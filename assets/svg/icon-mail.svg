@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>5DF112D7-1B53-4078-BC53-8D6B22B5A936</title>
+    <g id="首頁" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI" transform="translate(-43.000000, -381.000000)">
+            <g id="icon/mail" transform="translate(43.000000, 381.000000)">
+                <rect id="Rectangle" fill="#D8D8D8" opacity="0" x="0" y="0" width="22" height="22"></rect>
+                <rect id="Rectangle" stroke="#000000" stroke-width="1.5" x="1.75" y="3.75" width="18.5" height="14.5" rx="4"></rect>
+                <path d="M5,7 L9.89059961,10.2603997 C10.5623984,10.7082656 11.4376016,10.7082656 12.1094004,10.2603997 L17,7 L17,7" id="Path-5" stroke="#000000" stroke-width="1.5"></path>
+            </g>
+        </g>
+    </g>
+</svg>

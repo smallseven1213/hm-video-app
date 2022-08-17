@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html><head>
+<title>色天堂</title>
+<meta charset="UTF-8">
+<meta content="IE=Edge" http-equiv="X-UA-Compatible">
+<meta name="description" content="色天堂 打開你的 AV 新世界">
+<meta name="theme-color" content="#F9DD4A">
+<link rel="icon" href="favicon.png">
+
+<!-- iOS meta tags & icons -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="wgp_video_h5app">
+<link rel="apple-touch-icon" href="icons/app.png">
+<link rel="manifest" href="manifest.json">
+
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+<style>
+    body {
+        margin: 0;
+        padding: 0;
+        -webkit-overflow-scrolling: touch;
+        overflow: auto;
+    }
+    iframe#home {
+        transform: translate(0, 0) rotate(0deg);
+        transform-origin: top left;
+        width: 100vw;
+        height: 100vh;
+    }
+    @media screen and (orientation: landscape) {
+      iframe#home {
+        transform: translate(100vw, 0) rotate(90deg);
+        transform-origin: top left;
+        width: 100vh;
+        height: 100vw !important;
+      }
+    }
+    @media screen and (orientation: portrait) {
+      iframe#home {
+        transform: translate(0, 0) rotate(0deg);
+        transform-origin: top left;
+        width: 100vw;
+        height: 100vh !important;
+      }
+    }
+</style>
+</head>
+<body>
+<iframe id="home" frameborder="0" scrolling="yes"></iframe>
+<script>
+    document.getElementById('home').contentWindow.location.replace(`/index2.html#`);
+    window.addEventListener('touchstart', {});
+</script>
+</body>
+</html>

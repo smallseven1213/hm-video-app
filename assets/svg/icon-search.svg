@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="22px" viewBox="0 0 22 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>6AE341A0-BCD2-4C53-9A4C-B8C561345BF0</title>
+    <g id="首頁" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI" transform="translate(-163.000000, -301.000000)" fill="#B3B3B3">
+            <g id="icon/search" transform="translate(163.000000, 301.000000)">
+                <path d="M11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 Z M11,5 C7.6862915,5 5,7.6862915 5,11 C5,14.3137085 7.6862915,17 11,17 C14.3137085,17 17,14.3137085 17,11 C17,7.6862915 14.3137085,5 11,5 Z" id="Oval" fill-rule="nonzero"></path>
+                <rect id="Rectangle" transform="translate(16.646447, 17.353553) rotate(-45.000000) translate(-16.646447, -17.353553) " x="16.1464466" y="15.3535534" width="1" height="4" rx="0.5"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

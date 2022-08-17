@@ -1,0 +1,12 @@
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(1 9)" fill="none" fill-rule="evenodd">
+        <path d="M12 0h17c5.523 0 10 4.477 10 10s-4.477 10-10 10H12C6.477 20 2 15.523 2 10S6.477 0 12 0z" fill="#FFDC00"/>
+        <path d="M10 2h17c5.523 0 10 4.477 10 10s-4.477 10-10 10H10C4.477 22 0 17.523 0 12S4.477 2 10 2z" stroke="#000" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M12 6a2 2 0 0 1 2 2l-.001.999L15 9a2 2 0 1 1 0 4l-1.001-.001L14 14a2 2 0 1 1-4 0l-.001-1.001L9 13a2 2 0 1 1 0-4l.999-.001L10 8a2 2 0 0 1 2-2z" fill="#FFF"/>
+        <path d="M10 7a2 2 0 0 1 2 2l-.001.999L13 10a2 2 0 1 1 0 4l-1.001-.001L12 15a2 2 0 1 1-4 0l-.001-1.001L7 14a2 2 0 1 1 0-4l.999-.001L8 9a2 2 0 0 1 2-2z" stroke="#000" stroke-width="1.5" fill="#FFF" stroke-linejoin="round"/>
+        <circle fill="#FFF" cx="25.5" cy="7.5" r="2.5"/>
+        <circle fill="#FFF" cx="31.5" cy="13.5" r="2.5"/>
+        <circle stroke="#000" stroke-width="1.5" fill="#FFF" stroke-linejoin="round" cx="23" cy="8" r="2"/>
+        <circle stroke="#000" stroke-width="1.5" fill="#FFF" stroke-linejoin="round" cx="29" cy="14" r="2"/>
+    </g>
+</svg>

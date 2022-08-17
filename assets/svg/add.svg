@@ -1,0 +1,7 @@
+<svg width="22" height="22" viewBox="0 0 22 22" xmlns="http://www.w3.org/2000/svg">
+    <g fill="none" fill-rule="evenodd">
+        <rect stroke="#CACACA" stroke-width="1.5" fill="#F2F2F2" x=".75" y=".75" width="20.5" height="20.5" rx="10.25"/>
+        <path d="M11 6a.75.75 0 0 1 .75.75v8.5a.75.75 0 1 1-1.5 0v-8.5A.75.75 0 0 1 11 6z" fill="#CACACA"/>
+        <path d="M16 11a.75.75 0 0 1-.75.75h-8.5a.75.75 0 1 1 0-1.5h8.5A.75.75 0 0 1 16 11z" fill="#CACACA"/>
+    </g>
+</svg>

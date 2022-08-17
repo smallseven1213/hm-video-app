@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>290316FC-0EFD-4FEA-B626-AD9A8EDC8A4F</title>
+    <g id="首頁" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI" transform="translate(-766.000000, -158.000000)" stroke-width="1.5">
+            <g id="icon/recommend/IDcasrd" transform="translate(766.000000, 158.000000)">
+                <rect id="Rectangle" stroke="#000000" fill="#FFFFFF" x="2.75" y="5.75" width="26.5" height="20.5" rx="4"></rect>
+                <line x1="18" y1="14" x2="24" y2="14" id="Path-3" stroke="#FFDC00"></line>
+                <line x1="18" y1="18" x2="22" y2="18" id="Path-3" stroke="#FFDC00"></line>
+                <circle id="Oval" stroke="#FFDC00" cx="11" cy="14" r="1.25"></circle>
+                <path d="M14,20 C13.1428571,18.8954305 12.6568542,18 11,18 C9.34314575,18 8.85714286,18.8954305 8,20" id="Oval" stroke="#FFDC00"></path>
+            </g>
+        </g>
+    </g>
+</svg>

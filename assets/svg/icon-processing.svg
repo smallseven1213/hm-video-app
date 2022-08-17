@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80px" height="107px" viewBox="0 0 80 107" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>6776FDA7-6C6D-45AB-8928-F56EBE2BE113</title>
+    <defs>
+        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="50%" gradientTransform="translate(0.500000,0.500000),scale(0.083333,1.000000),rotate(90.000000),scale(1.000000,11.911046),translate(-0.500000,-0.500000)" id="radialGradient-1">
+            <stop stop-color="#B4B4B4" stop-opacity="0.352218948" offset="0%"></stop>
+            <stop stop-color="#B4B4B4" stop-opacity="0" offset="100%"></stop>
+        </radialGradient>
+    </defs>
+    <g id="首頁" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="UI" transform="translate(-798.000000, -214.000000)">
+            <g id="icon/Processing" transform="translate(798.000000, 214.000000)">
+                <ellipse id="Oval" fill="url(#radialGradient-1)" opacity="0.600000024" cx="40" cy="104" rx="36" ry="3"></ellipse>
+                <path d="M40,7 L58,7 C64.627417,7 70,12.372583 70,19 L70,73 C70,79.627417 64.627417,85 58,85 L14,85 C7.372583,85 2,79.627417 2,73 L2,56 L2,56" id="Rectangle" stroke="#3CA948" stroke-width="3" stroke-linecap="round" transform="translate(36.000000, 46.000000) rotate(-180.000000) translate(-36.000000, -46.000000) "></path>
+                <rect id="Rectangle" fill="#3CA948" x="18" y="30" width="31" height="3" rx="1.5"></rect>
+                <rect id="Rectangle" fill="#3CA948" x="57" y="65" width="12" height="3" rx="1.5"></rect>
+                <rect id="Rectangle" fill="#3CA948" transform="translate(58.500000, 61.000000) rotate(-90.000000) translate(-58.500000, -61.000000) " x="51.5" y="59.5" width="14" height="3" rx="1.5"></rect>
+                <rect id="Rectangle" fill="#3CA948" x="18" y="45" width="14" height="3" rx="1.5"></rect>
+                <rect id="Rectangle" stroke="#3CA948" stroke-width="3" fill="#FFFFFF" x="17.5" y="1.5" width="9" height="15" rx="4.5"></rect>
+                <rect id="Rectangle" stroke="#3CA948" stroke-width="3" fill="#FFFFFF" x="45.5" y="1.5" width="9" height="15" rx="4.5"></rect>
+                <circle id="Oval" stroke="#3CA948" stroke-width="3" cx="58.5" cy="66.5" r="20"></circle>
+            </g>
+        </g>
+    </g>
+</svg>

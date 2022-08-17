@@ -1,0 +1,33 @@
+<svg width="80" height="107" viewBox="0 0 80 107" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient x1="50%" y1="-29.33%" x2="50%" y2="100%" id="wkzbbiqcka">
+            <stop stop-color="#CACACA" offset="0%"/>
+            <stop stop-color="#CACACA" stop-opacity=".2" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="5b0g1j8iib">
+            <stop stop-color="#CACACA" offset="0%"/>
+            <stop stop-color="#CACACA" stop-opacity=".597" offset="100%"/>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="101.761%" id="i0o4fistec">
+            <stop stop-color="#D8D8D8" stop-opacity=".351" offset="0%"/>
+            <stop stop-color="#EEE" stop-opacity="0" offset="100%"/>
+        </linearGradient>
+        <radialGradient cx="50%" cy="50%" fx="50%" fy="50%" r="50%" gradientTransform="matrix(0 1 -.99258 0 .996 0)" id="0mfcwozcmd">
+            <stop stop-color="#B4B4B4" stop-opacity=".352" offset="0%"/>
+            <stop stop-color="#B4B4B4" stop-opacity="0" offset="100%"/>
+        </radialGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <rect fill="#FFF" y="7" width="80" height="86" rx="12"/>
+        <path d="M68 7c6.627 0 12 5.373 12 12v62c0 6.627-5.373 12-12 12H12C5.373 93 0 87.627 0 81V19C0 12.373 5.373 7 12 7h56zm0 3H12a9 9 0 0 0-8.996 8.735L3 19v62a9 9 0 0 0 8.735 8.996L12 90h56a9 9 0 0 0 8.996-8.735L77 81V19a9 9 0 0 0-8.735-8.996L68 10z" fill="url(#wkzbbiqcka)" fill-rule="nonzero"/>
+        <path d="M21.5 36.75h37a1.5 1.5 0 0 0 0-3h-37a1.5 1.5 0 0 0 0 3z" fill="#CACACA" opacity=".6"/>
+        <path d="M21.5 51.75h37a1.5 1.5 0 0 0 0-3h-37a1.5 1.5 0 0 0 0 3z" fill="#CACACA" opacity=".4"/>
+        <path d="M21.5 66.75h25a1.5 1.5 0 0 0 0-3h-25a1.5 1.5 0 0 0 0 3z" fill="#CACACA" opacity=".3"/>
+        <path d="M25 0a6 6 0 0 1 6 6v6a6 6 0 1 1-12 0V6a6 6 0 0 1 6-6z" fill="#FFF"/>
+        <path d="M25 0a6 6 0 0 1 6 6v6a6 6 0 1 1-12 0V6a6 6 0 0 1 6-6zm0 3a3 3 0 0 0-2.995 2.824L22 6v6a3 3 0 0 0 5.995.176L28 12V6a3 3 0 0 0-3-3z" fill="url(#5b0g1j8iib)" fill-rule="nonzero"/>
+        <path d="M55 0a6 6 0 0 1 6 6v6a6 6 0 1 1-12 0V6a6 6 0 0 1 6-6z" fill="#FFF"/>
+        <path d="M55 0a6 6 0 0 1 6 6v6a6 6 0 1 1-12 0V6a6 6 0 0 1 6-6zm0 3a3 3 0 0 0-2.995 2.824L52 6v6a3 3 0 0 0 5.995.176L58 12V6a3 3 0 0 0-3-3z" fill="url(#5b0g1j8iib)" fill-rule="nonzero"/>
+        <path fill="url(#i0o4fistec)" d="M0 0h80v93H0z"/>
+        <ellipse fill="url(#0mfcwozcmd)" opacity=".6" cx="40" cy="104" rx="36" ry="3"/>
+    </g>
+</svg>
