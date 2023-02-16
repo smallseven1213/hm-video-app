@@ -21,6 +21,7 @@ You can also find a detailed instruction on how to add platforms in the `pubspec
 
 ### Shared 專案資料夾架構
 - features/**/*.dart     各個共用頁面Page
+- widgets/**/*.dart     共用Widget, ex: CacheImage, AppSharedProvider
 - models/**/*_model.dart       各個Class型別
 - controllers/**/**_controller.dart   GetX Obs Controllers
 - services/**/*_service.dart   Service
