@@ -1,7 +1,0 @@
-<svg width="14" height="14" viewBox="0 0 14 14" xmlns="http://www.w3.org/2000/svg">
-    <g fill="#979797" fill-rule="evenodd">
-        <rect x="6.25" y="3.75" width="1.5" height="4" rx=".75"/>
-        <rect transform="rotate(90 8.25 7)" x="7.5" y="5" width="1.5" height="4" rx=".75"/>
-        <path d="M7 .75a6.25 6.25 0 1 0 0 12.5A6.25 6.25 0 0 0 7 .75zm0 1.5a4.75 4.75 0 1 1 0 9.5 4.75 4.75 0 0 1 0-9.5z" fill-rule="nonzero"/>
-    </g>
-</svg>
