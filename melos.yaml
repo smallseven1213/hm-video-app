@@ -1,0 +1,9 @@
+name: hm_video_app
+
+packages:
+  - apps/*
+  - packages/*
+
+scripts:
+  analyze:
+    exec: dart analyze .
