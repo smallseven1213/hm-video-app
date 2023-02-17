@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared/widgets/demo/demo_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -101,6 +102,11 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
+            ),
+            DemoButtonWidget(
+              label: 'Demo Button',
+              icon: Icons.add,
+              onPressed: () {},
             ),
           ],
         ),

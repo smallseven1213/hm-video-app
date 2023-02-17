@@ -19,12 +19,13 @@ You can also find a detailed instruction on how to add platforms in the `pubspec
 
 ## 給Member的 Getting Started
 
-### Shared 專案資料夾架構
+### Shared 專案資料夾架構, basePath: ./lib/
 - features/**/*.dart     各個共用頁面Page
 - widgets/**/*.dart     共用Widget, ex: CacheImage, AppSharedProvider
 - models/**/*_model.dart       各個Class型別
 - controllers/**/**_controller.dart   GetX Obs Controllers
 - services/**/*_service.dart   Service
+- apis/**/*.dart  各種API
 - utils/**/*.dart               Util工具
 
 ### App端引用範例
@@ -39,3 +40,4 @@ dev_dependencies:
 ### Ref
 - [Flutter Plugin and Package](https://juejin.cn/post/7041504300933054478)
 - [Melos Example](https://github.com/nilsreichardt/codemagic_monorepo_example/blob/main/apps/counter_app/pubspec.yaml)
+- 如果melos要搭fvm, fvm flutter pub global run melos publish
