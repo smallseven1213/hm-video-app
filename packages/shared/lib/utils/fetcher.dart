@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 
+// create a dio instance
+final dio = Dio();
+
 /// url: 網址
 /// method: 請求方法
 /// headers: 請求標頭
@@ -7,14 +10,11 @@ import 'package:dio/dio.dart';
 /// shouldValidate: 是否需要驗證
 Future<Response> fetcher({
   required String url,
-  String method = 'GET',
-  Map<String, dynamic> headers = const {},
-  Map<String, dynamic> body = const {},
-  bool shouldValidate = false,
+  String? method = 'GET',
+  Map<String, dynamic>? headers = const {},
+  Map<String, dynamic>? body = const {},
+  bool? shouldValidate = false,
 }) async {
-  // create a dio instance
-  final dio = Dio();
-
   // create a request options
   final options = Options(
     method: method,

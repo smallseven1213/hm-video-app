@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class AdScreen extends StatelessWidget {
-  const AdScreen({
+class Ad extends StatelessWidget {
+  const Ad({
     Key? key,
   }) : super(key: key);
 

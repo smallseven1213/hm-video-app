@@ -8,11 +8,13 @@ environment:
   flutter: ">=2.5.0"
 
 dependencies:
+  device_info_plus: ^8.1.0
   dio: ^5.0.0
   flutter:
     sdk: flutter
   get: ^4.6.5
   plugin_platform_interface: ^2.0.2
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:
