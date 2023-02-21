@@ -4,19 +4,16 @@ import 'package:get/get.dart';
 class AdDemo extends StatelessWidget {
   const AdDemo({
     Key? key,
-    required this.onComplete,
   }) : super(key: key);
-
-  final VoidCallback onComplete;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: const Center(
-        child: Text('Ad Screen'),
+        child: Text('Add Screen'),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
-        onComplete();
+        Get.offNamed('/home');
       }),
     );
   }
