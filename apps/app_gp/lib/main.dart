@@ -9,6 +9,7 @@ import 'package:shared/widgets/demo/ad.dart';
 import 'package:shared/widgets/root.dart';
 // import 'package:shared/widgets/splash.dart';
 import 'package:shared/widgets/demo/splash.dart';
+import 'package:shared/widgets/splash.dart';
 
 import 'pages/home.dart';
 
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RootWidget(
         widget: GetMaterialApp(initialRoute: '/', enableLog: true, getPages: [
-      GetPage(name: '/', page: () => const SplashDemo()),
+      GetPage(name: '/', page: () => const Splash()),
       GetPage(name: '/ad', page: () => const Ad()),
       GetPage(name: '/home', page: () => Home()),
     ]));

@@ -12,7 +12,12 @@ dependencies:
   dio: ^5.0.0
   flutter:
     sdk: flutter
+  flutter_dotenv: ^5.0.2
   get: ^4.6.5
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path: ^1.8.2
+  path_provider: ^2.0.12
   plugin_platform_interface: ^2.0.2
   uuid: ^3.0.7
 
@@ -48,7 +53,8 @@ flutter:
     # -------------------
 
   # To add assets to your plugin package, add an assets section, like this:
-  # assets:
+  assets:
+      - assets/env/
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
   #
