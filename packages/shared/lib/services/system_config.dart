@@ -1,7 +1,9 @@
+import 'dart:html';
+
+import 'package:get/get_utils/src/platform/platform.dart';
+import 'package:get_storage/get_storage.dart';
+
 const env = String.fromEnvironment('ENV', defaultValue: 'dev');
-const _project = String.fromEnvironment('PROJECT',
-    defaultValue: 'STT'); // STT | GP | 51SS | SV
-const _agentCode = String.fromEnvironment('AgentCode', defaultValue: '9L1O');
 
 class SystemConfig {
   /**
@@ -14,20 +16,30 @@ class SystemConfig {
   String apiHost = 'https://dl.dlstt.com/$env/dl.json';
   String vodHost = 'https://dl.dlstt.com/$env/dl.json';
   String imgHost = 'https://dl.dlstt.com/$env/dl.json';
-  String version =
-      const String.fromEnvironment('VERSION', defaultValue: '22.0713.1.0');
 
+  // STT | GP | 51SS | SV
+  String project = const String.fromEnvironment('PROJECT', defaultValue: 'STT');
+  String agentCode = GetPlatform.isWeb
+      ? window.location.host.split('.')[0]
+      : const String.fromEnvironment('AgentCode', defaultValue: '--');
+  String version = const String.fromEnvironment('VERSION',
+      defaultValue: '22.0713.1.0'); // 格式: 22.0713.1.0 之後改 --
   bool isMaintenance = false;
+  GetStorage box = GetStorage();
+  final userDevice = GetPlatform.isWeb
+      ? 'H5'
+      : GetPlatform.isAndroid
+          ? 'ANDROID'
+          : GetPlatform.isIOS
+              ? 'IOS'
+              : 'H5';
 
   List<String> vodHostList = [
-    'https://dl.dlstt.com/$env/dl.json',
+    'https://dl.dlstt.com/$env/dl.json1',
     'https://dl.0272pay.com/$env/dl.json',
   ];
 
   int timeout = 5000;
-
-  String project = _project;
-  String agentCode = _agentCode;
 
   factory SystemConfig() {
     return _instance;
