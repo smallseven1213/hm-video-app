@@ -8,13 +8,15 @@ import 'package:uuid/uuid.dart';
 
 final systemConfig = SystemConfig();
 
+enum AuthStatus { success, failed }
+
 class AuthApi {
   // 訪客登入
-  Future<Map<String, dynamic>> guestLogin(
-      {String? invitationCode, String? agentCode}) async {
+  Future<AuthStatus> guestLogin({
+    String? invitationCode,
+  }) async {
     String registerDeviceGuid = const Uuid().v4();
-    String registerDeviceType = systemConfig.userDevice;
-    GetStorage box = GetStorage();
+    GetStorage box = systemConfig.box;
 
     // 訪客註冊
     // 如果 GetPlatform.isWeb registerDeviceGuid 則用 uuid
@@ -36,28 +38,32 @@ class AuthApi {
     }
 
     try {
-      var res = await fetcher(
+      var response = await fetcher(
         url: '${systemConfig.apiHost}/public/auth/auth/guest/register',
         method: 'POST',
         body: {
-          'registerDeviceType': registerDeviceType,
+          'registerDeviceType': systemConfig.userDevice,
           'registerDeviceGuid': registerDeviceGuid,
           'invitationCode': invitationCode,
-          'agentCode': agentCode,
+          'agentCode': systemConfig.agentCode,
         },
       );
-      print('res: $res');
-      // if (res['code'] == '51633') {
-      //   printError(info: '帳號建立失敗，裝置停用。');
-      //   return '';
-      // } else if (res['code'] != '00') {
-      //   return '';
-      // }
+      var res = (response.data as Map<String, dynamic>);
 
-      return res.data;
+      print('res....: $res');
+      if (res['code'] == '51633') {
+        print('帳號建立失敗，裝置停用。');
+        return AuthStatus.failed;
+      } else if (res['code'] != '00') {
+        return AuthStatus.failed;
+      }
+      systemConfig.setToken(res['data']['token']);
+
+      // return res.data;
+      return AuthStatus.success;
     } catch (err) {
       print('guestLogin error: $err');
-      return {};
+      return AuthStatus.success;
     }
   }
 }

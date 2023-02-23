@@ -16,15 +16,15 @@ class ApkApi {
               '${systemConfig.apiHost}/public/apkBatchPackedRecords/apkBatchPackedRecord?specificVersion=$version&agentCode=$agentCode');
       var res = (value.data as Map<String, dynamic>);
       if (res['code'] != '00') {
-        return ApkUpdate(status: Status.noUpdate, url: '');
+        return ApkUpdate(status: ApkStatus.noUpdate, url: '');
       }
 
-      Status action = Status.parse(res['data']['isUpdateVersion']);
+      ApkStatus action = ApkStatus.parse(res['data']['isUpdateVersion']);
       String url = res['data']['download'][0]['content'];
       return ApkUpdate(status: action, url: url);
     } catch (err) {
       print('checkVersion error: $err');
-      return ApkUpdate(status: Status.noUpdate, url: '');
+      return ApkUpdate(status: ApkStatus.noUpdate, url: '');
     }
   }
 }

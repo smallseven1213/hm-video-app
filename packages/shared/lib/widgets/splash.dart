@@ -10,8 +10,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared/apis/apk_api.dart';
 import 'package:shared/apis/auth_api.dart';
+import 'package:shared/apis/banner_api.dart';
 import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
+import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/apk_update.dart';
 import 'package:shared/services/system_config.dart';
 
@@ -77,7 +79,8 @@ class _SplashState extends State<Splash> {
     var res = await dlApi.fetchDlJson();
     if (res != null) {
       // 設定apiHost & vodHost & imageHost & maintenance
-      systemConfig.setApiHost('https://api.${res['apl']?.first}'); // https://api.pkonly8.com/
+      // https://api.pkonly8.com/
+      systemConfig.setApiHost('https://api.${res['apl']?.first}');
       systemConfig.setVodHost('https://api.${res['dl']?.first}');
       systemConfig.setImageHost('https://api.${res['pl']?.first}');
       systemConfig.setMaintenance(res['maintenance'] == 'true' ? true : false);
@@ -120,7 +123,7 @@ class _SplashState extends State<Splash> {
       agentCode: systemConfig.agentCode,
     );
     print('apkUpdate: ${apkUpdate.status} ${apkUpdate.url}');
-    if (apkUpdate.status == Status.forceUpdate) {
+    if (apkUpdate.status == ApkStatus.forceUpdate) {
       Get.defaultDialog(
         title: '已有新版本',
         content: const Text('請更新至最新版本'),
@@ -133,7 +136,7 @@ class _SplashState extends State<Splash> {
           userLogin();
         },
       );
-    } else if (apkUpdate.status == Status.suggestUpdate) {
+    } else if (apkUpdate.status == ApkStatus.suggestUpdate) {
       Get.defaultDialog(
         title: '已有新版本',
         content: const Text('已發布新版本，為了更流暢的觀影體驗，請更新版本'),
@@ -157,31 +160,47 @@ class _SplashState extends State<Splash> {
   // Step6: 檢查是否有token (是否登入)
   userLogin() async {
     print('step6: 檢查是否有token (是否登入)');
+    UserApi userApi = UserApi();
     // check token from local storage has key 'auth-token'
     if (systemConfig.box.hasData('auth-token')) {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
       print('step6.1: 有token');
-
-      UserApi userApi = UserApi();
+      systemConfig.setToken(systemConfig.box.read('auth-token'));
       userApi.writeUserLoginRecord();
-
-      systemConfig.box.write('auth-token', 'eeeeee');
+      await getLandingAd();
     } else {
+      print('step6.2: 無token 訪客登入');
       // Step6-2: 無: 訪客登入
       AuthApi authApi = AuthApi();
       String invitationCode = await getInvitationCode();
-      String agentCode = systemConfig.agentCode;
-      print('===========');
-      print('invitationCode: $invitationCode');
-      print('agentCode: $agentCode');
       final res = await authApi.guestLogin(
         invitationCode: invitationCode,
-        agentCode: agentCode,
       );
+      if (res == AuthStatus.success) {
+        userApi.writeUserLoginRecord();
+        await getLandingAd();
+      }
     }
   }
-  // Step7: 無: 訪客登入
-  // Step8: 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
+
+  // Step7: 取得入站廣告 > 有廣告 > 廣告頁
+  getLandingAd() async {
+    print('step7: 取得入站廣告 > 有廣告 > 廣告頁');
+    BannerApi bannerApi = BannerApi();
+    final BannerController bannerController = Get.put(BannerController());
+    var eee = bannerController.fetchBanner();
+    print('eee: ${bannerController.banners}');
+    // // BannerController bannerController = Get.find(BannerController());
+    // var res = await bannerApi.getBannerById(positionId: '8');
+
+    // print('res: ${res}');
+
+    // if (res.isNotEmpty) {
+    //   bannerController.setBanners(res);
+    // }
+
+    // 無廣告停留在此頁，直接入站
+  }
 
   @override
   void initState() {

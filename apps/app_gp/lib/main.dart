@@ -1,6 +1,7 @@
 import 'package:app_gp/controllers/home_bottom_navigator_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/utils/setupDependencies.dart';
 import 'package:shared/widgets/ad.dart';
 // import 'package:shared/utils/setupDependencies.dart';
 // import 'package:shared/widgets/ad.dart';
@@ -15,7 +16,7 @@ import 'pages/home.dart';
 
 void main() {
   // DI shared package
-  // setupDependencies();
+  setupDependencies();
 
   // DI app_gp package
   Get.put(HomeBottomNavigatorController());

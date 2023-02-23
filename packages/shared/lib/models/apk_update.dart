@@ -1,23 +1,23 @@
-enum Status {
+enum ApkStatus {
   noUpdate(1), // 不更新
   suggestUpdate(2), // 建議更新
   forceUpdate(3); // 強制更新
 
   final int value;
 
-  const Status(
+  const ApkStatus(
     this.value,
   );
 
-  static Status parse(int i) {
-    if (i == -1) return Status.noUpdate;
-    return Status.values.firstWhere((e) => e.value == i);
+  static ApkStatus parse(int i) {
+    if (i == -1) return ApkStatus.noUpdate;
+    return ApkStatus.values.firstWhere((e) => e.value == i);
   }
 }
 
 class ApkUpdate {
   final String? url;
-  final Status status;
+  final ApkStatus status;
 
   ApkUpdate({
     required this.status,
