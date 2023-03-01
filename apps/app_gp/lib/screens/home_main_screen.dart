@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/layout_controller.dart';
 
 class HomeMainScreen extends StatelessWidget {
-  const HomeMainScreen({Key? key}) : super(key: key);
+  HomeMainScreen({Key? key}) : super(key: key);
+
+  final layoutController = Get.find<LayoutController>(tag: 'layout1');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
