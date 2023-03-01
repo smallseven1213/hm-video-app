@@ -1,4 +1,3 @@
-import 'package:app_gp/controllers/home_bottom_navigator_controller.dart';
 import 'package:app_gp/screens/discover_screen.dart';
 import 'package:app_gp/screens/shorts_screen.dart';
 import 'package:app_gp/screens/game_screen.dart';
@@ -6,15 +5,15 @@ import 'package:app_gp/screens/home_main_screen.dart';
 import 'package:app_gp/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/bottom_navigator_controller.dart';
 
 // home是一個有bottom navigation bar的頁面
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
-  final homeBottomNavigatorController =
-      Get.find<HomeBottomNavigatorController>();
+  final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
-  final screens = const [
+  final screens = [
     HomeMainScreen(),
     ShortScreen(),
     GameScreen(),
@@ -26,33 +25,12 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Obx(() => IndexedStack(
-              index: homeBottomNavigatorController.currentIndex,
+              index: bottomNavigatorController.activeIndex.value,
               children: screens,
             )),
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: (value) => homeBottomNavigatorController.changeIndex(value),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Short',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Game',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'Discover',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person),
-              label: 'User',
-            ),
-          ],
-        ));
+        bottomNavigationBar: Obx(() => BottomNavigationBar(
+              onTap: (value) => bottomNavigatorController.changeIndex(value),
+              items: bottomNavigatorController.navigatorItems,
+            )));
   }
 }
