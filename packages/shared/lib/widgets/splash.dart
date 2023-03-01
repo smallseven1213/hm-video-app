@@ -17,11 +17,12 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/apk_update.dart';
 import 'package:shared/services/system_config.dart';
 
-// TODO: 基本上這邊會做一些初始化的動作,
 class Splash extends StatefulWidget {
-  // Props為圖片以及完成後的callback事件
+  final void Function() onNext;
+
   const Splash({
     Key? key,
+    required this.onNext,
   }) : super(key: key);
 
   @override
@@ -124,34 +125,57 @@ class _SplashState extends State<Splash> {
     );
     print('apkUpdate: ${apkUpdate.status} ${apkUpdate.url}');
     if (apkUpdate.status == ApkStatus.forceUpdate) {
-      Get.defaultDialog(
-        title: '已有新版本',
-        content: const Text('請更新至最新版本'),
-        textConfirm: '更新版本',
-        confirmTextColor: Colors.white,
-        onConfirm: () {
-          Get.back();
-          // TODO: 跳轉到更新頁面
-          // launch('https://${apkUpdate.url ?? ''}');
-          userLogin();
-        },
+      // use showDialog
+      showDialog<int>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_ctx) => AlertDialog(
+          title: const Text('Basic dialog title'),
+          content: const Text('請更新至最新版本'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('確認'),
+              onPressed: () {
+                widget.onNext();
+                Navigator.of(context).pop();
+                userLogin();
+              },
+            ),
+          ],
+        ),
       );
     } else if (apkUpdate.status == ApkStatus.suggestUpdate) {
-      Get.defaultDialog(
-        title: '已有新版本',
-        content: const Text('已發布新版本，為了更流暢的觀影體驗，請更新版本'),
-        textConfirm: '立即體驗',
-        textCancel: '暫不升級',
-        confirmTextColor: Colors.white,
-        onConfirm: () {
-          Get.back();
-          // TODO: 跳轉到更新頁面
-          // launch('https://${apkUpdate.url ?? ''}');
-        },
-        onCancel: () {
-          Get.back();
-          userLogin();
-        },
+      showDialog<int>(
+        context: context,
+        barrierDismissible: false,
+        builder: (_ctx) => AlertDialog(
+          title: Text('已有新版本'),
+          content: const Text('已發布新版本，為了更流暢的觀影體驗，請更新版本'),
+          actions: <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('確認'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('取消'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                userLogin();
+              },
+            ),
+          ],
+        ),
       );
     }
     userLogin();

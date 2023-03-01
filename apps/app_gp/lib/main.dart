@@ -1,24 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/utils/setupDependencies.dart';
-import 'package:shared/widgets/ad.dart';
-// import 'package:shared/widgets/ad.dart';
-// import 'package:shared/widgets/ad_screen.dart';
+import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
-// import 'package:shared/widgets/splash.dart';
-import 'package:shared/widgets/splash.dart';
 
 import 'pages/home.dart';
 
 void main() {
-  // DI shared package
-  setupDependencies();
-
-  // DI app_gp package
-  // TODO
-
-  // start app
-  runApp(const MyApp());
+  runningMain(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -28,9 +16,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RootWidget(
         widget: GetMaterialApp(initialRoute: '/', enableLog: true, getPages: [
-      GetPage(name: '/', page: () => const Splash()),
-      GetPage(name: '/ad', page: () => const Ad()),
-      GetPage(name: '/home', page: () => Home()),
+      GetPage(name: '/', page: () => Home()),
     ]));
   }
 }
