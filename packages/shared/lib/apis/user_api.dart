@@ -21,9 +21,7 @@ final systemConfig = SystemConfig();
 
 class UserApi {
   // 使用者登入紀錄
-  Future<String> writeUserLoginRecord({
-    required String version,
-  }) async {
+  Future<String> writeUserLoginRecord() async {
     var status = 'login'; // login | logout
     try {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
@@ -41,19 +39,12 @@ class UserApi {
             (await deviceInfo.webBrowserInfo).userAgent.toString();
       }
 
-      var registerDeviceType = GetPlatform.isWeb
-          ? 'H5'
-          : GetPlatform.isAndroid
-              ? 'ANDROID'
-              : GetPlatform.isIOS
-                  ? 'IOS'
-                  : 'H5';
       var res = await fetcher(
-          url: '${systemConfig.apiHost}/user/userLoginRecord',
+          url: '${systemConfig.apiHost}/public/users/user/userLoginRecord',
           method: 'POST',
           body: {
-            'device': registerDeviceType,
-            'version': version,
+            'device': systemConfig.userDevice,
+            'version': systemConfig.version,
             'userAgent': registerDeviceGuid,
           });
 
