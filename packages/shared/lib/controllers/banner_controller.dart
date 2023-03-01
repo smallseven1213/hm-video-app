@@ -15,11 +15,12 @@ class BannerController extends GetxController {
     banners[id] = id;
   }
 
-  Future<void> fetchBanner() async {
+  Future<List> fetchBanner() async {
     print('loading game states');
     BannerApi bannerApi = BannerApi();
     final BannerController bannerController = Get.put(BannerController());
     var res = await bannerApi.getBannerById(positionId: '8');
     bannerController.setBanners(res);
+    return res;
   }
 }
