@@ -1,6 +1,11 @@
+import 'package:app_gp/screens/main_screen/marquee.dart';
+import 'package:app_gp/screens/main_screen/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
+
+import 'main_screen/channel.dart';
+import 'main_screen/tab_bar.dart';
 
 class HomeMainScreen extends StatelessWidget {
   HomeMainScreen({Key? key}) : super(key: key);
@@ -9,30 +14,46 @@ class HomeMainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final PageController controller = PageController();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      body: Center(
+      // appBar: AppBar(
+      //   title: const Text('Home'),
+      // ),
+
+      // appBar is a custom PreferredSize view
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(200),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            Expanded(
+              child: SearchBar(),
             ),
-            Text(
-              '0',
-              style: Theme.of(context).textTheme.headline4,
+            Expanded(
+              child: Tabbar(),
+            ),
+            Expanded(
+              child: Marquee(),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Add your onPressed code here!
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.green,
+      body: PageView(
+        controller: controller,
+        allowImplicitScrolling: true,
+        children: const [
+          MainChannelScreen(
+            channelId: '1',
+          ),
+          MainChannelScreen(
+            channelId: '2',
+          ),
+          MainChannelScreen(
+            channelId: '3',
+          ),
+          MainChannelScreen(
+            channelId: '4',
+          ),
+        ],
       ),
     );
   }
