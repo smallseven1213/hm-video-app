@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
@@ -12,10 +13,12 @@ class GameScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              'Game',
-            ),
+          children: <Widget>[
+            TextButton(
+                onPressed: () {
+                  Get.toNamed('/game/deposit');
+                },
+                child: Text('game'))
           ],
         ),
       ),

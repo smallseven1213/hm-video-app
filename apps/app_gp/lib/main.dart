@@ -1,3 +1,5 @@
+import 'package:app_gp/pages/game/deposit.dart';
+import 'package:app_gp/pages/video.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/utils/runningMain.dart';
@@ -17,6 +19,8 @@ class MyApp extends StatelessWidget {
     return RootWidget(
         widget: GetMaterialApp(initialRoute: '/', enableLog: true, getPages: [
       GetPage(name: '/', page: () => Home()),
+      GetPage(name: '/video', page: () => Video()),
+      GetPage(name: '/game/deposit', page: () => GameDeposit()),
     ]));
   }
 }
