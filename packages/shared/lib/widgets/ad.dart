@@ -1,24 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:shared/widgets/splash.dart';
+
+import '../navigator/delegate.dart';
+import 'test.dart';
 
 class Ad extends StatelessWidget {
-  // onNext
-  final void Function() onNext;
-
   const Ad({
     Key? key,
-    required this.onNext,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: // button ,and click it will call onNext
-            TextButton(
-                onPressed: () {
-                  onNext();
-                },
-                child: const Text('go to home')),
+        child: TextButton(
+            onPressed: () {
+              MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+              // MyRouteDelegate.of(context).pushAndRemoveUntil((context) {
+              //   return TestPage();
+              // });
+            },
+            child: const Text('go to home')),
       ),
     );
   }

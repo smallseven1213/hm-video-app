@@ -1,4 +1,4 @@
-import 'dart:html';
+// import 'dart:html';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared/apis/apk_api.dart';
@@ -17,12 +18,12 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/apk_update.dart';
 import 'package:shared/services/system_config.dart';
 
-class Splash extends StatefulWidget {
-  final void Function() onNext;
+import '../navigator/delegate.dart';
+import 'ad.dart';
 
+class Splash extends StatefulWidget {
   const Splash({
     Key? key,
-    required this.onNext,
   }) : super(key: key);
 
   @override
@@ -37,10 +38,10 @@ class _SplashState extends State<Splash> {
     String invitationCode = '';
     // web from url ?code=xxx
     if (GetPlatform.isWeb) {
-      String url = window.location.href;
-      final regExp = RegExp(r'code=([^&]+)');
-      final code = regExp.firstMatch(url)?.group(1) ?? '';
-      invitationCode = code;
+      // String url = window.location.href;
+      // final regExp = RegExp(r'code=([^&]+)');
+      // final code = regExp.firstMatch(url)?.group(1) ?? '';
+      // invitationCode = code;
     } else {
       // app from clipboard
       var cb = await Clipboard.getData(Clipboard.kTextPlain);
@@ -139,7 +140,7 @@ class _SplashState extends State<Splash> {
               ),
               child: const Text('確認'),
               onPressed: () {
-                widget.onNext();
+                // widget.onNext();
                 Navigator.of(context).pop();
                 userLogin();
               },
@@ -243,6 +244,25 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          child: Text('Next~~'),
+          onPressed: () {
+            print('被push前');
+            MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (BuildContext context) {
+            //       return Ad(
+            //         onEnd: widget.onEnd,
+            //       );
+            //     },
+            //   ),
+            // );
+          },
+        ),
+      ),
+    );
   }
 }
