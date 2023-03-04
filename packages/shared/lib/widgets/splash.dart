@@ -1,4 +1,4 @@
-// import 'dart:html';
+import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -6,17 +6,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared/apis/apk_api.dart';
 import 'package:shared/apis/auth_api.dart';
-import 'package:shared/apis/banner_api.dart';
 import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/apk_update.dart';
+import 'package:shared/models/auth.dart';
 import 'package:shared/services/system_config.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../navigator/delegate.dart';
 import 'ad.dart';
@@ -32,21 +32,37 @@ class Splash extends StatefulWidget {
 
 class _SplashState extends State<Splash> {
   SystemConfig systemConfig = SystemConfig();
+  DlApi dlApi = DlApi();
+  ApkApi apkApi = ApkApi();
+  UserApi userApi = UserApi();
+  AuthApi authApi = AuthApi();
+  BannerController bannerController = Get.put(BannerController());
 
   // 取得invitationCode
   getInvitationCode() async {
     String invitationCode = '';
     // web from url ?code=xxx
+
+    print('Uri!!!!!: ${Uri.base}');
+
+    print('code!!!!!: ${Uri.base.queryParameters['code']}');
+
     if (GetPlatform.isWeb) {
-      // String url = window.location.href;
-      // final regExp = RegExp(r'code=([^&]+)');
-      // final code = regExp.firstMatch(url)?.group(1) ?? '';
-      // invitationCode = code;
+      String url = Uri.base.toString();
+      print('Uri!!!!!: ${Uri.base}');
+
+      print('code!!!!!: ${Uri.base.queryParameters['code']}');
+
+      Uri.base.queryParameters['code'] ?? '';
+      final regExp = RegExp(r'code=([^&]+)');
+      final code = regExp.firstMatch(url)?.group(1) ?? '';
+      invitationCode = code;
     } else {
       // app from clipboard
       var cb = await Clipboard.getData(Clipboard.kTextPlain);
       invitationCode = cb?.text ?? '';
     }
+
     if (!RegExp('[0-9A-Za-z]{6}').hasMatch(invitationCode)) {
       invitationCode = '';
     }
@@ -77,7 +93,6 @@ class _SplashState extends State<Splash> {
   // Step3: fetch dl.json get apiHost & maintenance status
   fetchDlJson() async {
     print('step3: fetch dl.json');
-    DlApi dlApi = DlApi();
     var res = await dlApi.fetchDlJson();
     if (res != null) {
       // 設定apiHost & vodHost & imageHost & maintenance
@@ -119,12 +134,12 @@ class _SplashState extends State<Splash> {
   // Step5: 檢查是否有更新
   checkApkUpdate() async {
     print('step5: 檢查是否有更新');
-    ApkApi apkApi = ApkApi();
+    bool enterable = false;
     final apkUpdate = await apkApi.checkVersion(
       version: systemConfig.version,
       agentCode: systemConfig.agentCode,
     );
-    print('apkUpdate: ${apkUpdate.status} ${apkUpdate.url}');
+    print('apkUpdate: ${apkUpdate.status}');
     if (apkUpdate.status == ApkStatus.forceUpdate) {
       // use showDialog
       showDialog<int>(
@@ -179,67 +194,110 @@ class _SplashState extends State<Splash> {
         ),
       );
     }
-    userLogin();
+    return enterable;
   }
 
-  // Step6: 檢查是否有token (是否登入)
+  // Step6: 檢查是否登入 - key: 'auth-token'
   userLogin() async {
     print('step6: 檢查是否有token (是否登入)');
-    UserApi userApi = UserApi();
-    // check token from local storage has key 'auth-token'
+    print('userApi: ${userApi}');
     if (systemConfig.box.hasData('auth-token')) {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
       print('step6.1: 有token');
       systemConfig.setToken(systemConfig.box.read('auth-token'));
-      userApi.writeUserLoginRecord();
-      await getLandingAd();
+      fetchInitialDataAndNavigate();
     } else {
-      print('step6.2: 無token 訪客登入');
       // Step6-2: 無: 訪客登入
-      AuthApi authApi = AuthApi();
+      print('step6.2: 無token (訪客登入)');
       String invitationCode = await getInvitationCode();
       final res = await authApi.guestLogin(
         invitationCode: invitationCode,
       );
-      if (res == AuthStatus.success) {
-        userApi.writeUserLoginRecord();
-        await getLandingAd();
+      print('res.status ${res.status}');
+      if (res.status == ResponseStatus.success) {
+        fetchInitialDataAndNavigate();
+      } else {
+        showDialog<int>(
+          context: context,
+          barrierDismissible: false,
+          builder: (_ctx) => AlertDialog(
+            title: Text('失敗'),
+            content: const Text('帳號建立失敗，裝置停用'),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(
+                  textStyle: Theme.of(context).textTheme.labelLarge,
+                ),
+                child: const Text('確認'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          ),
+        );
       }
+      // TODO: 被封號的話，顯示帳號建立失敗，裝置停用
     }
   }
 
-  // Step7: 取得入站廣告 > 有廣告 > 廣告頁
-  getLandingAd() async {
-    print('step7: 取得入站廣告 > 有廣告 > 廣告頁');
-    BannerApi bannerApi = BannerApi();
-    final BannerController bannerController = Get.put(BannerController());
-    var eee = bannerController.fetchBanner();
-    print('eee: ${bannerController.banners}');
-    // // BannerController bannerController = Get.find(BannerController());
-    // var res = await bannerApi.getBannerById(positionId: '8');
+  // Step7.1: 取得nav bar內容
+  getNavBar() {
+    print('step7.1: 取得nav bar內容');
+    // final NavBarController navBarController = Get.put(NavBarController());
+    //  navBarController.fetchNavBar();
+  }
 
-    // print('res: ${res}');
+  // Step7: 在首頁前要取得的資料
+  // Step7.1: 取得nav bar內容
+  // Step7.2: 取得入站廣告 > 有廣告 > 廣告頁
+  fetchInitialDataAndNavigate() async {
+    userApi.writeUserLoginRecord();
+    getNavBar();
+    print('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
+    List landingBanners = await bannerController.fetchBanner();
 
-    // if (res.isNotEmpty) {
-    //   bannerController.setBanners(res);
-    // }
+    // 停留在閃屏一下，再跳轉
+    countdownRedirect(String path) {
+      int count = 2;
+      Timer.periodic(const Duration(seconds: 1), (timer) {
+        count--;
+        if (count == 0) {
+          timer.cancel();
+          Get.offNamed(path);
+        }
+      });
+    }
 
-    // 無廣告停留在此頁，直接入站
+    if (landingBanners.isEmpty) {
+      countdownRedirect('/home');
+    } else {
+      countdownRedirect('/ad');
+    }
   }
 
   @override
   void initState() {
     Future.microtask(() async {
-      await loadEnvConfig();
-      await initialIndexedDB();
+      loadEnvConfig();
+      initialIndexedDB();
       final dlJson = await fetchDlJson();
       bool isMaintenance = await checkIsMaintenance();
       if (dlJson == null || isMaintenance) return;
       // ---- init end ----
-      await checkApkUpdate();
+      bool enterable = await checkApkUpdate();
+      print('enterable: $enterable');
+      if (enterable) {
+        await userLogin();
+      }
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
