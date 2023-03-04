@@ -7,7 +7,7 @@ String apiPrefix = '${systemConfig.apiHost}/public/banners';
 class BannerApi {
   // 取得banner by id
   Future<List> getBannerById({
-    required String positionId,
+    required int positionId,
   }) async {
     try {
       var response = await fetcher(
