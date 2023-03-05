@@ -4,16 +4,16 @@ import '../models/channel.dart';
 
 class LayoutController extends GetxController {
   final String layoutId;
-  final _layout = <Channel>[].obs;
+  var layout = <Channel>[].obs;
   final chnnaleApi = ChannelApi();
 
   LayoutController(this.layoutId);
 
-  List<Channel> get layout => _layout.value;
-
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
-    chnnaleApi.getManyByLayout(int.parse(layoutId));
+    var res = await chnnaleApi.getManyByLayout(int.parse(layoutId));
+
+    layout.value = res;
   }
 }

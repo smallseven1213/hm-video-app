@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared/apis/apk_api.dart';
@@ -16,10 +15,8 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/apk_update.dart';
 import 'package:shared/models/auth.dart';
 import 'package:shared/services/system_config.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../navigator/delegate.dart';
-import 'ad.dart';
 
 class Splash extends StatefulWidget {
   const Splash({
@@ -264,7 +261,7 @@ class _SplashState extends State<Splash> {
         count--;
         if (count == 0) {
           timer.cancel();
-          Get.offNamed(path);
+          MyRouteDelegate.of(context).pushAndRemoveUntil(path);
         }
       });
     }
