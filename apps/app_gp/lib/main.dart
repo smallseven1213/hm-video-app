@@ -1,26 +1,32 @@
 import 'package:app_gp/pages/game/deposit.dart';
 import 'package:app_gp/pages/video.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'pages/home.dart';
 
 void main() {
-  runningMain(const MyApp());
+  usePathUrlStrategy();
+  runningMain(MyApp());
 }
 
+final Map<String, WidgetBuilder> routes = {
+  '/home': (context) => Home(),
+  '/video': (context) => Video(),
+  '/game/deposit': (context) => GameDeposit(),
+};
+
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return RootWidget(
-        widget: GetMaterialApp(initialRoute: '/', enableLog: true, getPages: [
-      GetPage(name: '/', page: () => Home()),
-      GetPage(name: '/video', page: () => Video()),
-      GetPage(name: '/game/deposit', page: () => GameDeposit()),
-    ]));
+      homePath: '/home',
+      routes: routes,
+    );
   }
 }

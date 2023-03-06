@@ -15,13 +15,11 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/services/system_config.dart';
 
 import '../models/index.dart';
+import '../navigator/delegate.dart';
 
 class Splash extends StatefulWidget {
-  final void Function() onNext;
-
   const Splash({
     Key? key,
-    required this.onNext,
   }) : super(key: key);
 
   @override
@@ -245,6 +243,7 @@ class _SplashState extends State<Splash> {
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
     // 停留在閃屏一下，再跳轉
+
     int count = 2;
     Timer.periodic(const Duration(seconds: 1), (timer) {
       count--;
@@ -253,10 +252,12 @@ class _SplashState extends State<Splash> {
         // Get.offNamed(path);
         if (landingBanners.isEmpty) {
           print('沒有廣告，直接進入首頁');
-          Get.offNamed('/home');
+          MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+          // Get.offNamed('/home');
         } else {
           print('有廣告，進入廣告頁');
-          widget.onNext();
+          // widget.onNext();
+          MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
         }
       }
     });
@@ -289,6 +290,25 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: TextButton(
+          child: Text('Next~~'),
+          onPressed: () {
+            print('被push前');
+            MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
+            // Navigator.of(context).push(
+            //   MaterialPageRoute(
+            //     builder: (BuildContext context) {
+            //       return Ad(
+            //         onEnd: widget.onEnd,
+            //       );
+            //     },
+            //   ),
+            // );
+          },
+        ),
+      ),
+    );
   }
 }

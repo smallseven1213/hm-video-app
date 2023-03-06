@@ -1,53 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../navigator/delegate.dart';
+import '../navigator/parser.dart';
 import 'ad.dart';
 import 'splash.dart';
 
-enum Process { splash, ad, start }
+typedef RouteObject = Map<String, WidgetBuilder>;
 
-class RootWidget extends StatefulWidget {
-  final Widget widget;
+class RootWidget extends StatelessWidget {
+  final String homePath;
+  final RouteObject routes;
+  final RouteObject baseRoutes = {
+    '/': (context) => const Splash(),
+    '/ad': (context) => const Ad(),
+  };
 
-  const RootWidget({Key? key, required this.widget}) : super(key: key);
-
-  @override
-  _RootWidgetState createState() => _RootWidgetState();
-}
-
-class _RootWidgetState extends State<RootWidget> {
-  Process process = Process.splash;
-
-  void toNextProcess({Process? nextProcess}) {
-    if (nextProcess != null) {
-      setState(() {
-        process = nextProcess;
-      });
-    } else {
-      if (process == Process.splash) {
-        setState(() {
-          process = Process.ad;
-        });
-      } else if (process == Process.ad) {
-        setState(() {
-          process = Process.start;
-        });
-      }
-    }
-  }
+  RootWidget({Key? key, required this.homePath, required this.routes})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: Scaffold(
-      body: process == Process.splash
-          ? Splash(
-              onNext: toNextProcess,
-            )
-          : process == Process.ad
-              ? Ad(
-                  onNext: toNextProcess,
-                )
-              : widget.widget,
-    ));
+    final delegate = MyRouteDelegate(
+      homePath: homePath,
+      routes: {...baseRoutes, ...routes},
+      // onGenerateRoute: (RouteSettings settings) {
+      //   return MaterialPageRoute(
+      //     settings: settings,
+      //     builder: (BuildContext context) {
+      //       return Splash();
+      //     },
+      //   );
+      // },
+    );
+
+    final parser = MyRouteParser();
+
+    return MaterialApp.router(
+      // routerConfig: router,
+      routerDelegate: delegate,
+      routeInformationParser: parser,
+    );
   }
 }

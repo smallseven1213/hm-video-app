@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/index.dart';
-
+import '../navigator/delegate.dart';
 import '../services/system_config.dart';
 import '../controllers/banner_controller.dart';
 
 final systemConfig = SystemConfig();
 
 class Ad extends StatefulWidget {
-  final void Function() onNext;
   const Ad({
     Key? key,
-    required this.onNext,
   }) : super(key: key);
 
   @override
@@ -36,7 +34,7 @@ class AdState extends State<Ad> {
           body: Center(
             child: TextButton(
               onPressed: () {
-                widget.onNext();
+                MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
               },
               child: Text(
                 bannerController.banners[BannerPosition.landing.index] !=

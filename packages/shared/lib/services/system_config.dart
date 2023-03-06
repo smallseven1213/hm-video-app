@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -20,7 +18,7 @@ class SystemConfig {
   // STT | GP | 51SS | SV
   String project = const String.fromEnvironment('PROJECT', defaultValue: 'STT');
   String agentCode = GetPlatform.isWeb
-      ? window.location.host.split('.')[0]
+      ? '--' // window.location.host.split('.')[0]
       : const String.fromEnvironment('AgentCode',
           defaultValue: '9L1O'); // 格式: 9L1O 之後改 --
   String version = const String.fromEnvironment('VERSION',

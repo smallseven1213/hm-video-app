@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/channel_screen_tab_controller.dart';
+import 'package:shared/controllers/layout_controller.dart';
 
 class TabbarItem {
   final String title;
@@ -13,10 +16,6 @@ class TabbarItem {
 }
 
 class Tabbar extends StatefulWidget {
-  // final List<TabbarItem> items;
-  // final int activeIndex;
-  // final void Function(int index) onChange;
-
   const Tabbar({
     Key? key,
   }) : super(key: key);
@@ -26,27 +25,18 @@ class Tabbar extends StatefulWidget {
 }
 
 class _TabbarState extends State<Tabbar> {
-  // mock tab items
-  final List<TabbarItem> items = [
-    TabbarItem(
-      title: 'Home',
-      icon: Icons.home,
-      activeIcon: Icons.home,
-    ),
-    TabbarItem(
-      title: 'Video',
-      icon: Icons.video_library,
-      activeIcon: Icons.video_library,
-    ),
-    TabbarItem(
-      title: 'Profile',
-      icon: Icons.person,
-      activeIcon: Icons.person,
-    ),
-  ];
+  final ChannelScreenTabController channelScreenTabController =
+      Get.find<ChannelScreenTabController>();
+
+  void handleTapTabItem(int index) {
+    channelScreenTabController.tabIndex.value = index;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final LayoutController layoutController =
+        Get.find<LayoutController>(tag: 'layout1');
+
     return Container(
       height: 60,
       decoration: const BoxDecoration(
@@ -59,34 +49,62 @@ class _TabbarState extends State<Tabbar> {
           ),
         ],
       ),
-      child: Row(
-        children: items
-            .asMap()
-            .map(
-              (index, item) => MapEntry(
-                index,
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      // widget.onChange(index);
-                    },
-                    child: Container(
-                      height: 60,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            item.title,
+      child: Obx(
+        () => Stack(
+          children: [
+            ListView(
+              scrollDirection: Axis.horizontal,
+              children: layoutController.layout
+                  .asMap()
+                  .map(
+                    (index, item) => MapEntry(
+                      index,
+                      GestureDetector(
+                        onTap: () {
+                          handleTapTabItem(index);
+                        },
+                        child: Container(
+                          height: 60,
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Obx(() => Text(
+                                    item.name,
+                                    style: TextStyle(
+                                      color:
+                                          channelScreenTabController.tabIndex ==
+                                                  index
+                                              ? Colors.blue
+                                              : Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                  )),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
+                  )
+                  .values
+                  .toList(),
+            ),
+            Obx(
+              () => Positioned(
+                bottom: 0,
+                left: channelScreenTabController.tabIndex.value * 100.0,
+                child: Container(
+                  width: 100,
+                  height: 5,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(5),
                   ),
                 ),
               ),
-            )
-            .values
-            .toList(),
+            ),
+          ],
+        ),
       ),
     );
   }
