@@ -25,16 +25,7 @@ class _ChannelsState extends State<Channels> {
     });
 
     ever(channelScreenTabController.pageViewIndex, (int page) {
-      print("from tab before: $page");
-      // controller.animateToPage(
-      //   page,
-      //   duration: const Duration(milliseconds: 0),
-      //   curve: Curves.ease,
-      // );
-
-      // change pageview index to page
       controller.jumpToPage(page);
-      print("from tab after: $page");
     });
     super.initState();
   }
