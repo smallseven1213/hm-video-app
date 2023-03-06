@@ -12,12 +12,10 @@ import 'package:shared/apis/auth_api.dart';
 import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/models/apk_update.dart';
-import 'package:shared/models/auth.dart';
 import 'package:shared/services/system_config.dart';
 
+import '../models/index.dart';
 import '../navigator/delegate.dart';
-
 class Splash extends StatefulWidget {
   const Splash({
     Key? key,
@@ -25,6 +23,35 @@ class Splash extends StatefulWidget {
 
   @override
   State<Splash> createState() => _SplashState();
+}
+
+void alertDialog(
+  BuildContext context, {
+  String? title,
+  String? content,
+  List<Widget>? actions,
+}) {
+  showDialog<int>(
+    context: context,
+    barrierDismissible: false,
+    builder: (_ctx) => AlertDialog(
+      title: Text(content ?? ''),
+      content: Text(content ?? ''),
+      actions: actions ??
+          <Widget>[
+            TextButton(
+              style: TextButton.styleFrom(
+                textStyle: Theme.of(context).textTheme.labelLarge,
+              ),
+              child: const Text('確認'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                return;
+              },
+            ),
+          ],
+    ),
+  );
 }
 
 class _SplashState extends State<Splash> {
@@ -39,17 +66,8 @@ class _SplashState extends State<Splash> {
   getInvitationCode() async {
     String invitationCode = '';
     // web from url ?code=xxx
-
-    print('Uri!!!!!: ${Uri.base}');
-
-    print('code!!!!!: ${Uri.base.queryParameters['code']}');
-
     if (GetPlatform.isWeb) {
       String url = Uri.base.toString();
-      print('Uri!!!!!: ${Uri.base}');
-
-      print('code!!!!!: ${Uri.base.queryParameters['code']}');
-
       Uri.base.queryParameters['code'] ?? '';
       final regExp = RegExp(r'code=([^&]+)');
       final code = regExp.firstMatch(url)?.group(1) ?? '';
@@ -107,22 +125,9 @@ class _SplashState extends State<Splash> {
   checkIsMaintenance() async {
     print('step4: 檢查是否維護中');
     if (systemConfig.isMaintenance) {
-      showDialog<int>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_ctx) => AlertDialog(
-          title: const Text('Basic dialog title'),
-          content: const Text('維護中'),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(
-                textStyle: Theme.of(context).textTheme.labelLarge,
-              ),
-              child: const Text('確認'),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
+      alertDialog(
+        context,
+        content: '維護中',
       );
     }
     return systemConfig.isMaintenance;
@@ -138,35 +143,30 @@ class _SplashState extends State<Splash> {
     );
     print('apkUpdate: ${apkUpdate.status}');
     if (apkUpdate.status == ApkStatus.forceUpdate) {
-      // use showDialog
-      showDialog<int>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_ctx) => AlertDialog(
-          title: const Text('Basic dialog title'),
-          content: const Text('請更新至最新版本'),
-          actions: <Widget>[
+      setState(() {
+        alertDialog(
+          context,
+          content: '請更新至最新版本',
+          actions: [
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('確認'),
               onPressed: () {
-                // widget.onNext();
                 Navigator.of(context).pop();
                 userLogin();
               },
             ),
           ],
-        ),
-      );
+        );
+      });
     } else if (apkUpdate.status == ApkStatus.suggestUpdate) {
-      showDialog<int>(
-        context: context,
-        barrierDismissible: false,
-        builder: (_ctx) => AlertDialog(
-          title: Text('已有新版本'),
-          content: const Text('已發布新版本，為了更流暢的觀影體驗，請更新版本'),
+      setState(() {
+        alertDialog(
+          context,
+          title: '已有新版本',
+          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本',
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
@@ -188,8 +188,8 @@ class _SplashState extends State<Splash> {
               },
             ),
           ],
-        ),
-      );
+        );
+      });
     }
     return enterable;
   }
@@ -210,31 +210,18 @@ class _SplashState extends State<Splash> {
       final res = await authApi.guestLogin(
         invitationCode: invitationCode,
       );
-      print('res.status ${res.status}');
-      if (res.status == ResponseStatus.success) {
+      print('res.status ${res.code}');
+      if (res.code == '00') {
         fetchInitialDataAndNavigate();
       } else {
-        showDialog<int>(
-          context: context,
-          barrierDismissible: false,
-          builder: (_ctx) => AlertDialog(
-            title: Text('失敗'),
-            content: const Text('帳號建立失敗，裝置停用'),
-            actions: <Widget>[
-              TextButton(
-                style: TextButton.styleFrom(
-                  textStyle: Theme.of(context).textTheme.labelLarge,
-                ),
-                child: const Text('確認'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          ),
-        );
+        setState(() {
+          alertDialog(
+            context,
+            title: '失敗',
+            content: res.message,
+          );
+        });
       }
-      // TODO: 被封號的話，顯示帳號建立失敗，裝置停用
     }
   }
 
@@ -252,30 +239,33 @@ class _SplashState extends State<Splash> {
     userApi.writeUserLoginRecord();
     getNavBar();
     print('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
-    List landingBanners = await bannerController.fetchBanner();
-
+    List landingBanners =
+        await bannerController.fetchBanner(BannerPosition.landing);
     // 停留在閃屏一下，再跳轉
-    countdownRedirect(String path) {
-      int count = 2;
-      Timer.periodic(const Duration(seconds: 1), (timer) {
-        count--;
-        if (count == 0) {
-          timer.cancel();
+          
+    int count = 2;
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      count--;
+      if (count == 0) {
+        timer.cancel();
+        // Get.offNamed(path);
+        if (landingBanners.isEmpty) {
+          print('沒有廣告，直接進入首頁');
           MyRouteDelegate.of(context).pushAndRemoveUntil(path);
+          // Get.offNamed('/home');
+        } else {
+          print('有廣告，進入廣告頁');
+          // widget.onNext();
+          MyRouteDelegate.of(context).pushAndRemoveUntil('/ad'');
         }
-      });
-    }
-
-    if (landingBanners.isEmpty) {
-      countdownRedirect('/home');
-    } else {
-      countdownRedirect('/ad');
-    }
+      }
+    });
   }
 
   @override
   void initState() {
     Future.microtask(() async {
+      WidgetsFlutterBinding.ensureInitialized();
       loadEnvConfig();
       initialIndexedDB();
       final dlJson = await fetchDlJson();
@@ -285,7 +275,7 @@ class _SplashState extends State<Splash> {
       bool enterable = await checkApkUpdate();
       print('enterable: $enterable');
       if (enterable) {
-        await userLogin();
+        userLogin();
       }
     });
 

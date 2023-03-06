@@ -5,14 +5,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 import 'package:uuid/uuid.dart';
-
-import '../models/auth.dart';
+import '../models/index.dart';
 
 final systemConfig = SystemConfig();
 
 class AuthApi {
   // 訪客登入
-  Future<HttpResult> guestLogin({
+  Future<HMApiResponse> guestLogin({
     String? invitationCode,
   }) async {
     String registerDeviceGuid = const Uuid().v4();
@@ -49,21 +48,20 @@ class AuthApi {
         },
       );
       var res = (response.data as Map<String, dynamic>);
-
       if (res['code'] != '00') {
-        HttpResult(
-          status: ResponseStatus.failed,
+        return HMApiResponse(
+          code: res['code'],
           message: res['code'] == '51633' ? '帳號建立失敗，裝置停用。' : '帳號建立失敗。',
         );
       }
       systemConfig.setToken(res['data']['token']);
-      return HttpResult(
-        status: ResponseStatus.success,
+      return HMApiResponse(
+        code: res['code'],
         message: '帳號建立成功。',
       );
     } catch (err) {
-      return HttpResult(
-        status: ResponseStatus.failed,
+      return HMApiResponse(
+        code: '01',
         message: '帳號建立失敗。',
       );
     }
