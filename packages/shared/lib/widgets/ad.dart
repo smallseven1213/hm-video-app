@@ -8,8 +8,6 @@ import '../controllers/banner_controller.dart';
 final systemConfig = SystemConfig();
 
 class Ad extends StatefulWidget {
-  final void Function() onNext;
-
   const Ad({
     Key? key,
   }) : super(key: key);
@@ -50,6 +48,5 @@ class AdState extends State<Ad> {
             ),
           ),
         ));
-              
   }
 }

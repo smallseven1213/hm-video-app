@@ -16,6 +16,7 @@ import 'package:shared/services/system_config.dart';
 
 import '../models/index.dart';
 import '../navigator/delegate.dart';
+
 class Splash extends StatefulWidget {
   const Splash({
     Key? key,
@@ -242,7 +243,7 @@ class _SplashState extends State<Splash> {
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
     // 停留在閃屏一下，再跳轉
-          
+
     int count = 2;
     Timer.periodic(const Duration(seconds: 1), (timer) {
       count--;
@@ -251,12 +252,12 @@ class _SplashState extends State<Splash> {
         // Get.offNamed(path);
         if (landingBanners.isEmpty) {
           print('沒有廣告，直接進入首頁');
-          MyRouteDelegate.of(context).pushAndRemoveUntil(path);
+          MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
           // Get.offNamed('/home');
         } else {
           print('有廣告，進入廣告頁');
           // widget.onNext();
-          MyRouteDelegate.of(context).pushAndRemoveUntil('/ad'');
+          MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
         }
       }
     });
