@@ -12,6 +12,7 @@ class Channels extends StatefulWidget {
 }
 
 class _ChannelsState extends State<Channels> {
+  int activePageIndex = 0;
   final PageController controller = PageController();
   final layoutController = Get.find<LayoutController>(tag: 'layout1');
 
@@ -20,13 +21,10 @@ class _ChannelsState extends State<Channels> {
 
   @override
   void initState() {
-    controller.addListener(() {
-      channelScreenTabController.pageViewIndex.value = controller.page!.toInt();
-    });
-
     ever(channelScreenTabController.pageViewIndex, (int page) {
       controller.jumpToPage(page);
     });
+
     super.initState();
   }
 
@@ -42,6 +40,8 @@ class _ChannelsState extends State<Channels> {
     return Obx(
       () => PageView(
         controller: controller,
+        onPageChanged: (value) =>
+            channelScreenTabController.tabIndex.value = value,
         allowImplicitScrolling: true,
         children: layoutController.layout
             .asMap()
