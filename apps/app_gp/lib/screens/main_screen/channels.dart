@@ -49,7 +49,7 @@ class _ChannelsState extends State<Channels> {
               (index, item) => MapEntry(
                 index,
                 MainChannelScreen(
-                  channelId: item.id.toString(),
+                  channelId: item.id,
                 ),
               ),
             )

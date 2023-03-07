@@ -11,6 +11,7 @@ class ChannelDataController extends GetxController {
 
   void mutateByChannelId(int channelId) async {
     var res = await VodApi().getBlockVodsByChannelAds(channelId);
+    print('resres $res');
     channelData[channelId] = res;
   }
 }

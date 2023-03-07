@@ -37,7 +37,6 @@ class RootWidget extends StatelessWidget {
     final parser = MyRouteParser();
 
     return MaterialApp.router(
-      // routerConfig: router,
       routerDelegate: delegate,
       routeInformationParser: parser,
     );
