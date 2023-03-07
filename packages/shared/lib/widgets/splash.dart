@@ -62,6 +62,7 @@ class _SplashState extends State<Splash> {
   UserApi userApi = UserApi();
   AuthApi authApi = AuthApi();
   BannerController bannerController = Get.put(BannerController());
+  Timer? timer;
 
   // 取得invitationCode
   getInvitationCode() async {
@@ -245,10 +246,10 @@ class _SplashState extends State<Splash> {
     // 停留在閃屏一下，再跳轉
 
     int count = 2;
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 1), (_timer) {
       count--;
       if (count == 0) {
-        timer.cancel();
+        _timer.cancel();
         // Get.offNamed(path);
         if (landingBanners.isEmpty) {
           print('沒有廣告，直接進入首頁');
@@ -285,6 +286,7 @@ class _SplashState extends State<Splash> {
 
   @override
   void dispose() {
+    timer?.cancel();
     super.dispose();
   }
 
