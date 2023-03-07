@@ -145,7 +145,7 @@ class _SplashState extends State<Splash> {
     );
     print('apkUpdate: ${apkUpdate.status}');
     if (apkUpdate.status == ApkStatus.forceUpdate) {
-      setState(() {
+      if (mounted) {
         alertDialog(
           context,
           content: '請更新至最新版本',
@@ -162,9 +162,9 @@ class _SplashState extends State<Splash> {
             ),
           ],
         );
-      });
+      }
     } else if (apkUpdate.status == ApkStatus.suggestUpdate) {
-      setState(() {
+      if (mounted) {
         alertDialog(
           context,
           title: '已有新版本',
@@ -191,7 +191,7 @@ class _SplashState extends State<Splash> {
             ),
           ],
         );
-      });
+      }
     }
     return enterable;
   }
@@ -216,13 +216,13 @@ class _SplashState extends State<Splash> {
       if (res.code == '00') {
         fetchInitialDataAndNavigate();
       } else {
-        setState(() {
+        if (mounted) {
           alertDialog(
             context,
             title: '失敗',
             content: res.message,
           );
-        });
+        }
       }
     }
   }
