@@ -27,16 +27,15 @@ class Tabbar extends StatefulWidget {
 class _TabbarState extends State<Tabbar> {
   final ChannelScreenTabController channelScreenTabController =
       Get.find<ChannelScreenTabController>();
+  final LayoutController layoutController =
+      Get.find<LayoutController>(tag: 'layout1');
 
   void handleTapTabItem(int index) {
-    channelScreenTabController.tabIndex.value = index;
+    channelScreenTabController.pageViewIndex.value = index;
   }
 
   @override
   Widget build(BuildContext context) {
-    final LayoutController layoutController =
-        Get.find<LayoutController>(tag: 'layout1');
-
     return Container(
       height: 60,
       decoration: const BoxDecoration(
@@ -72,11 +71,11 @@ class _TabbarState extends State<Tabbar> {
                               Obx(() => Text(
                                     item.name,
                                     style: TextStyle(
-                                      color:
-                                          channelScreenTabController.tabIndex ==
-                                                  index
-                                              ? Colors.blue
-                                              : Colors.black,
+                                      color: channelScreenTabController
+                                                  .tabIndex.value ==
+                                              index
+                                          ? Colors.blue
+                                          : Colors.black,
                                       fontSize: 16,
                                     ),
                                   )),

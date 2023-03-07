@@ -5,12 +5,17 @@ import '../models/block_vod.dart';
 import '../models/short_video_detail.dart';
 import '../models/video.dart';
 import '../models/vod.dart';
+import '../services/system_config.dart';
 import '../utils/fetcher.dart';
+
+final systemConfig = SystemConfig();
 
 class VodApi {
   Future<String> purchase(int videoId) async {
     var res = await fetcher(
-        url: '/video/purchase', method: 'POST', body: {'videoId': videoId});
+        url: '${systemConfig.apiHost}/public/videos/video/purchase',
+        method: 'POST',
+        body: {'videoId': videoId});
     if (res.data['code'] != '00') {
       return '';
     }
@@ -66,7 +71,9 @@ class VodApi {
   }
 
   Future<List<Vod>> searchMany(String keyword) async {
-    var res = await fetcher(url: '/video/search?keyword=$keyword');
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/search?keyword=$keyword');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -75,7 +82,9 @@ class VodApi {
   }
 
   Future<BlockVod> getManyByChannel(int blockId, {int? offset = 1}) async {
-    var res = await fetcher(url: '/video/index?areaId=$blockId&offset=$offset');
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/index?areaId=$blockId&offset=$offset');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -93,7 +102,9 @@ class VodApi {
   }
 
   Future<List<Block>> getManyByChannel2(int blockId, {int? offset = 1}) async {
-    var res = await fetcher(url: '/video/index?areaId=$blockId&offset=$offset');
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/index?areaId=$blockId&offset=$offset');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -112,7 +123,8 @@ class VodApi {
     int limit = 100,
   }) async {
     var res = await fetcher(
-        url: '/video/moreVideo?page=$page&limit=$limit&areaId=$areaId');
+        url:
+            '${systemConfig.apiHost}/public/videos/video/moreVideo?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -130,7 +142,8 @@ class VodApi {
   }
 
   Future<Vod> getVodUrl(int vodId) async {
-    var res = await fetcher(url: '/video/videoUrl?id=$vodId');
+    var res = await fetcher(
+        url: '${systemConfig.apiHost}/public/videos/video/videoUrl?id=$vodId');
     if (res.data['code'] != '00') {
       return Vod(0, '');
     }
@@ -142,7 +155,9 @@ class VodApi {
   }
 
   Future<Vod> refreshVodUrl(Vod vod) async {
-    var res = await fetcher(url: '/video/videoUrl?id=${vod.id}');
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/videoUrl?id=${vod.id}');
     if (res.data['code'] != '00') {
       return Vod(0, '');
     }
@@ -168,7 +183,9 @@ class VodApi {
   // });
 
   Future<Vod> getVodDetail(Vod vod) async {
-    var res = await fetcher(url: '/video/videoDetail?id=${vod.id}');
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=${vod.id}');
     if (res.data['code'] != '00') {
       return vod;
     }
@@ -180,7 +197,8 @@ class VodApi {
   }
 
   Future<List<Video>> getFollows() async {
-    var res = await fetcher(url: '/video/shortVideo/follow');
+    var res = await fetcher(
+        url: '${systemConfig.apiHost}/public/videos/video/shortVideo/follow');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -189,7 +207,8 @@ class VodApi {
   }
 
   Future<List<Video>> getRecommends() async {
-    var res = await fetcher(url: '/video/recommend');
+    var res = await fetcher(
+        url: '${systemConfig.apiHost}/public/videos/video/recommend');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -198,7 +217,8 @@ class VodApi {
   }
 
   Future<List<Video>> getPopular() async {
-    var res = await fetcher(url: '/video/shortVideo/popular');
+    var res = await fetcher(
+        url: '${systemConfig.apiHost}/public/videos/video/shortVideo/popular');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -207,7 +227,9 @@ class VodApi {
   }
 
   Future<ShortVideoDetail> getShortVideoDetailById(int id) async {
-    var res = await fetcher(url: '/video/shortVideoDetail?id=$id');
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideoDetail?id=$id');
     if (res.data['code'] != '00') {
       return ShortVideoDetail.fromJson({});
     }
@@ -215,7 +237,9 @@ class VodApi {
   }
 
   Future<Video> getById(int videoId) async {
-    var res = await fetcher(url: '/video/shortVideoDetail?id=$videoId');
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideoDetail?id=$videoId');
 
     try {
       return Video.fromJson(res.data['data']);
@@ -243,7 +267,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '/video/index?offset=$offset&channelId=$channelId&deviceId=$deviceId');
+            '${systemConfig.apiHost}/public/videos/video/index?offset=$offset&channelId=$channelId&deviceId=$deviceId');
 
     try {
       return List.from(
@@ -272,7 +296,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '/video/index/channelAreaBanner?offset=$offset&channelId=$channelId&deviceId=$deviceId');
+            '${systemConfig.apiHost}/public/videos/video/index/channelAreaBanner?offset=$offset&channelId=$channelId&deviceId=$deviceId');
     try {
       return List.from((res.data['videoIntegrateAds'] as List<dynamic>)
           .map((e) => Block.fromJson(e)));

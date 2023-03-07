@@ -6,7 +6,11 @@ import 'package:get/get.dart';
 import '../apis/vod_api.dart';
 import '../models/block.dart';
 
-class ChannelScreenTabController extends GetxController {
-  var tabIndex = 0.obs;
-  var pageViewIndex = 0.obs;
+class ChannelDataController extends GetxController {
+  var channelData = <int, List<Block>>{}.obs;
+
+  void mutateByChannelId(int channelId) async {
+    var res = await VodApi().getBlockVodsByChannelAds(channelId);
+    channelData[channelId] = res;
+  }
 }
