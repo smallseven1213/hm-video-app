@@ -5,6 +5,7 @@ class MyRouteParser extends RouteInformationParser<String> {
   @override
   Future<String> parseRouteInformation(RouteInformation routeInformation) {
     print("routeInformation ${routeInformation.location}");
+
     return SynchronousFuture('/');
   }
 

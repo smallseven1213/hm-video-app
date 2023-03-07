@@ -298,7 +298,7 @@ class VodApi {
         url:
             '${systemConfig.apiHost}/public/videos/video/index/channelAreaBanner?offset=$offset&channelId=$channelId&deviceId=$deviceId');
     try {
-      return List.from((res.data['videoIntegrateAds'] as List<dynamic>)
+      return List.from((res.data['data']['videoIntegrateAds'] as List<dynamic>)
           .map((e) => Block.fromJson(e)));
     } catch (e) {
       return [];
