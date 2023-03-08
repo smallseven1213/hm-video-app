@@ -1,5 +1,3 @@
-// MainChannelScreen, is a screen that shows the channel list and the channel details
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
@@ -20,9 +18,6 @@ class MainChannelScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Channel - $channelId'),
       ),
-      // body print all of channelDataController.channelData[channelId] data json format
-      // change channelId to int, code is
-      // channelDataController.channelData[channelId] to ListView and Text is name
       body: Obx(
         () => ListView.builder(
           itemCount: channelDataController.channelData[channelId]?.length,
