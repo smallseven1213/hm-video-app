@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/widgets/sid_image.dart';
 import '../navigator/delegate.dart';
 import '../services/system_config.dart';
 import '../controllers/banner_controller.dart';
@@ -20,11 +21,6 @@ class AdState extends State<Ad> {
   BannerController bannerController = Get.put(BannerController());
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // 紀錄入站次數，用來取得對應的廣告圖片
     final entryCount = systemConfig.box.read('entry-count') ?? 0;
@@ -36,15 +32,11 @@ class AdState extends State<Ad> {
               onPressed: () {
                 MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
               },
-              child: Text(
-                bannerController.banners[BannerPosition.landing.index] !=
-                            null &&
-                        bannerController.banners.isNotEmpty
-                    ? bannerController.banners[BannerPosition.landing.index]
-                            [entryCount % bannerController.banners.length]
-                        .toString()
-                    : 'default splash image',
-              ),
+              child: SidImage(
+                  sid: bannerController.banners[BannerPosition.landing.index]
+                          [entryCount % bannerController.banners.length]
+                          ['photoSid']
+                      .toString()),
             ),
           ),
         ));
