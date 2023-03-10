@@ -24,3 +24,4 @@ export 'video.dart';
 export 'videos_tag.dart';
 export 'vod.dart';
 export 'wallet_item.dart';
+export 'notices.dart';

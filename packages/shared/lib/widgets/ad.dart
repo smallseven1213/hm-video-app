@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/index.dart';
@@ -18,13 +20,37 @@ class Ad extends StatefulWidget {
 }
 
 class AdState extends State<Ad> {
-  BannerController bannerController = Get.put(BannerController());
+  BannerController bannerController = Get.find<BannerController>();
+  int countdownSeconds = 5;
+
+  @override
+  void initState() {
+    super.initState();
+    print('AdState initState');
+
+    // 倒數五秒
+    Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        countdownSeconds--;
+      });
+      if (countdownSeconds == 0) {
+        MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+        timer.cancel();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // 紀錄入站次數，用來取得對應的廣告圖片
     final entryCount = systemConfig.box.read('entry-count') ?? 0;
     systemConfig.box.write('entry-count', entryCount + 1); // 紀錄入站次數
+    print(bannerController.banners[BannerPosition.landing.index]);
 
     return Obx(() => Scaffold(
           body: Center(
