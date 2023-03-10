@@ -1,6 +1,8 @@
+import 'package:app_gp/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
+import 'package:shared/models/color_keys.dart';
 
 import '../../pages/video.dart';
 
@@ -15,46 +17,28 @@ class MainChannelScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Channel - $channelId'),
-      ),
+      backgroundColor: AppColors.colors[ColorKeys.background],
       body: Obx(
         () => ListView.builder(
           itemCount: channelDataController.channelData[channelId]?.length,
           itemBuilder: (context, index) {
             return Container(
               height: 100,
+              color: AppColors.colors[ColorKeys.background],
               child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Video()),
-                  );
-                },
-                child: Text(
-                    channelDataController.channelData[channelId]![index].name),
-              ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Video()),
+                    );
+                  },
+                  // child: Text(
+                  //     channelDataController.channelData[channelId]![index].name),
+                  child: Text('Video')),
             );
           },
         ),
       ),
-      // body: ListView.builder(
-      //   itemCount: 1000,
-      //   itemBuilder: (context, index) {
-      //     return Container(
-      //       height: 100,
-      //       child: TextButton(
-      //         onPressed: () {
-      //           Navigator.push(
-      //             context,
-      //             MaterialPageRoute(builder: (context) => const Video()),
-      //           );
-      //         },
-      //         child: Text('Video $index'),
-      //       ),
-      //     );
-      //   },
-      // ),
     );
   }
 }

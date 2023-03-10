@@ -6,8 +6,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 
-import 'main_screen/channel.dart';
-import 'main_screen/tab_bar.dart';
+import 'tab_bar.dart';
 
 class HomeMainScreen extends StatefulWidget {
   HomeMainScreen({Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(200),
+          preferredSize: const Size.fromHeight(120),
           child: Column(
             children: [
               Expanded(

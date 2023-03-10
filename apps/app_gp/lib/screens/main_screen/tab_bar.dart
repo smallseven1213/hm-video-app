@@ -1,19 +1,12 @@
+import 'package:app_gp/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
+import 'package:shared/models/color_keys.dart';
 
-class TabbarItem {
-  final String title;
-  final IconData icon;
-  final IconData activeIcon;
-
-  const TabbarItem({
-    required this.title,
-    required this.icon,
-    required this.activeIcon,
-  });
-}
+var logger = Logger();
 
 class Tabbar extends StatefulWidget {
   const Tabbar({
@@ -24,11 +17,52 @@ class Tabbar extends StatefulWidget {
   _TabbarState createState() => _TabbarState();
 }
 
-class _TabbarState extends State<Tabbar> {
+class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
   final ChannelScreenTabController channelScreenTabController =
       Get.find<ChannelScreenTabController>();
   final LayoutController layoutController =
       Get.find<LayoutController>(tag: 'layout1');
+  late TabController tabController;
+  List<Tab> tabItems = <Tab>[];
+
+  @override
+  void initState() {
+    super.initState();
+
+    ever(layoutController.layout, (channels) {
+      setState(() {
+        tabItems = channels
+            .map((e) => Tab(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Text(
+                      e.name,
+                      style: TextStyle(
+                          color: AppColors.colors[ColorKeys.textPrimary],
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ))
+            .toList();
+      });
+    });
+
+    ever(
+        channelScreenTabController.tabIndex,
+        (callback) => {
+              if (tabController.index != callback)
+                {
+                  tabController.animateTo(callback),
+                }
+            });
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
+  }
 
   void handleTapTabItem(int index) {
     channelScreenTabController.pageViewIndex.value = index;
@@ -36,75 +70,21 @@ class _TabbarState extends State<Tabbar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 60,
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5,
-            offset: Offset(0, -1),
-          ),
-        ],
-      ),
-      child: Obx(
-        () => Stack(
-          children: [
-            ListView(
-              scrollDirection: Axis.horizontal,
-              children: layoutController.layout
-                  .asMap()
-                  .map(
-                    (index, item) => MapEntry(
-                      index,
-                      GestureDetector(
-                        onTap: () {
-                          handleTapTabItem(index);
-                        },
-                        child: Container(
-                          height: 60,
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Obx(() => Text(
-                                    item.name,
-                                    style: TextStyle(
-                                      color: channelScreenTabController
-                                                  .tabIndex.value ==
-                                              index
-                                          ? Colors.blue
-                                          : Colors.black,
-                                      fontSize: 16,
-                                    ),
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                  .values
-                  .toList(),
-            ),
-            Obx(
-              () => Positioned(
-                bottom: 0,
-                left: channelScreenTabController.tabIndex.value * 100.0,
-                child: Container(
-                  width: 100,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+    tabController = TabController(
+      length: tabItems.length,
+      vsync: this,
+    );
+    if (tabItems.isEmpty) {
+      return Container();
+    }
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(20),
+      child: TabBar(
+          isScrollable: true,
+          controller: tabController,
+          indicatorPadding: const EdgeInsets.only(bottom: 4),
+          onTap: handleTapTabItem,
+          tabs: tabItems),
     );
   }
 }
