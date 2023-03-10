@@ -20,9 +20,8 @@ class Ad extends StatefulWidget {
   State<Ad> createState() => AdState();
 }
 
-class AdState extends State<Ad> with SingleTickerProviderStateMixin {
+class AdState extends State<Ad> {
   BannerController bannerController = Get.find<BannerController>();
-  late AnimationController _animation;
   late BannerPhoto currentBanner;
 
   int countdownSeconds = 5;
@@ -30,11 +29,6 @@ class AdState extends State<Ad> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     print('AdState initState');
-
-    _animation =
-        AnimationController(vsync: this, duration: const Duration(seconds: 1));
-    _animation.addListener(() => setState(() {}));
-    _animation.repeat();
 
     // 紀錄入站次數，用來取得對應的廣告圖片
     final entryCount = systemConfig.box.read('entry-count') ?? 0;
@@ -48,9 +42,9 @@ class AdState extends State<Ad> with SingleTickerProviderStateMixin {
     // 倒數五秒
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
-        if (currentBanner.isAutoClose == true) {
-          MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
-        }
+        // if (currentBanner.isAutoClose == true) {
+        //   MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+        // }
         timer.cancel();
       } else {
         setState(() {
@@ -70,8 +64,8 @@ class AdState extends State<Ad> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return SizedBox(
-      width: size.width,
-      height: size.height,
+      width: double.infinity,
+      height: double.infinity,
       child: Stack(
         children: [
           Positioned.fill(
@@ -117,4 +111,3 @@ class AdState extends State<Ad> with SingleTickerProviderStateMixin {
     );
   }
 }
-

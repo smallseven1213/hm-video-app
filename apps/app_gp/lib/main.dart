@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
     return RootWidget(
       homePath: '/home',
       routes: routes,
+      splashImage: 'assets/images/splash.png',
     );
   }
 }

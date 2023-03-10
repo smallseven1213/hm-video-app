@@ -13,13 +13,17 @@ import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/services/system_config.dart';
+import 'package:shared/widgets/loading.dart';
 
 import '../models/index.dart';
 import '../navigator/delegate.dart';
 
 class Splash extends StatefulWidget {
+  final String backgroundAssetPath;
+
   const Splash({
     Key? key,
+    required this.backgroundAssetPath,
   }) : super(key: key);
 
   @override
@@ -290,24 +294,21 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: TextButton(
-          child: Text('Next~~'),
-          onPressed: () {
-            print('被push前');
-            MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (BuildContext context) {
-            //       return Ad(
-            //         onEnd: widget.onEnd,
-            //       );
-            //     },
-            //   ),
-            // );
-          },
-        ),
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: Stack(
+        children: [
+          Image.asset(
+            widget.backgroundAssetPath,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          const Center(
+            child: Loading(),
+          ),
+        ],
       ),
     );
   }

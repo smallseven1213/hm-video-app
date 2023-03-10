@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/notice_api.dart';
 import 'package:shared/models/index.dart';
-import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+// import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 
 String str = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -86,12 +86,14 @@ void alertDialog(
                     height: 150,
                     child: SingleChildScrollView(
                       physics: const ClampingScrollPhysics(),
-                      child: HtmlWidget(
-                        notice.content ?? '',
-                        textStyle: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
+                      child: Text(notice.content ?? ''),
+
+                      // HtmlWidget(
+                      //   notice.content ?? '',
+                      //   textStyle: TextStyle(
+                      //     color: Colors.white,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),
