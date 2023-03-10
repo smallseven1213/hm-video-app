@@ -1,3 +1,4 @@
+import 'package:shared/models/banner.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 
@@ -6,7 +7,7 @@ String apiPrefix = '${systemConfig.apiHost}/public/banners';
 
 class BannerApi {
   // 取得banner by id
-  Future<List> getBannerById({
+  Future<List<BannerPhoto>> getBannerById({
     required int positionId,
   }) async {
     try {
@@ -16,8 +17,13 @@ class BannerApi {
       if (res['code'] != '00') {
         return [];
       }
-      print('getBannerById: ${res['data']}');
-      return res['data'];
+
+      var result = (res['data'] as List<dynamic>)
+          .map((e) => BannerPhoto.fromJson(e as Map<String, dynamic>))
+          .toList();
+
+      print('getBannerById: $result');
+      return result;
     } catch (err) {
       print('getBannerById error: $err');
       return [];
