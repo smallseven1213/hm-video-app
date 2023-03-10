@@ -4,7 +4,9 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared/utils/setupDependencies.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
-Future<void> runningMain(Widget widget) async {
+import '../models/color_keys.dart';
+
+Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   // start app
   await SentryFlutter.init(
     (options) {
@@ -20,6 +22,8 @@ Future<void> runningMain(Widget widget) async {
       setupDependencies();
 
       // DI app_gp package
+
+      // set SystemConfig appColors
 
       // Running Main
       runApp(widget);
