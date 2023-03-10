@@ -138,7 +138,6 @@ class _SplashState extends State<Splash> {
   // Step5: 檢查是否有更新
   checkApkUpdate() async {
     print('step5: 檢查是否有更新');
-    bool enterable = false;
     final apkUpdate = await apkApi.checkVersion(
       version: systemConfig.version,
       agentCode: systemConfig.agentCode,
@@ -193,7 +192,7 @@ class _SplashState extends State<Splash> {
         );
       }
     }
-    return enterable;
+    return apkUpdate.status == ApkStatus.noUpdate;
   }
 
   // Step6: 檢查是否登入 - key: 'auth-token'
@@ -275,7 +274,6 @@ class _SplashState extends State<Splash> {
       if (dlJson == null || isMaintenance) return;
       // ---- init end ----
       bool enterable = await checkApkUpdate();
-      print('enterable: $enterable');
       if (enterable) {
         userLogin();
       }
