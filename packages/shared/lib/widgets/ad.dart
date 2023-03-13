@@ -26,6 +26,7 @@ class AdState extends State<Ad> {
 
   int countdownSeconds = 5;
   bool imageLoaded = false;
+  late Timer? _timer;
 
   @override
   void initState() {
@@ -45,7 +46,7 @@ class AdState extends State<Ad> {
 
   startTimer() {
     // 倒數五秒
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
         // if (currentBanner.isAutoClose == true) {
         //   MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
@@ -62,6 +63,7 @@ class AdState extends State<Ad> {
   @override
   void dispose() {
     super.dispose();
+    _timer?.cancel();
   }
 
   @override

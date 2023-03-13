@@ -8,16 +8,17 @@ import 'package:shared/models/color_keys.dart';
 
 var logger = Logger();
 
-class Tabbar extends StatefulWidget {
-  const Tabbar({
+class LayoutTabBar extends StatefulWidget {
+  const LayoutTabBar({
     Key? key,
   }) : super(key: key);
 
   @override
-  _TabbarState createState() => _TabbarState();
+  LayoutTabBarState createState() => LayoutTabBarState();
 }
 
-class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
+class LayoutTabBarState extends State<LayoutTabBar>
+    with TickerProviderStateMixin {
   final ChannelScreenTabController channelScreenTabController =
       Get.find<ChannelScreenTabController>();
   final LayoutController layoutController =
@@ -32,18 +33,30 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
     ever(layoutController.layout, (channels) {
       setState(() {
         tabItems = channels
-            .map((e) => Tab(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
+            .map((e) => Tab(child: Builder(
+                  builder: (BuildContext context) {
+                    final bool isCurrentTab =
+                        tabController.index == channels.indexOf(e);
+                    return Text(
                       e.name,
                       style: TextStyle(
-                          color: AppColors.colors[ColorKeys.textPrimary],
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ))
+                          fontWeight: FontWeight.bold,
+                          color: isCurrentTab
+                              ? AppColors.colors[ColorKeys.primary]
+                              : const Color(0xffCFCECE),
+                          shadows: isCurrentTab
+                              ? [
+                                  Shadow(
+                                    color: AppColors.colors[ColorKeys.primary]!
+                                        .withOpacity(0.5),
+                                    offset: const Offset(0, 0),
+                                    blurRadius: 5,
+                                  ),
+                                ]
+                              : null),
+                    );
+                  },
+                )))
             .toList();
       });
     });
@@ -77,12 +90,21 @@ class _TabbarState extends State<Tabbar> with TickerProviderStateMixin {
     if (tabItems.isEmpty) {
       return Container();
     }
-    return PreferredSize(
-      preferredSize: const Size.fromHeight(20),
+    return Container(
+      height: 60,
+      width: double.infinity,
+      color: AppColors.colors[ColorKeys.background],
       child: TabBar(
           isScrollable: true,
           controller: tabController,
           indicatorPadding: const EdgeInsets.only(bottom: 4),
+          indicatorWeight: 5,
+          indicatorColor: AppColors.colors[ColorKeys.primary],
+          indicator: UnderlineTabIndicator(
+              borderRadius: const BorderRadius.horizontal(
+                  left: Radius.circular(10), right: Radius.circular(10)),
+              borderSide: BorderSide(
+                  width: 5.0, color: AppColors.colors[ColorKeys.primary]!)),
           onTap: handleTapTabItem,
           tabs: tabItems),
     );

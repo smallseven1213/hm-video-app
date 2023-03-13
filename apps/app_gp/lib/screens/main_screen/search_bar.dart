@@ -10,15 +10,56 @@ class SearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 40,
-      margin: const EdgeInsets.symmetric(horizontal: 20),
-      decoration: BoxDecoration(
-        color: AppColors.colors[ColorKeys.background],
-        borderRadius: BorderRadius.circular(20),
-      ),
+    return SizedBox(
+      height: 60,
+      width: double.infinity,
       child: Row(
-        children: [],
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          // button
+          Container(
+            width: 60,
+            height: 60,
+            color: AppColors.colors[ColorKeys.background],
+            child: const Icon(
+              Icons.search,
+              color: Colors.white,
+            ),
+          ),
+          // input
+          Expanded(
+            child: Container(
+              height: 60,
+              padding: const EdgeInsets.only(left: 10),
+              alignment: Alignment.center,
+              color: AppColors.colors[ColorKeys.background],
+              child: const TextField(
+                textAlignVertical: TextAlignVertical.center,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    borderSide: BorderSide(
+                      color: Colors.white,
+                      width: 2,
+                    ),
+                  ),
+                  hintText: 'Search',
+                  hintStyle: TextStyle(color: Colors.grey),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: 60,
+            height: 60,
+            color: AppColors.colors[ColorKeys.background],
+            child: const Icon(
+              Icons.filter_list,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }

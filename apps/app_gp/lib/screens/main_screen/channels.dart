@@ -1,8 +1,9 @@
-import 'package:app_gp/screens/main_screen/channel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
+
+import 'channel/index.dart';
 
 class Channels extends StatefulWidget {
   const Channels({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _ChannelsState extends State<Channels> {
             .map(
               (index, item) => MapEntry(
                 index,
-                MainChannelScreen(
+                Channel(
                   channelId: item.id,
                 ),
               ),

@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyRouteDelegate extends RouterDelegate<String>
     with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
   final List<String> _stack = ['/'];
+  bool _hasTransition = true;
 
   static MyRouteDelegate of(BuildContext context) {
     final delegate = Router.of(context).routerDelegate;
@@ -32,8 +34,9 @@ class MyRouteDelegate extends RouterDelegate<String>
   List<String> get stack => List.unmodifiable(_stack);
 
   // void push, from newRoute and add to _stack
-  void push(String routeName) {
+  void push(String routeName, {bool hasTransition = true}) {
     _stack.add(routeName);
+    _hasTransition = hasTransition;
     notifyListeners();
   }
 
@@ -43,9 +46,10 @@ class MyRouteDelegate extends RouterDelegate<String>
   }
 
   // implement pushAndRemoveUntil
-  void pushAndRemoveUntil(String newRoute) {
+  void pushAndRemoveUntil(String newRoute, {bool hasTransition = true}) {
     _stack.clear();
     _stack.add(newRoute);
+    _hasTransition = hasTransition;
     notifyListeners();
   }
 
@@ -78,11 +82,14 @@ class MyRouteDelegate extends RouterDelegate<String>
       key: navigatorKey,
       onPopPage: _onPopPage,
       pages: _stack.map((name) {
-        return MaterialPage(
-          key: ValueKey(name),
-          name: name,
-          child: routes[name]!(context),
-        );
+        if (_hasTransition) {
+          return MaterialPage(
+            key: ValueKey(name),
+            name: name,
+            child: routes[name]!(context),
+          );
+        }
+        return NoTransitionPage(child: routes[name]!(context));
       }).toList(),
     );
   }

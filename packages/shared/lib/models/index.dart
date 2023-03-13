@@ -4,7 +4,6 @@ export 'ad.dart';
 export 'apk_update.dart';
 export 'banner.dart';
 export 'block_vod.dart';
-export 'block.dart';
 export 'channel.dart';
 export 'hm_api_response.dart';
 export 'hm_api_response_with_data.dart';

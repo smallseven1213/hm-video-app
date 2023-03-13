@@ -92,7 +92,8 @@ class _SplashState extends State<Splash> {
 
   // Step1: 讀取env (local)
   loadEnvConfig() async {
-    print('step1: Load env with local config');
+    print(
+        'step1: Load env with local config: env/.${systemConfig.project}.env');
     await dotenv.load(fileName: "env/.${systemConfig.project}.env");
     print('BRAND_NAME: ${dotenv.get('BRAND_NAME')}');
   }
@@ -294,22 +295,7 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          if (GetPlatform.isAndroid)
-            Image.asset(
-              widget.backgroundAssetPath,
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
             ),
-          const Center(
-            child: Loading(),
-          ),
-        ],
       ),
     );
   }
