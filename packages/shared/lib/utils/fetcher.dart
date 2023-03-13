@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:get/utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
@@ -24,12 +25,19 @@ Future<Response> fetcher({
   //     ? null
   //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
 
+  final headerConfig = {
+    'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
+    'authorization': 'Bearer ${systemConfig.authToken}',
+  };
+
+  if (GetPlatform.isWeb) {
+    headerConfig['content-type'] = 'application/json; charset=utf-8';
+  }
+
   final options = Options(
     method: method,
     headers: {
-      'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
-      // 'content-type': 'application/json; charset=utf-8',
-      'authorization': 'Bearer ${systemConfig.authToken}',
+      ...headerConfig,
     },
   );
 
