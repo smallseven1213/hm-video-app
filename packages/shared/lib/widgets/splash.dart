@@ -238,7 +238,7 @@ class _SplashState extends State<Splash> {
           MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
         } else {
           print('有廣告，進入廣告頁');
-          // MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
+          MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
         }
       }
     });
