@@ -84,6 +84,9 @@ class AdState extends State<Ad> {
                 startTimer();
                 setState(() => imageLoaded = true);
               },
+              onError: (e, stackTrace) {
+                MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+              },
             ),
           ),
           if (imageLoaded)
