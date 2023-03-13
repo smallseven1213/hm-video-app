@@ -25,6 +25,7 @@ class AdState extends State<Ad> {
   late BannerPhoto currentBanner;
 
   int countdownSeconds = 5;
+  bool imageLoaded = false;
 
   @override
   void initState() {
@@ -39,6 +40,10 @@ class AdState extends State<Ad> {
       currentBanner = landingBanners[entryCount % landingBanners.length];
     });
 
+    super.initState();
+  }
+
+  startTimer() {
     // 倒數五秒
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
@@ -52,7 +57,6 @@ class AdState extends State<Ad> {
         });
       }
     });
-    super.initState();
   }
 
   @override
@@ -74,38 +78,43 @@ class AdState extends State<Ad> {
               height: size.height,
               sid: currentBanner.photoSid.toString(),
               fit: BoxFit.cover,
+              onLoaded: () {
+                startTimer();
+                setState(() => imageLoaded = true);
+              },
             ),
           ),
-          Positioned(
-            top: 20,
-            right: 20,
-            child: TextButton(
-              onPressed: () => {
-                if (countdownSeconds == 0)
-                  MyRouteDelegate.of(context).pushAndRemoveUntil('/home')
-              },
-              child: Container(
-                width: 90,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                decoration: BoxDecoration(
-                  color: const Color.fromRGBO(255, 255, 255, .5),
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Center(
-                  child: Text(
-                    countdownSeconds == 0
-                        ? '立即進入'
-                        : '倒數${countdownSeconds.toString()}s',
-                    style: const TextStyle(
-                      color: Color.fromRGBO(34, 34, 34, 0.949),
-                      fontSize: 16,
+          if (imageLoaded)
+            Positioned(
+              top: 20,
+              right: 20,
+              child: TextButton(
+                onPressed: () => {
+                  if (countdownSeconds == 0)
+                    MyRouteDelegate.of(context).pushAndRemoveUntil('/home')
+                },
+                child: Container(
+                  width: 90,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(255, 255, 255, .5),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Center(
+                    child: Text(
+                      countdownSeconds == 0
+                          ? '立即進入'
+                          : '倒數${countdownSeconds.toString()}s',
+                      style: const TextStyle(
+                        color: Color.fromRGBO(34, 34, 34, 0.949),
+                        fontSize: 16,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

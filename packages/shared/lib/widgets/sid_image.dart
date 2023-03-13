@@ -14,6 +14,8 @@ class SidImage extends StatefulWidget {
   final double height;
   final BoxFit fit;
   final Alignment alignment;
+  final Function? onLoaded;
+  final Function? onError;
 
   const SidImage({
     super.key,
@@ -22,6 +24,8 @@ class SidImage extends StatefulWidget {
     this.height = 200,
     this.fit = BoxFit.cover,
     this.alignment = Alignment.center,
+    this.onLoaded,
+    this.onError,
   });
 
   @override
@@ -55,6 +59,7 @@ class SidImageState extends State<SidImage> {
       setState(() {
         imageData = file;
       });
+      widget.onLoaded!();
     } else {
       try {
         var res = await ImageApi().getSidImageData(widget.sid);
@@ -64,8 +69,10 @@ class SidImageState extends State<SidImage> {
         setState(() {
           imageData = file;
         });
+        widget.onLoaded!();
       } catch (e) {
         logger.d(e);
+        widget.onError!();
       }
     }
   }

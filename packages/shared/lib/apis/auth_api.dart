@@ -15,6 +15,7 @@ class AuthApi {
     String? invitationCode,
   }) async {
     String registerDeviceGuid = const Uuid().v4();
+    final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     GetStorage box = systemConfig.box;
 
     // 訪客註冊
@@ -29,9 +30,9 @@ class AuthApi {
         box.write('register-device-guid', registerDeviceGuid);
       }
     } else if (GetPlatform.isAndroid) {
-      // registerDeviceGuid = await AndroidDeviceInfo().androidId;
+      // get android id
+      registerDeviceGuid = (await deviceInfo.androidInfo).data['id'];
     } else if (GetPlatform.isIOS) {
-      DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       registerDeviceGuid =
           (await (deviceInfo.iosInfo)).identifierForVendor.toString();
     }

@@ -260,8 +260,8 @@ class _SplashState extends State<Splash> {
           // Get.offNamed('/home');
         } else {
           print('有廣告，進入廣告頁');
-          // widget.onNext();
           MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
+          // widget.onNext();
         }
       }
     });
@@ -299,12 +299,13 @@ class _SplashState extends State<Splash> {
       height: double.infinity,
       child: Stack(
         children: [
-          Image.asset(
-            widget.backgroundAssetPath,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
+          if (GetPlatform.isAndroid)
+            Image.asset(
+              widget.backgroundAssetPath,
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            ),
           const Center(
             child: Loading(),
           ),
