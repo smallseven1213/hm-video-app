@@ -1,16 +1,13 @@
-// ChannelScreenTabController用來儲存目前tabIndex與pageViewIndex的狀態
-// 並且在tabbar或pageView的index發生改變時，更新兩者的index
-
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/vod_api.dart';
-import '../models/block.dart';
+import '../models/channel_info.dart';
 
 var logger = Logger();
 
 class ChannelDataController extends GetxController {
-  var channelData = <int, List<Block>>{}.obs;
+  var channelData = <int, ChannelInfo>{}.obs;
 
   void mutateByChannelId(int channelId) async {
     var res = await VodApi().getBlockVodsByChannelAds(channelId);
