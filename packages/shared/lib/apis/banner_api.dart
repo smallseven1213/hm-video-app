@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:shared/models/banner.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
