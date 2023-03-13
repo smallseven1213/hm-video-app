@@ -1,8 +1,8 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:logger/logger.dart';
-import '../models/block.dart';
 import '../models/block_vod.dart';
+import '../models/channel_info.dart';
 import '../models/short_video_detail.dart';
 import '../models/video.dart';
 import '../models/vod.dart';
@@ -103,21 +103,21 @@ class VodApi {
     return BlockVod([], 0);
   }
 
-  Future<List<Block>> getManyByChannel2(int blockId, {int? offset = 1}) async {
-    var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/index?areaId=$blockId&offset=$offset');
-    if (res.data['code'] != '00') {
-      return [];
-    }
-    try {
-      var result = Block.fromJson(res.data['data']);
-      return List.from([result]);
-    } catch (e) {
-      print(e);
-    }
-    return [];
-  }
+  // Future<List<Block>> getManyByChannel2(int blockId, {int? offset = 1}) async {
+  //   var res = await fetcher(
+  //       url:
+  //           '${systemConfig.apiHost}/public/videos/video/index?areaId=$blockId&offset=$offset');
+  //   if (res.data['code'] != '00') {
+  //     return [];
+  //   }
+  //   try {
+  //     var result = Block.fromJson(res.data['data']);
+  //     return List.from([result]);
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  //   return [];
+  // }
 
   Future<BlockVod> getMoreMany(
     int areaId, {
@@ -250,34 +250,34 @@ class VodApi {
     }
   }
 
-  Future<List<Block>> getBlockVodsByChannel(int channelId,
-      {int offset = 1}) async {
-    const device = {
-      'web': 1,
-      'ios': 2,
-      'android': 3,
-    };
-    int? deviceId = device['web'];
+  // Future<List<Block>> getBlockVodsByChannel(int channelId,
+  //     {int offset = 1}) async {
+  //   const device = {
+  //     'web': 1,
+  //     'ios': 2,
+  //     'android': 3,
+  //   };
+  //   int? deviceId = device['web'];
 
-    if (!kIsWeb) {
-      if (Platform.isIOS) {
-        deviceId = device['ios'];
-      } else {
-        deviceId = device['android'];
-      }
-    }
+  //   if (!kIsWeb) {
+  //     if (Platform.isIOS) {
+  //       deviceId = device['ios'];
+  //     } else {
+  //       deviceId = device['android'];
+  //     }
+  //   }
 
-    var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/index?offset=$offset&channelId=$channelId&deviceId=$deviceId');
+  //   var res = await fetcher(
+  //       url:
+  //           '${systemConfig.apiHost}/public/videos/video/index?offset=$offset&channelId=$channelId&deviceId=$deviceId');
 
-    try {
-      return List.from(
-          (res.data as List<dynamic>).map((e) => Block.fromJson(e)));
-    } catch (e) {
-      return [];
-    }
-  }
+  //   try {
+  //     return List.from(
+  //         (res.data as List<dynamic>).map((e) => Block.fromJson(e)));
+  //   } catch (e) {
+  //     return [];
+  //   }
+  // }
 
   // Future<List<Block>> getBlockVodsByChannelAds(int channelId,
   //     {int offset = 1}) async {
@@ -307,7 +307,7 @@ class VodApi {
   //   }
   // }
 
-  Future<List<Block>> getBlockVodsByChannelAds(int channelId,
+  Future<ChannelInfo> getBlockVodsByChannelAds(int channelId,
       {int offset = 1}) async {
     const device = {
       'web': 1,
@@ -328,10 +328,9 @@ class VodApi {
         url:
             '${systemConfig.apiHost}/public/videos/video/v2/videoBlocks?offset=$offset&channelId=$channelId&deviceId=$deviceId');
     try {
-      return List.from(
-          (res.data['data'] as List<dynamic>).map((e) => Block.fromJson(e)));
+      return ChannelInfo.fromJson(res.data['data']);
     } catch (e) {
-      return [];
+      return ChannelInfo();
     }
   }
 }

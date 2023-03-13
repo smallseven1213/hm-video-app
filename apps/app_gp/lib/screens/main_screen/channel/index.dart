@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
-import 'package:shared/models/block.dart';
 import 'package:shared/models/color_keys.dart';
 
 import 'banners.dart';
@@ -24,10 +23,19 @@ class Channel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.colors[ColorKeys.background],
-      body: Row(
+    return Container(
+      width: double.infinity,
+      color: AppColors.colors[ColorKeys.background],
+      child: Row(
         children: [
+          Text(
+            channelId.toString(),
+            // style 50px white
+            style: const TextStyle(
+              fontSize: 50,
+              color: Colors.white,
+            ),
+          ),
           Banners(channelId: channelId),
           // Jingang(channelId: channelId),
           VideoBlocks(channelId: channelId)

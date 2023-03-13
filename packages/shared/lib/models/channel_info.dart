@@ -1,56 +1,11 @@
-class Block {
-  int? id;
-  String? name;
-  int? template;
-  int? film;
-  int? quantity;
-  int? orderIndex;
-  bool? isMore;
-  bool? isCheckMore;
-  bool? isChange;
-  bool? isAreaAds;
-  bool? isTitle;
-  bool? isLoading;
-  bool? isEmbeddedAds;
-  dynamic areaAds;
+class ChannelInfo {
   List<Banner>? banner;
   Jingang? jingang;
-  Videos? videos;
+  List<Blocks>? blocks;
 
-  Block(
-      {id,
-      name,
-      template,
-      film,
-      quantity,
-      orderIndex,
-      isMore,
-      isCheckMore,
-      isChange,
-      isAreaAds,
-      isTitle,
-      isLoading,
-      isEmbeddedAds,
-      areaAds,
-      banner,
-      jingang,
-      videos});
+  ChannelInfo({banner, jingang, blocks});
 
-  Block.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    template = json['template'];
-    film = json['film'];
-    quantity = json['quantity'];
-    orderIndex = json['orderIndex'];
-    isMore = json['isMore'];
-    isCheckMore = json['isCheckMore'];
-    isChange = json['isChange'];
-    isAreaAds = json['isAreaAds'];
-    isTitle = json['isTitle'];
-    isLoading = json['isLoading'];
-    isEmbeddedAds = json['isEmbeddedAds'];
-    areaAds = json['areaAds'];
+  ChannelInfo.fromJson(Map<String, dynamic> json) {
     if (json['banner'] != null) {
       banner = <Banner>[];
       json['banner'].forEach((v) {
@@ -59,33 +14,24 @@ class Block {
     }
     jingang =
         json['jingang'] != null ? Jingang.fromJson(json['jingang']) : null;
-    videos = json['videos'] != null ? Videos.fromJson(json['videos']) : null;
+    if (json['blocks'] != null) {
+      blocks = <Blocks>[];
+      json['blocks'].forEach((v) {
+        blocks!.add(Blocks.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
-    data['template'] = template;
-    data['film'] = film;
-    data['quantity'] = quantity;
-    data['orderIndex'] = orderIndex;
-    data['isMore'] = isMore;
-    data['isCheckMore'] = isCheckMore;
-    data['isChange'] = isChange;
-    data['isAreaAds'] = isAreaAds;
-    data['isTitle'] = isTitle;
-    data['isLoading'] = isLoading;
-    data['isEmbeddedAds'] = isEmbeddedAds;
-    data['areaAds'] = areaAds;
     if (banner != null) {
       data['banner'] = banner!.map((v) => v.toJson()).toList();
     }
     if (jingang != null) {
       data['jingang'] = jingang!.toJson();
     }
-    if (videos != null) {
-      data['videos'] = videos!.toJson();
+    if (blocks != null) {
+      data['blocks'] = blocks!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -132,8 +78,7 @@ class Jingang {
       outerFrameStyle,
       title,
       jingangStyle,
-      quantity,
-      required int channelId});
+      quantity});
 
   Jingang.fromJson(Map<String, dynamic> json) {
     isBanner = json['isBanner'];
@@ -190,6 +135,83 @@ class JingangDetail {
   }
 }
 
+class Blocks {
+  int? id;
+  String? name;
+  int? template;
+  int? film;
+  int? quantity;
+  int? orderIndex;
+  bool? isMore;
+  bool? isCheckMore;
+  bool? isChange;
+  bool? isAreaAds;
+  bool? isTitle;
+  bool? isLoading;
+  bool? isEmbeddedAds;
+  Banner? banner;
+  Videos? videos;
+
+  Blocks(
+      {id,
+      name,
+      template,
+      film,
+      quantity,
+      orderIndex,
+      isMore,
+      isCheckMore,
+      isChange,
+      isAreaAds,
+      isTitle,
+      isLoading,
+      isEmbeddedAds,
+      banner,
+      videos});
+
+  Blocks.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    template = json['template'];
+    film = json['film'];
+    quantity = json['quantity'];
+    orderIndex = json['orderIndex'];
+    isMore = json['isMore'];
+    isCheckMore = json['isCheckMore'];
+    isChange = json['isChange'];
+    isAreaAds = json['isAreaAds'];
+    isTitle = json['isTitle'];
+    isLoading = json['isLoading'];
+    isEmbeddedAds = json['isEmbeddedAds'];
+    banner = json['banner'] != null ? Banner.fromJson(json['banner']) : null;
+    videos = json['videos'] != null ? Videos.fromJson(json['videos']) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['template'] = template;
+    data['film'] = film;
+    data['quantity'] = quantity;
+    data['orderIndex'] = orderIndex;
+    data['isMore'] = isMore;
+    data['isCheckMore'] = isCheckMore;
+    data['isChange'] = isChange;
+    data['isAreaAds'] = isAreaAds;
+    data['isTitle'] = isTitle;
+    data['isLoading'] = isLoading;
+    data['isEmbeddedAds'] = isEmbeddedAds;
+    if (banner != null) {
+      data['banner'] = banner!.toJson();
+    }
+    if (videos != null) {
+      data['videos'] = videos!.toJson();
+    }
+    return data;
+  }
+}
+
 class Videos {
   int? total;
   String? current;
@@ -215,9 +237,7 @@ class Videos {
     data['total'] = total;
     data['current'] = current;
     data['limit'] = limit;
-    if (data.isNotEmpty) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
+    data['data'] = this.data!.map((v) => v.toJson()).toList();
     return data;
   }
 }
@@ -237,7 +257,7 @@ class Data {
   List<Tags>? tags;
   int? videoViewTimes;
   int? videoCollectTimes;
-  dynamic appIcon;
+  String? appIcon;
   String? adUrl;
 
   Data(
