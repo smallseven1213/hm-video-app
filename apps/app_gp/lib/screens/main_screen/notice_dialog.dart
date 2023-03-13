@@ -1,6 +1,5 @@
 // import 'package:app_gp/widgets/button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/notice_api.dart';
 import 'package:shared/models/index.dart';
@@ -83,17 +82,18 @@ void alertDialog(
                   child: SizedBox(
                     height: 150,
                     child: SingleChildScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      child: HtmlWidget(
-                        notice.content ?? '',
-                        textStyle: TextStyle(
-                          color: Colors.white,
+                        physics: const ClampingScrollPhysics(),
+                        // child: HtmlWidget(
+                        //   notice.content ?? '',
+                        //   textStyle: TextStyle(
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
+                        child: Text('content')
+                        // HtmlWidget(
+                        //   notice.content ?? '',
+                        //   textStyle: TextStyle(
                         ),
-                      ),
-                      // HtmlWidget(
-                      //   notice.content ?? '',
-                      //   textStyle: TextStyle(
-                    ),
                   ),
                 ),
                 ButtonBar(
