@@ -90,28 +90,6 @@ class _SplashState extends State<Splash> {
     return invitationCode;
   }
 
-  // Step1: 讀取env (local)
-  loadEnvConfig() async {
-    print(
-        'step1: Load env with local config: env/.${systemConfig.project}.env');
-    await dotenv.load(fileName: "env/.${systemConfig.project}.env");
-    print('BRAND_NAME: ${dotenv.get('BRAND_NAME')}');
-  }
-
-  // Step2: initial indexedDB (Hive)
-  initialIndexedDB() async {
-    print('step2: initial indexedDB (Hive)');
-    await Hive.initFlutter();
-    if (!kIsWeb) {
-      var dir = await getApplicationDocumentsDirectory();
-      await dir.create(recursive: true);
-      Hive.init(dir.path);
-      // ..registerAdapter(VideoHistoryAdapter());
-    } else {
-      // Hive.registerAdapter(VideoHistoryAdapter());
-    }
-  }
-
   // Step3: fetch dl.json get apiHost & maintenance status
   fetchDlJson() async {
     print('step3: fetch dl.json');
@@ -258,11 +236,9 @@ class _SplashState extends State<Splash> {
         if (landingBanners.isEmpty) {
           print('沒有廣告，直接進入首頁');
           MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
-          // Get.offNamed('/home');
         } else {
           print('有廣告，進入廣告頁');
-          MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
-          // widget.onNext();
+          // MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
         }
       }
     });
@@ -272,8 +248,6 @@ class _SplashState extends State<Splash> {
   void initState() {
     Future.microtask(() async {
       WidgetsFlutterBinding.ensureInitialized();
-      loadEnvConfig();
-      initialIndexedDB();
       final dlJson = await fetchDlJson();
       bool isMaintenance = await checkIsMaintenance();
       if (dlJson == null || isMaintenance) return;
@@ -295,7 +269,21 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-            ),
+    return SizedBox(
+      width: double.infinity,
+      height: double.infinity,
+      child: Stack(
+        children: [
+          Image.asset(
+            widget.backgroundAssetPath,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
+          const Center(
+            child: Loading(),
+          ),
+        ],
       ),
     );
   }
