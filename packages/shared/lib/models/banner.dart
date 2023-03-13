@@ -35,26 +35,39 @@ enum BannerPosition {
   channelAreaBottomBanner;
 }
 
-class Banner {
+class BannerPhoto {
   final int id;
   final String photoSid;
+  final String? logoSid;
   final String? url;
+  final String? name;
+  final String? title;
+  final bool isAutoClose;
+  final List? tags;
+  final String? button;
 
-  Banner(
-    this.id,
-    this.photoSid,
+  BannerPhoto({
+    this.id = 0,
+    this.isAutoClose = false,
+    this.logoSid,
+    this.name,
+    this.photoSid = '',
+    this.title,
     this.url,
-  );
-
-  getPhotoUrl() =>
-      // "${AppController.cc.endpoint.getPhotoSidPreviewPrefix()}$photoSid";
-      photoSid;
-
-  factory Banner.fromJson(Map<String, dynamic> json) {
-    return Banner(
-      json['id'],
-      json['photoSid'],
-      json['url'],
+    this.tags,
+    this.button,
+  });
+  factory BannerPhoto.fromJson(Map<String, dynamic> json) {
+    return BannerPhoto(
+      id: json['id'],
+      isAutoClose: json['isAutoClose'] ?? false,
+      photoSid: json['photoSid'],
+      logoSid: json['logoSid'],
+      url: json['url'],
+      name: json['name'],
+      title: json['title'],
+      button: json['button'],
+      tags: json['tags'],
     );
   }
 }

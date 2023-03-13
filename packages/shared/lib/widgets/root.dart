@@ -12,16 +12,22 @@ typedef RouteObject = Map<String, WidgetBuilder>;
 class RootWidget extends StatelessWidget {
   final String homePath;
   final RouteObject routes;
-  final RouteObject baseRoutes = {
-    '/': (context) => const Splash(),
-    '/ad': (context) => const Ad(),
-  };
+  final String splashImage;
 
-  RootWidget({Key? key, required this.homePath, required this.routes})
-      : super(key: key);
+  const RootWidget({
+    Key? key,
+    required this.homePath,
+    required this.routes,
+    required this.splashImage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final RouteObject baseRoutes = {
+      '/': (context) => Splash(backgroundAssetPath: splashImage),
+      '/ad': (context) => const Ad(),
+    };
+
     final delegate = MyRouteDelegate(
       homePath: homePath,
       routes: {...baseRoutes, ...routes},

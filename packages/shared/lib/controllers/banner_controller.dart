@@ -16,7 +16,7 @@ class BannerController extends GetxController {
     update();
   }
 
-  Future<List> fetchBanner(BannerPosition position) async {
+  Future<List<BannerPhoto>> fetchBanner(BannerPosition position) async {
     BannerApi bannerApi = BannerApi();
     final BannerController bannerController = Get.find<BannerController>();
     var result = await bannerApi.getBannerById(positionId: position.index);
