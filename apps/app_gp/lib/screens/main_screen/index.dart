@@ -1,30 +1,25 @@
 import 'package:app_gp/screens/main_screen/channels.dart';
 import 'package:app_gp/screens/main_screen/marquee.dart';
-import 'package:app_gp/screens/main_screen/notice_dialog.dart';
 import 'package:app_gp/screens/main_screen/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/controllers/layout_controller.dart';
-import 'package:shared/controllers/channel_screen_tab_controller.dart';
 
-import 'tab_bar.dart';
+import 'notice_dialog.dart';
+import 'layout_tab_bar.dart';
 
 class HomeMainScreen extends StatefulWidget {
-  HomeMainScreen({Key? key}) : super(key: key);
+  const HomeMainScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeMainScreenState createState() => _HomeMainScreenState();
+  HomeMainScreenState createState() => HomeMainScreenState();
 }
 
-class _HomeMainScreenState extends State<HomeMainScreen> {
+class HomeMainScreenState extends State<HomeMainScreen> {
   BannerController bannerController = Get.find<BannerController>();
 
   @override
   void initState() {
-    // TODO: implement initState
-    // 入站廣告 banners/banner/position?positionId=5
-    // 進入大廳用戶事件紀錄 user/userEventRecord/enterHall
     super.initState();
   }
 
@@ -32,23 +27,28 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(200),
+        preferredSize: const Size.fromHeight(120),
         child: Column(
-          children: [
-            NoticeDialog(),
+          /**
+           * SearchBar h:60
+           * LayoutTabBar h:60
+           */
+          children: const [
+            Expanded(
+              child: LayoutTabBar(),
+            ),
             Expanded(
               child: SearchBar(),
             ),
-            Expanded(
-              child: Tabbar(),
-            ),
-            Expanded(
-              child: Marquee(),
-            ),
+            // Expanded(
+            //   child: Marquee(),
+            // ),
           ],
         ),
       ),
-      body: Channels(),
+      body: Stack(
+        children: const [Channels(), NoticeDialog()],
+      ),
     );
   }
 }

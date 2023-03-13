@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
 // create a dio instance
+final logger = Logger();
 final dio = Dio();
 final SystemConfig systemConfig = SystemConfig();
 
@@ -18,15 +20,15 @@ Future<Response> fetcher({
   bool? shouldValidate = true,
 }) async {
   // create a request options
-  Map? authorization = shouldValidate!
-      ? null
-      : {'authorization': 'Bearer ${systemConfig.authToken}'};
+  // Map? authorization = shouldValidate!
+  //     ? null
+  //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
 
   final options = Options(
     method: method,
     headers: {
       'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
-      'content-type': 'application/json; charset=utf-8',
+      // 'content-type': 'application/json; charset=utf-8',
       'authorization': 'Bearer ${systemConfig.authToken}',
     },
   );
@@ -36,6 +38,8 @@ Future<Response> fetcher({
     data: body,
     options: options,
   );
+
+  // logger.d('in testing fetcher : $url\n======\n$response');
 
   return response;
 }

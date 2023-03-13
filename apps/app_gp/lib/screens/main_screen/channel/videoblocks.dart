@@ -1,15 +1,20 @@
 import 'package:app_gp/config/colors.dart';
+import 'package:app_gp/screens/main_screen/layout_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
+import 'package:shared/models/block.dart';
 import 'package:shared/models/color_keys.dart';
 
-import '../../pages/video.dart';
+import '../../../pages/video.dart';
 
-class MainChannelScreen extends StatelessWidget {
+final logger = Logger();
+
+class VideoBlocks extends StatelessWidget {
   final int channelId;
 
-  MainChannelScreen({Key? key, required this.channelId}) : super(key: key);
+  VideoBlocks({Key? key, required this.channelId}) : super(key: key);
 
   final ChannelDataController channelDataController =
       Get.find<ChannelDataController>();
@@ -18,9 +23,14 @@ class MainChannelScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.colors[ColorKeys.background],
-      body: Obx(
-        () => ListView.builder(
-          itemCount: channelDataController.channelData[channelId]?.length,
+      body: Obx(() {
+        List<Block>? channelData = channelDataController.channelData[channelId];
+        if (channelData == null) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        return ListView.builder(
+          itemCount: channelData.length,
           itemBuilder: (context, index) {
             return Container(
               height: 100,
@@ -32,13 +42,12 @@ class MainChannelScreen extends StatelessWidget {
                       MaterialPageRoute(builder: (context) => const Video()),
                     );
                   },
-                  // child: Text(
-                  //     channelDataController.channelData[channelId]![index].name),
-                  child: Text('Video')),
+                  child: Text(channelData[index].name ?? 'Nothing More')),
+              // child: Text('hi')),
             );
           },
-        ),
-      ),
+        );
+      }),
     );
   }
 }

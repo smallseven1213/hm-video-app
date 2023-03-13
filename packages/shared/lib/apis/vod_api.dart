@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:logger/logger.dart';
 import '../models/block.dart';
 import '../models/block_vod.dart';
 import '../models/short_video_detail.dart';
@@ -9,6 +10,7 @@ import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class VodApi {
   Future<String> purchase(int videoId) async {
@@ -277,6 +279,34 @@ class VodApi {
     }
   }
 
+  // Future<List<Block>> getBlockVodsByChannelAds(int channelId,
+  //     {int offset = 1}) async {
+  //   const device = {
+  //     'web': 1,
+  //     'ios': 2,
+  //     'android': 3,
+  //   };
+  //   int? deviceId = device['web'];
+
+  //   if (!kIsWeb) {
+  //     if (Platform.isIOS) {
+  //       deviceId = device['ios'];
+  //     } else {
+  //       deviceId = device['android'];
+  //     }
+  //   }
+
+  //   var res = await fetcher(
+  //       url:
+  //           '${systemConfig.apiHost}/public/videos/video/index/channelAreaBanner?offset=$offset&channelId=$channelId&deviceId=$deviceId');
+  //   try {
+  //     return List.from((res.data['data']['videoIntegrateAds'] as List<dynamic>)
+  //         .map((e) => Block.fromJson(e)));
+  //   } catch (e) {
+  //     return [];
+  //   }
+  // }
+
   Future<List<Block>> getBlockVodsByChannelAds(int channelId,
       {int offset = 1}) async {
     const device = {
@@ -296,10 +326,10 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/index/channelAreaBanner?offset=$offset&channelId=$channelId&deviceId=$deviceId');
+            '${systemConfig.apiHost}/public/videos/video/v2/videoBlocks?offset=$offset&channelId=$channelId&deviceId=$deviceId');
     try {
-      return List.from((res.data['data']['videoIntegrateAds'] as List<dynamic>)
-          .map((e) => Block.fromJson(e)));
+      return List.from(
+          (res.data['data'] as List<dynamic>).map((e) => Block.fromJson(e)));
     } catch (e) {
       return [];
     }

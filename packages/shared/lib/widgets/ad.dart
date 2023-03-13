@@ -22,6 +22,7 @@ class Ad extends StatefulWidget {
 class AdState extends State<Ad> {
   BannerController bannerController = Get.find<BannerController>();
   int countdownSeconds = 5;
+  late Timer? _timer;
 
   @override
   void initState() {
@@ -29,12 +30,13 @@ class AdState extends State<Ad> {
     print('AdState initState');
 
     // 倒數五秒
-    Timer.periodic(const Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       setState(() {
         countdownSeconds--;
       });
       if (countdownSeconds == 0) {
-        MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+        MyRouteDelegate.of(context)
+            .pushAndRemoveUntil('/home', hasTransition: false);
         timer.cancel();
       }
     });
@@ -43,6 +45,7 @@ class AdState extends State<Ad> {
   @override
   void dispose() {
     super.dispose();
+    _timer?.cancel();
   }
 
   @override
@@ -50,7 +53,6 @@ class AdState extends State<Ad> {
     // 紀錄入站次數，用來取得對應的廣告圖片
     final entryCount = systemConfig.box.read('entry-count') ?? 0;
     systemConfig.box.write('entry-count', entryCount + 1); // 紀錄入站次數
-    print(bannerController.banners[BannerPosition.landing.index]);
 
     return Obx(() => Scaffold(
           body: Center(

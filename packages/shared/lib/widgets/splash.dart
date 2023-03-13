@@ -88,7 +88,8 @@ class _SplashState extends State<Splash> {
 
   // Step1: 讀取env (local)
   loadEnvConfig() async {
-    print('step1: Load env with local config');
+    print(
+        'step1: Load env with local config: env/.${systemConfig.project}.env');
     await dotenv.load(fileName: "env/.${systemConfig.project}.env");
     print('BRAND_NAME: ${dotenv.get('BRAND_NAME')}');
   }
@@ -296,7 +297,8 @@ class _SplashState extends State<Splash> {
           child: Text('Next~~'),
           onPressed: () {
             print('被push前');
-            MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
+            MyRouteDelegate.of(context)
+                .pushAndRemoveUntil('/ad', hasTransition: false);
             // Navigator.of(context).push(
             //   MaterialPageRoute(
             //     builder: (BuildContext context) {

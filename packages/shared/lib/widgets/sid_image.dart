@@ -42,14 +42,14 @@ class SidImageState extends State<SidImage> {
     var sidImageBox = await Hive.openBox('sidImage');
 
     //. print widget.sid
-    logger.d('widget.sid ===== ${widget.sid}');
+    // logger.d('widget.sid ===== ${widget.sid}');
     /**
      * 由sid當key, 去找hive中有沒有對應到的值
      * 有的話，由hive中取得並setState
      * 沒的話，呼叫ImageApi的getSidImageData，並存入hive以及setState
      */
     var hasFileInHive = sidImageBox.containsKey(widget.sid);
-    logger.d('hasFileInHive ===== $hasFileInHive');
+    // logger.d('hasFileInHive ===== $hasFileInHive');
     if (hasFileInHive) {
       var file = await sidImageBox.get(widget.sid);
       setState(() {
@@ -65,7 +65,7 @@ class SidImageState extends State<SidImage> {
           imageData = file;
         });
       } catch (e) {
-        logger.d(e);
+        // logger.d(e);
       }
     }
   }
