@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import '../models/color_keys.dart';
+import 'package:shared/models/color_keys.dart';
 import '../navigator/delegate.dart';
 import '../navigator/parser.dart';
 import 'ad.dart';
@@ -13,12 +11,14 @@ class RootWidget extends StatelessWidget {
   final String homePath;
   final RouteObject routes;
   final String splashImage;
+  final Map<ColorKeys, Color> appColors;
 
   const RootWidget({
     Key? key,
     required this.homePath,
     required this.routes,
     required this.splashImage,
+    required this.appColors,
   }) : super(key: key);
 
   @override
@@ -46,6 +46,9 @@ class RootWidget extends StatelessWidget {
     return MaterialApp.router(
       routerDelegate: delegate,
       routeInformationParser: parser,
+      theme: ThemeData(
+        scaffoldBackgroundColor: appColors[ColorKeys.background],
+      ),
     );
   }
 }
