@@ -29,4 +29,11 @@ class BannerController extends GetxController {
     return banners[position.index] != null &&
         banners[position.index]!.isNotEmpty;
   }
+
+  // 紀錄點擊banner
+  Future<void> recordBannerClick(int bannerId) async {
+    if (bannerId == 0) return;
+    BannerApi bannerApi = BannerApi();
+    await bannerApi.recordBannerClick(bannerId: bannerId);
+  }
 }
