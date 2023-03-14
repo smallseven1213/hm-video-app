@@ -1,5 +1,4 @@
 import 'package:app_gp/config/colors.dart';
-import 'package:app_gp/screens/main_screen/layout_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -7,7 +6,9 @@ import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/color_keys.dart';
 
-import '../../../pages/video.dart';
+import 'video_block_template/block_1.dart';
+import 'video_block_template/block_2.dart';
+import 'videoblock.dart';
 
 final logger = Logger();
 
@@ -28,44 +29,17 @@ class VideoBlocks extends StatelessWidget {
         if (channelData == null) {
           return const Center(child: CircularProgressIndicator());
         }
-        logger.d(channelData);
-
-        // return ListView.builder(
-        //   itemCount: channelData.length,
-        //   itemBuilder: (context, index) {
-        //     return Container(
-        //       height: 100,
-        //       color: AppColors.colors[ColorKeys.background],
-        //       child: TextButton(
-        //           onPressed: () {
-        //             Navigator.push(
-        //               context,
-        //               MaterialPageRoute(builder: (context) => const Video()),
-        //             );
-        //           },
-        //           child: Text(channelData[index].name ?? 'Nothing More')),
-        //       // child: Text('hi')),
-        //     );
-        //   },
+        // return Column(
+        //   children:
+        //       channelData.blocks!.map((e) => VideoBlock(block: e)).toList(),
         // );
-        // convert to Column
-        return Column(
-          children: channelData.blocks!
-              .map((videoblock) => Container(
-                    height: 100,
-                    color: AppColors.colors[ColorKeys.background],
-                    child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Video()),
-                          );
-                        },
-                        child: Text(videoblock.name ?? 'Nothing More')),
-                    // child: Text('hi')),
-                  ))
-              .toList(),
+        return ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: channelData.blocks?.length ?? 0,
+          itemBuilder: (context, index) {
+            return VideoBlock(block: channelData.blocks![index]);
+          },
         );
       }),
     );

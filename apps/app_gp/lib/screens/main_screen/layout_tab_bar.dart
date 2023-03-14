@@ -94,10 +94,11 @@ class LayoutTabBarState extends State<LayoutTabBar>
       height: 60,
       width: double.infinity,
       color: AppColors.colors[ColorKeys.background],
+      padding: const EdgeInsets.only(top: 24),
       child: TabBar(
           isScrollable: true,
           controller: tabController,
-          indicatorPadding: const EdgeInsets.only(bottom: 4),
+          indicatorPadding: const EdgeInsets.only(bottom: 0),
           indicatorWeight: 5,
           indicatorColor: AppColors.colors[ColorKeys.primary],
           indicator: UnderlineTabIndicator(

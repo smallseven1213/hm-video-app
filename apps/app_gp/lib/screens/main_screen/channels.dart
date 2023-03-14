@@ -32,7 +32,6 @@ class _ChannelsState extends State<Channels> {
   @override
   void dispose() {
     controller.dispose();
-    channelScreenTabController.dispose();
     super.dispose();
   }
 
