@@ -30,4 +30,22 @@ class BannerApi {
       return [];
     }
   }
+
+  // 紀錄點擊
+  Future<void> recordBannerClick({
+    required int bannerId,
+  }) async {
+    try {
+      var response = await fetcher(
+          url: '$apiPrefix/banner/bannerClickRecord',
+          method: 'POST',
+          body: {'bannerId': bannerId});
+      var res = (response.data as Map<String, dynamic>);
+      if (res['code'] != '00') {
+        return;
+      }
+    } catch (err) {
+      print('recordBannerClick error: $err');
+    }
+  }
 }

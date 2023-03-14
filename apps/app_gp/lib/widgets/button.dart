@@ -25,8 +25,8 @@ class Button extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(width: 1, color: Colors.white),
         color: type == 'primary'
-            ? const Color(0xff1E50B1)
-            : const Color(0xFFFFFFFF),
+            ? const Color.fromARGB(255, 161, 184, 226)
+            : const Color(0xff1E50B1),
       ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: GestureDetector(
@@ -40,10 +40,10 @@ class Button extends StatelessWidget {
             boxShadow: [
               BoxShadow(
                 color: type == 'primary'
-                    ? const Color.fromRGBO(18, 18, 69, 0.5)
-                    : const Color(0xFF4277DC),
+                    ? const Color(0xFF4277DC)
+                    : const Color.fromRGBO(18, 18, 69, 0.5),
                 blurRadius: 20,
-                spreadRadius: type == 'primary' ? -10 : 0,
+                spreadRadius: type == 'primary' ? 0 : -10,
               ),
             ],
           ),

@@ -48,9 +48,9 @@ class AdState extends State<Ad> {
     // 倒數五秒
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
-        // if (currentBanner.isAutoClose == true) {
-        //   MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
-        // }
+        if (currentBanner.isAutoClose == true) {
+          MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+        }
         timer.cancel();
       } else {
         setState(() {
@@ -96,7 +96,7 @@ class AdState extends State<Ad> {
               child: TextButton(
                 onPressed: () => {
                   if (countdownSeconds == 0)
-                    MyRouteDelegate.of(context).pushAndRemoveUntil('/home')
+                  MyRouteDelegate.of(context).pushAndRemoveUntil('/home')
                 },
                 child: Container(
                   width: 90,
