@@ -14,6 +14,9 @@ class Block1Widget extends StatelessWidget {
         crossAxisCount: 2,
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
+        mainAxisSpacing: 10,
+        crossAxisSpacing: 10,
+        padding: const EdgeInsets.all(10),
         children: List.generate(
           10,
           (index) => VideoPreviewWidget(

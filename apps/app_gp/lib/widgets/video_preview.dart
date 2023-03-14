@@ -23,11 +23,69 @@ class VideoPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: double.infinity,
-        height: 80,
-        child: Stack(
-          children: [SidImage(sid: coverHorizontal)],
-        ));
+    return Column(
+      children: [
+        Container(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(20)),
+          ),
+          height: 101,
+          width: double.infinity,
+          child: SidImage(
+              sid: coverHorizontal,
+              width: double.infinity,
+              height: 101,
+              fit: BoxFit.cover),
+        ),
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            textAlign: TextAlign.left,
+            overflow: TextOverflow.ellipsis,
+            softWrap: false,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+          ),
+        ),
+        Row(
+          children: tags
+              .map((e) => Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  decoration: BoxDecoration(
+                      color: const Color(0xff4277DC).withOpacity(0.5),
+                      borderRadius: BorderRadius.circular(10)),
+                  child: Text(
+                    e.name ?? '',
+                    style: const TextStyle(
+                      color: Color(0xff21AFFF),
+                      fontSize: 10,
+                    ),
+                  )))
+              .toList()
+              .map((widget) => Row(
+                    children: [
+                      widget,
+                      const SizedBox(width: 10),
+                    ],
+                  ))
+              .toList(),
+        )
+      ],
+    );
+    // return Container(
+    //     width: double.infinity,
+    //     height: 101,
+    //     child: Stack(
+    //       children: [
+    // SidImage(
+    //     sid: coverHorizontal,
+    //     width: double.infinity,
+    //     height: 101,
+    //     fit: BoxFit.cover)
+    //       ],
+    //     ));
   }
 }

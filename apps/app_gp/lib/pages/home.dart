@@ -1,3 +1,4 @@
+import 'package:app_gp/config/colors.dart';
 import 'package:app_gp/screens/discover_screen.dart';
 import 'package:app_gp/screens/shorts_screen.dart';
 import 'package:app_gp/screens/game_screen.dart';
@@ -5,6 +6,7 @@ import 'package:app_gp/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
+import 'package:shared/models/color_keys.dart';
 
 import '../screens/main_screen/index.dart';
 
@@ -30,6 +32,7 @@ class Home extends StatelessWidget {
               children: screens,
             )),
         bottomNavigationBar: Obx(() => BottomNavigationBar(
+              backgroundColor: AppColors.colors[ColorKeys.background],
               onTap: (value) => bottomNavigatorController.changeIndex(value),
               items: bottomNavigatorController.navigatorItems,
             )));

@@ -28,7 +28,7 @@ class VideoBlock extends StatelessWidget {
           Container(
             // padding x 10
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text(block.name ?? '',
+            child: Text('${block.name} [${block.template}]' ?? '',
                 textAlign: TextAlign.start,
                 style: const TextStyle(
                     fontSize: 20,
