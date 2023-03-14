@@ -4,6 +4,7 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/ad_banner.dart';
 
 class Carousel extends StatefulWidget {
   final List<BannerImage>? images;
@@ -29,7 +30,7 @@ class CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
       ),
@@ -58,34 +59,17 @@ class CarouselState extends State<Carousel> {
                       onPageChanged: (val, _) => indexChanged(val),
                     ),
                     items: widget.images
-                        ?.map((item) => AspectRatio(
+                        ?.map(
+                          (item) => AspectRatio(
                               aspectRatio: 16 / 9,
-                              child: InkWell(
-                                onTap: () => Get.find<BannerController>()
-                                    .recordBannerClick(item.id ?? 0),
-                                child: SidImage(
-                                  width: double.infinity,
-                                  height: double.infinity,
-                                  sid: item.photoSid.toString(),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ))
+                              child: AdBanner(image: item)),
+                        )
                         .toList(),
                   ),
                 )
               : AspectRatio(
                   aspectRatio: 16 / 9,
-                  child: InkWell(
-                    onTap: () => Get.find<BannerController>()
-                        .recordBannerClick(widget.images![0].id ?? 0),
-                    child: SidImage(
-                      width: double.infinity,
-                      height: double.infinity,
-                      sid: widget.images![0].photoSid.toString(),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  child: AdBanner(image: widget.images![0]),
                 ),
           widget.images!.length > 1
               ? Positioned(
@@ -107,8 +91,8 @@ class CarouselState extends State<Carousel> {
                                 borderRadius: BorderRadius.circular(4.0),
                               ),
                               child: InkWell(
-                                onTap: () => controller
-                                    .jumpToPage(widget.images!.indexOf(item)),
+                                onTap: () => controller.animateToPage(
+                                    widget.images!.indexOf(item)),
                               ),
                             ))
                         .toList() as List<Widget>,
