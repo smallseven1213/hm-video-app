@@ -27,7 +27,7 @@ class HomeMainScreenState extends State<HomeMainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(120),
+        preferredSize: const Size.fromHeight(88),
         child: Column(
           /**
            * SearchBar h:60

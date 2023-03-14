@@ -29,26 +29,29 @@ class SearchBar extends StatelessWidget {
           // input
           Expanded(
             child: Container(
-              height: 60,
-              padding: const EdgeInsets.only(left: 10),
-              alignment: Alignment.center,
-              color: AppColors.colors[ColorKeys.background],
-              child: const TextField(
-                textAlignVertical: TextAlignVertical.center,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: 20.0),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(20)),
-                    borderSide: BorderSide(
-                      color: Colors.white,
-                      width: 2,
+                height: 60,
+                // padding: const EdgeInsets.only(left: 10),
+                alignment: Alignment.center,
+                color: AppColors.colors[ColorKeys.background],
+                child: const SizedBox(
+                  height: 30,
+                  child: TextField(
+                    textAlignVertical: TextAlignVertical.center,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(vertical: 20.0),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        borderSide: BorderSide(
+                          color: Colors.white,
+                          width: 2,
+                        ),
+                      ),
+                      hintText: 'Search',
+                      hintStyle: TextStyle(color: Colors.grey),
                     ),
+                    style: TextStyle(color: Colors.white),
                   ),
-                  hintText: 'Search',
-                  hintStyle: TextStyle(color: Colors.grey),
-                ),
-              ),
-            ),
+                )),
           ),
           Container(
             width: 60,
