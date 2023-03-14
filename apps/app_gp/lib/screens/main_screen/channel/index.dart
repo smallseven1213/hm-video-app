@@ -23,24 +23,18 @@ class Channel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: AppColors.colors[ColorKeys.background],
-      child: Row(
-        children: [
-          Text(
-            channelId.toString(),
-            // style 50px white
-            style: const TextStyle(
-              fontSize: 50,
-              color: Colors.white,
-            ),
-          ),
-          Banners(channelId: channelId),
-          // Jingang(channelId: channelId),
-          VideoBlocks(channelId: channelId)
-        ],
-      ),
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: Banners(channelId: channelId),
+        ),
+        SliverToBoxAdapter(
+          child: Jingang(channelId: channelId),
+        ),
+        SliverToBoxAdapter(
+          child: VideoBlocks(channelId: channelId),
+        ),
+      ],
     );
   }
 }
