@@ -1,5 +1,5 @@
 class ChannelInfo {
-  List<Banner>? banner;
+  List<BannerImage>? banner;
   Jingang? jingang;
   List<Blocks>? blocks;
 
@@ -7,9 +7,9 @@ class ChannelInfo {
 
   ChannelInfo.fromJson(Map<String, dynamic> json) {
     if (json['banner'] != null) {
-      banner = <Banner>[];
+      banner = <BannerImage>[];
       json['banner'].forEach((v) {
-        banner!.add(Banner.fromJson(v));
+        banner!.add(BannerImage.fromJson(v));
       });
     }
     jingang =
@@ -37,15 +37,15 @@ class ChannelInfo {
   }
 }
 
-class Banner {
+class BannerImage {
   int? id;
   String? photoSid;
   String? url;
   bool? isAutoClose;
 
-  Banner({id, photoSid, url, isAutoClose});
+  BannerImage({id, photoSid, url, isAutoClose});
 
-  Banner.fromJson(Map<String, dynamic> json) {
+  BannerImage.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     photoSid = json['photoSid'];
     url = json['url'];
@@ -149,7 +149,7 @@ class Blocks {
   bool? isTitle;
   bool? isLoading;
   bool? isEmbeddedAds;
-  Banner? banner;
+  BannerImage? banner;
   Videos? videos;
 
   Blocks(
@@ -183,7 +183,8 @@ class Blocks {
     isTitle = json['isTitle'];
     isLoading = json['isLoading'];
     isEmbeddedAds = json['isEmbeddedAds'];
-    banner = json['banner'] != null ? Banner.fromJson(json['banner']) : null;
+    banner =
+        json['banner'] != null ? BannerImage.fromJson(json['banner']) : null;
     videos = json['videos'] != null ? Videos.fromJson(json['videos']) : null;
   }
 
