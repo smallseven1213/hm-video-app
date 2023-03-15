@@ -25,82 +25,25 @@ class VideoPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Column(
-    //   children: [
-    //     Container(
-    //       decoration: const BoxDecoration(
-    //         borderRadius: BorderRadius.all(Radius.circular(10)),
-    //         color: Colors.white,
-    //       ),
-    //       height: 101,
-    //       width: double.infinity,
-    //       child: ClipRRect(
-    //         borderRadius: const BorderRadius.all(Radius.circular(10)),
-    //         child: SidImage(
-    //           sid: coverHorizontal,
-    //           width: double.infinity,
-    //           fit: BoxFit.fill,
-    //         ),
-    //       ),
-    //     ),
-    //     const SizedBox(height: 5),
-    //     Container(
-    //       alignment: Alignment.centerLeft,
-    //       child: Text(
-    //         title,
-    //         textAlign: TextAlign.left,
-    //         overflow: TextOverflow.ellipsis,
-    //         softWrap: false,
-    //         style: const TextStyle(
-    //           color: Colors.white,
-    //           fontSize: 12,
-    //         ),
-    //       ),
-    //     ),
-    //     const SizedBox(height: 5),
-    //     Row(
-    //       children: tags
-    //           .map((e) => Container(
-    //               padding: const EdgeInsets.symmetric(horizontal: 5),
-    //               decoration: BoxDecoration(
-    //                   color: const Color(0xff4277DC).withOpacity(0.5),
-    //                   borderRadius: BorderRadius.circular(10)),
-    //               child: Text(
-    //                 e.name ?? '',
-    //                 style: const TextStyle(
-    //                   color: Color(0xff21AFFF),
-    //                   fontSize: 10,
-    //                 ),
-    //               )))
-    //           .toList()
-    //           .map((widget) => Row(
-    //                 children: [
-    //                   widget,
-    //                   const SizedBox(width: 10),
-    //                 ],
-    //               ))
-    //           .toList(),
-    //     )
-    //   ],
-    // );
-    // 上面程式放在LayoutBuilder裡面
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
           children: [
-            Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                color: Colors.white,
-              ),
-              height: constraints.maxWidth * (imageRatio ?? 182 / 101.93),
-              width: double.infinity,
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: SidImage(
-                  sid: coverHorizontal,
-                  width: double.infinity,
-                  fit: BoxFit.fill,
+            // 上面轉成AspectRatio
+            AspectRatio(
+              aspectRatio: imageRatio ?? 182 / 101.93,
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: Colors.white,
+                ),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: SidImage(
+                    sid: coverHorizontal,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
                 ),
               ),
             ),

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/widgets/grid_silver_fix_size_delegate.dart';
 
+import '../../../../widgets/video_block_grid_view.dart';
+
 // 一大多小
 class Block1Widget extends StatelessWidget {
   List<Data> videos = [];
@@ -15,40 +17,23 @@ class Block1Widget extends StatelessWidget {
     // 取得this.videos的第一個物件
     Data videoFromFirst = videos[0];
 
-    return Column(
-      children: [
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: VideoPreviewWidget(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          VideoPreviewWidget(
             title: videoFromFirst.title ?? '',
             tags: videoFromFirst.tags ?? [],
             timeLength: videoFromFirst.timeLength ?? 0,
             coverHorizontal: videoFromFirst.coverHorizontal ?? '',
             coverVertical: videoFromFirst.coverVertical ?? '',
             videoViewTimes: videoFromFirst.videoViewTimes ?? 0,
+            imageRatio: 374 / 198,
           ),
-        ),
-        GridView.count(
-            crossAxisCount: 2,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            // mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-            childAspectRatio: 182 / 160,
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            children: List.generate(
-              videosFromSecond.length,
-              (index) => VideoPreviewWidget(
-                  title: videosFromSecond[index].title ?? '',
-                  tags: videosFromSecond[index].tags ?? [],
-                  timeLength: videosFromSecond[index].timeLength ?? 0,
-                  coverHorizontal:
-                      videosFromSecond[index].coverHorizontal ?? '',
-                  coverVertical: videosFromSecond[index].coverVertical ?? '',
-                  videoViewTimes: videosFromSecond[index].videoViewTimes ?? 0,
-                  imageRatio: 101.93 / 182),
-            ))
-      ],
+          const SizedBox(height: 10),
+          VideoBlockGridView(videos: videosFromSecond),
+        ],
+      ),
     );
   }
 }
