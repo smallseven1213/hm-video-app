@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       homePath: routes.keys.first,
       routes: routes,
       splashImage: 'assets/images/splash.png',
+      appColors: AppColors.colors
     );
   }
 }
