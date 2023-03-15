@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
 
+import '../../../widgets/video_block_header.dart';
 import 'video_block_template/block_1.dart';
 import 'video_block_template/block_2.dart';
 
@@ -25,25 +26,15 @@ class VideoBlock extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            // padding x 10
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Text('${block.name} [${block.template}]' ?? '',
-                textAlign: TextAlign.start,
-                style: const TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white)),
+          VideoBlockHeader(
+            text: '${block.name} [${block.template}]',
+          ),
+          const SizedBox(
+            height: 5,
           ),
           blockMap[block.template ?? 0] == null
               ? const SizedBox()
               : blockMap[block.template ?? 0]!(block.videos?.data ?? []),
-
-          // ...?block.videos?.data
-          //     ?.map((e) => Container(
-          //           child: Text(e.title ?? '--'),
-          //         ))
-          //     .toList(),
         ],
       ),
     );

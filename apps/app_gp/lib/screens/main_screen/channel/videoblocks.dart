@@ -29,10 +29,6 @@ class VideoBlocks extends StatelessWidget {
         if (channelData == null) {
           return const Center(child: CircularProgressIndicator());
         }
-        // return Column(
-        //   children:
-        //       channelData.blocks!.map((e) => VideoBlock(block: e)).toList(),
-        // );
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
