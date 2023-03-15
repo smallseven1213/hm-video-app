@@ -4,9 +4,9 @@ import 'package:app_gp/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
 
-class Block2Widget extends StatelessWidget {
+class Block8Widget extends StatelessWidget {
   List<Data> videos = [];
-  Block2Widget({Key? key, required this.videos}) : super(key: key);
+  Block8Widget({Key? key, required this.videos}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
