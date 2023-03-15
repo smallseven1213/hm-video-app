@@ -63,7 +63,6 @@ class BannerImage {
 }
 
 class Jingang {
-  bool? isBanner;
   List<JingangDetail>? jingangDetail;
   bool? outerFrame;
   int? outerFrameStyle;
@@ -71,17 +70,16 @@ class Jingang {
   int? jingangStyle;
   int? quantity;
 
-  Jingang(
-      {isBanner,
-      jingangDetail,
-      outerFrame,
-      outerFrameStyle,
-      title,
-      jingangStyle,
-      quantity});
+  Jingang({
+    jingangDetail,
+    outerFrame, // 是否有外框
+    outerFrameStyle, // 1: 圓形, 2: 方形
+    title, // 金剛區標題
+    jingangStyle, // 1: 單排, 2: 多排
+    quantity, // 一排的數量，預設: 4
+  });
 
   Jingang.fromJson(Map<String, dynamic> json) {
-    isBanner = json['isBanner'];
     if (json['jingangDetail'] != null) {
       jingangDetail = <JingangDetail>[];
       json['jingangDetail'].forEach((v) {
@@ -97,7 +95,6 @@ class Jingang {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['isBanner'] = isBanner;
     if (jingangDetail != null) {
       data['jingangDetail'] = jingangDetail!.map((v) => v.toJson()).toList();
     }

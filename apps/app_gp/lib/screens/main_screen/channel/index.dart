@@ -29,7 +29,7 @@ class Channel extends StatelessWidget {
           child: Banners(channelId: channelId),
         ),
         SliverToBoxAdapter(
-          child: Jingang(channelId: channelId),
+          child: JingangList(channelId: channelId),
         ),
         SliverToBoxAdapter(
           child: VideoBlocks(channelId: channelId),

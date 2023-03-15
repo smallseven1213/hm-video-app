@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:shared/models/banner.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
@@ -35,17 +34,11 @@ class BannerApi {
   Future<void> recordBannerClick({
     required int bannerId,
   }) async {
-    try {
-      var response = await fetcher(
-          url: '$apiPrefix/banner/bannerClickRecord',
-          method: 'POST',
-          body: {'bannerId': bannerId});
-      var res = (response.data as Map<String, dynamic>);
-      if (res['code'] != '00') {
-        return;
-      }
-    } catch (err) {
-      print('recordBannerClick error: $err');
+    if (bannerId == 0) {
+      throw Exception('bannerId is 0');
     }
+    fetcher(url: '$apiPrefix/banner/bannerClickRecord', method: 'POST', body: {
+      'bannerId': bannerId,
+    });
   }
 }
