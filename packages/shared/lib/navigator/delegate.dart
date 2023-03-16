@@ -82,6 +82,13 @@ class MyRouteDelegate extends RouterDelegate<String>
       key: navigatorKey,
       onPopPage: _onPopPage,
       pages: _stack.map((name) {
+        if (routes[name] == null) {
+          return MaterialPage(
+            key: const ValueKey('/'),
+            name: '/',
+            child: routes['/']!(context),
+          );
+        }
         if (_hasTransition) {
           return MaterialPage(
             key: ValueKey(name),
