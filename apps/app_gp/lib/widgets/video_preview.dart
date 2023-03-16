@@ -115,11 +115,9 @@ class VideoPreviewWidget extends StatelessWidget {
                   aspectRatio: imageRatio ?? 182 / 101.93,
                   child: Align(
                     alignment: AlignmentDirectional.bottomEnd,
-                    child: Expanded(
-                      child: ViewInfo(
-                        viewCount: videoViewTimes,
-                        duration: getTimeString(timeLength),
-                      ),
+                    child: ViewInfo(
+                      viewCount: videoViewTimes,
+                      duration: getTimeString(timeLength),
                     ),
                   ),
                 ),
