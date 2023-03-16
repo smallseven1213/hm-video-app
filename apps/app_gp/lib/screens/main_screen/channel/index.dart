@@ -23,21 +23,29 @@ class Channel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate([
-            RepaintBoundary(
-              child: Banners(channelId: channelId),
-            ),
-            RepaintBoundary(
-              child: JingangList(channelId: channelId),
-            ),
-            RepaintBoundary(
-              child: VideoBlocks(channelId: channelId),
-            ),
-          ]),
-        ),
+    // return CustomScrollView(
+    //   slivers: [
+    //     SliverList(
+    //       delegate: SliverChildListDelegate([
+    //         RepaintBoundary(
+    //           child: Banners(channelId: channelId),
+    //         ),
+    //         RepaintBoundary(
+    //           child: JingangList(channelId: channelId),
+    //         ),
+    //         RepaintBoundary(
+    //           child: VideoBlocks(channelId: channelId),
+    //         ),
+    //       ]),
+    //     ),
+    //   ],
+    // );
+    // 改用ListView
+    return ListView(
+      children: [
+        Banners(channelId: channelId),
+        JingangList(channelId: channelId),
+        VideoBlocks(channelId: channelId),
       ],
     );
   }
