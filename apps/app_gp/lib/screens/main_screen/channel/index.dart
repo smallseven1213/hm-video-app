@@ -25,14 +25,18 @@ class Channel extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: [
-        SliverToBoxAdapter(
-          child: Banners(channelId: channelId),
-        ),
-        SliverToBoxAdapter(
-          child: JingangList(channelId: channelId),
-        ),
-        SliverToBoxAdapter(
-          child: VideoBlocks(channelId: channelId),
+        SliverList(
+          delegate: SliverChildListDelegate([
+            RepaintBoundary(
+              child: Banners(channelId: channelId),
+            ),
+            RepaintBoundary(
+              child: JingangList(channelId: channelId),
+            ),
+            RepaintBoundary(
+              child: VideoBlocks(channelId: channelId),
+            ),
+          ]),
         ),
       ],
     );
