@@ -27,7 +27,7 @@ class VideoBlocks extends StatelessWidget {
       child: Obx(() {
         ChannelInfo? channelData = channelDataController.channelData[channelId];
         if (channelData == null) {
-          return const Center(child: CircularProgressIndicator());
+          return const SizedBox();
         }
         return ListView.builder(
           shrinkWrap: true,

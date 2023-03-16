@@ -10,7 +10,7 @@ final Map<int, Widget Function(List<Data>)> blockMap = {
   1: (List<Data> videos) => Block1Widget(
         videos: videos,
       ),
-  2: (List<Data> videos) => Block2Widget(
+  2: (List<Data> videos) => Block1Widget(
         videos: videos,
       ),
 };
