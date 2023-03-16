@@ -14,45 +14,77 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   // start app
   SystemConfig systemConfig = SystemConfig();
 
-  await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://fa3ef717273444e6887f4e7f32901535@o4504800404373504.ingest.sentry.io/4504800405225472';
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://fa3ef717273444e6887f4e7f32901535@o4504800404373504.ingest.sentry.io/4504800405225472';
 
-      options.tracesSampleRate = 1.0;
-    },
-    appRunner: () async {
-      await Hive.initFlutter();
-      // Step1: 讀取env (local)
-      loadEnvConfig() async {
-        print('step1: Load env with local config');
-        await dotenv.load(fileName: "env/.${systemConfig.project}.env");
-        print('BRAND_NAME: ${dotenv.get('BRAND_NAME')}');
-      }
+  //     options.tracesSampleRate = 1.0;
+  //   },
+  //   appRunner: () async {
+  //     await Hive.initFlutter();
+  //     // Step1: 讀取env (local)
+  //     loadEnvConfig() async {
+  //       print('step1: Load env with local config');
+  //       await dotenv.load(fileName: "env/.${systemConfig.project}.env");
+  //       print('BRAND_NAME: ${dotenv.get('BRAND_NAME')}');
+  //     }
 
-      // Step2: initial indexedDB (Hive)
-      initialIndexedDB() async {
-        print('step2: initial indexedDB (Hive)');
-        await Hive.initFlutter();
-        if (!kIsWeb) {
-          var dir = await getApplicationDocumentsDirectory();
-          await dir.create(recursive: true);
-          Hive.init(dir.path);
-          // ..registerAdapter(VideoHistoryAdapter());
-        } else {
-          // Hive.registerAdapter(VideoHistoryAdapter());
-        }
-      }
+  //     // Step2: initial indexedDB (Hive)
+  //     initialIndexedDB() async {
+  //       print('step2: initial indexedDB (Hive)');
+  //       await Hive.initFlutter();
+  //       if (!kIsWeb) {
+  //         var dir = await getApplicationDocumentsDirectory();
+  //         await dir.create(recursive: true);
+  //         Hive.init(dir.path);
+  //         // ..registerAdapter(VideoHistoryAdapter());
+  //       } else {
+  //         // Hive.registerAdapter(VideoHistoryAdapter());
+  //       }
+  //     }
 
-      // DI shared package
-      setupDependencies();
+  //     // DI shared package
+  //     setupDependencies();
 
-      // DI app_gp package
+  //     // DI app_gp package
 
-      // set SystemConfig appColors
+  //     // set SystemConfig appColors
 
-      // Running Main
-      runApp(widget);
-    },
-  );
+  //     // Running Main
+  //     runApp(widget);
+  //   },
+  // );
+
+  await Hive.initFlutter();
+  // Step1: 讀取env (local)
+  loadEnvConfig() async {
+    print('step1: Load env with local config');
+    await dotenv.load(fileName: "env/.${systemConfig.project}.env");
+    print('BRAND_NAME: ${dotenv.get('BRAND_NAME')}');
+  }
+
+  // Step2: initial indexedDB (Hive)
+  initialIndexedDB() async {
+    print('step2: initial indexedDB (Hive)');
+    await Hive.initFlutter();
+    if (!kIsWeb) {
+      var dir = await getApplicationDocumentsDirectory();
+      await dir.create(recursive: true);
+      Hive.init(dir.path);
+      // ..registerAdapter(VideoHistoryAdapter());
+    } else {
+      // Hive.registerAdapter(VideoHistoryAdapter());
+    }
+  }
+
+  // DI shared package
+  setupDependencies();
+
+  // DI app_gp package
+
+  // set SystemConfig appColors
+
+  // Running Main
+  runApp(widget);
 }

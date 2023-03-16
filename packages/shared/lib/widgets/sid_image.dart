@@ -59,20 +59,22 @@ class SidImageState extends State<SidImage> {
       setState(() {
         imageData = file;
       });
-      widget.onLoaded!();
+      widget.onLoaded != null ? widget.onLoaded!() : null;
     } else {
       try {
         var res = await ImageApi().getSidImageData(widget.sid);
         var decoded = getSidImageDecode(res);
         var file = base64Decode(decoded);
         await sidImageBox.put(widget.sid, file);
+
         setState(() {
           imageData = file;
         });
-        widget.onLoaded!();
+        widget.onLoaded != null ? widget.onLoaded!() : null;
       } catch (e) {
-        logger.d(e);
-        widget.onError!();
+        logger.d('${widget.sid}==ERROR=\n$e');
+        // if widget.onError is not null, call it
+        widget.onError != null ? widget.onError!() : null;
       }
     }
   }
