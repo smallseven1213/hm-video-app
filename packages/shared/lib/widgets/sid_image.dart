@@ -82,12 +82,9 @@ class SidImageState extends State<SidImage> {
   @override
   Widget build(BuildContext context) {
     if (imageData.isEmpty) {
-      return Container(
+      return SizedBox(
         width: widget.width,
         height: widget.height,
-        child: const Center(
-          child: CircularProgressIndicator(),
-        ),
       );
     }
     return Image.memory(

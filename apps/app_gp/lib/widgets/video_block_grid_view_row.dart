@@ -16,76 +16,70 @@ class VideoBlockGridViewRow extends StatefulWidget {
 
 class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
   bool _isVisible = false;
-  double _opacity = 0.0;
 
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
       key: Key('video_block_grid_view_row_${widget.videoData.hashCode}'),
       onVisibilityChanged: (VisibilityInfo info) {
-        if (info.visibleFraction > 0.6 && !_isVisible) {
+        if (info.visibleFraction > 0.3 && !_isVisible) {
           setState(() {
             _isVisible = true;
-            _opacity = 1.0;
           });
         }
       },
       child: _isVisible
-          ? AnimatedOpacity(
-              opacity: _opacity,
-              duration: const Duration(milliseconds: 500),
-              child: Builder(
-                builder: (BuildContext context) {
-                  if (widget.videoData.length == 1) {
-                    return Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: VideoPreviewWidget(
-                            title: widget.videoData[0].title ?? '精彩好片',
-                            tags: widget.videoData[0].tags ?? [],
-                            timeLength: widget.videoData[0].timeLength ?? 0,
-                            coverHorizontal:
-                                widget.videoData[0].coverHorizontal ?? '',
-                            coverVertical:
-                                widget.videoData[0].coverVertical ?? '',
-                            videoViewTimes:
-                                widget.videoData[0].videoViewTimes ?? 0,
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        const Expanded(
-                          child: SizedBox(
-                            height: 200,
-                            width: double.infinity,
-                          ),
-                        ),
-                      ],
-                    );
-                  }
-
+          ? Builder(
+              builder: (BuildContext context) {
+                if (widget.videoData.length == 1) {
                   return Row(
-                    children: widget.videoData
-                        .expand(
-                          (e) => [
-                            Expanded(
-                              child: VideoPreviewWidget(
-                                title: e.title ?? '精彩好片',
-                                tags: e.tags ?? [],
-                                timeLength: e.timeLength ?? 0,
-                                coverHorizontal: e.coverHorizontal ?? '',
-                                coverVertical: e.coverVertical ?? '',
-                                videoViewTimes: e.videoViewTimes ?? 0,
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                          ],
-                        )
-                        .toList()
-                      ..removeLast(),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: VideoPreviewWidget(
+                          title: widget.videoData[0].title ?? '精彩好片',
+                          tags: widget.videoData[0].tags ?? [],
+                          timeLength: widget.videoData[0].timeLength ?? 0,
+                          coverHorizontal:
+                              widget.videoData[0].coverHorizontal ?? '',
+                          coverVertical:
+                              widget.videoData[0].coverVertical ?? '',
+                          videoViewTimes:
+                              widget.videoData[0].videoViewTimes ?? 0,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      const Expanded(
+                        child: SizedBox(
+                          height: 200,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ],
                   );
-                },
-              ),
+                }
+
+                return Row(
+                  children: widget.videoData
+                      .expand(
+                        (e) => [
+                          Expanded(
+                            child: VideoPreviewWidget(
+                              title: e.title ?? '精彩好片',
+                              tags: e.tags ?? [],
+                              timeLength: e.timeLength ?? 0,
+                              coverHorizontal: e.coverHorizontal ?? '',
+                              coverVertical: e.coverVertical ?? '',
+                              videoViewTimes: e.videoViewTimes ?? 0,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                        ],
+                      )
+                      .toList()
+                    ..removeLast(),
+                );
+              },
             )
           : Container(
               height: 200,
