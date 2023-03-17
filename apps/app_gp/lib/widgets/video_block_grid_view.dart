@@ -12,23 +12,22 @@ class VideoBlockGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: List.generate(
-        (videos.length / 2).ceil(),
-        (index) {
-          int start = index * 2;
-          int end = (start + 2 <= videos.length) ? start + 2 : videos.length;
-          List<Data> rowData = videos.sublist(start, end);
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              VideoBlockGridViewRow(videoData: rowData),
-              const SizedBox(height: 8),
-            ],
-          );
-        },
-      ),
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: (videos.length / 2).ceil(),
+      itemBuilder: (context, index) {
+        int start = index * 2;
+        int end = (start + 2 <= videos.length) ? start + 2 : videos.length;
+        List<Data> rowData = videos.sublist(start, end);
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            VideoBlockGridViewRow(videoData: rowData),
+            const SizedBox(height: 8),
+          ],
+        );
+      },
     );
   }
 }
