@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:app_gp/config/colors.dart';
 import 'package:app_gp/screens/discover_screen.dart';
 import 'package:app_gp/screens/shorts_screen.dart';
@@ -26,15 +28,55 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
-        body: IndexedStack(
-          index: bottomNavigatorController.activeIndex.value,
-          children: screens,
+    return Obx(
+      () => Scaffold(
+        body: Stack(
+          children: [
+            IndexedStack(
+              index: bottomNavigatorController.activeIndex.value,
+              children: screens,
+            ),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Opacity(
+                opacity: 0.9, // 控制透明度，此处设置为0.9
+                child: Container(
+                  height: 76,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Color(0xFF000000),
+                        Color(0xFF002869),
+                      ],
+                    ),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(10),
+                      topRight: Radius.circular(10),
+                    ),
+                    child: BottomNavigationBar(
+                      backgroundColor: Colors.transparent,
+                      onTap: (value) =>
+                          bottomNavigatorController.changeIndex(value),
+                      items: bottomNavigatorController.navigatorItems,
+                      elevation: 0, // To remove the default elevation
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: AppColors.colors[ColorKeys.background],
-          onTap: (value) => bottomNavigatorController.changeIndex(value),
-          items: bottomNavigatorController.navigatorItems,
-        )));
+      ),
+    );
   }
 }

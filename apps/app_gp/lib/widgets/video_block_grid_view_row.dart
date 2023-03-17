@@ -22,7 +22,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
     return VisibilityDetector(
       key: Key('video_block_grid_view_row_${widget.videoData.hashCode}'),
       onVisibilityChanged: (VisibilityInfo info) {
-        if (info.visibleFraction > 0.6 && !_isVisible) {
+        if (info.visibleFraction > 0.3 && !_isVisible) {
           setState(() {
             _isVisible = true;
           });

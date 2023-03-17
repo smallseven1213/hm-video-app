@@ -33,23 +33,41 @@ class SearchBar extends StatelessWidget {
                 // padding: const EdgeInsets.only(left: 10),
                 alignment: Alignment.center,
                 color: AppColors.colors[ColorKeys.background],
-                child: const SizedBox(
+                child: SizedBox(
                   height: 30,
-                  child: TextField(
-                    textAlignVertical: TextAlignVertical.center,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.symmetric(vertical: 20.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)),
-                        borderSide: BorderSide(
-                          color: Colors.white,
-                          width: 2,
-                        ),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xFF00B2FF),
+                          Color(0xFFCCEAFF),
+                          Color(0xFF0075FF),
+                        ],
+                        stops: [0, 0.5, 1],
                       ),
-                      hintText: 'Search',
-                      hintStyle: TextStyle(color: Colors.grey),
                     ),
-                    style: TextStyle(color: Colors.white),
+                    padding: const EdgeInsets.all(
+                        2), // Set the width of the gradient border
+                    child: const TextField(
+                      textAlignVertical: TextAlignVertical
+                          .center, // Vertically center the input text
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderSide: BorderSide.none,
+                        ),
+                        hintText: 'Search',
+                        hintStyle: TextStyle(color: Colors.grey),
+                        filled: true,
+                        fillColor: Color(
+                            0xFF002865), // Set the background color of the input
+                      ),
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 )),
           ),
