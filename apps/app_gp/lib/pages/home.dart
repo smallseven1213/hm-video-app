@@ -26,15 +26,25 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Obx(() => IndexedStack(
-              index: bottomNavigatorController.activeIndex.value,
-              children: screens,
-            )),
-        bottomNavigationBar: Obx(() => BottomNavigationBar(
-              backgroundColor: AppColors.colors[ColorKeys.background],
-              onTap: (value) => bottomNavigatorController.changeIndex(value),
-              items: bottomNavigatorController.navigatorItems,
-            )));
+    return Obx(() => Scaffold(
+        body: IndexedStack(
+          index: bottomNavigatorController.activeIndex.value,
+          children: screens,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: AppColors.colors[ColorKeys.background],
+          onTap: (value) => bottomNavigatorController.changeIndex(value),
+          items: bottomNavigatorController.navigatorItems,
+        )));
+    // return Scaffold(
+    //     body: Obx(() => IndexedStack(
+    //           index: bottomNavigatorController.activeIndex.value,
+    //           children: screens,
+    //         )),
+    //     bottomNavigationBar: Obx(() => BottomNavigationBar(
+    //           backgroundColor: AppColors.colors[ColorKeys.background],
+    //           onTap: (value) => bottomNavigatorController.changeIndex(value),
+    //           items: bottomNavigatorController.navigatorItems,
+    //         )));
   }
 }
