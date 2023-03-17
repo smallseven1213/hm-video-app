@@ -16,7 +16,7 @@ class GameScreen extends StatelessWidget {
           children: <Widget>[
             TextButton(
                 onPressed: () {
-                  Get.toNamed('/game/deposit');
+                  // Get.toNamed('/game/deposit');
                 },
                 child: Text('game'))
           ],

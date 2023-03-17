@@ -25,10 +25,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RootWidget(
-      homePath: routes.keys.first,
-      routes: routes,
-      splashImage: 'assets/images/splash.png',
-      appColors: AppColors.colors
-    );
+        homePath: routes.keys.first,
+        routes: routes,
+        splashImage: 'assets/images/splash.png',
+        appColors: AppColors.colors);
   }
 }
