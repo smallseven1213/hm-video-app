@@ -1,6 +1,3 @@
-import 'dart:ui';
-
-import 'package:app_gp/config/colors.dart';
 import 'package:app_gp/screens/discover_screen.dart';
 import 'package:app_gp/screens/shorts_screen.dart';
 import 'package:app_gp/screens/game_screen.dart';
@@ -8,9 +5,9 @@ import 'package:app_gp/screens/user_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
-import 'package:shared/models/color_keys.dart';
 
 import '../screens/main_screen/index.dart';
+import '../widgets/custom_bottom_bar_item.dart';
 
 // home是一個有bottom navigation bar的頁面
 class Home extends StatelessWidget {
@@ -18,65 +15,89 @@ class Home extends StatelessWidget {
 
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
-  final screens = [
-    HomeMainScreen(),
-    ShortScreen(),
-    GameScreen(),
-    DiscoverScreen(),
-    UserScreen()
-  ];
+  final screens = const {
+    '/layout1': HomeMainScreen(),
+    '/layout2': ShortScreen(),
+    '/game': GameScreen(),
+    '/apps': DiscoverScreen(),
+    '/user': UserScreen()
+  };
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-        body: Stack(
-          children: [
-            IndexedStack(
-              index: bottomNavigatorController.activeIndex.value,
-              children: screens,
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Opacity(
-                opacity: 0.9, // 控制透明度，此处设置为0.9
-                child: Container(
-                  height: 76,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF000000),
-                        Color(0xFF002869),
-                      ],
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    child: BottomNavigationBar(
-                      backgroundColor: Colors.transparent,
-                      onTap: (value) =>
-                          bottomNavigatorController.changeIndex(value),
-                      items: bottomNavigatorController.navigatorItems,
-                      elevation: 0, // To remove the default elevation
-                    ),
-                  ),
-                ),
+      () {
+        var screenIndex = screens.keys
+            .toList()
+            .indexOf(bottomNavigatorController.activeKey.value);
+
+        if (screenIndex == -1) {
+          return Container();
+        }
+        return Scaffold(
+          body: Stack(
+            children: [
+              IndexedStack(
+                index: screens.keys
+                    .toList()
+                    .indexOf(bottomNavigatorController.activeKey.value),
+                children: screens.values.toList(),
               ),
-            ),
-          ],
-        ),
-      ),
+              bottomNavigatorController.navigatorItems.isEmpty
+                  ? Container()
+                  : Positioned(
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      child: Opacity(
+                        opacity: 0.9, // 控制透明度，此处设置为0.9
+                        child: Container(
+                          height: 76,
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF000000),
+                                Color(0xFF002869),
+                              ],
+                            ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            child: Row(
+                              children: bottomNavigatorController.navigatorItems
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (entry) => Expanded(
+                                      child: CustomBottomBarItem(
+                                        isActive: entry.key == screenIndex,
+                                        iconSid: entry.value.photoSid!,
+                                        activeIconSid: entry.value.clickEffect!,
+                                        label: entry.value.name!,
+                                        onTap: () => bottomNavigatorController
+                                            .changeKey(entry.value.path!),
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

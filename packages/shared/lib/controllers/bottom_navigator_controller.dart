@@ -1,40 +1,29 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../apis/navigator_api.dart';
-import '../widgets/sid_image.dart';
+import '../models/navigation.dart';
+
+final logger = Logger();
 
 class BottonNavigatorController extends GetxController {
-  final activeIndex = 0.obs;
-  final navigatorItems = <BottomNavigationBarItem>[].obs;
+  final activeKey = ''.obs;
+  final navigatorItems = <Navigation>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     NavigatorApi().getNavigations().then((value) {
-      var items = value.map((e) {
-        return BottomNavigationBarItem(
-          icon: e.photoSid == null || e.photoSid == ''
-              ? Container()
-              : SidImage(
-                  sid: e.photoSid!,
-                  width: 30,
-                  height: 30,
-                ),
-          label: e.name,
-        );
-      }).toList();
-
-      setNavigatorItems(items);
+      setNavigatorItems(value);
+      changeKey(value.first.path!);
     });
   }
 
-  void changeIndex(int index) {
-    activeIndex.value = index;
+  void changeKey(String key) {
+    activeKey.value = key;
   }
 
-  // replace NavigatorItems
-  void setNavigatorItems(List<BottomNavigationBarItem> items) {
+  void setNavigatorItems(List<Navigation> items) {
     navigatorItems.value = items;
   }
 }
