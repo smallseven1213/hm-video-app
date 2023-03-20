@@ -15,7 +15,7 @@ void main() {
 
 final Map<String, WidgetBuilder> routes = {
   '/home': (context) => Home(),
-  '/video': (context) => Video(),
+  '/video/:id': (context) => Video(),
   '/game/deposit': (context) => GameDeposit(),
 };
 

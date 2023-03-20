@@ -1,4 +1,4 @@
-import 'package:app_gp/screens/discover_screen.dart';
+import 'package:app_gp/screens/apps_screen.dart';
 import 'package:app_gp/screens/shorts_screen.dart';
 import 'package:app_gp/screens/game_screen.dart';
 import 'package:app_gp/screens/user_screen.dart';
@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
     '/layout1': HomeMainScreen(),
     '/layout2': ShortScreen(),
     '/game': GameScreen(),
-    '/apps': DiscoverScreen(),
+    '/apps': AppsScreen(),
     '/user': UserScreen()
   };
 
