@@ -8,7 +8,7 @@ import 'video_block_template/block_2.dart';
 final Map<int, Widget Function(Blocks block)> blockMap = {
   0: (Blocks block) => const SizedBox(),
   1: (Blocks block) => Block1Widget(block: block),
-  2: (Blocks block) => Block1Widget(block: block),
+  2: (Blocks block) => Block2Widget(block: block),
 };
 
 class VideoBlock extends StatelessWidget {
