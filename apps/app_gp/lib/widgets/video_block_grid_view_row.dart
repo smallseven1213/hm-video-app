@@ -7,8 +7,12 @@ import 'video_preview.dart';
 
 class VideoBlockGridViewRow extends StatefulWidget {
   final List<Data> videoData;
-
-  VideoBlockGridViewRow({required this.videoData});
+  final int gridLength;
+  const VideoBlockGridViewRow({
+    super.key,
+    required this.videoData,
+    this.gridLength = 2,
+  });
 
   @override
   _VideoBlockGridViewRowState createState() => _VideoBlockGridViewRowState();
@@ -31,6 +35,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
       child: _isVisible
           ? Builder(
               builder: (BuildContext context) {
+                print('widget.videoData.length: ${widget.videoData}');
                 if (widget.videoData.length == 1) {
                   return Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +51,47 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                               widget.videoData[0].coverVertical ?? '',
                           videoViewTimes:
                               widget.videoData[0].videoViewTimes ?? 0,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      const Expanded(
+                        child: SizedBox(
+                          height: 200,
+                          width: double.infinity,
+                        ),
+                      ),
+                    ],
+                  );
+                } else if (widget.gridLength == 3 &&
+                    widget.videoData.length == 2) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: VideoPreviewWidget(
+                          title: widget.videoData[0].title ?? '精彩好片',
+                          tags: widget.videoData[0].tags ?? [],
+                          timeLength: widget.videoData[0].timeLength ?? 0,
+                          coverHorizontal:
+                              widget.videoData[0].coverHorizontal ?? '',
+                          coverVertical:
+                              widget.videoData[0].coverVertical ?? '',
+                          videoViewTimes:
+                              widget.videoData[0].videoViewTimes ?? 0,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: VideoPreviewWidget(
+                          title: widget.videoData[1].title ?? '精彩好片',
+                          tags: widget.videoData[1].tags ?? [],
+                          timeLength: widget.videoData[1].timeLength ?? 0,
+                          coverHorizontal:
+                              widget.videoData[1].coverHorizontal ?? '',
+                          coverVertical:
+                              widget.videoData[1].coverVertical ?? '',
+                          videoViewTimes:
+                              widget.videoData[1].videoViewTimes ?? 0,
                         ),
                       ),
                       const SizedBox(width: 10),

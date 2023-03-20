@@ -23,7 +23,7 @@ class SearchBar extends StatelessWidget {
               height: 60,
               color: AppColors.colors[ColorKeys.background],
               child: const Image(
-                image: AssetImage('assets/images/home_search_bar_logo.png'),
+                image: AssetImage('images/home_search_bar_logo.png'),
                 width: 50.0,
                 height: 50.0,
               ),
@@ -81,7 +81,7 @@ class SearchBar extends StatelessWidget {
               height: 60,
               color: AppColors.colors[ColorKeys.background],
               child: const Image(
-                image: AssetImage('assets/images/home_search_bar_filter.png'),
+                image: AssetImage('images/home_search_bar_filter.png'),
                 width: 50.0,
                 height: 50.0,
               ),

@@ -30,7 +30,7 @@ Future<Response> fetcher({
     'authorization': 'Bearer ${systemConfig.authToken}',
   };
 
-  if (GetPlatform.isWeb) {
+  if (GetPlatform.isWeb || method == 'POST') {
     headerConfig['content-type'] = 'application/json; charset=utf-8';
   }
 
