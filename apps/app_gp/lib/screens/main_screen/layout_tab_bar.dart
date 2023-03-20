@@ -6,6 +6,8 @@ import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
 import 'package:shared/models/color_keys.dart';
 
+import 'layout_tab_bar_item.dart';
+
 var logger = Logger();
 
 class LayoutTabBar extends StatefulWidget {
@@ -35,25 +37,9 @@ class LayoutTabBarState extends State<LayoutTabBar>
         tabItems = channels
             .map((e) => Tab(child: Builder(
                   builder: (BuildContext context) {
-                    final bool isCurrentTab =
-                        tabController.index == channels.indexOf(e);
-                    return Text(
-                      e.name,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: isCurrentTab
-                              ? AppColors.colors[ColorKeys.primary]
-                              : const Color(0xffCFCECE),
-                          shadows: isCurrentTab
-                              ? [
-                                  Shadow(
-                                    color: AppColors.colors[ColorKeys.primary]!
-                                        .withOpacity(0.5),
-                                    offset: const Offset(0, 0),
-                                    blurRadius: 5,
-                                  ),
-                                ]
-                              : null),
+                    return LayoutTabBarItem(
+                      index: channels.indexOf(e),
+                      name: e.name,
                     );
                   },
                 )))
@@ -94,11 +80,11 @@ class LayoutTabBarState extends State<LayoutTabBar>
       height: 60,
       width: double.infinity,
       color: AppColors.colors[ColorKeys.background],
-      padding: const EdgeInsets.only(top: 24),
+      padding: const EdgeInsets.only(top: 8),
       child: TabBar(
           isScrollable: true,
           controller: tabController,
-          indicatorPadding: const EdgeInsets.only(bottom: 0),
+          indicatorPadding: const EdgeInsets.only(bottom: 4),
           indicatorWeight: 5,
           indicatorColor: AppColors.colors[ColorKeys.primary],
           indicator: UnderlineTabIndicator(
