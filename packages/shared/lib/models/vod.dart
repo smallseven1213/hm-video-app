@@ -5,6 +5,13 @@ import 'package:shared/models/tag.dart';
 
 import 'actor.dart';
 
+enum VideoType {
+  unused,
+  video,
+  embeddedAd,
+  areaAd,
+}
+
 class Vod {
   final int id;
   final String title;

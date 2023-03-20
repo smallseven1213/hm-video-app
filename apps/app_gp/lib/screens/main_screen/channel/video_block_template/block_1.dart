@@ -1,7 +1,8 @@
+import 'package:app_gp/widgets/channel_area_banner.dart';
 import 'package:app_gp/widgets/video_block_grid_view_row.dart';
 import 'package:app_gp/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
 
 List<List<Data>> organizeRowData(List videos, Blocks block) {
   List<List<Data>> result = [];
@@ -9,6 +10,7 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
   int blockLength = block.isAreaAds == true ? 6 : 5;
 
   for (int i = 0; i < blockQuantity;) {
+    if (i == videos.length - 1) break;
     if (i % blockLength == 0 || i % blockLength == 5) {
       result.add([videos[i]]);
       i++;
@@ -27,8 +29,8 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
 
 // 一大多小
 class Block1Widget extends StatelessWidget {
-  Blocks block;
-  Block1Widget({
+  final Blocks block;
+  const Block1Widget({
     Key? key,
     required this.block,
   }) : super(key: key);
@@ -44,21 +46,29 @@ class Block1Widget extends StatelessWidget {
         children: List.generate(
           result.length,
           (index) {
-            return Padding(
+            return Container(
               padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                child: index % 4 == 0 || index % 4 == 3
-                    ? VideoPreviewWidget(
-                        title: result[index][0].title ?? '',
-                        tags: result[index][0].tags ?? [],
-                        timeLength: result[index][0].timeLength ?? 0,
-                        coverHorizontal: result[index][0].coverHorizontal ?? '',
-                        coverVertical: result[index][0].coverVertical ?? '',
-                        videoViewTimes: result[index][0].videoViewTimes ?? 0,
-                        imageRatio: 374 / 198,
-                      )
-                    : VideoBlockGridViewRow(videoData: result[index]),
-              ),
+              child: index % 4 == 0 || index % 4 == 3
+                  ? result[index][0].dataType == VideoType.areaAd.index
+                      ? ChannelAreaBanner(
+                          image: BannerImage.fromJson({
+                            'id': result[index][0].id ?? 0,
+                            'url': result[index][0].adUrl ?? '',
+                            'photoSid': result[index][0].coverHorizontal ?? '',
+                            'isAutoClose': false,
+                          }),
+                        )
+                      : VideoPreviewWidget(
+                          title: result[index][0].title ?? '',
+                          tags: result[index][0].tags ?? [],
+                          timeLength: result[index][0].timeLength ?? 0,
+                          coverHorizontal:
+                              result[index][0].coverHorizontal ?? '',
+                          coverVertical: result[index][0].coverVertical ?? '',
+                          videoViewTimes: result[index][0].videoViewTimes ?? 0,
+                          imageRatio: 374 / 198,
+                        )
+                  : VideoBlockGridViewRow(videoData: result[index]),
             );
           },
         ),
