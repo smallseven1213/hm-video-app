@@ -16,14 +16,17 @@ class SearchBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // button
-          Container(
-            width: 60,
-            height: 60,
-            color: AppColors.colors[ColorKeys.background],
-            child: const Icon(
-              Icons.search,
-              color: Colors.white,
+          InkWell(
+            onTap: () {},
+            child: Container(
+              width: 40,
+              height: 60,
+              color: AppColors.colors[ColorKeys.background],
+              child: const Image(
+                image: AssetImage('assets/images/home_search_bar_logo.png'),
+                width: 50.0,
+                height: 50.0,
+              ),
             ),
           ),
           // input
@@ -60,7 +63,7 @@ class SearchBar extends StatelessWidget {
                           borderRadius: BorderRadius.all(Radius.circular(20)),
                           borderSide: BorderSide.none,
                         ),
-                        hintText: 'Search',
+                        hintText: '搜尋',
                         hintStyle: TextStyle(color: Colors.grey),
                         filled: true,
                         fillColor: Color(
@@ -71,13 +74,17 @@ class SearchBar extends StatelessWidget {
                   ),
                 )),
           ),
-          Container(
-            width: 60,
-            height: 60,
-            color: AppColors.colors[ColorKeys.background],
-            child: const Icon(
-              Icons.filter_list,
-              color: Colors.white,
+          InkWell(
+            onTap: () {},
+            child: Container(
+              width: 40,
+              height: 60,
+              color: AppColors.colors[ColorKeys.background],
+              child: const Image(
+                image: AssetImage('assets/images/home_search_bar_filter.png'),
+                width: 50.0,
+                height: 50.0,
+              ),
             ),
           ),
         ],

@@ -94,11 +94,11 @@ class LayoutTabBarState extends State<LayoutTabBar>
       height: 60,
       width: double.infinity,
       color: AppColors.colors[ColorKeys.background],
-      padding: const EdgeInsets.only(top: 24),
-      child: TabBar(
+      padding: const EdgeInsets.only(top: 8),
+      child: Obx(() => TabBar(
           isScrollable: true,
           controller: tabController,
-          indicatorPadding: const EdgeInsets.only(bottom: 0),
+          indicatorPadding: const EdgeInsets.only(bottom: 4),
           indicatorWeight: 5,
           indicatorColor: AppColors.colors[ColorKeys.primary],
           indicator: UnderlineTabIndicator(
@@ -107,7 +107,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
               borderSide: BorderSide(
                   width: 5.0, color: AppColors.colors[ColorKeys.primary]!)),
           onTap: handleTapTabItem,
-          tabs: tabItems),
+          tabs: tabItems)),
     );
   }
 }

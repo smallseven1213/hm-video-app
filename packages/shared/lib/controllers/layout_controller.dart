@@ -22,5 +22,6 @@ class LayoutController extends GetxController {
     }
 
     layout.value = res;
+    update();
   }
 }
