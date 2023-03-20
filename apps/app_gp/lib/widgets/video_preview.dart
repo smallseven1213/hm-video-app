@@ -138,29 +138,34 @@ class VideoPreviewWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 5),
-            Row(
-              children: tags
-                  .map((e) => Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      decoration: BoxDecoration(
-                          color: const Color(0xff4277DC).withOpacity(0.5),
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Text(
-                        e.name ?? '',
-                        style: const TextStyle(
-                          color: Color(0xff21AFFF),
-                          fontSize: 10,
-                        ),
-                      )))
-                  .toList()
-                  .map((widget) => Row(
-                        children: [
-                          widget,
-                          const SizedBox(width: 10),
-                        ],
-                      ))
-                  .toList(),
-            )
+            if (tags.isNotEmpty)
+              Row(
+                children: tags
+                    .map((e) => Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        decoration: BoxDecoration(
+                            color: const Color(0xff4277DC).withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text(
+                          e.name ?? '',
+                          style: const TextStyle(
+                            color: Color(0xff21AFFF),
+                            fontSize: 10,
+                          ),
+                        )))
+                    .toList()
+                    .map((widget) => Row(
+                          children: [
+                            widget,
+                            const SizedBox(width: 10),
+                          ],
+                        ))
+                    .toList(),
+              )
+            else
+              const SizedBox(
+                height: 10,
+              ),
           ],
         );
       },
