@@ -70,4 +70,17 @@ class BannerPhoto {
       tags: json['tags'],
     );
   }
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['isAutoClose'] = isAutoClose;
+    data['photoSid'] = photoSid;
+    data['logoSid'] = logoSid;
+    data['url'] = url;
+    data['name'] = name;
+    data['title'] = title;
+    data['button'] = button;
+    data['tags'] = tags;
+    return data;
+  }
 }

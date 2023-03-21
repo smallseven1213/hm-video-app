@@ -13,7 +13,6 @@ class AdsApi {
     int page = 1,
     int limit = 20,
   }) async {
-    logger.i('call me!');
     var value = await fetcher(
         url:
             '$apiPrefix/ads-app/list?page=$page&limit=$limit&isRecommend=false');
@@ -38,8 +37,6 @@ class AdsApi {
     if (res['code'] != '00') {
       return [];
     }
-    print(List.from(
-        (res['data']['data'] as List<dynamic>).map((e) => Ads.fromJson(e))));
     return List.from(
         (res['data']['data'] as List<dynamic>).map((e) => Ads.fromJson(e)));
   }

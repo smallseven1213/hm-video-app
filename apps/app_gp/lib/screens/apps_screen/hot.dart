@@ -26,7 +26,6 @@ class HotWidget extends StatelessWidget {
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                logger.i(snapshot.data[index].toString());
                 return InkWell(
                   onTap: () {
                     dynamic idDynamic = snapshot.data[index].id;
