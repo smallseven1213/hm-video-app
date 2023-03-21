@@ -19,7 +19,6 @@ class CustomBottomBarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i(isActive);
     return InkWell(
       onTap: onTap,
       child: Column(

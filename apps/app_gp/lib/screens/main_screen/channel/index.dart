@@ -30,6 +30,10 @@ class Channel extends StatelessWidget {
             RepaintBoundary(
               child: Banners(channelId: channelId),
             ),
+          ]),
+        ),
+        SliverList(
+          delegate: SliverChildListDelegate([
             RepaintBoundary(
               child: JingangList(channelId: channelId),
             ),
