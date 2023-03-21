@@ -34,8 +34,13 @@ class MyRouteDelegate extends RouterDelegate<String>
   List<String> get stack => List.unmodifiable(_stack);
 
   // void push, from newRoute and add to _stack
-  void push(String routeName, {bool hasTransition = true}) {
+  void push(String routeName,
+      {bool hasTransition = true, int deletePreviousCount = 0}) {
     _stack.add(routeName);
+    if (deletePreviousCount > 0) {
+      _stack.removeRange(
+          _stack.length - deletePreviousCount - 1, _stack.length - 1);
+    }
     _hasTransition = hasTransition;
     notifyListeners();
   }

@@ -7,6 +7,8 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'config/colors.dart';
 import 'pages/home.dart';
+import 'pages/login.dart';
+import 'pages/register.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -17,6 +19,8 @@ final Map<String, WidgetBuilder> routes = {
   '/home': (context) => Home(),
   '/video/:id': (context) => Video(),
   '/game/deposit': (context) => GameDeposit(),
+  '/login': (context) => LoginPage(),
+  '/register': (context) => RegisterPage(),
 };
 
 class MyApp extends StatelessWidget {

@@ -6,12 +6,7 @@ import '../models/index.dart';
 class BannerController extends GetxController {
   final banners = {}.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
-  void setBanners(int positionId, List bannerList) {
+  void setBanners(int positionId, List<BannerPhoto> bannerList) {
     banners[positionId] = bannerList;
     update();
   }

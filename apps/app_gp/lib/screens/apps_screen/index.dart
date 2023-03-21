@@ -4,6 +4,7 @@ import 'package:shared/models/color_keys.dart';
 import '../../config/colors.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/header.dart';
+import 'banner.dart';
 import 'hot.dart';
 import 'popular.dart';
 
@@ -12,30 +13,33 @@ class AppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      appBar: CustomAppBar(
+    return Scaffold(
+      appBar: const CustomAppBar(
         title: '應用中心',
       ),
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
+            child: BannerWidget(),
+          ),
+          const SliverToBoxAdapter(
             child: Header(text: '熱門推薦'),
           ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: SizedBox(height: 20),
           ),
-          HotWidget(),
-          SliverToBoxAdapter(
+          const HotWidget(),
+          const SliverToBoxAdapter(
             child: SizedBox(height: 20),
           ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: Header(text: '大家都在玩'),
           ),
-          SliverToBoxAdapter(
+          const SliverToBoxAdapter(
             child: SizedBox(height: 20),
           ),
-          PopularWidget(),
-          SliverToBoxAdapter(
+          const PopularWidget(),
+          const SliverToBoxAdapter(
             child: SizedBox(height: 90),
           )
         ],

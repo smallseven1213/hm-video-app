@@ -52,29 +52,31 @@ class SidImageState extends State<SidImage> {
      * 有的話，由hive中取得並setState
      * 沒的話，呼叫ImageApi的getSidImageData，並存入hive以及setState
      */
-    var hasFileInHive = sidImageBox.containsKey(widget.sid);
-    // logger.d('hasFileInHive ===== $hasFileInHive');
-    if (hasFileInHive) {
-      var file = await sidImageBox.get(widget.sid);
-      setState(() {
-        imageData = file;
-      });
-      widget.onLoaded != null ? widget.onLoaded!() : null;
-    } else {
-      try {
-        var res = await ImageApi().getSidImageData(widget.sid);
-        var decoded = getSidImageDecode(res);
-        var file = base64Decode(decoded);
-        await sidImageBox.put(widget.sid, file);
-
+    if (widget.sid.isNotEmpty) {
+      var hasFileInHive = sidImageBox.containsKey(widget.sid);
+      // logger.d('hasFileInHive ===== $hasFileInHive');
+      if (hasFileInHive) {
+        var file = await sidImageBox.get(widget.sid);
         setState(() {
           imageData = file;
         });
         widget.onLoaded != null ? widget.onLoaded!() : null;
-      } catch (e) {
-        logger.d('${widget.sid}==ERROR=\n$e');
-        // if widget.onError is not null, call it
-        widget.onError != null ? widget.onError!() : null;
+      } else {
+        try {
+          var res = await ImageApi().getSidImageData(widget.sid);
+          var decoded = getSidImageDecode(res);
+          var file = base64Decode(decoded);
+          await sidImageBox.put(widget.sid, file);
+
+          setState(() {
+            imageData = file;
+          });
+          widget.onLoaded != null ? widget.onLoaded!() : null;
+        } catch (e) {
+          // logger.d('${widget.sid}==ERROR=\n$e');
+          // if widget.onError is not null, call it
+          widget.onError != null ? widget.onError!() : null;
+        }
       }
     }
   }

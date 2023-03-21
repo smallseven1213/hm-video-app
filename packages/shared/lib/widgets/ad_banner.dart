@@ -6,20 +6,25 @@ import 'package:shared/widgets/sid_image.dart';
 class AdBanner extends StatelessWidget {
   final BannerImage image;
   const AdBanner({
-    super.key,
+    Key? key,
     required this.image,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BannerLink(
-      image: image,
-      child: SidImage(
-        width: double.infinity,
-        height: double.infinity,
-        sid: image.photoSid.toString(),
-        fit: BoxFit.cover,
-      ),
-    );
+        image: image,
+        child: image.photoSid != null && image.photoSid!.isNotEmpty
+            ? SidImage(
+                width: double.infinity,
+                height: double.infinity,
+                sid: image.photoSid!,
+                fit: BoxFit.cover,
+              )
+            : Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.grey,
+              ));
   }
 }
