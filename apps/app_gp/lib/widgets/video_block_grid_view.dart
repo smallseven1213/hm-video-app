@@ -9,10 +9,12 @@ final logger = Logger();
 class VideoBlockGridView extends StatelessWidget {
   final List<Data> videos;
   final int gridLength;
+  final double? imageRatio;
   const VideoBlockGridView({
     Key? key,
     required this.videos,
     this.gridLength = 2,
+    this.imageRatio,
   }) : super(key: key);
 
   @override
@@ -30,7 +32,11 @@ class VideoBlockGridView extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            VideoBlockGridViewRow(videoData: rowData, gridLength: gridLength),
+            VideoBlockGridViewRow(
+              videoData: rowData,
+              gridLength: gridLength,
+              imageRatio: imageRatio,
+            ),
             const SizedBox(height: 8),
           ],
         );
