@@ -11,8 +11,6 @@ import 'pages/home.dart';
 import 'pages/login.dart';
 import 'pages/register.dart';
 
-MyRouteDelegate? globalRouterDelegate;
-
 void main() {
   usePathUrlStrategy();
   runningMain(MyApp(), AppColors.colors);
@@ -35,7 +33,6 @@ class MyApp extends StatelessWidget {
         homePath: routes.keys.first,
         routes: routes,
         splashImage: 'assets/images/splash.png',
-        appColors: AppColors.colors,
-        globalRouterDelegate: globalRouterDelegate!);
+        appColors: AppColors.colors);
   }
 }
