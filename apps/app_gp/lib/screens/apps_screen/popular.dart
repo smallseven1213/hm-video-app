@@ -59,13 +59,29 @@ class PopularWidget extends StatelessWidget {
                             const SizedBox(width: 20),
                             Expanded(
                               child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  // snapshot.data[index].name,
-                                  newList[index].name,
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ),
+                                  alignment: Alignment.centerLeft,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        newList[index].name,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 2),
+                                      Text(
+                                        newList[index].description,
+                                        style: const TextStyle(
+                                          color: Color(0xff7AA2C8),
+                                          fontSize: 12,
+                                        ),
+                                      ),
+                                    ],
+                                  )),
                             ),
                             // 按鈕
                             Container(
@@ -84,11 +100,12 @@ class PopularWidget extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: const [
-                                    Icon(
-                                      Icons.file_download,
-                                      color: Colors.black,
-                                      size: 16,
+                                    Image(
+                                      image: AssetImage(
+                                          'assets/images/apps_download.png'),
+                                      height: 11.0,
                                     ),
                                     SizedBox(width: 2),
                                     Text(
