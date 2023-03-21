@@ -29,8 +29,20 @@ class HotWidget extends StatelessWidget {
                 logger.i(snapshot.data[index].toString());
                 return InkWell(
                   onTap: () {
-                    AdsApi().addBannerClickRecord(snapshot.data[index].id);
-                    launchUrl(snapshot.data[index].url);
+                    dynamic idDynamic = snapshot.data[index].id;
+                    int id;
+
+                    if (idDynamic is String) {
+                      id = int.parse(idDynamic);
+                    } else if (idDynamic is int) {
+                      id = idDynamic;
+                    } else {
+                      throw 'Invalid data type for id';
+                    }
+                    AdsApi().addBannerClickRecord(id);
+                    String urlString = snapshot.data[index].url;
+                    Uri url = Uri.parse(urlString);
+                    launchUrl(url);
                   },
                   child: Center(
                     child: Column(
