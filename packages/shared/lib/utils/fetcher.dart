@@ -3,6 +3,8 @@ import 'package:get/utils.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
+import '../navigator/delegate.dart';
+
 // create a dio instance
 final logger = Logger();
 final dio = Dio();

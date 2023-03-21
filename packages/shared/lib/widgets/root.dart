@@ -12,14 +12,16 @@ class RootWidget extends StatelessWidget {
   final RouteObject routes;
   final String splashImage;
   final Map<ColorKeys, Color> appColors;
+  final MyRouteDelegate globalRouterDelegate;
 
-  const RootWidget({
-    Key? key,
-    required this.homePath,
-    required this.routes,
-    required this.splashImage,
-    required this.appColors,
-  }) : super(key: key);
+  const RootWidget(
+      {Key? key,
+      required this.homePath,
+      required this.routes,
+      required this.splashImage,
+      required this.appColors,
+      required this.globalRouterDelegate})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

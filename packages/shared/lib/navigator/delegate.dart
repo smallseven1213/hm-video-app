@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+// navigation_helper
+import 'package:shared/utils/navigation_helper.dart';
 
 class MyRouteDelegate extends RouterDelegate<String>
     with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
@@ -17,7 +19,9 @@ class MyRouteDelegate extends RouterDelegate<String>
     required this.routes,
     required this.homePath,
     this.onGenerateRoute,
-  });
+  }) {
+    setNavigatorKey(navigatorKey);
+  }
 
   final RouteFactory? onGenerateRoute;
   final Map<String, WidgetBuilder> routes;
