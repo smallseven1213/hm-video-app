@@ -1,4 +1,3 @@
-import 'package:app_gp/screens/discover_screen.dart';
 import 'package:app_gp/screens/shorts_screen.dart';
 import 'package:app_gp/screens/game_screen.dart';
 import 'package:app_gp/screens/user_screen.dart';
@@ -6,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 
+import '../screens/apps_screen/index.dart';
 import '../screens/main_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
@@ -19,7 +19,7 @@ class Home extends StatelessWidget {
     '/layout1': HomeMainScreen(),
     '/layout2': ShortScreen(),
     '/game': GameScreen(),
-    '/apps': DiscoverScreen(),
+    '/apps': AppsScreen(),
     '/user': UserScreen()
   };
 

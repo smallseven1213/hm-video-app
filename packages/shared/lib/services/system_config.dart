@@ -11,7 +11,7 @@ class SystemConfig {
   Map<ColorKeys, dynamic> appColors = {};
 
   // API ENDPOINT
-  String apiHost = 'https://dl.dlstt.com/$env/dl.json';
+  String apiHost = 'dev-sv.hmtech.site/$env/dl.json';
   String vodHost = 'https://dl.dlstt.com/$env/dl.json';
   String imgHost = 'https://dl.dlstt.com/$env/dl.json';
 

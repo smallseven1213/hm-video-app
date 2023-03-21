@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
 
-import '../../../widgets/video_block_header.dart';
+import '../../../widgets/header.dart';
 import 'video_block_template/block_1.dart';
 import 'video_block_template/block_2.dart';
 import 'video_block_template/block_3.dart';
@@ -30,7 +30,7 @@ class VideoBlock extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          VideoBlockHeader(
+          Header(
             text: '${block.name} [${block.template}]',
           ),
           const SizedBox(
