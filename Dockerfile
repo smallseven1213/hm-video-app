@@ -12,7 +12,7 @@ RUN flutter pub global activate melos
 ENV PATH="/root/.pub-cache/bin:$PATH"
 
 # Run Melos bootstrap
-RUN melos bootstrap
+RUN melos bs
 
 # Build web app using Melos with a specific scope
 # RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
