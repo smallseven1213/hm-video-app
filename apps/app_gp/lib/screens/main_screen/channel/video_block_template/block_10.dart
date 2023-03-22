@@ -1,39 +1,73 @@
-// Block1Widget
-
-import 'package:app_gp/widgets/video_preview.dart';
+import 'package:app_gp/widgets/channel_area_banner.dart';
+import 'package:app_gp/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
 
+List<List<Data>> organizeRowData(List videos, Blocks block) {
+  List<List<Data>> result = [];
+  int blockQuantity = block.quantity ?? 0;
+  int blockLength = block.isAreaAds == true ? 6 : 5;
+
+  for (int i = 0; i < blockQuantity;) {
+    bool hasAreaAd =
+        block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;
+    if (hasAreaAd) {
+      result.add([videos[i]]);
+      i++;
+    } else {
+      if (i + 2 > videos.length) {
+        result.add([videos[i]]);
+        i++;
+      } else {
+        result.add([videos[i], videos[i + 1]]);
+        i += 2;
+      }
+    }
+  }
+  return result;
+}
+
+// 六直
 class Block10Widget extends StatelessWidget {
-  List<Data> videos = [];
-  Block10Widget({Key? key, required this.videos}) : super(key: key);
+  final Blocks block;
+  const Block10Widget({
+    Key? key,
+    required this.block,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-        crossAxisCount: 2,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        padding: const EdgeInsets.all(10),
+    List<Data> videos = block.videos?.data ?? [];
+    List<List<Data>> result = organizeRowData(videos, block);
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
-            10,
-            (index) => Container(
-                  width: double.infinity,
-                  height: 60,
-                  color: Colors.white,
-                )));
-    // children: List.generate(
-    //   10,
-    //   (index) => VideoPreviewWidget(
-    //     title: videos[index].title ?? '',
-    //     tags: videos[index].tags ?? [],
-    //     timeLength: videos[index].timeLength ?? 0,
-    //     coverHorizontal: videos[index].coverHorizontal ?? '',
-    //     coverVertical: videos[index].coverVertical ?? '',
-    //     videoViewTimes: videos[index].videoViewTimes ?? 0,
-    //   ),
-    // ));
+          result.length,
+          (index) {
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                child: block.isAreaAds == true && index % 4 == 3
+                    ? ChannelAreaBanner(
+                        image: BannerImage.fromJson({
+                          'id': result[index][0].id ?? 0,
+                          'url': result[index][0].adUrl ?? '',
+                          'photoSid': result[index][0].coverHorizontal ?? '',
+                          'isAutoClose': false,
+                        }),
+                      )
+                    : VideoBlockGridViewRow(
+                        videoData: result[index],
+                        imageRatio: 182 / 248,
+                        isEmbeddedAds: block.isEmbeddedAds ?? false,
+                      ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
   }
 }

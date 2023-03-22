@@ -36,6 +36,8 @@ class Block6Widget extends StatelessWidget {
                 coverVertical: videos[index].coverVertical ?? '',
                 videoViewTimes: videos[index].videoViewTimes ?? 0,
                 detail: videos[index],
+                imageRatio: 143 / 80,
+                isEmbeddedAds: block.isEmbeddedAds ?? false,
               ),
             ),
           ),

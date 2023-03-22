@@ -36,6 +36,7 @@ class Block5Widget extends StatelessWidget {
                 coverVertical: videos[index].coverVertical ?? '',
                 videoViewTimes: videos[index].videoViewTimes ?? 0,
                 detail: videos[index],
+                isEmbeddedAds: block.isEmbeddedAds ?? false,
               ),
             ),
           ),

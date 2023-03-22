@@ -8,6 +8,7 @@ import 'video_block_template/block_3.dart';
 import 'video_block_template/block_4.dart';
 import 'video_block_template/block_5.dart';
 import 'video_block_template/block_6.dart';
+import 'video_block_template/block_10.dart';
 
 final Map<int, Widget Function(Blocks block)> blockMap = {
   0: (Blocks block) => const SizedBox(),
@@ -17,6 +18,7 @@ final Map<int, Widget Function(Blocks block)> blockMap = {
   4: (Blocks block) => Block6Widget(block: block),
   5: (Blocks block) => Block5Widget(block: block),
   6: (Blocks block) => Block6Widget(block: block),
+  10: (Blocks block) => Block10Widget(block: block),
 };
 
 class VideoBlock extends StatelessWidget {
@@ -39,6 +41,9 @@ class VideoBlock extends StatelessWidget {
           blockMap[block.template ?? 0] == null
               ? const SizedBox()
               : blockMap[block.template ?? 0]!(block),
+          const SizedBox(
+            height: 70,
+          ),
         ],
       ),
     );

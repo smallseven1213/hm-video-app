@@ -65,6 +65,7 @@ class Block4Widget extends StatelessWidget {
                         videos: result[index],
                         gridLength: 3,
                         imageRatio: 119 / 159,
+                        isEmbeddedAds: block.isEmbeddedAds ?? false,
                       ),
               ),
             );
