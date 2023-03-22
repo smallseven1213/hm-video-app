@@ -1,7 +1,9 @@
 // VideoPreviewWidget, has props: String sid, String duration, String[] tags, String title, String previewCount, String types
 
+import 'package:app_gp/widgets/video_embedded_ad.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
+import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
@@ -66,6 +68,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final String title;
   final int videoViewTimes;
   final double? imageRatio;
+  final Data detail;
   const VideoPreviewWidget({
     Key? key,
     required this.coverVertical,
@@ -74,11 +77,18 @@ class VideoPreviewWidget extends StatelessWidget {
     required this.tags,
     required this.title,
     required this.videoViewTimes,
+    required this.detail,
     this.imageRatio,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (detail.dataType == VideoType.embeddedAd.index) {
+      return VideoEmbeddedAdWidget(
+        imageRatio: 374 / 198,
+        detail: detail,
+      );
+    }
     return LayoutBuilder(
       builder: (context, constraints) {
         return Column(
@@ -164,7 +174,7 @@ class VideoPreviewWidget extends StatelessWidget {
               )
             else
               const SizedBox(
-                height: 10,
+                height: 15,
               ),
           ],
         );

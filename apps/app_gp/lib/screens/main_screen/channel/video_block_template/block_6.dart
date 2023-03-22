@@ -3,6 +3,7 @@
 import 'package:app_gp/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
 
 class Block6Widget extends StatelessWidget {
   final Blocks block;
@@ -34,6 +35,7 @@ class Block6Widget extends StatelessWidget {
                 coverHorizontal: videos[index].coverHorizontal ?? '',
                 coverVertical: videos[index].coverVertical ?? '',
                 videoViewTimes: videos[index].videoViewTimes ?? 0,
+                detail: videos[index],
               ),
             ),
           ),

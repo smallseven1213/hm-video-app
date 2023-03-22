@@ -71,6 +71,7 @@ class Block1Widget extends StatelessWidget {
                           coverVertical: result[index][0].coverVertical ?? '',
                           videoViewTimes: result[index][0].videoViewTimes ?? 0,
                           imageRatio: 374 / 198,
+                          detail: result[index][0],
                         )
                   : VideoBlockGridViewRow(videoData: result[index]),
             );

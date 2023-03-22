@@ -13,7 +13,8 @@ class AdBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BannerLink(
-        image: image,
+        id: image.id ?? 0,
+        url: image.url ?? '',
         child: image.photoSid != null && image.photoSid!.isNotEmpty
             ? SidImage(
                 width: double.infinity,
