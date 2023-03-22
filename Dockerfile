@@ -11,6 +11,9 @@ RUN flutter pub global activate melos 2.9.0
 # Set PATH for melos executable
 ENV PATH="/root/.pub-cache/bin:$PATH"
 
+# Clear .pub-cache temp directory
+RUN rm -rf /root/.pub-cache/_temp/*
+
 # Run Melos bootstrap
 RUN melos bootstrap
 
