@@ -5,9 +5,11 @@ ENV ENV=${env}
 WORKDIR /app
 COPY . /app
 
-# Update PATH and install Melos
-RUN export PATH="$PATH":"$HOME/.pub-cache/bin" && \
-    flutter pub global activate melos
+# Install Melos
+RUN flutter pub global activate melos
+
+# Set PATH for melos executable
+ENV PATH="/root/.pub-cache/bin:$PATH"
 
 # Run Melos bootstrap
 RUN melos bootstrap
