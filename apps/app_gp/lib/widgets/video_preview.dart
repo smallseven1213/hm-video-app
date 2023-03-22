@@ -69,6 +69,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final int videoViewTimes;
   final double? imageRatio;
   final Data detail;
+  final bool isEmbeddedAds;
   const VideoPreviewWidget({
     Key? key,
     required this.coverVertical,
@@ -77,15 +78,16 @@ class VideoPreviewWidget extends StatelessWidget {
     required this.tags,
     required this.title,
     required this.videoViewTimes,
+    required this.isEmbeddedAds,
     required this.detail,
     this.imageRatio,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (detail.dataType == VideoType.embeddedAd.index) {
+    if (detail.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
       return VideoEmbeddedAdWidget(
-        imageRatio: 374 / 198,
+        imageRatio: imageRatio ?? 374 / 198,
         detail: detail,
       );
     }
@@ -96,7 +98,7 @@ class VideoPreviewWidget extends StatelessWidget {
             Stack(
               children: [
                 AspectRatio(
-                  aspectRatio: imageRatio ?? 182 / 101.93,
+                  aspectRatio: imageRatio ?? 374 / 198,
                   child: Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -122,7 +124,7 @@ class VideoPreviewWidget extends StatelessWidget {
                   ),
                 ),
                 AspectRatio(
-                  aspectRatio: imageRatio ?? 182 / 101.93,
+                  aspectRatio: imageRatio ?? 374 / 198,
                   child: Align(
                     alignment: AlignmentDirectional.bottomEnd,
                     child: ViewInfo(

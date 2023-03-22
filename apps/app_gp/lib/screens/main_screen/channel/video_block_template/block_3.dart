@@ -58,7 +58,11 @@ class Block3Widget extends StatelessWidget {
                           'isAutoClose': false,
                         }),
                       )
-                    : VideoBlockGridViewRow(videoData: result[index]),
+                    : VideoBlockGridViewRow(
+                        videoData: result[index],
+                        imageRatio: 182 / 102,
+                        isEmbeddedAds: block.isEmbeddedAds ?? false,
+                      ),
               ),
             );
           },

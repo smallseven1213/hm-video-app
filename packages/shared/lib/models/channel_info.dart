@@ -135,8 +135,8 @@ class JingangDetail {
 class Blocks {
   int? id;
   String? name;
-  int? template;
-  int? film;
+  int? template; // block 1 ~ 6
+  int? film; // 1: 長視頻 2: 短視頻 3: 漫畫
   int? quantity;
   int? orderIndex;
   bool? isMore;

@@ -10,11 +10,14 @@ class VideoBlockGridViewRow extends StatefulWidget {
   final List<Data> videoData;
   final int gridLength;
   final double? imageRatio;
+  final bool isEmbeddedAds;
+
   const VideoBlockGridViewRow({
     super.key,
     required this.videoData,
     this.gridLength = 2,
     this.imageRatio,
+    required this.isEmbeddedAds,
   });
 
   @override
@@ -56,6 +59,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                               widget.videoData[0].videoViewTimes ?? 0,
                           imageRatio: widget.imageRatio,
                           detail: widget.videoData[0],
+                          isEmbeddedAds: widget.isEmbeddedAds,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -85,6 +89,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                               widget.videoData[0].videoViewTimes ?? 0,
                           imageRatio: widget.imageRatio,
                           detail: widget.videoData[0],
+                          isEmbeddedAds: widget.isEmbeddedAds,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -101,6 +106,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                               widget.videoData[1].videoViewTimes ?? 0,
                           imageRatio: widget.imageRatio,
                           detail: widget.videoData[1],
+                          isEmbeddedAds: widget.isEmbeddedAds,
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -128,6 +134,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                               videoViewTimes: e.videoViewTimes ?? 0,
                               imageRatio: widget.imageRatio,
                               detail: e,
+                              isEmbeddedAds: widget.isEmbeddedAds,
                             ),
                           ),
                           const SizedBox(width: 10),
