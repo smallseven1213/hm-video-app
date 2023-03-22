@@ -67,4 +67,52 @@ class AuthApi {
       );
     }
   }
+
+  Future<String?> register({
+    required String username,
+    required String password,
+    // String invitationCode = '',
+  }) async {
+    // var registerIp = '0.0.0.0';
+    // var uid = (await Get.find<UserProvider>().getCurrentUser()).uid;
+    // var invitationCode = Get.find<AppController>().invitationCode;
+
+    try {
+      var response = await fetcher(
+        url: '${systemConfig.apiHost}/public/auth/auth/register',
+        method: 'POST',
+        body: {
+          'username': username,
+          'password': password,
+          'agentCode': systemConfig.agentCode,
+        },
+      );
+      var res = (response.data as Map<String, dynamic>);
+      if (res['code'] != '00') {
+        return null;
+      }
+      return res['data']['token'];
+    } catch (err) {
+      return null;
+    }
+  }
+
+  Future<String?> login({
+    required String username,
+    required String password,
+  }) async {
+    var value = await fetcher(
+      url: '${systemConfig.apiHost}/public/auth/auth/login',
+      method: 'POST',
+      body: {
+        'username': username,
+        'password': password,
+      },
+    );
+    var res = (value.data as Map<String, dynamic>);
+    if (res['code'] != '00') {
+      return null;
+    }
+    return res['data']['token'];
+  }
 }

@@ -18,7 +18,6 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print("!!!!!!!!");
     mutateAll();
   }
 
