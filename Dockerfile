@@ -14,8 +14,8 @@ ENV PATH="/root/.pub-cache/bin:$PATH"
 # Clear .pub-cache temp directory
 RUN rm -rf /root/.pub-cache/_temp/*
 
-# Run Melos bootstrap
-RUN melos bootstrap
+# Clear Flutter cache
+RUN rm -rf /sdks/flutter/.pub-cache
 
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
