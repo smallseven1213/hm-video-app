@@ -90,10 +90,15 @@ class JingangButton extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             child: InkWell(
               onTap: () {
-                print('JingangButton onTap');
-                // todo
-                // record jingang click item?.id
-                // open jingang link
+                print('item: ${item?.id}   ${item?.url}${item?.toJson()}');
+
+                jingangApi.recordJingangClick(item?.id ?? 0);
+                if (item!.url!.startsWith('http://') ||
+                    item!.url!.startsWith('https://')) {
+                  launch(item!.url ?? '', webOnlyWindowName: '_blank');
+                } else {
+                  MyRouteDelegate.of(context).push(item!.url ?? '');
+                }
               },
               child: SidImage(
                 sid: item?.photoSid ?? '',

@@ -40,6 +40,7 @@ class Block2Widget extends StatelessWidget {
                         coverVertical: videos[index].coverVertical ?? '',
                         videoViewTimes: videos[index].videoViewTimes ?? 0,
                         imageRatio: 374 / 198,
+                        detail: videos[index],
                       ));
           },
         ),

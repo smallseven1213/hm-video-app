@@ -1,6 +1,7 @@
 import 'package:app_gp/screens/main_screen/layout_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 import 'video_preview.dart';
@@ -54,6 +55,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                           videoViewTimes:
                               widget.videoData[0].videoViewTimes ?? 0,
                           imageRatio: widget.imageRatio,
+                          detail: widget.videoData[0],
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -82,6 +84,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                           videoViewTimes:
                               widget.videoData[0].videoViewTimes ?? 0,
                           imageRatio: widget.imageRatio,
+                          detail: widget.videoData[0],
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -97,6 +100,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                           videoViewTimes:
                               widget.videoData[1].videoViewTimes ?? 0,
                           imageRatio: widget.imageRatio,
+                          detail: widget.videoData[1],
                         ),
                       ),
                       const SizedBox(width: 10),
@@ -123,6 +127,7 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                               coverVertical: e.coverVertical ?? '',
                               videoViewTimes: e.videoViewTimes ?? 0,
                               imageRatio: widget.imageRatio,
+                              detail: e,
                             ),
                           ),
                           const SizedBox(width: 10),

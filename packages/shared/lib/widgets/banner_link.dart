@@ -6,25 +6,26 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class BannerLink extends StatelessWidget {
-  final BannerImage image;
+  final int id;
+  final String url;
   final Widget child;
 
   const BannerLink({
     super.key,
-    required this.image,
+    required this.id,
+    required this.url,
     required this.child,
   });
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
-        Get.find<BannerController>().recordBannerClick(image.id ?? 0);
-        if (image.url!.startsWith('http://') ||
-            image.url!.startsWith('https://')) {
-          launch(image.url ?? '', webOnlyWindowName: '_blank');
+        Get.find<BannerController>().recordBannerClick(id);
+        if (url.startsWith('http://') || url.startsWith('https://')) {
+          launch(url, webOnlyWindowName: '_blank');
         } else {
-          MyRouteDelegate.of(context).push(image.url ?? '');
+          MyRouteDelegate.of(context).push(url);
         }
       },
       child: child,
