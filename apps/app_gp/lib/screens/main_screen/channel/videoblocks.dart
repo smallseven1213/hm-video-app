@@ -23,6 +23,7 @@ class VideoBlocks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(bottom: 70),
       color: AppColors.colors[ColorKeys.background],
       child: Obx(() {
         ChannelInfo? channelData = channelDataController.channelData[channelId];
