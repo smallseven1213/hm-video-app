@@ -27,5 +27,6 @@ FROM nginx:stable-alpine
 RUN apk add bash && \
     ln -snf /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
     echo Asia/Taipei > /etc/timezone
+RUN ls -al /app
 COPY --from=builder /app/app_gp/build/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
