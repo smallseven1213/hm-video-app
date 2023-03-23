@@ -1,6 +1,7 @@
 // RegisterPage , has button , click push to '/register'
 
 import 'package:app_gp/widgets/custom_app_bar.dart';
+import 'package:app_gp/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
@@ -133,15 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 1, // 設置分隔線寬度
                         color: Colors.grey, // 設置分隔線顏色
                       ),
-                      InkWell(
-                        onTap: () {
-                          MyRouteDelegate.of(context)
-                              .push('/register', deletePreviousCount: 1);
-                        },
-                        child: Column(children: [
-                          Text('忘記密碼', style: TextStyle(color: Colors.white)),
-                        ]),
-                      ),
+                      const ForgotPasswordButton()
                     ],
                   ),
                 ],
