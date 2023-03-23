@@ -3,10 +3,13 @@
 import 'package:app_gp/widgets/custom_app_bar.dart';
 import 'package:app_gp/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
+import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../utils/showConfirmDialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/login/button.dart';
 
@@ -26,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+  final UserController userController = Get.find<UserController>();
 
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) {
@@ -57,12 +61,26 @@ class _RegisterPageState extends State<RegisterPage> {
   void _handleRegister() async {
     if (_formKey.currentState!.validate()) {
       try {
+        ;
+        // TODO: var invitationCode = Get.find<AppController>().invitationCode;
         var res = authApi.register(
+            uid: userController.info.value.uid,
             username: _accountController.text,
             password: _passwordController.text);
         logger.i('register success $res');
+        userController.mutateAll();
+        // back to home
+        MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
       } catch (error) {
-        logger.i('register error $error');
+        showConfirmDialog(
+          context: context,
+          title: '註冊錯誤',
+          message: '帳號或密碼不正確(-1)',
+          showCancelButton: false,
+          onConfirm: () {
+            Navigator.of(context).pop();
+          },
+        );
       }
     }
   }

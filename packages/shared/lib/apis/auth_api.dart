@@ -84,11 +84,10 @@ class AuthApi {
   Future<String?> register({
     required String username,
     required String password,
-    // String invitationCode = '',
+    required int uid,
+    String invitationCode = '',
   }) async {
-    // var registerIp = '0.0.0.0';
-    // var uid = (await Get.find<UserProvider>().getCurrentUser()).uid;
-    // var invitationCode = Get.find<AppController>().invitationCode;
+    var registerIp = '0.0.0.0';
 
     try {
       var response = await fetcher(
@@ -97,7 +96,9 @@ class AuthApi {
         body: {
           'username': username,
           'password': password,
-          'agentCode': systemConfig.agentCode,
+          'uid': uid,
+          'registerIp': registerIp,
+          'invitationCode': invitationCode
         },
       );
       var res = (response.data as Map<String, dynamic>);
