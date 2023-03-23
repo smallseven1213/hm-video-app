@@ -3,8 +3,10 @@
 import 'package:app_gp/widgets/custom_app_bar.dart';
 import 'package:app_gp/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
+import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../utils/showConfirmDialog.dart';
@@ -42,23 +44,35 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void _handleLogin() async {
+  void _handleLogin(context) async {
     if (_formKey.currentState!.validate()) {
       try {
-        var res = authApi.login(
+        var token = await authApi.login(
             username: _accountController.text,
             password: _passwordController.text);
-        logger.i('login success $res');
+        if (token == null) {
+          showConfirmDialog(
+            context: context,
+            title: '登入錯誤',
+            message: '帳號或密碼不正確',
+            showCancelButton: false,
+            onConfirm: () {
+              Navigator.of(context).pop();
+            },
+          );
+        } else {
+          Get.find<UserController>().setToken(token);
+        }
+      } catch (error) {
         showConfirmDialog(
           context: context,
-          title: '登入成功',
-          message: '登入成功',
+          title: '登入錯誤',
+          message: '帳號或密碼不正確(-1)',
+          showCancelButton: false,
           onConfirm: () {
-            MyRouteDelegate.of(context).push('/home', deletePreviousCount: 1);
+            Navigator.of(context).pop();
           },
         );
-      } catch (error) {
-        logger.i('login error $error');
       }
     }
   }
@@ -116,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
               LoginButton(
                   text: '登入',
                   onPressed: () {
-                    _handleLogin();
+                    _handleLogin(context);
                   }),
               const SizedBox(height: 20),
               Column(

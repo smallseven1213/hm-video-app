@@ -65,13 +65,6 @@ class SystemConfig {
     isMaintenance = status;
   }
 
-  void setToken(String token) {
-    authToken = token;
-    if (!box.hasData('auth-token')) {
-      box.write('auth-token', authToken);
-    }
-  }
-
   void setColors(Map<ColorKeys, dynamic> colors) {
     appColors = colors;
   }
