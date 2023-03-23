@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/header.dart';
 import 'ad.dart';
 import 'grid_menu.dart';
 import 'info.dart';
@@ -19,12 +20,14 @@ class UserScreen extends StatelessWidget {
                 UserInfo(),
                 SizedBox(height: 10),
                 Ad(),
-                SizedBox(height: 10),
               ],
             ),
           ),
           GridMenu(),
-          ListMenu(),
+          const SliverToBoxAdapter(
+            child: Header(text: '更多服務'),
+          ),
+          const ListMenu(),
         ],
       ),
     );
