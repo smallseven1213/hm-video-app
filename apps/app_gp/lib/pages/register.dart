@@ -1,6 +1,7 @@
 // RegisterPage , has button , click push to '/register'
 
 import 'package:app_gp/widgets/custom_app_bar.dart';
+import 'package:app_gp/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
@@ -53,15 +54,15 @@ class _RegisterPageState extends State<RegisterPage> {
     return null;
   }
 
-  void _handleLogin() async {
+  void _handleRegister() async {
     if (_formKey.currentState!.validate()) {
       try {
-        var res = authApi.login(
+        var res = authApi.register(
             username: _accountController.text,
             password: _passwordController.text);
-        logger.i('login success $res');
+        logger.i('register success $res');
       } catch (error) {
-        logger.i('login error $error');
+        logger.i('register error $error');
       }
     }
   }
@@ -77,17 +78,6 @@ class _RegisterPageState extends State<RegisterPage> {
           key: _formKey,
           child: Column(
             children: [
-              // Center(
-              //   child: InkWell(
-              //     onTap: () {
-              //       MyRouteDelegate.of(context)
-              //           .push('/register', deletePreviousCount: 1);
-              //     },
-              //     child: Column(children: [
-              //       Text('註冊', style: TextStyle(color: Colors.white)),
-              //     ]),
-              //   ),
-              // ),
               const SizedBox(height: 80),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 50),
@@ -120,7 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
               LoginButton(
                   text: '登入',
                   onPressed: () {
-                    _handleLogin();
+                    _handleRegister();
                   }),
               const SizedBox(height: 20),
               Column(
@@ -144,15 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         width: 1, // 設置分隔線寬度
                         color: Colors.grey, // 設置分隔線顏色
                       ),
-                      InkWell(
-                        onTap: () {
-                          MyRouteDelegate.of(context)
-                              .push('/register', deletePreviousCount: 1);
-                        },
-                        child: Column(children: [
-                          Text('忘記密碼', style: TextStyle(color: Colors.white)),
-                        ]),
-                      ),
+                      const ForgotPasswordButton()
                     ],
                   ),
                 ],

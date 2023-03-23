@@ -15,6 +15,7 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/widgets/loading.dart';
 
+import '../controllers/user_controller.dart';
 import '../models/index.dart';
 import '../navigator/delegate.dart';
 
@@ -67,6 +68,7 @@ class _SplashState extends State<Splash> {
   AuthApi authApi = AuthApi();
   BannerController bannerController = Get.put(BannerController());
   Timer? timer;
+  UserController userController = Get.find<UserController>();
 
   // 取得invitationCode
   getInvitationCode() async {
@@ -182,29 +184,48 @@ class _SplashState extends State<Splash> {
   userLogin() async {
     print('step6: 檢查是否有token (是否登入)');
     print('userApi: ${userApi}');
-    if (systemConfig.box.hasData('auth-token')) {
+    if (userController.token.value != '') {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
-      print('step6.1: 有token');
-      systemConfig.setToken(systemConfig.box.read('auth-token'));
       fetchInitialDataAndNavigate();
     } else {
       // Step6-2: 無: 訪客登入
       print('step6.2: 無token (訪客登入)');
-      String invitationCode = await getInvitationCode();
-      final res = await authApi.guestLogin(
-        invitationCode: invitationCode,
-      );
-      print('res.status ${res.code}');
-      if (res.code == '00') {
-        fetchInitialDataAndNavigate();
-      } else {
-        if (mounted) {
+      try {
+        String invitationCode = await getInvitationCode();
+        final res = await authApi.guestLogin(
+          invitationCode: invitationCode,
+        );
+        userController.setToken(res.data['token']);
+        print('res.status ${res.code}');
+        if (res.code == '00') {
+          fetchInitialDataAndNavigate();
+        } else {
+          // if (mounted) {
+          //   alertDialog(
+          //     context,
+          //     title: '失敗',
+          //     content: res.message,
+          //   );
+          // }
+          var message = '';
+          if (res.code == '51633') {
+            message = '帳號建立失敗，裝置停用。';
+          } else {
+            message = '帳號建立失敗。';
+          }
           alertDialog(
             context,
             title: '失敗',
-            content: res.message,
+            content: message,
           );
         }
+      } catch (err) {
+        print('err: $err');
+        alertDialog(
+          context,
+          title: '失敗',
+          content: '帳號建立失敗。(01)',
+        );
       }
     }
   }

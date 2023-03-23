@@ -11,7 +11,7 @@ final systemConfig = SystemConfig();
 
 class AuthApi {
   // 訪客登入
-  Future<HMApiResponse> guestLogin({
+  Future<HMApiResponseBaseWithDataWithData> guestLogin({
     String? invitationCode,
   }) async {
     String registerDeviceGuid = const Uuid().v4();
@@ -37,35 +37,48 @@ class AuthApi {
           (await (deviceInfo.iosInfo)).identifierForVendor.toString();
     }
 
-    try {
-      var response = await fetcher(
-        url: '${systemConfig.apiHost}/public/auth/auth/guest/register',
-        method: 'POST',
-        body: {
-          'registerDeviceType': systemConfig.userDevice,
-          'registerDeviceGuid': registerDeviceGuid,
-          'invitationCode': invitationCode,
-          'agentCode': systemConfig.agentCode,
-        },
-      );
-      var res = (response.data as Map<String, dynamic>);
-      if (res['code'] != '00') {
-        return HMApiResponse(
-          code: res['code'],
-          message: res['code'] == '51633' ? '帳號建立失敗，裝置停用。' : '帳號建立失敗。',
-        );
-      }
-      systemConfig.setToken(res['data']['token']);
-      return HMApiResponse(
-        code: res['code'],
-        message: '帳號建立成功。',
-      );
-    } catch (err) {
-      return HMApiResponse(
-        code: '01',
-        message: '帳號建立失敗。',
-      );
-    }
+    var response = await fetcher(
+      url: '${systemConfig.apiHost}/public/auth/auth/guest/register',
+      method: 'POST',
+      body: {
+        'registerDeviceType': systemConfig.userDevice,
+        'registerDeviceGuid': registerDeviceGuid,
+        'invitationCode': invitationCode,
+        'agentCode': systemConfig.agentCode,
+      },
+    );
+
+    return HMApiResponseBaseWithDataWithData.fromJson(response.data);
+
+    // try {
+    //   var response = await fetcher(
+    //     url: '${systemConfig.apiHost}/public/auth/auth/guest/register',
+    //     method: 'POST',
+    //     body: {
+    //       'registerDeviceType': systemConfig.userDevice,
+    //       'registerDeviceGuid': registerDeviceGuid,
+    //       'invitationCode': invitationCode,
+    //       'agentCode': systemConfig.agentCode,
+    //     },
+    //   );
+    //   return response.data;
+    //   // if (res['code'] != '00') {
+    //   //   return HMApiResponse(
+    //   //     code: res['code'],
+    //   //     message: res['code'] == '51633' ? '帳號建立失敗，裝置停用。' : '帳號建立失敗。',
+    //   //   );
+    //   // }
+    //   // return HMApiResponse(
+    //   //   code: res['code'],
+    //   //   message: '帳號建立成功。',
+    //   // );
+    // } catch (err) {
+    //   // return HMApiResponse(
+    //   //   code: '01',
+    //   //   message: '帳號建立失敗。',
+    //   // );
+    //   // throw error
+    // }
   }
 
   Future<String?> register({

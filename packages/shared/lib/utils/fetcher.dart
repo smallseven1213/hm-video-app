@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:get/utils.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
-import '../navigator/delegate.dart';
+import '../controllers/user_controller.dart';
 
 // create a dio instance
 final logger = Logger();
@@ -15,7 +15,8 @@ final SystemConfig systemConfig = SystemConfig();
 /// headers: 請求標頭
 /// body: 請求內容
 /// shouldValidate: 是否需要驗證
-Future<Response> fetcher({
+// Future<Response> fetcher({
+Future<dynamic> fetcher({
   required String url,
   String? method = 'GET',
   Map<String, dynamic>? headers = const {},
@@ -27,9 +28,11 @@ Future<Response> fetcher({
   //     ? null
   //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
 
+  final token = Get.find<UserController>().token;
+
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
-    'authorization': 'Bearer ${systemConfig.authToken}',
+    'authorization': 'Bearer $token',
   };
 
   if (GetPlatform.isWeb || method == 'POST') {

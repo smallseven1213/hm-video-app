@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
+
+import 'auth_text_field_suffixicon.dart';
+
 class AuthTextField extends StatelessWidget {
   final String label;
   final String placeholderText;
@@ -56,7 +60,7 @@ class AuthTextField extends StatelessWidget {
                       hintStyle: TextStyle(
                           color: const Color(0xFFFFFF).withOpacity(0.3)),
                       contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 8),
+                          horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(25),
                         borderSide: const BorderSide(
@@ -83,6 +87,14 @@ class AuthTextField extends StatelessWidget {
                             color: Color(0xFFFF0000), width: 1),
                       ),
                       errorStyle: TextStyle(color: Color(0xFFFF0000)),
+                      suffixIcon: Padding(
+                        padding: const EdgeInsets.only(right: 4),
+                        child: AuthTextFieldSuffixIcon(
+                          controller: controller,
+                        ),
+                      ),
+                      suffixIconConstraints:
+                          BoxConstraints(minHeight: 15, minWidth: 15),
                     ),
                   ),
                 ],

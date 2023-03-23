@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../apis/user_api.dart';
 import '../models/user.dart';
@@ -10,15 +11,22 @@ class UserController extends GetxController {
     0,
     [],
   ).obs;
+  var token = ''.obs;
   var wallets = <WalletItem>[].obs;
   var isLoading = false.obs;
   var totalAmount = 0.0.obs;
   bool get isGuest => info.value.roles.contains('guest');
+  GetStorage box = GetStorage();
 
   @override
-  void onInit() {
-    super.onInit();
-    mutateAll();
+  void onReady() {
+    super.onReady();
+    String? storedToken = box.read('token');
+    if (storedToken != null) {
+      token.value = storedToken;
+    }
+
+    ever(token, (_) => mutateAll());
   }
 
   void _updateWallets(WalletItem walletItem) {
@@ -84,5 +92,11 @@ class UserController extends GetxController {
     if (revalidateFromServer) {
       // _fetchWallets();
     }
+  }
+
+  void setToken(String? token) {
+    var nextToken = token ?? '';
+    this.token.value = nextToken;
+    box.write('auth-token', nextToken);
   }
 }

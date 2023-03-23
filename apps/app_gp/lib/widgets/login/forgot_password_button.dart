@@ -13,6 +13,7 @@ class ForgotPasswordButton extends StatelessWidget {
             context: context,
             title: '忘记密码',
             message: '请联系客服人员',
+            showCancelButton: false,
             onConfirm: () {});
       },
       child: Column(children: [
