@@ -1,11 +1,13 @@
 // LoginPage , has button , click push to '/register'
 
 import 'package:app_gp/widgets/custom_app_bar.dart';
+import 'package:app_gp/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../utils/showConfirmDialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/login/button.dart';
 
@@ -47,6 +49,14 @@ class _LoginPageState extends State<LoginPage> {
             username: _accountController.text,
             password: _passwordController.text);
         logger.i('login success $res');
+        showConfirmDialog(
+          context: context,
+          title: '登入成功',
+          message: '登入成功',
+          onConfirm: () {
+            MyRouteDelegate.of(context).push('/home', deletePreviousCount: 1);
+          },
+        );
       } catch (error) {
         logger.i('login error $error');
       }
@@ -130,15 +140,7 @@ class _LoginPageState extends State<LoginPage> {
                         width: 1, // 設置分隔線寬度
                         color: Colors.grey, // 設置分隔線顏色
                       ),
-                      InkWell(
-                        onTap: () {
-                          MyRouteDelegate.of(context)
-                              .push('/register', deletePreviousCount: 1);
-                        },
-                        child: Column(children: [
-                          Text('忘記密碼', style: TextStyle(color: Colors.white)),
-                        ]),
-                      ),
+                      const ForgotPasswordButton()
                     ],
                   ),
                 ],
