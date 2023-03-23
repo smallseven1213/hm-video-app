@@ -14,7 +14,7 @@ final Map<int, Widget Function(Blocks block)> blockMap = {
   0: (Blocks block) => const SizedBox(),
   1: (Blocks block) => Block1Widget(block: block),
   2: (Blocks block) => Block2Widget(block: block),
-  3: (Blocks block) => Block3Widget(block: block),
+  3: (Blocks block) => Block10Widget(block: block),
   4: (Blocks block) => Block6Widget(block: block),
   5: (Blocks block) => Block5Widget(block: block),
   6: (Blocks block) => Block6Widget(block: block),
@@ -27,7 +27,7 @@ class VideoBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,7 +42,7 @@ class VideoBlock extends StatelessWidget {
               ? const SizedBox()
               : blockMap[block.template ?? 0]!(block),
           const SizedBox(
-            height: 70,
+            height: 10,
           ),
         ],
       ),

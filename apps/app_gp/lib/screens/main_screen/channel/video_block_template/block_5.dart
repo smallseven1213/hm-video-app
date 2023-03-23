@@ -1,5 +1,6 @@
 // Block5Widget
 
+import 'package:app_gp/widgets/video_block_footer.dart';
 import 'package:app_gp/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
@@ -20,8 +21,8 @@ class Block5Widget extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.all(16.0),
       child: Center(
-        child: Row(
-          children: List.generate(
+        child: Row(children: [
+          ...List.generate(
             videos.length,
             (index) => Container(
               padding: const EdgeInsets.only(right: 8.0),
@@ -40,7 +41,8 @@ class Block5Widget extends StatelessWidget {
               ),
             ),
           ),
-        ),
+          VideoBlockFooter(block: block)
+        ]),
       ),
     );
   }

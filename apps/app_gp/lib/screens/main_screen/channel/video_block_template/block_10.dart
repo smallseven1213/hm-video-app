@@ -1,4 +1,5 @@
 import 'package:app_gp/widgets/channel_area_banner.dart';
+import 'package:app_gp/widgets/video_block_footer.dart';
 import 'package:app_gp/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
@@ -41,9 +42,8 @@ class Block10Widget extends StatelessWidget {
     List<List<Data>> result = organizeRowData(videos, block);
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: List.generate(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        ...List.generate(
           result.length,
           (index) {
             return Padding(
@@ -67,7 +67,8 @@ class Block10Widget extends StatelessWidget {
             );
           },
         ),
-      ),
+        VideoBlockFooter(block: block)
+      ]),
     );
   }
 }
