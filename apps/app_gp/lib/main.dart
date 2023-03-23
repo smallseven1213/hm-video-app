@@ -16,12 +16,12 @@ void main() {
   runningMain(MyApp(), AppColors.colors);
 }
 
-final Map<String, WidgetBuilder> routes = {
-  '/home': (context) => Home(),
-  '/video/:id': (context) => Video(),
-  '/game/deposit': (context) => GameDeposit(),
-  '/login': (context) => LoginPage(),
-  '/register': (context) => RegisterPage(),
+final Map<String, RouteWidgetBuilder> routes = {
+  '/home': (context, args) => Home(),
+  '/video': (context, args) => Video(args: args),
+  '/game/deposit': (context, args) => const GameDeposit(),
+  '/login': (context, args) => LoginPage(),
+  '/register': (context, args) => RegisterPage(),
 };
 
 class MyApp extends StatelessWidget {
