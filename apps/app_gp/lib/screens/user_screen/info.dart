@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../widgets/avatar.dart';
+
 class UserInfo extends StatelessWidget {
   const UserInfo({Key? key}) : super(key: key);
 
@@ -34,30 +36,51 @@ class UserInfo extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.white,
-                    backgroundImage:
-                        NetworkImage(userController.info.value.avatar ?? ''),
-                  ),
-                  const SizedBox(width: 20),
+                  Avatar(),
+                  const SizedBox(width: 13),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          userController.info.value.nickname ?? '',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
+                        if (userController.info.value.roles.contains('vip'))
+                          const Image(
+                            image: AssetImage(
+                                'assets/images/user_screen_info_vip.png'),
+                            width: 20,
                           ),
+                        Row(
+                          children: [
+                            Text(
+                              userController.info.value.nickname ?? '',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            if (!userController.info.value.roles
+                                .contains('guest'))
+                              InkWell(
+                                onTap: () {
+                                  MyRouteDelegate.of(context)
+                                      .push('/user/config');
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(5),
+                                  child: const Image(
+                                    image: AssetImage(
+                                        'assets/images/user_screen_info_editor.png'),
+                                    width: 15,
+                                  ),
+                                ),
+                              ),
+                          ],
                         ),
                         const SizedBox(height: 5),
                         Text(
-                          'ID ${userController.info.value.uid}}',
-                          style: TextStyle(
+                          'ID: ${userController.info.value.uid}',
+                          style: const TextStyle(
                             fontSize: 12,
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
@@ -66,48 +89,46 @@ class UserInfo extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: TextButton(
-                      onPressed: () {
-                        MyRouteDelegate.of(context).push('/login');
-                      },
-                      child: userController.info.value.roles == 'guest'
-                          ? const Text(
-                              '登入/註冊',
-                              style: TextStyle(
-                                color: Color(0xffFFC700),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                shadows: [
-                                  Shadow(
-                                    color: Color(0xffFF7A00),
-                                    offset: Offset(0, 0),
-                                    blurRadius: 5,
-                                  ),
-                                ],
+                  if (userController.info.value.roles.contains('guest'))
+                    Expanded(
+                      flex: 1,
+                      child: TextButton(
+                        onPressed: () {
+                          MyRouteDelegate.of(context).push('/login');
+                        },
+                        child: const Text(
+                          '註冊/登入',
+                          style: TextStyle(
+                            color: Color(0xffFFC700),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            shadows: [
+                              Shadow(
+                                color: Color(0xffFF7A00),
+                                offset: Offset(0, 0),
+                                blurRadius: 5,
                               ),
-                            )
-                          : const Text(
-                              '登出',
-                              style: TextStyle(
-                                color: Color(0xffFFC700),
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
                 ],
               ),
               Positioned(
-                top: 10,
-                right: 10,
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  child: Icon(
-                    Icons.settings,
-                    color: Colors.grey,
+                top: 0,
+                right: 0,
+                child: InkWell(
+                  onTap: () {
+                    MyRouteDelegate.of(context).push('/user/config');
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Image(
+                      image: AssetImage(
+                          'assets/images/user_screen_config_button.png'),
+                      width: 15,
+                    ),
                   ),
                 ),
               ),

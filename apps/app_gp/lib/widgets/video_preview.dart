@@ -3,6 +3,7 @@
 import 'package:app_gp/widgets/video_embedded_ad.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/utils/video_info_formatter.dart';
@@ -97,29 +98,36 @@ class VideoPreviewWidget extends StatelessWidget {
           children: [
             Stack(
               children: [
-                AspectRatio(
-                  aspectRatio: imageRatio ?? 374 / 198,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.white,
-                    ),
-                    foregroundDecoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.0),
-                          Colors.black.withOpacity(0.3),
-                        ],
-                        stops: const [0.9, 1.0],
+                InkWell(
+                  onTap: () {
+                    MyRouteDelegate.of(context).push('/video', args: {
+                      'id': detail.id,
+                    });
+                  },
+                  child: AspectRatio(
+                    aspectRatio: imageRatio ?? 374 / 198,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.white,
                       ),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: SidImage(
-                      sid: coverHorizontal,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                      foregroundDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black.withOpacity(0.0),
+                            Colors.black.withOpacity(0.3),
+                          ],
+                          stops: const [0.9, 1.0],
+                        ),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: SidImage(
+                        sid: coverHorizontal,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),

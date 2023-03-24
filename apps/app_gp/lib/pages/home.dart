@@ -15,12 +15,12 @@ class Home extends StatelessWidget {
 
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
-  final screens = const {
-    '/layout1': HomeMainScreen(),
+  final screens = {
+    '/layout1': const HomeMainScreen(),
     '/layout2': ShortScreen(),
-    '/game': GameScreen(),
-    '/apps': AppsScreen(),
-    '/user': UserScreen()
+    '/game': const GameScreen(),
+    '/apps': const AppsScreen(),
+    '/user': const UserScreen()
   };
 
   @override

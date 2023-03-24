@@ -62,6 +62,7 @@ class _LoginPageState extends State<LoginPage> {
           );
         } else {
           Get.find<UserController>().setToken(token);
+          MyRouteDelegate.of(context).popRoute();
         }
       } catch (error) {
         showConfirmDialog(
@@ -118,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                       label: '密碼:',
                       controller: _passwordController,
                       placeholderText: '請輸入密碼',
+                      obscureText: true,
                       // onChanged: (value) {
                       //   _validatePassword(value);
                       // },
@@ -144,7 +146,7 @@ class _LoginPageState extends State<LoginPage> {
                           MyRouteDelegate.of(context)
                               .push('/register', deletePreviousCount: 1);
                         },
-                        child: Column(children: [
+                        child: Column(children: const [
                           Text('還沒有帳號', style: TextStyle(color: Colors.white)),
                         ]),
                       ),

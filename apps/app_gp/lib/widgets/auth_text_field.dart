@@ -9,6 +9,7 @@ class AuthTextField extends StatelessWidget {
   final String placeholderText;
   final FormFieldValidator<String> validator;
   final TextEditingController controller;
+  final bool obscureText;
   final void Function(String)? onChanged;
 
   const AuthTextField({
@@ -17,6 +18,7 @@ class AuthTextField extends StatelessWidget {
     required this.placeholderText,
     required this.validator,
     required this.controller,
+    this.obscureText = false,
     this.onChanged,
   }) : super(key: key);
 
@@ -49,6 +51,7 @@ class AuthTextField extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
+                    obscureText: obscureText,
                     validator: validator,
                     controller: controller,
                     onChanged: onChanged,

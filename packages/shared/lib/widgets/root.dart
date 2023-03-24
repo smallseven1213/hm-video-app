@@ -5,7 +5,7 @@ import '../navigator/parser.dart';
 import 'ad.dart';
 import 'splash.dart';
 
-typedef RouteObject = Map<String, WidgetBuilder>;
+typedef RouteObject = Map<String, RouteWidgetBuilder>;
 
 class RootWidget extends StatelessWidget {
   final String homePath;
@@ -24,8 +24,8 @@ class RootWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final RouteObject baseRoutes = {
-      '/': (context) => Splash(backgroundAssetPath: splashImage),
-      '/ad': (context) => const Ad(),
+      '/': (context, args) => Splash(backgroundAssetPath: splashImage),
+      '/ad': (context, args) => const Ad(),
     };
 
     final delegate = MyRouteDelegate(
