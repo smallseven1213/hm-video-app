@@ -69,8 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
             password: _passwordController.text);
         logger.i('register success $res');
         userController.mutateAll();
-        // back to home
-        MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+        MyRouteDelegate.of(context).popRoute();
       } catch (error) {
         showConfirmDialog(
           context: context,
@@ -110,6 +109,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 10),
                     AuthTextField(
                       label: '密碼:',
+                      obscureText: true,
                       controller: _passwordController,
                       placeholderText: '請輸入密碼',
                       validator: _validatePassword,
@@ -117,6 +117,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     const SizedBox(height: 10),
                     AuthTextField(
                       label: '驗證密碼:',
+                      obscureText: true,
                       controller: _confirmPasswordController,
                       placeholderText: '請輸入驗證密碼',
                       validator: _validateConfirmPassword,

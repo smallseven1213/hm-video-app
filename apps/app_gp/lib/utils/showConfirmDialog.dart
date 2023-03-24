@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import '../widgets/button.dart';
+
+final logger = Logger();
 
 Future<bool?> showConfirmDialog({
   required BuildContext context,
@@ -13,6 +16,7 @@ Future<bool?> showConfirmDialog({
   bool showConfirmButton = true,
   bool showCancelButton = true,
 }) {
+  logger.i(title);
   return showDialog<bool>(
     context: context,
     builder: (BuildContext context) {
@@ -41,22 +45,20 @@ Future<bool?> showConfirmDialog({
             ),
             child: Column(
               children: [
-                SizedBox(
+                Container(
+                  margin: const EdgeInsets.only(top: 20),
                   height: 30,
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20, bottom: 10),
-                    child: title != null
-                        ? Text(
-                            title,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.center,
-                          )
-                        : SizedBox.shrink(),
-                  ),
+                  child: title != null
+                      ? Text(
+                          title,
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        )
+                      : const SizedBox.shrink(),
                 ),
                 Expanded(
                   flex: 1,

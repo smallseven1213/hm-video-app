@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class GridMenuItem {
   final String name;
@@ -15,41 +16,48 @@ class GridMenuItem {
 class GridMenu extends StatelessWidget {
   GridMenu({Key? key}) : super(key: key);
 
-  final menuItems = [
-    GridMenuItem(
-      name: '我的足迹',
-      icon: 'assets/images/user_screen_footprint.png',
-      onTap: () {},
-    ),
-    GridMenuItem(
-      name: '我的喜欢',
-      icon: 'assets/images/user_screen_like.png',
-      onTap: () {},
-    ),
-    GridMenuItem(
-      name: '我的收藏',
-      icon: 'assets/images/user_screen_collection.png',
-      onTap: () {},
-    ),
-    GridMenuItem(
-      name: '推广分享',
-      icon: 'assets/images/user_screen_share.png',
-      onTap: () {},
-    ),
-    GridMenuItem(
-      name: '在线客服',
-      icon: 'assets/images/user_screen_online_service.png',
-      onTap: () {},
-    ),
-    GridMenuItem(
-      name: '应用中心',
-      icon: 'assets/images/user_screen_app_center.png',
-      onTap: () {},
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final menuItems = [
+      GridMenuItem(
+        name: '我的足迹',
+        icon: 'assets/images/user_screen_footprint.png',
+        onTap: () {
+          MyRouteDelegate.of(context).push('/playrecord');
+        },
+      ),
+      GridMenuItem(
+        name: '我的喜欢',
+        icon: 'assets/images/user_screen_like.png',
+        onTap: () {},
+      ),
+      GridMenuItem(
+        name: '我的收藏',
+        icon: 'assets/images/user_screen_collection.png',
+        onTap: () {
+          MyRouteDelegate.of(context).push('/myfavorite');
+        },
+      ),
+      GridMenuItem(
+        name: '推广分享',
+        icon: 'assets/images/user_screen_share.png',
+        onTap: () {
+          MyRouteDelegate.of(context).push('/share');
+        },
+      ),
+      GridMenuItem(
+        name: '在线客服',
+        icon: 'assets/images/user_screen_online_service.png',
+        onTap: () {},
+      ),
+      GridMenuItem(
+        name: '应用中心',
+        icon: 'assets/images/user_screen_app_center.png',
+        onTap: () {
+          MyRouteDelegate.of(context).push('/apps');
+        },
+      ),
+    ];
     return SliverGrid(
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 4,
