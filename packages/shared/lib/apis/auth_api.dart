@@ -1,5 +1,6 @@
 // import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/services/system_config.dart';
@@ -81,7 +82,7 @@ class AuthApi {
     // }
   }
 
-  Future<String?> register({
+  Future<HMApiResponseBaseWithDataWithData> register({
     required String username,
     required String password,
     required int uid,
@@ -89,26 +90,18 @@ class AuthApi {
   }) async {
     var registerIp = '0.0.0.0';
 
-    try {
-      var response = await fetcher(
-        url: '${systemConfig.apiHost}/public/auth/auth/register',
-        method: 'POST',
-        body: {
-          'username': username,
-          'password': password,
-          'uid': uid,
-          'registerIp': registerIp,
-          'invitationCode': invitationCode
-        },
-      );
-      var res = (response.data as Map<String, dynamic>);
-      if (res['code'] != '00') {
-        return null;
-      }
-      return res['data']['token'];
-    } catch (err) {
-      return null;
-    }
+    var res = await fetcher(
+      url: '${systemConfig.apiHost}/public/auth/auth/register',
+      method: 'POST',
+      body: {
+        'username': username,
+        'password': password,
+        'uid': uid,
+        'registerIp': registerIp,
+        'invitationCode': invitationCode
+      },
+    );
+    return HMApiResponseBaseWithDataWithData.fromJson(res.data);
   }
 
   Future<String?> login({
