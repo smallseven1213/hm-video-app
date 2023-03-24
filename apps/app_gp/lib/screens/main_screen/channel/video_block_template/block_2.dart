@@ -17,39 +17,41 @@ class Block2Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Data> videos = block.videos?.data ?? [];
-    return Padding(
+
+    return SliverPadding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...List.generate(
-            videos.length,
-            (index) {
-              return Container(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: videos[index].dataType == VideoType.areaAd.index
-                      ? ChannelAreaBanner(
-                          image: BannerImage.fromJson({
-                            'id': videos[index].id ?? 0,
-                            'url': videos[index].adUrl ?? '',
-                            'photoSid': videos[index].coverHorizontal ?? '',
-                            'isAutoClose': false,
-                          }),
-                        )
-                      : VideoPreviewWidget(
-                          title: videos[index].title ?? '',
-                          tags: videos[index].tags ?? [],
-                          timeLength: videos[index].timeLength ?? 0,
-                          coverHorizontal: videos[index].coverHorizontal ?? '',
-                          coverVertical: videos[index].coverVertical ?? '',
-                          videoViewTimes: videos[index].videoViewTimes ?? 0,
-                          detail: videos[index],
-                          isEmbeddedAds: block.isEmbeddedAds ?? false,
-                        ));
-            },
-          ),
-          VideoBlockFooter(block: block, updateBlock: updateBlock)
-        ],
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            if (index == videos.length) {
+              return VideoBlockFooter(block: block, updateBlock: updateBlock);
+            }
+
+            return Container(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: videos[index].dataType == VideoType.areaAd.index
+                  ? ChannelAreaBanner(
+                      image: BannerImage.fromJson({
+                        'id': videos[index].id ?? 0,
+                        'url': videos[index].adUrl ?? '',
+                        'photoSid': videos[index].coverHorizontal ?? '',
+                        'isAutoClose': false,
+                      }),
+                    )
+                  : VideoPreviewWidget(
+                      title: videos[index].title ?? '',
+                      tags: videos[index].tags ?? [],
+                      timeLength: videos[index].timeLength ?? 0,
+                      coverHorizontal: videos[index].coverHorizontal ?? '',
+                      coverVertical: videos[index].coverVertical ?? '',
+                      videoViewTimes: videos[index].videoViewTimes ?? 0,
+                      detail: videos[index],
+                      isEmbeddedAds: block.isEmbeddedAds ?? false,
+                    ),
+            );
+          },
+          childCount: videos.length + 1, // 额外的1用于 VideoBlockFooter
+        ),
       ),
     );
   }

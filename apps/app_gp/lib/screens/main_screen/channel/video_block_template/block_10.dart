@@ -50,12 +50,12 @@ class Block10Widget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Data> videos = block.videos?.data ?? [];
     List<List<Data>> result = organizeRowData(videos, block);
-    return Padding(
+
+    return SliverPadding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        ...List.generate(
-          result.length,
-          (index) {
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Container(
@@ -76,9 +76,9 @@ class Block10Widget extends StatelessWidget {
               ),
             );
           },
+          childCount: result.length,
         ),
-        VideoBlockFooter(block: block, updateBlock: updateBlock)
-      ]),
+      ),
     );
   }
 }

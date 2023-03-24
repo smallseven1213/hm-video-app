@@ -29,10 +29,6 @@ class HomeMainScreenState extends State<HomeMainScreen> {
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(88),
         child: Column(
-          /**
-           * SearchBar h:60
-           * LayoutTabBar h:60
-           */
           children: const [
             Expanded(
               child: LayoutTabBar(),

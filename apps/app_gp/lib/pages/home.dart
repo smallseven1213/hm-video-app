@@ -9,7 +9,6 @@ import '../screens/main_screen/index.dart';
 import '../screens/user_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
-// home是一個有bottom navigation bar的頁面
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
