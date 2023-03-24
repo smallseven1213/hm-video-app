@@ -100,7 +100,7 @@ class _SplashState extends State<Splash> {
       // 設定apiHost & vodHost & imageHost & maintenance
       // https://api.pkonly8.com/
       systemConfig.setApiHost('https://api.${res['apl']?.first}');
-      systemConfig.setVodHost('https://api.${res['dl']?.first}');
+      systemConfig.setVodHost('https://${res['dl']?.first}');
       systemConfig.setImageHost('https://${res['pl']?.first}');
       systemConfig.setMaintenance(res['maintenance'] == 'true' ? true : false);
     }

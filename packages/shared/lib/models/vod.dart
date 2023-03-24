@@ -3,7 +3,10 @@ import 'package:shared/models/publisher.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/models/tag.dart';
 
+import '../services/system_config.dart';
 import 'actor.dart';
+
+final systemConfig = SystemConfig();
 
 enum VideoType {
   unused,
@@ -218,5 +221,19 @@ class Vod {
         : List.from(
             (json['belongVods'] as List<dynamic>).map((e) => Vod.fromJson(e)));
     return this;
+  }
+
+  String? getVideoUrl() {
+    if (videoUrl != null && videoUrl!.isNotEmpty) {
+      // print(videoUrlUd);
+      String uri = videoUrl!.replaceAll('\\', '/').replaceAll('//', '/');
+      // print(uri);
+      if (uri.startsWith('http')) {
+        return uri;
+      }
+      String id = uri.substring(uri.indexOf('/') + 1);
+      return '${systemConfig.vodHost}/$id/$id.m3u8';
+    }
+    return null;
   }
 }
