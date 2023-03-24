@@ -123,7 +123,7 @@ class JingangList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (channelDataController.channelData[channelId] == null) {
-      return const SizedBox();
+      return const SliverToBoxAdapter(child: SizedBox());
     }
     return Obx(() {
       Jingang? jingang = channelDataController.channelData[channelId]!.jingang;
@@ -131,69 +131,27 @@ class JingangList extends StatelessWidget {
       if (jingang == null ||
           jingang.jingangDetail == null ||
           jingang.jingangDetail!.isEmpty) {
-        return const SizedBox();
+        return const SliverToBoxAdapter(child: SizedBox());
       }
-      return Container(
+      return SliverPadding(
         padding: const EdgeInsets.symmetric(vertical: 8),
-        child: Column(
-          children: [
-            Text(jingang.title ?? '',
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
-                )),
-            jingang.jingangStyle == JingangStyle.multiLine.index
-                ? GridView.count(
-                    crossAxisCount: 4,
-                    shrinkWrap: true,
-                    crossAxisSpacing: 30,
-                    // mainAxisSpacing: jingang.quantity == 4 ? 16 : 24,
-                    physics: NeverScrollableScrollPhysics(),
-                    childAspectRatio: 1,
-                    children: List.generate(
-                      jingang.jingangDetail!.length,
-                      (index) {
-                        return JingangButton(
-                          item: jingang.jingangDetail![index],
-                          outerFrame:
-                              jingang.outerFrame ?? OuterFrame.border.value,
-                          outerFrameStyle: jingang.outerFrameStyle ??
-                              OuterFrameStyle.circle.index,
-                        );
-                      },
-                    ),
-                  )
-                : Container(
-                    height: 100,
-                    padding: const EdgeInsets.only(left: 8, right: 8),
-                    child: Row(children: [
-                      Expanded(
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: jingang.jingangDetail!.length,
-                          itemBuilder: (context, index) {
-                            return Padding(
-                                padding: index == 0
-                                    ? const EdgeInsets.only(left: 8, right: 12)
-                                    : index == jingang.jingangDetail!.length - 1
-                                        ? const EdgeInsets.only(
-                                            left: 12, right: 8)
-                                        : const EdgeInsets.symmetric(
-                                            horizontal: 12),
-                                child: JingangButton(
-                                  item: jingang.jingangDetail![index],
-                                  outerFrame: jingang.outerFrame ??
-                                      OuterFrame.border.value,
-                                  outerFrameStyle: jingang.outerFrameStyle ??
-                                      OuterFrameStyle.circle.index,
-                                ));
-                          },
-                        ),
-                      ),
-                    ]),
-                  ),
-          ],
+        sliver: SliverGrid(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 4,
+            crossAxisSpacing: 30,
+            childAspectRatio: 1,
+          ),
+          delegate: SliverChildBuilderDelegate(
+            (BuildContext context, int index) {
+              return JingangButton(
+                item: jingang.jingangDetail![index],
+                outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+                outerFrameStyle:
+                    jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+              );
+            },
+            childCount: jingang.jingangDetail!.length,
+          ),
         ),
       );
     });

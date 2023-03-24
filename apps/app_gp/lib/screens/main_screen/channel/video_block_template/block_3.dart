@@ -50,42 +50,38 @@ class Block3Widget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Data> videos = block.videos?.data ?? [];
     List<List<Data>> result = organizeRowData(videos, block);
-    print('Block1Widget block.id : ${block.id} ');
 
-    if (block.id == 60) {
-      print('Block1Widget result: $result');
-    }
-    return Padding(
+    return SliverPadding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ...List.generate(
-            result.length,
-            (index) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Container(
-                  child: block.isAreaAds == true && index % 4 == 3
-                      ? ChannelAreaBanner(
-                          image: BannerImage.fromJson({
-                            'id': result[index][0].id ?? 0,
-                            'url': result[index][0].adUrl ?? '',
-                            'photoSid': result[index][0].coverHorizontal ?? '',
-                            'isAutoClose': false,
-                          }),
-                        )
-                      : VideoBlockGridViewRow(
-                          videoData: result[index],
-                          imageRatio: 182 / 102,
-                          isEmbeddedAds: block.isEmbeddedAds ?? false,
-                        ),
-                ),
-              );
-            },
-          ),
-          VideoBlockFooter(block: block, updateBlock: updateBlock)
-        ],
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+            if (index == result.length) {
+              return VideoBlockFooter(block: block, updateBlock: updateBlock);
+            }
+
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: Container(
+                child: block.isAreaAds == true && index % 4 == 3
+                    ? ChannelAreaBanner(
+                        image: BannerImage.fromJson({
+                          'id': result[index][0].id ?? 0,
+                          'url': result[index][0].adUrl ?? '',
+                          'photoSid': result[index][0].coverHorizontal ?? '',
+                          'isAutoClose': false,
+                        }),
+                      )
+                    : VideoBlockGridViewRow(
+                        videoData: result[index],
+                        imageRatio: 182 / 102,
+                        isEmbeddedAds: block.isEmbeddedAds ?? false,
+                      ),
+              ),
+            );
+          },
+          childCount: result.length + 1, // 额外的1用于 VideoBlockFooter
+        ),
       ),
     );
   }

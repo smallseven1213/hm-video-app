@@ -1,13 +1,13 @@
-import 'package:app_gp/config/colors.dart';
-import 'package:app_gp/screens/main_screen/channel/videoblocks.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
-import 'package:shared/models/color_keys.dart';
+import 'package:shared/models/channel_info.dart';
 
+import '../../../widgets/header.dart';
 import 'banners.dart';
 import 'jingang.dart';
+import 'videoblock.dart';
 
 final logger = Logger();
 
@@ -23,26 +23,37 @@ class Channel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverList(
-          delegate: SliverChildListDelegate([
-            RepaintBoundary(
-              child: Banners(channelId: channelId),
+    return Obx(() {
+      ChannelInfo? channelData = channelDataController.channelData[channelId];
+
+      List<Widget> sliverBlocks = [];
+      if (channelData != null) {
+        for (var block in channelData.blocks!) {
+          sliverBlocks.add(SliverToBoxAdapter(
+            child: Header(
+              text: '${block.name} [${block.template}]',
             ),
-          ]),
-        ),
-        SliverList(
-          delegate: SliverChildListDelegate([
-            RepaintBoundary(
-              child: JingangList(channelId: channelId),
-            ),
-            RepaintBoundary(
-              child: VideoBlocks(channelId: channelId),
-            ),
-          ]),
-        ),
-      ],
-    );
+          ));
+          sliverBlocks.add(const SliverToBoxAdapter(
+            child: SizedBox(height: 5),
+          ));
+          sliverBlocks.add(VideoBlock(block: block));
+          sliverBlocks.add(const SliverToBoxAdapter(
+            child: SizedBox(height: 10),
+          ));
+        }
+      }
+
+      return CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(child: Banners(channelId: channelId)),
+          JingangList(channelId: channelId),
+          ...sliverBlocks,
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 100),
+          )
+        ],
+      );
+    });
   }
 }

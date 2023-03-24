@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/avatar.dart';
+
+final logger = Logger();
 
 class UserInfo extends StatelessWidget {
   const UserInfo({Key? key}) : super(key: key);
@@ -12,6 +15,7 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('======build======');
     return Container(
       height: 120,
       decoration: BoxDecoration(
