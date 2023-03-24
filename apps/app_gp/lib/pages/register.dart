@@ -11,6 +11,7 @@ import 'package:shared/navigator/delegate.dart';
 
 import '../utils/showConfirmDialog.dart';
 import '../widgets/auth_text_field.dart';
+import '../widgets/button.dart';
 import '../widgets/login/button.dart';
 
 final logger = Logger();
@@ -35,7 +36,11 @@ class _RegisterPageState extends State<RegisterPage> {
     if (value == null || value.isEmpty) {
       return '請輸入帳號';
     }
-    // 可在此添加其他驗證邏輯
+
+    if (!RegExp(r'^[a-zA-Z0-9]{6,12}$').hasMatch(value)) {
+      return '账号为6-12位字母及数字';
+    }
+
     return null;
   }
 
@@ -43,7 +48,9 @@ class _RegisterPageState extends State<RegisterPage> {
     if (value == null || value.isEmpty) {
       return '請輸入密碼';
     }
-    // 可在此添加其他驗證邏輯
+    if (!RegExp(r'^[a-zA-Z0-9]{8,20}$').hasMatch(value)) {
+      return '密码为8-20位字母及数字';
+    }
     return null;
   }
 
@@ -58,18 +65,31 @@ class _RegisterPageState extends State<RegisterPage> {
     return null;
   }
 
-  void _handleRegister() async {
+  void _handleRegister(context) async {
     if (_formKey.currentState!.validate()) {
       try {
         ;
         // TODO: var invitationCode = Get.find<AppController>().invitationCode;
-        var res = authApi.register(
+        var res = await authApi.register(
             uid: userController.info.value.uid,
             username: _accountController.text,
             password: _passwordController.text);
         logger.i('register success $res');
-        userController.mutateAll();
-        MyRouteDelegate.of(context).popRoute();
+
+        if (res.code == '00') {
+          userController.mutateAll();
+          MyRouteDelegate.of(context).popRoute();
+        } else {
+          showConfirmDialog(
+            context: context,
+            title: '註冊錯誤',
+            message: '帳號或密碼不正確 ${res.code}',
+            showCancelButton: false,
+            onConfirm: () {
+              Navigator.of(context).pop();
+            },
+          );
+        }
       } catch (error) {
         showConfirmDialog(
           context: context,
@@ -126,11 +146,33 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               const SizedBox(height: 60),
-              LoginButton(
-                  text: '登入',
-                  onPressed: () {
-                    _handleRegister();
-                  }),
+              Container(
+                width: 360,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Button(
+                        text: '註冊',
+                        size: 'small',
+                        onPressed: () {
+                          _handleRegister(context);
+                        },
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Button(
+                        text: '取消',
+                        size: 'small',
+                        onPressed: () {
+                          MyRouteDelegate.of(context).popRoute();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               const SizedBox(height: 20),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -138,15 +180,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          MyRouteDelegate.of(context)
-                              .push('/login', deletePreviousCount: 1);
-                        },
-                        child: Column(children: [
-                          Text('前往登入', style: TextStyle(color: Colors.white)),
-                        ]),
-                      ),
+                      Column(children: [
+                        InkWell(
+                          onTap: () {
+                            MyRouteDelegate.of(context)
+                                .push('/login', deletePreviousCount: 1);
+                          },
+                          child: Column(children: [
+                            Text('前往登入', style: TextStyle(color: Colors.white)),
+                          ]),
+                        )
+                      ]),
                       Container(
                         margin: const EdgeInsets.symmetric(horizontal: 10),
                         height: 12, // 設置分隔線高度
