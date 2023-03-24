@@ -7,23 +7,31 @@ import 'package:shared/models/channel_info.dart';
 List<List<Data>> organizeRowData(List videos, Blocks block) {
   List<List<Data>> result = [];
   int blockQuantity = block.quantity ?? 0;
-  int blockLength = block.isAreaAds == true ? 6 : 5;
-
-  for (int i = 0; i < blockQuantity;) {
-    bool hasAreaAd =
-        block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;
-    if (hasAreaAd) {
-      result.add([videos[i]]);
-      i++;
-    } else {
-      if (i + 2 > videos.length) {
+  int blockLength = 6;
+  try {
+    for (int i = 0; i < blockQuantity;) {
+      if (i != 0 && i == videos.length) break;
+      bool hasAreaAd =
+          block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;
+      if (hasAreaAd) {
+        // 廣告那一筆
         result.add([videos[i]]);
+        print('Block1Widget 廣告變成一筆: $i');
         i++;
-      } else {
+      } else if (i + 1 < videos.length) {
+        // 影片列表
         result.add([videos[i], videos[i + 1]]);
         i += 2;
+        print('Block1Widget 有兩筆: $i');
+      } else {
+        // 落單的一筆
+        result.add([videos[i]]);
+        i++;
       }
     }
+  } catch (e) {
+    print('Block1Widget error: $e');
+    return [];
   }
   return result;
 }
@@ -31,9 +39,11 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
 // 六直
 class Block10Widget extends StatelessWidget {
   final Blocks block;
+  final Function updateBlock;
   const Block10Widget({
     Key? key,
     required this.block,
+    required this.updateBlock,
   }) : super(key: key);
 
   @override
@@ -67,7 +77,7 @@ class Block10Widget extends StatelessWidget {
             );
           },
         ),
-        VideoBlockFooter(block: block)
+        VideoBlockFooter(block: block, updateBlock: updateBlock)
       ]),
     );
   }

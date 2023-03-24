@@ -7,9 +7,11 @@ import 'package:shared/models/index.dart';
 // 四大
 class Block2Widget extends StatelessWidget {
   final Blocks block;
+  final Function updateBlock;
   const Block2Widget({
     Key? key,
     required this.block,
+    required this.updateBlock,
   }) : super(key: key);
 
   @override
@@ -46,9 +48,7 @@ class Block2Widget extends StatelessWidget {
                         ));
             },
           ),
-          VideoBlockFooter(
-            block: block,
-          )
+          VideoBlockFooter(block: block, updateBlock: updateBlock)
         ],
       ),
     );

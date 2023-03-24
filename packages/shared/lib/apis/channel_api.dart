@@ -14,4 +14,13 @@ class ChannelApi {
     return List.from(
         (res.data['data'] as List<dynamic>).map((e) => Channel.fromJson(e)));
   }
+
+  Future<List<Channel>> getManyByBlockId(int blockId) async {
+    var res = await fetcher(url: '$apiPrefix/channel/list?layout=$blockId');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Channel.fromJson(e)));
+  }
 }

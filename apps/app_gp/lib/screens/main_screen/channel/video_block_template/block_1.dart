@@ -5,38 +5,75 @@ import 'package:app_gp/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
 
-List<List<Data>> organizeRowData(List videos, Blocks block) {
+List<List<Data>> organizeRowData(List<Data> videos, Blocks block) {
   List<List<Data>> result = [];
   int blockQuantity = block.quantity ?? 0;
   int blockLength = block.isAreaAds == true ? 6 : 5;
+  try {
+    for (int i = 0; i < blockQuantity;) {
+      if (i != 0 && i == videos.length) break;
+      bool hasAreaAd =
+          block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;
 
-  for (int i = 0; i < blockQuantity;) {
-    if (i == videos.length - 1) break;
-    bool hasAreaAd =
-        block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;
-
-    if (i % blockLength == 0 || hasAreaAd) {
-      result.add([videos[i]]);
-      i++;
-    } else {
-      if (i + 2 > videos.length) {
+      if (i % blockLength == 0 || hasAreaAd) {
         result.add([videos[i]]);
         i++;
-      } else {
+      } else if (i + 1 < videos.length) {
+        // 影片列表
         result.add([videos[i], videos[i + 1]]);
         i += 2;
+        print('Block1Widget 有兩筆: $i');
+      } else {
+        // 落單的一筆
+        result.add([videos[i]]);
+        i++;
       }
     }
+  } catch (e) {
+    print('Block1Widget error: $e');
+    return [];
   }
+
   return result;
 }
+
+// List<List<Data>> groupArray(List<Data> arr, bool hasAd) {
+//   int blockQuantity = block.quantity ?? 0;
+
+//   List<List<Data>> result = [];
+//   int groupSize = 2;
+
+//   result.add([arr[0]]); // 將第一筆單獨放到一個陣列
+
+//   for (int i = 1; i < arr.length;) {
+//     if (hasAd && (i - 1) % (groupSize + 2) == groupSize) {
+//       result.add([arr[i]]);
+//       i++;
+//       if (i < arr.length) {
+//         result.add([arr[i]]);
+//         i++;
+//       }
+//     } else {
+//       List<Data> group = [];
+//       for (int j = 0; j < groupSize && i < arr.length; j++) {
+//         group.add(arr[i]);
+//         i++;
+//       }
+//       result.add(group);
+//     }
+//   }
+
+//   return result;
+// }
 
 // 一大多小
 class Block1Widget extends StatelessWidget {
   final Blocks block;
+  final Function updateBlock;
   const Block1Widget({
     Key? key,
     required this.block,
+    required this.updateBlock,
   }) : super(key: key);
 
   @override
@@ -85,9 +122,7 @@ class Block1Widget extends StatelessWidget {
               );
             },
           ),
-          VideoBlockFooter(
-            block: block,
-          )
+          VideoBlockFooter(block: block, updateBlock: updateBlock)
         ],
       ),
     );
