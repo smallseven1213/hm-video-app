@@ -1,3 +1,4 @@
+import 'package:app_gp/screens/video/video_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -17,13 +18,6 @@ class _VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     logger.i(widget.args);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Video - ${widget.args['id']}'),
-      ),
-      body: Center(
-        child: Text('Video - ${widget.args['id']}'),
-      ),
-    );
+    return VideoScreen(id: int.parse(widget.args['id'].toString()));
   }
 }
