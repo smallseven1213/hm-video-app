@@ -6,12 +6,14 @@ class CustomButton extends StatefulWidget {
   final String text;
   final Icon? icon;
   final bool? animate;
+  final Function onTap;
 
   const CustomButton({
     Key? key,
     required this.text,
     this.icon,
     this.animate = false,
+    required this.onTap,
   }) : super(key: key);
   @override
   _CustomButtonState createState() => _CustomButtonState();
@@ -47,6 +49,7 @@ class _CustomButtonState extends State<CustomButton>
               ? _animationController.reverse()
               : _animationController.forward();
         });
+        widget.onTap();
       },
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -90,16 +93,18 @@ class _CustomButtonState extends State<CustomButton>
 
 class VideoBlockFooter extends StatelessWidget {
   final Blocks block;
+  final Function updateBlock;
   final double? imageRatio;
+
   const VideoBlockFooter({
     Key? key,
     required this.block,
+    required this.updateBlock,
     this.imageRatio,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print('VideoBlockFooter build : ${block.toJson()}');
 // isAreaAds
 // isChange
 // isCheckMore
@@ -111,15 +116,31 @@ class VideoBlockFooter extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Expanded(
-                child: CustomButton(
-                    text: '進入櫥窗',
-                    icon: Icon(Icons.refresh, color: Colors.white))),
+              child: CustomButton(
+                text: '進入櫥窗',
+                icon: Icon(
+                  Icons.remove_red_eye_outlined,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  // updateBlock();
+                },
+              ),
+            ),
             SizedBox(width: 8),
             Expanded(
-                child: CustomButton(
-                    text: '換一批',
-                    animate: true,
-                    icon: Icon(Icons.refresh, color: Colors.white))),
+              child: CustomButton(
+                text: '換一批',
+                animate: true,
+                icon: Icon(
+                  Icons.refresh,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  updateBlock();
+                },
+              ),
+            ),
           ],
         )
       ],

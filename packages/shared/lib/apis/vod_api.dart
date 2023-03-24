@@ -333,4 +333,32 @@ class VodApi {
       return ChannelInfo();
     }
   }
+
+  Future<Blocks> getBlockVodsByBlockId(int blockId, {int offset = 1}) async {
+    const device = {
+      'web': 1,
+      'ios': 2,
+      'android': 3,
+    };
+    int? deviceId = device['web'];
+
+    if (!kIsWeb) {
+      if (Platform.isIOS) {
+        deviceId = device['ios'];
+      } else {
+        deviceId = device['android'];
+      }
+    }
+
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/v2/videoBlocks?offset=$offset&areaId=$blockId&deviceId=$deviceId');
+    print('getBlockVodsByBlockId res: ${res.data}');
+    try {
+      return Blocks.fromJson(res.data['data']);
+    } catch (e) {
+      print('getBlockVodsByBlockId error: $e');
+      return Blocks();
+    }
+  }
 }
