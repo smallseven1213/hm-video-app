@@ -71,52 +71,36 @@ class _VideoBlockGridViewRowState extends State<VideoBlockGridViewRow> {
                       ),
                     ],
                   );
-                } else if (widget.gridLength == 3 &&
-                    widget.videoData.length == 2) {
+                } else if (widget.gridLength == 3) {
                   return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: VideoPreviewWidget(
-                          title: widget.videoData[0].title ?? '精彩好片',
-                          tags: widget.videoData[0].tags ?? [],
-                          timeLength: widget.videoData[0].timeLength ?? 0,
-                          coverHorizontal:
-                              widget.videoData[0].coverHorizontal ?? '',
-                          coverVertical:
-                              widget.videoData[0].coverVertical ?? '',
-                          videoViewTimes:
-                              widget.videoData[0].videoViewTimes ?? 0,
-                          imageRatio: widget.imageRatio,
-                          detail: widget.videoData[0],
-                          isEmbeddedAds: widget.isEmbeddedAds,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: VideoPreviewWidget(
-                          title: widget.videoData[1].title ?? '精彩好片',
-                          tags: widget.videoData[1].tags ?? [],
-                          timeLength: widget.videoData[1].timeLength ?? 0,
-                          coverHorizontal:
-                              widget.videoData[1].coverHorizontal ?? '',
-                          coverVertical:
-                              widget.videoData[1].coverVertical ?? '',
-                          videoViewTimes:
-                              widget.videoData[1].videoViewTimes ?? 0,
-                          imageRatio: widget.imageRatio,
-                          detail: widget.videoData[1],
-                          isEmbeddedAds: widget.isEmbeddedAds,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      const Expanded(
-                        child: SizedBox(
-                          height: 200,
-                          width: double.infinity,
-                        ),
-                      ),
-                    ],
+                    children: widget.videoData
+                        .expand(
+                          (e) => [
+                            e.id == null
+                                ? const Expanded(
+                                    child: SizedBox(
+                                      height: 200,
+                                      width: double.infinity,
+                                    ),
+                                  )
+                                : Expanded(
+                                    child: VideoPreviewWidget(
+                                      title: e.title ?? '精彩好片',
+                                      tags: e.tags ?? [],
+                                      timeLength: e.timeLength ?? 0,
+                                      coverHorizontal: e.coverHorizontal ?? '',
+                                      coverVertical: e.coverVertical ?? '',
+                                      videoViewTimes: e.videoViewTimes ?? 0,
+                                      imageRatio: widget.imageRatio,
+                                      detail: e,
+                                      isEmbeddedAds: widget.isEmbeddedAds,
+                                    ),
+                                  ),
+                            const SizedBox(width: 10),
+                          ],
+                        )
+                        .toList()
+                      ..removeLast(),
                   );
                 }
 

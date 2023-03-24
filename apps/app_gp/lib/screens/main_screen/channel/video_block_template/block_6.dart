@@ -7,9 +7,11 @@ import 'package:shared/models/channel_info.dart';
 // 六小
 class Block6Widget extends StatelessWidget {
   final Blocks block;
+  final Function updateBlock;
   const Block6Widget({
     Key? key,
     required this.block,
+    required this.updateBlock,
   }) : super(key: key);
 
   @override
@@ -49,9 +51,7 @@ class Block6Widget extends StatelessWidget {
               ]),
             ),
           ),
-          VideoBlockFooter(
-            block: block,
-          )
+          VideoBlockFooter(block: block, updateBlock: updateBlock)
         ],
       ),
     );

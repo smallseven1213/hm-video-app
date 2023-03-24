@@ -211,9 +211,9 @@ class Blocks {
 }
 
 class Videos {
-  int? total;
+  num? total;
   String? current;
-  int? limit;
+  num? limit;
   List<Data>? data;
 
   Videos({total, current, limit, data});
