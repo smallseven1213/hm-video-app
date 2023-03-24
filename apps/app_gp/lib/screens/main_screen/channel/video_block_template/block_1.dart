@@ -37,35 +37,6 @@ List<List<Data>> organizeRowData(List<Data> videos, Blocks block) {
   return result;
 }
 
-// List<List<Data>> groupArray(List<Data> arr, bool hasAd) {
-//   int blockQuantity = block.quantity ?? 0;
-
-//   List<List<Data>> result = [];
-//   int groupSize = 2;
-
-//   result.add([arr[0]]); // 將第一筆單獨放到一個陣列
-
-//   for (int i = 1; i < arr.length;) {
-//     if (hasAd && (i - 1) % (groupSize + 2) == groupSize) {
-//       result.add([arr[i]]);
-//       i++;
-//       if (i < arr.length) {
-//         result.add([arr[i]]);
-//         i++;
-//       }
-//     } else {
-//       List<Data> group = [];
-//       for (int j = 0; j < groupSize && i < arr.length; j++) {
-//         group.add(arr[i]);
-//         i++;
-//       }
-//       result.add(group);
-//     }
-//   }
-
-//   return result;
-// }
-
 // 一大多小
 class Block1Widget extends StatelessWidget {
   final Blocks block;
