@@ -3,6 +3,7 @@ import 'package:app_gp/widgets/video_block_footer.dart';
 import 'package:app_gp/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
 
 List<List<Data>> organizeRowData(List videos, Blocks block) {
   List<List<Data>> result = [];
@@ -16,13 +17,13 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
       if (hasAreaAd) {
         // 廣告那一筆
         result.add([videos[i]]);
-        print('Block1Widget 廣告變成一筆: $i');
+        // print('Block1Widget 廣告變成一筆: $i');
         i++;
       } else if (i + 1 < videos.length) {
         // 影片列表
         result.add([videos[i], videos[i + 1]]);
         i += 2;
-        print('Block1Widget 有兩筆: $i');
+        // print('Block1Widget 有兩筆: $i');
       } else {
         // 落單的一筆
         result.add([videos[i]]);
@@ -56,27 +57,34 @@ class Block10Widget extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                child: block.isAreaAds == true && index % 4 == 3
-                    ? ChannelAreaBanner(
-                        image: BannerImage.fromJson({
-                          'id': result[index][0].id ?? 0,
-                          'url': result[index][0].adUrl ?? '',
-                          'photoSid': result[index][0].coverHorizontal ?? '',
-                          'isAutoClose': false,
-                        }),
-                      )
-                    : VideoBlockGridViewRow(
-                        videoData: result[index],
-                        imageRatio: 182 / 248,
-                        isEmbeddedAds: block.isEmbeddedAds ?? false,
-                      ),
-              ),
-            );
+            if (index < result.length) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  child: block.isAreaAds == true && index % 4 == 3
+                      ? ChannelAreaBanner(
+                          image: BannerImage.fromJson({
+                            'id': result[index][0].id ?? 0,
+                            'url': result[index][0].adUrl ?? '',
+                            'photoSid': result[index][0].coverHorizontal ?? '',
+                            'isAutoClose': false,
+                          }),
+                        )
+                      : VideoBlockGridViewRow(
+                          videoData: result[index],
+                          imageRatio: BlockImageRatio.block10.ratio,
+                          isEmbeddedAds: block.isEmbeddedAds ?? false,
+                        ),
+                ),
+              );
+            } else {
+              return VideoBlockFooter(
+                block: block,
+                updateBlock: updateBlock,
+              );
+            }
           },
-          childCount: result.length,
+          childCount: result.length + 1,
         ),
       ),
     );

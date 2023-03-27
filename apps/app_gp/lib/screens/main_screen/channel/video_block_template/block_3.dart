@@ -3,6 +3,7 @@ import 'package:app_gp/widgets/video_block_footer.dart';
 import 'package:app_gp/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
 
 List<List<Data>> organizeRowData(List videos, Blocks block) {
   List<List<Data>> result = [];
@@ -16,13 +17,13 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
       if (hasAreaAd) {
         // 廣告那一筆
         result.add([videos[i]]);
-        print('Block1Widget 廣告變成一筆: $i');
+        // print('Block1Widget 廣告變成一筆: $i');
         i++;
       } else if (i + 1 < videos.length) {
         // 影片列表
         result.add([videos[i], videos[i + 1]]);
         i += 2;
-        print('Block1Widget 有兩筆: $i');
+        // print('Block1Widget 有兩筆: $i');
       } else {
         // 落單的一筆
         result.add([videos[i]]);
@@ -74,7 +75,7 @@ class Block3Widget extends StatelessWidget {
                       )
                     : VideoBlockGridViewRow(
                         videoData: result[index],
-                        imageRatio: 182 / 102,
+                        imageRatio: BlockImageRatio.block3.ratio,
                         isEmbeddedAds: block.isEmbeddedAds ?? false,
                       ),
               ),

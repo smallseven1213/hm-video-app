@@ -84,14 +84,18 @@ class LayoutTabBarState extends State<LayoutTabBar>
       child: TabBar(
           isScrollable: true,
           controller: tabController,
-          indicatorPadding: const EdgeInsets.only(bottom: 4),
+          indicatorPadding:
+              const EdgeInsets.only(left: 15, right: 15, bottom: 4),
           indicatorWeight: 5,
           indicatorColor: AppColors.colors[ColorKeys.primary],
           indicator: UnderlineTabIndicator(
-              borderRadius: const BorderRadius.horizontal(
-                  left: Radius.circular(10), right: Radius.circular(10)),
-              borderSide: BorderSide(
-                  width: 5.0, color: AppColors.colors[ColorKeys.primary]!)),
+            borderRadius: const BorderRadius.horizontal(
+                left: Radius.circular(10), right: Radius.circular(10)),
+            borderSide: BorderSide(
+              width: 5.0,
+              color: AppColors.colors[ColorKeys.primary]!,
+            ),
+          ),
           onTap: handleTapTabItem,
           tabs: tabItems),
     );

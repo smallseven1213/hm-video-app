@@ -19,7 +19,7 @@ class ViewInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
         gradient: LinearGradient(
@@ -131,16 +131,18 @@ class VideoPreviewWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                AspectRatio(
-                  aspectRatio: imageRatio ?? 374 / 198,
-                  child: Align(
-                    alignment: AlignmentDirectional.bottomEnd,
-                    child: ViewInfo(
-                      viewCount: videoViewTimes,
-                      duration: getTimeString(timeLength),
-                    ),
-                  ),
-                ),
+                imageRatio != BlockImageRatio.block4.ratio
+                    ? AspectRatio(
+                        aspectRatio: imageRatio ?? 374 / 198,
+                        child: Align(
+                          alignment: AlignmentDirectional.bottomEnd,
+                          child: ViewInfo(
+                            viewCount: videoViewTimes,
+                            duration: getTimeString(timeLength),
+                          ),
+                        ),
+                      )
+                    : const SizedBox(),
               ],
             ),
             const SizedBox(height: 5),
@@ -163,6 +165,7 @@ class VideoPreviewWidget extends StatelessWidget {
                 children: tags
                     .map((e) => Container(
                         padding: const EdgeInsets.symmetric(horizontal: 5),
+                        margin: const EdgeInsets.only(right: 5),
                         decoration: BoxDecoration(
                             color: const Color(0xff4277DC).withOpacity(0.5),
                             borderRadius: BorderRadius.circular(10)),
@@ -173,13 +176,6 @@ class VideoPreviewWidget extends StatelessWidget {
                             fontSize: 10,
                           ),
                         )))
-                    .toList()
-                    .map((widget) => Row(
-                          children: [
-                            widget,
-                            const SizedBox(width: 10),
-                          ],
-                        ))
                     .toList(),
               )
             else

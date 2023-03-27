@@ -3,6 +3,7 @@ import 'package:app_gp/widgets/video_block_footer.dart';
 import 'package:app_gp/widgets/video_block_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
 
 List<List<Data>> organizeRowData(List videos, Blocks block) {
   List<List<Data>> result = [];
@@ -23,18 +24,18 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
         // 影片列表
         result.add([videos[i], videos[i + 1], videos[i + 2]]);
         i += 3;
-        print('Block1Widget 有3筆: $i');
+        // print('Block1Widget 有3筆: $i');
       } else if (i + 1 < videos.length) {
         // 影片列表
         result.add([videos[i], videos[i + 1], Data(id: null)]);
         i += 2;
-        print('Block1Widget 有2筆: $i');
+        // print('Block1Widget 有2筆: $i');
       } else {
         // 落單的一筆
         if (i < videos.length) {
           result.add([videos[i], Data(id: null), Data(id: null)]);
           i++;
-          print('Block1Widget 落單的一筆: $i');
+          // print('Block1Widget 落單的一筆: $i');
         } else {
           break;
         }
@@ -83,7 +84,7 @@ class Block4Widget extends StatelessWidget {
                       : VideoBlockGridView(
                           videos: result[index],
                           gridLength: 3,
-                          imageRatio: 119 / 159,
+                          imageRatio: BlockImageRatio.block4.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
                         ),
                 ),
