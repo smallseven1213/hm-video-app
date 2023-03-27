@@ -55,6 +55,7 @@ class _VideoBlockStatefulState extends State<VideoBlock> {
   void initState() {
     super.initState();
     block = widget.block;
+    pageSize = (block.videos!.total! / block.videos!.limit!).ceil();
   }
 
   updateBlock() async {
@@ -65,7 +66,6 @@ class _VideoBlockStatefulState extends State<VideoBlock> {
     setState(() {
       block = res;
       pageIndex = currentPage;
-      pageSize = (res.videos!.total! / res.videos!.limit!).ceil();
     });
   }
 

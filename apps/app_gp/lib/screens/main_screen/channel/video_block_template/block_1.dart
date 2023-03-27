@@ -22,7 +22,7 @@ List<List<Data>> organizeRowData(List<Data> videos, Blocks block) {
         // 影片列表
         result.add([videos[i], videos[i + 1]]);
         i += 2;
-        print('Block1Widget 有兩筆: $i');
+        // print('Block1Widget 有兩筆: $i');
       } else {
         // 落單的一筆
         result.add([videos[i]]);
@@ -89,7 +89,7 @@ class Block1Widget extends StatelessWidget {
                             )
                       : VideoBlockGridViewRow(
                           videoData: result[index],
-                          imageRatio: 182 / 102,
+                          imageRatio: BlockImageRatio.block1.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
                         ),
                 ),

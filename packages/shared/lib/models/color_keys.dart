@@ -8,4 +8,6 @@ enum ColorKeys {
   buttonBgSecondary,
   buttonBgGradientPrimary,
   buttonBgGradientSecondary,
+  noImageBgTop,
+  noImageBgBottom,
 }

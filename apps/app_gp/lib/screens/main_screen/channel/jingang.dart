@@ -45,11 +45,12 @@ class JingangButton extends StatelessWidget {
   Widget build(BuildContext context) {
     bool hasBorder = outerFrame == OuterFrame.border.value;
     bool isRounded = outerFrameStyle == OuterFrameStyle.circle.index;
+    final Size size = MediaQuery.of(context).size;
 
     return Column(children: [
       Container(
-        width: 65,
-        height: 65,
+        width: size.width * 0.15,
+        height: size.width * 0.13,
         margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
             borderRadius: isRounded
@@ -91,7 +92,6 @@ class JingangButton extends StatelessWidget {
             child: InkWell(
               onTap: () {
                 print('item: ${item?.id}   ${item?.url}${item?.toJson()}');
-
                 jingangApi.recordJingangClick(item?.id ?? 0);
                 if (item!.url!.startsWith('http://') ||
                     item!.url!.startsWith('https://')) {
@@ -127,7 +127,7 @@ class JingangList extends StatelessWidget {
     }
     return Obx(() {
       Jingang? jingang = channelDataController.channelData[channelId]!.jingang;
-      print('channelId $channelId jingang: $jingang');
+      // print('channelId $channelId jingang: $jingang');
       if (jingang == null ||
           jingang.jingangDetail == null ||
           jingang.jingangDetail!.isEmpty) {
@@ -139,7 +139,7 @@ class JingangList extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 30,
-            childAspectRatio: 1,
+            childAspectRatio: 0.95,
           ),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
