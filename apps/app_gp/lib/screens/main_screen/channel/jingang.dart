@@ -134,19 +134,6 @@ class JingangList extends StatelessWidget {
           jingang.jingangDetail!.isEmpty) {
         return const SliverToBoxAdapter(child: SizedBox());
       }
-      // return SliverAlignedGrid.count(
-      //   crossAxisCount: 4,
-      //   itemCount: jingang.jingangDetail?.length ?? 0,
-      //   itemBuilder: (BuildContext context, int index) => JingangButton(
-      //     item: jingang.jingangDetail![index],
-      //     outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
-      //     outerFrameStyle:
-      //         jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
-      //   ),
-      //   mainAxisSpacing: 12.0,
-      //   crossAxisSpacing: 10.0,
-      // );
-      // wrap with SliverPadding and vertical 8
       return SliverPadding(
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         sliver: SliverAlignedGrid.count(
