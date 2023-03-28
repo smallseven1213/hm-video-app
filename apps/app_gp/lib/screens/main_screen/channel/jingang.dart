@@ -140,7 +140,7 @@ class JingangList extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4,
             crossAxisSpacing: 30,
-            childAspectRatio: 0.95,
+            childAspectRatio: 1,
           ),
           delegate: SliverChildBuilderDelegate(
             (BuildContext context, int index) {
