@@ -1,10 +1,10 @@
 // VideoPlayerArea stateful widget
-
-import 'package:app_gp/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:video_player/video_player.dart';
+import 'package:volume_control/volume_control.dart';
+import 'package:screen_brightness/screen_brightness.dart';
 
 enum ControlsOverlayType { none, progress, playPause, middleTime }
 
@@ -21,14 +21,20 @@ class PlayPauseButton extends StatelessWidget {
       reverseDuration: const Duration(milliseconds: 200),
       child: controller.value.isPlaying
           ? const SizedBox.shrink()
-          : Container(
-              color: Colors.black26,
-              child: const Center(
-                child: Icon(
-                  Icons.play_arrow,
-                  color: Colors.white,
-                  size: 100.0,
-                  semanticLabel: 'Play',
+          : Center(
+              child: Container(
+                width: 100,
+                height: 100,
+                decoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.5),
+                    shape: BoxShape.circle),
+                child: const Center(
+                  child: Icon(
+                    Icons.play_arrow,
+                    color: Colors.white,
+                    size: 45.0,
+                    semanticLabel: 'Play',
+                  ),
                 ),
               ),
             ),
@@ -132,45 +138,54 @@ class ProgressBar extends StatelessWidget {
       right: 0,
       child: Container(
         color: Colors.black26,
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-              onPressed: () {
-                controller.value.isPlaying
-                    ? controller.pause()
-                    : controller.play();
-              },
-              icon: Icon(
-                controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                color: Colors.white,
-              ),
-            ),
-            Text(
-              "${controller.value.position.toString().split('.')[0]}",
-              style: TextStyle(color: Colors.white),
-            ),
-            Expanded(
-              child: VideoProgressIndicator(
-                controller,
-                allowScrubbing: true,
-                colors: VideoProgressColors(
-                  playedColor: Colors.blue,
-                  bufferedColor: Colors.grey,
-                  backgroundColor: Colors.white,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                  onPressed: () {
+                    controller.value.isPlaying
+                        ? controller.pause()
+                        : controller.play();
+                  },
+                  icon: Icon(
+                    controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                    color: Colors.white,
+                    size: 18,
+                  ),
                 ),
-              ),
-            ),
-            Text(
-              "${controller.value.duration.toString().split('.')[0]}",
-              style: TextStyle(color: Colors.white),
-            ),
-            IconButton(
-              onPressed: () {
-                // TODO: Add fullscreen functionality
-              },
-              icon: Icon(Icons.fullscreen, color: Colors.white),
+                Text(
+                  controller.value.position.toString().split('.')[0],
+                  style: const TextStyle(color: Colors.white),
+                ),
+                const SizedBox(width: 5.0),
+                Expanded(
+                  child: VideoProgressIndicator(
+                    controller,
+                    allowScrubbing: true,
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    colors: VideoProgressColors(
+                      playedColor: Colors.blue,
+                      bufferedColor: Colors.grey,
+                      backgroundColor: Colors.white.withOpacity(0.3),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 5.0),
+                Text(
+                  controller.value.duration.toString().split('.')[0],
+                  style: const TextStyle(color: Colors.white),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // TODO: Add fullscreen functionality
+                  },
+                  icon: const Icon(Icons.fullscreen, color: Colors.white),
+                ),
+              ],
             ),
           ],
         ),
@@ -338,6 +353,24 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
   double verticalDragPosition = 0.0;
   bool isForward = false;
 
+  Future<void> setVolume(double volume) async {
+    await VolumeControl.setVolume(volume);
+    widget.controller.setVolume(volume);
+
+    setState(() {
+      sideControlsType = SideControlsType.sound;
+      verticalDragPosition = volume;
+    });
+  }
+
+  Future<void> setBrightness(double brightness) async {
+    await ScreenBrightness().setScreenBrightness(brightness);
+    setState(() {
+      sideControlsType = SideControlsType.brightness;
+      verticalDragPosition = brightness;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
@@ -356,40 +389,50 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
               controlsType = ControlsOverlayType.playPause;
             });
           },
-          onVerticalDragStart: (details) {
+          onVerticalDragStart: (details) async {
+            if (GetPlatform.isWeb) {
+              return;
+            }
             startVerticalDragY = details.globalPosition.dy;
             initialVolume = widget.controller.value.volume;
             initialBrightness =
                 MediaQuery.of(context).platformBrightness.index.toDouble();
+
+            if (sideControlsType == SideControlsType.brightness) {
+              double brightness = await ScreenBrightness().current;
+              setBrightness(brightness);
+            } else {
+              double volume = await VolumeControl.volume;
+              setVolume(volume);
+            }
           },
-          onVerticalDragUpdate: (details) {
-            final box = context.findRenderObject()! as RenderBox;
+          onVerticalDragUpdate: (details) async {
+            if (GetPlatform.isWeb) {
+              return;
+            }
             const sensitivity = 0.02;
+            final box = context.findRenderObject()! as RenderBox;
             final deltaY = startVerticalDragY - details.globalPosition.dy;
             final percentageDelta = deltaY / box.size.height * 100;
 
             // Adjust volume when swipe on the right side of the screen
             if (details.globalPosition.dx >
                 MediaQuery.of(context).size.width / 2) {
-              final newVolume =
-                  (initialBrightness + sensitivity * percentageDelta)
-                      .clamp(0.0, 1.0);
-              widget.controller.setVolume(newVolume);
-              setState(() {
-                sideControlsType = SideControlsType.sound;
-                verticalDragPosition = newVolume;
-              });
-            }
-            // Adjust brightness when swipe on the left side of the screen
-            else {
+              if (details.primaryDelta! > 0) {
+                if (widget.controller.value.volume <= 0) return;
+                double volume = widget.controller.value.volume - 0.01;
+                await setVolume(volume);
+              } else {
+                if (widget.controller.value.volume >= 1) return;
+                double volume = widget.controller.value.volume + 0.01;
+                await setVolume(volume);
+              }
+            } else {
+              // Adjust brightness when swipe on the left side of the screen
               final newBrightness =
                   (initialBrightness + sensitivity * percentageDelta)
                       .clamp(0.0, 1.0);
-              setState(() {
-                sideControlsType = SideControlsType.brightness;
-                verticalDragPosition = newBrightness;
-              });
-              // SystemChrome.setScreenBrightness(newBrightness);
+              await setBrightness(newBrightness);
             }
           },
           onVerticalDragEnd: (details) {
@@ -449,7 +492,8 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
                   controlsType == ControlsOverlayType.playPause)
                 ProgressBar(controller: widget.controller),
               //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
-              if (sideControlsType == SideControlsType.brightness ||
+              if (!GetPlatform.isWeb &&
+                      sideControlsType == SideControlsType.brightness ||
                   sideControlsType == SideControlsType.sound)
                 VolumeBrightness(
                   controller: widget.controller,
