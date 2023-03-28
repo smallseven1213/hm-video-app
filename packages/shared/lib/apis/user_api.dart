@@ -134,24 +134,15 @@ class UserApi {
         return res['data']['data']['code'];
       });
 
-  Future<HMApiResponse> getPlayHistory() =>
-      fetcher(url: '${systemConfig.apiHost}/user/watchRecord').then((value) {
-        // var res = (value.body as Map<String, dynamic>);
+  Future<HMApiResponseBaseWithDataWithData> getPlayHistory() =>
+      fetcher(url: '${systemConfig.apiHost}/public/users/user/watchRecord')
+          .then((value) {
+        var result = HMApiResponseBaseWithDataWithData.fromJson(value.data);
 
-        // if (res['code'] != '00') {
-        //   return BlockVod([], 0);
-        // }
-        // List<Vod> vods = List.from(
-        //     (res['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
-        // return BlockVod(
-        //   vods,
-        //   vods.length,
-        // );
-
-        return value.data;
+        return result;
       });
   Future<void> addPlayHistory(int videoId) => fetcher(
-      url: '${systemConfig.apiHost}/user/watchRecord',
+      url: '${systemConfig.apiHost}/public/users/user/watchRecord',
       method: 'POST',
       body: {'videoId': videoId});
 

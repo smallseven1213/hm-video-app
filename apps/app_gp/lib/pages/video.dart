@@ -1,8 +1,11 @@
 import 'package:app_gp/screens/video/video_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/apis/user_api.dart';
 
 final logger = Logger();
+
+final userApi = UserApi();
 
 class Video extends StatefulWidget {
   // props: args
@@ -15,6 +18,12 @@ class Video extends StatefulWidget {
 }
 
 class _VideoState extends State<Video> {
+  @override
+  void initState() {
+    super.initState();
+    userApi.addPlayHistory(widget.args['id']);
+  }
+
   @override
   Widget build(BuildContext context) {
     logger.i(widget.args);

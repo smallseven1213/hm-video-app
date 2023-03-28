@@ -2,9 +2,12 @@
 
 import 'package:app_gp/widgets/video_embedded_ad.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/list_editor_controller.dart';
+import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/models/video_database_field.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
@@ -71,18 +74,26 @@ class VideoPreviewWidget extends StatelessWidget {
   final double? imageRatio;
   final Data detail;
   final bool isEmbeddedAds;
-  const VideoPreviewWidget({
-    Key? key,
-    required this.coverVertical,
-    required this.coverHorizontal,
-    required this.timeLength,
-    required this.tags,
-    required this.title,
-    required this.videoViewTimes,
-    required this.isEmbeddedAds,
-    required this.detail,
-    this.imageRatio,
-  }) : super(key: key);
+  final bool isEditing;
+  final bool isSelected;
+  final Function()? onEditingTap;
+  VideoPreviewWidget(
+      {Key? key,
+      required this.coverVertical,
+      required this.coverHorizontal,
+      required this.timeLength,
+      required this.tags,
+      required this.title,
+      required this.videoViewTimes,
+      this.isEmbeddedAds = false,
+      required this.detail,
+      this.isEditing = false,
+      this.isSelected = false,
+      this.imageRatio,
+      this.onEditingTap})
+      : super(key: key);
+
+  final playrecordController = Get.find<PlayRecordController>();
 
   @override
   Widget build(BuildContext context) {
@@ -99,36 +110,72 @@ class VideoPreviewWidget extends StatelessWidget {
             Stack(
               children: [
                 InkWell(
-                  onTap: () {
-                    MyRouteDelegate.of(context).push('/video', args: {
-                      'id': detail.id,
-                    });
-                  },
-                  child: AspectRatio(
-                    aspectRatio: imageRatio ?? 374 / 198,
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
-                      ),
-                      foregroundDecoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.0),
-                            Colors.black.withOpacity(0.3),
-                          ],
-                          stops: const [0.9, 1.0],
+                  onTap: isEditing
+                      ? onEditingTap
+                      : () {
+                          MyRouteDelegate.of(context).push('/video', args: {
+                            'id': detail.id,
+                          });
+                          var playRecord = VideoDatabaseField(
+                            id: detail.id!,
+                            coverHorizontal: coverHorizontal,
+                            coverVertical: coverVertical,
+                            timeLength: timeLength,
+                            tags: tags,
+                            title: title,
+                            videoViewTimes: videoViewTimes,
+                            detail: detail,
+                          );
+                          playrecordController.addPlayRecord(playRecord);
+                        },
+                  child: Stack(
+                    children: [
+                      AspectRatio(
+                        aspectRatio: imageRatio ?? 374 / 198,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Colors.white,
+                          ),
+                          foregroundDecoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.0),
+                                Colors.black.withOpacity(0.3),
+                              ],
+                              stops: const [0.9, 1.0],
+                            ),
+                          ),
+                          clipBehavior: Clip.antiAlias,
+                          child: SidImage(
+                            sid: coverHorizontal,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                      clipBehavior: Clip.antiAlias,
-                      child: SidImage(
-                        sid: coverHorizontal,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                      if (isEditing &&
+                          isSelected) // Check if isEditing is true and the id is in the selectedIds list
+                        AspectRatio(
+                          aspectRatio: imageRatio ?? 374 / 198,
+                          child: Container(
+                            color: Colors.black.withOpacity(
+                                0.5), // Add a black semi-transparent overlay
+                          ),
+                        ),
+                      if (isEditing && isSelected)
+                        const Positioned(
+                            top: 4,
+                            right: 4,
+                            child: Image(
+                              image: AssetImage(
+                                  'assets/images/video_selected.png'),
+                              width: 20,
+                              height: 20,
+                            ))
+                    ],
                   ),
                 ),
                 imageRatio != BlockImageRatio.block4.ratio

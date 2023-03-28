@@ -1,5 +1,6 @@
 // JingangList
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/models/channel_info.dart';
@@ -154,6 +155,22 @@ class JingangList extends StatelessWidget {
           ),
         ),
       );
+      // return SliverToBoxAdapter(
+      //   child: AlignedGridView.count(
+      //     physics: const NeverScrollableScrollPhysics(),
+      //     padding: const EdgeInsets.all(8.0),
+      //     crossAxisCount: 2,
+      //     itemCount: jingang.jingangDetail?.length,
+      //     itemBuilder: (BuildContext context, int index) => JingangButton(
+      //       item: jingang.jingangDetail![index],
+      //       outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+      //       outerFrameStyle:
+      //           jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+      //     ),
+      //     mainAxisSpacing: 12.0,
+      //     crossAxisSpacing: 10.0,
+      //   ),
+      // );
     });
   }
 }
