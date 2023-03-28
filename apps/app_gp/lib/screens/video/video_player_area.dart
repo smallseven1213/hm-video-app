@@ -1,7 +1,6 @@
 // VideoPlayerArea stateful widget
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:video_player/video_player.dart';
 
@@ -32,29 +31,84 @@ class PlayPauseButton extends StatelessWidget {
 }
 
 class VideoTime extends StatelessWidget {
-  const VideoTime({super.key});
+  final bool isForward;
+  final VideoPlayerController controller;
+  const VideoTime({
+    super.key,
+    required this.controller,
+    required this.isForward,
+  });
+
+  String formatDuration(Duration position) {
+    final ms = position.inMilliseconds;
+
+    int seconds = ms ~/ 1000;
+    final int hours = seconds ~/ 3600;
+    seconds = seconds % 3600;
+    final minutes = seconds ~/ 60;
+    seconds = seconds % 60;
+
+    final hoursString = hours >= 10
+        ? '$hours'
+        : hours == 0
+            ? '00'
+            : '0$hours';
+
+    final minutesString = minutes >= 10
+        ? '$minutes'
+        : minutes == 0
+            ? '00'
+            : '0$minutes';
+
+    final secondsString = seconds >= 10
+        ? '$seconds'
+        : seconds == 0
+            ? '00'
+            : '0$seconds';
+
+    final formattedTime =
+        '${hoursString == '00' ? '' : '$hoursString:'}$minutesString:$secondsString';
+
+    return formattedTime;
+  }
 
   @override
   Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        // text: '${formatDuration(position)} ',
-        text: '00:00:00',
-        children: <InlineSpan>[
-          TextSpan(
-            // text: '/ ${formatDuration(duration)}',
-            text: '/ 00:00:00',
-            style: TextStyle(
-              fontSize: 14.0,
-              color: Colors.white.withOpacity(.75),
-              fontWeight: FontWeight.normal,
+    return Center(
+      child: RichText(
+        text: TextSpan(
+          children: <InlineSpan>[
+            WidgetSpan(
+              child: Icon(
+                isForward
+                    ? Icons.keyboard_double_arrow_right
+                    : Icons.keyboard_double_arrow_left,
+                color: Colors.white,
+                size: 16,
+              ),
             ),
-          )
-        ],
-        style: const TextStyle(
-          fontSize: 14.0,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
+            TextSpan(
+              text: formatDuration(controller.value.position),
+              style: const TextStyle(
+                fontSize: 13.0,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            TextSpan(
+              text: ' / ${formatDuration(controller.value.duration)}',
+              style: TextStyle(
+                fontSize: 14.0,
+                color: Colors.white.withOpacity(.75),
+                fontWeight: FontWeight.normal,
+              ),
+            )
+          ],
+          style: const TextStyle(
+            fontSize: 14.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
@@ -112,6 +166,66 @@ class ProgressBar extends StatelessWidget {
                 // TODO: Add fullscreen functionality
               },
               icon: Icon(Icons.fullscreen, color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class VolumeBrightness extends StatelessWidget {
+  final VideoPlayerController controller;
+  final ControlsOverlayType controlsType;
+  final double verticalDragPosition;
+  final double height;
+
+  const VolumeBrightness({
+    super.key,
+    required this.controller,
+    required this.controlsType,
+    required this.verticalDragPosition,
+    required this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: height * .25,
+      right: controlsType == ControlsOverlayType.brightness ? 10 : null,
+      left: controlsType == ControlsOverlayType.sound ? 10 : null,
+      child: Container(
+        width: 20,
+        height: height * 0.5,
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: Colors.black45,
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: RotatedBox(
+                quarterTurns: -1,
+                child: LinearProgressIndicator(
+                  minHeight: 2,
+                  value: verticalDragPosition,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Icon(
+              controlsType == ControlsOverlayType.sound
+                  ? verticalDragPosition == 0
+                      ? Icons.volume_off_rounded
+                      : Icons.volume_up_rounded
+                  : verticalDragPosition == 0
+                      ? Icons.wb_sunny_rounded
+                      : Icons.wb_sunny_outlined,
+              color: Colors.white,
+              size: 12,
             ),
           ],
         ),
@@ -195,205 +309,154 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea> {
 
 class _ControlsOverlay extends StatefulWidget {
   final VideoPlayerController controller;
-
   const _ControlsOverlay({required this.controller});
 
   @override
   __ControlsOverlayState createState() => __ControlsOverlayState();
 }
 
-enum ControlsOverlayType { none, sound, brightness, progress }
+enum ControlsOverlayType {
+  none,
+  sound,
+  brightness,
+  progress,
+  playPause,
+  middleTime
+}
 
 class __ControlsOverlayState extends State<_ControlsOverlay> {
-  bool _hideControls = true;
+  ControlsOverlayType controlsType = ControlsOverlayType.none;
   double initialVolume = 0.0;
   double initialBrightness = 0.0;
-  double verDragPos = 0.0;
-
+  double startHorizontalDragX = 0.0;
   double startVerticalDragY = 0.0;
-  ControlsOverlayType controlsType = ControlsOverlayType.sound;
+  double verticalDragPosition = 0.0;
 
-  void _toggleControls() {
-    setState(() {
-      _hideControls = !_hideControls;
-    });
-  }
+  bool isForward = false;
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      child: GestureDetector(
-        onTap: () {
-          _toggleControls();
-          widget.controller.value.isPlaying
-              ? widget.controller.pause()
-              : widget.controller.play();
-        },
-        onVerticalDragStart: (details) {
-          startVerticalDragY = details.globalPosition.dy;
-          initialVolume = widget.controller.value.volume;
-          initialBrightness =
-              MediaQuery.of(context).platformBrightness.index.toDouble();
-          print('onVerticalDragStart: ${startVerticalDragY}');
-        },
-        onVerticalDragUpdate: (details) {
-          final box = context.findRenderObject()! as RenderBox;
-          const sensitivity = 2;
-          final deltaY = startVerticalDragY - details.globalPosition.dy;
-          final percentageDelta = deltaY / box.size.height;
+    return LayoutBuilder(builder: (context, constraints) {
+      return MouseRegion(
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              controlsType = ControlsOverlayType.progress;
+            });
+          },
+          onDoubleTap: () {
+            widget.controller.value.isPlaying
+                ? widget.controller.pause()
+                : widget.controller.play();
+            setState(() {
+              controlsType = ControlsOverlayType.playPause;
+            });
+          },
+          onVerticalDragStart: (details) {
+            startVerticalDragY = details.globalPosition.dy;
+            initialVolume = widget.controller.value.volume;
+            initialBrightness =
+                MediaQuery.of(context).platformBrightness.index.toDouble();
+          },
+          onVerticalDragUpdate: (details) {
+            final box = context.findRenderObject()! as RenderBox;
+            const sensitivity = 0.02;
+            final deltaY = startVerticalDragY - details.globalPosition.dy;
+            final percentageDelta = deltaY / box.size.height * 100;
 
-          // Adjust volume when swipe on the right side of the screen
-          if (details.globalPosition.dx >
-              MediaQuery.of(context).size.width / 2) {
-            final newVolume =
-                (initialVolume + sensitivity * percentageDelta).clamp(0.0, 1.0);
-            widget.controller.setVolume(newVolume);
+            // Adjust volume when swipe on the right side of the screen
+            if (details.globalPosition.dx >
+                MediaQuery.of(context).size.width / 2) {
+              final newVolume =
+                  (initialBrightness + sensitivity * percentageDelta)
+                      .clamp(0.0, 1.0);
+              widget.controller.setVolume(newVolume);
+              setState(() {
+                controlsType = ControlsOverlayType.sound;
+                verticalDragPosition = newVolume;
+              });
+            }
+            // Adjust brightness when swipe on the left side of the screen
+            else {
+              final newBrightness =
+                  (initialBrightness + sensitivity * percentageDelta)
+                      .clamp(0.0, 1.0);
+              setState(() {
+                controlsType = ControlsOverlayType.brightness;
+                verticalDragPosition = newBrightness;
+              });
+              // SystemChrome.setScreenBrightness(newBrightness);
+            }
+          },
+          onVerticalDragEnd: (details) {
             setState(() {
-              controlsType = ControlsOverlayType.sound;
-              verDragPos = newVolume;
+              controlsType = ControlsOverlayType.none;
             });
-          }
-          // Adjust brightness when swipe on the left side of the screen
-          else {
-            final newBrightness =
-                (initialBrightness + sensitivity * percentageDelta)
-                    .clamp(0.0, 1.0);
+          },
+          onHorizontalDragStart: (details) {
+            startHorizontalDragX = details.globalPosition.dx;
             setState(() {
-              controlsType = ControlsOverlayType.brightness;
-              verDragPos = newBrightness;
+              controlsType = ControlsOverlayType.middleTime;
             });
-            // SystemChrome.setScreenBrightness(newBrightness);
-          }
-        },
-        onVerticalDragEnd: (details) {
-          setState(() {
-            controlsType = ControlsOverlayType.none;
-          });
-        },
-        onHorizontalDragStart: (details) {
-          startVerticalDragY = details.globalPosition.dy;
-          print('onHorizontalDragStart: ${startVerticalDragY}');
-          setState(() {
-            controlsType = ControlsOverlayType.progress;
-          });
-        },
-        onHorizontalDragUpdate: (details) {
-          print('onHorizontalDragUpdate=======: ${details.globalPosition}');
-        },
-        onHorizontalDragEnd: (details) {
-          setState(() {
-            controlsType = ControlsOverlayType.none;
-          });
-        },
-        child: Stack(
-          children: <Widget>[
-            Container(
-              width: (context.findRenderObject() as RenderBox).size.width,
-              height: (context.findRenderObject() as RenderBox).size.height,
-              color: Colors.black12,
-            ),
-            // TODO: 點一下出現：播放暫停鍵
-            PlayPauseButton(controller: widget.controller),
-            // GestureDetector(),
-            // TODO: 水平拖拉：顯示快進或快退：影片時間 (左右拖動才顯示，可控制影片秒數)
-            // TODO: 點一下出現：底部控制區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
-            if (controlsType == ControlsOverlayType.progress)
-              ProgressBar(controller: widget.controller),
-            // TODO: 垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
-            // if (!_hideSoundAndBrightness)
-            if (controlsType == ControlsOverlayType.brightness ||
-                controlsType == ControlsOverlayType.sound)
-              Positioned(
-                top:
-                    (context.findRenderObject() as RenderBox).size.height * .25,
-                right:
-                    controlsType == ControlsOverlayType.brightness ? 10 : null,
-                left: controlsType == ControlsOverlayType.sound ? 10 : null,
-                child: Container(
-                  width: 20,
-                  height:
-                      (context.findRenderObject() as RenderBox).size.height *
-                          0.5,
-                  padding: const EdgeInsets.all(5),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.black45,
-                  ),
-                  child: Column(
-                    children: [
-                      Expanded(
-                        child: RotatedBox(
-                          quarterTurns: -1,
-                          child: LinearProgressIndicator(
-                            minHeight: 2,
-                            value: verDragPos,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      // Text(
-                      //   _verDragPos.toString(),
-                      //   style: TextStyle(color: Colors.white, fontSize: 9),
-                      // ),
-                      Icon(
-                        controlsType == ControlsOverlayType.sound
-                            ? verDragPos == 0
-                                ? Icons.volume_off_rounded
-                                : Icons.volume_up_rounded
-                            : verDragPos == 0
-                                ? Icons.wb_sunny_rounded
-                                : Icons.wb_sunny_outlined,
-                        color: Colors.white,
-                        size: 12,
-                      ),
-                    ],
-                  ),
-                ),
+          },
+          onHorizontalDragUpdate: (details) {
+            final box = context.findRenderObject()! as RenderBox;
+            final deltaX = startHorizontalDragX - details.globalPosition.dx;
+            final percentageDelta = deltaX / box.size.width;
+            final videoDuration = widget.controller.value.duration.inSeconds;
+            final newPositionSeconds =
+                widget.controller.value.position.inSeconds -
+                    (videoDuration * percentageDelta);
+
+            // 拖動影片進度
+            if (newPositionSeconds >= 0 &&
+                newPositionSeconds <= videoDuration) {
+              final newPosition = Duration(seconds: newPositionSeconds.round());
+              widget.controller.seekTo(newPosition);
+            }
+            // Determine whether the video is fast-forwarding or rewinding
+            setState(() {
+              isForward = percentageDelta < 0;
+            });
+            // Update the startHorizontalDragX to the current position
+            startHorizontalDragX = details.globalPosition.dx;
+          },
+          onHorizontalDragEnd: (details) {
+            setState(() {
+              controlsType = ControlsOverlayType.none;
+            });
+          },
+          child: Stack(
+            children: <Widget>[
+              Container(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                color: Colors.black12,
               ),
-
-            // Visibility(
-            //   visible: true,
-            //   child: Text(
-            //     'Volume: ${(widget.controller.value.volume! * 100).toInt()}%',
-            //     style: TextStyle(color: Colors.white, fontSize: 24),
-            //   ),
-            // )
-
-            // Add a container to display the volume and brightness indicators
-
-            // Container(
-            //     alignment: Alignment.center,
-            //     child: ValueListenableBuilder<double>(
-            //       valueListenable: valueList(enable: true),
-            //       builder: (context, value, child) {
-            //         return Visibility(
-            //           visible: value != null,
-            //           child: Text(
-            //             'Brightness: ${(value * 100).toInt()}%',
-            //             style: TextStyle(color: Colors.white, fontSize: 24),
-            //           ),
-            //         );
-            //       },
-            //     )),
-            // Container(
-            //     alignment: Alignment.center,
-            //     child: ValueListenableBuilder<double>(
-            //       valueListenable: valueList(enable: true),
-            //       builder: (context, value, child) {
-            //         return Visibility(
-            //           visible: value != null,
-            //           child: Text(
-            //             'Brightness: ${(value * 100).toInt()}%',
-            //             style: TextStyle(color: Colors.white, fontSize: 24),
-            //           ),
-            //         );
-            //       },
-            //     )),
-          ],
+              // 點兩下出現：播放暫停鍵
+              if (controlsType == ControlsOverlayType.playPause)
+                PlayPauseButton(controller: widget.controller),
+              // 水平拖拉：顯示快進或快退：影片時間 (左右拖動才顯示，可控制影片秒數)
+              if (controlsType == ControlsOverlayType.middleTime)
+                VideoTime(controller: widget.controller, isForward: isForward),
+              // 點一下出現：底部控制區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
+              if (controlsType == ControlsOverlayType.progress ||
+                  controlsType == ControlsOverlayType.middleTime ||
+                  controlsType == ControlsOverlayType.playPause)
+                ProgressBar(controller: widget.controller),
+              //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
+              if (controlsType == ControlsOverlayType.brightness ||
+                  controlsType == ControlsOverlayType.sound)
+                VolumeBrightness(
+                  controller: widget.controller,
+                  verticalDragPosition: verticalDragPosition,
+                  controlsType: controlsType,
+                  height: constraints.maxHeight,
+                )
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
