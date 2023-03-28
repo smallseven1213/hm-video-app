@@ -7,9 +7,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
+    this.actions, // 新增actions參數
   }) : super(key: key);
 
   final String title;
+  final List<Widget>? actions; // 定義actions列表
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 15,
         ),
       ),
+      actions: actions, // 將actions添加到AppBar
     );
   }
 
