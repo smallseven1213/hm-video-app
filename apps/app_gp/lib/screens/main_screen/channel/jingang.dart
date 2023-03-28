@@ -135,6 +135,7 @@ class JingangList extends StatelessWidget {
         return const SliverToBoxAdapter(child: SizedBox());
       }
       return SliverPadding(
+            crossAxisCount: 4,
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         sliver: SliverAlignedGrid.count(
           crossAxisCount: 4,
