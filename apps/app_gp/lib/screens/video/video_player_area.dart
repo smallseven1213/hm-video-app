@@ -1,8 +1,14 @@
 // VideoPlayerArea stateful widget
 
+import 'package:app_gp/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:video_player/video_player.dart';
+
+enum ControlsOverlayType { none, progress, playPause, middleTime }
+
+enum SideControlsType { none, sound, brightness }
 
 class PlayPauseButton extends StatelessWidget {
   final VideoPlayerController controller;
@@ -41,7 +47,6 @@ class VideoTime extends StatelessWidget {
 
   String formatDuration(Duration position) {
     final ms = position.inMilliseconds;
-
     int seconds = ms ~/ 1000;
     final int hours = seconds ~/ 3600;
     seconds = seconds % 3600;
@@ -151,7 +156,7 @@ class ProgressBar extends StatelessWidget {
                 controller,
                 allowScrubbing: true,
                 colors: VideoProgressColors(
-                  playedColor: Colors.red,
+                  playedColor: Colors.blue,
                   bufferedColor: Colors.grey,
                   backgroundColor: Colors.white,
                 ),
@@ -176,14 +181,15 @@ class ProgressBar extends StatelessWidget {
 
 class VolumeBrightness extends StatelessWidget {
   final VideoPlayerController controller;
-  final ControlsOverlayType controlsType;
+  final SideControlsType sideControlsType;
+
   final double verticalDragPosition;
   final double height;
 
   const VolumeBrightness({
     super.key,
     required this.controller,
-    required this.controlsType,
+    required this.sideControlsType,
     required this.verticalDragPosition,
     required this.height,
   });
@@ -192,8 +198,8 @@ class VolumeBrightness extends StatelessWidget {
   Widget build(BuildContext context) {
     return Positioned(
       top: height * .25,
-      right: controlsType == ControlsOverlayType.brightness ? 10 : null,
-      left: controlsType == ControlsOverlayType.sound ? 10 : null,
+      right: sideControlsType == SideControlsType.brightness ? 10 : null,
+      left: sideControlsType == SideControlsType.sound ? 10 : null,
       child: Container(
         width: 20,
         height: height * 0.5,
@@ -217,7 +223,7 @@ class VolumeBrightness extends StatelessWidget {
               height: 5,
             ),
             Icon(
-              controlsType == ControlsOverlayType.sound
+              sideControlsType == SideControlsType.sound
                   ? verticalDragPosition == 0
                       ? Icons.volume_off_rounded
                       : Icons.volume_up_rounded
@@ -287,7 +293,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea> {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Container(
+      child: SizedBox(
         height: 300,
         child: _controller != null && _controller!.value.isInitialized
             ? AspectRatio(
@@ -297,11 +303,18 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea> {
                   children: <Widget>[
                     VideoPlayer(_controller!),
                     _ControlsOverlay(controller: _controller!),
-                    // VideoProgressIndicator(_controller!, allowScrubbing: true),
                   ],
                 ),
               )
-            : Container(),
+            : Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black.withOpacity(0.5),
+                child: Center(
+                    child: Text('Loading...',
+                        style:
+                            TextStyle(color: Colors.white.withOpacity(0.5)))),
+              ),
       ),
     );
   }
@@ -315,23 +328,14 @@ class _ControlsOverlay extends StatefulWidget {
   __ControlsOverlayState createState() => __ControlsOverlayState();
 }
 
-enum ControlsOverlayType {
-  none,
-  sound,
-  brightness,
-  progress,
-  playPause,
-  middleTime
-}
-
 class __ControlsOverlayState extends State<_ControlsOverlay> {
   ControlsOverlayType controlsType = ControlsOverlayType.none;
+  SideControlsType sideControlsType = SideControlsType.none;
   double initialVolume = 0.0;
   double initialBrightness = 0.0;
   double startHorizontalDragX = 0.0;
   double startVerticalDragY = 0.0;
   double verticalDragPosition = 0.0;
-
   bool isForward = false;
 
   @override
@@ -372,7 +376,7 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
                       .clamp(0.0, 1.0);
               widget.controller.setVolume(newVolume);
               setState(() {
-                controlsType = ControlsOverlayType.sound;
+                sideControlsType = SideControlsType.sound;
                 verticalDragPosition = newVolume;
               });
             }
@@ -382,7 +386,7 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
                   (initialBrightness + sensitivity * percentageDelta)
                       .clamp(0.0, 1.0);
               setState(() {
-                controlsType = ControlsOverlayType.brightness;
+                sideControlsType = SideControlsType.brightness;
                 verticalDragPosition = newBrightness;
               });
               // SystemChrome.setScreenBrightness(newBrightness);
@@ -390,7 +394,7 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
           },
           onVerticalDragEnd: (details) {
             setState(() {
-              controlsType = ControlsOverlayType.none;
+              sideControlsType = SideControlsType.none;
             });
           },
           onHorizontalDragStart: (details) {
@@ -445,12 +449,12 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
                   controlsType == ControlsOverlayType.playPause)
                 ProgressBar(controller: widget.controller),
               //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
-              if (controlsType == ControlsOverlayType.brightness ||
-                  controlsType == ControlsOverlayType.sound)
+              if (sideControlsType == SideControlsType.brightness ||
+                  sideControlsType == SideControlsType.sound)
                 VolumeBrightness(
                   controller: widget.controller,
                   verticalDragPosition: verticalDragPosition,
-                  controlsType: controlsType,
+                  sideControlsType: sideControlsType,
                   height: constraints.maxHeight,
                 )
             ],
