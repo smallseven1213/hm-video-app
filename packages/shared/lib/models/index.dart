@@ -25,3 +25,4 @@ export 'videos_tag.dart';
 export 'vod.dart';
 export 'wallet_item.dart';
 export 'notices.dart';
+export 'block_image_ratio.dart';
