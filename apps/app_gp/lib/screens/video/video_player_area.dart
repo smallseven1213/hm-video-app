@@ -1,5 +1,6 @@
 // VideoPlayerArea stateful widget
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:video_player/video_player.dart';
@@ -128,7 +129,9 @@ class VideoTime extends StatelessWidget {
 
 class ProgressBar extends StatelessWidget {
   final VideoPlayerController controller;
-  const ProgressBar({super.key, required this.controller});
+  final Function toggleFullscreen;
+  const ProgressBar(
+      {super.key, required this.controller, required this.toggleFullscreen});
 
   @override
   Widget build(BuildContext context) {
@@ -182,6 +185,7 @@ class ProgressBar extends StatelessWidget {
                 IconButton(
                   onPressed: () {
                     // TODO: Add fullscreen functionality
+                    toggleFullscreen();
                   },
                   icon: const Icon(Icons.fullscreen, color: Colors.white),
                 ),
@@ -302,6 +306,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea> {
   @override
   void dispose() {
     _controller?.dispose();
+    // _controller?.removeListener(() { setState{}});
     super.dispose();
   }
 
@@ -352,6 +357,7 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
   double startVerticalDragY = 0.0;
   double verticalDragPosition = 0.0;
   bool isForward = false;
+  bool isFullscreen = false;
 
   Future<void> setVolume(double volume) async {
     await VolumeControl.setVolume(volume);
@@ -368,6 +374,25 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
     setState(() {
       sideControlsType = SideControlsType.brightness;
       verticalDragPosition = brightness;
+    });
+  }
+
+  void toggleFullscreen() {
+    if (isFullscreen) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    }
+    setState(() {
+      isFullscreen = !isFullscreen;
     });
   }
 
@@ -393,31 +418,39 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
             if (GetPlatform.isWeb) {
               return;
             }
-            startVerticalDragY = details.globalPosition.dy;
+            bool isVolume = details.globalPosition.dx >
+                MediaQuery.of(context).size.width / 2;
             initialVolume = widget.controller.value.volume;
             initialBrightness =
                 MediaQuery.of(context).platformBrightness.index.toDouble();
+            setState(() {
+              startVerticalDragY = details.globalPosition.dy;
+              sideControlsType = isVolume
+                  ? SideControlsType.sound
+                  : SideControlsType.brightness;
+            });
 
-            if (sideControlsType == SideControlsType.brightness) {
-              double brightness = await ScreenBrightness().current;
-              setBrightness(brightness);
-            } else {
+            if (isVolume) {
               double volume = await VolumeControl.volume;
-              setVolume(volume);
+              await setVolume(volume);
+            } else {
+              double brightness = await ScreenBrightness().current;
+              await setBrightness(brightness);
             }
           },
           onVerticalDragUpdate: (details) async {
             if (GetPlatform.isWeb) {
               return;
             }
+            bool isVolume = details.globalPosition.dx >
+                MediaQuery.of(context).size.width / 2;
             const sensitivity = 0.02;
             final box = context.findRenderObject()! as RenderBox;
             final deltaY = startVerticalDragY - details.globalPosition.dy;
             final percentageDelta = deltaY / box.size.height * 100;
 
             // Adjust volume when swipe on the right side of the screen
-            if (details.globalPosition.dx >
-                MediaQuery.of(context).size.width / 2) {
+            if (isVolume) {
               if (details.primaryDelta! > 0) {
                 if (widget.controller.value.volume <= 0) return;
                 double volume = widget.controller.value.volume - 0.01;
@@ -490,7 +523,9 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
               if (controlsType == ControlsOverlayType.progress ||
                   controlsType == ControlsOverlayType.middleTime ||
                   controlsType == ControlsOverlayType.playPause)
-                ProgressBar(controller: widget.controller),
+                ProgressBar(
+                    controller: widget.controller,
+                    toggleFullscreen: () => toggleFullscreen()),
               //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
               if (!GetPlatform.isWeb &&
                       sideControlsType == SideControlsType.brightness ||
