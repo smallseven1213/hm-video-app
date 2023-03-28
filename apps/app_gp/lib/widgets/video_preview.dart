@@ -164,7 +164,8 @@ class VideoPreviewWidget extends StatelessWidget {
               Row(
                 children: tags
                     .map((e) => Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 5, vertical: 2),
                         margin: const EdgeInsets.only(right: 5),
                         decoration: BoxDecoration(
                             color: const Color(0xff4277DC).withOpacity(0.5),
