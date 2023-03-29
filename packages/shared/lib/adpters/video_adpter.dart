@@ -3,6 +3,7 @@
 import 'package:hive/hive.dart';
 
 import '../models/channel_info.dart';
+import '../models/tag.dart';
 import '../models/video_database_field.dart';
 
 class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
@@ -15,7 +16,7 @@ class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
     final coverVertical = reader.readString();
     final coverHorizontal = reader.readString();
     final timeLength = reader.readInt();
-    final tags = reader.readList().cast<Tags>();
+    final tags = reader.readList().cast<Tag>();
     final title = reader.readString();
     final videoViewTimes = reader.readInt();
     final imageRatio = reader.readDouble();

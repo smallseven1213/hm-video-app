@@ -159,6 +159,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
         children: [
           Expanded(
             child: VideoPreviewWidget(
+              id: videoData[0].id!,
               title: videoData[0].title ?? '精彩好片',
               tags: videoData[0].tags ?? [],
               timeLength: videoData[0].timeLength ?? 0,
@@ -193,6 +194,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
                       )
                     : Expanded(
                         child: VideoPreviewWidget(
+                          id: e.id!,
                           title: e.title ?? '精彩好片',
                           tags: e.tags ?? [],
                           timeLength: e.timeLength ?? 0,
@@ -218,6 +220,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
             (e) => [
               Expanded(
                 child: VideoPreviewWidget(
+                  id: e.id!,
                   title: e.title ?? '精彩好片',
                   tags: e.tags ?? [],
                   timeLength: e.timeLength ?? 0,

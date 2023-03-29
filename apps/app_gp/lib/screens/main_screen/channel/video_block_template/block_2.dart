@@ -39,6 +39,7 @@ class Block2Widget extends StatelessWidget {
                       }),
                     )
                   : VideoPreviewWidget(
+                      id: videos[index].id!,
                       title: videos[index].title ?? '',
                       tags: videos[index].tags ?? [],
                       timeLength: videos[index].timeLength ?? 0,

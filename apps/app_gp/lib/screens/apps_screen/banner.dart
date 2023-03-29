@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/models/banner.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
 final logger = Logger();
 
 class BannerWidget extends StatefulWidget {
-  BannerWidget({
+  const BannerWidget({
     Key? key,
   }) : super(key: key);
 

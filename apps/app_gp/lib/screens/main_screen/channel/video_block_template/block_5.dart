@@ -37,6 +37,7 @@ class Block5Widget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8.0),
                       width: (MediaQuery.of(context).size.width - 16) / 2.5,
                       child: VideoPreviewWidget(
+                        id: videos[index].id!,
                         title: videos[index].title ?? '',
                         tags: videos[index].tags ?? [],
                         timeLength: videos[index].timeLength ?? 0,

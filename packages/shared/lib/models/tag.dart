@@ -16,6 +16,15 @@ class Tag {
       orderIndex: json['orderIndex'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['parent'] = parent;
+    data['orderIndex'] = orderIndex;
+    return data;
+  }
 }
 
 class TagVideos {
