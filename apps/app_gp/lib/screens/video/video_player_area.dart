@@ -296,7 +296,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     // _controller!.addListener(() {
     //   setState(() {});
     // });
-    _controller!.setLooping(true);
+    // _controller!.setLooping(true);
     _controller!.initialize().then((_) => setState(() {}));
     _controller!.play();
   }
@@ -324,6 +324,14 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     });
   }
 
+  Future<bool> onWillPop() async {
+    // Pause the video & exit fullscreen when the back button is pressed
+    _controller?.pause();
+    toggleFullscreen(fullScreen: false);
+    // Allow the navigation to continue
+    return true;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
@@ -345,14 +353,13 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     super.didChangeMetrics();
     final orientation =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
-    Size size = WidgetsBinding.instance.window.physicalSize;
-    print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
-    print('@@@@@@@@@ orientation: $orientation');
-    if (orientation == Orientation.landscape) {
-      toggleFullscreen(fullScreen: true);
-    } else {
-      toggleFullscreen(fullScreen: false);
-    }
+    // Size size = WidgetsBinding.instance.window.physicalSize;
+    // print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
+    // print('@@@@@@@@@ didChangeMetrics orientation: $orientation');
+
+    setState(() {
+      isFullscreen = orientation == Orientation.landscape;
+    });
   }
 
   @override
@@ -362,21 +369,13 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     super.dispose();
   }
 
-  Future<bool> onWillPop() async {
-    // Pause the video & exit fullscreen when the back button is pressed
-    _controller?.pause();
-    toggleFullscreen(fullScreen: false);
-    // Allow the navigation to continue
-    return true;
-  }
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: onWillPop,
       child: SliverToBoxAdapter(
-        child: Container(
-          color: Colors.red.withOpacity(0.3),
+        child: SizedBox(
+          // color: Colors.red.withOpacity(0.3),
           width: MediaQuery.of(context).size.width,
           height: isFullscreen ? MediaQuery.of(context).size.height : 235,
           child: Stack(
