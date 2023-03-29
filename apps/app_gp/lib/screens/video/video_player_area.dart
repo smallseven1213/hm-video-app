@@ -341,6 +341,21 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   }
 
   @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    final orientation =
+        MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
+    Size size = WidgetsBinding.instance.window.physicalSize;
+    print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
+    print('@@@@@@@@@ orientation: $orientation');
+    if (orientation == Orientation.landscape) {
+      toggleFullscreen(fullScreen: true);
+    } else {
+      toggleFullscreen(fullScreen: false);
+    }
+  }
+
+  @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _controller?.dispose();
