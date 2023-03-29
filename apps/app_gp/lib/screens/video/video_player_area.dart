@@ -130,69 +130,66 @@ class VideoTime extends StatelessWidget {
 class ProgressBar extends StatelessWidget {
   final VideoPlayerController controller;
   final Function toggleFullscreen;
-  const ProgressBar(
-      {super.key, required this.controller, required this.toggleFullscreen});
+  final bool isFullscreen;
+  const ProgressBar({
+    super.key,
+    required this.controller,
+    required this.toggleFullscreen,
+    required this.isFullscreen,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 0,
+      bottom: isFullscreen ? 30 : 0,
       left: 0,
       right: 0,
-      child: Container(
-        color: Colors.black26,
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    controller.value.isPlaying
-                        ? controller.pause()
-                        : controller.play();
-                  },
-                  icon: Icon(
-                    controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                Text(
-                  controller.value.position.toString().split('.')[0],
-                  style: const TextStyle(color: Colors.white),
-                ),
-                const SizedBox(width: 5.0),
-                Expanded(
-                  child: VideoProgressIndicator(
-                    controller,
-                    allowScrubbing: true,
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    colors: VideoProgressColors(
-                      playedColor: Colors.blue,
-                      bufferedColor: Colors.grey,
-                      backgroundColor: Colors.white.withOpacity(0.3),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 5.0),
-                Text(
-                  controller.value.duration.toString().split('.')[0],
-                  style: const TextStyle(color: Colors.white),
-                ),
-                IconButton(
-                  onPressed: () {
-                    // TODO: Add fullscreen functionality
-                    toggleFullscreen();
-                  },
-                  icon: const Icon(Icons.fullscreen, color: Colors.white),
-                ),
-              ],
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          IconButton(
+            onPressed: () {
+              controller.value.isPlaying
+                  ? controller.pause()
+                  : controller.play();
+            },
+            icon: Icon(
+              controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+              color: Colors.white,
+              size: 18,
             ),
-          ],
-        ),
+          ),
+          Text(
+            controller.value.position.toString().split('.')[0],
+            style: const TextStyle(color: Colors.white),
+          ),
+          const SizedBox(width: 5.0),
+          Expanded(
+            child: VideoProgressIndicator(
+              controller,
+              allowScrubbing: true,
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              colors: VideoProgressColors(
+                playedColor: Colors.blue,
+                bufferedColor: Colors.grey,
+                backgroundColor: Colors.white.withOpacity(0.3),
+              ),
+            ),
+          ),
+          const SizedBox(width: 5.0),
+          Text(
+            controller.value.duration.toString().split('.')[0],
+            style: const TextStyle(color: Colors.white),
+          ),
+          IconButton(
+            onPressed: () => toggleFullscreen(),
+            icon: Icon(
+                isFullscreen
+                    ? Icons.close_fullscreen_rounded
+                    : Icons.fullscreen,
+                color: Colors.white),
+          ),
+        ],
       ),
     );
   }
@@ -261,19 +258,24 @@ class VolumeBrightness extends StatelessWidget {
 
 class VideoPlayerArea extends StatefulWidget {
   final int id;
-  VideoPlayerArea({Key? key, required this.id}) : super(key: key);
+  final String? name;
+  const VideoPlayerArea({Key? key, required this.id, this.name})
+      : super(key: key);
 
   @override
   _VideoPlayerAreaState createState() => _VideoPlayerAreaState();
 }
 
-class _VideoPlayerAreaState extends State<VideoPlayerArea> {
+class _VideoPlayerAreaState extends State<VideoPlayerArea>
+    with WidgetsBindingObserver {
   VideoPlayerController? _controller;
   final VodApi vodApi = VodApi();
+  bool isFullscreen = false;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _getVodUrl();
     // initializePlayer();
   }
@@ -291,64 +293,155 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea> {
     // _controller!.play();
 
     _controller = VideoPlayerController.network(videoUrl!);
-    _controller!.addListener(() {
-      setState(() {});
-    });
+    // _controller!.addListener(() {
+    //   setState(() {});
+    // });
     _controller!.setLooping(true);
     _controller!.initialize().then((_) => setState(() {}));
     _controller!.play();
   }
 
   // Future<void> initializePlayer(String source, {bool force = true}) async {
-
   // }
+
+  void toggleFullscreen({bool fullScreen = false}) {
+    if (fullScreen) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    }
+
+    setState(() {
+      isFullscreen = fullScreen;
+    });
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.paused:
+      case AppLifecycleState.detached:
+      case AppLifecycleState.inactive:
+        _controller?.pause(); // Pause the video
+        toggleFullscreen(fullScreen: false);
+        break;
+      case AppLifecycleState.resumed:
+        _controller?.play(); // Resume the video
+        break;
+    }
+  }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _controller?.dispose();
-    // _controller?.removeListener(() { setState{}});
     super.dispose();
+  }
+
+  Future<bool> onWillPop() async {
+    // Pause the video & exit fullscreen when the back button is pressed
+    _controller?.pause();
+    toggleFullscreen(fullScreen: false);
+    // Allow the navigation to continue
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: SizedBox(
-        height: 300,
-        child: _controller != null && _controller!.value.isInitialized
-            ? AspectRatio(
-                aspectRatio: _controller!.value.aspectRatio,
-                child: Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: <Widget>[
-                    VideoPlayer(_controller!),
-                    _ControlsOverlay(controller: _controller!),
-                  ],
+    return WillPopScope(
+      onWillPop: onWillPop,
+      child: SliverToBoxAdapter(
+        child: Container(
+          color: Colors.red.withOpacity(0.3),
+          width: MediaQuery.of(context).size.width,
+          height: isFullscreen ? MediaQuery.of(context).size.height : 235,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: <Widget>[
+              if (_controller != null && _controller!.value.isInitialized) ...[
+                VideoPlayer(_controller!),
+                ControlsOverlay(
+                  controller: _controller!,
+                  name: widget.name,
+                  isFullscreen: isFullscreen,
+                  toggleFullscreen: () {
+                    toggleFullscreen(fullScreen: !isFullscreen);
+                  },
                 ),
-              )
-            : Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.black.withOpacity(0.5),
-                child: Center(
-                    child: Text('Loading...',
-                        style:
-                            TextStyle(color: Colors.white.withOpacity(0.5)))),
+              ] else
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.black.withOpacity(0.5),
+                  child: Center(
+                      child: Text('Loading...',
+                          style:
+                              TextStyle(color: Colors.white.withOpacity(0.5)))),
+                ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: AppBar(
+                  title: Text(widget.name ?? ''),
+                  backgroundColor: Colors.transparent,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    onPressed: () {
+                      if (isFullscreen) {
+                        toggleFullscreen(fullScreen: false);
+                      } else {
+                        toggleFullscreen(fullScreen: false);
+                        Navigator.pop(context);
+                      }
+                    },
+                  ),
+                ),
               ),
+            ],
+          ),
+
+          // AspectRatio(
+          //   aspectRatio: isFullscreen
+          //       ? MediaQuery.of(context).size.width /
+          //           MediaQuery.of(context).size.height
+          //       : 16 / 9,
+          //   child:
+          // ),
+        ),
       ),
     );
   }
 }
 
-class _ControlsOverlay extends StatefulWidget {
+class ControlsOverlay extends StatefulWidget {
   final VideoPlayerController controller;
-  const _ControlsOverlay({required this.controller});
+  final String? name;
+  final Function toggleFullscreen;
+  final bool isFullscreen;
+
+  const ControlsOverlay({
+    super.key,
+    required this.controller,
+    this.name,
+    required this.toggleFullscreen,
+    required this.isFullscreen,
+  });
 
   @override
-  __ControlsOverlayState createState() => __ControlsOverlayState();
+  ControlsOverlayState createState() => ControlsOverlayState();
 }
 
-class __ControlsOverlayState extends State<_ControlsOverlay> {
+class ControlsOverlayState extends State<ControlsOverlay> {
   ControlsOverlayType controlsType = ControlsOverlayType.none;
   SideControlsType sideControlsType = SideControlsType.none;
   double initialVolume = 0.0;
@@ -357,7 +450,6 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
   double startVerticalDragY = 0.0;
   double verticalDragPosition = 0.0;
   bool isForward = false;
-  bool isFullscreen = false;
 
   Future<void> setVolume(double volume) async {
     await VolumeControl.setVolume(volume);
@@ -374,25 +466,6 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
     setState(() {
       sideControlsType = SideControlsType.brightness;
       verticalDragPosition = brightness;
-    });
-  }
-
-  void toggleFullscreen() {
-    if (isFullscreen) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    }
-    setState(() {
-      isFullscreen = !isFullscreen;
     });
   }
 
@@ -513,6 +586,7 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
                 height: constraints.maxHeight,
                 color: Colors.black12,
               ),
+
               // 點兩下出現：播放暫停鍵
               if (controlsType == ControlsOverlayType.playPause)
                 PlayPauseButton(controller: widget.controller),
@@ -524,8 +598,10 @@ class __ControlsOverlayState extends State<_ControlsOverlay> {
                   controlsType == ControlsOverlayType.middleTime ||
                   controlsType == ControlsOverlayType.playPause)
                 ProgressBar(
-                    controller: widget.controller,
-                    toggleFullscreen: () => toggleFullscreen()),
+                  controller: widget.controller,
+                  toggleFullscreen: widget.toggleFullscreen,
+                  isFullscreen: widget.isFullscreen,
+                ),
               //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
               if (!GetPlatform.isWeb &&
                       sideControlsType == SideControlsType.brightness ||

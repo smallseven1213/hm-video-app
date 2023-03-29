@@ -95,7 +95,7 @@ class AdState extends State<Ad> {
               right: 20,
               child: TextButton(
                 onPressed: () => {
-                  if (countdownSeconds == 0)
+                  // if (countdownSeconds == 0)
                   MyRouteDelegate.of(context).pushAndRemoveUntil('/home')
                 },
                 child: Container(

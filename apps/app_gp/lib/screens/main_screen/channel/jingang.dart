@@ -51,7 +51,7 @@ class JingangButton extends StatelessWidget {
     return Column(children: [
       Container(
         width: size.width * 0.15,
-        height: size.width * 0.13,
+        height: size.width * 0.15,
         margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
             borderRadius: isRounded
