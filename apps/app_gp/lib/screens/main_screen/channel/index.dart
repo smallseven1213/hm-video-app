@@ -45,6 +45,7 @@ class Channel extends StatelessWidget {
       }
 
       return CustomScrollView(
+        physics: const BouncingScrollPhysics(),
         slivers: [
           SliverToBoxAdapter(child: Banners(channelId: channelId)),
           JingangList(channelId: channelId),
