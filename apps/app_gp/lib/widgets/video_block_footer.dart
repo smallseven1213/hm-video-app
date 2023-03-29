@@ -97,6 +97,7 @@ class _CustomButtonState extends State<CustomButton>
 
 class VideoBlockFooter extends StatelessWidget {
   final Blocks block;
+  final int channelId;
   final Function updateBlock;
   final double? imageRatio;
 
@@ -104,6 +105,7 @@ class VideoBlockFooter extends StatelessWidget {
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
     this.imageRatio,
   }) : super(key: key);
 
@@ -139,6 +141,7 @@ class VideoBlockFooter extends StatelessWidget {
                       args: {
                         'id': block.id,
                         'title': block.name,
+                        'channelId': channelId,
                       },
                     );
                     // updateBlock();

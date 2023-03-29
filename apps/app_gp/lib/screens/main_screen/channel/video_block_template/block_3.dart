@@ -41,10 +41,12 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
 class Block3Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
+  final int channelId;
   const Block3Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
   }) : super(key: key);
 
   @override
@@ -58,7 +60,8 @@ class Block3Widget extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             if (index == result.length) {
-              return VideoBlockFooter(block: block, updateBlock: updateBlock);
+              return VideoBlockFooter(
+                  block: block, updateBlock: updateBlock, channelId: channelId);
             }
 
             return Padding(

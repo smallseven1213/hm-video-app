@@ -9,10 +9,12 @@ import 'package:shared/models/index.dart';
 class Block5Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
+  final int channelId;
   const Block5Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
   }) : super(key: key);
 
   @override
@@ -52,7 +54,8 @@ class Block5Widget extends StatelessWidget {
                 ),
               ),
             ),
-            VideoBlockFooter(block: block, updateBlock: updateBlock),
+            VideoBlockFooter(
+                block: block, updateBlock: updateBlock, channelId: channelId),
           ],
         ),
       ),

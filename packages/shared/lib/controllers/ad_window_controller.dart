@@ -1,27 +1,23 @@
-/**
- * 櫥窗用的Ad管理
- * AdWindowController, init will call AdApi().getBannersByChannel
- * and save to obs value
- */
-
 import 'package:get/get.dart';
 import 'package:shared/apis/ad_api.dart';
-import 'package:shared/models/index.dart';
 
 import '../models/channel_banner.dart';
 
 class AdWindowController extends GetxController {
+  final int channelId;
   var data = ChannelBanner([], []).obs;
+
+  AdWindowController(this.channelId);
 
   @override
   void onInit() async {
     super.onInit();
-    fetchBanner();
+    fetchBanner(channelId);
   }
 
-  Future<void> fetchBanner() async {
+  Future<void> fetchBanner(int channelId) async {
     AdApi adApi = AdApi();
-    var result = await adApi.getBannersByChannel(3);
+    var result = await adApi.getBannersByChannel(channelId);
     var channelBanner = ChannelBanner(
       result.channelBanners,
       result.areaBanners,

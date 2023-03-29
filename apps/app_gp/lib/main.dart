@@ -28,6 +28,7 @@ final Map<String, RouteWidgetBuilder> routes = {
   '/video_by_block': (context, args) => VideoByBlockPage(
         id: args['id'] as int,
         title: args['title'] as String,
+        channelId: args['channelId'] as int,
       ),
   '/game/deposit': (context, args) => const GameDeposit(),
   '/login': (context, args) => LoginPage(),

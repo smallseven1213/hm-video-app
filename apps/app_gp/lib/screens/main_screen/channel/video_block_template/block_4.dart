@@ -51,11 +51,13 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
 class Block4Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
+  final int channelId;
 
   const Block4Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
   }) : super(key: key);
 
   @override
@@ -91,9 +93,7 @@ class Block4Widget extends StatelessWidget {
               );
             } else {
               return VideoBlockFooter(
-                block: block,
-                updateBlock: updateBlock,
-              );
+                  block: block, updateBlock: updateBlock, channelId: channelId);
             }
           },
           childCount: result.length + 1,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/ad_window_controller.dart';
@@ -15,18 +14,21 @@ final logger = Logger();
 
 class VideoByBlockPage extends StatelessWidget {
   final int id;
+  final int channelId;
   final String title;
+
   const VideoByBlockPage({
     Key? key,
     required this.id,
     required this.title,
+    required this.channelId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final BlockVideosController blockVideosController =
         Get.put(BlockVideosController(id), tag: id.toString());
-    Get.put(AdWindowController());
+    Get.put(AdWindowController(channelId), tag: channelId.toString());
 
     final ScrollController _scrollController = ScrollController();
 
@@ -45,9 +47,8 @@ class VideoByBlockPage extends StatelessWidget {
               controller: _scrollController,
               slivers: [
                 ...blockVideosController.blocks
-                    .map((e) => SliverBlockWidget(
-                          vods: e.vods,
-                        ))
+                    .map((e) =>
+                        SliverBlockWidget(vods: e.vods, channelId: channelId))
                     .toList(),
               ],
             )));
@@ -56,15 +57,17 @@ class VideoByBlockPage extends StatelessWidget {
 
 class SliverBlockWidget extends StatelessWidget {
   final List<Vod> vods;
-  SliverBlockWidget({
+  final int channelId;
+  const SliverBlockWidget({
     Key? key,
     required this.vods,
+    required this.channelId,
   }) : super(key: key);
-
-  final AdWindowController adWindowController = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    final AdWindowController adWindowController =
+        Get.find<AdWindowController>(tag: channelId.toString());
     logger.i(
         '//////// ====> \n總量:${(vods.length).ceil()}\nRow量:${(vods.length / 2).ceil()}');
     return SliverPadding(
