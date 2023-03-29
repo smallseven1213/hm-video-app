@@ -1,5 +1,6 @@
 import 'package:app_gp/screens/video/video_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/user_api.dart';
 
@@ -22,12 +23,28 @@ class _VideoState extends State<Video> {
   void initState() {
     super.initState();
     userApi.addPlayHistory(widget.args['id']);
+    // Allow screen rotation when entering the page
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+  }
+
+  @override
+  void dispose() {
+    // Restore original orientations when leaving the page
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     logger.i(widget.args);
-
     return VideoScreen(
       id: int.parse(widget.args['id'].toString()),
       name: widget.args['name'],
