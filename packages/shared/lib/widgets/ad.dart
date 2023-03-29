@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/sid_image.dart';
+import '../models/banner_photo.dart';
 import '../navigator/delegate.dart';
 import '../services/system_config.dart';
 import '../controllers/banner_controller.dart';
-import '../models/index.dart';
 
 final systemConfig = SystemConfig();
 

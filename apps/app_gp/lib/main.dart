@@ -15,6 +15,7 @@ import 'pages/playrecord.dart';
 import 'pages/register.dart';
 import 'pages/share.dart';
 import 'pages/sharerecord.dart';
+import 'pages/video_by_block.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -24,6 +25,11 @@ void main() {
 final Map<String, RouteWidgetBuilder> routes = {
   '/home': (context, args) => Home(),
   '/video': (context, args) => Video(args: args),
+  '/video_by_block': (context, args) => VideoByBlockPage(
+        id: args['id'] as int,
+        title: args['title'] as String,
+        channelId: args['channelId'] as int,
+      ),
   '/game/deposit': (context, args) => const GameDeposit(),
   '/login': (context, args) => LoginPage(),
   '/register': (context, args) => RegisterPage(),

@@ -1,6 +1,7 @@
 import 'package:hive/hive.dart';
 
 import '../models/channel_info.dart';
+import '../models/tag.dart';
 
 class VideoDetailAdapter extends TypeAdapter<Data> {
   @override
@@ -20,7 +21,7 @@ class VideoDetailAdapter extends TypeAdapter<Data> {
       timeLength: reader.readInt(),
       coverVertical: reader.readString(),
       coverHorizontal: reader.readString(),
-      tags: reader.readList().cast<Tags>(),
+      tags: reader.readList().cast<Tag>(),
       videoViewTimes: reader.readInt(),
       videoCollectTimes: reader.readInt(),
       appIcon: reader.readString(),

@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared/apis/banner_api.dart';
 
+import '../models/banner_photo.dart';
 import '../models/index.dart';
 
 class BannerController extends GetxController {

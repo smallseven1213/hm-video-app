@@ -1,3 +1,5 @@
+import 'package:shared/models/tag.dart';
+
 import 'channel_info.dart';
 
 class VideoDatabaseField {
@@ -5,7 +7,7 @@ class VideoDatabaseField {
   final String coverVertical;
   final String coverHorizontal;
   final int timeLength;
-  final List<Tags> tags;
+  final List<Tag> tags;
   final String title;
   final int videoViewTimes;
   final double? imageRatio;

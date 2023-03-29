@@ -41,10 +41,12 @@ List<List<Data>> organizeRowData(List<Data> videos, Blocks block) {
 class Block1Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
+  final int channelId;
   const Block1Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
   }) : super(key: key);
 
   @override
@@ -75,6 +77,7 @@ class Block1Widget extends StatelessWidget {
                               }),
                             )
                           : VideoPreviewWidget(
+                              id: videos[index].id!,
                               title: result[index][0].title ?? '',
                               tags: result[index][0].tags ?? [],
                               timeLength: result[index][0].timeLength ?? 0,
@@ -94,7 +97,10 @@ class Block1Widget extends StatelessWidget {
                         ),
                 ),
                 if (index == result.length - 1)
-                  VideoBlockFooter(block: block, updateBlock: updateBlock),
+                  VideoBlockFooter(
+                      block: block,
+                      updateBlock: updateBlock,
+                      channelId: channelId),
               ],
             ),
           );

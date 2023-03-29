@@ -1,3 +1,5 @@
+import 'package:shared/models/tag.dart';
+
 class ChannelInfo {
   List<BannerImage>? banner;
   Jingang? jingang;
@@ -252,7 +254,7 @@ class Data {
   int? timeLength;
   String? coverVertical;
   String? coverHorizontal;
-  List<Tags>? tags;
+  List<Tag>? tags;
   int? videoViewTimes;
   int? videoCollectTimes;
   String? appIcon;
@@ -289,9 +291,9 @@ class Data {
     coverVertical = json['coverVertical'];
     coverHorizontal = json['coverHorizontal'];
     if (json['tags'] != null) {
-      tags = <Tags>[];
+      tags = <Tag>[];
       json['tags'].forEach((v) {
-        tags!.add(Tags.fromJson(v));
+        tags!.add(Tag.fromJson(v));
       });
     }
     videoViewTimes = json['videoViewTimes'];
@@ -320,25 +322,6 @@ class Data {
     data['videoCollectTimes'] = videoCollectTimes;
     data['appIcon'] = appIcon;
     data['adUrl'] = adUrl;
-    return data;
-  }
-}
-
-class Tags {
-  int? id;
-  String? name;
-
-  Tags({id, name});
-
-  Tags.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['name'] = name;
     return data;
   }
 }

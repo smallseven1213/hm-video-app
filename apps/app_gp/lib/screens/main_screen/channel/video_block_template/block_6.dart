@@ -8,10 +8,12 @@ import 'package:shared/models/channel_info.dart';
 class Block6Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
+  final int channelId;
   const Block6Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,7 @@ class Block6Widget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8.0),
                       width: (MediaQuery.of(context).size.width - 16) * 0.7,
                       child: VideoPreviewWidget(
+                        id: videos[index].id!,
                         title: videos[index].title ?? '',
                         tags: videos[index].tags ?? [],
                         timeLength: videos[index].timeLength ?? 0,
@@ -50,7 +53,8 @@ class Block6Widget extends StatelessWidget {
                 ),
               ),
             ),
-            VideoBlockFooter(block: block, updateBlock: updateBlock),
+            VideoBlockFooter(
+                block: block, updateBlock: updateBlock, channelId: channelId),
           ],
         ),
       ),

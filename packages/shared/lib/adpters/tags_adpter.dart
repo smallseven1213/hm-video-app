@@ -1,24 +1,23 @@
 import 'package:hive/hive.dart';
+import '../models/tag.dart';
 
-import '../models/channel_info.dart';
-
-class TagsAdapter extends TypeAdapter<Tags> {
+class TagsAdapter extends TypeAdapter<Tag> {
   @override
   final int typeId = 2;
 
   @override
-  Tags read(BinaryReader reader) {
+  Tag read(BinaryReader reader) {
     final id = reader.readInt();
     final name = reader.readString();
 
-    return Tags(
-      id: id,
-      name: name,
+    return Tag(
+      id,
+      name,
     );
   }
 
   @override
-  void write(BinaryWriter writer, Tags obj) {
+  void write(BinaryWriter writer, Tag obj) {
     writer.writeInt(obj.id!);
     writer.writeString(obj.name!);
   }

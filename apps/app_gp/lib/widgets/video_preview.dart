@@ -65,20 +65,22 @@ class ViewInfo extends StatelessWidget {
 }
 
 class VideoPreviewWidget extends StatelessWidget {
+  final int id;
   final String coverVertical;
   final String coverHorizontal;
   final int timeLength;
-  final List<Tags> tags;
+  final List<Tag> tags;
   final String title;
   final int videoViewTimes;
   final double? imageRatio;
-  final Data detail;
+  final Data? detail;
   final bool isEmbeddedAds;
   final bool isEditing;
   final bool isSelected;
   final Function()? onEditingTap;
   VideoPreviewWidget(
       {Key? key,
+      required this.id,
       required this.coverVertical,
       required this.coverHorizontal,
       required this.timeLength,
@@ -86,7 +88,7 @@ class VideoPreviewWidget extends StatelessWidget {
       required this.title,
       required this.videoViewTimes,
       this.isEmbeddedAds = false,
-      required this.detail,
+      this.detail,
       this.isEditing = false,
       this.isSelected = false,
       this.imageRatio,
@@ -97,10 +99,10 @@ class VideoPreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (detail.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
+    if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
       return VideoEmbeddedAdWidget(
         imageRatio: imageRatio ?? 374 / 198,
-        detail: detail,
+        detail: detail!,
       );
     }
     return LayoutBuilder(
@@ -114,17 +116,17 @@ class VideoPreviewWidget extends StatelessWidget {
                       ? onEditingTap
                       : () {
                           MyRouteDelegate.of(context).push('/video', args: {
-                            'id': detail.id,
+                            'id': id,
                           });
                           var playRecord = VideoDatabaseField(
-                            id: detail.id!,
+                            id: id,
                             coverHorizontal: coverHorizontal,
                             coverVertical: coverVertical,
                             timeLength: timeLength,
                             tags: tags,
                             title: title,
                             videoViewTimes: videoViewTimes,
-                            detail: detail,
+                            detail: detail!,
                           );
                           playrecordController.addPlayRecord(playRecord);
                         },

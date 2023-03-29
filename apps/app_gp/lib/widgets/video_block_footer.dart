@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class CustomButton extends StatefulWidget {
   final String text;
@@ -96,6 +97,7 @@ class _CustomButtonState extends State<CustomButton>
 
 class VideoBlockFooter extends StatelessWidget {
   final Blocks block;
+  final int channelId;
   final Function updateBlock;
   final double? imageRatio;
 
@@ -103,6 +105,7 @@ class VideoBlockFooter extends StatelessWidget {
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
     this.imageRatio,
   }) : super(key: key);
 
@@ -133,6 +136,14 @@ class VideoBlockFooter extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
+                    MyRouteDelegate.of(context).push(
+                      '/video_by_block',
+                      args: {
+                        'id': block.id,
+                        'title': block.name,
+                        'channelId': channelId,
+                      },
+                    );
                     // updateBlock();
                   },
                 ),

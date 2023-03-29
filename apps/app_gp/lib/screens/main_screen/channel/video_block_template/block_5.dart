@@ -9,10 +9,12 @@ import 'package:shared/models/index.dart';
 class Block5Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
+  final int channelId;
   const Block5Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
   }) : super(key: key);
 
   @override
@@ -37,6 +39,7 @@ class Block5Widget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8.0),
                       width: (MediaQuery.of(context).size.width - 16) / 2.5,
                       child: VideoPreviewWidget(
+                        id: videos[index].id!,
                         title: videos[index].title ?? '',
                         tags: videos[index].tags ?? [],
                         timeLength: videos[index].timeLength ?? 0,
@@ -51,7 +54,8 @@ class Block5Widget extends StatelessWidget {
                 ),
               ),
             ),
-            VideoBlockFooter(block: block, updateBlock: updateBlock),
+            VideoBlockFooter(
+                block: block, updateBlock: updateBlock, channelId: channelId),
           ],
         ),
       ),

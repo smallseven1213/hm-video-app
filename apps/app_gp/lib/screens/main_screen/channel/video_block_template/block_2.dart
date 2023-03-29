@@ -8,10 +8,12 @@ import 'package:shared/models/index.dart';
 class Block2Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
+  final int channelId;
   const Block2Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
+    required this.channelId,
   }) : super(key: key);
 
   @override
@@ -24,7 +26,8 @@ class Block2Widget extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             if (index == videos.length) {
-              return VideoBlockFooter(block: block, updateBlock: updateBlock);
+              return VideoBlockFooter(
+                  block: block, updateBlock: updateBlock, channelId: channelId);
             }
 
             return Container(
@@ -39,6 +42,7 @@ class Block2Widget extends StatelessWidget {
                       }),
                     )
                   : VideoPreviewWidget(
+                      id: videos[index].id!,
                       title: videos[index].title ?? '',
                       tags: videos[index].tags ?? [],
                       timeLength: videos[index].timeLength ?? 0,
