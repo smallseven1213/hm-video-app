@@ -29,13 +29,15 @@ class GridMenu extends StatelessWidget {
       GridMenuItem(
         name: '我的喜欢',
         icon: 'assets/images/user_screen_like.png',
-        onTap: () {},
+        onTap: () {
+          MyRouteDelegate.of(context).push('/favorites');
+        },
       ),
       GridMenuItem(
         name: '我的收藏',
         icon: 'assets/images/user_screen_collection.png',
         onTap: () {
-          MyRouteDelegate.of(context).push('/myfavorite');
+          MyRouteDelegate.of(context).push('/collection');
         },
       ),
       GridMenuItem(

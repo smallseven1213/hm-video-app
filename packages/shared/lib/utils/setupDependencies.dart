@@ -23,6 +23,8 @@ void setupDependencies() {
   Get.lazyPut<PlayRecordController>(() => PlayRecordController());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
       tag: 'playrecord');
+  Get.lazyPut<ListEditorController>(() => ListEditorController(),
+      tag: 'user_video_collection');
   Get.lazyPut<UserFavoritesUserController>(() => UserFavoritesUserController());
   Get.lazyPut<UserFavoritesVideoController>(
       () => UserFavoritesVideoController());
