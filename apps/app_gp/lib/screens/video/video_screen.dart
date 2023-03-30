@@ -6,7 +6,10 @@ import 'package:app_gp/screens/video/video_player_area.dart';
 import 'package:app_gp/widgets/button.dart';
 import 'package:app_gp/widgets/glowing_icon.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared/controllers/block_videos_controller.dart';
+import 'package:shared/controllers/user_favorites_video_controlle.dart';
+import 'package:shared/controllers/user_video_collection_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/sliver_header_delegate.dart';
@@ -117,7 +120,11 @@ class LikeButtonState extends State<LikeButton> {
 }
 
 class Actions extends StatelessWidget {
-  const Actions({super.key});
+  final Vod video;
+  Actions({super.key, required this.video});
+
+  final userCollectionController = Get.find<UserCollectionController>();
+  final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -125,24 +132,26 @@ class Actions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-          child: LikeButton(
-            text: '喜歡就點讚',
-            isLiked: false,
-            onPressed: () {
-              print('like button pressed');
-            },
-          ),
+          child: Obx(() => LikeButton(
+                text: '喜歡就點讚',
+                isLiked: userFavoritesVideoController.videos
+                    .contains(video.id.toString()),
+                onPressed: () {
+                  userFavoritesVideoController.addVideo(video);
+                },
+              )),
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: LikeButton(
-            text: '收藏',
-            type: LikeButtonType.bookmark,
-            isLiked: false,
-            onPressed: () {
-              print('like button pressed');
-            },
-          ),
+          child: Obx(() => LikeButton(
+                text: '收藏',
+                type: LikeButtonType.bookmark,
+                isLiked: userCollectionController.videos
+                    .contains(video.id.toString()),
+                onPressed: () {
+                  userCollectionController.addVideo(video);
+                },
+              )),
         ),
       ],
     );
@@ -296,7 +305,9 @@ class _VideoScreenState extends State<VideoScreen>
                                 title: snapshot.data!.title,
                                 tags: snapshot.data!.tags ?? [],
                               ),
-                              Actions(),
+                              Actions(
+                                video: snapshot.data!,
+                              ),
                               // BannerAd(),
                               // ChannelAreaBanner(
                               //   image: block.banner!,

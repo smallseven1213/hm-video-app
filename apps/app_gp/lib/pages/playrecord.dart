@@ -53,7 +53,7 @@ class _PlayRecordPageState extends State<PlayRecordPage> {
               itemCount: playRecordController.playRecord.length,
               itemBuilder: (BuildContext context, int index) =>
                   Obx(() => VideoPreviewWidget(
-                        id: videos[index].detail.id!,
+                        id: videos[index].detail?.id ?? videos[index].id,
                         isEditing: listEditorController.isEditing.value,
                         isSelected: listEditorController.selectedIds
                             .contains(videos[index].id),
