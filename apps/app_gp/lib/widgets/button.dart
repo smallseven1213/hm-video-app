@@ -4,7 +4,7 @@ class Button extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  final Icon? icon;
+  final dynamic icon; // GlowingIcon or Icon
   final String? type; // primary, secondary
   final String? size; // small, medium, large
 
@@ -32,31 +32,38 @@ class Button extends StatelessWidget {
       child: GestureDetector(
         onTap: onPressed,
         child: Container(
-          clipBehavior: Clip.antiAlias,
-          padding: size == 'medium'
-              ? const EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.5)
-              : const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            boxShadow: [
-              BoxShadow(
-                color: type == 'primary'
-                    ? const Color(0xFF4277DC)
-                    : const Color.fromRGBO(18, 18, 69, 0.5),
-                blurRadius: 20,
-                spreadRadius: type == 'primary' ? 0 : -10,
-              ),
-            ],
-          ),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: size == 'medium' ? 16 : 14,
-              ),
+            clipBehavior: Clip.antiAlias,
+            padding: size == 'medium'
+                ? const EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.5)
+                : const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: type == 'primary'
+                      ? const Color(0xFF4277DC)
+                      : const Color.fromRGBO(18, 18, 69, 0.5),
+                  blurRadius: 20,
+                  spreadRadius: type == 'primary' ? 0 : -10,
+                ),
+              ],
             ),
-          ),
-        ),
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (icon != null) icon!,
+                  if (icon != null) const SizedBox(width: 8),
+                  Text(
+                    text,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size == 'medium' ? 16 : 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ],
+              ),
+            )),
       ),
     );
   }
