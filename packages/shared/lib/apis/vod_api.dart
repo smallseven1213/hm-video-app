@@ -184,17 +184,17 @@ class VodApi {
   //   }
   // });
 
-  Future<Vod> getVodDetail(Vod vod) async {
+  Future<Vod> getVodDetail(int vodId) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=${vod.id}');
+            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=${vodId}');
     if (res.data['code'] != '00') {
-      return vod;
+      return res.data['data'];
     }
     try {
-      return vod.fillDetail(res.data['data']);
+      return Vod.fromJson(res.data['data']);
     } catch (e) {
-      return vod;
+      return Vod(0, '');
     }
   }
 
