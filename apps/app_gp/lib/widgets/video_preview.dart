@@ -150,6 +150,7 @@ class VideoPreviewWidget extends StatelessWidget {
                       ),
                       clipBehavior: Clip.antiAlias,
                       child: SidImage(
+                        key: ValueKey('video-preview-$id'),
                         sid: coverHorizontal,
                         width: double.infinity,
                         fit: BoxFit.cover,
