@@ -14,7 +14,9 @@ class UserCollectionController extends GetxController {
   late Box<VideoDatabaseField> _userCollectionBox;
   var videos = <VideoDatabaseField>[].obs;
 
-  UserCollectionController() {
+  @override
+  void onInit() {
+    super.onInit();
     _init();
   }
 
@@ -65,6 +67,7 @@ class UserCollectionController extends GetxController {
     );
     videos.add(formattedVideo);
     await _userCollectionBox.put(video.id, formattedVideo);
+    userApi.addVideoCollection(video.id);
   }
 
   // removeVideo from collection
@@ -73,5 +76,6 @@ class UserCollectionController extends GetxController {
     for (var id in ids) {
       await _userCollectionBox.delete(id);
     }
+    userApi.deleteVideoCollection(ids);
   }
 }

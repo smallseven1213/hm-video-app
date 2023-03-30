@@ -12,7 +12,9 @@ class UserFavoritesActorController extends GetxController {
   late Box<Actor> _userFavoritesActorBox;
   var actors = <Actor>[].obs;
 
-  UserFavoritesActorController() {
+  @override
+  void onInit() {
+    super.onInit();
     _init();
   }
 
@@ -41,6 +43,7 @@ class UserFavoritesActorController extends GetxController {
     }
     actors.add(actor);
     await _userFavoritesActorBox.put(actor.id, actor);
+    userApi.addFavoriteActor(actor.id);
   }
 
   void removeActor(List<int> ids) async {
@@ -48,5 +51,6 @@ class UserFavoritesActorController extends GetxController {
     for (var id in ids) {
       await _userFavoritesActorBox.delete(id);
     }
+    userApi.deleteActorFavorite(ids);
   }
 }

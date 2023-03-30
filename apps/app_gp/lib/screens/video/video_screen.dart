@@ -86,33 +86,28 @@ class LikeButton extends StatefulWidget {
 }
 
 class LikeButtonState extends State<LikeButton> {
-  bool isLiked = false;
   LikeButtonType type = LikeButtonType.favorite;
 
   @override
   void initState() {
     super.initState();
-    isLiked = widget.isLiked;
     type = widget.type ?? LikeButtonType.favorite;
   }
 
   @override
   Widget build(BuildContext context) {
-    IconData iconData = isLiked ? Icons.favorite : Icons.favorite_border;
+    IconData iconData = widget.isLiked ? Icons.favorite : Icons.favorite_border;
     if (type == LikeButtonType.bookmark) {
-      iconData = isLiked ? Icons.bookmark : Icons.bookmark_border;
+      iconData = widget.isLiked ? Icons.bookmark : Icons.bookmark_border;
     }
     return Button(
       text: widget.text,
       onPressed: () {
-        setState(() {
-          isLiked = !isLiked;
-        });
         widget.onPressed();
       },
       icon: GlowingIcon(
         iconData: iconData,
-        color: isLiked ? Colors.yellow.shade700 : Colors.white,
+        color: widget.isLiked ? Colors.yellow.shade700 : Colors.white,
         size: 20,
       ),
     );
@@ -132,26 +127,40 @@ class Actions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Expanded(
-          child: Obx(() => LikeButton(
-                text: '喜歡就點讚',
-                isLiked: userFavoritesVideoController.videos
-                    .contains(video.id.toString()),
-                onPressed: () {
+          child: Obx(() {
+            var isLiked = userFavoritesVideoController.videos
+                .any((e) => e.id == video.id);
+            return LikeButton(
+              text: '喜歡就點讚',
+              isLiked: isLiked,
+              onPressed: () {
+                if (isLiked) {
+                  userFavoritesVideoController.removeVideo([video.id]);
+                } else {
                   userFavoritesVideoController.addVideo(video);
-                },
-              )),
+                }
+              },
+            );
+          }),
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: Obx(() => LikeButton(
-                text: '收藏',
-                type: LikeButtonType.bookmark,
-                isLiked: userCollectionController.videos
-                    .contains(video.id.toString()),
-                onPressed: () {
+          child: Obx(() {
+            var isLiked =
+                userCollectionController.videos.any((e) => e.id == video.id);
+            return LikeButton(
+              text: '收藏',
+              type: LikeButtonType.bookmark,
+              isLiked: isLiked,
+              onPressed: () {
+                if (isLiked) {
+                  userCollectionController.removeVideo([video.id]);
+                } else {
                   userCollectionController.addVideo(video);
-                },
-              )),
+                }
+              },
+            );
+          }),
         ),
       ],
     );

@@ -13,22 +13,25 @@ class FavoritesVideoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var videos = userFavoritesVideoController.videos;
-      return AlignedGridView.count(
-        crossAxisCount: 2,
-        itemCount: videos.length,
-        itemBuilder: (BuildContext context, int index) {
-          var video = videos[index];
-          return VideoPreviewWidget(
-              id: video.id,
-              coverVertical: video.coverVertical,
-              coverHorizontal: video.coverHorizontal,
-              timeLength: video.timeLength,
-              tags: video.tags,
-              title: video.title,
-              videoViewTimes: video.videoViewTimes);
-        },
-        mainAxisSpacing: 12.0,
-        crossAxisSpacing: 10.0,
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        child: AlignedGridView.count(
+          crossAxisCount: 2,
+          itemCount: videos.length,
+          itemBuilder: (BuildContext context, int index) {
+            var video = videos[index];
+            return VideoPreviewWidget(
+                id: video.id,
+                coverVertical: video.coverVertical,
+                coverHorizontal: video.coverHorizontal,
+                timeLength: video.timeLength,
+                tags: video.tags,
+                title: video.title,
+                videoViewTimes: video.videoViewTimes);
+          },
+          mainAxisSpacing: 12.0,
+          crossAxisSpacing: 10.0,
+        ),
       );
     });
   }

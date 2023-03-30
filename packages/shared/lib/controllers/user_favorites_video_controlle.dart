@@ -17,7 +17,9 @@ class UserFavoritesVideoController extends GetxController {
   late Box<VideoDatabaseField> _userFavoritesVideoBox;
   var videos = <VideoDatabaseField>[].obs;
 
-  UserFavoritesVideoController() {
+  @override
+  void onInit() {
+    super.onInit();
     _init();
   }
 
