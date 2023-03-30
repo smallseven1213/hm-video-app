@@ -15,7 +15,7 @@ class PanelWidget extends StatelessWidget {
   final PlayRecordController playRecordController =
       Get.find<PlayRecordController>();
   final listEditorController =
-      Get.find<ListEditorController>(tag: 'user_video_collection');
+      Get.find<ListEditorController>(tag: 'playrecord');
 
   void _handleSelectAll() {
     var allData = playRecordController.playRecord;

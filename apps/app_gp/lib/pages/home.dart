@@ -29,6 +29,7 @@ class Home extends StatelessWidget {
         var screenIndex = screens.keys
             .toList()
             .indexOf(bottomNavigatorController.activeKey.value);
+        logger.i('====NAVI INDEX: $screenIndex');
 
         if (screenIndex == -1) {
           return Container();

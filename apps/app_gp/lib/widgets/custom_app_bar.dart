@@ -7,11 +7,19 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
     required this.title,
+    this.bottom,
     this.actions, // 新增actions參數
   }) : super(key: key);
 
   final String title;
   final List<Widget>? actions; // 定義actions列表
+  final PreferredSizeWidget? bottom;
+
+  @override
+  Size get preferredSize {
+    final double bottomHeight = bottom?.preferredSize.height ?? 0;
+    return Size.fromHeight(kToolbarHeight + bottomHeight);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +31,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           fontSize: 15,
         ),
       ),
+      bottom: bottom,
       actions: actions, // 將actions添加到AppBar
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

@@ -15,7 +15,6 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('======build======');
     return Container(
       height: 120,
       decoration: BoxDecoration(
@@ -132,6 +131,22 @@ class UserInfo extends StatelessWidget {
                       image: AssetImage(
                           'assets/images/user_screen_config_button.png'),
                       width: 15,
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 0,
+                right: 30,
+                child: InkWell(
+                  onTap: () {
+                    MyRouteDelegate.of(context).push('/notifications');
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(5),
+                    child: const Icon(
+                      Icons.notifications,
+                      color: Colors.white,
                     ),
                   ),
                 ),
