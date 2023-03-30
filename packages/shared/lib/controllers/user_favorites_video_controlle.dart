@@ -1,11 +1,18 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../apis/user_api.dart';
+import '../models/channel_info.dart';
 import '../models/video_database_field.dart';
+import '../models/vod.dart';
+
+final userApi = UserApi();
 
 class UserFavoritesVideoController extends GetxController {
-  static const String _boxName = 'userVideoCollection';
-  late Box<VideoDatabaseField> _userCollectionBox;
+  static const String _boxName = 'userFavoritesVideo';
+  late Box<VideoDatabaseField> _userFavoritesVideoBox;
   var videos = <VideoDatabaseField>[].obs;
 
   UserFavoritesVideoController() {
@@ -13,22 +20,31 @@ class UserFavoritesVideoController extends GetxController {
   }
 
   Future<void> _init() async {
-    _userCollectionBox = await Hive.openBox<VideoDatabaseField>(_boxName);
+    _userFavoritesVideoBox = await Hive.openBox<VideoDatabaseField>(_boxName);
 
-    if (_userCollectionBox.isEmpty) {
+    if (_userFavoritesVideoBox.isEmpty) {
       await _fetchAndSaveCollection();
     } else {
-      videos.value = _userCollectionBox.values.toList();
+      videos.value = _userFavoritesVideoBox.values.toList();
     }
   }
 
   Future<void> _fetchAndSaveCollection() async {
-    // List<Video> fetchedVideos = await fetchCollectionVideo();
-    // videos.value = fetchedVideos;
-
-    // for (Video video in fetchedVideos) {
-    //   await _userCollectionBox.put(video.id, video);
-    // }
+    var blockData = await userApi.getFavoriteVideo();
+    for (Vod video in blockData.vods) {
+      var videoDatabaseField = VideoDatabaseField(
+        id: video.id,
+        title: video.title,
+        coverHorizontal: video.coverHorizontal!,
+        coverVertical: video.coverVertical!,
+        timeLength: video.timeLength!,
+        tags: video.tags!,
+        videoViewTimes: video.videoViewTimes!,
+        detail: jsonDecode(video.detail!),
+      );
+      await _userFavoritesVideoBox.put(video.id, videoDatabaseField);
+      videos.add(videoDatabaseField);
+    }
   }
 
   // addVideo to collection
@@ -37,14 +53,16 @@ class UserFavoritesVideoController extends GetxController {
       videos.removeWhere((v) => v.id == video.id);
     }
     videos.add(video);
-    await _userCollectionBox.put(video.id, video);
+    await _userFavoritesVideoBox.put(video.id, video);
+    userApi.addFavoriteVideo(video.id);
   }
 
   // removeVideo from collection
   void removeVideo(List<int> ids) async {
     videos.removeWhere((v) => ids.contains(v.id));
     for (var id in ids) {
-      await _userCollectionBox.delete(id);
+      await _userFavoritesVideoBox.delete(id);
     }
+    userApi.deleteFavoriteVideo(ids);
   }
 }

@@ -1,7 +1,13 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 
+import '../apis/user_api.dart';
 import '../models/video_database_field.dart';
+import '../models/vod.dart';
+
+final userApi = UserApi();
 
 class UserCollectionController extends GetxController {
   static const String _boxName = 'userVideoCollection';
@@ -23,12 +29,21 @@ class UserCollectionController extends GetxController {
   }
 
   Future<void> _fetchAndSaveCollection() async {
-    // List<Video> fetchedVideos = await fetchCollectionVideo();
-    // videos.value = fetchedVideos;
-
-    // for (Video video in fetchedVideos) {
-    //   await _userCollectionBox.put(video.id, video);
-    // }
+    var blockData = await userApi.getVideoCollection();
+    for (Vod video in blockData.vods) {
+      var videoDatabaseField = VideoDatabaseField(
+        id: video.id,
+        title: video.title,
+        coverHorizontal: video.coverHorizontal!,
+        coverVertical: video.coverVertical!,
+        timeLength: video.timeLength!,
+        tags: video.tags!,
+        videoViewTimes: video.videoViewTimes!,
+        detail: jsonDecode(video.detail!),
+      );
+      await _userCollectionBox.put(video.id, videoDatabaseField);
+      videos.add(videoDatabaseField);
+    }
   }
 
   // addVideo to collection
