@@ -105,136 +105,131 @@ class VideoPreviewWidget extends StatelessWidget {
         detail: detail!,
       );
     }
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Column(
+    return Column(
+      children: [
+        Stack(
           children: [
-            Stack(
-              children: [
-                InkWell(
-                  onTap: isEditing
-                      ? onEditingTap
-                      : () {
-                          MyRouteDelegate.of(context).push('/video', args: {
-                            'id': id,
-                          });
-                          var playRecord = VideoDatabaseField(
-                            id: id,
-                            coverHorizontal: coverHorizontal,
-                            coverVertical: coverVertical,
-                            timeLength: timeLength,
-                            tags: tags,
-                            title: title,
-                            videoViewTimes: videoViewTimes,
-                            detail: detail!,
-                          );
-                          playrecordController.addPlayRecord(playRecord);
-                        },
-                  child: Stack(
-                    children: [
-                      AspectRatio(
-                        aspectRatio: imageRatio ?? 374 / 198,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.white,
-                          ),
-                          foregroundDecoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0.0),
-                                Colors.black.withOpacity(0.3),
-                              ],
-                              stops: const [0.9, 1.0],
-                            ),
-                          ),
-                          clipBehavior: Clip.antiAlias,
-                          child: SidImage(
-                            sid: coverHorizontal,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
+            InkWell(
+              onTap: isEditing
+                  ? onEditingTap
+                  : () {
+                      MyRouteDelegate.of(context).push('/video', args: {
+                        'id': id,
+                      });
+                      var playRecord = VideoDatabaseField(
+                        id: id,
+                        coverHorizontal: coverHorizontal,
+                        coverVertical: coverVertical,
+                        timeLength: timeLength,
+                        tags: tags,
+                        title: title,
+                        videoViewTimes: videoViewTimes,
+                        detail: detail!,
+                      );
+                      playrecordController.addPlayRecord(playRecord);
+                    },
+              child: Stack(
+                children: [
+                  AspectRatio(
+                    aspectRatio: imageRatio ?? 374 / 198,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.white,
+                      ),
+                      foregroundDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.black.withOpacity(0.0),
+                            Colors.black.withOpacity(0.3),
+                          ],
+                          stops: const [0.9, 1.0],
                         ),
                       ),
-                      if (isEditing &&
-                          isSelected) // Check if isEditing is true and the id is in the selectedIds list
-                        AspectRatio(
-                          aspectRatio: imageRatio ?? 374 / 198,
-                          child: Container(
-                            color: Colors.black.withOpacity(
-                                0.5), // Add a black semi-transparent overlay
-                          ),
-                        ),
-                      if (isEditing && isSelected)
-                        const Positioned(
-                            top: 4,
-                            right: 4,
-                            child: Image(
-                              image: AssetImage(
-                                  'assets/images/video_selected.png'),
-                              width: 20,
-                              height: 20,
-                            ))
-                    ],
+                      clipBehavior: Clip.antiAlias,
+                      child: SidImage(
+                        sid: coverHorizontal,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
-                imageRatio != BlockImageRatio.block4.ratio
-                    ? AspectRatio(
-                        aspectRatio: imageRatio ?? 374 / 198,
-                        child: Align(
-                          alignment: AlignmentDirectional.bottomEnd,
-                          child: ViewInfo(
-                            viewCount: videoViewTimes,
-                            duration: getTimeString(timeLength),
-                          ),
-                        ),
-                      )
-                    : const SizedBox(),
-              ],
-            ),
-            const SizedBox(height: 5),
-            Container(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                title,
-                textAlign: TextAlign.left,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
+                  if (isEditing &&
+                      isSelected) // Check if isEditing is true and the id is in the selectedIds list
+                    AspectRatio(
+                      aspectRatio: imageRatio ?? 374 / 198,
+                      child: Container(
+                        color: Colors.black.withOpacity(
+                            0.5), // Add a black semi-transparent overlay
+                      ),
+                    ),
+                  if (isEditing && isSelected)
+                    const Positioned(
+                        top: 4,
+                        right: 4,
+                        child: Image(
+                          image: AssetImage('assets/images/video_selected.png'),
+                          width: 20,
+                          height: 20,
+                        ))
+                ],
               ),
             ),
-            const SizedBox(height: 5),
-            if (tags.isNotEmpty)
-              Row(
-                children: tags
-                    .map((e) => Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 5, vertical: 2),
-                        margin: const EdgeInsets.only(right: 5),
-                        decoration: BoxDecoration(
-                            color: const Color(0xff4277DC).withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Text(
-                          e.name ?? '',
-                          style: const TextStyle(
-                            color: Color(0xff21AFFF),
-                            fontSize: 10,
-                          ),
-                        )))
-                    .toList(),
-              )
-            else
-              const SizedBox(
-                height: 15,
-              ),
+            imageRatio != BlockImageRatio.block4.ratio
+                ? AspectRatio(
+                    aspectRatio: imageRatio ?? 374 / 198,
+                    child: Align(
+                      alignment: AlignmentDirectional.bottomEnd,
+                      child: ViewInfo(
+                        viewCount: videoViewTimes,
+                        duration: getTimeString(timeLength),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
           ],
-        );
-      },
+        ),
+        const SizedBox(height: 5),
+        Container(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            title,
+            textAlign: TextAlign.left,
+            overflow: TextOverflow.ellipsis,
+            softWrap: false,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 12,
+            ),
+          ),
+        ),
+        const SizedBox(height: 5),
+        if (tags.isNotEmpty)
+          Row(
+            children: tags
+                .map((e) => Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    margin: const EdgeInsets.only(right: 5),
+                    decoration: BoxDecoration(
+                        color: const Color(0xff4277DC).withOpacity(0.5),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Text(
+                      e.name ?? '',
+                      style: const TextStyle(
+                        color: Color(0xff21AFFF),
+                        fontSize: 10,
+                      ),
+                    )))
+                .toList(),
+          )
+        else
+          const SizedBox(
+            height: 15,
+          ),
+      ],
     );
   }
 }

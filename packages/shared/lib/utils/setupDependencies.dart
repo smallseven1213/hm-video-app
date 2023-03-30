@@ -7,6 +7,9 @@ import '../controllers/layout_controller.dart';
 import '../controllers/list_editor_controller.dart';
 import '../controllers/play_record_controller.dart';
 import '../controllers/user_controller.dart';
+import '../controllers/user_favorites_user_controll.dart';
+import '../controllers/user_favorites_video_controlle.dart';
+import '../controllers/user_video_collection_controller.dart';
 
 void setupDependencies() {
   Get.lazyPut<UserController>(() => UserController());
@@ -20,4 +23,8 @@ void setupDependencies() {
   Get.lazyPut<PlayRecordController>(() => PlayRecordController());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
       tag: 'playrecord');
+  Get.lazyPut<UserFavoritesUserController>(() => UserFavoritesUserController());
+  Get.lazyPut<UserFavoritesVideoController>(
+      () => UserFavoritesVideoController());
+  Get.lazyPut<UserCollectionController>(() => UserCollectionController());
 }
