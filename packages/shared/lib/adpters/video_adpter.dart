@@ -8,7 +8,7 @@ import '../models/video_database_field.dart';
 
 class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
   @override
-  final int typeId = 1; // 您需要为该类型分配一个唯一的 typeId
+  final int typeId = 1;
 
   @override
   VideoDatabaseField read(BinaryReader reader) {
@@ -41,17 +41,6 @@ class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
 
   @override
   void write(BinaryWriter writer, VideoDatabaseField obj) {
-    // writer.writeInt(obj.id);
-    // writer.writeString(obj.coverVertical);
-    // writer.writeString(obj.coverHorizontal);
-    // writer.writeInt(obj.timeLength);
-    // writer.writeList(obj.tags);
-    // writer.writeString(obj.title);
-    // writer.writeInt(obj.videoViewTimes);
-    // writer.writeDouble(obj.imageRatio ?? 1);
-    // writer.write(obj.detail);
-    // writer.writeBool(obj.isEmbeddedAds);
-    // writer.writeBool(obj.isEditing);
     writer.writeInt(obj.id ?? 0);
     writer.writeString(obj.title ?? '');
     writer.writeInt(obj.timeLength ?? 0);

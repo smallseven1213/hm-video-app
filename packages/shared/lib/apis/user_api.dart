@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import '../models/actor.dart';
+import '../models/block_vod.dart';
 import '../models/hm_api_response.dart';
 import '../models/hm_api_response_with_data.dart';
 import '../models/user.dart';
@@ -14,6 +15,7 @@ import '../models/user_promote.dart';
 import '../models/user_promote_record.dart';
 import '../models/user_promote_with_totalcount.dart';
 import '../models/user_withdrawal_data.dart';
+import '../models/vod.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
@@ -148,84 +150,111 @@ class UserApi {
 
   Future<void> deletePlayHistory(List<int> videoId) => fetcher(
       url:
-          '${systemConfig.apiHost}/user/watchRecord?videoId=${videoId.join(',')}',
+          '${systemConfig.apiHost}/public/users/user/watchRecord?videoId=${videoId.join(',')}',
       method: 'DELETE');
 
-  Future<void> addFavoriteVod(int vodId) => fetcher(
-      url: '${systemConfig.apiHost}/user/collectRecord',
+  Future<void> addFavoriteVideo(int vodId) => fetcher(
+      url: '${systemConfig.apiHost}/public/users/user/collectRecord',
       method: 'POST',
       body: {'videoId': vodId});
 
-  Future<void> deleteFavorite(List<int> vodId) => fetcher(
+  Future<void> deleteFavoriteVideo(List<int> vodId) => fetcher(
       url:
-          '${systemConfig.apiHost}/user/collectRecord?videoId=${vodId.join(',')}',
+          '${systemConfig.apiHost}/public/users/user/collectRecord?videoId=${vodId.join(',')}',
       method: 'DELETE');
 
   Future<void> deleteActorFavorite(List<int> vodId) => fetcher(
       url:
-          '${systemConfig.apiHost}/user/actorCollectRecord?actorId=${vodId.join(',')}',
+          '${systemConfig.apiHost}/public/users/user/actorCollectRecord?actorId=${vodId.join(',')}',
       method: 'DELETE');
 
-  Future<HMApiResponse> getFavorite() =>
-      fetcher(url: '${systemConfig.apiHost}/user/collectRecord').then((value) {
-        // var res = (value.data as Map<String, dynamic>);
-        return value.data;
-        // if (res['code'] != '00') {
-        //   return BlockVod([], 0);
-        // }
-        // List<Vod> vods = List.from(
-        //     (res['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
-        // return BlockVod(
-        //   vods,
-        //   vods.length,
-        // );
-      });
+  // 獲得視頻喜愛紀錄清單
+  Future<BlockVod> getFavoriteVideo() async {
+    var res = await fetcher(
+        url: '${systemConfig.apiHost}/public/users/user/collectRecord?film=2');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    List<Vod> vods = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return BlockVod(
+      vods,
+      vods.length,
+    );
+  }
 
   Future<void> addFavoriteActor(int actorId) => fetcher(
-      url: '${systemConfig.apiHost}/user/actorCollectRecord',
+      url: '${systemConfig.apiHost}/public/users/user/actorCollectRecord',
       method: 'POST',
       body: {'actorId': actorId});
 
   Future<void> deleteFavoriteActor(List<int> actorId) => fetcher(
       url:
-          '${systemConfig.apiHost}/user/actorCollectRecord?videoId=${actorId.join(',')}',
+          '${systemConfig.apiHost}/public/users/user/actorCollectRecord?videoId=${actorId.join(',')}',
       method: 'DELETE');
 
-  Future<List<Actor>> getFavoriteActor() => fetcher(
-              url: '${systemConfig.apiHost}/user/actorCollectRecord',
-              method: 'GET',
-              shouldValidate: true)
-          .then((value) {
-        var res = (value.data as Map<String, dynamic>);
-        if (res['code'] != '00') {
-          return [];
-        }
-        List<Actor> actors = List.from(
-            (res['data'] as List<dynamic>).map((e) => Actor.fromJson(e)));
-        return actors;
-      });
+  // 獲得視頻收藏紀錄清單
+  Future<BlockVod> getVideoCollection() async {
+    var res = await fetcher(
+        url: '${systemConfig.apiHost}/public/users/user/favoriteRecord?film=1');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    List<Vod> vods = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return BlockVod(
+      vods,
+      vods.length,
+    );
+  }
+
+  Future<void> addVideoCollection(int videoId) => fetcher(
+      url: '${systemConfig.apiHost}/public/users/user/favoriteRecord',
+      method: 'POST',
+      body: {'videoId': videoId});
+
+  Future<void> deleteVideoCollection(List<int> videoId) => fetcher(
+      url:
+          '${systemConfig.apiHost}/public/users/user/favoriteRecord?videoId=${videoId.join(',')}',
+      method: 'DELETE');
+
+  // 演員喜愛紀錄清單
+  Future<List<Actor>> getFavoriteActor() async {
+    var res = await fetcher(
+        url: '${systemConfig.apiHost}/public/users/user/actorCollectRecord',
+        method: 'GET',
+        shouldValidate: true);
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    List<Actor> actors = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Actor.fromJson(e)));
+    return actors;
+  }
 
   Future<void> deleteTagFollowRecord(int tagId) => fetcher(
-      url: '${systemConfig.apiHost}/user/tagFollowRecord?tagId=$tagId',
+      url:
+          '${systemConfig.apiHost}/public/users/user/tagFollowRecord?tagId=$tagId',
       method: 'DELETE');
 
   Future<void> addTagFollowRecord(int tagId) => fetcher(
-      url: '${systemConfig.apiHost}/user/tagFollowRecord',
+      url: '${systemConfig.apiHost}/public/users/user/tagFollowRecord',
       method: 'POST',
       body: {'tagId': tagId});
 
   Future<void> deleteSupplierFollowRecord(int supplierId) => fetcher(
       url:
-          '${systemConfig.apiHost}/user/supplierFollowRecord?supplierId=$supplierId',
+          '${systemConfig.apiHost}/public/users/user/supplierFollowRecord?supplierId=$supplierId',
       method: 'DELETE');
 
   Future<void> addSupplierFollowRecord(int supplierId) => fetcher(
-      url: '${systemConfig.apiHost}/user/supplierFollowRecord',
+      url: '${systemConfig.apiHost}/public/users/user/supplierFollowRecord',
       method: 'POST',
       body: {'supplierId': supplierId});
 
   Future<void> addUserEventRecord(String version) => fetcher(
-      url: '${systemConfig.apiHost}/user/userEventRecord/enterHall',
+      url:
+          '${systemConfig.apiHost}/public/users/user/userEventRecord/enterHall',
       method: 'POST',
       body: {'version': version});
 
@@ -235,7 +264,7 @@ class UserApi {
   }) =>
       fetcher(
               url:
-                  '${systemConfig.apiHost}/user/promoteRecord?page=$page&limit=$limit')
+                  '${systemConfig.apiHost}/public/users/user/promoteRecord?page=$page&limit=$limit')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
         // print(res['data']);

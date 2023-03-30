@@ -8,6 +8,7 @@ import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/setupDependencies.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
+import '../adpters/actor_adpter.dart';
 import '../adpters/tags_adpter.dart';
 import '../adpters/video_adpter.dart';
 import '../adpters/video_detail_adpter.dart';
@@ -72,6 +73,7 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   Hive.registerAdapter(VideoDatabaseFieldAdapter());
   Hive.registerAdapter(TagsAdapter());
   Hive.registerAdapter(VideoDetailAdapter());
+  Hive.registerAdapter(ActorAdapter());
 
   // DI shared package
   setupDependencies();
