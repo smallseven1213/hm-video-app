@@ -26,11 +26,13 @@ class CustomBottomBarItem extends StatelessWidget {
         children: [
           isActive
               ? SidImage(
+                  key: const Key('activeIcon'),
                   sid: activeIconSid,
                   width: 30,
                   height: 30,
                 )
               : SidImage(
+                  key: const Key('unactiveIcon'),
                   sid: iconSid,
                   width: 30,
                   height: 30,
