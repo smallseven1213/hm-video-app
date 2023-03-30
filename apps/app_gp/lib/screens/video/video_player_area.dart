@@ -6,6 +6,7 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:shared/widgets/sliver_header_delegate.dart';
 
 enum ControlsOverlayType { none, progress, playPause, middleTime }
 
@@ -371,66 +372,74 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
   @override
   Widget build(BuildContext context) {
+    double playerHeight =
+        isFullscreen ? MediaQuery.of(context).size.height : 235;
     return WillPopScope(
       onWillPop: onWillPop,
-      child: SliverToBoxAdapter(
-        child: SizedBox(
-          // color: Colors.red.withOpacity(0.3),
-          width: MediaQuery.of(context).size.width,
-          height: isFullscreen ? MediaQuery.of(context).size.height : 235,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: <Widget>[
-              if (_controller != null && _controller!.value.isInitialized) ...[
-                VideoPlayer(_controller!),
-                ControlsOverlay(
-                  controller: _controller!,
-                  name: widget.name,
-                  isFullscreen: isFullscreen,
-                  toggleFullscreen: () {
-                    toggleFullscreen(fullScreen: !isFullscreen);
-                  },
-                ),
-              ] else
-                Container(
-                  width: double.infinity,
-                  height: double.infinity,
-                  color: Colors.black.withOpacity(0.5),
-                  child: Center(
-                      child: Text('Loading...',
-                          style:
-                              TextStyle(color: Colors.white.withOpacity(0.5)))),
-                ),
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: AppBar(
-                  title: Text(widget.name ?? ''),
-                  backgroundColor: Colors.transparent,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      if (isFullscreen) {
-                        toggleFullscreen(fullScreen: false);
-                      } else {
-                        toggleFullscreen(fullScreen: false);
-                        Navigator.pop(context);
-                      }
+      child: SliverPersistentHeader(
+        pinned: true,
+        delegate: SliverHeaderDelegate(
+          minHeight: playerHeight,
+          maxHeight: playerHeight,
+          child: SizedBox(
+            // color: Colors.red.withOpacity(0.3),
+            width: MediaQuery.of(context).size.width,
+            height: playerHeight,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: <Widget>[
+                if (_controller != null &&
+                    _controller!.value.isInitialized) ...[
+                  VideoPlayer(_controller!),
+                  ControlsOverlay(
+                    controller: _controller!,
+                    name: widget.name,
+                    isFullscreen: isFullscreen,
+                    toggleFullscreen: () {
+                      toggleFullscreen(fullScreen: !isFullscreen);
                     },
                   ),
+                ] else
+                  Container(
+                    width: double.infinity,
+                    height: double.infinity,
+                    color: Colors.black,
+                    child: Center(
+                        child: Text('Loading...',
+                            style: TextStyle(
+                                color: Colors.white.withOpacity(0.5)))),
+                  ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: AppBar(
+                    title: Text(widget.name ?? ''),
+                    backgroundColor: Colors.transparent,
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back),
+                      onPressed: () {
+                        if (isFullscreen) {
+                          toggleFullscreen(fullScreen: false);
+                        } else {
+                          toggleFullscreen(fullScreen: false);
+                          Navigator.pop(context);
+                        }
+                      },
+                    ),
+                  ),
                 ),
-              ),
-            ],
-          ),
+              ],
+            ),
 
-          // AspectRatio(
-          //   aspectRatio: isFullscreen
-          //       ? MediaQuery.of(context).size.width /
-          //           MediaQuery.of(context).size.height
-          //       : 16 / 9,
-          //   child:
-          // ),
+            // AspectRatio(
+            //   aspectRatio: isFullscreen
+            //       ? MediaQuery.of(context).size.width /
+            //           MediaQuery.of(context).size.height
+            //       : 16 / 9,
+            //   child:
+            // ),
+          ),
         ),
       ),
     );
