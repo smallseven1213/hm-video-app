@@ -11,7 +11,7 @@ class VideoDatabaseField {
   final String title;
   final int videoViewTimes;
   final double? imageRatio;
-  final Data detail;
+  final Data? detail;
   final bool isEmbeddedAds;
   final bool isEditing;
   VideoDatabaseField({
@@ -23,7 +23,7 @@ class VideoDatabaseField {
     required this.title,
     required this.videoViewTimes,
     this.isEmbeddedAds = false,
-    required this.detail,
+    this.detail,
     this.isEditing = false,
     this.imageRatio,
   });

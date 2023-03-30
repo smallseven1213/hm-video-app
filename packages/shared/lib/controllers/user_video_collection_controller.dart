@@ -47,12 +47,24 @@ class UserCollectionController extends GetxController {
   }
 
   // addVideo to collection
-  void addVideo(VideoDatabaseField video) async {
+  void addVideo(Vod video) async {
     if (videos.firstWhereOrNull((v) => v.id == video.id) != null) {
       videos.removeWhere((v) => v.id == video.id);
     }
-    videos.add(video);
-    await _userCollectionBox.put(video.id, video);
+    var formattedVideo = VideoDatabaseField(
+      id: video.id,
+      title: video.title,
+      coverHorizontal: video.coverHorizontal!,
+      coverVertical: video.coverVertical!,
+      timeLength: video.timeLength!,
+      tags: video.tags!,
+      videoViewTimes: video.videoViewTimes!,
+      // detail: video.detail == null || video.detail == ''
+      //     ? {}
+      //     : jsonDecode(video.detail!),
+    );
+    videos.add(formattedVideo);
+    await _userCollectionBox.put(video.id, formattedVideo);
   }
 
   // removeVideo from collection
