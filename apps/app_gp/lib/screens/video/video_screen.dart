@@ -7,14 +7,22 @@ import 'package:app_gp/widgets/button.dart';
 import 'package:app_gp/widgets/glowing_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/block_videos_controller.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/block_videos_by_category_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sliver_header_delegate.dart';
 
+import '../../widgets/video_preview.dart';
+
+final logger = Logger();
+
 enum LikeButtonType { favorite, bookmark }
+
+enum VideoFilterType { actor, category, tag }
 
 class VideoInfo extends StatelessWidget {
   final String title;
@@ -28,7 +36,7 @@ class VideoInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('tags: $tags');
+    logger.i('tags: $tags');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -96,6 +104,8 @@ class LikeButtonState extends State<LikeButton> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('LikeButton init');
+
     IconData iconData = widget.isLiked ? Icons.favorite : Icons.favorite_border;
     if (type == LikeButtonType.bookmark) {
       iconData = widget.isLiked ? Icons.bookmark : Icons.bookmark_border;
@@ -123,6 +133,8 @@ class Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('Actions init');
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -181,7 +193,10 @@ class BannerAd extends StatelessWidget {
 class RelatedVideosHeader extends StatelessWidget {
   final TabController tabController;
 
-  const RelatedVideosHeader({super.key, required this.tabController});
+  const RelatedVideosHeader({
+    super.key,
+    required this.tabController,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -222,42 +237,127 @@ class RelatedVideosHeader extends StatelessWidget {
 
 class RelatedVideos extends StatelessWidget {
   final TabController tabController;
+  final Vod videoData;
 
   const RelatedVideos({
     super.key,
     required this.tabController,
+    required this.videoData,
   });
 
   @override
   Widget build(BuildContext context) {
+    // print('videoData: $videoData');
+    logger.i('RelatedVideos init videoData: $videoData');
+
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
       child: TabBarView(
         controller: tabController,
         children: [
-          _buildVideoList('同演員'),
-          _buildVideoList('同類型'),
-          _buildVideoList('同標籤'),
+          VideoList(
+            videoData: videoData,
+            tabController: tabController,
+            category: VideoFilterType.actor,
+          ),
+          VideoList(
+            videoData: videoData,
+            tabController: tabController,
+            category: VideoFilterType.category,
+          ),
+          VideoList(
+            videoData: videoData,
+            tabController: tabController,
+            category: VideoFilterType.tag,
+          ),
           // SliverAlignGrid
         ],
       ),
     );
   }
+}
 
-  Widget _buildVideoList(String category) {
-    return GridView.builder(
-      scrollDirection: Axis.vertical,
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        childAspectRatio: 182 / 143,
-      ),
-      itemCount: 10,
-      itemBuilder: (context, index) => Container(
-        color: Colors.blue,
-        child: Center(child: Text('$category 影片 ${index + 1}')),
-      ),
+// change _buildVideoList to a stateless widget named VideoList and has props tabController and videoData
+class VideoList extends StatelessWidget {
+  final VideoFilterType category;
+  final TabController tabController;
+  final Vod videoData;
+
+  const VideoList({
+    super.key,
+    required this.category,
+    required this.tabController,
+    required this.videoData,
+  });
+
+  String getIdList(List inputList) {
+    if (inputList.isEmpty) return '';
+    return inputList.take(3).map((e) => e.id.toString()).join(', ');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    logger.i('VideoList init');
+
+    return Obx(
+      () {
+        List<Vod> videos;
+        final BlockVideosByCategoryController blockVideosController = Get.put(
+          BlockVideosByCategoryController(
+            tagId: getIdList(videoData.tags!),
+            actorId: videoData.actors![0].id.toString(),
+            excludeId: videoData.id.toString(),
+            internalTagId: videoData.internalTagIds!.join(', ').toString(),
+          ),
+        );
+
+        switch (category) {
+          case VideoFilterType.actor:
+            videos = blockVideosController.videoByActor;
+            break;
+          case VideoFilterType.category:
+            videos = blockVideosController.videoByTag;
+            break;
+          case VideoFilterType.tag:
+            videos = blockVideosController.videoByInternalTag;
+            break;
+          default:
+            videos = [];
+        }
+
+        return GridView.builder(
+          scrollDirection: Axis.vertical,
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 8,
+            crossAxisSpacing: 8,
+            childAspectRatio: 182 / 143,
+          ),
+          itemCount: videos.length,
+          itemBuilder: (context, index) =>
+
+              // InkWell(
+              //   onTap: () {
+              //     print('videos[index].id: ${videos[index].id}');
+              //     // tabController.animateTo(0);
+              //     MyRouteDelegate.of(context).push('/video', args: {
+              //       'id': videos[index].id,
+              //     });
+              //   },
+              //   child: Container(width: 100, height: 100, color: Colors.red),
+              // ),
+
+              VideoPreviewWidget(
+            id: videos[index].id,
+            title: videos[index].title,
+            tags: videos[index].tags ?? [],
+            timeLength: videos[index].timeLength ?? 0,
+            coverHorizontal: videos[index].coverHorizontal ?? '',
+            coverVertical: videos[index].coverVertical ?? '',
+            videoViewTimes: videos[index].videoViewTimes ?? 0,
+          ),
+        );
+      },
     );
   }
 }
@@ -294,19 +394,19 @@ class _VideoScreenState extends State<VideoScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            VideoPlayerArea(id: widget.id, name: widget.name),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: FutureBuilder<Vod>(
-                      future: _video,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return Column(
+        body: FutureBuilder<Vod>(
+          future: _video,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return CustomScrollView(
+                slivers: [
+                  VideoPlayerArea(id: widget.id, name: widget.name),
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -317,49 +417,49 @@ class _VideoScreenState extends State<VideoScreen>
                               Actions(
                                 video: snapshot.data!,
                               ),
-                              // BannerAd(),
-                              // ChannelAreaBanner(
-                              //   image: block.banner!,
-                              // ),
                             ],
-                          );
-                        } else if (snapshot.hasError) {
-                          return Text('${snapshot.error}');
-                        }
-
-                        // By default, show a loading spinner.
-                        return Center(child: CircularProgressIndicator());
-                      },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: SliverHeaderDelegate(
+                      minHeight: 50.0,
+                      maxHeight: 50.0,
+                      child: RelatedVideosHeader(
+                        tabController: _tabController,
+                      ),
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height - 235,
+                      ),
+                      child: RelatedVideos(
+                        tabController: _tabController,
+                        videoData: snapshot.data!,
+                      ),
                     ),
                   ),
                 ],
-              ),
-            ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: SliverHeaderDelegate(
-                minHeight: 50.0,
-                maxHeight: 50.0,
-                child: RelatedVideosHeader(tabController: _tabController),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: MediaQuery.of(context).size.height - 235,
-                ),
-                child: RelatedVideos(tabController: _tabController),
-              ),
-            ),
-          ],
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            }
+
+            // By default, show a loading spinner.
+            return const Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );
   }
 }
 
-
-// 同類型 (excludeId) 帶空取全部、取前面最多三個
+// 同類型 (internalTagId) 帶空取全部、取前面最多三個
 // {{public_host}}/internalTags/internalTag/views?excludeId=3439&internalTagId=187
 // » 同分類（internalTag），排除這筆影片，隨機 10 筆。（不看觀看次數）
 
@@ -368,6 +468,5 @@ class _VideoScreenState extends State<VideoScreen>
 // » 同分類（tag），排除這筆影片，隨機 10 筆。（不看觀看次數）
 
 // 同演員 actor id[0]
-// {{public_host}}/tags/tag/views?tagId=250&excludeId=4192
+// {{public_host}}/videos/video/sameActors?actorId=1,2,3
 // » 同分類（tag），排除這筆影片，隨機 10 筆。（不看觀看次數）
-
