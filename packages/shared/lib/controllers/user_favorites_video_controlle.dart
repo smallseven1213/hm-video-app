@@ -44,8 +44,9 @@ class UserFavoritesVideoController extends GetxController {
         timeLength: video.timeLength!,
         tags: video.tags!,
         videoViewTimes: video.videoViewTimes!,
-        detail: jsonDecode(video.detail!),
+        // detail: video.detail,
       );
+
       await _userFavoritesVideoBox.put(video.id, videoDatabaseField);
       videos.add(videoDatabaseField);
     }
@@ -53,10 +54,11 @@ class UserFavoritesVideoController extends GetxController {
 
   // addVideo to collection
   void addVideo(Vod video) async {
+    logger.i(video.toJson());
     if (videos.firstWhereOrNull((v) => v.id == video.id) != null) {
       videos.removeWhere((v) => v.id == video.id);
     }
-    logger.i(video.detail);
+
     var formattedVideo = VideoDatabaseField(
       id: video.id,
       title: video.title,
@@ -69,6 +71,7 @@ class UserFavoritesVideoController extends GetxController {
       //     ? {}
       //     : jsonDecode(video.detail!),
     );
+    logger.i(formattedVideo.toJson());
     videos.add(formattedVideo);
     await _userFavoritesVideoBox.put(video.id, formattedVideo);
     userApi.addFavoriteVideo(video.id);

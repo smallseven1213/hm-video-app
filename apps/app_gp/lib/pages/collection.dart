@@ -5,7 +5,7 @@ import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
 
 import '../widgets/custom_app_bar.dart';
-import '../widgets/collection/panel.dart';
+import '../widgets/list_page_panel.dart';
 import '../widgets/video_preview.dart';
 
 class CollectionPage extends StatefulWidget {
@@ -25,6 +25,17 @@ class _CollectionPageState extends State<CollectionPage> {
   void dispose() {
     listEditorController.clearSelected();
     super.dispose();
+  }
+
+  void _handleSelectAll() {
+    var allData = userCollectionController.videos;
+    listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+  }
+
+  void _handleDeleteAll() {
+    var selectedIds = listEditorController.selectedIds.toList();
+    userCollectionController.removeVideo(selectedIds);
+    listEditorController.removeBoundData(selectedIds);
   }
 
   @override
@@ -76,7 +87,10 @@ class _CollectionPageState extends State<CollectionPage> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: PanelWidget(),
+            child: ListPagePanelWidget(
+                listEditorController: listEditorController,
+                onSelectButtonClick: _handleSelectAll,
+                onDeleteButtonClick: _handleDeleteAll),
           ),
         ],
       ),

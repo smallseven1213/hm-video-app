@@ -104,6 +104,52 @@ class Vod {
     this.dataType,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'subScript': subScript,
+      'timeLength': timeLength,
+      'coverVertical': coverVertical,
+      'coverHorizontal': coverHorizontal,
+      'videoUrlHd': videoUrlHd,
+      'videoUrlSd': videoUrlSd,
+      'videoUrlUd': videoUrlUd,
+      'videoUrl': videoUrl,
+      'externalId': externalId,
+      'titleSub': titleSub,
+      'description': description,
+      'detail': detail,
+      'film': film,
+      'currentNum': currentNum,
+      'totalNum': totalNum,
+      'belong': belong,
+      'isAvailable': isAvailable,
+      'isCollect': isCollect,
+      'chargeType': chargeType,
+      'orderIndex': orderIndex,
+      'actors': actors,
+      'tags': tags,
+      'internalTags': internalTags,
+      'internalTagIds': internalTagIds,
+      'region': region,
+      'publisher': publisher,
+      'supplier': supplier,
+      'belongVods': belongVods,
+      'point': point,
+      'buyPoint': buyPoint,
+      'videoCollectTimes': videoCollectTimes,
+      'videoViewTimes': videoViewTimes,
+      'isAd': isAd,
+      'videoAdUrl': videoAdUrl,
+      'adCover': adCover,
+      'adTitle': adTitle,
+      'appIcon': appIcon,
+      'adUrl': adUrl,
+      'dataType': dataType,
+    };
+  }
+
   factory Vod.fromJson(Map<String, dynamic> json) {
     try {
       return Vod(

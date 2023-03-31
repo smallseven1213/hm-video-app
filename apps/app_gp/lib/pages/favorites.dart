@@ -1,14 +1,13 @@
-// FavoritesPage have 2 tabs, first tab is "Video", and second is "Actor"
-// tab button is from widgets/button.dart
-// and position of tab that is under the AppBar, and fixed on top
-// Video and Actor are from screens/favorites/video.dart and screens/favorites/actor.dart
-// default tab is Video
-
 import 'package:app_gp/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/list_editor_controller.dart';
+import 'package:shared/controllers/user_favorites_actor_controller.dart';
+import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import '../widgets/button.dart';
 import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
+import '../widgets/list_page_panel.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -25,12 +24,46 @@ class _FavoritesPageState extends State<FavoritesPage>
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        listEditorController.clearSelected();
+      }
+    });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
+    listEditorController.clearSelected();
     super.dispose();
+  }
+
+  final ListEditorController listEditorController =
+      Get.find<ListEditorController>(tag: 'favorites');
+  final userFavoritesActorController = Get.find<UserFavoritesActorController>();
+  final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
+
+  void _handleSelectAll() {
+    if (_tabController.index == 0) {
+      var allData = userFavoritesVideoController.videos;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    } else {
+      var allData = userFavoritesActorController.actors;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    }
+  }
+
+  void _handleDeleteAll() {
+    if (_tabController.index == 0) {
+      var selectedIds = listEditorController.selectedIds.toList();
+      userFavoritesVideoController.removeVideo(selectedIds);
+      listEditorController.removeBoundData(selectedIds);
+    } else {
+      var selectedIds = listEditorController.selectedIds.toList();
+      userFavoritesActorController.removeActor(selectedIds);
+      listEditorController.removeBoundData(selectedIds);
+    }
   }
 
   @override
@@ -38,8 +71,18 @@ class _FavoritesPageState extends State<FavoritesPage>
     return Scaffold(
       appBar: CustomAppBar(
         title: '我的喜歡',
+        actions: [
+          Obx(() => TextButton(
+              onPressed: () {
+                listEditorController.toggleEditing();
+              },
+              child: Text(
+                listEditorController.isEditing.value ? '取消' : '編輯',
+                style: const TextStyle(color: Color(0xff00B0D4)),
+              )))
+        ],
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(60),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Row(
@@ -48,7 +91,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 Expanded(
                   flex: 1,
                   child: Button(
-                    text: 'Video',
+                    text: '長視頻',
                     size: 'small',
                     onPressed: () => _tabController.animateTo(0),
                   ),
@@ -57,7 +100,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 Expanded(
                   flex: 1,
                   child: Button(
-                    text: 'Actor',
+                    text: '演員',
                     size: 'small',
                     onPressed: () => _tabController.animateTo(1),
                   ),
@@ -67,11 +110,24 @@ class _FavoritesPageState extends State<FavoritesPage>
           ),
         ),
       ),
-      body: TabBarView(
-        controller: _tabController,
+      body: Stack(
         children: [
-          FavoritesVideoScreen(),
-          FavoritesActorScreen(),
+          TabBarView(
+            controller: _tabController,
+            children: [
+              FavoritesVideoScreen(),
+              FavoritesActorScreen(),
+            ],
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: ListPagePanelWidget(
+                listEditorController: listEditorController,
+                onSelectButtonClick: _handleSelectAll,
+                onDeleteButtonClick: _handleDeleteAll),
+          ),
         ],
       ),
     );

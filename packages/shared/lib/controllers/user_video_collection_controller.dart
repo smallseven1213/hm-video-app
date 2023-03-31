@@ -41,7 +41,7 @@ class UserCollectionController extends GetxController {
         timeLength: video.timeLength!,
         tags: video.tags!,
         videoViewTimes: video.videoViewTimes!,
-        detail: jsonDecode(video.detail!),
+        // detail: video.detail,
       );
       await _userCollectionBox.put(video.id, videoDatabaseField);
       videos.add(videoDatabaseField);

@@ -4,7 +4,11 @@ import '../models/supplier.dart';
 import '../models/tag.dart';
 import '../models/videos_tag.dart';
 import '../models/vod.dart';
+import '../services/system_config.dart';
 import '../utils/fetcher.dart';
+
+final systemConfig = SystemConfig();
+String apiPrefix = '${systemConfig.apiHost}/public/tags';
 
 class TagApi {
   Future<List<Tag>> getManyBy({
@@ -15,7 +19,7 @@ class TagApi {
   }) async {
     var res = await fetcher(
         url:
-            '/tag/list?page=$page&limit=48&name=$name&region=$region&isSortByVideos=${sortBy ?? 0}');
+            '$apiPrefix/tag/list?page=$page&limit=48&name=$name&region=$region&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -28,7 +32,8 @@ class TagApi {
     String? name,
   }) async {
     var res = await fetcher(
-        url: '/tag/list?page=$page&limit=48&name=$name&isSortByVideos=0');
+        url:
+            '$apiPrefix/tag/list?page=$page&limit=48&name=$name&isSortByVideos=0');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -37,7 +42,7 @@ class TagApi {
   }
 
   Future<List<VideoTags>> getAllShortVideoPopular() async {
-    var res = await fetcher(url: '/tag/shortVideoPopular');
+    var res = await fetcher(url: '$apiPrefix/tag/shortVideoPopular');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -46,7 +51,7 @@ class TagApi {
   }
 
   Future<SupplierTag> getOneTag(int id) async {
-    var res = await fetcher(url: '/tag/statistics?id=$id');
+    var res = await fetcher(url: '$apiPrefix/tag/statistics?id=$id');
     if (res.data['code'] != '00') {
       return SupplierTag(0);
     }
@@ -58,8 +63,8 @@ class TagApi {
     required int page,
     required int limit,
   }) async {
-    var res =
-        await fetcher(url: '/tag/shortVideo?page=$page&limit=$limit&id=$id');
+    var res = await fetcher(
+        url: '$apiPrefix/tag/shortVideo?page=$page&limit=$limit&id=$id');
     if (res.data['code'] != '00') {
       return Pager.fromJson(
         res.data['data'],
@@ -77,8 +82,8 @@ class TagApi {
     required int page,
     required int limit,
   }) async {
-    var res =
-        await fetcher(url: '/tag/shortVideo?page=$page&limit=$limit&id=$id');
+    var res = await fetcher(
+        url: '$apiPrefix/tag/shortVideo?page=$page&limit=$limit&id=$id');
     if (res.data['code'] != '00') {
       return Pager.fromJson(
         res.data['data'],
@@ -94,8 +99,8 @@ class TagApi {
   }
 
   Future<List<VideoTags>> searchShortVideoPopular(String keyword) async {
-    var res =
-        await fetcher(url: '/tag/searchShortVideoPopular?keyword=$keyword');
+    var res = await fetcher(
+        url: '$apiPrefix/tag/searchShortVideoPopular?keyword=$keyword');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -104,7 +109,7 @@ class TagApi {
   }
 
   Future<Tag> getOne(int tagId) async {
-    var res = await fetcher(url: '/tag?id=$tagId');
+    var res = await fetcher(url: '$apiPrefix/tag?id=$tagId');
     if (res.data['code'] != '00') {
       return Tag(0, '標籤');
     }
@@ -112,7 +117,8 @@ class TagApi {
   }
 
   Future<List<Tag>> getPopular({int page = 1, int limit = 100}) async {
-    var value = await fetcher(url: '/tag/popular?page=$page&limit=$limit');
+    var value =
+        await fetcher(url: '$apiPrefix/tag/popular?page=$page&limit=$limit');
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return [];
@@ -128,7 +134,7 @@ class TagApi {
     int page = 1,
     int limit = 100,
   }) async {
-    var url = '/tag/views?page=$page&limit=$limit&';
+    var url = '$apiPrefix/tag/views?page=$page&limit=$limit&';
     if (tagIds?.isNotEmpty == true && vodId != null) {
       url = '${url}tagId=${(tagIds ?? []).join(',')}&excludeId=$vodId';
     } else {
@@ -156,8 +162,8 @@ class TagApi {
     required int tagId,
     required int videoId,
   }) async {
-    var value =
-        await fetcher(url: '/tag/playlist?tagId=$tagId&videoId=$videoId');
+    var value = await fetcher(
+        url: '$apiPrefix/tag/playlist?tagId=$tagId&videoId=$videoId');
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return TagVideos(0);

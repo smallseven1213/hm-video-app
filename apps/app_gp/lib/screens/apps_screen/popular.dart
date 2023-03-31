@@ -12,11 +12,6 @@ class PopularWidget extends StatelessWidget {
       future: AdsApi().getRecommendBy(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          // var newList 是 snapshot.data 重複100次
-          final List newList = [];
-          for (var i = 0; i < 10000; i++) {
-            newList.addAll(snapshot.data);
-          }
           return SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -51,7 +46,7 @@ class PopularWidget extends StatelessWidget {
                               borderRadius: BorderRadius.circular(10),
                               child: SidImage(
                                 // sid: snapshot.data[index].photoSid,
-                                sid: newList[index].photoSid,
+                                sid: snapshot.data[index].photoSid,
                                 width: 60,
                                 height: 60,
                               ),
@@ -66,7 +61,7 @@ class PopularWidget extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        newList[index].name,
+                                        snapshot.data[index].name,
                                         style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 14,
@@ -74,7 +69,7 @@ class PopularWidget extends StatelessWidget {
                                       ),
                                       const SizedBox(height: 2),
                                       Text(
-                                        newList[index].description,
+                                        snapshot.data[index].description,
                                         style: const TextStyle(
                                           color: Color(0xff7AA2C8),
                                           fontSize: 12,
@@ -138,7 +133,7 @@ class PopularWidget extends StatelessWidget {
                 );
               },
               // childCount: snapshot.data.length,
-              childCount: newList.length,
+              childCount: snapshot.data.length,
             ),
           );
         } else {
