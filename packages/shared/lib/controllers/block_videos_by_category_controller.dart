@@ -11,10 +11,9 @@ class BlockVideosByCategoryController extends GetxController {
   String tagId;
   String internalTagId;
 
-  late int page;
-  final List<Vod> videoByInternalTag = <Vod>[].obs;
-  final List<Vod> videoByTag = <Vod>[].obs;
-  final List<Vod> videoByActor = <Vod>[].obs;
+  final RxList<Vod> videoByInternalTag = <Vod>[].obs;
+  final RxList<Vod> videoByTag = <Vod>[].obs;
+  final RxList<Vod> videoByActor = <Vod>[].obs;
 
   BlockVideosByCategoryController({
     required this.tagId,
@@ -27,20 +26,18 @@ class BlockVideosByCategoryController extends GetxController {
   void onInit() async {
     super.onInit();
     print('@@@@@@ init');
-
     mutateAll();
   }
 
-  Future<void> mutateAll() async {
-    // Call getVideoByInternalTag & getVideoByTags & getVideoByActorId
+  Future mutateAll() async {
     final internalTagVideos =
         await vodApi.getVideoByInternalTag(excludeId, internalTagId);
     final tagVideos = await vodApi.getVideoByTags(excludeId, tagId);
     final actorVideos = await vodApi.getVideoByActorId(actorId);
 
-    print('log internalTagVideos: ${internalTagVideos.vods}');
-    print('log tagVideos: ${tagVideos.vods}');
-    print('log actorVideos: ${actorVideos.vods}');
+    // print('log internalTagVideos: ${internalTagVideos.vods}');
+    // print('log tagVideos: ${tagVideos.vods}');
+    // print('log actorVideos: ${actorVideos.vods}');
 
     // Assign fetched videos to respective observable lists
     videoByInternalTag.assignAll(internalTagVideos.vods);

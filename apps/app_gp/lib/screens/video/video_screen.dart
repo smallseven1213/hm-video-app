@@ -245,33 +245,50 @@ class RelatedVideos extends StatelessWidget {
     required this.videoData,
   });
 
+  String getIdList(List inputList) {
+    if (inputList.isEmpty) return '';
+    return inputList.take(3).map((e) => e.id.toString()).join(',');
+  }
+
   @override
   Widget build(BuildContext context) {
-    // print('videoData: $videoData');
-    logger.i('RelatedVideos init videoData: $videoData');
+    final BlockVideosByCategoryController blockVideosController = Get.put(
+      BlockVideosByCategoryController(
+        tagId: getIdList(videoData.tags!),
+        actorId:
+            videoData.actors!.isEmpty ? '' : videoData.actors![0].id.toString(),
+        excludeId: videoData.id.toString(),
+        internalTagId: videoData.internalTagIds!.join(',').toString(),
+      ),
+      tag: DateTime.now().toString(),
+    );
 
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-      child: TabBarView(
-        controller: tabController,
-        children: [
-          VideoList(
-            videoData: videoData,
-            tabController: tabController,
-            category: VideoFilterType.actor,
-          ),
-          VideoList(
-            videoData: videoData,
-            tabController: tabController,
-            category: VideoFilterType.category,
-          ),
-          VideoList(
-            videoData: videoData,
-            tabController: tabController,
-            category: VideoFilterType.tag,
-          ),
-          // SliverAlignGrid
-        ],
+      child: Obx(
+        () {
+          return TabBarView(
+            controller: tabController,
+            children: [
+              VideoList(
+                videos: blockVideosController.videoByActor.value,
+                tabController: tabController,
+                category: VideoFilterType.actor,
+              ),
+              VideoList(
+                videos: blockVideosController.videoByTag.value,
+                tabController: tabController,
+                category: VideoFilterType.category,
+              ),
+              VideoList(
+                videos: blockVideosController.videoByInternalTag.value,
+                tabController: tabController,
+                category: VideoFilterType.tag,
+              ),
+              // SliverAlignGrid
+            ],
+          );
+        },
       ),
     );
   }
@@ -279,85 +296,39 @@ class RelatedVideos extends StatelessWidget {
 
 // change _buildVideoList to a stateless widget named VideoList and has props tabController and videoData
 class VideoList extends StatelessWidget {
+  final List<Vod> videos;
   final VideoFilterType category;
   final TabController tabController;
-  final Vod videoData;
 
   const VideoList({
     super.key,
+    required this.videos,
     required this.category,
     required this.tabController,
-    required this.videoData,
   });
-
-  String getIdList(List inputList) {
-    if (inputList.isEmpty) return '';
-    return inputList.take(3).map((e) => e.id.toString()).join(', ');
-  }
 
   @override
   Widget build(BuildContext context) {
-    logger.i('VideoList init');
+    logger.i('VideoList init: $videos');
 
-    return Obx(
-      () {
-        List<Vod> videos;
-        final BlockVideosByCategoryController blockVideosController = Get.put(
-          BlockVideosByCategoryController(
-            tagId: getIdList(videoData.tags!),
-            actorId: videoData.actors![0].id.toString(),
-            excludeId: videoData.id.toString(),
-            internalTagId: videoData.internalTagIds!.join(', ').toString(),
-          ),
-        );
-
-        switch (category) {
-          case VideoFilterType.actor:
-            videos = blockVideosController.videoByActor;
-            break;
-          case VideoFilterType.category:
-            videos = blockVideosController.videoByTag;
-            break;
-          case VideoFilterType.tag:
-            videos = blockVideosController.videoByInternalTag;
-            break;
-          default:
-            videos = [];
-        }
-
-        return GridView.builder(
-          scrollDirection: Axis.vertical,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 8,
-            crossAxisSpacing: 8,
-            childAspectRatio: 182 / 143,
-          ),
-          itemCount: videos.length,
-          itemBuilder: (context, index) =>
-
-              // InkWell(
-              //   onTap: () {
-              //     print('videos[index].id: ${videos[index].id}');
-              //     // tabController.animateTo(0);
-              //     MyRouteDelegate.of(context).push('/video', args: {
-              //       'id': videos[index].id,
-              //     });
-              //   },
-              //   child: Container(width: 100, height: 100, color: Colors.red),
-              // ),
-
-              VideoPreviewWidget(
-            id: videos[index].id,
-            title: videos[index].title,
-            tags: videos[index].tags ?? [],
-            timeLength: videos[index].timeLength ?? 0,
-            coverHorizontal: videos[index].coverHorizontal ?? '',
-            coverVertical: videos[index].coverVertical ?? '',
-            videoViewTimes: videos[index].videoViewTimes ?? 0,
-          ),
-        );
-      },
+    return GridView.builder(
+      scrollDirection: Axis.vertical,
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        mainAxisSpacing: 8,
+        crossAxisSpacing: 8,
+        childAspectRatio: 182 / 143,
+      ),
+      itemCount: videos.length,
+      itemBuilder: (context, index) => VideoPreviewWidget(
+        id: videos[index].id,
+        title: videos[index].title,
+        tags: videos[index].tags ?? [],
+        timeLength: videos[index].timeLength ?? 0,
+        coverHorizontal: videos[index].coverHorizontal ?? '',
+        coverVertical: videos[index].coverVertical ?? '',
+        videoViewTimes: videos[index].videoViewTimes ?? 0,
+      ),
     );
   }
 }
