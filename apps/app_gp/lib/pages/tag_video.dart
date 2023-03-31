@@ -7,7 +7,13 @@ import '../widgets/custom_app_bar.dart';
 import '../widgets/video_preview.dart';
 
 class TagVideoPage extends StatelessWidget {
-  TagVideoPage({Key? key}) : super(key: key);
+  final int id;
+  final String title;
+  TagVideoPage({
+    Key? key,
+    required this.id,
+    required this.title,
+  }) : super(key: key);
 
   final UserCollectionController userCollectionController =
       Get.find<UserCollectionController>();
@@ -16,7 +22,7 @@ class TagVideoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '我的收藏',
+        title: title,
       ),
       body: Obx(() {
         var videos = userCollectionController.videos;

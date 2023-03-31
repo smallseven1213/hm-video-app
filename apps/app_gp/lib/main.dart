@@ -17,6 +17,7 @@ import 'pages/playrecord.dart';
 import 'pages/register.dart';
 import 'pages/share.dart';
 import 'pages/sharerecord.dart';
+import 'pages/tag_video.dart';
 import 'pages/vendor_videos.dart';
 import 'pages/video_by_block.dart';
 
@@ -34,6 +35,10 @@ final Map<String, RouteWidgetBuilder> routes = {
         channelId: args['channelId'] as int,
       ),
   '/vendor_videos': (context, args) => VendorVideosPage(
+        id: args['id'] as int,
+        title: args['title'] as String,
+      ),
+  '/tag': (context, args) => TagVideoPage(
         id: args['id'] as int,
         title: args['title'] as String,
       ),
