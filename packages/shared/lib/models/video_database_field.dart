@@ -27,4 +27,20 @@ class VideoDatabaseField {
     this.isEditing = false,
     this.imageRatio,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'coverVertical': coverVertical,
+      'coverHorizontal': coverHorizontal,
+      'timeLength': timeLength,
+      'tags': tags,
+      'title': title,
+      'videoViewTimes': videoViewTimes,
+      'detail': detail,
+      'isEmbeddedAds': isEmbeddedAds,
+      'isEditing': isEditing,
+      'imageRatio': imageRatio,
+    };
+  }
 }

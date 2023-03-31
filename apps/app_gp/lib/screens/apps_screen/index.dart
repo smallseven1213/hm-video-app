@@ -13,8 +13,8 @@ class AppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
+    return const Scaffold(
+      appBar: CustomAppBar(
         title: '應用中心',
       ),
       body: CustomScrollView(
@@ -22,24 +22,24 @@ class AppsScreen extends StatelessWidget {
           SliverToBoxAdapter(
             child: BannerWidget(),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Header(text: '熱門推薦'),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 20),
           ),
-          const HotWidget(),
-          const SliverToBoxAdapter(
+          HotWidget(),
+          SliverToBoxAdapter(
             child: SizedBox(height: 20),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Header(text: '大家都在玩'),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 20),
           ),
-          const PopularWidget(),
-          const SliverToBoxAdapter(
+          PopularWidget(),
+          SliverToBoxAdapter(
             child: SizedBox(height: 90),
           )
         ],

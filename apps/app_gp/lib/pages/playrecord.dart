@@ -5,7 +5,7 @@ import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 
 import '../widgets/custom_app_bar.dart';
-import '../widgets/playrecord/panel.dart';
+import '../widgets/list_page_panel.dart';
 import '../widgets/video_preview.dart';
 
 class PlayRecordPage extends StatefulWidget {
@@ -25,6 +25,17 @@ class _PlayRecordPageState extends State<PlayRecordPage> {
   void dispose() {
     listEditorController.clearSelected();
     super.dispose();
+  }
+
+  void _handleSelectAll() {
+    var allData = playRecordController.playRecord;
+    listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+  }
+
+  void _handleDeleteAll() {
+    var selectedIds = listEditorController.selectedIds.toList();
+    playRecordController.removePlayRecord(selectedIds);
+    listEditorController.removeBoundData(selectedIds);
   }
 
   @override
@@ -76,7 +87,10 @@ class _PlayRecordPageState extends State<PlayRecordPage> {
             left: 0,
             right: 0,
             bottom: 0,
-            child: PanelWidget(),
+            child: ListPagePanelWidget(
+                listEditorController: listEditorController,
+                onSelectButtonClick: _handleSelectAll,
+                onDeleteButtonClick: _handleDeleteAll),
           ),
         ],
       ),

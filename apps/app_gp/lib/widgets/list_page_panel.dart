@@ -5,28 +5,19 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 
-import '../button.dart';
+import 'button.dart';
 
-class PanelWidget extends StatelessWidget {
-  PanelWidget({
-    Key? key,
-  }) : super(key: key);
+class ListPagePanelWidget extends StatelessWidget {
+  final Function()? onSelectButtonClick;
+  final Function()? onDeleteButtonClick;
+  final ListEditorController listEditorController;
 
-  final PlayRecordController playRecordController =
-      Get.find<PlayRecordController>();
-  final listEditorController =
-      Get.find<ListEditorController>(tag: 'playrecord');
-
-  void _handleSelectAll() {
-    var allData = playRecordController.playRecord;
-    listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-  }
-
-  void _handleDeleteAll() {
-    var selectedIds = listEditorController.selectedIds.toList();
-    playRecordController.removePlayRecord(selectedIds);
-    listEditorController.removeBoundData(selectedIds);
-  }
+  const ListPagePanelWidget(
+      {Key? key,
+      this.onSelectButtonClick,
+      this.onDeleteButtonClick,
+      required this.listEditorController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +39,7 @@ class PanelWidget extends StatelessWidget {
                           child: Button(
                               text: '全選',
                               size: 'small',
-                              onPressed: _handleSelectAll)),
+                              onPressed: onSelectButtonClick!)),
                       const SizedBox(width: 10),
                       Expanded(
                           flex: 1,
@@ -56,13 +47,13 @@ class PanelWidget extends StatelessWidget {
                               text: '刪除',
                               size: 'small',
                               type: 'primary',
-                              onPressed: _handleDeleteAll)),
+                              onPressed: onDeleteButtonClick!)),
                     ],
                   ),
                 );
               },
             )
-          : SizedBox.shrink(),
+          : const SizedBox.shrink(),
     );
   }
 }
