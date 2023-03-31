@@ -113,20 +113,25 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap: isEditing
                   ? onEditingTap
                   : () {
-                      MyRouteDelegate.of(context).push('/video', args: {
-                        'id': id,
-                      });
-                      var playRecord = VideoDatabaseField(
-                        id: id,
-                        coverHorizontal: coverHorizontal,
-                        coverVertical: coverVertical,
-                        timeLength: timeLength,
-                        tags: tags,
-                        title: title,
-                        videoViewTimes: videoViewTimes,
-                        detail: detail!,
-                      );
-                      playrecordController.addPlayRecord(playRecord);
+                      print('VideoPreviewWidget: onTap: $id');
+                      try {
+                        MyRouteDelegate.of(context).push('/video', args: {
+                          'id': id,
+                        });
+                        var playRecord = VideoDatabaseField(
+                          id: id,
+                          coverHorizontal: coverHorizontal,
+                          coverVertical: coverVertical,
+                          timeLength: timeLength,
+                          tags: tags,
+                          title: title,
+                          videoViewTimes: videoViewTimes,
+                          detail: detail!,
+                        );
+                        playrecordController.addPlayRecord(playRecord);
+                      } catch (e) {
+                        print('@@@@@@error: $e');
+                      }
                     },
               child: Stack(
                 children: [

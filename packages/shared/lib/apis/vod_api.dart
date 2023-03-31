@@ -353,12 +353,67 @@ class VodApi {
     var res = await fetcher(
         url:
             '${systemConfig.apiHost}/public/videos/video/v2/videoBlocks?offset=$offset&areaId=$blockId&deviceId=$deviceId');
-    print('getBlockVodsByBlockId res: ${res.data}');
     try {
       return Blocks.fromJson(res.data['data']);
     } catch (e) {
       print('getBlockVodsByBlockId error: $e');
       return Blocks();
     }
+  }
+
+  // 同類型 (internalTagId) 帶空取全部、取前面最多三個
+  Future<BlockVod> getVideoByInternalTag(
+    String? excludeId,
+    String internalTagId,
+  ) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/internalTags/internalTag/views?excludeId=$excludeId&internalTagId=$internalTagId');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    List<Vod> vods = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return BlockVod(
+      vods,
+      vods.length,
+    );
+  }
+
+  // 同標籤 (tag) tagId 帶空取全部、取前面最多三個
+  Future<BlockVod> getVideoByTags(
+    String excludeId,
+    String tagId,
+  ) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/tags/tag/views?tagId=$tagId&excludeId=$excludeId');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    List<Vod> vods = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return BlockVod(
+      vods,
+      vods.length,
+    );
+  }
+
+  // 同演員: 目前只取一位演員
+  Future<BlockVod> getVideoByActorId(
+    String actorId,
+  ) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/sameActors?actorId=$actorId');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    List<Vod> vods = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return BlockVod(
+      vods,
+      vods.length,
+    );
   }
 }
