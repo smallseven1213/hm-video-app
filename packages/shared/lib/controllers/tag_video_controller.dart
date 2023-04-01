@@ -1,22 +1,39 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:shared/apis/tag_api.dart';
+import '../models/block_vod.dart';
 
-import '../apis/user_api.dart';
-import '../models/video_database_field.dart';
-import '../models/vod.dart';
-
-final userApi = UserApi();
+final tagApi = TagApi();
+const limit = 100;
 
 class TagVideoController extends GetxController {
-  var videos = <VideoDatabaseField>[].obs;
+  final int id;
+  late int page;
+  final List<BlockVod> blocks = <BlockVod>[].obs;
+  bool _hasReachedEnd = false;
 
-  @override
-  void onInit() {
-    super.onInit();
-    _init();
+  TagVideoController(this.id) {
+    page = 1;
   }
 
-  Future<void> _init() async {}
+  @override
+  void onInit() async {
+    super.onInit();
+    fetchMoreVideos();
+  }
+
+  Future<void> fetchMoreVideos() async {
+    if (_hasReachedEnd) return;
+
+    var res = await tagApi.getRecommendVod(tagId: id, page: page, limit: limit);
+    if (res.vods.isEmpty || res.vods.length < limit) {
+      _hasReachedEnd = true;
+    }
+
+    if (res.vods.isNotEmpty) {
+      blocks.add(res);
+      page++;
+    }
+  }
 }
