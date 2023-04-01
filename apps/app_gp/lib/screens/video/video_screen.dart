@@ -55,7 +55,8 @@ class VideoInfo extends StatelessWidget {
           children: tags.map((tag) {
             return InkWell(
               onTap: () {
-                // 點擊事件，帶入tag.id進入查詢頁
+                MyRouteDelegate.of(context)
+                    .push('/tag', args: {'id': tag.id, 'title': tag.name});
               },
               child: Text(
                 '#${tag.name}',
