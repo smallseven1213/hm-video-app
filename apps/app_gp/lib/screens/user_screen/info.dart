@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/avatar.dart';
@@ -66,8 +67,8 @@ class UserInfo extends StatelessWidget {
                                 .contains('guest'))
                               InkWell(
                                 onTap: () {
-                                  MyRouteDelegate.of(context)
-                                      .push('/user/config');
+                                  // MyRouteDelegate.of(context)
+                                  //     .push('/user/config');
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(5),
@@ -97,7 +98,8 @@ class UserInfo extends StatelessWidget {
                       flex: 1,
                       child: TextButton(
                         onPressed: () {
-                          MyRouteDelegate.of(context).push('/login');
+                          MyRouteDelegate.of(context)
+                              .push(AppRoutes.login.value);
                         },
                         child: const Text(
                           '註冊/登入',
@@ -123,7 +125,7 @@ class UserInfo extends StatelessWidget {
                 right: 0,
                 child: InkWell(
                   onTap: () {
-                    MyRouteDelegate.of(context).push('/user/config');
+                    MyRouteDelegate.of(context).push(AppRoutes..value);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),
@@ -140,7 +142,8 @@ class UserInfo extends StatelessWidget {
                 right: 30,
                 child: InkWell(
                   onTap: () {
-                    MyRouteDelegate.of(context).push('/notifications');
+                    MyRouteDelegate.of(context)
+                        .push(AppRoutes.notifications.value);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/models/video_database_field.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -113,7 +114,8 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap: isEditing
                   ? onEditingTap
                   : () {
-                      MyRouteDelegate.of(context).push('/video', args: {
+                      MyRouteDelegate.of(context)
+                          .push(AppRoutes.video.value, args: {
                         'id': id,
                       });
                       var playRecord = VideoDatabaseField(

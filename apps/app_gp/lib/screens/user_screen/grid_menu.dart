@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 class GridMenuItem {
@@ -23,28 +24,28 @@ class GridMenu extends StatelessWidget {
         name: '我的足迹',
         icon: 'assets/images/user_screen_footprint.png',
         onTap: () {
-          MyRouteDelegate.of(context).push('/playrecord');
+          MyRouteDelegate.of(context).push(AppRoutes.playRecord.value);
         },
       ),
       GridMenuItem(
         name: '我的喜欢',
         icon: 'assets/images/user_screen_like.png',
         onTap: () {
-          MyRouteDelegate.of(context).push('/favorites');
+          MyRouteDelegate.of(context).push(AppRoutes.favorites.value);
         },
       ),
       GridMenuItem(
         name: '我的收藏',
         icon: 'assets/images/user_screen_collection.png',
         onTap: () {
-          MyRouteDelegate.of(context).push('/collection');
+          MyRouteDelegate.of(context).push(AppRoutes.collection.value);
         },
       ),
       GridMenuItem(
         name: '推广分享',
         icon: 'assets/images/user_screen_share.png',
         onTap: () {
-          MyRouteDelegate.of(context).push('/share');
+          MyRouteDelegate.of(context).push(AppRoutes.share.value);
         },
       ),
       GridMenuItem(
@@ -56,7 +57,7 @@ class GridMenu extends StatelessWidget {
         name: '应用中心',
         icon: 'assets/images/user_screen_app_center.png',
         onTap: () {
-          MyRouteDelegate.of(context).push('/apps');
+          MyRouteDelegate.of(context).push(AppRoutes.apps.value);
         },
       ),
     ];

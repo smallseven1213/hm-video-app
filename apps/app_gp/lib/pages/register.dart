@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../utils/showConfirmDialog.dart';
@@ -183,8 +184,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       Column(children: [
                         InkWell(
                           onTap: () {
-                            MyRouteDelegate.of(context)
-                                .push('/login', deletePreviousCount: 1);
+                            MyRouteDelegate.of(context).push(
+                                AppRoutes.login.value,
+                                deletePreviousCount: 1);
                           },
                           child: Column(children: [
                             Text('前往登入', style: TextStyle(color: Colors.white)),

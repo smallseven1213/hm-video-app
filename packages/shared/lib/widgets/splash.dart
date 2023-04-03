@@ -16,6 +16,7 @@ import 'package:shared/services/system_config.dart';
 import 'package:shared/widgets/loading.dart';
 
 import '../controllers/user_controller.dart';
+import '../enums/app_routes.dart';
 import '../models/index.dart';
 import '../navigator/delegate.dart';
 
@@ -256,10 +257,10 @@ class _SplashState extends State<Splash> {
         // Get.offNamed(path);
         if (landingBanners.isEmpty) {
           print('沒有廣告，直接進入首頁');
-          MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+          MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.home.value);
         } else {
           print('有廣告，進入廣告頁');
-          MyRouteDelegate.of(context).pushAndRemoveUntil('/ad');
+          MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.ad.value);
         }
       }
     });

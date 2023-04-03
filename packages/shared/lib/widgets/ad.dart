@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/sid_image.dart';
+import '../enums/app_routes.dart';
 import '../models/banner_photo.dart';
 import '../navigator/delegate.dart';
 import '../services/system_config.dart';
@@ -49,7 +50,7 @@ class AdState extends State<Ad> {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
         if (currentBanner.isAutoClose == true) {
-          MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+          MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.home.value);
         }
         timer.cancel();
       } else {
@@ -85,7 +86,8 @@ class AdState extends State<Ad> {
                 setState(() => imageLoaded = true);
               },
               onError: (e, stackTrace) {
-                MyRouteDelegate.of(context).pushAndRemoveUntil('/home');
+                MyRouteDelegate.of(context)
+                    .pushAndRemoveUntil(AppRoutes.home.value);
               },
             ),
           ),
@@ -96,7 +98,8 @@ class AdState extends State<Ad> {
               child: TextButton(
                 onPressed: () => {
                   // if (countdownSeconds == 0)
-                  MyRouteDelegate.of(context).pushAndRemoveUntil('/home')
+                  MyRouteDelegate.of(context)
+                      .pushAndRemoveUntil(AppRoutes.home.value)
                 },
                 child: Container(
                   width: 90,

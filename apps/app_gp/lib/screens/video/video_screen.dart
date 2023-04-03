@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/block_videos_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -48,8 +49,8 @@ class VideoInfo extends StatelessWidget {
           children: tags.map((tag) {
             return InkWell(
               onTap: () {
-                MyRouteDelegate.of(context)
-                    .push('/tag', args: {'id': tag.id, 'title': tag.name});
+                MyRouteDelegate.of(context).push(AppRoutes.tag.value,
+                    args: {'id': tag.id, 'title': tag.name});
               },
               child: Text(
                 '#${tag.name}',
