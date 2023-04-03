@@ -6,8 +6,11 @@ final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/notices';
 
 class NoticeApi {
-  Future<Notice?> getMany() async =>
-      await fetcher(url: '$apiPrefix/notice/announcement').then((res) {
+  // 消息中心的公告
+  Future<Notice?> getNoticeAnnouncement(int page, int limit) async =>
+      await fetcher(
+              url: '$apiPrefix/notice/announcement?page=$page&limit=$limit')
+          .then((res) {
         if (res.data['code'] != '00') {
           return null;
         }
@@ -17,6 +20,7 @@ class NoticeApi {
         return null;
       });
 
+  // 彈窗公告
   Future<Notice?> getBounceOne() async =>
       await fetcher(url: '$apiPrefix/notice/latest/bounce').then((res) {
         if (res.data['code'] != '00') {
@@ -28,6 +32,7 @@ class NoticeApi {
         return null;
       });
 
+  // 跑馬燈
   Future<Notice?> getMarquee() async =>
       await fetcher(url: '$apiPrefix/notice/latest/marquee').then((res) {
         if (res.data['code'] != '00') {

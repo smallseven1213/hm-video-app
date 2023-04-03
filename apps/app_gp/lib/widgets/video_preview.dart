@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/models/video_database_field.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -113,25 +114,21 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap: isEditing
                   ? onEditingTap
                   : () {
-                      print('VideoPreviewWidget: onTap: $id');
-                      try {
-                        MyRouteDelegate.of(context).push('/video', args: {
-                          'id': id,
-                        });
-                        var playRecord = VideoDatabaseField(
-                          id: id,
-                          coverHorizontal: coverHorizontal,
-                          coverVertical: coverVertical,
-                          timeLength: timeLength,
-                          tags: tags,
-                          title: title,
-                          videoViewTimes: videoViewTimes,
-                          detail: detail!,
-                        );
-                        playrecordController.addPlayRecord(playRecord);
-                      } catch (e) {
-                        print('@@@@@@error: $e');
-                      }
+                      MyRouteDelegate.of(context)
+                          .push(AppRoutes.video.value, args: {
+                        'id': id,
+                      });
+                      var playRecord = VideoDatabaseField(
+                        id: id,
+                        coverHorizontal: coverHorizontal,
+                        coverVertical: coverVertical,
+                        timeLength: timeLength,
+                        tags: tags,
+                        title: title,
+                        videoViewTimes: videoViewTimes,
+                        detail: detail!,
+                      );
+                      playrecordController.addPlayRecord(playRecord);
                     },
               child: Stack(
                 children: [

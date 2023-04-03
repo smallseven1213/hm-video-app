@@ -66,7 +66,7 @@ class _NotificationsPageState extends State<NotificationsPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [NotificationScreen(), SystemScreen()],
+        children: [NotificationScreen(), SystemScreen()],
       ),
     );
   }

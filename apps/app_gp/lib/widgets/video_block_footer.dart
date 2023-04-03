@@ -2,6 +2,7 @@ import 'package:app_gp/config/colors.dart';
 import 'package:app_gp/widgets/channel_area_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -137,7 +138,7 @@ class VideoBlockFooter extends StatelessWidget {
                   ),
                   onTap: () {
                     MyRouteDelegate.of(context).push(
-                      '/video_by_block',
+                      AppRoutes.vendorVideos.value,
                       args: {
                         'id': block.id,
                         'title': block.name,

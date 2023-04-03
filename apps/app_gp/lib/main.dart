@@ -4,6 +4,7 @@ import 'package:app_gp/pages/notifications.dart';
 import 'package:app_gp/pages/video.dart';
 import 'package:app_gp/screens/apps_screen/index.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
@@ -27,31 +28,31 @@ void main() {
 }
 
 final Map<String, RouteWidgetBuilder> routes = {
-  '/home': (context, args) => Home(),
-  '/video': (context, args) => Video(args: args),
-  '/video_by_block': (context, args) => VideoByBlockPage(
+  AppRoutes.home.value: (context, args) => Home(),
+  AppRoutes.video.value: (context, args) => Video(args: args),
+  AppRoutes.videoByBlock.value: (context, args) => VideoByBlockPage(
         id: args['id'] as int,
         title: args['title'] as String,
         channelId: args['channelId'] as int,
       ),
-  '/vendor_videos': (context, args) => VendorVideosPage(
+  AppRoutes.vendorVideos.value: (context, args) => VendorVideosPage(
         id: args['id'] as int,
         title: args['title'] as String,
       ),
-  '/tag': (context, args) => TagVideoPage(
+  AppRoutes.tag.value: (context, args) => TagVideoPage(
         id: args['id'] as int,
         title: args['title'] as String,
       ),
-  '/game/deposit': (context, args) => const GameDeposit(),
-  '/login': (context, args) => LoginPage(),
-  '/register': (context, args) => RegisterPage(),
-  '/share': (context, args) => const SharePage(),
-  '/playrecord': (context, args) => PlayRecordPage(),
-  '/sharerecord': (context, args) => const ShareRecord(),
-  '/apps': (context, args) => const AppsScreen(),
-  '/favorites': (context, args) => FavoritesPage(),
-  '/collection': (context, args) => CollectionPage(),
-  '/notifications': (context, args) => const NotificationsPage(),
+  AppRoutes.gameDeposit.value: (context, args) => const GameDeposit(),
+  AppRoutes.login.value: (context, args) => LoginPage(),
+  AppRoutes.register.value: (context, args) => RegisterPage(),
+  AppRoutes.share.value: (context, args) => const SharePage(),
+  AppRoutes.playRecord.value: (context, args) => PlayRecordPage(),
+  AppRoutes.shareRecord.value: (context, args) => const ShareRecord(),
+  AppRoutes.apps.value: (context, args) => const AppsScreen(),
+  AppRoutes.favorites.value: (context, args) => FavoritesPage(),
+  AppRoutes.collection.value: (context, args) => CollectionPage(),
+  AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
 };
 
 class MyApp extends StatelessWidget {
