@@ -1,15 +1,20 @@
 import 'package:flutter/widgets.dart';
 
-class NoTransitionPage extends Page {
+class NoAnimationPage extends Page<dynamic> {
   final Widget child;
 
-  NoTransitionPage({required this.child}) : super(key: ValueKey(child));
+  const NoAnimationPage({
+    required this.child,
+    required String name,
+    LocalKey? key,
+  }) : super(key: key, name: name);
 
   @override
   Route createRoute(BuildContext context) {
     return PageRouteBuilder(
-      pageBuilder: (context, _, __) => child,
-      transitionsBuilder: (_, __, ___, child) => child,
+      settings: this,
+      pageBuilder: (_, __, ___) => child,
+      transitionsBuilder: (_, __, ___, Widget child) => child,
     );
   }
 }

@@ -125,7 +125,7 @@ class UserInfo extends StatelessWidget {
                 right: 0,
                 child: InkWell(
                   onTap: () {
-                    MyRouteDelegate.of(context).push(AppRoutes..value);
+                    // MyRouteDelegate.of(context).push(AppRoutes.value);
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),
