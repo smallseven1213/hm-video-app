@@ -11,11 +11,13 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/block_videos_by_category_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sliver_header_delegate.dart';
+import 'package:video_player/video_player.dart';
 
 import '../../widgets/video_preview.dart';
 
@@ -37,7 +39,7 @@ class VideoInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('tags: $tags');
+    // logger.i('tags: $tags');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -106,8 +108,6 @@ class LikeButtonState extends State<LikeButton> {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('LikeButton init');
-
     IconData iconData = widget.isLiked ? Icons.favorite : Icons.favorite_border;
     if (type == LikeButtonType.bookmark) {
       iconData = widget.isLiked ? Icons.bookmark : Icons.bookmark_border;
@@ -135,8 +135,6 @@ class Actions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('Actions init');
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
@@ -311,8 +309,6 @@ class VideoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('VideoList init: $videos');
-
     return GridView.builder(
       scrollDirection: Axis.vertical,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -353,12 +349,18 @@ class _VideoScreenState extends State<VideoScreen>
     with SingleTickerProviderStateMixin {
   late Future<Vod> _video;
   late TabController _tabController;
+  late VideoDetailController videoDetailController;
 
   @override
   void initState() {
     super.initState();
     _video = fetchVideoDetail();
     _tabController = TabController(length: 3, vsync: this);
+    getVideoUrl();
+  }
+
+  void getVideoUrl() async {
+    videoDetailController = Get.put(VideoDetailController(widget.id));
   }
 
   Future<Vod> fetchVideoDetail() async => await vodApi.getVodDetail(widget.id);
@@ -373,7 +375,13 @@ class _VideoScreenState extends State<VideoScreen>
             if (snapshot.hasData) {
               return CustomScrollView(
                 slivers: [
-                  VideoPlayerArea(id: widget.id, name: widget.name),
+                  Obx(
+                    () => VideoPlayerArea(
+                      id: widget.id,
+                      name: widget.name,
+                      videoUrl: videoDetailController.videoUrl.value,
+                    ),
+                  ),
                   SliverList(
                     delegate: SliverChildListDelegate(
                       [
