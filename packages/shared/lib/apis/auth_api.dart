@@ -104,6 +104,14 @@ class AuthApi {
     return HMApiResponseBaseWithDataWithData.fromJson(res.data);
   }
 
+  Future<HMApiResponseBaseWithDataWithData> getLoginCode() async {
+    var res = await fetcher(
+      url: '${systemConfig.apiHost}/public/auth/auth/code',
+    );
+    print('getLoginCode: $res');
+    return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+  }
+
   Future<String?> login({
     required String username,
     required String password,
