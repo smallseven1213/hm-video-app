@@ -54,13 +54,20 @@ class MyRouteDelegate extends RouterDelegate<String>
   void push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,
+      bool removeSamePath = false,
       Map<String, dynamic>? args}) {
+    if (removeSamePath) {
+      _stack.removeWhere((stackData) => stackData.path == routeName);
+    }
+
     _stack.add(StackData(
         path: routeName, args: args ?? {}, hasTransition: hasTransition));
+
     if (deletePreviousCount > 0) {
       _stack.removeRange(
           _stack.length - deletePreviousCount - 1, _stack.length - 1);
     }
+    logger.i(_stack);
     notifyListeners();
   }
 

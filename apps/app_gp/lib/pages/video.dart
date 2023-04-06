@@ -44,8 +44,8 @@ class _VideoState extends State<Video> {
 
   @override
   Widget build(BuildContext context) {
-    logger.i(widget.args);
     return VideoScreen(
+      key: ValueKey(widget.args['id']),
       id: int.parse(widget.args['id'].toString()),
       name: widget.args['name'],
     );

@@ -119,15 +119,10 @@ class _FavoritesPageState extends State<FavoritesPage>
               FavoritesActorScreen(),
             ],
           ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: ListPagePanelWidget(
-                listEditorController: listEditorController,
-                onSelectButtonClick: _handleSelectAll,
-                onDeleteButtonClick: _handleDeleteAll),
-          ),
+          ListPagePanelWidget(
+              listEditorController: listEditorController,
+              onSelectButtonClick: _handleSelectAll,
+              onDeleteButtonClick: _handleDeleteAll),
         ],
       ),
     );
