@@ -27,6 +27,8 @@ void setupDependencies() {
       tag: 'user_video_collection');
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
       tag: 'favorites');
+  Get.lazyPut<ListEditorController>(() => ListEditorController(),
+      tag: 'notifications');
   Get.lazyPut<UserFavoritesActorController>(
       () => UserFavoritesActorController());
   Get.lazyPut<UserFavoritesVideoController>(

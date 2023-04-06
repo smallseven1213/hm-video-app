@@ -3,6 +3,7 @@
 import 'package:app_gp/widgets/video_embedded_ad.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -11,6 +12,8 @@ import 'package:shared/models/video_database_field.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/utils/video_info_formatter.dart';
+
+final logger = Logger();
 
 class ViewInfo extends StatelessWidget {
   final int viewCount;
@@ -114,10 +117,12 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap: isEditing
                   ? onEditingTap
                   : () {
-                      MyRouteDelegate.of(context)
-                          .push(AppRoutes.video.value, args: {
-                        'id': id,
-                      });
+                      logger.i('===REDIRECT TO $id');
+                      MyRouteDelegate.of(context).push(AppRoutes.video.value,
+                          args: {
+                            'id': id,
+                          },
+                          removeSamePath: true);
                       var playRecord = VideoDatabaseField(
                         id: id,
                         coverHorizontal: coverHorizontal,

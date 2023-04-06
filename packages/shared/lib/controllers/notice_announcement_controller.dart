@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../apis/notice_api.dart';
 import '../models/notices.dart';
+
+final logger = Logger();
 
 class NoticeAnnouncementController extends GetxController {
   final _announcement = <Notice>[].obs;
@@ -33,8 +36,9 @@ class NoticeAnnouncementController extends GetxController {
       _page.value,
       _limit.value,
     );
-    if (res != null) {
-      _announcement.addAll([res]);
+    logger.i(res);
+    if (res.isNotEmpty) {
+      _announcement.addAll(res);
       _page.value++;
     }
     _isLoading.value = false;

@@ -147,9 +147,10 @@ class UserInfo extends StatelessWidget {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(5),
-                    child: const Icon(
-                      Icons.notifications,
-                      color: Colors.white,
+                    child: const Image(
+                      image: AssetImage(
+                          'assets/images/user_screen_notice_button.png'),
+                      width: 15,
                     ),
                   ),
                 ),
