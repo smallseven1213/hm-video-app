@@ -257,10 +257,12 @@ class _SplashState extends State<Splash> {
         // Get.offNamed(path);
         if (landingBanners.isEmpty) {
           print('沒有廣告，直接進入首頁');
-          MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.home.value);
+          MyRouteDelegate.of(context)
+              .pushAndRemoveUntil(AppRoutes.home.value, hasTransition: false);
         } else {
           print('有廣告，進入廣告頁');
-          MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.ad.value);
+          MyRouteDelegate.of(context)
+              .pushAndRemoveUntil(AppRoutes.ad.value, hasTransition: false);
         }
       }
     });
