@@ -1,10 +1,8 @@
 // VideoPlayerArea stateful widget
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
-import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -262,16 +260,8 @@ class VolumeBrightness extends StatelessWidget {
 class VideoPlayerArea extends StatefulWidget {
   final int id;
   final String? name;
-  final String videoUrl;
-  VideoPlayerController? controller;
-
-  VideoPlayerArea({
-    Key? key,
-    required this.id,
-    required this.videoUrl,
-    this.name,
-    this.controller,
-  }) : super(key: key);
+  const VideoPlayerArea({Key? key, required this.id, this.name})
+      : super(key: key);
 
   @override
   _VideoPlayerAreaState createState() => _VideoPlayerAreaState();
@@ -287,12 +277,23 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // _getVodUrl();
-    initializePlayer();
+    _getVodUrl();
+    // initializePlayer();
   }
 
-  void initializePlayer() async {
-    _controller = VideoPlayerController.network(widget.videoUrl);
+  void _getVodUrl() async {
+    var vod = await vodApi.getVodUrl(widget.id);
+    var videoUrl = vod.getVideoUrl();
+    logger.i(videoUrl);
+    // _controller = VideoPlayerController.asset(videoUrl!);
+    // _controller!.addListener(() {
+    //   setState(() {});
+    // });
+    // _controller!.setLooping(true);
+    // _controller!.initialize().then((_) => setState(() {}));
+    // _controller!.play();
+
+    _controller = VideoPlayerController.network(videoUrl!);
     // _controller!.addListener(() {
     //   setState(() {});
     // });
@@ -300,6 +301,9 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     _controller!.initialize().then((_) => setState(() {}));
     _controller!.play();
   }
+
+  // Future<void> initializePlayer(String source, {bool force = true}) async {
+  // }
 
   void toggleFullscreen({bool fullScreen = false}) {
     if (fullScreen) {
