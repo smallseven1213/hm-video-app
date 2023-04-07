@@ -35,7 +35,7 @@ class Button extends StatelessWidget {
             clipBehavior: Clip.antiAlias,
             padding: size == 'medium'
                 ? const EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.5)
-                : null,
+                : const EdgeInsets.all(10),
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(

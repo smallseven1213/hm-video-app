@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:shared/apis/auth_api.dart';
 
 import '../apis/user_api.dart';
 import '../models/user.dart';
@@ -16,8 +15,6 @@ class UserController extends GetxController {
   var wallets = <WalletItem>[].obs;
   var isLoading = false.obs;
   var totalAmount = 0.0.obs;
-  var loginCode = ''.obs;
-
   bool get isGuest => info.value.roles.contains('guest');
   GetStorage box = GetStorage();
 
@@ -61,20 +58,6 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> getLoginCode() async {
-    isLoading.value = true;
-    try {
-      var authApi = AuthApi();
-      var res = await authApi.getLoginCode();
-      print('res.data: ${res.data}');
-      loginCode.value = res.data;
-    } catch (error) {
-      print(error);
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
   // Future<void> _fetchWallets() async {
   //   isLoading.value = true;
   //   try {
@@ -91,7 +74,6 @@ class UserController extends GetxController {
   void mutateAll() {
     _fetchUserInfo();
     // _fetchWallets();
-    getLoginCode();
   }
 
   void mutateInfo(User? user, bool revalidateFromServer) {

@@ -1,4 +1,3 @@
-import 'package:app_gp/screens/user_screen/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -40,22 +39,6 @@ class GridMenu extends StatelessWidget {
         icon: 'assets/images/user_screen_collection.png',
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.collection.value);
-        },
-      ),
-      GridMenuItem(
-        name: '身份卡',
-        icon: 'assets/images/user_screen_collection.png',
-        onTap: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-                child: QRCodePopup(),
-              );
-            },
-          );
         },
       ),
       GridMenuItem(

@@ -6,10 +6,12 @@ import '../controllers/channel_data_controller.dart';
 import '../controllers/layout_controller.dart';
 import '../controllers/list_editor_controller.dart';
 import '../controllers/play_record_controller.dart';
+import '../controllers/tag_popular_controller.dart';
 import '../controllers/user_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
 import '../controllers/user_favorites_video_controlle.dart';
 import '../controllers/user_video_collection_controller.dart';
+import '../controllers/video_popular_controller.dart';
 
 void setupDependencies() {
   Get.lazyPut<UserController>(() => UserController());
@@ -34,4 +36,6 @@ void setupDependencies() {
   Get.lazyPut<UserFavoritesVideoController>(
       () => UserFavoritesVideoController());
   Get.lazyPut<UserCollectionController>(() => UserCollectionController());
+  Get.lazyPut<TagPopularController>(() => TagPopularController());
+  Get.lazyPut<VideoPopularController>(() => VideoPopularController());
 }
