@@ -75,12 +75,12 @@ class VodApi {
   Future<List<Vod>> searchMany(String keyword) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/search?keyword=$keyword');
+            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=1&limit=10');
     if (res.data['code'] != '00') {
       return [];
     }
-    return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return List.from((res.data['data']['data'] as List<dynamic>)
+        .map((e) => Vod.fromJson(e)));
   }
 
   Future<BlockVod> getManyByChannel(int blockId, {int? offset = 1}) async {
@@ -381,13 +381,26 @@ class VodApi {
   }
 
   // 同標籤 (tag) tagId 帶空取全部、取前面最多三個
-  Future<BlockVod> getVideoByTags(
-    String excludeId,
-    String tagId,
-  ) async {
-    var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/tags/tag/views?tagId=$tagId&excludeId=$excludeId');
+  Future<BlockVod> getVideoByTags({
+    String? excludeId,
+    String? tagId,
+  }) async {
+    String url = '${systemConfig.apiHost}/public/tags/tag/views';
+    List<String> queryParams = [];
+
+    if (excludeId != null) {
+      queryParams.add('excludeId=$excludeId');
+    }
+    if (tagId != null) {
+      queryParams.add('tagId=$tagId');
+    }
+
+    if (queryParams.isNotEmpty) {
+      url += '?' + queryParams.join('&');
+    }
+
+    var res = await fetcher(url: url);
+
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -415,5 +428,16 @@ class VodApi {
       vods,
       vods.length,
     );
+  }
+
+  // search keyword
+  Future<List<String>> getSearchKeyword(String keyword) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/keywordV2?keyword=$keyword');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from(res.data['data'] as List<String>);
   }
 }
