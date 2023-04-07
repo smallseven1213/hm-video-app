@@ -163,7 +163,7 @@ class ContentAndButton extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 8),
                     child: Text(
                       'ID: ${userController.info.value.uid}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
@@ -191,13 +191,13 @@ class ContentAndButton extends StatelessWidget {
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: Color(0xFF21AFFF),
+                        color: const Color.fromRGBO(66, 119, 220, 0.5),
                       ),
                       width: 115,
                       child: Text(
                         '官网地址 : GPOINT.TV',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,
                           fontSize: 10,
                         ),
@@ -209,17 +209,11 @@ class ContentAndButton extends StatelessWidget {
 
           // Add the button widget here
           const SizedBox(height: 33),
-          const SizedBox(
-            height: 38,
-            child: Expanded(
-              flex: 1,
-              child: Button(
-                text: '请截图保存',
-                size: 'small',
-                type: 'secondary',
-                onPressed: _captureAndSaveScreenshot,
-              ),
-            ),
+          const Button(
+            text: '请截图保存',
+            size: 'small',
+            type: 'secondary',
+            onPressed: _captureAndSaveScreenshot,
           ),
           const SizedBox(height: 10),
         ],
