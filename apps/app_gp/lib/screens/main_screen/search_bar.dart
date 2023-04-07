@@ -1,7 +1,10 @@
 // SearchBar, left is search input, right have 2 buttons
 
+import 'package:app_gp/widgets/search_input.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../config/colors.dart';
 
@@ -31,48 +34,14 @@ class SearchBar extends StatelessWidget {
           ),
           // input
           Expanded(
-            child: Container(
-                height: 60,
-                // padding: const EdgeInsets.only(left: 10),
-                alignment: Alignment.center,
-                color: AppColors.colors[ColorKeys.background],
-                child: SizedBox(
-                  height: 30,
-                  child: Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFF00B2FF),
-                          Color(0xFFCCEAFF),
-                          Color(0xFF0075FF),
-                        ],
-                        stops: [0, 0.5, 1],
-                      ),
-                    ),
-                    padding: const EdgeInsets.all(
-                        2), // Set the width of the gradient border
-                    child: const TextField(
-                      textAlignVertical: TextAlignVertical
-                          .center, // Vertically center the input text
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
-                          borderSide: BorderSide.none,
-                        ),
-                        hintText: '搜尋',
-                        hintStyle: TextStyle(color: Colors.grey),
-                        filled: true,
-                        fillColor: Color(
-                            0xFF002865), // Set the background color of the input
-                      ),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                )),
+            child: SearchInput(
+              defaultValue: '神级美乳AV女优',
+              onTap: () {
+                MyRouteDelegate.of(context)
+                    .push(AppRoutes.search.value, hasTransition: false);
+              },
+              autoFocus: false, // 如果需要，可以將此設置為true
+            ),
           ),
           InkWell(
             onTap: () {},

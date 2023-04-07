@@ -1,6 +1,8 @@
 import 'package:app_gp/pages/favorites.dart';
 import 'package:app_gp/pages/game/deposit.dart';
 import 'package:app_gp/pages/notifications.dart';
+import 'package:app_gp/pages/search.dart';
+import 'package:app_gp/pages/search_result.dart';
 import 'package:app_gp/pages/video.dart';
 import 'package:app_gp/screens/apps_screen/index.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +45,9 @@ final Map<String, RouteWidgetBuilder> routes = {
         id: args['id'] as int,
         title: args['title'] as String,
       ),
+  AppRoutes.search_result.value: (context, args) => SearchResultPage(
+        keyword: args['keyword'] as String,
+      ),
   AppRoutes.gameDeposit.value: (context, args) => const GameDeposit(),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.register.value: (context, args) => RegisterPage(),
@@ -53,6 +58,7 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.favorites.value: (context, args) => FavoritesPage(),
   AppRoutes.collection.value: (context, args) => CollectionPage(),
   AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
+  AppRoutes.search.value: (context, args) => const SearchPage(),
 };
 
 class MyApp extends StatelessWidget {
