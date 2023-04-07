@@ -16,6 +16,8 @@ enum AppRoutes {
   favorites,
   collection,
   notifications,
+  search,
+  search_result
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -55,6 +57,10 @@ extension AppRoutesExtension on AppRoutes {
         return '/collection';
       case AppRoutes.notifications:
         return '/notifications';
+      case AppRoutes.search:
+        return '/search';
+      case AppRoutes.search_result:
+        return '/search_result';
       default:
         return '/unknown';
     }
