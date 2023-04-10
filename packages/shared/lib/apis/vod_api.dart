@@ -438,6 +438,11 @@ class VodApi {
     if (res.data['code'] != '00') {
       return [];
     }
-    return List.from(res.data['data'] as List<String>);
+
+    List<String> names = res.data['data']
+        .map<String>((dynamic item) => item['name'] as String)
+        .toList();
+
+    return names;
   }
 }
