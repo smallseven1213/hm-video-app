@@ -35,10 +35,6 @@ Future<dynamic> fetcher({
     'authorization': 'Bearer $token',
   };
 
-  if (GetPlatform.isWeb || method == 'POST') {
-    headerConfig['content-type'] = 'application/json; charset=utf-8';
-  }
-
   final options = Options(
     method: method,
     headers: {
@@ -46,9 +42,16 @@ Future<dynamic> fetcher({
     },
   );
 
+  Object? data;
+  if (body != null && body.isNotEmpty) {
+    data = {
+      ...body,
+    };
+  }
+
   final response = await dio.request(
     url,
-    data: body,
+    data: data,
     options: options,
   );
 
