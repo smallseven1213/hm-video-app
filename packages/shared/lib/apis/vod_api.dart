@@ -46,10 +46,13 @@ class VodApi {
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
+
     return BlockVod(
-        List.from((res.data['data']['data'] as List<dynamic>)
-            .map((e) => Vod.fromJson(e))),
-        res.data['total']);
+      List.from((res.data['data']['data'] as List<dynamic>)
+          .map((e) => Vod.fromJson(e))
+          .toList()),
+      res.data['data']['total'],
+    );
   }
 
   Future<List<Vod>> searchMany(String keyword) async {

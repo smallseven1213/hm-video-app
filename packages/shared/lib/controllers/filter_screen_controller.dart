@@ -84,17 +84,17 @@ class FilterScreenController extends GetxController {
         selectedOptions[key]!.add(value);
       }
     }
-    _handleSelectedOptionsChange();
+    _page = 1;
+    _handleSelectedOptionsChange(refresh: true);
   }
 
   void loadNextPage() async {
-    _isLoading = true;
     _page += 1;
-    await _handleSelectedOptionsChange(); // 修改此方法以接受 page 參數
-    _isLoading = false;
+    _handleSelectedOptionsChange(); // 修改此方法以接受 page 參數
   }
 
-  Future<void> _handleSelectedOptionsChange({int? page}) async {
+  Future<void> _handleSelectedOptionsChange({int? page, bool? refresh}) async {
+    _isLoading = true;
     List<String> queryItems = [];
 
     selectedOptions.forEach((key, values) {
@@ -111,14 +111,19 @@ class FilterScreenController extends GetxController {
         page: page ?? _page, limit: 100, queryString: queryString);
 
     if (res.vods.isNotEmpty) {
+      if (refresh == true) {
+        filterResults.clear();
+      }
       filterResults.addAll(res.vods);
     } else {
       hasMoreData.value = false;
     }
+    _isLoading = false;
   }
 
   @override
   void onInit() {
     super.onInit();
+    _handleSelectedOptionsChange();
   }
 }
