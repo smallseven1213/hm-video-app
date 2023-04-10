@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
 import 'package:shared/controllers/banner_controller.dart';
@@ -12,7 +11,6 @@ import '../screens/search/recommand.dart';
 import '../widgets/search_input.dart';
 
 final vodApi = VodApi();
-final logger = Logger();
 
 class SearchPage extends StatefulWidget {
   const SearchPage({Key? key}) : super(key: key);
@@ -56,17 +54,12 @@ class SearchPageState extends State<SearchPage> {
     // List<String> results = List<String>.generate(500, (index) {
     //   return _generateRandomString(5);
     // });
-    if (keyword.isNotEmpty) {
-      List<String> results = await vodApi.getSearchKeyword(keyword);
-      logger.i(results);
-      setState(() {
-        _searchResults = results;
-      });
-    } else {
-      setState(() {
-        _searchResults = [];
-      });
-    }
+
+    // setState(() {
+    //   _searchResults = results;
+    // });
+
+    await vodApi.getSearchKeyword(keyword);
   }
 
   @override

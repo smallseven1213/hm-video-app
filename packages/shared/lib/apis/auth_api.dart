@@ -1,6 +1,5 @@
 // import 'package:device_info_plus/device_info_plus.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:dio/dio.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/services/system_config.dart';
@@ -101,6 +100,14 @@ class AuthApi {
         'invitationCode': invitationCode
       },
     );
+    return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+  }
+
+  Future<HMApiResponseBaseWithDataWithData> getLoginCode() async {
+    var res = await fetcher(
+      url: '${systemConfig.apiHost}/public/auth/auth/code',
+    );
+    print('getLoginCode: $res');
     return HMApiResponseBaseWithDataWithData.fromJson(res.data);
   }
 
