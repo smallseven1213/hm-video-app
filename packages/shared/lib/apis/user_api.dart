@@ -279,7 +279,8 @@ class UserApi {
       });
 
   Future<UserPromote> getUserPromote() =>
-      fetcher(url: '${systemConfig.apiHost}/user/userPromote').then((value) {
+      fetcher(url: '${systemConfig.apiHost}/public/users/user/userPromote')
+          .then((value) {
         var res = (value.data as Map<String, dynamic>);
         // print(res['data']);
         if (res['code'] != '00') {
