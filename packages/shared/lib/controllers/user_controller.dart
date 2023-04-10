@@ -2,9 +2,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../apis/user_api.dart';
+import '../apis/auth_api.dart';
 import '../models/index.dart';
-import '../models/user.dart';
-import '../models/wallet_item.dart';
 
 class UserController extends GetxController {
   var info = User(
