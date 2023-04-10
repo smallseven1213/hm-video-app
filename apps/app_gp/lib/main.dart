@@ -1,9 +1,3 @@
-import 'package:app_gp/pages/favorites.dart';
-import 'package:app_gp/pages/game/deposit.dart';
-import 'package:app_gp/pages/notifications.dart';
-import 'package:app_gp/pages/search.dart';
-import 'package:app_gp/pages/search_result.dart';
-import 'package:app_gp/pages/video.dart';
 import 'package:app_gp/screens/apps_screen/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -23,6 +17,13 @@ import 'pages/sharerecord.dart';
 import 'pages/tag_video.dart';
 import 'pages/vendor_videos.dart';
 import 'pages/video_by_block.dart';
+import 'pages/favorites.dart';
+import 'pages/filter.dart';
+import 'pages/game/deposit.dart';
+import 'pages/notifications.dart';
+import 'pages/search.dart';
+import 'pages/search_result.dart';
+import 'pages/video.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -45,7 +46,7 @@ final Map<String, RouteWidgetBuilder> routes = {
         id: args['id'] as int,
         title: args['title'] as String,
       ),
-  AppRoutes.search_result.value: (context, args) => SearchResultPage(
+  AppRoutes.searchResult.value: (context, args) => SearchResultPage(
         keyword: args['keyword'] as String,
       ),
   AppRoutes.gameDeposit.value: (context, args) => const GameDeposit(),
@@ -59,6 +60,7 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.collection.value: (context, args) => CollectionPage(),
   AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
   AppRoutes.search.value: (context, args) => const SearchPage(),
+  AppRoutes.filter.value: (context, args) => const FilterPage(),
 };
 
 class MyApp extends StatelessWidget {
