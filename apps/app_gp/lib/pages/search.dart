@@ -55,11 +55,10 @@ class SearchPageState extends State<SearchPage> {
     //   return _generateRandomString(5);
     // });
 
-    // setState(() {
-    //   _searchResults = results;
-    // });
-
-    await vodApi.getSearchKeyword(keyword);
+    var results = await vodApi.getSearchKeyword(keyword);
+    setState(() {
+      _searchResults = results;
+    });
   }
 
   @override
