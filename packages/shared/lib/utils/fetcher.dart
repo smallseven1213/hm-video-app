@@ -40,6 +40,7 @@ Future<dynamic> fetcher({
     headers: {
       ...headerConfig,
     },
+    contentType: Headers.jsonContentType,
   );
 
   Object? data;

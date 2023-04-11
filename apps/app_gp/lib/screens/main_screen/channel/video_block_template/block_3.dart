@@ -2,13 +2,12 @@ import 'package:app_gp/widgets/channel_area_banner.dart';
 import 'package:app_gp/widgets/video_block_footer.dart';
 import 'package:app_gp/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
 
 List<List<Data>> organizeRowData(List videos, Blocks block) {
   List<List<Data>> result = [];
   int blockQuantity = block.quantity ?? 0;
-  int blockLength = 6;
+  int blockLength = 7;
   try {
     for (int i = 0; i < blockQuantity;) {
       if (i != 0 && i == videos.length) break;
