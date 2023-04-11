@@ -8,7 +8,7 @@ import 'package:shared/models/index.dart';
 List<List<Data>> organizeRowData(List videos, Blocks block) {
   List<List<Data>> result = [];
   int blockQuantity = block.quantity ?? 0;
-  int blockLength = 6;
+  int blockLength = 7;
 
   for (int i = 0; i < blockQuantity;) {
     if (i != 0 && i == videos.length - 1) break;
