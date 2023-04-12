@@ -475,7 +475,8 @@ class _VideoScreenState extends State<VideoScreen>
   }
 
   void getVideoUrl() async {
-    videoDetailController = Get.put(VideoDetailController(widget.id));
+    videoDetailController =
+        Get.put(VideoDetailController(widget.id), tag: widget.id.toString());
   }
 
   Future<Vod> fetchVideoDetail() async => await vodApi.getVodDetail(widget.id);
