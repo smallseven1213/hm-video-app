@@ -59,7 +59,9 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.favorites.value: (context, args) => FavoritesPage(),
   AppRoutes.collection.value: (context, args) => CollectionPage(),
   AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
-  AppRoutes.search.value: (context, args) => const SearchPage(),
+  AppRoutes.search.value: (context, args) => SearchPage(
+        inputDefaultValue: args['inputDefaultValue'] as String,
+      ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
 };
 
