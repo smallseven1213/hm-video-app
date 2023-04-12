@@ -215,23 +215,37 @@ class VideoPreviewWidget extends StatelessWidget {
         ),
         const SizedBox(height: 5),
         if (tags.isNotEmpty)
-          Row(
-            children: tags
-                .map((e) => Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                    margin: const EdgeInsets.only(right: 5),
-                    decoration: BoxDecoration(
-                        color: const Color(0xff4277DC).withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(10)),
-                    child: Text(
-                      e.name ?? '',
-                      style: const TextStyle(
-                        color: Color(0xff21AFFF),
-                        fontSize: 10,
-                      ),
-                    )))
-                .toList(),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: Container(
+              height: 20,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.start,
+                spacing: 5.0,
+                runSpacing: 5.0,
+                clipBehavior: Clip.antiAlias,
+                children: tags
+                    .map((e) => Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                            color: const Color(0xff4277DC).withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10)),
+                        child: Text(
+                          e.name,
+                          style: const TextStyle(
+                            color: Color(0xff21AFFF),
+                            fontSize: 10,
+                            height: 1.5,
+                          ),
+                        )))
+                    .toList(),
+              ),
+            ),
           )
         else
           const SizedBox(
