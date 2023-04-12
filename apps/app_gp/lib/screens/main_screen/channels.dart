@@ -6,7 +6,8 @@ import 'package:shared/controllers/layout_controller.dart';
 import 'channel/index.dart';
 
 class Channels extends StatefulWidget {
-  const Channels({Key? key}) : super(key: key);
+  final int layoutId;
+  const Channels({Key? key, required this.layoutId}) : super(key: key);
 
   @override
   _ChannelsState createState() => _ChannelsState();
@@ -15,7 +16,6 @@ class Channels extends StatefulWidget {
 class _ChannelsState extends State<Channels> {
   int activePageIndex = 0;
   final PageController controller = PageController();
-  final layoutController = Get.find<LayoutController>(tag: 'layout1');
 
   final ChannelScreenTabController channelScreenTabController =
       Get.put(ChannelScreenTabController(), permanent: true);
@@ -37,6 +37,8 @@ class _ChannelsState extends State<Channels> {
 
   @override
   Widget build(BuildContext context) {
+    final layoutController =
+        Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
     return Obx(
       () => PageView(
         controller: controller,

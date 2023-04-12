@@ -2,7 +2,7 @@ import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/models/color_keys.dart';
 
-const env = String.fromEnvironment('ENV', defaultValue: 'prod');
+const env = String.fromEnvironment('ENV', defaultValue: 'dev');
 
 class SystemConfig {
   static final SystemConfig _instance = SystemConfig._internal();

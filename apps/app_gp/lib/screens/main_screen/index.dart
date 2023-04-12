@@ -4,12 +4,14 @@ import 'package:app_gp/screens/main_screen/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/banner_controller.dart';
+import 'package:shared/controllers/layout_controller.dart';
 
 import 'notice_dialog.dart';
 import 'layout_tab_bar.dart';
 
 class HomeMainScreen extends StatefulWidget {
-  const HomeMainScreen({Key? key}) : super(key: key);
+  final int layoutId;
+  const HomeMainScreen({Key? key, required this.layoutId}) : super(key: key);
 
   @override
   HomeMainScreenState createState() => HomeMainScreenState();
@@ -25,6 +27,9 @@ class HomeMainScreenState extends State<HomeMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(LayoutController(widget.layoutId.toString()),
+        tag: 'layout${widget.layoutId}');
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(88),
@@ -43,7 +48,7 @@ class HomeMainScreenState extends State<HomeMainScreen> {
         ),
       ),
       body: Stack(
-        children: const [Channels(), NoticeDialog()],
+        children: [Channels(layoutId: widget.layoutId), NoticeDialog()],
       ),
     );
   }

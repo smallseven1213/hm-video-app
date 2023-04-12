@@ -72,6 +72,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final int id;
   final String coverVertical;
   final String coverHorizontal;
+  final bool displaycoverVertical;
   final int timeLength;
   final List<Tag> tags;
   final String title;
@@ -87,6 +88,7 @@ class VideoPreviewWidget extends StatelessWidget {
       required this.id,
       required this.coverVertical,
       required this.coverHorizontal,
+      this.displaycoverVertical = false,
       required this.timeLength,
       required this.tags,
       required this.title,
@@ -117,7 +119,6 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap: isEditing
                   ? onEditingTap
                   : () {
-                      logger.i('===REDIRECT TO $id');
                       MyRouteDelegate.of(context).push(AppRoutes.video.value,
                           args: {
                             'id': id,
@@ -138,7 +139,8 @@ class VideoPreviewWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   AspectRatio(
-                    aspectRatio: imageRatio ?? 374 / 198,
+                    aspectRatio: imageRatio ??
+                        (displaycoverVertical == true ? 119 / 179 : 374 / 198),
                     child: Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -158,7 +160,9 @@ class VideoPreviewWidget extends StatelessWidget {
                       clipBehavior: Clip.antiAlias,
                       child: SidImage(
                         key: ValueKey('video-preview-$id'),
-                        sid: coverHorizontal,
+                        sid: displaycoverVertical
+                            ? coverVertical
+                            : coverHorizontal,
                         width: double.infinity,
                         fit: BoxFit.cover,
                       ),

@@ -11,7 +11,7 @@ class FilterPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         appBar: CustomAppBar(
           title: '篩選',
         ),
@@ -20,6 +20,8 @@ class FilterPage extends StatelessWidget {
 }
 
 class FilterScrollView extends StatefulWidget {
+  const FilterScrollView({super.key});
+
   @override
   _FilterScrollViewState createState() => _FilterScrollViewState();
 }
@@ -32,8 +34,7 @@ class _FilterScrollViewState extends State<FilterScrollView> {
   void initState() {
     super.initState();
     _scrollController.addListener(() {
-      if (_scrollController.offset >
-          _scrollController.position.maxScrollExtent / 2) {
+      if (_scrollController.offset > 120) {
         if (!_showSelectedBar) {
           setState(() {
             _showSelectedBar = true;
@@ -73,6 +74,11 @@ class _FilterScrollViewState extends State<FilterScrollView> {
           controller: _scrollController,
           slivers: [
             FilterOptions(),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
+            ),
             FilterResult(),
           ],
         ),
@@ -82,6 +88,7 @@ class _FilterScrollViewState extends State<FilterScrollView> {
   }
 
   Widget _buildSelectedBar() {
+    final controller = Get.find<FilterScreenController>();
     return GestureDetector(
       onTap: () {
         _scrollController.animateTo(
@@ -108,8 +115,8 @@ class _FilterScrollViewState extends State<FilterScrollView> {
                             (value) => Container(
                               padding: EdgeInsets.symmetric(horizontal: 8),
                               child: Text(
-                                '${entry.key}=$value',
-                                style: TextStyle(color: Colors.white),
+                                controller.findName(entry.key, value),
+                                style: TextStyle(color: Color(0xFFF4D743)),
                               ),
                             ),
                           )
