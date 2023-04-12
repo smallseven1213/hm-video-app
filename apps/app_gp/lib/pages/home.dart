@@ -18,10 +18,10 @@ class Home extends StatelessWidget {
     '/layout1': const HomeMainScreen(
       layoutId: 1,
     ),
-    // '/layout2': ShortScreen(),
-    '/layout2': const HomeMainScreen(
-      layoutId: 2,
-    ),
+    '/layout2': ShortScreen(),
+    // '/layout2': const HomeMainScreen(
+    //   layoutId: 2,
+    // ),
     '/game': const GameScreen(),
     '/apps': const AppsScreen(),
     '/user': const UserScreen()

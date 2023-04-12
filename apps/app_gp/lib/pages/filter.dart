@@ -1,3 +1,4 @@
+import 'package:app_gp/screens/filter/filter_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
@@ -73,7 +74,9 @@ class _FilterScrollViewState extends State<FilterScrollView> {
         CustomScrollView(
           controller: _scrollController,
           slivers: [
-            FilterOptions(),
+            SliverToBoxAdapter(
+              child: FilterOptions(),
+            ),
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 10,
@@ -82,53 +85,11 @@ class _FilterScrollViewState extends State<FilterScrollView> {
             FilterResult(),
           ],
         ),
-        if (_showSelectedBar) _buildSelectedBar(),
+        if (_showSelectedBar)
+          FilterBar(
+            scrollController: _scrollController,
+          ),
       ],
-    );
-  }
-
-  Widget _buildSelectedBar() {
-    final controller = Get.find<FilterScreenController>();
-    return GestureDetector(
-      onTap: () {
-        _scrollController.animateTo(
-          0,
-          duration: const Duration(milliseconds: 300),
-          curve: Curves.easeInOut,
-        );
-      },
-      child: Container(
-        color: Colors.black.withOpacity(0.8),
-        padding: EdgeInsets.all(8),
-        width: double.infinity,
-        height: 40,
-        child: GetBuilder<FilterScreenController>(
-          builder: (controller) {
-            return SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: controller.selectedOptions.entries
-                    .map(
-                      (entry) => entry.value
-                          .where((element) => element != null)
-                          .map(
-                            (value) => Container(
-                              padding: EdgeInsets.symmetric(horizontal: 8),
-                              child: Text(
-                                controller.findName(entry.key, value),
-                                style: TextStyle(color: Color(0xFFF4D743)),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    )
-                    .expand((element) => element)
-                    .toList(),
-              ),
-            );
-          },
-        ),
-      ),
     );
   }
 }

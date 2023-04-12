@@ -3,49 +3,40 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 
 class OptionButton extends StatelessWidget {
-  final int index;
-  final int itemIndex;
+  final bool isSelected;
+  final String name;
+  final VoidCallback? onTap;
   final FilterScreenController controller = Get.find();
 
   OptionButton({
     Key? key,
-    required this.index,
-    required this.itemIndex,
+    required this.isSelected,
+    required this.name,
+    this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      final option = controller.menuData[index]['options'][itemIndex];
-
-      final isSelected = controller
-          .selectedOptions[controller.menuData[index]['key']]!
-          .contains(option['value']);
-
-      return GestureDetector(
-        onTap: () {
-          var key = controller.menuData[index]['key'];
-          controller.handleOptionChange(key, option['value']);
-        },
-        child: SizedBox(
-          height: 20, // 修改高度
-          child: CustomPaint(
-            painter: isSelected ? _GradientBorderPainter() : null,
-            child: Padding(
-              // 添加Padding
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-              child: Center(
-                child: Text(
-                  option['name'],
-                  style: TextStyle(
-                      color: isSelected ? Color(0xFFF4D743) : Colors.white),
-                ),
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        height: 20, // 修改高度
+        child: CustomPaint(
+          painter: isSelected ? _GradientBorderPainter() : null,
+          child: Padding(
+            // 添加Padding
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Center(
+              child: Text(
+                name,
+                style: TextStyle(
+                    color: isSelected ? Color(0xFFF4D743) : Colors.white),
               ),
             ),
           ),
         ),
-      );
-    });
+      ),
+    );
   }
 }
 

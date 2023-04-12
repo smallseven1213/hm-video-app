@@ -11,28 +11,45 @@ class FilterOptions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverPadding(
+    return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
-      sliver: Obx(() => SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return SizedBox(
-                  height: 30,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.menuData[index]['options'].length,
-                    itemBuilder: (context, itemIndex) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(vertical: 5),
-                        child: OptionButton(index: index, itemIndex: itemIndex),
-                      );
-                    },
-                  ),
-                );
-              },
-              childCount: controller.menuData.length,
-            ),
-          )),
+      child: Column(
+        children: List.generate(
+          controller.menuData.length,
+          (index) {
+            return Container(
+              height: 30,
+              color: const Color(0xFF001A40),
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: controller.menuData[index]['options'].length,
+                itemBuilder: (context, itemIndex) {
+                  return Obx(() {
+                    final option =
+                        controller.menuData[index]['options'][itemIndex];
+
+                    final isSelected = controller
+                        .selectedOptions[controller.menuData[index]['key']]!
+                        .contains(option['value']);
+
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10),
+                      child: OptionButton(
+                          isSelected: isSelected,
+                          name: option['name'],
+                          onTap: () {
+                            var key = controller.menuData[index]['key'];
+                            controller.handleOptionChange(key, option['value']);
+                          }),
+                    );
+                  });
+                },
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
