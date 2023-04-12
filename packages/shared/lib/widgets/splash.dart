@@ -15,7 +15,9 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/widgets/loading.dart';
 
+import '../controllers/tag_popular_controller.dart';
 import '../controllers/user_controller.dart';
+import '../controllers/video_popular_controller.dart';
 import '../enums/app_routes.dart';
 import '../models/index.dart';
 import '../navigator/delegate.dart';
@@ -241,9 +243,12 @@ class _SplashState extends State<Splash> {
   // Step7: 在首頁前要取得的資料
   // Step7.1: 取得nav bar內容
   // Step7.2: 取得入站廣告 > 有廣告 > 廣告頁
+  // DI一些登入後才能用的資料(Controllers)
   fetchInitialDataAndNavigate() async {
     userApi.writeUserLoginRecord();
     getNavBar();
+    Get.put(VideoPopularController());
+    Get.put(TagPopularController());
     print('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);

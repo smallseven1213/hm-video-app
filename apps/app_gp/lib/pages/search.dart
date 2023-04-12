@@ -2,18 +2,22 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../screens/search/recommand.dart';
+import '../screens/search/search_result.dart';
 import '../widgets/search_input.dart';
 
 final vodApi = VodApi();
+final logger = Logger();
 
 class SearchPage extends StatefulWidget {
-  const SearchPage({Key? key}) : super(key: key);
+  final String? inputDefaultValue;
+  const SearchPage({Key? key, this.inputDefaultValue}) : super(key: key);
 
   @override
   SearchPageState createState() => SearchPageState();
@@ -22,12 +26,15 @@ class SearchPage extends StatefulWidget {
 class SearchPageState extends State<SearchPage> {
   BannerController bannerController = Get.find<BannerController>();
   Timer? _debounceTimer;
-  TextEditingController _searchController = TextEditingController();
+  String? searchKeyword;
+  final TextEditingController _searchController = TextEditingController();
   List<String> _searchResults = [];
+  bool displaySearchResult = false;
 
   @override
   void initState() {
     super.initState();
+    searchKeyword = widget.inputDefaultValue;
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -46,14 +53,21 @@ class SearchPageState extends State<SearchPage> {
     _debounceTimer = Timer(const Duration(milliseconds: 200), () {
       _search();
     });
+
+    if (_searchController.text.isEmpty) {
+      setState(() {
+        displaySearchResult = false;
+        searchKeyword = null;
+      });
+    } else {
+      setState(() {
+        displaySearchResult = true;
+      });
+    }
   }
 
   Future<void> _search() async {
     String keyword = _searchController.text;
-
-    // List<String> results = List<String>.generate(500, (index) {
-    //   return _generateRandomString(5);
-    // });
 
     var results = await vodApi.getSearchKeyword(keyword);
     setState(() {
@@ -85,46 +99,62 @@ class SearchPageState extends State<SearchPage> {
           onTap: () {
             // 處理點擊事件的邏輯，如果需要
           },
-          defaultValue: '神级美乳AV女优', // 如果需要，可以提供一個預設值
+          defaultValue: widget.inputDefaultValue, // 如果需要，可以提供一個預設值
           // autoFocus: true, // 根據需要自動聚焦
         ),
       ),
-      body: _searchController.value.text.isNotEmpty
-          ? Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ListView.builder(
-                itemCount: _searchResults.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () {
-                      MyRouteDelegate.of(context).push('/search_result', args: {
-                        'keyword': _searchResults[index],
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom: BorderSide(
-                            color: const Color(0xff7AA2C8).withOpacity(0.3),
-                            width: 1.0,
+      body: Stack(
+        children: [
+          searchKeyword == null
+              ? RecommandScreen()
+              : SearchResultPage(
+                  keyword: searchKeyword!,
+                  key: ValueKey(searchKeyword),
+                ),
+          if (displaySearchResult)
+            // 文字搜尋結果
+            Container(
+              color: const Color(0xFF001A40),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  itemCount: _searchResults.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          searchKeyword = _searchResults[index];
+                          displaySearchResult = false;
+                        });
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: const Color(0xff7AA2C8).withOpacity(0.3),
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        child: ListTile(
+                          title: Text(
+                            _searchResults[index],
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                            ),
                           ),
                         ),
                       ),
-                      child: ListTile(
-                        title: Text(
-                          _searchResults[index],
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
             )
-          : RecommandScreen(),
+        ],
+      ),
     );
   }
 }
+
+// TODO, 如果點擊了input，然後input又有值，然後displaySearchResult為false; displaySearchResult就設定true

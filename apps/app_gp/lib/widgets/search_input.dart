@@ -9,6 +9,7 @@ class SearchInput extends StatefulWidget {
   const SearchInput({
     Key? key,
     this.controller,
+    this.focusNode,
     this.onChanged,
     this.onSubmitted,
     this.onTap,
@@ -20,6 +21,7 @@ class SearchInput extends StatefulWidget {
   final void Function(String)? onChanged;
   final void Function(String)? onSubmitted;
   final void Function()? onTap;
+  final FocusNode? focusNode;
   final String? defaultValue;
   final bool autoFocus;
 
@@ -90,6 +92,7 @@ class _SearchInputState extends State<SearchInput> {
             ),
             style: const TextStyle(color: Colors.white),
             autofocus: widget.autoFocus,
+            focusNode: widget.focusNode,
           ),
         ),
       ),

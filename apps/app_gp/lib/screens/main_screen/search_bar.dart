@@ -1,7 +1,9 @@
-// SearchBar, left is search input, right have 2 buttons
+import 'dart:math';
 
 import 'package:app_gp/widgets/search_input.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/video_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -9,7 +11,10 @@ import 'package:shared/navigator/delegate.dart';
 import '../../config/colors.dart';
 
 class SearchBar extends StatelessWidget {
-  const SearchBar({Key? key}) : super(key: key);
+  SearchBar({Key? key}) : super(key: key);
+
+  final VideoPopularController videoPopularController =
+      Get.find<VideoPopularController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +39,25 @@ class SearchBar extends StatelessWidget {
           ),
           // input
           Expanded(
-            child: SearchInput(
-              defaultValue: '神级美乳AV女优',
-              onTap: () {
-                MyRouteDelegate.of(context)
-                    .push(AppRoutes.search.value, hasTransition: false);
-              },
-              autoFocus: false, // 如果需要，可以將此設置為true
-            ),
+            child: Obx(() {
+              int listLength = videoPopularController.data.length;
+              int randomIndex = Random().nextInt(listLength);
+              String randomTitle = videoPopularController.data.isNotEmpty
+                  ? videoPopularController.data[randomIndex].title
+                  : '';
+
+              return SearchInput(
+                defaultValue: randomTitle,
+                onTap: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.search.value,
+                      hasTransition: false,
+                      args: {
+                        'inputDefaultValue': randomTitle,
+                      });
+                },
+                autoFocus: false, // 如果需要，可以將此設置為true
+              );
+            }),
           ),
           InkWell(
             onTap: () {
