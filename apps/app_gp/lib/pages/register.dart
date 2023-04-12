@@ -16,6 +16,7 @@ import '../widgets/button.dart';
 import '../widgets/login/button.dart';
 
 final logger = Logger();
+
 final authApi = AuthApi();
 
 class RegisterPage extends StatefulWidget {
@@ -39,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     if (!RegExp(r'^[a-zA-Z0-9]{6,12}$').hasMatch(value)) {
-      return '账号为6-12位字母及数字';
+      return '帳號為6-12位字母及數字';
     }
 
     return null;
@@ -50,7 +51,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return '請輸入密碼';
     }
     if (!RegExp(r'^[a-zA-Z0-9]{8,20}$').hasMatch(value)) {
-      return '密码为8-20位字母及数字';
+      return '密碼為8-20位字母及數字';
     }
     return null;
   }
@@ -60,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return '請輸入驗證密碼';
     }
     if (value != _passwordController.text) {
-      return '驗證密碼不一致';
+      return '驗證密碼不一緻';
     }
     // 可在此添加其他驗證邏輯
     return null;

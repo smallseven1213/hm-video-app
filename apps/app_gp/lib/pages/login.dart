@@ -58,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
             message: '帳號或密碼不正確',
             showCancelButton: false,
             onConfirm: () {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
             },
           );
         } else {
@@ -69,10 +69,10 @@ class _LoginPageState extends State<LoginPage> {
         showConfirmDialog(
           context: context,
           title: '登入錯誤',
-          message: '帳號或密碼不正確(-1)',
+          message: '帳號或密碼不正確($error)',
           showCancelButton: false,
           onConfirm: () {
-            Navigator.of(context).pop();
+            // Navigator.of(context).pop();
           },
         );
       }
@@ -107,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '帳號:',
+                      label: '帳號',
                       controller: _accountController,
                       placeholderText: '請輸入帳號',
                       // onChanged: (value) {
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '密碼:',
+                      label: '密碼',
                       controller: _passwordController,
                       placeholderText: '請輸入密碼',
                       obscureText: true,

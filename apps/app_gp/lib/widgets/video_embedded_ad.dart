@@ -21,7 +21,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 廣告封面
+          // 廣告封麵
           AspectRatio(
             aspectRatio: imageRatio,
             child: Container(

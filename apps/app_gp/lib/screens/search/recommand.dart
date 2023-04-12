@@ -18,7 +18,7 @@ class RecommandScreen extends StatelessWidget {
       slivers: <Widget>[
         const SliverToBoxAdapter(
           child: Header(
-            text: '搜索推荐',
+            text: '搜索推薦',
           ),
         ),
         Obx(() => SliverList(
@@ -43,7 +43,7 @@ class RecommandScreen extends StatelessWidget {
         ),
         const SliverToBoxAdapter(
           child: Header(
-            text: '热门推荐',
+            text: '熱門推薦',
           ),
         ),
         Obx(() => SliverPadding(

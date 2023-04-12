@@ -54,7 +54,7 @@ class NestedTabBarView extends StatelessWidget {
     );
 
     return DefaultTabController(
-      length: tabs.length, // tab的数量.
+      length: tabs.length, // tab的數量.
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
