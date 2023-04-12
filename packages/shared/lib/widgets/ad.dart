@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/widgets/loading.dart';
 import 'package:shared/widgets/sid_image.dart';
 import '../enums/app_routes.dart';
 import '../models/banner_photo.dart';
@@ -13,8 +14,11 @@ import '../controllers/banner_controller.dart';
 final systemConfig = SystemConfig();
 
 class Ad extends StatefulWidget {
+  final String backgroundAssetPath;
+
   const Ad({
     Key? key,
+    required this.backgroundAssetPath,
   }) : super(key: key);
 
   @override
@@ -123,6 +127,19 @@ class AdState extends State<Ad> {
                 ),
               ),
             ),
+          if (!imageLoaded) ...[
+            Positioned.fill(
+              child: Image.asset(
+                widget.backgroundAssetPath,
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            const Center(
+              child: Loading(),
+            ),
+          ]
         ],
       ),
     );
