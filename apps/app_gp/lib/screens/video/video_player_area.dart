@@ -147,17 +147,22 @@ class ProgressBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          IconButton(
-            onPressed: () {
-              controller.value.isPlaying
-                  ? controller.pause()
-                  : controller.play();
+          ValueListenableBuilder(
+            valueListenable: controller,
+            builder: (context, value, child) {
+              return IconButton(
+                onPressed: () {
+                  controller.value.isPlaying
+                      ? controller.pause()
+                      : controller.play();
+                },
+                icon: Icon(
+                  controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                  color: Colors.white,
+                  size: 18,
+                ),
+              );
             },
-            icon: Icon(
-              controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-              color: Colors.white,
-              size: 18,
-            ),
           ),
           Text(
             controller.value.position.toString().split('.')[0],

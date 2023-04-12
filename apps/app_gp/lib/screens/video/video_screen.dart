@@ -116,7 +116,10 @@ class NestedTabBarView extends StatelessWidget {
                             child: SizedBox(
                               height: 200,
                               child: Center(
-                                child: Text('暫無數據'),
+                                child: Text(
+                                  '暫無數據',
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               ),
                             ),
                           );

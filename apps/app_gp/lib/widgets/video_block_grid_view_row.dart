@@ -171,6 +171,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
               isEmbeddedAds: isEmbeddedAds,
             ),
           ),
+          const SizedBox(width: 10),
           const Expanded(
             child: SizedBox(
               height: 200,
@@ -206,6 +207,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
                           isEmbeddedAds: isEmbeddedAds,
                         ),
                       ),
+                const SizedBox(width: 10),
               ],
             )
             .toList()
@@ -232,6 +234,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
                   isEmbeddedAds: isEmbeddedAds,
                 ),
               ),
+              const SizedBox(width: 10),
             ],
           )
           .toList()
