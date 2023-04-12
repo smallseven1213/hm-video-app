@@ -11,8 +11,6 @@ import 'videoblock.dart';
 
 final logger = Logger();
 
-// ChannelWidget, 由上到下是 BannerWidget, JingangWidget, then ChannelWidget
-
 class Channel extends StatelessWidget {
   final int channelId;
 

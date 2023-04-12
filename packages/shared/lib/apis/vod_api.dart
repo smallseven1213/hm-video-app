@@ -30,46 +30,29 @@ class VodApi {
   Future<BlockVod> getSimpleManyBy({
     required int page,
     int limit = 20,
-    String? tags,
-    String? publisherId,
-    String? actors,
-    String? regionId,
-    String? film,
+    String? queryString = '',
     int belong = 0,
     int order = 0,
     int chargeTypeId = 0,
   }) async {
-    String queryString = '';
-    if (tags != null && tags != '') {
-      queryString += '&tags=$tags';
-    }
-    if (publisherId != null && publisherId != '') {
-      queryString += '&publisherId=$publisherId';
-    }
-    if (actors != null && actors != '') {
-      queryString += '&actors=$actors';
-    }
-    if (regionId != null && regionId != '') {
-      queryString += '&regionId=$regionId';
-    }
-    if (film != null && film != '') {
-      queryString += '&film=$film';
-    }
-    if (chargeTypeId != 0) {
-      queryString += '&chargeType=$chargeTypeId';
-    }
+    // if (chargeTypeId != 0) {
+    //   queryString += '&chargeType=$chargeTypeId';
+    // }
 
     var res = await fetcher(
         url:
-            '/video/list?page=$page&limit=$limit&belong=$belong&order=$order$queryString');
+            '${systemConfig.apiHost}/public/videos/video/list?page=$page&limit=$limit&belong=$belong&$queryString');
 
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
+
     return BlockVod(
-        List.from(
-            (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e))),
-        res.data['total']);
+      List.from((res.data['data']['data'] as List<dynamic>)
+          .map((e) => Vod.fromJson(e))
+          .toList()),
+      res.data['data']['total'],
+    );
   }
 
   Future<List<Vod>> searchMany(String keyword) async {

@@ -44,7 +44,10 @@ class SearchBar extends StatelessWidget {
             ),
           ),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              MyRouteDelegate.of(context)
+                  .push(AppRoutes.filter.value, hasTransition: false);
+            },
             child: Container(
               width: 40,
               height: 60,
