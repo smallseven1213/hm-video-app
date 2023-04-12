@@ -20,7 +20,7 @@ class ListMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       ListMenuItem(
-        name: '找回账号',
+        name: '找回帳號',
         icon: 'assets/images/user_screen_find_account.png',
         onTap: () {
           showConfirmDialog(
@@ -31,7 +31,7 @@ class ListMenu extends StatelessWidget {
         },
       ),
       ListMenuItem(
-        name: '版本号:3003.8.92',
+        name: '版本號:3003.8.92',
         icon: 'assets/images/user_screen_version.png',
         onTap: () {},
       ),

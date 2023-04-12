@@ -11,8 +11,8 @@ class ForgotPasswordButton extends StatelessWidget {
       onTap: () {
         showConfirmDialog(
             context: context,
-            title: '忘记密码',
-            message: '请联系客服人员',
+            title: '忘記密碼',
+            message: '請聯係客服人員',
             showCancelButton: false,
             onConfirm: () {});
       },

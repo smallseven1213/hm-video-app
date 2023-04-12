@@ -54,7 +54,7 @@ class NestedTabBarView extends StatelessWidget {
     );
 
     return DefaultTabController(
-      length: tabs.length, // tab的数量.
+      length: tabs.length, // tab的數量.
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -475,7 +475,8 @@ class _VideoScreenState extends State<VideoScreen>
   }
 
   void getVideoUrl() async {
-    videoDetailController = Get.put(VideoDetailController(widget.id));
+    videoDetailController =
+        Get.put(VideoDetailController(widget.id), tag: widget.id.toString());
   }
 
   Future<Vod> fetchVideoDetail() async => await vodApi.getVodDetail(widget.id);

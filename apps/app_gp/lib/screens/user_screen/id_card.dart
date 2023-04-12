@@ -37,7 +37,7 @@ Future<void> _captureAndSaveScreenshot() async {
   File file = File('$tempPath/$fileName');
   await file.writeAsBytes(pngBytes);
 
-  // 保存到相册
+  // 保存到相冊
   final result = await ImageGallerySaver.saveFile(file.path);
   print('File saved: $result');
 
@@ -61,30 +61,28 @@ class QRCodePopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       key: _globalKey,
-      child: Center(
-        child: Container(
-          width: 270,
-          height: 400,
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-            borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFF00386A),
-                Color(0xFF000916),
-                Color(0xFF003F6C),
-                Color(0xFF005B9C),
-              ],
-              stops: [0.032, 0.2198, 0.8544, 0.9092],
-              // transform: GradientRotation(
-              //     156.33 * (3.141592 / 180)), // Convert degrees to radians
-            ),
+      child: Container(
+        width: 270,
+        height: 400,
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
+          borderRadius: BorderRadius.circular(10),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF00386A),
+              Color(0xFF000916),
+              Color(0xFF003F6C),
+              Color(0xFF005B9C),
+            ],
+            stops: [0.032, 0.2198, 0.8544, 0.9092],
+            // transform: GradientRotation(
+            //     156.33 * (3.141592 / 180)), // Convert degrees to radians
           ),
-          child: ContentAndButton(),
         ),
+        child: ContentAndButton(),
       ),
     );
   }
@@ -148,7 +146,7 @@ class ContentAndButton extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
-                      '用於找回帐号，请妥善保存，请勿露馅',
+                      '用於找回帳號，請妥善保存，請勿露餡',
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.5),
                         fontWeight: FontWeight.w400,
@@ -195,7 +193,7 @@ class ContentAndButton extends StatelessWidget {
                       ),
                       width: 115,
                       child: Text(
-                        '官网地址 : GPOINT.TV',
+                        '官網地址 : GPOINT.TV',
                         style: TextStyle(
                           color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,
@@ -210,7 +208,7 @@ class ContentAndButton extends StatelessWidget {
           // Add the button widget here
           const SizedBox(height: 33),
           const Button(
-            text: '请截图保存',
+            text: '請截圖保存',
             size: 'small',
             type: 'secondary',
             onPressed: _captureAndSaveScreenshot,

@@ -593,10 +593,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               // 點兩下出現：播放暫停鍵
               if (controlsType == ControlsOverlayType.playPause)
                 PlayPauseButton(controller: widget.controller),
-              // 水平拖拉：顯示快進或快退：影片時間 (左右拖動才顯示，可控制影片秒數)
+              // 水平拖拉：顯示快進或快退：影片時間 (左右拖動才顯示，可控製影片秒數)
               if (controlsType == ControlsOverlayType.middleTime)
                 VideoTime(controller: widget.controller, isForward: isForward),
-              // 點一下出現：底部控制區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
+              // 點一下出現：底部控製區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
               if (controlsType == ControlsOverlayType.progress ||
                   controlsType == ControlsOverlayType.middleTime ||
                   controlsType == ControlsOverlayType.playPause)

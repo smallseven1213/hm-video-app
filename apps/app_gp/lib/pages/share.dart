@@ -43,7 +43,7 @@ Future<void> _captureAndSaveScreenshot() async {
   File file = File('$tempPath/$fileName');
   await file.writeAsBytes(pngBytes);
 
-  // 保存到相册
+  // 保存到相冊
   final result = await ImageGallerySaver.saveFile(file.path);
   print('File saved: $result');
 
@@ -235,7 +235,7 @@ class ContentAndButton extends StatelessWidget {
                   const Padding(
                     padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: Button(
-                      text: '截图分享',
+                      text: '截圖分享',
                       size: 'small',
                       type: 'secondary',
                       onPressed: _captureAndSaveScreenshot,

@@ -22,14 +22,14 @@ class GridMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final menuItems = [
       GridMenuItem(
-        name: '我的足迹',
+        name: '我的足跡',
         icon: 'assets/images/user_screen_footprint.png',
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.playRecord.value);
         },
       ),
       GridMenuItem(
-        name: '我的喜欢',
+        name: '我的喜歡',
         icon: 'assets/images/user_screen_like.png',
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.favorites.value);
@@ -49,7 +49,7 @@ class GridMenu extends StatelessWidget {
           showDialog(
             context: context,
             builder: (BuildContext context) {
-              return Dialog(
+              return const Dialog(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
                 child: QRCodePopup(),
@@ -59,19 +59,19 @@ class GridMenu extends StatelessWidget {
         },
       ),
       GridMenuItem(
-        name: '推广分享',
+        name: '推廣分享',
         icon: 'assets/images/user_screen_share.png',
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.share.value);
         },
       ),
       GridMenuItem(
-        name: '在线客服',
+        name: '在線客服',
         icon: 'assets/images/user_screen_online_service.png',
         onTap: () {},
       ),
       GridMenuItem(
-        name: '应用中心',
+        name: '應用中心',
         icon: 'assets/images/user_screen_app_center.png',
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.apps.value);

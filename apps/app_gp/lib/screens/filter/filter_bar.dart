@@ -56,7 +56,7 @@ class _FilterBarState extends State<FilterBar> {
       height: 40,
       child: GetBuilder<FilterScreenController>(
         builder: (controller) {
-          // 生成子元素列表并添加间距
+          // 生成子元素列錶並添加間距
           List<Widget> childrenWithSpacing = [];
           List<Widget> children = controller.selectedOptions.entries
               .map((entry) => entry.value
