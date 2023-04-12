@@ -61,30 +61,28 @@ class QRCodePopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepaintBoundary(
       key: _globalKey,
-      child: Center(
-        child: Container(
-          width: 270,
-          height: 400,
-          padding: const EdgeInsets.all(15),
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-            borderRadius: BorderRadius.circular(10),
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Color(0xFF00386A),
-                Color(0xFF000916),
-                Color(0xFF003F6C),
-                Color(0xFF005B9C),
-              ],
-              stops: [0.032, 0.2198, 0.8544, 0.9092],
-              // transform: GradientRotation(
-              //     156.33 * (3.141592 / 180)), // Convert degrees to radians
-            ),
+      child: Container(
+        width: 270,
+        height: 400,
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
+          borderRadius: BorderRadius.circular(10),
+          gradient: const LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFF00386A),
+              Color(0xFF000916),
+              Color(0xFF003F6C),
+              Color(0xFF005B9C),
+            ],
+            stops: [0.032, 0.2198, 0.8544, 0.9092],
+            // transform: GradientRotation(
+            //     156.33 * (3.141592 / 180)), // Convert degrees to radians
           ),
-          child: ContentAndButton(),
         ),
+        child: ContentAndButton(),
       ),
     );
   }
