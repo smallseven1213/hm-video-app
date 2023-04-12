@@ -171,7 +171,6 @@ class VideoBlockGridViewRow extends StatelessWidget {
               isEmbeddedAds: isEmbeddedAds,
             ),
           ),
-          const SizedBox(width: 10),
           const Expanded(
             child: SizedBox(
               height: 200,
@@ -182,6 +181,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
       );
     } else if (gridLength == 3) {
       return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: videoData
             .expand(
               (e) => [
@@ -206,7 +206,6 @@ class VideoBlockGridViewRow extends StatelessWidget {
                           isEmbeddedAds: isEmbeddedAds,
                         ),
                       ),
-                const SizedBox(width: 10),
               ],
             )
             .toList()
@@ -215,6 +214,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
     }
 
     return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: videoData
           .expand(
             (e) => [
@@ -232,7 +232,6 @@ class VideoBlockGridViewRow extends StatelessWidget {
                   isEmbeddedAds: isEmbeddedAds,
                 ),
               ),
-              const SizedBox(width: 10),
             ],
           )
           .toList()

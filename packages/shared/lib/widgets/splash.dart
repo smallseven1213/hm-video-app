@@ -225,7 +225,7 @@ class _SplashState extends State<Splash> {
         alertDialog(
           context,
           title: '失敗',
-          content: '帳號建立失敗。(01)',
+          content: '帳號建立失敗。($err)',
         );
       }
     }

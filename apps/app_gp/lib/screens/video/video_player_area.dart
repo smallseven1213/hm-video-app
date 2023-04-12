@@ -1,14 +1,11 @@
 // VideoPlayerArea stateful widget
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
-import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
-import 'package:shared/widgets/sliver_header_delegate.dart';
 
 enum ControlsOverlayType { none, progress, playPause, middleTime }
 
@@ -287,7 +284,6 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // _getVodUrl();
     initializePlayer();
   }
 
@@ -368,74 +364,58 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
   @override
   Widget build(BuildContext context) {
-    double playerHeight =
-        isFullscreen ? MediaQuery.of(context).size.height : 235;
+    double playerHeight = isFullscreen
+        ? MediaQuery.of(context).size.height
+        : MediaQuery.of(context).size.width / 16 * 9;
     return WillPopScope(
       onWillPop: onWillPop,
-      child: SliverPersistentHeader(
-        pinned: true,
-        delegate: SliverHeaderDelegate(
-          minHeight: playerHeight,
-          maxHeight: playerHeight,
-          child: SizedBox(
-            // color: Colors.red.withOpacity(0.3),
-            width: MediaQuery.of(context).size.width,
-            height: playerHeight,
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: <Widget>[
-                if (_controller != null &&
-                    _controller!.value.isInitialized) ...[
-                  VideoPlayer(_controller!),
-                  ControlsOverlay(
-                    controller: _controller!,
-                    name: widget.name,
-                    isFullscreen: isFullscreen,
-                    toggleFullscreen: () {
-                      toggleFullscreen(fullScreen: !isFullscreen);
-                    },
-                  ),
-                ] else
-                  Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    color: Colors.black,
-                    child: Center(
-                        child: Text('Loading...',
-                            style: TextStyle(
-                                color: Colors.white.withOpacity(0.5)))),
-                  ),
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: AppBar(
-                    title: Text(widget.name ?? ''),
-                    backgroundColor: Colors.transparent,
-                    leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      onPressed: () {
-                        if (isFullscreen) {
-                          toggleFullscreen(fullScreen: false);
-                        } else {
-                          toggleFullscreen(fullScreen: false);
-                          Navigator.pop(context);
-                        }
-                      },
-                    ),
-                  ),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: playerHeight,
+        child: Stack(
+          alignment: Alignment.bottomCenter,
+          children: <Widget>[
+            if (_controller != null && _controller!.value.isInitialized) ...[
+              VideoPlayer(_controller!),
+              ControlsOverlay(
+                controller: _controller!,
+                name: widget.name,
+                isFullscreen: isFullscreen,
+                toggleFullscreen: () {
+                  toggleFullscreen(fullScreen: !isFullscreen);
+                },
+              ),
+            ] else
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black,
+                child: Center(
+                    child: Text('Loading...',
+                        style:
+                            TextStyle(color: Colors.white.withOpacity(0.5)))),
+              ),
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: AppBar(
+                title: Text(widget.name ?? ''),
+                backgroundColor: Colors.transparent,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  onPressed: () {
+                    if (isFullscreen) {
+                      toggleFullscreen(fullScreen: false);
+                    } else {
+                      toggleFullscreen(fullScreen: false);
+                      Navigator.pop(context);
+                    }
+                  },
                 ),
-              ],
+              ),
             ),
-
-            // AspectRatio(
-            //   aspectRatio: isFullscreen
-            //       ? MediaQuery.of(context).size.width /
-            //           MediaQuery.of(context).size.height
-            //       : 16 / 9,
-            //   child:
-            // ),
-          ),
+          ],
         ),
       ),
     );
@@ -605,7 +585,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 height: constraints.maxHeight,
                 color: Colors.black12,
               ),
-
               // 點兩下出現：播放暫停鍵
               if (controlsType == ControlsOverlayType.playPause)
                 PlayPauseButton(controller: widget.controller),
