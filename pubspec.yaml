@@ -1,0 +1,11 @@
+name: hm_video_app_workspace
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+  
+dev_dependencies:
+  melos: ^2.9.0
+dependencies:
+  path: ^1.8.3
+  path_provider: ^2.0.12
+  
