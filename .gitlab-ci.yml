@@ -30,7 +30,7 @@ deploy-job:      # This job runs in the deploy stage.
 build-prod-job: 
   stage: build
   tags: 
-    - hm-gitlab-runner
+    - gitlab-shared-runner
   only: 
     refs: 
       - tags
@@ -42,7 +42,7 @@ build-prod-job:
 deploy-prod-job: 
   stage: deploy
   tags: 
-    - hm-gitlab-runner
+    - gitlab-shared-runner
   only: 
     refs: 
       - tags
