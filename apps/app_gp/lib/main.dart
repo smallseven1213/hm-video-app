@@ -1,4 +1,5 @@
 import 'package:app_gp/screens/apps_screen/index.dart';
+import 'package:app_gp/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -68,9 +69,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RootWidget(
-        homePath: routes.keys.first,
-        routes: routes,
-        splashImage: 'assets/images/splash.png',
-        appColors: AppColors.colors);
+      homePath: routes.keys.first,
+      routes: routes,
+      splashImage: 'assets/images/splash.png',
+      appColors: AppColors.colors,
+      loading: ({text}) => Loading(
+        loadingText: text ?? '正在加載...',
+      ),
+    );
   }
 }
