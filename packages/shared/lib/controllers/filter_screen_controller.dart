@@ -4,7 +4,6 @@ import 'package:logger/logger.dart';
 import '../apis/publisher_api.dart';
 import '../apis/region_api.dart';
 import '../apis/vod_api.dart';
-import '../models/block_vod.dart';
 import '../models/vod.dart';
 
 final logger = Logger();
@@ -44,14 +43,14 @@ class FilterScreenController extends GetxController {
         {'name': 'VIP', 'value': 3}
       ],
     },
-    {
-      'key': 'film',
-      'options': [
-        {'name': '長視頻', 'value': 1},
-        {'name': '短視頻', 'value': 2},
-        {'name': '漫畫', 'value': 3}
-      ],
-    },
+    // {
+    //   'key': 'film',
+    //   'options': [
+    //     {'name': '長視頻', 'value': 1},
+    //     {'name': '短視頻', 'value': 2},
+    //     {'name': '漫畫', 'value': 3}
+    //   ],
+    // },
   ].obs;
 
   final RxMap<String, Set<dynamic>> selectedOptions = {
@@ -160,14 +159,17 @@ class FilterScreenController extends GetxController {
     var res = await vodApi.getSimpleManyBy(
         page: page ?? _page, limit: 100, queryString: queryString);
 
-    if (res.vods.isNotEmpty) {
-      if (refresh == true) {
-        filterResults.clear();
-      }
+    if (refresh == true) {
+      filterResults.clear();
       filterResults.addAll(res.vods);
     } else {
-      hasMoreData.value = false;
+      if (res.vods.isNotEmpty) {
+        filterResults.addAll(res.vods);
+      } else {
+        hasMoreData.value = false;
+      }
     }
+
     _isLoading = false;
   }
 }
