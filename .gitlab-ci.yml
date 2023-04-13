@@ -26,3 +26,26 @@ deploy-job:      # This job runs in the deploy stage.
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
+
+build-prod-job: 
+  stage: build
+  tags: 
+    - gs-prod-runner
+  only: 
+    refs: 
+      - tags
+  script: 
+    - docker build -f Dockerfile --build-arg env=prod -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
+    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}
+
+deploy-prod-job: 
+  stage: deploy
+  tags: 
+    - gs-prod-runner
+  only: 
+    refs: 
+      - tags
+  script: 
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/gs --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/gs/${CI_PROJECT_NAME} -n prod
+    - /bin/bash /home/gitlab-runner/tg-notify.sh gs prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
