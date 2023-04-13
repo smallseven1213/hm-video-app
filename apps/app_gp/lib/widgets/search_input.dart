@@ -96,13 +96,10 @@ class _SearchInputState extends State<SearchInput> {
               fillColor: Color(0xFF002865),
               suffixIcon: InkWell(
                 onTap: widget.onSearchButtonClick,
-                child: Container(
-                  padding: EdgeInsets.all(8.0),
-                  child: Image(
-                    width: 48,
-                    height: 48,
-                    image: AssetImage('/images/search_button.png'),
-                  ),
+                child: const Image(
+                  width: 48,
+                  height: 48,
+                  image: AssetImage('/images/search_button.png'),
                 ),
               ),
             ),
