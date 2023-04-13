@@ -37,7 +37,7 @@ class _VendorVideosPageState extends State<VendorVideosPage>
       appBar: CustomAppBar(
         title: widget.title,
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60),
+          preferredSize: const Size.fromHeight(60),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
             child: Row(

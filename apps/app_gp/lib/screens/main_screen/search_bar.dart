@@ -55,6 +55,7 @@ class SearchBar extends StatelessWidget {
                       hasTransition: false,
                       args: {
                         'inputDefaultValue': randomTitle,
+                        'dontSearch': false
                       });
                 },
                 onTap: () {

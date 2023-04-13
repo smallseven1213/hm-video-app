@@ -12,6 +12,7 @@ class BlockVideosController extends GetxController {
   late int page;
   final List<BlockVod> blocks = <BlockVod>[].obs;
   bool _hasReachedEnd = false;
+  final isLoading = false.obs;
 
   BlockVideosController(this.id) {
     page = 1;
@@ -26,14 +27,22 @@ class BlockVideosController extends GetxController {
   Future<void> fetchMoreVideos() async {
     if (_hasReachedEnd) return;
 
-    var res = await vodApi.getMoreMany(id, page: page, limit: limit);
-    if (res.vods.isEmpty || res.vods.length < limit) {
-      _hasReachedEnd = true;
-    }
+    isLoading.value = true;
 
-    if (res.vods.isNotEmpty) {
-      blocks.add(res);
-      page++;
+    try {
+      var res = await vodApi.getMoreMany(id, page: page, limit: limit);
+      if (res.vods.isEmpty || res.vods.length < limit) {
+        _hasReachedEnd = true;
+      }
+
+      if (res.vods.isNotEmpty) {
+        blocks.add(res);
+        page++;
+      }
+    } catch (e) {
+      logger.e(e);
+    } finally {
+      isLoading.value = false;
     }
   }
 }

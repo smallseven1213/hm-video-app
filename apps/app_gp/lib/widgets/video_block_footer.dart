@@ -112,9 +112,6 @@ class VideoBlockFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-// isAreaAds
-// isChange
-// isCheckMore
     return Column(
       children: [
         // button Row
@@ -138,7 +135,7 @@ class VideoBlockFooter extends StatelessWidget {
                   ),
                   onTap: () {
                     MyRouteDelegate.of(context).push(
-                      AppRoutes.vendorVideos.value,
+                      AppRoutes.videoByBlock.value,
                       args: {
                         'id': block.id,
                         'title': block.name,

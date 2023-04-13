@@ -8,6 +8,7 @@ import 'package:shared/models/vod.dart';
 
 import '../widgets/channel_area_banner.dart';
 import '../widgets/custom_app_bar.dart';
+import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
 final logger = Logger();
@@ -68,14 +69,11 @@ class SliverBlockWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final AdWindowController adWindowController =
         Get.find<AdWindowController>(tag: channelId.toString());
-    logger.i(
-        '//////// ====> \n總量:${(vods.length).ceil()}\nRow量:${(vods.length / 2).ceil()}');
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            logger.i('index~~> $index');
             return Column(
               children: [
                 Row(
