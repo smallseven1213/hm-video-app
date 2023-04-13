@@ -33,18 +33,21 @@ class HomeMainScreenState extends State<HomeMainScreen> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(88),
-        child: Column(
-          children: [
-            const Expanded(
-              child: LayoutTabBar(),
-            ),
-            Expanded(
-              child: SearchBar(),
-            ),
-            // Expanded(
-            //   child: Marquee(),
-            // ),
-          ],
+        child: Padding(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          child: Column(
+            children: [
+              const Expanded(
+                child: LayoutTabBar(),
+              ),
+              Expanded(
+                child: SearchBar(),
+              ),
+              // Expanded(
+              //   child: Marquee(),
+              // ),
+            ],
+          ),
         ),
       ),
       body: Stack(

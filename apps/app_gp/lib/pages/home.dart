@@ -34,7 +34,6 @@ class Home extends StatelessWidget {
         var screenIndex = screens.keys
             .toList()
             .indexOf(bottomNavigatorController.activeKey.value);
-        logger.i('====NAVI INDEX: $screenIndex');
 
         if (screenIndex == -1) {
           return Container();
@@ -56,49 +55,55 @@ class Home extends StatelessWidget {
                       right: 0,
                       child: Opacity(
                         opacity: 0.9, // 控制透明度，此處設置為0.9
-                        child: Container(
-                          height: 76,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              bottom: MediaQuery.of(context).padding.bottom),
+                          child: Container(
+                            height: 76,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xFF000000),
+                                  Color(0xFF002869),
+                                ],
+                              ),
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Color(0xFF000000),
-                                Color(0xFF002869),
-                              ],
-                            ),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              topLeft: Radius.circular(10),
-                              topRight: Radius.circular(10),
-                            ),
-                            child: Row(
-                              children: bottomNavigatorController.navigatorItems
-                                  .asMap()
-                                  .entries
-                                  .map(
-                                    (entry) => Expanded(
-                                      child: CustomBottomBarItem(
-                                        isActive: entry.key == screenIndex,
-                                        iconSid: entry.value.photoSid!,
-                                        activeIconSid: entry.value.clickEffect!,
-                                        label: entry.value.name!,
-                                        onTap: () => bottomNavigatorController
-                                            .changeKey(entry.value.path!),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                              ),
+                              child: Row(
+                                children: bottomNavigatorController
+                                    .navigatorItems
+                                    .asMap()
+                                    .entries
+                                    .map(
+                                      (entry) => Expanded(
+                                        child: CustomBottomBarItem(
+                                          isActive: entry.key == screenIndex,
+                                          iconSid: entry.value.photoSid!,
+                                          activeIconSid:
+                                              entry.value.clickEffect!,
+                                          label: entry.value.name!,
+                                          onTap: () => bottomNavigatorController
+                                              .changeKey(entry.value.path!),
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                  .toList(),
+                                    )
+                                    .toList(),
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
+                    )
             ],
           ),
         );
