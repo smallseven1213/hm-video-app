@@ -45,7 +45,10 @@ class _FilterBarState extends State<FilterBar> {
   }
 
   Widget _buildOpen() {
-    return FilterOptions();
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: FilterOptions(),
+    );
   }
 
   Widget _buildClosed() {
