@@ -60,6 +60,7 @@ dependencies:
   image_gallery_saver: ^1.7.1
   permission_handler: ^10.2.0
   shimmer: ^2.0.0
+  wakelock: ^0.6.2
 
 
 dev_dependencies:
