@@ -85,6 +85,8 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   // Running Main
 
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+      overlays: [SystemUiOverlay.bottom]);
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
