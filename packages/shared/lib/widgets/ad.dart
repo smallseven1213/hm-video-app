@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/widgets/loading.dart';
 import 'package:shared/widgets/sid_image.dart';
 import '../enums/app_routes.dart';
 import '../models/banner_photo.dart';
@@ -15,10 +14,12 @@ final systemConfig = SystemConfig();
 
 class Ad extends StatefulWidget {
   final String backgroundAssetPath;
+  final Function? loading;
 
   const Ad({
     Key? key,
     required this.backgroundAssetPath,
+    required this.loading,
   }) : super(key: key);
 
   @override
@@ -136,8 +137,9 @@ class AdState extends State<Ad> {
                 fit: BoxFit.cover,
               ),
             ),
-            const Center(
-              child: Loading(),
+            Center(
+              child: widget.loading!(text: '取得最新資源...') ??
+                  const CircularProgressIndicator(),
             ),
           ]
         ],

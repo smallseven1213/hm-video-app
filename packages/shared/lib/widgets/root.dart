@@ -12,20 +12,24 @@ class RootWidget extends StatelessWidget {
   final RouteObject routes;
   final String splashImage;
   final Map<ColorKeys, Color> appColors;
+  final Function? loading;
 
-  const RootWidget(
-      {Key? key,
-      required this.homePath,
-      required this.routes,
-      required this.splashImage,
-      required this.appColors})
-      : super(key: key);
+  const RootWidget({
+    Key? key,
+    required this.homePath,
+    required this.routes,
+    required this.splashImage,
+    required this.appColors,
+    this.loading,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final RouteObject baseRoutes = {
-      '/': (context, args) => Splash(backgroundAssetPath: splashImage),
-      '/ad': (context, args) => Ad(backgroundAssetPath: splashImage),
+      '/': (context, args) =>
+          Splash(backgroundAssetPath: splashImage, loading: loading),
+      '/ad': (context, args) =>
+          Ad(backgroundAssetPath: splashImage, loading: loading),
     };
 
     final delegate = MyRouteDelegate(
