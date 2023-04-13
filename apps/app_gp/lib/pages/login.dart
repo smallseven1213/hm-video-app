@@ -1,5 +1,6 @@
 // LoginPage , has button , click push to '/register'
 
+import 'package:app_gp/widgets/button.dart';
 import 'package:app_gp/widgets/custom_app_bar.dart';
 import 'package:app_gp/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
@@ -130,11 +131,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               const SizedBox(height: 60),
-              LoginButton(
+
+              SizedBox(
+                width: 200,
+                child: Button(
                   text: '登入',
-                  onPressed: () {
-                    _handleLogin(context);
-                  }),
+                  onPressed: () => _handleLogin(context),
+                  size: 'small',
+                ),
+              ),
+
               const SizedBox(height: 20),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -149,7 +155,11 @@ class _LoginPageState extends State<LoginPage> {
                               deletePreviousCount: 1);
                         },
                         child: Column(children: const [
-                          Text('還沒有帳號', style: TextStyle(color: Colors.white)),
+                          Text('還沒有帳號',
+                              style: TextStyle(
+                                color: Color(0xFF00B2FF),
+                                decoration: TextDecoration.underline,
+                              )),
                         ]),
                       ),
                       Container(

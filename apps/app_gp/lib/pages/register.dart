@@ -123,14 +123,14 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '帳號:',
+                      label: '帳　　號',
                       controller: _accountController,
                       placeholderText: '請輸入帳號',
                       validator: _validateUsername,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '密碼:',
+                      label: '密　　碼',
                       obscureText: true,
                       controller: _passwordController,
                       placeholderText: '請輸入密碼',
@@ -138,7 +138,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '驗證密碼:',
+                      label: '驗證密碼',
                       obscureText: true,
                       controller: _confirmPasswordController,
                       placeholderText: '請輸入驗證密碼',
@@ -147,9 +147,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 20),
               Container(
-                width: 360,
+                width: 240,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -157,6 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       child: Button(
                         text: '註冊',
                         size: 'small',
+                        type: 'secondary',
                         onPressed: () {
                           _handleRegister(context);
                         },
@@ -189,8 +190,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                 AppRoutes.login.value,
                                 deletePreviousCount: 1);
                           },
-                          child: Column(children: [
-                            Text('前往登入', style: TextStyle(color: Colors.white)),
+                          child: Column(children: const [
+                            Text('前往登入',
+                                style: TextStyle(
+                                  color: Color(0xFF00B2FF),
+                                  decoration: TextDecoration.underline,
+                                )),
                           ]),
                         )
                       ]),

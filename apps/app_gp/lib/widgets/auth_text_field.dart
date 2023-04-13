@@ -28,18 +28,20 @@ class AuthTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              height: 60,
+              height: 38,
               padding: const EdgeInsets.only(top: 2),
-              alignment: Alignment.topLeft,
+              alignment: Alignment.centerLeft,
               child: Text(
                 label,
                 style: const TextStyle(
-                    fontSize: 14,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold),
+                  fontSize: 14,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  height: 1,
+                ),
               ),
             ),
             const SizedBox(width: 8),
@@ -89,7 +91,7 @@ class AuthTextField extends StatelessWidget {
                         borderSide: const BorderSide(
                             color: Color(0xFFFF0000), width: 1),
                       ),
-                      errorStyle: TextStyle(color: Color(0xFFFF0000)),
+                      errorStyle: const TextStyle(color: Color(0xFFFF0000)),
                       suffixIcon: Padding(
                         padding: const EdgeInsets.only(right: 4),
                         child: AuthTextFieldSuffixIcon(
@@ -97,7 +99,7 @@ class AuthTextField extends StatelessWidget {
                         ),
                       ),
                       suffixIconConstraints:
-                          BoxConstraints(minHeight: 15, minWidth: 15),
+                          const BoxConstraints(minHeight: 15, minWidth: 15),
                     ),
                   ),
                 ],
