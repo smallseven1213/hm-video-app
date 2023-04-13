@@ -46,6 +46,7 @@ class VideoByBlockPage extends StatelessWidget {
         ),
         body: Obx(() => CustomScrollView(
               controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
               slivers: [
                 ...blockVideosController.blocks
                     .map((e) =>

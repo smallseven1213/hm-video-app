@@ -115,7 +115,15 @@ class SearchPageState extends State<SearchPage> {
       body: Stack(
         children: [
           searchKeyword == null
-              ? RecommandScreen()
+              ? RecommandScreen(
+                  onClickTag: (tag) {
+                    setState(() {
+                      searchKeyword = tag;
+                      displaySearchResult = false;
+                    });
+                    _searchController.text = tag;
+                  },
+                )
               : SearchResultPage(
                   keyword: searchKeyword!,
                   key: ValueKey(searchKeyword),
