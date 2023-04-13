@@ -62,8 +62,7 @@ class Block1Widget extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  padding: const EdgeInsets.only(bottom: 8.0),
+                SizedBox(
                   child: index % 4 == 0 ||
                           (block.isAreaAds == true && index % 4 == 3)
                       ? result[index][0].dataType == VideoType.areaAd.index
@@ -96,11 +95,14 @@ class Block1Widget extends StatelessWidget {
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
                         ),
                 ),
-                if (index == result.length - 1)
+                if (index == result.length - 1) ...[
+                  const SizedBox(height: 16),
                   VideoBlockFooter(
-                      block: block,
-                      updateBlock: updateBlock,
-                      channelId: channelId),
+                    block: block,
+                    updateBlock: updateBlock,
+                    channelId: channelId,
+                  ),
+                ]
               ],
             ),
           );
