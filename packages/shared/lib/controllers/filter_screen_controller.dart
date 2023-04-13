@@ -58,7 +58,7 @@ class FilterScreenController extends GetxController {
     'regionId': {0}.obs,
     'publisherId': {0}.obs,
     'chargeType': {0}.obs,
-    'film': {1}.obs,
+    // 'film': {1}.obs,
   }.obs;
 
   final List<Vod> filterResults = <Vod>[].obs;

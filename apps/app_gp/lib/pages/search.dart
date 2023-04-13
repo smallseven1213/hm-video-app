@@ -103,6 +103,12 @@ class SearchPageState extends State<SearchPage> {
           onTap: () {
             // 處理點擊事件的邏輯，如果需要
           },
+          onSearchButtonClick: () {
+            setState(() {
+              searchKeyword = _searchController.text;
+              displaySearchResult = false;
+            });
+          },
           defaultValue: widget.inputDefaultValue, // 如果需要，可以提供一個預設值
           // autoFocus: true, // 根據需要自動聚焦
         ),

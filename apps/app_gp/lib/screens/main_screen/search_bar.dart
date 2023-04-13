@@ -9,6 +9,7 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../config/colors.dart';
+import '../../widgets/static_search_input.dart';
 
 class SearchBar extends StatelessWidget {
   SearchBar({Key? key}) : super(key: key);
@@ -46,10 +47,8 @@ class SearchBar extends StatelessWidget {
                   ? videoPopularController.data[randomIndex].title
                   : '';
 
-              return SearchInput(
+              return StaticSearchInput(
                 defaultValue: randomTitle,
-                readOnly: true,
-                enableInteractiveSelection: false,
                 onSearchButtonClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
                       hasTransition: false,
@@ -58,7 +57,7 @@ class SearchBar extends StatelessWidget {
                         'dontSearch': false
                       });
                 },
-                onTap: () {
+                onInputClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
                       hasTransition: false,
                       args: {
@@ -66,7 +65,6 @@ class SearchBar extends StatelessWidget {
                         'dontSearch': true
                       });
                 },
-                autoFocus: false, // 如果需要，可以將此設置為true
               );
             }),
           ),

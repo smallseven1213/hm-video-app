@@ -15,6 +15,11 @@ class UserScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
+            child: SizedBox(
+              height: MediaQuery.of(context).padding.top,
+            ),
+          ),
+          SliverToBoxAdapter(
             child: Column(
               children: const [
                 UserInfo(),
