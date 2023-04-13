@@ -25,7 +25,7 @@ class RootWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final RouteObject baseRoutes = {
       '/': (context, args) => Splash(backgroundAssetPath: splashImage),
-      '/ad': (context, args) => const Ad(),
+      '/ad': (context, args) => Ad(backgroundAssetPath: splashImage),
     };
 
     final delegate = MyRouteDelegate(

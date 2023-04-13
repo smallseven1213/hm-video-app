@@ -6,6 +6,7 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:wakelock/wakelock.dart';
 
 enum ControlsOverlayType { none, progress, playPause, middleTime }
 
@@ -294,10 +295,9 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
   void initializePlayer() async {
     _controller = VideoPlayerController.network(widget.videoUrl);
-    // _controller!.addListener(() {
-    //   setState(() {});
-    // });
     // _controller!.setLooping(true);
+    // 監聽播放狀態
+    _controller!.addListener(_onControllerValueChanged);
     _controller!.initialize().then((_) => setState(() {}));
     _controller!.play();
   }
@@ -320,6 +320,20 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     setState(() {
       isFullscreen = fullScreen;
     });
+  }
+
+  void _onControllerValueChanged() async {
+    if (_controller!.value.isPlaying) {
+      // 保持屏幕亮度
+      // var isLock = await Wakelock.enabled;
+      // if (!isLock) {
+      //   Wakelock.enable();
+      // }
+      Wakelock.enable();
+    } else {
+      // 恢復正常屏幕行為
+      Wakelock.disable();
+    }
   }
 
   Future<bool> onWillPop() async {
@@ -363,6 +377,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
     super.dispose();
   }

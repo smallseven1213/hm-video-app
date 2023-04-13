@@ -303,13 +303,12 @@ class _SplashState extends State<Splash> {
       height: double.infinity,
       child: Stack(
         children: [
-          if (GetPlatform.isAndroid)
-            Image.asset(
-              widget.backgroundAssetPath,
-              width: double.infinity,
-              height: double.infinity,
-              fit: BoxFit.cover,
-            ),
+          Image.asset(
+            widget.backgroundAssetPath,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+          ),
           const Center(
             child: Loading(),
           ),

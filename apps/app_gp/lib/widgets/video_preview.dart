@@ -244,7 +244,7 @@ class VideoPreviewWidget extends StatelessWidget {
                           style: const TextStyle(
                             color: Color(0xff21AFFF),
                             fontSize: 10,
-                            height: 1.5,
+                            height: 1.4,
                           ),
                         )))
                     .toList(),
