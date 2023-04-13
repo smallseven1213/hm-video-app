@@ -41,7 +41,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/list?page=$page&limit=$limit&belong=$belong&$queryString');
+            '${systemConfig.apiHost}/public/videos/video/list?page=$page&limit=$limit&belong=$belong&film=1&$queryString');
 
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
