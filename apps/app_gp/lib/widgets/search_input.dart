@@ -6,16 +6,19 @@ import 'package:shared/models/color_keys.dart';
 import '../config/colors.dart';
 
 class SearchInput extends StatefulWidget {
-  const SearchInput({
-    Key? key,
-    this.controller,
-    this.focusNode,
-    this.onChanged,
-    this.onSubmitted,
-    this.onTap,
-    this.defaultValue,
-    this.autoFocus = false,
-  }) : super(key: key);
+  const SearchInput(
+      {Key? key,
+      this.controller,
+      this.focusNode,
+      this.onChanged,
+      this.onSubmitted,
+      this.onTap,
+      this.defaultValue,
+      this.autoFocus = false,
+      this.readOnly = false,
+      this.enableInteractiveSelection = true,
+      this.onSearchButtonClick}) // 新的回調
+      : super(key: key);
 
   final TextEditingController? controller;
   final void Function(String)? onChanged;
@@ -24,6 +27,9 @@ class SearchInput extends StatefulWidget {
   final FocusNode? focusNode;
   final String? defaultValue;
   final bool autoFocus;
+  final bool? readOnly;
+  final bool? enableInteractiveSelection;
+  final VoidCallback? onSearchButtonClick; // 新的回調
 
   @override
   _SearchInputState createState() => _SearchInputState();
@@ -73,13 +79,12 @@ class _SearchInputState extends State<SearchInput> {
           ),
           padding: const EdgeInsets.all(2),
           child: TextField(
-            // focusNode: widget.onTap != null ? AlwaysDisabledFocusNode() : null,
             onTap: widget.onTap,
             controller: _controller,
             textAlignVertical: TextAlignVertical.center,
             onChanged: widget.onChanged,
             onSubmitted: widget.onSubmitted,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -89,6 +94,17 @@ class _SearchInputState extends State<SearchInput> {
               hintStyle: TextStyle(color: Colors.grey),
               filled: true,
               fillColor: Color(0xFF002865),
+              suffixIcon: InkWell(
+                onTap: widget.onSearchButtonClick,
+                child: Container(
+                  padding: EdgeInsets.all(8.0),
+                  child: Image(
+                    width: 48,
+                    height: 48,
+                    image: AssetImage('/images/search_button.png'),
+                  ),
+                ),
+              ),
             ),
             style: const TextStyle(color: Colors.white),
             autofocus: widget.autoFocus,
