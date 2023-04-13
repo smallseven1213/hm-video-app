@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+const buttonPadding = {
+  'small': EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+  'medium': EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+  'large': EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+};
+
 class Button extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -33,9 +39,7 @@ class Button extends StatelessWidget {
         onTap: onPressed,
         child: Container(
             clipBehavior: Clip.antiAlias,
-            padding: size == 'medium'
-                ? const EdgeInsets.symmetric(vertical: 20.0, horizontal: 12.5)
-                : const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.5),
+            padding: buttonPadding[size],
             decoration: BoxDecoration(
               boxShadow: [
                 BoxShadow(
@@ -57,7 +61,7 @@ class Button extends StatelessWidget {
                     text,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: size == 'medium' ? 16 : 14,
+                      fontSize: size == 'small' ? 14 : 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),

@@ -421,9 +421,10 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
               right: 0,
               child: AppBar(
                 title: Text(widget.name ?? ''),
+                elevation: 0,
                 backgroundColor: Colors.transparent,
                 leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
+                  icon: const Icon(Icons.arrow_back_ios_new, size: 16),
                   onPressed: () {
                     if (isFullscreen) {
                       toggleFullscreen(fullScreen: false);

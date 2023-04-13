@@ -71,7 +71,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                     Center(
                       child: Padding(
                         padding: const EdgeInsets.only(
-                          top: 45,
+                          top: 5,
                           left: 20,
                           right: 20,
                           bottom: 0,
@@ -88,26 +88,25 @@ class NoticeDialogState extends State<NoticeDialog> {
                         ),
                       ),
                     ),
-                    Padding(
+                    Container(
                       padding: const EdgeInsets.only(
                         top: 10,
                         left: 20,
                         right: 20,
                         bottom: 0,
                       ),
-                      child: SizedBox(
-                        height: 150,
-                        child: SingleChildScrollView(
-                          physics: const ClampingScrollPhysics(),
-                          child: HtmlWidget(
-                            notice.content ?? '',
-                            textStyle: const TextStyle(
-                              color: Colors.white,
-                            ),
+                      height: 150,
+                      child: SingleChildScrollView(
+                        physics: const ClampingScrollPhysics(),
+                        child: HtmlWidget(
+                          notice.content ?? '',
+                          textStyle: const TextStyle(
+                            color: Colors.white,
                           ),
                         ),
                       ),
                     ),
+                    const SizedBox(height: 15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[

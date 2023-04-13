@@ -54,7 +54,7 @@ class Home extends StatelessWidget {
                       left: 0,
                       right: 0,
                       child: Opacity(
-                        opacity: 0.9, // 控制透明度，此處設置為0.9
+                        opacity: 1, // 控制透明度，此處設置為0.9
                         child: Padding(
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).padding.bottom),

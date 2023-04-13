@@ -515,12 +515,12 @@ class _VideoScreenState extends State<VideoScreen>
 
             // By default, show a loading spinner.
             return Column(
-              children: const [
+              children: [
                 CustomAppBar(
-                  title: '我的收藏',
+                  title: widget.name ?? '',
                   backgroundColor: Colors.transparent,
                 ),
-                Expanded(
+                const Expanded(
                   child: Center(child: CircularProgressIndicator()),
                 ),
               ],
