@@ -1,5 +1,5 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/utils/navigation_helper.dart';
 
@@ -116,7 +116,7 @@ class MyRouteDelegate extends RouterDelegate<String>
       onPopPage: _onPopPage,
       pages: _stack.map((stack) {
         if (stack.hasTransition == true) {
-          return MaterialPage(
+          return CupertinoPage(
             key: ValueKey(stack.path),
             name: stack.path,
             child: routes[stack.path]!(context, stack.args),
@@ -129,7 +129,7 @@ class MyRouteDelegate extends RouterDelegate<String>
             child: routes[stack.path]!(context, stack.args),
           );
         }
-        return MaterialPage(
+        return CupertinoPage(
           key: const ValueKey('/'),
           name: '/',
           child: routes['/']!(context, stack.args),
