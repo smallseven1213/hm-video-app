@@ -48,11 +48,21 @@ class SearchBar extends StatelessWidget {
 
               return SearchInput(
                 defaultValue: randomTitle,
+                readOnly: true,
+                enableInteractiveSelection: false,
+                onSearchButtonClick: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.search.value,
+                      hasTransition: false,
+                      args: {
+                        'inputDefaultValue': randomTitle,
+                      });
+                },
                 onTap: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
                       hasTransition: false,
                       args: {
                         'inputDefaultValue': randomTitle,
+                        'dontSearch': true
                       });
                 },
                 autoFocus: false, // 如果需要，可以將此設置為true

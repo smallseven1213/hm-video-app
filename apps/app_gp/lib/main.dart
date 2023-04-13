@@ -22,7 +22,6 @@ import 'pages/filter.dart';
 import 'pages/game/deposit.dart';
 import 'pages/notifications.dart';
 import 'pages/search.dart';
-import 'pages/search_result.dart';
 import 'pages/video.dart';
 
 void main() {
@@ -46,9 +45,6 @@ final Map<String, RouteWidgetBuilder> routes = {
         id: args['id'] as int,
         title: args['title'] as String,
       ),
-  AppRoutes.searchResult.value: (context, args) => SearchResultPage(
-        keyword: args['keyword'] as String,
-      ),
   AppRoutes.gameDeposit.value: (context, args) => const GameDeposit(),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.register.value: (context, args) => RegisterPage(),
@@ -61,6 +57,7 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
   AppRoutes.search.value: (context, args) => SearchPage(
         inputDefaultValue: args['inputDefaultValue'] as String,
+        dontSearch: args['dontSearch'] as bool,
       ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
 };

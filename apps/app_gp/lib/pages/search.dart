@@ -17,7 +17,9 @@ final logger = Logger();
 
 class SearchPage extends StatefulWidget {
   final String? inputDefaultValue;
-  const SearchPage({Key? key, this.inputDefaultValue}) : super(key: key);
+  final bool? dontSearch;
+  const SearchPage({Key? key, this.inputDefaultValue, this.dontSearch = false})
+      : super(key: key);
 
   @override
   SearchPageState createState() => SearchPageState();
@@ -34,19 +36,21 @@ class SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    searchKeyword = widget.inputDefaultValue;
-    _searchController.addListener(_onSearchChanged);
+    if (widget.dontSearch == false) {
+      searchKeyword = widget.inputDefaultValue;
+    } else {
+      _searchController.text = widget.inputDefaultValue!;
+    }
   }
 
   @override
   void dispose() {
-    _searchController.removeListener(_onSearchChanged);
     _searchController.dispose();
     _debounceTimer?.cancel();
     super.dispose();
   }
 
-  void _onSearchChanged() {
+  void _onSearchChanged(String value) {
     if (_debounceTimer != null) {
       _debounceTimer?.cancel();
     }
@@ -91,7 +95,7 @@ class SearchPageState extends State<SearchPage> {
         title: SearchInput(
           controller: _searchController,
           onChanged: (value) {
-            // 處理文本更改的邏輯
+            _onSearchChanged(value);
           },
           onSubmitted: (value) {
             // 處理文本提交的邏輯

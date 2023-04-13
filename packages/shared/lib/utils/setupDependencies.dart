@@ -36,7 +36,7 @@ void setupDependencies() {
       () => UserFavoritesActorController());
   Get.lazyPut<UserFavoritesVideoController>(
       () => UserFavoritesVideoController());
-  // Get.lazyPut<UserCollectionController>(() => UserCollectionController());
+  Get.lazyPut<UserCollectionController>(() => UserCollectionController());
   // Get.lazyPut<TagPopularController>(() => TagPopularController());
   /**
    * Get.put(VideoPopularController());
