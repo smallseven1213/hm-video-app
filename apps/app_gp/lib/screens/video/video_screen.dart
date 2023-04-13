@@ -16,6 +16,7 @@ import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sliver_header_delegate.dart';
 
+import '../../widgets/custom_app_bar.dart';
 import '../../widgets/video_preview.dart';
 
 final logger = Logger();
@@ -514,18 +515,12 @@ class _VideoScreenState extends State<VideoScreen>
 
             // By default, show a loading spinner.
             return Column(
-              children: [
-                AppBar(
-                  title: Text(widget.name ?? ''),
+              children: const [
+                CustomAppBar(
+                  title: '我的收藏',
                   backgroundColor: Colors.transparent,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
                 ),
-                const Expanded(
+                Expanded(
                   child: Center(child: CircularProgressIndicator()),
                 ),
               ],

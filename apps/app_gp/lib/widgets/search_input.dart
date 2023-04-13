@@ -99,7 +99,7 @@ class _SearchInputState extends State<SearchInput> {
                 child: const Image(
                   width: 48,
                   height: 48,
-                  image: AssetImage('/images/search_button.png'),
+                  image: AssetImage('assets/images/search_button.png'),
                 ),
               ),
             ),

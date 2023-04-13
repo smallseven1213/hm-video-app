@@ -22,6 +22,7 @@ dependencies:
   hive_flutter: ^1.1.0
   hive_generator: ^2.0.0
   logger: ^1.2.2
+  page_transition: ^2.0.9
   path: ^1.8.2
   path_provider: ^2.0.12
   plugin_platform_interface: ^2.0.2
