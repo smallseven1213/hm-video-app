@@ -83,23 +83,24 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool isEditing;
   final bool isSelected;
   final Function()? onEditingTap;
-  VideoPreviewWidget(
-      {Key? key,
-      required this.id,
-      required this.coverVertical,
-      required this.coverHorizontal,
-      this.displaycoverVertical = false,
-      required this.timeLength,
-      required this.tags,
-      required this.title,
-      required this.videoViewTimes,
-      this.isEmbeddedAds = false,
-      this.detail,
-      this.isEditing = false,
-      this.isSelected = false,
-      this.imageRatio,
-      this.onEditingTap})
-      : super(key: key);
+
+  VideoPreviewWidget({
+    Key? key,
+    required this.id,
+    required this.coverVertical,
+    required this.coverHorizontal,
+    this.displaycoverVertical = false,
+    required this.timeLength,
+    required this.tags,
+    required this.title,
+    required this.videoViewTimes,
+    this.isEmbeddedAds = false,
+    this.detail,
+    this.isEditing = false,
+    this.isSelected = false,
+    this.imageRatio,
+    this.onEditingTap,
+  }) : super(key: key);
 
   final playrecordController = Get.find<PlayRecordController>();
 
@@ -217,8 +218,8 @@ class VideoPreviewWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 5),
-        if (tags.isNotEmpty)
+        if (tags.isNotEmpty) ...[
+          const SizedBox(height: 5),
           Align(
             alignment: Alignment.centerLeft,
             child: Container(
@@ -251,10 +252,7 @@ class VideoPreviewWidget extends StatelessWidget {
               ),
             ),
           )
-        else
-          const SizedBox(
-            height: 15,
-          ),
+        ]
       ],
     );
   }

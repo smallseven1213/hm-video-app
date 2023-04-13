@@ -1,19 +1,14 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:shared/apis/apk_api.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/services/system_config.dart';
-import 'package:shared/widgets/loading.dart';
 
 import '../controllers/tag_popular_controller.dart';
 import '../controllers/user_controller.dart';
@@ -24,10 +19,12 @@ import '../navigator/delegate.dart';
 
 class Splash extends StatefulWidget {
   final String backgroundAssetPath;
+  final Function? loading;
 
   const Splash({
     Key? key,
     required this.backgroundAssetPath,
+    this.loading,
   }) : super(key: key);
 
   @override
@@ -72,6 +69,7 @@ class _SplashState extends State<Splash> {
   BannerController bannerController = Get.put(BannerController());
   Timer? timer;
   UserController userController = Get.find<UserController>();
+  String loadingText = '線路檢查中...';
 
   // 取得invitationCode
   getInvitationCode() async {
@@ -125,12 +123,14 @@ class _SplashState extends State<Splash> {
 
   // Step5: 檢查是否有更新
   checkApkUpdate() async {
+    setState(() => loadingText = '檢查更新...');
     print('step5: 檢查是否有更新');
     final apkUpdate = await apkApi.checkVersion(
       version: systemConfig.version,
       agentCode: systemConfig.agentCode,
     );
     print('apkUpdate: ${apkUpdate.status}');
+
     if (apkUpdate.status == ApkStatus.forceUpdate) {
       if (mounted) {
         alertDialog(
@@ -185,6 +185,7 @@ class _SplashState extends State<Splash> {
 
   // Step6: 檢查是否登入 - key: 'auth-token'
   userLogin() async {
+    setState(() => loadingText = '用戶登入...');
     print('step6: 檢查是否有token (是否登入)');
     print('userApi: ${userApi}');
     if (userController.token.value != '') {
@@ -235,6 +236,7 @@ class _SplashState extends State<Splash> {
 
   // Step7.1: 取得nav bar內容
   getNavBar() {
+    setState(() => loadingText = '取得最新資源...');
     print('step7.1: 取得nav bar內容');
     // final NavBarController navBarController = Get.put(NavBarController());
     //  navBarController.fetchNavBar();
@@ -309,8 +311,9 @@ class _SplashState extends State<Splash> {
             height: double.infinity,
             fit: BoxFit.cover,
           ),
-          const Center(
-            child: Loading(),
+          Center(
+            child: widget.loading!(text: loadingText) ??
+                const CircularProgressIndicator(),
           ),
         ],
       ),

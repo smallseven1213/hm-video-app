@@ -86,8 +86,7 @@ class SearchPageState extends State<SearchPage> {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.keyboard_arrow_left,
-              color: Colors.white), // 或其他顏色
+          icon: const Icon(Icons.arrow_back_ios_new, size: 16),
           onPressed: () {
             Navigator.pop(context);
           },
