@@ -73,7 +73,7 @@ class Header extends StatelessWidget {
                 ],
               ),
               const Spacer(),
-              moreButton!,
+              moreButton ?? const SizedBox(),
             ],
           );
         },

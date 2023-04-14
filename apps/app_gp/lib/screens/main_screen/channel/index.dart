@@ -32,7 +32,7 @@ class Channel extends StatelessWidget {
           sliverBlocks.add(SliverToBoxAdapter(
             child: Header(
               text: '${block.name} [${block.template}]',
-              moreButton: block.isCheckMore!
+              moreButton: block.isMore!
                   ? InkWell(
                       onTap: () => {
                             MyRouteDelegate.of(context).push(
