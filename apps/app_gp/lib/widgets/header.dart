@@ -1,12 +1,17 @@
 import 'package:app_gp/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class Header extends StatelessWidget {
   final String text;
+  final Widget? moreButton;
 
   const Header({
+    super.key,
     required this.text,
+    this.moreButton,
   });
 
   @override
@@ -30,39 +35,45 @@ class Header extends StatelessWidget {
 
           final textWidth = textPainter.width;
 
-          return Stack(
+          return Row(
             children: [
-              Text(
-                text,
-                style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              Positioned(
-                bottom: 0,
-                left: 0,
-                child: Container(
-                  width: textWidth,
-                  height: 5,
-                  decoration: BoxDecoration(
-                    color: AppColors.colors[ColorKeys.textPrimary],
-                    borderRadius: const BorderRadius.horizontal(
-                      left: Radius.circular(5),
-                      right: Radius.circular(5),
+              Stack(
+                children: [
+                  Text(
+                    text,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 2.0,
-                        spreadRadius: 2.0,
-                        color: AppColors.colors[ColorKeys.textPrimary]!
-                            .withOpacity(0.5),
-                      ),
-                    ],
                   ),
-                ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    child: Container(
+                      width: textWidth,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: AppColors.colors[ColorKeys.textPrimary],
+                        borderRadius: const BorderRadius.horizontal(
+                          left: Radius.circular(5),
+                          right: Radius.circular(5),
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            blurRadius: 2.0,
+                            spreadRadius: 2.0,
+                            color: AppColors.colors[ColorKeys.textPrimary]!
+                                .withOpacity(0.5),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
+              const Spacer(),
+              moreButton!,
             ],
           );
         },

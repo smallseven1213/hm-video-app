@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../../widgets/header.dart';
 import 'banners.dart';
@@ -30,6 +32,26 @@ class Channel extends StatelessWidget {
           sliverBlocks.add(SliverToBoxAdapter(
             child: Header(
               text: '${block.name} [${block.template}]',
+              moreButton: block.isCheckMore!
+                  ? InkWell(
+                      onTap: () => {
+                            MyRouteDelegate.of(context).push(
+                              AppRoutes.videoByBlock.value,
+                              args: {
+                                'id': block.id,
+                                'title': block.name,
+                                'channelId': channelId,
+                              },
+                            )
+                          },
+                      child: const Text(
+                        '更多 >',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
+                      ))
+                  : null,
             ),
           ));
           sliverBlocks.add(const SliverToBoxAdapter(
