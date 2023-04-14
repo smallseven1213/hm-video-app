@@ -93,6 +93,7 @@ class NestedTabBarView extends StatelessWidget {
                 builder: (BuildContext context) {
                   return CustomScrollView(
                     key: PageStorageKey<String>(name),
+                    physics: const BouncingScrollPhysics(),
                     slivers: <Widget>[
                       SliverOverlapInjector(
                         handle: NestedScrollView.sliverOverlapAbsorberHandleFor(

@@ -18,6 +18,7 @@ class AppsScreen extends StatelessWidget {
         title: '應用中心',
       ),
       body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: BannerWidget(),

@@ -9,12 +9,17 @@ import '../../widgets/header.dart';
 import '../../widgets/video_preview.dart';
 
 class RecommandScreen extends StatelessWidget {
+  final Function onClickTag;
+
+  RecommandScreen({Key? key, required this.onClickTag}) : super(key: key);
+
   final TagPopularController tagPopularController = Get.find();
   final VideoPopularController videoPopularController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
+      physics: const BouncingScrollPhysics(),
       slivers: <Widget>[
         const SliverToBoxAdapter(
           child: Header(
@@ -29,7 +34,11 @@ class RecommandScreen extends StatelessWidget {
                     spacing: 8, // 標籤之間的水平間距
                     runSpacing: 8, // 標籤之間的垂直間距
                     children: tagPopularController.data
-                        .map((tag) => TagItem(tag: tag.name))
+                        .map((tag) => TagItem(
+                            tag: tag.name,
+                            onTap: () {
+                              onClickTag(tag.name);
+                            }))
                         .toList()
                         .cast<Widget>(),
                   ),

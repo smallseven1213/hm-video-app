@@ -36,6 +36,7 @@ class TagVideoPage extends StatelessWidget {
       ),
       body: Obx(() => CustomScrollView(
             controller: _scrollController,
+            physics: const BouncingScrollPhysics(),
             slivers: [
               ...tagVideoController.blocks
                   .map((e) => SliverBlockWidget(vods: e.vods))

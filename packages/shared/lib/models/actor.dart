@@ -9,6 +9,7 @@ class Actor {
   final int? containVideos;
   final int? actorCollectTimes;
   final bool? isCollect;
+  final String? coverVertical;
 
   Actor(
     this.id,
@@ -21,6 +22,7 @@ class Actor {
     this.containVideos,
     this.actorCollectTimes,
     this.isCollect,
+    this.coverVertical,
   });
   getPhotoUrl() =>
       // "${AppController.cc.endpoint.getPhotoSidPreviewPrefix()}$photoSid";
@@ -41,6 +43,7 @@ class Actor {
       containVideos: json['containVideos'] ?? 0,
       actorCollectTimes: json['actorCollectTimes'] ?? 0,
       isCollect: json['isCollect'] ?? false,
+      coverVertical: json['coverVertical'] ?? '',
     );
   }
 }

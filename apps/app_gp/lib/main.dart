@@ -1,3 +1,4 @@
+import 'package:app_gp/pages/actor.dart';
 import 'package:app_gp/screens/apps_screen/index.dart';
 import 'package:app_gp/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +46,9 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.tag.value: (context, args) => TagVideoPage(
         id: args['id'] as int,
         title: args['title'] as String,
+      ),
+  AppRoutes.actor.value: (context, args) => ActorPage(
+        id: args['id'] as int,
       ),
   AppRoutes.gameDeposit.value: (context, args) => const GameDeposit(),
   AppRoutes.login.value: (context, args) => LoginPage(),
