@@ -3,9 +3,6 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/actor_vod_controller.dart';
-import 'package:shared/controllers/tag_video_controller.dart';
-import 'package:shared/controllers/user_video_collection_controller.dart';
-import 'package:shared/models/vod.dart';
 
 import '../screens/actor/card.dart';
 import '../widgets/custom_app_bar.dart';
