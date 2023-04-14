@@ -32,6 +32,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
       vodList.addAll(newData.vods);
       page.value = nextPage;
       totalCount.value = vodList.length;
+      hasMoreData = newData.hasMoreData;
     } else {
       hasMoreData = false;
     }

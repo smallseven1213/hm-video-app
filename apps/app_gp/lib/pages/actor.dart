@@ -9,6 +9,7 @@ import 'package:shared/models/vod.dart';
 
 import '../screens/actor/card.dart';
 import '../widgets/custom_app_bar.dart';
+import '../widgets/list_no_more.dart';
 import '../widgets/video_preview.dart';
 
 class ActorPage extends StatelessWidget {
@@ -55,8 +56,8 @@ class ActorPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end, // Add this line
                     children: [
                       const Icon(
-                        Icons.video_collection,
-                        color: Colors.grey,
+                        Icons.videocam_outlined,
+                        color: Color(0xFF21AFFF),
                       ),
                       const SizedBox(
                         width: 6,
@@ -93,13 +94,8 @@ class ActorPage extends StatelessWidget {
                 ),
               ),
               if (!actorVodController.hasMoreData)
-                SliverToBoxAdapter(
-                  child: Container(
-                    height: 100,
-                    child: Center(
-                      child: Text('没有更多了'),
-                    ),
-                  ),
+                const SliverToBoxAdapter(
+                  child: ListNoMore(),
                 )
             ],
           )),
