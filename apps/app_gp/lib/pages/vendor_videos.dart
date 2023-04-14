@@ -67,9 +67,15 @@ class _VendorVideosPageState extends State<VendorVideosPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: const [
-          VendorVideoList(type: 'new'),
-          VendorVideoList(type: 'hot'),
+        children: [
+          VendorVideoList(
+            type: 'new',
+            publisherId: widget.id,
+          ),
+          VendorVideoList(
+            type: 'hot',
+            publisherId: widget.id,
+          ),
         ],
       ),
     );
