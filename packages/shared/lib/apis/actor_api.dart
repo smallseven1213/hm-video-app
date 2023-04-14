@@ -1,7 +1,11 @@
 import '../models/actor.dart';
 import '../models/block_vod.dart';
 import '../models/vod.dart';
+import '../services/system_config.dart';
 import '../utils/fetcher.dart';
+
+final systemConfig = SystemConfig();
+String apiPrefix = '${systemConfig.apiHost}/public/actors';
 
 class ActorApi {
   Future<List<Actor>> getManyBy({
@@ -13,7 +17,7 @@ class ActorApi {
   }) async {
     var res = await fetcher(
         url:
-            '/actor/list?page=$page&limit=$limit&name=$name&region=$region&isSortByVideos=${sortBy ?? 0}');
+            '$apiPrefix/actor/list?page=$page&limit=$limit&name=$name&region=$region&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -26,7 +30,8 @@ class ActorApi {
     String? name,
   }) async {
     var res = await fetcher(
-        url: '/actor/list?page=$page&limit=48&name=$name&isSortByVideos=0');
+        url:
+            '$apiPrefix/actor/list?page=$page&limit=48&name=$name&isSortByVideos=0');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -35,7 +40,7 @@ class ActorApi {
   }
 
   Future<Actor> getOne(int actorId) async {
-    var res = await fetcher(url: '/actor?id=$actorId');
+    var res = await fetcher(url: '$apiPrefix/actor?id=$actorId');
     if (res.data['code'] != '00') {
       return Actor(0, '演員', '');
     }
@@ -44,8 +49,8 @@ class ActorApi {
 
   Future<BlockVod> getManyLatestVodBy(
       {int page = 1, int limit = 10, required int actorId}) async {
-    var res =
-        await fetcher(url: '/actor/latest?id=$actorId&page=$page&limit=$limit');
+    var res = await fetcher(
+        url: '$apiPrefix/actor/latest?id=$actorId&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -60,7 +65,7 @@ class ActorApi {
   Future<BlockVod> getManyHottestVodBy(
       {int page = 1, int limit = 10, required int actorId}) async {
     var res = await fetcher(
-        url: '/actor/hottest?id=$actorId&page=$page&limit=$limit');
+        url: '$apiPrefix/actor/hottest?id=$actorId&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
