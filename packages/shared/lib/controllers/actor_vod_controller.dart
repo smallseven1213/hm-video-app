@@ -1,8 +1,11 @@
+import 'package:logger/logger.dart';
+
 import '../apis/actor_api.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
 final actorApi = ActorApi();
+final logger = Logger();
 const limit = 100;
 
 class ActorVodController extends BaseVodInfinityScrollController {
@@ -16,8 +19,8 @@ class ActorVodController extends BaseVodInfinityScrollController {
     var res = await actorApi.getManyLatestVodBy(
         page: page, actorId: actorId, limit: limit);
 
-    bool hasReachedEnd = res.total > limit * page;
+    bool hasMoreData = res.total > limit * page;
 
-    return InfinityVod(res.vods, res.total, hasReachedEnd);
+    return InfinityVod(res.vods, res.total, hasMoreData);
   }
 }

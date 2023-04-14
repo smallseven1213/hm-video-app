@@ -28,6 +28,43 @@ class ActorCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
+          if (coverVertical != '' && coverVertical != null)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: SidImage(
+                  key: ValueKey(coverVertical),
+                  sid: coverVertical ?? photoSid,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          if (coverVertical == '' || coverVertical == null)
+            Positioned(
+              top: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    stops: [0.0, 0.5], // 控制顏色分佈的位置
+                    colors: [
+                      Color(0xFF00091A), // 左上角顏色
+                      Color(0xFFFF4545), // 位於中間位置的顏色
+                    ],
+                  ),
+                ),
+                // 您可以在這裡添加其他屬性，例如寬度、高度或子組件
+              ),
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Row(
@@ -35,7 +72,11 @@ class ActorCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(80),
                   child: SidImage(
-                      sid: photoSid, width: 80, height: 80, fit: BoxFit.cover),
+                      key: ValueKey(photoSid),
+                      sid: photoSid,
+                      width: 80,
+                      height: 80,
+                      fit: BoxFit.cover),
                 ),
                 const SizedBox(width: 8),
                 Flexible(
@@ -62,20 +103,6 @@ class ActorCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: SidImage(
-                sid: coverVertical ?? photoSid,
-                width: double.infinity,
-                height: 200,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Positioned(
             top: 8,
             right: 8,
             child: Row(
@@ -85,7 +112,11 @@ class ActorCard extends StatelessWidget {
                   style: const TextStyle(fontSize: 12, color: Colors.white),
                 ),
                 const SizedBox(width: 6),
-                const Icon(Icons.arrow_forward_ios, size: 12),
+                const Icon(
+                  Icons.favorite_outline,
+                  size: 12,
+                  color: Color(0xFF21AFFF),
+                ),
               ],
             ),
           ),

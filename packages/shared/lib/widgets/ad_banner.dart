@@ -17,6 +17,7 @@ class AdBanner extends StatelessWidget {
         url: image.url ?? '',
         child: image.photoSid != null && image.photoSid!.isNotEmpty
             ? SidImage(
+                key: ValueKey(image.photoSid),
                 width: double.infinity,
                 height: double.infinity,
                 sid: image.photoSid!,
