@@ -4,13 +4,13 @@ import 'package:app_gp/widgets/video_embedded_ad.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/models/video_database_field.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/view_times.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 final logger = Logger();
@@ -44,20 +44,7 @@ class ViewInfo extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              const Icon(
-                Icons.remove_red_eye_outlined,
-                color: Colors.white,
-                size: 16,
-              ),
-              const SizedBox(width: 5),
-              Text(
-                '$viewCount',
-                style: const TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
+          ViewTimes(times: viewCount),
           Text(
             duration,
             style: const TextStyle(color: Colors.white),
@@ -234,20 +221,31 @@ class VideoPreviewWidget extends StatelessWidget {
                 runSpacing: 5.0,
                 clipBehavior: Clip.antiAlias,
                 children: tags
-                    .map((e) => Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 2),
-                        decoration: BoxDecoration(
-                            color: const Color(0xff4277DC).withOpacity(0.5),
-                            borderRadius: BorderRadius.circular(10)),
-                        child: Text(
-                          e.name,
-                          style: const TextStyle(
-                            color: Color(0xff21AFFF),
-                            fontSize: 10,
-                            height: 1.4,
-                          ),
-                        )))
+                    .map(
+                      (tag) => InkWell(
+                        onTap: () {
+                          MyRouteDelegate.of(context).push(
+                            AppRoutes.tag.value,
+                            args: {'id': tag.id, 'title': tag.name},
+                            removeSamePath: true,
+                          );
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: const Color(0xff4277DC).withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(10)),
+                            child: Text(
+                              tag.name,
+                              style: const TextStyle(
+                                color: Color(0xff21AFFF),
+                                fontSize: 10,
+                                height: 1.4,
+                              ),
+                            )),
+                      ),
+                    )
                     .toList(),
               ),
             ),
