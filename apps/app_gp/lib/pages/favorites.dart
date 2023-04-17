@@ -1,4 +1,5 @@
 import 'package:app_gp/widgets/custom_app_bar.dart';
+import 'package:app_gp/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -81,34 +82,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Button(
-                    text: '長視頻',
-                    size: 'small',
-                    onPressed: () => _tabController.animateTo(0),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: Button(
-                    text: '演員',
-                    size: 'small',
-                    onPressed: () => _tabController.animateTo(1),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        bottom: GSTabBar(tabs: const ['長視頻', '演員'], controller: _tabController),
       ),
       body: Stack(
         children: [

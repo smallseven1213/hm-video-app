@@ -3,6 +3,7 @@ import 'package:app_gp/config/colors.dart';
 import 'package:app_gp/screens/video/video_player_area.dart';
 import 'package:app_gp/widgets/button.dart';
 import 'package:app_gp/widgets/glowing_icon.dart';
+import 'package:app_gp/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -37,7 +38,8 @@ class NestedTabBarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<String> tabs = <String>['同演員', '同類型', '同標籤'];
+    final List<String> tabs =
+        videoData!.actors!.isEmpty ? ['同類型', '同標籤'] : ['同演員', '同類型', '同標籤'];
     String getIdList(List inputList) {
       if (inputList.isEmpty) return '';
       return inputList.take(3).map((e) => e.id.toString()).join(',');
@@ -94,9 +96,9 @@ class NestedTabBarView extends StatelessWidget {
                         flexibleSpace: const SizedBox.shrink(),
                         bottom: PreferredSize(
                             preferredSize: Size.fromHeight(60),
-                            child: Container(
+                            child: SizedBox(
                               height: 60,
-                              child: RelatedVideosHeader(),
+                              child: GSTabBar(tabs: tabs),
                             ))),
                   ),
                 ];
@@ -187,9 +189,6 @@ class VideoInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('publisher: $publisher');
-    logger.i('actor: $actor');
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -413,51 +412,6 @@ class BannerAd extends StatelessWidget {
       height: 100,
       color: Colors.orange,
       child: Center(child: Text('廣告 Banner', style: TextStyle(fontSize: 24))),
-    );
-  }
-}
-
-class RelatedVideosHeader extends StatelessWidget
-    implements PreferredSizeWidget {
-  const RelatedVideosHeader({
-    super.key,
-  });
-
-  @override
-  Size get preferredSize => const Size.fromHeight(50);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: AppColors.colors[ColorKeys.background],
-      padding: const EdgeInsets.only(bottom: 8),
-      child: Align(
-        child: SizedBox(
-          width: 230,
-          child: TabBar(
-            indicatorPadding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-              bottom: 4,
-            ),
-            indicatorWeight: 5,
-            indicatorColor: AppColors.colors[ColorKeys.primary],
-            indicator: UnderlineTabIndicator(
-              borderRadius: const BorderRadius.horizontal(
-                  left: Radius.circular(10), right: Radius.circular(10)),
-              borderSide: BorderSide(
-                width: 5.0,
-                color: AppColors.colors[ColorKeys.primary]!,
-              ),
-            ),
-            tabs: const [
-              Tab(text: '同演員'),
-              Tab(text: '同類型'),
-              Tab(text: '同標籤'),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
