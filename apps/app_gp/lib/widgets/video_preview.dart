@@ -11,13 +11,14 @@ import 'package:shared/models/video_database_field.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/view_times.dart';
+import 'package:shared/widgets/video_time.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 final logger = Logger();
 
 class ViewInfo extends StatelessWidget {
   final int viewCount;
-  final String duration;
+  final int duration;
 
   const ViewInfo({Key? key, required this.viewCount, required this.duration})
       : super(key: key);
@@ -45,10 +46,7 @@ class ViewInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ViewTimes(times: viewCount),
-          Text(
-            duration,
-            style: const TextStyle(color: Colors.white),
-          ),
+          VideoTime(time: duration),
         ],
       ),
     );
@@ -184,7 +182,7 @@ class VideoPreviewWidget extends StatelessWidget {
                       alignment: AlignmentDirectional.bottomEnd,
                       child: ViewInfo(
                         viewCount: videoViewTimes,
-                        duration: getTimeString(timeLength),
+                        duration: timeLength,
                       ),
                     ),
                   )

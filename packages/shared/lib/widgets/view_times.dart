@@ -21,7 +21,6 @@ class ViewTimes extends StatelessWidget {
           TextSpan(
             text: ' ${getViewTimes(times)}',
             style: TextStyle(
-              fontSize: 12,
               color: color ?? Colors.white,
               letterSpacing: 0.1,
             ),

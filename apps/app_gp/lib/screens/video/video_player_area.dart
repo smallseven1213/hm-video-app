@@ -44,10 +44,10 @@ class PlayPauseButton extends StatelessWidget {
   }
 }
 
-class VideoTime extends StatelessWidget {
+class ProgressStatus extends StatelessWidget {
   final bool isForward;
   final VideoPlayerController controller;
-  const VideoTime({
+  const ProgressStatus({
     super.key,
     required this.controller,
     required this.isForward,
@@ -611,7 +611,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 PlayPauseButton(controller: widget.controller),
               // 水平拖拉：顯示快進或快退：影片時間 (左右拖動才顯示，可控製影片秒數)
               if (controlsType == ControlsOverlayType.middleTime)
-                VideoTime(controller: widget.controller, isForward: isForward),
+                ProgressStatus(controller: widget.controller, isForward: isForward),
               // 點一下出現：底部控製區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
               if (controlsType == ControlsOverlayType.progress ||
                   controlsType == ControlsOverlayType.middleTime ||
