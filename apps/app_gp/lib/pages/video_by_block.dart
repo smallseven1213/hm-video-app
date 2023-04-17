@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/ad_window_controller.dart';
-import 'package:shared/controllers/block_videos_controller.dart';
+import 'package:shared/controllers/block_vod_controller.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
 
 import '../widgets/channel_area_banner.dart';
 import '../widgets/custom_app_bar.dart';
-import '../widgets/sliver_video_preview_skelton_list.dart';
+import '../widgets/list_no_more.dart';
 import '../widgets/video_preview.dart';
 
 final logger = Logger();
+
+List<List<Vod>> splitVodList(List<Vod> vodList, int chunkSize) {
+  List<List<Vod>> chunks = [];
+  for (int i = 0; i < vodList.length; i += chunkSize) {
+    chunks.add(vodList.sublist(
+        i, i + chunkSize > vodList.length ? vodList.length : i + chunkSize));
+  }
+  return chunks;
+}
 
 class VideoByBlockPage extends StatelessWidget {
   final int id;
@@ -27,32 +36,35 @@ class VideoByBlockPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final BlockVideosController blockVideosController =
-        Get.put(BlockVideosController(id), tag: id.toString());
     Get.put(AdWindowController(channelId), tag: channelId.toString());
 
-    final ScrollController _scrollController = ScrollController();
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        blockVideosController.fetchMoreVideos();
-      }
-    });
+    final BlockVodController blockVodController =
+        BlockVodController(areaId: id);
 
     return Scaffold(
         appBar: CustomAppBar(
           title: title,
         ),
-        body: Obx(() => CustomScrollView(
-              controller: _scrollController,
-              slivers: [
-                ...blockVideosController.blocks
-                    .map((e) =>
-                        SliverBlockWidget(vods: e.vods, channelId: channelId))
-                    .toList(),
-              ],
-            )));
+        body: Obx(() {
+          // 使用 splitVodList 函數將 vodList 按每100個Vod分割成子列表
+          List<List<Vod>> vodChunks =
+              splitVodList(blockVodController.vodList.value, 100);
+
+          return CustomScrollView(
+            controller: blockVodController.scrollController,
+            physics: const BouncingScrollPhysics(),
+            slivers: [
+              // split every 100 record from blockVodController.vodList
+              ...vodChunks
+                  .map((e) => SliverBlockWidget(vods: e, channelId: channelId))
+                  .toList(),
+              if (!blockVodController.hasMoreData)
+                const SliverToBoxAdapter(
+                  child: ListNoMore(),
+                )
+            ],
+          );
+        }));
   }
 }
 

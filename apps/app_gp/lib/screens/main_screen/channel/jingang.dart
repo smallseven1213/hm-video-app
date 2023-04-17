@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -28,6 +29,8 @@ enum JingangStyle {
   single,
   multiLine,
 }
+
+final logger = Logger();
 
 class JingangButton extends StatelessWidget {
   final JingangDetail? item;
@@ -98,7 +101,18 @@ class JingangButton extends StatelessWidget {
                     item!.url!.startsWith('https://')) {
                   launch(item!.url ?? '', webOnlyWindowName: '_blank');
                 } else {
-                  MyRouteDelegate.of(context).push(item!.url ?? '');
+                  List<String> parts = item!.url!.split('/');
+
+                  // 從列表中獲取所需的字串和數字
+                  String path = '/' + parts[1];
+                  int id = int.parse(parts[2]);
+
+                  // 創建一個 Object，包含 id
+                  var args = {'id': id};
+
+                  logger.i('PATH ===> $path, $args');
+
+                  MyRouteDelegate.of(context).push(path, args: args);
                 }
               },
               child: SidImage(

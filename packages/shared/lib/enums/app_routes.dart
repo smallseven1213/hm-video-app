@@ -18,6 +18,7 @@ enum AppRoutes {
   notifications,
   search,
   filter,
+  actor,
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -61,6 +62,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/search';
       case AppRoutes.filter:
         return '/filter';
+      case AppRoutes.actor:
+        return '/actor';
       default:
         return '/unknown';
     }

@@ -73,6 +73,7 @@ class _FilterScrollViewState extends State<FilterScrollView> {
       children: [
         CustomScrollView(
           controller: _scrollController,
+          physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: FilterOptions(),

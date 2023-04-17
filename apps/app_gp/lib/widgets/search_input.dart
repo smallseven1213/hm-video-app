@@ -14,6 +14,7 @@ class SearchInput extends StatefulWidget {
       this.onSubmitted,
       this.onTap,
       this.defaultValue,
+      this.placeHolder,
       this.autoFocus = false,
       this.readOnly = false,
       this.enableInteractiveSelection = true,
@@ -26,6 +27,7 @@ class SearchInput extends StatefulWidget {
   final void Function()? onTap;
   final FocusNode? focusNode;
   final String? defaultValue;
+  final String? placeHolder;
   final bool autoFocus;
   final bool? readOnly;
   final bool? enableInteractiveSelection;
@@ -90,7 +92,7 @@ class _SearchInputState extends State<SearchInput> {
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide.none,
               ),
-              hintText: '搜尋',
+              hintText: widget.placeHolder,
               hintStyle: TextStyle(color: Colors.grey),
               filled: true,
               fillColor: Color(0xFF002865),
