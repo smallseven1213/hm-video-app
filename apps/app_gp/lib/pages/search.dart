@@ -88,6 +88,35 @@ class SearchPageState extends State<SearchPage> {
             Navigator.pop(context);
           },
         ),
+        titleSpacing: 0,
+        title: Padding(
+          // padding right 10
+          padding: const EdgeInsets.only(right: 8),
+          child: SearchInput(
+            controller: _searchController,
+            onChanged: (value) {
+              _onSearchChanged(value);
+            },
+            onSubmitted: (value) {
+              setState(() {
+                searchKeyword = _searchController.text;
+                displaySearchResult = false;
+              });
+            },
+            onTap: () {
+              // 處理點擊事件的邏輯，如果需要
+            },
+            onSearchButtonClick: () {
+              setState(() {
+                searchKeyword = _searchController.text;
+                displaySearchResult = false;
+              });
+            },
+            defaultValue:
+                widget.dontSearch == true ? null : widget.inputDefaultValue,
+            placeHolder: widget.inputDefaultValue,
+          ),
+        ),
       ),
       body: Stack(
         children: [

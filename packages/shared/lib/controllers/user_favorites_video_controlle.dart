@@ -5,7 +5,6 @@ import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
-import '../models/channel_info.dart';
 import '../models/video_database_field.dart';
 import '../models/vod.dart';
 
@@ -29,6 +28,7 @@ class UserFavoritesVideoController extends GetxController {
     if (_userFavoritesVideoBox.isEmpty) {
       await _fetchAndSaveCollection();
     } else {
+      logger.i(_userFavoritesVideoBox.values);
       videos.value = _userFavoritesVideoBox.values.toList();
     }
   }

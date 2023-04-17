@@ -28,10 +28,12 @@ enum VideoFilterType { actor, category, tag }
 class NestedTabBarView extends StatelessWidget {
   // final Widget header;
   final Vod? videoData;
+  final Vod videoDetail;
   const NestedTabBarView({
     Key? key,
     // required this.header,
     this.videoData,
+    required this.videoDetail,
   }) : super(key: key);
 
   @override
@@ -70,6 +72,7 @@ class NestedTabBarView extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Actions(
                   video: videoData!,
+                  videoDetail: videoDetail,
                 ),
               ),
               SliverOverlapAbsorber(
@@ -246,7 +249,8 @@ class LikeButtonState extends State<LikeButton> {
 
 class Actions extends StatelessWidget {
   final Vod video;
-  Actions({super.key, required this.video});
+  final Vod videoDetail;
+  Actions({super.key, required this.video, required this.videoDetail});
 
   final userCollectionController = Get.find<UserCollectionController>();
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
@@ -265,9 +269,9 @@ class Actions extends StatelessWidget {
               isLiked: isLiked,
               onPressed: () {
                 if (isLiked) {
-                  userFavoritesVideoController.removeVideo([video.id]);
+                  userFavoritesVideoController.removeVideo([videoDetail.id]);
                 } else {
-                  userFavoritesVideoController.addVideo(video);
+                  userFavoritesVideoController.addVideo(videoDetail);
                 }
               },
             );
@@ -284,9 +288,9 @@ class Actions extends StatelessWidget {
               isLiked: isLiked,
               onPressed: () {
                 if (isLiked) {
-                  userCollectionController.removeVideo([video.id]);
+                  userCollectionController.removeVideo([videoDetail.id]);
                 } else {
-                  userCollectionController.addVideo(video);
+                  userCollectionController.addVideo(videoDetail);
                 }
               },
             );
@@ -505,6 +509,7 @@ class _VideoScreenState extends State<VideoScreen>
                       padding: const EdgeInsets.all(8.0),
                       child: NestedTabBarView(
                         videoData: snapshot.data!,
+                        videoDetail: videoDetailController.videoDetail.value,
                       ),
                     ),
                   ),
