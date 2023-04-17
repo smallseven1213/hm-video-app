@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -491,6 +492,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
+
+    if (currentRoutePath != '/video') {
+      widget.controller.pause();
+    }
+
     return LayoutBuilder(builder: (context, constraints) {
       return MouseRegion(
         child: GestureDetector(
