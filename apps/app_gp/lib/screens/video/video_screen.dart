@@ -14,7 +14,10 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/sliver_header_delegate.dart';
+import 'package:shared/widgets/video_time.dart';
+import 'package:shared/widgets/view_times.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/video_preview.dart';
@@ -67,6 +70,10 @@ class NestedTabBarView extends StatelessWidget {
                 child: VideoInfo(
                   title: videoData!.title,
                   tags: videoData!.tags ?? [],
+                  timeLength: videoData!.timeLength ?? 0,
+                  viewTimes: videoData!.videoViewTimes ?? 0,
+                  actor: videoData!.actors,
+                  publisher: videoData!.publisher,
                 ),
               ),
               SliverToBoxAdapter(
@@ -152,16 +159,26 @@ class NestedTabBarView extends StatelessWidget {
 class VideoInfo extends StatelessWidget {
   final String title;
   final List<Tag> tags;
+  final int timeLength;
+  final int viewTimes;
+  final List<Actor>? actor;
+  final Publisher? publisher;
 
   const VideoInfo({
     super.key,
     required this.title,
     required this.tags,
+    required this.timeLength,
+    required this.viewTimes,
+    this.actor,
+    this.publisher,
   });
 
   @override
   Widget build(BuildContext context) {
-    // logger.i('tags: $tags');
+    logger.i('publisher: $publisher');
+    logger.i('actor: $actor');
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -171,6 +188,82 @@ class VideoInfo extends StatelessWidget {
             fontSize: 14,
             fontWeight: FontWeight.w400,
             color: Colors.white,
+          ),
+        ),
+        // 供應商、演員、觀看次數、時長
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (publisher != null || (actor != null && actor!.isNotEmpty))
+                Expanded(
+                  flex: 2,
+                  child: Row(
+                    children: [
+                      if (publisher != null) ...[
+                        InkWell(
+                          onTap: () => MyRouteDelegate.of(context).push(
+                            AppRoutes.vendorVideos.value,
+                            args: {
+                              'id': publisher!.id,
+                              'title': publisher!.name
+                            },
+                            removeSamePath: true,
+                          ),
+                          child: Text(
+                            publisher!.name,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Color(0xffC7C3C3),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16,
+                        )
+                      ],
+                      if (actor != null && actor!.isNotEmpty)
+                        InkWell(
+                          onTap: () {
+                            MyRouteDelegate.of(context).push(
+                              AppRoutes.actor.value,
+                              args: {
+                                'id': actor![0].id,
+                                'title': actor![0].name
+                              },
+                              removeSamePath: true,
+                            );
+                          },
+                          child: Text(
+                            actor![0].name,
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Color(0xffC7C3C3),
+                            ),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+              // const Spacer(),
+              Expanded(
+                  flex: 1,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ViewTimes(
+                        times: viewTimes,
+                        color: const Color(0xffC7C3C3),
+                      ),
+                      VideoTime(
+                        time: timeLength,
+                        color: const Color(0xffC7C3C3),
+                        hasIcon: true,
+                      ),
+                    ],
+                  ))
+            ],
           ),
         ),
         Wrap(
