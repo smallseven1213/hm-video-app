@@ -174,7 +174,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
           const SizedBox(width: 10),
           const Expanded(
             child: SizedBox(
-              height: 200,
+              height: 100,
               width: double.infinity,
             ),
           ),
@@ -189,7 +189,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
                 e.id == null
                     ? const Expanded(
                         child: SizedBox(
-                          height: 200,
+                          height: 100,
                           width: double.infinity,
                         ),
                       )
