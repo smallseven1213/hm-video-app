@@ -30,11 +30,14 @@ class BlockVideosByCategoryController extends GetxController {
   }
 
   Future mutateAll() async {
+    BlockVod actorVideos = BlockVod([], 0);
     final internalTagVideos =
         await vodApi.getVideoByInternalTag(excludeId, internalTagId);
     final tagVideos =
         await vodApi.getVideoByTags(excludeId: excludeId, tagId: tagId);
-    final actorVideos = await vodApi.getVideoByActorId(actorId);
+    if (actorId != '') {
+      actorVideos = await vodApi.getVideoByActorId(actorId);
+    }
 
     // print('log internalTagVideos: ${internalTagVideos.vods}');
     // print('log tagVideos: ${tagVideos.vods}');

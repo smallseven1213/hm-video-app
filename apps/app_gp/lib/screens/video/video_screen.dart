@@ -14,8 +14,6 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/video_info_formatter.dart';
-import 'package:shared/widgets/sliver_header_delegate.dart';
 import 'package:shared/widgets/video_time.dart';
 import 'package:shared/widgets/view_times.dart';
 
@@ -29,19 +27,17 @@ enum LikeButtonType { favorite, bookmark }
 enum VideoFilterType { actor, category, tag }
 
 class NestedTabBarView extends StatelessWidget {
-  // final Widget header;
   final Vod? videoData;
   final Vod videoDetail;
   const NestedTabBarView({
     Key? key,
-    // required this.header,
     this.videoData,
     required this.videoDetail,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const tabs = ['同演員', '同類型', '同標籤'];
+    final List<String> tabs = <String>['同演員', '同類型', '同標籤'];
     String getIdList(List inputList) {
       if (inputList.isEmpty) return '';
       return inputList.take(3).map((e) => e.id.toString()).join(',');
@@ -59,100 +55,115 @@ class NestedTabBarView extends StatelessWidget {
       tag: DateTime.now().toString(),
     );
 
-    return DefaultTabController(
-      length: tabs.length, // tab的數量.
-      child: Scaffold(
-        body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              // header,
-              SliverToBoxAdapter(
-                child: VideoInfo(
-                  title: videoData!.title,
-                  tags: videoData!.tags ?? [],
-                  timeLength: videoData!.timeLength ?? 0,
-                  viewTimes: videoData!.videoViewTimes ?? 0,
-                  actor: videoData!.actors,
-                  publisher: videoData!.publisher,
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: Actions(
-                  video: videoData!,
-                  videoDetail: videoDetail,
-                ),
-              ),
-              SliverOverlapAbsorber(
-                handle:
-                    NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                sliver: SliverPersistentHeader(
-                  pinned: true,
-                  delegate: SliverHeaderDelegate(
-                    minHeight: 50.0,
-                    maxHeight: 50.0,
-                    child: const RelatedVideosHeader(),
+    return Padding(
+        padding: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 8),
+        child: DefaultTabController(
+          length: tabs.length, // This is the number of tabs.
+          child: Scaffold(
+            body: NestedScrollView(
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                // These are the slivers that show up in the "outer" scroll view.
+                return <Widget>[
+                  SliverToBoxAdapter(
+                    child: VideoInfo(
+                      title: videoData!.title,
+                      tags: videoData!.tags ?? [],
+                      timeLength: videoData!.timeLength ?? 0,
+                      viewTimes: videoData!.videoViewTimes ?? 0,
+                      actor: videoData!.actors,
+                      publisher: videoData!.publisher,
+                    ),
                   ),
-                ),
-              ),
-            ];
-          },
-          body: TabBarView(
-            children: tabs.map((String name) {
-              print('name: $name');
-              return Builder(
-                builder: (BuildContext context) {
-                  return CustomScrollView(
-                    key: PageStorageKey<String>(name),
-                    physics: const BouncingScrollPhysics(),
-                    slivers: <Widget>[
-                      SliverOverlapInjector(
-                        handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                            context),
-                      ),
-                      Obx(() {
-                        var videos = blockVideosController.videoByActor.value;
-                        switch (name) {
-                          case '同類型':
-                            videos = blockVideosController.videoByTag.value;
-                            break;
-                          case '同標籤':
-                            videos =
-                                blockVideosController.videoByInternalTag.value;
-                            break;
-                          case '同演員':
-                            videos = blockVideosController.videoByActor.value;
-                            break;
-                        }
-                        if (videos.isEmpty) {
-                          return const SliverToBoxAdapter(
-                            child: SizedBox(
-                              height: 200,
-                              child: Center(
-                                child: Text(
-                                  '暫無數據',
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                          );
-                        }
-
-                        return SliverPadding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          sliver: VideoList(
-                            videos: videos,
+                  SliverToBoxAdapter(
+                    child: Actions(
+                      video: videoData!,
+                      videoDetail: videoDetail,
+                    ),
+                  ),
+                  SliverOverlapAbsorber(
+                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
+                        context),
+                    sliver: SliverAppBar(
+                        pinned: true,
+                        leading: null,
+                        automaticallyImplyLeading: false,
+                        forceElevated: innerBoxIsScrolled,
+                        expandedHeight: 0,
+                        toolbarHeight: 0,
+                        flexibleSpace: const SizedBox.shrink(),
+                        bottom: PreferredSize(
+                            preferredSize: Size.fromHeight(60),
+                            child: Container(
+                              height: 60,
+                              child: RelatedVideosHeader(),
+                            ))),
+                  ),
+                ];
+              },
+              body: TabBarView(
+                children: tabs.map((String name) {
+                  print('name: $name');
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return CustomScrollView(
+                        key: PageStorageKey<String>(name),
+                        physics: const BouncingScrollPhysics(),
+                        slivers: <Widget>[
+                          SliverOverlapInjector(
+                            handle:
+                                NestedScrollView.sliverOverlapAbsorberHandleFor(
+                                    context),
                           ),
-                        );
-                      }),
-                    ],
+                          Obx(() {
+                            var videos =
+                                blockVideosController.videoByActor.value;
+                            switch (name) {
+                              case '同類型':
+                                videos = blockVideosController.videoByTag.value;
+                                break;
+                              case '同標籤':
+                                videos = blockVideosController
+                                    .videoByInternalTag.value;
+                                break;
+                              case '同演員':
+                                videos =
+                                    blockVideosController.videoByActor.value;
+                                break;
+                            }
+                            if (videos.isEmpty) {
+                              return const SliverToBoxAdapter(
+                                child: SizedBox(
+                                  height: 300,
+                                  child: Center(
+                                    child: Text(
+                                      '沒有相關影片',
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            }
+
+                            return SliverPadding(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              sliver: VideoList(
+                                videos: videos,
+                              ),
+                            );
+                          }),
+                        ],
+                      );
+                    },
                   );
-                },
-              );
-            }).toList(),
+                }).toList(),
+              ),
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
 
@@ -182,6 +193,7 @@ class VideoInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        const SizedBox(height: 8),
         Text(
           title,
           style: const TextStyle(
@@ -559,17 +571,14 @@ class VideoScreen extends StatefulWidget {
   _VideoScreenState createState() => _VideoScreenState();
 }
 
-class _VideoScreenState extends State<VideoScreen>
-    with SingleTickerProviderStateMixin {
+class _VideoScreenState extends State<VideoScreen> {
   late Future<Vod> _video;
-  // late TabController _tabController;
   late VideoDetailController videoDetailController;
 
   @override
   void initState() {
     super.initState();
     _video = fetchVideoDetail();
-    // _tabController = TabController(length: 3, vsync: this);
     getVideoUrl();
   }
 
@@ -598,14 +607,11 @@ class _VideoScreenState extends State<VideoScreen>
                     ),
                   ),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: NestedTabBarView(
-                        videoData: snapshot.data!,
-                        videoDetail: videoDetailController.videoDetail.value,
-                      ),
+                    child: NestedTabBarView(
+                      videoData: snapshot.data!,
+                      videoDetail: videoDetailController.videoDetail.value,
                     ),
-                  ),
+                  )
                 ],
               );
             } else if (snapshot.hasError) {
