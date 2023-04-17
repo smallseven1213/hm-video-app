@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:app_gp/widgets/search_input.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_popular_controller.dart';

@@ -30,11 +30,6 @@ class ListMenu extends StatelessWidget {
               showCancelButton: false);
         },
       ),
-      ListMenuItem(
-        name: '版本號:3003.8.92',
-        icon: 'assets/images/user_screen_version.png',
-        onTap: () {},
-      ),
     ];
     return SliverList(
       delegate: SliverChildListDelegate(
