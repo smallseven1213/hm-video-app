@@ -27,10 +27,14 @@ class PlayRecordController extends GetxController {
 
   void _initialData() async {
     try {
+      playrecordBox = await Hive.openBox<VideoDatabaseField>(hiveKey);
+
+      logger.i('INITIAL=======playrecordBox');
+      logger.i('INITIAL=======playrecordBox DB, $playrecordBox');
       if (playrecordBox.isEmpty) {
-        playrecordBox = await Hive.openBox<VideoDatabaseField>(hiveKey);
+        playRecord.value = playrecordBox.values.toList();
+        logger.i('INITIAL=======playrecordBox 2222');
       }
-      playRecord.value = playrecordBox.values.toList();
     } catch (error) {
       print(error);
     }
