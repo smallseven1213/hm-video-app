@@ -1,6 +1,7 @@
 import 'package:app_gp/screens/notifications/notification.dart';
 import 'package:app_gp/screens/notifications/system.dart';
 import 'package:app_gp/widgets/custom_app_bar.dart';
+import 'package:app_gp/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -47,34 +48,8 @@ class _NotificationsPageState extends State<NotificationsPage>
     return Scaffold(
       appBar: CustomAppBar(
         title: '消息中心',
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Button(
-                    text: '公告',
-                    size: 'small',
-                    onPressed: () => _tabController.animateTo(0),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: Button(
-                    text: '系統通知',
-                    size: 'small',
-                    onPressed: () => _tabController.animateTo(1),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        bottom:
+            GSTabBar(tabs: const ['公告', '系統通知'], controller: _tabController),
         actions: [
           _tabController.index == 0
               ? const SizedBox.shrink()
