@@ -35,7 +35,7 @@ class RecommandScreen extends StatelessWidget {
                     runSpacing: 8, // 標籤之間的垂直間距
                     children: tagPopularController.data
                         .map((tag) => TagItem(
-                            tag: tag.name,
+                            tag: '#${tag.name}',
                             onTap: () {
                               onClickTag(tag.name);
                             }))
@@ -53,6 +53,11 @@ class RecommandScreen extends StatelessWidget {
         const SliverToBoxAdapter(
           child: Header(
             text: '熱門推薦',
+          ),
+        ),
+        const SliverToBoxAdapter(
+          child: SizedBox(
+            height: 10,
           ),
         ),
         Obx(() => SliverPadding(

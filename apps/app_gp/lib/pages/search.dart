@@ -1,12 +1,9 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../screens/search/recommand.dart';
 import '../screens/search/search_result.dart';
@@ -39,7 +36,7 @@ class SearchPageState extends State<SearchPage> {
     if (widget.dontSearch == false) {
       searchKeyword = widget.inputDefaultValue;
     } else {
-      _searchController.text = widget.inputDefaultValue!;
+      // _searchController.value = null;
     }
   }
 
@@ -90,26 +87,6 @@ class SearchPageState extends State<SearchPage> {
           onPressed: () {
             Navigator.pop(context);
           },
-        ),
-        title: SearchInput(
-          controller: _searchController,
-          onChanged: (value) {
-            _onSearchChanged(value);
-          },
-          onSubmitted: (value) {
-            // 處理文本提交的邏輯
-          },
-          onTap: () {
-            // 處理點擊事件的邏輯，如果需要
-          },
-          onSearchButtonClick: () {
-            setState(() {
-              searchKeyword = _searchController.text;
-              displaySearchResult = false;
-            });
-          },
-          defaultValue: widget.inputDefaultValue, // 如果需要，可以提供一個預設值
-          // autoFocus: true, // 根據需要自動聚焦
         ),
       ),
       body: Stack(
