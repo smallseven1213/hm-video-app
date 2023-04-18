@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/screen_control.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -432,6 +433,16 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     double playerHeight = isFullscreen
         ? MediaQuery.of(context).size.height
         : MediaQuery.of(context).size.width / 16 * 9;
+
+    var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
+    if (currentRoutePath != '/video') {
+      _controller?.pause();
+      restoreScreenRotation();
+    } else {
+      _controller?.play();
+      setScreenRotation();
+    }
+
     return WillPopScope(
       onWillPop: onWillPop,
       child: SizedBox(
@@ -536,12 +547,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
   @override
   Widget build(BuildContext context) {
-    var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
-
-    if (currentRoutePath != '/video') {
-      widget.controller.pause();
-    }
-
     return LayoutBuilder(builder: (context, constraints) {
       return MouseRegion(
         child: GestureDetector(
