@@ -92,6 +92,7 @@ class SliverBlockWidget extends StatelessWidget {
             return Column(
               children: [
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: VideoPreviewWidget(
