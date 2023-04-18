@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 class VideoTime extends StatelessWidget {
@@ -16,6 +17,7 @@ class VideoTime extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(
+      style: const TextStyle(height: 1),
       TextSpan(
         children: [
           hasIcon == true
@@ -35,6 +37,7 @@ class VideoTime extends StatelessWidget {
             style: TextStyle(
               color: color ?? Colors.white,
               letterSpacing: 0.1,
+              fontSize: 12,
             ),
           ),
         ],

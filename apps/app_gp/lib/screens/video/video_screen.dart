@@ -208,7 +208,7 @@ class VideoInfo extends StatelessWidget {
             children: [
               if (publisher != null || (actor != null && actor!.isNotEmpty))
                 Expanded(
-                  flex: 2,
+                  flex: 3,
                   child: Row(
                     children: [
                       if (publisher != null) ...[
@@ -258,7 +258,7 @@ class VideoInfo extends StatelessWidget {
                 ),
               // const Spacer(),
               Expanded(
-                  flex: 1,
+                  flex: 2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
