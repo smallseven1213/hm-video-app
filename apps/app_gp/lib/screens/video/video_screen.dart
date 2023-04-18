@@ -202,7 +202,7 @@ class VideoInfo extends StatelessWidget {
         ),
         // 供應商、演員、觀看次數、時長
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 0),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -276,28 +276,30 @@ class VideoInfo extends StatelessWidget {
             ],
           ),
         ),
-        Wrap(
-          spacing: 4,
-          runSpacing: 4,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: tags.map((tag) {
-            return InkWell(
-              onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.tag.value,
-                    args: {'id': tag.id, 'title': tag.name});
-              },
-              child: Text(
-                '#${tag.name}',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFF00B2FF),
-                  letterSpacing: 0.1,
+        if (tags.isNotEmpty) ...[
+          Wrap(
+            spacing: 4,
+            runSpacing: 4,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: tags.map((tag) {
+              return InkWell(
+                onTap: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.tag.value,
+                      args: {'id': tag.id, 'title': tag.name});
+                },
+                child: Text(
+                  '#${tag.name}',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFF00B2FF),
+                    letterSpacing: 0.1,
+                  ),
                 ),
-              ),
-            );
-          }).toList(),
-        ),
-        const SizedBox(height: 8),
+              );
+            }).toList(),
+          ),
+          const SizedBox(height: 8),
+        ]
       ],
     );
   }

@@ -133,11 +133,13 @@ class ProgressBar extends StatelessWidget {
   final VideoPlayerController controller;
   final Function toggleFullscreen;
   final bool isFullscreen;
+  final double opacity;
   const ProgressBar({
     super.key,
     required this.controller,
     required this.toggleFullscreen,
     required this.isFullscreen,
+    required this.opacity,
   });
 
   @override
@@ -146,57 +148,61 @@ class ProgressBar extends StatelessWidget {
       bottom: isFullscreen ? 30 : 0,
       left: 0,
       right: 0,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ValueListenableBuilder(
-            valueListenable: controller,
-            builder: (context, value, child) {
-              return IconButton(
-                onPressed: () {
-                  controller.value.isPlaying
-                      ? controller.pause()
-                      : controller.play();
-                },
-                icon: Icon(
-                  controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-                  color: Colors.white,
-                  size: 18,
+      child: AnimatedOpacity(
+        opacity: opacity,
+        duration: const Duration(milliseconds: 300),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ValueListenableBuilder(
+              valueListenable: controller,
+              builder: (context, value, child) {
+                return IconButton(
+                  onPressed: () {
+                    controller.value.isPlaying
+                        ? controller.pause()
+                        : controller.play();
+                  },
+                  icon: Icon(
+                    controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+                    color: Colors.white,
+                    size: 18,
+                  ),
+                );
+              },
+            ),
+            Text(
+              controller.value.position.toString().split('.')[0],
+              style: const TextStyle(color: Colors.white),
+            ),
+            const SizedBox(width: 5.0),
+            Expanded(
+              child: VideoProgressIndicator(
+                controller,
+                allowScrubbing: true,
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                colors: VideoProgressColors(
+                  playedColor: Colors.blue,
+                  bufferedColor: Colors.grey,
+                  backgroundColor: Colors.white.withOpacity(0.3),
                 ),
-              );
-            },
-          ),
-          Text(
-            controller.value.position.toString().split('.')[0],
-            style: const TextStyle(color: Colors.white),
-          ),
-          const SizedBox(width: 5.0),
-          Expanded(
-            child: VideoProgressIndicator(
-              controller,
-              allowScrubbing: true,
-              padding: const EdgeInsets.symmetric(vertical: 8.0),
-              colors: VideoProgressColors(
-                playedColor: Colors.blue,
-                bufferedColor: Colors.grey,
-                backgroundColor: Colors.white.withOpacity(0.3),
               ),
             ),
-          ),
-          const SizedBox(width: 5.0),
-          Text(
-            controller.value.duration.toString().split('.')[0],
-            style: const TextStyle(color: Colors.white),
-          ),
-          IconButton(
-            onPressed: () => toggleFullscreen(),
-            icon: Icon(
-                isFullscreen
-                    ? Icons.close_fullscreen_rounded
-                    : Icons.fullscreen,
-                color: Colors.white),
-          ),
-        ],
+            const SizedBox(width: 5.0),
+            Text(
+              controller.value.duration.toString().split('.')[0],
+              style: const TextStyle(color: Colors.white),
+            ),
+            IconButton(
+              onPressed: () => toggleFullscreen(),
+              icon: Icon(
+                  isFullscreen
+                      ? Icons.close_fullscreen_rounded
+                      : Icons.fullscreen,
+                  color: Colors.white),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -666,29 +672,24 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 ProgressStatus(
                     controller: widget.controller, isForward: isForward),
               // 點一下出現：底部控製區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
-              AnimatedOpacity(
+              if (controlsType == ControlsOverlayType.progress ||
+                  controlsType == ControlsOverlayType.middleTime ||
+                  controlsType == ControlsOverlayType.playPause)
+                PlayerHeader(
+                  isFullscreen: widget.isFullscreen,
+                  title: widget.name,
+                  toggleFullscreen: widget.toggleFullscreen,
+                ),
+              ProgressBar(
+                controller: widget.controller,
+                toggleFullscreen: () =>
+                    widget.toggleFullscreen(!widget.isFullscreen),
+                isFullscreen: widget.isFullscreen,
                 opacity: controlsType == ControlsOverlayType.progress ||
                         controlsType == ControlsOverlayType.middleTime ||
                         controlsType == ControlsOverlayType.playPause
                     ? 1.0
                     : 0.0,
-                duration: const Duration(milliseconds: 300),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    PlayerHeader(
-                      isFullscreen: widget.isFullscreen,
-                      title: widget.name,
-                      toggleFullscreen: widget.toggleFullscreen,
-                    ),
-                    ProgressBar(
-                      controller: widget.controller,
-                      toggleFullscreen: () =>
-                          widget.toggleFullscreen(!widget.isFullscreen),
-                      isFullscreen: widget.isFullscreen,
-                    ),
-                  ],
-                ),
               ),
               //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
               if (!GetPlatform.isWeb &&
