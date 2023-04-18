@@ -1,8 +1,11 @@
 import 'package:app_gp/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/apis/notice_api.dart';
 import 'package:shared/models/index.dart';
+
+final logger = Logger();
 
 class NoticeDialog extends StatefulWidget {
   const NoticeDialog({super.key});
@@ -24,6 +27,7 @@ class NoticeDialogState extends State<NoticeDialog> {
 
   // call notice api and show notice dialog
   showNoticeDialog() async {
+    logger.i('===DISPLAY NOTICE DIALOG===');
     Notice? notice = await noticeApi.getBounceOne();
     if (notice != null && mounted) {
       showDialog(

@@ -17,12 +17,14 @@ class _ChannelsState extends State<Channels> {
   int activePageIndex = 0;
   final PageController controller = PageController();
 
-  final ChannelScreenTabController channelScreenTabController =
-      Get.put(ChannelScreenTabController(), permanent: true);
+  late final ChannelScreenTabController channelScreenTabController;
+  late final Worker everWorker;
 
   @override
   void initState() {
-    ever(channelScreenTabController.pageViewIndex, (int page) {
+    channelScreenTabController = Get.put(ChannelScreenTabController());
+
+    everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
       controller.jumpToPage(page);
     });
 
@@ -32,6 +34,11 @@ class _ChannelsState extends State<Channels> {
   @override
   void dispose() {
     controller.dispose();
+    Get.delete<ChannelScreenTabController>();
+
+    // Dispose the ever subscription
+    everWorker.dispose();
+
     super.dispose();
   }
 

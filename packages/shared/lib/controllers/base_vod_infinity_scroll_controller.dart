@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +10,8 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   final vodList = <Vod>[].obs;
   final page = 0.obs;
   final totalCount = 0.obs;
+  RxBool showNoMore = false.obs;
+  Timer? _timer;
   bool isLoading = false;
   bool hasMoreData = true;
   ScrollController scrollController = ScrollController();
@@ -45,12 +49,35 @@ abstract class BaseVodInfinityScrollController extends GetxController {
         scrollController.position.maxScrollExtent) {
       _loadMoreData();
     }
+
+    if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent &&
+        !hasMoreData &&
+        !showNoMore.value) {
+      Future.delayed(const Duration(milliseconds: 5), () {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
+      showNoMore.value = true;
+      _startTimer();
+    }
+  }
+
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer(const Duration(seconds: 3), () {
+      showNoMore.value = false;
+    });
   }
 
   @override
   void onClose() {
     scrollController.removeListener(_scrollListener);
     scrollController.dispose();
+    _timer?.cancel();
     super.onClose();
   }
 }

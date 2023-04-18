@@ -7,13 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
-import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../utils/showConfirmDialog.dart';
 import '../widgets/auth_text_field.dart';
-import '../widgets/login/button.dart';
 
 final logger = Logger();
 final authApi = AuthApi();
@@ -63,14 +62,14 @@ class _LoginPageState extends State<LoginPage> {
             },
           );
         } else {
-          Get.find<UserController>().setToken(token);
+          Get.find<AuthController>().setToken(token);
           MyRouteDelegate.of(context).popRoute();
         }
       } catch (error) {
         showConfirmDialog(
           context: context,
           title: '登入錯誤',
-          message: '帳號或密碼不正確($error)',
+          message: '帳號或密碼不正確',
           showCancelButton: false,
           onConfirm: () {
             // Navigator.of(context).pop();

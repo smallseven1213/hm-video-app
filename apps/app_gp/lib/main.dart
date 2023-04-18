@@ -25,6 +25,7 @@ import 'pages/game/deposit.dart';
 import 'pages/notifications.dart';
 import 'pages/search.dart';
 import 'pages/video.dart';
+import 'screens/main_screen/notice_dialog.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -68,7 +69,7 @@ final Map<String, RouteWidgetBuilder> routes = {
 };
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
