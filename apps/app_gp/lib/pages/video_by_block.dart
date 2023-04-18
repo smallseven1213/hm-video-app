@@ -9,6 +9,7 @@ import 'package:shared/models/vod.dart';
 import '../widgets/channel_area_banner.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
+import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
 final logger = Logger();
@@ -58,6 +59,8 @@ class VideoByBlockPage extends StatelessWidget {
               ...vodChunks
                   .map((e) => SliverBlockWidget(vods: e, channelId: channelId))
                   .toList(),
+              if (blockVodController.hasMoreData)
+                const SliverVideoPreviewSkeletonList(),
               if (!blockVodController.hasMoreData)
                 const SliverToBoxAdapter(
                   child: ListNoMore(),

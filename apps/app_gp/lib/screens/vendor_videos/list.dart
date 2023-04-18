@@ -5,6 +5,7 @@ import 'package:shared/controllers/publisher_hottest_vod_controller.dart';
 import 'package:shared/controllers/publisher_latest_vod_controller.dart';
 
 import '../../widgets/list_no_more.dart';
+import '../../widgets/sliver_video_preview_skelton_list.dart';
 import '../../widgets/video_preview.dart';
 
 class VendorVideoList extends StatelessWidget {
@@ -44,6 +45,8 @@ class VendorVideoList extends StatelessWidget {
                 crossAxisSpacing: 10.0,
               ),
             ),
+            if (publisherVodController.hasMoreData)
+              const SliverVideoPreviewSkeletonList(),
             if (!publisherVodController.hasMoreData)
               const SliverToBoxAdapter(
                 child: ListNoMore(),
