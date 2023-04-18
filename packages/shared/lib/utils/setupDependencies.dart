@@ -21,7 +21,6 @@ void setupDependencies() {
   // Get.lazyPut<LayoutController>(() => LayoutController('1'), tag: 'layout1');
   // Get.lazyPut<LayoutController>(() => LayoutController('2'), tag: 'layout2');
   // Get.lazyPut<LayoutController>(() => LayoutController('3'), tag: 'layout3');
-  Get.lazyPut<ChannelDataController>(() => ChannelDataController());
   Get.lazyPut<BannerController>(() => BannerController());
   Get.lazyPut<PlayRecordController>(() => PlayRecordController());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
@@ -37,10 +36,5 @@ void setupDependencies() {
   Get.lazyPut<UserFavoritesVideoController>(
       () => UserFavoritesVideoController());
   Get.lazyPut<UserCollectionController>(() => UserCollectionController());
-  // Get.lazyPut<TagPopularController>(() => TagPopularController());
-  /**
-   * Get.put(VideoPopularController());
-  Get.put(TagPopularController());
-   */
   Get.lazyPut<FilterScreenController>(() => FilterScreenController());
 }

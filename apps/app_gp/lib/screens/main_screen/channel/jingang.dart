@@ -132,16 +132,18 @@ class JingangButton extends StatelessWidget {
 class JingangList extends StatelessWidget {
   final int channelId;
   JingangList({Key? key, required this.channelId}) : super(key: key);
-  final ChannelDataController channelDataController =
-      Get.find<ChannelDataController>();
 
   @override
   Widget build(BuildContext context) {
-    if (channelDataController.channelData[channelId] == null) {
+    final ChannelDataController channelDataController =
+        Get.find<ChannelDataController>(
+            tag: 'channelId-${channelId.toString()}');
+
+    if (channelDataController.channelData.value == null) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
     return Obx(() {
-      Jingang? jingang = channelDataController.channelData[channelId]!.jingang;
+      Jingang? jingang = channelDataController.channelData.value!.jingang;
       // print('channelId $channelId jingang: $jingang');
       if (jingang == null ||
           jingang.jingangDetail == null ||

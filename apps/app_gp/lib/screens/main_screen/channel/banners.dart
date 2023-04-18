@@ -9,13 +9,14 @@ import 'package:shared/models/channel_info.dart';
 class Banners extends StatelessWidget {
   final int channelId;
   Banners({Key? key, required this.channelId}) : super(key: key);
-  final ChannelDataController channelDataController =
-      Get.find<ChannelDataController>();
 
   @override
   Widget build(BuildContext context) {
+    final ChannelDataController channelDataController =
+        Get.find<ChannelDataController>(
+            tag: 'channelId-${channelId.toString()}');
     return Obx(() {
-      ChannelInfo? channelData = channelDataController.channelData[channelId];
+      ChannelInfo? channelData = channelDataController.channelData.value;
       if (channelData?.banner == null) {
         return const SizedBox();
       }
