@@ -6,6 +6,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/header.dart';
 import 'banners.dart';
 import 'jingang.dart';
@@ -16,18 +17,21 @@ final logger = Logger();
 class Channel extends StatelessWidget {
   final int channelId;
 
-  Channel({Key? key, required this.channelId}) : super(key: key);
-
-  final ChannelDataController channelDataController =
-      Get.find<ChannelDataController>();
+  const Channel({Key? key, required this.channelId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      ChannelInfo? channelData = channelDataController.channelData[channelId];
+    final channelDataController = Get.put<ChannelDataController>(
+        ChannelDataController(channelId: channelId),
+        tag: 'channelId-$channelId');
 
-      List<Widget> sliverBlocks = [];
-      if (channelData != null) {
+    return Obx(() {
+      ChannelInfo? channelData = channelDataController.channelData.value;
+
+      if (channelData == null) {
+        return ChannelSkeleton();
+      } else {
+        List<Widget> sliverBlocks = [];
         for (var block in channelData.blocks!) {
           sliverBlocks.add(SliverToBoxAdapter(
             child: Header(
@@ -62,19 +66,19 @@ class Channel extends StatelessWidget {
             child: SizedBox(height: 10),
           ));
         }
-      }
 
-      return CustomScrollView(
-        physics: const BouncingScrollPhysics(),
-        slivers: [
-          SliverToBoxAdapter(child: Banners(channelId: channelId)),
-          JingangList(channelId: channelId),
-          ...sliverBlocks,
-          const SliverToBoxAdapter(
-            child: SizedBox(height: 100),
-          )
-        ],
-      );
+        return CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            SliverToBoxAdapter(child: Banners(channelId: channelId)),
+            JingangList(channelId: channelId),
+            ...sliverBlocks,
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 100),
+            )
+          ],
+        );
+      }
     });
   }
 }

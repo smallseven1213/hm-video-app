@@ -7,10 +7,15 @@ import '../models/channel_info.dart';
 var logger = Logger();
 
 class ChannelDataController extends GetxController {
-  var channelData = <int, ChannelInfo>{}.obs;
+  final int channelId;
+  var channelData = Rx<ChannelInfo?>(null);
+
+  ChannelDataController({required this.channelId}) {
+    mutateByChannelId(channelId);
+  }
 
   void mutateByChannelId(int channelId) async {
     var res = await VodApi().getBlockVodsByChannelAds(channelId);
-    channelData[channelId] = res;
+    channelData.value = res;
   }
 }
