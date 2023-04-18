@@ -90,7 +90,6 @@ class SearchPageState extends State<SearchPage> {
         ),
         titleSpacing: 0,
         title: Padding(
-          // padding right 10
           padding: const EdgeInsets.only(right: 8),
           child: SearchInput(
             controller: _searchController,
@@ -108,7 +107,9 @@ class SearchPageState extends State<SearchPage> {
             },
             onSearchButtonClick: () {
               setState(() {
-                searchKeyword = _searchController.text;
+                searchKeyword = _searchController.text.isEmpty
+                    ? widget.inputDefaultValue
+                    : _searchController.text;
                 displaySearchResult = false;
               });
             },

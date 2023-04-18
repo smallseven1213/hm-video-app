@@ -21,9 +21,9 @@ class Channel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final channelDataController = Get.put<ChannelDataController>(
-        ChannelDataController(channelId: channelId),
-        tag: 'channelId-$channelId');
+    final channelDataController = Get.find<ChannelDataController>(
+      tag: 'channelId-$channelId',
+    );
 
     return Obx(() {
       ChannelInfo? channelData = channelDataController.channelData.value;
