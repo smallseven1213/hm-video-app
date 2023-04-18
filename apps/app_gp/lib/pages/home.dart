@@ -17,10 +17,12 @@ class Home extends StatelessWidget {
 
   final screens = {
     '/layout1': () => const HomeMainScreen(
+          key: Key('layout1'),
           layoutId: 1,
         ),
     // '/layout2': () => ShortScreen(),
     '/layout2': () => const HomeMainScreen(
+          key: Key('layout2'),
           layoutId: 2,
         ),
     '/game': () => const GameScreen(),
