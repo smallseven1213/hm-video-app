@@ -85,7 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
           showConfirmDialog(
             context: context,
             title: '註冊錯誤',
-            message: '帳號或密碼不正確 ${res.code}',
+            message: '帳號或密碼不正確',
             showCancelButton: false,
             onConfirm: () {
               Navigator.of(context).pop();
@@ -96,7 +96,7 @@ class _RegisterPageState extends State<RegisterPage> {
         showConfirmDialog(
           context: context,
           title: '註冊錯誤',
-          message: '帳號或密碼不正確(-1)',
+          message: '帳號或密碼不正確',
           showCancelButton: false,
           onConfirm: () {
             Navigator.of(context).pop();
