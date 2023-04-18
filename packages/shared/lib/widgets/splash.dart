@@ -295,22 +295,25 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          Image.asset(
-            widget.backgroundAssetPath,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Center(
-            child: widget.loading!(text: loadingText) ??
-                const CircularProgressIndicator(),
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Image.asset(
+              widget.backgroundAssetPath,
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            Center(
+              child: widget.loading!(text: loadingText) ??
+                  const CircularProgressIndicator(),
+            ),
+          ],
+        ),
       ),
     );
   }

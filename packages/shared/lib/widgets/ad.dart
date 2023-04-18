@@ -75,74 +75,77 @@ class AdState extends State<Ad> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: SidImage(
-              width: size.width,
-              height: size.height,
-              sid: currentBanner.photoSid.toString(),
-              fit: BoxFit.cover,
-              onLoaded: () {
-                startTimer();
-                setState(() => imageLoaded = true);
-              },
-              onError: (e, stackTrace) {
-                MyRouteDelegate.of(context)
-                    .pushAndRemoveUntil(AppRoutes.home.value);
-              },
-            ),
-          ),
-          if (imageLoaded)
-            Positioned(
-              top: 20,
-              right: 20,
-              child: TextButton(
-                onPressed: () => {
-                  // if (countdownSeconds == 0)
-                  MyRouteDelegate.of(context)
-                      .pushAndRemoveUntil(AppRoutes.home.value)
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: SidImage(
+                width: size.width,
+                height: size.height,
+                sid: currentBanner.photoSid.toString(),
+                fit: BoxFit.cover,
+                onLoaded: () {
+                  startTimer();
+                  setState(() => imageLoaded = true);
                 },
-                child: Container(
-                  width: 90,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(255, 255, 255, .5),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: Text(
-                      countdownSeconds == 0
-                          ? '立即進入'
-                          : '倒數${countdownSeconds.toString()}s',
-                      style: const TextStyle(
-                        color: Color.fromRGBO(34, 34, 34, 0.949),
-                        fontSize: 16,
+                onError: (e, stackTrace) {
+                  MyRouteDelegate.of(context)
+                      .pushAndRemoveUntil(AppRoutes.home.value);
+                },
+              ),
+            ),
+            if (imageLoaded)
+              Positioned(
+                top: 20,
+                right: 20,
+                child: TextButton(
+                  onPressed: () => {
+                    // if (countdownSeconds == 0)
+                    MyRouteDelegate.of(context)
+                        .pushAndRemoveUntil(AppRoutes.home.value)
+                  },
+                  child: Container(
+                    width: 90,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, .5),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Center(
+                      child: Text(
+                        countdownSeconds == 0
+                            ? '立即進入'
+                            : '倒數${countdownSeconds.toString()}s',
+                        style: const TextStyle(
+                          color: Color.fromRGBO(34, 34, 34, 0.949),
+                          fontSize: 16,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          if (!imageLoaded) ...[
-            Positioned.fill(
-              child: Image.asset(
-                widget.backgroundAssetPath,
-                width: double.infinity,
-                height: double.infinity,
-                fit: BoxFit.cover,
+            if (!imageLoaded) ...[
+              Positioned.fill(
+                child: Image.asset(
+                  widget.backgroundAssetPath,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Center(
-              child: widget.loading!(text: '取得最新資源...') ??
-                  const CircularProgressIndicator(),
-            ),
-          ]
-        ],
+              Center(
+                child: widget.loading!(text: '取得最新資源...') ??
+                    const CircularProgressIndicator(),
+              ),
+            ]
+          ],
+        ),
       ),
     );
   }

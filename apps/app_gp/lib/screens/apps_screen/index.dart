@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared/models/color_keys.dart';
 
-import '../../config/colors.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/header.dart';
 import 'banner.dart';

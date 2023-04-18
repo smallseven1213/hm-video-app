@@ -51,6 +51,9 @@ class HomeMainScreenState extends State<HomeMainScreen> {
             ],
           ),
         ),
+        body: Stack(
+          children: [Channels(layoutId: widget.layoutId), NoticeDialog()],
+        ),
       ),
       body: Channels(layoutId: widget.layoutId),
     );
