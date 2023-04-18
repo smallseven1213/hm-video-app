@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -262,6 +263,44 @@ class VolumeBrightness extends StatelessWidget {
   }
 }
 
+class PlayerHeader extends StatelessWidget {
+  final String? title;
+  final bool isFullscreen;
+  final Function toggleFullscreen;
+
+  const PlayerHeader({
+    super.key,
+    this.title,
+    required this.isFullscreen,
+    required this.toggleFullscreen,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      top: 0,
+      left: 0,
+      right: 0,
+      child: AppBar(
+        title: Text(title ?? ''),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+          onPressed: () {
+            if (isFullscreen) {
+              toggleFullscreen(false);
+            } else {
+              toggleFullscreen(false);
+              Navigator.pop(context);
+            }
+          },
+        ),
+      ),
+    );
+  }
+}
+
 class VideoPlayerArea extends StatefulWidget {
   final int id;
   final String? name;
@@ -401,11 +440,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
                 controller: _controller!,
                 name: widget.name,
                 isFullscreen: isFullscreen,
-                toggleFullscreen: () {
-                  toggleFullscreen(fullScreen: !isFullscreen);
+                toggleFullscreen: (status) {
+                  toggleFullscreen(fullScreen: status);
                 },
               ),
-            ] else
+            ] else ...[
               Container(
                 width: double.infinity,
                 height: double.infinity,
@@ -415,27 +454,12 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
                         style:
                             TextStyle(color: Colors.white.withOpacity(0.5)))),
               ),
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: AppBar(
-                title: Text(widget.name ?? ''),
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-                  onPressed: () {
-                    if (isFullscreen) {
-                      toggleFullscreen(fullScreen: false);
-                    } else {
-                      toggleFullscreen(fullScreen: false);
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-            ),
+              PlayerHeader(
+                isFullscreen: isFullscreen,
+                title: widget.name,
+                toggleFullscreen: toggleFullscreen,
+              )
+            ]
           ],
         ),
       ),
@@ -489,8 +513,27 @@ class ControlsOverlayState extends State<ControlsOverlay> {
     });
   }
 
+  void startCountdown() {
+    if (controlsType == ControlsOverlayType.progress ||
+        controlsType == ControlsOverlayType.playPause) {
+      Future.delayed(Duration(seconds: 3), () {
+        if (mounted) {
+          setState(() {
+            controlsType = ControlsOverlayType.none;
+          });
+        }
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
+
+    if (currentRoutePath != '/video') {
+      widget.controller.pause();
+    }
+
     return LayoutBuilder(builder: (context, constraints) {
       return MouseRegion(
         child: GestureDetector(
@@ -498,6 +541,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             setState(() {
               controlsType = ControlsOverlayType.progress;
             });
+            startCountdown();
           },
           onDoubleTap: () {
             widget.controller.value.isPlaying
@@ -506,6 +550,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             setState(() {
               controlsType = ControlsOverlayType.playPause;
             });
+            startCountdown();
           },
           onVerticalDragStart: (details) async {
             if (GetPlatform.isWeb) {
@@ -590,6 +635,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             // Determine whether the video is fast-forwarding or rewinding
             setState(() {
               isForward = percentageDelta < 0;
+              controlsType = ControlsOverlayType.middleTime;
             });
             // Update the startHorizontalDragX to the current position
             startHorizontalDragX = details.globalPosition.dx;
@@ -607,30 +653,60 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 color: Colors.black12,
               ),
               // 點兩下出現：播放暫停鍵
-              if (controlsType == ControlsOverlayType.playPause)
-                PlayPauseButton(controller: widget.controller),
+              AnimatedOpacity(
+                opacity:
+                    controlsType == ControlsOverlayType.playPause ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: PlayPauseButton(controller: widget.controller),
+              ),
               // 水平拖拉：顯示快進或快退：影片時間 (左右拖動才顯示，可控製影片秒數)
-              if (controlsType == ControlsOverlayType.middleTime)
-                ProgressStatus(controller: widget.controller, isForward: isForward),
+              AnimatedOpacity(
+                opacity:
+                    controlsType == ControlsOverlayType.middleTime ? 1.0 : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: ProgressStatus(
+                    controller: widget.controller, isForward: isForward),
+              ),
               // 點一下出現：底部控製區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
-              if (controlsType == ControlsOverlayType.progress ||
-                  controlsType == ControlsOverlayType.middleTime ||
-                  controlsType == ControlsOverlayType.playPause)
-                ProgressBar(
-                  controller: widget.controller,
-                  toggleFullscreen: widget.toggleFullscreen,
-                  isFullscreen: widget.isFullscreen,
+              AnimatedOpacity(
+                opacity: controlsType == ControlsOverlayType.progress ||
+                        controlsType == ControlsOverlayType.middleTime ||
+                        controlsType == ControlsOverlayType.playPause
+                    ? 1.0
+                    : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    PlayerHeader(
+                      isFullscreen: widget.isFullscreen,
+                      title: widget.name,
+                      toggleFullscreen: widget.toggleFullscreen,
+                    ),
+                    ProgressBar(
+                      controller: widget.controller,
+                      toggleFullscreen: () =>
+                          widget.toggleFullscreen(!widget.isFullscreen),
+                      isFullscreen: widget.isFullscreen,
+                    ),
+                  ],
                 ),
+              ),
               //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
-              if (!GetPlatform.isWeb &&
-                      sideControlsType == SideControlsType.brightness ||
-                  sideControlsType == SideControlsType.sound)
-                VolumeBrightness(
+              AnimatedOpacity(
+                opacity: !GetPlatform.isWeb &&
+                            sideControlsType == SideControlsType.brightness ||
+                        sideControlsType == SideControlsType.sound
+                    ? 1.0
+                    : 0.0,
+                duration: const Duration(milliseconds: 300),
+                child: VolumeBrightness(
                   controller: widget.controller,
                   verticalDragPosition: verticalDragPosition,
                   sideControlsType: sideControlsType,
                   height: constraints.maxHeight,
-                )
+                ),
+              ),
             ],
           ),
         ),

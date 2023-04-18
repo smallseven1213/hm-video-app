@@ -40,29 +40,26 @@ class UserScreen extends StatelessWidget {
             ),
           ),
           const ListMenu(),
-          const SliverToBoxAdapter(
-            child: SizedBox(
-              height: 60,
-            ),
-          ),
-          // a radius container, border 1, border color 79A2C8, text center, padding y 5 x 10
-          // text color 79A2C8, text size 14
-          // text '退出登入'
-          SliverToBoxAdapter(
-            child: Center(
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  border: Border.all(
-                    color: Color(0xFF79A2C8),
-                    width: 1,
+          SliverFillRemaining(
+            hasScrollBody: false,
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 90),
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    border: Border.all(
+                      color: const Color(0xFF79A2C8),
+                      width: 1,
+                    ),
                   ),
-                ),
-                child: Text(
-                  '版本號:3.8.7533967',
-                  style: TextStyle(color: Color(0xFF79A2C8)),
+                  child: const Text(
+                    '版本號:3.8.7533967',
+                    style: TextStyle(color: Color(0xFF79A2C8)),
+                  ),
                 ),
               ),
             ),
@@ -72,3 +69,5 @@ class UserScreen extends StatelessWidget {
     );
   }
 }
+
+// MediaQuery.of(context).padding.bottom)

@@ -5,6 +5,7 @@ import 'package:app_gp/widgets/button.dart';
 import 'package:app_gp/widgets/glowing_icon.dart';
 import 'package:app_gp/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/block_videos_by_category_controller.dart';
@@ -486,27 +487,22 @@ class VideoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverGrid(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        mainAxisSpacing: 8,
-        crossAxisSpacing: 8,
-        childAspectRatio: 182 / 148,
-      ),
-      delegate: SliverChildBuilderDelegate(
-        (context, index) {
-          return VideoPreviewWidget(
-            id: videos[index].id,
-            title: videos[index].title,
-            tags: videos[index].tags ?? [],
-            timeLength: videos[index].timeLength ?? 0,
-            coverHorizontal: videos[index].coverHorizontal ?? '',
-            coverVertical: videos[index].coverVertical ?? '',
-            videoViewTimes: videos[index].videoViewTimes ?? 0,
-          );
-        },
-        childCount: videos.length,
-      ),
+    return SliverAlignedGrid.count(
+      crossAxisCount: 2,
+      itemCount: videos.length,
+      itemBuilder: (BuildContext context, int index) {
+        var video = videos[index];
+        return VideoPreviewWidget(
+            id: video.id,
+            coverVertical: video.coverVertical!,
+            coverHorizontal: video.coverHorizontal!,
+            timeLength: video.timeLength!,
+            tags: video.tags!,
+            title: video.title,
+            videoViewTimes: video.videoViewTimes!);
+      },
+      mainAxisSpacing: 12.0,
+      crossAxisSpacing: 10.0,
     );
   }
 }
