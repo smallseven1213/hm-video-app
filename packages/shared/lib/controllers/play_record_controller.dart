@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
@@ -7,11 +8,11 @@ import '../models/video_database_field.dart';
 
 final UserApi userApi = UserApi();
 final logger = Logger();
-const String hiveKey = 'playrecord';
+const String prefsKey = 'playrecord';
 
 class PlayRecordController extends GetxController {
   final playRecord = <VideoDatabaseField>[].obs;
-  late Box<VideoDatabaseField> playrecordBox;
+  late SharedPreferences prefs;
 
   @override
   void onInit() {
@@ -19,24 +20,21 @@ class PlayRecordController extends GetxController {
     _initialData();
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    playrecordBox.close();
-  }
-
   void _initialData() async {
+    logger.i('=====PLAYRECORD=====222');
     try {
-      playrecordBox = await Hive.openBox<VideoDatabaseField>(hiveKey);
-
-      logger.i('INITIAL=======playrecordBox');
-      logger.i('INITIAL=======playrecordBox DB, $playrecordBox');
-      if (playrecordBox.isEmpty) {
-        playRecord.value = playrecordBox.values.toList();
-        logger.i('INITIAL=======playrecordBox 2222');
+      prefs = await SharedPreferences.getInstance();
+      if (prefs.containsKey(prefsKey)) {
+        final jsonData =
+            jsonDecode(prefs.getString(prefsKey)!) as List<dynamic>;
+        playRecord.value = jsonData
+            .map<VideoDatabaseField>((videoJson) =>
+                VideoDatabaseField.fromJson(videoJson as Map<String, dynamic>))
+            .toList();
+        logger.i('INITIAL=======prefs 2222');
       }
     } catch (error) {
-      print(error);
+      logger.e(error);
     }
   }
 
@@ -45,18 +43,24 @@ class PlayRecordController extends GetxController {
       playRecord.removeWhere((v) => v.id == video.id);
     }
     playRecord.add(video);
-    playrecordBox.put(video.id, video);
+    logger.i('=====CREATE=====\n ${video.id} \n ${video.toJson()}');
+    await _updatePrefs();
   }
 
   void removePlayRecord(List<int> ids) async {
     playRecord.removeWhere((v) => ids.contains(v.id));
-    // for (var id in ids) {
-    //   playRecord.removeWhere((v) => v.id == int.parse(id));
-    //   playrecordBox.delete(int.parse(id));
-    // }
+    for (var id in ids) {
+      playRecord.removeWhere((v) => v.id == id);
+    }
+    await _updatePrefs();
   }
 
   VideoDatabaseField? getById(int id) {
     return playRecord.firstWhereOrNull((video) => video.id == id);
+  }
+
+  Future<void> _updatePrefs() async {
+    final jsonData = playRecord.map((video) => video.toJson()).toList();
+    await prefs.setString(prefsKey, jsonEncode(jsonData));
   }
 }

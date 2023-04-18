@@ -1,5 +1,6 @@
+import 'dart:convert';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../apis/user_api.dart';
 import '../models/actor.dart';
@@ -8,8 +9,8 @@ import '../models/video_database_field.dart';
 final userApi = UserApi();
 
 class UserFavoritesActorController extends GetxController {
-  static const String _boxName = 'userFavoritesActor';
-  late Box<Actor> _userFavoritesActorBox;
+  static const String _prefsKey = 'userFavoritesActor';
+  late SharedPreferences prefs;
   var actors = <Actor>[].obs;
 
   @override
@@ -19,22 +20,23 @@ class UserFavoritesActorController extends GetxController {
   }
 
   Future<void> _init() async {
-    _userFavoritesActorBox = await Hive.openBox<Actor>(_boxName);
+    prefs = await SharedPreferences.getInstance();
 
-    if (_userFavoritesActorBox.isEmpty) {
-      await _fetchAndSaveCollection();
+    if (prefs.containsKey(_prefsKey)) {
+      final jsonData = jsonDecode(prefs.getString(_prefsKey)!) as List<dynamic>;
+      actors.value = jsonData
+          .map<Actor>(
+              (actorJson) => Actor.fromJson(actorJson as Map<String, dynamic>))
+          .toList();
     } else {
-      actors.value = _userFavoritesActorBox.values.toList();
+      await _fetchAndSaveCollection();
     }
   }
 
   Future<void> _fetchAndSaveCollection() async {
     var actorList = await userApi.getFavoriteActor();
-
-    for (Actor actor in actorList) {
-      await _userFavoritesActorBox.put(actor.id, actor);
-      actors.add(actor);
-    }
+    actors.value = actorList;
+    await _updatePrefs();
   }
 
   void addActor(Actor actor) async {
@@ -42,15 +44,18 @@ class UserFavoritesActorController extends GetxController {
       actors.removeWhere((v) => v.id == actor.id);
     }
     actors.add(actor);
-    await _userFavoritesActorBox.put(actor.id, actor);
+    await _updatePrefs();
     userApi.addFavoriteActor(actor.id);
   }
 
   void removeActor(List<int> ids) async {
     actors.removeWhere((v) => ids.contains(v.id));
-    for (var id in ids) {
-      await _userFavoritesActorBox.delete(id);
-    }
+    await _updatePrefs();
     userApi.deleteActorFavorite(ids);
+  }
+
+  Future<void> _updatePrefs() async {
+    final jsonData = actors.map((actor) => actor.toJson()).toList();
+    await prefs.setString(_prefsKey, jsonEncode(jsonData));
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../apis/user_api.dart';
 import '../models/video_database_field.dart';
@@ -10,8 +10,8 @@ import '../models/vod.dart';
 final userApi = UserApi();
 
 class UserCollectionController extends GetxController {
-  static const String _boxName = 'userVideoCollection';
-  late Box<VideoDatabaseField> _userCollectionBox;
+  static const String _prefsKey = 'userVideoCollection';
+  late SharedPreferences prefs;
   var videos = <VideoDatabaseField>[].obs;
 
   @override
@@ -21,31 +21,34 @@ class UserCollectionController extends GetxController {
   }
 
   Future<void> _init() async {
-    _userCollectionBox = await Hive.openBox<VideoDatabaseField>(_boxName);
+    prefs = await SharedPreferences.getInstance();
 
-    if (_userCollectionBox.isEmpty) {
-      await _fetchAndSaveCollection();
+    if (prefs.containsKey(_prefsKey)) {
+      final jsonData = jsonDecode(prefs.getString(_prefsKey)!) as List<dynamic>;
+      videos.value = jsonData
+          .map<VideoDatabaseField>((videoJson) =>
+              VideoDatabaseField.fromJson(videoJson as Map<String, dynamic>))
+          .toList();
     } else {
-      videos.value = _userCollectionBox.values.toList();
+      await _fetchAndSaveCollection();
     }
   }
 
   Future<void> _fetchAndSaveCollection() async {
     var blockData = await userApi.getVideoCollection();
-    for (Vod video in blockData.vods) {
-      var videoDatabaseField = VideoDatabaseField(
-        id: video.id,
-        title: video.title,
-        coverHorizontal: video.coverHorizontal!,
-        coverVertical: video.coverVertical!,
-        timeLength: video.timeLength!,
-        tags: video.tags!,
-        videoViewTimes: video.videoViewTimes!,
-        // detail: video.detail,
-      );
-      await _userCollectionBox.put(video.id, videoDatabaseField);
-      videos.add(videoDatabaseField);
-    }
+    videos.value = blockData.vods
+        .map((video) => VideoDatabaseField(
+              id: video.id,
+              title: video.title,
+              coverHorizontal: video.coverHorizontal!,
+              coverVertical: video.coverVertical!,
+              timeLength: video.timeLength!,
+              tags: video.tags!,
+              videoViewTimes: video.videoViewTimes!,
+              // detail: video.detail,
+            ))
+        .toList();
+    await _updatePrefs();
   }
 
   // addVideo to collection
@@ -66,16 +69,19 @@ class UserCollectionController extends GetxController {
       //     : jsonDecode(video.detail!),
     );
     videos.add(formattedVideo);
-    await _userCollectionBox.put(video.id, formattedVideo);
+    await _updatePrefs();
     userApi.addVideoCollection(video.id);
   }
 
   // removeVideo from collection
   void removeVideo(List<int> ids) async {
     videos.removeWhere((v) => ids.contains(v.id));
-    for (var id in ids) {
-      await _userCollectionBox.delete(id);
-    }
+    await _updatePrefs();
     userApi.deleteVideoCollection(ids);
+  }
+
+  Future<void> _updatePrefs() async {
+    final jsonData = videos.map((video) => video.toJson()).toList();
+    await prefs.setString(_prefsKey, jsonEncode(jsonData));
   }
 }

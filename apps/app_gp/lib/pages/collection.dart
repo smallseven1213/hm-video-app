@@ -64,7 +64,7 @@ class _CollectionPageState extends State<CollectionPage> {
               itemCount: userCollectionController.videos.length,
               itemBuilder: (BuildContext context, int index) =>
                   Obx(() => VideoPreviewWidget(
-                        id: videos[index].detail?.id ?? videos[index].id,
+                        id: videos[index].id,
                         isEditing: listEditorController.isEditing.value,
                         isSelected: listEditorController.selectedIds
                             .contains(videos[index].id),
@@ -77,7 +77,7 @@ class _CollectionPageState extends State<CollectionPage> {
                         coverHorizontal: videos[index].coverHorizontal,
                         coverVertical: videos[index].coverVertical,
                         videoViewTimes: videos[index].videoViewTimes,
-                        detail: videos[index].detail,
+                        // detail: videos[index].detail,
                       )),
               mainAxisSpacing: 12.0,
               crossAxisSpacing: 10.0,

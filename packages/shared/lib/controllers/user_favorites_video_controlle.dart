@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
@@ -12,8 +12,8 @@ final userApi = UserApi();
 final logger = Logger();
 
 class UserFavoritesVideoController extends GetxController {
-  static const String _boxName = 'userFavoritesVideo';
-  late Box<VideoDatabaseField> _userFavoritesVideoBox;
+  static const String _prefsKey = 'userFavoritesVideo';
+  late SharedPreferences prefs;
   var videos = <VideoDatabaseField>[].obs;
 
   @override
@@ -23,33 +23,34 @@ class UserFavoritesVideoController extends GetxController {
   }
 
   Future<void> _init() async {
-    _userFavoritesVideoBox = await Hive.openBox<VideoDatabaseField>(_boxName);
+    prefs = await SharedPreferences.getInstance();
 
-    if (_userFavoritesVideoBox.isEmpty) {
-      await _fetchAndSaveCollection();
+    if (prefs.containsKey(_prefsKey)) {
+      final jsonData = jsonDecode(prefs.getString(_prefsKey)!) as List<dynamic>;
+      videos.value = jsonData
+          .map<VideoDatabaseField>((videoJson) =>
+              VideoDatabaseField.fromJson(videoJson as Map<String, dynamic>))
+          .toList();
     } else {
-      logger.i(_userFavoritesVideoBox.values);
-      videos.value = _userFavoritesVideoBox.values.toList();
+      await _fetchAndSaveCollection();
     }
   }
 
   Future<void> _fetchAndSaveCollection() async {
     var blockData = await userApi.getFavoriteVideo();
-    for (Vod video in blockData.vods) {
-      var videoDatabaseField = VideoDatabaseField(
-        id: video.id,
-        title: video.title,
-        coverHorizontal: video.coverHorizontal!,
-        coverVertical: video.coverVertical!,
-        timeLength: video.timeLength!,
-        tags: video.tags!,
-        videoViewTimes: video.videoViewTimes!,
-        // detail: video.detail,
-      );
-
-      await _userFavoritesVideoBox.put(video.id, videoDatabaseField);
-      videos.add(videoDatabaseField);
-    }
+    videos.value = blockData.vods
+        .map((video) => VideoDatabaseField(
+              id: video.id,
+              title: video.title,
+              coverHorizontal: video.coverHorizontal!,
+              coverVertical: video.coverVertical!,
+              timeLength: video.timeLength!,
+              tags: video.tags!,
+              videoViewTimes: video.videoViewTimes!,
+              // detail: video.detail,
+            ))
+        .toList();
+    await _updatePrefs();
   }
 
   // addVideo to collection
@@ -73,16 +74,19 @@ class UserFavoritesVideoController extends GetxController {
     );
     logger.i(formattedVideo.toJson());
     videos.add(formattedVideo);
-    await _userFavoritesVideoBox.put(video.id, formattedVideo);
+    await _updatePrefs();
     userApi.addFavoriteVideo(video.id);
   }
 
   // removeVideo from collection
   void removeVideo(List<int> ids) async {
     videos.removeWhere((v) => ids.contains(v.id));
-    for (var id in ids) {
-      await _userFavoritesVideoBox.delete(id);
-    }
+    await _updatePrefs();
     userApi.deleteFavoriteVideo(ids);
+  }
+
+  Future<void> _updatePrefs() async {
+    final jsonData = videos.map((video) => video.toJson()).toList();
+    await prefs.setString(_prefsKey, jsonEncode(jsonData));
   }
 }
