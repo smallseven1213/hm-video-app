@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
+import '../controllers/auth_controller.dart';
 import '../controllers/user_controller.dart';
 
 // create a dio instance
@@ -28,7 +29,7 @@ Future<dynamic> fetcher({
   //     ? null
   //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
 
-  final token = Get.find<UserController>().token;
+  final token = Get.find<AuthController>().token;
 
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',

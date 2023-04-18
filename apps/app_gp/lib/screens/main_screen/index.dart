@@ -37,8 +37,10 @@ class HomeMainScreenState extends State<HomeMainScreen> {
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
           child: Column(
             children: [
-              const Expanded(
-                child: LayoutTabBar(),
+              Expanded(
+                child: LayoutTabBar(
+                  layoutId: widget.layoutId,
+                ),
               ),
               Expanded(
                 child: SearchBar(),
@@ -50,9 +52,7 @@ class HomeMainScreenState extends State<HomeMainScreen> {
           ),
         ),
       ),
-      body: Stack(
-        children: [Channels(layoutId: widget.layoutId), NoticeDialog()],
-      ),
+      body: Channels(layoutId: widget.layoutId),
     );
   }
 }

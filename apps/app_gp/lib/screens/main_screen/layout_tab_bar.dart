@@ -11,8 +11,10 @@ import 'layout_tab_bar_item.dart';
 var logger = Logger();
 
 class LayoutTabBar extends StatefulWidget {
+  final int layoutId;
   const LayoutTabBar({
     Key? key,
+    required this.layoutId,
   }) : super(key: key);
 
   @override
@@ -23,38 +25,53 @@ class LayoutTabBarState extends State<LayoutTabBar>
     with TickerProviderStateMixin {
   final ChannelScreenTabController channelScreenTabController =
       Get.find<ChannelScreenTabController>();
-  final LayoutController layoutController =
-      Get.find<LayoutController>(tag: 'layout1');
+  late LayoutController layoutController;
+
   late TabController tabController;
   List<Tab> tabItems = <Tab>[];
 
   @override
   void initState() {
     super.initState();
+    layoutController =
+        Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
+    _updateTabItems();
+    _initializeTabController();
 
     ever(layoutController.layout, (channels) {
       setState(() {
-        tabItems = channels
-            .map((e) => Tab(child: Builder(
-                  builder: (BuildContext context) {
-                    return LayoutTabBarItem(
-                      index: channels.indexOf(e),
-                      name: e.name,
-                    );
-                  },
-                )))
-            .toList();
+        _updateTabItems();
+        _initializeTabController();
       });
     });
 
-    ever(
-        channelScreenTabController.tabIndex,
-        (callback) => {
-              if (tabController.index != callback)
-                {
-                  tabController.animateTo(callback),
-                }
-            });
+    ever(channelScreenTabController.tabIndex, (callback) {
+      if (tabController.index != callback) {
+        tabController.animateTo(callback);
+      }
+    });
+  }
+
+  void _updateTabItems() {
+    tabItems = layoutController.layout
+        .map((e) => Tab(
+              child: Builder(
+                builder: (BuildContext context) {
+                  return LayoutTabBarItem(
+                    index: layoutController.layout.indexOf(e),
+                    name: e.name,
+                  );
+                },
+              ),
+            ))
+        .toList();
+  }
+
+  void _initializeTabController() {
+    tabController = TabController(
+      length: tabItems.length,
+      vsync: this,
+    );
   }
 
   @override
@@ -69,10 +86,6 @@ class LayoutTabBarState extends State<LayoutTabBar>
 
   @override
   Widget build(BuildContext context) {
-    tabController = TabController(
-      length: tabItems.length,
-      vsync: this,
-    );
     if (tabItems.isEmpty) {
       return Container();
     }

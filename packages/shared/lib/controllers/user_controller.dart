@@ -1,9 +1,13 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
 import '../apis/auth_api.dart';
 import '../models/index.dart';
+import 'auth_controller.dart';
+
+final logger = Logger();
 
 class UserController extends GetxController {
   var info = User(
@@ -11,7 +15,6 @@ class UserController extends GetxController {
     0,
     [],
   ).obs;
-  var token = ''.obs;
   var wallets = <WalletItem>[].obs;
   var isLoading = false.obs;
   var totalAmount = 0.0.obs;
@@ -21,15 +24,27 @@ class UserController extends GetxController {
   bool get isGuest => info.value.roles.contains('guest');
   GetStorage box = GetStorage();
 
+  // find AuthController
+  final authController = Get.find<AuthController>();
+
   @override
   void onReady() {
     super.onReady();
-    String? storedToken = box.read('token');
-    if (storedToken != null) {
-      token.value = storedToken;
+
+    logger.i('TRACE TOKEN =====, INITIAL');
+    if (authController.token.value.isNotEmpty) {
+      mutateAll();
     }
 
-    ever(token, (_) => mutateAll());
+    ever(
+      authController.token,
+      (token) {
+        logger.i('TRACE TOKEN =====, user controller token: $token');
+        if (authController.token.value.isNotEmpty) {
+          mutateAll();
+        }
+      },
+    );
   }
 
   void _updateWallets(WalletItem walletItem) {
@@ -124,11 +139,5 @@ class UserController extends GetxController {
     if (revalidateFromServer) {
       // _fetchWallets();
     }
-  }
-
-  void setToken(String? token) {
-    var nextToken = token ?? '';
-    this.token.value = nextToken;
-    box.write('auth-token', nextToken);
   }
 }

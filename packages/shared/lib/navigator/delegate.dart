@@ -32,6 +32,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   MyRouteDelegate({
     required this.routes,
     required this.homePath,
+    this.noticeDialogWidget,
     this.onGenerateRoute,
   }) {
     setNavigatorKey(navigatorKey);
@@ -40,6 +41,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   final RouteFactory? onGenerateRoute;
   final Map<String, RouteWidgetBuilder> routes;
   final String homePath;
+  final Widget? noticeDialogWidget;
 
   @override
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -111,30 +113,35 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: navigatorKey,
-      onPopPage: _onPopPage,
-      pages: _stack.map((stack) {
-        if (stack.hasTransition == true) {
-          return CupertinoPage(
-            key: ValueKey(stack.path),
-            name: stack.path,
-            child: routes[stack.path]!(context, stack.args),
-          );
-        }
-        if (stack.hasTransition == false) {
-          return NoAnimationPage(
-            key: ValueKey(stack.path),
-            name: stack.path,
-            child: routes[stack.path]!(context, stack.args),
-          );
-        }
-        return CupertinoPage(
-          key: const ValueKey('/'),
-          name: '/',
-          child: routes['/']!(context, stack.args),
-        );
-      }).toList(),
+    return Stack(
+      children: [
+        Navigator(
+          key: navigatorKey,
+          onPopPage: _onPopPage,
+          pages: _stack.map((stack) {
+            if (stack.hasTransition == true) {
+              return CupertinoPage(
+                key: ValueKey(stack.path),
+                name: stack.path,
+                child: routes[stack.path]!(context, stack.args),
+              );
+            }
+            if (stack.hasTransition == false) {
+              return NoAnimationPage(
+                key: ValueKey(stack.path),
+                name: stack.path,
+                child: routes[stack.path]!(context, stack.args),
+              );
+            }
+            return CupertinoPage(
+              key: const ValueKey('/'),
+              name: '/',
+              child: routes['/']!(context, stack.args),
+            );
+          }).toList(),
+        ),
+        noticeDialogWidget ?? const SizedBox.shrink(),
+      ],
     );
   }
 }

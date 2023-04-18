@@ -6,6 +6,7 @@ import 'package:shared/controllers/bottom_navigator_controller.dart';
 
 import '../screens/apps_screen/index.dart';
 import '../screens/main_screen/index.dart';
+import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
@@ -15,38 +16,34 @@ class Home extends StatelessWidget {
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
   final screens = {
-    '/layout1': const HomeMainScreen(
-      layoutId: 1,
-    ),
-    '/layout2': ShortScreen(),
-    // '/layout2': const HomeMainScreen(
-    //   layoutId: 2,
-    // ),
-    '/game': const GameScreen(),
-    '/apps': const AppsScreen(),
-    '/user': const UserScreen()
+    '/layout1': () => const HomeMainScreen(
+          layoutId: 1,
+        ),
+    // '/layout2': () => ShortScreen(),
+    '/layout2': () => const HomeMainScreen(
+          layoutId: 2,
+        ),
+    '/game': () => const GameScreen(),
+    '/apps': () => const AppsScreen(),
+    '/user': () => const UserScreen()
   };
 
   @override
   Widget build(BuildContext context) {
     return Obx(
       () {
-        var screenIndex = screens.keys
-            .toList()
-            .indexOf(bottomNavigatorController.activeKey.value);
+        var activeKey = bottomNavigatorController.activeKey.value;
 
-        if (screenIndex == -1) {
+        if (!screens.containsKey(activeKey)) {
           return Container();
         }
+
+        final currentScreen = screens[activeKey]!();
+
         return Scaffold(
           body: Stack(
             children: [
-              IndexedStack(
-                index: screens.keys
-                    .toList()
-                    .indexOf(bottomNavigatorController.activeKey.value),
-                children: screens.values.toList(),
-              ),
+              currentScreen,
               bottomNavigatorController.navigatorItems.isEmpty
                   ? Container()
                   : Positioned(
@@ -54,7 +51,7 @@ class Home extends StatelessWidget {
                       left: 0,
                       right: 0,
                       child: Opacity(
-                        opacity: 1, // 控制透明度，此處設置為0.9
+                        opacity: 1,
                         child: Padding(
                           padding: EdgeInsets.only(
                               bottom: MediaQuery.of(context).padding.bottom),
@@ -87,7 +84,8 @@ class Home extends StatelessWidget {
                                     .map(
                                       (entry) => Expanded(
                                         child: CustomBottomBarItem(
-                                          isActive: entry.key == screenIndex,
+                                          isActive:
+                                              entry.value.path! == activeKey,
                                           iconSid: entry.value.photoSid!,
                                           activeIconSid:
                                               entry.value.clickEffect!,
@@ -103,7 +101,8 @@ class Home extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )
+                    ),
+              const NoticeDialog()
             ],
           ),
         );

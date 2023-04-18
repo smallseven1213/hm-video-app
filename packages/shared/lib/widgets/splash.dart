@@ -3,10 +3,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/apis/apk_api.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/services/system_config.dart';
 
@@ -16,6 +18,8 @@ import '../controllers/video_popular_controller.dart';
 import '../enums/app_routes.dart';
 import '../models/index.dart';
 import '../navigator/delegate.dart';
+
+final logger = Logger();
 
 class Splash extends StatefulWidget {
   final String backgroundAssetPath;
@@ -68,7 +72,7 @@ class _SplashState extends State<Splash> {
   AuthApi authApi = AuthApi();
   BannerController bannerController = Get.put(BannerController());
   Timer? timer;
-  UserController userController = Get.find<UserController>();
+  AuthController authController = Get.find<AuthController>();
   String loadingText = '線路檢查中...';
 
   // 取得invitationCode
@@ -187,19 +191,19 @@ class _SplashState extends State<Splash> {
   userLogin() async {
     setState(() => loadingText = '用戶登入...');
     print('step6: 檢查是否有token (是否登入)');
-    print('userApi: ${userApi}');
-    if (userController.token.value != '') {
+    logger.i('userApi: ${authController.token.value}');
+    if (authController.token.value != '') {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
       fetchInitialDataAndNavigate();
     } else {
       // Step6-2: 無: 訪客登入
-      print('step6.2: 無token (訪客登入)');
+      logger.i('step6.2: 無token (訪客登入)');
       try {
         String invitationCode = await getInvitationCode();
         final res = await authApi.guestLogin(
           invitationCode: invitationCode,
         );
-        userController.setToken(res.data['token']);
+        authController.setToken(res.data['token']);
         print('res.status ${res.code}');
         if (res.code == '00') {
           fetchInitialDataAndNavigate();
