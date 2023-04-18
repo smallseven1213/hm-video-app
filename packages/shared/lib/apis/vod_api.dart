@@ -66,6 +66,30 @@ class VodApi {
         .map((e) => Vod.fromJson(e)));
   }
 
+  Future<BlockVod> getSameTagVod({
+    required int tagId,
+    required int page,
+    required int limit,
+  }) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/sameTags?id=$tagId&film=1&page=$page&limit=$limit');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    try {
+      var bb = BlockVod(
+        List.from((res.data['data']['data'] as List<dynamic>)
+            .map((e) => Vod.fromJson(e))),
+        res.data['data']['total'],
+      );
+      return bb;
+    } catch (e) {
+      print(e);
+    }
+    return BlockVod([], 0);
+  }
+
   Future<BlockVod> getManyByChannel(int blockId, {int? offset = 1}) async {
     var res = await fetcher(
         url:

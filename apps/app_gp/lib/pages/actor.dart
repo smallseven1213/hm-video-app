@@ -7,6 +7,7 @@ import 'package:shared/controllers/actor_vod_controller.dart';
 import '../screens/actor/card.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
+import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
 class ActorPage extends StatelessWidget {
@@ -90,6 +91,8 @@ class ActorPage extends StatelessWidget {
                   crossAxisSpacing: 10.0,
                 ),
               ),
+              if (actorVodController.hasMoreData)
+                const SliverVideoPreviewSkeletonList(),
               if (!actorVodController.hasMoreData)
                 const SliverToBoxAdapter(
                   child: ListNoMore(),
