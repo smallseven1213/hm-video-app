@@ -450,9 +450,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
                 height: double.infinity,
                 color: Colors.black,
                 child: Center(
-                    child: Text('Loading...',
-                        style:
-                            TextStyle(color: Colors.white.withOpacity(0.5)))),
+                  child: Text(
+                    'Loading...',
+                    style: TextStyle(color: Colors.white.withOpacity(0.5)),
+                  ),
+                ),
               ),
               PlayerHeader(
                 isFullscreen: isFullscreen,
@@ -660,13 +662,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 child: PlayPauseButton(controller: widget.controller),
               ),
               // 水平拖拉：顯示快進或快退：影片時間 (左右拖動才顯示，可控製影片秒數)
-              AnimatedOpacity(
-                opacity:
-                    controlsType == ControlsOverlayType.middleTime ? 1.0 : 0.0,
-                duration: const Duration(milliseconds: 300),
-                child: ProgressStatus(
+              if (controlsType == ControlsOverlayType.middleTime)
+                ProgressStatus(
                     controller: widget.controller, isForward: isForward),
-              ),
               // 點一下出現：底部控製區（播放鍵+已看時間+進度條+影片總長+全螢幕，拖拉進度條的時候也顯示影片時間）
               AnimatedOpacity(
                 opacity: controlsType == ControlsOverlayType.progress ||
@@ -693,20 +691,15 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 ),
               ),
               //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
-              AnimatedOpacity(
-                opacity: !GetPlatform.isWeb &&
-                            sideControlsType == SideControlsType.brightness ||
-                        sideControlsType == SideControlsType.sound
-                    ? 1.0
-                    : 0.0,
-                duration: const Duration(milliseconds: 300),
-                child: VolumeBrightness(
+              if (!GetPlatform.isWeb &&
+                      sideControlsType == SideControlsType.brightness ||
+                  sideControlsType == SideControlsType.sound)
+                VolumeBrightness(
                   controller: widget.controller,
                   verticalDragPosition: verticalDragPosition,
                   sideControlsType: sideControlsType,
                   height: constraints.maxHeight,
-                ),
-              ),
+                )
             ],
           ),
         ),
