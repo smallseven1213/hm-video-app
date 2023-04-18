@@ -29,18 +29,16 @@ enum LikeButtonType { favorite, bookmark }
 enum VideoFilterType { actor, category, tag }
 
 class NestedTabBarView extends StatelessWidget {
-  final Vod? videoData;
   final Vod videoDetail;
   const NestedTabBarView({
     Key? key,
-    this.videoData,
     required this.videoDetail,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final List<String> tabs =
-        videoData!.actors!.isEmpty ? ['同類型', '同標籤'] : ['同演員', '同類型', '同標籤'];
+        videoDetail.actors!.isEmpty ? ['同類型', '同標籤'] : ['同演員', '同類型', '同標籤'];
     String getIdList(List inputList) {
       if (inputList.isEmpty) return '';
       return inputList.take(3).map((e) => e.id.toString()).join(',');
@@ -48,12 +46,12 @@ class NestedTabBarView extends StatelessWidget {
 
     final BlockVideosByCategoryController blockVideosController = Get.put(
       BlockVideosByCategoryController(
-        tagId: getIdList(videoData!.tags!),
-        actorId: videoData!.actors!.isEmpty
+        tagId: getIdList(videoDetail.tags!),
+        actorId: videoDetail.actors!.isEmpty
             ? ''
-            : videoData!.actors![0].id.toString(),
-        excludeId: videoData!.id.toString(),
-        internalTagId: videoData!.internalTagIds!.join(',').toString(),
+            : videoDetail.actors![0].id.toString(),
+        excludeId: videoDetail.id.toString(),
+        internalTagId: videoDetail.internalTagIds!.join(',').toString(),
       ),
       tag: DateTime.now().toString(),
     );
@@ -70,17 +68,17 @@ class NestedTabBarView extends StatelessWidget {
                 return <Widget>[
                   SliverToBoxAdapter(
                     child: VideoInfo(
-                      title: videoData!.title,
-                      tags: videoData!.tags ?? [],
-                      timeLength: videoData!.timeLength ?? 0,
-                      viewTimes: videoData!.videoViewTimes ?? 0,
-                      actor: videoData!.actors,
-                      publisher: videoData!.publisher,
+                      title: videoDetail.title,
+                      tags: videoDetail.tags ?? [],
+                      timeLength: videoDetail.timeLength ?? 0,
+                      viewTimes: videoDetail.videoViewTimes ?? 0,
+                      actor: videoDetail.actors,
+                      publisher: videoDetail.publisher,
                     ),
                   ),
                   SliverToBoxAdapter(
                     child: Actions(
-                      video: videoData!,
+                      video: videoDetail,
                       videoDetail: videoDetail,
                     ),
                   ),
@@ -419,12 +417,12 @@ class BannerAd extends StatelessWidget {
 
 class RelatedVideos extends StatelessWidget {
   final TabController tabController;
-  final Vod videoData;
+  final Vod videoDetail;
 
   const RelatedVideos({
     super.key,
     required this.tabController,
-    required this.videoData,
+    required this.videoDetail,
   });
 
   String getIdList(List inputList) {
@@ -436,11 +434,12 @@ class RelatedVideos extends StatelessWidget {
   Widget build(BuildContext context) {
     final BlockVideosByCategoryController blockVideosController = Get.put(
       BlockVideosByCategoryController(
-        tagId: getIdList(videoData.tags!),
-        actorId:
-            videoData.actors!.isEmpty ? '' : videoData.actors![0].id.toString(),
-        excludeId: videoData.id.toString(),
-        internalTagId: videoData.internalTagIds!.join(',').toString(),
+        tagId: getIdList(videoDetail.tags!),
+        actorId: videoDetail.actors!.isEmpty
+            ? ''
+            : videoDetail.actors![0].id.toString(),
+        excludeId: videoDetail.id.toString(),
+        internalTagId: videoDetail.internalTagIds!.join(',').toString(),
       ),
       tag: DateTime.now().toString(),
     );
@@ -522,65 +521,53 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
-  late Future<Vod> _video;
   late VideoDetailController videoDetailController;
 
   @override
   void initState() {
     super.initState();
-    _video = fetchVideoDetail();
-    getVideoUrl();
+    getVideo();
   }
 
-  void getVideoUrl() async {
+  void getVideo() async {
     videoDetailController =
         Get.put(VideoDetailController(widget.id), tag: widget.id.toString());
   }
-
-  Future<Vod> fetchVideoDetail() async => await vodApi.getVodDetail(widget.id);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: FutureBuilder<Vod>(
-          future: _video,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return Column(
-                children: [
-                  Obx(
-                    () => VideoPlayerArea(
+        body: Obx(
+          () => videoDetailController.videoUrl.value != ''
+              ? Column(
+                  children: [
+                    VideoPlayerArea(
                       id: widget.id,
                       name: widget.name,
                       videoUrl: videoDetailController.videoUrl.value,
                     ),
-                  ),
-                  Expanded(
-                    child: NestedTabBarView(
-                      videoData: snapshot.data!,
-                      videoDetail: videoDetailController.videoDetail.value,
+                    videoDetailController.videoDetail.value.id != 0
+                        ? Expanded(
+                            child: NestedTabBarView(
+                              videoDetail:
+                                  videoDetailController.videoDetail.value,
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+                  ],
+                )
+              : Column(
+                  children: [
+                    CustomAppBar(
+                      title: widget.name ?? '',
+                      backgroundColor: Colors.transparent,
                     ),
-                  )
-                ],
-              );
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            }
-
-            // By default, show a loading spinner.
-            return Column(
-              children: [
-                CustomAppBar(
-                  title: widget.name ?? '',
-                  backgroundColor: Colors.transparent,
+                    const Expanded(
+                      child: Center(child: CircularProgressIndicator()),
+                    ),
+                  ],
                 ),
-                const Expanded(
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-              ],
-            );
-          },
         ),
       ),
     );

@@ -13,23 +13,26 @@ class Video {
   bool? isCollected;
   String? externalId;
   String? buyPoints = "0";
+  int? timeLength;
   bool isPlay = false;
   bool started = false;
   bool hideAD = false;
 
-  Video(
-      {required this.id,
-      required this.title,
-      this.film,
-      this.chargeType,
-      this.points,
-      this.buyPoints,
-      this.isCollected,
-      this.externalId,
-      this.videoUrl,
-      this.isPreview,
-      this.coverHorizontal,
-      this.coverVertical});
+  Video({
+    required this.id,
+    required this.title,
+    this.film,
+    this.chargeType,
+    this.points,
+    this.buyPoints,
+    this.isCollected,
+    this.externalId,
+    this.videoUrl,
+    this.isPreview,
+    this.coverHorizontal,
+    this.coverVertical,
+    this.timeLength,
+  });
 
   Video.fromJson(Map<dynamic, dynamic> json)
       : id = json['id'],
@@ -43,7 +46,8 @@ class Video {
         videoUrl = json['videoUrl'],
         isPreview = json['isPreview'],
         coverHorizontal = json['coverHorizontal'],
-        coverVertical = json['coverVertical'];
+        coverVertical = json['coverVertical'],
+        timeLength = json['timeLength'];
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -59,6 +63,7 @@ class Video {
     data['isPreview'] = isPreview;
     data['coverHorizontal'] = coverHorizontal;
     data['coverVertical'] = coverVertical;
+    data['timeLength'] = timeLength;
     return data;
   }
 }

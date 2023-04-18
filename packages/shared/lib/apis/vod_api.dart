@@ -126,34 +126,34 @@ class VodApi {
     return BlockVod([], 0);
   }
 
-  Future<Vod> getVodUrl(int vodId) async {
+  Future<Video> getVodUrl(int vodId) async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/videoUrl?id=$vodId');
     if (res.data['code'] != '00') {
-      return Vod(0, '');
+      return Video(id: 0, title: '');
     }
     try {
-      return Vod.fromJson(res.data['data']);
+      return Video.fromJson(res.data['data']);
     } catch (e) {
-      return Vod(0, '');
+      return Video(id: 0, title: '');
     }
   }
 
-  Future<Vod> refreshVodUrl(Vod vod) async {
-    var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/videoUrl?id=${vod.id}');
-    if (res.data['code'] != '00') {
-      return Vod(0, '');
-    }
-    try {
-      // return vod.updateUrl(res.data['data']);
-      return Vod.fromJson(res.data['data']);
-    } catch (e) {
-      print(e);
-      return vod;
-    }
-  }
+  // Future<Vod> refreshVodUrl(Vod vod) async {
+  //   var res = await fetcher(
+  //       url:
+  //           '${systemConfig.apiHost}/public/videos/video/videoUrl?id=${vod.id}');
+  //   if (res.data['code'] != '00') {
+  //     return Vod(0, '');
+  //   }
+  //   try {
+  //     // return vod.updateUrl(res.data['data']);
+  //     return Vod.fromJson(res.data['data']);
+  //   } catch (e) {
+  //     print(e);
+  //     return vod;
+  //   }
+  // }
   // get('/video/videoUrl?id=${vod.id}').then((value) {
   //   var res = (value.body as Map<String, dynamic>);
   //   if (res['code'] != '00') {
