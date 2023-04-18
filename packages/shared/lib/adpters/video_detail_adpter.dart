@@ -1,11 +1,12 @@
 import 'package:hive/hive.dart';
 
+import '../enums/adapters.dart';
 import '../models/channel_info.dart';
 import '../models/tag.dart';
 
 class VideoDetailAdapter extends TypeAdapter<Data> {
   @override
-  final int typeId = 3;
+  final int typeId = adapterId(Adapters.videoDetail);
 
   @override
   Data read(BinaryReader reader) {

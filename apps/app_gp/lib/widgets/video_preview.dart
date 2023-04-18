@@ -118,7 +118,7 @@ class VideoPreviewWidget extends StatelessWidget {
                         tags: tags,
                         title: title,
                         videoViewTimes: videoViewTimes,
-                        detail: detail!,
+                        // detail: detail!,
                       );
                       playrecordController.addPlayRecord(playRecord);
                     },

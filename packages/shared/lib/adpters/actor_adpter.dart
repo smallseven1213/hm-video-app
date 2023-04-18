@@ -1,10 +1,11 @@
 import 'package:hive/hive.dart';
 
+import '../enums/adapters.dart';
 import '../models/actor.dart';
 
 class ActorAdapter extends TypeAdapter<Actor> {
   @override
-  final int typeId = 4;
+  final int typeId = adapterId(Adapters.actor);
 
   @override
   Actor read(BinaryReader reader) {

@@ -13,6 +13,7 @@ import '../adpters/tags_adpter.dart';
 import '../adpters/video_adpter.dart';
 import '../adpters/video_detail_adpter.dart';
 import '../models/color_keys.dart';
+import '../models/video_database_field.dart';
 
 Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   // start app
@@ -70,10 +71,11 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
     Hive.init(dir.path);
   }
 
-  Hive.registerAdapter(VideoDatabaseFieldAdapter());
-  Hive.registerAdapter(TagsAdapter());
-  Hive.registerAdapter(VideoDetailAdapter());
-  Hive.registerAdapter(ActorAdapter());
+  // Hive 會crash,暫時先不用
+  // Hive.registerAdapter(VideoDatabaseFieldAdapter());
+  // Hive.registerAdapter(TagsAdapter());
+  // Hive.registerAdapter(VideoDetailAdapter());
+  // Hive.registerAdapter(ActorAdapter());
 
   // DI shared package
   setupDependencies();

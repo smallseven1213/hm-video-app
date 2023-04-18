@@ -46,4 +46,20 @@ class Actor {
       coverVertical: json['coverVertical'] ?? '',
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'photoSid': photoSid,
+      'aliasName': aliasName,
+      'description': description,
+      'detail': detail,
+      'orderIndex': orderIndex,
+      'containVideos': containVideos,
+      'actorCollectTimes': actorCollectTimes,
+      'isCollect': isCollect,
+      'coverVertical': coverVertical,
+    };
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:shared/models/tag.dart';
 
-import 'channel_info.dart';
+// import 'channel_info.dart';
 
 class VideoDatabaseField {
   final int id;
@@ -10,10 +10,7 @@ class VideoDatabaseField {
   final List<Tag> tags;
   final String title;
   final int videoViewTimes;
-  final double? imageRatio;
-  final Data? detail;
-  final bool isEmbeddedAds;
-  final bool isEditing;
+  // final Data? detail;
   VideoDatabaseField({
     required this.id,
     required this.coverVertical,
@@ -22,10 +19,7 @@ class VideoDatabaseField {
     required this.tags,
     required this.title,
     required this.videoViewTimes,
-    this.isEmbeddedAds = false,
-    this.detail,
-    this.isEditing = false,
-    this.imageRatio,
+    // this.detail,
   });
 
   Map<String, dynamic> toJson() {
@@ -37,10 +31,22 @@ class VideoDatabaseField {
       'tags': tags,
       'title': title,
       'videoViewTimes': videoViewTimes,
-      'detail': detail,
-      'isEmbeddedAds': isEmbeddedAds,
-      'isEditing': isEditing,
-      'imageRatio': imageRatio,
+      // 'detail': detail,
     };
+  }
+
+  factory VideoDatabaseField.fromJson(Map<String, dynamic> json) {
+    return VideoDatabaseField(
+      id: json['id'],
+      coverVertical: json['coverVertical'],
+      coverHorizontal: json['coverHorizontal'],
+      timeLength: json['timeLength'],
+      tags: (json['tags'] as List<dynamic>)
+          .map<Tag>((tagJson) => Tag.fromJson(tagJson as Map<String, dynamic>))
+          .toList(),
+      title: json['title'],
+      videoViewTimes: json['videoViewTimes'],
+      // detail: json['detail'],
+    );
   }
 }

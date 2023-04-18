@@ -2,13 +2,13 @@
 
 import 'package:hive/hive.dart';
 
-import '../models/channel_info.dart';
+import '../enums/adapters.dart';
 import '../models/tag.dart';
 import '../models/video_database_field.dart';
 
 class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
   @override
-  final int typeId = 1;
+  final int typeId = adapterId(Adapters.video);
 
   @override
   VideoDatabaseField read(BinaryReader reader) {
@@ -19,10 +19,7 @@ class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
     final tags = reader.readList().cast<Tag>();
     final title = reader.readString();
     final videoViewTimes = reader.readInt();
-    final imageRatio = reader.readDouble();
-    final detail = reader.read() as Data;
-    final isEmbeddedAds = reader.readBool();
-    final isEditing = reader.readBool();
+    // final detail = reader.read() as Data;
 
     return VideoDatabaseField(
       id: id,
@@ -32,21 +29,18 @@ class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
       tags: tags,
       title: title,
       videoViewTimes: videoViewTimes,
-      isEmbeddedAds: isEmbeddedAds,
-      detail: detail,
-      isEditing: isEditing,
-      imageRatio: imageRatio,
+      // detail: detail,
     );
   }
 
   @override
   void write(BinaryWriter writer, VideoDatabaseField obj) {
-    writer.writeInt(obj.id ?? 0);
-    writer.writeString(obj.title ?? '');
-    writer.writeInt(obj.timeLength ?? 0);
-    writer.writeString(obj.coverVertical ?? '');
-    writer.writeString(obj.coverHorizontal ?? '');
-    writer.writeList(obj.tags ?? []);
-    writer.writeInt(obj.videoViewTimes ?? 0);
+    writer.writeInt(obj.id);
+    writer.writeString(obj.title);
+    writer.writeInt(obj.timeLength);
+    writer.writeString(obj.coverVertical);
+    writer.writeString(obj.coverHorizontal);
+    writer.writeList(obj.tags);
+    writer.writeInt(obj.videoViewTimes);
   }
 }
