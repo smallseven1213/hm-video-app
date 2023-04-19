@@ -14,6 +14,7 @@ import 'package:shared/widgets/view_times.dart';
 import 'package:shared/widgets/video_time.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 final logger = Logger();
 
@@ -161,31 +162,32 @@ class VideoPreviewWidget extends StatelessWidget {
                     aspectRatio: imageRatio ??
                         (displaycoverVertical == true ? 119 / 179 : 374 / 198),
                     child: Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        // color: Colors.white,
-                      ),
-                      foregroundDecoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.0),
-                            Colors.black.withOpacity(0.3),
-                          ],
-                          stops: const [0.9, 1.0],
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                          // color: Colors.white,
                         ),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: SidImage(
-                        key: ValueKey('video-preview-$id'),
-                        sid: displaycoverVertical
-                            ? coverVertical
-                            : coverHorizontal,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                        foregroundDecoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.0),
+                              Colors.black.withOpacity(0.3),
+                            ],
+                            stops: const [0.9, 1.0],
+                          ),
+                        ),
+                        clipBehavior: Clip.antiAlias,
+                        child: SidImageVisibilityDetector(
+                          child: SidImage(
+                            key: ValueKey('video-preview-$id'),
+                            sid: displaycoverVertical
+                                ? coverVertical
+                                : coverHorizontal,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                        )),
                   ),
                   if (isEditing &&
                       isSelected) // Check if isEditing is true and the id is in the selectedIds list
@@ -283,6 +285,40 @@ class VideoPreviewWidget extends StatelessWidget {
           )
         ]
       ],
+    );
+  }
+}
+
+class SidImageVisibilityDetector extends StatefulWidget {
+  final Widget child;
+  const SidImageVisibilityDetector({
+    Key? key,
+    required this.child,
+  }) : super(key: key);
+
+  @override
+  _SidImageVisibilityDetectorState createState() =>
+      _SidImageVisibilityDetectorState();
+}
+
+class _SidImageVisibilityDetectorState
+    extends State<SidImageVisibilityDetector> {
+  final _visibilityDetectorKey = GlobalKey();
+
+  bool _isInViewport = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return VisibilityDetector(
+      key: _visibilityDetectorKey,
+      onVisibilityChanged: (visibilityInfo) {
+        if (visibilityInfo.visibleFraction > 0.5) {
+          setState(() {
+            _isInViewport = true;
+          });
+        }
+      },
+      child: _isInViewport ? widget.child : const SizedBox.shrink(),
     );
   }
 }
