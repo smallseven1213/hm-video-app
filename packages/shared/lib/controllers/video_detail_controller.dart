@@ -22,6 +22,7 @@ class VideoDetailController extends GetxController {
   final int videoId;
   var videoDetail = Vod(0, '').obs;
   var videoUrl = ''.obs;
+  var video = Video(id: 0, title: '').obs;
 
   VideoDetailController(this.videoId);
 
@@ -38,8 +39,9 @@ class VideoDetailController extends GetxController {
 
   Future<void> fetchVideoUrl(int videoId) async {
     try {
-      Video video = await vodApi.getVodUrl(videoId);
-      videoUrl.value = getVideoUrl(video.videoUrl)!;
+      Video _video = await vodApi.getVodUrl(videoId);
+      videoUrl.value = getVideoUrl(_video.videoUrl)!;
+      video.value = _video;
     } catch (error) {
       print(error);
     }
