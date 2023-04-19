@@ -1,6 +1,7 @@
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:universal_html/html.dart';
 
 const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
@@ -9,7 +10,6 @@ class SystemConfig {
 
   // Color
   Map<ColorKeys, dynamic> appColors = {};
-
   // API ENDPOINT
   String apiHost = 'dev-sv.hmtech.site/$env/dl.json';
   String vodHost = 'https://dl.dlstt.com/$env/dl.json';
@@ -18,7 +18,7 @@ class SystemConfig {
   // STT | GP | 51SS | SV
   String project = const String.fromEnvironment('PROJECT', defaultValue: 'STT');
   String agentCode = GetPlatform.isWeb
-      ? '--' // window.location.host.split('.')[0]
+      ? window.location.host.split('.')[0] // window.location.host.split('.')[0]
       : const String.fromEnvironment('AgentCode',
           defaultValue: '--'); // 格式: 9L1O 之後改 --
   String version = const String.fromEnvironment('VERSION',
