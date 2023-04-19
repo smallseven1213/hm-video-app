@@ -17,13 +17,16 @@ class _ChannelsState extends State<Channels> {
   int activePageIndex = 0;
   final PageController controller = PageController();
 
-  late final ChannelScreenTabController channelScreenTabController;
+  late ChannelScreenTabController channelScreenTabController;
+  late LayoutController layoutController;
   late final Worker everWorker;
 
   @override
   void initState() {
-    channelScreenTabController = Get.put(ChannelScreenTabController());
-
+    channelScreenTabController = Get.find<ChannelScreenTabController>(
+        tag: 'channel-screen-${widget.layoutId}');
+    layoutController =
+        Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
     everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
       controller.jumpToPage(page);
     });
@@ -31,21 +34,16 @@ class _ChannelsState extends State<Channels> {
     super.initState();
   }
 
-  @override
-  void dispose() {
-    controller.dispose();
-    Get.delete<ChannelScreenTabController>();
+  // @override
+  // void dispose() {
+  //   controller.dispose();
+  //   everWorker.dispose();
 
-    // Dispose the ever subscription
-    everWorker.dispose();
-
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final layoutController =
-        Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
     return Obx(
       () => PageView(
         controller: controller,

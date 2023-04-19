@@ -23,8 +23,7 @@ class LayoutTabBar extends StatefulWidget {
 
 class LayoutTabBarState extends State<LayoutTabBar>
     with TickerProviderStateMixin {
-  final ChannelScreenTabController channelScreenTabController =
-      Get.find<ChannelScreenTabController>();
+  late ChannelScreenTabController channelScreenTabController;
   late LayoutController layoutController;
 
   late TabController tabController;
@@ -33,6 +32,9 @@ class LayoutTabBarState extends State<LayoutTabBar>
   @override
   void initState() {
     super.initState();
+    channelScreenTabController = Get.find<ChannelScreenTabController>(
+        tag: 'channel-screen-${widget.layoutId}');
+
     layoutController =
         Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
     _updateTabItems();
@@ -58,6 +60,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
               child: Builder(
                 builder: (BuildContext context) {
                   return LayoutTabBarItem(
+                    layoutId: widget.layoutId,
                     index: layoutController.layout.indexOf(e),
                     name: e.name,
                   );
@@ -74,11 +77,11 @@ class LayoutTabBarState extends State<LayoutTabBar>
     );
   }
 
-  @override
-  void dispose() {
-    tabController.dispose();
-    super.dispose();
-  }
+  // @override
+  // void dispose() {
+  //   tabController.dispose();
+  //   super.dispose();
+  // }
 
   void handleTapTabItem(int index) {
     channelScreenTabController.pageViewIndex.value = index;

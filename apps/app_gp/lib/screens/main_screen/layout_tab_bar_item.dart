@@ -9,33 +9,44 @@ import '../../config/colors.dart';
 
 final logger = Logger();
 
-class LayoutTabBarItem extends StatelessWidget {
-  LayoutTabBarItem({
+class LayoutTabBarItem extends StatefulWidget {
+  const LayoutTabBarItem({
     Key? key,
+    required this.layoutId,
     required this.index,
     required this.name,
   }) : super(key: key);
 
+  final int layoutId;
   final int index;
   final String name;
 
-  final ChannelScreenTabController channelScreenTabController =
-      Get.find<ChannelScreenTabController>();
+  @override
+  _LayoutTabBarItemState createState() => _LayoutTabBarItemState();
+}
+
+class _LayoutTabBarItemState extends State<LayoutTabBarItem> {
+  late ChannelScreenTabController channelScreenTabController;
+
+  @override
+  void initState() {
+    super.initState();
+    channelScreenTabController = Get.find<ChannelScreenTabController>(
+        tag: 'channel-screen-${widget.layoutId}');
+  }
 
   @override
   Widget build(BuildContext context) {
     return Tab(
       child: Obx(() {
-        logger.i(
-            'channelScreenTabController.tabIndex.value ${channelScreenTabController.tabIndex.value}');
         return Text(
-          name,
+          widget.name,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: channelScreenTabController.tabIndex.value == index
+              color: channelScreenTabController.tabIndex.value == widget.index
                   ? AppColors.colors[ColorKeys.primary]
                   : const Color(0xffCFCECE),
-              shadows: channelScreenTabController.tabIndex.value == index
+              shadows: channelScreenTabController.tabIndex.value == widget.index
                   ? [
                       Shadow(
                         color: AppColors.colors[ColorKeys.primary]!

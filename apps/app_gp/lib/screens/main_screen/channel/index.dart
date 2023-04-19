@@ -29,7 +29,7 @@ class Channel extends StatelessWidget {
       ChannelInfo? channelData = channelDataController.channelData.value;
 
       if (channelData == null) {
-        return ChannelSkeleton();
+        return const ChannelSkeleton();
       } else {
         List<Widget> sliverBlocks = [];
         for (var block in channelData.blocks!) {
