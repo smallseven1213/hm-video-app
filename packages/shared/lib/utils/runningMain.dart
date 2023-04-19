@@ -52,7 +52,7 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   //     // DI shared package
   //     setupDependencies();
 
-  //     // DI app_gp package
+  //     // DI app_gs package
 
   //     // set SystemConfig appColors
 
@@ -80,7 +80,7 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   // DI shared package
   setupDependencies();
 
-  // DI app_gp package
+  // DI app_gs package
 
   // set SystemConfig appColors
 

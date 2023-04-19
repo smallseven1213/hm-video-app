@@ -19,7 +19,7 @@ RUN rm -rf /sdks/flutter/.pub-cache
 
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
-    melos exec --scope="app_gp" -- \
+    melos exec --scope="app_gs" -- \
     flutter build web --web-renderer html --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
 
 # Production stage
@@ -29,5 +29,5 @@ RUN apk add bash && \
     echo Asia/Taipei > /etc/timezone
 # COPY --from=builder /app/ /app/
 # RUN ls -la /app/
-COPY --from=builder /app/apps/app_gp/build/web /usr/share/nginx/html
+COPY --from=builder /app/apps/app_gs/build/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
