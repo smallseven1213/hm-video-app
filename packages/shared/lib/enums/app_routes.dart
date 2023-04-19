@@ -4,7 +4,7 @@ enum AppRoutes {
   home,
   video,
   videoByBlock,
-  vendorVideos,
+  publisher,
   tag,
   gameDeposit,
   login,
@@ -34,8 +34,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/video';
       case AppRoutes.videoByBlock:
         return '/video_by_block';
-      case AppRoutes.vendorVideos:
-        return '/vendor_videos';
+      case AppRoutes.publisher:
+        return '/publisher';
       case AppRoutes.tag:
         return '/tag';
       case AppRoutes.gameDeposit:

@@ -17,7 +17,7 @@ import 'pages/register.dart';
 import 'pages/share.dart';
 import 'pages/sharerecord.dart';
 import 'pages/tag_video.dart';
-import 'pages/vendor_videos.dart';
+import 'pages/publisher.dart';
 import 'pages/video_by_block.dart';
 import 'pages/favorites.dart';
 import 'pages/filter.dart';
@@ -40,9 +40,9 @@ final Map<String, RouteWidgetBuilder> routes = {
         title: args['title'] as String,
         channelId: args['channelId'] as int,
       ),
-  AppRoutes.vendorVideos.value: (context, args) => VendorVideosPage(
+  AppRoutes.publisher.value: (context, args) => PublisherPage(
         id: args['id'] as int,
-        title: args['title'] as String,
+        // title: args['title'] as String,
       ),
   AppRoutes.tag.value: (context, args) => TagVideoPage(
         id: args['id'] as int,

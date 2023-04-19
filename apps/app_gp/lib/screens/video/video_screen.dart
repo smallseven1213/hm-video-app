@@ -214,7 +214,7 @@ class VideoInfo extends StatelessWidget {
                       if (publisher != null) ...[
                         InkWell(
                           onTap: () => MyRouteDelegate.of(context).push(
-                            AppRoutes.vendorVideos.value,
+                            AppRoutes.publisher.value,
                             args: {
                               'id': publisher!.id,
                               'title': publisher!.name
