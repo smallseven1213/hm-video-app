@@ -32,21 +32,23 @@ class HomeMainScreenState extends State<HomeMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(88),
-        child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          child: Column(
-            children: [
-              Expanded(
-                child: SearchBar(),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(88),
+          child: Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: Column(
+              children: [
+                Expanded(
+                  child: LayoutTabBar(
+                    layoutId: widget.layoutId,
+                  ),
+                ),
               ),
               Expanded(
-                child: LayoutTabBar(
-                  key: ValueKey(widget.layoutId),
-                  layoutId: widget.layoutId,
-                ),
+                child: SearchBar(),
               ),
               // Expanded(
               //   child: Marquee(),
@@ -54,8 +56,8 @@ class HomeMainScreenState extends State<HomeMainScreen> {
             ],
           ),
         ),
+        body: Channels(layoutId: widget.layoutId),
       ),
-      body: Channels(layoutId: widget.layoutId),
     );
   }
 }

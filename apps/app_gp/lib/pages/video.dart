@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/user_api.dart';
+import 'package:shared/utils/screen_control.dart';
 
 final logger = Logger();
 
@@ -23,22 +24,12 @@ class _VideoState extends State<Video> {
   void initState() {
     super.initState();
     userApi.addPlayHistory(widget.args['id']);
-    // Allow screen rotation when entering the page
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-      DeviceOrientation.landscapeLeft,
-      DeviceOrientation.landscapeRight,
-    ]);
+    setScreenRotation();
   }
 
   @override
   void dispose() {
-    // Restore original orientations when leaving the page
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
+    restoreScreenRotation();
     super.dispose();
   }
 
