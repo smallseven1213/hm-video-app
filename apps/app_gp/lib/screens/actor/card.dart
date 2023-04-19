@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/user_favorites_actor_controller.dart';
+import 'package:shared/models/actor.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class ActorCard extends StatelessWidget {
-  final int id;
-  final String name;
-  final String photoSid;
-  final String description;
-  final String actorCollectTimes;
-  final String? coverVertical;
+  final Actor actor;
   const ActorCard({
     Key? key,
-    required this.id,
-    required this.name,
-    required this.photoSid,
-    required this.description,
-    required this.actorCollectTimes,
-    this.coverVertical,
+    required this.actor,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final UserFavoritesActorController userFavoritesActorController =
+        Get.find<UserFavoritesActorController>();
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       decoration: BoxDecoration(
@@ -28,7 +23,7 @@ class ActorCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          if (coverVertical != '' && coverVertical != null)
+          if (actor.coverVertical != '' && actor.coverVertical != null)
             Positioned(
               top: 0,
               left: 0,
@@ -36,14 +31,14 @@ class ActorCard extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 child: SidImage(
-                  key: ValueKey(coverVertical),
-                  sid: coverVertical ?? photoSid,
+                  key: ValueKey(actor.coverVertical),
+                  sid: actor.coverVertical ?? actor.photoSid,
                   width: double.infinity,
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-          if (coverVertical == '' || coverVertical == null)
+          if (actor.coverVertical == '' || actor.coverVertical == null)
             Positioned(
               top: 0,
               left: 0,
@@ -69,14 +64,18 @@ class ActorCard extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Row(
               children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(80),
-                  child: SidImage(
-                      key: ValueKey(photoSid),
-                      sid: photoSid,
-                      width: 80,
-                      height: 80,
-                      fit: BoxFit.cover),
+                SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(80),
+                    child: SidImage(
+                        key: ValueKey(actor.photoSid),
+                        sid: actor.photoSid,
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover),
+                  ),
                 ),
                 const SizedBox(width: 8),
                 Flexible(
@@ -92,10 +91,35 @@ class ActorCard extends StatelessWidget {
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        description,
+                        actor.description!,
                         style:
                             const TextStyle(fontSize: 12, color: Colors.white),
                       ),
+                      InkWell(
+                        onTap: () {
+                          userFavoritesActorController.addActor(actor);
+                        },
+                        child: Container(
+                          width: 30,
+                          height: 30,
+                          color: Colors.white,
+                          child: Row(
+                            children: [
+                              Text(
+                                actor.actorCollectTimes.toString(),
+                                style: const TextStyle(
+                                    fontSize: 12, color: Colors.white),
+                              ),
+                              const SizedBox(width: 6),
+                              const Icon(
+                                Icons.favorite_outline,
+                                size: 12,
+                                color: Color(0xFF21AFFF),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),
@@ -103,23 +127,33 @@ class ActorCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 8,
-            right: 8,
-            child: Row(
-              children: [
-                Text(
-                  actorCollectTimes,
-                  style: const TextStyle(fontSize: 12, color: Colors.white),
+            top: 20,
+            right: 20,
+            child: InkWell(
+              onTap: () {
+                userFavoritesActorController.addActor(actor);
+              },
+              child: Container(
+                width: 30,
+                height: 30,
+                color: Colors.white,
+                child: Row(
+                  children: [
+                    Text(
+                      actor.actorCollectTimes.toString(),
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                    ),
+                    const SizedBox(width: 6),
+                    const Icon(
+                      Icons.favorite_outline,
+                      size: 12,
+                      color: Color(0xFF21AFFF),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 6),
-                const Icon(
-                  Icons.favorite_outline,
-                  size: 12,
-                  color: Color(0xFF21AFFF),
-                ),
-              ],
+              ),
             ),
-          ),
+          )
         ],
       ),
     );
