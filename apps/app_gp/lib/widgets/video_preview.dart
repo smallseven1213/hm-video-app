@@ -13,6 +13,7 @@ import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/view_times.dart';
 import 'package:shared/widgets/video_time.dart';
 import 'package:shared/utils/video_info_formatter.dart';
+import 'package:shimmer/shimmer.dart';
 
 final logger = Logger();
 
@@ -124,13 +125,45 @@ class VideoPreviewWidget extends StatelessWidget {
                     },
               child: Stack(
                 children: [
+                  // 背景
+                  AspectRatio(
+                    aspectRatio: imageRatio ??
+                        (displaycoverVertical == true ? 119 / 179 : 374 / 198),
+                    child: Container(
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: Color(0xFF00234D)
+                            // color: Colors.white,
+                            ),
+                        clipBehavior: Clip.antiAlias,
+                        child: const Center(
+                          child: Image(
+                            image: AssetImage(
+                                'assets/images/video_preview_loading.png'),
+                            width: 102,
+                            height: 70,
+                          ),
+                          // 特效版有點慢
+                          // child: Shimmer.fromColors(
+                          //   child: Image(
+                          //     image: AssetImage(
+                          //         'assets/images/video_preview_loading.png'),
+                          //     width: 102,
+                          //     height: 70,
+                          //   ),
+                          //   baseColor: Colors.white.withOpacity(0.4),
+                          //   highlightColor: Colors.white.withOpacity(0.2),
+                          // ),
+                        )),
+                  ),
+                  // 主體
                   AspectRatio(
                     aspectRatio: imageRatio ??
                         (displaycoverVertical == true ? 119 / 179 : 374 / 198),
                     child: Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Colors.white,
+                        // color: Colors.white,
                       ),
                       foregroundDecoration: BoxDecoration(
                         gradient: LinearGradient(

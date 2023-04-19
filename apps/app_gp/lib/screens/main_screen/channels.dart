@@ -58,6 +58,7 @@ class _ChannelsState extends State<Channels> {
               (index, item) => MapEntry(
                 index,
                 Channel(
+                  key: ValueKey(item.id),
                   channelId: item.id,
                 ),
               ),

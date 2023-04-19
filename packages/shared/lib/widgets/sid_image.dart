@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/widgets/fade_in_effect.dart';
 
 import '../apis/image_api.dart';
 import '../utils/sid_image_result_decode.dart';
@@ -85,25 +86,27 @@ class SidImageState extends State<SidImage> {
   @override
   Widget build(BuildContext context) {
     if (imageData.isEmpty) {
-      return Container(
-        // todo: 顏色應該以brand分類 & add no-image
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF00234D), Color(0xFF002D62)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      // return Container(
+      //   decoration: const BoxDecoration(
+      //     gradient: LinearGradient(
+      //       colors: [Color(0xFF00234D), Color(0xFF002D62)],
+      //       begin: Alignment.topCenter,
+      //       end: Alignment.bottomCenter,
+      //     ),
+      //   ),
+      //   width: widget.width,
+      //   height: widget.height,
+      // );
+      return const SizedBox.shrink();
+    }
+    return FadeInEffect(
+      child: Image.memory(
+        imageData,
         width: widget.width,
         height: widget.height,
-      );
-    }
-    return Image.memory(
-      imageData,
-      width: widget.width,
-      height: widget.height,
-      fit: widget.fit,
-      alignment: widget.alignment,
+        fit: widget.fit,
+        alignment: widget.alignment,
+      ),
     );
   }
 }

@@ -101,6 +101,7 @@ class JingangButton extends StatelessWidget {
                     item!.url!.startsWith('https://')) {
                   launch(item!.url ?? '', webOnlyWindowName: '_blank');
                 } else {
+                  logger.i(item!.url);
                   List<String> parts = item!.url!.split('/');
 
                   // 從列表中獲取所需的字串和數字

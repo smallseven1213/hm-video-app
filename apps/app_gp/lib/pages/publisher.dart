@@ -2,20 +2,16 @@ import 'package:app_gp/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import '../screens/vendor_videos/list.dart';
 import '../widgets/button.dart';
-import '../screens/favorites/video.dart';
-import '../screens/favorites/actor.dart';
 
-class VendorVideosPage extends StatefulWidget {
+class PublisherPage extends StatefulWidget {
   final int id;
-  final String title;
-  const VendorVideosPage({Key? key, required this.id, required this.title})
-      : super(key: key);
+  const PublisherPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _VendorVideosPageState createState() => _VendorVideosPageState();
 }
 
-class _VendorVideosPageState extends State<VendorVideosPage>
+class _VendorVideosPageState extends State<PublisherPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -35,7 +31,7 @@ class _VendorVideosPageState extends State<VendorVideosPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.title,
+        title: '',
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(60),
           child: Padding(
