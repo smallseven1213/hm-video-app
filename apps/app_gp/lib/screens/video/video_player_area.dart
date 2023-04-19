@@ -354,6 +354,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
       restoreScreenRotation();
     }
@@ -409,6 +410,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     // Size size = WidgetsBinding.instance.window.physicalSize;
     // print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
     print('@@@@@@@@@ didChangeMetrics orientation: $orientation');
+    if(orientation == Orientation.landscape) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
     setState(() {
       isFullscreen = orientation == Orientation.landscape;
     });
@@ -439,14 +445,19 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
     return WillPopScope(
       onWillPop: onWillPop,
-      child: SizedBox(
+      child: Container(
+        color: Colors.black,
         width: MediaQuery.of(context).size.width,
         height: playerHeight,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: <Widget>[
             if (_controller != null && _controller!.value.isInitialized) ...[
-              VideoPlayer(_controller!),
+              AspectRatio(
+                aspectRatio: _controller!.value.size.width /
+                    _controller!.value.size.height,
+                child: VideoPlayer(_controller!),
+              ),
               ControlsOverlay(
                 controller: _controller!,
                 name: widget.name,
