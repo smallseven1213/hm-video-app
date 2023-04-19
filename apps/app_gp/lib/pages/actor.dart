@@ -37,13 +37,7 @@ class ActorPage extends StatelessWidget {
             slivers: [
               SliverToBoxAdapter(
                 child: ActorCard(
-                  id: actorController.actor.value.id,
-                  name: actorController.actor.value.name,
-                  photoSid: actorController.actor.value.photoSid,
-                  description: actorController.actor.value.description!,
-                  actorCollectTimes:
-                      actorController.actor.value.actorCollectTimes.toString(),
-                  coverVertical: actorController.actor.value.coverVertical,
+                  actor: actorController.actor.value,
                 ),
               ),
               SliverToBoxAdapter(
