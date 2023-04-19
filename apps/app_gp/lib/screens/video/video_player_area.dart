@@ -354,6 +354,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
         DeviceOrientation.landscapeLeft,
         DeviceOrientation.landscapeRight,
       ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
       restoreScreenRotation();
     }
@@ -409,6 +410,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     // Size size = WidgetsBinding.instance.window.physicalSize;
     // print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
     print('@@@@@@@@@ didChangeMetrics orientation: $orientation');
+    if(orientation == Orientation.landscape) {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    } else {
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    }
     setState(() {
       isFullscreen = orientation == Orientation.landscape;
     });
