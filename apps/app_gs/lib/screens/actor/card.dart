@@ -95,31 +95,6 @@ class ActorCard extends StatelessWidget {
                         style:
                             const TextStyle(fontSize: 12, color: Colors.white),
                       ),
-                      InkWell(
-                        onTap: () {
-                          userFavoritesActorController.addActor(actor);
-                        },
-                        child: Container(
-                          width: 30,
-                          height: 30,
-                          color: Colors.white,
-                          child: Row(
-                            children: [
-                              Text(
-                                actor.actorCollectTimes.toString(),
-                                style: const TextStyle(
-                                    fontSize: 12, color: Colors.white),
-                              ),
-                              const SizedBox(width: 6),
-                              const Icon(
-                                Icons.favorite_outline,
-                                size: 12,
-                                color: Color(0xFF21AFFF),
-                              ),
-                            ],
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),
@@ -129,14 +104,18 @@ class ActorCard extends StatelessWidget {
           Positioned(
             top: 20,
             right: 20,
-            child: InkWell(
-              onTap: () {
-                userFavoritesActorController.addActor(actor);
-              },
-              child: Container(
-                width: 30,
-                height: 30,
-                color: Colors.white,
+            child: Obx(() {
+              var isLiked = userFavoritesActorController.actors
+                  .any((e) => e.id == actor.id);
+              return InkWell(
+                onTap: () {
+                  if (isLiked) {
+                    userFavoritesActorController.removeActor([]);
+                    return;
+                  } else {
+                    userFavoritesActorController.addActor(actor);
+                  }
+                },
                 child: Row(
                   children: [
                     Text(
@@ -144,15 +123,15 @@ class ActorCard extends StatelessWidget {
                       style: const TextStyle(fontSize: 12, color: Colors.white),
                     ),
                     const SizedBox(width: 6),
-                    const Icon(
-                      Icons.favorite_outline,
-                      size: 12,
+                    Icon(
+                      isLiked ? Icons.favorite_outline : Icons.favorite_sharp,
+                      size: 20,
                       color: Color(0xFF21AFFF),
                     ),
                   ],
                 ),
-              ),
-            ),
+              );
+            }),
           )
         ],
       ),
