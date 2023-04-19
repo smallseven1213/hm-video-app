@@ -22,7 +22,6 @@ class HomeMainScreenState extends State<HomeMainScreen> {
   @override
   void initState() {
     super.initState();
-    logger.i('INITIAL-HOME');
 
     Get.put(ChannelScreenTabController(),
         tag: 'channel-screen-${widget.layoutId}', permanent: false);
