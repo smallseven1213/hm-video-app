@@ -439,14 +439,19 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
     return WillPopScope(
       onWillPop: onWillPop,
-      child: SizedBox(
+      child: Container(
+        color: Colors.black,
         width: MediaQuery.of(context).size.width,
         height: playerHeight,
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: <Widget>[
             if (_controller != null && _controller!.value.isInitialized) ...[
-              VideoPlayer(_controller!),
+              AspectRatio(
+                aspectRatio: _controller!.value.size.width /
+                    _controller!.value.size.height,
+                child: VideoPlayer(_controller!),
+              ),
               ControlsOverlay(
                 controller: _controller!,
                 name: widget.name,

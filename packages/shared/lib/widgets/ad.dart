@@ -120,7 +120,7 @@ class AdState extends State<Ad> {
                       child: Text(
                         countdownSeconds == 0
                             ? '立即進入'
-                            : '倒數${countdownSeconds.toString()}s',
+                            : '倒數 ${countdownSeconds.toString()}s',
                         style: const TextStyle(
                           color: Color.fromRGBO(34, 34, 34, 0.949),
                           fontSize: 16,
