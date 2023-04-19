@@ -12,9 +12,9 @@ class ChannelScreenTabController extends GetxController {
     pageViewIndex.value = 0;
   }
 
-  @override
-  void onClose() {
-    reset();
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   reset();
+  //   super.onClose();
+  // }
 }

@@ -18,17 +18,18 @@ class SidImage extends StatefulWidget {
   final Alignment alignment;
   final Function? onLoaded;
   final Function? onError;
+  final bool noFadeIn;
 
-  const SidImage({
-    super.key,
-    required this.sid,
-    this.width = 200,
-    this.height = 200,
-    this.fit = BoxFit.cover,
-    this.alignment = Alignment.center,
-    this.onLoaded,
-    this.onError,
-  });
+  const SidImage(
+      {super.key,
+      required this.sid,
+      this.width = 200,
+      this.height = 200,
+      this.fit = BoxFit.cover,
+      this.alignment = Alignment.center,
+      this.onLoaded,
+      this.onError,
+      this.noFadeIn = false});
 
   @override
   State<SidImage> createState() => SidImageState();
@@ -86,18 +87,26 @@ class SidImageState extends State<SidImage> {
   @override
   Widget build(BuildContext context) {
     if (imageData.isEmpty) {
-      // return Container(
-      //   decoration: const BoxDecoration(
-      //     gradient: LinearGradient(
-      //       colors: [Color(0xFF00234D), Color(0xFF002D62)],
-      //       begin: Alignment.topCenter,
-      //       end: Alignment.bottomCenter,
-      //     ),
-      //   ),
-      //   width: widget.width,
-      //   height: widget.height,
-      // );
-      return const SizedBox.shrink();
+      return Container(
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //     colors: [Color(0xFF00234D), Color(0xFF002D62)],
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //   ),
+        // ),
+        width: widget.width,
+        height: widget.height,
+      );
+    }
+    if (widget.noFadeIn) {
+      return Image.memory(
+        imageData,
+        width: widget.width,
+        height: widget.height,
+        fit: widget.fit,
+        alignment: widget.alignment,
+      );
     }
     return FadeInEffect(
       child: Image.memory(

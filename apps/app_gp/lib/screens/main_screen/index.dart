@@ -41,6 +41,7 @@ class HomeMainScreenState extends State<HomeMainScreen> {
             child: Column(children: [
               Expanded(
                   child: LayoutTabBar(
+                key: Key('layout-tab-bar-${widget.layoutId}'),
                 layoutId: widget.layoutId,
               )),
               Expanded(

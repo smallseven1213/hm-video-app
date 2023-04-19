@@ -30,12 +30,14 @@ class CustomBottomBarItem extends StatelessWidget {
                   sid: activeIconSid,
                   width: 30,
                   height: 30,
+                  noFadeIn: true,
                 )
               : SidImage(
                   key: const Key('unactiveIcon'),
                   sid: iconSid,
                   width: 30,
                   height: 30,
+                  noFadeIn: true,
                 ),
           const SizedBox(height: 4),
           Text(

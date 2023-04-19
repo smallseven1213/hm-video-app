@@ -25,6 +25,8 @@ class LayoutTabBarState extends State<LayoutTabBar>
     with TickerProviderStateMixin {
   late ChannelScreenTabController channelScreenTabController;
   late LayoutController layoutController;
+  late Worker layoutWorker;
+  late Worker screenTabWorker;
 
   late TabController tabController;
   List<Tab> tabItems = <Tab>[];
@@ -40,17 +42,24 @@ class LayoutTabBarState extends State<LayoutTabBar>
     _updateTabItems();
     _initializeTabController();
 
-    ever(layoutController.layout, (channels) {
+    layoutWorker = ever(layoutController.layout, (channels) {
       setState(() {
         _updateTabItems();
         _initializeTabController();
       });
     });
 
-    ever(channelScreenTabController.tabIndex, (callback) {
-      if (tabController.index != callback) {
-        tabController.animateTo(callback);
-      }
+    screenTabWorker = ever(channelScreenTabController.tabIndex, (callback) {
+      // if (tabController.index != callback && tabItems.isNotEmpty && mounted) {
+      //   WidgetsBinding.instance.addPostFrameCallback((_) {
+      //     tabController.animateTo(callback);
+      //   });
+      // }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (tabController.index != callback && tabItems.isNotEmpty && mounted) {
+          tabController.animateTo(callback);
+        }
+      });
     });
   }
 
@@ -77,11 +86,13 @@ class LayoutTabBarState extends State<LayoutTabBar>
     );
   }
 
-  // @override
-  // void dispose() {
-  //   tabController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    tabController.dispose();
+    layoutWorker.dispose();
+    screenTabWorker.dispose();
+    super.dispose();
+  }
 
   void handleTapTabItem(int index) {
     channelScreenTabController.pageViewIndex.value = index;
