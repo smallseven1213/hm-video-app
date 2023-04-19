@@ -28,19 +28,24 @@ class _ChannelsState extends State<Channels> {
     layoutController =
         Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
     everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
-      controller.jumpToPage(page);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (controller.hasClients) {
+          controller.jumpToPage(page);
+        }
+      });
     });
 
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   controller.dispose();
-  //   everWorker.dispose();
+  @override
+  void dispose() {
+    controller.dispose();
+    everWorker.dispose();
+    channelScreenTabController.reset();
 
-  //   super.dispose();
-  // }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
