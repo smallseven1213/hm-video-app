@@ -258,25 +258,16 @@ class _SplashState extends State<Splash> {
     print('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
-    // 停留在閃屏一下，再跳轉
 
-    int count = 2;
-    timer = Timer.periodic(const Duration(seconds: 1), (_timer) {
-      count--;
-      if (count == 0) {
-        _timer.cancel();
-        // Get.offNamed(path);
-        if (landingBanners.isEmpty) {
-          print('沒有廣告，直接進入首頁');
-          MyRouteDelegate.of(context)
-              .pushAndRemoveUntil(AppRoutes.home.value, hasTransition: false);
-        } else {
-          print('有廣告，進入廣告頁');
-          MyRouteDelegate.of(context)
-              .pushAndRemoveUntil(AppRoutes.ad.value, hasTransition: false);
-        }
-      }
-    });
+    if (landingBanners.isEmpty && mounted) {
+      print('沒有廣告，直接進入首頁');
+      MyRouteDelegate.of(context)
+          .pushAndRemoveUntil(AppRoutes.home.value, hasTransition: false);
+    } else {
+      print('有廣告，進入廣告頁');
+      MyRouteDelegate.of(context)
+          .pushAndRemoveUntil(AppRoutes.ad.value, hasTransition: false);
+    }
   }
 
   @override
@@ -304,22 +295,25 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          Image.asset(
-            widget.backgroundAssetPath,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Center(
-            child: widget.loading!(text: loadingText) ??
-                const CircularProgressIndicator(),
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Image.asset(
+              widget.backgroundAssetPath,
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            Center(
+              child: widget.loading!(text: loadingText) ??
+                  const CircularProgressIndicator(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -30,29 +30,32 @@ class HomeMainScreenState extends State<HomeMainScreen> {
     Get.put(LayoutController(widget.layoutId.toString()),
         tag: 'layout${widget.layoutId}');
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(88),
-        child: Padding(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          child: Column(
-            children: [
-              Expanded(
-                child: LayoutTabBar(
-                  layoutId: widget.layoutId,
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(88),
+          child: Padding(
+            padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+            child: Column(
+              children: [
+                Expanded(
+                  child: LayoutTabBar(
+                    layoutId: widget.layoutId,
+                  ),
                 ),
-              ),
-              Expanded(
-                child: SearchBar(),
-              ),
-              // Expanded(
-              //   child: Marquee(),
-              // ),
-            ],
+                Expanded(
+                  child: SearchBar(),
+                ),
+                // Expanded(
+                //   child: Marquee(),
+                // ),
+              ],
+            ),
           ),
         ),
+        body: Channels(layoutId: widget.layoutId),
       ),
-      body: Channels(layoutId: widget.layoutId),
     );
   }
 }
