@@ -38,21 +38,18 @@ class HomeMainScreenState extends State<HomeMainScreen> {
           preferredSize: const Size.fromHeight(88),
           child: Padding(
             padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-            child: Column(
-              children: [
-                Expanded(
+            child: Column(children: [
+              Expanded(
                   child: LayoutTabBar(
-                    layoutId: widget.layoutId,
-                  ),
-                ),
-              ),
+                layoutId: widget.layoutId,
+              )),
               Expanded(
                 child: SearchBar(),
-              ),
-              // Expanded(
-              //   child: Marquee(),
-              // ),
-            ],
+              )
+            ]),
+            // Expanded(
+            //   child: Marquee(),
+            // ),
           ),
         ),
         body: Channels(layoutId: widget.layoutId),
