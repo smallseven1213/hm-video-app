@@ -91,23 +91,20 @@ class JingangList extends StatelessWidget {
   }
 
   Widget buildRow(jingang) {
-    return SizedBox(
-      height: 90.0,
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        itemCount: jingang.jingangDetail?.length ?? 0,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: JingangButton(
-              item: jingang.jingangDetail![index],
-              outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
-              outerFrameStyle:
-                  jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
-            ),
-          );
-        },
-      ),
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemCount: jingang.jingangDetail?.length ?? 0,
+      itemBuilder: (context, index) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: JingangButton(
+            item: jingang.jingangDetail![index],
+            outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+            outerFrameStyle:
+                jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+          ),
+        );
+      },
     );
   }
 
@@ -132,22 +129,8 @@ class JingangList extends StatelessWidget {
         if (jingang.jingangStyle == JingangStyle.single.index) {
           return SliverToBoxAdapter(
             child: SizedBox(
-              height: 95.0,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: jingang.jingangDetail?.length ?? 0,
-                itemBuilder: (context, index) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: JingangButton(
-                      item: jingang.jingangDetail![index],
-                      outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
-                      outerFrameStyle: jingang.outerFrameStyle ??
-                          OuterFrameStyle.circle.index,
-                    ),
-                  );
-                },
-              ),
+              height: 95,
+              child: buildRow(jingang),
             ),
           );
         }
