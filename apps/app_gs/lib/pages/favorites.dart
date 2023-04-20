@@ -29,6 +29,7 @@ class _FavoritesPageState extends State<FavoritesPage>
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         listEditorController.clearSelected();
+        listEditorController.isEditing.value = false;
       }
     });
   }
@@ -37,6 +38,7 @@ class _FavoritesPageState extends State<FavoritesPage>
   void dispose() {
     _tabController.dispose();
     listEditorController.clearSelected();
+    listEditorController.isEditing.value = false;
     super.dispose();
   }
 
