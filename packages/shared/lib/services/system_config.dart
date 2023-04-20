@@ -11,9 +11,9 @@ class SystemConfig {
   // Color
   Map<ColorKeys, dynamic> appColors = {};
   // API ENDPOINT
-  String apiHost = 'dev-sv.hmtech.site/$env/dl.json';
-  String vodHost = 'https://dl.dlstt.com/$env/dl.json';
-  String imgHost = 'https://dl.dlstt.com/$env/dl.json';
+  String apiHost = 'dl.dlsv.net/$env/dl.json';
+  String vodHost = 'https://dl.dlsv.net/$env/dl.json';
+  String imgHost = 'https://dl.dlsv.net/$env/dl.json';
 
   // STT | GP | 51SS | SV
   String project = const String.fromEnvironment('PROJECT', defaultValue: 'STT');
@@ -36,8 +36,8 @@ class SystemConfig {
               : 'H5';
 
   List<String> vodHostList = [
-    'https://dl.dlstt.com/$env/dl.json',
-    'https://dl.0272pay.com/$env/dl.json',
+    'https://dl.dlsv.net/$env/dl.json',
+    'https://dl.dlsv.app/$env/dl.json'
   ];
 
   int timeout = 5000;

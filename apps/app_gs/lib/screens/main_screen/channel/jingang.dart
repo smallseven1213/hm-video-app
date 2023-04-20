@@ -132,7 +132,7 @@ class JingangList extends StatelessWidget {
         if (jingang.jingangStyle == JingangStyle.single.index) {
           return SliverToBoxAdapter(
             child: SizedBox(
-              height: 90.0,
+              height: 95.0,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: jingang.jingangDetail?.length ?? 0,
