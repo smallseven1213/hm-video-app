@@ -110,6 +110,8 @@ class ActorCard extends SliverPersistentHeaderDelegate {
               opacity: opacity,
               child: Text(
                 actor.description!,
+                softWrap: true,
+                maxLines: null,
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 12,

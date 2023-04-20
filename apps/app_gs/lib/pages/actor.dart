@@ -23,14 +23,6 @@ class ActorPage extends StatelessWidget {
     final actorController = ActorController(actorId: id);
 
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: const Size.fromHeight(kToolbarHeight),
-      //   child: Obx(
-      //     () => CustomAppBar(
-      //       title: actorController.actor.value.name,
-      //     ),
-      //   ),
-      // ),
       body: Obx(() => CustomScrollView(
             controller: actorVodController.scrollController,
             physics: const BouncingScrollPhysics(),
@@ -39,24 +31,6 @@ class ActorPage extends StatelessWidget {
                 delegate: ActorCard(actor: actorController.actor.value),
                 pinned: true,
               ),
-
-              // SliverPersistentHeader(
-              //   delegate: CustomSliverPersistentHeaderDelegate(
-              //     minHeight: kToolbarHeight,
-              //     maxHeight: kToolbarHeight + 100,
-              //     child: Obx(
-              //       () => ActorCard(
-              //         actor: actorController.actor.value,
-              //       ),
-              //     ),
-              //   ),
-              //   pinned: true,
-              // ),
-              // SliverToBoxAdapter(
-              //   child: ActorCard(
-              //     actor: actorController.actor.value,
-              //   ),
-              // ),
               SliverPadding(
                 padding: const EdgeInsets.all(8.0),
                 sliver: SliverAlignedGrid.count(
