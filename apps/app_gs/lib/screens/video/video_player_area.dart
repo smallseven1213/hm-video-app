@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 // VideoPlayerArea stateful widget
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -732,10 +733,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             }
             bool isVolume = details.globalPosition.dx >
                 MediaQuery.of(context).size.width / 2;
-            const sensitivity = 0.02;
             final box = context.findRenderObject()! as RenderBox;
             final deltaY = startVerticalDragY - details.globalPosition.dy;
-            final percentageDelta = deltaY / box.size.height * 100;
+            const sensitivity = 0.05;
+            final percentageDelta = deltaY / box.size.height;
 
             // Adjust volume when swipe on the right side of the screen
             if (isVolume) {
@@ -750,9 +751,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               }
             } else {
               // Adjust brightness when swipe on the left side of the screen
+              var current = await ScreenBrightness().current;
               final newBrightness =
-                  (initialBrightness + sensitivity * percentageDelta)
-                      .clamp(0.0, 1.0);
+                  (current + sensitivity * (percentageDelta)).clamp(0.0, 1.0);
               await setBrightness(newBrightness);
             }
           },
