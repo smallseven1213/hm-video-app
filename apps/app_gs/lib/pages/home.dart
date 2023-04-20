@@ -43,52 +43,57 @@ class Home extends StatelessWidget {
         final paddingBottom = MediaQuery.of(context).padding.bottom;
 
         return Scaffold(
-          body: currentScreen,
-          bottomNavigationBar: bottomNavigatorController.navigatorItems.isEmpty
-              ? null
-              : Container(
-                  padding: EdgeInsets.only(bottom: paddingBottom),
-                  height: 76 + paddingBottom,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                      colors: [
-                        Color(0xFF000000),
-                        Color(0xFF002869),
-                      ],
-                    ),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(10),
-                      topRight: Radius.circular(10),
-                    ),
-                    child: Row(
-                      children: bottomNavigatorController.navigatorItems
-                          .asMap()
-                          .entries
-                          .map(
-                            (entry) => Expanded(
-                              child: CustomBottomBarItem(
-                                isActive: entry.value.path! == activeKey,
-                                iconSid: entry.value.photoSid!,
-                                activeIconSid: entry.value.clickEffect!,
-                                label: entry.value.name!,
-                                onTap: () => bottomNavigatorController
-                                    .changeKey(entry.value.path!),
-                              ),
-                            ),
-                          )
-                          .toList(),
-                    ),
-                  ),
-                ),
-        );
+            body: currentScreen,
+            bottomNavigationBar: bottomNavigatorController
+                    .navigatorItems.isEmpty
+                ? null
+                : Stack(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.only(bottom: paddingBottom),
+                        height: 76 + paddingBottom,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xFF000000),
+                              Color(0xFF002869),
+                            ],
+                          ),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
+                          ),
+                          child: Row(
+                            children: bottomNavigatorController.navigatorItems
+                                .asMap()
+                                .entries
+                                .map(
+                                  (entry) => Expanded(
+                                    child: CustomBottomBarItem(
+                                      isActive: entry.value.path! == activeKey,
+                                      iconSid: entry.value.photoSid!,
+                                      activeIconSid: entry.value.clickEffect!,
+                                      label: entry.value.name!,
+                                      onTap: () => bottomNavigatorController
+                                          .changeKey(entry.value.path!),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                      const NoticeDialog()
+                    ],
+                  ));
       },
     );
   }

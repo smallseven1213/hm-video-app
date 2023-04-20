@@ -9,7 +9,7 @@ class PopularWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: AdsApi().getRecommendBy(),
+      future: AdsApi().getManyBy(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return SliverList(

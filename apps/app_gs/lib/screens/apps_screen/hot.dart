@@ -14,7 +14,7 @@ class HotWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: AdsApi().getManyBy(),
+      future: AdsApi().getRecommendBy(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
           return SliverGrid(
