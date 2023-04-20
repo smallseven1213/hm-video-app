@@ -118,15 +118,18 @@ class ActorCard extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Text(
-                      actor.actorCollectTimes.toString(),
-                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                    Icon(
+                      isLiked ? Icons.favorite_sharp : Icons.favorite_outline,
+                      size: 20,
+                      color: const Color(0xFF21AFFF),
                     ),
                     const SizedBox(width: 6),
-                    Icon(
-                      isLiked ? Icons.favorite_outline : Icons.favorite_sharp,
-                      size: 20,
-                      color: Color(0xFF21AFFF),
+                    Text(
+                      actor.actorCollectTimes.toString(),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
