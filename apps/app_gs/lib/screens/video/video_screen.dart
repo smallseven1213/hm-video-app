@@ -541,13 +541,14 @@ class _VideoScreenState extends State<VideoScreen> {
     return SafeArea(
       child: Scaffold(
         body: Obx(
-          () => videoDetailController.videoUrl.value != ''
+          () => videoDetailController.video.value.id != 0
               ? Column(
                   children: [
                     VideoPlayerArea(
                       id: widget.id,
                       name: widget.name,
                       videoUrl: videoDetailController.videoUrl.value,
+                      video: videoDetailController.video.value,
                     ),
                     videoDetailController.videoDetail.value.id != 0
                         ? Expanded(

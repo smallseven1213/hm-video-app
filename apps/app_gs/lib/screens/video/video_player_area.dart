@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/models/video.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/screen_control.dart';
+import 'package:shared/widgets/sid_image.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -13,6 +15,91 @@ import 'package:wakelock/wakelock.dart';
 enum ControlsOverlayType { none, progress, playPause, middleTime }
 
 enum SideControlsType { none, sound, brightness }
+
+class DotLineAnimation extends StatefulWidget {
+  const DotLineAnimation({super.key});
+
+  @override
+  _DotLineAnimationState createState() => _DotLineAnimationState();
+}
+
+class _DotLineAnimationState extends State<DotLineAnimation>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _animation = Tween<double>(begin: 0, end: 1).animate(_controller)
+      ..addListener(() {
+        setState(() {});
+      });
+
+    _controller.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        buildDot(_animation.value),
+        const SizedBox(width: 8),
+        buildLine(_animation.value),
+        const SizedBox(width: 8),
+        buildDot(1 - _animation.value),
+      ],
+    );
+  }
+
+  Widget buildDot(double scale) {
+    return Container(
+        width: 5 * scale,
+        height: 5 * scale,
+        decoration: BoxDecoration(
+            color: Color(0xffF4D743),
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: Color(0xffF4D743).withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 2,
+                offset: Offset(0, 1), // changes position of shadow
+              ),
+            ]));
+  }
+
+  Widget buildLine(double scale) {
+    return Container(
+      width: 15 * scale + 5,
+      height: 5,
+      decoration: BoxDecoration(
+          color: Color(0xffF4D743),
+          borderRadius: BorderRadius.circular(5),
+          boxShadow: [
+            BoxShadow(
+              color: Color(0xffF4D743).withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 2,
+              offset: Offset(0, 1), // changes position of shadow
+            ),
+          ]),
+    );
+  }
+}
 
 class PlayPauseButton extends StatelessWidget {
   final VideoPlayerController controller;
@@ -289,8 +376,13 @@ class PlayerHeader extends StatelessWidget {
       left: 0,
       right: 0,
       child: AppBar(
-        title: Text(title ?? ''),
+        title: Text(title ?? '',
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(
+              fontSize: 14,
+            )),
         elevation: 0,
+        centerTitle: false,
         backgroundColor: Colors.transparent,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 16),
@@ -312,12 +404,14 @@ class VideoPlayerArea extends StatefulWidget {
   final int id;
   final String? name;
   final String videoUrl;
+  final Video video;
   VideoPlayerController? controller;
 
   VideoPlayerArea({
     Key? key,
     required this.id,
     required this.videoUrl,
+    required this.video,
     this.name,
     this.controller,
   }) : super(key: key);
@@ -340,6 +434,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   }
 
   void initializePlayer() async {
+    print('widget.videoUrl: ${widget.videoUrl}');
     _controller = VideoPlayerController.network(widget.videoUrl);
     // _controller!.setLooping(true);
     // 監聽播放狀態
@@ -410,7 +505,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     // Size size = WidgetsBinding.instance.window.physicalSize;
     // print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
     print('@@@@@@@@@ didChangeMetrics orientation: $orientation');
-    if(orientation == Orientation.landscape) {
+    if (orientation == Orientation.landscape) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
@@ -442,7 +537,6 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       _controller?.play();
       setScreenRotation();
     }
-
     return WillPopScope(
       onWillPop: onWillPop,
       child: Container(
@@ -460,28 +554,66 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
               ),
               ControlsOverlay(
                 controller: _controller!,
-                name: widget.name,
+                name: widget.video.title,
                 isFullscreen: isFullscreen,
                 toggleFullscreen: (status) {
                   toggleFullscreen(fullScreen: status);
                 },
               ),
             ] else ...[
-              Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Colors.black,
-                child: Center(
-                  child: Text(
-                    'Loading...',
-                    style: TextStyle(color: Colors.white.withOpacity(0.5)),
+              Stack(
+                children: [
+                  Container(
+                    foregroundDecoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.8),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.8),
+                          const Color.fromARGB(255, 0, 34, 79),
+                        ],
+                        stops: const [0.8, 1.0],
+                      ),
+                    ),
+                    child: SidImage(
+                      key: ValueKey(widget.video.coverHorizontal ?? ''),
+                      sid: widget.video.coverHorizontal ?? '',
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Image(
+                          image: AssetImage('assets/images/logo.png'),
+                          width: 60.0,
+                        ),
+                        DotLineAnimation(),
+                        SizedBox(height: 15),
+                        Text(
+                          '精彩即將呈現',
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        )
+                      ]),
+                ],
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
                 ),
-              ),
-              PlayerHeader(
-                isFullscreen: isFullscreen,
-                title: widget.name,
-                toggleFullscreen: toggleFullscreen,
               )
             ]
           ],
