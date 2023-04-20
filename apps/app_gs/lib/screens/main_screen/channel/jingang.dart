@@ -10,6 +10,8 @@ import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/apis/jingang_api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../../widgets/circle_sidimage_text_item.dart';
+
 enum OuterFrame {
   border(true),
   noBorder(false);
@@ -51,82 +53,31 @@ class JingangButton extends StatelessWidget {
     bool isRounded = outerFrameStyle == OuterFrameStyle.circle.index;
     final Size size = MediaQuery.of(context).size;
 
-    return Column(children: [
-      Container(
-        width: size.width * 0.15,
-        height: size.width * 0.15,
-        margin: const EdgeInsets.only(bottom: 5),
-        decoration: BoxDecoration(
-            borderRadius: isRounded
-                ? BorderRadius.circular(40)
-                : BorderRadius.circular(5),
-            boxShadow: hasBorder
-                ? [
-                    BoxShadow(
-                      color: const Color.fromRGBO(69, 110, 255, 1),
-                      blurRadius: isRounded ? 10 : 8,
-                    ),
-                  ]
-                : null,
-            gradient: hasBorder
-                ? LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: isRounded
-                        ? const [
-                            Color(0xff00B2FF),
-                            Color(0xffCCEAFF),
-                            Color(0xff0075FF),
-                          ]
-                        : const [
-                            Color(0xff000000),
-                            Color(0xff00145B),
-                            Color(0xff000000),
-                          ],
-                    stops: isRounded ? null : [0, 0.99, 1.0])
-                : null),
-        child: Container(
-            margin: isRounded ? const EdgeInsets.all(1) : null,
-            decoration: BoxDecoration(
-              borderRadius: isRounded
-                  ? BorderRadius.circular(40)
-                  : BorderRadius.circular(5),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-              onTap: () {
-                print('item: ${item?.id}   ${item?.url}${item?.toJson()}');
-                jingangApi.recordJingangClick(item?.id ?? 0);
-                if (item!.url!.startsWith('http://') ||
-                    item!.url!.startsWith('https://')) {
-                  launch(item!.url ?? '', webOnlyWindowName: '_blank');
-                } else {
-                  logger.i(item!.url);
-                  List<String> parts = item!.url!.split('/');
+    return CircleTextItem(
+        text: item?.name ?? '',
+        photoSid: item?.photoSid ?? '',
+        imageWidth: size.width * 0.15,
+        imageHeight: size.width * 0.15,
+        isRounded: isRounded,
+        hasBorder: hasBorder,
+        onTap: () async {
+          jingangApi.recordJingangClick(item?.id ?? 0);
+          if (item!.url!.startsWith('http://') ||
+              item!.url!.startsWith('https://')) {
+            launch(item!.url ?? '', webOnlyWindowName: '_blank');
+          } else {
+            List<String> parts = item!.url!.split('/');
 
-                  // 從列表中獲取所需的字串和數字
-                  String path = '/' + parts[1];
-                  int id = int.parse(parts[2]);
+            // 從列表中獲取所需的字串和數字
+            String path = '/${parts[1]}';
+            int id = int.parse(parts[2]);
 
-                  // 創建一個 Object，包含 id
-                  var args = {'id': id};
+            // 創建一個 Object，包含 id
+            var args = {'id': id};
 
-                  logger.i('PATH ===> $path, $args');
-
-                  MyRouteDelegate.of(context).push(path, args: args);
-                }
-              },
-              child: SidImage(
-                sid: item?.photoSid ?? '',
-              ),
-            )),
-      ),
-      Text(item?.name ?? '',
-          style: const TextStyle(
-            fontSize: 12,
-            color: Color.fromARGB(255, 255, 255, 255),
-          )),
-    ]);
+            MyRouteDelegate.of(context).push(path, args: args);
+          }
+        });
   }
 }
 

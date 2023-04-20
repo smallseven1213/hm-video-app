@@ -32,7 +32,6 @@ class MyRouteDelegate extends RouterDelegate<String>
   MyRouteDelegate({
     required this.routes,
     required this.homePath,
-    this.noticeDialogWidget,
     this.onGenerateRoute,
   }) {
     setNavigatorKey(navigatorKey);
@@ -41,7 +40,6 @@ class MyRouteDelegate extends RouterDelegate<String>
   final RouteFactory? onGenerateRoute;
   final Map<String, RouteWidgetBuilder> routes;
   final String homePath;
-  final Widget? noticeDialogWidget;
 
   @override
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -140,7 +138,6 @@ class MyRouteDelegate extends RouterDelegate<String>
             );
           }).toList(),
         ),
-        noticeDialogWidget ?? const SizedBox.shrink(),
       ],
     );
   }

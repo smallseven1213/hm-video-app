@@ -16,53 +16,35 @@ class ActorCard extends StatelessWidget {
     final UserFavoritesActorController userFavoritesActorController =
         Get.find<UserFavoritesActorController>();
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.white, width: 1),
-      ),
       child: Stack(
         children: [
-          if (actor.coverVertical != '' && actor.coverVertical != null)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: SidImage(
-                  key: ValueKey(actor.coverVertical),
-                  sid: actor.coverVertical ?? actor.photoSid,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          if (actor.coverVertical == '' || actor.coverVertical == null)
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: Container(
+          if (actor.coverVertical!.isNotEmpty)
+            Positioned.fill(
+              child: SidImage(
+                sid: actor.coverVertical!,
+                fit: BoxFit.cover,
                 width: double.infinity,
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    stops: [0.0, 0.5], // 控制顏色分佈的位置
-                    colors: [
-                      Color(0xFF00091A), // 左上角顏色
-                      Color(0xFFFF4545), // 位於中間位置的顏色
-                    ],
-                  ),
-                ),
-                // 您可以在這裡添加其他屬性，例如寬度、高度或子組件
               ),
             ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0xFF4277DC)
+                        .withOpacity(0.5), // Adjust the opacity here
+                    const Color(0xFF4378DC).withOpacity(1.0),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
                   width: 80,
@@ -82,9 +64,9 @@ class ActorCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        '女優簡介',
-                        style: TextStyle(
+                      Text(
+                        actor.name,
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 12,
                             color: Colors.white),
@@ -110,7 +92,7 @@ class ActorCard extends StatelessWidget {
               return InkWell(
                 onTap: () {
                   if (isLiked) {
-                    userFavoritesActorController.removeActor([]);
+                    userFavoritesActorController.removeActor([actor.id]);
                     return;
                   } else {
                     userFavoritesActorController.addActor(actor);
@@ -118,15 +100,18 @@ class ActorCard extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Text(
-                      actor.actorCollectTimes.toString(),
-                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                    Icon(
+                      isLiked ? Icons.favorite_sharp : Icons.favorite_outline,
+                      size: 20,
+                      color: const Color(0xFF21AFFF),
                     ),
                     const SizedBox(width: 6),
-                    Icon(
-                      isLiked ? Icons.favorite_outline : Icons.favorite_sharp,
-                      size: 20,
-                      color: Color(0xFF21AFFF),
+                    Text(
+                      actor.actorCollectTimes.toString(),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
@@ -138,3 +123,29 @@ class ActorCard extends StatelessWidget {
     );
   }
 }
+
+/**
+ * Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end, // Add this line
+                    children: [
+                      const Icon(
+                        Icons.videocam_outlined,
+                        color: Color(0xFF21AFFF),
+                      ),
+                      const SizedBox(
+                        width: 6,
+                      ),
+                      Text(
+                        actorVodController.totalCount.value.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+ */
