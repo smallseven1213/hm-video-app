@@ -44,72 +44,75 @@ Widget buildPage(
   final screenWidth = MediaQuery.of(context).size.width;
   final screenHeight = MediaQuery.of(context).size.height;
 
-  return Container(
-    width: screenWidth,
-    height: screenHeight,
-    color: color,
-    child: Stack(
-      children: [
-        // Center(
-        //   child: Text(pageTitle),
-        // ),
-        Positioned(
-          left: 10,
-          bottom: 90,
-          child: Text(otherInfo),
-        ),
-        Positioned(
-          right: 10,
-          bottom: screenHeight / 2 - 20,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                ),
-                child: Center(
-                  child: Text(
-                    'A',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+  return WillPopScope(
+    onWillPop: () async => false,
+    child: Container(
+      width: screenWidth,
+      height: screenHeight,
+      color: color,
+      child: Stack(
+        children: [
+          // Center(
+          //   child: Text(pageTitle),
+          // ),
+          Positioned(
+            left: 10,
+            bottom: 90,
+            child: Text(otherInfo),
+          ),
+          Positioned(
+            right: 10,
+            bottom: screenHeight / 2 - 20,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                  ),
+                  child: Center(
+                    child: Text(
+                      'A',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(width: 10),
-              Container(
-                width: 40,
-                height: 40,
-                child: Center(
-                  child: Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                    size: 20,
+                SizedBox(width: 10),
+                Container(
+                  width: 40,
+                  height: 40,
+                  child: Center(
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.red,
+                      size: 20,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(width: 10),
-              Container(
-                width: 40,
-                height: 40,
-                child: Center(
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.white,
-                    size: 20,
+                SizedBox(width: 10),
+                Container(
+                  width: 40,
+                  height: 40,
+                  child: Center(
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.white,
+                      size: 20,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     ),
   );
 }
