@@ -35,14 +35,16 @@ class _BannerWidgetState extends State<BannerWidget> {
         return Container();
       } else {
         List<BannerImage> images = banners
-            .map((e) => BannerImage(
-                  id: e.id,
-                  photoSid: e.photoSid,
-                  url: e.url,
-                  isAutoClose: e.isAutoClose,
-                ))
+            .map(
+              (e) => BannerImage.fromJson({
+                'id': e.id ?? 0,
+                'url': e.url ?? '',
+                'photoSid': e.photoSid,
+                'isAutoClose': false,
+              }),
+            )
             .toList();
-
+        print(banners);
         return Carousel(images: images);
       }
     });

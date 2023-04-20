@@ -6,20 +6,23 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Game'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            TextButton(
-                onPressed: () {
-                  // Get.toNamed('/game/deposit');
-                },
-                child: Text('game'))
-          ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Game'),
+        ),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              TextButton(
+                  onPressed: () {
+                    // Get.toNamed('/game/deposit');
+                  },
+                  child: Text('game'))
+            ],
+          ),
         ),
       ),
     );
