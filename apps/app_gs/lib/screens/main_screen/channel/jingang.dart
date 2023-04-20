@@ -1,4 +1,5 @@
 // JingangList
+import 'package:app_gs/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/apis/jingang_api.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -85,6 +85,32 @@ class JingangList extends StatelessWidget {
   final int channelId;
   JingangList({Key? key, required this.channelId}) : super(key: key);
 
+  Widget buildTitle(String title) {
+    if (title == '') return const SizedBox();
+    return Header(text: title);
+  }
+
+  Widget buildRow(jingang) {
+    return SizedBox(
+      height: 90.0,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: jingang.jingangDetail?.length ?? 0,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: JingangButton(
+              item: jingang.jingangDetail![index],
+              outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+              outerFrameStyle:
+                  jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final ChannelDataController channelDataController =
@@ -94,29 +120,53 @@ class JingangList extends StatelessWidget {
     if (channelDataController.channelData.value == null) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
-    return Obx(() {
-      Jingang? jingang = channelDataController.channelData.value!.jingang;
-      // print('channelId $channelId jingang: $jingang');
-      if (jingang == null ||
-          jingang.jingangDetail == null ||
-          jingang.jingangDetail!.isEmpty) {
-        return const SliverToBoxAdapter(child: SizedBox());
-      }
-      return SliverPadding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
-        sliver: SliverAlignedGrid.count(
-          crossAxisCount: 4,
-          itemCount: jingang.jingangDetail?.length ?? 0,
-          itemBuilder: (BuildContext context, int index) => JingangButton(
-            item: jingang.jingangDetail![index],
-            outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
-            outerFrameStyle:
-                jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+    return Obx(
+      () {
+        Jingang? jingang = channelDataController.channelData.value!.jingang;
+        if (jingang == null ||
+            jingang.jingangDetail == null ||
+            jingang.jingangDetail!.isEmpty) {
+          return const SliverToBoxAdapter(child: SizedBox());
+        }
+
+        if (jingang.jingangStyle == JingangStyle.single.index) {
+          return SliverToBoxAdapter(
+            child: SizedBox(
+              height: 90.0,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: jingang.jingangDetail?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: JingangButton(
+                      item: jingang.jingangDetail![index],
+                      outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+                      outerFrameStyle: jingang.outerFrameStyle ??
+                          OuterFrameStyle.circle.index,
+                    ),
+                  );
+                },
+              ),
+            ),
+          );
+        }
+        return SliverPadding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          sliver: SliverAlignedGrid.count(
+            crossAxisCount: jingang.quantity ?? 4,
+            itemCount: jingang.jingangDetail?.length ?? 0,
+            itemBuilder: (BuildContext context, int index) => JingangButton(
+              item: jingang.jingangDetail![index],
+              outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+              outerFrameStyle:
+                  jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+            ),
+            mainAxisSpacing: 12.0,
+            crossAxisSpacing: 10.0,
           ),
-          mainAxisSpacing: 12.0,
-          crossAxisSpacing: 10.0,
-        ),
-      );
-    });
+        );
+      },
+    );
   }
 }

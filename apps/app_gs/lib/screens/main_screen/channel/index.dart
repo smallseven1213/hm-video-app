@@ -14,6 +14,17 @@ import 'videoblock.dart';
 
 final logger = Logger();
 
+Widget buildTitle(String title) {
+  return title == ''
+      ? const SizedBox()
+      : Column(
+          children: [
+            Header(text: title),
+            const SizedBox(height: 8),
+          ],
+        );
+}
+
 class Channel extends StatelessWidget {
   final int channelId;
 
@@ -71,6 +82,8 @@ class Channel extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(child: Banners(channelId: channelId)),
+            SliverToBoxAdapter(
+                child: buildTitle(channelData.jingang!.title ?? '')),
             JingangList(channelId: channelId),
             ...sliverBlocks,
             const SliverToBoxAdapter(
