@@ -23,35 +23,14 @@ class ActorPage extends StatelessWidget {
     final actorController = ActorController(actorId: id);
 
     return Scaffold(
-      // appBar: PreferredSize(
-      //   preferredSize: const Size.fromHeight(kToolbarHeight),
-      //   child: Obx(
-      //     () => CustomAppBar(
-      //       title: actorController.actor.value.name,
-      //     ),
-      //   ),
-      // ),
       body: Obx(() => CustomScrollView(
             controller: actorVodController.scrollController,
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverPersistentHeader(
-                delegate: CustomSliverPersistentHeaderDelegate(
-                  minHeight: kToolbarHeight,
-                  maxHeight: kToolbarHeight + 100,
-                  child: Obx(
-                    () => ActorCard(
-                      actor: actorController.actor.value,
-                    ),
-                  ),
-                ),
+                delegate: ActorCard(actor: actorController.actor.value),
                 pinned: true,
               ),
-              // SliverToBoxAdapter(
-              //   child: ActorCard(
-              //     actor: actorController.actor.value,
-              //   ),
-              // ),
               SliverPadding(
                 padding: const EdgeInsets.all(8.0),
                 sliver: SliverAlignedGrid.count(
@@ -81,37 +60,5 @@ class ActorPage extends StatelessWidget {
             ],
           )),
     );
-  }
-}
-
-class CustomSliverPersistentHeaderDelegate
-    extends SliverPersistentHeaderDelegate {
-  final double minHeight;
-  final double maxHeight;
-  final Widget child;
-
-  CustomSliverPersistentHeaderDelegate({
-    required this.minHeight,
-    required this.maxHeight,
-    required this.child,
-  });
-
-  @override
-  double get minExtent => minHeight;
-
-  @override
-  double get maxExtent => maxHeight;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return SizedBox.expand(child: child);
-  }
-
-  @override
-  bool shouldRebuild(CustomSliverPersistentHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        child != oldDelegate.child;
   }
 }
