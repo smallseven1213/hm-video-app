@@ -85,7 +85,16 @@ class SearchPageState extends State<SearchPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, size: 16),
           onPressed: () {
-            Navigator.pop(context);
+            if (searchKeyword != null) {
+              setState(() {
+                searchKeyword = null;
+                displaySearchResult = false;
+              });
+              _searchController.value = TextEditingValue.empty;
+              FocusScope.of(context).requestFocus(FocusNode());
+            } else {
+              Navigator.pop(context);
+            }
           },
         ),
         titleSpacing: 0,
@@ -150,6 +159,7 @@ class SearchPageState extends State<SearchPage> {
                           searchKeyword = _searchResults[index];
                           displaySearchResult = false;
                         });
+                        FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Container(
                         decoration: BoxDecoration(
