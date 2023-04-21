@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/actor_controller.dart';
-import 'package:shared/controllers/actor_vod_controller.dart';
+import 'package:shared/controllers/actor_latest_vod_controller.dart';
+import 'package:shared/controllers/actor_newest_vod_controller.dart';
 
 import '../screens/actor/card.dart';
-import '../widgets/custom_app_bar.dart';
+import '../screens/actor/video.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
-class ActorPage extends StatelessWidget {
+class ActorPage extends StatefulWidget {
   final int id;
   const ActorPage({
     Key? key,
@@ -18,47 +19,71 @@ class ActorPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final actorVodController = ActorVodController(actorId: id);
-    final actorController = ActorController(actorId: id);
+  _ActorPageState createState() => _ActorPageState();
+}
 
-    return Scaffold(
-      body: Obx(() => CustomScrollView(
-            controller: actorVodController.scrollController,
-            physics: const BouncingScrollPhysics(),
-            slivers: [
+class _ActorPageState extends State<ActorPage>
+    with SingleTickerProviderStateMixin {
+  late ActorLatestVodController actorLatestVodController;
+  late ActorNewestVodController actorNewestVodController;
+  late ActorController actorController;
+  late TabController _tabController;
+  final ScrollController _parentScrollController = ScrollController();
+
+  int tabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    actorLatestVodController = ActorLatestVodController(
+        actorId: widget.id, scrollController: _parentScrollController);
+    actorNewestVodController = ActorNewestVodController(
+        actorId: widget.id, scrollController: _parentScrollController);
+    actorController = ActorController(actorId: widget.id);
+    _tabController = TabController(vsync: this, length: 2);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _parentScrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(body: Obx(() {
+      var actor = actorController.actor.value;
+      return NestedScrollView(
+          controller: _parentScrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            // 返回一个 Sliver 数组给外部可滚动组件。
+            return <Widget>[
               SliverPersistentHeader(
-                delegate: ActorCard(actor: actorController.actor.value),
+                delegate: ActorCard(actor: actor),
                 pinned: true,
+              ), //构建一个 sliverList
+            ];
+          },
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              ActorVideoScreen(
+                key: const Key('actor_latest_vod'),
+                id: widget.id,
+                type: 'vod',
+                vodController: actorLatestVodController,
+                scrollController: _parentScrollController,
               ),
-              SliverPadding(
-                padding: const EdgeInsets.all(8.0),
-                sliver: SliverAlignedGrid.count(
-                  crossAxisCount: 2,
-                  itemCount: actorVodController.vodList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var video = actorVodController.vodList[index];
-                    return VideoPreviewWidget(
-                        id: video.id,
-                        coverVertical: video.coverVertical!,
-                        coverHorizontal: video.coverHorizontal!,
-                        timeLength: video.timeLength!,
-                        tags: video.tags!,
-                        title: video.title,
-                        videoViewTimes: video.videoViewTimes!);
-                  },
-                  mainAxisSpacing: 12.0,
-                  crossAxisSpacing: 10.0,
-                ),
+              ActorVideoScreen(
+                key: const Key('actor_newest_vod'),
+                id: widget.id,
+                type: 'series',
+                vodController: actorNewestVodController,
+                scrollController: _parentScrollController,
               ),
-              if (actorVodController.hasMoreData)
-                const SliverVideoPreviewSkeletonList(),
-              if (!actorVodController.hasMoreData)
-                const SliverToBoxAdapter(
-                  child: ListNoMore(),
-                )
             ],
-          )),
-    );
+          ));
+    }));
   }
 }

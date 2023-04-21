@@ -11,7 +11,9 @@ import '../widgets/video_preview.dart';
 class TagVideoPage extends StatelessWidget {
   final int id;
   final String title;
-  const TagVideoPage({
+  final scrollController = ScrollController();
+
+  TagVideoPage({
     Key? key,
     required this.id,
     required this.title,
@@ -19,7 +21,8 @@ class TagVideoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TagVodController tagVideoController = TagVodController(tagId: id);
+    final TagVodController tagVideoController =
+        TagVodController(tagId: id, scrollController: scrollController);
 
     return Scaffold(
       appBar: CustomAppBar(

@@ -16,8 +16,11 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   bool hasMoreData = true;
   ScrollController scrollController = ScrollController();
 
-  BaseVodInfinityScrollController({bool loadDataOnInit = true}) {
-    scrollController.addListener(_scrollListener);
+  BaseVodInfinityScrollController(
+      {bool loadDataOnInit = true,
+      required ScrollController scrollController}) {
+    this.scrollController = scrollController;
+    this.scrollController.addListener(_scrollListener);
     if (loadDataOnInit) {
       _loadMoreData();
     }
