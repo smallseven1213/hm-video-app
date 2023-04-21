@@ -42,7 +42,7 @@ class _LayoutTabBarItemState extends State<LayoutTabBarItem> {
         return Text(
           widget.name,
           style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontWeight: FontWeight.w200,
               color: channelScreenTabController.tabIndex.value == widget.index
                   ? AppColors.colors[ColorKeys.primary]
                   : const Color(0xffCFCECE),

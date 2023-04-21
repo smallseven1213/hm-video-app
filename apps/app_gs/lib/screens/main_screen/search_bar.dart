@@ -24,17 +24,12 @@ class SearchBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          InkWell(
-            onTap: () {},
-            child: Container(
-              width: 40,
-              height: 60,
-              color: AppColors.colors[ColorKeys.background],
-              child: const Image(
-                image: AssetImage('assets/images/home_search_bar_logo.png'),
-                width: 50.0,
-                height: 50.0,
-              ),
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 13),
+            child: Image(
+              image: AssetImage('assets/images/home_search_bar_logo.png'),
+              width: 24.0,
+              height: 27.0,
             ),
           ),
           // input
@@ -50,7 +45,7 @@ class SearchBar extends StatelessWidget {
                 defaultValue: randomTitle,
                 onSearchButtonClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
-                      hasTransition: false,
+                      useBottomToTopAnimation: true,
                       args: {
                         'inputDefaultValue': randomTitle,
                         'dontSearch': false
@@ -58,7 +53,7 @@ class SearchBar extends StatelessWidget {
                 },
                 onInputClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
-                      hasTransition: false,
+                      useBottomToTopAnimation: true,
                       args: {
                         'inputDefaultValue': randomTitle,
                         'dontSearch': true
@@ -69,8 +64,7 @@ class SearchBar extends StatelessWidget {
           ),
           InkWell(
             onTap: () {
-              MyRouteDelegate.of(context)
-                  .push(AppRoutes.filter.value, hasTransition: false);
+              MyRouteDelegate.of(context).push(AppRoutes.filter.value);
             },
             child: Container(
               width: 40,
