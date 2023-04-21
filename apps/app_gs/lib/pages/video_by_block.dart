@@ -27,8 +27,9 @@ class VideoByBlockPage extends StatelessWidget {
   final int id;
   final int channelId;
   final String title;
+  final scrollController = ScrollController();
 
-  const VideoByBlockPage({
+  VideoByBlockPage({
     Key? key,
     required this.id,
     required this.title,
@@ -40,7 +41,7 @@ class VideoByBlockPage extends StatelessWidget {
     Get.put(AdWindowController(channelId), tag: channelId.toString());
 
     final BlockVodController blockVodController =
-        BlockVodController(areaId: id);
+        BlockVodController(areaId: id, scrollController: scrollController);
 
     return Scaffold(
         appBar: CustomAppBar(
@@ -74,6 +75,7 @@ class VideoByBlockPage extends StatelessWidget {
 class SliverBlockWidget extends StatelessWidget {
   final List<Vod> vods;
   final int channelId;
+
   const SliverBlockWidget({
     Key? key,
     required this.vods,

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/actor_api.dart';
@@ -8,11 +9,15 @@ final actorApi = ActorApi();
 final logger = Logger();
 const limit = 100;
 
-class ActorVodController extends BaseVodInfinityScrollController {
+class ActorLatestVodController extends BaseVodInfinityScrollController {
   final int actorId;
 
-  ActorVodController({required this.actorId, bool loadDataOnInit = true})
-      : super(loadDataOnInit: loadDataOnInit);
+  ActorLatestVodController(
+      {required this.actorId,
+      required ScrollController scrollController,
+      bool loadDataOnInit = true})
+      : super(
+            loadDataOnInit: loadDataOnInit, scrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {

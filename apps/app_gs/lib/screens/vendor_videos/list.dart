@@ -11,15 +11,17 @@ import '../../widgets/video_preview.dart';
 class VendorVideoList extends StatelessWidget {
   final String type;
   final int publisherId;
-  const VendorVideoList(
-      {Key? key, required this.type, required this.publisherId})
+  final scrollController = ScrollController();
+  VendorVideoList({Key? key, required this.type, required this.publisherId})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final publisherVodController = type == 'hot'
-        ? PublisherHottestVodController(publisherId: publisherId)
-        : PublisherLatestVodController(publisherId: publisherId);
+        ? PublisherHottestVodController(
+            publisherId: publisherId, scrollController: scrollController)
+        : PublisherLatestVodController(
+            publisherId: publisherId, scrollController: scrollController);
 
     return Obx(() => CustomScrollView(
           controller: publisherVodController.scrollController,

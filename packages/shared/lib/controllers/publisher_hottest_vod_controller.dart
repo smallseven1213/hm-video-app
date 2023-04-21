@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/actor_api.dart';
@@ -13,8 +14,11 @@ class PublisherHottestVodController extends BaseVodInfinityScrollController {
   final int publisherId;
 
   PublisherHottestVodController(
-      {required this.publisherId, bool loadDataOnInit = true})
-      : super(loadDataOnInit: loadDataOnInit);
+      {required this.publisherId,
+      required ScrollController scrollController,
+      bool loadDataOnInit = true})
+      : super(
+            loadDataOnInit: loadDataOnInit, scrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {

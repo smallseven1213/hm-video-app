@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:shared/apis/tag_api.dart';
 import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
@@ -9,8 +10,12 @@ const limit = 100;
 class TagVodController extends BaseVodInfinityScrollController {
   final int tagId;
 
-  TagVodController({required this.tagId, bool loadDataOnInit = true})
-      : super(loadDataOnInit: loadDataOnInit);
+  TagVodController(
+      {required this.tagId,
+      required ScrollController scrollController,
+      bool loadDataOnInit = true})
+      : super(
+            loadDataOnInit: loadDataOnInit, scrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {
