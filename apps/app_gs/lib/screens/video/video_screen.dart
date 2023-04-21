@@ -30,9 +30,11 @@ enum VideoFilterType { actor, category, tag }
 
 class NestedTabBarView extends StatelessWidget {
   final Vod videoDetail;
+  final Video videoBase;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
+    required this.videoBase,
   }) : super(key: key);
 
   @override
@@ -78,7 +80,7 @@ class NestedTabBarView extends StatelessWidget {
                   ),
                   SliverToBoxAdapter(
                     child: Actions(
-                      video: videoDetail,
+                      videoBase: videoBase,
                       videoDetail: videoDetail,
                     ),
                   ),
@@ -353,9 +355,9 @@ class LikeButtonState extends State<LikeButton> {
 }
 
 class Actions extends StatelessWidget {
-  final Vod video;
+  final Video videoBase;
   final Vod videoDetail;
-  Actions({super.key, required this.video, required this.videoDetail});
+  Actions({super.key, required this.videoBase, required this.videoDetail});
 
   final userCollectionController = Get.find<UserCollectionController>();
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
@@ -368,15 +370,17 @@ class Actions extends StatelessWidget {
         Expanded(
           child: Obx(() {
             var isLiked = userFavoritesVideoController.videos
-                .any((e) => e.id == video.id);
+                .any((e) => e.id == videoBase.id);
             return LikeButton(
               text: '喜歡就點讚',
               isLiked: isLiked,
               onPressed: () {
                 if (isLiked) {
-                  userFavoritesVideoController.removeVideo([videoDetail.id]);
+                  userFavoritesVideoController.removeVideo([videoBase.id]);
                 } else {
-                  userFavoritesVideoController.addVideo(videoDetail);
+                  // 將videoBase的值寫入到Vod class
+                  var vod = Vod.fromJson(videoBase.toJson());
+                  userFavoritesVideoController.addVideo(vod);
                 }
               },
             );
@@ -385,8 +389,8 @@ class Actions extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: Obx(() {
-            var isLiked =
-                userCollectionController.videos.any((e) => e.id == video.id);
+            var isLiked = userCollectionController.videos
+                .any((e) => e.id == videoBase.id);
             return LikeButton(
               text: '收藏',
               type: LikeButtonType.bookmark,
@@ -395,7 +399,8 @@ class Actions extends StatelessWidget {
                 if (isLiked) {
                   userCollectionController.removeVideo([videoDetail.id]);
                 } else {
-                  userCollectionController.addVideo(videoDetail);
+                  var vod = Vod.fromJson(videoBase.toJson());
+                  userCollectionController.addVideo(vod);
                 }
               },
             );
@@ -553,6 +558,7 @@ class _VideoScreenState extends State<VideoScreen> {
                     videoDetailController.videoDetail.value.id != 0
                         ? Expanded(
                             child: NestedTabBarView(
+                              videoBase: videoDetailController.video.value,
                               videoDetail:
                                   videoDetailController.videoDetail.value,
                             ),
