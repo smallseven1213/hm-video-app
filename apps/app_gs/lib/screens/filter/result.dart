@@ -1,4 +1,5 @@
 import 'package:app_gs/widgets/list_no_more.dart';
+import 'package:app_gs/widgets/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -19,7 +20,7 @@ class FilterResult extends StatelessWidget {
           ? const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 60),
-                child: ListNoMore(),
+                child: NoDataWidget(),
               ),
             )
           : SliverAlignedGrid.count(
