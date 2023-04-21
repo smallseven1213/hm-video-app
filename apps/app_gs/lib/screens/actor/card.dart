@@ -50,9 +50,8 @@ class ActorCard extends SliverPersistentHeaderDelegate {
       color: Color(0xFF001a40).withOpacity(1 - opacity),
       child: Stack(
         children: [
-          Opacity(
-            opacity: opacity,
-            child: Container(
+          if (opacity > 0)
+            Container(
               height: 200,
               width: double.infinity,
               decoration: BoxDecoration(
@@ -66,7 +65,6 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                 ),
               ),
             ),
-          ),
           Positioned(
             top: lerpDouble(100, (kToolbarHeight - imageSize) / 2, percentage),
             left: lerpDouble(10, leftPadding, percentage)!,
