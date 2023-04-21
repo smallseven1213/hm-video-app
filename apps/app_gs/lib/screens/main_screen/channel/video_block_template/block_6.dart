@@ -26,9 +26,8 @@ class Block6Widget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height:
-                  (MediaQuery.of(context).size.width - 16) * 0.7 / 16 * 9 + 40,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
