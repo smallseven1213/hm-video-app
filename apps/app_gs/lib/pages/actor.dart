@@ -5,12 +5,12 @@ import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/actor_vod_controller.dart';
 
 import '../screens/actor/card.dart';
-import '../widgets/custom_app_bar.dart';
+import '../screens/actor/video.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
-class ActorPage extends StatelessWidget {
+class ActorPage extends StatefulWidget {
   final int id;
   const ActorPage({
     Key? key,
@@ -18,13 +18,47 @@ class ActorPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final actorVodController = ActorVodController(actorId: id);
-    final actorController = ActorController(actorId: id);
+  _ActorPageState createState() => _ActorPageState();
+}
 
+class _ActorPageState extends State<ActorPage>
+    with SingleTickerProviderStateMixin {
+  late ActorVodController actorVodController;
+  late ActorController actorController;
+  late TabController _tabController;
+  late ScrollController _parentScrollController;
+
+  int tabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    actorVodController = ActorVodController(actorId: widget.id);
+    actorController = ActorController(actorId: widget.id);
+    _tabController = TabController(vsync: this, length: 2);
+    _parentScrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _parentScrollController.dispose();
+    super.dispose();
+  }
+
+  // void _handleScroll(ScrollNotification notification) {
+  //   if (notification is ScrollUpdateNotification) {
+  //     final currentOffset = _parentScrollController.offset;
+  //     final delta = notification.scrollDelta!;
+  //     _parentScrollController.jumpTo(currentOffset + delta);
+  //   }
+  // }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() => CustomScrollView(
-            controller: actorVodController.scrollController,
+            // controller: actorVodController.scrollController,
             physics: const BouncingScrollPhysics(),
             slivers: [
               SliverPersistentHeader(
