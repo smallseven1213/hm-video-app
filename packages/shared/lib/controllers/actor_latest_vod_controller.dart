@@ -7,7 +7,7 @@ import 'base_vod_infinity_scroll_controller.dart';
 
 final actorApi = ActorApi();
 final logger = Logger();
-const limit = 100;
+const limit = 20;
 
 class ActorLatestVodController extends BaseVodInfinityScrollController {
   final int actorId;

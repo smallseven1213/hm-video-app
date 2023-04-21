@@ -7,12 +7,12 @@ import 'base_vod_infinity_scroll_controller.dart';
 
 final actorApi = ActorApi();
 final logger = Logger();
-const limit = 100;
+const limit = 20;
 
-class ActorNewestVodController extends BaseVodInfinityScrollController {
+class ActorHottestVodController extends BaseVodInfinityScrollController {
   final int actorId;
 
-  ActorNewestVodController(
+  ActorHottestVodController(
       {required this.actorId,
       required ScrollController scrollController,
       bool loadDataOnInit = true})
@@ -21,7 +21,7 @@ class ActorNewestVodController extends BaseVodInfinityScrollController {
 
   @override
   Future<InfinityVod> fetchData(int page) async {
-    var res = await actorApi.getManyLatestVodBy(
+    var res = await actorApi.getManyHottestVodBy(
         page: page, actorId: actorId, limit: limit);
 
     bool hasMoreData = res.total > limit * page;

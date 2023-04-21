@@ -5,7 +5,7 @@ import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
 final vodApi = VodApi();
-const limit = 100;
+const limit = 20;
 
 class TagVodController extends BaseVodInfinityScrollController {
   final int tagId;

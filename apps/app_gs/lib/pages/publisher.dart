@@ -1,7 +1,10 @@
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/publisher_controller.dart';
 import '../screens/vendor_videos/list.dart';
 import '../widgets/button.dart';
+import '../widgets/tab_bar.dart';
 
 class PublisherPage extends StatefulWidget {
   final int id;
@@ -14,11 +17,15 @@ class PublisherPage extends StatefulWidget {
 class _VendorVideosPageState extends State<PublisherPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  late PublisherController publisherController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
+    publisherController = PublisherController(
+      publisherId: widget.id,
+    );
   }
 
   @override
@@ -31,35 +38,13 @@ class _VendorVideosPageState extends State<PublisherPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '',
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(60),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: Button(
-                    text: '最新',
-                    size: 'small',
-                    onPressed: () => _tabController.animateTo(0),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  flex: 1,
-                  child: Button(
-                    text: '最熱',
-                    size: 'small',
-                    onPressed: () => _tabController.animateTo(1),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        titleWidget: Obx(() => Text(
+              publisherController.publisher.value.name,
+              style: const TextStyle(
+                fontSize: 15,
+              ),
+            )),
+        bottom: GSTabBar(tabs: const ['最新', '最熱'], controller: _tabController),
       ),
       body: TabBarView(
         controller: _tabController,
