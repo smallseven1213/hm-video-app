@@ -4,6 +4,7 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/fade_in_effect.dart';
 
+import '../../widgets/list_no_more.dart';
 import '../../widgets/no_data.dart';
 import '../../widgets/video_preview.dart';
 import '../../widgets/video_preview_skelton_list.dart';
@@ -44,7 +45,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
         child: isLoading
             ? const VideoPreviewSkeletonList()
             : videos.isEmpty
-                ? const NoDataWidget()
+                ? const ListNoMore()
                 : FadeInEffect(
                     child: AlignedGridView.count(
                     crossAxisCount: 2,
