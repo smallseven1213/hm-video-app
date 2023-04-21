@@ -713,8 +713,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             initialVolume = widget.controller.value.volume;
             initialBrightness =
                 MediaQuery.of(context).platformBrightness.index.toDouble();
+
+            double brightness = await ScreenBrightness().current;
+
             setState(() {
-              startVerticalDragY = details.globalPosition.dy;
+              startVerticalDragY =
+                  isVolume ? details.globalPosition.dy : brightness;
               sideControlsType = isVolume
                   ? SideControlsType.sound
                   : SideControlsType.brightness;
@@ -724,7 +728,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               double volume = await VolumeControl.volume;
               await setVolume(volume);
             } else {
-              double brightness = await ScreenBrightness().current;
               await setBrightness(brightness);
             }
           },
