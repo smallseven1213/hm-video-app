@@ -157,7 +157,7 @@ class FilterScreenController extends GetxController {
     logger.i(queryString);
 
     var res = await vodApi.getSimpleManyBy(
-        page: page ?? _page, limit: 100, queryString: queryString);
+        page: page ?? _page, limit: 20, queryString: queryString);
 
     if (refresh == true) {
       filterResults.clear();

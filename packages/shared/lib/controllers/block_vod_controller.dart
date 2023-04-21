@@ -8,7 +8,7 @@ import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
 final vodApi = VodApi();
-const int limit = 96;
+const int limit = 16;
 
 class BlockVodController extends BaseVodInfinityScrollController {
   final int areaId;

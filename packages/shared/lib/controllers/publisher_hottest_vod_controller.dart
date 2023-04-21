@@ -8,7 +8,7 @@ import 'base_vod_infinity_scroll_controller.dart';
 
 final publisherApi = PublisherApi();
 final logger = Logger();
-const limit = 100;
+const limit = 20;
 
 class PublisherHottestVodController extends BaseVodInfinityScrollController {
   final int publisherId;
