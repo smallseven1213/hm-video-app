@@ -127,6 +127,7 @@ class _SplashState extends State<Splash> {
 
   // Step5: 檢查是否有更新
   checkApkUpdate() async {
+    if (GetPlatform.isWeb) return;
     setState(() => loadingText = '檢查更新...');
     print('step5: 檢查是否有更新');
     final apkUpdate = await apkApi.checkVersion(
