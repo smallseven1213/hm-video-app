@@ -109,6 +109,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
       color: AppColors.colors[ColorKeys.background],
       padding: const EdgeInsets.only(top: 8),
       child: TabBar(
+          physics: const BouncingScrollPhysics(),
           isScrollable: true,
           controller: tabController,
           indicatorPadding:
@@ -119,7 +120,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
             borderRadius: const BorderRadius.horizontal(
                 left: Radius.circular(10), right: Radius.circular(10)),
             borderSide: BorderSide(
-              width: 5.0,
+              width: 3.0,
               color: AppColors.colors[ColorKeys.primary]!,
             ),
           ),

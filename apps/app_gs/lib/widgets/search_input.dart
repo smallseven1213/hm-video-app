@@ -87,15 +87,15 @@ class _SearchInputState extends State<SearchInput> {
             onChanged: widget.onChanged,
             onSubmitted: widget.onSubmitted,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(10, 0, 0, 0),
-              border: OutlineInputBorder(
+              contentPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+              border: const OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 borderSide: BorderSide.none,
               ),
               hintText: widget.placeHolder,
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
-              fillColor: Color(0xFF002865),
+              fillColor: const Color(0xFF002865),
               suffixIcon: InkWell(
                 onTap: widget.onSearchButtonClick,
                 child: const Image(
@@ -105,7 +105,7 @@ class _SearchInputState extends State<SearchInput> {
                 ),
               ),
             ),
-            style: const TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white, fontSize: 12),
             autofocus: widget.autoFocus,
             focusNode: widget.focusNode,
           ),

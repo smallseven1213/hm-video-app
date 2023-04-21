@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/utils/navigation_helper.dart';
 
+import 'bottom_to_top_page.dart';
 import 'no_transition_page.dart';
 
 typedef RouteWidgetBuilder = Widget Function(
@@ -12,9 +14,14 @@ class StackData {
   final String path;
   final Map<String, dynamic> args;
   final bool? hasTransition;
+  final bool useBottomToTopAnimation;
 
-  StackData(
-      {required this.path, required this.args, this.hasTransition = true});
+  StackData({
+    required this.path,
+    required this.args,
+    this.hasTransition = true,
+    this.useBottomToTopAnimation = false,
+  });
 }
 
 final logger = Logger();
@@ -50,18 +57,21 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   List<String> get stack => List.unmodifiable(_stack);
 
-  // void push, from newRoute and add to _stack
   void push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,
       bool removeSamePath = false,
+      bool useBottomToTopAnimation = false, // 添加新参数
       Map<String, dynamic>? args}) {
     if (removeSamePath) {
       _stack.removeWhere((stackData) => stackData.path == routeName);
     }
 
     _stack.add(StackData(
-        path: routeName, args: args ?? {}, hasTransition: hasTransition));
+        path: routeName,
+        args: args ?? {},
+        hasTransition: hasTransition,
+        useBottomToTopAnimation: useBottomToTopAnimation)); // 传递新参数
 
     if (deletePreviousCount > 0) {
       _stack.removeRange(
@@ -116,27 +126,31 @@ class MyRouteDelegate extends RouterDelegate<String>
         Navigator(
           key: navigatorKey,
           onPopPage: _onPopPage,
-          pages: _stack.map((stack) {
+          pages: _stack.map<Page<dynamic>>((stack) {
+            // 指定返回的List元素类型
+            final widget = routes[stack.path]!(context, stack.args);
+
             if (stack.hasTransition == true) {
               return CupertinoPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: routes[stack.path]!(context, stack.args),
+                child: widget,
+                fullscreenDialog: stack.useBottomToTopAnimation,
               );
             }
             if (stack.hasTransition == false) {
               return NoAnimationPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: routes[stack.path]!(context, stack.args),
+                child: widget,
               );
             }
             return CupertinoPage(
               key: const ValueKey('/'),
               name: '/',
-              child: routes['/']!(context, stack.args),
+              child: routes['/']!(context, {}),
             );
-          }).toList(),
+          }).toList(), // 调用toList时指定类型
         ),
       ],
     );
