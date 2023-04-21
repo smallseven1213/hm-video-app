@@ -115,7 +115,10 @@ class FilterScreenController extends GetxController {
   }
 
   void handleOptionChange(String key, dynamic value) {
-    if (key == 'order' || key == 'chargeType') {
+    if (key == 'order' ||
+        key == 'chargeType' ||
+        key == 'regionId' ||
+        key == 'publisherId') {
       // 如果選擇了 "order" 中的任何一個選項，則清除所有其他選項並選擇當前選項
       selectedOptions[key]!.clear();
       selectedOptions[key]!.add(value);
