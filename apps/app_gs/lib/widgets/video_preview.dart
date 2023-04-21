@@ -312,7 +312,7 @@ class _SidImageVisibilityDetectorState
     return VisibilityDetector(
       key: _visibilityDetectorKey,
       onVisibilityChanged: (visibilityInfo) {
-        if (visibilityInfo.visibleFraction > 0.5) {
+        if (visibilityInfo.visibleFraction > 0.2) {
           setState(() {
             _isInViewport = true;
           });

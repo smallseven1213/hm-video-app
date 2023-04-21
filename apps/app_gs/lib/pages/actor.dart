@@ -50,36 +50,62 @@ class _ActorPageState extends State<ActorPage>
   Widget build(BuildContext context) {
     return Scaffold(body: Obx(() {
       var actor = actorController.actor.value;
-      return NestedScrollView(
-          controller: _parentScrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            // 返回一个 Sliver 数组给外部可滚动组件。
-            return <Widget>[
-              SliverPersistentHeader(
-                delegate: ActorCard(actor: actor),
-                pinned: true,
-              ), //构建一个 sliverList
-            ];
-          },
-          body: TabBarView(
-            controller: _tabController,
-            children: [
-              ActorVideoScreen(
-                key: const Key('actor_latest_vod'),
-                id: widget.id,
-                type: 'vod',
-                vodController: actorLatestVodController,
-                scrollController: _parentScrollController,
+      return Stack(
+        children: [
+          NestedScrollView(
+              controller: _parentScrollController,
+              headerSliverBuilder:
+                  (BuildContext context, bool innerBoxIsScrolled) {
+                // 返回一个 Sliver 数组给外部可滚动组件。
+                return <Widget>[
+                  SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: MediaQuery.of(context).padding.top,
+                    ),
+                  ),
+                  SliverPersistentHeader(
+                    delegate: ActorCard(actor: actor, context: context),
+                    pinned: true,
+                  ), //构建一个 sliverList
+                ];
+              },
+              body: TabBarView(
+                controller: _tabController,
+                children: [
+                  ActorVideoScreen(
+                    key: const Key('actor_latest_vod'),
+                    id: widget.id,
+                    type: 'vod',
+                    vodController: actorLatestVodController,
+                    scrollController: _parentScrollController,
+                  ),
+                  ActorVideoScreen(
+                    key: const Key('actor_newest_vod'),
+                    id: widget.id,
+                    type: 'series',
+                    vodController: actorNewestVodController,
+                    scrollController: _parentScrollController,
+                  ),
+                ],
+              )),
+          if (Navigator.canPop(context))
+            Positioned(
+              top: 0 + MediaQuery.of(context).padding.top,
+              left: 0,
+              child: SizedBox(
+                width: kToolbarHeight, // width of the AppBar's leading area
+                height: kToolbarHeight, // height of the AppBar's leading area
+                child: IconButton(
+                  color: Colors.white,
+                  icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
               ),
-              ActorVideoScreen(
-                key: const Key('actor_newest_vod'),
-                id: widget.id,
-                type: 'series',
-                vodController: actorNewestVodController,
-                scrollController: _parentScrollController,
-              ),
-            ],
-          ));
+            )
+        ],
+      );
     }));
   }
 }

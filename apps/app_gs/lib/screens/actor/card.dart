@@ -8,13 +8,18 @@ import 'package:shared/widgets/sid_image.dart';
 
 class ActorCard extends SliverPersistentHeaderDelegate {
   final Actor actor;
+  final BuildContext context;
 
   ActorCard({
     required this.actor,
+    required this.context,
   });
 
   @override
-  double get minExtent => kToolbarHeight;
+  double get minExtent {
+    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    return kToolbarHeight + statusBarHeight;
+  }
 
   @override
   double get maxExtent =>
@@ -43,6 +48,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
     );
     textPainter.layout();
     final textWidth = textPainter.width;
+    final systemTopBarHeight = MediaQuery.of(context).padding.top;
     final leftPadding = (screenWidth - imageSize - textWidth - 8) /
         2; // Subtract 8 for the space between image and text
 
@@ -66,7 +72,10 @@ class ActorCard extends SliverPersistentHeaderDelegate {
               ),
             ),
           Positioned(
-            top: lerpDouble(100, (kToolbarHeight - imageSize) / 2, percentage),
+            top: lerpDouble(
+                100,
+                ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
+                percentage),
             left: lerpDouble(10, leftPadding, percentage)!,
             child: SizedBox(
               width: imageSize,
@@ -83,7 +92,10 @@ class ActorCard extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            top: lerpDouble(110, (kToolbarHeight - fontSize) / 2, percentage),
+            top: lerpDouble(
+                110,
+                ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
+                percentage),
             left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
             child: Text(
               actor.name,
@@ -112,7 +124,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
           ),
           if (opacity == 0)
             Positioned(
-              top: 0,
+              top: 0 + systemTopBarHeight,
               right: 0,
               child: Obx(() {
                 var isLiked = userFavoritesActorController.actors
@@ -218,22 +230,6 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                       );
                     })
                   ],
-                ),
-              ),
-            ),
-          if (Navigator.canPop(context))
-            Positioned(
-              top: 0,
-              left: 0,
-              child: SizedBox(
-                width: kToolbarHeight, // width of the AppBar's leading area
-                height: kToolbarHeight, // height of the AppBar's leading area
-                child: IconButton(
-                  color: Colors.white,
-                  icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
                 ),
               ),
             ),
