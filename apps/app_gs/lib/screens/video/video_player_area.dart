@@ -650,6 +650,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   double startHorizontalDragX = 0.0;
   double startVerticalDragY = 0.0;
   double verticalDragPosition = 0.0;
+
   bool isForward = false;
 
   Future<void> setVolume(double volume) async {
@@ -712,8 +713,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             initialVolume = widget.controller.value.volume;
             initialBrightness =
                 MediaQuery.of(context).platformBrightness.index.toDouble();
+
+            double brightness = await ScreenBrightness().current;
+
             setState(() {
-              startVerticalDragY = details.globalPosition.dy;
+              startVerticalDragY =
+                  isVolume ? details.globalPosition.dy : brightness;
               sideControlsType = isVolume
                   ? SideControlsType.sound
                   : SideControlsType.brightness;
@@ -723,7 +728,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               double volume = await VolumeControl.volume;
               await setVolume(volume);
             } else {
-              double brightness = await ScreenBrightness().current;
               await setBrightness(brightness);
             }
           },
@@ -733,7 +737,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             }
             bool isVolume = details.globalPosition.dx >
                 MediaQuery.of(context).size.width / 2;
+            final globalPosition = details.globalPosition;
             final box = context.findRenderObject()! as RenderBox;
+            final Offset tapPos = box.globalToLocal(globalPosition);
+            final double relative =
+                math.min(1.0, math.max(0.0, tapPos.dy / box.size.height));
+
             final deltaY = startVerticalDragY - details.globalPosition.dy;
             const sensitivity = 0.05;
             final percentageDelta = deltaY / box.size.height;
@@ -751,10 +760,21 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               }
             } else {
               // Adjust brightness when swipe on the left side of the screen
-              var current = await ScreenBrightness().current;
-              final newBrightness =
-                  (current + sensitivity * (percentageDelta)).clamp(0.0, 1.0);
-              await setBrightness(newBrightness);
+              // var current = await ScreenBrightness().current;
+              // final newBrightness =
+              //     (current + sensitivity * (percentageDelta)).clamp(0.0, 1.0);
+              // await setBrightness(newBrightness);
+
+              Future.microtask(() async {
+                var current = await ScreenBrightness().current;
+                verticalDragPosition = math.min(1.0,
+                    math.max(0.0, current + (startVerticalDragY - relative)));
+                await ScreenBrightness()
+                    .setScreenBrightness(verticalDragPosition);
+                setState(() {
+                  startVerticalDragY = relative;
+                });
+              });
             }
           },
           onVerticalDragEnd: (details) {

@@ -115,7 +115,7 @@ class _SplashState extends State<Splash> {
 
   // Step4: 檢查維護中
   checkIsMaintenance() async {
-    print('step4: 檢查是否維護中');
+    print('step4: 檢查是否維護中${systemConfig.isMaintenance}');
     if (systemConfig.isMaintenance) {
       alertDialog(
         context,
@@ -127,6 +127,7 @@ class _SplashState extends State<Splash> {
 
   // Step5: 檢查是否有更新
   checkApkUpdate() async {
+    if (GetPlatform.isWeb) return true;
     setState(() => loadingText = '檢查更新...');
     print('step5: 檢查是否有更新');
     final apkUpdate = await apkApi.checkVersion(

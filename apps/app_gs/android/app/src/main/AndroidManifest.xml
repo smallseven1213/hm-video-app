@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.app_gs">
    <application
-        android:label="app_gs"
+        android:label="G點視頻"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
