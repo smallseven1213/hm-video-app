@@ -22,7 +22,7 @@ class Banners extends StatelessWidget {
       }
       return Carousel(
         images: channelData?.banner,
-        ratio: 359 / 184,
+        ratio: 359 / 170,
       );
     });
   }

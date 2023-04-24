@@ -85,7 +85,7 @@ class Channel extends StatelessWidget {
                 child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: AspectRatio(
-                  aspectRatio: 359 / 184, child: Banners(channelId: channelId)),
+                  aspectRatio: 359 / 170, child: Banners(channelId: channelId)),
             )),
             SliverToBoxAdapter(
                 child: buildTitle(channelData.jingang!.title ?? '')),
