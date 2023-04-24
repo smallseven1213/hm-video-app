@@ -21,7 +21,10 @@ class AppsScreen extends StatelessWidget {
           physics: BouncingScrollPhysics(),
           slivers: <Widget>[
             SliverToBoxAdapter(
-              child: BannerWidget(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: BannerWidget(),
+              ),
             ),
             SliverToBoxAdapter(
               child: Header(text: '熱門推薦'),

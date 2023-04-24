@@ -426,6 +426,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   VideoPlayerController? _controller;
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
+  bool hasError = false;
 
   @override
   void initState() {
@@ -438,6 +439,14 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     try {
       _controller = VideoPlayerController.network(widget.videoUrl);
       _controller!.addListener(() {
+        if (_controller!.value.hasError) {
+          setState(() {
+            hasError = true;
+          });
+        }
+        if (_controller!.value.isBuffering) {
+          print('👹👹👹 isBuffering');
+        }
         setState(() {});
       });
       _controller!.setLooping(true);
@@ -446,6 +455,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       await _controller!.play();
     } catch (error) {
       print('👹👹👹 Error occurred: $error');
+      if (_controller!.value.hasError) {
+        setState(() {
+          hasError = true;
+        });
+      }
       // 這裡可以進一步處理錯誤，例如重試或顯示錯誤信息給用戶
     }
   }
@@ -536,6 +550,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
         ? MediaQuery.of(context).size.height
         : MediaQuery.of(context).size.width / 16 * 9;
 
+    var aspectRatio = _controller!.value.size.width == 0 ||
+            _controller!.value.size.height == 0
+        ? 16 / 9
+        : _controller!.value.size.width / _controller!.value.size.height;
+
     var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
     if (currentRoutePath != '/video') {
       _controller?.pause();
@@ -553,8 +572,86 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: <Widget>[
-            if (_controller != null && _controller!.value.isInitialized) ...[
-              VideoPlayer(_controller!),
+            if (hasError) ...[
+              Stack(
+                children: [
+                  Container(
+                    foregroundDecoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.8),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.8),
+                          const Color.fromARGB(255, 0, 34, 79),
+                        ],
+                        stops: const [0.8, 1.0],
+                      ),
+                    ),
+                    child: SidImage(
+                      key: ValueKey(widget.video.coverHorizontal ?? ''),
+                      sid: widget.video.coverHorizontal ?? '',
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            setState(() {
+                              hasError = false;
+                            });
+                            initializePlayer();
+                          },
+                          child: Center(
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.5),
+                                  shape: BoxShape.circle),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.play_arrow,
+                                  color: Colors.white,
+                                  size: 45.0,
+                                  semanticLabel: 'Play',
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: AppBar(
+                  elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              )
+            ] else if (_controller != null &&
+                _controller!.value.isInitialized) ...[
+              AspectRatio(
+                aspectRatio: _controller!.value.size.width /
+                    _controller!.value.size.height,
+                child: VideoPlayer(_controller!),
+              ),
               ControlsOverlay(
                 controller: _controller!,
                 name: widget.video.title,
@@ -618,7 +715,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
                   ),
                 ),
               )
-            ]
+            ],
           ],
         ),
       ),
