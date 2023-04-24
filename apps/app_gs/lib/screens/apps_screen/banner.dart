@@ -45,7 +45,10 @@ class _BannerWidgetState extends State<BannerWidget> {
             )
             .toList();
         print(banners);
-        return Carousel(images: images);
+        return Carousel(
+          images: images,
+          ratio: 359 / 170,
+        );
       }
     });
   }
