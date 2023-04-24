@@ -554,11 +554,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
           alignment: Alignment.bottomCenter,
           children: <Widget>[
             if (_controller != null && _controller!.value.isInitialized) ...[
-              AspectRatio(
-                aspectRatio: _controller!.value.size.width /
-                    _controller!.value.size.height,
-                child: VideoPlayer(_controller!),
-              ),
+              VideoPlayer(_controller!),
               ControlsOverlay(
                 controller: _controller!,
                 name: widget.video.title,
