@@ -11,14 +11,25 @@ class SliverVideoPreviewSkeletonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAlignedGrid.count(
-      crossAxisCount: 2,
-      itemCount: 6,
-      itemBuilder: (BuildContext context, int index) {
-        return VideoPreviewSkeleton();
-      },
-      mainAxisSpacing: 12.0,
-      crossAxisSpacing: 10.0,
+    // return SliverAlignedGrid.count(
+    //   crossAxisCount: 2,
+    //   itemCount: 6,
+    //   itemBuilder: (BuildContext context, int index) {
+    //     return VideoPreviewSkeleton();
+    //   },
+    //   mainAxisSpacing: 12.0,
+    //   crossAxisSpacing: 10.0,
+    // );
+    return const SliverToBoxAdapter(
+      child: Padding(
+        padding: EdgeInsets.symmetric(vertical: 60),
+        child: Center(
+          child: Text(
+            '更多影片讀取中...',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
     );
   }
 }

@@ -47,9 +47,9 @@ class VendorVideoList extends StatelessWidget {
                 crossAxisSpacing: 10.0,
               ),
             ),
-            if (publisherVodController.hasMoreData)
+            if (publisherVodController.hasMoreData.value)
               const SliverVideoPreviewSkeletonList(),
-            if (!publisherVodController.hasMoreData)
+            if (!publisherVodController.hasMoreData.value)
               const SliverToBoxAdapter(
                 child: ListNoMore(),
               )

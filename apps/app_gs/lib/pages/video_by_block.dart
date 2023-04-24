@@ -60,9 +60,9 @@ class VideoByBlockPage extends StatelessWidget {
               ...vodChunks
                   .map((e) => SliverBlockWidget(vods: e, channelId: channelId))
                   .toList(),
-              if (blockVodController.hasMoreData)
+              if (blockVodController.hasMoreData.value)
                 const SliverVideoPreviewSkeletonList(),
-              if (!blockVodController.hasMoreData)
+              if (!blockVodController.hasMoreData.value)
                 const SliverToBoxAdapter(
                   child: ListNoMore(),
                 )

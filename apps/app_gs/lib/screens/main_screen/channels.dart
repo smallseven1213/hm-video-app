@@ -4,6 +4,19 @@ import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
 
 import 'channel/index.dart';
+import 'package:flutter/physics.dart';
+
+class CustomPageScrollPhysics extends BouncingScrollPhysics {
+  CustomPageScrollPhysics({required ScrollPhysics parent})
+      : super(parent: parent);
+
+  @override
+  SpringDescription get spring => SpringDescription(
+        mass: 0.5,
+        stiffness: 400,
+        damping: 0.5,
+      );
+}
 
 class Channels extends StatefulWidget {
   final int layoutId;
@@ -55,6 +68,7 @@ class _ChannelsState extends State<Channels> {
         onPageChanged: (value) =>
             channelScreenTabController.tabIndex.value = value,
         allowImplicitScrolling: true,
+        physics: const ClampingScrollPhysics(),
         children: layoutController.layout
             .asMap()
             .map(
