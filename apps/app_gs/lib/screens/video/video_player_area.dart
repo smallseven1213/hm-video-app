@@ -435,13 +435,19 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   }
 
   void initializePlayer() async {
-    print('widget.videoUrl: ${widget.videoUrl}');
-    _controller = VideoPlayerController.network(widget.videoUrl);
-    // _controller!.setLooping(true);
-    // 監聽播放狀態
-    _controller!.addListener(_onControllerValueChanged);
-    _controller!.initialize().then((_) => setState(() {}));
-    _controller!.play();
+    try {
+      _controller = VideoPlayerController.network(widget.videoUrl);
+      _controller!.addListener(() {
+        setState(() {});
+      });
+      _controller!.setLooping(true);
+      await _controller!.initialize();
+      setState(() {});
+      await _controller!.play();
+    } catch (error) {
+      print('👹👹👹 Error occurred: $error');
+      // 這裡可以進一步處理錯誤，例如重試或顯示錯誤信息給用戶
+    }
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
@@ -461,17 +467,17 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   }
 
   void _onControllerValueChanged() async {
-    if (_controller!.value.isPlaying) {
-      // 保持屏幕亮度
-      // var isLock = await Wakelock.enabled;
-      // if (!isLock) {
-      //   Wakelock.enable();
-      // }
-      Wakelock.enable();
-    } else {
-      // 恢復正常屏幕行為
-      Wakelock.disable();
-    }
+    // if (_controller!.value.isPlaying) {
+    //   // 保持屏幕亮度
+    //   // var isLock = await Wakelock.enabled;
+    //   // if (!isLock) {
+    //   //   Wakelock.enable();
+    //   // }
+    //   Wakelock.enable();
+    // } else {
+    //   // 恢復正常屏幕行為
+    //   Wakelock.disable();
+    // }
   }
 
   Future<bool> onWillPop() async {
@@ -548,11 +554,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
           alignment: Alignment.bottomCenter,
           children: <Widget>[
             if (_controller != null && _controller!.value.isInitialized) ...[
-              AspectRatio(
-                aspectRatio: _controller!.value.size.width /
-                    _controller!.value.size.height,
-                child: VideoPlayer(_controller!),
-              ),
+              VideoPlayer(_controller!),
               ControlsOverlay(
                 controller: _controller!,
                 name: widget.video.title,
