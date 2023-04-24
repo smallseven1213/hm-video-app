@@ -6,6 +6,7 @@ import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/circle_sidimage_text_item.dart';
+import '../../widgets/no_data.dart';
 
 class FavoritesActorScreen extends StatelessWidget {
   FavoritesActorScreen({Key? key}) : super(key: key);
@@ -18,6 +19,9 @@ class FavoritesActorScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var actors = userFavoritesActorController.actors;
+      if (actors.isEmpty) {
+        return const NoDataWidget();
+      }
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: AlignedGridView.count(

@@ -23,14 +23,24 @@ class _FilterBarState extends State<FilterBar> {
   @override
   void initState() {
     super.initState();
-    widget.scrollController.addListener(() {
-      if (widget.scrollController.position.userScrollDirection !=
-          ScrollDirection.idle) {
+    widget.scrollController.addListener(_scrollListener);
+  }
+
+  @override
+  void dispose() {
+    widget.scrollController.removeListener(_scrollListener);
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    if (widget.scrollController.position.userScrollDirection !=
+        ScrollDirection.idle) {
+      if (mounted) {
         setState(() {
           isOpen = false;
         });
       }
-    });
+    }
   }
 
   @override

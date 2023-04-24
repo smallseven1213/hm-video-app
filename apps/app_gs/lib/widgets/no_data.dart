@@ -4,8 +4,8 @@ class NoDataWidget extends StatelessWidget {
   const NoDataWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 100,
+    return Padding(
+      padding: const EdgeInsets.only(top: 80),
       child: Center(
         child: Column(
           children: [

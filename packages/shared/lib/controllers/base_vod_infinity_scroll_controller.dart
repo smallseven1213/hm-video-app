@@ -2,9 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../models/infinity_vod.dart';
 import '../models/vod.dart';
+
+final logger = Logger();
 
 abstract class BaseVodInfinityScrollController extends GetxController {
   final vodList = <Vod>[].obs;
@@ -12,50 +15,60 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   final totalCount = 0.obs;
   RxBool showNoMore = false.obs;
   Timer? _timer;
-  bool isLoading = false;
-  bool hasMoreData = true;
+  RxBool isLoading = false.obs;
+  RxBool hasMoreData = true.obs;
   ScrollController scrollController = ScrollController();
 
   BaseVodInfinityScrollController(
       {bool loadDataOnInit = true,
       required ScrollController scrollController}) {
-    this.scrollController = scrollController;
+    // this.scrollController = scrollController;
     this.scrollController.addListener(_scrollListener);
     if (loadDataOnInit) {
-      _loadMoreData();
+      loadMoreData();
     }
   }
 
   Future<InfinityVod> fetchData(int page);
 
-  Future<void> _loadMoreData() async {
-    if (isLoading || !hasMoreData) return;
-    isLoading = true;
+  void reset() {
+    vodList.clear();
+    page.value = 0;
+    totalCount.value = 0;
+    hasMoreData.value = true;
+    showNoMore.value = false;
+  }
+
+  Future<void> loadMoreData() async {
+    if (isLoading.value || !hasMoreData.value) return;
+    isLoading.value = true;
 
     int nextPage = page.value + 1;
     InfinityVod newData = await fetchData(nextPage);
+    logger.i(newData.vods.isNotEmpty);
 
     if (newData.vods.isNotEmpty) {
       vodList.addAll(newData.vods);
       page.value = nextPage;
       totalCount.value = vodList.length;
-      hasMoreData = newData.hasMoreData;
+      hasMoreData.value = newData.hasMoreData;
     } else {
-      hasMoreData = false;
+      hasMoreData.value = false;
     }
 
-    isLoading = false;
+    isLoading.value = false;
   }
 
   void _scrollListener() {
+    logger.i('XD');
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
-      _loadMoreData();
+      loadMoreData();
     }
 
     if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent &&
-        !hasMoreData &&
+        !hasMoreData.value &&
         !showNoMore.value) {
       Future.delayed(const Duration(milliseconds: 5), () {
         scrollController.animateTo(

@@ -4,12 +4,13 @@ import 'package:logger/logger.dart';
 import '../apis/publisher_api.dart';
 import '../apis/region_api.dart';
 import '../apis/vod_api.dart';
-import '../models/vod.dart';
 
 final logger = Logger();
 final vodApi = VodApi();
 final regionApi = RegionApi();
 final publisherApi = PublisherApi();
+
+const limit = 20;
 
 class FilterScreenController extends GetxController {
   final List<Map<String, dynamic>> menuData = [
@@ -61,18 +62,12 @@ class FilterScreenController extends GetxController {
     // 'film': {1}.obs,
   }.obs;
 
-  final List<Vod> filterResults = <Vod>[].obs;
-
-  int _page = 1;
-  bool _isLoading = false;
-  RxBool hasMoreData = true.obs;
-
   @override
   void onInit() {
     super.onInit();
+    logger.i('FILTER SCREEN INITIAL====================');
     _handleInitRegionData();
     _handleInitPublisherRecommendData();
-    _handleSelectedOptionsChange();
   }
 
   String findName(String key, int value) {
@@ -87,15 +82,10 @@ class FilterScreenController extends GetxController {
     var regionData =
         res.map((item) => {'name': item.name, 'value': item.id}).toList();
 
-    var newOptions = [...menuData[1]['options'], ...regionData];
     int indexToUpdate = 1;
-    menuData.removeAt(indexToUpdate);
-    menuData.insert(
-        indexToUpdate,
-        {
-          'key': 'regionId',
-          'options': newOptions,
-        } as Map<String, dynamic>);
+    menuData[indexToUpdate].update('options', (existingOptions) {
+      return [...existingOptions, ...regionData];
+    });
   }
 
   void _handleInitPublisherRecommendData() async {
@@ -103,15 +93,10 @@ class FilterScreenController extends GetxController {
     var publisherData =
         res.map((item) => {'name': item.name, 'value': item.id}).toList();
 
-    var newOptions = [...menuData[2]['options'], ...publisherData];
     int indexToUpdate = 2;
-    menuData.removeAt(indexToUpdate);
-    menuData.insert(
-        indexToUpdate,
-        {
-          'key': 'publisherId',
-          'options': newOptions,
-        } as Map<String, dynamic>);
+    menuData[indexToUpdate].update('options', (existingOptions) {
+      return [...existingOptions, ...publisherData];
+    });
   }
 
   void handleOptionChange(String key, dynamic value) {
@@ -136,43 +121,5 @@ class FilterScreenController extends GetxController {
       }
     }
     selectedOptions.refresh();
-    _page = 1;
-    _handleSelectedOptionsChange(refresh: true);
-  }
-
-  void loadNextPage() async {
-    _page += 1;
-    _handleSelectedOptionsChange(); // 修改此方法以接受 page 參數
-  }
-
-  Future<void> _handleSelectedOptionsChange({int? page, bool? refresh}) async {
-    _isLoading = true;
-    List<String> queryItems = [];
-
-    selectedOptions.forEach((key, values) {
-      if (values.isNotEmpty && values.first != 0) {
-        String valueString = values.map((value) => value.toString()).join(',');
-        queryItems.add('$key=$valueString');
-      }
-    });
-
-    String queryString = queryItems.join('&');
-    logger.i(queryString);
-
-    var res = await vodApi.getSimpleManyBy(
-        page: page ?? _page, limit: 20, queryString: queryString);
-
-    if (refresh == true) {
-      filterResults.clear();
-      filterResults.addAll(res.vods);
-    } else {
-      if (res.vods.isNotEmpty) {
-        filterResults.addAll(res.vods);
-      } else {
-        hasMoreData.value = false;
-      }
-    }
-
-    _isLoading = false;
   }
 }

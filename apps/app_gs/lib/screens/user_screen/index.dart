@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../widgets/header.dart';
 import 'ad.dart';
+import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
 import 'list_menu.dart';
@@ -22,20 +23,35 @@ class UserScreen extends StatelessWidget {
                 height: MediaQuery.of(context).padding.top,
               ),
             ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: const [
-                  UserInfo(),
-                  SizedBox(height: 10),
-                  Ad(),
-                ],
+            const SliverToBoxAdapter(
+              child: UserInfo(),
+            ),
+            // height 10
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
               ),
             ),
             GridMenu(),
             const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
+            ),
+            const SliverToBoxAdapter(
+                child: Padding(
+              // padding x 8
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: UserSreenBanner(),
+            )),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 20,
+              ),
+            ),
+            const SliverToBoxAdapter(
               child: Header(text: '更多服務'),
             ),
-            // size h 10
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 10,
@@ -45,23 +61,12 @@ class UserScreen extends StatelessWidget {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Container(
-                padding: const EdgeInsets.only(bottom: 90),
-                child: Align(
+                padding: const EdgeInsets.only(bottom: 15),
+                child: const Align(
                   alignment: Alignment.bottomCenter,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      border: Border.all(
-                        color: const Color(0xFF79A2C8),
-                        width: 1,
-                      ),
-                    ),
-                    child: const Text(
-                      '版本號:3.8.7533967',
-                      style: TextStyle(color: Color(0xFF79A2C8)),
-                    ),
+                  child: Text(
+                    '版本號:3.8.7533967',
+                    style: TextStyle(color: Color(0xFF486A89)),
                   ),
                 ),
               ),

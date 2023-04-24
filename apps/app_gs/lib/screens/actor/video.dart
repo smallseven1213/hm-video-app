@@ -47,9 +47,9 @@ class ActorVideoScreen extends StatelessWidget {
                 crossAxisSpacing: 10.0,
               ),
             ),
-            if (vodController.hasMoreData)
+            if (vodController.hasMoreData.value)
               const SliverVideoPreviewSkeletonList(),
-            if (!vodController.hasMoreData)
+            if (!vodController.hasMoreData.value)
               const SliverToBoxAdapter(
                 child: ListNoMore(),
               )

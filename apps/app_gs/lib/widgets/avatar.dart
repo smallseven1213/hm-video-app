@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
+import 'package:shimmer/shimmer.dart';
 
 class Avatar extends StatelessWidget {
   Avatar({
@@ -11,13 +12,33 @@ class Avatar extends StatelessWidget {
   final Function? onTap;
   final userController = Get.find<UserController>();
 
+  Widget _buildShimmer() {
+    return Shimmer.fromColors(
+      baseColor: Colors.white.withOpacity(0.4),
+      highlightColor: Colors.white.withOpacity(0.2),
+      child: Container(
+        width: 60,
+        height: 60,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          shape: BoxShape.circle,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap as void Function()?,
       child: Obx(() {
+        var isLoading = userController.isLoading.value;
         var hasNoAvatar = userController.info.value.roles.contains('guest') ||
             userController.info.value.avatar == null;
+
+        if (isLoading && userController.info.value.avatar == null) {
+          return _buildShimmer();
+        }
         return Container(
             padding: const EdgeInsets.all(
                 1), // Add padding to create the border effect

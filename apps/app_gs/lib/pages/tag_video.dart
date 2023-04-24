@@ -29,8 +29,6 @@ class TagVideoPage extends StatelessWidget {
         title: '#$title',
       ),
       body: Obx(() {
-        logger.i(
-            'tagVideoController.isLoading ==> ${tagVideoController.isLoading}');
         return CustomScrollView(
           controller: tagVideoController.scrollController,
           physics: const BouncingScrollPhysics(),
@@ -55,7 +53,7 @@ class TagVideoPage extends StatelessWidget {
                 crossAxisSpacing: 10.0,
               ),
             ),
-            if (tagVideoController.hasMoreData)
+            if (tagVideoController.hasMoreData.value)
               const SliverVideoPreviewSkeletonList(),
             if (tagVideoController.showNoMore.value)
               const SliverToBoxAdapter(
