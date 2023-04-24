@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared/services/system_config.dart';
 
 import '../../widgets/header.dart';
 import 'ad.dart';
@@ -6,6 +7,8 @@ import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
 import 'list_menu.dart';
+
+final systemConfig = SystemConfig();
 
 class UserScreen extends StatelessWidget {
   const UserScreen({Key? key}) : super(key: key);
@@ -62,11 +65,11 @@ class UserScreen extends StatelessWidget {
               hasScrollBody: false,
               child: Container(
                 padding: const EdgeInsets.only(bottom: 15),
-                child: const Align(
+                child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
-                    '版本號:3.8.7533967',
-                    style: TextStyle(color: Color(0xFF486A89)),
+                    '版本號:${systemConfig.version}',
+                    style: const TextStyle(color: Color(0xFF486A89)),
                   ),
                 ),
               ),
