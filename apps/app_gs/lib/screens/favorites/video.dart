@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 
+import '../../widgets/no_data.dart';
+
 class FavoritesVideoScreen extends StatelessWidget {
   FavoritesVideoScreen({Key? key}) : super(key: key);
 
@@ -16,6 +18,9 @@ class FavoritesVideoScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var videos = userFavoritesVideoController.videos;
+      if (videos.isEmpty) {
+        return const NoDataWidget();
+      }
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: AlignedGridView.count(

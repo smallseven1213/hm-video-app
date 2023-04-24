@@ -19,7 +19,7 @@ class FilterResult extends StatelessWidget {
       sliver: Obx(() => controller.filterResults.isEmpty
           ? const SliverToBoxAdapter(
               child: Padding(
-                padding: EdgeInsets.only(top: 60),
+                padding: EdgeInsets.only(top: 200),
                 child: NoDataWidget(),
               ),
             )

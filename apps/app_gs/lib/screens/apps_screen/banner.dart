@@ -29,8 +29,8 @@ class _BannerWidgetState extends State<BannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var banners = bannerController
-          .banners[BannerPosition.discoverCarousel.index] as List<BannerPhoto>?;
+      var banners = bannerController.banners[BannerPosition.discoverCarousel]
+          as List<BannerPhoto>?;
       if (banners == null || banners.isEmpty) {
         return Container();
       } else {

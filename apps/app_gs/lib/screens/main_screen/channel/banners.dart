@@ -20,7 +20,10 @@ class Banners extends StatelessWidget {
       if (channelData?.banner == null) {
         return const SizedBox();
       }
-      return Carousel(images: channelData?.banner);
+      return Carousel(
+        images: channelData?.banner,
+        ratio: 359 / 184,
+      );
     });
   }
 }

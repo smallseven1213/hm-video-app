@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/sid_image.dart';
 import '../enums/app_routes.dart';
@@ -11,6 +12,7 @@ import '../services/system_config.dart';
 import '../controllers/banner_controller.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class Ad extends StatefulWidget {
   final String backgroundAssetPath;
@@ -36,15 +38,13 @@ class AdState extends State<Ad> {
 
   @override
   void initState() {
-    print('AdState initState');
-
     // 紀錄入站次數，用來取得對應的廣告圖片
     final entryCount = systemConfig.box.read('entry-count') ?? 0;
     systemConfig.box.write('entry-count', entryCount + 1);
-    final landingBanners =
-        bannerController.banners[BannerPosition.landing.index];
+    final landingBanners = bannerController.banners[BannerPosition.landing];
+    logger.i(landingBanners);
     setState(() {
-      currentBanner = landingBanners[entryCount % landingBanners.length];
+      currentBanner = landingBanners![entryCount % landingBanners.length];
     });
 
     super.initState();

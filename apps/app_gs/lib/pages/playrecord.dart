@@ -1,3 +1,4 @@
+import 'package:app_gs/widgets/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -58,6 +59,9 @@ class _PlayRecordPageState extends State<PlayRecordPage> {
         children: [
           Obx(() {
             var videos = playRecordController.playRecord;
+            if (videos.isEmpty) {
+              return const NoDataWidget();
+            }
             return AlignedGridView.count(
               padding: const EdgeInsets.all(8.0),
               crossAxisCount: 2,

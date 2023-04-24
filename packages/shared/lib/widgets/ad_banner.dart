@@ -18,8 +18,8 @@ class AdBanner extends StatelessWidget {
         child: image.photoSid != null && image.photoSid!.isNotEmpty
             ? SidImage(
                 key: ValueKey(image.photoSid),
-                width: double.infinity,
-                height: double.infinity,
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
                 sid: image.photoSid!,
                 fit: BoxFit.cover,
               )
