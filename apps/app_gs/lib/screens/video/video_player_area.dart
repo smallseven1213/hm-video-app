@@ -855,11 +855,11 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               if (deltaY.abs() >= threshold) {
                 if (deltaY > 0) {
                   if (widget.controller.value.volume <= 0) return;
-                  double volume = widget.controller.value.volume - 0.01;
+                  double volume = widget.controller.value.volume - 0.015;
                   setVolume(volume);
                 } else {
                   if (widget.controller.value.volume >= 1) return;
-                  double volume = widget.controller.value.volume + 0.01;
+                  double volume = widget.controller.value.volume + 0.015;
                   setVolume(volume);
                 }
                 // 更新lastDragPosition以便于下次计算
