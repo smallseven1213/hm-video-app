@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/actor_hottest_vod_controller.dart';
 import 'package:shared/controllers/actor_latest_vod_controller.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 import '../screens/actor/card.dart';
 import '../screens/actor/video.dart';
+
+final logger = Logger();
 
 class ActorPage extends StatefulWidget {
   final int id;
@@ -37,6 +41,15 @@ class _ActorPageState extends State<ActorPage>
         actorId: widget.id, scrollController: _parentScrollController);
     actorController = ActorController(actorId: widget.id);
     _tabController = TabController(vsync: this, length: 2);
+
+    actorLatestVodController.scrollController.addListener(() {
+      _parentScrollController
+          .jumpTo(actorLatestVodController.scrollController.offset);
+    });
+    actorNewestVodController.scrollController.addListener(() {
+      _parentScrollController
+          .jumpTo(actorLatestVodController.scrollController.offset);
+    });
   }
 
   @override
@@ -50,10 +63,12 @@ class _ActorPageState extends State<ActorPage>
   Widget build(BuildContext context) {
     return Scaffold(body: Obx(() {
       var actor = actorController.actor.value;
+      print('RE RENDER');
       return Stack(
         children: [
           NestedScrollView(
               controller: _parentScrollController,
+              physics: const BouncingScrollPhysics(),
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
                 // 返回一个 Sliver 数组给外部可滚动组件。
@@ -71,20 +86,19 @@ class _ActorPageState extends State<ActorPage>
               },
               body: TabBarView(
                 controller: _tabController,
+                physics: const BouncingScrollPhysics(),
                 children: [
                   ActorVideoScreen(
                     key: const Key('actor_latest_vod'),
                     id: widget.id,
                     type: 'vod',
                     vodController: actorLatestVodController,
-                    scrollController: _parentScrollController,
                   ),
                   ActorVideoScreen(
                     key: const Key('actor_newest_vod'),
                     id: widget.id,
                     type: 'series',
                     vodController: actorNewestVodController,
-                    scrollController: _parentScrollController,
                   ),
                 ],
               )),

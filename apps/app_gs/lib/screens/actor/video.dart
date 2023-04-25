@@ -11,21 +11,19 @@ import '../../widgets/video_preview.dart';
 class ActorVideoScreen extends StatelessWidget {
   final int id;
   final String type;
-  final ScrollController scrollController;
   final vodController;
   ActorVideoScreen({
     Key? key,
     required this.type,
     required this.id,
-    required this.scrollController,
     required this.vodController,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Obx(() => CustomScrollView(
-          // controller: scrollController, // Use the shared ScrollController
-          physics: const ClampingScrollPhysics(),
+          controller: vodController.scrollController,
+          // physics: const ClampingScrollPhysics(),
           slivers: [
             SliverPadding(
               padding: const EdgeInsets.all(8.0),

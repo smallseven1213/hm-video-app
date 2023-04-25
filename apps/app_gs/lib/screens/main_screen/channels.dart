@@ -68,7 +68,7 @@ class _ChannelsState extends State<Channels> {
         onPageChanged: (value) =>
             channelScreenTabController.tabIndex.value = value,
         allowImplicitScrolling: true,
-        physics: const ClampingScrollPhysics(),
+        physics: const CustomPageViewScrollPhysics(),
         children: layoutController.layout
             .asMap()
             .map(
@@ -85,4 +85,21 @@ class _ChannelsState extends State<Channels> {
       ),
     );
   }
+}
+
+class CustomPageViewScrollPhysics extends ScrollPhysics {
+  const CustomPageViewScrollPhysics({ScrollPhysics? parent})
+      : super(parent: parent);
+
+  @override
+  CustomPageViewScrollPhysics applyTo(ScrollPhysics? ancestor) {
+    return CustomPageViewScrollPhysics(parent: buildParent(ancestor)!);
+  }
+
+  @override
+  SpringDescription get spring => const SpringDescription(
+        mass: 50,
+        stiffness: 100,
+        damping: 1,
+      );
 }
