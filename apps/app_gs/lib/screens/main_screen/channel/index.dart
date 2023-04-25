@@ -37,7 +37,7 @@ class Channel extends StatefulWidget {
 
 class _ChannelState extends State<Channel> with AutomaticKeepAliveClientMixin {
   ChannelInfo? channelData;
-  late List<Widget> sliverBlocks;
+  late List<Widget>? sliverBlocks;
 
   @override
   void initState() {
@@ -48,6 +48,9 @@ class _ChannelState extends State<Channel> with AutomaticKeepAliveClientMixin {
     );
 
     channelData = channelDataController.channelData.value;
+    if (channelData != null) {
+      sliverBlocks = _buildSliverBlocks(channelData!, context);
+    }
 
     channelDataController.channelData.listen((value) {
       setState(() {
@@ -66,7 +69,7 @@ class _ChannelState extends State<Channel> with AutomaticKeepAliveClientMixin {
   Widget build(BuildContext context) {
     super.build(context); // Make sure to include this line
 
-    if (channelData == null) {
+    if (channelData == null || sliverBlocks == null) {
       return const ChannelSkeleton();
     } else {
       return CustomScrollView(
@@ -82,7 +85,7 @@ class _ChannelState extends State<Channel> with AutomaticKeepAliveClientMixin {
           SliverToBoxAdapter(
               child: buildTitle(channelData!.jingang!.title ?? '')),
           JingangList(channelId: widget.channelId),
-          ...sliverBlocks,
+          ...sliverBlocks!,
           const SliverToBoxAdapter(
             child: SizedBox(height: 100),
           )
