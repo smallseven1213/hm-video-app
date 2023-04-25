@@ -55,15 +55,24 @@ class VodApi {
     );
   }
 
-  Future<List<Vod>> searchMany(String keyword) async {
+  Future<BlockVod> searchMany(String keyword, int page, int limit) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=1&limit=10');
+            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
-      return [];
+      return BlockVod([], 0);
     }
-    return List.from((res.data['data']['data'] as List<dynamic>)
-        .map((e) => Vod.fromJson(e)));
+    try {
+      var bb = BlockVod(
+        List.from((res.data['data']['data'] as List<dynamic>)
+            .map((e) => Vod.fromJson(e))),
+        res.data['data']['total'],
+      );
+      return bb;
+    } catch (e) {
+      print(e);
+    }
+    return BlockVod([], 0);
   }
 
   Future<BlockVod> getSameTagVod({
