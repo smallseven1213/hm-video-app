@@ -63,7 +63,6 @@ class _ActorPageState extends State<ActorPage>
   Widget build(BuildContext context) {
     return Scaffold(body: Obx(() {
       var actor = actorController.actor.value;
-      print('RE RENDER');
       return Stack(
         children: [
           NestedScrollView(
