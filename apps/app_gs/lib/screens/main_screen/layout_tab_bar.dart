@@ -100,6 +100,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
 
   @override
   Widget build(BuildContext context) {
+    logger.i('RENDER LayoutTabBarState');
     if (tabItems.isEmpty) {
       return Container();
     }
