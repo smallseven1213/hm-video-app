@@ -746,13 +746,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   double startHorizontalDragX = 0.0;
   double startVerticalDragY = 0.0;
   double verticalDragPosition = 0.0;
+  double? lastDragPosition; // 添加一个类变量来保存上次触发音量更改的滑动位置
 
   bool isForward = false;
 
   Future<void> setVolume(double volume) async {
-    await VolumeControl.setVolume(volume);
+    VolumeControl.setVolume(volume);
     widget.controller.setVolume(volume);
-
     setState(() {
       sideControlsType = SideControlsType.sound;
       verticalDragPosition = volume;
@@ -845,22 +845,27 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
             // Adjust volume when swipe on the right side of the screen
             if (isVolume) {
-              if (details.primaryDelta! > 0) {
-                if (widget.controller.value.volume <= 0) return;
-                double volume = widget.controller.value.volume - 0.01;
-                await setVolume(volume);
-              } else {
-                if (widget.controller.value.volume >= 1) return;
-                double volume = widget.controller.value.volume + 0.01;
-                await setVolume(volume);
+              // 檢查lastDragPosition是否為null，如果是，則初始化它
+              lastDragPosition ??= details.globalPosition.dy;
+              // 計算滑動距離
+              double deltaY = details.globalPosition.dy - lastDragPosition!;
+              // 設置滑動閾值，例如3個像素
+              double threshold = 3;
+              // 檢查滑動距離是否超過閾值
+              if (deltaY.abs() >= threshold) {
+                if (deltaY > 0) {
+                  if (widget.controller.value.volume <= 0) return;
+                  double volume = widget.controller.value.volume - 0.01;
+                  setVolume(volume);
+                } else {
+                  if (widget.controller.value.volume >= 1) return;
+                  double volume = widget.controller.value.volume + 0.01;
+                  setVolume(volume);
+                }
+                // 更新lastDragPosition以便于下次计算
+                lastDragPosition = details.globalPosition.dy;
               }
             } else {
-              // Adjust brightness when swipe on the left side of the screen
-              // var current = await ScreenBrightness().current;
-              // final newBrightness =
-              //     (current + sensitivity * (percentageDelta)).clamp(0.0, 1.0);
-              // await setBrightness(newBrightness);
-
               Future.microtask(() async {
                 var current = await ScreenBrightness().current;
                 verticalDragPosition = math.min(1.0,
