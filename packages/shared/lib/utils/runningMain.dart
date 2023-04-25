@@ -46,12 +46,13 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   // start app
   SystemConfig systemConfig = SystemConfig();
 
-  await SentryFlutter.init(
-    (options) {
-      options.dsn =
-          'https://c7999b4a8ee6400c887489947f5f43fd@o996294.ingest.sentry.io/4505050671415296';
-      options.tracesSampleRate = 1.0;
-    },
-    appRunner: () => realMain(widget),
-  );
+  // await SentryFlutter.init(
+  //   (options) {
+  //     options.dsn =
+  //         'https://c7999b4a8ee6400c887489947f5f43fd@o996294.ingest.sentry.io/4505050671415296';
+  //     options.tracesSampleRate = 1.0;
+  //   },
+  //   appRunner: () => realMain(widget),
+  // );
+  realMain(widget);
 }
