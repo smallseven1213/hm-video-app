@@ -31,6 +31,7 @@ class HomeMainScreenState extends State<HomeMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('RENDER: HomeMainScreen Layout ${widget.layoutId}');
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

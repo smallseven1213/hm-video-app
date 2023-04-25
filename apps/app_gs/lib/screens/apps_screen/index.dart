@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/header.dart';
@@ -6,11 +7,14 @@ import 'banner.dart';
 import 'hot.dart';
 import 'popular.dart';
 
+final logger = Logger();
+
 class AppsScreen extends StatelessWidget {
   const AppsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    logger.i('RENDER: AppsScreen');
     return WillPopScope(
       onWillPop: () async => false,
       child: const Scaffold(
