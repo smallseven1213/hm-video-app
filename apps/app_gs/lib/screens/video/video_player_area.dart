@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 // VideoPlayerArea stateful widget
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
@@ -438,21 +439,10 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   void initializePlayer() async {
     try {
       _controller = VideoPlayerController.network(widget.videoUrl);
-      _controller!.addListener(() {
-        if (_controller!.value.hasError) {
-          setState(() {
-            hasError = true;
-          });
-        }
-        if (_controller!.value.isBuffering) {
-          print('👹👹👹 isBuffering');
-        }
-        setState(() {});
-      });
-      _controller!.setLooping(true);
-      await _controller!.initialize();
-      setState(() {});
-      await _controller!.play();
+      // 監聽播放狀態
+      _controller!.addListener(_onControllerValueChanged);
+      _controller!.initialize().then((_) => setState(() {}));
+      _controller!.play();
     } catch (error) {
       print('👹👹👹 Error occurred: $error');
       if (_controller!.value.hasError) {
@@ -460,7 +450,6 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
           hasError = true;
         });
       }
-      // 這裡可以進一步處理錯誤，例如重試或顯示錯誤信息給用戶
     }
   }
 
@@ -481,17 +470,26 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   }
 
   void _onControllerValueChanged() async {
-    // if (_controller!.value.isPlaying) {
-    //   // 保持屏幕亮度
-    //   // var isLock = await Wakelock.enabled;
-    //   // if (!isLock) {
-    //   //   Wakelock.enable();
-    //   // }
-    //   Wakelock.enable();
-    // } else {
-    //   // 恢復正常屏幕行為
-    //   Wakelock.disable();
-    // }
+    if (_controller!.value.hasError) {
+      setState(() {
+        hasError = true;
+      });
+    }
+    if (_controller!.value.isBuffering) {
+      print('👹👹👹 isBuffering');
+    }
+
+    if (!kIsWeb && _controller!.value.isPlaying) {
+      // 保持屏幕亮度
+      // var isLock = await Wakelock.enabled;
+      // if (!isLock) {
+      //   Wakelock.enable();
+      // }
+      Wakelock.enable();
+    } else {
+      // 恢復正常屏幕行為
+      Wakelock.disable();
+    }
   }
 
   Future<bool> onWillPop() async {
@@ -648,8 +646,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
             ] else if (_controller != null &&
                 _controller!.value.isInitialized) ...[
               AspectRatio(
-                aspectRatio: _controller!.value.size.width /
-                    _controller!.value.size.height,
+                aspectRatio: aspectRatio,
                 child: VideoPlayer(_controller!),
               ),
               ControlsOverlay(
