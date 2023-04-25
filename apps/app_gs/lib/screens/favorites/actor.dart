@@ -23,7 +23,7 @@ class FavoritesActorScreen extends StatelessWidget {
         return const NoDataWidget();
       }
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: const EdgeInsets.only(top: 10.0, left: 8.0, right: 8.0),
         child: AlignedGridView.count(
           crossAxisCount: 5,
           itemCount: actors.length,

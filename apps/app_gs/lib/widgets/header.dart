@@ -56,14 +56,6 @@ class Header extends StatelessWidget {
                         left: Radius.circular(5),
                         right: Radius.circular(5),
                       ),
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 2.0,
-                          spreadRadius: 2.0,
-                          color: AppColors.colors[ColorKeys.textPrimary]!
-                              .withOpacity(0.5),
-                        ),
-                      ],
                     ),
                   ),
                 ],

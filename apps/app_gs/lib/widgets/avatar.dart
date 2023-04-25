@@ -44,21 +44,20 @@ class Avatar extends StatelessWidget {
                 1), // Add padding to create the border effect
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              boxShadow: [
-                // if user roles contains guest then show shadow
-                if (hasNoAvatar)
-                  const BoxShadow(
-                    color: Color(0xFF456EFF),
-                    blurRadius: 9,
-                    spreadRadius: 0,
-                  )
-                else
-                  const BoxShadow(
-                    color: Color(0xFFFFC700),
-                    blurRadius: 9,
-                    spreadRadius: 0,
-                  ),
-              ],
+              // boxShadow: [
+              //   if (hasNoAvatar)
+              //     const BoxShadow(
+              //       color: Color(0xFF456EFF),
+              //       blurRadius: 9,
+              //       spreadRadius: 0,
+              //     )
+              //   else
+              //     const BoxShadow(
+              //       color: Color(0xFFFFC700),
+              //       blurRadius: 9,
+              //       spreadRadius: 0,
+              //     ),
+              // ],
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
