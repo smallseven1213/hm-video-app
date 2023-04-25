@@ -1,10 +1,12 @@
 // import 'package:device_info_plus/device_info_plus.dart';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 import 'package:uuid/uuid.dart';
+import 'package:android_id/android_id.dart';
 import '../models/index.dart';
 
 final systemConfig = SystemConfig();
@@ -31,7 +33,9 @@ class AuthApi {
       }
     } else if (GetPlatform.isAndroid) {
       // get android id
-      registerDeviceGuid = (await deviceInfo.androidInfo).data['id'];
+      String androidId = await const AndroidId().getId() ?? 'Unknown ID';
+      registerDeviceGuid = androidId;
+      print('👺👺 androidId2: $androidId');
     } else if (GetPlatform.isIOS) {
       registerDeviceGuid =
           (await (deviceInfo.iosInfo)).identifierForVendor.toString();
