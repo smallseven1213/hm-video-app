@@ -96,7 +96,7 @@ class JingangList extends StatelessWidget {
       itemCount: jingang.jingangDetail?.length ?? 0,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: JingangButton(
             item: jingang.jingangDetail![index],
             outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
@@ -129,13 +129,28 @@ class JingangList extends StatelessWidget {
         if (jingang.jingangStyle == JingangStyle.single.index) {
           return SliverToBoxAdapter(
             child: SizedBox(
-              height: 95,
-              child: buildRow(jingang),
+              height: 108,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: jingang.jingangDetail?.length ?? 0,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16, vertical: 16.0),
+                    child: JingangButton(
+                      item: jingang.jingangDetail![index],
+                      outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+                      outerFrameStyle: jingang.outerFrameStyle ??
+                          OuterFrameStyle.circle.index,
+                    ),
+                  );
+                },
+              ),
             ),
           );
         }
         return SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
           sliver: SliverAlignedGrid.count(
             crossAxisCount: jingang.quantity ?? 4,
             itemCount: jingang.jingangDetail?.length ?? 0,
