@@ -71,35 +71,45 @@ class _FavoritesPageState extends State<FavoritesPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: '我的喜歡',
-        actions: [
-          Obx(() => TextButton(
-              onPressed: () {
-                listEditorController.toggleEditing();
-              },
-              child: Text(
-                listEditorController.isEditing.value ? '取消' : '編輯',
-                style: const TextStyle(color: Color(0xff00B0D4)),
-              )))
-        ],
-        bottom: GSTabBar(tabs: const ['長視頻', '演員'], controller: _tabController),
-      ),
-      body: Stack(
-        children: [
-          TabBarView(
-            controller: _tabController,
-            children: [
-              FavoritesVideoScreen(),
-              FavoritesActorScreen(),
-            ],
-          ),
-          ListPagePanelWidget(
-              listEditorController: listEditorController,
-              onSelectButtonClick: _handleSelectAll,
-              onDeleteButtonClick: _handleDeleteAll),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        if (_tabController.index != 0) {
+          _tabController.animateTo(_tabController.index - 1);
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: '我的喜歡',
+          actions: [
+            Obx(() => TextButton(
+                onPressed: () {
+                  listEditorController.toggleEditing();
+                },
+                child: Text(
+                  listEditorController.isEditing.value ? '取消' : '編輯',
+                  style: const TextStyle(color: Color(0xff00B0D4)),
+                )))
+          ],
+          bottom:
+              GSTabBar(tabs: const ['長視頻', '演員'], controller: _tabController),
+        ),
+        body: Stack(
+          children: [
+            TabBarView(
+              controller: _tabController,
+              children: [
+                FavoritesVideoScreen(),
+                FavoritesActorScreen(),
+              ],
+            ),
+            ListPagePanelWidget(
+                listEditorController: listEditorController,
+                onSelectButtonClick: _handleSelectAll,
+                onDeleteButtonClick: _handleDeleteAll),
+          ],
+        ),
       ),
     );
   }

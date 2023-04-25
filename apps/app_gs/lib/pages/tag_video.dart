@@ -8,10 +8,9 @@ import '../widgets/list_no_more.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
-class TagVideoPage extends StatelessWidget {
+class TagVideoPage extends StatefulWidget {
   final int id;
   final String title;
-  final scrollController = ScrollController();
 
   TagVideoPage({
     Key? key,
@@ -20,13 +19,27 @@ class TagVideoPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final TagVodController tagVideoController =
-        TagVodController(tagId: id, scrollController: scrollController);
+  _TagVideoPageState createState() => _TagVideoPageState();
+}
 
+class _TagVideoPageState extends State<TagVideoPage> {
+  final scrollController = ScrollController();
+  late final TagVodController tagVideoController;
+
+  @override
+  void initState() {
+    super.initState();
+    tagVideoController = TagVodController(
+      tagId: widget.id,
+      scrollController: scrollController,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '#$title',
+        title: '#${widget.title}',
       ),
       body: Obx(() {
         return CustomScrollView(

@@ -42,19 +42,10 @@ class _LayoutTabBarItemState extends State<LayoutTabBarItem> {
         return Text(
           widget.name,
           style: TextStyle(
-              color: channelScreenTabController.tabIndex.value == widget.index
-                  ? AppColors.colors[ColorKeys.primary]
-                  : const Color(0xffCFCECE),
-              shadows: channelScreenTabController.tabIndex.value == widget.index
-                  ? [
-                      Shadow(
-                        color: AppColors.colors[ColorKeys.primary]!
-                            .withOpacity(0.5),
-                        offset: const Offset(0, 0),
-                        blurRadius: 5,
-                      ),
-                    ]
-                  : null),
+            color: channelScreenTabController.tabIndex.value == widget.index
+                ? AppColors.colors[ColorKeys.primary]
+                : const Color(0xffCFCECE),
+          ),
         );
       }),
     );

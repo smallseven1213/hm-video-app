@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
@@ -67,8 +68,8 @@ class _ChannelsState extends State<Channels> {
         controller: controller,
         onPageChanged: (value) =>
             channelScreenTabController.tabIndex.value = value,
-        allowImplicitScrolling: true,
-        physics: const ClampingScrollPhysics(),
+        allowImplicitScrolling: kIsWeb ? false : true,
+        physics: const CustomPageViewScrollPhysics(),
         children: layoutController.layout
             .asMap()
             .map(
@@ -85,4 +86,21 @@ class _ChannelsState extends State<Channels> {
       ),
     );
   }
+}
+
+class CustomPageViewScrollPhysics extends ScrollPhysics {
+  const CustomPageViewScrollPhysics({ScrollPhysics? parent})
+      : super(parent: parent);
+
+  @override
+  CustomPageViewScrollPhysics applyTo(ScrollPhysics? ancestor) {
+    return CustomPageViewScrollPhysics(parent: buildParent(ancestor)!);
+  }
+
+  @override
+  SpringDescription get spring => const SpringDescription(
+        mass: 50,
+        stiffness: 100,
+        damping: 1,
+      );
 }
