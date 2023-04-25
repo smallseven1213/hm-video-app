@@ -15,6 +15,7 @@ class UserScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('RENDER: UserScreen');
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(

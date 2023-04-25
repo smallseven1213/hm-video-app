@@ -2,6 +2,7 @@ import 'package:app_gs/screens/shorts_screen.dart';
 import 'package:app_gs/screens/game_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 
 import '../screens/apps_screen/index.dart';
@@ -9,6 +10,8 @@ import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
+
+final logger = Logger();
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -42,6 +45,7 @@ class Home extends StatelessWidget {
         final currentScreen = screens[activeKey]!();
         final paddingBottom = MediaQuery.of(context).padding.bottom;
 
+        logger.i('RENDER: Home');
         return Scaffold(
             body: currentScreen,
             bottomNavigationBar: bottomNavigatorController

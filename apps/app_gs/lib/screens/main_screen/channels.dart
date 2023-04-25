@@ -64,26 +64,29 @@ class _ChannelsState extends State<Channels> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => PageView(
-        controller: controller,
-        onPageChanged: (value) =>
-            channelScreenTabController.tabIndex.value = value,
-        allowImplicitScrolling: kIsWeb ? false : true,
-        physics: const CustomPageViewScrollPhysics(),
-        children: layoutController.layout
-            .asMap()
-            .map(
-              (index, item) => MapEntry(
-                index,
-                Channel(
-                  key: ValueKey(item.id),
-                  channelId: item.id,
+      () {
+        logger.i('RENDER OBX PageView');
+        return PageView(
+          controller: controller,
+          onPageChanged: (value) =>
+              channelScreenTabController.tabIndex.value = value,
+          allowImplicitScrolling: true,
+          physics: const CustomPageViewScrollPhysics(),
+          children: layoutController.layout
+              .asMap()
+              .map(
+                (index, item) => MapEntry(
+                  index,
+                  Channel(
+                    key: ValueKey(item.id),
+                    channelId: item.id,
+                  ),
                 ),
-              ),
-            )
-            .values
-            .toList(),
-      ),
+              )
+              .values
+              .toList(),
+        );
+      },
     );
   }
 }
