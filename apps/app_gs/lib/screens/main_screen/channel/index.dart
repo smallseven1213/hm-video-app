@@ -16,11 +16,11 @@ final logger = Logger();
 
 Widget buildTitle(String title) {
   return title == ''
-      ? const SizedBox()
+      ? const SizedBox(height: 8)
       : Column(
           children: [
+            const SizedBox(height: 20),
             Header(text: title),
-            const SizedBox(height: 8),
           ],
         );
 }
