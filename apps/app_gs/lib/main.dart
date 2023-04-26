@@ -1,5 +1,6 @@
 import 'package:app_gs/pages/actor.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
+import 'package:app_gs/screens/game_screen/lobby.dart';
 import 'package:app_gs/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -21,15 +22,13 @@ import 'pages/publisher.dart';
 import 'pages/video_by_block.dart';
 import 'pages/favorites.dart';
 import 'pages/filter.dart';
-import 'pages/game/deposit.dart';
 import 'pages/notifications.dart';
 import 'pages/search.dart';
 import 'pages/video.dart';
-import 'screens/main_screen/notice_dialog.dart';
 
 void main() {
   usePathUrlStrategy();
-  runningMain(MyApp(), AppColors.colors);
+  runningMain(const MyApp(), AppColors.colors);
 }
 
 final Map<String, RouteWidgetBuilder> routes = {
@@ -51,14 +50,14 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.actor.value: (context, args) => ActorPage(
         id: args['id'] as int,
       ),
-  AppRoutes.gameDeposit.value: (context, args) => const GameDeposit(),
+  AppRoutes.gameLobby.value: (context, args) => const GameScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.register.value: (context, args) => RegisterPage(),
   AppRoutes.share.value: (context, args) => const SharePage(),
   AppRoutes.playRecord.value: (context, args) => PlayRecordPage(),
   AppRoutes.shareRecord.value: (context, args) => const ShareRecord(),
   AppRoutes.apps.value: (context, args) => const AppsScreen(),
-  AppRoutes.favorites.value: (context, args) => FavoritesPage(),
+  AppRoutes.favorites.value: (context, args) => const FavoritesPage(),
   AppRoutes.collection.value: (context, args) => CollectionPage(),
   AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
   AppRoutes.search.value: (context, args) => SearchPage(

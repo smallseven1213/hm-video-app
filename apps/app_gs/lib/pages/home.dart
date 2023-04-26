@@ -1,5 +1,4 @@
-import 'package:app_gs/screens/shorts_screen.dart';
-import 'package:app_gs/screens/game_screen.dart';
+import 'package:app_gs/screens/game_screen/lobby.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
