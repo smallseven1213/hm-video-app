@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/filter_result_controller.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 
+import '../screens/filter/options.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_vod_grid.dart';
@@ -78,6 +79,16 @@ class _FilterScrollViewState extends State<FilterScrollView> {
     return Stack(
       children: [
         SliverVodGrid(
+          headerExtends: [
+            SliverToBoxAdapter(
+              child: FilterOptions(),
+            ),
+            const SliverToBoxAdapter(
+              child: SizedBox(
+                height: 10,
+              ),
+            )
+          ],
           videos: vodController.vodList,
           hasMoreData: vodController.hasMoreData.value,
           noMoreWidget: const ListNoMore(),
