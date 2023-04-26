@@ -7,6 +7,7 @@ class SliverVodGrid extends StatelessWidget {
   final List videos;
   final bool hasMoreData;
   final Widget? noMoreWidget;
+  final List<Widget>? headerExtends;
   final ScrollController? scrollController;
 
   const SliverVodGrid({
@@ -15,6 +16,7 @@ class SliverVodGrid extends StatelessWidget {
     required this.hasMoreData,
     this.noMoreWidget,
     this.scrollController,
+    this.headerExtends,
   }) : super(key: key);
 
   @override
@@ -24,6 +26,7 @@ class SliverVodGrid extends StatelessWidget {
       return CustomScrollView(
         controller: scrollController,
         slivers: [
+          ...?headerExtends,
           SliverPadding(
             padding: const EdgeInsets.all(8.0),
             sliver: SliverList(
@@ -55,18 +58,20 @@ class SliverVodGrid extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(width: 8),
-                          if (secondVideo != null)
-                            Expanded(
-                              child: VideoPreviewWidget(
-                                id: secondVideo.id,
-                                coverVertical: secondVideo.coverVertical!,
-                                coverHorizontal: secondVideo.coverHorizontal!,
-                                timeLength: secondVideo.timeLength!,
-                                tags: secondVideo.tags!,
-                                title: secondVideo.title,
-                                videoViewTimes: secondVideo.videoViewTimes!,
-                              ),
-                            ),
+                          Expanded(
+                              child: secondVideo != null
+                                  ? VideoPreviewWidget(
+                                      id: secondVideo.id,
+                                      coverVertical: secondVideo.coverVertical!,
+                                      coverHorizontal:
+                                          secondVideo.coverHorizontal!,
+                                      timeLength: secondVideo.timeLength!,
+                                      tags: secondVideo.tags!,
+                                      title: secondVideo.title,
+                                      videoViewTimes:
+                                          secondVideo.videoViewTimes!,
+                                    )
+                                  : const SizedBox.shrink()),
                         ],
                       ),
                       const SizedBox(height: 8),
