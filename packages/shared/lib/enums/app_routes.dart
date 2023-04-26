@@ -6,6 +6,7 @@ enum AppRoutes {
   videoByBlock,
   publisher,
   tag,
+  gameLobby,
   gameDeposit,
   login,
   register,
@@ -38,8 +39,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/publisher';
       case AppRoutes.tag:
         return '/tag';
-      case AppRoutes.gameDeposit:
-        return '/game/deposit';
+      case AppRoutes.gameLobby:
+        return '/game';
       case AppRoutes.login:
         return '/login';
       case AppRoutes.register:
