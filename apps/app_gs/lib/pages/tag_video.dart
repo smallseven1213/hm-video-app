@@ -5,8 +5,7 @@ import 'package:shared/controllers/tag_vod_controller.dart';
 
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
-import '../widgets/sliver_video_preview_skelton_list.dart';
-import '../widgets/video_preview.dart';
+import '../widgets/sliver_vod_grid.dart';
 
 class TagVideoPage extends StatefulWidget {
   final int id;
@@ -24,12 +23,12 @@ class TagVideoPage extends StatefulWidget {
 
 class _TagVideoPageState extends State<TagVideoPage> {
   final scrollController = ScrollController();
-  late final TagVodController tagVideoController;
+  late final TagVodController vodController;
 
   @override
   void initState() {
     super.initState();
-    tagVideoController = TagVodController(
+    vodController = TagVodController(
       tagId: widget.id,
       scrollController: scrollController,
     );
@@ -42,37 +41,11 @@ class _TagVideoPageState extends State<TagVideoPage> {
         title: '#${widget.title}',
       ),
       body: Obx(() {
-        return CustomScrollView(
-          controller: tagVideoController.scrollController,
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(8.0),
-              sliver: SliverAlignedGrid.count(
-                crossAxisCount: 2,
-                itemCount: tagVideoController.vodList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var video = tagVideoController.vodList[index];
-                  return VideoPreviewWidget(
-                      id: video.id,
-                      coverVertical: video.coverVertical!,
-                      coverHorizontal: video.coverHorizontal!,
-                      timeLength: video.timeLength!,
-                      tags: video.tags!,
-                      title: video.title,
-                      videoViewTimes: video.videoViewTimes!);
-                },
-                mainAxisSpacing: 12.0,
-                crossAxisSpacing: 10.0,
-              ),
-            ),
-            if (tagVideoController.hasMoreData.value)
-              const SliverVideoPreviewSkeletonList(),
-            if (tagVideoController.showNoMore.value)
-              const SliverToBoxAdapter(
-                child: ListNoMore(),
-              )
-          ],
+        return SliverVodGrid(
+          videos: vodController.vodList,
+          hasMoreData: vodController.hasMoreData.value,
+          noMoreWidget: const ListNoMore(),
+          scrollController: vodController.scrollController,
         );
       }),
     );

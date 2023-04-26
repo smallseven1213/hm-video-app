@@ -9,6 +9,7 @@ import 'package:shared/widgets/fade_in_effect.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/no_data.dart';
 import '../../widgets/sliver_video_preview_skelton_list.dart';
+import '../../widgets/sliver_vod_grid.dart';
 import '../../widgets/video_preview.dart';
 import '../../widgets/video_preview_skelton_list.dart';
 
@@ -38,41 +39,11 @@ class _SearchResultPageState extends State<SearchResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Obx(() {
-          return CustomScrollView(
-            controller: searchVodController.scrollController,
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.all(8.0),
-                sliver: SliverAlignedGrid.count(
-                  crossAxisCount: 2,
-                  itemCount: searchVodController.vodList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var video = searchVodController.vodList[index];
-                    return VideoPreviewWidget(
-                        id: video.id,
-                        coverVertical: video.coverVertical!,
-                        coverHorizontal: video.coverHorizontal!,
-                        timeLength: video.timeLength!,
-                        tags: video.tags!,
-                        title: video.title,
-                        videoViewTimes: video.videoViewTimes!);
-                  },
-                  mainAxisSpacing: 12.0,
-                  crossAxisSpacing: 10.0,
-                ),
-              ),
-              if (searchVodController.hasMoreData.value)
-                const SliverVideoPreviewSkeletonList(),
-              if (searchVodController.showNoMore.value)
-                const SliverToBoxAdapter(
-                  child: ListNoMore(),
-                )
-            ],
-          );
-        }));
+    return SliverVodGrid(
+      videos: searchVodController.vodList,
+      hasMoreData: searchVodController.hasMoreData.value,
+      noMoreWidget: const ListNoMore(),
+      scrollController: searchVodController.scrollController,
+    );
   }
 }
