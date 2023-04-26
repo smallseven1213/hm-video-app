@@ -70,7 +70,7 @@ class _ChannelsState extends State<Channels> {
           controller: controller,
           onPageChanged: (value) =>
               channelScreenTabController.tabIndex.value = value,
-          allowImplicitScrolling: true,
+          allowImplicitScrolling: false,
           physics: const CustomPageViewScrollPhysics(),
           children: layoutController.layout
               .asMap()

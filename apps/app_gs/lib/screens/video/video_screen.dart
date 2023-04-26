@@ -493,22 +493,55 @@ class VideoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverAlignedGrid.count(
-      crossAxisCount: 2,
-      itemCount: videos.length,
-      itemBuilder: (BuildContext context, int index) {
-        var video = videos[index];
-        return VideoPreviewWidget(
-            id: video.id,
-            coverVertical: video.coverVertical!,
-            coverHorizontal: video.coverHorizontal!,
-            timeLength: video.timeLength!,
-            tags: video.tags!,
-            title: video.title,
-            videoViewTimes: video.videoViewTimes!);
-      },
-      mainAxisSpacing: 12.0,
-      crossAxisSpacing: 10.0,
+    int totalRows = (videos.length / 2).ceil();
+    return SliverList(
+      delegate: SliverChildBuilderDelegate(
+        (BuildContext context, int index) {
+          int firstVideoIndex = index * 2;
+          int secondVideoIndex = firstVideoIndex + 1;
+
+          var firstVideo = videos[firstVideoIndex];
+          var secondVideo = secondVideoIndex < videos.length
+              ? videos[secondVideoIndex]
+              : null;
+
+          logger.i('RENDER VIDEO SCREEN RALATED VIDEO LIST');
+          return Column(
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: VideoPreviewWidget(
+                      id: firstVideo.id,
+                      coverVertical: firstVideo.coverVertical!,
+                      coverHorizontal: firstVideo.coverHorizontal!,
+                      timeLength: firstVideo.timeLength!,
+                      tags: firstVideo.tags!,
+                      title: firstVideo.title,
+                      videoViewTimes: firstVideo.videoViewTimes!,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  if (secondVideo != null)
+                    Expanded(
+                      child: VideoPreviewWidget(
+                        id: secondVideo.id,
+                        coverVertical: secondVideo.coverVertical!,
+                        coverHorizontal: secondVideo.coverHorizontal!,
+                        timeLength: secondVideo.timeLength!,
+                        tags: secondVideo.tags!,
+                        title: secondVideo.title,
+                        videoViewTimes: secondVideo.videoViewTimes!,
+                      ),
+                    ),
+                ],
+              ),
+              const SizedBox(height: 8),
+            ],
+          );
+        },
+        childCount: totalRows,
+      ),
     );
   }
 }

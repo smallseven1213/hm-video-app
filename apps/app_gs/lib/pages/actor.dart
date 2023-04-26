@@ -4,10 +4,10 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/actor_hottest_vod_controller.dart';
 import 'package:shared/controllers/actor_latest_vod_controller.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 import '../screens/actor/card.dart';
-import '../screens/actor/video.dart';
+import '../widgets/list_no_more.dart';
+import '../widgets/sliver_vod_grid.dart';
 
 final logger = Logger();
 
@@ -87,17 +87,19 @@ class _ActorPageState extends State<ActorPage>
                 controller: _tabController,
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  ActorVideoScreen(
+                  SliverVodGrid(
                     key: const Key('actor_latest_vod'),
-                    id: widget.id,
-                    type: 'vod',
-                    vodController: actorLatestVodController,
+                    videos: actorLatestVodController.vodList,
+                    hasMoreData: actorLatestVodController.hasMoreData.value,
+                    noMoreWidget: const ListNoMore(),
+                    scrollController: actorLatestVodController.scrollController,
                   ),
-                  ActorVideoScreen(
+                  SliverVodGrid(
                     key: const Key('actor_newest_vod'),
-                    id: widget.id,
-                    type: 'series',
-                    vodController: actorNewestVodController,
+                    videos: actorNewestVodController.vodList,
+                    hasMoreData: actorNewestVodController.hasMoreData.value,
+                    noMoreWidget: const ListNoMore(),
+                    scrollController: actorNewestVodController.scrollController,
                   ),
                 ],
               )),

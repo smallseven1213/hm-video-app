@@ -10,7 +10,7 @@ import '../models/vod.dart';
 final logger = Logger();
 
 abstract class BaseVodInfinityScrollController extends GetxController {
-  final vodList = <Vod>[].obs;
+  RxList<Vod> vodList = <Vod>[].obs;
   final page = 0.obs;
   final totalCount = 0.obs;
   RxBool showNoMore = false.obs;

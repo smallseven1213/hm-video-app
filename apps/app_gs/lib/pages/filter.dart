@@ -1,16 +1,13 @@
 import 'package:app_gs/screens/filter/filter_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/filter_result_controller.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 
-import '../screens/filter/options.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
-import '../widgets/sliver_video_preview_skelton_list.dart';
-import '../widgets/video_preview.dart';
+import '../widgets/sliver_vod_grid.dart';
 
 final logger = Logger();
 
@@ -80,50 +77,12 @@ class _FilterScrollViewState extends State<FilterScrollView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Obx(() {
-          logger.i(
-              'HAHAHA ${vodController.hasMoreData} THEN ${vodController.isLoading} HAHA ${vodController.vodList.length}');
-          return CustomScrollView(
-            controller: vodController.scrollController,
-            physics: const BouncingScrollPhysics(),
-            slivers: [
-              SliverToBoxAdapter(
-                child: FilterOptions(),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
-                ),
-              ),
-              SliverPadding(
-                padding: const EdgeInsets.all(8.0),
-                sliver: SliverAlignedGrid.count(
-                  crossAxisCount: 2,
-                  itemCount: vodController.vodList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    var video = vodController.vodList[index];
-                    return VideoPreviewWidget(
-                        id: video.id,
-                        coverVertical: video.coverVertical!,
-                        coverHorizontal: video.coverHorizontal!,
-                        timeLength: video.timeLength!,
-                        tags: video.tags!,
-                        title: video.title,
-                        videoViewTimes: video.videoViewTimes!);
-                  },
-                  mainAxisSpacing: 12.0,
-                  crossAxisSpacing: 10.0,
-                ),
-              ),
-              if (vodController.hasMoreData.value)
-                const SliverVideoPreviewSkeletonList(),
-              if (!vodController.hasMoreData.value)
-                const SliverToBoxAdapter(
-                  child: ListNoMore(),
-                )
-            ],
-          );
-        }),
+        SliverVodGrid(
+          videos: vodController.vodList,
+          hasMoreData: vodController.hasMoreData.value,
+          noMoreWidget: const ListNoMore(),
+          scrollController: vodController.scrollController,
+        ),
         if (_showSelectedBar)
           FilterBar(
             scrollController: vodController.scrollController,
