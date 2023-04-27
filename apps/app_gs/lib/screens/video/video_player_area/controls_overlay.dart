@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -16,14 +17,18 @@ class ControlsOverlay extends StatefulWidget {
   final VideoPlayerController controller;
   final String? name;
   final Function toggleFullscreen;
+  final Function onScreenLock;
   final bool isFullscreen;
+  final bool isScreenLocked;
 
   const ControlsOverlay({
     super.key,
     required this.controller,
     this.name,
     required this.toggleFullscreen,
+    required this.onScreenLock,
     required this.isFullscreen,
+    required this.isScreenLocked,
   });
 
   @override
@@ -236,6 +241,36 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
+              if (widget.isFullscreen &&
+                  !kIsWeb &&
+                  (controlsType == ControlsOverlayType.progress ||
+                      controlsType == ControlsOverlayType.middleTime ||
+                      controlsType == ControlsOverlayType.playPause))
+                Positioned(
+                    top: 135,
+                    left: 10,
+                    right: 0,
+                    child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 1),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
+                              widget.isScreenLocked
+                                  ? Icons.lock_open_outlined
+                                  : Icons.lock,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              widget.onScreenLock(!widget.isScreenLocked);
+                            },
+                          ),
+                        ))),
+
               ProgressBar(
                 controller: widget.controller,
                 toggleFullscreen: () =>
