@@ -286,8 +286,11 @@ class VideoInfo extends StatelessWidget {
             children: tags.map((tag) {
               return InkWell(
                 onTap: () {
-                  MyRouteDelegate.of(context).push(AppRoutes.tag.value,
-                      args: {'id': tag.id, 'title': tag.name});
+                  MyRouteDelegate.of(context).push(
+                    AppRoutes.tag.value,
+                    args: {'id': tag.id, 'title': tag.name},
+                    removeSamePath: true,
+                  );
                 },
                 child: Text(
                   '#${tag.name}',

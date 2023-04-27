@@ -171,7 +171,7 @@ class UserApi {
   // 獲得視頻喜愛紀錄清單
   Future<BlockVod> getFavoriteVideo() async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/collectRecord?film=2');
+        url: '${systemConfig.apiHost}/public/users/user/collectRecord?film=1');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }

@@ -141,7 +141,7 @@ class MyRouteDelegate extends RouterDelegate<String>
                         top: 0,
                         left: 0,
                         child: Container(
-                            width: 8,
+                            width: 16,
                             height: MediaQuery.of(context).size.height,
                             color: Colors.transparent))
                   ],
