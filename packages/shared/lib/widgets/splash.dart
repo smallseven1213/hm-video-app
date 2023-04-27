@@ -191,7 +191,7 @@ class _SplashState extends State<Splash> {
   // Step6: 檢查是否登入 - key: 'auth-token'
   userLogin() async {
     setState(() => loadingText = '用戶登入...');
-    print('step6: 檢查是否有token (是否登入)');
+    print('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
     logger.i('userApi: ${authController.token.value}');
     if (authController.token.value != '') {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
