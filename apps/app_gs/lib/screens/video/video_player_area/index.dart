@@ -42,12 +42,15 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
   bool hasError = false;
+  bool isScreenLocked = false;
+  Orientation orientation = Orientation.portrait;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     initializePlayer();
+    setScreenRotation();
   }
 
   void initializePlayer() async {
@@ -76,10 +79,15 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
       restoreScreenRotation();
+      // 五秒後偵測螢幕方向
+      Future.delayed(const Duration(seconds: 5), () {
+        setScreenRotation();
+      });
     }
 
     setState(() {
       isFullscreen = fullScreen;
+      isScreenLocked = isFullscreen;
     });
   }
 
@@ -125,18 +133,19 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    final orientation =
+    final _orientation =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
     // Size size = WidgetsBinding.instance.window.physicalSize;
     // print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
-    print('@@@@@@@@@ didChangeMetrics orientation: $orientation');
-    if (orientation == Orientation.landscape) {
+    if (_orientation == Orientation.landscape) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     }
+    // if (isScreenLocked == true) return;
     setState(() {
-      isFullscreen = orientation == Orientation.landscape;
+      isFullscreen = _orientation == Orientation.landscape;
+      orientation = _orientation;
     });
   }
 
@@ -144,15 +153,9 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _controller?.pause();
-    if (isFullscreen) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
-    }
     _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
+    restoreScreenRotation();
     super.dispose();
   }
 
@@ -171,9 +174,6 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     if (currentRoutePath != '/video') {
       _controller?.pause();
       restoreScreenRotation();
-    } else {
-      _controller?.play();
-      setScreenRotation();
     }
     return Container(
       color: Colors.black,
@@ -267,6 +267,17 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
               isFullscreen: isFullscreen,
               toggleFullscreen: (status) {
                 toggleFullscreen(fullScreen: status);
+              },
+              isScreenLocked: isScreenLocked,
+              onScreenLock: (bool isLocked) {
+                setState(() {
+                  isScreenLocked = isLocked;
+                });
+                if (isLocked) {
+                  toggleFullscreen(fullScreen: true);
+                } else {
+                  setScreenRotation();
+                }
               },
             ),
           ] else ...[
