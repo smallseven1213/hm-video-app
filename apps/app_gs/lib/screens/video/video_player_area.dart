@@ -983,28 +983,35 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
-              if (widget.isFullscreen)
+              if (widget.isFullscreen &&
+                  !kIsWeb &&
+                  (controlsType == ControlsOverlayType.progress ||
+                      controlsType == ControlsOverlayType.middleTime ||
+                      controlsType == ControlsOverlayType.playPause))
                 Positioned(
-                    top: 120,
-                    left: 0,
+                    top: 135,
+                    left: 10,
                     right: 0,
                     child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: IconButton(
-                          icon: Icon(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.white, width: 1),
+                          ),
+                          child: IconButton(
+                            icon: Icon(
                               widget.isScreenLocked
                                   ? Icons.lock_open_outlined
                                   : Icons.lock,
-                              size: 30,
-                              color: Colors.white),
-                          onPressed: () {
-                            widget.onScreenLock(!widget.isScreenLocked);
-                          },
-                        ),
-                      ),
-                    )),
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                            onPressed: () {
+                              widget.onScreenLock(!widget.isScreenLocked);
+                            },
+                          ),
+                        ))),
               ProgressBar(
                 controller: widget.controller,
                 toggleFullscreen: () => {
