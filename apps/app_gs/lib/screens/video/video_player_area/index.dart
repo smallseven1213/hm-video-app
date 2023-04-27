@@ -72,17 +72,9 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
   void toggleFullscreen({bool fullScreen = false}) {
     if (fullScreen) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+      setScreenLandScape();
     } else {
-      restoreScreenRotation();
-      // 五秒後偵測螢幕方向
-      Future.delayed(const Duration(seconds: 5), () {
-        setScreenRotation();
-      });
+      setScreenRotation();
     }
 
     setState(() {
@@ -156,6 +148,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
     restoreScreenRotation();
+    logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
     super.dispose();
   }
 
@@ -175,6 +168,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       _controller?.pause();
       restoreScreenRotation();
     }
+
     return Container(
       color: Colors.black,
       width: MediaQuery.of(context).size.width,
