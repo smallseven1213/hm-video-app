@@ -66,57 +66,65 @@ class SharePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: '推廣分享',
-        actions: [
-          Center(
-            child: InkWell(
-              onTap: () {
-                // MyRouteDelegate.of(context)
-                //     .push(AppRoutes.login.value, deletePreviousCount: 1);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(10),
-                child: const Text(
-                  '推廣紀錄',
-                  style: TextStyle(
-                    color: Color(0xff00B0D4),
-                    fontSize: 12,
+      body: Stack(
+        children: [
+          const Positioned(
+            child: Image(
+              width: double.infinity,
+              image: AssetImage('assets/images/share_bg.webp'),
+            ),
+          ),
+          CustomAppBar(
+            title: '推廣分享',
+            backgroundColor: Colors.transparent,
+            actions: [
+              Center(
+                child: InkWell(
+                  onTap: () {
+                    // MyRouteDelegate.of(context)
+                    //     .push(AppRoutes.login.value, deletePreviousCount: 1);
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    child: const Text(
+                      '推廣紀錄',
+                      style: TextStyle(
+                        color: Color(0xff00B0D4),
+                        fontSize: 12,
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-      body: RepaintBoundary(
-        key: _globalKey,
-        child: Center(
-          child: Container(
-            width: 270,
-            height: 400,
-            padding: const EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              border:
-                  Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-              borderRadius: BorderRadius.circular(10),
-              gradient: const LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  Color(0xFF00386A),
-                  Color(0xFF000916),
-                  Color(0xFF003F6C),
-                  Color(0xFF005B9C),
-                ],
-                stops: [0.032, 0.2198, 0.8544, 0.9092],
-                // transform: GradientRotation(
-                //     156.33 * (3.141592 / 180)), // Convert degrees to radians
+          Center(
+            child: Container(
+              width: 270,
+              height: 400,
+              padding: const EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                border:
+                    Border.all(color: Colors.white.withOpacity(0.5), width: 1),
+                borderRadius: BorderRadius.circular(10),
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Color(0xFF00386A),
+                    Color(0xFF000916),
+                    Color(0xFF003F6C),
+                    Color(0xFF005B9C),
+                  ],
+                  stops: [0.032, 0.2198, 0.8544, 0.9092],
+                  // transform: GradientRotation(
+                  //     156.33 * (3.141592 / 180)), // Convert degrees to radians
+                ),
               ),
+              child: const ContentAndButton(),
             ),
-            child: const ContentAndButton(),
-          ),
-        ),
+          )
+        ],
       ),
     );
   }

@@ -20,11 +20,14 @@ class ListPagePanelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final paddingBottom = MediaQuery.of(context).padding.bottom;
     return Obx(
       () => AnimatedPositioned(
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
-        bottom: listEditorController.isEditing.value ? 0 : -100,
+        bottom: listEditorController.isEditing.value
+            ? paddingBottom + 0
+            : paddingBottom - 100,
         left: 0,
         right: 0,
         child: Container(
