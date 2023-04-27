@@ -3,6 +3,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/circle_sidimage_text_item.dart';
@@ -32,7 +34,15 @@ class FavoritesActorScreen extends StatelessWidget {
             final Size size = MediaQuery.of(context).size;
             return InkWell(
               onTap: () {
-                listEditorController.toggleSelected(actors[index].id);
+                if (listEditorController.isEditing.value) {
+                  listEditorController.toggleSelected(actors[index].id);
+                } else {
+                  MyRouteDelegate.of(context).push(
+                    AppRoutes.actor.value,
+                    args: {'id': actors[index].id, 'title': actors[index].name},
+                    removeSamePath: true,
+                  );
+                }
               },
               child: Stack(
                 children: [
