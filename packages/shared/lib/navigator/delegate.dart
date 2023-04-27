@@ -134,7 +134,18 @@ class MyRouteDelegate extends RouterDelegate<String>
               return CupertinoPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: widget,
+                child: Stack(
+                  children: [
+                    widget,
+                    Positioned(
+                        top: 0,
+                        left: 0,
+                        child: Container(
+                            width: 8,
+                            height: MediaQuery.of(context).size.height,
+                            color: Colors.transparent))
+                  ],
+                ),
                 fullscreenDialog: stack.useBottomToTopAnimation,
               );
             }

@@ -71,15 +71,7 @@ class _FavoritesPageState extends State<FavoritesPage>
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (_tabController.index != 0) {
-          _tabController.animateTo(_tabController.index - 1);
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
+    return Scaffold(
         appBar: CustomAppBar(
           title: '我的喜歡',
           actions: [
@@ -109,8 +101,6 @@ class _FavoritesPageState extends State<FavoritesPage>
                 onSelectButtonClick: _handleSelectAll,
                 onDeleteButtonClick: _handleDeleteAll),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }
