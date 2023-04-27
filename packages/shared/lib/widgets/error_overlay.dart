@@ -30,13 +30,13 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
           if (responseController.responseStatus.value == 401) {
             return AlertDialog(
               title: Text('Unauthorized'),
-              content: Text('You are unauthorized. Please log in again.'),
+              content: Text('你已被登出，請重新登入'),
               actions: [
                 TextButton(
                   onPressed: () {
                     responseController.updateResponseStatus(0);
                   },
-                  child: Text('OK'),
+                  child: Text('確認'),
                 ),
               ],
             );
