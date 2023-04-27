@@ -1,3 +1,4 @@
+import 'package:app_gs/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -94,14 +95,46 @@ class _ChannelState extends State<Channel> with AutomaticKeepAliveClientMixin {
         return CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(child: Banners(channelId: widget.channelId)),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Banners(channelId: widget.channelId),
+            )),
             SliverToBoxAdapter(
                 child: buildTitle(channelData.jingang!.title ?? '')),
             JingangList(channelId: widget.channelId),
             ...sliverBlocks,
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 100),
-            )
+            SliverToBoxAdapter(
+              child: AspectRatio(
+                aspectRatio: 390 / 190,
+                child: Stack(
+                  children: [
+                    const Positioned.fill(
+                      child: Image(
+                        image: AssetImage(
+                            'assets/images/channel_more_button.webp'),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Center(
+                      child: SizedBox(
+                        height: 38,
+                        width: 183,
+                        child: Button(
+                          text: '探索更多內容',
+                          onPressed: () {
+                            MyRouteDelegate.of(context)
+                                .push(AppRoutes.filter.value);
+                          },
+                          type: 'primary',
+                          size: 'small',
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
           ],
         );
       }

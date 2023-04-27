@@ -192,8 +192,8 @@ class ContentAndButton extends StatelessWidget {
                         color: const Color.fromRGBO(66, 119, 220, 0.5),
                       ),
                       width: 115,
-                      child: Text(
-                        '官網地址 : GPOINT.TV',
+                      child: const Text(
+                        '官網地址 : gdtv.app',
                         style: TextStyle(
                           color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,
