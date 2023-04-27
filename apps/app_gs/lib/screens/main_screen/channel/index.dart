@@ -95,7 +95,11 @@ class _ChannelState extends State<Channel> with AutomaticKeepAliveClientMixin {
         return CustomScrollView(
           physics: const BouncingScrollPhysics(),
           slivers: [
-            SliverToBoxAdapter(child: Banners(channelId: widget.channelId)),
+            SliverToBoxAdapter(
+                child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Banners(channelId: widget.channelId),
+            )),
             SliverToBoxAdapter(
                 child: buildTitle(channelData.jingang!.title ?? '')),
             JingangList(channelId: widget.channelId),
