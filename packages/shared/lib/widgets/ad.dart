@@ -93,8 +93,9 @@ class AdState extends State<Ad> {
                   setState(() => imageLoaded = true);
                 },
                 onError: (e, stackTrace) {
-                  MyRouteDelegate.of(context)
-                      .pushAndRemoveUntil(AppRoutes.home.value);
+                  MyRouteDelegate.of(context).pushAndRemoveUntil(
+                      AppRoutes.home.value,
+                      hasTransition: false);
                 },
               ),
             ),
