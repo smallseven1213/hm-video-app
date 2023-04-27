@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/utils/navigation_helper.dart';
 
+import '../controllers/response_controller.dart';
+import '../widgets/error_overlay.dart';
 import 'bottom_to_top_page.dart';
 import 'no_transition_page.dart';
 
@@ -47,6 +50,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   final RouteFactory? onGenerateRoute;
   final Map<String, RouteWidgetBuilder> routes;
   final String homePath;
+  final responseController = Get.find<ResponseController>();
 
   @override
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -129,6 +133,11 @@ class MyRouteDelegate extends RouterDelegate<String>
           pages: _stack.map<Page<dynamic>>((stack) {
             // 指定返回的List元素类型
             final widget = routes[stack.path]!(context, stack.args);
+            Widget buildScreen() {
+              return ErrorOverlayWidget(
+                child: widget,
+              );
+            }
 
             if (stack.hasTransition == true) {
               return CupertinoPage(
@@ -136,14 +145,17 @@ class MyRouteDelegate extends RouterDelegate<String>
                 name: stack.path,
                 child: Stack(
                   children: [
-                    widget,
+                    // widget,
+                    buildScreen(),
                     Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                            width: 8,
-                            height: MediaQuery.of(context).size.height,
-                            color: Colors.transparent))
+                      top: 0,
+                      left: 0,
+                      child: Container(
+                        width: 8,
+                        height: MediaQuery.of(context).size.height,
+                        color: Colors.transparent,
+                      ),
+                    )
                   ],
                 ),
                 fullscreenDialog: stack.useBottomToTopAnimation,
@@ -153,7 +165,7 @@ class MyRouteDelegate extends RouterDelegate<String>
               return NoAnimationPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: widget,
+                child: buildScreen(),
               );
             }
             return CupertinoPage(

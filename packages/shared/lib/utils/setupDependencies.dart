@@ -8,6 +8,7 @@ import '../controllers/filter_screen_controller.dart';
 import '../controllers/layout_controller.dart';
 import '../controllers/list_editor_controller.dart';
 import '../controllers/play_record_controller.dart';
+import '../controllers/response_controller.dart';
 import '../controllers/tag_popular_controller.dart';
 import '../controllers/user_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
@@ -17,6 +18,7 @@ import '../controllers/video_popular_controller.dart';
 
 void setupDependencies() {
   Get.lazyPut<AuthController>(() => AuthController());
+  Get.lazyPut<ResponseController>(() => ResponseController());
   Get.lazyPut<UserController>(() => UserController());
   Get.lazyPut<BottonNavigatorController>(() => BottonNavigatorController());
   Get.lazyPut<BannerController>(() => BannerController());
