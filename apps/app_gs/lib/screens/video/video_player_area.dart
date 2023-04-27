@@ -427,13 +427,16 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   VideoPlayerController? _controller;
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
+  bool isScreenLocked = false;
   bool hasError = false;
+  Orientation orientation = Orientation.portrait;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     initializePlayer();
+    setScreenRotation();
   }
 
   void initializePlayer() async {
@@ -462,10 +465,15 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
       restoreScreenRotation();
+      // 五秒後
+      Future.delayed(Duration(seconds: 5), () {
+        setScreenRotation();
+      });
     }
 
     setState(() {
       isFullscreen = fullScreen;
+      isScreenLocked = isFullscreen;
     });
   }
 
@@ -519,18 +527,21 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
-    final orientation =
+    final _orientation =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
     // Size size = WidgetsBinding.instance.window.physicalSize;
     // print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
-    print('@@@@@@@@@ didChangeMetrics orientation: $orientation');
-    if (orientation == Orientation.landscape) {
+    print('😑😑😑 @@@@@@@@@ didChangeMetrics orientation: $_orientation');
+    if (_orientation == Orientation.landscape) {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
     }
+    // if (isScreenLocked == true) return;
+
     setState(() {
-      isFullscreen = orientation == Orientation.landscape;
+      isFullscreen = _orientation == Orientation.landscape;
+      orientation = _orientation;
     });
   }
 
@@ -539,6 +550,9 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     WidgetsBinding.instance.removeObserver(this);
     _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
+    _controller?.pause();
+
+    restoreScreenRotation();
     super.dispose();
   }
 
@@ -555,12 +569,20 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
     var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
     if (currentRoutePath != '/video') {
+      print('🤡🤡🤡狀態');
       _controller?.pause();
       restoreScreenRotation();
-    } else {
-      _controller?.play();
-      setScreenRotation();
     }
+    // else {
+    //   print('isScreenLocked: $isScreenLocked');
+    //   if (isScreenLocked == false) {
+    //     setScreenRotation();
+    //     print('自動轉向 ');
+    //   } else {
+    //     restoreScreenRotation();
+    //     print('禁止轉向');
+    //   }
+    // }
     return WillPopScope(
       onWillPop: onWillPop,
       child: Container(
@@ -656,6 +678,17 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
                 toggleFullscreen: (status) {
                   toggleFullscreen(fullScreen: status);
                 },
+                isScreenLocked: isScreenLocked,
+                onScreenLock: (bool isLocked) {
+                  setState(() {
+                    isScreenLocked = isLocked;
+                  });
+                  if (isLocked) {
+                    toggleFullscreen(fullScreen: true);
+                  } else {
+                    setScreenRotation();
+                  }
+                },
               ),
             ] else ...[
               Stack(
@@ -724,14 +757,18 @@ class ControlsOverlay extends StatefulWidget {
   final VideoPlayerController controller;
   final String? name;
   final Function toggleFullscreen;
+  final Function onScreenLock;
   final bool isFullscreen;
+  final bool isScreenLocked;
 
   const ControlsOverlay({
     super.key,
     required this.controller,
     this.name,
     required this.toggleFullscreen,
+    required this.onScreenLock,
     required this.isFullscreen,
+    required this.isScreenLocked,
   });
 
   @override
@@ -782,6 +819,8 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
   @override
   Widget build(BuildContext context) {
+    print('👾👾👾build ControlsOverlay');
+    print('鎖定狀態： ${widget.isScreenLocked ? '鎖定' : '未鎖定'}');
     return LayoutBuilder(builder: (context, constraints) {
       return MouseRegion(
         child: GestureDetector(
@@ -944,10 +983,34 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
+              if (widget.isFullscreen)
+                Positioned(
+                    top: 120,
+                    left: 0,
+                    right: 0,
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconButton(
+                          icon: Icon(
+                              widget.isScreenLocked
+                                  ? Icons.lock_open_outlined
+                                  : Icons.lock,
+                              size: 30,
+                              color: Colors.white),
+                          onPressed: () {
+                            widget.onScreenLock(!widget.isScreenLocked);
+                          },
+                        ),
+                      ),
+                    )),
               ProgressBar(
                 controller: widget.controller,
-                toggleFullscreen: () =>
-                    widget.toggleFullscreen(!widget.isFullscreen),
+                toggleFullscreen: () => {
+                  // widget.onScreenLock(!widget.isScreenLocked),
+                  widget.toggleFullscreen(!widget.isFullscreen),
+                },
                 isFullscreen: widget.isFullscreen,
                 opacity: controlsType == ControlsOverlayType.progress ||
                         controlsType == ControlsOverlayType.middleTime ||
