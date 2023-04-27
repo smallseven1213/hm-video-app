@@ -14,44 +14,40 @@ class AppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('RENDER: AppsScreen');
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: const Scaffold(
-        appBar: CustomAppBar(
-          title: '應用中心',
-        ),
-        body: CustomScrollView(
-          physics: BouncingScrollPhysics(),
-          slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: BannerWidget(),
-              ),
+    return const Scaffold(
+      appBar: CustomAppBar(
+        title: '應用中心',
+      ),
+      body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: <Widget>[
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8),
+              child: BannerWidget(),
             ),
-            SliverToBoxAdapter(
-              child: Header(text: '熱門推薦'),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
-            HotWidget(),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
-            SliverToBoxAdapter(
-              child: Header(text: '大家都在玩'),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
-            PopularWidget(),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 90),
-            )
-          ],
-        ),
+          ),
+          SliverToBoxAdapter(
+            child: Header(text: '熱門推薦'),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 20),
+          ),
+          HotWidget(),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 20),
+          ),
+          SliverToBoxAdapter(
+            child: Header(text: '大家都在玩'),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 20),
+          ),
+          PopularWidget(),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 90),
+          )
+        ],
       ),
     );
   }
