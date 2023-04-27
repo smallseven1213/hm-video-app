@@ -44,6 +44,7 @@ final Map<String, RouteWidgetBuilder> routes = {
         // title: args['title'] as String,
       ),
   AppRoutes.tag.value: (context, args) => TagVideoPage(
+        key: ValueKey('tag-video-${args['id']}'),
         id: args['id'] as int,
         title: args['title'] as String,
       ),
