@@ -1,6 +1,6 @@
 // VideoScreen stateless
 import 'package:app_gs/config/colors.dart';
-import 'package:app_gs/screens/video/video_player_area.dart';
+import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:app_gs/widgets/button.dart';
 import 'package:app_gs/widgets/glowing_icon.dart';
 import 'package:app_gs/widgets/tab_bar.dart';
