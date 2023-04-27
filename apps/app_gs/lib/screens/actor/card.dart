@@ -70,13 +70,17 @@ class ActorCard extends SliverPersistentHeaderDelegate {
               Container(
                 height: 200,
                 width: double.infinity,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     colors: [
-                      const Color(0xFF131E34).withOpacity(0.3),
-                      const Color(0xFF4378DC).withOpacity(0.3),
+                      Color.fromRGBO(67, 120, 220, 0.65),
+                      Color(0xFF001C46),
+                    ],
+                    stops: [
+                      -0.06,
+                      1.0,
                     ],
                   ),
                 ),
