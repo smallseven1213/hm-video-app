@@ -50,7 +50,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   final RouteFactory? onGenerateRoute;
   final Map<String, RouteWidgetBuilder> routes;
   final String homePath;
-  final responseController = Get.find<ResponseController>();
+  final responseController = Get.find<ApiResponseErrorCatchController>();
 
   @override
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

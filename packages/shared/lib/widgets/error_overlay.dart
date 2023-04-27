@@ -12,7 +12,7 @@ class ErrorOverlayWidget extends StatefulWidget {
 }
 
 class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
-  final responseController = Get.find<ResponseController>();
+  final responseController = Get.find<ApiResponseErrorCatchController>();
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    responseController.updateResponseStatus(0);
+                    responseController.emitEvent(0, '');
                   },
                   child: Text('確認'),
                 ),

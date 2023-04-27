@@ -29,7 +29,7 @@ Future<dynamic> fetcher({
   // Map? authorization = shouldValidate!
   //     ? null
   //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
-  final responseController = Get.find<ResponseController>();
+  final responseController = Get.find<ApiResponseErrorCatchController>();
 
   final token = Get.find<AuthController>().token;
   AuthController authController = Get.find<AuthController>();
@@ -69,16 +69,10 @@ Future<dynamic> fetcher({
       final storage = GetStorage();
       storage.remove('auth-token');
       authController.setToken('');
-
-      // 更新狀態和消息
-      responseController.updateResponseStatus(401);
-      responseController.updateResponseMessage("Unauthorized");
+      responseController.emitEvent(401, 'Unauthorized');
     } else {
       // 其他錯誤處理
-      print('errror: 其他錯誤處理');
-      // 更新狀態和消息
-      responseController.updateResponseStatus(e.response?.statusCode ?? 0);
-      responseController.updateResponseMessage("Other error");
+      responseController.emitEvent(e.response?.statusCode ?? 0, 'Other error');
     }
     rethrow;
   }

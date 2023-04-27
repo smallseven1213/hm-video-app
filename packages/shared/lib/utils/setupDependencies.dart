@@ -18,7 +18,8 @@ import '../controllers/video_popular_controller.dart';
 
 void setupDependencies() {
   Get.lazyPut<AuthController>(() => AuthController());
-  Get.lazyPut<ResponseController>(() => ResponseController());
+  Get.lazyPut<ApiResponseErrorCatchController>(
+      () => ApiResponseErrorCatchController());
   Get.lazyPut<UserController>(() => UserController());
   Get.lazyPut<BottonNavigatorController>(() => BottonNavigatorController());
   Get.lazyPut<BannerController>(() => BannerController());

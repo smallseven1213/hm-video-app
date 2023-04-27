@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class ResponseController extends GetxController {
+class ApiResponseErrorCatchController extends GetxController {
   final responseStatus = 0.obs;
   final responseMessage = ''.obs;
 
@@ -14,11 +14,8 @@ class ResponseController extends GetxController {
   //   super.onClose();
   // }
 
-  void updateResponseStatus(int status) {
+  void emitEvent(int status, String message) {
     responseStatus.value = status;
-  }
-
-  void updateResponseMessage(String message) {
     responseMessage.value = message;
   }
 }
