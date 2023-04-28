@@ -12,6 +12,7 @@ import 'player_header.dart';
 import 'progress_bar.dart';
 import 'progress_status.dart';
 import 'volume_brightness.dart';
+import 'screen_lock.dart';
 
 class ControlsOverlay extends StatefulWidget {
   final VideoPlayerController controller;
@@ -242,35 +243,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
               if (widget.isFullscreen &&
-                  !kIsWeb &&
+                  // !kIsWeb &&
                   (controlsType == ControlsOverlayType.progress ||
                       controlsType == ControlsOverlayType.middleTime ||
                       controlsType == ControlsOverlayType.playPause))
-                Positioned(
-                    top: 135,
-                    left: 10,
-                    right: 0,
-                    child: Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.white, width: 1),
-                          ),
-                          child: IconButton(
-                            icon: Icon(
-                              widget.isScreenLocked
-                                  ? Icons.lock_open_outlined
-                                  : Icons.lock,
-                              size: 20,
-                              color: Colors.white,
-                            ),
-                            onPressed: () {
-                              widget.onScreenLock(!widget.isScreenLocked);
-                            },
-                          ),
-                        ))),
-
+                ScreenLock(
+                    isScreenLocked: widget.isScreenLocked,
+                    onScreenLock: widget.onScreenLock),
               ProgressBar(
                 controller: widget.controller,
                 toggleFullscreen: () =>
