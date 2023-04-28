@@ -17,8 +17,8 @@ class UserInfo extends StatelessWidget {
 
   Widget _buildShimmer({required double width, required double height}) {
     return Shimmer.fromColors(
-      baseColor: Colors.white.withOpacity(0.4),
-      highlightColor: Colors.white.withOpacity(0.2),
+      baseColor: const Color(0xFF003068),
+      highlightColor: const Color(0xFF00234d),
       child: Container(
         width: width,
         height: height,

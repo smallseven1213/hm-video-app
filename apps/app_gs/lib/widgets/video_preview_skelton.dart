@@ -10,8 +10,8 @@ class VideoPreviewSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Shimmer.fromColors(
-      baseColor: Colors.white.withOpacity(0.2),
-      highlightColor: Colors.white.withOpacity(0.1),
+      baseColor: const Color(0xFF003068),
+      highlightColor: const Color(0xFF00234d),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

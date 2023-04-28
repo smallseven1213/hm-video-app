@@ -1,3 +1,7 @@
+import 'package:logger/logger.dart';
+
+final logger = Logger();
+
 class Actor {
   final int id;
   final String name;
@@ -29,7 +33,8 @@ class Actor {
       photoSid;
 
   factory Actor.fromJson(Map<String, dynamic> json) {
-    if (json['actorCollectTimes'] != null) {
+    if (json['actorCollectTimes'] != null &&
+        json['actorCollectTimes'].runtimeType == String) {
       json['actorCollectTimes'] = int.parse(json['actorCollectTimes']);
     }
     return Actor(

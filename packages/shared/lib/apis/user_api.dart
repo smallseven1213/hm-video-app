@@ -221,7 +221,8 @@ class UserApi {
   // 演員喜愛紀錄清單
   Future<List<Actor>> getFavoriteActor() async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/actorCollectRecord',
+        url:
+            '${systemConfig.apiHost}/public/users/user/actorCollectRecord?film=1',
         method: 'GET',
         shouldValidate: true);
     if (res.data['code'] != '00') {
