@@ -90,24 +90,6 @@ class JingangList extends StatelessWidget {
     return Header(text: title);
   }
 
-  Widget buildRow(jingang) {
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      itemCount: jingang.jingangDetail?.length ?? 0,
-      itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: JingangButton(
-            item: jingang.jingangDetail![index],
-            outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
-            outerFrameStyle:
-                jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
-          ),
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final ChannelDataController channelDataController =
@@ -136,7 +118,7 @@ class JingangList extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 16.0),
+                        horizontal: 8, vertical: 16.0),
                     child: JingangButton(
                       item: jingang.jingangDetail![index],
                       outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
