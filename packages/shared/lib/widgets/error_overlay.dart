@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/navigator/delegate.dart';
 import '../controllers/response_controller.dart';
+import '../enums/app_routes.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -17,33 +19,37 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   @override
   void initState() {
     super.initState();
+    responseController.responseStatus.listen((status) {
+      if (status == 401 && !responseController.alertDialogShown.value) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          responseController.setAlertDialogShown(true);
+          showDialog(
+            context: context,
+            barrierDismissible: false,
+            builder: (context) => AlertDialog(
+              title: const Text('帳號重複登入'),
+              content: const Text('你已被登出，請重新登入'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    responseController.setAlertDialogShown(false);
+                    MyRouteDelegate.of(context)
+                        .push(AppRoutes.splash.value, removeSamePath: true);
+                  },
+                  child: const Text('確認'),
+                ),
+              ],
+            ),
+          );
+        });
+      }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: Colors.transparent,
-        child: Obx(() {
-          if (responseController.responseStatus.value == 401) {
-            return AlertDialog(
-              title: Text('Unauthorized'),
-              content: Text('你已被登出，請重新登入'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    responseController.emitEvent(0, '');
-                  },
-                  child: Text('確認'),
-                ),
-              ],
-            );
-          }
-          return widget.child;
-        }),
-      ),
+      body: widget.child,
     );
   }
 }
