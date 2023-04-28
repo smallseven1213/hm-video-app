@@ -72,9 +72,17 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
   void toggleFullscreen({bool fullScreen = false}) {
     if (fullScreen) {
-      setScreenLandScape();
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
     } else {
-      setScreenRotation();
+      restoreScreenRotation();
+      // 五秒後偵測螢幕方向
+      Future.delayed(const Duration(seconds: 2), () {
+        setScreenRotation();
+      });
     }
 
     setState(() {
