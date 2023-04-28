@@ -1,11 +1,33 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
 
-import 'channel/index.dart';
-import 'package:flutter/physics.dart';
+import 'channel_style_1/index.dart';
+
+import 'channel_style_2/index.dart';
+import 'channel_style_3/index.dart';
+import 'channel_style_4/index.dart';
+import 'channel_style_not_found/index.dart';
+
+Map<int, Function> styleWidgetMap = {
+  1: (item) => ChannelStyle1(
+        key: ValueKey(item.id),
+        channelId: item.id,
+      ),
+  2: (item) => ChannelStyle2(
+        key: ValueKey(item.id),
+        channelId: item.id,
+      ),
+  3: (item) => ChannelStyle3(
+        key: ValueKey(item.id),
+        channelId: item.id,
+      ),
+  4: (item) => ChannelStyle4(
+        key: ValueKey(item.id),
+        channelId: item.id,
+      ),
+};
 
 class CustomPageScrollPhysics extends BouncingScrollPhysics {
   CustomPageScrollPhysics({required ScrollPhysics parent})
@@ -65,27 +87,25 @@ class _ChannelsState extends State<Channels> {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        logger.i('RENDER OBX PageView');
         return PageView(
-          controller: controller,
-          onPageChanged: (value) =>
-              channelScreenTabController.tabIndex.value = value,
-          allowImplicitScrolling: false,
-          physics: const CustomPageViewScrollPhysics(),
-          children: layoutController.layout
-              .asMap()
-              .map(
-                (index, item) => MapEntry(
-                  index,
-                  Channel(
-                    key: ValueKey(item.id),
-                    channelId: item.id,
+            controller: controller,
+            onPageChanged: (value) =>
+                channelScreenTabController.tabIndex.value = value,
+            allowImplicitScrolling: false,
+            physics: const CustomPageViewScrollPhysics(),
+            children: layoutController.layout
+                .asMap()
+                .map(
+                  (index, item) => MapEntry(
+                    index,
+                    styleWidgetMap.containsKey(item.style)
+                        ? styleWidgetMap[item.style]!(item)
+                        : const ChannelStyleNotFound(),
                   ),
-                ),
-              )
-              .values
-              .toList(),
-        );
+                )
+                .values
+                .toList()
+                .cast<Widget>());
       },
     );
   }

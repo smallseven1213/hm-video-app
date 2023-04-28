@@ -26,16 +26,17 @@ Widget buildTitle(String title) {
         );
 }
 
-class Channel extends StatefulWidget {
+class ChannelStyle1 extends StatefulWidget {
   final int channelId;
 
-  const Channel({Key? key, required this.channelId}) : super(key: key);
+  const ChannelStyle1({Key? key, required this.channelId}) : super(key: key);
 
   @override
-  _ChannelState createState() => _ChannelState();
+  _ChannelStyle1State createState() => _ChannelStyle1State();
 }
 
-class _ChannelState extends State<Channel> with AutomaticKeepAliveClientMixin {
+class _ChannelStyle1State extends State<ChannelStyle1>
+    with AutomaticKeepAliveClientMixin {
   late ChannelDataController channelDataController;
 
   @override

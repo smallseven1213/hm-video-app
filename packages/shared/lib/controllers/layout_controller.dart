@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import '../apis/channel_api.dart';
-import '../models/channel.dart';
+import '../models/slim_channel.dart';
 import 'channel_data_controller.dart';
 
 class LayoutController extends GetxController {
   final int layoutId;
-  var layout = <Channel>[].obs;
+  var layout = <SlimChannel>[].obs;
   final chnnaleApi = ChannelApi();
 
   LayoutController(this.layoutId);
