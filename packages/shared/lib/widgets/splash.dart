@@ -10,6 +10,7 @@ import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/banner_controller.dart';
+import 'package:shared/controllers/response_controller.dart';
 import 'package:shared/services/system_config.dart';
 
 import '../controllers/channel_screen_tab_controller.dart';
@@ -75,6 +76,8 @@ class _SplashState extends State<Splash> {
   BannerController bannerController = Get.put(BannerController());
   Timer? timer;
   AuthController authController = Get.find<AuthController>();
+  ApiResponseErrorCatchController responseController =
+      Get.find<ApiResponseErrorCatchController>();
   String loadingText = '線路檢查中...';
 
   // 取得invitationCode
@@ -194,6 +197,7 @@ class _SplashState extends State<Splash> {
   userLogin() async {
     setState(() => loadingText = '用戶登入...');
     print('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
+
     logger.i('userApi: ${authController.token.value}');
     if (authController.token.value != '') {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
@@ -207,6 +211,8 @@ class _SplashState extends State<Splash> {
           invitationCode: invitationCode,
         );
         authController.setToken(res.data['token']);
+        responseController.clear();
+
         print('res.status ${res.code}');
         if (res.code == '00') {
           fetchInitialDataAndNavigate();
@@ -321,3 +327,4 @@ class _SplashState extends State<Splash> {
     );
   }
 }
+
