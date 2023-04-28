@@ -30,7 +30,6 @@ class VideoList extends StatelessWidget {
               ? videos[secondVideoIndex]
               : null;
 
-          logger.i('RENDER VIDEO SCREEN RALATED VIDEO LIST');
           return Column(
             children: [
               Row(

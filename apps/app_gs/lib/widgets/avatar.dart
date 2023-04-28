@@ -14,8 +14,8 @@ class Avatar extends StatelessWidget {
 
   Widget _buildShimmer() {
     return Shimmer.fromColors(
-      baseColor: Colors.white.withOpacity(0.4),
-      highlightColor: Colors.white.withOpacity(0.2),
+      baseColor: const Color(0xFF003068),
+      highlightColor: const Color(0xFF00234d),
       child: Container(
         width: 60,
         height: 60,

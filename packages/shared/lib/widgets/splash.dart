@@ -12,6 +12,8 @@ import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/services/system_config.dart';
 
+import '../controllers/channel_screen_tab_controller.dart';
+import '../controllers/layout_controller.dart';
 import '../controllers/tag_popular_controller.dart';
 import '../controllers/user_controller.dart';
 import '../controllers/video_popular_controller.dart';

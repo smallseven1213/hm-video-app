@@ -32,6 +32,7 @@ class Block6Widget extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(
                     videos.length,
                     (index) => Container(

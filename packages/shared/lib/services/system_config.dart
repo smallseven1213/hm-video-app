@@ -11,9 +11,12 @@ class SystemConfig {
   // Color
   Map<ColorKeys, dynamic> appColors = {};
   // API ENDPOINT
-  String apiHost = 'dl.dlsv.net/$env/dl.json';
-  String vodHost = 'https://dl.dlsv.net/$env/dl.json';
-  String imgHost = 'https://dl.dlsv.net/$env/dl.json';
+  // String apiHost = 'dl.dlsv.net/$env/dl.json';
+  // String vodHost = 'https://dl.dlsv.net/$env/dl.json';
+  // String imgHost = 'https://dl.dlsv.net/$env/dl.json';
+  String? apiHost;
+  String? vodHost;
+  String? imgHost;
 
   // STT | GP | 51SS | SV
   String project = const String.fromEnvironment('PROJECT', defaultValue: 'STT');

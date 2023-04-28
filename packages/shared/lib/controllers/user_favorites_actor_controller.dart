@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../apis/user_api.dart';
@@ -7,6 +8,7 @@ import '../models/actor.dart';
 import '../models/video_database_field.dart';
 
 final userApi = UserApi();
+final logger = Logger();
 
 class UserFavoritesActorController extends GetxController {
   static const String _prefsKey = 'userFavoritesActor';
@@ -21,13 +23,16 @@ class UserFavoritesActorController extends GetxController {
 
   Future<void> _init() async {
     prefs = await SharedPreferences.getInstance();
+    logger.i('CHECK ACTOR prefs $prefs');
 
     if (prefs.containsKey(_prefsKey)) {
       final jsonData = jsonDecode(prefs.getString(_prefsKey)!) as List<dynamic>;
+      logger.i('CHECK ACTOR jsonData $jsonData');
       actors.value = jsonData
           .map<Actor>(
               (actorJson) => Actor.fromJson(actorJson as Map<String, dynamic>))
           .toList();
+      logger.i('CHECK ACTOR obj ${actors.value}');
     } else {
       await _fetchAndSaveCollection();
     }

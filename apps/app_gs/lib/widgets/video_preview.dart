@@ -12,8 +12,6 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/view_times.dart';
 import 'package:shared/widgets/video_time.dart';
-import 'package:shared/utils/video_info_formatter.dart';
-import 'package:shimmer/shimmer.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
 final logger = Logger();

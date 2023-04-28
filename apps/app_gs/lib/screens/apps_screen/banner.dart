@@ -29,8 +29,7 @@ class _BannerWidgetState extends State<BannerWidget> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var banners = bannerController.banners[BannerPosition.discoverCarousel]
-          as List<BannerPhoto>?;
+      var banners = bannerController.banners[BannerPosition.discoverCarousel];
       if (banners == null || banners.isEmpty) {
         return Container();
       } else {
@@ -44,7 +43,6 @@ class _BannerWidgetState extends State<BannerWidget> {
               }),
             )
             .toList();
-        print(banners);
         return Carousel(
           images: images,
           ratio: 359 / 170,
