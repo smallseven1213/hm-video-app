@@ -4,7 +4,7 @@ import '../models/channel.dart';
 import 'channel_data_controller.dart';
 
 class LayoutController extends GetxController {
-  final String layoutId;
+  final int layoutId;
   var layout = <Channel>[].obs;
   final chnnaleApi = ChannelApi();
 
@@ -13,7 +13,7 @@ class LayoutController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    var res = await chnnaleApi.getManyByLayout(int.parse(layoutId));
+    var res = await chnnaleApi.getManyByLayout(layoutId);
 
     for (var item in res) {
       Get.lazyPut<ChannelDataController>(

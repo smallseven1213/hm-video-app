@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
+import 'package:shared/controllers/channel_screen_tab_controller.dart';
+import 'package:shared/controllers/layout_controller.dart';
 
+import '../config/layouts.dart';
 import '../screens/apps_screen/index.dart';
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
@@ -11,25 +14,42 @@ import '../screens/user_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
+final screens = {
+  '/layout1': () => HomeMainScreen(
+        key: Key('layout${layouts[0]}'),
+        layoutId: layouts[0],
+      ),
+  '/layout2': () => HomeMainScreen(
+        key: Key('layout${layouts[1]}'),
+        layoutId: layouts[1],
+      ),
+  '/game': () => const GameScreen(),
+  '/apps': () => const AppsScreen(),
+  '/user': () => const UserScreen()
+};
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
 
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
-  final screens = {
-    '/layout1': () => const HomeMainScreen(
-          key: Key('layout1'),
-          layoutId: 1,
-        ),
-    '/layout2': () => const HomeMainScreen(
-          key: Key('layout2'),
-          layoutId: 2,
-        ),
-    '/game': () => const GameScreen(),
-    '/apps': () => const AppsScreen(),
-    '/user': () => const UserScreen()
-  };
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final bottomNavigatorController = Get.find<BottonNavigatorController>();
+
+  // init
+  @override
+  void initState() {
+    super.initState();
+    for (var layout in layouts) {
+      Get.put(ChannelScreenTabController(),
+          tag: 'channel-screen-$layout', permanent: false);
+      Get.put(LayoutController(layout), tag: 'layout$layout', permanent: false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
