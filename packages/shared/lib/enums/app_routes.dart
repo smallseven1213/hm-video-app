@@ -20,6 +20,7 @@ enum AppRoutes {
   search,
   filter,
   actor,
+  actors
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -63,6 +64,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/search';
       case AppRoutes.filter:
         return '/filter';
+      case AppRoutes.actors:
+        return '/actors';
       case AppRoutes.actor:
         return '/actor';
       default:

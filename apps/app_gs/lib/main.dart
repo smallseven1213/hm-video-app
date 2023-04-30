@@ -10,6 +10,7 @@ import 'package:shared/widgets/root.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'config/colors.dart';
+import 'pages/actors.dart';
 import 'pages/collection.dart';
 import 'pages/home.dart';
 import 'pages/login.dart';
@@ -66,6 +67,7 @@ final Map<String, RouteWidgetBuilder> routes = {
         dontSearch: args['dontSearch'] as bool,
       ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
+  AppRoutes.actors.value: (context, args) => ActorsPage(),
 };
 
 class MyApp extends StatelessWidget {
