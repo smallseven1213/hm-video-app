@@ -80,7 +80,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     } else {
       restoreScreenRotation();
       // 五秒後偵測螢幕方向
-      Future.delayed(const Duration(seconds: 5), () {
+      Future.delayed(const Duration(seconds: 2), () {
         setScreenRotation();
       });
     }
@@ -156,6 +156,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
     restoreScreenRotation();
+    logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
     super.dispose();
   }
 
@@ -175,6 +176,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       _controller?.pause();
       restoreScreenRotation();
     }
+
     return Container(
       color: Colors.black,
       width: MediaQuery.of(context).size.width,
