@@ -40,7 +40,7 @@ class SliverVodGrid extends StatelessWidget {
                       ? videos[secondVideoIndex]
                       : null;
 
-                  logger.i('RENDER SLIVER VOD GRID');
+                  // logger.i('RENDER SLIVER VOD GRID');
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

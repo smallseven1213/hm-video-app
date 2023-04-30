@@ -60,7 +60,6 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   }
 
   void _scrollListener() {
-    logger.i('XD');
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
       loadMoreData();

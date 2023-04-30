@@ -8,6 +8,7 @@ import 'package:shared/controllers/actor_latest_vod_controller.dart';
 import '../screens/actor/card.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_vod_grid.dart';
+import '../widgets/tab_bar.dart';
 
 final logger = Logger();
 
@@ -48,7 +49,7 @@ class _ActorPageState extends State<ActorPage>
     });
     actorNewestVodController.scrollController.addListener(() {
       _parentScrollController
-          .jumpTo(actorLatestVodController.scrollController.offset);
+          .jumpTo(actorNewestVodController.scrollController.offset);
     });
   }
 
@@ -81,11 +82,30 @@ class _ActorPageState extends State<ActorPage>
                     delegate: ActorCard(actor: actor, context: context),
                     pinned: true,
                   ), //构建一个 sliverList
+                  SliverAppBar(
+                    pinned: true,
+                    leading: null,
+                    automaticallyImplyLeading: false,
+                    forceElevated: true,
+                    expandedHeight: 0,
+                    toolbarHeight: 0,
+                    flexibleSpace: const SizedBox.shrink(),
+                    bottom: PreferredSize(
+                      preferredSize: Size.fromHeight(60),
+                      child: SizedBox(
+                          height: 60,
+                          child: GSTabBar(
+                            controller: _tabController,
+                            tabs: const ['最新', '最熱'],
+                          )),
+                    ),
+                  ),
                 ];
               },
               body: TabBarView(
                 controller: _tabController,
                 physics: const BouncingScrollPhysics(),
+                // physics: const NeverScrollableScrollPhysics(),
                 children: [
                   SliverVodGrid(
                     key: const Key('actor_latest_vod'),

@@ -23,7 +23,7 @@ Map<int, Function> styleWidgetMap = {
         key: ValueKey(item.id),
         channelId: item.id,
       ),
-  4: (item) => ChannelStyle4(
+  4: (item) => ChannelStyle3(
         key: ValueKey(item.id),
         channelId: item.id,
       ),
