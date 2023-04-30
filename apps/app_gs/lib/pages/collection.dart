@@ -24,7 +24,7 @@ class _CollectionPageState extends State<CollectionPage> {
 
   @override
   void dispose() {
-    listEditorController.clearSelected();
+    listEditorController.closeEditing();
     super.dispose();
   }
 

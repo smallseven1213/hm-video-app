@@ -18,6 +18,10 @@ class ListEditorController extends GetxController {
     isEditing.value = !isEditing.value;
   }
 
+  void closeEditing() {
+    isEditing.value = false;
+  }
+
   void toggleSelected(int id) {
     if (selectedIds.contains(id)) {
       selectedIds.remove(id);
