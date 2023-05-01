@@ -1,4 +1,7 @@
+import 'package:logger/logger.dart';
+
 import '../models/actor.dart';
+import '../models/actor_with_vods.dart';
 import '../models/block_vod.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
@@ -6,6 +9,8 @@ import '../utils/fetcher.dart';
 
 final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/actors';
+
+final logger = Logger();
 
 class ActorApi {
   Future<List<Actor>> getManyBy({
@@ -75,5 +80,22 @@ class ActorApi {
           .toList()),
       res.data['data']['total'],
     );
+  }
+
+  Future<List<ActorWithVod>> getManyPopularActorBy(
+      {int page = 1, int limit = 10}) async {
+    var res = await fetcher(
+        url: '$apiPrefix/actor/popular-actor-channel?page=$page&limit=$limit');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from((res.data['data'] as List<dynamic>)
+        .map((e) => ActorWithVod(
+              Actor.fromJson(e['actor']),
+              List.from((e['video'] as List<dynamic>)
+                  .map((e) => Vod.fromJson(e))
+                  .toList()),
+            ))
+        .toList());
   }
 }

@@ -13,7 +13,7 @@ final publisherApi = PublisherApi();
 const limit = 20;
 
 class FilterScreenController extends GetxController {
-  final List<Map<String, dynamic>> menuData = [
+  final RxList<Map<String, dynamic>> menuData = [
     {
       'key': 'order',
       'options': [

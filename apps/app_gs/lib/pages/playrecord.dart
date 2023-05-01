@@ -24,7 +24,7 @@ class _PlayRecordPageState extends State<PlayRecordPage> {
 
   @override
   void dispose() {
-    listEditorController.clearSelected();
+    listEditorController.closeEditing();
     super.dispose();
   }
 
