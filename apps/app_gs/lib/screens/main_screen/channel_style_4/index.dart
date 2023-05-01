@@ -220,6 +220,7 @@ class ChannelStyle4 extends StatelessWidget {
                                             child: VideoPreviewWidget(
                                               id: vod.id,
                                               title: vod.title,
+                                              displaycoverVertical: true,
                                               coverHorizontal:
                                                   vod.coverHorizontal!,
                                               coverVertical: vod.coverVertical!,
@@ -232,8 +233,27 @@ class ChannelStyle4 extends StatelessWidget {
                                       );
                                     },
                                   ),
-                                )
+                                ),
                               ],
+                            ),
+                          ),
+                          Positioned(
+                            top: 0,
+                            right: 0,
+                            child: ClipPath(
+                              clipper: CustomClipperWithRoundedCorners(),
+                              child: Container(
+                                color: const Color(0xfff32a2a),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 9, vertical: 4),
+                                  child: Text(
+                                    '${data.actor.containVideos}部影片',
+                                    style: const TextStyle(
+                                        fontSize: 12, color: Colors.white),
+                                  ),
+                                ),
+                              ),
                             ),
                           )
                         ],
@@ -247,4 +267,32 @@ class ChannelStyle4 extends StatelessWidget {
       ),
     );
   }
+}
+
+class CustomClipperWithRoundedCorners extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    final path = Path();
+
+    // 开始画左上角
+    path.moveTo(0, 0);
+
+    // 画到右上角，并添加圆角
+    path.lineTo(size.width - 10, 0);
+    path.quadraticBezierTo(size.width, 0, size.width, 10);
+
+    // 画到右下角
+    path.lineTo(size.width, size.height);
+
+    // 画到左下角，并添加圆角
+    path.lineTo(10, size.height);
+    path.quadraticBezierTo(0, size.height, 0, size.height - 10);
+
+    // 完成路径
+    path.close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
