@@ -23,18 +23,18 @@ Map<int, Function> styleWidgetMap = {
         key: ValueKey(item.id),
         channelId: item.id,
       ),
-  4: (item) => ChannelStyle3(
+  4: (item) => ChannelStyle4(
         key: ValueKey(item.id),
         channelId: item.id,
       ),
 };
 
 class CustomPageScrollPhysics extends BouncingScrollPhysics {
-  CustomPageScrollPhysics({required ScrollPhysics parent})
+  const CustomPageScrollPhysics({required ScrollPhysics parent})
       : super(parent: parent);
 
   @override
-  SpringDescription get spring => SpringDescription(
+  SpringDescription get spring => const SpringDescription(
         mass: 0.5,
         stiffness: 400,
         damping: 0.5,
