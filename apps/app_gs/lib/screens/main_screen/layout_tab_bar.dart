@@ -113,16 +113,23 @@ class LayoutTabBarState extends State<LayoutTabBar>
           physics: const BouncingScrollPhysics(),
           isScrollable: true,
           controller: tabController,
-          indicatorPadding:
-              const EdgeInsets.only(left: 15, right: 15, bottom: 4),
-          indicatorWeight: 5,
-          indicatorColor: AppColors.colors[ColorKeys.primary],
+          labelStyle: TextStyle(
+            fontSize: 14,
+            letterSpacing: 0.05,
+            color: AppColors.colors[ColorKeys.primary],
+          ),
+          unselectedLabelColor: const Color(0xffb2bac5),
           indicator: UnderlineTabIndicator(
             borderRadius: const BorderRadius.horizontal(
-                left: Radius.circular(10), right: Radius.circular(10)),
+                left: Radius.circular(3), right: Radius.circular(3)),
             borderSide: BorderSide(
-              width: 3.0,
+              width: 5.0,
               color: AppColors.colors[ColorKeys.primary]!,
+            ),
+            insets: const EdgeInsets.only(
+              left: 18,
+              right: 18,
+              bottom: 0,
             ),
           ),
           onTap: handleTapTabItem,

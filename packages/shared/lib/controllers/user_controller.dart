@@ -119,8 +119,8 @@ class UserController extends GetxController {
   void mutateAll() {
     _fetchUserInfo();
     // _fetchWallets();
-    getLoginCode();
-    getUserPromoteData();
+    // getLoginCode();
+    // getUserPromoteData();
   }
 
   void mutateInfo(User? user, bool revalidateFromServer) {

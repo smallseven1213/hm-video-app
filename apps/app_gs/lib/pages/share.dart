@@ -130,9 +130,23 @@ class SharePage extends StatelessWidget {
   }
 }
 
-class ContentAndButton extends StatelessWidget {
+class ContentAndButton extends StatefulWidget {
   const ContentAndButton({Key? key}) : super(key: key);
+
+  @override
+  _ContentAndButtonState createState() => _ContentAndButtonState();
+}
+
+class _ContentAndButtonState extends State<ContentAndButton> {
   UserController get userController => Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      userController.getUserPromoteData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {

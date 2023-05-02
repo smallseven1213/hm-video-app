@@ -28,13 +28,20 @@ class GSTabBar extends StatelessWidget implements PreferredSizeWidget {
             indicatorPadding: const EdgeInsets.only(
               left: 20,
               right: 20,
-              bottom: 4,
+              bottom: 8,
             ),
-            indicatorWeight: 5,
-            indicatorColor: AppColors.colors[ColorKeys.primary],
+            labelStyle: const TextStyle(
+              fontSize: 14,
+            ),
+            labelPadding: const EdgeInsets.only(
+              left: 0,
+              right: 0,
+              bottom: 0,
+            ),
+            unselectedLabelColor: const Color(0xffb2bac5),
             indicator: UnderlineTabIndicator(
               borderRadius: const BorderRadius.horizontal(
-                  left: Radius.circular(10), right: Radius.circular(10)),
+                  left: Radius.circular(3), right: Radius.circular(3)),
               borderSide: BorderSide(
                 width: 5.0,
                 color: AppColors.colors[ColorKeys.primary]!,
