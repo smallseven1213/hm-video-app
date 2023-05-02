@@ -8,6 +8,8 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../../widgets/actor_avatar.dart';
+
 const gradiens = {
   1: [Color(0xFF00091A), Color(0xFF45abb1)],
   2: [Color(0xFF00091a), Color(0xFFc08e53)],
@@ -113,51 +115,7 @@ class ChannelStyle4 extends StatelessWidget {
                                 Row(
                                   children: [
                                     const SizedBox(width: 8),
-                                    // height 60,width 60,circle image
-                                    // SizedBox(
-                                    //   width: 60,
-                                    //   height: 60,
-                                    //   child: ClipRRect(
-                                    //     borderRadius: BorderRadius.circular(80),
-                                    //     child: SidImage(
-                                    //         key: ValueKey(data.actor.photoSid),
-                                    //         sid: data.actor.photoSid,
-                                    //         width: 60,
-                                    //         height: 60,
-                                    //         fit: BoxFit.cover),
-                                    //   ),
-                                    // ),
-                                    Container(
-                                      padding: const EdgeInsets.all(
-                                          1), // Add padding to create the border effect
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        gradient: LinearGradient(
-                                          begin: Alignment.topCenter,
-                                          end: Alignment.bottomCenter,
-                                          colors: [
-                                            Color(0xFF00B2FF),
-                                            Color(0xFFCCEAFF),
-                                            Color(0xFF00B2FF),
-                                          ],
-                                        ),
-                                      ),
-                                      child: SizedBox(
-                                        width: 60,
-                                        height: 60,
-                                        child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(80),
-                                          child: SidImage(
-                                              key:
-                                                  ValueKey(data.actor.photoSid),
-                                              sid: data.actor.photoSid,
-                                              width: 60,
-                                              height: 60,
-                                              fit: BoxFit.cover),
-                                        ),
-                                      ),
-                                    ),
+                                    ActorAvatar(photoSid: data.actor.photoSid),
                                     // width 10
                                     const SizedBox(width: 10),
                                     Expanded(

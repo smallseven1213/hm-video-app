@@ -18,11 +18,13 @@ class ActorApi {
     int limit = 100,
     String? name,
     int? sortBy,
-    required int region,
+    int? region,
   }) async {
+    String nameQuery = name != null ? '&name=$name' : '';
+    String regionQuery = region != null ? '&region=$region' : '';
     var res = await fetcher(
         url:
-            '$apiPrefix/actor/list?page=$page&limit=$limit&name=$name&region=$region&isSortByVideos=${sortBy ?? 0}');
+            '$apiPrefix/actor/list?page=$page&limit=$limit${nameQuery}${regionQuery}&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }

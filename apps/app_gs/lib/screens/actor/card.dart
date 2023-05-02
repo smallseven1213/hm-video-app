@@ -6,6 +6,8 @@ import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../widgets/actor_avatar.dart';
+
 class ActorCard extends SliverPersistentHeaderDelegate {
   final Actor actor;
   final BuildContext context;
@@ -91,19 +93,24 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                   ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
                   percentage),
               left: lerpDouble(10, leftPadding, percentage)!,
-              child: SizedBox(
+              child: ActorAvatar(
+                photoSid: actor.photoSid,
                 width: imageSize,
                 height: imageSize,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(80),
-                  child: SidImage(
-                      key: ValueKey(actor.photoSid),
-                      sid: actor.photoSid,
-                      width: imageSize,
-                      height: imageSize,
-                      fit: BoxFit.cover),
-                ),
               ),
+              // child: SizedBox(
+              //   width: imageSize,
+              //   height: imageSize,
+              //   child: ClipRRect(
+              //     borderRadius: BorderRadius.circular(80),
+              //     child: SidImage(
+              //         key: ValueKey(actor.photoSid),
+              //         sid: actor.photoSid,
+              //         width: imageSize,
+              //         height: imageSize,
+              //         fit: BoxFit.cover),
+              //   ),
+              // ),
             ),
             Positioned(
               top: lerpDouble(
