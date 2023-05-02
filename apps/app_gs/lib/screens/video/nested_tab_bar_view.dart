@@ -8,7 +8,7 @@ import 'package:shared/models/index.dart';
 
 import 'video_info.dart';
 
-class NestedTabBarView extends StatelessWidget {
+class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
   final Video videoBase;
   const NestedTabBarView({
@@ -18,25 +18,38 @@ class NestedTabBarView extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final List<String> tabs =
-        videoDetail.actors!.isEmpty ? ['同類型', '同標籤'] : ['同演員', '同類型', '同標籤'];
-    String getIdList(List inputList) {
-      if (inputList.isEmpty) return '';
-      return inputList.take(3).map((e) => e.id.toString()).join(',');
-    }
+  _NestedTabBarViewState createState() => _NestedTabBarViewState();
+}
 
-    final BlockVideosByCategoryController blockVideosController = Get.put(
+class _NestedTabBarViewState extends State<NestedTabBarView> {
+  late BlockVideosByCategoryController blockVideosController;
+
+  @override
+  void initState() {
+    super.initState();
+    blockVideosController = Get.put(
       BlockVideosByCategoryController(
-        tagId: getIdList(videoDetail.tags!),
-        actorId: videoDetail.actors!.isEmpty
+        tagId: getIdList(widget.videoDetail.tags!),
+        actorId: widget.videoDetail.actors!.isEmpty
             ? ''
-            : videoDetail.actors![0].id.toString(),
-        excludeId: videoDetail.id.toString(),
-        internalTagId: videoDetail.internalTagIds!.join(',').toString(),
+            : widget.videoDetail.actors![0].id.toString(),
+        excludeId: widget.videoDetail.id.toString(),
+        internalTagId: widget.videoDetail.internalTagIds!.join(',').toString(),
       ),
       tag: DateTime.now().toString(),
     );
+  }
+
+  String getIdList(List inputList) {
+    if (inputList.isEmpty) return '';
+    return inputList.take(3).map((e) => e.id.toString()).join(',');
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> tabs = widget.videoDetail.actors!.isEmpty
+        ? ['同類型', '同標籤']
+        : ['同演員', '同類型', '同標籤'];
 
     return Padding(
         padding: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 8),
@@ -50,18 +63,18 @@ class NestedTabBarView extends StatelessWidget {
                 return <Widget>[
                   SliverToBoxAdapter(
                     child: VideoInfo(
-                      title: videoDetail.title,
-                      tags: videoDetail.tags ?? [],
-                      timeLength: videoDetail.timeLength ?? 0,
-                      viewTimes: videoDetail.videoViewTimes ?? 0,
-                      actor: videoDetail.actors,
-                      publisher: videoDetail.publisher,
+                      title: widget.videoDetail.title,
+                      tags: widget.videoDetail.tags ?? [],
+                      timeLength: widget.videoDetail.timeLength ?? 0,
+                      viewTimes: widget.videoDetail.videoViewTimes ?? 0,
+                      actor: widget.videoDetail.actors,
+                      publisher: widget.videoDetail.publisher,
                     ),
                   ),
                   SliverToBoxAdapter(
                     child: VideoActions(
-                      videoBase: videoBase,
-                      videoDetail: videoDetail,
+                      videoBase: widget.videoBase,
+                      videoDetail: widget.videoDetail,
                     ),
                   ),
                   SliverOverlapAbsorber(
@@ -98,6 +111,22 @@ class NestedTabBarView extends StatelessWidget {
                                 NestedScrollView.sliverOverlapAbsorberHandleFor(
                                     context),
                           ),
+                          if (name == '同標籤' &&
+                              widget.videoDetail.internalTagIds!.isEmpty)
+                            const SliverToBoxAdapter(
+                              child: SizedBox(
+                                height: 50,
+                                child: Center(
+                                  child: Text(
+                                    '找不到相關影片，猜您也會喜歡',
+                                    style: TextStyle(
+                                      color: Color(0xff808c9f),
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           Obx(() {
                             var videos =
                                 blockVideosController.videoByActor.value;
@@ -122,8 +151,8 @@ class NestedTabBarView extends StatelessWidget {
                                     child: Text(
                                       '沒有相關影片',
                                       style: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16,
+                                        color: Color(0xff808c9f),
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ),
