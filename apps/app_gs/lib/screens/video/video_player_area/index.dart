@@ -72,13 +72,9 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
   void toggleFullscreen({bool fullScreen = false}) {
     if (fullScreen) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.landscapeLeft,
-        DeviceOrientation.landscapeRight,
-      ]);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+      setScreenLandScape();
     } else {
-      restoreScreenRotation();
+      setScreenPortrait();
       // 五秒後偵測螢幕方向
       Future.delayed(const Duration(seconds: 2), () {
         setScreenRotation();
@@ -135,12 +131,16 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     super.didChangeMetrics();
     final _orientation =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
-    // Size size = WidgetsBinding.instance.window.physicalSize;
-    // print("@@@@@@@@@ didChangeMetrics: 寬：${size.width} 高：${size.height}");
+    // print("@@@@@@@@@ didChangeMetrics: $_orientation");
     if (_orientation == Orientation.landscape) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+      // 隱藏狀態欄
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     } else {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+      // 顯示狀態欄
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+        SystemUiOverlay.bottom,
+        SystemUiOverlay.top,
+      ]);
     }
     // if (isScreenLocked == true) return;
     setState(() {
@@ -155,7 +155,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     _controller?.pause();
     _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
-    restoreScreenRotation();
+    // setScreenPortrait();
     logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
     super.dispose();
   }
@@ -174,7 +174,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
     if (currentRoutePath != '/video') {
       _controller?.pause();
-      restoreScreenRotation();
+      setScreenPortrait();
     }
 
     return Container(

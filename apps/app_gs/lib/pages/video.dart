@@ -29,7 +29,7 @@ class _VideoState extends State<Video> {
 
   @override
   void dispose() {
-    // restoreScreenRotation();
+    // setScreenPortrait();
     super.dispose();
   }
 

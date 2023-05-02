@@ -1,15 +1,15 @@
 import 'package:flutter/services.dart';
 
-// Allow screen rotation when entering the page
-
+// 設定為橫向，並隱藏狀態列
 void setScreenLandScape() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.landscapeLeft,
     DeviceOrientation.landscapeRight,
   ]);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
 }
 
+// 設定可以旋轉，並顯示狀態列
 void setScreenRotation() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -19,13 +19,13 @@ void setScreenRotation() {
   ]);
 }
 
-// Restore original orientations when leaving the page
-void restoreScreenRotation() {
+// 設定直向，並顯示狀態列
+void setScreenPortrait() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
     SystemUiOverlay.bottom,
     SystemUiOverlay.top,
   ]);
