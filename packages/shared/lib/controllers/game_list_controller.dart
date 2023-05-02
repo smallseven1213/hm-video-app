@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared/apis/game_api.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 import '../models/game_list.dart';
 
@@ -13,6 +14,9 @@ class GamesListController extends GetxController {
   void onInit() {
     super.onInit();
     _fetchGames();
+    Get.find<AuthController>().token.listen((event) {
+      _fetchGames();
+    });
   }
 
   Future<void> _fetchGames() async {

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:logger/logger.dart';
 
@@ -20,6 +21,9 @@ class UserFavoritesVideoController extends GetxController {
   void onInit() {
     super.onInit();
     _init();
+    Get.find<AuthController>().token.listen((event) {
+      _init();
+    });
   }
 
   Future<void> _init() async {

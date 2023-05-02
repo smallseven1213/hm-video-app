@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:shared/apis/game_api.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 class GameBannerController extends GetxController {
   var isLoading = false.obs;
@@ -9,7 +10,10 @@ class GameBannerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchGameBanners();
+    Get.find<AuthController>().token.listen((event) {
+      fetchGameBanners();
+    });
+    update();
   }
 
   Future<void> fetchGameBanners() async {

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 import '../apis/publisher_api.dart';
 import '../apis/region_api.dart';
@@ -68,6 +69,11 @@ class FilterScreenController extends GetxController {
     logger.i('FILTER SCREEN INITIAL====================');
     _handleInitRegionData();
     _handleInitPublisherRecommendData();
+
+    Get.find<AuthController>().token.listen((event) {
+      _handleInitRegionData();
+      _handleInitPublisherRecommendData();
+    });
   }
 
   String findName(String key, int value) {
