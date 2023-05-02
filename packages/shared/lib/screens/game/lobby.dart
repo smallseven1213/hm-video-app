@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 import 'package:shared/apis/game_api.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/game_banner_controller.dart';
 import 'package:shared/controllers/game_list_controller.dart';
 import 'package:shared/controllers/game_wallet_controller.dart';
@@ -52,6 +53,10 @@ class _GameLobbyState extends State<GameLobby> {
       GameBannerController();
       getGameHistory();
     });
+
+    // Get.find<AuthController>().token.listen((event) {
+    //   TODO: 要重新打api，需要哪些資料在這裡重打一次
+    // });
   }
 
   _refreshData() {

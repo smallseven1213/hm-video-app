@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/models/vod.dart';
 import '../apis/vod_api.dart';
 import '../models/block_vod.dart';
@@ -27,6 +28,10 @@ class BlockVideosByCategoryController extends GetxController {
     super.onInit();
     print('@@@@@@ init');
     mutateAll();
+
+    Get.find<AuthController>().token.listen((event) {
+      mutateAll();
+    });
   }
 
   Future mutateAll() async {

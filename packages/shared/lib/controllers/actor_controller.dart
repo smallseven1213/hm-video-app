@@ -2,6 +2,7 @@
 
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 import '../apis/actor_api.dart';
 import '../models/actor.dart';
@@ -15,6 +16,9 @@ class ActorController extends GetxController {
 
   ActorController({required this.actorId}) {
     _fetchData();
+    Get.find<AuthController>().token.listen((event) {
+      _fetchData();
+    });
   }
 
   _fetchData() async {
