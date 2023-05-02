@@ -14,6 +14,7 @@ class FilterOptions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(() {
+        logger.i('controller.menuData => ${controller.menuData}');
         return Column(
           children: List.generate(
             controller.menuData.length,

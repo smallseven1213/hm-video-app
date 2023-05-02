@@ -86,6 +86,7 @@ class FilterScreenController extends GetxController {
     menuData[indexToUpdate].update('options', (existingOptions) {
       return [...existingOptions, ...regionData];
     });
+    menuData.refresh();
   }
 
   void _handleInitPublisherRecommendData() async {
@@ -97,6 +98,7 @@ class FilterScreenController extends GetxController {
     menuData[indexToUpdate].update('options', (existingOptions) {
       return [...existingOptions, ...publisherData];
     });
+    menuData.refresh();
   }
 
   void handleOptionChange(String key, dynamic value) {
