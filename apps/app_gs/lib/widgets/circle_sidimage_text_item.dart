@@ -71,6 +71,7 @@ class CircleTextItem extends StatelessWidget {
             child: InkWell(
               onTap: onTap,
               child: SidImage(
+                key: ValueKey(photoSid),
                 sid: photoSid,
               ),
             )),
