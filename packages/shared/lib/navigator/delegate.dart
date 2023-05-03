@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -131,7 +133,6 @@ class MyRouteDelegate extends RouterDelegate<String>
           key: navigatorKey,
           onPopPage: _onPopPage,
           pages: _stack.map<Page<dynamic>>((stack) {
-            // 指定返回的List元素类型
             final widget = routes[stack.path]!(context, stack.args);
             Widget buildScreen() {
               return ErrorOverlayWidget(
@@ -139,7 +140,11 @@ class MyRouteDelegate extends RouterDelegate<String>
               );
             }
 
-            if (stack.hasTransition == true) {
+            // 判断是否为Web平台
+            final bool isWeb = kIsWeb ||
+                (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
+
+            if (stack.hasTransition == true && !isWeb) {
               return CupertinoPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
@@ -159,7 +164,7 @@ class MyRouteDelegate extends RouterDelegate<String>
                 fullscreenDialog: stack.useBottomToTopAnimation,
               );
             }
-            if (stack.hasTransition == false) {
+            if (stack.hasTransition == false || isWeb) {
               return NoAnimationPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
@@ -171,7 +176,7 @@ class MyRouteDelegate extends RouterDelegate<String>
               name: '/',
               child: routes['/']!(context, {}),
             );
-          }).toList(), // 调用toList时指定类型
+          }).toList(),
         ),
       ],
     );
