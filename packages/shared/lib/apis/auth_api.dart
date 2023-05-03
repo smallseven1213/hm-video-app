@@ -46,7 +46,7 @@ class AuthApi {
       method: 'POST',
       body: {
         'registerDeviceType': systemConfig.userDevice,
-        'registerDeviceGuid': '12321312312321',
+        'registerDeviceGuid': registerDeviceGuid,
         'invitationCode': invitationCode,
         'agentCode': systemConfig.agentCode,
       },
