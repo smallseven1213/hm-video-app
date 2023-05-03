@@ -68,24 +68,30 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool isEditing;
   final bool isSelected;
   final Function()? onEditingTap;
+  final bool? noTags;
+  final bool? noInfoView;
+  final int? type; // 1長視頻, 2短視頻
 
-  VideoPreviewWidget({
-    Key? key,
-    required this.id,
-    required this.coverVertical,
-    required this.coverHorizontal,
-    this.displaycoverVertical = false,
-    required this.timeLength,
-    required this.tags,
-    required this.title,
-    required this.videoViewTimes,
-    this.isEmbeddedAds = false,
-    this.detail,
-    this.isEditing = false,
-    this.isSelected = false,
-    this.imageRatio,
-    this.onEditingTap,
-  }) : super(key: key);
+  VideoPreviewWidget(
+      {Key? key,
+      required this.id,
+      required this.coverVertical,
+      required this.coverHorizontal,
+      this.displaycoverVertical = false,
+      required this.timeLength,
+      required this.tags,
+      required this.title,
+      required this.videoViewTimes,
+      this.isEmbeddedAds = false,
+      this.detail,
+      this.isEditing = false,
+      this.isSelected = false,
+      this.imageRatio,
+      this.onEditingTap,
+      this.type = 1,
+      this.noTags = false,
+      this.noInfoView = false})
+      : super(key: key);
 
   final playrecordController = Get.find<PlayRecordController>();
 
@@ -106,11 +112,15 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap: isEditing
                   ? onEditingTap
                   : () {
-                      MyRouteDelegate.of(context).push(AppRoutes.video.value,
-                          args: {
-                            'id': id,
-                          },
-                          removeSamePath: true);
+                      if (type == 2) {
+                        MyRouteDelegate.of(context).push(AppRoutes.video.value,
+                            args: {
+                              'id': id,
+                            },
+                            removeSamePath: true);
+                      } else {
+                        MyRouteDelegate.of(context).push(AppRoutes.short.value);
+                      }
                       var playRecord = VideoDatabaseField(
                         id: id,
                         coverHorizontal: coverHorizontal,
@@ -209,7 +219,7 @@ class VideoPreviewWidget extends StatelessWidget {
                 ],
               ),
             ),
-            imageRatio != BlockImageRatio.block4.ratio
+            imageRatio != BlockImageRatio.block4.ratio && noInfoView != true
                 ? AspectRatio(
                     aspectRatio: imageRatio ?? 374 / 198,
                     child: Align(
@@ -237,7 +247,7 @@ class VideoPreviewWidget extends StatelessWidget {
             ),
           ),
         ),
-        if (tags.isNotEmpty) ...[
+        if (tags.isNotEmpty && noTags != true) ...[
           const SizedBox(height: 5),
           Align(
             alignment: Alignment.centerLeft,

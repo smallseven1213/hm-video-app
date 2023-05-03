@@ -127,6 +127,7 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Widget build(BuildContext context) {
+    logger.i('NAVI!! ==> , $_stack');
     return Stack(
       children: [
         Navigator(
@@ -145,10 +146,12 @@ class MyRouteDelegate extends RouterDelegate<String>
                 (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
 
             if (stack.hasTransition == true && !isWeb) {
+              logger.i('NAVI!! ==> , ${stack.path}');
               return CupertinoPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: Stack(
+                child: CupertinoApp(
+                    home: Stack(
                   children: [
                     // widget,
                     buildScreen(),
@@ -160,7 +163,7 @@ class MyRouteDelegate extends RouterDelegate<String>
                             height: MediaQuery.of(context).size.height,
                             color: Colors.transparent))
                   ],
-                ),
+                )),
                 fullscreenDialog: stack.useBottomToTopAnimation,
               );
             }
@@ -168,13 +171,13 @@ class MyRouteDelegate extends RouterDelegate<String>
               return NoAnimationPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: buildScreen(),
+                child: CupertinoApp(home: buildScreen()),
               );
             }
             return CupertinoPage(
               key: const ValueKey('/'),
               name: '/',
-              child: routes['/']!(context, {}),
+              child: CupertinoApp(home: routes['/']!(context, {})),
             );
           }).toList(),
         ),
