@@ -105,7 +105,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
       return Container();
     }
     return Container(
-      height: 60,
+      height: 65,
       width: double.infinity,
       color: AppColors.colors[ColorKeys.background],
       padding: const EdgeInsets.only(top: 8),
@@ -123,13 +123,13 @@ class LayoutTabBarState extends State<LayoutTabBar>
             borderRadius: const BorderRadius.horizontal(
                 left: Radius.circular(3), right: Radius.circular(3)),
             borderSide: BorderSide(
-              width: 5.0,
+              width: 3.0,
               color: AppColors.colors[ColorKeys.primary]!,
             ),
             insets: const EdgeInsets.only(
               left: 18,
               right: 18,
-              bottom: 0,
+              bottom: 4,
             ),
           ),
           onTap: handleTapTabItem,

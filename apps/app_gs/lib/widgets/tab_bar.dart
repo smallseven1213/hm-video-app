@@ -45,13 +45,13 @@ class GSTabBar extends StatelessWidget implements PreferredSizeWidget {
               borderRadius: const BorderRadius.horizontal(
                   left: Radius.circular(3), right: Radius.circular(3)),
               borderSide: BorderSide(
-                width: 5.0,
+                width: 3.0,
                 color: AppColors.colors[ColorKeys.primary]!,
               ),
               insets: const EdgeInsets.only(
                 left: 10,
                 right: 10,
-                bottom: 0,
+                bottom: 3,
               ),
             ),
             tabs: tabs.map((text) => Tab(text: text)).toList(),

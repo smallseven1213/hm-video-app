@@ -26,7 +26,7 @@ class Header extends StatelessWidget {
             text: TextSpan(
               text: text,
               style: const TextStyle(
-                fontSize: 20,
+                fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -38,24 +38,29 @@ class Header extends StatelessWidget {
 
           return Row(
             children: [
-              Column(
+              Stack(
+                alignment: Alignment.bottomLeft,
                 children: [
                   Text(
                     text,
                     style: const TextStyle(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
                   ),
-                  Container(
-                    width: textWidth,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: AppColors.colors[ColorKeys.textPrimary],
-                      borderRadius: const BorderRadius.horizontal(
-                        left: Radius.circular(5),
-                        right: Radius.circular(5),
+                  Positioned(
+                    bottom: 2,
+                    child: Container(
+                      width: textWidth,
+                      height: 5,
+                      decoration: BoxDecoration(
+                        color: AppColors.colors[ColorKeys.textPrimary]!
+                            .withOpacity(0.78),
+                        borderRadius: const BorderRadius.horizontal(
+                          left: Radius.circular(5),
+                          right: Radius.circular(5),
+                        ),
                       ),
                     ),
                   ),
