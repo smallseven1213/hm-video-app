@@ -13,10 +13,7 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/controllers/response_controller.dart';
 import 'package:shared/services/system_config.dart';
 
-import '../controllers/channel_screen_tab_controller.dart';
-import '../controllers/layout_controller.dart';
 import '../controllers/tag_popular_controller.dart';
-import '../controllers/user_controller.dart';
 import '../controllers/video_popular_controller.dart';
 import '../enums/app_routes.dart';
 import '../models/index.dart';
@@ -48,7 +45,7 @@ void alertDialog(
     context: context,
     barrierDismissible: false,
     builder: (_ctx) => AlertDialog(
-      title: Text(content ?? ''),
+      title: title != null ? Text(title) : const SizedBox.shrink(),
       content: Text(content ?? ''),
       actions: actions ??
           <Widget>[
@@ -122,10 +119,7 @@ class _SplashState extends State<Splash> {
   checkIsMaintenance() async {
     print('step4: 檢查是否維護中${systemConfig.isMaintenance}');
     if (systemConfig.isMaintenance) {
-      alertDialog(
-        context,
-        content: '維護中',
-      );
+      alertDialog(context, content: '系統維護中，請稍後再試。', actions: []);
     }
     return systemConfig.isMaintenance;
   }
@@ -327,4 +321,3 @@ class _SplashState extends State<Splash> {
     );
   }
 }
-
