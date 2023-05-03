@@ -150,8 +150,7 @@ class MyRouteDelegate extends RouterDelegate<String>
               return CupertinoPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: CupertinoApp(
-                    home: Stack(
+                child: Stack(
                   children: [
                     // widget,
                     buildScreen(),
@@ -163,7 +162,7 @@ class MyRouteDelegate extends RouterDelegate<String>
                             height: MediaQuery.of(context).size.height,
                             color: Colors.transparent))
                   ],
-                )),
+                ),
                 fullscreenDialog: stack.useBottomToTopAnimation,
               );
             }
@@ -171,13 +170,13 @@ class MyRouteDelegate extends RouterDelegate<String>
               return NoAnimationPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: CupertinoApp(home: buildScreen()),
+                child: buildScreen(),
               );
             }
             return CupertinoPage(
               key: const ValueKey('/'),
               name: '/',
-              child: CupertinoApp(home: routes['/']!(context, {})),
+              child: routes['/']!(context, {}),
             );
           }).toList(),
         ),
