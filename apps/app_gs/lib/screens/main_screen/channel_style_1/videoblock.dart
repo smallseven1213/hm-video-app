@@ -12,27 +12,39 @@ import 'video_block_template/block_6.dart';
 import 'video_block_template/block_10.dart';
 import 'video_block_template/block_7.dart';
 
-final Map<int,
-        Widget Function(Blocks block, Function updateBlock, int channelId)>
-    blockMap = {
-  0: (Blocks block, updateBlock, channelId) =>
+final Map<
+    int,
+    Widget Function(Blocks block, Function updateBlock, int channelId,
+        {int? film})> blockMap = {
+  0: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
       const SliverToBoxAdapter(child: SizedBox()),
-  1: (Blocks block, updateBlock, channelId) => Block1Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
-  2: (Blocks block, updateBlock, channelId) => Block2Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
-  3: (Blocks block, updateBlock, channelId) => Block3Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
-  4: (Blocks block, updateBlock, channelId) => Block4Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
-  5: (Blocks block, updateBlock, channelId) => Block5Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
-  6: (Blocks block, updateBlock, channelId) => Block6Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
-  7: (Blocks block, updateBlock, channelId) => Block7Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
-  10: (Blocks block, updateBlock, channelId) => Block10Widget(
-      block: block, updateBlock: updateBlock, channelId: channelId),
+  1: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block1Widget(
+          block: block, updateBlock: updateBlock, channelId: channelId),
+  2: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block2Widget(
+          block: block, updateBlock: updateBlock, channelId: channelId),
+  3: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block3Widget(
+          block: block, updateBlock: updateBlock, channelId: channelId),
+  4: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block4Widget(
+          block: block, updateBlock: updateBlock, channelId: channelId),
+  5: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block5Widget(
+          block: block, updateBlock: updateBlock, channelId: channelId),
+  6: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block6Widget(
+          block: block, updateBlock: updateBlock, channelId: channelId),
+  7: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block7Widget(
+          block: block,
+          updateBlock: updateBlock,
+          channelId: channelId,
+          film: film!),
+  10: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
+      Block10Widget(
+          block: block, updateBlock: updateBlock, channelId: channelId),
 };
 
 // wrap VideoBlock with stateful widget
@@ -77,6 +89,7 @@ class _VideoBlockStatefulState extends State<VideoBlock> {
   Widget build(BuildContext context) {
     return blockMap[block.template ?? 0] == null
         ? const SliverToBoxAdapter(child: SizedBox())
-        : blockMap[block.template ?? 0]!(block, updateBlock, widget.channelId);
+        : blockMap[block.template ?? 0]!(block, updateBlock, widget.channelId,
+            film: widget.block.film);
   }
 }

@@ -9,15 +9,18 @@ class Block7Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
+  final int film;
   const Block7Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
     required this.channelId,
+    required this.film,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    logger.i('RENDER BLOCK 7 $film');
     List<Data> videos = block.videos?.data ?? [];
 
     return SliverToBoxAdapter(
@@ -41,6 +44,7 @@ class Block7Widget extends StatelessWidget {
                   height: 245,
                   child: VideoPreviewWidget(
                       id: vod.id!,
+                      film: film,
                       displaycoverVertical: true,
                       coverVertical: vod.coverVertical!,
                       coverHorizontal: vod.coverHorizontal!,
@@ -55,19 +59,5 @@ class Block7Widget extends StatelessWidget {
             }),
       ),
     );
-    // return GridView.count(
-    //     crossAxisCount: 2,
-    //     shrinkWrap: true,
-    //     physics: const NeverScrollableScrollPhysics(),
-    //     mainAxisSpacing: 10,
-    //     crossAxisSpacing: 10,
-    //     padding: const EdgeInsets.all(10),
-    //     children: List.generate(
-    //         10,
-    //         (index) => Container(
-    //               width: double.infinity,
-    //               height: 60,
-    //               color: Colors.white,
-    //             )));
   }
 }

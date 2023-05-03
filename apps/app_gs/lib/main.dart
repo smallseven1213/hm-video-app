@@ -21,6 +21,7 @@ import 'pages/playrecord.dart';
 import 'pages/register.dart';
 import 'pages/share.dart';
 import 'pages/sharerecord.dart';
+import 'pages/short.dart';
 import 'pages/tag_video.dart';
 import 'pages/publisher.dart';
 import 'pages/video_by_block.dart';
@@ -76,6 +77,9 @@ final Map<String, RouteWidgetBuilder> routes = {
       ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
   AppRoutes.actors.value: (context, args) => ActorsPage(),
+  AppRoutes.short.value: (context, args) => const ShortPage(
+        itemCount: 10,
+      ),
 };
 
 class MyApp extends StatelessWidget {
