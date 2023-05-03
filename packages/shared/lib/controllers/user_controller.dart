@@ -33,7 +33,7 @@ class UserController extends GetxController {
 
     logger.i('TRACE TOKEN =====, INITIAL');
     if (authController.token.value.isNotEmpty) {
-      mutateAll();
+      fetchUserInfo();
     }
 
     ever(
@@ -41,36 +41,20 @@ class UserController extends GetxController {
       (token) {
         logger.i('TRACE TOKEN =====, user controller token: $token');
         if (authController.token.value.isNotEmpty) {
-          mutateAll();
+          fetchUserInfo();
         }
       },
     );
   }
 
-  void _updateWallets(WalletItem walletItem) {
-    if (wallets.indexWhere((element) => element.type == walletItem.type) !=
-        -1) {
-      wallets[wallets.indexWhere((element) => element.type == walletItem.type)]
-          .amount = walletItem.amount;
-    } else {
-      wallets.add(walletItem);
-    }
-
-    totalAmount.value =
-        wallets.fold(0.0, (sum, item) => sum + (item.amount ?? 0));
-  }
-
-  Future<void> _fetchUserInfo() async {
+  fetchUserInfo() async {
     isLoading.value = true;
     try {
       var userApi = UserApi();
       var res = await userApi.getCurrentUser();
       info.value = res;
-
-      _updateWallets(WalletItem(
-          type: WalletType.main, amount: double.parse(res.points ?? '0')));
     } catch (error) {
-      print(error);
+      print('fetchUserInfo error: $error');
     } finally {
       isLoading.value = false;
     }
@@ -103,41 +87,12 @@ class UserController extends GetxController {
     }
   }
 
-  // Future<void> _fetchWallets() async {
-  //   isLoading.value = true;
-  //   try {
-  //     var res = await Get.put(GamePlatformProvider()).getPoints();
-  //     _updateWallets(WalletItem(
-  //         type: WalletType.wali, amount: double.parse(res['balance'] ?? '0')));
-  //   } catch (error) {
-  //     print(error);
-  //   } finally {
-  //     isLoading.value = false;
-  //   }
-  // }
-
-  void mutateAll() {
-    _fetchUserInfo();
-    // _fetchWallets();
-    // getLoginCode();
-    // getUserPromoteData();
-  }
-
   void mutateInfo(User? user, bool revalidateFromServer) {
     if (user != null) {
       info.value = user;
     }
     if (revalidateFromServer) {
-      _fetchUserInfo();
-    }
-  }
-
-  void mutateWallets(WalletItem? walletItem, bool revalidateFromServer) {
-    if (walletItem != null) {
-      _updateWallets(walletItem);
-    }
-    if (revalidateFromServer) {
-      // _fetchWallets();
+      fetchUserInfo();
     }
   }
 }

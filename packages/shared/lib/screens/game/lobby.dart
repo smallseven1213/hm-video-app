@@ -7,9 +7,15 @@ import 'package:shared/controllers/game_banner_controller.dart';
 import 'package:shared/controllers/game_list_controller.dart';
 import 'package:shared/controllers/game_wallet_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/screens/game/game_theme_config.dart';
 import 'package:shared/models/game_list.dart';
 import 'package:shared/screens/game/lobby/game_list_view.dart';
+import 'package:shared/screens/game/user_info/game_user_info.dart';
+import 'package:shared/screens/game/user_info/game_user_info_deposit.dart';
+import 'package:shared/screens/game/user_info/game_user_info_service.dart';
+import 'package:shared/screens/game/user_info/game_user_info_withdraw.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GameLobby extends StatefulWidget {
@@ -42,10 +48,21 @@ class _GameLobbyState extends State<GameLobby> {
   final gamesListController = GamesListController();
   final gameBannerController = GameBannerController();
   final ScrollController _scrollController = ScrollController();
+  UserController get userController => Get.find<UserController>();
 
   @override
   void initState() {
     super.initState();
+    _fetchDataInit();
+
+    Get.find<AuthController>().token.listen((event) {
+      _fetchDataInit();
+      userController.fetchUserInfo();
+      print('token changed');
+    });
+  }
+
+  _fetchDataInit() {
     Future.wait([
       GameLobbyApi().registerGame(),
     ]).then((value) {
@@ -53,14 +70,6 @@ class _GameLobbyState extends State<GameLobby> {
       GameBannerController();
       getGameHistory();
     });
-
-    // Get.find<AuthController>().token.listen((event) {
-    //   TODO: 要重新打api，需要哪些資料在這裡重打一次
-    // });
-  }
-
-  _refreshData() {
-    getGameHistory();
   }
 
   // 先取得當前的localStorage的遊戲歷史紀錄
@@ -87,7 +96,6 @@ class _GameLobbyState extends State<GameLobby> {
 
   @override
   Widget build(BuildContext context) {
-    final userController = UserController();
     final gameWalletController = GameWalletController();
 
     return Obx(() => Scaffold(
@@ -101,9 +109,10 @@ class _GameLobbyState extends State<GameLobby> {
             title: Text(
               '游戏大厅',
               style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: gameLobbyAppBarTextColor),
+                fontSize: 18,
+                fontWeight: FontWeight.w500,
+                color: gameLobbyAppBarTextColor,
+              ),
             ),
             // 如果roles是'guest'，就顯示登入按鈕
             actions: userController.info.value.roles.contains('guest')
@@ -165,32 +174,32 @@ class _GameLobbyState extends State<GameLobby> {
                       children: [
                         // Banners(data: gameBannerController.gameBanner),
                         // Marquee(data: gameBannerController.gameMarquee),
-                        // UserInfo(
-                        //   type: 'lobby',
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: const [
-                        //       // 存款
-                        //       UserInfoDeposit(onTap: () async {
-                        //         // var res = await gto('/game/deposit');
-                        //         var res = await gto(
-                        //             gamesState.switchPaymentPage.value ==
-                        //                     switchPaymentPageType['normal']
-                        //                 ? '/game/deposit'
-                        //                 : '/game/deposit2');
-                        //         _refreshData();
-                        //       }),
-                        //       // 提現
-                        //       UserInfoWithdraw(onTap: () async {
-                        //         var res = await gto('/game/withdraw');
-                        //         // widget.onNextPagePop();
-                        //         _refreshData();
-                        //       }),
-                        //       // 客服
-                        //       const UserInfoService(),
-                        //     ],
-                        //   ),
-                        // ),
+                        GameUserInfo(
+                          type: 'lobby',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // 存款
+                              UserInfoDeposit(
+                                onTap: () {
+                                  MyRouteDelegate.of(context).push(
+                                    AppRoutes.gameDepositPagePolling.value,
+                                  );
+                                },
+                              ),
+                              // 提現
+                              UserInfoWithdraw(
+                                onTap: () {
+                                  MyRouteDelegate.of(context).push(
+                                    AppRoutes.gameWithdraw.value,
+                                  );
+                                },
+                              ),
+                              // 客服
+                              const UserInfoService(),
+                            ],
+                          ),
+                        ),
                         GameListView(
                           updateGameHistory: () {
                             getGameHistory();

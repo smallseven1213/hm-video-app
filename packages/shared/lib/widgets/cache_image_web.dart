@@ -1,7 +1,7 @@
 import 'dart:typed_data';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
-import 'package:http/http.dart' as http;
 
 class CacheImageWeb extends StatefulWidget {
   final String url;
@@ -52,13 +52,19 @@ class _CacheImageWebState extends State<CacheImageWeb> {
       }
     } else {
       try {
-        final response = await http.get(Uri.parse(url));
+        final dio = Dio();
+        final response = await dio.get(
+          url,
+          options: Options(responseType: ResponseType.bytes),
+        );
         if (response.statusCode == 200) {
-          // If the response is successful, save the image to the box
-          box.put(url, response.bodyBytes);
-          setState(() {
-            imageData = response.bodyBytes;
-          });
+          if (response.data != null) {
+            final data = List<int>.from(response.data);
+            box.put(url, data);
+            setState(() {
+              imageData = Uint8List.fromList(data);
+            });
+          }
         } else {
           setState(() {
             imageData = Uint8List(0);
@@ -68,6 +74,8 @@ class _CacheImageWebState extends State<CacheImageWeb> {
         setState(() {
           imageData = Uint8List(0);
         });
+      } finally {
+        box.close();
       }
     }
   }
