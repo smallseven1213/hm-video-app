@@ -10,6 +10,7 @@ import 'video_block_template/block_4.dart';
 import 'video_block_template/block_5.dart';
 import 'video_block_template/block_6.dart';
 import 'video_block_template/block_10.dart';
+import 'video_block_template/block_7.dart';
 
 final Map<int,
         Widget Function(Blocks block, Function updateBlock, int channelId)>
@@ -27,6 +28,8 @@ final Map<int,
   5: (Blocks block, updateBlock, channelId) => Block5Widget(
       block: block, updateBlock: updateBlock, channelId: channelId),
   6: (Blocks block, updateBlock, channelId) => Block6Widget(
+      block: block, updateBlock: updateBlock, channelId: channelId),
+  7: (Blocks block, updateBlock, channelId) => Block7Widget(
       block: block, updateBlock: updateBlock, channelId: channelId),
   10: (Blocks block, updateBlock, channelId) => Block10Widget(
       block: block, updateBlock: updateBlock, channelId: channelId),

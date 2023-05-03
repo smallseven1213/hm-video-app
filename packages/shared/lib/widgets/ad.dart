@@ -38,16 +38,17 @@ class AdState extends State<Ad> {
 
   @override
   void initState() {
+    super.initState();
     // 紀錄入站次數，用來取得對應的廣告圖片
     final entryCount = systemConfig.box.read('entry-count') ?? 0;
     systemConfig.box.write('entry-count', entryCount + 1);
     final landingBanners = bannerController.banners[BannerPosition.landing];
     logger.i(landingBanners);
-    setState(() {
-      currentBanner = landingBanners![entryCount % landingBanners.length];
-    });
-
-    super.initState();
+    if (mounted) {
+      setState(() {
+        currentBanner = landingBanners![entryCount % landingBanners.length];
+      });
+    }
   }
 
   startTimer() {
@@ -59,17 +60,19 @@ class AdState extends State<Ad> {
         }
         timer.cancel();
       } else {
-        setState(() {
-          countdownSeconds--;
-        });
+        if (mounted) {
+          setState(() {
+            countdownSeconds--;
+          });
+        }
       }
     });
   }
 
   @override
   void dispose() {
-    super.dispose();
     _timer?.cancel();
+    super.dispose();
   }
 
   @override

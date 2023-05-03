@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -125,13 +127,13 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Widget build(BuildContext context) {
+    logger.i('NAVI!! ==> , $_stack');
     return Stack(
       children: [
         Navigator(
           key: navigatorKey,
           onPopPage: _onPopPage,
           pages: _stack.map<Page<dynamic>>((stack) {
-            // 指定返回的List元素类型
             final widget = routes[stack.path]!(context, stack.args);
             Widget buildScreen() {
               return ErrorOverlayWidget(
@@ -139,11 +141,17 @@ class MyRouteDelegate extends RouterDelegate<String>
               );
             }
 
-            if (stack.hasTransition == true) {
+            // 判断是否为Web平台
+            final bool isWeb = kIsWeb ||
+                (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
+
+            if (stack.hasTransition == true && !isWeb) {
+              logger.i('NAVI!! ==> , ${stack.path}');
               return CupertinoPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: Stack(
+                child: CupertinoApp(
+                    home: Stack(
                   children: [
                     // widget,
                     buildScreen(),
@@ -155,23 +163,23 @@ class MyRouteDelegate extends RouterDelegate<String>
                             height: MediaQuery.of(context).size.height,
                             color: Colors.transparent))
                   ],
-                ),
+                )),
                 fullscreenDialog: stack.useBottomToTopAnimation,
               );
             }
-            if (stack.hasTransition == false) {
+            if (stack.hasTransition == false || isWeb) {
               return NoAnimationPage(
                 key: ValueKey(stack.path),
                 name: stack.path,
-                child: buildScreen(),
+                child: CupertinoApp(home: buildScreen()),
               );
             }
             return CupertinoPage(
               key: const ValueKey('/'),
               name: '/',
-              child: routes['/']!(context, {}),
+              child: CupertinoApp(home: routes['/']!(context, {})),
             );
-          }).toList(), // 调用toList时指定类型
+          }).toList(),
         ),
       ],
     );
