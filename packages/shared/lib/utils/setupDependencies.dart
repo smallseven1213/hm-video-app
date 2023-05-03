@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../controllers/actor_region_controller.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/banner_controller.dart';
 import '../controllers/bottom_navigator_controller.dart';
@@ -38,4 +39,5 @@ void setupDependencies() {
       () => UserFavoritesVideoController());
   Get.lazyPut<UserCollectionController>(() => UserCollectionController());
   Get.lazyPut<FilterScreenController>(() => FilterScreenController());
+  Get.lazyPut<ActorRegionController>(() => ActorRegionController());
 }

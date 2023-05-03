@@ -5,11 +5,13 @@ import 'package:shared/models/color_keys.dart';
 class GSTabBar extends StatelessWidget implements PreferredSizeWidget {
   final List<String> tabs;
   final TabController? controller;
+  final EdgeInsetsGeometry? padding;
 
   const GSTabBar({
     super.key,
     required this.tabs,
     this.controller,
+    this.padding,
   });
 
   @override
@@ -19,7 +21,7 @@ class GSTabBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.colors[ColorKeys.background],
-      padding: const EdgeInsets.only(bottom: 8),
+      padding: padding ?? const EdgeInsets.only(bottom: 8),
       child: Align(
         child: SizedBox(
           width: tabs.length * 100,

@@ -60,9 +60,11 @@ class SidImageState extends State<SidImage> {
       // logger.d('hasFileInHive ===== $hasFileInHive');
       if (hasFileInHive) {
         var file = await sidImageBox.get(widget.sid);
-        setState(() {
-          imageData = file;
-        });
+        if (mounted) {
+          setState(() {
+            imageData = file;
+          });
+        }
         widget.onLoaded != null ? widget.onLoaded!() : null;
       } else {
         try {
@@ -71,9 +73,11 @@ class SidImageState extends State<SidImage> {
           var file = base64Decode(decoded);
           await sidImageBox.put(widget.sid, file);
 
-          setState(() {
-            imageData = file;
-          });
+          if (mounted) {
+            setState(() {
+              imageData = file;
+            });
+          }
           widget.onLoaded != null ? widget.onLoaded!() : null;
         } catch (e) {
           // logger.d('${widget.sid}==ERROR=\n$e');

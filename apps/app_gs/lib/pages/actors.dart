@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/actor_region_controller.dart';
 import 'package:shared/controllers/actors_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../screens/actors/tabbar.dart';
 import '../widgets/circle_sidimage_text_item.dart';
 
 final logger = Logger();
@@ -19,11 +21,9 @@ class ActorsPage extends StatefulWidget {
   _ActorsPageState createState() => _ActorsPageState();
 }
 
-class _ActorsPageState extends State<ActorsPage> {
-  bool _checkBoxValue1 = false;
-  bool _checkBoxValue2 = false;
-
+class _ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   final actorsController = Get.put(ActorsController());
+  final actorRegionController = Get.find<ActorRegionController>();
 
   Widget _buildCustomRadioButton(int value, String label) {
     return Expanded(
@@ -93,14 +93,12 @@ class _ActorsPageState extends State<ActorsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         title: '全部女優',
       ),
       body: Column(
         children: [
-          // GSTabBar(
-          //   tabs: ['1', '2', '3'],
-          // ),
+          ActorsTabBar(),
           Row(
             children: [
               const SizedBox(
