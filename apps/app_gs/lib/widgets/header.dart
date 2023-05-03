@@ -41,14 +41,6 @@ class Header extends StatelessWidget {
               Stack(
                 alignment: Alignment.bottomLeft,
                 children: [
-                  Text(
-                    text,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
                   Positioned(
                     bottom: 2,
                     child: Container(
@@ -62,6 +54,14 @@ class Header extends StatelessWidget {
                           right: Radius.circular(5),
                         ),
                       ),
+                    ),
+                  ),
+                  Text(
+                    text,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
                   ),
                 ],
