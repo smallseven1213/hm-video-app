@@ -70,7 +70,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final Function()? onEditingTap;
   final bool? noTags;
   final bool? noInfoView;
-  final int? type; // 1長視頻, 2短視頻
+  final int? film; // 1長視頻, 2短視頻, 3漫畫
 
   VideoPreviewWidget(
       {Key? key,
@@ -88,7 +88,7 @@ class VideoPreviewWidget extends StatelessWidget {
       this.isSelected = false,
       this.imageRatio,
       this.onEditingTap,
-      this.type = 1,
+      this.film = 1,
       this.noTags = false,
       this.noInfoView = false})
       : super(key: key);
@@ -112,14 +112,16 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap: isEditing
                   ? onEditingTap
                   : () {
-                      if (type == 2) {
+                      if (film == 1) {
                         MyRouteDelegate.of(context).push(AppRoutes.video.value,
                             args: {
                               'id': id,
                             },
                             removeSamePath: true);
-                      } else {
+                      } else if (film == 2) {
                         MyRouteDelegate.of(context).push(AppRoutes.short.value);
+                      } else if (film == 3) {
+                        logger.i('MANGA');
                       }
                       var playRecord = VideoDatabaseField(
                         id: id,
