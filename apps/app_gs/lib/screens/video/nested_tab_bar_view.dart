@@ -111,8 +111,9 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                                 NestedScrollView.sliverOverlapAbsorberHandleFor(
                                     context),
                           ),
-                          if (name == '同標籤' &&
-                              widget.videoDetail.internalTagIds!.isEmpty)
+                          if (name == '同類型' &&
+                                  widget.videoDetail.internalTagIds!.isEmpty ||
+                              name == '同標籤' && widget.videoDetail.tags!.isEmpty)
                             const SliverToBoxAdapter(
                               child: SizedBox(
                                 height: 50,
@@ -132,11 +133,11 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                                 blockVideosController.videoByActor.value;
                             switch (name) {
                               case '同類型':
-                                videos = blockVideosController.videoByTag.value;
-                                break;
-                              case '同標籤':
                                 videos = blockVideosController
                                     .videoByInternalTag.value;
+                                break;
+                              case '同標籤':
+                                videos = blockVideosController.videoByTag.value;
                                 break;
                               case '同演員':
                                 videos =
