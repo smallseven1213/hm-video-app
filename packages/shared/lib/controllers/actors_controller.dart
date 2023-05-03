@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 
 import '../apis/actor_api.dart';
 import '../models/actor.dart';
+import 'actor_region_controller.dart';
 
 final ActorApi actorApi = ActorApi();
 final logger = Logger();
@@ -15,8 +16,16 @@ class ActorsController extends GetxController {
   Rx<String?> name = Rx<String?>(null);
   Rx<int> sortBy = Rx<int>(0);
 
+  final actorRegionController = Get.find<ActorRegionController>();
+
   ActorsController() {
-    _fetchData();
+    ever(actorRegionController.regions, (_) {
+      if (actorRegionController.regions.isNotEmpty) {
+        region.value = actorRegionController.regions[0].id;
+        _fetchData();
+      }
+    });
+
     ever(region, (_) => _fetchData());
     ever(name, (_) => _fetchData());
     ever(sortBy, (_) => _fetchData());
