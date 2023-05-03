@@ -10,10 +10,10 @@ class GameBannerController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchGameBanners();
     Get.find<AuthController>().token.listen((event) {
       fetchGameBanners();
     });
-    update();
   }
 
   Future<void> fetchGameBanners() async {

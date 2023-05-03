@@ -68,6 +68,8 @@ final gameLobbyDepositActiveColor =
     gameTheme[theme]!['gameLobbyDepositActiveColor'] ?? Colors.transparent;
 final gameLobbyIconColor =
     gameTheme[theme]!['gameLobbyIconColor'] ?? Colors.transparent;
+final gameLobbyIconColor2 =
+    gameTheme[theme]!['gameLobbyIconColor2'] ?? Colors.transparent;
 final gameLobbyUserInfoColor1 =
     gameTheme[theme]!['gameLobbyUserInfoColor1'] ?? Colors.transparent;
 final gameLobbyUserInfoColor2 =
@@ -118,6 +120,7 @@ class DarkThemeColors {
   static const gameLobbyButtonDisableTextColor = Color(0xff43474a);
   static const gameLobbyDepositActiveColor = Color(0x1aebfe69);
   static const gameLobbyIconColor = Color(0xff3B3E41);
+  static const gameLobbyIconColor2 = Colors.white;
   static const gameLobbyUserInfoColor1 = Color(0xff3a3c33);
   static const gameLobbyUserInfoColor2 = Color(0xff2c2c2c);
   static const gameLobbyDividerColor = Color(0xff3a3c33);
@@ -159,6 +162,7 @@ class LightThemeColors {
   static const gameLobbyButtonDisableTextColor = Color(0xff93b6ae);
   static const gameLobbyDepositActiveColor = Color(0x1a38d59f);
   static const gameLobbyIconColor = Color(0xffCCD9D5);
+  static const gameLobbyIconColor2 = Color(0xffd2deda);
   static const gameLobbyUserInfoColor1 = Color(0xffedffec);
   static const gameLobbyUserInfoColor2 = Color(0xffe8fdff);
   static const gameLobbyDividerColor = Color(0xffc7ece4);
@@ -203,6 +207,7 @@ Map<String, Map<String, Color>> gameTheme = {
         LightThemeColors.gameLobbyButtonDisableTextColor,
     'gameLobbyDepositActiveColor': LightThemeColors.gameLobbyDepositActiveColor,
     'gameLobbyIconColor': LightThemeColors.gameLobbyIconColor,
+    'gameLobbyIconColor2': LightThemeColors.gameLobbyIconColor2,
     'gameLobbyUserInfoColor1': LightThemeColors.gameLobbyUserInfoColor1,
     'gameLobbyUserInfoColor2': LightThemeColors.gameLobbyUserInfoColor2,
     'gameLobbyDividerColor': LightThemeColors.gameLobbyDividerColor,
@@ -246,6 +251,7 @@ Map<String, Map<String, Color>> gameTheme = {
         DarkThemeColors.gameLobbyButtonDisableTextColor,
     'gameLobbyDepositActiveColor': DarkThemeColors.gameLobbyDepositActiveColor,
     'gameLobbyIconColor': DarkThemeColors.gameLobbyIconColor,
+    'gameLobbyIconColor2': DarkThemeColors.gameLobbyIconColor2,
     'gameLobbyUserInfoColor1': DarkThemeColors.gameLobbyUserInfoColor1,
     'gameLobbyUserInfoColor2': DarkThemeColors.gameLobbyUserInfoColor2,
     'gameLobbyDividerColor': DarkThemeColors.gameLobbyDividerColor,

@@ -20,7 +20,7 @@ final logger = Logger();
 final authApi = AuthApi();
 
 class RegisterPage extends StatefulWidget {
-  RegisterPage({Key? key}) : super(key: key);
+  const RegisterPage({Key? key}) : super(key: key);
 
   @override
   _RegisterPageState createState() => _RegisterPageState();
@@ -70,7 +70,6 @@ class _RegisterPageState extends State<RegisterPage> {
   void _handleRegister(context) async {
     if (_formKey.currentState!.validate()) {
       try {
-        ;
         // TODO: var invitationCode = Get.find<AppController>().invitationCode;
         var res = await authApi.register(
             uid: userController.info.value.uid,
@@ -79,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
         logger.i('register success $res');
 
         if (res.code == '00') {
-          userController.mutateAll();
+          userController.fetchUserInfo();
           MyRouteDelegate.of(context).popRoute();
         } else {
           showConfirmDialog(
@@ -148,7 +147,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
               ),
               const SizedBox(height: 20),
-              Container(
+              SizedBox(
                 width: 240,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

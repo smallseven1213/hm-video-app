@@ -8,7 +8,6 @@ import 'package:shared/models/game_order.dart';
 import 'package:shared/models/game_payment.dart';
 import 'package:shared/models/hm_api_response.dart';
 import 'package:shared/models/hm_api_response_with_data.dart';
-import 'package:shared/models/user.dart';
 import 'package:shared/models/user_withdrawal_data.dart';
 import 'package:shared/models/game_withdraw_record.dart';
 import 'package:shared/models/game_withdraw_stack_limit.dart';
@@ -23,20 +22,6 @@ class GameLobbyApi {
   //register TODO: check if need
   Future<void> register() =>
       fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
-
-  Future<User> getUserInfo() => fetcher(
-              url:
-                  '$apiPrefix/users/user/info?ts=${DateTime.now().millisecondsSinceEpoch}')
-          .then(
-        (value) {
-          var res = (value.data as Map<String, dynamic>);
-          if (res['code'] != '00') {
-            return User('', 0, ['guest']);
-          }
-
-          return User.fromJson(res['data'] as Map<String, dynamic>);
-        },
-      );
 
   //取得遊戲清單
   Future<List<GameItem>> getGameList() => fetcher(url: '$apiPrefix/game').then(
