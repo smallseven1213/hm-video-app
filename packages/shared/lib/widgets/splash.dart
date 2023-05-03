@@ -127,7 +127,9 @@ class _SplashState extends State<Splash> {
   // Step5: 檢查是否有更新
   checkApkUpdate() async {
     if (GetPlatform.isWeb) return true;
-    setState(() => loadingText = '檢查更新...');
+    if (mounted) {
+      setState(() => loadingText = '檢查更新...');
+    }
     print('step5: 檢查是否有更新');
     final apkUpdate = await apkApi.checkVersion(
       version: systemConfig.version,
@@ -189,7 +191,9 @@ class _SplashState extends State<Splash> {
 
   // Step6: 檢查是否登入 - key: 'auth-token'
   userLogin() async {
-    setState(() => loadingText = '用戶登入...');
+    if (mounted) {
+      setState(() => loadingText = '用戶登入...');
+    }
     print('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
 
     logger.i('userApi: ${authController.token.value}');
@@ -243,7 +247,9 @@ class _SplashState extends State<Splash> {
 
   // Step7.1: 取得nav bar內容
   getNavBar() {
-    setState(() => loadingText = '取得最新資源...');
+    if (mounted) {
+      setState(() => loadingText = '取得最新資源...');
+    }
     print('step7.1: 取得nav bar內容');
     // final NavBarController navBarController = Get.put(NavBarController());
     //  navBarController.fetchNavBar();
@@ -255,7 +261,9 @@ class _SplashState extends State<Splash> {
   // DI一些登入後才能用的資料(Controllers)
   fetchInitialDataAndNavigate() async {
     userApi.writeUserLoginRecord();
-    getNavBar();
+    if (mounted) {
+      setState(() => loadingText = '取得最新資源...');
+    }
     Get.put(VideoPopularController());
     Get.put(TagPopularController());
     print('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');

@@ -53,6 +53,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('RENDER: Home');
     return Obx(
       () {
         var activeKey = bottomNavigatorController.activeKey.value;

@@ -15,6 +15,7 @@ class ErrorOverlayWidget extends StatefulWidget {
 
 class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   final responseController = Get.find<ApiResponseErrorCatchController>();
+  bool showErrorMessage = false;
 
   @override
   void initState() {
@@ -22,25 +23,10 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
     responseController.responseStatus.listen((status) {
       if (status == 401 && !responseController.alertDialogShown.value) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          responseController.setAlertDialogShown(true);
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (context) => AlertDialog(
-              title: const Text('帳號重複登入'),
-              content: const Text('你已被登出，請重新登入'),
-              actions: [
-                TextButton(
-                  onPressed: () {
-                    responseController.setAlertDialogShown(false);
-                    MyRouteDelegate.of(context)
-                        .push(AppRoutes.splash.value, removeSamePath: true);
-                  },
-                  child: const Text('確認'),
-                ),
-              ],
-            ),
-          );
+          setState(() {
+            showErrorMessage = true;
+            responseController.setAlertDialogShown(true);
+          });
         });
       }
     });
@@ -49,7 +35,25 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.child,
+      body: showErrorMessage
+          ? AlertDialog(
+              title: const Text('帳號重複登入'),
+              content: const Text('你已被登出，請重新登入'),
+              actions: [
+                TextButton(
+                  onPressed: () {
+                    responseController.setAlertDialogShown(false);
+                    setState(() {
+                      showErrorMessage = false;
+                    });
+                    MyRouteDelegate.of(context)
+                        .push(AppRoutes.splash.value, removeSamePath: true);
+                  },
+                  child: const Text('確認'),
+                ),
+              ],
+            )
+          : widget.child,
     );
   }
 }
