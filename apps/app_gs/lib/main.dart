@@ -8,7 +8,6 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
-import 'package:game/utils/setupGameDependencies.dart';
 
 import 'config/colors.dart';
 import 'pages/actors.dart';
@@ -32,7 +31,6 @@ import 'pages/video.dart';
 void main() {
   usePathUrlStrategy();
   runningMain(const MyApp(), AppColors.colors);
-  setupGameDependencies();
 }
 
 final Map<String, RouteWidgetBuilder> routes = {

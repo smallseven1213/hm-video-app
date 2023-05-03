@@ -5,7 +5,8 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/setupDependencies.dart';
-import 'package:sentry_flutter/sentry_flutter.dart';
+
+import 'package:game/utils/setupGameDependencies.dart';
 
 import '../models/color_keys.dart';
 
@@ -25,6 +26,7 @@ void realMain(Widget widget) async {
 
   // DI shared package
   setupDependencies();
+  setupGameDependencies();
 
   WidgetsFlutterBinding.ensureInitialized();
 
