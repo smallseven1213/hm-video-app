@@ -5,14 +5,15 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:game/models/user.dart';
+import 'package:game/services/game_system_config.dart';
 import 'package:uuid/uuid.dart';
+
 import '../models/hm_api_response.dart';
 import '../models/hm_api_response_with_data.dart';
 import '../models/user_withdrawal_data.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
-final systemConfig = SystemConfig();
+final systemConfig = GameSystemConfig();
 
 class UserApi {
   Future<User> getCurrentUser() => fetcher(

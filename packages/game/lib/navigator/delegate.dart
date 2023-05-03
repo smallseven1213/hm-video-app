@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-import 'package:game/controllers/response_controller.dart';
+import 'package:game/controllers/game_response_controller.dart';
 import 'package:game/widgets/error_overlay.dart';
 
 class NoAnimationPage extends Page<dynamic> {
@@ -76,7 +76,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   final RouteFactory? onGenerateRoute;
   final Map<String, RouteWidgetBuilder> routes;
   final String homePath;
-  final responseController = Get.find<ApiResponseErrorCatchController>();
+  final responseController = Get.find<GameApiResponseErrorCatchController>();
 
   @override
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

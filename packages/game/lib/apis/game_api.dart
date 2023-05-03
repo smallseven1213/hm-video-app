@@ -11,10 +11,10 @@ import 'package:game/models/hm_api_response_with_data.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/models/game_withdraw_record.dart';
 import 'package:game/models/game_withdraw_stack_limit.dart';
-import 'package:game/services/system_config.dart';
+import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/fetcher.dart';
 
-final systemConfig = SystemConfig();
+final systemConfig = GameSystemConfig();
 String apiPrefix =
     '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform';
 

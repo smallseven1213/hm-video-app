@@ -8,7 +8,7 @@ import 'package:game/controllers/game_auth_controller.dart';
 
 final logger = Logger();
 
-class UserController extends GetxController {
+class GameUserController extends GetxController {
   var info = User(
     '',
     0,
@@ -22,7 +22,7 @@ class UserController extends GetxController {
   GetStorage box = GetStorage();
 
   // find AuthController
-  final authController = Get.find<AuthController>();
+  final authController = Get.find<GameAuthController>();
 
   @override
   void onReady() {

@@ -6,7 +6,7 @@ import 'package:game/controllers/game_auth_controller.dart';
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
-import 'package:game/controllers/user_controller.dart';
+import 'package:game/controllers/game_user_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:game/navigator/delegate.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -48,14 +48,14 @@ class _GameLobbyState extends State<GameLobby> {
   final gamesListController = GamesListController();
   final gameBannerController = GameBannerController();
   final ScrollController _scrollController = ScrollController();
-  UserController get userController => Get.find<UserController>();
+  GameUserController get userController => Get.find<GameUserController>();
 
   @override
   void initState() {
     super.initState();
     _fetchDataInit();
 
-    Get.find<AuthController>().token.listen((event) {
+    Get.find<GameAuthController>().token.listen((event) {
       _fetchDataInit();
       userController.fetchUserInfo();
       print('token changed');

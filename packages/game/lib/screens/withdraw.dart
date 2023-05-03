@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/controllers/user_controller.dart';
+import 'package:game/controllers/game_user_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
@@ -26,7 +26,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   TextEditingController amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
   bool _enableSubmit = false;
-  final userController = Get.put(UserController());
+  final userController = Get.put(GameUserController());
   final gameWalletController = Get.put(GameWalletController());
   bool reachable = false;
   String stakeLimit = '0.00';

@@ -4,7 +4,7 @@ import 'package:logger/logger.dart';
 
 final logger = Logger();
 
-class AuthController extends GetxController {
+class GameAuthController extends GetxController {
   var token = ''.obs;
 
   GetStorage box = GetStorage();

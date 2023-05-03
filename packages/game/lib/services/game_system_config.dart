@@ -18,8 +18,8 @@ enum ColorKeys {
 
 const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
-class SystemConfig {
-  static final SystemConfig _instance = SystemConfig._internal();
+class GameSystemConfig {
+  static final GameSystemConfig _instance = GameSystemConfig._internal();
 
   // Color
   Map<ColorKeys, dynamic> appColors = {};
@@ -58,11 +58,11 @@ class SystemConfig {
 
   int timeout = 5000;
 
-  factory SystemConfig() {
+  factory GameSystemConfig() {
     return _instance;
   }
 
-  SystemConfig._internal();
+  GameSystemConfig._internal();
 
   // settle
   void setApiHost(String host) {

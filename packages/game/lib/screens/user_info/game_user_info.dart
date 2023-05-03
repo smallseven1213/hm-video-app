@@ -1,10 +1,10 @@
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:game/controllers/game_user_controller.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
-import 'package:game/controllers/user_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 
 class GameUserInfo extends StatefulWidget {
@@ -21,7 +21,7 @@ class GameUserInfo extends StatefulWidget {
 class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
   late AnimationController animationController;
   final gameWalletController = GameWalletController();
-  UserController get userController => Get.find<UserController>();
+  GameUserController get userController => Get.find<GameUserController>();
 
   @override
   void initState() {

@@ -11,7 +11,7 @@ class GameBannerController extends GetxController {
   void onInit() {
     super.onInit();
     fetchGameBanners();
-    Get.find<AuthController>().token.listen((event) {
+    Get.find<GameAuthController>().token.listen((event) {
       fetchGameBanners();
     });
   }

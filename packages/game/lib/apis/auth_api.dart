@@ -3,13 +3,13 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:game/services/system_config.dart';
+import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/fetcher.dart';
 import 'package:uuid/uuid.dart';
 import 'package:android_id/android_id.dart';
 import 'package:game/models/index.dart';
 
-final systemConfig = SystemConfig();
+final systemConfig = GameSystemConfig();
 
 class AuthApi {
   // 訪客登入

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class ApiResponseErrorCatchController extends GetxController {
+class GameApiResponseErrorCatchController extends GetxController {
   final responseStatus = 0.obs;
   final responseMessage = ''.obs;
   final RxBool alertDialogShown = false.obs;

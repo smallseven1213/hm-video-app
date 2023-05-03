@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:game/navigator/delegate.dart';
-import 'package:game/controllers/response_controller.dart';
+import 'package:game/controllers/game_response_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -14,7 +14,7 @@ class ErrorOverlayWidget extends StatefulWidget {
 }
 
 class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
-  final responseController = Get.find<ApiResponseErrorCatchController>();
+  final responseController = Get.find<GameApiResponseErrorCatchController>();
 
   @override
   void initState() {
