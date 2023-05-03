@@ -40,14 +40,15 @@ class _CacheImageWebState extends State<CacheImageWeb> {
 
   void _loadImageFromUrl(String url) async {
     await Hive.openBox('images');
-    final box = Hive.box('images');
+    final box = await Hive.openBox('images'); // 等待Hive初始化完成
 
     if (box.containsKey(url)) {
       // If the image is in the box, get it from the box
       final record = box.get(url);
       if (record != null) {
+        final data = List<int>.from(record);
         setState(() {
-          imageData = Uint8List.fromList(record);
+          imageData = Uint8List.fromList(data);
         });
       }
     } else {
@@ -59,7 +60,7 @@ class _CacheImageWebState extends State<CacheImageWeb> {
         );
         if (response.statusCode == 200) {
           if (response.data != null) {
-            final data = List<int>.from(response.data);
+            final data = List<int>.from(response.data.cast<int>());
             box.put(url, data);
             setState(() {
               imageData = Uint8List.fromList(data);
@@ -74,8 +75,6 @@ class _CacheImageWebState extends State<CacheImageWeb> {
         setState(() {
           imageData = Uint8List(0);
         });
-      } finally {
-        box.close();
       }
     }
   }
