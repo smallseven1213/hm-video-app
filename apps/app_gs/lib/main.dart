@@ -1,9 +1,6 @@
 import 'package:app_gs/pages/actor.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
-import 'package:app_gs/screens/game_deposit_page_list_screen/index.dart';
-import 'package:app_gs/screens/game_deposit_page_polling_screen/index.dart';
 import 'package:app_gs/screens/game_screen/lobby.dart';
-import 'package:app_gs/screens/game_withdraw_screen/index.dart';
 import 'package:app_gs/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -57,13 +54,8 @@ final Map<String, RouteWidgetBuilder> routes = {
         id: args['id'] as int,
       ),
   AppRoutes.gameLobby.value: (context, args) => const GameScreen(),
-  AppRoutes.gameWithdraw.value: (context, args) => const GameWithdrawScreen(),
-  AppRoutes.gameDepositPagePolling.value: (context, args) =>
-      const GameDepositPagePollingScreen(),
-  AppRoutes.gameDepositPageList.value: (context, args) =>
-      const GameDepositPageListScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),
-  AppRoutes.register.value: (context, args) => RegisterPage(),
+  AppRoutes.register.value: (context, args) => const RegisterPage(),
   AppRoutes.share.value: (context, args) => const SharePage(),
   AppRoutes.playRecord.value: (context, args) => PlayRecordPage(),
   AppRoutes.shareRecord.value: (context, args) => const ShareRecord(),
