@@ -10,8 +10,6 @@ import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'package:game/enums/game_app_routes.dart';
-
 import 'config/colors.dart';
 import 'pages/actors.dart';
 import 'pages/collection.dart';
@@ -57,8 +55,7 @@ final Map<String, RouteWidgetBuilder> routes = {
         id: args['id'] as int,
       ),
   AppRoutes.gameLobby.value: (context, args) => const GameScreen(),
-  GameAppRoutes.gameWithdraw.value: (context, args) =>
-      const GameWithdrawScreen(),
+  AppRoutes.gameWithdraw.value: (context, args) => const GameWithdrawScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),
   AppRoutes.share.value: (context, args) => const SharePage(),
