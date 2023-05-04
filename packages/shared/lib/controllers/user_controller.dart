@@ -65,8 +65,7 @@ class UserController extends GetxController {
     try {
       var authApi = AuthApi();
       var res = await authApi.getLoginCode();
-      print('res.data: ${res.data}');
-      loginCode.value = res.data;
+      loginCode.value = res.data['code'];
     } catch (error) {
       print(error);
     } finally {
