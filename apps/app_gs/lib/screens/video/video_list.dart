@@ -33,6 +33,7 @@ class VideoList extends StatelessWidget {
           return Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
                     child: VideoPreviewWidget(
@@ -46,18 +47,19 @@ class VideoList extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 8),
-                  if (secondVideo != null)
-                    Expanded(
-                      child: VideoPreviewWidget(
-                        id: secondVideo.id,
-                        coverVertical: secondVideo.coverVertical!,
-                        coverHorizontal: secondVideo.coverHorizontal!,
-                        timeLength: secondVideo.timeLength!,
-                        tags: secondVideo.tags!,
-                        title: secondVideo.title,
-                        videoViewTimes: secondVideo.videoViewTimes!,
-                      ),
-                    ),
+                  Expanded(
+                    child: secondVideo != null
+                        ? VideoPreviewWidget(
+                            id: secondVideo.id,
+                            coverVertical: secondVideo.coverVertical!,
+                            coverHorizontal: secondVideo.coverHorizontal!,
+                            timeLength: secondVideo.timeLength!,
+                            tags: secondVideo.tags!,
+                            title: secondVideo.title,
+                            videoViewTimes: secondVideo.videoViewTimes!,
+                          )
+                        : const SizedBox.shrink(),
+                  ),
                 ],
               ),
               const SizedBox(height: 8),
