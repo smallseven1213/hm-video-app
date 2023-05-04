@@ -243,7 +243,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
               if (widget.isFullscreen &&
-                  // !kIsWeb &&
+                  !kIsWeb &&
                   (controlsType == ControlsOverlayType.progress ||
                       controlsType == ControlsOverlayType.middleTime ||
                       controlsType == ControlsOverlayType.playPause))
