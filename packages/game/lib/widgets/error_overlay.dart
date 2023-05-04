@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:game/navigator/delegate.dart';
+
+import 'package:shared/navigator/delegate.dart';
+import 'package:shared/enums/app_routes.dart';
+
 import 'package:game/controllers/game_response_controller.dart';
-import 'package:game/enums/game_app_routes.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -34,7 +36,7 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
                   onPressed: () {
                     responseController.setAlertDialogShown(false);
                     MyRouteDelegate.of(context)
-                        .push(GameAppRoutes.home.value, removeSamePath: true);
+                        .push(AppRoutes.home.value, removeSamePath: true);
                   },
                   child: const Text('確認'),
                 ),

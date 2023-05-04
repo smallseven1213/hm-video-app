@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:game/controllers/game_auth_controller.dart';
+import 'package:game/controllers/game_response_controller.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -79,6 +81,11 @@ class _SplashState extends State<Splash> {
       Get.find<ApiResponseErrorCatchController>();
   String loadingText = '線路檢查中...';
 
+  // GameLobby TODO
+  GameAuthController gameAuthController = Get.find<GameAuthController>();
+  GameApiResponseErrorCatchController gameResponseController =
+      Get.find<GameApiResponseErrorCatchController>();
+
   // 取得invitationCode
   getInvitationCode() async {
     String invitationCode = '';
@@ -112,8 +119,9 @@ class _SplashState extends State<Splash> {
       systemConfig.setVodHost('https://${res['dl']?.first}');
       systemConfig.setImageHost('https://${res['pl']?.first}');
       systemConfig.setMaintenance(res['maintenance'] == 'true' ? true : false);
-      gameSystemConfig.setApiHost(
-          'https://api.${res['apl']?.first}'); // TODO: 做一個進入頁，再導到遊戲大廳
+
+      // GameLobby TODO
+      gameSystemConfig.setApiHost('https://api.${res['apl']?.first}');
     }
 
     return res;
@@ -214,6 +222,10 @@ class _SplashState extends State<Splash> {
         );
         authController.setToken(res.data['token']);
         responseController.clear();
+
+        // GameLobby TODO
+        gameAuthController.setToken(res.data['token']);
+        gameResponseController.clear();
 
         print('res.status ${res.code}');
         if (res.code == '00') {
