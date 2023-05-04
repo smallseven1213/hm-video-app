@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/actor_hottest_vod_controller.dart';
 import 'package:shared/controllers/actor_latest_vod_controller.dart';
+import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/actor/card.dart';
 import '../widgets/list_no_more.dart';
@@ -123,22 +124,7 @@ class _ActorPageState extends State<ActorPage>
                   ),
                 ],
               )),
-          if (Navigator.canPop(context))
-            Positioned(
-              top: 0 + MediaQuery.of(context).padding.top,
-              left: 0,
-              child: SizedBox(
-                width: kToolbarHeight, // width of the AppBar's leading area
-                height: kToolbarHeight, // height of the AppBar's leading area
-                child: IconButton(
-                  color: Colors.white,
-                  icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            )
+          const FloatPageBackButton()
         ],
       );
     }));
