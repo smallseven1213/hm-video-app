@@ -1,5 +1,3 @@
-// VideoPreviewWidget, has props: String sid, String duration, String[] tags, String title, String previewCount, String types
-
 import 'package:app_gs/widgets/video_embedded_ad.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -120,9 +118,7 @@ class VideoPreviewWidget extends StatelessWidget {
                             removeSamePath: true);
                       } else if (film == 2) {
                         MyRouteDelegate.of(context).push(AppRoutes.short.value);
-                      } else if (film == 3) {
-                        logger.i('MANGA');
-                      }
+                      } else if (film == 3) {}
                       var playRecord = VideoDatabaseField(
                         id: id,
                         coverHorizontal: coverHorizontal,

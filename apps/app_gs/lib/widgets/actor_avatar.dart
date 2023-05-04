@@ -34,12 +34,22 @@ class ActorAvatar extends StatelessWidget {
         height: height,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(height / 2),
-          child: SidImage(
-              key: ValueKey(photoSid),
-              sid: photoSid,
-              width: width,
-              height: height,
-              fit: BoxFit.cover),
+          child: Stack(
+            children: [
+              Image(
+                image: const AssetImage('assets/images/empty_avatar.png'),
+                fit: BoxFit.cover,
+                width: width,
+                height: height,
+              ),
+              SidImage(
+                  key: ValueKey(photoSid),
+                  sid: photoSid,
+                  width: width,
+                  height: height,
+                  fit: BoxFit.cover)
+            ],
+          ),
         ),
       ),
     );
