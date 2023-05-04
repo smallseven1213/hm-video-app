@@ -24,10 +24,6 @@ Future<dynamic> fetcher({
   Map<String, dynamic>? body = const {},
   bool? shouldValidate = true,
 }) async {
-  // create a request options
-  // Map? authorization = shouldValidate!
-  //     ? null
-  //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
   final responseController = Get.find<GameApiResponseErrorCatchController>();
 
   final token = Get.find<GameAuthController>().token;

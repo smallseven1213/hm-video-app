@@ -25,12 +25,6 @@ class GamesListController extends GetxController {
     games.assignAll(res);
   }
 
-  // _getGameLobbyShowConfig() async {
-  //   var resGameConfig = await Get.put(GameLobbyApi()).getGameConfig();
-  //   isShowFab = resGameConfig.distributed.obs;
-  //   switchPaymentPage.value = resGameConfig.paymentPage;
-  // }
-
   void updateGame(GameItem game) {
     final index = games.indexWhere((element) => element.gameId == game.gameId);
     if (index != -1) {

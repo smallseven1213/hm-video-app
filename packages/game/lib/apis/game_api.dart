@@ -19,7 +19,6 @@ String apiPrefix =
     '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform';
 
 class GameLobbyApi {
-  //register TODO: check if need
   Future<void> register() =>
       fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
 
@@ -86,6 +85,7 @@ class GameLobbyApi {
   Future<List<GameItem>> getGames() =>
       fetcher(url: '$apiPrefix/game?tpCode=wali').then(
         (value) {
+          print('value: $value');
           var res = (value.data as Map<String, dynamic>);
           if (res['code'] != '00') {
             return [];
