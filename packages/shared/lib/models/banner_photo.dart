@@ -1,11 +1,12 @@
 class BannerPhoto {
   final int id;
   final String photoSid;
+  final bool isAutoClose;
+  final int? positionId;
   final String? logoSid;
   final String? url;
   final String? name;
   final String? title;
-  final bool isAutoClose;
   final List? tags;
   final String? button;
 
@@ -19,6 +20,7 @@ class BannerPhoto {
     this.url,
     this.tags,
     this.button,
+    this.positionId,
   });
   factory BannerPhoto.fromJson(Map<String, dynamic> json) {
     return BannerPhoto(
@@ -31,6 +33,7 @@ class BannerPhoto {
       title: json['title'],
       button: json['button'],
       tags: json['tags'],
+      positionId: json['positionId'],
     );
   }
 
@@ -45,6 +48,7 @@ class BannerPhoto {
       'title': title,
       'button': button,
       'tags': tags,
+      'positionId': positionId,
     };
   }
 }

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 
-import 'nested_tab_bar_view.dart';
+import 'nested_tab_bar_view/index.dart';
 import '../../widgets/custom_app_bar.dart';
 
 final logger = Logger();
