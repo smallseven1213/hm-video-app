@@ -11,6 +11,14 @@ final logger = Logger();
 final apiPrefixUrl = '${systemConfig.apiHost}/public/publishers';
 
 class PublisherApi {
+  static final PublisherApi _instance = PublisherApi._internal();
+
+  PublisherApi._internal();
+
+  factory PublisherApi() {
+    return _instance;
+  }
+
   Future<List<Publisher>> getManyBy(
       {required int page, String? name, int? sortBy}) async {
     var res = await fetcher(

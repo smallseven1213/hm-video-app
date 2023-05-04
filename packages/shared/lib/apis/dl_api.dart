@@ -4,6 +4,14 @@ import 'package:shared/services/system_config.dart';
 final systemConfig = SystemConfig();
 
 class DlApi {
+  static final DlApi _instance = DlApi._internal();
+
+  DlApi._internal();
+
+  factory DlApi() {
+    return _instance;
+  }
+
   // 1: 不更新、2: 建議更新、3: 強制更新
   fetchDlJson() async {
     try {

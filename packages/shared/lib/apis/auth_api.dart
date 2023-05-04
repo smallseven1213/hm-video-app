@@ -12,6 +12,14 @@ import '../models/index.dart';
 final systemConfig = SystemConfig();
 
 class AuthApi {
+  static final AuthApi _instance = AuthApi._internal();
+
+  AuthApi._internal();
+
+  factory AuthApi() {
+    return _instance;
+  }
+
   // 訪客登入
   Future<HMApiResponseBaseWithDataWithData> guestLogin({
     String? invitationCode,

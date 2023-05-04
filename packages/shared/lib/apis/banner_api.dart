@@ -2,11 +2,20 @@ import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 
 import '../models/banner_photo.dart';
+import 'channel_api.dart';
 
 final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/banners';
 
 class BannerApi {
+  static final BannerApi _instance = BannerApi._internal();
+
+  BannerApi._internal();
+
+  factory BannerApi() {
+    return _instance;
+  }
+
   // 取得banner by id
   Future<List<BannerPhoto>> getBannerById({
     required int positionId,

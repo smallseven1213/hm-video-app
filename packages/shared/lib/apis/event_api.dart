@@ -11,6 +11,14 @@ final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/events';
 
 class EventApi {
+  static final EventApi _instance = EventApi._internal();
+
+  EventApi._internal();
+
+  factory EventApi() {
+    return _instance;
+  }
+
   Future<List<Event>> getEvents() async {
     var res = await fetcher(url: '$apiPrefix/event/list');
     if (res.data['code'] != '00') {

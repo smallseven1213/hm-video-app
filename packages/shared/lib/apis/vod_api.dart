@@ -13,6 +13,14 @@ final systemConfig = SystemConfig();
 final logger = Logger();
 
 class VodApi {
+  static final VodApi _instance = VodApi._internal();
+
+  VodApi._internal();
+
+  factory VodApi() {
+    return _instance;
+  }
+
   Future<String> purchase(int videoId) async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/purchase',

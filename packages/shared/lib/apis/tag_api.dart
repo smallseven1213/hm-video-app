@@ -11,6 +11,14 @@ final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/tags';
 
 class TagApi {
+  static final TagApi _instance = TagApi._internal();
+
+  TagApi._internal();
+
+  factory TagApi() {
+    return _instance;
+  }
+
   Future<List<Tag>> getManyBy({
     required int page,
     String? name,

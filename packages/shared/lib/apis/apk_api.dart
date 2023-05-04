@@ -5,6 +5,13 @@ import 'package:shared/utils/fetcher.dart';
 final systemConfig = SystemConfig();
 
 class ApkApi {
+  static final ApkApi _instance = ApkApi._internal();
+
+  ApkApi._internal();
+
+  factory ApkApi() {
+    return _instance;
+  }
   // 1: 不更新、2: 建議更新、3: 強制更新
   Future<ApkUpdate> checkVersion({
     required String version,

@@ -10,6 +10,14 @@ final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/ads-apps';
 
 class AdApi {
+  static final AdApi _instance = AdApi._internal();
+
+  AdApi._internal();
+
+  factory AdApi() {
+    return _instance;
+  }
+
   Future<ChannelBanner> getBannersByChannel(int channelId) async {
     var res = await fetcher(
         url:

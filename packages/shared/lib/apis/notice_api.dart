@@ -6,6 +6,14 @@ final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/notices';
 
 class NoticeApi {
+  static final NoticeApi _instance = NoticeApi._internal();
+
+  NoticeApi._internal();
+
+  factory NoticeApi() {
+    return _instance;
+  }
+
   // 消息中心的公告
   Future<List<Notice>> getNoticeAnnouncement(int page, int limit) async {
     var res = await fetcher(
