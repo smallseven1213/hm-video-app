@@ -189,7 +189,7 @@ class _ContentAndButtonState extends State<ContentAndButton> {
                     child: QrImage(
                       data: userController.loginCode.value,
                       version: QrVersions.auto,
-                      size: 90.0,
+                      size: 95.0,
                       backgroundColor: Colors.white,
                       foregroundColor: const Color.fromARGB(255, 2, 44, 108),
                     ),
