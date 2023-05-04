@@ -1,5 +1,6 @@
 import 'package:app_gs/screens/video/nested_tab_bar_view/video_actions.dart';
 import 'package:app_gs/screens/video/nested_tab_bar_view/video_list.dart';
+import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -155,23 +156,6 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                                     blockVideosController.videoByActor.value;
                                 break;
                             }
-                            if (videos.isEmpty) {
-                              return const SliverToBoxAdapter(
-                                child: SizedBox(
-                                  height: 300,
-                                  child: Center(
-                                    child: Text(
-                                      '沒有相關影片',
-                                      style: TextStyle(
-                                        color: Color(0xff808c9f),
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-
                             return SliverPadding(
                               padding: const EdgeInsets.only(bottom: 8),
                               sliver: VideoList(
