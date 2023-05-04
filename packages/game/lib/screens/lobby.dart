@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
+
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
+
 import 'package:game/apis/game_api.dart';
-import 'package:game/enums/game_app_routes.dart';
-import 'package:game/navigator/delegate.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/controllers/game_auth_controller.dart';
 import 'package:game/controllers/game_banner_controller.dart';
@@ -183,7 +185,7 @@ class _GameLobbyState extends State<GameLobby> {
                               UserInfoDeposit(
                                 onTap: () {
                                   MyRouteDelegate.of(context).push(
-                                    GameAppRoutes.gameDepositPagePolling.value,
+                                    AppRoutes.gameDepositPagePolling.value,
                                   );
                                 },
                               ),
@@ -191,7 +193,7 @@ class _GameLobbyState extends State<GameLobby> {
                               UserInfoWithdraw(
                                 onTap: () {
                                   MyRouteDelegate.of(context).push(
-                                    GameAppRoutes.gameWithdraw.value,
+                                    AppRoutes.gameWithdraw.value,
                                   );
                                 },
                               ),
