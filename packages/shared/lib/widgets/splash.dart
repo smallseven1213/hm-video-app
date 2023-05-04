@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:game/services/game_system_config.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/apk_api.dart';
@@ -44,7 +45,7 @@ void alertDialog(
   showDialog<int>(
     context: context,
     barrierDismissible: false,
-    builder: (_ctx) => AlertDialog(
+    builder: (ctx) => AlertDialog(
       title: title != null ? Text(title) : const SizedBox.shrink(),
       content: Text(content ?? ''),
       actions: actions ??
@@ -66,6 +67,7 @@ void alertDialog(
 
 class _SplashState extends State<Splash> {
   SystemConfig systemConfig = SystemConfig();
+  GameSystemConfig gameSystemConfig = GameSystemConfig();
   DlApi dlApi = DlApi();
   ApkApi apkApi = ApkApi();
   UserApi userApi = UserApi();
@@ -110,6 +112,8 @@ class _SplashState extends State<Splash> {
       systemConfig.setVodHost('https://${res['dl']?.first}');
       systemConfig.setImageHost('https://${res['pl']?.first}');
       systemConfig.setMaintenance(res['maintenance'] == 'true' ? true : false);
+      gameSystemConfig.setApiHost(
+          'https://api.${res['apl']?.first}'); // TODO: 做一個進入頁，再導到遊戲大廳
     }
 
     return res;
