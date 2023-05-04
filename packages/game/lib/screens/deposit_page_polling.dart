@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:game/enums/game_app_routes.dart';
-import 'package:game/navigator/delegate.dart';
+
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
+
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 
@@ -78,7 +80,7 @@ class _GameDepositState extends State<GameDeposit> {
                       child: TextButton(
                         onPressed: () {
                           MyRouteDelegate.of(context).push(
-                            GameAppRoutes.gameWithdraw.value,
+                            AppRoutes.gameWithdraw.value,
                           );
                         },
                         style: TextButton.styleFrom(
