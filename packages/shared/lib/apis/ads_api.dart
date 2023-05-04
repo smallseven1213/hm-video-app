@@ -9,6 +9,14 @@ final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/ads-apps';
 
 class AdsApi {
+  static final AdsApi _instance = AdsApi._internal();
+
+  AdsApi._internal();
+
+  factory AdsApi() {
+    return _instance;
+  }
+
   Future<List<Ads>> getManyBy({
     int page = 1,
     int limit = 20,

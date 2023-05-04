@@ -13,6 +13,14 @@ String apiPrefix = '${systemConfig.apiHost}/public/actors';
 final logger = Logger();
 
 class ActorApi {
+  static final ActorApi _instance = ActorApi._internal();
+
+  ActorApi._internal();
+
+  factory ActorApi() {
+    return _instance;
+  }
+
   Future<List<Actor>> getManyBy({
     required int page,
     int limit = 100,

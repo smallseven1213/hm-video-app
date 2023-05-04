@@ -22,6 +22,14 @@ import '../utils/fetcher.dart';
 final systemConfig = SystemConfig();
 
 class UserApi {
+  static final UserApi _instance = UserApi._internal();
+
+  UserApi._internal();
+
+  factory UserApi() {
+    return _instance;
+  }
+
   // 使用者登入紀錄
   Future<String> writeUserLoginRecord() async {
     var status = 'login'; // login | logout

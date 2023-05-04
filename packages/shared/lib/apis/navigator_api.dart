@@ -7,6 +7,14 @@ import '../utils/fetcher.dart';
 final systemConfig = SystemConfig();
 
 class NavigatorApi {
+  static final NavigatorApi _instance = NavigatorApi._internal();
+
+  NavigatorApi._internal();
+
+  factory NavigatorApi() {
+    return _instance;
+  }
+
   Future<List<Navigation>> getNavigations() async {
     try {
       var res = await fetcher(

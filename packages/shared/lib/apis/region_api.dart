@@ -7,6 +7,14 @@ final systemConfig = SystemConfig();
 final logger = Logger();
 
 class RegionApi {
+  static final RegionApi _instance = RegionApi._internal();
+
+  RegionApi._internal();
+
+  factory RegionApi() {
+    return _instance;
+  }
+
   Future<List<Region>> getActorRegions() async {
     var res = await fetcher(
         url:

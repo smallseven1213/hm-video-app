@@ -2,6 +2,14 @@ import '../models/product.dart';
 import '../utils/fetcher.dart';
 
 class ProductProvider {
+  static final ProductProvider _instance = ProductProvider._internal();
+
+  ProductProvider._internal();
+
+  factory ProductProvider() {
+    return _instance;
+  }
+
   Future<List<Product>> getManyBy(
       {int type = 1, int page = 1, int limit = 100}) async {
     var res =
