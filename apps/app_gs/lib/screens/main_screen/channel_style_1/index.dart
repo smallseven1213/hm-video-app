@@ -64,14 +64,39 @@ class _ChannelStyle1State extends State<ChannelStyle1>
               moreButton: block.isMore!
                   ? InkWell(
                       onTap: () => {
-                            MyRouteDelegate.of(context).push(
-                              AppRoutes.videoByBlock.value,
-                              args: {
-                                'id': block.id,
-                                'title': block.name,
-                                'channelId': widget.channelId,
-                              },
-                            )
+                            if (block.film == 1)
+                              {
+                                MyRouteDelegate.of(context).push(
+                                  AppRoutes.videoByBlock.value,
+                                  args: {
+                                    'id': block.id,
+                                    'title': block.name,
+                                    'channelId': widget.channelId,
+                                  },
+                                )
+                              }
+                            else if (block.film == 2)
+                              {
+                                MyRouteDelegate.of(context).push(
+                                  AppRoutes.videoByBlock.value,
+                                  args: {
+                                    'id': block.id,
+                                    'title': block.name,
+                                    'channelId': widget.channelId,
+                                  },
+                                )
+                              }
+                            else if (block.film == 3)
+                              {
+                                MyRouteDelegate.of(context).push(
+                                  AppRoutes.videoByBlock.value,
+                                  args: {
+                                    'id': block.id,
+                                    'title': block.name,
+                                    'channelId': widget.channelId,
+                                  },
+                                )
+                              }
                           },
                       child: const Text(
                         '更多 >',

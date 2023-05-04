@@ -3,9 +3,11 @@
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/widgets/sid_image.dart';
 
-class Block7Widget extends StatelessWidget {
+class Block7Widget extends StatefulWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
@@ -19,44 +21,94 @@ class Block7Widget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  Block7WidgetState createState() => Block7WidgetState();
+}
+
+class Block7WidgetState extends State<Block7Widget> {
+  String? backgroundPhotoSid;
+  final CarouselController _carouselController = CarouselController();
+
+  @override
   Widget build(BuildContext context) {
-    logger.i('RENDER BLOCK 7 $film');
-    List<Data> videos = block.videos?.data ?? [];
+    List<Data> videos = widget.block.videos?.data ?? [];
+    backgroundPhotoSid = videos[0].coverHorizontal;
 
     return SliverToBoxAdapter(
       child: Container(
         height: 310,
         margin: const EdgeInsets.symmetric(horizontal: 8),
-        child: CarouselSlider.builder(
-            itemCount: videos.length,
-            options: CarouselOptions(
-              autoPlay: false,
-              enlargeCenterPage: true,
-              viewportFraction: 0.5,
-              height: 277,
-              initialPage: 2,
-            ),
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) {
-              var vod = videos[itemIndex];
-              return Center(
-                child: SizedBox(
-                  height: 245,
-                  child: VideoPreviewWidget(
-                      id: vod.id!,
-                      film: film,
-                      displaycoverVertical: true,
-                      coverVertical: vod.coverVertical!,
-                      coverHorizontal: vod.coverHorizontal!,
-                      timeLength: vod.timeLength!,
-                      tags: vod.tags!,
-                      title: vod.title!,
-                      imageRatio: 190 / 245,
-                      noTags: true,
-                      videoViewTimes: vod.videoViewTimes!),
+        child: Stack(
+          children: [
+            backgroundPhotoSid == null
+                ? const SizedBox.shrink()
+                : ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: SizedBox(
+                        width: double.infinity,
+                        height: 300,
+                        child: SidImage(
+                          key: ValueKey(backgroundPhotoSid),
+                          sid: backgroundPhotoSid!,
+                          width: double.infinity,
+                          height: 300,
+                          fit: BoxFit.fill,
+                        )),
+                  ),
+            Container(
+              width: double.infinity,
+              height: double.infinity,
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.centerLeft,
+                  end: Alignment.centerRight,
+                  colors: [
+                    const Color(0xFF040405),
+                    const Color(0xFF040405).withOpacity(0.0),
+                    const Color.fromRGBO(20, 49, 104, 0.7),
+                  ],
+                  stops: const [0.0, 0.5, 0.5],
                 ),
-              );
-            }),
+              ),
+            ),
+            CarouselSlider.builder(
+                carouselController: _carouselController,
+                itemCount: videos.length,
+                options: CarouselOptions(
+                  autoPlay: false,
+                  enlargeCenterPage: true,
+                  viewportFraction: 0.5,
+                  height: 283,
+                  initialPage: 2,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      backgroundPhotoSid = videos[index].coverHorizontal;
+                    });
+                  },
+                ),
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) {
+                  var vod = videos[itemIndex];
+                  return Center(
+                    child: SizedBox(
+                      height: 245,
+                      width: 190,
+                      child: VideoPreviewWidget(
+                          id: vod.id!,
+                          film: widget.film,
+                          displaycoverVertical: true,
+                          coverVertical: vod.coverVertical!,
+                          coverHorizontal: vod.coverHorizontal!,
+                          timeLength: vod.timeLength!,
+                          tags: vod.tags!,
+                          title: vod.title!,
+                          imageRatio: 190 / 245,
+                          noTags: true,
+                          videoViewTimes: vod.videoViewTimes!),
+                    ),
+                  );
+                })
+          ],
+        ),
       ),
     );
   }
