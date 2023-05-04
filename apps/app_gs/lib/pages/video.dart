@@ -1,4 +1,4 @@
-import 'package:app_gs/screens/video/video_screen.dart';
+import 'package:app_gs/screens/video/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';

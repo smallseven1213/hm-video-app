@@ -1,10 +1,10 @@
-import 'package:app_gs/screens/video/video_list.dart';
+import 'package:app_gs/screens/video/nested_tab_bar_view/video_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/block_videos_by_category_controller.dart';
 import 'package:shared/models/vod.dart';
 
-import 'enums.dart';
+import 'nested_tab_bar_view/enums.dart';
 
 class RelatedVideos extends StatelessWidget {
   final TabController tabController;

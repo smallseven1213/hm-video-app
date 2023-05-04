@@ -42,6 +42,7 @@ class BannerController extends GetxController {
         return [];
       }
     } else {
+      if (hasBanner(position)) return banners[position]!;
       var result =
           await bannerApi.getBannerById(positionId: position.value); // 修改这里
       bannerController.setBanners(position, result); // 修改这里
@@ -51,7 +52,7 @@ class BannerController extends GetxController {
 
   // 檢查是否有banner by position id
   bool hasBanner(BannerPosition position) {
-    return banners[position.value] != null &&
+    return banners[position] != null && banners[position]!.isNotEmpty;
         banners[position.value]!.isNotEmpty;
   }
 

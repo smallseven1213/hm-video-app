@@ -1,7 +1,7 @@
 // VideoScreen stateless
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
-import '../../widgets/video_preview.dart';
+import '../../../widgets/video_preview.dart';
 import 'enums.dart';
 
 class VideoList extends StatelessWidget {
