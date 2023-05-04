@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import '../enums/app_routes.dart';
 import '../models/banner_photo.dart';
@@ -86,20 +87,24 @@ class AdState extends State<Ad> {
         child: Stack(
           children: [
             Positioned.fill(
-              child: SidImage(
-                width: size.width,
-                height: size.height,
-                sid: currentBanner.photoSid.toString(),
-                fit: BoxFit.cover,
-                onLoaded: () {
-                  startTimer();
-                  setState(() => imageLoaded = true);
-                },
-                onError: (e, stackTrace) {
-                  MyRouteDelegate.of(context).pushAndRemoveUntil(
-                      AppRoutes.home.value,
-                      hasTransition: false);
-                },
+              child: BannerLink(
+                id: currentBanner.id,
+                url: currentBanner.url ?? '',
+                child: SidImage(
+                  width: size.width,
+                  height: size.height,
+                  sid: currentBanner.photoSid.toString(),
+                  fit: BoxFit.cover,
+                  onLoaded: () {
+                    startTimer();
+                    setState(() => imageLoaded = true);
+                  },
+                  onError: (e, stackTrace) {
+                    MyRouteDelegate.of(context).pushAndRemoveUntil(
+                        AppRoutes.home.value,
+                        hasTransition: false);
+                  },
+                ),
               ),
             ),
             if (imageLoaded)
@@ -108,10 +113,10 @@ class AdState extends State<Ad> {
                 right: 20,
                 child: TextButton(
                   onPressed: () => {
-                    // if (countdownSeconds == 0)
-                    MyRouteDelegate.of(context).pushAndRemoveUntil(
-                        AppRoutes.home.value,
-                        hasTransition: false)
+                    if (countdownSeconds == 0)
+                      MyRouteDelegate.of(context).pushAndRemoveUntil(
+                          AppRoutes.home.value,
+                          hasTransition: false)
                   },
                   child: Container(
                     width: 90,
