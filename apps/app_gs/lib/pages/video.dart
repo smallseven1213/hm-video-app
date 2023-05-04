@@ -10,16 +10,15 @@ final logger = Logger();
 final userApi = UserApi();
 
 class Video extends StatefulWidget {
-  // props: args
   final Map<String, dynamic> args;
 
-  Video({Key? key, required this.args}) : super(key: key);
+  const Video({Key? key, required this.args}) : super(key: key);
 
   @override
-  _VideoState createState() => _VideoState();
+  VideoState createState() => VideoState();
 }
 
-class _VideoState extends State<Video> {
+class VideoState extends State<Video> {
   @override
   void initState() {
     super.initState();
@@ -35,6 +34,7 @@ class _VideoState extends State<Video> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('RENDER VIDEO ${widget.args['id']}');
     return VideoScreen(
       key: ValueKey(widget.args['id']),
       id: int.parse(widget.args['id'].toString()),

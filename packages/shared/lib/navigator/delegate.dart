@@ -148,7 +148,7 @@ class MyRouteDelegate extends RouterDelegate<String>
             if (stack.hasTransition == true && !isWeb) {
               logger.i('NAVI!! ==> , ${stack.path}');
               return CupertinoPage(
-                key: ValueKey(stack.path),
+                key: ValueKey(stack.path + stack.args.toString()),
                 name: stack.path,
                 child: Stack(
                   children: [
@@ -168,7 +168,7 @@ class MyRouteDelegate extends RouterDelegate<String>
             }
             if (stack.hasTransition == false || isWeb) {
               return NoAnimationPage(
-                key: ValueKey(stack.path),
+                key: ValueKey(stack.path + stack.args.toString()),
                 name: stack.path,
                 child: buildScreen(),
               );
