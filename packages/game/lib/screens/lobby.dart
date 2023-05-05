@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
+import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 
@@ -177,7 +178,7 @@ class _GameLobbyState extends State<GameLobby> {
                     child: Column(
                       children: [
                         GameCarousel(data: gameBannerController.gameBanner),
-                        // Marquee(data: gameBannerController.gameMarquee),
+                        GameMarquee(data: gameBannerController.gameMarquee),
                         GameUserInfo(
                           type: 'lobby',
                           child: Row(
