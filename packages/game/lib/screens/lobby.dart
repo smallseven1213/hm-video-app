@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:game/screens/lobby/game_carousel.dart';
+import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
 
@@ -48,7 +50,6 @@ class _GameLobbyState extends State<GameLobby> {
   bool isShowFab = false;
 
   final gamesListController = GamesListController();
-  final gameBannerController = GameBannerController();
   final ScrollController _scrollController = ScrollController();
   GameUserController get userController => Get.find<GameUserController>();
 
@@ -68,8 +69,8 @@ class _GameLobbyState extends State<GameLobby> {
     Future.wait([
       GameLobbyApi().registerGame(),
     ]).then((value) {
-      GameWalletController().fetchWallets();
       GameBannerController();
+      GameWalletController().fetchWallets();
       getGameHistory();
     });
   }
@@ -98,6 +99,8 @@ class _GameLobbyState extends State<GameLobby> {
 
   @override
   Widget build(BuildContext context) {
+    final gameBannerController = Get.put(GameBannerController());
+
     final gameWalletController = GameWalletController();
 
     return Obx(() => Scaffold(
@@ -174,8 +177,8 @@ class _GameLobbyState extends State<GameLobby> {
                     padding: const EdgeInsets.all(8),
                     child: Column(
                       children: [
-                        // Banners(data: gameBannerController.gameBanner),
-                        // Marquee(data: gameBannerController.gameMarquee),
+                        GameCarousel(data: gameBannerController.gameBanner),
+                        GameMarquee(data: gameBannerController.gameMarquee),
                         GameUserInfo(
                           type: 'lobby',
                           child: Row(
@@ -239,8 +242,8 @@ class _GameLobbyState extends State<GameLobby> {
                   decoration: const BoxDecoration(
                     color: Colors.transparent,
                     image: DecorationImage(
-                      image:
-                          AssetImage('assets/img/game_lobby/red-envelope.webp'),
+                      image: AssetImage(
+                          'packages/game/assets/images/game_lobby/red-envelope.webp'),
                     ),
                   ),
                   child: Wrap(

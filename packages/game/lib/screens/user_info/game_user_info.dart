@@ -3,6 +3,7 @@ import 'package:decimal/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:game/controllers/game_user_controller.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -22,6 +23,11 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
   late AnimationController animationController;
   final gameWalletController = GameWalletController();
   GameUserController get userController => Get.find<GameUserController>();
+
+  final theme = themeMode[GetStorage('session').hasData('pageColor')
+          ? GetStorage('session').read('pageColor')
+          : 1]
+      .toString();
 
   @override
   void initState() {
@@ -83,9 +89,9 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                           : CircleAvatar(
                               backgroundColor: gameLobbyBgColor,
                               radius: 16,
-                              child: const Image(
+                              child: Image(
                                 image: AssetImage(
-                                    'assets/img/icon-supplier@3x.png'),
+                                    'packages/game/assets/images/game_lobby/avatar-$theme.webp'),
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                               ),

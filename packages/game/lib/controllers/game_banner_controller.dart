@@ -19,10 +19,9 @@ class GameBannerController extends GetxController {
   Future<void> fetchGameBanners() async {
     isLoading.value = true;
     try {
-      var res = await GameLobbyApi().getMarqueeAndBanner();
-
-      gameBanner = res['banner'];
-      gameMarquee = res['marquee'];
+      var res = await Get.put(GameLobbyApi()).getMarqueeAndBanner();
+      gameBanner = RxList(res['banner']);
+      gameMarquee = RxList(res['marquee']);
     } catch (error) {
       print('fetchGameBanners: $error');
     } finally {

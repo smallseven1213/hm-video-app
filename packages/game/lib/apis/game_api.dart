@@ -85,7 +85,6 @@ class GameLobbyApi {
   Future<List<GameItem>> getGames() =>
       fetcher(url: '$apiPrefix/game?tpCode=wali').then(
         (value) {
-          print('value: $value');
           var res = (value.data as Map<String, dynamic>);
           if (res['code'] != '00') {
             return [];
