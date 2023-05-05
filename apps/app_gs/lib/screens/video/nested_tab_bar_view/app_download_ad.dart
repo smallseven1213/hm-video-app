@@ -6,13 +6,24 @@ import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/app_icon.dart';
 
-class AppDownloadAd extends StatelessWidget {
+class AppDownloadAd extends StatefulWidget {
+  const AppDownloadAd({super.key});
+
+  @override
+  _AppDownloadAdState createState() => _AppDownloadAdState();
+}
+
+class _AppDownloadAdState extends State<AppDownloadAd> {
   final VideoAdsController controller = Get.find<VideoAdsController>();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
     controller.recordVideoViews(); // 紀錄觀看次數
+  }
 
+  @override
+  Widget build(BuildContext context) {
     return Obx(() {
       List<BannerPhoto> appDownloadAds =
           controller.videoAds.value.appDownloadAds ?? [];
@@ -73,7 +84,7 @@ class AppDownloadAd extends StatelessWidget {
                                 ],
                                 center: const AlignmentDirectional(0.0, 0.0),
                                 focal: const AlignmentDirectional(0.0, 0.0),
-                                radius: 0.60,
+                                radius: 0.90,
                                 focalRadius: 0.001,
                                 stops: const [0.75, 1.0],
                               ),
