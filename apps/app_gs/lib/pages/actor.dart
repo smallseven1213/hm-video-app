@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/actor_controller.dart';
@@ -82,25 +83,11 @@ class _ActorPageState extends State<ActorPage>
                   SliverPersistentHeader(
                     delegate: ActorCard(actor: actor, context: context),
                     pinned: true,
-                  ), //构建一个 sliverList
-                  SliverAppBar(
-                    pinned: true,
-                    leading: null,
-                    automaticallyImplyLeading: false,
-                    forceElevated: true,
-                    expandedHeight: 0,
-                    toolbarHeight: 0,
-                    flexibleSpace: const SizedBox.shrink(),
-                    bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(60),
-                      child: SizedBox(
-                          height: 60,
-                          child: GSTabBar(
-                            controller: _tabController,
-                            tabs: const ['最新', '最熱'],
-                          )),
-                    ),
                   ),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: TabBarHeaderDelegate(_tabController),
+                  )
                 ];
               },
               body: TabBarView(
@@ -128,5 +115,31 @@ class _ActorPageState extends State<ActorPage>
         ],
       );
     }));
+  }
+}
+
+class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final TabController tabController;
+
+  TabBarHeaderDelegate(this.tabController);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return GSTabBar(
+      controller: tabController,
+      tabs: const ['最新', '最熱'],
+    );
+  }
+
+  @override
+  double get maxExtent => 60.0;
+
+  @override
+  double get minExtent => 60.0;
+
+  @override
+  bool shouldRebuild(covariant TabBarHeaderDelegate oldDelegate) {
+    return false;
   }
 }

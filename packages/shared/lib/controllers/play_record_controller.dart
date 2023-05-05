@@ -46,8 +46,7 @@ class PlayRecordController extends GetxController {
     if (playRecord.firstWhereOrNull((v) => v.id == video.id) != null) {
       playRecord.removeWhere((v) => v.id == video.id);
     }
-    playRecord.add(video);
-    logger.i('=====CREATE=====\n ${video.id} \n ${video.toJson()}');
+    playRecord.insert(0, video);
     await _updatePrefs();
   }
 

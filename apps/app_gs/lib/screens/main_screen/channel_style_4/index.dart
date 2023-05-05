@@ -150,10 +150,13 @@ class ChannelStyle4 extends StatelessWidget {
                                               },
                                             );
                                           },
-                                          child: const Text(
-                                            '查看全部',
-                                            style:
-                                                TextStyle(color: Colors.white),
+                                          child: const Padding(
+                                            padding: EdgeInsets.only(top: 18),
+                                            child: Text(
+                                              '查看全部',
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ),
                                           ),
                                         ),
                                       ),
