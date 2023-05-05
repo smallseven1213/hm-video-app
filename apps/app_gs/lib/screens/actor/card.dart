@@ -53,139 +53,124 @@ class ActorCard extends SliverPersistentHeaderDelegate {
     final systemTopBarHeight = MediaQuery.of(context).padding.top;
     final leftPadding = (screenWidth - imageSize - textWidth - 8) / 2;
 
-    return RepaintBoundary(
-      child: Container(
-        color: const Color(0xFF001a40).withOpacity(1 - opacity),
-        child: Stack(
-          children: [
-            Opacity(
-              opacity: opacity,
-              child: SidImage(
-                key: ValueKey(actor.coverVertical),
-                sid: actor.coverVertical!,
-                width: 500,
-                height: 500,
-                fit: BoxFit.cover,
-              ),
+    return Container(
+      color: const Color(0xFF001a40).withOpacity(1 - opacity),
+      child: Stack(
+        children: [
+          Opacity(
+            opacity: opacity,
+            child: SidImage(
+              key: ValueKey(actor.coverVertical),
+              sid: actor.coverVertical!,
+              width: 500,
+              height: 500,
+              fit: BoxFit.cover,
             ),
-            if (opacity > 0)
-              Container(
-                height: 200,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color.fromRGBO(67, 120, 220, 0.65),
-                      Color(0xFF001C46),
-                    ],
-                    stops: [
-                      -0.06,
-                      1.0,
-                    ],
-                  ),
+          ),
+          if (opacity > 0)
+            Container(
+              height: 200,
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color.fromRGBO(67, 120, 220, 0.65),
+                    Color(0xFF001C46),
+                  ],
+                  stops: [
+                    -0.06,
+                    1.0,
+                  ],
                 ),
               ),
-            Positioned(
-              top: lerpDouble(
-                  100,
-                  ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
-                  percentage),
-              left: lerpDouble(10, leftPadding, percentage)!,
-              child: ActorAvatar(
-                photoSid: actor.photoSid,
-                width: imageSize,
-                height: imageSize,
-              ),
-              // child: SizedBox(
-              //   width: imageSize,
-              //   height: imageSize,
-              //   child: ClipRRect(
-              //     borderRadius: BorderRadius.circular(80),
-              //     child: SidImage(
-              //         key: ValueKey(actor.photoSid),
-              //         sid: actor.photoSid,
-              //         width: imageSize,
-              //         height: imageSize,
-              //         fit: BoxFit.cover),
-              //   ),
-              // ),
             ),
-            Positioned(
-              top: lerpDouble(
-                  110,
-                  ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
-                  percentage),
-              left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
+          Positioned(
+            top: lerpDouble(
+                100,
+                ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
+                percentage),
+            left: lerpDouble(10, leftPadding, percentage)!,
+            child: ActorAvatar(
+              photoSid: actor.photoSid,
+              width: imageSize,
+              height: imageSize,
+            ),
+          ),
+          Positioned(
+            top: lerpDouble(
+                110,
+                ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
+                percentage),
+            left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
+            child: Text(
+              actor.name,
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSize,
+                  color: Colors.white),
+            ),
+          ),
+          Positioned(
+            top: lerpDouble(
+                135, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+            left: 100,
+            child: Opacity(
+              opacity: opacity,
               child: Text(
-                actor.name,
-                style: TextStyle(
+                actor.description!,
+                softWrap: true,
+                maxLines: null,
+                style: const TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: fontSize,
+                    fontSize: 12,
                     color: Colors.white),
               ),
             ),
-            Positioned(
-              top: lerpDouble(
-                  135, (kToolbarHeight - 12) / 2 + fontSize, percentage),
-              left: 100,
-              child: Opacity(
+          ),
+          Positioned(
+            top: lerpDouble(
+                105, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+            right: 8,
+            child: Obx(() {
+              var isLiked = userFavoritesActorController.actors
+                  .any((e) => e.id == actor.id);
+              IconData iconData =
+                  isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
+              return Opacity(
                 opacity: opacity,
-                child: Text(
-                  actor.description!,
-                  softWrap: true,
-                  maxLines: null,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Colors.white),
-                ),
-              ),
-            ),
-            Positioned(
-              top: lerpDouble(
-                  105, (kToolbarHeight - 12) / 2 + fontSize, percentage),
-              right: 8,
-              child: Obx(() {
-                var isLiked = userFavoritesActorController.actors
-                    .any((e) => e.id == actor.id);
-                IconData iconData =
-                    isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
-                return Opacity(
-                  opacity: opacity,
-                  child: InkWell(
-                    onTap: () {
-                      if (isLiked) {
-                        userFavoritesActorController.removeActor([actor.id]);
-                        return;
-                      } else {
-                        userFavoritesActorController.addActor(actor);
-                      }
-                    },
-                    child: Row(
-                      children: [
-                        Icon(
-                          iconData,
-                          size: 20,
-                          color: const Color(0xFF21AFFF),
+                child: InkWell(
+                  onTap: () {
+                    if (isLiked) {
+                      userFavoritesActorController.removeActor([actor.id]);
+                      return;
+                    } else {
+                      userFavoritesActorController.addActor(actor);
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        iconData,
+                        size: 20,
+                        color: const Color(0xFF21AFFF),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        actor.actorCollectTimes.toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
                         ),
-                        const SizedBox(width: 6),
-                        Text(
-                          actor.actorCollectTimes.toString(),
-                          style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              }),
-            ),
-          ],
-        ),
+                ),
+              );
+            }),
+          ),
+        ],
       ),
     );
   }
