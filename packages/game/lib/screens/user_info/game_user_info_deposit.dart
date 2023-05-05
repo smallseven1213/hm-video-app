@@ -26,7 +26,7 @@ class _UserInfoDeposit extends State<UserInfoDeposit> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset(
-              "assets/img/game_lobby/deposit.webp",
+              "packages/game/assets/images/game_lobby/deposit.webp",
               width: 28,
               height: 28,
             ),

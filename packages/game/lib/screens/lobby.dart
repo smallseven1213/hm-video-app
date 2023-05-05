@@ -241,8 +241,8 @@ class _GameLobbyState extends State<GameLobby> {
                   decoration: const BoxDecoration(
                     color: Colors.transparent,
                     image: DecorationImage(
-                      image:
-                          AssetImage('assets/img/game_lobby/red-envelope.webp'),
+                      image: AssetImage(
+                          'packages/game/assets/images/game_lobby/red-envelope.webp'),
                     ),
                   ),
                   child: Wrap(

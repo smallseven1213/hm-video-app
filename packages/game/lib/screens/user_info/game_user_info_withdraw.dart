@@ -21,7 +21,7 @@ class _UserInfoWithdraw extends State<UserInfoWithdraw> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset(
-              "assets/img/game_lobby/withdraw.webp",
+              "packages/game/assets/images/game_lobby/withdraw.webp",
               width: 28,
               height: 28,
             ),
