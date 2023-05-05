@@ -1,9 +1,14 @@
 import 'package:app_gs/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/notice_api.dart';
+import 'package:shared/controllers/banner_controller.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/widgets/ad_banner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final logger = Logger();
 
@@ -16,12 +21,12 @@ class NoticeDialog extends StatefulWidget {
 
 class NoticeDialogState extends State<NoticeDialog> {
   NoticeApi noticeApi = NoticeApi();
+  BannerController bannerController = Get.find<BannerController>();
 
   @override
   void initState() {
-    // 入站公告 /notice/latest/bounce
-    print('NoticeDialogState initState');
     super.initState();
+    bannerController.fetchBanner(BannerPosition.lobbyPopup);
     showNoticeDialog();
   }
 
@@ -124,11 +129,13 @@ class NoticeDialogState extends State<NoticeDialog> {
                                 type: 'secondary',
                                 onPressed: () {
                                   Navigator.pop(context);
-                                  if (notice.leftButtonUrl != '-1') {
-                                    // todo: 另開新視窗到廣告頁面
-                                    // MyRouteDelegate.of(context)
-                                    //     .pushAndRemoveUntil(
-                                    //         notice.rightButtonUrl ?? '');
+                                  if (notice.leftButtonUrl != '-1' &&
+                                      (notice.leftButtonUrl!
+                                              .startsWith('http://') ||
+                                          notice.leftButtonUrl!
+                                              .startsWith('https://'))) {
+                                    launch(notice.leftButtonUrl!,
+                                        webOnlyWindowName: '_blank');
                                   }
                                 },
                               ),
@@ -145,11 +152,13 @@ class NoticeDialogState extends State<NoticeDialog> {
                                 type: 'primary',
                                 onPressed: () {
                                   Navigator.pop(context);
-                                  if (notice.rightButtonUrl != '-1') {
-                                    // todo: 另開新視窗到廣告頁面
-                                    // MyRouteDelegate.of(context)
-                                    //     .pushAndRemoveUntil(
-                                    //         notice.rightButtonUrl ?? '');
+                                  if (notice.rightButtonUrl != '-1' &&
+                                      (notice.rightButtonUrl!
+                                              .startsWith('http://') ||
+                                          notice.rightButtonUrl!
+                                              .startsWith('https://'))) {
+                                    launch(notice.rightButtonUrl!,
+                                        webOnlyWindowName: '_blank');
                                   }
                                 },
                               ),
@@ -163,8 +172,78 @@ class NoticeDialogState extends State<NoticeDialog> {
             ),
           );
         },
-      );
+      ).then((value) {
+        showAdDialog(0);
+      });
     }
+  }
+
+  showAdDialog(int index) {
+    double dialogWidth = MediaQuery.of(context).size.width * 0.8;
+    List<BannerPhoto>? banners =
+        bannerController.banners[BannerPosition.lobbyPopup];
+    if (banners!.isEmpty || banners.length < index) {
+      return;
+    }
+    BannerPhoto banner = banners[index];
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_ctx) {
+          return AlertDialog(
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            titlePadding: EdgeInsets.zero,
+            title: null,
+            contentPadding: EdgeInsets.zero,
+            content: SizedBox(
+              width: dialogWidth,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  AspectRatio(
+                    aspectRatio: 1.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: AdBanner(image: banner),
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Container(
+                          width: 36,
+                          height: 36,
+                          margin: const EdgeInsets.only(top: 10),
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.white, width: 1),
+                            borderRadius: BorderRadius.circular(36.0),
+                          ),
+                          child: const Icon(
+                            Icons.close,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).then((value) {
+      if (banners.length > index + 1) {
+        showAdDialog(1 + index);
+      }
+    });
   }
 
   @override

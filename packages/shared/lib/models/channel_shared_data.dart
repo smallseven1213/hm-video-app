@@ -1,9 +1,9 @@
 // 金剛區共用Class
 
-import 'banner_image.dart';
+import 'package:shared/models/banner_photo.dart';
 
 class ChannelSharedData {
-  List<BannerImage>? banner;
+  List<BannerPhoto>? banner;
   // Jingang? jingang;
   // Tags
   // Blocks

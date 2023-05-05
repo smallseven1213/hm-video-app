@@ -1,7 +1,9 @@
 import 'package:shared/models/tag.dart';
 
+import 'banner_photo.dart';
+
 class ChannelInfo {
-  List<BannerImage>? banner;
+  List<BannerPhoto>? banner;
   Jingang? jingang;
   List<Blocks>? blocks;
 
@@ -9,9 +11,9 @@ class ChannelInfo {
 
   ChannelInfo.fromJson(Map<String, dynamic> json) {
     if (json['banner'] != null) {
-      banner = <BannerImage>[];
+      banner = <BannerPhoto>[];
       json['banner'].forEach((v) {
-        banner!.add(BannerImage.fromJson(v));
+        banner!.add(BannerPhoto.fromJson(v));
       });
     }
     jingang =
@@ -35,31 +37,6 @@ class ChannelInfo {
     if (blocks != null) {
       data['blocks'] = blocks!.map((v) => v.toJson()).toList();
     }
-    return data;
-  }
-}
-
-class BannerImage {
-  int? id;
-  String? photoSid;
-  String? url;
-  bool? isAutoClose;
-
-  BannerImage({id, photoSid, url, isAutoClose});
-
-  BannerImage.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    photoSid = json['photoSid'];
-    url = json['url'];
-    isAutoClose = json['isAutoClose'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['photoSid'] = photoSid;
-    data['url'] = url;
-    data['isAutoClose'] = isAutoClose;
     return data;
   }
 }
@@ -148,7 +125,7 @@ class Blocks {
   bool? isTitle;
   bool? isLoading;
   bool? isEmbeddedAds;
-  BannerImage? banner;
+  BannerPhoto? banner;
   Videos? videos;
 
   Blocks(
@@ -183,7 +160,7 @@ class Blocks {
     isLoading = json['isLoading'];
     isEmbeddedAds = json['isEmbeddedAds'];
     banner =
-        json['banner'] != null ? BannerImage.fromJson(json['banner']) : null;
+        json['banner'] != null ? BannerPhoto.fromJson(json['banner']) : null;
     videos = json['videos'] != null ? Videos.fromJson(json['videos']) : null;
   }
 
