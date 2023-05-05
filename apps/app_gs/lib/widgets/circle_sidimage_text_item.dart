@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-/**
- * 給金剛區與角色選擇用的圓形按鈕+文字
- */
 class CircleTextItem extends StatelessWidget {
   final String text;
   final double imageWidth;
