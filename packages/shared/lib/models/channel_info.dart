@@ -1,6 +1,7 @@
 import 'package:shared/models/tag.dart';
 
 import 'banner_photo.dart';
+import 'jingang.dart';
 
 class ChannelInfo {
   List<BannerPhoto>? banner;
@@ -37,76 +38,6 @@ class ChannelInfo {
     if (blocks != null) {
       data['blocks'] = blocks!.map((v) => v.toJson()).toList();
     }
-    return data;
-  }
-}
-
-class Jingang {
-  List<JingangDetail>? jingangDetail;
-  bool? outerFrame;
-  int? outerFrameStyle;
-  String? title;
-  int? jingangStyle;
-  int? quantity;
-
-  Jingang({
-    jingangDetail,
-    outerFrame, // 是否有外框
-    outerFrameStyle, // 1: 圓形, 2: 方形
-    title, // 金剛區標題
-    jingangStyle, // 1: 單排, 2: 多排
-    quantity, // 一排的數量，預設: 4
-  });
-
-  Jingang.fromJson(Map<String, dynamic> json) {
-    if (json['jingangDetail'] != null) {
-      jingangDetail = <JingangDetail>[];
-      json['jingangDetail'].forEach((v) {
-        jingangDetail!.add(JingangDetail.fromJson(v));
-      });
-    }
-    outerFrame = json['outerFrame'];
-    outerFrameStyle = json['outerFrameStyle'];
-    title = json['title'];
-    jingangStyle = json['jingangStyle'];
-    quantity = json['quantity'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (jingangDetail != null) {
-      data['jingangDetail'] = jingangDetail!.map((v) => v.toJson()).toList();
-    }
-    data['outerFrame'] = outerFrame;
-    data['outerFrameStyle'] = outerFrameStyle;
-    data['title'] = title;
-    data['jingangStyle'] = jingangStyle;
-    data['quantity'] = quantity;
-    return data;
-  }
-}
-
-class JingangDetail {
-  int? id;
-  String? photoSid;
-  String? url;
-  String? name;
-
-  JingangDetail({id, photoSid, url, name});
-
-  JingangDetail.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    photoSid = json['photoSid'];
-    url = json['url'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['photoSid'] = photoSid;
-    data['url'] = url;
-    data['name'] = name;
     return data;
   }
 }

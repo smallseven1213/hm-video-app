@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:game/models/game_banner_image.dart';
 import 'package:game/widgets/banner_item.dart';
 

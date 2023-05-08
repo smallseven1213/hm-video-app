@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:shared/widgets/ad_banner.dart';
 

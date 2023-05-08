@@ -24,8 +24,7 @@ class _UserSreenBannerState extends State<UserSreenBanner> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var banners = bannerController.banners[BannerPosition.userCenter]
-          as List<BannerPhoto>?;
+      var banners = bannerController.banners[BannerPosition.userCenter];
       if (banners == null || banners.isEmpty) {
         return const SizedBox.shrink();
       }

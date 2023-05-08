@@ -1,16 +1,21 @@
-// JingangList
-import 'package:app_gs/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/channel_data_controller.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/channel_shared_data_controller.dart';
+import 'package:shared/models/channel_shared_data.dart';
+import 'package:app_gs/widgets/carousel.dart';
 import 'package:shared/models/jingang.dart';
 
-import '../../../widgets/jingang_button.dart';
+import 'header.dart';
+import 'jingang_button.dart';
 
-class JingangList extends StatelessWidget {
+final logger = Logger();
+
+class ChannelJingangArea extends StatelessWidget {
   final int channelId;
-  const JingangList({Key? key, required this.channelId}) : super(key: key);
+  const ChannelJingangArea({Key? key, required this.channelId})
+      : super(key: key);
 
   Widget buildTitle(String title) {
     if (title == '') return const SizedBox();
@@ -19,16 +24,17 @@ class JingangList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ChannelDataController channelDataController =
-        Get.find<ChannelDataController>(
-            tag: 'channelId-${channelId.toString()}');
+    final channelSharedDataController = Get.find<ChannelSharedDataController>(
+      tag: '$channelId',
+    );
 
-    if (channelDataController.channelData.value == null) {
+    if (channelSharedDataController.channelSharedData.value == null) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
     return Obx(
       () {
-        Jingang? jingang = channelDataController.channelData.value!.jingang;
+        Jingang? jingang =
+            channelSharedDataController.channelSharedData.value!.jingang;
         if (jingang == null ||
             jingang.jingangDetail == null ||
             jingang.jingangDetail!.isEmpty) {

@@ -1,4 +1,4 @@
-import 'jingang.dart';
+import 'jingang_detail.dart';
 
 class Channel {
   final int id;
@@ -8,7 +8,7 @@ class Channel {
   final bool? isBanner;
   final List<int>? jingang;
   final int jingangStyle;
-  final List<JinGang>? jingangDetail;
+  final List<JinGangDetail>? jingangDetail;
   final bool? outerFrame;
   final int outerFrameStyle;
   final String? title;
@@ -38,7 +38,7 @@ class Channel {
       jingangDetail: json['jingangDetail'] == null
           ? []
           : List.from((json['jingangDetail'] as List<dynamic>)
-              .map((e) => JinGang.fromJson(e))),
+              .map((e) => JinGangDetail.fromJson(e))),
       isBanner: json['isBanner'] ?? false,
       outerFrame: json['outerFrame'] ?? false, // 是否有外框
       outerFrameStyle: json['outerFrameStyle'] ?? 1, // 1: 圓形, 2: 方形

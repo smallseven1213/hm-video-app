@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/enums/game_app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:game/navigator/delegate.dart';
 
 String gameUrl = '';
 
