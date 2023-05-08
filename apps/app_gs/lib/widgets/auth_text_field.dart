@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:flutter/material.dart';
-
 import 'auth_text_field_suffixicon.dart';
 
 class AuthTextField extends StatelessWidget {
@@ -53,6 +50,7 @@ class AuthTextField extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
+                    key: key,
                     obscureText: obscureText,
                     validator: validator,
                     controller: controller,

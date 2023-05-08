@@ -26,6 +26,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final field1Key = GlobalKey<FormFieldState>();
+  final field2Key = GlobalKey<FormFieldState>();
   final TextEditingController _accountController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -107,23 +109,25 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     AuthTextField(
+                      key: field1Key,
                       label: '帳號',
                       controller: _accountController,
                       placeholderText: '請輸入帳號',
-                      // onChanged: (value) {
-                      //   _formKey.currentState!.validate();
-                      // },
+                      onChanged: (value) {
+                        field1Key.currentState!.validate();
+                      },
                       validator: _validateUsername,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
+                      key: field2Key,
                       label: '密碼',
                       controller: _passwordController,
                       placeholderText: '請輸入密碼',
                       obscureText: true,
-                      // onChanged: (value) {
-                      //   _validatePassword(value);
-                      // },
+                      onChanged: (value) {
+                        field2Key.currentState!.validate();
+                      },
                       validator: _validatePassword,
                     ),
                   ],
