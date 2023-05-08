@@ -86,6 +86,12 @@ class UserController extends GetxController {
     }
   }
 
+  updateNickname(String nickname) {
+    info.update((val) {
+      val!.nickname = nickname;
+    });
+  }
+
   void mutateInfo(User? user, bool revalidateFromServer) {
     if (user != null) {
       info.value = user;

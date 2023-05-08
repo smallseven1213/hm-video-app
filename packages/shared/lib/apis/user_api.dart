@@ -323,7 +323,7 @@ class UserApi {
       });
 
   Future<void> updateNickname(String nickname) => fetcher(
-      url: '${systemConfig.apiHost}/user/nickname',
+      url: '${systemConfig.apiHost}/public/users/user/nickname',
       method: 'PUT',
       body: {'nickname': nickname});
 
