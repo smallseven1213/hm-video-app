@@ -1,6 +1,8 @@
-// ChannelStyle2 is a stateless widget, return Text 'STYLE 2
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/channel_shared_data_controller.dart';
+import 'package:shared/models/channel_shared_data.dart';
 
 import '../../../widgets/header.dart';
 import '../../../widgets/tab_bar.dart';
@@ -10,17 +12,23 @@ class ChannelStyle3 extends StatefulWidget {
   const ChannelStyle3({Key? key, required this.channelId}) : super(key: key);
 
   @override
-  _ChannelStyle3State createState() => _ChannelStyle3State();
+  ChannelStyle3State createState() => ChannelStyle3State();
 }
 
-class _ChannelStyle3State extends State<ChannelStyle3>
+class ChannelStyle3State extends State<ChannelStyle3>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
   final ScrollController _parentScrollController = ScrollController();
 
+  late ChannelSharedDataController? channelSharedDataController;
+
   @override
   void initState() {
     super.initState();
+    channelSharedDataController = Get.put(
+      ChannelSharedDataController(channelId: widget.channelId),
+      tag: 'channelSharedDataController-${widget.channelId}',
+    );
     _tabController = TabController(length: 3, vsync: this);
   }
 

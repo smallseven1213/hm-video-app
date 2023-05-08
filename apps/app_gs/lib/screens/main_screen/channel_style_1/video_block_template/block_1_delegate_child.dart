@@ -3,6 +3,7 @@ import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_block_grid_view_row.dart';
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/banner_image.dart';
 import 'package:shared/models/index.dart';
 
 Map<String, dynamic> organizeRowDataForSliverDelegate(

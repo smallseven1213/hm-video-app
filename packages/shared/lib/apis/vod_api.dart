@@ -274,63 +274,6 @@ class VodApi {
     }
   }
 
-  // Future<List<Block>> getBlockVodsByChannel(int channelId,
-  //     {int offset = 1}) async {
-  //   const device = {
-  //     'web': 1,
-  //     'ios': 2,
-  //     'android': 3,
-  //   };
-  //   int? deviceId = device['web'];
-
-  //   if (!kIsWeb) {
-  //     if (Platform.isIOS) {
-  //       deviceId = device['ios'];
-  //     } else {
-  //       deviceId = device['android'];
-  //     }
-  //   }
-
-  //   var res = await fetcher(
-  //       url:
-  //           '${systemConfig.apiHost}/public/videos/video/index?offset=$offset&channelId=$channelId&deviceId=$deviceId');
-
-  //   try {
-  //     return List.from(
-  //         (res.data as List<dynamic>).map((e) => Block.fromJson(e)));
-  //   } catch (e) {
-  //     return [];
-  //   }
-  // }
-
-  // Future<List<Block>> getBlockVodsByChannelAds(int channelId,
-  //     {int offset = 1}) async {
-  //   const device = {
-  //     'web': 1,
-  //     'ios': 2,
-  //     'android': 3,
-  //   };
-  //   int? deviceId = device['web'];
-
-  //   if (!kIsWeb) {
-  //     if (Platform.isIOS) {
-  //       deviceId = device['ios'];
-  //     } else {
-  //       deviceId = device['android'];
-  //     }
-  //   }
-
-  //   var res = await fetcher(
-  //       url:
-  //           '${systemConfig.apiHost}/public/videos/video/index/channelAreaBanner?offset=$offset&channelId=$channelId&deviceId=$deviceId');
-  //   try {
-  //     return List.from((res.data['data']['videoIntegrateAds'] as List<dynamic>)
-  //         .map((e) => Block.fromJson(e)));
-  //   } catch (e) {
-  //     return [];
-  //   }
-  // }
-
   Future<ChannelInfo> getBlockVodsByChannelAds(int channelId,
       {int offset = 1}) async {
     const device = {

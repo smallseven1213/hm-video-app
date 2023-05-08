@@ -5,7 +5,8 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/jingang.dart';
+import 'package:shared/models/jingang_detail.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/apis/jingang_api.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -35,7 +36,7 @@ enum JingangStyle {
 final logger = Logger();
 
 class JingangButton extends StatelessWidget {
-  final JingangDetail? item;
+  final JinGangDetail? item;
   final bool outerFrame;
   final int outerFrameStyle;
   final JingangApi jingangApi = JingangApi();

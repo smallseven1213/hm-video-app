@@ -22,4 +22,14 @@ class ChannelApi {
     return List.from((res.data['data']['channel'] as List<dynamic>)
         .map((e) => SlimChannel.fromJson(e)));
   }
+
+  // Get channel/v2/channelInfo?channelId=54
+  Future<dynamic> getOneById(int channelId) async {
+    var res = await fetcher(
+        url: '$apiPrefix/channel/v2/channelInfo?channelId=$channelId');
+    if (res.data['code'] != '00') {
+      // return SlimChannel();
+    }
+    // return SlimChannel.fromJson(res.data['data']['channel']);
+  }
 }
