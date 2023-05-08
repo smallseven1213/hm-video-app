@@ -88,8 +88,8 @@ class UserInfo extends StatelessWidget {
                               .contains('guest'))
                             InkWell(
                               onTap: () {
-                                // MyRouteDelegate.of(context)
-                                //     .push('/user/config');
+                                MyRouteDelegate.of(context)
+                                    .push('/user/nickname');
                               },
                               child: Container(
                                 padding: const EdgeInsets.all(5),

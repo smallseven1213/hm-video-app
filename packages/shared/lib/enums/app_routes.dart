@@ -24,6 +24,7 @@ enum AppRoutes {
   actor,
   actors,
   short,
+  nickname
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -79,6 +80,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/actor';
       case AppRoutes.short:
         return '/short';
+      case AppRoutes.nickname:
+        return '/user/nickname';
       default:
         return '/unknown';
     }

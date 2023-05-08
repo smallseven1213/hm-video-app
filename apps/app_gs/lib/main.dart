@@ -17,6 +17,7 @@ import 'pages/home.dart';
 import 'pages/login.dart';
 import 'pages/playrecord.dart';
 import 'pages/register.dart';
+import 'pages/nickname.dart';
 import 'pages/share.dart';
 import 'pages/sharerecord.dart';
 import 'pages/short.dart';
@@ -57,6 +58,7 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.gameLobby.value: (context, args) => const GameScreen(),
   AppRoutes.gameWithdraw.value: (context, args) => const GameWithdrawScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),
+  AppRoutes.nickname.value: (context, args) => NicknamePage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),
   AppRoutes.share.value: (context, args) => const SharePage(),
   AppRoutes.playRecord.value: (context, args) => PlayRecordPage(),

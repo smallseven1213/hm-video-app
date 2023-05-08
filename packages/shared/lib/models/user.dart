@@ -6,7 +6,7 @@ class User {
   final String? phoneNumber;
   final dynamic agentId;
   final dynamic superiorId;
-  final String? nickname;
+  String? nickname;
   final String? avatar;
   final String? invitationCode;
   final String? vipExpiredAt;

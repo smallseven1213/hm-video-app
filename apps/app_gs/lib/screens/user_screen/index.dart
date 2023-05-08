@@ -65,12 +65,13 @@ class UserScreen extends StatelessWidget {
             SliverFillRemaining(
               hasScrollBody: false,
               child: Container(
-                padding: const EdgeInsets.only(bottom: 15),
+                padding: const EdgeInsets.only(bottom: 20, right: 20),
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Text(
                     '版本號:${systemConfig.version}',
-                    style: const TextStyle(color: Color(0xFF486A89)),
+                    style:
+                        const TextStyle(color: Color(0xFFFFFFFF), fontSize: 12),
                   ),
                 ),
               ),
