@@ -16,7 +16,8 @@ class CacheImage extends StatelessWidget {
     this.width = double.infinity,
     this.height = double.infinity,
     this.fit = BoxFit.cover,
-    this.emptyImageUrl = 'assets/img/game_lobby/game_empty-dark.webp',
+    this.emptyImageUrl =
+        'packages/game/assets/images/game_lobby/game_empty-dark.webp',
   }) : super(key: key);
 
   @override

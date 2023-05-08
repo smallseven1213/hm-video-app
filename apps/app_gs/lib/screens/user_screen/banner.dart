@@ -31,21 +31,11 @@ class _UserSreenBannerState extends State<UserSreenBanner> {
         return const SizedBox.shrink();
       }
 
-      List<BannerImage> images = banners
-          .map(
-            (e) => BannerImage.fromJson({
-              'id': e.id,
-              'url': e.url ?? '',
-              'photoSid': e.photoSid,
-              'isAutoClose': false,
-            }),
-          )
-          .toList();
-      return images.isNotEmpty == true
+      return banners.isNotEmpty == true
           ? AspectRatio(
               aspectRatio: 359 / 75,
               child: Carousel(
-                images: images,
+                images: banners,
                 ratio: 359 / 75,
               ),
             )

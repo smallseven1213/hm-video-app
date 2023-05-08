@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:shared/models/banner_image.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/widgets/ad_banner.dart';
 
 class ChannelAreaBanner extends StatelessWidget {
-  final BannerImage image;
+  final BannerPhoto image;
   const ChannelAreaBanner({
     Key? key,
     required this.image,

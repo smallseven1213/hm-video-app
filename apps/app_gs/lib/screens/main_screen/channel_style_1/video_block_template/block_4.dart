@@ -2,6 +2,7 @@ import 'package:app_gs/widgets/channel_area_banner.dart';
 import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_block_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
 
@@ -76,7 +77,7 @@ class Block4Widget extends StatelessWidget {
                 child: Container(
                   child: block.isAreaAds == true && index % 3 == 2
                       ? ChannelAreaBanner(
-                          image: BannerImage.fromJson({
+                          image: BannerPhoto.fromJson({
                             'id': result[index][0].id ?? 0,
                             'url': result[index][0].adUrl ?? '',
                             'photoSid': result[index][0].coverHorizontal ?? '',

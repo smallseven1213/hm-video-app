@@ -46,11 +46,12 @@ class GameListItem extends StatelessWidget {
                   width: double.infinity,
                   height: 105,
                   fit: BoxFit.cover,
-                  emptyImageUrl: 'assets/img/game_lobby/game_empty-$theme.webp',
+                  emptyImageUrl:
+                      'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
                 )
               : SizedBox(
                   child: Image.asset(
-                    'assets/img/game_lobby/game_empty-$theme.webp',
+                    'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
                     width: double.infinity,
                     height: 105,
                   ),
@@ -119,42 +120,42 @@ class _GameListViewState extends State<GameListView>
       {
         'name': '全部',
         'gameType': 0,
-        'icon': 'assets/img/game_lobby/menu-all@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
       },
       {
         'name': '最近',
         'gameType': -1,
-        'icon': 'assets/img/game_lobby/menu-new@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
       },
       {
         'name': '捕魚',
         'gameType': 1,
-        'icon': 'assets/img/game_lobby/menu-fish@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
       },
       {
         'name': '真人',
         'gameType': 2,
-        'icon': 'assets/img/game_lobby/menu-live@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
       },
       {
         'name': '棋牌',
         'gameType': 3,
-        'icon': 'assets/img/game_lobby/menu-poker@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
       },
       {
         'name': '電子',
         'gameType': 4,
-        'icon': 'assets/img/game_lobby/menu-slot@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
       },
       {
         'name': '體育',
         'gameType': 5,
-        'icon': 'assets/img/game_lobby/menu-sport@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
       },
       {
         'name': '彩票',
         'gameType': 6,
-        'icon': 'assets/img/game_lobby/menu-lottery@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
       }
     ];
 
@@ -264,7 +265,7 @@ class _GameListViewState extends State<GameListView>
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/img/game_lobby/game-item-empty-$theme.webp',
+                  'packages/game/assets/images/game_lobby/game-item-empty-$theme.webp',
                   width: 80,
                   height: 80,
                 ),

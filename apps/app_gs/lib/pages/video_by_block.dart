@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/ad_window_controller.dart';
 import 'package:shared/controllers/block_vod_controller.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
 
@@ -141,7 +142,7 @@ class SliverBlockWidget extends StatelessWidget {
                         .data.value.channelBanners[bannerIndex];
 
                     return ChannelAreaBanner(
-                        image: BannerImage.fromJson({
+                        image: BannerPhoto.fromJson({
                       'id': data.id,
                       'url': data.url,
                       'photoSid': data.photoSid,

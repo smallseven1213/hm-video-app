@@ -2,7 +2,7 @@ import 'package:app_gs/widgets/channel_area_banner.dart';
 import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/banner_image.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
 // 四大
@@ -35,7 +35,7 @@ class Block2Widget extends StatelessWidget {
               padding: const EdgeInsets.only(bottom: 8.0),
               child: videos[index].dataType == VideoType.areaAd.index
                   ? ChannelAreaBanner(
-                      image: BannerImage.fromJson({
+                      image: BannerPhoto.fromJson({
                         'id': videos[index].id ?? 0,
                         'url': videos[index].adUrl ?? '',
                         'photoSid': videos[index].coverHorizontal ?? '',

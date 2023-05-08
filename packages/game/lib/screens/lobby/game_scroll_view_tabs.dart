@@ -77,7 +77,8 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Image.asset(
-                  widget.icon ?? 'assets/img/game_lobby/game_empty-$theme.webp',
+                  widget.icon ??
+                      'packages/game/game_lobby/game_empty-$theme.webp',
                   width: 24,
                   height: 24,
                 ),

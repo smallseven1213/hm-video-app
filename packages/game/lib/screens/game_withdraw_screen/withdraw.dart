@@ -241,7 +241,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Image.asset(
-                                "assets/img/game_lobby/withdraw-record.webp",
+                                "packages/game/assets/images/game_lobby/withdraw-record.webp",
                                 width: 28,
                                 height: 28,
                               ),

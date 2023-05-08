@@ -339,6 +339,17 @@ class _SplashState extends State<Splash> {
               child: widget.loading!(text: loadingText) ??
                   const CircularProgressIndicator(),
             ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Text(
+                '版本 ${systemConfig.version}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
           ],
         ),
       ),

@@ -30,7 +30,7 @@ class _UserInfoService extends State<UserInfoService> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset(
-              "assets/img/game_lobby/service.webp",
+              "packages/game/assets/images/game_lobby/service.webp",
               width: 28,
               height: 28,
             ),

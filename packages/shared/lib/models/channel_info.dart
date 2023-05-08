@@ -1,10 +1,9 @@
 import 'package:shared/models/tag.dart';
 
-import 'banner_image.dart';
-import 'jingang.dart';
+import 'banner_photo.dart';
 
 class ChannelInfo {
-  List<BannerImage>? banner;
+  List<BannerPhoto>? banner;
   Jingang? jingang;
   List<Blocks>? blocks;
 
@@ -12,9 +11,9 @@ class ChannelInfo {
 
   ChannelInfo.fromJson(Map<String, dynamic> json) {
     if (json['banner'] != null) {
-      banner = <BannerImage>[];
+      banner = <BannerPhoto>[];
       json['banner'].forEach((v) {
-        banner!.add(BannerImage.fromJson(v));
+        banner!.add(BannerPhoto.fromJson(v));
       });
     }
     jingang =
@@ -56,7 +55,7 @@ class Blocks {
   bool? isTitle;
   bool? isLoading;
   bool? isEmbeddedAds;
-  BannerImage? banner;
+  BannerPhoto? banner;
   Videos? videos;
 
   Blocks(
@@ -91,7 +90,7 @@ class Blocks {
     isLoading = json['isLoading'];
     isEmbeddedAds = json['isEmbeddedAds'];
     banner =
-        json['banner'] != null ? BannerImage.fromJson(json['banner']) : null;
+        json['banner'] != null ? BannerPhoto.fromJson(json['banner']) : null;
     videos = json['videos'] != null ? Videos.fromJson(json['videos']) : null;
   }
 

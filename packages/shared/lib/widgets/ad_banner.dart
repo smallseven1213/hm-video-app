@@ -3,8 +3,11 @@ import 'package:shared/models/channel_info.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../models/banner_photo.dart';
+
 class AdBanner extends StatelessWidget {
-  final BannerImage image;
+  final BannerPhoto image;
+  
   const AdBanner({
     Key? key,
     required this.image,
