@@ -1,6 +1,7 @@
 import 'package:shared/models/tag.dart';
 
 import 'banner_photo.dart';
+import 'jingang.dart';
 
 class ChannelInfo {
   List<BannerPhoto>? banner;

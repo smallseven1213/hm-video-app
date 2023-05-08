@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:game/navigator/delegate.dart';
 import 'package:get/get.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:game/models/game_banner_image.dart';

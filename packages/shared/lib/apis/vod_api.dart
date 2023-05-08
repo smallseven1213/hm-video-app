@@ -412,4 +412,23 @@ class VodApi {
 
     return names;
   }
+
+  Future<BlockVod> getVideoByAreaId(
+    int areaId, {
+    int page = 1,
+    int limit = 2,
+  }) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/v2/areaInfo?page=$page&limit=$limit&areaId=$areaId');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    List<Vod> vods = List.from((res.data['data']['data'] as List<dynamic>)
+        .map((e) => Vod.fromJson(e)));
+    return BlockVod(
+      vods,
+      res.data['data']['total'],
+    );
+  }
 }

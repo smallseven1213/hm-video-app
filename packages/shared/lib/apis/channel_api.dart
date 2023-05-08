@@ -1,4 +1,11 @@
+import 'dart:convert';
+
+import '../models/banner_photo.dart';
+import '../models/channel_info.dart';
+import '../models/channel_shared_data.dart';
+import '../models/jingang.dart';
 import '../models/slim_channel.dart';
+import '../models/tag.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
@@ -24,12 +31,21 @@ class ChannelApi {
   }
 
   // Get channel/v2/channelInfo?channelId=54
-  Future<dynamic> getOneById(int channelId) async {
+  Future<ChannelSharedData> getOneById(int channelId) async {
     var res = await fetcher(
         url: '$apiPrefix/channel/v2/channelInfo?channelId=$channelId');
     if (res.data['code'] != '00') {
-      // return SlimChannel();
+      return ChannelSharedData();
     }
-    // return SlimChannel.fromJson(res.data['data']['channel']);
+    ChannelSharedData channelSharedData = ChannelSharedData(
+        banner: List.from((res.data['data']['banner'] as List<dynamic>)
+            .map((e) => BannerPhoto.fromJson(e))),
+        jingang: Jingang.fromJson(res.data['data']['jingang']),
+        tags: List.from((res.data['data']['tags'] as List<dynamic>)
+            .map((e) => Tag.fromJson(e))),
+        blocks: List.from((res.data['data']['blocks'] as List<dynamic>)
+            .map((e) => Blocks.fromJson(e))));
+
+    return channelSharedData;
   }
 }

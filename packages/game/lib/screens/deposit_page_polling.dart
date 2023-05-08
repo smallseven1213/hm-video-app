@@ -2,29 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
-
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class GameDeposit extends StatefulWidget {
   const GameDeposit({Key? key}) : super(key: key);
 
   @override
-  _GameDepositState createState() => _GameDepositState();
+  GameDepositState createState() => GameDepositState();
 }
 
-class _GameDepositState extends State<GameDeposit> {
+class GameDepositState extends State<GameDeposit> {
   bool pointLoading = true;
   bool isLoading = false;
-
-  _updateLoading(bool status) {
-    print('status>>>>: $status ');
-    setState(() {
-      isLoading = status;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

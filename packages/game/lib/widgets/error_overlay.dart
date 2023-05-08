@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:shared/navigator/delegate.dart';
-import 'package:shared/enums/app_routes.dart';
-
 import 'package:game/controllers/game_response_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -12,10 +11,10 @@ class ErrorOverlayWidget extends StatefulWidget {
   final Widget child;
   const ErrorOverlayWidget({super.key, required this.child});
   @override
-  _ErrorOverlayWidgetState createState() => _ErrorOverlayWidgetState();
+  ErrorOverlayWidgetState createState() => ErrorOverlayWidgetState();
 }
 
-class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
+class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   final responseController = Get.find<GameApiResponseErrorCatchController>();
 
   @override

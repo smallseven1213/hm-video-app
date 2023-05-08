@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:game/utils/setupGameDependencies.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/setupDependencies.dart';
-
-import 'package:game/utils/setupGameDependencies.dart';
 
 import '../models/color_keys.dart';
 

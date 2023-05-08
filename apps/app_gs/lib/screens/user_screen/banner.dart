@@ -2,7 +2,6 @@ import 'package:app_gs/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/models/banner_image.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
@@ -25,8 +24,7 @@ class _UserSreenBannerState extends State<UserSreenBanner> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var banners = bannerController.banners[BannerPosition.userCenter]
-          as List<BannerPhoto>?;
+      var banners = bannerController.banners[BannerPosition.userCenter];
       if (banners == null || banners.isEmpty) {
         return const SizedBox.shrink();
       }
