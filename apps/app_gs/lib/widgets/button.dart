@@ -28,12 +28,11 @@ class Button extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 1, color: Colors.white),
-        color: type == 'primary'
-            ? const Color.fromARGB(255, 161, 184, 226)
-            : const Color(0xff1E50B1),
-      ),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(width: 1, color: Colors.white),
+          color: type == 'primary'
+              ? const Color.fromRGBO(255, 255, 255, 0.8)
+              : const Color.fromRGBO(66, 119, 220, 0.5)),
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: GestureDetector(
         onTap: onPressed,
