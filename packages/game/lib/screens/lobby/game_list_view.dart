@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game/utils/handleGameItem.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
@@ -293,11 +294,11 @@ class _GameListViewState extends State<GameListView>
                 children: [
                   GestureDetector(
                     onTap: () {
-                      // handleGameItem(
-                      //   context,
-                      //   gameId: gameListResult[index * 2].gameId,
-                      //   updateGameHistory: widget.updateGameHistory,
-                      // );
+                      handleGameItem(
+                        context,
+                        gameId: gameListResult[index * 2].gameId,
+                        updateGameHistory: widget.updateGameHistory,
+                      );
                     },
                     child: GameListItem(
                       imageUrl: gameListResult[index * 2].imgUrl,
@@ -307,11 +308,11 @@ class _GameListViewState extends State<GameListView>
                   if (index * 2 + 1 < gameListResult.length)
                     GestureDetector(
                       onTap: () {
-                        // handleGameItem(
-                        //   context,
-                        //   gameId: gameListResult[index * 2 + 1].gameId,
-                        //   updateGameHistory: widget.updateGameHistory,
-                        // );
+                        handleGameItem(
+                          context,
+                          gameId: gameListResult[index * 2 + 1].gameId,
+                          updateGameHistory: widget.updateGameHistory,
+                        );
                       },
                       child: GameListItem(
                         imageUrl: gameListResult[index * 2 + 1].imgUrl,

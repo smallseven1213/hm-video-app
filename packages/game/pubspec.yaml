@@ -36,6 +36,10 @@ dependencies:
   form_builder_validators: ^8.1.1
   carousel_slider: ^4.2.1
   marquee: ^2.2.1
+  fwfh_webview: ^0.6.2+5
+  webview_flutter: ^3.0.4
+  flutter_widget_from_html_core: ^0.8.5+3
+  pointer_interceptor: ^0.9.3+4
 
 dev_dependencies:
   flutter_test:
