@@ -1,7 +1,5 @@
 import 'package:app_gs/pages/actor.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
-import 'package:app_gs/screens/game_screen/lobby.dart';
-import 'package:app_gs/screens/game_withdraw_screen/index.dart';
 import 'package:app_gs/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -9,6 +7,10 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
+
+import 'package:app_gs/screens/game_screen/lobby.dart';
+import 'package:app_gs/screens/game_withdraw_screen/index.dart';
+import 'package:app_gs/screens/game_webview_screen/index.dart';
 
 import 'config/colors.dart';
 import 'pages/actors.dart';
@@ -57,6 +59,9 @@ final Map<String, RouteWidgetBuilder> routes = {
       ),
   AppRoutes.gameLobby.value: (context, args) => const GameScreen(),
   AppRoutes.gameWithdraw.value: (context, args) => const GameWithdrawScreen(),
+  AppRoutes.gameWebview.value: (context, args) => GameWebviewScreen(
+        gameUrl: args['url'],
+      ),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.nickname.value: (context, args) => NicknamePage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:game/apis/game_api.dart';
-import 'package:game/enums/game_app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
+
+import 'package:game/apis/game_api.dart';
 
 String gameUrl = '';
 
@@ -18,10 +19,6 @@ getGameUrl(String tpCode, int gameId) async {
     gameUrl = res['loginUrls'][0];
   }
 }
-
-// void _checkIsWeb(BuildContext context) {
-//   MyRouteDelegate.of(context).push(AppRoutes.gameLobby.value);
-// }
 
 _saveGameHistory({gameId}) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -48,6 +45,7 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
     await Future.delayed(const Duration(seconds: 1));
 
     if (gameUrl == '') {
+      print('gameUrl is empty');
       // onLoading(context, status: false);
       showDialog(
         context: context,
@@ -62,8 +60,11 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
       );
       return;
     } else {
+      print('gameUrl: $gameUrl');
       // onLoading(context, status: false);
-      MyRouteDelegate.of(context).push(GameAppRoutes.gameLobby.value);
+      MyRouteDelegate.of(context).push(AppRoutes.gameWebview.value, args: {
+        'url': gameUrl,
+      });
     }
   } catch (error) {
     print('getGameUrl error: $error');
