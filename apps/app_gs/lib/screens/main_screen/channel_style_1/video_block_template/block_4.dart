@@ -80,7 +80,7 @@ class Block4Widget extends StatelessWidget {
                           image: BannerPhoto.fromJson({
                             'id': result[index][0].id ?? 0,
                             'url': result[index][0].adUrl ?? '',
-                            'photoSid': result[index][0].coverHorizontal ?? '',
+                            'photoSid': result[index][0].coverVertical ?? '',
                             'isAutoClose': false,
                           }),
                         )
@@ -89,6 +89,7 @@ class Block4Widget extends StatelessWidget {
                           gridLength: 3,
                           imageRatio: BlockImageRatio.block4.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
+                          displayCoverVertical: true,
                         ),
                 ),
               );

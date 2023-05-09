@@ -141,6 +141,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
   final int gridLength;
   final double? imageRatio;
   final bool isEmbeddedAds;
+  final bool? displayCoverVertical;
 
   const VideoBlockGridViewRow({
     Key? key,
@@ -148,6 +149,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
     this.gridLength = 2,
     this.imageRatio,
     required this.isEmbeddedAds,
+    this.displayCoverVertical = false,
   }) : super(key: key);
 
   @override
@@ -169,6 +171,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
               imageRatio: imageRatio,
               detail: videoData[0],
               isEmbeddedAds: isEmbeddedAds,
+              displayCoverVertical: displayCoverVertical ?? false,
             ),
           ),
           const SizedBox(width: 10),
@@ -205,6 +208,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
                           imageRatio: imageRatio,
                           detail: e,
                           isEmbeddedAds: isEmbeddedAds,
+                          displayCoverVertical: displayCoverVertical ?? false,
                         ),
                       ),
                 const SizedBox(width: 10),
@@ -232,6 +236,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
                   imageRatio: imageRatio,
                   detail: e,
                   isEmbeddedAds: isEmbeddedAds,
+                  displayCoverVertical: displayCoverVertical ?? false,
                 ),
               ),
               const SizedBox(width: 10),
