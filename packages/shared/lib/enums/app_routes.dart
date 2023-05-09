@@ -7,8 +7,8 @@ enum AppRoutes {
   publisher,
   tag,
   gameLobby,
-  gameDepositPageList,
-  gameDepositPagePolling,
+  gameDepositList,
+  gameDepositPolling,
   gameWithdraw,
   gameWebview,
   login,
@@ -49,9 +49,9 @@ extension AppRoutesExtension on AppRoutes {
         return '/game';
       case AppRoutes.gameWithdraw:
         return '/withdraw';
-      case AppRoutes.gameDepositPageList:
+      case AppRoutes.gameDepositList:
         return '/game/deposit_page_list';
-      case AppRoutes.gameDepositPagePolling:
+      case AppRoutes.gameDepositPolling:
         return '/game/deposit_page_polling';
       case AppRoutes.gameWebview:
         return '/game/webview';
