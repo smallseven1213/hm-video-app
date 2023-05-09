@@ -78,6 +78,7 @@ class Block10Widget extends StatelessWidget {
                           imageRatio: BlockImageRatio.block10.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
                           displayCoverVertical: true,
+                          blockId: block.id ?? 0,
                         ),
                 ),
               );

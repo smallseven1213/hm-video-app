@@ -20,9 +20,12 @@ String? getVideoUrl(String? videoUrl) {
 class VideoDetailController extends GetxController {
   VodApi vodApi = VodApi();
   final int videoId;
-  var videoDetail = Vod(0, '').obs;
+  // var videoDetail = Vod(0, '').obs;
   var videoUrl = ''.obs;
-  var video = Video(id: 0, title: '').obs;
+  // var video = Video(id: 0, title: '').obs;
+
+  var videoDetail = Rx<Vod?>(null);
+  var video = Rx<Video?>(null);
 
   VideoDetailController(this.videoId);
 

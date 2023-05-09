@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/video_short_popular_controller.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/short/button.dart';
@@ -6,8 +8,18 @@ import '../widgets/shortcard/index.dart';
 
 class ShortPage extends StatefulWidget {
   final int itemCount;
+  final int id;
+  final int areaId;
 
-  const ShortPage({Key? key, required this.itemCount}) : super(key: key);
+  // area id
+  // video id
+
+  const ShortPage({
+    Key? key,
+    required this.itemCount,
+    required this.id,
+    required this.areaId,
+  }) : super(key: key);
 
   @override
   ShortPageState createState() => ShortPageState();
@@ -16,55 +28,70 @@ class ShortPage extends StatefulWidget {
 class ShortPageState extends State<ShortPage> {
   final PageController _pageController = PageController();
 
+  // fetch vod getPopular
+
   @override
   Widget build(BuildContext context) {
+    final VideoShortPopularController videoShortPopularController =
+        Get.put(VideoShortPopularController(
+      widget.areaId, // block.id,
+      widget.id, // video.id,
+    ));
+
     return Scaffold(
       body: Stack(
         children: [
-          PageView.builder(
-            controller: _pageController,
-            itemCount: widget.itemCount,
-            itemBuilder: (BuildContext context, int index) {
-              return Column(
-                children: [
-                  ShortCard(index: index),
-                  Container(
-                    height: 90,
-                    // gradient background
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Colors.black,
-                          Color(0xFF002869),
-                        ],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
+          Obx(() {
+            print(
+                'videoShortPopularController.videoShortPopular.value.length: ${videoShortPopularController.data.length}');
+            return PageView.builder(
+              controller: _pageController,
+              itemCount: videoShortPopularController.data.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Column(
+                  children: [
+                    ShortCard(
+                      index: index,
+                      id: videoShortPopularController.data[index].id,
+                    ),
+                    Container(
+                      height: 90,
+                      // gradient background
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black,
+                            Color(0xFF002869),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
                       ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: const [
-                        ShortButtomButton(
-                          title: '1.9萬',
-                          subscribe: '喜歡就點讚',
-                          activeIcon: Icons.favorite,
-                          unActiveIcon: Icons.favorite_border,
-                        ),
-                        ShortButtomButton(
-                          title: '1.9萬',
-                          subscribe: '添加到收藏',
-                          // icon is star
-                          activeIcon: Icons.star,
-                          unActiveIcon: Icons.star_border,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              );
-            },
-            scrollDirection: Axis.vertical,
-          ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: const [
+                          ShortButtomButton(
+                            title: '1.9萬',
+                            subscribe: '喜歡就點讚',
+                            activeIcon: Icons.favorite,
+                            unActiveIcon: Icons.favorite_border,
+                          ),
+                          ShortButtomButton(
+                            title: '1.9萬',
+                            subscribe: '添加到收藏',
+                            // icon is star
+                            activeIcon: Icons.star,
+                            unActiveIcon: Icons.star_border,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
+              scrollDirection: Axis.vertical,
+            );
+          }),
           const FloatPageBackButton()
         ],
       ),

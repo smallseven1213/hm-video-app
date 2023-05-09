@@ -13,9 +13,9 @@ class ChannelStyle2 extends StatelessWidget {
       scrollDirection: Axis.vertical,
       itemCount: 1000,
       itemBuilder: (BuildContext context, int index) {
-        return ShortCard(
-          index: index,
-        );
+        // return ShortCard(
+        //   index: index, id: null,
+        // );
       },
     );
   }

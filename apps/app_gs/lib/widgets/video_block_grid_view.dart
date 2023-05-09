@@ -12,6 +12,7 @@ class VideoBlockGridView extends StatelessWidget {
   final double? imageRatio;
   final bool isEmbeddedAds;
   final bool displayCoverVertical;
+  final int? blockId;
 
   const VideoBlockGridView({
     Key? key,
@@ -20,6 +21,7 @@ class VideoBlockGridView extends StatelessWidget {
     this.imageRatio,
     required this.isEmbeddedAds,
     required this.displayCoverVertical,
+    this.blockId,
   }) : super(key: key);
 
   @override
@@ -43,6 +45,7 @@ class VideoBlockGridView extends StatelessWidget {
               imageRatio: imageRatio,
               isEmbeddedAds: isEmbeddedAds,
               displayCoverVertical: displayCoverVertical,
+              blockId: blockId,
             ),
             const SizedBox(height: 8),
           ],

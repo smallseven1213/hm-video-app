@@ -85,6 +85,7 @@ class Block4Widget extends StatelessWidget {
                           }),
                         )
                       : VideoBlockGridView(
+                          blockId: block.id ?? 0,
                           videos: result[index],
                           gridLength: 3,
                           imageRatio: BlockImageRatio.block4.ratio,
