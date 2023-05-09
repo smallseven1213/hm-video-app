@@ -55,7 +55,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final int id;
   final String coverVertical;
   final String coverHorizontal;
-  final bool displaycoverVertical;
+  final bool displayCoverVertical;
   final int timeLength;
   final List<Tag> tags;
   final String title;
@@ -75,7 +75,7 @@ class VideoPreviewWidget extends StatelessWidget {
       required this.id,
       required this.coverVertical,
       required this.coverHorizontal,
-      this.displaycoverVertical = false,
+      this.displayCoverVertical = false,
       required this.timeLength,
       required this.tags,
       required this.title,
@@ -136,7 +136,7 @@ class VideoPreviewWidget extends StatelessWidget {
                   // 背景
                   AspectRatio(
                     aspectRatio: imageRatio ??
-                        (displaycoverVertical == true ? 119 / 179 : 374 / 198),
+                        (displayCoverVertical == true ? 119 / 179 : 374 / 198),
                     child: Container(
                         decoration: const BoxDecoration(
                             borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -167,7 +167,7 @@ class VideoPreviewWidget extends StatelessWidget {
                   // 主體
                   AspectRatio(
                     aspectRatio: imageRatio ??
-                        (displaycoverVertical == true ? 119 / 179 : 374 / 198),
+                        (displayCoverVertical == true ? 119 / 179 : 374 / 198),
                     child: Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -188,7 +188,7 @@ class VideoPreviewWidget extends StatelessWidget {
                         child: SidImageVisibilityDetector(
                           child: SidImage(
                             key: ValueKey('video-preview-$id'),
-                            sid: displaycoverVertical
+                            sid: displayCoverVertical
                                 ? coverVertical
                                 : coverHorizontal,
                             width: double.infinity,

@@ -181,7 +181,7 @@ class ChannelStyle4 extends StatelessWidget {
                                             child: VideoPreviewWidget(
                                               id: vod.id,
                                               title: vod.title,
-                                              displaycoverVertical: true,
+                                              displayCoverVertical: true,
                                               coverHorizontal:
                                                   vod.coverHorizontal!,
                                               coverVertical: vod.coverVertical!,
