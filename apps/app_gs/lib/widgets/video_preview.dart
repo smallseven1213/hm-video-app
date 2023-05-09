@@ -69,27 +69,29 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool? noTags;
   final bool? noInfoView;
   final int? film; // 1長視頻, 2短視頻, 3漫畫
+  final int? blockId;
 
-  VideoPreviewWidget(
-      {Key? key,
-      required this.id,
-      required this.coverVertical,
-      required this.coverHorizontal,
-      this.displayCoverVertical = false,
-      required this.timeLength,
-      required this.tags,
-      required this.title,
-      required this.videoViewTimes,
-      this.isEmbeddedAds = false,
-      this.detail,
-      this.isEditing = false,
-      this.isSelected = false,
-      this.imageRatio,
-      this.onEditingTap,
-      this.film = 1,
-      this.noTags = false,
-      this.noInfoView = false})
-      : super(key: key);
+  VideoPreviewWidget({
+    Key? key,
+    required this.id,
+    required this.coverVertical,
+    required this.coverHorizontal,
+    this.displayCoverVertical = false,
+    required this.timeLength,
+    required this.tags,
+    required this.title,
+    required this.videoViewTimes,
+    this.isEmbeddedAds = false,
+    this.detail,
+    this.isEditing = false,
+    this.isSelected = false,
+    this.imageRatio,
+    this.onEditingTap,
+    this.film = 1,
+    this.noTags = false,
+    this.noInfoView = false,
+    this.blockId,
+  }) : super(key: key);
 
   final playrecordController = Get.find<PlayRecordController>();
 
@@ -117,7 +119,12 @@ class VideoPreviewWidget extends StatelessWidget {
                             },
                             removeSamePath: true);
                       } else if (film == 2) {
-                        MyRouteDelegate.of(context).push(AppRoutes.short.value);
+                        MyRouteDelegate.of(context).push(AppRoutes.short.value,
+                            args: {
+                              'id': id, // videoId
+                              'areaId': blockId, // blockId
+                            },
+                            removeSamePath: true);
                       } else if (film == 3) {}
                       var playRecord = VideoDatabaseField(
                         id: id,

@@ -86,8 +86,10 @@ final Map<String, RouteWidgetBuilder> routes = {
       ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
   AppRoutes.actors.value: (context, args) => ActorsPage(),
-  AppRoutes.short.value: (context, args) => const ShortPage(
+  AppRoutes.short.value: (context, args) => ShortPage(
         itemCount: 10,
+        id: args['id'] as int,
+        areaId: args['areaId'] as int
       ),
   AppRoutes.supplier.value: (context, args) => SupplierPage(
         id: args['id'] as int,

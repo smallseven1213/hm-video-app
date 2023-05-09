@@ -208,7 +208,9 @@ class Vod {
         publisher: (json['publisher'] == null)
             ? null
             : Publisher.fromJson(json['publisher']),
-        supplier: null,
+        supplier: (json['supplier'] == null)
+            ? null
+            : Supplier.fromJson(json['supplier']),
         belongVods: json['belongVods'] == null
             ? null
             : List.from((json['belongVods'] as List<dynamic>)

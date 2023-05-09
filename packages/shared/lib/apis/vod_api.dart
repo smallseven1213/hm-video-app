@@ -242,9 +242,10 @@ class VodApi {
         (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
   }
 
-  Future<List<Video>> getPopular() async {
+  Future<List<Video>> getPopular(int areaId, int videoId) async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/videos/video/shortVideo/popular');
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideo/popular?areaId=$areaId&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }
