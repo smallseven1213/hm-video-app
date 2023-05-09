@@ -1,15 +1,16 @@
-// // Block6Widget
+// Block5Widget
+
 import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/index.dart';
 
-// 六小
-class Block6Widget extends StatelessWidget {
+class Block5Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
-  const Block6Widget({
+  const Block5Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
@@ -18,7 +19,7 @@ class Block6Widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Data> videos = block.videos?.data ?? [];
+    List<Vod> videos = block.videos?.data ?? [];
 
     return SliverToBoxAdapter(
       child: Padding(
@@ -26,18 +27,17 @@ class Block6Widget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
+            SizedBox(
+              height:
+                  (MediaQuery.of(context).size.width - 16) / 2.5 / 16 * 9 + 40,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: List.generate(
                     videos.length,
                     (index) => Container(
                       padding: const EdgeInsets.only(right: 8.0),
-                      width: (MediaQuery.of(context).size.width - 16) * 0.7,
+                      width: (MediaQuery.of(context).size.width - 16) / 2.5,
                       child: VideoPreviewWidget(
                         id: videos[index].id!,
                         title: videos[index].title ?? '',

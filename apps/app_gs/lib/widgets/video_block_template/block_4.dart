@@ -3,11 +3,10 @@ import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_block_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
 
-List<List<Data>> organizeRowData(List videos, Blocks block) {
-  List<List<Data>> result = [];
+List<List<Vod>> organizeRowData(List videos, Blocks block) {
+  List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
   int blockLength = 7;
 
@@ -28,13 +27,13 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
         // print('Block1Widget 有3筆: $i');
       } else if (i + 1 < videos.length) {
         // 影片列表
-        result.add([videos[i], videos[i + 1], Data(id: null)]);
+        result.add([videos[i], videos[i + 1], Vod(0, '')]);
         i += 2;
         // print('Block1Widget 有2筆: $i');
       } else {
         // 落單的一筆
         if (i < videos.length) {
-          result.add([videos[i], Data(id: null), Data(id: null)]);
+          result.add([videos[i], Vod(0, ''), Vod(0, '')]);
           i++;
           // print('Block1Widget 落單的一筆: $i');
         } else {
@@ -63,8 +62,8 @@ class Block4Widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Data> videos = block.videos?.data ?? [];
-    List<List<Data>> result = organizeRowData(videos, block);
+    List<Vod> videos = block.videos?.data ?? [];
+    List<List<Vod>> result = organizeRowData(videos, block);
 
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
@@ -78,8 +77,8 @@ class Block4Widget extends StatelessWidget {
                   child: block.isAreaAds == true && index % 3 == 2
                       ? ChannelAreaBanner(
                           image: BannerPhoto.fromJson({
-                            'id': result[index][0].id ?? 0,
-                            'url': result[index][0].adUrl ?? '',
+                            'id': result[index][0].id,
+                            'url': result[index][0].adUrl,
                             'photoSid': result[index][0].coverHorizontal ?? '',
                             'isAutoClose': false,
                           }),

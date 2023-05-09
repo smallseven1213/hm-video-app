@@ -3,10 +3,11 @@ import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
+import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
 
-List<List<Data>> organizeRowData(List videos, Blocks block) {
-  List<List<Data>> result = [];
+List<List<Vod>> organizeRowData(List videos, Blocks block) {
+  List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
   int blockLength = 7;
   try {
@@ -37,12 +38,12 @@ List<List<Data>> organizeRowData(List videos, Blocks block) {
   return result;
 }
 
-// 六小
-class Block3Widget extends StatelessWidget {
+// 六直
+class Block10Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
-  const Block3Widget({
+  const Block10Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
@@ -51,40 +52,40 @@ class Block3Widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Data> videos = block.videos?.data ?? [];
-    List<List<Data>> result = organizeRowData(videos, block);
+    List<Vod> videos = block.videos?.data ?? [];
+    List<List<Vod>> result = organizeRowData(videos, block);
 
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            if (index == result.length) {
+            if (index < result.length) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child: Container(
+                  child: block.isAreaAds == true && index % 4 == 3
+                      ? ChannelAreaBanner(
+                          image: BannerPhoto.fromJson({
+                            'id': result[index][0].id ?? 0,
+                            'url': result[index][0].adUrl ?? '',
+                            'photoSid': result[index][0].coverHorizontal ?? '',
+                            'isAutoClose': false,
+                          }),
+                        )
+                      : VideoBlockGridViewRow(
+                          videoData: result[index],
+                          imageRatio: BlockImageRatio.block10.ratio,
+                          isEmbeddedAds: block.isEmbeddedAds ?? false,
+                        ),
+                ),
+              );
+            } else {
               return VideoBlockFooter(
                   block: block, updateBlock: updateBlock, channelId: channelId);
             }
-
-            return Padding(
-              padding: const EdgeInsets.only(bottom: 8.0),
-              child: Container(
-                child: block.isAreaAds == true && index % 4 == 3
-                    ? ChannelAreaBanner(
-                        image: BannerPhoto.fromJson({
-                          'id': result[index][0].id ?? 0,
-                          'url': result[index][0].adUrl ?? '',
-                          'photoSid': result[index][0].coverHorizontal ?? '',
-                          'isAutoClose': false,
-                        }),
-                      )
-                    : VideoBlockGridViewRow(
-                        videoData: result[index],
-                        imageRatio: BlockImageRatio.block3.ratio,
-                        isEmbeddedAds: block.isEmbeddedAds ?? false,
-                      ),
-              ),
-            );
           },
-          childCount: result.length + 1, // 额外的1用于 VideoBlockFooter
+          childCount: result.length + 1,
         ),
       ),
     );

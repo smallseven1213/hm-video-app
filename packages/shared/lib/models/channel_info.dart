@@ -1,4 +1,6 @@
+import 'package:logger/logger.dart';
 import 'package:shared/models/tag.dart';
+import 'package:shared/models/vod.dart';
 
 import 'banner_photo.dart';
 import 'jingang.dart';
@@ -124,7 +126,7 @@ class Videos {
   num? total;
   String? current;
   num? limit;
-  List<Data>? data;
+  List<Vod>? data;
 
   Videos({total, current, limit, data});
 
@@ -133,9 +135,9 @@ class Videos {
     current = json['current'];
     limit = json['limit'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Vod>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(Vod.fromJson(v));
       });
     }
   }
@@ -145,91 +147,9 @@ class Videos {
     data['total'] = total;
     data['current'] = current;
     data['limit'] = limit;
-    data['data'] = this.data!.map((v) => v.toJson()).toList();
-    return data;
-  }
-}
-
-class Data {
-  int? id;
-  int? dataType;
-  String? title;
-  String? titleSub;
-  String? externalId;
-  int? chargeType;
-  int? points;
-  int? subScript;
-  int? timeLength;
-  String? coverVertical;
-  String? coverHorizontal;
-  List<Tag>? tags;
-  int? videoViewTimes;
-  int? videoCollectTimes;
-  String? appIcon;
-  String? adUrl;
-
-  Data(
-      {id,
-      dataType,
-      title,
-      titleSub,
-      externalId,
-      chargeType,
-      points,
-      subScript,
-      timeLength,
-      coverVertical,
-      coverHorizontal,
-      tags,
-      videoViewTimes,
-      videoCollectTimes,
-      appIcon,
-      adUrl});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    dataType = json['dataType'];
-    title = json['title'];
-    titleSub = json['titleSub'];
-    externalId = json['externalId'];
-    chargeType = json['chargeType'];
-    points = json['points'];
-    subScript = json['subScript'];
-    timeLength = json['timeLength'];
-    coverVertical = json['coverVertical'];
-    coverHorizontal = json['coverHorizontal'];
-    if (json['tags'] != null) {
-      tags = <Tag>[];
-      json['tags'].forEach((v) {
-        tags!.add(Tag.fromJson(v));
-      });
+    if (data['data'].isNotEmpty) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    videoViewTimes = json['videoViewTimes'];
-    videoCollectTimes = json['videoCollectTimes'];
-    appIcon = json['appIcon'];
-    adUrl = json['adUrl'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['dataType'] = dataType;
-    data['title'] = title;
-    data['titleSub'] = titleSub;
-    data['externalId'] = externalId;
-    data['chargeType'] = chargeType;
-    data['points'] = points;
-    data['subScript'] = subScript;
-    data['timeLength'] = timeLength;
-    data['coverVertical'] = coverVertical;
-    data['coverHorizontal'] = coverHorizontal;
-    if (tags != null) {
-      data['tags'] = tags!.map((v) => v.toJson()).toList();
-    }
-    data['videoViewTimes'] = videoViewTimes;
-    data['videoCollectTimes'] = videoCollectTimes;
-    data['appIcon'] = appIcon;
-    data['adUrl'] = adUrl;
     return data;
   }
 }
