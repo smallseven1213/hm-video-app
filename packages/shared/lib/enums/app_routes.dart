@@ -10,6 +10,7 @@ enum AppRoutes {
   gameDepositPageList,
   gameDepositPagePolling,
   gameWithdraw,
+  gameWebview,
   login,
   register,
   share,
@@ -24,6 +25,7 @@ enum AppRoutes {
   actor,
   actors,
   short,
+  nickname
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -51,6 +53,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/game/deposit_page_list';
       case AppRoutes.gameDepositPagePolling:
         return '/game/deposit_page_polling';
+      case AppRoutes.gameWebview:
+        return '/game/webview';
       case AppRoutes.login:
         return '/login';
       case AppRoutes.register:
@@ -79,6 +83,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/actor';
       case AppRoutes.short:
         return '/short';
+      case AppRoutes.nickname:
+        return '/user/nickname';
       default:
         return '/unknown';
     }

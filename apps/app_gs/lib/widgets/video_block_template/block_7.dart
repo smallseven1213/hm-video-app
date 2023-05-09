@@ -95,7 +95,7 @@ class Block7WidgetState extends State<Block7Widget> {
                       child: VideoPreviewWidget(
                           id: vod.id!,
                           film: widget.film,
-                          displaycoverVertical: true,
+                          displayCoverVertical: true,
                           coverVertical: vod.coverVertical!,
                           coverHorizontal: vod.coverHorizontal!,
                           timeLength: vod.timeLength!,

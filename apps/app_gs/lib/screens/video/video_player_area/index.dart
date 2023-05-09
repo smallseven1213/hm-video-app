@@ -88,6 +88,9 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   }
 
   void _onControllerValueChanged() async {
+    if (!mounted) {
+      return;
+    }
     if (_controller!.value.hasError) {
       setState(() {
         hasError = true;

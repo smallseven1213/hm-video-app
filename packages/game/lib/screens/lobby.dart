@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import 'package:game/apis/game_api.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/controllers/game_auth_controller.dart';
 import 'package:game/controllers/game_banner_controller.dart';
@@ -67,7 +66,7 @@ class _GameLobbyState extends State<GameLobby> {
 
   _fetchDataInit() {
     Future.wait([
-      GameLobbyApi().registerGame(),
+      // GameLobbyApi().registerGame(),
     ]).then((value) {
       GameBannerController();
       GameWalletController().fetchWallets();
