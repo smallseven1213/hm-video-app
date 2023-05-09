@@ -11,7 +11,7 @@ import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/header.dart';
 import 'banners.dart';
 import 'jingang.dart';
-import 'videoblock.dart';
+import '../../../widgets/videoblock.dart';
 
 final logger = Logger();
 

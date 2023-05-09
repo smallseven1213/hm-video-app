@@ -19,7 +19,7 @@ class Block2Widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Data> videos = block.videos?.data ?? [];
+    List<Vod> videos = block.videos?.data ?? [];
 
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),

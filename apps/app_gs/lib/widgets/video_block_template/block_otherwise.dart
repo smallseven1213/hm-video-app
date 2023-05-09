@@ -1,10 +1,8 @@
-// Block1Widget
-
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/vod.dart';
 
 class BlockOtherwiseWidget extends StatelessWidget {
-  List<Data> videos = [];
+  List<Vod> videos = [];
   BlockOtherwiseWidget({Key? key}) : super(key: key);
 
   @override

@@ -61,7 +61,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final String title;
   final int videoViewTimes;
   final double? imageRatio;
-  final Data? detail;
+  final Vod? detail;
   final bool isEmbeddedAds;
   final bool isEditing;
   final bool isSelected;

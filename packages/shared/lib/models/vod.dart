@@ -153,15 +153,12 @@ class Vod {
   factory Vod.fromJson(Map<String, dynamic> json) {
     try {
       return Vod(
-        json['id'],
+        json['id'] ?? 0,
         json['title'] ?? '',
         subScript: json['subScript'] ?? 0,
         timeLength: json['timeLength'] ?? 0,
         coverVertical: json['coverVertical'] ?? '',
         coverHorizontal: json['coverHorizontal'] ?? '',
-        // videoUrlHd: json['videoUrlHd'],
-        // videoUrlSd: json['videoUrlSd'],
-        // videoUrlUd: json['videoUrlUd'],
         videoUrl: json['videoUrl'] ?? '',
         externalId: json['externalId'] ?? '',
         titleSub: json['titleSub'] ?? '',
@@ -207,7 +204,6 @@ class Vod {
             ? []
             : List.from(
                 (json['internalTag'] ?? json['internalTags']) as List<dynamic>),
-
         region: json['region'],
         publisher: (json['publisher'] == null)
             ? null

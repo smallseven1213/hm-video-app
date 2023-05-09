@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
-List<List<Data>> organizeRowData(List videos, Blocks block) {
-  List<List<Data>> result = [];
+List<List<Vod>> organizeRowData(List videos, Blocks block) {
+  List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
   int blockLength = 7;
   try {
@@ -51,8 +51,8 @@ class Block3Widget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Data> videos = block.videos?.data ?? [];
-    List<List<Data>> result = organizeRowData(videos, block);
+    List<Vod> videos = block.videos?.data ?? [];
+    List<List<Vod>> result = organizeRowData(videos, block);
 
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),

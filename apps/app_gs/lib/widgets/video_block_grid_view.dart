@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/vod.dart';
 
 import 'video_block_grid_view_row.dart';
 
 final logger = Logger();
 
 class VideoBlockGridView extends StatelessWidget {
-  final List<Data> videos;
+  final List<Vod> videos;
   final int gridLength;
   final double? imageRatio;
   final bool isEmbeddedAds;
@@ -33,7 +33,7 @@ class VideoBlockGridView extends StatelessWidget {
         int end = (start + gridLength <= videos.length)
             ? start + gridLength
             : videos.length;
-        List<Data> rowData = videos.sublist(start, end);
+        List<Vod> rowData = videos.sublist(start, end);
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,11 +1,8 @@
-// Block1Widget
-
-import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/vod.dart';
 
 class Block12Widget extends StatelessWidget {
-  List<Data> videos = [];
+  List<Vod> videos = [];
   Block12Widget({Key? key, required this.videos}) : super(key: key);
 
   @override
@@ -24,16 +21,5 @@ class Block12Widget extends StatelessWidget {
                   height: 60,
                   color: Colors.white,
                 )));
-    // children: List.generate(
-    //   10,
-    //   (index) => VideoPreviewWidget(
-    //     title: videos[index].title ?? '',
-    //     tags: videos[index].tags ?? [],
-    //     timeLength: videos[index].timeLength ?? 0,
-    //     coverHorizontal: videos[index].coverHorizontal ?? '',
-    //     coverVertical: videos[index].coverVertical ?? '',
-    //     videoViewTimes: videos[index].videoViewTimes ?? 0,
-    //   ),
-    // ));
   }
 }

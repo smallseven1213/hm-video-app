@@ -47,8 +47,6 @@ final Map<
           block: block, updateBlock: updateBlock, channelId: channelId),
 };
 
-// wrap VideoBlock with stateful widget
-
 class VideoBlock extends StatefulWidget {
   final Blocks block;
   final int channelId;
@@ -56,11 +54,10 @@ class VideoBlock extends StatefulWidget {
       : super(key: key);
 
   @override
-  _VideoBlockStatefulState createState() => _VideoBlockStatefulState();
+  VideoBlockStatefulState createState() => VideoBlockStatefulState();
 }
 
-class _VideoBlockStatefulState extends State<VideoBlock> {
-  // use getx put VideoBlockController here
+class VideoBlockStatefulState extends State<VideoBlock> {
   final BlockController blockController = Get.put(BlockController());
 
   Blocks block = Blocks();

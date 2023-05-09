@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class VideoEmbeddedAdWidget extends StatelessWidget {
-  final Data detail;
+  final Vod detail;
   final double imageRatio;
   const VideoEmbeddedAdWidget({
     Key? key,

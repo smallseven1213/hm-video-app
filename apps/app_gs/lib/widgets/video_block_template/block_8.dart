@@ -1,12 +1,9 @@
-// Block1Widget
-
-import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/vod.dart';
 
-class Block9Widget extends StatelessWidget {
-  List<Data> videos = [];
-  Block9Widget({Key? key, required this.videos}) : super(key: key);
+class Block8Widget extends StatelessWidget {
+  List<Vod> videos = [];
+  Block8Widget({Key? key, required this.videos}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

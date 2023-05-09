@@ -107,6 +107,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                   ?.map((e) => Vods(
                         scrollController: _parentScrollController,
                         areaId: e.id ?? 0,
+                        templateId: e.template,
                       ))
                   .toList() ??
               [],

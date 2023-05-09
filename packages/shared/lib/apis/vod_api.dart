@@ -424,11 +424,13 @@ class VodApi {
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
-    List<Vod> vods = List.from((res.data['data']['data'] as List<dynamic>)
-        .map((e) => Vod.fromJson(e)));
+
+    var videos = res.data['data']['videos'];
+    List<Vod> vods = List.from(
+        (videos['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
     return BlockVod(
       vods,
-      res.data['data']['total'],
+      videos['total'],
     );
   }
 }

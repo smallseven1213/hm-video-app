@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shared/apis/tag_api.dart';
+import 'package:logger/logger.dart';
 import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
 final vodApi = VodApi();
 const limit = 20;
+final logger = Logger();
 
 // 目前給Channel Block Style 3用
 class ChannelBlockVodController extends BaseVodInfinityScrollController {
@@ -23,7 +24,6 @@ class ChannelBlockVodController extends BaseVodInfinityScrollController {
     var res = await vodApi.getVideoByAreaId(areaId, page: page, limit: limit);
 
     bool hasMoreData = res.total > limit * page;
-
     return InfinityVod(res.vods, res.total, hasMoreData);
   }
 }
