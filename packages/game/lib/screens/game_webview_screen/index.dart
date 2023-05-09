@@ -228,20 +228,24 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
                   )
                 : Container(),
           ),
-          RotatedBox(
-            quarterTurns: orientation == Orientation.portrait ? 1 : 0,
-            child: PointerInterceptor(
-              child: GestureDetector(
-                onTap: () {
-                  toggleButtonRow();
-                },
-                child: SizedBox(
-                  width: 55,
-                  height: 55,
-                  child: Image.asset(
-                    'packages/game/assets/images/game_lobby/icons-menu.webp',
-                    width: 40,
-                    height: 40,
+          Positioned(
+            top: 20,
+            left: 10,
+            child: RotatedBox(
+              quarterTurns: orientation == Orientation.portrait ? 1 : 0,
+              child: PointerInterceptor(
+                child: GestureDetector(
+                  onTap: () {
+                    toggleButtonRow();
+                  },
+                  child: SizedBox(
+                    width: 55,
+                    height: 55,
+                    child: Image.asset(
+                      'packages/game/assets/images/game_lobby/icons-menu.webp',
+                      width: 40,
+                      height: 40,
+                    ),
                   ),
                 ),
               ),

@@ -62,11 +62,13 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
       );
       return;
     } else {
-      print('gameUrl: $gameUrl');
       onLoading(context, status: false);
-      MyRouteDelegate.of(context).push(AppRoutes.gameWebview.value, args: {
-        'url': gameUrl,
-      });
+      MyRouteDelegate.of(context).push(
+        AppRoutes.gameWebview.value,
+        args: {
+          'url': gameUrl,
+        },
+      );
     }
   } catch (error) {
     print('getGameUrl error: $error');
