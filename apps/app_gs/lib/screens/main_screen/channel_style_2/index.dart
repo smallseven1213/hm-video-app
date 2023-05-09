@@ -10,6 +10,7 @@ class ChannelStyle2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PageView.builder(
+      scrollDirection: Axis.vertical,
       itemCount: 1000,
       itemBuilder: (BuildContext context, int index) {
         return ShortCard(
