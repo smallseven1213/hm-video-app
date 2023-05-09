@@ -25,6 +25,8 @@ import 'pages/nickname.dart';
 import 'pages/share.dart';
 import 'pages/sharerecord.dart';
 import 'pages/short.dart';
+import 'pages/supplier.dart';
+import 'pages/supplier_tag_video.dart';
 import 'pages/tag_video.dart';
 import 'pages/publisher.dart';
 import 'pages/video_by_block.dart';
@@ -87,6 +89,11 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.short.value: (context, args) => const ShortPage(
         itemCount: 10,
       ),
+  AppRoutes.supplier.value: (context, args) => SupplierPage(
+        id: args['id'] as int,
+      ),
+  AppRoutes.supplierTag.value: (context, args) => SupplierTagVideoPage(
+      tagId: args['tagId'] as int, tagName: args['tagName']),
 };
 
 class MyApp extends StatelessWidget {
