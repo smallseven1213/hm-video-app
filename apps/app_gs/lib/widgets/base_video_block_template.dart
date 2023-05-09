@@ -6,11 +6,11 @@ import 'base_video_block_templates/template_2.dart';
 import 'base_video_block_templates/template_3.dart';
 import 'base_video_block_templates/template_4.dart';
 
-final Map<int, Widget Function(List<Vod> vods)> templateMap = {
-  2: (List<Vod> vods) => BaseVideoBlockTemplate2(vods: vods),
-  3: (List<Vod> vods) => BaseVideoBlockTemplate3(vods: vods),
-  4: (List<Vod> vods) => BaseVideoBlockTemplate4(vods: vods),
-  10: (List<Vod> vods) => BaseVideoBlockTemplate10(vods: vods),
+final Map<int, SliverChildDelegate Function(List<Vod> vods)> templateMap = {
+  2: (List<Vod> vods) => baseVideoBlockTemplate2(vods: vods),
+  3: (List<Vod> vods) => baseVideoBlockTemplate3(vods: vods),
+  4: (List<Vod> vods) => baseVideoBlockTemplate4(vods: vods),
+  10: (List<Vod> vods) => baseVideoBlockTemplate10(vods: vods),
 };
 
 class BaseVideoBlockTemplate extends StatelessWidget {
@@ -22,6 +22,7 @@ class BaseVideoBlockTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return templateMap[templateId]!(vods);
+    final delegate = templateMap[templateId]!(vods);
+    return SliverList(delegate: delegate);
   }
 }

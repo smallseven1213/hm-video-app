@@ -56,6 +56,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+        controller: _parentScrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(
