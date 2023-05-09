@@ -1,13 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:game/services/game_system_config.dart';
-import 'package:game/widgets/h5webview.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:url_launcher/url_launcher.dart';
+
+import 'package:game/services/game_system_config.dart';
+import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/widgets/h5webview.dart';
 
 var switchPaymentPageType = {
   'normal': 1,
@@ -61,26 +64,18 @@ class _ButtonWidget extends State<ButtonWidget> {
               child: InkWell(
                 onTap: () {
                   print('返回大廳');
-                  // widget.toggleButtonRow();
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) => AlertDialog(
-                      title: const Text('退出遊戲'),
-                      content: const Text('你真的要退出遊戲嗎？'),
-                      actions: [
-                        PointerInterceptor(
-                          child: TextButton(
-                            onPressed: () {
-                              MyRouteDelegate.of(context).push(
-                                  AppRoutes.gameLobby.value,
-                                  removeSamePath: true);
-                            },
-                            child: const Text('確認'),
-                          ),
-                        ),
-                      ],
-                    ),
+                  showConfirmDialog(
+                    context,
+                    title: '退出遊戲',
+                    content: '你真的要退出遊戲嗎？',
+                    rotate: orientation == Orientation.portrait ? true : false,
+                    onConfirm: () {
+                      Navigator.of(context).pop();
+                      MyRouteDelegate.of(context).popRoute();
+                    },
+                    onCancel: () {
+                      MyRouteDelegate.of(context).popRoute();
+                    },
                   );
                 },
                 child: Column(
@@ -210,10 +205,8 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
       body: Stack(
         key: _parentKey,
         children: [
-          SizedBox(
-            child: H5Webview(
-              initialUrl: widget.gameUrl,
-            ),
+          H5Webview(
+            initialUrl: widget.gameUrl,
           ),
           Positioned(
             top: orientation == Orientation.portrait

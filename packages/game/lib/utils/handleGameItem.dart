@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game/utils/showConfirmDialog.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -48,21 +49,23 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
 
     if (gameUrl == '') {
       print('gameUrl is empty');
+      // ignore: use_build_context_synchronously
       onLoading(context, status: false);
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const Dialog(
-            backgroundColor: Colors.transparent,
-            child: Center(
-              child: Text('遊戲維護中'),
-            ),
-          );
+      // ignore: use_build_context_synchronously
+      showConfirmDialog(
+        context,
+        title: '遊戲維護中',
+        content: '遊戲維護中，請稍後再試',
+        confirmText: '確認',
+        onConfirm: () {
+          MyRouteDelegate.of(context).popRoute();
         },
       );
       return;
     } else {
+      // ignore: use_build_context_synchronously
       onLoading(context, status: false);
+      // ignore: use_build_context_synchronously
       MyRouteDelegate.of(context).push(
         AppRoutes.gameWebview.value,
         args: {
@@ -73,15 +76,13 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
   } catch (error) {
     print('getGameUrl error: $error');
     onLoading(context, status: false);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const Dialog(
-          backgroundColor: Colors.transparent,
-          child: Center(
-            child: Text('遊戲維護中'),
-          ),
-        );
+    showConfirmDialog(
+      context,
+      title: '遊戲維護中',
+      content: '遊戲維護中，請稍後再試',
+      confirmText: '確認',
+      onConfirm: () {
+        MyRouteDelegate.of(context).popRoute();
       },
     );
   }
