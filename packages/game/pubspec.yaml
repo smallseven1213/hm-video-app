@@ -40,6 +40,7 @@ dependencies:
   webview_flutter: ^3.0.4
   flutter_widget_from_html_core: ^0.8.5+3
   pointer_interceptor: ^0.9.3+4
+  flutter_svg: ^2.0.5
 
 dev_dependencies:
   flutter_test:
@@ -74,6 +75,7 @@ flutter:
 
   # To add assets to your plugin package, add an assets section, like this:
   assets:
+    - assets/svg/
     - assets/images/game_lobby/
     - assets/images/game_deposit/
   #   - images/a_dot_burr.jpeg
