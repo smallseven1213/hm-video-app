@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:game/services/game_system_config.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserInfoService extends StatefulWidget {
   const UserInfoService({Key? key}) : super(key: key);
@@ -11,6 +13,8 @@ class UserInfoService extends StatefulWidget {
 }
 
 class _UserInfoService extends State<UserInfoService> {
+  final systemConfig = GameSystemConfig();
+
   @override
   void initState() {
     super.initState();
@@ -23,8 +27,8 @@ class _UserInfoService extends State<UserInfoService> {
       height: 60,
       child: InkWell(
         onTap: () {
-          // launch(
-          //     '${AppController.cc.endpoint.getApi()}/public/domains/domain/customer-services');
+          launch(
+              '${systemConfig.apiHost}/public/domains/domain/customer-services');
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

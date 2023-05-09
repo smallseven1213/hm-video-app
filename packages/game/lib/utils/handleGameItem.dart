@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:game/utils/showConfirmDialog.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import 'package:game/utils/onLoading.dart';
 import 'package:game/apis/game_api.dart';
 
 String gameUrl = '';
@@ -37,7 +40,7 @@ _saveGameHistory({gameId}) async {
 
 void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
   try {
-    // onLoading(context, status: true);
+    onLoading(context, status: true);
     await getGameUrl('wali', gameId);
     await _saveGameHistory(gameId: gameId);
     updateGameHistory();
@@ -46,38 +49,40 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
 
     if (gameUrl == '') {
       print('gameUrl is empty');
-      // onLoading(context, status: false);
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return const Dialog(
-            backgroundColor: Colors.transparent,
-            child: Center(
-              child: Text('遊戲維護中'),
-            ),
-          );
+      // ignore: use_build_context_synchronously
+      onLoading(context, status: false);
+      // ignore: use_build_context_synchronously
+      showConfirmDialog(
+        context,
+        title: '遊戲維護中',
+        content: '遊戲維護中，請稍後再試',
+        confirmText: '確認',
+        onConfirm: () {
+          MyRouteDelegate.of(context).popRoute();
         },
       );
       return;
     } else {
-      print('gameUrl: $gameUrl');
-      // onLoading(context, status: false);
-      MyRouteDelegate.of(context).push(AppRoutes.gameWebview.value, args: {
-        'url': gameUrl,
-      });
+      // ignore: use_build_context_synchronously
+      onLoading(context, status: false);
+      // ignore: use_build_context_synchronously
+      MyRouteDelegate.of(context).push(
+        AppRoutes.gameWebview.value,
+        args: {
+          'url': gameUrl,
+        },
+      );
     }
   } catch (error) {
     print('getGameUrl error: $error');
-    // onLoading(context, status: false);
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return const Dialog(
-          backgroundColor: Colors.transparent,
-          child: Center(
-            child: Text('遊戲維護中'),
-          ),
-        );
+    onLoading(context, status: false);
+    showConfirmDialog(
+      context,
+      title: '遊戲維護中',
+      content: '遊戲維護中，請稍後再試',
+      confirmText: '確認',
+      onConfirm: () {
+        MyRouteDelegate.of(context).popRoute();
       },
     );
   }

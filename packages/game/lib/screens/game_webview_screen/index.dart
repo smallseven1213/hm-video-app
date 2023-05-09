@@ -1,10 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:game/widgets/h5webview.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
+
+import 'package:game/services/game_system_config.dart';
+import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/widgets/h5webview.dart';
 
 var switchPaymentPageType = {
   'normal': 1,
@@ -32,6 +38,8 @@ class ButtonWidget extends StatefulWidget {
 
 // 建立一個ButtonWidget，用來放兩個floatingActionButton
 class _ButtonWidget extends State<ButtonWidget> {
+  final systemConfig = GameSystemConfig();
+
   @override
   void initState() {
     super.initState();
@@ -40,139 +48,133 @@ class _ButtonWidget extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    return Container(
-      height: 88,
-      width: 288,
-      decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.5),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          PointerInterceptor(
-            child: InkWell(
-              onTap: () {
-                print('返回大廳');
-                // widget.toggleButtonRow();
-                showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (context) => AlertDialog(
-                    title: const Text('退出遊戲'),
-                    content: const Text('你真的要退出遊戲嗎？'),
-                    actions: [
-                      PointerInterceptor(
-                        child: TextButton(
-                          onPressed: () {
-                            MyRouteDelegate.of(context).push(
-                                AppRoutes.gameLobby.value,
-                                removeSamePath: true);
-                          },
-                          child: const Text('確認'),
-                        ),
+    return RotatedBox(
+      quarterTurns: orientation == Orientation.portrait ? 1 : 0,
+      child: Container(
+        height: 88,
+        width: 288,
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.5),
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            PointerInterceptor(
+              child: InkWell(
+                onTap: () {
+                  print('返回大廳');
+                  showConfirmDialog(
+                    context,
+                    title: '退出遊戲',
+                    content: '你真的要退出遊戲嗎？',
+                    rotate: orientation == Orientation.portrait ? true : false,
+                    onConfirm: () {
+                      Navigator.of(context).pop();
+                      MyRouteDelegate.of(context).popRoute();
+                    },
+                    onCancel: () {
+                      MyRouteDelegate.of(context).popRoute();
+                    },
+                  );
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'packages/game/assets/svg/icon-game-home.svg',
+                      width: 32,
+                      height: 32,
+                    ),
+                    const SizedBox(height: 5),
+                    const Text(
+                      "返回大廳",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontFeatures: [FontFeature.proportionalFigures()],
                       ),
-                    ],
-                  ),
-                );
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.home,
-                    color: Colors.red,
-                    size: 20,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    "返回大廳",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontFeatures: [FontFeature.proportionalFigures()],
-                    ),
-                  ), // <-- Text
-                ],
+                    ), // <-- Text
+                  ],
+                ),
               ),
             ),
-          ),
-          PointerInterceptor(
-            child: InkWell(
-              onTap: () {
-                // launch(
-                //     '${AppController.cc.endpoint.getApi()}/public/domains/domain/customer-services');
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.safety_check,
-                    color: Colors.red,
-                    size: 20,
-                  ),
-                  SizedBox(height: 5),
-
-                  Text(
-                    "客服",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
+            PointerInterceptor(
+              child: InkWell(
+                onTap: () {
+                  launch(
+                      '${systemConfig.apiHost}/public/domains/domain/customer-services');
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'packages/game/assets/svg/icon-game-service.svg',
+                      width: 32,
+                      height: 32,
                     ),
-                  ), // <-- Text
-                ],
+                    const SizedBox(height: 5),
+                    const Text(
+                      "客服",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ), // <-- Text
+                  ],
+                ),
               ),
             ),
-          ),
-          PointerInterceptor(
-            child: InkWell(
-              onTap: () async {
-                MyRouteDelegate.of(context).push(AppRoutes.gameLobby.value);
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.deblur,
-                    color: Colors.red,
-                    size: 20,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    "充值",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
+            PointerInterceptor(
+              child: InkWell(
+                onTap: () async {
+                  MyRouteDelegate.of(context).push(AppRoutes.gameLobby.value);
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'packages/game/assets/svg/icon-game-deposit.svg',
+                      width: 32,
+                      height: 32,
                     ),
-                  ), // <-- Text
-                ],
+                    const SizedBox(height: 5),
+                    const Text(
+                      "充值",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ), // <-- Text
+                  ],
+                ),
               ),
             ),
-          ),
-          PointerInterceptor(
-            child: InkWell(
-              onTap: () => widget.toggleButtonRow(),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(
-                    Icons.close,
-                    color: Colors.red,
-                    size: 20,
-                  ),
-                  SizedBox(height: 5),
-                  Text(
-                    "關閉",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
+            PointerInterceptor(
+              child: InkWell(
+                onTap: () => widget.toggleButtonRow(),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'packages/game/assets/svg/icon-game-close.svg',
+                      width: 32,
+                      height: 32,
                     ),
-                  ), // <-- Text
-                ],
+                    const SizedBox(height: 5),
+                    const Text(
+                      "關閉",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                    ), // <-- Text
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -203,13 +205,9 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
       body: Stack(
         key: _parentKey,
         children: [
-          SizedBox(
-            child: H5Webview(
-              initialUrl: widget.gameUrl,
-            ),
+          H5Webview(
+            initialUrl: widget.gameUrl,
           ),
-
-          // 當 toggleButton 為 true 時，做一個Buttons組件在正中間
           Positioned(
             top: orientation == Orientation.portrait
                 ? Get.height / 2 - 144
@@ -223,18 +221,25 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
                   )
                 : Container(),
           ),
-          PointerInterceptor(
-            child: GestureDetector(
-              onTap: () {
-                toggleButtonRow();
-              },
-              child: const SizedBox(
-                width: 55,
-                height: 55,
-                child: Icon(
-                  Icons.home,
-                  color: Colors.red,
-                  size: 40,
+          Positioned(
+            top: 20,
+            left: 10,
+            child: RotatedBox(
+              quarterTurns: orientation == Orientation.portrait ? 1 : 0,
+              child: PointerInterceptor(
+                child: GestureDetector(
+                  onTap: () {
+                    toggleButtonRow();
+                  },
+                  child: SizedBox(
+                    width: 55,
+                    height: 55,
+                    child: Image.asset(
+                      'packages/game/assets/images/game_lobby/icons-menu.webp',
+                      width: 40,
+                      height: 40,
+                    ),
+                  ),
                 ),
               ),
             ),

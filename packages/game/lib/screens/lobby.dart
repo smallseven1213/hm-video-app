@@ -187,7 +187,7 @@ class _GameLobbyState extends State<GameLobby> {
                               UserInfoDeposit(
                                 onTap: () {
                                   MyRouteDelegate.of(context).push(
-                                    AppRoutes.gameDepositPagePolling.value,
+                                    AppRoutes.gameDepositList.value,
                                   );
                                 },
                               ),
