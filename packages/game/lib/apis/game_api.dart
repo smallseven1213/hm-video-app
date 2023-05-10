@@ -166,7 +166,7 @@ class GameLobbyApi {
       String paymentPin) async {
     var value =
         await fetcher(url: '$apiPrefix/paymentPin?paymentPin=$paymentPin');
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
 
     return HMApiResponseBaseWithDataWithData<bool>.fromJson(res);
   }
@@ -177,7 +177,7 @@ class GameLobbyApi {
         url: '$apiPrefix/paymentPin',
         method: 'POST',
         body: {'paymentPin': paymentPin});
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       throw Exception(res['message']);
     }
@@ -187,7 +187,7 @@ class GameLobbyApi {
   Future<HMApiResponseBaseWithDataWithData<GameWithdrawStackLimit>>
       getStackLimit() async {
     var value = await fetcher(url: '$apiPrefix/stack-limit');
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
 
     var stackLimitData = res['data'] == null
         ? null
@@ -203,7 +203,7 @@ class GameLobbyApi {
   Future<HMApiResponseBaseWithDataWithData<GameParamConfig>>
       getGameParamConfig() async {
     var value = await fetcher(url: '$apiPrefix/parameter-config');
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
 
     var paramConfigData =
         res['data'] == null ? null : GameParamConfig.fromJson(res['data']);
@@ -228,7 +228,7 @@ class GameLobbyApi {
       'stakeLimit': stakeLimit,
       'validAmount': validStake,
     });
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
 
     return HMApiResponse.fromJson(res);
   }
@@ -238,7 +238,7 @@ class GameLobbyApi {
               url:
                   '$apiPrefix/payment-channel?productId=$productId&deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}&amount=$amount')
           .then((value) {
-        var res = (value.body as Map<String, dynamic>);
+        var res = (value.data as Map<String, dynamic>);
         if (res['code'] != '00') {
           return [];
         }
@@ -251,12 +251,26 @@ class GameLobbyApi {
     var value = await fetcher(
         url:
             '$apiPrefix/deposit-channel?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return res;
     }
     return res['data'];
   }
+
+  Future<List<Product>> getProductManyBy(
+          {int type = 1, int page = 1, int limit = 100}) =>
+      fetcher(
+              url:
+                  '${systemConfig.apiHost}/public/product/list?page=$page&limit=$limit&type=$type')
+          .then((value) {
+        var res = (value.data as Map<String, dynamic>);
+        if (res['code'] != '00') {
+          return [];
+        }
+        return List.from((res['data']['data'] as List<dynamic>)
+            .map((e) => Product.fromJson(e)));
+      });
 
   // 遊戲大廳 取得存款記錄
   Future<List<GameOrder>> getManyBy({
@@ -273,7 +287,7 @@ class GameLobbyApi {
         url:
             '$apiPrefix/deposit?page=$page&limit=$limit${paymentStatus != null ? '&paymentStatus=$paymentStatus' : ''}${startedAt != null ? '&startedAt=$startedAt' : ''}${endedAt != null ? '&endedAt=$endedAt' : ''}');
 
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
 
     if (res['code'] != '00') {
       return [];
@@ -316,7 +330,7 @@ class GameLobbyApi {
       path += qs.entries.map((e) => '${e.key}=${e.value}').join('&');
     }
     return fetcher(url: path).then((value) {
-      var res = (value.body as Map<String, dynamic>);
+      var res = (value.data as Map<String, dynamic>);
       List<WithdrawalRecord> record = List.from(
           (res['data']['data'] as List<dynamic>)
               .map((e) => WithdrawalRecord.fromJson(e)));
@@ -340,7 +354,7 @@ class GameLobbyApi {
         'name': name,
       },
     );
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return res['code'];
     }
@@ -362,7 +376,7 @@ class GameLobbyApi {
       'legalName': legalName,
       'branchName': branchName
     });
-    var res = (value.body as Map<String, dynamic>);
+    var res = (value.data as Map<String, dynamic>);
 
     return HMApiResponse.fromJson(res);
   }

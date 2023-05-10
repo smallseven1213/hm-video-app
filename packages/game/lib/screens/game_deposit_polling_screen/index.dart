@@ -203,9 +203,10 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 48,
         centerTitle: true,
         title: Text(
-          '遊戲提現',
+          '存款',
           style: TextStyle(
             color: gameLobbyAppBarTextColor,
             fontSize: 18,
@@ -217,6 +218,21 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
           icon: Icon(Icons.arrow_back_ios, color: gameLobbyAppBarIconColor),
           onPressed: () => Navigator.pop(context, true),
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              // gto("/deposit/record");
+            },
+            child: Text(
+              '存款記錄',
+              style: TextStyle(
+                color: gameLobbyPrimaryTextColor,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Container(
         color: gameLobbyBgColor,

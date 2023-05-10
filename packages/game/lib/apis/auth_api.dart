@@ -3,11 +3,12 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:game/services/game_system_config.dart';
-import 'package:game/utils/fetcher.dart';
 import 'package:uuid/uuid.dart';
 import 'package:android_id/android_id.dart';
-import 'package:game/models/index.dart';
+
+import 'package:shared/utils/fetcher.dart';
+import 'package:game/services/game_system_config.dart';
+import '../models/index.dart';
 
 final systemConfig = GameSystemConfig();
 
@@ -53,36 +54,6 @@ class AuthApi {
     );
 
     return HMApiResponseBaseWithDataWithData.fromJson(response.data);
-
-    // try {
-    //   var response = await fetcher(
-    //     url: '${systemConfig.apiHost}/public/auth/auth/guest/register',
-    //     method: 'POST',
-    //     body: {
-    //       'registerDeviceType': systemConfig.userDevice,
-    //       'registerDeviceGuid': registerDeviceGuid,
-    //       'invitationCode': invitationCode,
-    //       'agentCode': systemConfig.agentCode,
-    //     },
-    //   );
-    //   return response.data;
-    //   // if (res['code'] != '00') {
-    //   //   return HMApiResponse(
-    //   //     code: res['code'],
-    //   //     message: res['code'] == '51633' ? '帳號建立失敗，裝置停用。' : '帳號建立失敗。',
-    //   //   );
-    //   // }
-    //   // return HMApiResponse(
-    //   //   code: res['code'],
-    //   //   message: '帳號建立成功。',
-    //   // );
-    // } catch (err) {
-    //   // return HMApiResponse(
-    //   //   code: '01',
-    //   //   message: '帳號建立失敗。',
-    //   // );
-    //   // throw error
-    // }
   }
 
   Future<HMApiResponseBaseWithDataWithData> register({

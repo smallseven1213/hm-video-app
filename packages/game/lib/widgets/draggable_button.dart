@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DraggableFloatingActionButton extends StatefulWidget {
   final Widget child;
@@ -33,7 +34,7 @@ class _DraggableFloatingActionButtonState
     super.initState();
     _offset = widget.initialOffset;
 
-    WidgetsBinding.instance?.addPostFrameCallback(_setBoundary);
+    WidgetsBinding.instance.addPostFrameCallback(_setBoundary);
   }
 
   void _setBoundary(_) {
@@ -50,7 +51,7 @@ class _DraggableFloatingActionButtonState
         _minOffset = const Offset(0, 0);
         _maxOffset = Offset(
             parentSize.width - size.width,
-            kIsWeb
+            GetPlatform.isWeb
                 ? parentSize.width - size.width
                 : parentSize.height - size.height);
       });
