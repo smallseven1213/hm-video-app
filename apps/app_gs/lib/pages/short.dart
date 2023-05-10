@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_short_popular_controller.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/short/button.dart';
 import '../widgets/shortcard/index.dart';
+
+final logger = Logger();
 
 class ShortPage extends StatefulWidget {
   final int itemCount;
@@ -32,6 +35,7 @@ class ShortPageState extends State<ShortPage> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('${widget.itemCount}, ${widget.id}, ${widget.areaId}');
     final VideoShortPopularController videoShortPopularController =
         Get.put(VideoShortPopularController(
       widget.areaId, // block.id,

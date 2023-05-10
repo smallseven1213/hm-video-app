@@ -1,0 +1,184 @@
+import 'package:app_gs/widgets/video_embedded_ad.dart';
+import 'package:app_gs/widgets/video_preview.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/index.dart';
+import 'package:shared/models/video_database_field.dart';
+import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/view_times.dart';
+import 'package:shared/widgets/video_time.dart';
+import 'package:visibility_detector/visibility_detector.dart';
+
+final logger = Logger();
+
+class ViewInfo extends StatelessWidget {
+  final int viewCount;
+  final int duration;
+
+  const ViewInfo({Key? key, required this.viewCount, required this.duration})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(5),
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.black.withOpacity(0.1),
+            Colors.black.withOpacity(0.7),
+          ],
+          stops: const [0.05, 1.0],
+        ),
+        // color: Colors.black.withOpacity(0.5),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ViewTimes(times: viewCount),
+          VideoTime(time: duration),
+        ],
+      ),
+    );
+  }
+}
+
+class VideoPreviewWithEditWidget extends StatelessWidget {
+  final int id;
+  final String coverVertical;
+  final String coverHorizontal;
+  final bool displayCoverVertical;
+  final int timeLength;
+  final List<Tag> tags;
+  final String title;
+  final int videoViewTimes;
+  final double? imageRatio;
+  final Vod? detail;
+  final bool isEmbeddedAds;
+  final bool isEditing;
+  final bool isSelected;
+  final Function()? onEditingTap;
+  final Function()? onTap;
+  final bool? noTags;
+  final bool? noInfoView;
+  final int? film; // 1長視頻, 2短視頻, 3漫畫
+  final int? blockId;
+  final bool? hasRadius; // 要不要圓角
+  final bool? hasTitle; // 要不要標題
+
+  VideoPreviewWithEditWidget(
+      {Key? key,
+      required this.id,
+      required this.coverVertical,
+      required this.coverHorizontal,
+      this.displayCoverVertical = false,
+      required this.timeLength,
+      required this.tags,
+      required this.title,
+      required this.videoViewTimes,
+      this.isEmbeddedAds = false,
+      this.detail,
+      this.isEditing = false,
+      this.isSelected = false,
+      this.imageRatio,
+      this.onEditingTap,
+      this.onTap,
+      this.film = 1,
+      this.noTags = false,
+      this.noInfoView = false,
+      this.blockId,
+      this.hasRadius = true,
+      this.hasTitle = true})
+      : super(key: key);
+
+  final playrecordController = Get.find<PlayRecordController>();
+
+  @override
+  Widget build(BuildContext context) {
+    logger.i('$id ==> $isEditing');
+    if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
+      return VideoEmbeddedAdWidget(
+        imageRatio: imageRatio ?? 374 / 198,
+        detail: detail!,
+      );
+    }
+    logger.i('RENDER VIDEO PREVIEW WIDGET!!! $isEditing, $isSelected');
+    return Stack(
+      children: [
+        VideoPreviewWidget(
+            id: id,
+            coverVertical: coverVertical,
+            coverHorizontal: coverHorizontal,
+            timeLength: timeLength,
+            tags: tags,
+            title: title,
+            videoViewTimes: videoViewTimes,
+            hasTapEvent: !isEditing),
+        if (isEditing)
+          Positioned.fill(
+            child: InkWell(
+              onTap: onEditingTap,
+              child: Container(
+                color: Colors.transparent,
+              ),
+            ),
+          ),
+        if (isEditing && isSelected)
+          const Positioned(
+              top: 4,
+              right: 4,
+              child: Image(
+                image: AssetImage('assets/images/video_selected.png'),
+                width: 20,
+                height: 20,
+              ))
+      ],
+    );
+
+    // return InkWell(
+    //   onTap: isEditing ? onEditingTap : null,
+    //   child: Stack(
+    //     children: [
+    // VideoPreviewWidget(
+    //     id: id,
+    //     coverVertical: coverVertical,
+    //     coverHorizontal: coverHorizontal,
+    //     timeLength: timeLength,
+    //     tags: tags,
+    //     title: title,
+    //     videoViewTimes: videoViewTimes,
+    //     hasTapEvent: !isEditing),
+    // if (isEditing && isSelected)
+    //   Positioned(
+    //     left: 0,
+    //     right: 0,
+    //     bottom: 0,
+    //     child: Container(
+    //       width: double.infinity,
+    //       height: double.infinity,
+    //       color: Colors.black.withOpacity(0.5),
+    //     ),
+    //   ),
+    // if (isEditing && isSelected)
+    //   const Positioned(
+    //       top: 4,
+    //       right: 4,
+    //       child: Image(
+    //         image: AssetImage('assets/images/video_selected.png'),
+    //         width: 20,
+    //         height: 20,
+    //       ))
+    //     ],
+    //   ),
+    // );
+  }
+}

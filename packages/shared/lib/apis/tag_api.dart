@@ -1,6 +1,5 @@
 import '../models/block_vod.dart';
 import '../models/pager.dart';
-import '../models/supplier.dart';
 import '../models/tag.dart';
 import '../models/videos_tag.dart';
 import '../models/vod.dart';
@@ -56,14 +55,6 @@ class TagApi {
     }
     return List.from(
         (res.data['data'] as List<dynamic>).map((e) => VideoTags.fromJson(e)));
-  }
-
-  Future<SupplierTag> getOneTag(int id) async {
-    var res = await fetcher(url: '$apiPrefix/tag/statistics?id=$id');
-    if (res.data['code'] != '00') {
-      return SupplierTag(0);
-    }
-    return SupplierTag.fromJson(res.data['data'][0]);
   }
 
   Future<Pager<VideoTag>> getShortVideoById({

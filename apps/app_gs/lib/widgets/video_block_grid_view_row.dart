@@ -10,6 +10,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
   final bool isEmbeddedAds;
   final bool? displayCoverVertical;
   final int? blockId;
+  final bool? hasInfoView;
 
   const VideoBlockGridViewRow({
     Key? key,
@@ -19,6 +20,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
     required this.isEmbeddedAds,
     this.blockId,
     this.displayCoverVertical = false,
+    this.hasInfoView = true,
   }) : super(key: key);
 
   @override
@@ -30,19 +32,19 @@ class VideoBlockGridViewRow extends StatelessWidget {
         children: [
           Expanded(
             child: VideoPreviewWidget(
-              id: videoData[0].id!,
-              title: videoData[0].title ?? '精彩好片',
-              tags: videoData[0].tags ?? [],
-              timeLength: videoData[0].timeLength ?? 0,
-              coverHorizontal: videoData[0].coverHorizontal ?? '',
-              coverVertical: videoData[0].coverVertical ?? '',
-              videoViewTimes: videoData[0].videoViewTimes ?? 0,
-              imageRatio: imageRatio,
-              detail: videoData[0],
-              isEmbeddedAds: isEmbeddedAds,
-              displayCoverVertical: displayCoverVertical ?? false,
-              blockId: blockId,
-            ),
+                id: videoData[0].id,
+                title: videoData[0].title,
+                tags: videoData[0].tags ?? [],
+                timeLength: videoData[0].timeLength ?? 0,
+                coverHorizontal: videoData[0].coverHorizontal ?? '',
+                coverVertical: videoData[0].coverVertical ?? '',
+                videoViewTimes: videoData[0].videoViewTimes ?? 0,
+                imageRatio: imageRatio,
+                detail: videoData[0],
+                isEmbeddedAds: isEmbeddedAds,
+                displayCoverVertical: displayCoverVertical ?? false,
+                blockId: blockId,
+                hasInfoView: hasInfoView),
           ),
           const SizedBox(width: 10),
           const Expanded(

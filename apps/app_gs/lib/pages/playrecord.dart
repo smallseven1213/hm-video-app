@@ -2,21 +2,24 @@ import 'package:app_gs/widgets/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_page_panel.dart';
-import '../widgets/video_preview.dart';
+import '../widgets/video_preview_with_edit.dart';
+
+final logger = Logger();
 
 class PlayRecordPage extends StatefulWidget {
   PlayRecordPage({Key? key}) : super(key: key);
 
   @override
-  _PlayRecordPageState createState() => _PlayRecordPageState();
+  PlayRecordPageState createState() => PlayRecordPageState();
 }
 
-class _PlayRecordPageState extends State<PlayRecordPage> {
+class PlayRecordPageState extends State<PlayRecordPage> {
   final PlayRecordController playRecordController =
       Get.find<PlayRecordController>();
   final ListEditorController listEditorController =
@@ -67,12 +70,13 @@ class _PlayRecordPageState extends State<PlayRecordPage> {
               crossAxisCount: 2,
               itemCount: playRecordController.playRecord.length,
               itemBuilder: (BuildContext context, int index) =>
-                  Obx(() => VideoPreviewWidget(
+                  Obx(() => VideoPreviewWithEditWidget(
                         id: videos[index].id,
                         isEditing: listEditorController.isEditing.value,
                         isSelected: listEditorController.selectedIds
                             .contains(videos[index].id),
                         onEditingTap: () {
+                          logger.i('CLICK!!');
                           listEditorController.toggleSelected(videos[index].id);
                         },
                         title: videos[index].title,

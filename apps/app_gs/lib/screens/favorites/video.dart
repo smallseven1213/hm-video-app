@@ -6,6 +6,7 @@ import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 
 import '../../widgets/no_data.dart';
+import '../../widgets/video_preview_with_edit.dart';
 
 class FavoritesVideoScreen extends StatelessWidget {
   FavoritesVideoScreen({Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class FavoritesVideoScreen extends StatelessWidget {
           itemCount: videos.length,
           itemBuilder: (BuildContext context, int index) {
             var video = videos[index];
-            return Obx(() => VideoPreviewWidget(
+            return Obx(() => VideoPreviewWithEditWidget(
                 id: video.id,
                 isEditing: listEditorController.isEditing.value,
                 isSelected:
