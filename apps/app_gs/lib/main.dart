@@ -13,6 +13,7 @@ import 'package:app_gs/screens/game_webview_screen/index.dart';
 import 'package:app_gs/screens/game_withdraw_screen/index.dart';
 import 'package:app_gs/screens/game_deposit_list_screen/index.dart';
 import 'package:app_gs/screens/game_deposit_polling_screen/index.dart';
+import 'package:app_gs/screens/game_payment_result_screen/index.dart';
 
 import 'config/colors.dart';
 import 'pages/actors.dart';
@@ -70,6 +71,8 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.gameDepositPolling.value: (context, args) =>
       const GameDepositPollingScreen(),
   AppRoutes.gameWithdraw.value: (context, args) => const GameWithdrawScreen(),
+  AppRoutes.gamePaymentResult.value: (context, args) =>
+      const GamePaymentResultScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.nickname.value: (context, args) => NicknamePage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),
@@ -87,10 +90,7 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.filter.value: (context, args) => const FilterPage(),
   AppRoutes.actors.value: (context, args) => ActorsPage(),
   AppRoutes.short.value: (context, args) => ShortPage(
-        itemCount: 10,
-        id: args['id'] as int,
-        areaId: args['areaId'] as int
-      ),
+      itemCount: 10, id: args['id'] as int, areaId: args['areaId'] as int),
   AppRoutes.supplier.value: (context, args) => SupplierPage(
         id: args['id'] as int,
       ),

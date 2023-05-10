@@ -1,9 +1,13 @@
-import 'package:flutter/foundation.dart';
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/onLoading.dart';
 import 'package:game/utils/showFormDialog.dart';
+import 'package:get/get.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,7 +23,7 @@ submitDepositOrder(
   onLoading(context, status: true);
   // ignore: avoid_init_to_null
   var windowRef = null;
-  if (kIsWeb) windowRef = html.window.open('', '_blank');
+  if (GetPlatform.isWeb) windowRef = html.window.open('', '_blank');
   await Future.delayed(const Duration(milliseconds: 66));
   try {
     var value = await GameLobbyApi().makeOrderV2(
@@ -28,26 +32,22 @@ submitDepositOrder(
       name: userName ?? '',
     );
     if (value.isNotEmpty && value.startsWith('http')) {
-      if (kIsWeb) {
+      if (GetPlatform.isWeb) {
         await Future.delayed(const Duration(milliseconds: 500));
-        // ignore: use_build_context_synchronously
         onLoading(context, status: false);
-        // ignore: use_build_context_synchronously
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
         windowRef?.location.href = value;
+        MyRouteDelegate.of(context).push(AppRoutes.gamePaymentResult.value);
         // gto('/game/deposit/payment-result/0/$activePayment');
       } else {
         await launch(value, webOnlyWindowName: '_blank');
-        // ignore: use_build_context_synchronously
         onLoading(context, status: false);
-        // ignore: use_build_context_synchronously
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
+        MyRouteDelegate.of(context).push(AppRoutes.gamePaymentResult.value);
         // gto('/game/deposit/payment-result/0/$activePayment');
       }
     } else {
-      // ignore: use_build_context_synchronously
       onLoading(context, status: false);
-      // ignore: use_build_context_synchronously
       showFormDialog(
         context,
         title: '交易失敗',
@@ -63,16 +63,27 @@ submitDepositOrder(
         confirmText: '確認',
         onConfirm: () => {
           Navigator.pop(context),
-          Navigator.popUntil(
-              context, (route) => route.settings.name == '/game/deposit2'),
+          Navigator.pop(context),
         },
       );
     }
   } catch (e) {
-    // ignore: use_build_context_synchronously
     onLoading(context, status: false);
-    // ignore: use_build_context_synchronously
-    Navigator.pop(context);
-    print('_submitOrder error: $e');
+    showFormDialog(
+      context,
+      title: '_submitOrder error',
+      content: SizedBox(
+        height: 60,
+        child: Text(
+          e.toString(),
+          style: TextStyle(color: gameLobbyPrimaryTextColor),
+        ),
+      ),
+      confirmText: '確認',
+      onConfirm: () => {
+        Navigator.pop(context),
+        Navigator.pop(context),
+      },
+    );
   }
 }

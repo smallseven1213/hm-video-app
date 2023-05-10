@@ -118,7 +118,9 @@ void showFormDialog(
                       ),
                       minimumSize: const Size(double.infinity, 52),
                     ),
-                    onPressed: onConfirm,
+                    onPressed: () {
+                      onConfirm();
+                    },
                     child: Text(
                       confirmText,
                       style: TextStyle(
