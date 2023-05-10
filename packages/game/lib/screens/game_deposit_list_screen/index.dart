@@ -1,6 +1,8 @@
 // paymentPage:2 列表
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:game/screens/game_deposit_list_screen/payment_items.dart';
+import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
@@ -66,22 +68,22 @@ class _GameDepositListState extends State<GameDepositList> {
               child: Stack(
                 children: [
                   Column(
-                    children: const [
-                      Padding(
+                    children: [
+                      const Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                         child: GameUserInfo(
                           child: UserInfoService(),
                         ),
                       ),
-                      // (depositData != null)
-                      //     ? DepositPaymentItems(
-                      //         depositData: depositData,
-                      //         initialIndex: depositData.keys.first.toString(),
-                      //       )
-                      //     : const CircularProgressIndicator(),
-                      SizedBox(height: 36),
-                      // Tips(),
+                      (depositData != null)
+                          ? DepositPaymentItems(
+                              depositData: depositData,
+                              initialIndex: depositData.keys.first.toString(),
+                            )
+                          : const CircularProgressIndicator(),
+                      const SizedBox(height: 36),
+                      Tips(),
                     ],
                   ),
                   isLoading == true
