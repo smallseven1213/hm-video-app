@@ -6,7 +6,7 @@ import '../models/supplier.dart';
 final supplierApi = SupplierApi();
 
 class SupplierController extends GetxController {
-  Rx<Supplier?> supplier = null.obs;
+  Rx<Supplier> supplier = Supplier().obs;
   int supplierId;
 
   SupplierController({required this.supplierId}) {

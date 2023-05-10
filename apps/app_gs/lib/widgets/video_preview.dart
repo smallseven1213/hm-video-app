@@ -63,35 +63,37 @@ class VideoPreviewWidget extends StatelessWidget {
   final double? imageRatio;
   final Vod? detail;
   final bool isEmbeddedAds;
-  final bool isEditing;
-  final bool isSelected;
-  final Function()? onEditingTap;
-  final bool? noTags;
-  final bool? noInfoView;
+  final bool? hasTags;
+  final bool? hasInfoView;
   final int? film; // 1長視頻, 2短視頻, 3漫畫
   final int? blockId;
+  final bool? hasRadius; // 要不要圓角
+  final bool? hasTitle; // 要不要標題
+  final bool? hasTapEvent; // 要不要點擊事件
+  final Function()? onTap;
 
-  VideoPreviewWidget({
-    Key? key,
-    required this.id,
-    required this.coverVertical,
-    required this.coverHorizontal,
-    this.displayCoverVertical = false,
-    required this.timeLength,
-    required this.tags,
-    required this.title,
-    required this.videoViewTimes,
-    this.isEmbeddedAds = false,
-    this.detail,
-    this.isEditing = false,
-    this.isSelected = false,
-    this.imageRatio,
-    this.onEditingTap,
-    this.film = 1,
-    this.noTags = false,
-    this.noInfoView = false,
-    this.blockId,
-  }) : super(key: key);
+  VideoPreviewWidget(
+      {Key? key,
+      required this.id,
+      required this.coverVertical,
+      required this.coverHorizontal,
+      this.displayCoverVertical = false,
+      required this.timeLength,
+      required this.tags,
+      required this.title,
+      required this.videoViewTimes,
+      this.isEmbeddedAds = false,
+      this.detail,
+      this.imageRatio,
+      this.film = 1,
+      this.hasTags = true,
+      this.hasInfoView = true,
+      this.blockId,
+      this.hasRadius = true,
+      this.hasTitle = true,
+      this.onTap,
+      this.hasTapEvent = true})
+      : super(key: key);
 
   final playrecordController = Get.find<PlayRecordController>();
 
@@ -106,153 +108,139 @@ class VideoPreviewWidget extends StatelessWidget {
     }
     return Column(
       children: [
-        Stack(
-          children: [
-            InkWell(
-              onTap: isEditing
-                  ? onEditingTap
-                  : () {
-                      if (film == 1) {
-                        MyRouteDelegate.of(context).push(AppRoutes.video.value,
-                            args: {
-                              'id': id,
-                            },
-                            removeSamePath: true);
-                      } else if (film == 2) {
-                        MyRouteDelegate.of(context).push(AppRoutes.short.value,
-                            args: {
-                              'id': id, // videoId
-                              'areaId': blockId, // blockId
-                            },
-                            removeSamePath: true);
-                      } else if (film == 3) {}
-                      var playRecord = VideoDatabaseField(
-                        id: id,
-                        coverHorizontal: coverHorizontal,
-                        coverVertical: coverVertical,
-                        timeLength: timeLength,
-                        tags: tags,
-                        title: title,
-                        videoViewTimes: videoViewTimes,
-                        // detail: detail!,
-                      );
-                      playrecordController.addPlayRecord(playRecord);
-                    },
-              child: Stack(
-                children: [
-                  // 背景
-                  AspectRatio(
-                    aspectRatio: imageRatio ??
-                        (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-                    child: Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Color(0xFF00234D)
-                            // color: Colors.white,
-                            ),
-                        clipBehavior: Clip.antiAlias,
-                        child: const Center(
-                          child: Image(
-                            image: AssetImage(
-                                'assets/images/video_preview_loading.png'),
-                            width: 102,
-                            height: 70,
-                          ),
-                          // 特效版有點慢
-                          // child: Shimmer.fromColors(
-                          //   child: Image(
-                          //     image: AssetImage(
-                          //         'assets/images/video_preview_loading.png'),
-                          //     width: 102,
-                          //     height: 70,
-                          //   ),
-                          //   baseColor: Colors.white.withOpacity(0.4),
-                          //   highlightColor: Colors.white.withOpacity(0.2),
-                          // ),
-                        )),
-                  ),
-                  // 主體
-                  AspectRatio(
-                    aspectRatio: imageRatio ??
-                        (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-                    child: Container(
-                        decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          // color: Colors.white,
+        InkWell(
+          onTap: () {
+            if (onTap != null) {
+              onTap!();
+            }
+            if (hasTapEvent == true) {
+              if (film == 1) {
+                MyRouteDelegate.of(context).push(
+                  AppRoutes.video.value,
+                  args: {'id': id, 'blockId': blockId},
+                  removeSamePath: true,
+                );
+              } else if (film == 2) {
+                logger.i('CLICK TO FILM2 $id, $blockId');
+                MyRouteDelegate.of(context).push(
+                  AppRoutes.short.value,
+                  args: {'id': id, 'areaId': blockId},
+                  removeSamePath: true,
+                );
+              } else if (film == 3) {
+                // MyRouteDelegate.of(context).push(
+                //   AppRoutes.comic.value,
+                //   args: {'id': id, 'blockId': blockId},
+                //   removeSamePath: true,
+                // );
+              }
+              var playRecord = VideoDatabaseField(
+                id: id,
+                coverHorizontal: coverHorizontal,
+                coverVertical: coverVertical,
+                timeLength: timeLength,
+                tags: tags,
+                title: title,
+                videoViewTimes: videoViewTimes,
+                // detail: detail!,
+              );
+              playrecordController.addPlayRecord(playRecord);
+            }
+          },
+          child: Stack(
+            children: [
+              // 背景
+              AspectRatio(
+                aspectRatio: imageRatio ??
+                    (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+                child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: hasRadius == true
+                            ? const BorderRadius.all(Radius.circular(10))
+                            : null,
+                        color: const Color(0xFF00234D)
+                        // color: Colors.white,
                         ),
-                        foregroundDecoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.black.withOpacity(0.0),
-                              Colors.black.withOpacity(0.3),
-                            ],
-                            stops: const [0.9, 1.0],
-                          ),
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        child: SidImageVisibilityDetector(
-                          child: SidImage(
-                            key: ValueKey('video-preview-$id'),
-                            sid: displayCoverVertical
-                                ? coverVertical
-                                : coverHorizontal,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
-                          ),
-                        )),
-                  ),
-                  if (isEditing &&
-                      isSelected) // Check if isEditing is true and the id is in the selectedIds list
-                    AspectRatio(
-                      aspectRatio: imageRatio ?? 374 / 198,
-                      child: Container(
-                        color: Colors.black.withOpacity(
-                            0.5), // Add a black semi-transparent overlay
+                    clipBehavior: Clip.antiAlias,
+                    child: const Center(
+                      child: Image(
+                        image: AssetImage(
+                            'assets/images/video_preview_loading.png'),
+                        width: 102,
+                        height: 70,
                       ),
-                    ),
-                  if (isEditing && isSelected)
-                    const Positioned(
-                        top: 4,
-                        right: 4,
-                        child: Image(
-                          image: AssetImage('assets/images/video_selected.png'),
-                          width: 20,
-                          height: 20,
-                        ))
-                ],
+                    )),
               ),
-            ),
-            imageRatio != BlockImageRatio.block4.ratio && noInfoView != true
-                ? AspectRatio(
-                    aspectRatio: imageRatio ?? 374 / 198,
-                    child: Align(
-                      alignment: AlignmentDirectional.bottomEnd,
-                      child: ViewInfo(
-                        viewCount: videoViewTimes,
-                        duration: timeLength,
+              // 主體
+              AspectRatio(
+                aspectRatio: imageRatio ??
+                    (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+                child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: hasRadius == true
+                          ? const BorderRadius.all(Radius.circular(10))
+                          : null,
+                      // color: Colors.white,
+                    ),
+                    foregroundDecoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.0),
+                          Colors.black.withOpacity(0.3),
+                        ],
+                        stops: const [0.9, 1.0],
                       ),
                     ),
-                  )
-                : const SizedBox(),
-          ],
-        ),
-        const SizedBox(height: 5),
-        Container(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            title,
-            textAlign: TextAlign.left,
-            overflow: TextOverflow.ellipsis,
-            softWrap: false,
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
+                    clipBehavior: Clip.antiAlias,
+                    child: SidImageVisibilityDetector(
+                      child: SidImage(
+                        key: ValueKey('video-preview-$id'),
+                        sid: displayCoverVertical
+                            ? coverVertical
+                            : coverHorizontal,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    )),
+              ),
+              if (hasInfoView == true)
+                Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: ViewInfo(
+                      viewCount: videoViewTimes,
+                      duration: timeLength,
+                    )),
+              // imageRatio != BlockImageRatio.block4.ratio && noInfoView != true
+              //     ? Positioned(
+              //         bottom: 0,
+              // child: ViewInfo(
+              //   viewCount: videoViewTimes,
+              //   duration: timeLength,
+              // ))
+              //     : const SizedBox(),
+            ],
           ),
         ),
-        if (tags.isNotEmpty && noTags != true) ...[
+        const SizedBox(height: 5),
+        if (hasTitle == true)
+          Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              title,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        if (tags.isNotEmpty && hasTags == true) ...[
           const SizedBox(height: 5),
           Align(
             alignment: Alignment.centerLeft,

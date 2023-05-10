@@ -6,12 +6,12 @@ class ActorAvatar extends StatelessWidget {
   final double height;
   const ActorAvatar({
     Key? key,
-    required this.photoSid,
+    this.photoSid,
     this.width = 60,
     this.height = 60,
   }) : super(key: key);
 
-  final String photoSid;
+  final String? photoSid;
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +42,13 @@ class ActorAvatar extends StatelessWidget {
                 width: width,
                 height: height,
               ),
-              SidImage(
-                  key: ValueKey(photoSid),
-                  sid: photoSid,
-                  width: width,
-                  height: height,
-                  fit: BoxFit.cover)
+              if (photoSid != null && photoSid != '')
+                SidImage(
+                    key: ValueKey(photoSid),
+                    sid: photoSid!,
+                    width: width,
+                    height: height,
+                    fit: BoxFit.cover)
             ],
           ),
         ),

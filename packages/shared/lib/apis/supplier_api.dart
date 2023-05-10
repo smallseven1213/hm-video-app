@@ -1,3 +1,4 @@
+import '../models/block_vod.dart';
 import '../models/supplier.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
@@ -19,13 +20,13 @@ class SupplierApi {
   Future<Supplier> getOneSupplier(int id) async {
     var res = await fetcher(url: '$apiPrefix/supplier/?id=$id');
     if (res.data['code'] != '00') {
-      return Supplier(0, '');
+      return Supplier();
     }
     return Supplier.fromJson(res.data['data']);
   }
 
   // Get /supplier/shortVideo?page=1&limit=100&id=20
-  Future<List<Vod>> getManyShortVideoBy({
+  Future<BlockVod> getManyShortVideoBy({
     required int page,
     int limit = 100,
     required int id,
@@ -33,9 +34,12 @@ class SupplierApi {
     var res = await fetcher(
         url: '$apiPrefix/supplier/shortVideo?page=$page&limit=$limit&id=$id');
     if (res.data['code'] != '00') {
-      return [];
+      return BlockVod([], 0);
     }
-    return List.from((res.data['data']['data'] as List<dynamic>)
-        .map((e) => Vod.fromJson(e)));
+    return BlockVod(
+        List.from((res.data['data']['data'] as List<dynamic>)
+            .map((e) => Vod.fromJson(e))
+            .toList()),
+        res.data['data']['total'] ?? limit * (page + 1));
   }
 }

@@ -91,7 +91,7 @@ class Block4Widget extends StatelessWidget {
                           imageRatio: BlockImageRatio.block4.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
                           displayCoverVertical: true,
-                        ),
+                          hasInfoView: false),
                 ),
               );
             } else {

@@ -13,16 +13,18 @@ class VideoBlockGridView extends StatelessWidget {
   final bool isEmbeddedAds;
   final bool displayCoverVertical;
   final int? blockId;
+  final bool? hasInfoView;
 
-  const VideoBlockGridView({
-    Key? key,
-    required this.videos,
-    this.gridLength = 2,
-    this.imageRatio,
-    required this.isEmbeddedAds,
-    required this.displayCoverVertical,
-    this.blockId,
-  }) : super(key: key);
+  const VideoBlockGridView(
+      {Key? key,
+      required this.videos,
+      this.gridLength = 2,
+      this.imageRatio,
+      required this.isEmbeddedAds,
+      required this.displayCoverVertical,
+      this.blockId,
+      this.hasInfoView = true})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +42,13 @@ class VideoBlockGridView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             VideoBlockGridViewRow(
-              videoData: rowData,
-              gridLength: gridLength,
-              imageRatio: imageRatio,
-              isEmbeddedAds: isEmbeddedAds,
-              displayCoverVertical: displayCoverVertical,
-              blockId: blockId,
-            ),
+                videoData: rowData,
+                gridLength: gridLength,
+                imageRatio: imageRatio,
+                isEmbeddedAds: isEmbeddedAds,
+                displayCoverVertical: displayCoverVertical,
+                blockId: blockId,
+                hasInfoView: hasInfoView),
             const SizedBox(height: 8),
           ],
         );

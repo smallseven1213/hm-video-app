@@ -7,7 +7,7 @@ import 'package:shared/controllers/user_video_collection_controller.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_page_panel.dart';
 import '../widgets/no_data.dart';
-import '../widgets/video_preview.dart';
+import '../widgets/video_preview_with_edit.dart';
 
 class CollectionPage extends StatefulWidget {
   CollectionPage({Key? key}) : super(key: key);
@@ -67,7 +67,7 @@ class _CollectionPageState extends State<CollectionPage> {
               crossAxisCount: 2,
               itemCount: userCollectionController.videos.length,
               itemBuilder: (BuildContext context, int index) =>
-                  Obx(() => VideoPreviewWidget(
+                  Obx(() => VideoPreviewWithEditWidget(
                         id: videos[index].id,
                         isEditing: listEditorController.isEditing.value,
                         isSelected: listEditorController.selectedIds
