@@ -202,8 +202,12 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       _controller = VideoPlayerController.network(widget.videoUrl);
       // 監聽播放狀態
       _controller!.addListener(_onControllerValueChanged);
-      _controller!.initialize().then((_) => setState(() {}));
-      _controller!.play();
+      await _controller!.initialize().then((_) {
+        // 初始化完成後，更新 UI 並播放視頻
+        setState(() {
+          _controller!.play();
+        });
+      });
     } catch (error) {
       print('👹👹👹 Error occurred: $error');
       if (_controller!.value.hasError) {
@@ -235,6 +239,8 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     if (!mounted) {
       return;
     }
+    print('👹👹👹👹👹👹👹👹👹_controller!.value: ${_controller!.value}');
+
     if (_controller!.value.hasError) {
       setState(() {
         hasError = true;
@@ -244,7 +250,14 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       print('👹👹👹 isBuffering');
     } else {
       // 當視頻停止緩衝並準備播放時，自動播放視頻
-      if (_controller!.value.isPlaying == false && !hasError) {
+      print('==================================');
+      print('_controller!.value: ${_controller!.value}');
+      print('_controller!.value.isPlaying: ${_controller!.value.isPlaying}');
+      print('hasError: $hasError');
+      print('==================================');
+
+      if (_controller!.value.isPlaying == false &&
+          !_controller!.value.hasError) {
         _controller!.play();
       }
     }

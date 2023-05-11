@@ -28,6 +28,8 @@ class ShortCard extends StatelessWidget {
       var video = videoDetailController!.video.value;
       var videoDetail = videoDetailController.videoDetail.value;
 
+      print('@@@@video: ${video}');
+
       return Expanded(
           child: Stack(
         children: [
@@ -41,15 +43,15 @@ class ShortCard extends StatelessWidget {
                 videoUrl: videoDetailController.videoUrl.value,
               ),
             ),
-            Center(
-              child: Text(
-                '視頻編號：${video.id}',
-                style: const TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+            // Center(
+            //   child: Text(
+            //     '視頻編號：${video.id}',
+            //     style: const TextStyle(
+            //       fontSize: 24,
+            //       color: Colors.white,
+            //     ),
+            //   ),
+            // ),
           ],
           if (videoDetail != null)
             ShortCardInfo(index: index, data: videoDetail)
