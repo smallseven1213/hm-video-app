@@ -2,6 +2,8 @@ import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_vod_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 const gridRatio = 128 / 227;
 
@@ -29,6 +31,13 @@ class SupplierVods extends StatelessWidget {
             var vod = vodController.vodList.value[index];
             return VideoPreviewWidget(
                 id: id,
+                onOverrideRedirectTap: () {
+                  MyRouteDelegate.of(context).push(
+                    AppRoutes.shortsBySupplier.value,
+                    args: {'videoId': id, 'supplierId': id},
+                    removeSamePath: true,
+                  );
+                },
                 film: 2,
                 hasRadius: false,
                 hasTitle: false,

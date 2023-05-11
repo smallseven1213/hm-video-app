@@ -71,6 +71,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool? hasTitle; // 要不要標題
   final bool? hasTapEvent; // 要不要點擊事件
   final Function()? onTap;
+  final Function()? onOverrideRedirectTap; // 自定義路由轉址
 
   VideoPreviewWidget(
       {Key? key,
@@ -92,7 +93,8 @@ class VideoPreviewWidget extends StatelessWidget {
       this.hasRadius = true,
       this.hasTitle = true,
       this.onTap,
-      this.hasTapEvent = true})
+      this.hasTapEvent = true,
+      this.onOverrideRedirectTap})
       : super(key: key);
 
   final playrecordController = Get.find<PlayRecordController>();
@@ -114,26 +116,31 @@ class VideoPreviewWidget extends StatelessWidget {
               onTap!();
             }
             if (hasTapEvent == true) {
-              if (film == 1) {
-                MyRouteDelegate.of(context).push(
-                  AppRoutes.video.value,
-                  args: {'id': id, 'blockId': blockId},
-                  removeSamePath: true,
-                );
-              } else if (film == 2) {
-                logger.i('CLICK TO FILM2 $id, $blockId');
-                MyRouteDelegate.of(context).push(
-                  AppRoutes.short.value,
-                  args: {'id': id, 'areaId': blockId},
-                  removeSamePath: true,
-                );
-              } else if (film == 3) {
-                // MyRouteDelegate.of(context).push(
-                //   AppRoutes.comic.value,
-                //   args: {'id': id, 'blockId': blockId},
-                //   removeSamePath: true,
-                // );
+              if (onOverrideRedirectTap != null) {
+                onOverrideRedirectTap!();
+              } else {
+                if (film == 1) {
+                  MyRouteDelegate.of(context).push(
+                    AppRoutes.video.value,
+                    args: {'id': id, 'blockId': blockId},
+                    removeSamePath: true,
+                  );
+                } else if (film == 2) {
+                  logger.i('CLICK TO FILM2 $id, $blockId');
+                  MyRouteDelegate.of(context).push(
+                    AppRoutes.shortsByBlock.value,
+                    args: {'videoId': id, 'areaId': blockId},
+                    removeSamePath: true,
+                  );
+                } else if (film == 3) {
+                  // MyRouteDelegate.of(context).push(
+                  //   AppRoutes.comic.value,
+                  //   args: {'id': id, 'blockId': blockId},
+                  //   removeSamePath: true,
+                  // );
+                }
               }
+
               var playRecord = VideoDatabaseField(
                 id: id,
                 coverHorizontal: coverHorizontal,

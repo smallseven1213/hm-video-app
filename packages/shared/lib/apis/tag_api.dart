@@ -167,8 +167,8 @@ class TagApi {
     if (res.data['code'] != '00') {
       return [];
     }
-    return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+    return List.from((res.data['data']['videos'] as List<dynamic>)
+        .map((e) => Video.fromJson(e)));
   }
 
   Future<BlockVod> getShortVideoByTagId({

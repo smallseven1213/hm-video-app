@@ -55,7 +55,7 @@ class SupplierApi {
     if (res.data['code'] != '00') {
       return [];
     }
-    return List.from((res.data['data'] as List<dynamic>)
+    return List.from((res.data['data']['videos'] as List<dynamic>)
         .map((e) => Vod.fromJson(e))
         .toList());
   }
