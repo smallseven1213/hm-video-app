@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/widgets/video_player/player.dart';
 
@@ -10,17 +11,19 @@ import 'short_card_info.dart';
 class ShortCard extends StatelessWidget {
   final int index;
   final int id;
+  final String title;
 
   const ShortCard({
     Key? key,
     required this.index,
     required this.id,
+    required this.title,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final VideoDetailController? videoDetailController =
-        Get.put(VideoDetailController(id), tag: id.toString());
+    final ShortVideoDetailController? videoDetailController =
+        Get.put(ShortVideoDetailController(id), tag: id.toString());
 
     print('@@@@widget.id: ${id}');
 
@@ -53,7 +56,7 @@ class ShortCard extends StatelessWidget {
             // ),
           ],
           if (videoDetail != null)
-            ShortCardInfo(index: index, data: videoDetail)
+            ShortCardInfo(index: index, data: videoDetail, title: title)
         ],
       ));
     });

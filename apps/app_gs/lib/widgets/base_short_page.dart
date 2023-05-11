@@ -41,6 +41,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                     ShortCard(
                       index: index,
                       id: controller.data[index].id,
+                      title: controller.data[index].title
                     ),
                     Container(
                       height: 90,
