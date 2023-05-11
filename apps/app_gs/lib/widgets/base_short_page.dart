@@ -21,12 +21,29 @@ class BaseShortPage extends StatefulWidget {
   BaseShortPageState createState() => BaseShortPageState();
 }
 
+<<<<<<< HEAD:apps/app_gs/lib/widgets/base_short_page.dart
 class BaseShortPageState extends State<BaseShortPage> {
+=======
+
+class ShortPageState extends State<ShortPage> {
+>>>>>>> develop:apps/app_gs/lib/pages/short.dart
   final PageController _pageController = PageController();
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD:apps/app_gs/lib/widgets/base_short_page.dart
     final controller = widget.createController();
+=======
+    logger.i('${widget.itemCount}, ${widget.id}, ${widget.areaId}');
+    final VideoShortPopularController videoShortPopularController = Get.put(
+        VideoShortPopularController(
+          widget.areaId, // block.id,
+          widget.id, // video.id,
+        ),
+        tag: widget.id.toString());
+
+    logger.i('ShortPageState WIDGET!!!: VIDEO ID: ${widget.id}');
+>>>>>>> develop:apps/app_gs/lib/pages/short.dart
 
     return Scaffold(
       body: Stack(
@@ -58,13 +75,13 @@ class BaseShortPageState extends State<BaseShortPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
-                          ShortButtomButton(
+                          ShortButtonButton(
                             title: '1.9萬',
                             subscribe: '喜歡就點讚',
                             activeIcon: Icons.favorite,
                             unActiveIcon: Icons.favorite_border,
                           ),
-                          ShortButtomButton(
+                          ShortButtonButton(
                             title: '1.9萬',
                             subscribe: '添加到收藏',
                             // icon is star
