@@ -12,6 +12,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:app_gs/screens/game_screen/lobby.dart';
 import 'package:app_gs/screens/game_webview_screen/index.dart';
 import 'package:app_gs/screens/game_withdraw_screen/index.dart';
+import 'package:app_gs/screens/game_set_fundpassword_screen/index.dart';
 import 'package:app_gs/screens/game_deposit_list_screen/index.dart';
 import 'package:app_gs/screens/game_deposit_polling_screen/index.dart';
 import 'package:app_gs/screens/game_payment_result_screen/index.dart';
@@ -73,6 +74,8 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.gameDepositPolling.value: (context, args) =>
       const GameDepositPollingScreen(),
   AppRoutes.gameWithdraw.value: (context, args) => const GameWithdrawScreen(),
+  AppRoutes.gameSetFundPassword.value: (context, args) =>
+      const GameSetFundPasswordScreen(),
   AppRoutes.gamePaymentResult.value: (context, args) =>
       const GamePaymentResultScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),

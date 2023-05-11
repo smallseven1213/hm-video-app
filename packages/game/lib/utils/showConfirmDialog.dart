@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-void showConfirmDialog(
-  BuildContext context, {
+void showConfirmDialog({
+  required BuildContext context,
   required String title,
   required String content,
   String confirmText = "確定",
   String cancelText = "取消",
   bool barrierDismissible = false,
-  Function()? onConfirm,
-  Function()? onCancel,
+  required void Function() onConfirm,
+  Function? onCancel,
   bool? rotate = false,
 }) {
   showDialog(
@@ -112,7 +112,7 @@ void showConfirmDialog(
                           ),
                         ),
                         child: InkWell(
-                          onTap: onCancel,
+                          onTap: onCancel(),
                           borderRadius: BorderRadius.only(
                             bottomLeft: const Radius.circular(24),
                             bottomRight:

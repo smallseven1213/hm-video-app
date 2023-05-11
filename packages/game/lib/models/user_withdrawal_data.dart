@@ -1,6 +1,6 @@
 class UserWithdrawalData {
   List<UserPaymentSecurity>? userPaymentSecurity;
-  int? points;
+  double? points;
   bool? paymentPin;
 
   UserWithdrawalData({this.userPaymentSecurity, this.points, this.paymentPin});
@@ -12,18 +12,18 @@ class UserWithdrawalData {
         userPaymentSecurity!.add(UserPaymentSecurity.fromJson(v));
       });
     }
-    points = json['points'];
+    points = json['points'].toDouble() ?? 0.00;
     paymentPin = json['paymentPin'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.userPaymentSecurity != null) {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (userPaymentSecurity != null) {
       data['userPaymentSecurity'] =
-          this.userPaymentSecurity!.map((v) => v.toJson()).toList();
+          userPaymentSecurity!.map((v) => v.toJson()).toList();
     }
-    data['points'] = this.points;
-    data['paymentPin'] = this.paymentPin;
+    data['points'] = points;
+    data['paymentPin'] = paymentPin;
     return data;
   }
 }
@@ -51,12 +51,12 @@ class UserPaymentSecurity {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['account'] = this.account;
-    data['remittanceType'] = this.remittanceType;
-    data['legalName'] = this.legalName;
-    data['bankName'] = this.bankName;
-    data['branchName'] = this.branchName;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['account'] = account;
+    data['remittanceType'] = remittanceType;
+    data['legalName'] = legalName;
+    data['bankName'] = bankName;
+    data['branchName'] = branchName;
     return data;
   }
 }

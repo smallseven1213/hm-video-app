@@ -65,7 +65,7 @@ class _ButtonWidget extends State<ButtonWidget> {
                 onTap: () {
                   print('返回大廳');
                   showConfirmDialog(
-                    context,
+                    context: context,
                     title: '退出遊戲',
                     content: '你真的要退出遊戲嗎？',
                     rotate: orientation == Orientation.portrait ? true : false,
