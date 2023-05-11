@@ -35,7 +35,8 @@ class ShortCard extends StatelessWidget {
             Container(
               height: double.infinity,
               width: double.infinity,
-              child: VideoPlayerWidget(
+              child: VideoPlayerArea(
+                id: id,
                 video: video,
                 videoUrl: videoDetailController.videoUrl.value,
               ),
