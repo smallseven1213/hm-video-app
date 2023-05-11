@@ -1,19 +1,18 @@
-// VideoPlayerArea stateful widget
+// VideoPlayerWidget stateful widget
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/video.dart';
-import 'package:shared/models/video_player.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
-import 'controls_overlay.dart';
-import 'dot_line_animation.dart';
+// import 'controls_overlay.dart';
+// import 'dot_line_animation.dart';
 
 final logger = Logger();
 
@@ -52,7 +51,7 @@ class VideoLoading extends StatelessWidget {
             image: AssetImage('assets/images/logo.png'),
             width: 60.0,
           ),
-          DotLineAnimation(),
+          // DotLineAnimation(),
           SizedBox(height: 15),
           Text(
             '精彩即將呈現',
@@ -161,27 +160,27 @@ class VideoError extends StatelessWidget {
   }
 }
 
-class VideoPlayerArea extends StatefulWidget {
-  final int id;
+class VideoPlayerWidget extends StatefulWidget {
   final String? name;
   final String videoUrl;
   final Video video;
   final VideoPlayerController? controller;
+  final double? height;
 
-  VideoPlayerArea({
+  VideoPlayerWidget({
     Key? key,
-    required this.id,
     required this.videoUrl,
     required this.video,
     this.name,
     this.controller,
+    this.height,
   }) : super(key: key);
 
   @override
   _VideoPlayerAreaState createState() => _VideoPlayerAreaState();
 }
 
-class _VideoPlayerAreaState extends State<VideoPlayerArea>
+class _VideoPlayerAreaState extends State<VideoPlayerWidget>
     with WidgetsBindingObserver {
   VideoPlayerController? _controller;
   final VodApi vodApi = VodApi();
@@ -203,8 +202,12 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       _controller = VideoPlayerController.network(widget.videoUrl);
       // 監聽播放狀態
       _controller!.addListener(_onControllerValueChanged);
-      _controller!.initialize().then((_) => setState(() {}));
-      _controller!.play();
+      _controller!.initialize().then((_) {
+        if (!mounted) return;
+        setState(() {
+          _controller!.play();
+        });
+      });
     } catch (error) {
       print('👹👹👹 Error occurred: $error');
       if (_controller!.value.hasError) {
@@ -237,6 +240,8 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       return;
     }
     if (_controller!.value.hasError) {
+      print('👹👹👹 isError');
+
       setState(() {
         hasError = true;
       });
@@ -305,7 +310,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _controller?.pause();
+    // _controller?.pause();
     _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
     // setScreenPortrait();
@@ -332,8 +337,6 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
     return Container(
       color: Colors.black,
-      width: MediaQuery.of(context).size.width,
-      height: playerHeight,
       child: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -341,37 +344,89 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
             VideoError(
               coverHorizontal: widget.video.coverHorizontal ?? '',
               onTap: () {
+                print('👹👹👹 onTap');
+                _controller?.play();
                 setState(() {
                   hasError = false;
                 });
-                initializePlayer();
               },
             ),
+            Stack(
+              children: [
+                Container(
+                  foregroundDecoration: BoxDecoration(
+                    color: Colors.black.withOpacity(0.8),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withOpacity(0.8),
+                        const Color.fromARGB(255, 0, 34, 79),
+                      ],
+                      stops: const [0.8, 1.0],
+                    ),
+                  ),
+                  child: SidImage(
+                    key: ValueKey(widget.video.coverHorizontal ?? ''),
+                    sid: widget.video.coverHorizontal ?? '',
+                    width: double.infinity,
+                    height: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          print('👹👹👹 onTap');
+                          _controller?.play();
+                          setState(() {
+                            hasError = false;
+                          });
+                        },
+                        child: Center(
+                          child: Container(
+                            width: 100,
+                            height: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.black.withOpacity(0.5),
+                                shape: BoxShape.circle),
+                            child: const Center(
+                              child: Icon(
+                                Icons.play_arrow,
+                                color: Colors.white,
+                                size: 45.0,
+                                semanticLabel: 'Play',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  child: AppBar(
+                    elevation: 0,
+                    backgroundColor: Colors.transparent,
+                    leading: IconButton(
+                      icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ),
+                )
+              ],
+            )
           ] else if (_controller != null &&
               _controller!.value.isInitialized) ...[
-            AspectRatio(
-              aspectRatio: aspectRatio,
-              child: VideoPlayer(_controller!),
-            ),
-            ControlsOverlay(
-              controller: _controller!,
-              name: widget.video.title,
-              isFullscreen: isFullscreen,
-              toggleFullscreen: (status) {
-                toggleFullscreen(fullScreen: status);
-              },
-              isScreenLocked: isScreenLocked,
-              onScreenLock: (bool isLocked) {
-                setState(() {
-                  isScreenLocked = isLocked;
-                });
-                if (isLocked) {
-                  toggleFullscreen(fullScreen: true);
-                } else {
-                  setScreenRotation();
-                }
-              },
-            ),
+            VideoPlayer(_controller!)
           ] else ...[
             VideoLoading(
               coverHorizontal: widget.video.coverHorizontal ?? '',

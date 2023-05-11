@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
-
 import 'video_preview.dart';
 
 class VideoBlockGridViewRow extends StatelessWidget {

@@ -3,13 +3,13 @@
 
 import 'package:flutter/material.dart';
 
-class ShortButtomButton extends StatelessWidget {
+class ShortButtonButton extends StatelessWidget {
   final String title;
   final String subscribe;
   final IconData activeIcon;
   final IconData unActiveIcon;
 
-  const ShortButtomButton(
+  const ShortButtonButton(
       {Key? key,
       required this.title,
       required this.subscribe,

@@ -28,6 +28,7 @@ class ShortPage extends StatefulWidget {
   ShortPageState createState() => ShortPageState();
 }
 
+
 class ShortPageState extends State<ShortPage> {
   final PageController _pageController = PageController();
 
@@ -36,11 +37,14 @@ class ShortPageState extends State<ShortPage> {
   @override
   Widget build(BuildContext context) {
     logger.i('${widget.itemCount}, ${widget.id}, ${widget.areaId}');
-    final VideoShortPopularController videoShortPopularController =
-        Get.put(VideoShortPopularController(
-      widget.areaId, // block.id,
-      widget.id, // video.id,
-    ));
+    final VideoShortPopularController videoShortPopularController = Get.put(
+        VideoShortPopularController(
+          widget.areaId, // block.id,
+          widget.id, // video.id,
+        ),
+        tag: widget.id.toString());
+
+    logger.i('ShortPageState WIDGET!!!: VIDEO ID: ${widget.id}');
 
     return Scaffold(
       body: Stack(
@@ -74,13 +78,13 @@ class ShortPageState extends State<ShortPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: const [
-                          ShortButtomButton(
+                          ShortButtonButton(
                             title: '1.9萬',
                             subscribe: '喜歡就點讚',
                             activeIcon: Icons.favorite,
                             unActiveIcon: Icons.favorite_border,
                           ),
-                          ShortButtomButton(
+                          ShortButtonButton(
                             title: '1.9萬',
                             subscribe: '添加到收藏',
                             // icon is star
