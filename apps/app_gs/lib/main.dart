@@ -1,4 +1,5 @@
 import 'package:app_gs/pages/actor.dart';
+import 'package:app_gs/pages/shorts_by_tag.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
 import 'package:app_gs/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -96,6 +97,11 @@ final Map<String, RouteWidgetBuilder> routes = {
       ),
   AppRoutes.supplierTag.value: (context, args) => SupplierTagVideoPage(
       tagId: args['tagId'] as int, tagName: args['tagName']),
+  AppRoutes.supplierTagShorts.value: (context, args) => ShortsByTagPage(
+        itemCount: 10,
+        id: args['id'] as int,
+        tagId: args['tagId'] as int,
+      ),
 };
 
 class MyApp extends StatelessWidget {

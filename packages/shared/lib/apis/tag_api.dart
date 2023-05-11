@@ -1,6 +1,7 @@
 import '../models/block_vod.dart';
 import '../models/pager.dart';
 import '../models/tag.dart';
+import '../models/video.dart';
 import '../models/videos_tag.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
@@ -157,16 +158,33 @@ class TagApi {
     return BlockVod(vods, vods.length);
   }
 
-  Future<TagVideos> getPlayList({
+  Future<List<Video>> getPlayList({
     required int tagId,
     required int videoId,
   }) async {
-    var value = await fetcher(
+    var res = await fetcher(
         url: '$apiPrefix/tag/playlist?tagId=$tagId&videoId=$videoId');
-    var res = (value.data as Map<String, dynamic>);
-    if (res['code'] != '00') {
-      return TagVideos(0);
+    if (res.data['code'] != '00') {
+      return [];
     }
-    return TagVideos.fromJson(res['data'][0]);
+    return List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+  }
+
+  Future<BlockVod> getShortVideoByTagId({
+    required int page,
+    int limit = 10,
+    required int id,
+  }) async {
+    var res = await fetcher(
+        url: '$apiPrefix/tag/shortVideo?page=$page&limit=$limit&id=$id');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    return BlockVod(
+        List.from((res.data['data']['data'] as List<dynamic>)
+            .map((e) => Vod.fromJson(e))
+            .toList()),
+        res.data['data']['total'] ?? limit * (page + 1));
   }
 }

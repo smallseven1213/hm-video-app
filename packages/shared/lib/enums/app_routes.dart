@@ -28,7 +28,8 @@ enum AppRoutes {
   short,
   nickname,
   supplier,
-  supplierTag
+  supplierTag,
+  supplierTagShorts
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -94,6 +95,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/supplier';
       case AppRoutes.supplierTag:
         return '/supplier_tag';
+      case AppRoutes.supplierTagShorts:
+        return '/supplier_tag_shorts';
       default:
         return '/unknown';
     }

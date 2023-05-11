@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/supplier/card.dart';
@@ -16,7 +14,7 @@ class SupplierPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ScrollController _parentScrollController = ScrollController();
+    final ScrollController parentScrollController = ScrollController();
     return Stack(
       children: [
         CustomScrollView(
@@ -28,7 +26,7 @@ class SupplierPage extends StatelessWidget {
               ),
             ),
             SupplierCard(id: id),
-            SupplierVods(id: id, scrollController: _parentScrollController)
+            SupplierVods(id: id, scrollController: parentScrollController)
           ],
         ),
         const FloatPageBackButton()

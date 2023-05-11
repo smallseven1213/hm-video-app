@@ -29,6 +29,7 @@ class SupplierVods extends StatelessWidget {
             var vod = vodController.vodList.value[index];
             return VideoPreviewWidget(
                 id: id,
+                film: 2,
                 hasRadius: false,
                 hasTitle: false,
                 imageRatio: gridRatio,
