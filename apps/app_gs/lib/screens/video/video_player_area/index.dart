@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/video.dart';
-import 'package:shared/models/video_player.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/sid_image.dart';
