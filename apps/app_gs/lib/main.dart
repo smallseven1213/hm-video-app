@@ -26,7 +26,8 @@ import 'pages/register.dart';
 import 'pages/nickname.dart';
 import 'pages/share.dart';
 import 'pages/sharerecord.dart';
-import 'pages/short.dart';
+import 'pages/shorts_by_block.dart';
+import 'pages/shorts_by_supplier.dart';
 import 'pages/supplier.dart';
 import 'pages/supplier_tag_video.dart';
 import 'pages/tag_video.dart';
@@ -90,17 +91,22 @@ final Map<String, RouteWidgetBuilder> routes = {
       ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
   AppRoutes.actors.value: (context, args) => ActorsPage(),
-  AppRoutes.short.value: (context, args) => ShortPage(
-      itemCount: 10, id: args['id'] as int, areaId: args['areaId'] as int),
   AppRoutes.supplier.value: (context, args) => SupplierPage(
         id: args['id'] as int,
       ),
   AppRoutes.supplierTag.value: (context, args) => SupplierTagVideoPage(
       tagId: args['tagId'] as int, tagName: args['tagName']),
-  AppRoutes.supplierTagShorts.value: (context, args) => ShortsByTagPage(
-        itemCount: 10,
-        id: args['id'] as int,
+  AppRoutes.shortsByTag.value: (context, args) => ShortsByTagPage(
+        videoId: args['videoId'] as int,
         tagId: args['tagId'] as int,
+      ),
+  AppRoutes.shortsBySupplier.value: (context, args) => ShortsBySupplierPage(
+        videoId: args['videoId'] as int,
+        supplierId: args['supplierId'] as int,
+      ),
+  AppRoutes.shortsByBlock.value: (context, args) => ShortsByBlockPage(
+        videoId: args['videoId'] as int,
+        areaId: args['areaId'] as int,
       ),
 };
 
