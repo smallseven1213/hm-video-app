@@ -56,6 +56,9 @@ class ShortCardInfo extends StatelessWidget {
                       'id': data.supplier!.id,
                     }),
                 child: Row(children: [
+                  ActorAvatar(
+                      photoSid: data.supplier!.photoSid, width: 30, height: 30),
+                  const SizedBox(width: 6),
                   const SizedBox(height: 8),
                   Text(data.supplier!.aliasName ?? '',
                       style: const TextStyle(

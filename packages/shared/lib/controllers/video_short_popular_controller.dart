@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
-import '../apis/vod_api.dart';
+import '../apis/area_api.dart';
 import '../models/video.dart';
 
 class VideoShortPopularController extends GetxController {
@@ -22,8 +22,8 @@ class VideoShortPopularController extends GetxController {
   }
 
   Future<void> fetchPopular(areaId, videoId) async {
-    VodApi vodApi = VodApi();
-    var result = await vodApi.getPopular(areaId, videoId);
+    AreaApi areaApi = AreaApi();
+    var result = await areaApi.getPopular(areaId, videoId);
     data.value = result;
   }
 }
