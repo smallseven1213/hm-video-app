@@ -45,25 +45,32 @@ class ShortCardInfo extends StatelessWidget {
                 ],
               ),
             // 供應商
-            if (data.supplier != null) ...[
-              InkWell(
-                onTap: () => MyRouteDelegate.of(context).push(
-                    AppRoutes.supplier.value,
-                    useBottomToTopAnimation: true,
-                    args: {
-                      'id': data.supplier!.id,
-                    }),
-                child: Row(children: [
-                  const SizedBox(height: 8),
-                  Text(data.supplier!.aliasName ?? '',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                      )),
-                  const SizedBox(height: 8),
-                ]),
-              )
-            ],
+            // if (data.supplier != null) ...[
+            //   InkWell(
+            //     onTap: () => MyRouteDelegate.of(context).push(
+            //         AppRoutes.supplier.value,
+            //         useBottomToTopAnimation: true,
+            //         args: {
+            //           'id': data.supplier!.id,
+            //         }),
+            //     child: Row(children: [
+            //       const SizedBox(height: 8),
+            //       Text(data.supplier!.aliasName ?? '',
+            //           style: const TextStyle(
+            //             fontSize: 13,
+            //             color: Colors.white,
+            //           )),
+            //       const SizedBox(height: 8),
+            //     ]),
+            //   )
+            // ],
+
+            // 標題
+            Text(data.title,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                )),
 
             // 標籤
             if (data.tags!.isNotEmpty)
