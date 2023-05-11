@@ -25,10 +25,12 @@ enum AppRoutes {
   filter,
   actor,
   actors,
-  short,
   nickname,
   supplier,
-  supplierTag
+  supplierTag,
+  shortsByTag,
+  shortsByBlock,
+  shortsBySupplier
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -86,14 +88,18 @@ extension AppRoutesExtension on AppRoutes {
         return '/actors';
       case AppRoutes.actor:
         return '/actor';
-      case AppRoutes.short:
-        return '/short';
       case AppRoutes.nickname:
         return '/user/nickname';
       case AppRoutes.supplier:
         return '/supplier';
       case AppRoutes.supplierTag:
         return '/supplier_tag';
+      case AppRoutes.shortsByTag:
+        return '/shorts_by_tag';
+      case AppRoutes.shortsByBlock:
+        return '/shorts_by_block';
+      case AppRoutes.shortsBySupplier:
+        return '/shorts_by_supplier';
       default:
         return '/unknown';
     }

@@ -1,66 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:shared/controllers/video_short_popular_controller.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/short/button.dart';
-import '../widgets/shortcard/index.dart';
+import 'shortcard/index.dart';
 
-final logger = Logger();
+class BaseShortPage extends StatefulWidget {
+  final Function() createController;
+  final int videoId;
+  final int itemId; // areaId, tagId, supplierId
 
-class ShortPage extends StatefulWidget {
-  final int itemCount;
-  final int id;
-  final int areaId;
-
-  // area id
-  // video id
-
-  const ShortPage({
-    Key? key,
-    required this.itemCount,
-    required this.id,
-    required this.areaId,
-  }) : super(key: key);
+  const BaseShortPage(
+      {required this.createController,
+      required this.videoId,
+      required this.itemId,
+      Key? key})
+      : super(key: key);
 
   @override
-  ShortPageState createState() => ShortPageState();
+  BaseShortPageState createState() => BaseShortPageState();
 }
 
-
-class ShortPageState extends State<ShortPage> {
+class BaseShortPageState extends State<BaseShortPage> {
   final PageController _pageController = PageController();
-
-  // fetch vod getPopular
 
   @override
   Widget build(BuildContext context) {
-    logger.i('${widget.itemCount}, ${widget.id}, ${widget.areaId}');
-    final VideoShortPopularController videoShortPopularController = Get.put(
-        VideoShortPopularController(
-          widget.areaId, // block.id,
-          widget.id, // video.id,
-        ),
-        tag: widget.id.toString());
-
-    logger.i('ShortPageState WIDGET!!!: VIDEO ID: ${widget.id}');
+    final controller = widget.createController();
 
     return Scaffold(
       body: Stack(
         children: [
           Obx(() {
-            print(
-                'videoShortPopularController.videoShortPopular.value.length: ${videoShortPopularController.data.length}');
             return PageView.builder(
               controller: _pageController,
-              itemCount: videoShortPopularController.data.length,
+              itemCount: controller.data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [
                     ShortCard(
                       index: index,
-                      id: videoShortPopularController.data[index].id,
+                      id: controller.data[index].id,
                     ),
                     Container(
                       height: 90,

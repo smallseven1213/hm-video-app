@@ -60,7 +60,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
     final double percentage = shrinkOffset / maxExtent;
 
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
-    final double fontSize = lerpDouble(14, 15, percentage)!;
+    final double fontSize = lerpDouble(18, 15, percentage)!;
 
     final screenWidth = MediaQuery.of(context).size.width;
     final textPainter = TextPainter(
@@ -110,7 +110,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                 100,
                 ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
                 percentage),
-            left: lerpDouble(10, leftPadding, percentage)!,
+            left: lerpDouble(17, leftPadding, percentage)!,
             child: ActorAvatar(
               photoSid: supplier.photoSid,
               width: imageSize,
@@ -119,18 +119,83 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                110,
+                120,
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
-            left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
+            left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
             child: Text(
-              supplier.aliasName ?? '--',
+              '@${supplier.aliasName}',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
                   color: Colors.white),
             ),
           ),
+          Positioned(
+              top: 148,
+              left: 107,
+              child: SizedBox(
+                  width: screenWidth - 100,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                          flex: 1,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(supplier.shortVideoTotal.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(width: 5),
+                              const Text('短視頻',
+                                  style: TextStyle(
+                                    color: Color(0xFFD4D4D4),
+                                    fontSize: 12,
+                                  ))
+                            ],
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(supplier.followTotal.toString(),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(width: 5),
+                              const Text('收藏',
+                                  style: TextStyle(
+                                    color: Color(0xFFD4D4D4),
+                                    fontSize: 12,
+                                  ))
+                            ],
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(supplier.followTotal.toString(),
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 15,
+                                  )),
+                              const SizedBox(width: 5),
+                              const Text('點讚',
+                                  style: TextStyle(
+                                    color: Color(0xFFD4D4D4),
+                                    fontSize: 12,
+                                  ))
+                            ],
+                          ))
+                    ],
+                  ))),
           // Positioned(
           //   top: lerpDouble(
           //       105, (kToolbarHeight - 12) / 2 + fontSize, percentage),

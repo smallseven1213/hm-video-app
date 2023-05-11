@@ -1,5 +1,6 @@
 import '../models/block_vod.dart';
 import '../models/supplier.dart';
+import '../models/video.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';
@@ -41,5 +42,21 @@ class SupplierApi {
             .map((e) => Vod.fromJson(e))
             .toList()),
         res.data['data']['total'] ?? limit * (page + 1));
+  }
+
+  // get PlayList from "GET" /suppliers/supplier/playlist?supplierId=20&videoId=605
+  Future<List<Video>> getPlayList({
+    required int supplierId,
+    required int videoId,
+  }) async {
+    var res = await fetcher(
+        url:
+            '$apiPrefix/supplier/playlist?supplierId=$supplierId&videoId=$videoId');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from((res.data['data']['videos'] as List<dynamic>)
+        .map((e) => Vod.fromJson(e))
+        .toList());
   }
 }
