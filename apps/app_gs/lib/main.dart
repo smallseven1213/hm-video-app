@@ -9,13 +9,13 @@ import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
-import 'package:app_gs/screens/game_screen/lobby.dart';
-import 'package:app_gs/screens/game_webview_screen/index.dart';
-import 'package:app_gs/screens/game_withdraw_screen/index.dart';
-import 'package:app_gs/screens/game_set_fundpassword_screen/index.dart';
-import 'package:app_gs/screens/game_deposit_list_screen/index.dart';
-import 'package:app_gs/screens/game_deposit_polling_screen/index.dart';
-import 'package:app_gs/screens/game_payment_result_screen/index.dart';
+import 'package:app_gs/screens/games/game_lobby_screen/lobby.dart';
+import 'package:app_gs/screens/games/game_webview_screen/index.dart';
+import 'package:app_gs/screens/games/game_withdraw_screen/index.dart';
+import 'package:app_gs/screens/games/game_set_fundpassword_screen/index.dart';
+import 'package:app_gs/screens/games/game_deposit_list_screen/index.dart';
+import 'package:app_gs/screens/games/game_deposit_polling_screen/index.dart';
+import 'package:app_gs/screens/games/game_payment_result_screen/index.dart';
 
 import 'config/colors.dart';
 import 'pages/actors.dart';
