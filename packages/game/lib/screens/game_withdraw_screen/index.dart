@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:game/controllers/game_auth_controller.dart';
+import 'package:game/models/user_withdrawal_data.dart';
+import 'package:game/screens/game_withdraw_screen/game_withdraw_options.dart';
+import 'package:game/screens/game_withdraw_screen/label_with_status.dart';
+import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
@@ -9,6 +16,8 @@ import 'package:game/controllers/game_user_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class GameWithdraw extends StatefulWidget {
   const GameWithdraw({Key? key}) : super(key: key);
@@ -17,7 +26,7 @@ class GameWithdraw extends StatefulWidget {
   State<GameWithdraw> createState() => _GameWithdrawState();
 }
 
-enum Type { backcard, crypto }
+enum Type { bankcard, crypto }
 
 class _GameWithdrawState extends State<GameWithdraw> {
   final gameWithdrawController = Get.put(GameWithdrawController());
@@ -33,80 +42,78 @@ class _GameWithdrawState extends State<GameWithdraw> {
   String validStake = '0.00';
   String withdrawalFee = '0.000';
   String withdrawalMode = '0';
+  final GlobalKey _globalKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
+    _fetchDataInit();
+
+    Get.find<GameAuthController>().token.listen((event) {
+      _fetchDataInit();
+    });
+  }
+
+  _fetchDataInit() {
     _getUserWithdrawalData();
     _getStackLimit();
     _getParamConfig();
   }
 
-  Future<void> _getUserWithdrawalData() async {
+  void _getUserWithdrawalData() async {
     try {
       var res = await Get.put(GameWithdrawController()).getWithDrawalData();
+      print('res: $res');
 
-      if (res['code'] == '04' || res['code'] == '57630') {
-        // showConfirm(
-        //   context,
-        //   title: '',
-        //   content: '你已被登出，請重新登入',
-        //   onConfirm: () async {
-        //     _logout();
-        //     Navigator.pop(context);
-        //     Get.toNamed('/default', arguments: 2);
-        //     Get.find<AppController>().updateNavigationIndex('/game', 2);
-        //   },
-        // );
-      } else if (res['code'] == '00' && res['data'].paymentPin == false) {
+      if (res['code'] == '00' && res['data'].paymentPin == false) {
         showFundPassword();
       } else if (res['code'] == '00' &&
           res['data'].paymentPin &&
           res['data'].userPaymentSecurity != null) {
-        _transferInit();
+        // ignore: use_build_context_synchronously
+        _transferInit(context);
       } else {
         gameWithdrawController.setLoadingStatus(false);
-        // showConfirm(
-        //   context,
-        //   title: 'error',
-        //   content: res['data'].toString(),
-        //   onConfirm: () async {
-        //     Navigator.pop(context);
-        //   },
-        // );
+        // ignore: use_build_context_synchronously
+        showConfirmDialog(
+          context: context,
+          title: 'error',
+          content: res['data'].toString(),
+          onConfirm: () {
+            Navigator.pop(context);
+          },
+        );
       }
     } catch (error) {
-      print('_getUserWithdrawalData $error');
+      print('_getUserWithdrawalData error $error');
 
-      // showConfirm(
-      //   context,
-      //   title: '',
-      //   content: error.toString(),
-      //   onConfirm: () async {
-      //     Navigator.pop(context);
-      //     Navigator.pop(context);
-      //   },
-      // );
+      showConfirmDialog(
+        context: context,
+        title: '',
+        content: error.toString(),
+        onConfirm: () {
+          Navigator.pop(context);
+        },
+      );
     }
     gameWithdrawController.setLoadingStatus(false);
   }
 
   showFundPassword() {
-    // showConfirm(
-    //   context,
-    //   title: "",
-    //   content: "請先設置資金密碼",
-    //   barrierDismissible: false,
-    //   confirmText: "前往設定!!",
-    //   onConfirm: () async {
-    //     gameWithdrawController.setLoadingStatus(false);
-    //     Navigator.pop(context);
-    //     var result = await gto('/set/fundPassword');
-    //   },
-    // );
+    showConfirmDialog(
+      context: context,
+      title: "",
+      content: "請先設置資金密碼",
+      barrierDismissible: false,
+      confirmText: "前往設定!!",
+      onConfirm: () {
+        gameWithdrawController.setLoadingStatus(false);
+        MyRouteDelegate.of(context).push(AppRoutes.gameSetFundPassword.value);
+      },
+    );
   }
 
-  void _transferInit() async {
+  void _transferInit(context) async {
     try {
       var res = await GameLobbyApi().transfer(2, 0, 'wali');
       if (res['code'] == '00') {
@@ -114,22 +121,27 @@ class _GameWithdrawState extends State<GameWithdraw> {
         var balance = res['data']['balance'].toString();
 
         if (double.parse(balance) > 0) {
-          // print('double.parse(balance) : ${double.parse(balance)}');
-          // showConfirm(
-          //   context,
-          //   title: "仍有遊戲進行中",
-          //   content: "仍有遊戲進行中，可提現額度為$points",
-          //   confirmText: "確認",
-          //   onConfirm: () {
-          //     Navigator.pop(context);
-          //   },
-          // );
+          print('double.parse(balance) : ${double.parse(balance)}');
+          showConfirmDialog(
+            context: context,
+            title: "仍有遊戲進行中",
+            content: "仍有遊戲進行中，可提現額度為$points",
+            confirmText: "確認",
+            onConfirm: () {
+              Navigator.pop(context);
+            },
+          );
         }
       } else {
-        // Fluttertoast.showToast(
-        //   msg: '餘額自動轉出遊戲失敗',
-        //   gravity: ToastGravity.CENTER,
-        // );
+        showConfirmDialog(
+          context: context,
+          title: "",
+          content: "餘額自動轉出遊戲失敗",
+          confirmText: "確認",
+          onConfirm: () {
+            Navigator.pop(context);
+          },
+        );
       }
     } catch (error) {
       print(error);
@@ -168,9 +180,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   // onConfirm function
-  void _onConfirm(Type type) async {
-    int intType = type == Type.backcard ? 1 : 2;
-
+  void _onConfirm(Type type) {
+    int intType = type == Type.bankcard ? 1 : 2;
     // showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
     //   // call applyWithdrawal
     //   var res = await GameLobbyApi().applyWithdrawalV2(
@@ -306,86 +317,76 @@ class _GameWithdrawState extends State<GameWithdraw> {
                               if (gameWithdrawController.paymentPin == true &&
                                   // ignore: unrelated_type_equality_checks
                                   gameWithdrawController.hasPaymentData == true)
-                                // LabelWithStatus(
-                                //   label: "流水限額",
-                                //   reachable: reachable,
-                                //   statusText: reachable ? "已達標" : "未達標",
-                                //   stakeLimit: stakeLimit,
-                                //   validStake: validStake,
-                                //   withdrawalFee: double.parse(withdrawalFee),
-                                //   rightIcon: Icons.info,
-                                // ),
-                                // 提現金額TextField
-                                Obx(() => FormBuilderField<String?>(
-                                      name: 'amount',
-                                      onChanged: (val) =>
-                                          debugPrint(val.toString()),
-                                      validator: FormBuilderValidators.compose([
-                                        FormBuilderValidators.required(
-                                          errorText: '請輸提現金額',
-                                        ),
-                                        // 不得小於100
-                                        FormBuilderValidators.min(
-                                          100,
-                                          errorText: '輸入金額不得小於 100元',
-                                        ),
-                                        // 不得大於餘額
-                                        FormBuilderValidators.max(
-                                          gameWalletController.wallet.value,
-                                          errorText: '輸入金額不得大於餘額',
-                                        ),
-                                        FormBuilderValidators.match(
-                                          r"^(?![-\.])\d*$",
-                                          errorText: '輸入金額格式錯誤',
-                                        )
-                                      ]),
-                                      builder: (FormFieldState field) {
-                                        return const Text('提現金額');
-                                        // GameInput(
-                                        //   label: "提現金額",
-                                        //   hint: "請輸入提現金額",
-                                        //   controller: amountController,
-                                        //   onChanged: (value) =>
-                                        //       field.didChange(value),
-                                        //   warningMessage: "*最低可提金額為 100 CNY",
-                                        //   errorMessage: field.errorText,
-                                        //   inputFormatters: <TextInputFormatter>[
-                                        //     FilteringTextInputFormatter
-                                        //         .digitsOnly
-                                        //   ],
-                                        // );
-                                      },
-                                    )),
+                                LabelWithStatus(
+                                  label: "流水限額",
+                                  reachable: reachable,
+                                  statusText: reachable ? "已達標" : "未達標",
+                                  stakeLimit: stakeLimit,
+                                  validStake: validStake,
+                                  withdrawalFee: double.parse(withdrawalFee),
+                                  rightIcon: Icons.info,
+                                ),
+                              // 提現金額TextField
+                              Obx(() => FormBuilderField<String?>(
+                                    name: 'amount',
+                                    onChanged: (val) =>
+                                        debugPrint(val.toString()),
+                                    validator: FormBuilderValidators.compose([
+                                      FormBuilderValidators.required(
+                                        errorText: '請輸提現金額',
+                                      ),
+                                      // 不得小於100
+                                      FormBuilderValidators.min(
+                                        100,
+                                        errorText: '輸入金額不得小於 100元',
+                                      ),
+                                      // 不得大於餘額
+                                      FormBuilderValidators.max(
+                                        gameWalletController.wallet.value,
+                                        errorText: '輸入金額不得大於餘額',
+                                      ),
+                                      FormBuilderValidators.match(
+                                        r"^(?![-\.])\d*$",
+                                        errorText: '輸入金額格式錯誤',
+                                      )
+                                    ]),
+                                    builder: (FormFieldState field) {
+                                      return GameInput(
+                                        label: "提現金額",
+                                        hint: "請輸入提現金額",
+                                        controller: amountController,
+                                        onChanged: (value) =>
+                                            field.didChange(value),
+                                        warningMessage: "*最低可提金額為 100 CNY",
+                                        errorMessage: field.errorText,
+                                        inputFormatters: <TextInputFormatter>[
+                                          FilteringTextInputFormatter.digitsOnly
+                                        ],
+                                      );
+                                    },
+                                  )),
                               const SizedBox(height: 10),
-                              // GameWithDrawOptions(
-                              //   controller: amountController,
-                              //   onConfirm: _onConfirm,
-                              //   onBackFromBindingPage: () =>
-                              //       _getUserWithdrawalData(),
-                              //   enableSubmit: _enableSubmit,
-                              //   hasPaymentData:
-                              //       gameWithdrawController.hasPaymentData.value,
-                              //   reachable: reachable,
-                              //   withdrawalMode: withdrawalMode,
-                              //   withdrawalFee: withdrawalFee,
-                              //   applyAmount: amountController.text,
-                              //   bankData: gameWithdrawController
-                              //           .userPaymentSecurity.value
-                              //           .firstWhere(
-                              //               (element) =>
-                              //                   element.remittanceType == 1,
-                              //               orElse: () =>
-                              //                   UserPaymentSecurity()) ??
-                              //       [],
-                              //   usdtData: gameWithdrawController
-                              //           .userPaymentSecurity.value
-                              //           .firstWhere(
-                              //               (element) =>
-                              //                   element.remittanceType == 2,
-                              //               orElse: () =>
-                              //                   UserPaymentSecurity()) ??
-                              //       [],
-                              // )
+                              GameWithDrawOptions(
+                                controller: amountController,
+                                onConfirm: (type) => _onConfirm(Type.bankcard),
+                                onBackFromBindingPage: () =>
+                                    _getUserWithdrawalData(),
+                                enableSubmit: _enableSubmit,
+                                hasPaymentData:
+                                    gameWithdrawController.hasPaymentData.value,
+                                reachable: reachable,
+                                withdrawalMode: withdrawalMode,
+                                withdrawalFee: withdrawalFee,
+                                applyAmount: amountController.text,
+                                bankData: gameWithdrawController
+                                        .userPaymentSecurity.value
+                                        .firstWhere(
+                                            (element) =>
+                                                element.remittanceType == 1,
+                                            orElse: () =>
+                                                UserPaymentSecurity()) ??
+                                    [],
+                              )
                             ],
                           ),
                         ),

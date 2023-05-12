@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:game/screens/game_withdraw_screen/withdraw.dart';
+import 'package:game/screens/game_withdraw_screen/index.dart';
 
 class GameWithdrawScreen extends StatelessWidget {
   const GameWithdrawScreen({Key? key}) : super(key: key);

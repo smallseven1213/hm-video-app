@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:game/apis/game_api.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:get/get.dart';
-import 'package:flutter/services.dart';
 
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -66,7 +66,7 @@ class _GameLobbyState extends State<GameLobby> {
 
   _fetchDataInit() {
     Future.wait([
-      // GameLobbyApi().registerGame(),
+      GameLobbyApi().registerGame(),
     ]).then((value) {
       GameBannerController();
       GameWalletController().fetchWallets();
@@ -106,9 +106,6 @@ class _GameLobbyState extends State<GameLobby> {
           appBar: AppBar(
             leading: Container(),
             backgroundColor: gameLobbyBgColor,
-            systemOverlayStyle: SystemUiOverlayStyle(
-              statusBarColor: gameLobbyBgColor,
-            ),
             centerTitle: true,
             title: Text(
               '游戏大厅',
@@ -123,6 +120,8 @@ class _GameLobbyState extends State<GameLobby> {
                 ? [
                     InkWell(
                       onTap: () {
+                        MyRouteDelegate.of(context)
+                            .push(AppRoutes.gameSetFundPassword.value);
                         // showGameLoginDialog(
                         //   context,
                         //   content: GameLobbyLoginTabs(

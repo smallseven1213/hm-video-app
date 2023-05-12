@@ -53,7 +53,7 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
       onLoading(context, status: false);
       // ignore: use_build_context_synchronously
       showConfirmDialog(
-        context,
+        context: context,
         title: '遊戲維護中',
         content: '遊戲維護中，請稍後再試',
         confirmText: '確認',
@@ -77,7 +77,7 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
     print('getGameUrl error: $error');
     onLoading(context, status: false);
     showConfirmDialog(
-      context,
+      context: context,
       title: '遊戲維護中',
       content: '遊戲維護中，請稍後再試',
       confirmText: '確認',
