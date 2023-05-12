@@ -82,15 +82,13 @@ class ShortCardInfo extends StatelessWidget {
             // 標籤
             if (data.tag.isNotEmpty)
               Row(
-                  children: data.tag!
+                  children: data.tag
                       .map((e) => InkWell(
                           onTap: () => MyRouteDelegate.of(context).push(
-                                  AppRoutes.supplierTag.value,
-                                  useBottomToTopAnimation: true,
-                                  args: {
-                                    'id': data.supplier!.id,
-                                  }),
-                          child: ShortCardInfoTag(name: '#${e}')))
+                              AppRoutes.supplierTag.value,
+                              useBottomToTopAnimation: true,
+                              args: {'tagId': e.id, 'tagName': e.name}),
+                          child: ShortCardInfoTag(name: '#${e.name}')))
                       .toList()
                   // const [
                   //   data.tag.length > 0
