@@ -12,154 +12,11 @@ import 'package:shared/widgets/sid_image.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
-// import 'controls_overlay.dart';
-// import 'dot_line_animation.dart';
+import 'error.dart';
+import 'loading.dart';
+import 'progress.dart';
 
 final logger = Logger();
-
-class VideoLoading extends StatelessWidget {
-  final String coverHorizontal;
-  const VideoLoading({Key? key, required this.coverHorizontal})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          foregroundDecoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.8),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.black.withOpacity(0.8),
-                const Color.fromARGB(255, 0, 34, 79),
-              ],
-              stops: const [0.8, 1.0],
-            ),
-          ),
-          child: SidImage(
-            key: ValueKey(coverHorizontal ?? ''),
-            sid: coverHorizontal ?? '',
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-        ),
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
-          Image(
-            image: AssetImage('assets/images/logo.png'),
-            width: 60.0,
-          ),
-          // DotLineAnimation(),
-          SizedBox(height: 15),
-          Text(
-            '精彩即將呈現',
-            style: TextStyle(fontSize: 12, color: Colors.white),
-          )
-        ]),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
-
-class VideoError extends StatelessWidget {
-  final String coverHorizontal;
-  final onTap;
-
-  const VideoError({
-    Key? key,
-    required this.coverHorizontal,
-    required this.onTap,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          foregroundDecoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.8),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.black.withOpacity(0.8),
-                const Color.fromARGB(255, 0, 34, 79),
-              ],
-              stops: const [0.8, 1.0],
-            ),
-          ),
-          child: SidImage(
-            key: ValueKey(coverHorizontal),
-            sid: coverHorizontal,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-        ),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InkWell(
-                onTap: onTap,
-                child: Center(
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                        size: 45.0,
-                        semanticLabel: 'Play',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
 
 class VideoPlayerWidget extends StatefulWidget {
   final String? name;
@@ -290,29 +147,6 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
         break;
     }
   }
-
-  // @override
-  // void didChangeMetrics() {
-  //   super.didChangeMetrics();
-  //   final _orientation =
-  //       MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
-  //   // print("@@@@@@@@@ didChangeMetrics: $_orientation");
-  //   if (_orientation == Orientation.landscape) {
-  //     // 隱藏狀態欄
-  //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-  //   } else {
-  //     // 顯示狀態欄
-  //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //       SystemUiOverlay.bottom,
-  //       SystemUiOverlay.top,
-  //     ]);
-  //   }
-  //   // if (isScreenLocked == true) return;
-  //   setState(() {
-  //     isFullscreen = _orientation == Orientation.landscape;
-  //     orientation = _orientation;
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -488,7 +322,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
                                 ValueListenableBuilder<VideoPlayerValue>(
                                   valueListenable: _controller!,
                                   builder: (context, value, _) =>
-                                      _VideoProgressSlider(
+                                      VideoProgressSlider(
                                     position: value.position,
                                     duration: value.duration,
                                     controller: _controller!,
@@ -514,45 +348,3 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
   }
 }
 
-class _VideoProgressSlider extends StatelessWidget {
-  const _VideoProgressSlider({
-    super.key,
-    required this.position,
-    required this.duration,
-    required this.controller,
-    required this.swatch,
-  });
-
-  final Duration position;
-  final Duration duration;
-  final VideoPlayerController controller;
-  final Color swatch;
-
-  @override
-  Widget build(BuildContext context) {
-    final max = duration.inMilliseconds.toDouble();
-    final value = position.inMilliseconds.clamp(0, max).toDouble();
-    return Theme(
-      data: ThemeData.from(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: swatch, brightness: Brightness.dark),
-        useMaterial3: true,
-      ),
-      child: SliderTheme(
-        data: const SliderThemeData(
-          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5),
-          trackHeight: 2,
-        ),
-        child: Slider(
-          min: 0,
-          max: max,
-          value: value,
-          onChanged: (value) =>
-              controller.seekTo(Duration(milliseconds: value.toInt())),
-          onChangeStart: (_) => controller.pause(),
-          onChangeEnd: (_) => controller.play(),
-        ),
-      ),
-    );
-  }
-}
