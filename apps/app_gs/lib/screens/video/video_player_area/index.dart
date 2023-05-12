@@ -197,17 +197,17 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     setScreenRotation();
   }
 
-  void initializePlayer() async {
+  initializePlayer() async {
     try {
       _controller = VideoPlayerController.network(widget.videoUrl);
       // 監聽播放狀態
       _controller!.addListener(_onControllerValueChanged);
-      await _controller!.initialize().then((_) {
-        // 初始化完成後，更新 UI 並播放視頻
+      _controller!.initialize().then((_) {
+        if (!mounted) return;
         setState(() {
           _controller!.play();
         });
-      });
+      }).catchError((_) => initializePlayer());
     } catch (error) {
       print('👹👹👹 Error occurred: $error');
       if (_controller!.value.hasError) {
@@ -239,7 +239,6 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     if (!mounted) {
       return;
     }
-    print('👹👹👹👹👹👹👹👹👹_controller!.value: ${_controller!.value}');
 
     if (_controller!.value.hasError) {
       setState(() {
@@ -256,10 +255,10 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       print('hasError: $hasError');
       print('==================================');
 
-      if (_controller!.value.isPlaying == false &&
-          !_controller!.value.hasError) {
-        _controller!.play();
-      }
+      // if (_controller!.value.isPlaying == false &&
+      //     !_controller!.value.hasError) {
+      //   _controller!.play();
+      // }
     }
 
     if (!kIsWeb && _controller!.value.isPlaying) {

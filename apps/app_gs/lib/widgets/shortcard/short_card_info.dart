@@ -22,7 +22,7 @@ class ShortCardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      bottom: 0,
+      bottom: 20,
       child: Container(
         width: MediaQuery.of(context).size.width,
         padding: const EdgeInsets.all(16),
