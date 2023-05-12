@@ -1,6 +1,8 @@
 // ChannelStyle3Main is a statefull widget
 
+import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
+import 'package:app_gs/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -68,6 +70,15 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               ),
             ),
             ChannelJingangArea(
+              channelId: widget.channelId,
+            ),
+            const SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 15),
+                child: Header(text: '大家都在看'),
+              ),
+            ),
+            ChannelTags(
               channelId: widget.channelId,
             ),
             SliverAppBar(

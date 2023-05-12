@@ -21,10 +21,10 @@ class Vods extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VodsState createState() => _VodsState();
+  VodsState createState() => VodsState();
 }
 
-class _VodsState extends State<Vods> {
+class VodsState extends State<Vods> {
   @override
   Widget build(BuildContext context) {
     final vodController = Get.put(
