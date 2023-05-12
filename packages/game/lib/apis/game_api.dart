@@ -175,7 +175,7 @@ class GameLobbyApi {
   Future<void> updatePaymentPin(String paymentPin) async {
     var value = await fetcher(
         url: '$apiPrefix/paymentPin',
-        method: 'POST',
+        method: 'PUT',
         body: {'paymentPin': paymentPin});
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {

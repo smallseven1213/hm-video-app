@@ -6,6 +6,7 @@ import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/button.dart';
 import 'package:game/widgets/input2.dart';
 import 'package:get/get.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class GameSetFundPassword extends StatefulWidget {
   const GameSetFundPassword({Key? key}) : super(key: key);
@@ -38,6 +39,7 @@ class _GameSetFundPasswordState extends State<GameSetFundPassword> {
     if (!isConfirmButtonEnabled) return;
     try {
       await Get.find<GameLobbyApi>().updatePaymentPin(passwordController.text);
+      // ignore: use_build_context_synchronously
       showConfirmDialog(
         context: context,
         title: "",
@@ -47,7 +49,7 @@ class _GameSetFundPasswordState extends State<GameSetFundPassword> {
         onConfirm: () => {
           gameWithdrawController.setLoadingStatus(false),
           Navigator.pop(context),
-          Get.back(),
+          MyRouteDelegate.of(context).popRoute(),
         },
       );
     } catch (e) {
