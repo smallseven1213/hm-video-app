@@ -1,7 +1,8 @@
 // VideoPlayerWidget stateful widget
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/video.dart';
@@ -188,6 +189,8 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
   bool hasError = false;
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
+  bool isPause = false;
+  bool isVisibleControls = false;
 
   @override
   void initState() {
@@ -197,7 +200,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
     setScreenRotation();
   }
 
-  void initializePlayer() async {
+  initializePlayer() async {
     try {
       _controller = VideoPlayerController.network(widget.videoUrl);
       // 監聽播放狀態
@@ -207,7 +210,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
         setState(() {
           _controller!.play();
         });
-      });
+      }).catchError((_) => initializePlayer());
     } catch (error) {
       print('👹👹👹 Error occurred: $error');
       if (_controller!.value.hasError) {
@@ -239,18 +242,22 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
     if (!mounted) {
       return;
     }
-    if (_controller!.value.hasError) {
-      print('👹👹👹 isError');
 
+    if (_controller!.value.hasError) {
       setState(() {
         hasError = true;
       });
+      initializePlayer();
+      print('👹👹👹 Error occurred: ${_controller!.value.errorDescription}');
     }
-    if (_controller!.value.isBuffering) {
-      print('👹👹👹 isBuffering');
-    } else {
-      // 當視頻停止緩衝並準備播放時，自動播放視頻
-      if (_controller!.value.isPlaying == false && !hasError) {
+
+    if (_controller!.value.isBuffering == false) {
+      // 如果影片播放完畢，則暫停
+      if (_controller!.value.position == _controller!.value.duration) {
+        _controller!.pause();
+      } else if (_controller!.value.isPlaying == false &&
+          !hasError &&
+          isPause == false) {
         _controller!.play();
       }
     }
@@ -284,28 +291,28 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
     }
   }
 
-  @override
-  void didChangeMetrics() {
-    super.didChangeMetrics();
-    final _orientation =
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
-    // print("@@@@@@@@@ didChangeMetrics: $_orientation");
-    if (_orientation == Orientation.landscape) {
-      // 隱藏狀態欄
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    } else {
-      // 顯示狀態欄
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-        SystemUiOverlay.bottom,
-        SystemUiOverlay.top,
-      ]);
-    }
-    // if (isScreenLocked == true) return;
-    setState(() {
-      isFullscreen = _orientation == Orientation.landscape;
-      orientation = _orientation;
-    });
-  }
+  // @override
+  // void didChangeMetrics() {
+  //   super.didChangeMetrics();
+  //   final _orientation =
+  //       MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
+  //   // print("@@@@@@@@@ didChangeMetrics: $_orientation");
+  //   if (_orientation == Orientation.landscape) {
+  //     // 隱藏狀態欄
+  //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+  //   } else {
+  //     // 顯示狀態欄
+  //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+  //       SystemUiOverlay.bottom,
+  //       SystemUiOverlay.top,
+  //     ]);
+  //   }
+  //   // if (isScreenLocked == true) return;
+  //   setState(() {
+  //     isFullscreen = _orientation == Orientation.landscape;
+  //     orientation = _orientation;
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -320,21 +327,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
 
   @override
   Widget build(BuildContext context) {
-    double playerHeight = isFullscreen
-        ? MediaQuery.of(context).size.height
-        : MediaQuery.of(context).size.width / 16 * 9;
-
-    var aspectRatio = _controller!.value.size.width == 0 ||
-            _controller!.value.size.height == 0
-        ? 16 / 9
-        : _controller!.value.size.width / _controller!.value.size.height;
-
     var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
     if (currentRoutePath != '/video') {
       _controller?.pause();
       setScreenPortrait();
     }
-
     return Container(
       color: Colors.black,
       child: Stack(
@@ -426,13 +423,135 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
             )
           ] else if (_controller != null &&
               _controller!.value.isInitialized) ...[
-            VideoPlayer(_controller!)
+            VideoPlayer(_controller!),
+            // controls
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isVisibleControls = true;
+                });
+                Timer(const Duration(seconds: 3), () {
+                  if (mounted) {
+                    setState(() {
+                      isVisibleControls = false;
+                    });
+                  }
+                });
+              },
+              child: Container(
+                color: Colors.transparent,
+                width: double.infinity,
+                height: double.infinity,
+                child: isVisibleControls
+                    ? Stack(
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.5),
+                                  shape: BoxShape.circle),
+                              child: IconButton(
+                                icon: Icon(
+                                  _controller!.value.isPlaying
+                                      ? Icons.pause
+                                      : Icons.play_arrow,
+                                  color: Colors.white,
+                                  size: 48.0,
+                                ),
+                                onPressed: () {
+                                  print('onPressed 播放暫停');
+                                  setState(() {
+                                    if (_controller!.value.isPlaying) {
+                                      _controller!.pause();
+                                      setState(() {
+                                        isPause = true;
+                                      });
+                                    } else {
+                                      _controller!.play();
+                                      setState(() {
+                                        isPause = false;
+                                      });
+                                    }
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Stack(
+                              children: <Widget>[
+                                ValueListenableBuilder<VideoPlayerValue>(
+                                  valueListenable: _controller!,
+                                  builder: (context, value, _) =>
+                                      _VideoProgressSlider(
+                                    position: value.position,
+                                    duration: value.duration,
+                                    controller: _controller!,
+                                    swatch: const Color(0xffFFC700),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(),
+              ),
+            ),
           ] else ...[
             VideoLoading(
               coverHorizontal: widget.video.coverHorizontal ?? '',
             )
           ],
         ],
+      ),
+    );
+  }
+}
+
+class _VideoProgressSlider extends StatelessWidget {
+  const _VideoProgressSlider({
+    super.key,
+    required this.position,
+    required this.duration,
+    required this.controller,
+    required this.swatch,
+  });
+
+  final Duration position;
+  final Duration duration;
+  final VideoPlayerController controller;
+  final Color swatch;
+
+  @override
+  Widget build(BuildContext context) {
+    final max = duration.inMilliseconds.toDouble();
+    final value = position.inMilliseconds.clamp(0, max).toDouble();
+    return Theme(
+      data: ThemeData.from(
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: swatch, brightness: Brightness.dark),
+        useMaterial3: true,
+      ),
+      child: SliderTheme(
+        data: const SliderThemeData(
+          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5),
+          trackHeight: 2,
+        ),
+        child: Slider(
+          min: 0,
+          max: max,
+          value: value,
+          onChanged: (value) =>
+              controller.seekTo(Duration(milliseconds: value.toInt())),
+          onChangeStart: (_) => controller.pause(),
+          onChangeEnd: (_) => controller.play(),
+        ),
       ),
     );
   }

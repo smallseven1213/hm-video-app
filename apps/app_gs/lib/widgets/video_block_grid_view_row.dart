@@ -10,6 +10,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
   final bool? displayCoverVertical;
   final int? blockId;
   final bool? hasInfoView;
+  final int? film;
 
   const VideoBlockGridViewRow({
     Key? key,
@@ -20,6 +21,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
     this.blockId,
     this.displayCoverVertical = false,
     this.hasInfoView = true,
+    this.film = 1,
   }) : super(key: key);
 
   @override
@@ -31,19 +33,21 @@ class VideoBlockGridViewRow extends StatelessWidget {
         children: [
           Expanded(
             child: VideoPreviewWidget(
-                id: videoData[0].id,
-                title: videoData[0].title,
-                tags: videoData[0].tags ?? [],
-                timeLength: videoData[0].timeLength ?? 0,
-                coverHorizontal: videoData[0].coverHorizontal ?? '',
-                coverVertical: videoData[0].coverVertical ?? '',
-                videoViewTimes: videoData[0].videoViewTimes ?? 0,
-                imageRatio: imageRatio,
-                detail: videoData[0],
-                isEmbeddedAds: isEmbeddedAds,
-                displayCoverVertical: displayCoverVertical ?? false,
-                blockId: blockId,
-                hasInfoView: hasInfoView),
+              id: videoData[0].id,
+              title: videoData[0].title,
+              tags: videoData[0].tags ?? [],
+              timeLength: videoData[0].timeLength ?? 0,
+              coverHorizontal: videoData[0].coverHorizontal ?? '',
+              coverVertical: videoData[0].coverVertical ?? '',
+              videoViewTimes: videoData[0].videoViewTimes ?? 0,
+              imageRatio: imageRatio,
+              detail: videoData[0],
+              isEmbeddedAds: isEmbeddedAds,
+              displayCoverVertical: displayCoverVertical ?? false,
+              blockId: blockId,
+              hasInfoView: hasInfoView,
+              film: film,
+            ),
           ),
           const SizedBox(width: 10),
           const Expanded(
@@ -80,6 +84,8 @@ class VideoBlockGridViewRow extends StatelessWidget {
                           detail: e,
                           isEmbeddedAds: isEmbeddedAds,
                           displayCoverVertical: displayCoverVertical ?? false,
+                          blockId: blockId,
+                          film: film,
                         ),
                       ),
                 const SizedBox(width: 10),
@@ -108,6 +114,8 @@ class VideoBlockGridViewRow extends StatelessWidget {
                   detail: e,
                   isEmbeddedAds: isEmbeddedAds,
                   displayCoverVertical: displayCoverVertical ?? false,
+                  blockId: blockId,
+                  film: film,
                 ),
               ),
               const SizedBox(width: 10),
