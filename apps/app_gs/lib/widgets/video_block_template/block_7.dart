@@ -3,9 +3,12 @@
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/sid_image.dart';
+
+final logger = Logger();
 
 class Block7Widget extends StatefulWidget {
   final Blocks block;
@@ -28,11 +31,17 @@ class Block7WidgetState extends State<Block7Widget> {
   String? backgroundPhotoSid;
   final CarouselController _carouselController = CarouselController();
 
+  // override initial
+  @override
+  void initState() {
+    super.initState();
+    List<Vod> videos = widget.block.videos?.data ?? [];
+    backgroundPhotoSid = videos[0].coverHorizontal;
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Vod> videos = widget.block.videos?.data ?? [];
-    backgroundPhotoSid = videos[0].coverHorizontal;
-
     return SliverToBoxAdapter(
       child: Container(
         height: 310,
@@ -81,6 +90,7 @@ class Block7WidgetState extends State<Block7Widget> {
                   initialPage: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
+                      logger.i(videos[index].coverHorizontal);
                       backgroundPhotoSid = videos[index].coverHorizontal;
                     });
                   },
