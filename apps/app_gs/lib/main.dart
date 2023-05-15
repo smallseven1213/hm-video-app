@@ -1,5 +1,3 @@
-import 'dart:js_interop';
-
 import 'package:app_gs/pages/actor.dart';
 import 'package:app_gs/pages/shorts_by_tag.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
