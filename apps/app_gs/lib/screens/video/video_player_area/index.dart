@@ -161,7 +161,6 @@ class VideoError extends StatelessWidget {
 }
 
 class VideoPlayerArea extends StatefulWidget {
-  final int id;
   final String? name;
   final String videoUrl;
   final Video video;
@@ -169,7 +168,6 @@ class VideoPlayerArea extends StatefulWidget {
 
   VideoPlayerArea({
     Key? key,
-    required this.id,
     required this.videoUrl,
     required this.video,
     this.name,

@@ -5,9 +5,8 @@ import 'package:shared/widgets/sid_image.dart';
 final logger = Logger();
 
 class VideoLoading extends StatelessWidget {
-  final String coverHorizontal;
-  const VideoLoading({Key? key, required this.coverHorizontal})
-      : super(key: key);
+  final String cover;
+  const VideoLoading({Key? key, required this.cover}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,25 +26,13 @@ class VideoLoading extends StatelessWidget {
             ),
           ),
           child: SidImage(
-            key: ValueKey(coverHorizontal ?? ''),
-            sid: coverHorizontal ?? '',
+            key: ValueKey(cover),
+            sid: cover,
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
           ),
         ),
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: const [
-          Image(
-            image: AssetImage('assets/images/logo.png'),
-            width: 60.0,
-          ),
-          // DotLineAnimation(),
-          SizedBox(height: 15),
-          Text(
-            '精彩即將呈現',
-            style: TextStyle(fontSize: 12, color: Colors.white),
-          )
-        ]),
         Positioned(
           top: 0,
           left: 0,
