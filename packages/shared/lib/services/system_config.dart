@@ -35,7 +35,8 @@ class SystemConfig {
       : GetPlatform.isAndroid
           ? 'ANDROID'
           : GetPlatform.isIOS
-              ? 'IOS'
+              // ? 'IOS'
+              ? 'ANDROID'
               : 'H5';
 
   List<String> vodHostList = [

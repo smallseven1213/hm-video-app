@@ -83,6 +83,7 @@ class _ChannelStyle1State extends State<ChannelStyle1>
                                     'id': block.id,
                                     'title': block.name,
                                     'channelId': widget.channelId,
+                                    'film': 2,
                                   },
                                 )
                               }

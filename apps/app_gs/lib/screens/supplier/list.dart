@@ -16,8 +16,8 @@ class SupplierVods extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final vodController = Get.put(SupplierVodController(
-        supplierId: id, scrollController: scrollController));
+    final vodController = SupplierVodController(
+        supplierId: id, scrollController: scrollController);
     return Obx(() {
       return SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

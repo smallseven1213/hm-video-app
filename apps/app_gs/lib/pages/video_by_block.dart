@@ -28,14 +28,16 @@ class VideoByBlockPage extends StatelessWidget {
   final int id;
   final int channelId;
   final String title;
+  final int film;
   final scrollController = ScrollController();
 
-  VideoByBlockPage({
-    Key? key,
-    required this.id,
-    required this.title,
-    required this.channelId,
-  }) : super(key: key);
+  VideoByBlockPage(
+      {Key? key,
+      required this.id,
+      required this.title,
+      required this.channelId,
+      this.film = 1})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +48,7 @@ class VideoByBlockPage extends StatelessWidget {
 
     return Scaffold(
         appBar: CustomAppBar(
-          title: title,
+          title: 'title + $film',
         ),
         body: Obx(() {
           // 使用 splitVodList 函數將 vodList 按每100個Vod分割成子列表
@@ -59,7 +61,11 @@ class VideoByBlockPage extends StatelessWidget {
             slivers: [
               // split every 100 record from blockVodController.vodList
               ...vodChunks
-                  .map((e) => SliverBlockWidget(vods: e, channelId: channelId))
+                  .map((e) => SliverBlockWidget(
+                        vods: e,
+                        channelId: channelId,
+                        film: film,
+                      ))
                   .toList(),
               if (blockVodController.hasMoreData.value)
                 const SliverVideoPreviewSkeletonList(),
@@ -76,12 +82,11 @@ class VideoByBlockPage extends StatelessWidget {
 class SliverBlockWidget extends StatelessWidget {
   final List<Vod> vods;
   final int channelId;
+  final int film;
 
-  const SliverBlockWidget({
-    Key? key,
-    required this.vods,
-    required this.channelId,
-  }) : super(key: key);
+  const SliverBlockWidget(
+      {Key? key, required this.vods, required this.channelId, this.film = 1})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +111,8 @@ class SliverBlockWidget extends StatelessWidget {
                         timeLength: vods[index * 2].timeLength!,
                         tags: vods[index * 2].tags!,
                         videoViewTimes: vods[index * 2].videoViewTimes!,
+                        film: film,
+                        displayCoverVertical: film == 2,
                       ),
                     ),
                     const SizedBox(
@@ -123,6 +130,8 @@ class SliverBlockWidget extends StatelessWidget {
                               tags: vods[index * 2 + 1].tags!,
                               videoViewTimes:
                                   vods[index * 2 + 1].videoViewTimes!,
+                              film: film,
+                              displayCoverVertical: film == 2,
                             ),
                           )
                         : const Expanded(

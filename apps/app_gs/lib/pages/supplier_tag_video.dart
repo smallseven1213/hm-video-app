@@ -2,6 +2,8 @@ import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/short_tag_vod_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/video_preview.dart';
 
@@ -38,6 +40,13 @@ class SupplierTagVideoPage extends StatelessWidget {
               return VideoPreviewWidget(
                   id: vod.id,
                   film: 2,
+                  onOverrideRedirectTap: () {
+                    MyRouteDelegate.of(context).push(
+                      AppRoutes.shortsByTag.value,
+                      args: {'videoId': vod.id, 'tagId': tagId},
+                      removeSamePath: true,
+                    );
+                  },
                   hasRadius: false,
                   hasTitle: false,
                   imageRatio: gridRatio,
