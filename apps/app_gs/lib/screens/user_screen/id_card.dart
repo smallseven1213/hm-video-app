@@ -186,7 +186,7 @@ class _ContentAndButtonState extends State<ContentAndButton> {
                   // 5. QR Code image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: QrImage(
+                    child: QrImageView(
                       data: userController.loginCode.value,
                       version: QrVersions.auto,
                       size: 95.0,
