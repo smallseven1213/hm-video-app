@@ -1,5 +1,4 @@
 import 'package:app_gs/screens/main_screen/channels.dart';
-import 'package:app_gs/screens/main_screen/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
@@ -29,7 +28,7 @@ class HomeMainScreen extends StatelessWidget {
                     key: Key('layout-tab-bar-$layoutId'),
                     layoutId: layoutId,
                   )),
-                  Expanded(
+                  const Expanded(
                     child: SearchBar(),
                   )
                 ]),

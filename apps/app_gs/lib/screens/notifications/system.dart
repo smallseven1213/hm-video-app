@@ -33,9 +33,9 @@ class SystemScreen extends StatelessWidget {
           Obx(() => ListView(
                 children: [
                   ...eventsController.data.map((e) => SystemEventCard(
-                        title: e.title!,
-                        content: e.content!,
-                        time: e.createdAt!,
+                        title: e.title,
+                        content: e.content,
+                        time: e.createdAt,
                         isSelected:
                             listEditorController.selectedIds.contains(e.id),
                         id: e.id!,

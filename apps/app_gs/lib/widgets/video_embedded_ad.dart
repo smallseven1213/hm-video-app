@@ -16,7 +16,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BannerLink(
       url: detail.adUrl ?? '',
-      id: detail.id ?? 0,
+      id: detail.id,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -73,7 +73,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                   children: [
                     // 主標
                     Text(
-                      detail.title ?? '',
+                      detail.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
