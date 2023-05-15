@@ -10,8 +10,8 @@ import 'package:shared/navigator/delegate.dart';
 import '../../config/colors.dart';
 import '../../widgets/static_search_input.dart';
 
-class SearchBar extends StatelessWidget {
-  SearchBar({Key? key}) : super(key: key);
+class ChannelSearchBar extends StatelessWidget {
+  ChannelSearchBar({Key? key}) : super(key: key);
 
   final VideoPopularController videoPopularController =
       Get.find<VideoPopularController>();

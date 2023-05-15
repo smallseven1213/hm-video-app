@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
 
+import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
 
 class HomeMainScreen extends StatelessWidget {
@@ -28,8 +29,8 @@ class HomeMainScreen extends StatelessWidget {
                     key: Key('layout-tab-bar-$layoutId'),
                     layoutId: layoutId,
                   )),
-                  const Expanded(
-                    child: SearchBar(),
+                  Expanded(
+                    child: ChannelSearchBar(),
                   )
                 ]),
                 // Expanded(
