@@ -1,23 +1,20 @@
 import 'package:get/get.dart';
 
+class ApiResponse {
+  ApiResponse({required this.status, required this.message});
+
+  final int status;
+  final String message;
+}
+
 class ApiResponseErrorCatchController extends GetxController {
-  final responseStatus = 0.obs;
-  final responseMessage = ''.obs;
+  final Rx<ApiResponse> apiResponse =
+      Rx<ApiResponse>(ApiResponse(status: 0, message: ''));
+
   final RxBool alertDialogShown = false.obs;
 
-  // @override
-  // void onInit() async {
-  //   super.onInit();
-  // }
-
-  // @override
-  // void onClose() {
-  //   super.onClose();
-  // }
-
   void emitEvent(int status, String message) {
-    responseStatus.value = status;
-    responseMessage.value = message;
+    apiResponse.value = ApiResponse(status: status, message: message);
   }
 
   void setAlertDialogShown(bool shown) {
