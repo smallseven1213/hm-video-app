@@ -68,7 +68,7 @@ class _NicknamePageState extends State<NicknamePage> {
           key: _formKey,
           child: Column(
             children: [
-              const SizedBox(height: 80),
+              const SizedBox(height: 20),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 50),
                 child: Column(
@@ -82,7 +82,7 @@ class _NicknamePageState extends State<NicknamePage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 120),
               SizedBox(
                 width: 200,
                 child: Button(

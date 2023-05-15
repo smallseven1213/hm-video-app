@@ -36,7 +36,6 @@ class AuthTextField extends StatelessWidget {
                 style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white,
-                  fontWeight: FontWeight.bold,
                   height: 1,
                 ),
               ),
