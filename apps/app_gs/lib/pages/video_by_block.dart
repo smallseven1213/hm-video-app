@@ -48,7 +48,7 @@ class VideoByBlockPage extends StatelessWidget {
 
     return Scaffold(
         appBar: CustomAppBar(
-          title: 'title + $film',
+          title: title,
         ),
         body: Obx(() {
           // 使用 splitVodList 函數將 vodList 按每100個Vod分割成子列表
