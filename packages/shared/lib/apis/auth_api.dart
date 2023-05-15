@@ -128,7 +128,7 @@ class AuthApi {
     required String password,
   }) async {
     var value = await fetcher(
-      url: '${systemConfig.apiHost}/public/auth/auth/login',
+      url: '${systemConfig.apiHost}/public/auth/auth/v2/login',
       method: 'POST',
       body: {
         'username': username,

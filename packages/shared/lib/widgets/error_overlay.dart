@@ -20,8 +20,10 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   @override
   void initState() {
     super.initState();
-    responseController.responseStatus.listen((status) {
-      if (status == 401 && !responseController.alertDialogShown.value) {
+    responseController.apiResponse.listen((response) {
+      if (response.status == 401 &&
+          response.message == 'Unauthorized' &&
+          !responseController.alertDialogShown.value) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           setState(() {
             showErrorMessage = true;
@@ -42,7 +44,7 @@ class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    responseController.setAlertDialogShown(false);
+                    // responseController.setAlertDialogShown(false);
                     setState(() {
                       showErrorMessage = false;
                     });
