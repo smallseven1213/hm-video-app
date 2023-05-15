@@ -1,171 +1,38 @@
 // VideoPlayerWidget stateful widget
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/video.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
 
+import '../base_video_player.dart';
 import 'error.dart';
 import 'loading.dart';
 import 'progress.dart';
 
 final logger = Logger();
 
-class VideoPlayerWidget extends StatefulWidget {
-  final String? name;
-  final String videoUrl;
-  final Video video;
-  final VideoPlayerController? controller;
-  final double? height;
-
-  VideoPlayerWidget({
-    Key? key,
-    required this.videoUrl,
-    required this.video,
-    this.name,
-    this.controller,
-    this.height,
-  }) : super(key: key);
+class VideoPlayerWidget extends BaseVideoPlayerWidget {
+  VideoPlayerWidget({required String videoUrl, required Video video})
+      : super(videoUrl: videoUrl, video: video);
 
   @override
-  _VideoPlayerAreaState createState() => _VideoPlayerAreaState();
+  VideoPlayerWidgetState createState() => VideoPlayerWidgetState();
 }
 
-class _VideoPlayerAreaState extends State<VideoPlayerWidget>
-    with WidgetsBindingObserver {
-  VideoPlayerController? _controller;
-  final VodApi vodApi = VodApi();
-  bool isFullscreen = false;
-  bool hasError = false;
-  bool isScreenLocked = false;
-  Orientation orientation = Orientation.portrait;
-  bool isPause = false;
+class VideoPlayerWidgetState extends BaseVideoPlayerWidgetState {
+  bool isPlaying = false;
   bool isVisibleControls = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    initializePlayer();
-    setScreenRotation();
-  }
-
-  initializePlayer() async {
-    try {
-      _controller = VideoPlayerController.network(widget.videoUrl);
-      // 監聽播放狀態
-      _controller!.addListener(_onControllerValueChanged);
-      _controller!.initialize().then((_) {
-        if (!mounted) return;
-        setState(() {
-          _controller!.play();
-        });
-      }).catchError((_) => initializePlayer());
-    } catch (error) {
-      print('👹👹👹 Error occurred: $error');
-      if (_controller!.value.hasError) {
-        setState(() {
-          hasError = true;
-        });
-      }
-    }
-  }
-
-  void toggleFullscreen({bool fullScreen = false}) {
-    if (fullScreen) {
-      setScreenLandScape();
-    } else {
-      setScreenPortrait();
-      // 五秒後偵測螢幕方向
-      Future.delayed(const Duration(seconds: 2), () {
-        setScreenRotation();
-      });
-    }
-
-    setState(() {
-      isFullscreen = fullScreen;
-      isScreenLocked = isFullscreen;
-    });
-  }
-
-  void _onControllerValueChanged() async {
-    if (!mounted) {
-      return;
-    }
-
-    if (_controller!.value.hasError) {
-      setState(() {
-        hasError = true;
-      });
-      initializePlayer();
-      print('👹👹👹 Error occurred: ${_controller!.value.errorDescription}');
-    }
-
-    if (_controller!.value.isBuffering == false) {
-      // 如果影片播放完畢，則暫停
-      if (_controller!.value.position == _controller!.value.duration) {
-        _controller!.pause();
-      } else if (_controller!.value.isPlaying == false &&
-          !hasError &&
-          isPause == false) {
-        _controller!.play();
-      }
-    }
-
-    if (!kIsWeb && _controller!.value.isPlaying) {
-      // 保持屏幕亮度
-      // var isLock = await Wakelock.enabled;
-      // if (!isLock) {
-      //   Wakelock.enable();
-      // }
-      Wakelock.enable();
-    } else {
-      // 恢復正常屏幕行為
-      Wakelock.disable();
-    }
   }
 
   @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    switch (state) {
-      case AppLifecycleState.paused:
-      case AppLifecycleState.detached:
-      case AppLifecycleState.inactive:
-        _controller?.pause(); // Pause the video
-        toggleFullscreen(fullScreen: false);
-        break;
-      case AppLifecycleState.resumed:
-        _controller?.play(); // Resume the video
-        break;
-    }
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    // _controller?.pause();
-    _controller!.removeListener(_onControllerValueChanged);
-    _controller?.dispose();
-    // setScreenPortrait();
-    logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var currentRoutePath = MyRouteDelegate.of(context).currentConfiguration;
-    if (currentRoutePath != '/video') {
-      _controller?.pause();
-      setScreenPortrait();
-    }
+  Widget buildPage(BuildContext context, {VideoPlayerController? controller}) {
     return Container(
       color: Colors.black,
       child: Stack(
@@ -176,7 +43,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
               coverHorizontal: widget.video.coverHorizontal ?? '',
               onTap: () {
                 print('👹👹👹 onTap');
-                _controller?.play();
+                controller?.play();
                 setState(() {
                   hasError = false;
                 });
@@ -211,8 +78,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
                     children: [
                       InkWell(
                         onTap: () {
-                          print('👹👹👹 onTap');
-                          _controller?.play();
+                          controller?.play();
                           setState(() {
                             hasError = false;
                           });
@@ -255,9 +121,8 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
                 )
               ],
             )
-          ] else if (_controller != null &&
-              _controller!.value.isInitialized) ...[
-            VideoPlayer(_controller!),
+          ] else if (controller != null && controller!.value.isInitialized) ...[
+            VideoPlayer(controller),
             // controls
             GestureDetector(
               onTap: () {
@@ -288,22 +153,24 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
                                   shape: BoxShape.circle),
                               child: IconButton(
                                 icon: Icon(
-                                  _controller!.value.isPlaying
+                                  controller!.value.isPlaying
                                       ? Icons.pause
                                       : Icons.play_arrow,
                                   color: Colors.white,
                                   size: 48.0,
                                 ),
                                 onPressed: () {
-                                  print('onPressed 播放暫停');
                                   setState(() {
-                                    if (_controller!.value.isPlaying) {
-                                      _controller!.pause();
+                                    hasError = false;
+                                  });
+                                  setState(() {
+                                    if (controller!.value.isPlaying) {
+                                      controller!.pause();
                                       setState(() {
                                         isPause = true;
                                       });
                                     } else {
-                                      _controller!.play();
+                                      controller!.play();
                                       setState(() {
                                         isPause = false;
                                       });
@@ -320,12 +187,12 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
                             child: Stack(
                               children: <Widget>[
                                 ValueListenableBuilder<VideoPlayerValue>(
-                                  valueListenable: _controller!,
+                                  valueListenable: controller!,
                                   builder: (context, value, _) =>
                                       VideoProgressSlider(
                                     position: value.position,
                                     duration: value.duration,
-                                    controller: _controller!,
+                                    controller: controller!,
                                     swatch: const Color(0xffFFC700),
                                   ),
                                 ),
@@ -339,7 +206,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
             ),
           ] else ...[
             VideoLoading(
-              coverHorizontal: widget.video.coverHorizontal ?? '',
+              cover: widget.video.coverVertical ?? '',
             )
           ],
         ],
@@ -347,4 +214,3 @@ class _VideoPlayerAreaState extends State<VideoPlayerWidget>
     );
   }
 }
-

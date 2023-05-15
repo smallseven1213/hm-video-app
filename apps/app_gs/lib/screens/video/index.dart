@@ -34,7 +34,6 @@ class VideoScreen extends StatelessWidget {
             children: [
               video != null
                   ? VideoPlayerArea(
-                      id: id,
                       name: name,
                       videoUrl: videoDetailController.videoUrl.value,
                       video: video,
