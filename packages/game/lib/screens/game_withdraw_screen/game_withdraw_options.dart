@@ -7,6 +7,8 @@ import 'package:game/screens/game_withdraw_screen/game_withdraw_options_button.d
 import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/button.dart';
 import 'package:get/get.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../models/user_withdrawal_data.dart';
 
@@ -119,9 +121,9 @@ class _GameWithDrawOptionsState extends State<GameWithDrawOptions> {
         else if (type == Type.bankcard && widget.bankData.account == null)
           GameButton(
             text: "前往綁定",
-            onPressed: () async {
-              // var result = await gto('/set/bankcard');
+            onPressed: () {
               widget.onBackFromBindingPage();
+              MyRouteDelegate.of(context).push(AppRoutes.gameSetBankcard.value);
             },
             disabled: gameWithdrawalController.hasPaymentData.value,
           )

@@ -108,6 +108,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
       confirmText: "前往設定!!",
       onConfirm: () {
         gameWithdrawController.setLoadingStatus(false);
+        Navigator.of(context).pop();
         MyRouteDelegate.of(context).push(AppRoutes.gameSetFundPassword.value);
       },
     );
