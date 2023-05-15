@@ -3,7 +3,6 @@ import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
 
 List<List<Vod>> organizeRowData(List videos, Blocks block) {
@@ -67,7 +66,7 @@ class Block10Widget extends StatelessWidget {
                   child: block.isAreaAds == true && index % 4 == 3
                       ? ChannelAreaBanner(
                           image: BannerPhoto.fromJson({
-                            'id': result[index][0].id ?? 0,
+                            'id': result[index][0].id,
                             'url': result[index][0].adUrl ?? '',
                             'photoSid': result[index][0].coverVertical ?? '',
                             'isAutoClose': false,
