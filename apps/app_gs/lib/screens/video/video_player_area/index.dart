@@ -313,11 +313,11 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
 
   @override
   void dispose() {
+    setScreenPortrait();
     WidgetsBinding.instance.removeObserver(this);
     _controller?.pause();
     _controller!.removeListener(_onControllerValueChanged);
     _controller?.dispose();
-    // setScreenPortrait();
     logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
     super.dispose();
   }

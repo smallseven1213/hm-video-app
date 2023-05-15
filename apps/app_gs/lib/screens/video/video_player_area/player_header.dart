@@ -33,7 +33,6 @@ class PlayerHeader extends StatelessWidget {
             if (isFullscreen) {
               toggleFullscreen(false);
             } else {
-              toggleFullscreen(false);
               Navigator.pop(context);
             }
           },
