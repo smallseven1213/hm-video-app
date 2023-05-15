@@ -1,8 +1,6 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'dart:ui';
 
-import 'package:app_gs/config/colors.dart';
 import 'package:app_gs/widgets/button.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +12,6 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared/controllers/user_controller.dart';
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
-import 'package:shared/navigator/delegate.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 
@@ -222,7 +217,7 @@ class _ContentAndButtonState extends State<ContentAndButton> {
                   // 5. QR Code image
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
-                    child: QrImage(
+                    child: QrImageView(
                       data: userController.promoteData.value.promoteLink,
                       version: QrVersions.auto,
                       size: 90.0,
