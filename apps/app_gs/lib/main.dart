@@ -52,6 +52,7 @@ final Map<String, RouteWidgetBuilder> routes = {
         id: args['id'] as int,
         title: args['title'] as String,
         channelId: args['channelId'] as int,
+        film: args['film'] as int,
       ),
   AppRoutes.publisher.value: (context, args) => PublisherPage(
         id: args['id'] as int,
