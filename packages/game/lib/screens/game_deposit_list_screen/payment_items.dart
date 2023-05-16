@@ -68,8 +68,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   int _amountActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
-  final theme = themeMode[GetStorage('session').hasData('pageColor')
-          ? GetStorage('session').read('pageColor')
+  final theme = themeMode[GetStorage().hasData('pageColor')
+          ? GetStorage().read('pageColor')
           : 1]
       .toString();
 
@@ -122,8 +122,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = themeMode[GetStorage('session').hasData('pageColor')
-            ? GetStorage('session').read('pageColor')
+    final theme = themeMode[GetStorage().hasData('pageColor')
+            ? GetStorage().read('pageColor')
             : 1]
         .toString();
     List paymentItem = widget.depositData.keys.toList();

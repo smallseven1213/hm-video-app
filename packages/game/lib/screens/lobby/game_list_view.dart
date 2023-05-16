@@ -16,8 +16,8 @@ class GameListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = themeMode[GetStorage('session').hasData('pageColor')
-            ? GetStorage('session').read('pageColor')
+    final theme = themeMode[GetStorage().hasData('pageColor')
+            ? GetStorage().read('pageColor')
             : 1]
         .toString();
 

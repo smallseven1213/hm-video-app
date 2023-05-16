@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:game/controllers/game_auth_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:get/get.dart';
@@ -82,7 +81,6 @@ class _SplashState extends State<Splash> {
   String loadingText = '線路檢查中...';
 
   // GameLobby TODO
-  GameAuthController gameAuthController = Get.find<GameAuthController>();
   GameApiResponseErrorCatchController gameResponseController =
       Get.find<GameApiResponseErrorCatchController>();
 
@@ -224,7 +222,6 @@ class _SplashState extends State<Splash> {
         responseController.clear();
 
         // GameLobby TODO
-        gameAuthController.setToken(res.data['token']);
         gameResponseController.clear();
 
         print('res.status ${res.code}');

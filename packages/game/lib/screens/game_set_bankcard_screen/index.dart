@@ -1,9 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/models/bank.dart';
@@ -24,15 +24,20 @@ class GameSetBankCard extends StatefulWidget {
 }
 
 class _GameSetBankCardState extends State<GameSetBankCard> {
-  // set表單
+  List<BankItem> BankList = [];
   final accountController = TextEditingController();
   final bankNameController = TextEditingController();
   final legalNameController = TextEditingController();
   final branchNameController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
-  bool _enableSubmit = false;
-  List<BankItem> BankList = [];
   final gameWithdrawController = Get.put(GameWithdrawController());
+
+  bool _legalNameEnable = false;
+  bool _accountEnable = false;
+  bool _bankNameEnable = false;
+  String? _legalNameError;
+  String? _accountError;
+  String? _bankNameError;
 
   // on init時呼叫 showFundingPasswordBottomSheet(context, onSuccess: () {});
   @override
@@ -69,44 +74,41 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
     gameWithdrawController.setWithDrawalDataNotEmpty();
     onLoading(context, status: true);
     try {
-      if (_formKey.currentState!.saveAndValidate()) {
-        var formData = getFormData();
-        var res = await Get.put(GameLobbyApi()).updatePaymentSecurity(
-            formData['account'],
-            formData['remittanceType'],
-            formData['bankName'],
-            formData['legalName'],
-            formData['branchName']);
-        if (res.code == '00') {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text(
-                '設置成功',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+      var formData = getFormData();
+      var res = await Get.put(GameLobbyApi()).updatePaymentSecurity(
+          formData['account'],
+          formData['remittanceType'],
+          formData['bankName'],
+          formData['legalName'],
+          formData['branchName']);
+      if (res.code == '00') {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              '設置成功',
+              style: TextStyle(
+                color: Colors.white,
               ),
             ),
-          );
-          gameWithdrawController.setLoadingStatus(false);
-          gameWithdrawController.mutate();
-          Navigator.of(context).pop();
-          MyRouteDelegate.of(context).popRoute();
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(
-                res.message.toString(),
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
+          ),
+        );
+        gameWithdrawController.setLoadingStatus(false);
+        gameWithdrawController.mutate();
+        Navigator.of(context).pop();
+        MyRouteDelegate.of(context).popRoute();
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              res.message.toString(),
+              style: const TextStyle(
+                color: Colors.white,
               ),
             ),
-          );
-        }
-
-        onLoading(context, status: false);
+          ),
+        );
       }
+      onLoading(context, status: false);
     } catch (e) {
       print(e);
       onLoading(context, status: false);
@@ -123,6 +125,57 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
         BankList = res;
       });
     }
+  }
+
+  void _checkFormValidity() {
+    setState(() {
+      _accountEnable = _accountError == null;
+      _bankNameEnable = _bankNameError == null;
+      _legalNameEnable = _legalNameError == null;
+    });
+  }
+
+  void _validateAccount(String? value) {
+    if (value!.isEmpty) {
+      setState(() {
+        _accountError = '請輸入您的銀行卡號';
+      });
+    } else if (value.isNotEmpty) {
+      if (value.length >= 16 && value.length <= 19) {
+        print('account length: ${value.length}');
+        setState(() {
+          _accountError = null;
+        });
+      } else if (value.length < 16 || value.length > 19) {
+        setState(() {
+          _accountError = '帳戶長度為16~19';
+        });
+      }
+    }
+    _checkFormValidity();
+  }
+
+  void _validateBankName(String? value) {
+    if (value!.isEmpty) {
+      setState(() {
+        _bankNameError = '請輸入銀行名稱';
+      });
+    } else if (value.isNotEmpty) {
+      setState(() {
+        _bankNameError = null;
+      });
+    }
+    _checkFormValidity();
+  }
+
+  void _validateLegalName(String? value) {
+    if (value!.isEmpty) {
+      _legalNameError = '請輸入您的真實姓名';
+    } else if (value.isNotEmpty) {
+      print('value.isNotEmpty');
+      _legalNameError = null;
+    }
+    _checkFormValidity();
   }
 
   @override
@@ -187,33 +240,22 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
                   ),
                   child: FormBuilder(
                     key: _formKey,
-                    onChanged: () {
-                      _formKey.currentState!.save();
-                      setState(() {
-                        _enableSubmit =
-                            _formKey.currentState?.validate() ?? false;
-                      });
-                    },
                     child: Column(
                       children: [
                         const SizedBox(height: 10),
                         FormBuilderField<String?>(
                           name: 'bankName',
                           onChanged: (val) => debugPrint(val.toString()),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: '請輸入銀行名稱',
-                            ),
-                          ]),
                           builder: (FormFieldState field) {
                             return AutoComplete(
                               label: '銀行名稱',
                               hint: '請輸入銀行名稱',
                               controller: bankNameController,
                               listContent: BankList,
-                              onChanged: (value) => field.didChange(value),
-                              errorMessage: _formKey
-                                  .currentState!.fields['bankName']!.errorText,
+                              onChanged: (value) => {
+                                _validateBankName(value),
+                              },
+                              errorMessage: _bankNameError,
                             );
                           },
                         ),
@@ -226,7 +268,8 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
                               label: '支行名稱',
                               hint: '請輸入支行名稱(選填)',
                               controller: branchNameController,
-                              onChanged: (value) => field.didChange(value),
+                              onChanged: (value) =>
+                                  branchNameController.text = value,
                               errorMessage: _formKey.currentState!
                                   .fields['branchName']!.errorText,
                             );
@@ -235,44 +278,30 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
                         const SizedBox(height: 10),
                         FormBuilderField<String?>(
                           name: 'account',
-                          onChanged: (val) => debugPrint(val.toString()),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: '請輸入您的銀行卡號',
-                            ),
-                            FormBuilderValidators.minLength(16,
-                                errorText: '帳戶長度為16~19'),
-                            FormBuilderValidators.maxLength(19,
-                                errorText: '帳戶長度為16~19')
-                          ]),
                           builder: (FormFieldState field) {
                             return GameInput(
                               label: '銀行卡號',
                               hint: '請輸入您的銀行卡號',
                               controller: accountController,
-                              onChanged: (value) => field.didChange(value),
-                              errorMessage: _formKey
-                                  .currentState!.fields['account']!.errorText,
+                              onChanged: (value) => {
+                                _validateAccount(value),
+                              },
+                              errorMessage: _accountError,
                             );
                           },
                         ),
                         const SizedBox(height: 10),
                         FormBuilderField<String?>(
                           name: 'legalName',
-                          onChanged: (val) => debugPrint(val.toString()),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: '請輸入您的真實姓名',
-                            ),
-                          ]),
                           builder: (FormFieldState field) {
                             return GameInput(
                               label: '真實姓名',
                               hint: '請輸入您的真實姓名',
                               controller: legalNameController,
-                              onChanged: (value) => field.didChange(value),
-                              errorMessage: _formKey
-                                  .currentState!.fields['legalName']!.errorText,
+                              onChanged: (value) => {
+                                _validateLegalName(value),
+                              },
+                              errorMessage: _legalNameError,
                             );
                           },
                         ),
@@ -280,8 +309,16 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
                         GameButton(
                           text: '確認',
                           onPressed: () => _onSubmit(),
-                          disabled: !_enableSubmit,
-                        )
+                          disabled: _legalNameEnable == false ||
+                              _bankNameEnable == false ||
+                              _accountEnable == false ||
+                              _accountError != null ||
+                              _bankNameError != null ||
+                              _legalNameError != null ||
+                              accountController.text.isEmpty ||
+                              bankNameController.text.isEmpty ||
+                              legalNameController.text.isEmpty,
+                        ),
                       ],
                     ),
                   ),
