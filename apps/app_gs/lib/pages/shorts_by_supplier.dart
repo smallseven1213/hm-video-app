@@ -11,7 +11,8 @@ class ShortsBySupplierPage extends BaseShortPage {
       : super(
           videoId: videoId,
           itemId: supplierId,
-          createController: () =>
-              Get.put(VideoShortBySupplierController(supplierId, videoId)),
+          createController: () => Get.put(
+              VideoShortBySupplierController(supplierId, videoId),
+              tag: videoId.toString() + supplierId.toString()),
         );
 }
