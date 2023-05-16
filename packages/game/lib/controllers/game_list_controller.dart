@@ -13,13 +13,13 @@ class GamesListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _fetchGames();
+    // fetchGames();
     Get.find<GameAuthController>().token.listen((event) {
-      _fetchGames();
+      fetchGames();
     });
   }
 
-  Future<void> _fetchGames() async {
+  Future<void> fetchGames() async {
     print('loading game states');
     var res = await GameLobbyApi().getGames(); // [{}]
     games.assignAll(res);

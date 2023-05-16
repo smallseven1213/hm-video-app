@@ -22,8 +22,8 @@ class GameListItem extends StatelessWidget {
         .toString();
 
     return Container(
-      width: (Get.width - 114) / 2,
-      height: (Get.width - 114) / 3,
+      width: (Get.width - 110) / 2,
+      height: (Get.width - 110) / 3,
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -83,32 +83,29 @@ class _GameListViewState extends State<GameListView>
   final GamesListController gamesListController =
       Get.put(GamesListController());
   final ScrollController _scrollController = ScrollController();
-  late TabController _tabController;
+  TabController? _tabController;
   var filteredGameCategories = [];
 
   @override
   void initState() {
     super.initState();
-    _filterGameCategories();
-    widget.updateGameHistory();
-    _tabController = TabController(
-      length: filteredGameCategories.length,
-      vsync: this,
-      initialIndex: 0,
-    );
-    _tabController.index = 0;
-    _tabController.addListener(_handleTabSelection);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose(); // 釋放 _tabController
-    super.dispose();
+    gamesListController.fetchGames().then((value) {
+      _filterGameCategories();
+      _tabController = TabController(
+        length: filteredGameCategories.length,
+        vsync: this,
+        initialIndex: 0,
+      );
+      _tabController!.addListener(_handleTabSelection);
+      setState(() {}); // 重新構建畫面
+      widget.updateGameHistory();
+    });
   }
 
   _handleTabSelection() {
-    gamesListController.updateSelectedCategoryIndex(_tabController.index);
-    if (_tabController.index == -1) {
+    gamesListController
+        .updateSelectedCategoryIndex(_tabController!.index ?? -1);
+    if (_tabController?.index == -1) {
       widget.updateGameHistory();
     }
   }
@@ -164,87 +161,106 @@ class _GameListViewState extends State<GameListView>
       gameTypes.add(game.gameType);
     }
 
-    // gameCategories中的gameType在gameTypes中的元素，其中gameType=0跟-1的元素不會被篩選掉
+    // 將gameTypes轉換為Set<int>型態，以便使用contains方法進行比較
 
-    filteredGameCategories = gameCategoriesMapper
+    var filteredCategories = gameCategoriesMapper
         .where((category) =>
             gameTypes.contains(category['gameType']) ||
             category['gameType'] == 0 ||
             category['gameType'] == -1)
         .toList();
+
+    // 將過濾後的遊戲類別列表分配給filteredGameCategories
+
+    filteredGameCategories.assignAll(filteredCategories);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => gamesListController.games.isNotEmpty
-        ? SizedBox(
-            width: Get.width,
-            height: Get.height -
-                widget.deductHeight -
-                (GetPlatform.isWeb ? 250 : 270),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 0,
-                  child: RotatedBox(
-                    quarterTurns: 1,
-                    child: SizedBox(
-                      width: Get.height - 180,
-                      height: 60,
-                      child: TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        labelColor: Colors.white,
-                        labelPadding: const EdgeInsets.only(right: 0),
-                        indicatorColor: Colors.transparent,
-                        indicatorSize: TabBarIndicatorSize.label,
-                        tabs: filteredGameCategories
-                            .map(
-                              (category) => RotatedBox(
-                                quarterTurns: 3,
-                                child: GameScrollViewTabs(
-                                  text: category['name'].toString(),
-                                  icon: category['icon'].toString(),
-                                  isActive: gamesListController
-                                          .selectedCategoryIndex.value ==
-                                      filteredGameCategories.indexOf(category),
-                                ),
-                              ),
-                            )
-                            .toList(),
+    return Obx(() {
+      // ignore: unnecessary_null_comparison
+      if (gamesListController.games.isEmpty || _tabController == null) {
+        return const CircularProgressIndicator();
+      } else {
+        return gamesListController.games.isNotEmpty
+            ? SizedBox(
+                width: Get.width,
+                height: Get.height -
+                    widget.deductHeight -
+                    (GetPlatform.isWeb ? 250 : 270),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Flexible(
+                      flex: 0,
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: SizedBox(
+                          width: Get.height - 180,
+                          height: 60,
+                          child: _tabController != null
+                              ? TabBar(
+                                  controller: _tabController,
+                                  isScrollable: true,
+                                  labelColor: Colors.white,
+                                  labelPadding: const EdgeInsets.only(right: 0),
+                                  indicatorColor: Colors.transparent,
+                                  indicatorSize: TabBarIndicatorSize.label,
+                                  tabs: filteredGameCategories
+                                      .map(
+                                        (category) => RotatedBox(
+                                          quarterTurns: 3,
+                                          child: GameScrollViewTabs(
+                                            text: category['name'].toString(),
+                                            icon: category['icon'].toString(),
+                                            isActive: gamesListController
+                                                    .selectedCategoryIndex
+                                                    .value ==
+                                                filteredGameCategories
+                                                    .indexOf(category),
+                                          ),
+                                        ),
+                                      )
+                                      .toList(),
+                                )
+                              : const SizedBox(),
+                        ),
                       ),
                     ),
-                  ),
+                    const VerticalDivider(
+                        thickness: 1, width: 10, color: Colors.transparent),
+                    Flexible(
+                      flex: 1,
+                      child: _tabController != null
+                          ? TabBarView(
+                              controller: _tabController,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: filteredGameCategories
+                                  .map(
+                                    (category) =>
+                                        gamesListController.games.isNotEmpty
+                                            ? _buildGameList(
+                                                category['gameType'] as int)
+                                            : const SizedBox(),
+                                  )
+                                  .toList(),
+                            )
+                          : const SizedBox(),
+                    ),
+                  ],
                 ),
-                const VerticalDivider(
-                    thickness: 1, width: 12, color: Colors.transparent),
-                Flexible(
-                  flex: 1,
-                  child: TabBarView(
-                    controller: _tabController,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: filteredGameCategories
-                        .map(
-                          (category) => gamesListController.games.isNotEmpty
-                              ? _buildGameList(category['gameType'] as int)
-                              : const SizedBox(),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ],
-            ),
-          )
-        : const CircularProgressIndicator());
+              )
+            : const CircularProgressIndicator();
+      }
+    });
   }
 
   Widget _buildGameList(int gameType) {
     final gameListResult = gameType == 0
-        ? gamesListController.games.value
+        ? gamesListController.games
         : widget.gameHistoryList!.isNotEmpty && gameType == -1
             ? widget.gameHistoryList
-            : gamesListController.games.value
+            : gamesListController.games
                 .where((game) => game.gameType == gameType)
                 .toList()
                 .obs;

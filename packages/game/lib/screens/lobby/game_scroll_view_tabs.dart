@@ -53,7 +53,7 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
         color: Colors.transparent,
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.only(bottom: 6),
           child: Container(
             width: 60,
             height: 60,
