@@ -29,10 +29,10 @@ class FilterScrollView extends StatefulWidget {
   const FilterScrollView({super.key});
 
   @override
-  _FilterScrollViewState createState() => _FilterScrollViewState();
+  FilterScrollViewState createState() => FilterScrollViewState();
 }
 
-class _FilterScrollViewState extends State<FilterScrollView> {
+class FilterScrollViewState extends State<FilterScrollView> {
   final ScrollController scrollController = ScrollController();
   final FilterScreenController filterScreenController =
       Get.find<FilterScreenController>();
