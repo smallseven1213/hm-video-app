@@ -57,6 +57,12 @@ class ActorCard extends SliverPersistentHeaderDelegate {
       color: const Color(0xFF001a40).withOpacity(1 - opacity),
       child: Stack(
         children: [
+          const Positioned.fill(
+            child: Image(
+              image: AssetImage('assets/images/supplier_card_bg.webp'),
+              fit: BoxFit.fill,
+            ),
+          ),
           Opacity(
             opacity: opacity,
             child: SidImage(
