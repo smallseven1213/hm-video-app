@@ -46,7 +46,6 @@ class ChannelSearchBar extends StatelessWidget {
                 defaultValue: randomTitle,
                 onSearchButtonClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
-                      useBottomToTopAnimation: true,
                       args: {
                         'inputDefaultValue': randomTitle,
                         'dontSearch': false
@@ -54,7 +53,6 @@ class ChannelSearchBar extends StatelessWidget {
                 },
                 onInputClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
-                      useBottomToTopAnimation: true,
                       args: {
                         'inputDefaultValue': randomTitle,
                         'dontSearch': true
