@@ -66,7 +66,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   void push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,
-      bool removeSamePath = false,
+      bool removeSamePath = true,
       bool useBottomToTopAnimation = false, // 添加新参数
       Map<String, dynamic>? args}) {
     if (removeSamePath) {
