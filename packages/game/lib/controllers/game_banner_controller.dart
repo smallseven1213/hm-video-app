@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
-import 'package:game/controllers/game_auth_controller.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 class GameBannerController extends GetxController {
   var isLoading = false.obs;
@@ -11,7 +11,7 @@ class GameBannerController extends GetxController {
   void onInit() {
     super.onInit();
     fetchGameBanners();
-    Get.find<GameAuthController>().token.listen((event) {
+    Get.find<AuthController>().token.listen((event) {
       fetchGameBanners();
     });
   }

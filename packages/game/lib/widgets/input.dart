@@ -66,7 +66,7 @@ class _GameInputState extends State<GameInput> {
               ),
             ),
             Expanded(
-              child: TextField(
+              child: TextFormField(
                 controller: widget.controller,
                 obscureText: isPassword ? obscureText : false,
                 decoration: InputDecoration(

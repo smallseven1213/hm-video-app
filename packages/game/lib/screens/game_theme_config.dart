@@ -6,7 +6,7 @@ final themeMode = {
   2: 'light',
 };
 
-final localStorage = GetStorage('session');
+final localStorage = GetStorage();
 int themeNumber =
     localStorage.hasData('pageColor') ? localStorage.read('pageColor') : 1;
 final theme = themeMode[themeNumber].toString();

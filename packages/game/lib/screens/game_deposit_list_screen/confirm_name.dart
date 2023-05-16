@@ -29,8 +29,8 @@ class _ConfirmNameState extends State<ConfirmName> {
   TextEditingController textEditingController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   bool isUnfocus = false;
-  final theme = themeMode[GetStorage('session').hasData('pageColor')
-          ? GetStorage('session').read('pageColor')
+  final theme = themeMode[GetStorage().hasData('pageColor')
+          ? GetStorage().read('pageColor')
           : 1]
       .toString();
 

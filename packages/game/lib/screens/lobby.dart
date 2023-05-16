@@ -3,16 +3,16 @@ import 'package:game/apis/game_api.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/controllers/user_controller.dart';
 
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'package:game/models/game_list.dart';
-import 'package:game/controllers/game_auth_controller.dart';
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
-import 'package:game/controllers/game_user_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/game_list_view.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
@@ -50,16 +50,18 @@ class _GameLobbyState extends State<GameLobby> {
 
   final gamesListController = GamesListController();
   final ScrollController _scrollController = ScrollController();
-  GameUserController get userController => Get.find<GameUserController>();
+  UserController get userController => Get.find<UserController>();
+  GameWalletController gameWalletController = Get.find<GameWalletController>();
 
   @override
   void initState() {
     super.initState();
     _fetchDataInit();
 
-    Get.find<GameAuthController>().token.listen((event) {
+    Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
       userController.fetchUserInfo();
+      gameWalletController.fetchWallets();
       print('token changed');
     });
   }
@@ -69,7 +71,6 @@ class _GameLobbyState extends State<GameLobby> {
       GameLobbyApi().registerGame(),
     ]).then((value) {
       GameBannerController();
-      GameWalletController().fetchWallets();
       getGameHistory();
     });
   }
@@ -116,49 +117,49 @@ class _GameLobbyState extends State<GameLobby> {
               ),
             ),
             // 如果roles是'guest'，就顯示登入按鈕
-            actions: userController.info.value.roles.contains('guest')
-                ? [
-                    InkWell(
-                      onTap: () {
-                        MyRouteDelegate.of(context)
-                            .push(AppRoutes.gameSetFundPassword.value);
-                        // showGameLoginDialog(
-                        //   context,
-                        //   content: GameLobbyLoginTabs(
-                        //     type: Type.login,
-                        //     onSuccess: () {
-                        //       _refreshData();
-                        //       userState.mutateAll();
-                        //       gameWalletController.mutate();
-                        //       Navigator.pop(context);
-                        //     },
-                        //   ),
-                        //   onClosed: () => Navigator.pop(context),
-                        // );
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Container(
-                          width: 85,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(24),
-                            color: gamePrimaryButtonColor,
-                          ),
-                          child: Center(
-                            child: Text(
-                              '註冊/登入',
-                              style: TextStyle(
-                                color: gamePrimaryButtonTextColor,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ]
-                : null,
+            // actions: userController.info.value.roles.contains('guest')
+            //     ? [
+            //         InkWell(
+            //           onTap: () {
+            //             MyRouteDelegate.of(context)
+            //                 .push(AppRoutes.gameSetFundPassword.value);
+            //             showModel(
+            //               context,
+            //               content: GameLobbyLoginTabs(
+            //                 type: Type.login,
+            //                 onSuccess: () {
+            //                   _refreshData();
+            //                   userState.mutateAll();
+            //                   gameWalletController.mutate();
+            //                   Navigator.pop(context);
+            //                 },
+            //               ),
+            //               onClosed: () => Navigator.pop(context),
+            //             );
+            //           },
+            //           child: Padding(
+            //             padding: const EdgeInsets.all(8),
+            //             child: Container(
+            //               width: 85,
+            //               decoration: BoxDecoration(
+            //                 borderRadius: BorderRadius.circular(24),
+            //                 color: gamePrimaryButtonColor,
+            //               ),
+            //               child: Center(
+            //                 child: Text(
+            //                   '註冊/登入',
+            //                   style: TextStyle(
+            //                     color: gamePrimaryButtonTextColor,
+            //                     fontSize: 14,
+            //                     fontWeight: FontWeight.w600,
+            //                   ),
+            //                 ),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //       ]
+            //     : null,
           ),
           body: SafeArea(
             child: Container(
