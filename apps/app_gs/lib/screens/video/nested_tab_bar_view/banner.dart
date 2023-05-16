@@ -33,6 +33,7 @@ class VideoScreenBannerState extends State<VideoScreenBanner> {
               child: Carousel(
                 images: banners,
                 ratio: 374 / 104,
+                scrollPhysics: const NeverScrollableScrollPhysics(),
               ),
             )
           : const SizedBox.shrink();

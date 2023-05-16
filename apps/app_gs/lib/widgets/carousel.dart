@@ -6,9 +6,11 @@ import 'package:shared/widgets/ad_banner.dart';
 class Carousel extends StatefulWidget {
   final List<BannerPhoto>? images;
   final double? ratio;
+  final ScrollPhysics? scrollPhysics;
   const Carousel({
     Key? key,
     required this.images,
+    this.scrollPhysics,
     this.ratio = 16 / 9,
   }) : super(key: key);
 
@@ -48,6 +50,8 @@ class CarouselState extends State<Carousel> {
                 autoPlay: multipleImages,
                 onPageChanged:
                     multipleImages ? (val, _) => indexChanged(val) : null,
+                scrollPhysics: widget.scrollPhysics ??
+                    const AlwaysScrollableScrollPhysics(),
               ),
               items: widget.images
                   ?.map(
