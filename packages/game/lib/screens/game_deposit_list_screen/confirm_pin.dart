@@ -38,8 +38,8 @@ class _ConfirmPinState extends State<ConfirmPin> {
   StreamController<ErrorAnimationType> errorController =
       StreamController<ErrorAnimationType>();
 
-  final theme = themeMode[GetStorage('session').hasData('pageColor')
-          ? GetStorage('session').read('pageColor')
+  final theme = themeMode[GetStorage().hasData('pageColor')
+          ? GetStorage().read('pageColor')
           : 1]
       .toString();
 

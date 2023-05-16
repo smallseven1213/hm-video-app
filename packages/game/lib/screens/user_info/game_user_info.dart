@@ -1,12 +1,12 @@
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:game/controllers/game_user_controller.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:shared/controllers/user_controller.dart';
 
 class GameUserInfo extends StatefulWidget {
   final String? type;
@@ -21,11 +21,11 @@ class GameUserInfo extends StatefulWidget {
 
 class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
   late AnimationController animationController;
-  final gameWalletController = GameWalletController();
-  GameUserController get userController => Get.find<GameUserController>();
+  UserController get userController => Get.find<UserController>();
+  GameWalletController gameWalletController = Get.find<GameWalletController>();
 
-  final theme = themeMode[GetStorage('session').hasData('pageColor')
-          ? GetStorage('session').read('pageColor')
+  final theme = themeMode[GetStorage().hasData('pageColor')
+          ? GetStorage().read('pageColor')
           : 1]
       .toString();
 
@@ -37,6 +37,8 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
           milliseconds: 1000,
         ));
     super.initState();
+    userController.fetchUserInfo();
+    gameWalletController.fetchWallets();
   }
 
   @override
@@ -47,6 +49,8 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final gameWalletController = Get.find<GameWalletController>();
+
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -110,7 +114,6 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                                 color: gameLobbyPrimaryTextColor)),
                         Row(children: [
                           Obx(() => Text(
-                                // ignore: prefer_is_empty
                                 gameWalletController.wallet != null
                                     ? NumberFormat.currency(symbol: '').format(
                                         DecimalIntl(

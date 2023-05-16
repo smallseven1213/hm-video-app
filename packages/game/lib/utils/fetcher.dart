@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:game/services/game_system_config.dart';
-import 'package:game/controllers/game_auth_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 // create a dio instance
 final logger = Logger();
@@ -26,8 +26,8 @@ Future<dynamic> fetcher({
 }) async {
   final responseController = Get.find<GameApiResponseErrorCatchController>();
 
-  final token = Get.find<GameAuthController>().token;
-  GameAuthController authController = Get.find<GameAuthController>();
+  final token = Get.find<AuthController>().token;
+  AuthController authController = Get.find<AuthController>();
 
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',

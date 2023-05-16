@@ -221,7 +221,8 @@ class GameLobbyApi {
       String paymentPin,
       String stakeLimit,
       String validStake) async {
-    var value = await fetcher(url: '/withdrawalV2', method: 'POST', body: {
+    var value =
+        await fetcher(url: '$apiPrefix/withdrawalV2', method: 'POST', body: {
       'remittanceType': remittanceType,
       'applyAmount': applyAmount,
       'paymentPin': paymentPin,

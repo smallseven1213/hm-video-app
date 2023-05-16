@@ -5,13 +5,13 @@ import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/controllers/game_auth_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
-import 'package:game/controllers/game_user_controller.dart';
+import 'package:shared/controllers/user_controller.dart';
 
 void setupGameDependencies() {
   Get.lazyPut<GameAuthController>(() => GameAuthController());
   Get.lazyPut<GameApiResponseErrorCatchController>(
       () => GameApiResponseErrorCatchController());
-  Get.lazyPut<GameUserController>(() => GameUserController());
+  Get.lazyPut<UserController>(() => UserController());
   Get.lazyPut<GameBannerController>(() => GameBannerController());
   Get.lazyPut<GamesListController>(() => GamesListController());
   Get.lazyPut<GameWalletController>(() => GameWalletController());

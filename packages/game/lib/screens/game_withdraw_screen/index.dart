@@ -2,20 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:game/controllers/game_auth_controller.dart';
-import 'package:game/models/user_withdrawal_data.dart';
-import 'package:game/screens/game_withdraw_screen/game_withdraw_options.dart';
-import 'package:game/screens/game_withdraw_screen/label_with_status.dart';
-import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
-import 'package:game/apis/game_api.dart';
-import 'package:game/controllers/game_wallet_controller.dart';
-import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/controllers/game_user_controller.dart';
+
+import 'package:game/screens/game_withdraw_screen/game_withdraw_options.dart';
+import 'package:game/screens/game_withdraw_screen/label_with_status.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+
+import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/showFundingPasswordBottomSheet.dart';
+import 'package:game/models/user_withdrawal_data.dart';
+import 'package:game/apis/game_api.dart';
+import 'package:game/controllers/game_wallet_controller.dart';
+import 'package:game/controllers/game_withdraw_controller.dart';
+
+import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -35,21 +39,20 @@ class _GameWithdrawState extends State<GameWithdraw> {
   TextEditingController amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
   bool _enableSubmit = false;
-  final userController = Get.put(GameUserController());
+  final userController = Get.put(UserController());
   final gameWalletController = Get.put(GameWalletController());
   bool reachable = false;
   String stakeLimit = '0.00';
   String validStake = '0.00';
   String withdrawalFee = '0.000';
   String withdrawalMode = '0';
-  final GlobalKey _globalKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     _fetchDataInit();
 
-    Get.find<GameAuthController>().token.listen((event) {
+    Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
     });
   }
@@ -181,33 +184,54 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   // onConfirm function
-  void _onConfirm(Type type) {
+  void _onConfirm(Type type, context) {
     int intType = type == Type.bankcard ? 1 : 2;
-    // showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
-    //   // call applyWithdrawal
-    //   var res = await GameLobbyApi().applyWithdrawalV2(
-    //       intType,
-    //       amountController.text,
-    //       pin.toString(),
-    //       stakeLimit.toString(),
-    //       validStake.toString());
-    //   if (res.code == '00') {
-    //     showConfirm(context,
-    //         title: "申請完成",
-    //         content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
-    //         confirmText: "確認", onConfirm: () {
-    //       userState.mutateAll();
-    //       gameWalletState.mutate();
-    //       Get.toNamed('/default', arguments: 2);
-    //       Get.find<AppController>().updateNavigationIndex('/game', 2);
-    //     });
-    //   } else {
-    //     Fluttertoast.showToast(
-    //       msg: res.message.toString(),
-    //       gravity: ToastGravity.CENTER,
-    //     );
-    //   }
-    // });
+    showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
+      // call applyWithdrawal
+      var res = await GameLobbyApi().applyWithdrawalV2(
+          intType,
+          amountController.text,
+          pin.toString(),
+          stakeLimit.toString(),
+          validStake.toString());
+      if (res.code == '00') {
+        showConfirmDialog(
+            context: context,
+            title: "申請完成",
+            content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
+            confirmText: "確認",
+            onConfirm: () {
+              userController.fetchUserInfo();
+              gameWalletController.mutate();
+              Navigator.of(context).pop();
+              MyRouteDelegate.of(context).popRoute();
+            });
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              res.message.toString(),
+              style: const TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
+        );
+      }
+    });
+  }
+
+  String? _validate(String? value) {
+    if (value == null || value.isEmpty) {
+      return '請輸提現金額';
+    } else if (int.parse(value) < 100) {
+      return '輸入金額不得小於 100元';
+    } else if (int.parse(value) > gameWalletController.wallet.value) {
+      return '輸入金額不得大於餘額';
+    } else if (int.parse(value) % 100 != 0) {
+      return '輸入金額格式錯誤';
+    }
+    return null;
   }
 
   @override
@@ -304,14 +328,6 @@ class _GameWithdrawState extends State<GameWithdraw> {
                         ),
                         child: FormBuilder(
                           key: _formKey,
-                          onChanged: () {
-                            _formKey.currentState!.save();
-                            setState(() {
-                              _enableSubmit =
-                                  _formKey.currentState?.validate() ?? false;
-                            });
-                            print('驗證表單: ${_formKey.currentState?.validate()}');
-                          },
                           child: Column(
                             children: [
                               // ignore: unrelated_type_equality_checks
@@ -356,10 +372,18 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                         label: "提現金額",
                                         hint: "請輸入提現金額",
                                         controller: amountController,
-                                        onChanged: (value) =>
-                                            field.didChange(value),
+                                        onChanged: (value) => {
+                                          value = amountController.text,
+                                          _validate(amountController.text),
+                                          setState(() {
+                                            _enableSubmit = _validate(
+                                                    amountController.text) ==
+                                                null;
+                                          })
+                                        },
                                         warningMessage: "*最低可提金額為 100 CNY",
-                                        errorMessage: field.errorText,
+                                        errorMessage:
+                                            _validate(amountController.text),
                                         inputFormatters: <TextInputFormatter>[
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
@@ -369,7 +393,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                               const SizedBox(height: 10),
                               GameWithDrawOptions(
                                 controller: amountController,
-                                onConfirm: (type) => _onConfirm(Type.bankcard),
+                                onConfirm: (type) =>
+                                    _onConfirm(Type.bankcard, context),
                                 onBackFromBindingPage: () =>
                                     _getUserWithdrawalData(),
                                 enableSubmit: _enableSubmit,
