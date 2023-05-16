@@ -39,10 +39,9 @@ class BaseShortPageState extends State<BaseShortPage> {
                 return Column(
                   children: [
                     ShortCard(
-                      index: index,
-                      id: controller.data[index].id,
-                      title: controller.data[index].title
-                    ),
+                        index: index,
+                        id: controller.data[index].id,
+                        title: controller.data[index].title),
                     Container(
                       height: 90,
                       // gradient background

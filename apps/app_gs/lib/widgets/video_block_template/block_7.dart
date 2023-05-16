@@ -36,7 +36,7 @@ class Block7WidgetState extends State<Block7Widget> {
   void initState() {
     super.initState();
     List<Vod> videos = widget.block.videos?.data ?? [];
-    backgroundPhotoSid = videos[0].coverHorizontal;
+    backgroundPhotoSid = videos[0].coverVertical;
   }
 
   @override
@@ -75,7 +75,7 @@ class Block7WidgetState extends State<Block7Widget> {
                     const Color(0xFF040405).withOpacity(0.0),
                     const Color.fromRGBO(20, 49, 104, 0.7),
                   ],
-                  stops: const [0.0, 0.5, 0.5],
+                  stops: const [0.0, 0.5, 1],
                 ),
               ),
             ),
