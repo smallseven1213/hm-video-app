@@ -66,16 +66,15 @@ class Block7WidgetState extends State<Block7Widget> {
             Container(
               width: double.infinity,
               height: double.infinity,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.centerLeft,
                   end: Alignment.centerRight,
                   colors: [
-                    const Color(0xFF040405),
-                    const Color(0xFF040405).withOpacity(0.0),
-                    const Color.fromRGBO(20, 49, 104, 0.7),
+                    Color(0xFF040405),
+                    Color.fromRGBO(20, 49, 104, 0.7),
                   ],
-                  stops: const [0.0, 0.5, 1],
+                  stops: [0.0, 1],
                 ),
               ),
             ),
