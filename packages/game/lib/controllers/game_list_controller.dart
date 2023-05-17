@@ -13,7 +13,6 @@ class GamesListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // fetchGames();
     Get.find<GameAuthController>().token.listen((event) {
       fetchGames();
     });

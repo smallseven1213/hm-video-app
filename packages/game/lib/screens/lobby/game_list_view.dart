@@ -97,7 +97,7 @@ class _GameListViewState extends State<GameListView>
         initialIndex: 0,
       );
       _tabController!.addListener(_handleTabSelection);
-      setState(() {}); // 重新構建畫面
+      setState(() {});
       widget.updateGameHistory();
     });
   }
@@ -178,7 +178,6 @@ class _GameListViewState extends State<GameListView>
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      // ignore: unnecessary_null_comparison
       if (gamesListController.games.isEmpty || _tabController == null) {
         return const CircularProgressIndicator();
       } else {
@@ -198,32 +197,29 @@ class _GameListViewState extends State<GameListView>
                         child: SizedBox(
                           width: Get.height - 180,
                           height: 60,
-                          child: _tabController != null
-                              ? TabBar(
-                                  controller: _tabController,
-                                  isScrollable: true,
-                                  labelColor: Colors.white,
-                                  labelPadding: const EdgeInsets.only(right: 0),
-                                  indicatorColor: Colors.transparent,
-                                  indicatorSize: TabBarIndicatorSize.label,
-                                  tabs: filteredGameCategories
-                                      .map(
-                                        (category) => RotatedBox(
-                                          quarterTurns: 3,
-                                          child: GameScrollViewTabs(
-                                            text: category['name'].toString(),
-                                            icon: category['icon'].toString(),
-                                            isActive: gamesListController
-                                                    .selectedCategoryIndex
-                                                    .value ==
-                                                filteredGameCategories
-                                                    .indexOf(category),
-                                          ),
-                                        ),
-                                      )
-                                      .toList(),
+                          child: TabBar(
+                            controller: _tabController,
+                            isScrollable: true,
+                            labelColor: Colors.white,
+                            labelPadding: const EdgeInsets.only(right: 0),
+                            indicatorColor: Colors.transparent,
+                            indicatorSize: TabBarIndicatorSize.label,
+                            tabs: filteredGameCategories
+                                .map(
+                                  (category) => RotatedBox(
+                                    quarterTurns: 3,
+                                    child: GameScrollViewTabs(
+                                      text: category['name'].toString(),
+                                      icon: category['icon'].toString(),
+                                      isActive: gamesListController
+                                              .selectedCategoryIndex.value ==
+                                          filteredGameCategories
+                                              .indexOf(category),
+                                    ),
+                                  ),
                                 )
-                              : const SizedBox(),
+                                .toList(),
+                          ),
                         ),
                       ),
                     ),
@@ -231,21 +227,17 @@ class _GameListViewState extends State<GameListView>
                         thickness: 1, width: 10, color: Colors.transparent),
                     Flexible(
                       flex: 1,
-                      child: _tabController != null
-                          ? TabBarView(
-                              controller: _tabController,
-                              physics: const NeverScrollableScrollPhysics(),
-                              children: filteredGameCategories
-                                  .map(
-                                    (category) =>
-                                        gamesListController.games.isNotEmpty
-                                            ? _buildGameList(
-                                                category['gameType'] as int)
-                                            : const SizedBox(),
-                                  )
-                                  .toList(),
+                      child: TabBarView(
+                        controller: _tabController,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: filteredGameCategories
+                            .map(
+                              (category) => gamesListController.games.isNotEmpty
+                                  ? _buildGameList(category['gameType'] as int)
+                                  : const SizedBox(),
                             )
-                          : const SizedBox(),
+                            .toList(),
+                      ),
                     ),
                   ],
                 ),
