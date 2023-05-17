@@ -35,7 +35,7 @@ class VideoPlayerWidget extends StatelessWidget {
     if (isActive) {
       obsVideoPlayerController.play();
     } else {
-      obsVideoPlayerController.pause();
+      obsVideoPlayerController.disposeSelf();
     }
 
     return Container(

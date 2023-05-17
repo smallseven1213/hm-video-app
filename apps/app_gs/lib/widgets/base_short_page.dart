@@ -44,11 +44,12 @@ class BaseShortPageState extends State<BaseShortPage> {
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [
-                    ShortCard(
-                        isActive: currentPage == index,
-                        index: index,
-                        id: controller.data[index].id,
-                        title: controller.data[index].title),
+                    Expanded(
+                        child: ShortCard(
+                            isActive: currentPage == index,
+                            index: index,
+                            id: controller.data[index].id,
+                            title: controller.data[index].title)),
                     Container(
                       height: 90,
                       // gradient background

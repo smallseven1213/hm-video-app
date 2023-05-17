@@ -14,6 +14,7 @@ class ObservableVideoPlayerController extends GetxController {
   RxBool isPause = false.obs;
   RxBool isVisibleControls = false.obs;
   String videoUrl;
+  RxBool isDisposed = false.obs;
 
   ObservableVideoPlayerController(this.videoUrl);
 
@@ -27,6 +28,15 @@ class ObservableVideoPlayerController extends GetxController {
   void dispose() {
     videoPlayerController?.dispose();
     super.dispose();
+  }
+
+  @override
+  void onClose() {
+    if (videoPlayerController != null) {
+      videoPlayerController!.removeListener(_onControllerValueChanged);
+      videoPlayerController!.dispose();
+    }
+    super.onClose();
   }
 
   Future<void> initializePlayer() async {
@@ -76,18 +86,14 @@ class ObservableVideoPlayerController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    videoPlayerController!.removeListener(_onControllerValueChanged);
-    videoPlayerController?.dispose();
-    super.onClose();
-  }
-
   void setVideoPlayerController(VideoPlayerController controller) {
     videoPlayerController = controller;
   }
 
   void play() {
+    if (isDisposed.value) {
+      return;
+    }
     logger.i('RENDER OBX: PLAY VIDEO PLAYER CTRL id: $videoUrl');
     videoAction.value = 'play';
     videoPlayerController?.play();
@@ -123,5 +129,19 @@ class ObservableVideoPlayerController extends GetxController {
   void setControls(bool value) {
     isVisibleControls.value = value;
     update();
+  }
+
+  // void disposeSelf() {
+  //   videoPlayerController?.dispose();
+  //   Get.delete<ObservableVideoPlayerController>(tag: videoUrl);
+  // }
+
+  void disposeSelf() {
+    if (videoPlayerController != null) {
+      videoPlayerController!.dispose();
+      videoPlayerController = null;
+      isDisposed.value = true;
+    }
+    Get.delete<ObservableVideoPlayerController>(tag: videoUrl);
   }
 }
