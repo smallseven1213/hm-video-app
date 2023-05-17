@@ -49,7 +49,7 @@ class VideoPlayerWidget extends StatelessWidget {
                   coverHorizontal: video.coverHorizontal ?? '',
                   onTap: () {
                     print('👹👹👹 onTap');
-                    obsVideoPlayerController.play();
+                    obsVideoPlayerController.initializePlayer();
                   },
                 ),
               ] else if (obsVideoPlayerController.isReady.value) ...[
