@@ -10,7 +10,6 @@ class H5WebviewShared extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('initialUrl: $initialUrl');
     final orientation = MediaQuery.of(context).orientation;
     return RotatedBox(
       quarterTurns: orientation == Orientation.portrait ? 1 : 0,
