@@ -34,9 +34,6 @@ class GameDepositState extends State<GameDeposit> {
           ),
         ),
         backgroundColor: gameLobbyBgColor,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: gameLobbyBgColor,
-        ),
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: gameLobbyAppBarIconColor),
           onPressed: () => Navigator.pop(context, true),
