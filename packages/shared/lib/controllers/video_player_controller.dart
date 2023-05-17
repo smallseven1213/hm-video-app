@@ -23,12 +23,19 @@ class ObservableVideoPlayerController extends GetxController {
     initializePlayer();
   }
 
+  @override
+  void dispose() {
+    videoPlayerController?.dispose();
+    super.dispose();
+  }
+
   Future<void> initializePlayer() async {
     logger.i('RENDER OBX: INIT VIDEO PLAYER CTRL id: $videoUrl');
     try {
+      videoPlayerController?.dispose();
       videoPlayerController =
           VideoPlayerController.network(videoUrl); // 使用成员变量 videoUrl
-      // videoPlayerController!.addListener(_onControllerValueChanged);
+      videoPlayerController!.addListener(_onControllerValueChanged);
       await videoPlayerController!.initialize();
       videoPlayerController!.setLooping(true);
       isReady.value = true;
