@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -20,10 +21,12 @@ class StackData {
   final Map<String, dynamic> args;
   final bool? hasTransition;
   final bool useBottomToTopAnimation;
+  final Completer<void> completer;
 
   StackData({
     required this.path,
     required this.args,
+    required this.completer,
     this.hasTransition = true,
     this.useBottomToTopAnimation = false,
   });
@@ -33,7 +36,9 @@ final logger = Logger();
 
 class MyRouteDelegate extends RouterDelegate<String>
     with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
-  final List<StackData> _stack = [StackData(path: '/', args: {})];
+  final List<StackData> _stack = [
+    StackData(path: '/', args: {}, completer: Completer<void>())
+  ];
 
   static MyRouteDelegate of(BuildContext context) {
     final delegate = Router.of(context).routerDelegate;
@@ -63,21 +68,25 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   List<String> get stack => List.unmodifiable(_stack);
 
-  void push(String routeName,
+  Future<void> push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,
       bool removeSamePath = true,
       bool useBottomToTopAnimation = false, // 添加新参数
       Map<String, dynamic>? args}) {
+    final Completer<void> completer = Completer<void>();
+
     if (removeSamePath) {
       _stack.removeWhere((stackData) => stackData.path == routeName);
     }
 
     _stack.add(StackData(
-        path: routeName,
-        args: args ?? {},
-        hasTransition: hasTransition,
-        useBottomToTopAnimation: useBottomToTopAnimation)); // 传递新参数
+      path: routeName,
+      args: args ?? {},
+      hasTransition: hasTransition,
+      useBottomToTopAnimation: useBottomToTopAnimation, // 传递新参数
+      completer: completer, // Pass the completer to your stack data
+    ));
 
     if (deletePreviousCount > 0) {
       _stack.removeRange(
@@ -85,6 +94,8 @@ class MyRouteDelegate extends RouterDelegate<String>
     }
     logger.i(_stack);
     notifyListeners();
+
+    return completer.future; // Return the future of the completer
   }
 
   void remove(String routeName) {
@@ -92,12 +103,15 @@ class MyRouteDelegate extends RouterDelegate<String>
     notifyListeners();
   }
 
-  // implement pushAndRemoveUntil
   void pushAndRemoveUntil(String newRoute,
       {bool hasTransition = true, Map<String, dynamic>? args}) {
     _stack.clear();
     _stack.add(StackData(
-        path: newRoute, args: args ?? {}, hasTransition: hasTransition));
+      path: newRoute,
+      args: args ?? {},
+      hasTransition: hasTransition,
+      completer: Completer<void>(), // Add this line
+    ));
     notifyListeners();
   }
 
@@ -110,7 +124,11 @@ class MyRouteDelegate extends RouterDelegate<String>
   Future<void> setNewRoutePath(String configuration) {
     _stack
       ..clear()
-      ..add(StackData(path: configuration, args: {}));
+      ..add(StackData(
+        path: configuration,
+        args: {},
+        completer: Completer<void>(),
+      ));
     return SynchronousFuture<void>(null);
   }
 
@@ -118,7 +136,8 @@ class MyRouteDelegate extends RouterDelegate<String>
     if (_stack.isNotEmpty) {
       logger.i(route.settings.name);
       if (_stack.last.path == route.settings.name) {
-        _stack.removeLast();
+        final lastStackData = _stack.removeLast();
+        lastStackData.completer.complete();
         notifyListeners();
       }
     }
