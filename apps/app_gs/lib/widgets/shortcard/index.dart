@@ -28,6 +28,9 @@ class ShortCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isActive == false) {
+      return const SizedBox.shrink();
+    }
     final ShortVideoDetailController? videoDetailController =
         Get.put(ShortVideoDetailController(id), tag: id.toString());
 
@@ -37,33 +40,34 @@ class ShortCard extends StatelessWidget {
 
       if (video != null && videoDetailController.videoUrl.value.isNotEmpty) {
         String videoUrl = videoDetailController.videoUrl.value;
-        Get.put(ObservableVideoPlayerController(videoUrl), tag: videoUrl);
+        Get.lazyPut(() => ObservableVideoPlayerController(videoUrl),
+            tag: videoUrl);
 
-        return Expanded(
-          child: Stack(
-            children: [
-              SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-                child: VideoPlayerWidget(
-                  isActive: isActive,
-                  video: video,
-                  videoUrl: videoUrl,
-                ),
+        return Stack(
+          children: [
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: VideoPlayerWidget(
+                isActive: isActive,
+                video: video,
+                videoUrl: videoUrl,
               ),
-              if (videoDetail != null)
-                ShortCardInfo(
-                    index: index,
-                    data: videoDetail,
-                    title: title,
-                    videoUrl: videoUrl)
-            ],
-          ),
+            ),
+            if (videoDetail != null)
+              ShortCardInfo(
+                  index: index,
+                  data: videoDetail,
+                  title: title,
+                  videoUrl: videoUrl)
+          ],
         );
       } else {
-        // video is null or videoUrl is null:
-        // return CircularProgressIndicator();
-        return const SizedBox.shrink();
+        return const Expanded(
+          child: Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       }
     });
   }
