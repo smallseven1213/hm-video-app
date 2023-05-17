@@ -1,5 +1,8 @@
 import 'package:app_gs/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/models/vod.dart';
@@ -7,20 +10,26 @@ import 'package:shared/navigator/delegate.dart';
 
 import 'short_card_info_tag.dart';
 
+final logger = Logger();
+
 class ShortCardInfo extends StatelessWidget {
   final int index;
   final ShortVideoDetail data;
   final String title;
+  final String videoUrl;
 
   const ShortCardInfo({
     Key? key,
     required this.index,
     required this.data,
     required this.title,
+    required this.videoUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final obsVideoPlayerController =
+        Get.find<ObservableVideoPlayerController>(tag: videoUrl);
     return Positioned(
       bottom: 20,
       child: Container(
@@ -49,12 +58,18 @@ class ShortCardInfo extends StatelessWidget {
             // 供應商
             if (data.supplier != null) ...[
               InkWell(
-                onTap: () => MyRouteDelegate.of(context).push(
-                    AppRoutes.supplier.value,
-                    useBottomToTopAnimation: true,
-                    args: {
-                      'id': data.supplier!.id,
-                    }),
+                onTap: () async {
+                  obsVideoPlayerController.pause();
+                  logger.i('RENDER OBX toGo!!');
+                  await MyRouteDelegate.of(context).push(
+                      AppRoutes.supplier.value,
+                      useBottomToTopAnimation: true,
+                      args: {
+                        'id': data.supplier!.id,
+                      });
+                  logger.i('RENDER OBX isBack!!');
+                  obsVideoPlayerController.play();
+                },
                 child: Row(children: [
                   ActorAvatar(
                       photoSid: data.supplier!.photoSid, width: 30, height: 30),
@@ -84,10 +99,14 @@ class ShortCardInfo extends StatelessWidget {
               Row(
                   children: data.tag
                       .map((e) => InkWell(
-                          onTap: () => MyRouteDelegate.of(context).push(
-                              AppRoutes.supplierTag.value,
-                              useBottomToTopAnimation: true,
-                              args: {'tagId': e.id, 'tagName': e.name}),
+                          onTap: () async {
+                            obsVideoPlayerController.pause();
+                            await MyRouteDelegate.of(context).push(
+                                AppRoutes.supplierTag.value,
+                                useBottomToTopAnimation: true,
+                                args: {'tagId': e.id, 'tagName': e.name});
+                            obsVideoPlayerController.play();
+                          },
                           child: ShortCardInfoTag(name: '#${e.name}')))
                       .toList()
                   // const [

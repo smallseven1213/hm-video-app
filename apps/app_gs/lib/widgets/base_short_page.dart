@@ -23,6 +23,7 @@ class BaseShortPage extends StatefulWidget {
 
 class BaseShortPageState extends State<BaseShortPage> {
   final PageController _pageController = PageController();
+  int currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +36,16 @@ class BaseShortPageState extends State<BaseShortPage> {
             return PageView.builder(
               controller: _pageController,
               itemCount: controller.data.length,
+              onPageChanged: (int index) {
+                setState(() {
+                  currentPage = index;
+                });
+              },
               itemBuilder: (BuildContext context, int index) {
                 return Column(
                   children: [
                     ShortCard(
+                        isActive: currentPage == index,
                         index: index,
                         id: controller.data[index].id,
                         title: controller.data[index].title),
