@@ -7,7 +7,6 @@ import '../models/game_list.dart';
 class GamesListController extends GetxController {
   var games = <GameItem>[].obs;
   var isShowFab = false.obs;
-  var switchPaymentPage = 0.obs;
   final RxInt selectedCategoryIndex = 0.obs;
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:game/controllers/game_config_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -11,11 +12,6 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/h5webview.dart';
-
-var switchPaymentPageType = {
-  'normal': 1,
-  'refactor': 2,
-};
 
 class GameLobbyWebview extends StatefulWidget {
   final String gameUrl;
@@ -48,20 +44,22 @@ class _ButtonWidget extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    return RotatedBox(
-      quarterTurns: orientation == Orientation.portrait ? 1 : 0,
-      child: Container(
-        height: 88,
-        width: 288,
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.5),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            PointerInterceptor(
-              child: InkWell(
+    final gameConfigController = Get.put(GameConfigController());
+
+    return PointerInterceptor(
+      child: RotatedBox(
+        quarterTurns: orientation == Orientation.portrait ? 1 : 0,
+        child: Container(
+          height: 88,
+          width: 288,
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.5),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              InkWell(
                 onTap: () {
                   print('返回大廳');
                   showConfirmDialog(
@@ -98,9 +96,7 @@ class _ButtonWidget extends State<ButtonWidget> {
                   ],
                 ),
               ),
-            ),
-            PointerInterceptor(
-              child: InkWell(
+              InkWell(
                 onTap: () {
                   launch(
                       '${systemConfig.apiHost}/public/domains/domain/customer-services');
@@ -124,11 +120,16 @@ class _ButtonWidget extends State<ButtonWidget> {
                   ],
                 ),
               ),
-            ),
-            PointerInterceptor(
-              child: InkWell(
-                onTap: () async {
-                  MyRouteDelegate.of(context).push(AppRoutes.gameLobby.value);
+              InkWell(
+                onTap: () {
+                  print('充值');
+                  Navigator.of(context).pop();
+                  MyRouteDelegate.of(context).push(
+                    gameConfigController.switchPaymentPage.value ==
+                            switchPaymentPageType['list']
+                        ? AppRoutes.gameDepositList.value
+                        : AppRoutes.gameDepositPolling.value,
+                  );
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -149,9 +150,7 @@ class _ButtonWidget extends State<ButtonWidget> {
                   ],
                 ),
               ),
-            ),
-            PointerInterceptor(
-              child: InkWell(
+              InkWell(
                 onTap: () => widget.toggleButtonRow(),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -172,8 +171,8 @@ class _ButtonWidget extends State<ButtonWidget> {
                   ],
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
