@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -32,32 +34,58 @@ class _ShortCardState extends State<ShortCard> {
   ShortVideoDetailController? videoDetailController;
   ObservableVideoPlayerController? videoPlayerController;
 
-  @override
-  void initState() {
-    logger.i('RENDER OBX: ShortCard initState');
-    super.initState();
-    videoDetailController = Get.put(ShortVideoDetailController(widget.id),
-        tag: widget.id.toString());
-  }
+  late StreamSubscription<String> videoUrlSubscription;
 
   @override
-  void didChangeDependencies() async {
-    logger.i('RENDER OBX: ShortCard didChangeDependencies');
-    super.didChangeDependencies();
-    videoDetailController!.videoUrl.listen((videoUrl) {
+  void initState() {
+    super.initState();
+    if (!Get.isRegistered<ShortVideoDetailController>(
+        tag: widget.id.toString())) {
+      videoDetailController = Get.put(ShortVideoDetailController(widget.id),
+          tag: widget.id.toString());
+    }
+
+    var videoUrl = videoDetailController!.videoUrl.value;
+    if (videoUrl.isNotEmpty) {
+      _putController();
+    }
+    videoUrlSubscription = videoDetailController!.videoUrl.listen((videoUrl) {
       if (videoUrl.isNotEmpty) {
-        videoPlayerController?.dispose();
-        Get.putAsync<ObservableVideoPlayerController>(() async {
-          videoPlayerController = ObservableVideoPlayerController(videoUrl);
-          setState(() {});
-          return videoPlayerController!;
-        }, tag: videoUrl);
+        _putController();
       }
     });
   }
 
+  void _putController() async {
+    var videoUrl = videoDetailController!.videoUrl.value;
+    videoPlayerController?.dispose();
+    await Get.putAsync<ObservableVideoPlayerController>(() async {
+      videoPlayerController = ObservableVideoPlayerController(videoUrl);
+      logger.i('RENDER OBX: ShortCard didChangeDependencies retry');
+      return videoPlayerController!;
+    }, tag: videoUrl);
+    setState(() {});
+  }
+
+  // @override
+  // void didChangeDependencies() async {
+  //   videoDetailController!.videoUrl.listen((videoUrl) {
+  //     if (videoUrl.isNotEmpty) {
+  //       videoPlayerController?.dispose();
+  //       Get.putAsync<ObservableVideoPlayerController>(() async {
+  //         videoPlayerController = ObservableVideoPlayerController(videoUrl);
+  //         setState(() {});
+  //         logger.i('RENDER OBX: ShortCard didChangeDependencies retry');
+  //         return videoPlayerController!;
+  //       }, tag: videoUrl);
+  //     }
+  //   });
+  //   super.didChangeDependencies();
+  // }
+
   @override
   void dispose() {
+    videoUrlSubscription.cancel(); // 在dispose方法中取消订阅
     videoDetailController?.dispose();
     videoPlayerController?.dispose();
     super.dispose();
@@ -70,7 +98,7 @@ class _ShortCardState extends State<ShortCard> {
       var videoDetail = videoDetailController!.videoDetail.value;
 
       if (video != null && videoDetailController!.videoUrl.value.isNotEmpty) {
-        logger.i('RENDER OBX: ShortCard');
+        logger.i('RENDER OBX: ShortCard Inside ${videoDetail!.toJson()}');
         return Stack(
           children: [
             SizedBox(
@@ -81,12 +109,11 @@ class _ShortCardState extends State<ShortCard> {
                 videoUrl: videoDetailController!.videoUrl.value,
               ),
             ),
-            if (videoDetail != null)
-              ShortCardInfo(
-                  index: widget.index,
-                  data: videoDetail,
-                  title: widget.title,
-                  videoUrl: videoDetailController!.videoUrl.value)
+            ShortCardInfo(
+                index: widget.index,
+                data: videoDetail,
+                title: widget.title,
+                videoUrl: videoDetailController!.videoUrl.value)
           ],
         );
       } else {
