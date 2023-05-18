@@ -28,101 +28,110 @@ class ShortCardInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: videoUrl);
-    return Positioned(
-      bottom: 20,
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // // 演員
-            // if (data.actors!.isNotEmpty)
-            //   Row(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       ActorAvatar(
-            //           photoSid: data.actors![0].photoSid,
-            //           width: 30,
-            //           height: 30),
-            //       const SizedBox(width: 6),
-            //       Text(data.actors![0].name,
-            //           style: const TextStyle(
-            //             fontSize: 15,
-            //             color: Colors.white,
-            //           )),
-            //     ],
-            //   ),
-            // 供應商
-            if (data.supplier != null) ...[
-              InkWell(
-                onTap: () async {
-                  obsVideoPlayerController.pause();
-                  logger.i('RENDER OBX toGo!!');
-                  await MyRouteDelegate.of(context).push(
-                      AppRoutes.supplier.value,
-                      useBottomToTopAnimation: true,
-                      args: {
-                        'id': data.supplier!.id,
-                      });
-                  logger.i('RENDER OBX isBack!!');
-                  obsVideoPlayerController.play();
-                },
-                child: Row(children: [
-                  ActorAvatar(
-                      photoSid: data.supplier!.photoSid, width: 30, height: 30),
-                  const SizedBox(width: 6),
-                  const SizedBox(height: 8),
-                  Text(data.supplier!.aliasName ?? '',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                      )),
-                  const SizedBox(height: 8),
-                ]),
-              )
-            ],
+    bool isObsVideoPlayerControllerReady =
+        Get.isRegistered<ObservableVideoPlayerController>(tag: videoUrl);
+    if (isObsVideoPlayerControllerReady) {
+      logger.i('RENDER OBX: ShortCardInfo');
+      final obsVideoPlayerController =
+          Get.find<ObservableVideoPlayerController>(tag: videoUrl);
+      return Positioned(
+        bottom: 20,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // // 演員
+              // if (data.actors!.isNotEmpty)
+              //   Row(
+              //     crossAxisAlignment: CrossAxisAlignment.center,
+              //     children: [
+              //       ActorAvatar(
+              //           photoSid: data.actors![0].photoSid,
+              //           width: 30,
+              //           height: 30),
+              //       const SizedBox(width: 6),
+              //       Text(data.actors![0].name,
+              //           style: const TextStyle(
+              //             fontSize: 15,
+              //             color: Colors.white,
+              //           )),
+              //     ],
+              //   ),
+              // 供應商
+              if (data.supplier != null) ...[
+                InkWell(
+                  onTap: () async {
+                    obsVideoPlayerController.pause();
+                    logger.i('RENDER OBX toGo!!');
+                    await MyRouteDelegate.of(context).push(
+                        AppRoutes.supplier.value,
+                        useBottomToTopAnimation: true,
+                        args: {
+                          'id': data.supplier!.id,
+                        });
+                    logger.i('RENDER OBX isBack!!');
+                    obsVideoPlayerController.play();
+                  },
+                  child: Row(children: [
+                    ActorAvatar(
+                        photoSid: data.supplier!.photoSid,
+                        width: 30,
+                        height: 30),
+                    const SizedBox(width: 6),
+                    const SizedBox(height: 8),
+                    Text(data.supplier!.aliasName ?? '',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                        )),
+                    const SizedBox(height: 8),
+                  ]),
+                )
+              ],
 
-            // 標題
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.white,
+              // 標題
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.white,
+                ),
               ),
-            ),
 
-            // 標籤
-            if (data.tag.isNotEmpty)
-              Row(
-                  children: data.tag
-                      .map((e) => InkWell(
-                          onTap: () async {
-                            obsVideoPlayerController.pause();
-                            await MyRouteDelegate.of(context).push(
-                                AppRoutes.supplierTag.value,
-                                useBottomToTopAnimation: true,
-                                args: {'tagId': e.id, 'tagName': e.name});
-                            obsVideoPlayerController.play();
-                          },
-                          child: ShortCardInfoTag(name: '#${e.name}')))
-                      .toList()
-                  // const [
-                  //   data.tag.length > 0
-                  //       ? ShortCardInfoTag(name: '#${data.tag[0]}')
-                  //       : SizedBox.shrink(),
-                  //   ShortCardInfoTag(name: '#免費'),
-                  //   SizedBox(width: 8),
-                  //   ShortCardInfoTag(name: '#網紅'),
-                  //   SizedBox(width: 8),
-                  //   ShortCardInfoTag(name: '#大集合'),
-                  // ],
-                  ),
-          ],
+              // 標籤
+              if (data.tag.isNotEmpty)
+                Row(
+                    children: data.tag
+                        .map((e) => InkWell(
+                            onTap: () async {
+                              obsVideoPlayerController.pause();
+                              await MyRouteDelegate.of(context).push(
+                                  AppRoutes.supplierTag.value,
+                                  useBottomToTopAnimation: true,
+                                  args: {'tagId': e.id, 'tagName': e.name});
+                              obsVideoPlayerController.play();
+                            },
+                            child: ShortCardInfoTag(name: '#${e.name}')))
+                        .toList()
+                    // const [
+                    //   data.tag.length > 0
+                    //       ? ShortCardInfoTag(name: '#${data.tag[0]}')
+                    //       : SizedBox.shrink(),
+                    //   ShortCardInfoTag(name: '#免費'),
+                    //   SizedBox(width: 8),
+                    //   ShortCardInfoTag(name: '#網紅'),
+                    //   SizedBox(width: 8),
+                    //   ShortCardInfoTag(name: '#大集合'),
+                    // ],
+                    ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

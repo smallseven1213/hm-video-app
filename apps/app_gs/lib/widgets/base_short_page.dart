@@ -42,14 +42,16 @@ class BaseShortPageState extends State<BaseShortPage> {
                 });
               },
               itemBuilder: (BuildContext context, int index) {
+                var isActive = index == currentPage;
                 return Column(
                   children: [
                     Expanded(
-                        child: ShortCard(
-                            isActive: currentPage == index,
-                            index: index,
-                            id: controller.data[index].id,
-                            title: controller.data[index].title)),
+                        child: isActive == true
+                            ? ShortCard(
+                                index: index,
+                                id: controller.data[index].id,
+                                title: controller.data[index].title)
+                            : const SizedBox.shrink()),
                     Container(
                       height: 90,
                       // gradient background

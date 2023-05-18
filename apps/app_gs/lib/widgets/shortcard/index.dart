@@ -12,54 +12,81 @@ import 'short_card_info.dart';
 
 final logger = Logger();
 
-class ShortCard extends StatelessWidget {
+class ShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final bool isActive;
 
   const ShortCard({
     Key? key,
     required this.index,
     required this.id,
     required this.title,
-    required this.isActive,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    if (isActive == false) {
-      return const SizedBox.shrink();
-    }
-    final ShortVideoDetailController? videoDetailController =
-        Get.put(ShortVideoDetailController(id), tag: id.toString());
+  _ShortCardState createState() => _ShortCardState();
+}
 
+class _ShortCardState extends State<ShortCard> {
+  ShortVideoDetailController? videoDetailController;
+  ObservableVideoPlayerController? videoPlayerController;
+
+  @override
+  void initState() {
+    logger.i('RENDER OBX: ShortCard initState');
+    super.initState();
+    videoDetailController = Get.put(ShortVideoDetailController(widget.id),
+        tag: widget.id.toString());
+  }
+
+  @override
+  void didChangeDependencies() async {
+    logger.i('RENDER OBX: ShortCard didChangeDependencies');
+    super.didChangeDependencies();
+    videoDetailController!.videoUrl.listen((videoUrl) {
+      if (videoUrl.isNotEmpty) {
+        videoPlayerController?.dispose();
+        Get.putAsync<ObservableVideoPlayerController>(() async {
+          videoPlayerController = ObservableVideoPlayerController(videoUrl);
+          setState(() {});
+          return videoPlayerController!;
+        }, tag: videoUrl);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    videoDetailController?.dispose();
+    videoPlayerController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Obx(() {
       var video = videoDetailController!.video.value;
-      var videoDetail = videoDetailController.videoDetail.value;
+      var videoDetail = videoDetailController!.videoDetail.value;
 
-      if (video != null && videoDetailController.videoUrl.value.isNotEmpty) {
-        String videoUrl = videoDetailController.videoUrl.value;
-        Get.lazyPut(() => ObservableVideoPlayerController(videoUrl),
-            tag: videoUrl);
-
+      if (video != null && videoDetailController!.videoUrl.value.isNotEmpty) {
+        logger.i('RENDER OBX: ShortCard');
         return Stack(
           children: [
             SizedBox(
               height: double.infinity,
               width: double.infinity,
               child: VideoPlayerWidget(
-                isActive: isActive,
                 video: video,
-                videoUrl: videoUrl,
+                videoUrl: videoDetailController!.videoUrl.value,
               ),
             ),
             if (videoDetail != null)
               ShortCardInfo(
-                  index: index,
+                  index: widget.index,
                   data: videoDetail,
-                  title: title,
-                  videoUrl: videoUrl)
+                  title: widget.title,
+                  videoUrl: videoDetailController!.videoUrl.value)
           ],
         );
       } else {
