@@ -7,6 +7,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:get/get.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class GameDepositList extends StatefulWidget {
   const GameDepositList({Key? key}) : super(key: key);
@@ -57,6 +59,22 @@ class _GameDepositListState extends State<GameDepositList> {
             icon: Icon(Icons.arrow_back_ios, color: gameLobbyAppBarIconColor),
             onPressed: () => Navigator.pop(context, true),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                MyRouteDelegate.of(context)
+                    .push(AppRoutes.gameDepositRecord.value);
+              },
+              child: Text(
+                '存款記錄',
+                style: TextStyle(
+                  color: gameLobbyAppBarTextColor,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+          ],
         ),
         body: Container(
           width: double.infinity,

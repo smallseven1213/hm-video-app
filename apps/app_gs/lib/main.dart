@@ -17,6 +17,8 @@ import 'package:app_gs/screens/games/game_set_bankcard_screen/index.dart';
 import 'package:app_gs/screens/games/game_deposit_list_screen/index.dart';
 import 'package:app_gs/screens/games/game_deposit_polling_screen/index.dart';
 import 'package:app_gs/screens/games/game_payment_result_screen/index.dart';
+import 'package:app_gs/screens/games/game_deposit_record_screen/index.dart';
+import 'package:app_gs/screens/games/game_withdraw_record_screen/index.dart';
 
 import 'config/colors.dart';
 import 'pages/actors.dart';
@@ -82,6 +84,10 @@ final Map<String, RouteWidgetBuilder> routes = {
       const GameSetBankCardScreen(),
   AppRoutes.gamePaymentResult.value: (context, args) =>
       const GamePaymentResultScreen(),
+  AppRoutes.gameDepositRecord.value: (context, args) =>
+      const GameDepositRecordScreen(),
+  AppRoutes.gameWithdrawRecord.value: (context, args) =>
+      const GameWithdrawRecordScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.nickname.value: (context, args) => NicknamePage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),

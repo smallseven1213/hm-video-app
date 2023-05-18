@@ -41,19 +41,19 @@ class DepositPaymentItems extends StatefulWidget {
 var paymentsMapper = {
   'aliPay': {
     'title': '支付寶',
-    'icon': 'assets/img/game_deposit/aliPay.webp',
+    'icon': 'packages/game/assets/images/game_deposit/aliPay.webp',
   },
   'debit': {
     'title': '銀行卡',
-    'icon': 'assets/img/game_deposit/debit.webp',
+    'icon': 'packages/game/assets/images/game_deposit/debit.webp',
   },
   'unionPay': {
     'title': '雲閃付',
-    'icon': 'assets/img/game_deposit/unionPay.webp',
+    'icon': 'packages/game/assets/images/game_deposit/unionPay.webp',
   },
   'weChat': {
     'title': '微信',
-    'icon': 'assets/img/game_deposit/weChat.webp',
+    'icon': 'packages/game/assets/images/game_deposit/weChat.webp',
   },
 };
 
@@ -201,7 +201,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                     ? paymentsMapper[paymentItem[index]]![
                                             'icon']
                                         .toString()
-                                    : 'assets/img/game_lobby/game_empty-$theme.webp',
+                                    : 'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
                                 width: 24,
                                 height: 24,
                               ),
@@ -366,7 +366,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                         child: Column(
                       children: [
                         Image.asset(
-                          'assets/img/game_deposit/payment_empty-$theme.webp',
+                          'packages/game/assets/images/game_deposit/payment_empty-$theme.webp',
                           width: 80,
                           height: 80,
                           fit: BoxFit.cover,
