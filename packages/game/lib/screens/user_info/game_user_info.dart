@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 class GameUserInfo extends StatefulWidget {
   final String? type;
@@ -82,11 +83,10 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                               child: SizedBox(
                                 width: 32,
                                 height: 32,
-                                child: Image(
-                                  image: AssetImage(
-                                      userController.info.value.avatar ?? ''),
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
+                                child: SidImage(
+                                  sid: userController.info.value.avatar ?? '',
+                                  width: 32,
+                                  height: 32,
                                 ),
                               ),
                             )

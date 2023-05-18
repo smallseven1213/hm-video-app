@@ -78,7 +78,7 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
               children: [
                 Image.asset(
                   widget.icon ??
-                      'packages/game/game_lobby/game_empty-$theme.webp',
+                      'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
                   width: 24,
                   height: 24,
                 ),
