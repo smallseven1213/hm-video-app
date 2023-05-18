@@ -61,7 +61,7 @@ class _ConfirmPinState extends State<ConfirmPin> {
         Padding(
           padding: const EdgeInsets.only(top: 5, bottom: 10),
           child: Image.asset(
-            'assets/img/game_deposit/deposit_confirm-$theme.webp',
+            'packages/game/assets/images/game_deposit/deposit_confirm-$theme.webp',
             width: 65,
             height: 65,
             fit: BoxFit.cover,

@@ -26,15 +26,13 @@ class BannerItem extends StatelessWidget {
           }
         }
       },
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 6.0),
-        child: ClipRRect(
-            borderRadius: BorderRadius.circular(6.0),
-            child: Image.network(
-              image.photoUrl ?? '',
-              width: Get.width,
-              fit: BoxFit.fill,
-            )),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(6.0),
+        child: Image.network(
+          image.photoUrl ?? '',
+          width: Get.width,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }

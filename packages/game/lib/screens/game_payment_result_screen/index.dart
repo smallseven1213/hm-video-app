@@ -105,10 +105,11 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                 const SizedBox(
                   height: 78,
                 ),
-                const SizedBox(
+                Image.asset(
+                  'packages/game/assets/images/game_lobby/pay-success.webp',
                   width: 130,
                   height: 130,
-                  child: Image(image: AssetImage('assets/img/pay@3x.webp')),
+                  fit: BoxFit.cover,
                 ),
                 const SizedBox(
                   height: 30,
@@ -143,10 +144,10 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                     left: 16,
                     right: 16,
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         '溫馨提醒',
                         // color is 979797

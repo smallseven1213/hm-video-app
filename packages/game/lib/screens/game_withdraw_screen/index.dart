@@ -271,7 +271,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                         height: 60,
                         child: InkWell(
                           onTap: () {
-                            // gto('/withdrawal/record');
+                            MyRouteDelegate.of(context)
+                                .push(AppRoutes.gameWithdrawRecord.value);
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

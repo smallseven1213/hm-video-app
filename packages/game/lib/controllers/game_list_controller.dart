@@ -7,19 +7,17 @@ import '../models/game_list.dart';
 class GamesListController extends GetxController {
   var games = <GameItem>[].obs;
   var isShowFab = false.obs;
-  var switchPaymentPage = 0.obs;
   final RxInt selectedCategoryIndex = 0.obs;
 
   @override
   void onInit() {
     super.onInit();
-    _fetchGames();
     Get.find<GameAuthController>().token.listen((event) {
-      _fetchGames();
+      fetchGames();
     });
   }
 
-  Future<void> _fetchGames() async {
+  Future<void> fetchGames() async {
     print('loading game states');
     var res = await GameLobbyApi().getGames(); // [{}]
     games.assignAll(res);

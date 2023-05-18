@@ -20,8 +20,8 @@ class GameBannerController extends GetxController {
     isLoading.value = true;
     try {
       var res = await Get.put(GameLobbyApi()).getMarqueeAndBanner();
-      gameBanner = RxList(res['banner']);
-      gameMarquee = RxList(res['marquee']);
+      gameBanner.value = res['banner'];
+      gameMarquee.value = res['marquee'];
     } catch (error) {
       print('fetchGameBanners: $error');
     } finally {

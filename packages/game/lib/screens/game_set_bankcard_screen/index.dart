@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -183,9 +182,6 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: gameLobbyBgColor,
-        ),
         centerTitle: true,
         title: Text(
           '銀行卡設置',

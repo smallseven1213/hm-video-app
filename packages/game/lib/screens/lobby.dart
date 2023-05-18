@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:get/get.dart';
@@ -35,11 +36,6 @@ class CustomFabPosition extends FloatingActionButtonLocation {
     return Offset(scaffoldGeometry.scaffoldSize.width * .8, 430);
   }
 }
-
-var switchPaymentPageType = {
-  'normal': 1,
-  'refactor': 2,
-};
 
 class _GameLobbyState extends State<GameLobby> {
   bool isShowGameList = false;
@@ -100,8 +96,8 @@ class _GameLobbyState extends State<GameLobby> {
   @override
   Widget build(BuildContext context) {
     final gameBannerController = Get.put(GameBannerController());
-
     final gameWalletController = GameWalletController();
+    final gameConfigController = Get.put(GameConfigController());
 
     return Obx(() => Scaffold(
           appBar: AppBar(
@@ -187,7 +183,11 @@ class _GameLobbyState extends State<GameLobby> {
                               UserInfoDeposit(
                                 onTap: () {
                                   MyRouteDelegate.of(context).push(
-                                    AppRoutes.gameDepositList.value,
+                                    gameConfigController
+                                                .switchPaymentPage.value ==
+                                            switchPaymentPageType['list']
+                                        ? AppRoutes.gameDepositList.value
+                                        : AppRoutes.gameDepositPolling.value,
                                   );
                                 },
                               ),

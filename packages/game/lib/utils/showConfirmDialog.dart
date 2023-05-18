@@ -11,18 +11,17 @@ void showConfirmDialog({
   String cancelText = "取消",
   bool barrierDismissible = false,
   required void Function() onConfirm,
-  Function? onCancel,
+  void Function()? onCancel,
   bool? rotate = false,
 }) {
   showDialog(
     context: context,
     barrierDismissible: barrierDismissible,
     builder: (context) {
-      print('title: $title');
-      return RotatedBox(
+      return PointerInterceptor(
+        child: RotatedBox(
           quarterTurns: rotate == true ? 1 : 0,
-          child: PointerInterceptor(
-              child: AlertDialog(
+          child: AlertDialog(
             backgroundColor: Colors.transparent,
             titlePadding: EdgeInsets.zero,
             contentPadding: EdgeInsets.zero,
@@ -112,7 +111,7 @@ void showConfirmDialog({
                           ),
                         ),
                         child: InkWell(
-                          onTap: onCancel(),
+                          onTap: onCancel,
                           borderRadius: BorderRadius.only(
                             bottomLeft: const Radius.circular(24),
                             bottomRight:
@@ -174,7 +173,9 @@ void showConfirmDialog({
                 ],
               ),
             ],
-          )));
+          ),
+        ),
+      );
     },
   );
 }

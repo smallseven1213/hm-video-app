@@ -53,7 +53,7 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
         color: Colors.transparent,
         clipBehavior: Clip.antiAlias,
         child: Padding(
-          padding: const EdgeInsets.all(4),
+          padding: const EdgeInsets.only(bottom: 6),
           child: Container(
             width: 60,
             height: 60,
@@ -78,7 +78,7 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
               children: [
                 Image.asset(
                   widget.icon ??
-                      'packages/game/game_lobby/game_empty-$theme.webp',
+                      'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
                   width: 24,
                   height: 24,
                 ),

@@ -199,6 +199,21 @@ class GameLobbyApi {
     );
   }
 
+  // 取得遊戲設置config
+  Future<GameConfig> getGameConfig() => fetcher(
+              url:
+                  '${systemConfig.apiHost}/public/game-platform-config/game-platform-config')
+          .then(
+        (value) {
+          var res = (value.data as Map<String, dynamic>);
+          if (res['code'] != '00') {
+            return GameConfig(false, false, 1, 1);
+          }
+
+          return GameConfig.fromJson(res['data'] as Map<String, dynamic>);
+        },
+      );
+
   // 取得參數設定
   Future<HMApiResponseBaseWithDataWithData<GameParamConfig>>
       getGameParamConfig() async {
