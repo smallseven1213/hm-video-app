@@ -15,18 +15,21 @@ class ObservableVideoPlayerController extends GetxController {
   RxBool isVisibleControls = false.obs;
   String videoUrl;
   RxBool isDisposed = false.obs;
+  RxBool isVPCRegister = false.obs;
 
   ObservableVideoPlayerController(this.videoUrl);
 
   @override
   void onInit() {
-    super.onInit();
+    logger.i('RENDER OBX: INIT VIDEO PLAYER CTRL id: $videoUrl');
     initializePlayer();
+    super.onInit();
   }
 
   @override
   void dispose() {
     videoPlayerController?.dispose();
+    isVPCRegister.value = false;
     super.dispose();
   }
 
@@ -35,6 +38,7 @@ class ObservableVideoPlayerController extends GetxController {
     if (videoPlayerController != null) {
       videoPlayerController!.removeListener(_onControllerValueChanged);
       videoPlayerController!.dispose();
+      isVPCRegister.value = false;
     }
     super.onClose();
   }
@@ -49,6 +53,7 @@ class ObservableVideoPlayerController extends GetxController {
       await videoPlayerController!.initialize();
       videoPlayerController!.setLooping(true);
       isReady.value = true;
+      isVPCRegister.value = true;
       videoAction.value = 'play';
 
       play();
@@ -129,19 +134,5 @@ class ObservableVideoPlayerController extends GetxController {
   void setControls(bool value) {
     isVisibleControls.value = value;
     update();
-  }
-
-  // void disposeSelf() {
-  //   videoPlayerController?.dispose();
-  //   Get.delete<ObservableVideoPlayerController>(tag: videoUrl);
-  // }
-
-  void disposeSelf() {
-    if (videoPlayerController != null) {
-      videoPlayerController!.dispose();
-      videoPlayerController = null;
-      isDisposed.value = true;
-    }
-    Get.delete<ObservableVideoPlayerController>(tag: videoUrl);
   }
 }
