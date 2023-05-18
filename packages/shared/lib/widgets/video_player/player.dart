@@ -51,9 +51,7 @@ class VideoPlayerWidget extends StatelessWidget {
                     },
                   ),
                 ] else if (obsVideoPlayerController.isReady.value) ...[
-                  if (obsVideoPlayerController.isVPCRegister.value)
-                    VideoPlayer(
-                        obsVideoPlayerController.videoPlayerController!),
+                  VideoPlayer(obsVideoPlayerController.videoPlayerController!),
                   GestureDetector(
                     onTap: () {
                       obsVideoPlayerController.setControls(true);

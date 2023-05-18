@@ -15,33 +15,32 @@ class ObservableVideoPlayerController extends GetxController {
   RxBool isVisibleControls = false.obs;
   String videoUrl;
   RxBool isDisposed = false.obs;
-  RxBool isVPCRegister = false.obs;
 
   ObservableVideoPlayerController(this.videoUrl);
 
   @override
   void onInit() {
-    logger.i('RENDER OBX: INIT VIDEO PLAYER CTRL id: $videoUrl');
+    logger.i('RENDER OBX: CTX Life INIT VIDEO PLAYER CTRL id: $videoUrl');
     initializePlayer();
     super.onInit();
   }
 
   @override
   void dispose() {
+    logger.i('RENDER OBX: CTX Life DISPOSE VIDEO PLAYER CTRL id: $videoUrl');
     videoPlayerController?.dispose();
-    isVPCRegister.value = false;
+    Get.delete<ObservableVideoPlayerController>(tag: videoUrl);
     super.dispose();
   }
 
-  @override
-  void onClose() {
-    if (videoPlayerController != null) {
-      videoPlayerController!.removeListener(_onControllerValueChanged);
-      videoPlayerController!.dispose();
-      isVPCRegister.value = false;
-    }
-    super.onClose();
-  }
+  // @override
+  // void onClose() {
+  //   if (videoPlayerController != null) {
+  //     videoPlayerController!.removeListener(_onControllerValueChanged);
+  //     videoPlayerController!.dispose();
+  //   }
+  //   super.onClose();
+  // }
 
   Future<void> initializePlayer() async {
     logger.i('RENDER OBX: INIT VIDEO PLAYER CTRL id: $videoUrl');
@@ -53,7 +52,6 @@ class ObservableVideoPlayerController extends GetxController {
       await videoPlayerController!.initialize();
       videoPlayerController!.setLooping(true);
       isReady.value = true;
-      isVPCRegister.value = true;
       videoAction.value = 'play';
 
       play();
