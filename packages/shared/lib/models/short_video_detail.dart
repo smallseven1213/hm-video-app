@@ -16,4 +16,15 @@ class ShortVideoDetail {
       json['supplier'] != null ? Supplier.fromJson(json['supplier']) : null,
     );
   }
+
+  // toJson function
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['tag'] = tag;
+    if (supplier != null) {
+      data['supplier'] = supplier!.toJson();
+    }
+    return data;
+  }
 }

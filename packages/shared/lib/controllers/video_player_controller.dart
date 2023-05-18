@@ -28,17 +28,20 @@ class ObservableVideoPlayerController extends GetxController {
   @override
   void dispose() {
     logger.i('RENDER OBX: CTX Life DISPOSE VIDEO PLAYER CTRL id: $videoUrl');
-    videoPlayerController?.dispose();
+    if (videoPlayerController != null) {
+      videoPlayerController!.removeListener(_onControllerValueChanged);
+      videoPlayerController!.dispose();
+    }
     Get.delete<ObservableVideoPlayerController>(tag: videoUrl);
     super.dispose();
   }
 
   // @override
   // void onClose() {
-  //   if (videoPlayerController != null) {
-  //     videoPlayerController!.removeListener(_onControllerValueChanged);
-  //     videoPlayerController!.dispose();
-  //   }
+  // if (videoPlayerController != null) {
+  //   videoPlayerController!.removeListener(_onControllerValueChanged);
+  //   videoPlayerController!.dispose();
+  // }
   //   super.onClose();
   // }
 
