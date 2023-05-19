@@ -8,7 +8,7 @@ import 'tag.dart';
 class ChannelSharedData {
   List<BannerPhoto>? banner;
   Jingang? jingang;
-  List<Tag>? tags;
+  Tags? tags;
   List<Blocks>? blocks;
 
   ChannelSharedData({this.banner, this.jingang, this.tags, this.blocks});
@@ -22,12 +22,8 @@ class ChannelSharedData {
     }
     jingang =
         json['jingang'] != null ? Jingang.fromJson(json['jingang']) : null;
-    if (json['tags'] != null) {
-      tags = <Tag>[];
-      json['tags'].forEach((v) {
-        tags!.add(Tag.fromJson(v));
-      });
-    }
+    tags = json['tags'] != null ? Tags.fromJson(json['tags']) : null;
+
     if (json['blocks'] != null) {
       blocks = <Blocks>[];
       json['blocks'].forEach((v) {

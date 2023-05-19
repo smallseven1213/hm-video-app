@@ -72,12 +72,6 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
             ChannelJingangArea(
               channelId: widget.channelId,
             ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 15),
-                child: Header(text: '大家都在看'),
-              ),
-            ),
             ChannelTags(
               channelId: widget.channelId,
             ),
