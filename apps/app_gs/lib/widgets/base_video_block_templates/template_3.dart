@@ -20,7 +20,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate3({
           videoData: videos,
           gridLength: 2,
           imageRatio: BlockImageRatio.block3.ratio,
-          isEmbeddedAds: false,
+          isEmbeddedAds: true,
         ),
       );
     },
