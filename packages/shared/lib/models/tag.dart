@@ -1,5 +1,32 @@
 import 'package:shared/models/video.dart';
 
+class Tags {
+  String? title;
+  bool? outerFrame;
+  List<Tag>? details;
+
+  Tags({title, outerFrame, details});
+
+  Tags.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    outerFrame = json['outerFrame'];
+    if (json['details'] != null) {
+      details = <Tag>[];
+      json['details'].forEach((v) {
+        details!.add(Tag.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['outerFrame'] = outerFrame;
+    data['details'] = details;
+    return data;
+  }
+}
+
 class Tag {
   final int id;
   final String name;

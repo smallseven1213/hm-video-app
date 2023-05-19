@@ -41,8 +41,7 @@ class ChannelApi {
         banner: List.from((res.data['data']['banner'] as List<dynamic>)
             .map((e) => BannerPhoto.fromJson(e))),
         jingang: Jingang.fromJson(res.data['data']['jingang']),
-        tags: List.from((res.data['data']['tags'] as List<dynamic>)
-            .map((e) => Tag.fromJson(e))),
+        tags: Tags.fromJson(res.data['data']['tags']),
         blocks: List.from((res.data['data']['blocks'] as List<dynamic>)
             .map((e) => Blocks.fromJson(e))));
 
