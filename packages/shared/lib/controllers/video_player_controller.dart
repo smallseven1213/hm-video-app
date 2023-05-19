@@ -118,7 +118,10 @@ class ObservableVideoPlayerController extends GetxController {
     }
     logger.i('RENDER OBX: PLAY VIDEO PLAYER CTRL id: $videoUrl');
     videoAction.value = 'play';
-    videoPlayerController?.play();
+    // check videoPlayerController is ready or not
+    if (videoPlayerController!.value.isInitialized) {
+      videoPlayerController?.play();
+    }
   }
 
   void replay() {
