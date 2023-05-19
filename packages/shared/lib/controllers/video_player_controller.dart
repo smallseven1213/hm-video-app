@@ -62,7 +62,7 @@ class ObservableVideoPlayerController extends GetxController {
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         videoAction.value = 'play';
-        videoPlayerController!.setVolume(0);
+        // videoPlayerController!.setVolume(0);
         // Plays the video once the widget is build and loaded.
         // if k is web , delay 1s to play()
         if (kIsWeb) {
