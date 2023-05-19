@@ -109,7 +109,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      key: field1Key,
                       label: '帳號',
                       controller: _accountController,
                       placeholderText: '請輸入帳號',
@@ -120,7 +119,6 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      key: field2Key,
                       label: '密碼',
                       controller: _passwordController,
                       placeholderText: '請輸入密碼',

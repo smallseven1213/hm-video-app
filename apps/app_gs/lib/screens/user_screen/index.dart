@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
 import '../../widgets/header.dart';
@@ -9,6 +10,7 @@ import 'info.dart';
 import 'list_menu.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class UserScreen extends StatelessWidget {
   const UserScreen({Key? key}) : super(key: key);

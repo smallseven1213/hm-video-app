@@ -115,6 +115,18 @@ class AuthApi {
     return HMApiResponseBaseWithDataWithData.fromJson(res.data);
   }
 
+  Future<HMApiResponseBaseWithDataWithData?> loginByCode(String code) async {
+    try {
+      var res = await fetcher(
+          url: '${systemConfig.apiHost}/public/auth/auth/code',
+          method: 'POST',
+          body: {"code": code});
+      return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+    } catch (err) {
+      // return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+    }
+  }
+
   Future<HMApiResponseBaseWithDataWithData> getLoginCode() async {
     var res = await fetcher(
       url: '${systemConfig.apiHost}/public/auth/auth/code',
