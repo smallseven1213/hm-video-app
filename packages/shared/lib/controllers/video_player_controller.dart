@@ -70,9 +70,11 @@ class ObservableVideoPlayerController extends GetxController {
         // }
 
         if (kIsWeb) {
-          Timer(const Duration(milliseconds: 500), () {
-            play();
-          });
+          videoPlayerController!.setVolume(0);
+          play();
+          // Timer(const Duration(milliseconds: 500), () {
+          //   play();
+          // });
         } else {
           play();
         }
@@ -107,7 +109,8 @@ class ObservableVideoPlayerController extends GetxController {
       logger.i(
           'VPC LISTEN: error ${videoPlayerController!.value.errorDescription}');
       videoAction.value = 'error';
-      _initializePlayer();
+      pause();
+      // _initializePlayer();
     }
 
     // if (videoPlayerController!.value.isBuffering == false) {
