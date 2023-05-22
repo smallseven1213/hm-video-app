@@ -37,6 +37,10 @@ class SupplierTagVideoPage extends StatelessWidget {
             ),
             itemBuilder: (BuildContext context, int index) {
               var vod = vodController.vodList.value[index];
+              // return Text(
+              //   vod.title,
+              //   style: TextStyle(color: Colors.white, fontSize: 30),
+              // );
               return VideoPreviewWidget(
                   id: vod.id,
                   film: 2,
