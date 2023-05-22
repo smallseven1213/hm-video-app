@@ -128,6 +128,17 @@ class VideoPreviewWidget extends StatelessWidget {
                     args: {'id': id, 'blockId': blockId},
                     removeSamePath: true,
                   );
+                  var playRecord = VideoDatabaseField(
+                    id: id,
+                    coverHorizontal: coverHorizontal,
+                    coverVertical: coverVertical,
+                    timeLength: timeLength,
+                    tags: tags,
+                    title: title,
+                    videoViewTimes: videoViewTimes,
+                    // detail: detail!,
+                  );
+                  playrecordController.addPlayRecord(playRecord);
                 } else if (film == 2) {
                   logger.i('CLICK TO FILM2 $id, $blockId');
                   MyRouteDelegate.of(context).push(
@@ -143,18 +154,6 @@ class VideoPreviewWidget extends StatelessWidget {
                   // );
                 }
               }
-
-              var playRecord = VideoDatabaseField(
-                id: id,
-                coverHorizontal: coverHorizontal,
-                coverVertical: coverVertical,
-                timeLength: timeLength,
-                tags: tags,
-                title: title,
-                videoViewTimes: videoViewTimes,
-                // detail: detail!,
-              );
-              playrecordController.addPlayRecord(playRecord);
             }
           },
           child: Stack(
@@ -322,7 +321,7 @@ class _SidImageVisibilityDetectorState
     return VisibilityDetector(
       key: _visibilityDetectorKey,
       onVisibilityChanged: (visibilityInfo) {
-        if (kIsWeb && visibilityInfo.visibleFraction > 0.8) {
+        if (kIsWeb && visibilityInfo.visibleFraction > 0.2) {
           setState(() {
             _isInViewport = true;
           });

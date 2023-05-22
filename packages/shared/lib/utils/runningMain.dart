@@ -7,6 +7,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/setupDependencies.dart';
 
+import '../adpters/actor_adpter.dart';
+import '../adpters/tags_adpter.dart';
+import '../adpters/video_adpter.dart';
+import '../adpters/video_detail_adpter.dart';
 import '../models/color_keys.dart';
 
 void realMain(Widget widget) async {
@@ -18,10 +22,10 @@ void realMain(Widget widget) async {
   }
 
   // Hive 會crash,暫時先不用
-  // Hive.registerAdapter(VideoDatabaseFieldAdapter());
-  // Hive.registerAdapter(TagsAdapter());
-  // Hive.registerAdapter(VideoDetailAdapter());
-  // Hive.registerAdapter(ActorAdapter());
+  Hive.registerAdapter(VideoDatabaseFieldAdapter());
+  Hive.registerAdapter(TagsAdapter());
+  Hive.registerAdapter(VideoDetailAdapter());
+  Hive.registerAdapter(ActorAdapter());
 
   // DI shared package
   setupDependencies();

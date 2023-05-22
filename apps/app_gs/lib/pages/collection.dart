@@ -58,6 +58,7 @@ class _CollectionPageState extends State<CollectionPage> {
       body: Stack(
         children: [
           Obx(() {
+            logger.i('RENDER BOX: Testing Page');
             var videos = userCollectionController.videos;
             if (videos.isEmpty) {
               return const NoDataWidget();
@@ -66,23 +67,24 @@ class _CollectionPageState extends State<CollectionPage> {
               padding: const EdgeInsets.all(8.0),
               crossAxisCount: 2,
               itemCount: userCollectionController.videos.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  Obx(() => VideoPreviewWithEditWidget(
-                        id: videos[index].id,
-                        isEditing: listEditorController.isEditing.value,
-                        isSelected: listEditorController.selectedIds
-                            .contains(videos[index].id),
-                        onEditingTap: () {
-                          listEditorController.toggleSelected(videos[index].id);
-                        },
-                        title: videos[index].title,
-                        tags: videos[index].tags,
-                        timeLength: videos[index].timeLength,
-                        coverHorizontal: videos[index].coverHorizontal,
-                        coverVertical: videos[index].coverVertical,
-                        videoViewTimes: videos[index].videoViewTimes,
-                        // detail: videos[index].detail,
-                      )),
+              itemBuilder: (BuildContext context, int index) {
+                return VideoPreviewWithEditWidget(
+                  id: videos[index].id,
+                  isEditing: listEditorController.isEditing.value,
+                  isSelected: listEditorController.selectedIds
+                      .contains(videos[index].id),
+                  onEditingTap: () {
+                    listEditorController.toggleSelected(videos[index].id);
+                  },
+                  title: videos[index].title,
+                  tags: videos[index].tags,
+                  timeLength: videos[index].timeLength,
+                  coverHorizontal: videos[index].coverHorizontal,
+                  coverVertical: videos[index].coverVertical,
+                  videoViewTimes: videos[index].videoViewTimes,
+                  // detail: videos[index].detail,
+                );
+              },
               mainAxisSpacing: 12.0,
               crossAxisSpacing: 10.0,
             );

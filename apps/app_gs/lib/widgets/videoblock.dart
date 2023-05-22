@@ -44,7 +44,10 @@ final Map<
           film: film!),
   10: (Blocks block, Function updateBlock, int channelId, {int? film}) =>
       Block10Widget(
-          block: block, updateBlock: updateBlock, channelId: channelId),
+          block: block,
+          updateBlock: updateBlock,
+          channelId: channelId,
+          film: film),
 };
 
 class VideoBlock extends StatefulWidget {

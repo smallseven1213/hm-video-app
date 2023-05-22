@@ -101,14 +101,16 @@ class VideoBlockFooter extends StatelessWidget {
   final int channelId;
   final Function updateBlock;
   final double? imageRatio;
+  final int? film;
 
-  const VideoBlockFooter({
-    Key? key,
-    required this.block,
-    required this.updateBlock,
-    required this.channelId,
-    this.imageRatio,
-  }) : super(key: key);
+  const VideoBlockFooter(
+      {Key? key,
+      required this.block,
+      required this.updateBlock,
+      required this.channelId,
+      this.imageRatio,
+      this.film = 1})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -134,14 +136,27 @@ class VideoBlockFooter extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    MyRouteDelegate.of(context).push(
-                      AppRoutes.videoByBlock.value,
-                      args: {
-                        'id': block.id,
-                        'title': block.name,
-                        'channelId': channelId,
-                      },
-                    );
+                    if (film == 1) {
+                      MyRouteDelegate.of(context).push(
+                        AppRoutes.videoByBlock.value,
+                        args: {
+                          'id': block.id,
+                          'title': block.name,
+                          'channelId': channelId,
+                        },
+                      );
+                    } else if (film == 2) {
+                      MyRouteDelegate.of(context).push(
+                        AppRoutes.videoByBlock.value,
+                        args: {
+                          'id': block.id,
+                          'title': block.name,
+                          'channelId': channelId,
+                          'film': 2,
+                        },
+                      );
+                    }
+
                     // updateBlock();
                   },
                 ),

@@ -13,7 +13,7 @@ import '../widgets/video_preview_with_edit.dart';
 final logger = Logger();
 
 class PlayRecordPage extends StatefulWidget {
-  PlayRecordPage({Key? key}) : super(key: key);
+  const PlayRecordPage({Key? key}) : super(key: key);
 
   @override
   PlayRecordPageState createState() => PlayRecordPageState();
@@ -70,23 +70,23 @@ class PlayRecordPageState extends State<PlayRecordPage> {
               crossAxisCount: 2,
               itemCount: playRecordController.playRecord.length,
               itemBuilder: (BuildContext context, int index) =>
-                  Obx(() => VideoPreviewWithEditWidget(
-                        id: videos[index].id,
-                        isEditing: listEditorController.isEditing.value,
-                        isSelected: listEditorController.selectedIds
-                            .contains(videos[index].id),
-                        onEditingTap: () {
-                          logger.i('CLICK!!');
-                          listEditorController.toggleSelected(videos[index].id);
-                        },
-                        title: videos[index].title,
-                        tags: videos[index].tags,
-                        timeLength: videos[index].timeLength,
-                        coverHorizontal: videos[index].coverHorizontal,
-                        coverVertical: videos[index].coverVertical,
-                        videoViewTimes: videos[index].videoViewTimes,
-                        //detail: videos[index].detail,
-                      )),
+                  VideoPreviewWithEditWidget(
+                id: videos[index].id,
+                isEditing: listEditorController.isEditing.value,
+                isSelected:
+                    listEditorController.selectedIds.contains(videos[index].id),
+                onEditingTap: () {
+                  logger.i('CLICK!!');
+                  listEditorController.toggleSelected(videos[index].id);
+                },
+                title: videos[index].title,
+                tags: videos[index].tags,
+                timeLength: videos[index].timeLength,
+                coverHorizontal: videos[index].coverHorizontal,
+                coverVertical: videos[index].coverVertical,
+                videoViewTimes: videos[index].videoViewTimes,
+                //detail: videos[index].detail,
+              ),
               mainAxisSpacing: 12.0,
               crossAxisSpacing: 10.0,
             );
