@@ -41,13 +41,13 @@ class VideoPlayerWidget extends StatelessWidget {
               alignment: Alignment.center,
               children: <Widget>[
                 if (obsVideoPlayerController.videoAction.value == 'error') ...[
-                  VideoError(
-                    coverHorizontal: video.coverHorizontal ?? '',
-                    onTap: () {
-                      print('👹👹👹 onTap');
-                      obsVideoPlayerController.play();
-                    },
-                  ),
+                  // VideoError(
+                  //   coverHorizontal: video.coverHorizontal ?? '',
+                  //   onTap: () {
+                  //     print('👹👹👹 onTap');
+                  //     obsVideoPlayerController.play();
+                  //   },
+                  // ),
                 ] else if (obsVideoPlayerController.isReady.value) ...[
                   VideoPlayer(obsVideoPlayerController.videoPlayerController!),
                   GestureDetector(

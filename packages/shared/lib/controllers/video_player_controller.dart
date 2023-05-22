@@ -70,8 +70,7 @@ class ObservableVideoPlayerController extends GetxController {
         // }
 
         if (kIsWeb) {
-          videoPlayerController!.setVolume(0);
-          play();
+          // play();
           // Timer(const Duration(milliseconds: 500), () {
           //   play();
           // });
@@ -87,14 +86,14 @@ class ObservableVideoPlayerController extends GetxController {
     }
   }
 
-  void userDidClick() {
-    // 使用者點擊後，將音量設為正常，並設定 isFirstTimeForIOSSafari 為 false
-    if (isFirstTimeForIOSSafari) {
-      logger.i('VPC LISTEN: userDidClick');
-      videoPlayerController?.setVolume(1.0);
-      isFirstTimeForIOSSafari = false;
-    }
-  }
+  // void userDidClick() {
+  //   // 使用者點擊後，將音量設為正常，並設定 isFirstTimeForIOSSafari 為 false
+  //   if (isFirstTimeForIOSSafari) {
+  //     logger.i('VPC LISTEN: userDidClick');
+  //     videoPlayerController?.setVolume(1.0);
+  //     isFirstTimeForIOSSafari = false;
+  //   }
+  // }
 
   void _disposePlayer() {
     if (videoPlayerController != null) {
@@ -109,7 +108,7 @@ class ObservableVideoPlayerController extends GetxController {
       logger.i(
           'VPC LISTEN: error ${videoPlayerController!.value.errorDescription}');
       videoAction.value = 'error';
-      pause();
+      // pause();
       // _initializePlayer();
     }
 
@@ -142,6 +141,9 @@ class ObservableVideoPlayerController extends GetxController {
     logger.i('RENDER OBX: PLAY VIDEO PLAYER CTRL id: $videoUrl');
     videoAction.value = 'play';
     videoPlayerController?.play();
+    // if (kIsWeb && isFirstTimeForIOSSafari) {
+    //   videoPlayerController!.setVolume(1.0);
+    // }
   }
 
   void replay() {
@@ -172,9 +174,9 @@ class ObservableVideoPlayerController extends GetxController {
     update();
   }
 
-  void setControls(bool value) {
-    userDidClick();
-    isVisibleControls.value = value;
-    update();
-  }
+  // void setControls(bool value) {
+  //   userDidClick();
+  //   isVisibleControls.value = value;
+  //   update();
+  // }
 }
