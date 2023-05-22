@@ -55,7 +55,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                               )
                             : const SizedBox.shrink()),
                     Container(
-                      height: 90,
+                      height: 100,
+                      margin: const EdgeInsets.only(top: 3),
                       padding: EdgeInsets.only(
                           bottom: MediaQuery.of(context).padding.bottom),
                       decoration: const BoxDecoration(

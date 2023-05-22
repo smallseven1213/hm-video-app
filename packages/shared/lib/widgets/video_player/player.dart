@@ -51,91 +51,96 @@ class VideoPlayerWidget extends StatelessWidget {
                   // ),
                   //
                 ] else if (obsVideoPlayerController.isReady.value) ...[
-                  VideoPlayer(obsVideoPlayerController.videoPlayerController!),
-                  GestureDetector(
-                    onTap: () {
-                      obsVideoPlayerController.toggle();
-                      // obsVideoPlayerController.setControls(true);
-                      // Timer(const Duration(seconds: 3), () {
-                      //   // if (mounted) {
-                      //   //   obsVideoPlayerController.setControls(false);
-                      //   // }
-                      //   obsVideoPlayerController.setControls(false);
-                      // });
-                    },
-                    child: Container(
-                        color: Colors.transparent,
-                        width: double.infinity,
-                        height: double.infinity,
-                        child: Center(
-                          child: obsVideoPlayerController.videoAction.value ==
-                                  'pause'
-                              ? Container(
-                                  width: 100,
-                                  height: 100,
-                                  decoration: BoxDecoration(
-                                      color: Colors.black.withOpacity(0.5),
-                                      shape: BoxShape.circle),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      obsVideoPlayerController
-                                                  .videoAction.value ==
-                                              'pause'
-                                          ? Icons.play_arrow
-                                          : Icons.pause,
-                                      color: Colors.white,
-                                      size: 48.0,
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 5),
+                    child: VideoPlayer(
+                        obsVideoPlayerController.videoPlayerController!),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 5),
+                    child: GestureDetector(
+                      onTap: () {
+                        obsVideoPlayerController.toggle();
+                        // obsVideoPlayerController.setControls(true);
+                        // Timer(const Duration(seconds: 3), () {
+                        //   // if (mounted) {
+                        //   //   obsVideoPlayerController.setControls(false);
+                        //   // }
+                        //   obsVideoPlayerController.setControls(false);
+                        // });
+                      },
+                      child: Container(
+                          color: Colors.transparent,
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Center(
+                            child: obsVideoPlayerController.videoAction.value ==
+                                    'pause'
+                                ? Container(
+                                    width: 100,
+                                    height: 100,
+                                    decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.5),
+                                        shape: BoxShape.circle),
+                                    child: IconButton(
+                                      icon: Icon(
+                                        obsVideoPlayerController
+                                                    .videoAction.value ==
+                                                'pause'
+                                            ? Icons.play_arrow
+                                            : Icons.pause,
+                                        color: Colors.white,
+                                        size: 48.0,
+                                      ),
+                                      onPressed: () {
+                                        obsVideoPlayerController.toggle();
+                                      },
                                     ),
-                                    onPressed: () {
-                                      obsVideoPlayerController.toggle();
-                                    },
+                                  )
+                                : const SizedBox(
+                                    width: 100,
+                                    height: 100,
+                                    child: SizedBox.shrink(),
                                   ),
-                                )
-                              : const SizedBox(
-                                  width: 100,
-                                  height: 100,
-                                  child: SizedBox.shrink(),
-                                ),
-                        )),
-                    // child: obsVideoPlayerController.isVisibleControls.value
-                    // ? Stack(
-                    //     children: [
-                    //       Center(
-                    //         child: Container(
-                    //           width: 100,
-                    //           height: 100,
-                    //           decoration: BoxDecoration(
-                    //               color: Colors.black.withOpacity(0.5),
-                    //               shape: BoxShape.circle),
-                    //           child: IconButton(
-                    //             icon: Icon(
-                    //               obsVideoPlayerController
-                    //                           .videoAction.value ==
-                    //                       'pause'
-                    //                   ? Icons.pause
-                    //                   : Icons.play_arrow,
-                    //               color: Colors.white,
-                    //               size: 48.0,
-                    //             ),
-                    //             onPressed: () {
-                    //               obsVideoPlayerController.toggle();
-                    //             },
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   )
-                    //     : const SizedBox()),
+                          )),
+                      // child: obsVideoPlayerController.isVisibleControls.value
+                      // ? Stack(
+                      //     children: [
+                      //       Center(
+                      //         child: Container(
+                      //           width: 100,
+                      //           height: 100,
+                      //           decoration: BoxDecoration(
+                      //               color: Colors.black.withOpacity(0.5),
+                      //               shape: BoxShape.circle),
+                      //           child: IconButton(
+                      //             icon: Icon(
+                      //               obsVideoPlayerController
+                      //                           .videoAction.value ==
+                      //                       'pause'
+                      //                   ? Icons.pause
+                      //                   : Icons.play_arrow,
+                      //               color: Colors.white,
+                      //               size: 48.0,
+                      //             ),
+                      //             onPressed: () {
+                      //               obsVideoPlayerController.toggle();
+                      //             },
+                      //           ),
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   )
+                      //     : const SizedBox()),
+                    ),
                   ),
                 ] else ...[
                   // VideoLoading(
                   //   cover: video.coverVertical ?? '',
                   // )
                 ],
-                Container(
-                    width: double.infinity, height: 10, color: Colors.red),
                 Positioned(
-                  bottom: 10,
+                  bottom: -18,
                   left: -24,
                   right: -24,
                   child: ValueListenableBuilder<VideoPlayerValue>(

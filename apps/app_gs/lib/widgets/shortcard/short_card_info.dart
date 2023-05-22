@@ -34,10 +34,11 @@ class ShortCardInfo extends StatelessWidget {
       final obsVideoPlayerController =
           Get.find<ObservableVideoPlayerController>(tag: videoUrl);
       return Positioned(
-        bottom: 20,
+        bottom: 15,
         child: Container(
           width: MediaQuery.of(context).size.width,
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(10),
+          // color: Colors.tealAccent.withOpacity(0.3),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -105,21 +106,18 @@ class ShortCardInfo extends StatelessWidget {
 
               // 標籤
               if (data.tag.isNotEmpty)
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 8),
-                  child: Row(
-                    children: data.tag
-                        .map((e) => InkWell(
-                            onTap: () async {
-                              obsVideoPlayerController.pause();
-                              await MyRouteDelegate.of(context).push(
-                                  AppRoutes.supplierTag.value,
-                                  args: {'tagId': e.id, 'tagName': e.name});
-                              obsVideoPlayerController.play();
-                            },
-                            child: ShortCardInfoTag(name: '#${e.name}')))
-                        .toList(),
-                  ),
+                Row(
+                  children: data.tag
+                      .map((e) => InkWell(
+                          onTap: () async {
+                            obsVideoPlayerController.pause();
+                            await MyRouteDelegate.of(context).push(
+                                AppRoutes.supplierTag.value,
+                                args: {'tagId': e.id, 'tagName': e.name});
+                            obsVideoPlayerController.play();
+                          },
+                          child: ShortCardInfoTag(name: '#${e.name}')))
+                      .toList(),
                 ),
             ],
           ),
