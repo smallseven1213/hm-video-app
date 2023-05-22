@@ -57,7 +57,7 @@ class _ShortCardState extends State<ShortCard> {
       }
     });
 
-    videoPlayerController?.setIsPageActive(widget.isActive);
+    // videoPlayerController?.setIsPageActive(widget.isActive);
   }
 
   void _putController() async {

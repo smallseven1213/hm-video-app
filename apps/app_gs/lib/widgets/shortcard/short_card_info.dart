@@ -5,7 +5,6 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
-import 'package:shared/models/vod.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'short_card_info_tag.dart';

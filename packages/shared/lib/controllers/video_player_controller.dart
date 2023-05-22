@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:html';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,12 +12,10 @@ final logger = Logger();
 bool isFirstTimeForIOSSafari = true;
 
 class ObservableVideoPlayerController extends GetxController {
-  final isPageActive = true.obs;
+  // final isPageActive = true.obs;
   final isReady = false.obs;
-  final RxString videoAction = ''.obs;
+  final RxString videoAction = kIsWeb ? 'pause'.obs : 'play'.obs;
   VideoPlayerController? videoPlayerController;
-  final RxBool hasError = false.obs;
-  final RxBool isPause = false.obs;
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
   final RxBool isDisposed = false.obs;
@@ -30,12 +27,12 @@ class ObservableVideoPlayerController extends GetxController {
     // logger.i('VPC LISTEN: CTX Life INIT VIDEO PLAYER CTRL id: $videoUrl');
     _initializePlayer();
 
-    isPageActive.listen((value) {
-      logger.i('VPC LISTEN: CTX Life INIT VIDEO PLAYER CTRL id: $videoUrl');
-      if (value && videoAction.value == 'pause') {
-        play();
-      }
-    });
+    // isPageActive.listen((value) {
+    //   logger.i('VPC LISTEN: CTX Life INIT VIDEO PLAYER CTRL id: $videoUrl');
+    //   if (value && videoAction.value == 'pause') {
+    //     play();
+    //   }
+    // });
     super.onInit();
   }
 
@@ -53,9 +50,9 @@ class ObservableVideoPlayerController extends GetxController {
     super.onClose();
   }
 
-  void setIsPageActive(bool value) {
-    isPageActive.value = value;
-  }
+  // void setIsPageActive(bool value) {
+  //   isPageActive.value = value;
+  // }
 
   Future<void> _initializePlayer() async {
     logger.i('VPC LISTEN: INIT VIDEO PLAYER CTRL id: $videoUrl');
@@ -68,15 +65,14 @@ class ObservableVideoPlayerController extends GetxController {
       isReady.value = true;
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        videoAction.value = 'play';
-        if (kIsWeb && isFirstTimeForIOSSafari) {
-          videoPlayerController!.setVolume(0);
-        }
+        // if (kIsWeb && isFirstTimeForIOSSafari) {
+        //   videoPlayerController!.setVolume(0);
+        // }
 
         if (kIsWeb) {
-          Timer(const Duration(milliseconds: 500), () {
-            play();
-          });
+          // Timer(const Duration(milliseconds: 500), () {
+          //   play();
+          // });
         } else {
           play();
         }
@@ -84,7 +80,7 @@ class ObservableVideoPlayerController extends GetxController {
     } catch (error) {
       logger.e('👹👹👹 Error occurred: $error');
       if (videoPlayerController!.value.hasError) {
-        hasError.value = true;
+        videoAction.value = 'error';
       }
     }
   }
@@ -110,7 +106,7 @@ class ObservableVideoPlayerController extends GetxController {
     if (videoPlayerController!.value.hasError) {
       logger.i(
           'VPC LISTEN: error ${videoPlayerController!.value.errorDescription}');
-      hasError.value = true;
+      videoAction.value = 'error';
       _initializePlayer();
     }
 
@@ -159,7 +155,8 @@ class ObservableVideoPlayerController extends GetxController {
   }
 
   void toggle() {
-    logger.i('RENDER OBX: TOGGLE VIDEO PLAYER CTRL id: $videoUrl');
+    logger
+        .i('RENDER OBX: TOGGLE VIDEO PLAYER CTRL toggle: ${videoAction.value}');
     if (videoAction.value == 'play') {
       pause();
     } else {
