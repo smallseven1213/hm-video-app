@@ -70,9 +70,9 @@ class ObservableVideoPlayerController extends GetxController {
         // }
 
         if (kIsWeb) {
-          // Timer(const Duration(milliseconds: 500), () {
-          //   play();
-          // });
+          Timer(const Duration(milliseconds: 500), () {
+            play();
+          });
         } else {
           play();
         }
