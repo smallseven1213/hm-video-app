@@ -64,20 +64,28 @@ class ObservableVideoPlayerController extends GetxController {
       videoPlayerController!.setLooping(true);
       isReady.value = true;
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        // if (kIsWeb && isFirstTimeForIOSSafari) {
-        //   videoPlayerController!.setVolume(0);
-        // }
+      // WidgetsBinding.instance.addPostFrameCallback((_) {
+      //   // if (kIsWeb && isFirstTimeForIOSSafari) {
+      //   //   videoPlayerController!.setVolume(0);
+      //   // }
 
-        if (kIsWeb) {
-          // play();
-          // Timer(const Duration(milliseconds: 500), () {
-          //   play();
-          // });
-        } else {
-          play();
-        }
-      });
+      //   if (kIsWeb) {
+      //     // play();
+      //     // Timer(const Duration(milliseconds: 500), () {
+      //     //   play();
+      //     // });
+      //   } else {
+      //     play();
+      //   }
+      // });
+      if (kIsWeb) {
+        // play();
+        // Timer(const Duration(milliseconds: 500), () {
+        //   play();
+        // });
+      } else {
+        play();
+      }
     } catch (error) {
       logger.e('👹👹👹 Error occurred: $error');
       if (videoPlayerController!.value.hasError) {

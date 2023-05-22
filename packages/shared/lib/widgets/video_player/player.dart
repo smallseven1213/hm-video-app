@@ -79,12 +79,8 @@ class VideoPlayerWidget extends StatelessWidget {
                                       obsVideoPlayerController
                                                   .videoAction.value ==
                                               'pause'
-                                          ? Icons.pause
-                                          : obsVideoPlayerController
-                                                      .videoAction.value ==
-                                                  'error'
-                                              ? Icons.error
-                                              : Icons.play_arrow,
+                                          ? Icons.play_arrow
+                                          : Icons.pause,
                                       color: Colors.white,
                                       size: 48.0,
                                     ),
@@ -130,9 +126,9 @@ class VideoPlayerWidget extends StatelessWidget {
                     //     : const SizedBox()),
                   ),
                 ] else ...[
-                  VideoLoading(
-                    cover: video.coverVertical ?? '',
-                  )
+                  // VideoLoading(
+                  //   cover: video.coverVertical ?? '',
+                  // )
                 ],
               ],
             );
