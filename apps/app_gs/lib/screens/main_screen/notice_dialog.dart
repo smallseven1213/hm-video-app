@@ -46,7 +46,7 @@ class NoticeDialogState extends State<NoticeDialog> {
             contentPadding: EdgeInsets.zero,
             scrollable: true,
             content: Container(
-                width: MediaQuery.of(context).size.width / 4 * 3,
+                width: 270,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     stops: [0.0, 0.9375, 1.0],
@@ -78,7 +78,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 150,
+                        top: 120,
                         left: 24,
                         right: 24,
                         bottom: 24,
@@ -91,27 +91,28 @@ class NoticeDialogState extends State<NoticeDialog> {
                               notice.title,
                               textAlign: TextAlign.center,
                               style: const TextStyle(
-                                fontWeight: FontWeight.bold,
                                 color: Colors.white,
+                                fontSize: 14,
                               ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Container(
-                            padding: const EdgeInsets.only(
-                              top: 10,
-                              left: 30,
-                              right: 30,
-                              bottom: 0,
-                            ),
-                            height: 150,
-                            child: SingleChildScrollView(
-                              physics: const ClampingScrollPhysics(),
-                              child: HtmlWidget(
-                                notice.content ?? '',
-                                textStyle: const TextStyle(
-                                  color: Colors.white,
+                          Center(
+                            child: Container(
+                              width: 172,
+                              padding: const EdgeInsets.only(
+                                top: 10,
+                                bottom: 20,
+                              ),
+                              height: 110,
+                              child: SingleChildScrollView(
+                                physics: const ClampingScrollPhysics(),
+                                child: HtmlWidget(
+                                  notice.content ?? '',
+                                  textStyle: const TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
@@ -122,7 +123,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                             children: <Widget>[
                               notice.leftButton != null
                                   ? SizedBox(
-                                      width: 150,
+                                      width: 105,
                                       child: Button(
                                         text: notice.leftButton ?? '取消',
                                         type: 'secondary',
@@ -144,7 +145,7 @@ class NoticeDialogState extends State<NoticeDialog> {
 
                               notice.rightButton != null
                                   ? SizedBox(
-                                      width: 150,
+                                      width: 105,
                                       child: Button(
                                         text: notice.rightButton ?? '確認',
                                         type: 'primary',
