@@ -10,8 +10,6 @@ import 'package:shared/models/index.dart';
 import 'package:shared/widgets/ad_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../widgets/confirm_dialog.dart';
-
 final logger = Logger();
 
 class NoticeDialog extends StatefulWidget {
