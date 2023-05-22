@@ -44,15 +44,15 @@ class ChannelTags extends StatelessWidget {
                     bottom: (tags.details!.length - rowIndex) > 4 ? 10 : 0),
                 child: Row(
                   children: [
-                    for (int i = 0; i < 4; i++) ...[
-                      if (tags.details!.length > rowIndex + i)
-                        Expanded(
-                          flex: 1,
-                          child: TagWidget(
-                              id: tags.details![rowIndex + i].id,
-                              name: tags.details![rowIndex + i].name),
-                        ),
-                    ],
+                    for (int i = 0; i < 4; i++)
+                      Expanded(
+                        flex: 1,
+                        child: tags.details!.length > rowIndex + i
+                            ? TagWidget(
+                                id: tags.details![rowIndex + i].id,
+                                name: tags.details![rowIndex + i].name)
+                            : Container(), // Empty container for no data
+                      ),
                   ],
                 ),
               );
