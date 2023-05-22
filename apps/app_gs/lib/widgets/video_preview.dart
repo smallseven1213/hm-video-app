@@ -268,11 +268,25 @@ class VideoPreviewWidget extends StatelessWidget {
                     .map(
                       (tag) => InkWell(
                         onTap: () {
-                          MyRouteDelegate.of(context).push(
-                            AppRoutes.tag.value,
-                            args: {'id': tag.id, 'title': tag.name},
-                            removeSamePath: true,
-                          );
+                          if (film == 1) {
+                            MyRouteDelegate.of(context).push(
+                              AppRoutes.tag.value,
+                              args: {'id': tag.id, 'title': tag.name},
+                              removeSamePath: true,
+                            );
+                          } else if (film == 2) {
+                            MyRouteDelegate.of(context).push(
+                              AppRoutes.shortsByTag.value,
+                              args: {'tagId': tag.id, 'title': tag.name},
+                              removeSamePath: true,
+                            );
+                          } else if (film == 3) {
+                            // MyRouteDelegate.of(context).push(
+                            //   AppRoutes.comic.value,
+                            //   args: {'id': tag.id, 'title': tag.name},
+                            //   removeSamePath: true,
+                            // );
+                          }
                         },
                         child: Container(
                             padding: const EdgeInsets.symmetric(

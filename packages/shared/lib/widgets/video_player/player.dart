@@ -1,11 +1,9 @@
 // VideoPlayerWidget stateful widget
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/video.dart';
-import 'package:shared/widgets/sid_image.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../controllers/video_player_controller.dart';
@@ -42,7 +40,7 @@ class VideoPlayerWidget extends StatelessWidget {
             return Stack(
               alignment: Alignment.center,
               children: <Widget>[
-                if (obsVideoPlayerController.hasError.value) ...[
+                if (obsVideoPlayerController.videoAction.value == 'error') ...[
                   VideoError(
                     coverHorizontal: video.coverHorizontal ?? '',
                     onTap: () {
@@ -54,47 +52,78 @@ class VideoPlayerWidget extends StatelessWidget {
                   VideoPlayer(obsVideoPlayerController.videoPlayerController!),
                   GestureDetector(
                     onTap: () {
-                      obsVideoPlayerController.setControls(true);
-                      Timer(const Duration(seconds: 3), () {
-                        // if (mounted) {
-                        //   obsVideoPlayerController.setControls(false);
-                        // }
-                        obsVideoPlayerController.setControls(false);
-                      });
+                      obsVideoPlayerController.toggle();
+                      // obsVideoPlayerController.setControls(true);
+                      // Timer(const Duration(seconds: 3), () {
+                      //   // if (mounted) {
+                      //   //   obsVideoPlayerController.setControls(false);
+                      //   // }
+                      //   obsVideoPlayerController.setControls(false);
+                      // });
                     },
                     child: Container(
                         color: Colors.transparent,
                         width: double.infinity,
                         height: double.infinity,
-                        child: obsVideoPlayerController.isVisibleControls.value
-                            ? Stack(
-                                children: [
-                                  Center(
-                                    child: Container(
-                                      width: 100,
-                                      height: 100,
-                                      decoration: BoxDecoration(
-                                          color: Colors.black.withOpacity(0.5),
-                                          shape: BoxShape.circle),
-                                      child: IconButton(
-                                        icon: Icon(
-                                          obsVideoPlayerController
-                                                      .videoAction.value ==
-                                                  'pause'
-                                              ? Icons.pause
-                                              : Icons.play_arrow,
-                                          color: Colors.white,
-                                          size: 48.0,
-                                        ),
-                                        onPressed: () {
-                                          obsVideoPlayerController.toggle();
-                                        },
-                                      ),
+                        child: Center(
+                          child: obsVideoPlayerController.videoAction.value ==
+                                  'pause'
+                              ? Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.5),
+                                      shape: BoxShape.circle),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      obsVideoPlayerController
+                                                  .videoAction.value ==
+                                              'pause'
+                                          ? Icons.pause
+                                          : Icons.play_arrow,
+                                      color: Colors.white,
+                                      size: 48.0,
                                     ),
+                                    onPressed: () {
+                                      obsVideoPlayerController.toggle();
+                                    },
                                   ),
-                                ],
-                              )
-                            : const SizedBox()),
+                                )
+                              : const SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: SizedBox.shrink(),
+                                ),
+                        )),
+                    // child: obsVideoPlayerController.isVisibleControls.value
+                    // ? Stack(
+                    //     children: [
+                    //       Center(
+                    //         child: Container(
+                    //           width: 100,
+                    //           height: 100,
+                    //           decoration: BoxDecoration(
+                    //               color: Colors.black.withOpacity(0.5),
+                    //               shape: BoxShape.circle),
+                    //           child: IconButton(
+                    //             icon: Icon(
+                    //               obsVideoPlayerController
+                    //                           .videoAction.value ==
+                    //                       'pause'
+                    //                   ? Icons.pause
+                    //                   : Icons.play_arrow,
+                    //               color: Colors.white,
+                    //               size: 48.0,
+                    //             ),
+                    //             onPressed: () {
+                    //               obsVideoPlayerController.toggle();
+                    //             },
+                    //           ),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   )
+                    //     : const SizedBox()),
                   ),
                 ] else ...[
                   VideoLoading(
