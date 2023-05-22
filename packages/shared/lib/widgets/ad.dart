@@ -123,17 +123,18 @@ class AdState extends State<Ad> {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     decoration: BoxDecoration(
-                      color: const Color.fromRGBO(255, 255, 255, .5),
+                      color: const Color.fromRGBO(0, 0, 0, .5),
                       borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white, width: 1),
                     ),
                     child: Center(
                       child: Text(
                         countdownSeconds == 0
                             ? '立即進入'
-                            : '倒數 ${countdownSeconds.toString()}s',
+                            : '倒數 ${countdownSeconds.toString()}S',
                         style: const TextStyle(
-                          color: Color.fromRGBO(34, 34, 34, 0.949),
-                          fontSize: 16,
+                          color: Colors.white,
+                          fontSize: 15,
                         ),
                       ),
                     ),
