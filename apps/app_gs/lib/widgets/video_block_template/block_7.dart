@@ -36,7 +36,9 @@ class Block7WidgetState extends State<Block7Widget> {
   void initState() {
     super.initState();
     List<Vod> videos = widget.block.videos?.data ?? [];
-    backgroundPhotoSid = videos[0].coverVertical;
+    setState(() {
+      backgroundPhotoSid = videos[2].coverHorizontal;
+    });
   }
 
   @override
@@ -53,28 +55,49 @@ class Block7WidgetState extends State<Block7Widget> {
                 : ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: SizedBox(
-                        width: double.infinity,
-                        height: 300,
+                      width: double.infinity,
+                      height: 310,
+                      child: FractionallySizedBox(
+                        alignment: Alignment.centerLeft,
+                        widthFactor: 2.0,
                         child: SidImage(
                           key: ValueKey(backgroundPhotoSid),
                           sid: backgroundPhotoSid!,
                           width: double.infinity,
-                          height: 300,
-                          fit: BoxFit.fill,
-                        )),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      // child: Stack(
+                      //   alignment: Alignment.centerLeft,
+                      //   children: [
+                      //     FractionallySizedBox(
+                      //       widthFactor: 2.0,
+                      //       child: SidImage(
+                      //         key: ValueKey(backgroundPhotoSid),
+                      //         sid: backgroundPhotoSid!,
+                      //         width: double.infinity,
+                      //         fit: BoxFit.cover,
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                    ),
                   ),
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                  colors: [
-                    Color(0xFF040405),
-                    Color.fromRGBO(20, 49, 104, 0.7),
-                  ],
-                  stops: [0.0, 1],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF040405),
+                      Color.fromRGBO(20, 49, 104, 0.7),
+                    ],
+                    stops: [0.0, 1],
+                  ),
                 ),
               ),
             ),
@@ -89,7 +112,6 @@ class Block7WidgetState extends State<Block7Widget> {
                   initialPage: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
-                      logger.i(videos[index].coverHorizontal);
                       backgroundPhotoSid = videos[index].coverHorizontal;
                     });
                   },
