@@ -18,12 +18,14 @@ class ShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
+  final bool isActive;
 
   const ShortCard({
     Key? key,
     required this.index,
     required this.id,
     required this.title,
+    this.isActive = false,
   }) : super(key: key);
 
   @override
@@ -54,6 +56,8 @@ class _ShortCardState extends State<ShortCard> {
         _putController();
       }
     });
+
+    videoPlayerController?.setIsPageActive(widget.isActive);
   }
 
   void _putController() async {

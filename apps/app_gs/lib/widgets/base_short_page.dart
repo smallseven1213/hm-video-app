@@ -49,6 +49,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                         child: isActive == true
                             ? ShortCard(
                                 index: index,
+                                isActive: isActive,
                                 id: controller.data[index].id,
                                 title: controller.data[index].title)
                             : const SizedBox.shrink()),

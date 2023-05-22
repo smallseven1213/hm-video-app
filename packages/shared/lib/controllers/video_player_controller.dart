@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:html';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,52 +10,58 @@ import 'package:wakelock/wakelock.dart';
 
 final logger = Logger();
 
+bool isFirstTimeForIOSSafari = true;
+
 class ObservableVideoPlayerController extends GetxController {
+  final isPageActive = true.obs;
   final isReady = false.obs;
-  RxString videoAction = ''.obs;
+  final RxString videoAction = ''.obs;
   VideoPlayerController? videoPlayerController;
-  RxBool hasError = false.obs;
-  RxBool isPause = false.obs;
-  RxBool isVisibleControls = false.obs;
-  String videoUrl;
-  RxBool isDisposed = false.obs;
+  final RxBool hasError = false.obs;
+  final RxBool isPause = false.obs;
+  final RxBool isVisibleControls = false.obs;
+  final String videoUrl;
+  final RxBool isDisposed = false.obs;
 
   ObservableVideoPlayerController(this.videoUrl);
 
   @override
   void onInit() {
-    logger.i('VPC LISTEN: CTX Life INIT VIDEO PLAYER CTRL id: $videoUrl');
-    initializePlayer();
+    // logger.i('VPC LISTEN: CTX Life INIT VIDEO PLAYER CTRL id: $videoUrl');
+    _initializePlayer();
+
+    isPageActive.listen((value) {
+      logger.i('VPC LISTEN: CTX Life INIT VIDEO PLAYER CTRL id: $videoUrl');
+      if (value && videoAction.value == 'pause') {
+        play();
+      }
+    });
     super.onInit();
   }
 
   @override
   void dispose() {
     logger.i('VPC LISTEN: CTX Life DISPOSE VIDEO PLAYER CTRL id: $videoUrl');
-    if (videoPlayerController != null) {
-      videoPlayerController!.removeListener(_onControllerValueChanged);
-      videoPlayerController!.dispose();
-    }
+    _disposePlayer();
     Get.delete<ObservableVideoPlayerController>(tag: videoUrl);
     super.dispose();
   }
 
   @override
   void onClose() {
-    // if (videoPlayerController != null) {
-    //   videoPlayerController!.removeListener(_onControllerValueChanged);
-    //   videoPlayerController!.dispose();
-    // }
     logger.i('VPC LISTEN: CTX Life CLOSE VIDEO PLAYER CTRL id: $videoUrl');
     super.onClose();
   }
 
-  Future<void> initializePlayer() async {
+  void setIsPageActive(bool value) {
+    isPageActive.value = value;
+  }
+
+  Future<void> _initializePlayer() async {
     logger.i('VPC LISTEN: INIT VIDEO PLAYER CTRL id: $videoUrl');
     try {
-      videoPlayerController?.dispose();
-      videoPlayerController =
-          VideoPlayerController.network(videoUrl); // 使用成员变量 videoUrl
+      _disposePlayer();
+      videoPlayerController = VideoPlayerController.network(videoUrl);
       videoPlayerController!.addListener(_onControllerValueChanged);
       await videoPlayerController!.initialize();
       videoPlayerController!.setLooping(true);
@@ -62,11 +69,12 @@ class ObservableVideoPlayerController extends GetxController {
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
         videoAction.value = 'play';
-        videoPlayerController!.setVolume(0);
-        // Plays the video once the widget is build and loaded.
-        // if k is web , delay 1s to play()
+        if (kIsWeb && isFirstTimeForIOSSafari) {
+          videoPlayerController!.setVolume(0);
+        }
+
         if (kIsWeb) {
-          Timer(const Duration(milliseconds: 200), () {
+          Timer(const Duration(milliseconds: 500), () {
             play();
           });
         } else {
@@ -74,10 +82,27 @@ class ObservableVideoPlayerController extends GetxController {
         }
       });
     } catch (error) {
-      print('👹👹👹 Error occurred: $error');
+      logger.e('👹👹👹 Error occurred: $error');
       if (videoPlayerController!.value.hasError) {
         hasError.value = true;
       }
+    }
+  }
+
+  void userDidClick() {
+    // 使用者點擊後，將音量設為正常，並設定 isFirstTimeForIOSSafari 為 false
+    if (isFirstTimeForIOSSafari) {
+      logger.i('VPC LISTEN: userDidClick');
+      videoPlayerController?.setVolume(1.0);
+      isFirstTimeForIOSSafari = false;
+    }
+  }
+
+  void _disposePlayer() {
+    if (videoPlayerController != null) {
+      videoPlayerController!.removeListener(_onControllerValueChanged);
+      videoPlayerController!.dispose();
+      videoPlayerController = null;
     }
   }
 
@@ -86,10 +111,9 @@ class ObservableVideoPlayerController extends GetxController {
       logger.i(
           'VPC LISTEN: error ${videoPlayerController!.value.errorDescription}');
       hasError.value = true;
-      initializePlayer();
+      _initializePlayer();
     }
 
-    // logger.i('VPC LISTEN: ${videoPlayerController!.value.position}');
     // if (videoPlayerController!.value.isBuffering == false) {
     //   if (videoPlayerController!.value.position ==
     //       videoPlayerController!.value.duration) {
@@ -149,6 +173,7 @@ class ObservableVideoPlayerController extends GetxController {
   }
 
   void setControls(bool value) {
+    userDidClick();
     isVisibleControls.value = value;
     update();
   }
