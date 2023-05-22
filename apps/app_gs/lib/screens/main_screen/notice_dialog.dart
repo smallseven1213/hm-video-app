@@ -10,6 +10,8 @@ import 'package:shared/models/index.dart';
 import 'package:shared/widgets/ad_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../widgets/confirm_dialog.dart';
+
 final logger = Logger();
 
 class NoticeDialog extends StatefulWidget {
@@ -39,13 +41,14 @@ class NoticeDialogState extends State<NoticeDialog> {
         context: context,
         builder: (BuildContext _ctx) {
           return AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))),
+            shape: RoundedRectangleBorder(
+                side:
+                    BorderSide(color: Colors.white.withOpacity(0.5), width: 1),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0))),
             contentPadding: EdgeInsets.zero,
-            content: IntrinsicHeight(
-              child: Container(
+            scrollable: true,
+            content: Container(
                 width: MediaQuery.of(context).size.width / 4 * 3,
-                padding: const EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     stops: [0.0, 0.9375, 1.0],
@@ -62,114 +65,126 @@ class NoticeDialogState extends State<NoticeDialog> {
                     alignment: Alignment.topCenter,
                     fit: BoxFit.fitWidth,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
                 ),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: Stack(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: <Widget>[
-                        IconButton(
-                          icon: const Icon(Icons.close, color: Colors.white),
-                          onPressed: () => Navigator.of(context).pop(),
-                        ),
-                      ],
-                    ),
-                    Center(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 5,
-                          left: 20,
-                          right: 20,
-                          bottom: 0,
-                        ),
-                        child: Text(
-                          notice.title,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: IconButton(
+                        icon: Icon(Icons.close,
+                            color: Colors.white.withOpacity(0.5)),
+                        onPressed: () => Navigator.of(context).pop(),
                       ),
                     ),
-                    Container(
+                    Padding(
                       padding: const EdgeInsets.only(
-                        top: 10,
-                        left: 20,
-                        right: 20,
-                        bottom: 0,
+                        top: 150,
+                        left: 24,
+                        right: 24,
+                        bottom: 24,
                       ),
-                      height: 150,
-                      child: SingleChildScrollView(
-                        physics: const ClampingScrollPhysics(),
-                        child: HtmlWidget(
-                          notice.content ?? '',
-                          textStyle: const TextStyle(
-                            color: Colors.white,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text(
+                              notice.title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        if (notice.leftButton != null)
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              width: double.infinity - 10,
-                              child: Button(
-                                text: notice.leftButton ?? '取消',
-                                type: 'secondary',
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  if (notice.leftButtonUrl != '-1' &&
-                                      (notice.leftButtonUrl!
-                                              .startsWith('http://') ||
-                                          notice.leftButtonUrl!
-                                              .startsWith('https://'))) {
-                                    launch(notice.leftButtonUrl!,
-                                        webOnlyWindowName: '_blank');
-                                  }
-                                },
+                          Container(
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                              left: 30,
+                              right: 30,
+                              bottom: 0,
+                            ),
+                            height: 150,
+                            child: SingleChildScrollView(
+                              physics: const ClampingScrollPhysics(),
+                              child: HtmlWidget(
+                                notice.content ?? '',
+                                textStyle: const TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                        const SizedBox(width: 20),
-                        if (notice.rightButton != null)
-                          Expanded(
-                            flex: 1,
-                            child: SizedBox(
-                              width: double.infinity - 10,
-                              child: Button(
-                                text: notice.rightButton ?? '確認',
-                                type: 'primary',
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                  if (notice.rightButtonUrl != '-1' &&
-                                      (notice.rightButtonUrl!
-                                              .startsWith('http://') ||
-                                          notice.rightButtonUrl!
-                                              .startsWith('https://'))) {
-                                    launch(notice.rightButtonUrl!,
-                                        webOnlyWindowName: '_blank');
-                                  }
-                                },
-                              ),
-                            ),
+                          const SizedBox(height: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              notice.leftButton != null
+                                  ? SizedBox(
+                                      width: 150,
+                                      child: Button(
+                                        text: notice.leftButton ?? '取消',
+                                        type: 'secondary',
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          if (notice.leftButtonUrl != '-1' &&
+                                              (notice.leftButtonUrl!
+                                                      .startsWith('http://') ||
+                                                  notice.leftButtonUrl!
+                                                      .startsWith(
+                                                          'https://'))) {
+                                            launch(notice.leftButtonUrl!,
+                                                webOnlyWindowName: '_blank');
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  : const SizedBox(),
+
+                              notice.rightButton != null
+                                  ? SizedBox(
+                                      width: 150,
+                                      child: Button(
+                                        text: notice.rightButton ?? '確認',
+                                        type: 'primary',
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          if (notice.rightButtonUrl != '-1' &&
+                                              (notice.rightButtonUrl!
+                                                      .startsWith('http://') ||
+                                                  notice.rightButtonUrl!
+                                                      .startsWith(
+                                                          'https://'))) {
+                                            launch(notice.rightButtonUrl!,
+                                                webOnlyWindowName: '_blank');
+                                          }
+                                        },
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              // rightButton ?? const SizedBox()
+                              // if (leftButton != null)
+
+                              //   Expanded(
+                              //     flex: 1,
+                              //     child: leftButton ?? const SizedBox(),
+                              //   ),
+                              // const SizedBox(width: 24),
+                              // if (rightButton != null)
+                              //   Expanded(
+                              //     flex: 1,
+                              //     child: rightButton ?? const SizedBox(),
+                              //   ),
+                            ],
                           ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
-                ),
-              ),
-            ),
+                )),
           );
         },
       ).then((value) {
@@ -197,18 +212,21 @@ class NoticeDialogState extends State<NoticeDialog> {
             title: null,
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
-              width: dialogWidth,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  AspectRatio(
-                    aspectRatio: 1.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      clipBehavior: Clip.antiAlias,
+                  Container(
+                    width: 270,
+                    height: 320,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                          color: Colors.white.withOpacity(0.5), width: 1),
+                    ),
+                    clipBehavior: Clip.hardEdge,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
                       child: AdBanner(image: banner),
                     ),
                   ),
@@ -220,16 +238,19 @@ class NoticeDialogState extends State<NoticeDialog> {
                           Navigator.of(context).pop();
                         },
                         child: Container(
-                          width: 36,
-                          height: 36,
-                          margin: const EdgeInsets.only(top: 10),
+                          width: 28,
+                          height: 28,
+                          margin: const EdgeInsets.only(top: 20),
                           decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white, width: 1),
+                            border: Border.all(
+                                color: Colors.white.withOpacity(0.5), width: 2),
                             borderRadius: BorderRadius.circular(36.0),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.close,
-                            color: Colors.white,
+                            weight: 5,
+                            color: Colors.white.withOpacity(0.5),
+                            size: 18,
                           ),
                         ),
                       ),
