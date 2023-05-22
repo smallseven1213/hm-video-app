@@ -224,14 +224,6 @@ class VideoPreviewWidget extends StatelessWidget {
                       viewCount: videoViewTimes,
                       duration: timeLength,
                     )),
-              // imageRatio != BlockImageRatio.block4.ratio && noInfoView != true
-              //     ? Positioned(
-              //         bottom: 0,
-              // child: ViewInfo(
-              //   viewCount: videoViewTimes,
-              //   duration: timeLength,
-              // ))
-              //     : const SizedBox(),
             ],
           ),
         ),
@@ -279,13 +271,7 @@ class VideoPreviewWidget extends StatelessWidget {
                             MyRouteDelegate.of(context).push(
                                 AppRoutes.supplierTag.value,
                                 args: {'tagId': tag.id, 'tagName': tag.name});
-                          } else if (film == 3) {
-                            // MyRouteDelegate.of(context).push(
-                            //   AppRoutes.comic.value,
-                            //   args: {'id': tag.id, 'title': tag.name},
-                            //   removeSamePath: true,
-                            // );
-                          }
+                          } else if (film == 3) {}
                         },
                         child: Container(
                             padding: const EdgeInsets.symmetric(
