@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 const buttonPadding = {
-  'small': EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-  'medium': EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-  'large': EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+  'small': EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+  'medium': EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+  'large': EdgeInsets.symmetric(horizontal: 10, vertical: 10),
 };
 
 class Button extends StatelessWidget {
@@ -60,7 +60,7 @@ class Button extends StatelessWidget {
                     text,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: size == 'small' ? 14 : 16,
+                      fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
