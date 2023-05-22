@@ -108,7 +108,6 @@ class ShortCardInfo extends StatelessWidget {
                               obsVideoPlayerController.pause();
                               await MyRouteDelegate.of(context).push(
                                   AppRoutes.supplierTag.value,
-                                  useBottomToTopAnimation: true,
                                   args: {'tagId': e.id, 'tagName': e.name});
                               obsVideoPlayerController.play();
                             },

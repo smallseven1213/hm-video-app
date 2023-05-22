@@ -1,4 +1,5 @@
 import 'package:app_gs/widgets/video_embedded_ad.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -276,10 +277,8 @@ class VideoPreviewWidget extends StatelessWidget {
                             );
                           } else if (film == 2) {
                             MyRouteDelegate.of(context).push(
-                              AppRoutes.shortsByTag.value,
-                              args: {'tagId': tag.id, 'title': tag.name},
-                              removeSamePath: true,
-                            );
+                                AppRoutes.supplierTag.value,
+                                args: {'tagId': tag.id, 'tagName': tag.name});
                           } else if (film == 3) {
                             // MyRouteDelegate.of(context).push(
                             //   AppRoutes.comic.value,
@@ -330,14 +329,14 @@ class _SidImageVisibilityDetectorState
     extends State<SidImageVisibilityDetector> {
   final _visibilityDetectorKey = GlobalKey();
 
-  bool _isInViewport = false;
+  bool _isInViewport = kIsWeb ? false : true;
 
   @override
   Widget build(BuildContext context) {
     return VisibilityDetector(
       key: _visibilityDetectorKey,
       onVisibilityChanged: (visibilityInfo) {
-        if (visibilityInfo.visibleFraction > 0.2) {
+        if (kIsWeb && visibilityInfo.visibleFraction > 0.8) {
           setState(() {
             _isInViewport = true;
           });
