@@ -244,14 +244,14 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
       });
     }
     if (_controller!.value.isBuffering) {
-      print('👹👹👹 isBuffering');
+      // print('👹👹👹 isBuffering');
     } else {
       // 當視頻停止緩衝並準備播放時，自動播放視頻
-      print('==================================');
-      print('_controller!.value: ${_controller!.value}');
-      print('_controller!.value.isPlaying: ${_controller!.value.isPlaying}');
-      print('hasError: $hasError');
-      print('==================================');
+      // print('==================================');
+      // print('_controller!.value: ${_controller!.value}');
+      // print('_controller!.value.isPlaying: ${_controller!.value.isPlaying}');
+      // print('hasError: $hasError');
+      // print('==================================');
 
       // if (_controller!.value.isPlaying == false &&
       //     !_controller!.value.hasError) {

@@ -1,17 +1,10 @@
 import 'package:app_gs/widgets/video_embedded_ad.dart';
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/play_record_controller.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/models/video_database_field.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/view_times.dart';
 import 'package:shared/widgets/video_time.dart';
-import 'package:visibility_detector/visibility_detector.dart';
 
 final logger = Logger();
 
@@ -75,7 +68,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final bool? hasRadius; // 要不要圓角
   final bool? hasTitle; // 要不要標題
 
-  VideoPreviewWithEditWidget(
+  const VideoPreviewWithEditWidget(
       {Key? key,
       required this.id,
       required this.coverVertical,
@@ -100,22 +93,19 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       this.hasTitle = true})
       : super(key: key);
 
-  final playrecordController = Get.find<PlayRecordController>();
-
   @override
   Widget build(BuildContext context) {
-    logger.i('$id ==> $isEditing');
     if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
       return VideoEmbeddedAdWidget(
         imageRatio: imageRatio ?? 374 / 198,
         detail: detail!,
       );
     }
-    logger.i('RENDER VIDEO PREVIEW WIDGET!!! $isEditing, $isSelected');
     return Stack(
       children: [
         VideoPreviewWidget(
             id: id,
+            displayCoverVertical: displayCoverVertical,
             coverVertical: coverVertical,
             coverHorizontal: coverHorizontal,
             timeLength: timeLength,

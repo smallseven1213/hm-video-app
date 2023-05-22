@@ -1,19 +1,18 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../apis/user_api.dart';
 import '../models/actor.dart';
-import '../models/video_database_field.dart';
 
 final userApi = UserApi();
 final logger = Logger();
 
 class UserFavoritesActorController extends GetxController {
-  static const String _prefsKey = 'userFavoritesActor';
-  late SharedPreferences prefs;
+  static const String _boxName = 'userFavoritesActor';
+  late Box<String> box;
   var actors = <Actor>[].obs;
 
   @override
@@ -26,17 +25,13 @@ class UserFavoritesActorController extends GetxController {
   }
 
   Future<void> _init() async {
-    prefs = await SharedPreferences.getInstance();
-    logger.i('CHECK ACTOR prefs $prefs');
+    box = await Hive.openBox<String>(_boxName);
 
-    if (prefs.containsKey(_prefsKey)) {
-      final jsonData = jsonDecode(prefs.getString(_prefsKey)!) as List<dynamic>;
-      logger.i('CHECK ACTOR jsonData $jsonData');
-      actors.value = jsonData
-          .map<Actor>(
-              (actorJson) => Actor.fromJson(actorJson as Map<String, dynamic>))
-          .toList();
-      logger.i('CHECK ACTOR obj ${actors.value}');
+    if (box.isNotEmpty) {
+      actors.value = box.values.map((actorStr) {
+        final actorJson = jsonDecode(actorStr) as Map<String, dynamic>;
+        return Actor.fromJson(actorJson);
+      }).toList();
     } else {
       await _fetchAndSaveCollection();
     }
@@ -45,7 +40,7 @@ class UserFavoritesActorController extends GetxController {
   Future<void> _fetchAndSaveCollection() async {
     var actorList = await userApi.getFavoriteActor();
     actors.value = actorList;
-    await _updatePrefs();
+    await _updateHive();
   }
 
   void addActor(Actor actor) async {
@@ -53,18 +48,21 @@ class UserFavoritesActorController extends GetxController {
       actors.removeWhere((v) => v.id == actor.id);
     }
     actors.add(actor);
-    await _updatePrefs();
+    await _updateHive();
     userApi.addFavoriteActor(actor.id);
   }
 
   void removeActor(List<int> ids) async {
     actors.removeWhere((v) => ids.contains(v.id));
-    await _updatePrefs();
+    await _updateHive();
     userApi.deleteActorFavorite(ids);
   }
 
-  Future<void> _updatePrefs() async {
-    final jsonData = actors.map((actor) => actor.toJson()).toList();
-    await prefs.setString(_prefsKey, jsonEncode(jsonData));
+  Future<void> _updateHive() async {
+    await box.clear();
+    for (var actor in actors) {
+      final actorStr = jsonEncode(actor.toJson());
+      await box.put(actor.id.toString(), actorStr);
+    }
   }
 }
