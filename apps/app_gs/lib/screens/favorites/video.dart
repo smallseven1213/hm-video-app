@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
+import 'package:shared/models/video_database_field.dart';
 
 import '../../widgets/no_data.dart';
 import '../../widgets/video_preview_with_edit.dart';
@@ -24,28 +25,56 @@ class FavoritesVideoScreen extends StatelessWidget {
       }
       return Padding(
         padding: const EdgeInsets.only(top: 10.0, right: 8, left: 8),
-        child: AlignedGridView.count(
-          crossAxisCount: 2,
-          itemCount: videos.length,
-          itemBuilder: (BuildContext context, int index) {
-            var video = videos[index];
-            return Obx(() => VideoPreviewWithEditWidget(
-                id: video.id,
-                isEditing: listEditorController.isEditing.value,
-                isSelected:
-                    listEditorController.selectedIds.contains(videos[index].id),
-                onEditingTap: () {
-                  listEditorController.toggleSelected(videos[index].id);
-                },
-                coverVertical: video.coverVertical,
-                coverHorizontal: video.coverHorizontal,
-                timeLength: video.timeLength,
-                tags: video.tags,
-                title: video.title,
-                videoViewTimes: video.videoViewTimes));
+        child: ListView.separated(
+          itemCount: (videos.length / 2).ceil(),
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(height: 8);
           },
-          mainAxisSpacing: 12.0,
-          crossAxisSpacing: 10.0,
+          itemBuilder: (BuildContext context, int index) {
+            var video1 = videos[index * 2];
+            VideoDatabaseField? video2;
+            if (index * 2 + 1 < videos.length) {
+              video2 = videos[index * 2 + 1];
+            }
+            return Row(
+              children: [
+                Expanded(
+                  child: Obx(() => VideoPreviewWithEditWidget(
+                      id: video1.id,
+                      isEditing: listEditorController.isEditing.value,
+                      isSelected:
+                          listEditorController.selectedIds.contains(video1.id),
+                      onEditingTap: () {
+                        listEditorController.toggleSelected(video1.id);
+                      },
+                      coverVertical: video1.coverVertical,
+                      coverHorizontal: video1.coverHorizontal,
+                      timeLength: video1.timeLength,
+                      tags: video1.tags,
+                      title: video1.title,
+                      videoViewTimes: video1.videoViewTimes)),
+                ),
+                const SizedBox(width: 8),
+                if (video2 != null)
+                  Expanded(
+                    child: Obx(() => VideoPreviewWithEditWidget(
+                        id: video2!.id,
+                        isEditing: listEditorController.isEditing.value,
+                        isSelected: listEditorController.selectedIds
+                            .contains(video2.id),
+                        onEditingTap: () {
+                          listEditorController.toggleSelected(video2!.id);
+                        },
+                        coverVertical: video2.coverVertical,
+                        coverHorizontal: video2.coverHorizontal,
+                        timeLength: video2.timeLength,
+                        tags: video2.tags,
+                        title: video2.title,
+                        videoViewTimes: video2.videoViewTimes)),
+                  ),
+              ],
+            );
+          },
         ),
       );
     });

@@ -26,91 +26,67 @@ class FavoritesActorScreen extends StatelessWidget {
       }
       return Padding(
         padding: const EdgeInsets.only(top: 10.0, right: 8, left: 8),
-        child: AlignedGridView.count(
-          crossAxisCount: 5,
-          itemCount: actors.length,
+        child: ListView.separated(
+          separatorBuilder: (BuildContext context, int index) {
+            return const SizedBox(height: 8);
+          },
+          itemCount: (actors.length / 5).ceil(),
           itemBuilder: (BuildContext context, int index) {
-            var actor = actors[index];
             final Size size = MediaQuery.of(context).size;
-            return InkWell(
-              onTap: () {
-                if (listEditorController.isEditing.value) {
-                  listEditorController.toggleSelected(actors[index].id);
-                } else {
-                  MyRouteDelegate.of(context).push(
-                    AppRoutes.actor.value,
-                    args: {'id': actors[index].id, 'title': actors[index].name},
-                    removeSamePath: true,
+            return Wrap(
+              children: List.generate(5, (i) {
+                final int actorIndex = index * 5 + i;
+                if (actorIndex < actors.length) {
+                  var actor = actors[actorIndex];
+                  return SizedBox(
+                    width: (size.width - 16) / 5,
+                    child: Center(
+                      child: InkWell(
+                        onTap: () {
+                          if (listEditorController.isEditing.value) {
+                            listEditorController.toggleSelected(actor.id);
+                          } else {
+                            MyRouteDelegate.of(context).push(
+                              AppRoutes.actor.value,
+                              args: {'id': actor.id, 'title': actor.name},
+                              removeSamePath: true,
+                            );
+                          }
+                        },
+                        child: Stack(
+                          children: [
+                            CircleTextItem(
+                                text: actor.name,
+                                photoSid: actor.photoSid,
+                                imageWidth: size.width * 0.15,
+                                imageHeight: size.width * 0.15,
+                                isRounded: true,
+                                hasBorder: true),
+                            Positioned(
+                                right: 0,
+                                top: 0,
+                                child: Obx(() => Visibility(
+                                    visible:
+                                        listEditorController.isEditing.value &&
+                                            listEditorController.selectedIds
+                                                .contains(actor.id),
+                                    child: const Image(
+                                      image: AssetImage(
+                                          'assets/images/video_selected.png'),
+                                      width: 20,
+                                      height: 20,
+                                    )))),
+                          ],
+                        ),
+                      ),
+                    ),
                   );
+                } else {
+                  return SizedBox(width: (size.width - 16) / 5);
                 }
-              },
-              child: Stack(
-                children: [
-                  CircleTextItem(
-                      text: actor.name,
-                      photoSid: actor.photoSid,
-                      imageWidth: size.width * 0.15,
-                      imageHeight: size.width * 0.15,
-                      isRounded: true,
-                      hasBorder: true),
-                  Positioned(
-                      right: 0,
-                      top: 0,
-                      child: Obx(() => Visibility(
-                          visible: listEditorController.isEditing.value &&
-                              listEditorController.selectedIds
-                                  .contains(actors[index].id),
-                          child: const Image(
-                            image:
-                                AssetImage('assets/images/video_selected.png'),
-                            width: 20,
-                            height: 20,
-                          )))),
-                ],
-              ),
-              // child: Column(
-              //   children: [
-              //     SizedBox(
-              //       width: 80,
-              //       height: 80,
-              //       child: Stack(
-              //         children: [
-              //           ClipRRect(
-              //             borderRadius: BorderRadius.circular(80),
-              //             child: SidImage(
-              //                 key: ValueKey(actor.photoSid),
-              //                 sid: actor.photoSid,
-              //                 width: 80,
-              //                 height: 80,
-              //                 fit: BoxFit.cover),
-              //           ),
-              // Positioned(
-              //   right: -20,
-              //   top: -20,
-              //   child: Obx(() => Visibility(
-              //       visible: listEditorController.isEditing.value &&
-              //           listEditorController.selectedIds
-              //               .contains(actors[index].id),
-              //       child: const Image(
-              //         image: AssetImage(
-              //             'assets/images/video_selected.png'),
-              //         width: 40,
-              //         height: 40,
-              //       ))),
-              //           )
-              //         ],
-              //       ),
-              //     ),
-              //     Text(
-              //       actor.name,
-              //       style: TextStyle(color: Colors.white),
-              //     )
-              //   ],
-              // ),
+              }),
             );
           },
-          mainAxisSpacing: 12.0,
-          crossAxisSpacing: 10.0,
         ),
       );
     });

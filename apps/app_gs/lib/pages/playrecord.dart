@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/models/video_database_field.dart';
 
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_page_panel.dart';
@@ -65,36 +66,69 @@ class PlayRecordPageState extends State<PlayRecordPage> {
             if (videos.isEmpty) {
               return const NoDataWidget();
             }
-            return AlignedGridView.count(
+            return ListView.separated(
               padding: const EdgeInsets.all(8.0),
-              crossAxisCount: 2,
-              itemCount: playRecordController.playRecord.length,
-              itemBuilder: (BuildContext context, int index) =>
-                  VideoPreviewWithEditWidget(
-                id: videos[index].id,
-                isEditing: listEditorController.isEditing.value,
-                isSelected:
-                    listEditorController.selectedIds.contains(videos[index].id),
-                onEditingTap: () {
-                  logger.i('CLICK!!');
-                  listEditorController.toggleSelected(videos[index].id);
-                },
-                title: videos[index].title,
-                tags: videos[index].tags,
-                timeLength: videos[index].timeLength,
-                coverHorizontal: videos[index].coverHorizontal,
-                coverVertical: videos[index].coverVertical,
-                videoViewTimes: videos[index].videoViewTimes,
-                //detail: videos[index].detail,
-              ),
-              mainAxisSpacing: 12.0,
-              crossAxisSpacing: 10.0,
+              itemCount: (videos.length / 2).ceil(),
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 8);
+              },
+              itemBuilder: (BuildContext context, int index) {
+                logger.i('RENDER BOX Testing');
+                var video1 = videos[index * 2];
+                VideoDatabaseField? video2;
+                if (index * 2 + 1 < videos.length) {
+                  video2 = videos[index * 2 + 1];
+                }
+                return Row(
+                  children: [
+                    Expanded(
+                      child: VideoPreviewWithEditWidget(
+                        id: video1.id,
+                        isEditing: listEditorController.isEditing.value,
+                        isSelected: listEditorController.selectedIds
+                            .contains(video1.id),
+                        onEditingTap: () {
+                          listEditorController.toggleSelected(video1.id);
+                        },
+                        title: video1.title,
+                        tags: video1.tags,
+                        timeLength: video1.timeLength,
+                        coverHorizontal: video1.coverHorizontal,
+                        coverVertical: video1.coverVertical,
+                        videoViewTimes: video1.videoViewTimes,
+                        // detail: video1.detail,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    if (video2 != null)
+                      Expanded(
+                        child: VideoPreviewWithEditWidget(
+                          id: video2.id,
+                          isEditing: listEditorController.isEditing.value,
+                          isSelected: listEditorController.selectedIds
+                              .contains(video2.id),
+                          onEditingTap: () {
+                            listEditorController.toggleSelected(video2!.id);
+                          },
+                          title: video2.title,
+                          tags: video2.tags,
+                          timeLength: video2.timeLength,
+                          coverHorizontal: video2.coverHorizontal,
+                          coverVertical: video2.coverVertical,
+                          videoViewTimes: video2.videoViewTimes,
+                          // detail: video2.detail,
+                        ),
+                      ),
+                  ],
+                );
+              },
             );
           }),
           ListPagePanelWidget(
-              listEditorController: listEditorController,
-              onSelectButtonClick: _handleSelectAll,
-              onDeleteButtonClick: _handleDeleteAll),
+            listEditorController: listEditorController,
+            onSelectButtonClick: _handleSelectAll,
+            onDeleteButtonClick: _handleDeleteAll,
+          ),
         ],
       ),
     );
