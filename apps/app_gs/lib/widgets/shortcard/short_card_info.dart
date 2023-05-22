@@ -75,10 +75,11 @@ class ShortCardInfo extends StatelessWidget {
                   },
                   child: Row(children: [
                     ActorAvatar(
-                        photoSid: data.supplier!.photoSid,
-                        width: 30,
-                        height: 30),
-                    const SizedBox(width: 6),
+                      photoSid: data.supplier!.photoSid,
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(width: 8),
                     const SizedBox(height: 8),
                     Text(data.supplier!.aliasName ?? '',
                         style: const TextStyle(
@@ -91,17 +92,22 @@ class ShortCardInfo extends StatelessWidget {
               ],
 
               // 標題
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 15,
-                  color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    color: Colors.white,
+                  ),
                 ),
               ),
 
               // 標籤
               if (data.tag.isNotEmpty)
-                Row(
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 8),
+                  child: Row(
                     children: data.tag
                         .map((e) => InkWell(
                             onTap: () async {
@@ -112,18 +118,9 @@ class ShortCardInfo extends StatelessWidget {
                               obsVideoPlayerController.play();
                             },
                             child: ShortCardInfoTag(name: '#${e.name}')))
-                        .toList()
-                    // const [
-                    //   data.tag.length > 0
-                    //       ? ShortCardInfoTag(name: '#${data.tag[0]}')
-                    //       : SizedBox.shrink(),
-                    //   ShortCardInfoTag(name: '#免費'),
-                    //   SizedBox(width: 8),
-                    //   ShortCardInfoTag(name: '#網紅'),
-                    //   SizedBox(width: 8),
-                    //   ShortCardInfoTag(name: '#大集合'),
-                    // ],
-                    ),
+                        .toList(),
+                  ),
+                ),
             ],
           ),
         ),

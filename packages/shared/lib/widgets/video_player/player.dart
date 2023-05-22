@@ -35,8 +35,9 @@ class VideoPlayerWidget extends StatelessWidget {
       logger.i('RENDER OBX: VideoPlayerWidget id: $videoUrl');
 
       return Container(
-          color: Colors.black,
-          child: Obx(() {
+        color: Colors.black,
+        child: Obx(
+          () {
             return Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -48,6 +49,7 @@ class VideoPlayerWidget extends StatelessWidget {
                   //     obsVideoPlayerController.play();
                   //   },
                   // ),
+                  //
                 ] else if (obsVideoPlayerController.isReady.value) ...[
                   VideoPlayer(obsVideoPlayerController.videoPlayerController!),
                   GestureDetector(
@@ -130,9 +132,29 @@ class VideoPlayerWidget extends StatelessWidget {
                   //   cover: video.coverVertical ?? '',
                   // )
                 ],
+                Container(
+                    width: double.infinity, height: 10, color: Colors.red),
+                Positioned(
+                  bottom: 10,
+                  left: -24,
+                  right: -24,
+                  child: ValueListenableBuilder<VideoPlayerValue>(
+                    valueListenable:
+                        obsVideoPlayerController.videoPlayerController!,
+                    builder: (context, value, _) => VideoProgressSlider(
+                      controller:
+                          obsVideoPlayerController.videoPlayerController!,
+                      position: value.position,
+                      duration: value.duration,
+                      swatch: const Color(0xffFFC700),
+                    ),
+                  ),
+                ),
               ],
             );
-          }));
+          },
+        ),
+      );
     } else {
       return const SizedBox.shrink();
     }

@@ -51,7 +51,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                                 index: index,
                                 isActive: isActive,
                                 id: controller.data[index].id,
-                                title: controller.data[index].title)
+                                title: controller.data[index].title,
+                              )
                             : const SizedBox.shrink()),
                     Container(
                       height: 90,

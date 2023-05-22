@@ -114,10 +114,11 @@ class _ShortCardState extends State<ShortCard> {
               ),
             ),
             ShortCardInfo(
-                index: widget.index,
-                data: videoDetail,
-                title: widget.title,
-                videoUrl: videoDetailController!.videoUrl.value)
+              index: widget.index,
+              data: videoDetail,
+              title: widget.title,
+              videoUrl: videoDetailController!.videoUrl.value,
+            )
           ],
         );
       } else {

@@ -32,6 +32,8 @@ class VideoProgressSlider extends StatelessWidget {
         data: const SliderThemeData(
           thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5),
           trackHeight: 2,
+          thumbColor: Color(0xffFFC700),
+          inactiveTrackColor: Color(0xffffffff),
         ),
         child: Slider(
           min: 0,
