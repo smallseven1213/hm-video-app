@@ -54,8 +54,8 @@ Future<void> _captureAndSaveScreenshot() async {
   );
 }
 
-class QRCodePopup extends StatelessWidget {
-  const QRCodePopup({Key? key}) : super(key: key);
+class IDCard extends StatelessWidget {
+  const IDCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,20 +82,20 @@ class QRCodePopup extends StatelessWidget {
             //     156.33 * (3.141592 / 180)), // Convert degrees to radians
           ),
         ),
-        child: ContentAndButton(),
+        child: IDCardContent(),
       ),
     );
   }
 }
 
-class ContentAndButton extends StatefulWidget {
-  const ContentAndButton({Key? key}) : super(key: key);
+class IDCardContent extends StatefulWidget {
+  const IDCardContent({Key? key}) : super(key: key);
 
   @override
-  _ContentAndButtonState createState() => _ContentAndButtonState();
+  IDCardContentState createState() => IDCardContentState();
 }
 
-class _ContentAndButtonState extends State<ContentAndButton> {
+class IDCardContentState extends State<IDCardContent> {
   UserController get userController => Get.find<UserController>();
 
   @override
