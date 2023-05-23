@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../enums/game_app_routes.dart';
+
 class GamePaymentResult extends StatefulWidget {
   const GamePaymentResult({Key? key}) : super(key: key);
 
@@ -116,7 +118,7 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                 ),
                 InkWell(
                   onTap: () async {
-                    MyRouteDelegate.of(context).push(AppRoutes.gameLobby.value);
+                    MyRouteDelegate.of(context).push(GameAppRoutes.lobby.value);
                   },
                   child: Container(
                     alignment: Alignment.center,

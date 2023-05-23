@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:game/utils/showConfirmDialog.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'package:game/utils/onLoading.dart';
 import 'package:game/apis/game_api.dart';
+
+import '../enums/game_app_routes.dart';
 
 String gameUrl = '';
 
@@ -67,7 +68,7 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
       onLoading(context, status: false);
       // ignore: use_build_context_synchronously
       MyRouteDelegate.of(context).push(
-        AppRoutes.gameWebview.value,
+        GameAppRoutes.webview.value,
         args: {
           'url': gameUrl,
         },

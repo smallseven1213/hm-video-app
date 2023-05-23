@@ -15,10 +15,10 @@ class GameCarousel extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _GameCarouselState createState() => _GameCarouselState();
+  GameCarouselState createState() => GameCarouselState();
 }
 
-class _GameCarouselState extends State<GameCarousel> {
+class GameCarouselState extends State<GameCarousel> {
   @override
   void initState() {
     super.initState();

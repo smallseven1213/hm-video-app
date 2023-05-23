@@ -6,12 +6,13 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/h5webview.dart';
+
+import '../../enums/game_app_routes.dart';
 
 class GameLobbyWebview extends StatefulWidget {
   final String gameUrl;
@@ -127,8 +128,8 @@ class _ButtonWidget extends State<ButtonWidget> {
                   MyRouteDelegate.of(context).push(
                     gameConfigController.switchPaymentPage.value ==
                             switchPaymentPageType['list']
-                        ? AppRoutes.gameDepositList.value
-                        : AppRoutes.gameDepositPolling.value,
+                        ? GameAppRoutes.depositList.value
+                        : GameAppRoutes.depositPolling.value,
                   );
                 },
                 child: Column(

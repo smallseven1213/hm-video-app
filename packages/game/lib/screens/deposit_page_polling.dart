@@ -7,6 +7,8 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../enums/game_app_routes.dart';
+
 class GameDeposit extends StatefulWidget {
   const GameDeposit({Key? key}) : super(key: key);
 
@@ -69,7 +71,7 @@ class GameDepositState extends State<GameDeposit> {
                       child: TextButton(
                         onPressed: () {
                           MyRouteDelegate.of(context).push(
-                            AppRoutes.gameWithdraw.value,
+                            GameAppRoutes.withdraw.value,
                           );
                         },
                         style: TextButton.styleFrom(
