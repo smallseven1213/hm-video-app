@@ -57,15 +57,25 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
       try {
         var res = await userApi.updatePassword(
             _originPasswordController.text, _passwordController.text);
-        logger.i('register success $res');
+        logger.i('register success $res, ${res['code']}');
 
-        if (res.code == '00') {
+        if (res['code'] == '00') {
           userController.fetchUserInfo();
-          MyRouteDelegate.of(context).popRoute();
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text(
+                '已成功保存密碼',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          );
+          Navigator.pop(context);
         } else {
           showConfirmDialog(
             context: context,
-            title: '錯誤',
+            title: '錯誤0',
             message: '密碼不正確',
             showCancelButton: false,
             onConfirm: () {
@@ -74,9 +84,10 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
           );
         }
       } catch (error) {
+        logger.i(error);
         showConfirmDialog(
           context: context,
-          title: '錯誤',
+          title: '錯誤1',
           message: '密碼不正確',
           showCancelButton: false,
           onConfirm: () {
@@ -105,8 +116,9 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                   children: [
                     AuthTextField(
                       label: '原密碼',
+                      obscureText: true,
                       controller: _originPasswordController,
-                      placeholderText: '請輸入帳號',
+                      placeholderText: '請輸入原密碼',
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
