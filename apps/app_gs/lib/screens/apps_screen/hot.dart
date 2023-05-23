@@ -19,7 +19,7 @@ class HotWidget extends StatelessWidget {
         if (snapshot.hasData) {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 4,
+              crossAxisCount: 5,
               // mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,
               childAspectRatio: 1.0,
