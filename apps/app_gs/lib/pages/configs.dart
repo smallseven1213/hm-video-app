@@ -143,40 +143,40 @@ class ConfigsPage extends StatelessWidget {
           MyRouteDelegate.of(context).push(AppRoutes.idCard.value);
         },
       ),
-      CellData(
-        image: const Image(
-          image: AssetImage('assets/images/config_setting.png'),
-          width: 20,
-          height: 20,
-        ),
-        text: '個性設置',
-        onTap: () {
-          print('Settings tapped');
-        },
-      ),
-      CellData(
-        image: const Image(
-          image: AssetImage('assets/images/config_lock.png'),
-          width: 20,
-          height: 20,
-        ),
-        text: '安全鎖設置',
-        label: const Text('未設置'),
-        onTap: () {
-          print('Settings tapped');
-        },
-      ),
-      CellData(
-        image: const Image(
-          image: AssetImage('assets/images/config_update.png'),
-          width: 20,
-          height: 20,
-        ),
-        text: '更新檢查',
-        onTap: () {
-          print('Settings tapped');
-        },
-      ),
+      // CellData(
+      //   image: const Image(
+      //     image: AssetImage('assets/images/config_setting.png'),
+      //     width: 20,
+      //     height: 20,
+      //   ),
+      //   text: '個性設置',
+      //   onTap: () {
+      //     print('Settings tapped');
+      //   },
+      // ),
+      // CellData(
+      //   image: const Image(
+      //     image: AssetImage('assets/images/config_lock.png'),
+      //     width: 20,
+      //     height: 20,
+      //   ),
+      //   text: '安全鎖設置',
+      //   label: const Text('未設置'),
+      //   onTap: () {
+      //     print('Settings tapped');
+      //   },
+      // ),
+      // CellData(
+      //   image: const Image(
+      //     image: AssetImage('assets/images/config_update.png'),
+      //     width: 20,
+      //     height: 20,
+      //   ),
+      //   text: '更新檢查',
+      //   onTap: () {
+      //     print('Settings tapped');
+      //   },
+      // ),
     ];
     return Scaffold(
       appBar: const CustomAppBar(title: '設置'),
