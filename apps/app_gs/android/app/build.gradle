@@ -52,17 +52,8 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
 
-        ndk {
-            abiFilters 'armeabi-v7a','armeabi'
-        }
     }
 
-    splits {
-        abi {
-            reset()
-            include('armeabi-v7a', 'armeabi')
-        }
-    }
 
     buildTypes {
         release {
