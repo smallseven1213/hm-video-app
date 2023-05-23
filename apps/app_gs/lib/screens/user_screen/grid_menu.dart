@@ -1,4 +1,4 @@
-import 'package:app_gs/screens/user_screen/id_card.dart';
+import 'package:app_gs/widgets/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -52,7 +52,7 @@ class GridMenu extends StatelessWidget {
               return const Dialog(
                 backgroundColor: Colors.transparent,
                 elevation: 0,
-                child: QRCodePopup(),
+                child: IDCard(),
               );
             },
           );

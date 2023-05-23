@@ -4,7 +4,7 @@ import 'auth_text_field_suffixicon.dart';
 class AuthTextField extends StatelessWidget {
   final String label;
   final String placeholderText;
-  final FormFieldValidator<String> validator;
+  final FormFieldValidator<String>? validator;
   final TextEditingController controller;
   final bool obscureText;
   final void Function(String)? onChanged;
@@ -13,7 +13,7 @@ class AuthTextField extends StatelessWidget {
     Key? key,
     required this.label,
     required this.placeholderText,
-    required this.validator,
+    this.validator,
     required this.controller,
     this.obscureText = false,
     this.onChanged,

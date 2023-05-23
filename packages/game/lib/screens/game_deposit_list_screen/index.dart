@@ -1,6 +1,7 @@
 // paymentPage:2 列表
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_deposit_list_screen/payment_items.dart';
 import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -63,7 +64,7 @@ class _GameDepositListState extends State<GameDepositList> {
             TextButton(
               onPressed: () {
                 MyRouteDelegate.of(context)
-                    .push(AppRoutes.gameDepositRecord.value);
+                    .push(GameAppRoutes.depositRecord.value);
               },
               child: Text(
                 '存款記錄',

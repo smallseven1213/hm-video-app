@@ -23,6 +23,8 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../enums/game_app_routes.dart';
+
 class GameWithdraw extends StatefulWidget {
   const GameWithdraw({Key? key}) : super(key: key);
 
@@ -112,7 +114,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
       onConfirm: () {
         gameWithdrawController.setLoadingStatus(false);
         Navigator.of(context).pop();
-        MyRouteDelegate.of(context).push(AppRoutes.gameSetFundPassword.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword.value);
       },
     );
   }
@@ -272,7 +274,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                         child: InkWell(
                           onTap: () {
                             MyRouteDelegate.of(context)
-                                .push(AppRoutes.gameWithdrawRecord.value);
+                                .push(GameAppRoutes.withdrawRecord.value);
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

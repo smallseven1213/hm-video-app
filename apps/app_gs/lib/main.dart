@@ -1,9 +1,11 @@
 import 'package:app_gs/pages/actor.dart';
+import 'package:app_gs/pages/configs.dart';
 import 'package:app_gs/pages/shorts_by_tag.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
 import 'package:app_gs/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/runningMain.dart';
 import 'package:shared/widgets/root.dart';
@@ -24,6 +26,7 @@ import 'config/colors.dart';
 import 'pages/actors.dart';
 import 'pages/collection.dart';
 import 'pages/home.dart';
+import 'pages/id.dart';
 import 'pages/login.dart';
 import 'pages/playrecord.dart';
 import 'pages/register.dart';
@@ -36,6 +39,7 @@ import 'pages/supplier.dart';
 import 'pages/supplier_tag_video.dart';
 import 'pages/tag_video.dart';
 import 'pages/publisher.dart';
+import 'pages/update_password.dart';
 import 'pages/video_by_block.dart';
 import 'pages/favorites.dart';
 import 'pages/filter.dart';
@@ -69,30 +73,30 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.actor.value: (context, args) => ActorPage(
         id: args['id'] as int,
       ),
-  AppRoutes.gameLobby.value: (context, args) => const GameScreen(),
-  AppRoutes.gameWebview.value: (context, args) => GameWebviewScreen(
+  GameAppRoutes.lobby.value: (context, args) => const GameScreen(),
+  GameAppRoutes.webview.value: (context, args) => GameWebviewScreen(
         gameUrl: args['url'],
       ),
-  AppRoutes.gameDepositList.value: (context, args) =>
+  GameAppRoutes.depositList.value: (context, args) =>
       const GameDepositListScreen(),
-  AppRoutes.gameDepositPolling.value: (context, args) =>
+  GameAppRoutes.depositPolling.value: (context, args) =>
       const GameDepositPollingScreen(),
-  AppRoutes.gameWithdraw.value: (context, args) => const GameWithdrawScreen(),
-  AppRoutes.gameSetFundPassword.value: (context, args) =>
+  GameAppRoutes.withdraw.value: (context, args) => const GameWithdrawScreen(),
+  GameAppRoutes.setFundPassword.value: (context, args) =>
       const GameSetFundPasswordScreen(),
-  AppRoutes.gameSetBankcard.value: (context, args) =>
+  GameAppRoutes.setBankcard.value: (context, args) =>
       const GameSetBankCardScreen(),
-  AppRoutes.gamePaymentResult.value: (context, args) =>
+  GameAppRoutes.paymentResult.value: (context, args) =>
       const GamePaymentResultScreen(),
-  AppRoutes.gameDepositRecord.value: (context, args) =>
+  GameAppRoutes.depositRecord.value: (context, args) =>
       const GameDepositRecordScreen(),
-  AppRoutes.gameWithdrawRecord.value: (context, args) =>
+  GameAppRoutes.withdrawRecord.value: (context, args) =>
       const GameWithdrawRecordScreen(),
   AppRoutes.login.value: (context, args) => LoginPage(),
   AppRoutes.nickname.value: (context, args) => NicknamePage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),
   AppRoutes.share.value: (context, args) => const SharePage(),
-  AppRoutes.playRecord.value: (context, args) => PlayRecordPage(),
+  AppRoutes.playRecord.value: (context, args) => const PlayRecordPage(),
   AppRoutes.shareRecord.value: (context, args) => const ShareRecord(),
   AppRoutes.apps.value: (context, args) => const AppsScreen(),
   AppRoutes.favorites.value: (context, args) => const FavoritesPage(),
@@ -121,6 +125,9 @@ final Map<String, RouteWidgetBuilder> routes = {
         videoId: args['videoId'] as int,
         areaId: args['areaId'] as int,
       ),
+  AppRoutes.configs.value: (context, args) => ConfigsPage(),
+  AppRoutes.updatePassword.value: (context, args) => const UpdatePasswordPage(),
+  AppRoutes.idCard.value: (context, args) => const IDCardPage(),
 };
 
 class MyApp extends StatelessWidget {

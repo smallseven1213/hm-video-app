@@ -55,23 +55,26 @@ class FavoritesVideoScreen extends StatelessWidget {
                       videoViewTimes: video1.videoViewTimes)),
                 ),
                 const SizedBox(width: 8),
-                if (video2 != null)
-                  Expanded(
-                    child: Obx(() => VideoPreviewWithEditWidget(
-                        id: video2!.id,
-                        isEditing: listEditorController.isEditing.value,
-                        isSelected: listEditorController.selectedIds
-                            .contains(video2.id),
-                        onEditingTap: () {
-                          listEditorController.toggleSelected(video2!.id);
-                        },
-                        coverVertical: video2.coverVertical,
-                        coverHorizontal: video2.coverHorizontal,
-                        timeLength: video2.timeLength,
-                        tags: video2.tags,
-                        title: video2.title,
-                        videoViewTimes: video2.videoViewTimes)),
-                  ),
+                Expanded(
+                  child: video2 != null
+                      ? VideoPreviewWithEditWidget(
+                          id: video2.id,
+                          isEditing: listEditorController.isEditing.value,
+                          isSelected: listEditorController.selectedIds
+                              .contains(video2.id),
+                          onEditingTap: () {
+                            listEditorController.toggleSelected(video2!.id);
+                          },
+                          title: video2.title,
+                          tags: video2.tags,
+                          timeLength: video2.timeLength,
+                          coverHorizontal: video2.coverHorizontal,
+                          coverVertical: video2.coverVertical,
+                          videoViewTimes: video2.videoViewTimes,
+                          // detail: video2.detail,
+                        )
+                      : const SizedBox(),
+                ),
               ],
             );
           },

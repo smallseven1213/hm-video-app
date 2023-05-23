@@ -6,16 +6,6 @@ enum AppRoutes {
   videoByBlock,
   publisher,
   tag,
-  gameLobby,
-  gameDepositList,
-  gameDepositPolling,
-  gameWithdraw,
-  gameWebview,
-  gamePaymentResult,
-  gameSetFundPassword,
-  gameSetBankcard,
-  gameDepositRecord,
-  gameWithdrawRecord,
   login,
   register,
   share,
@@ -34,7 +24,10 @@ enum AppRoutes {
   supplierTag,
   shortsByTag,
   shortsByBlock,
-  shortsBySupplier
+  shortsBySupplier,
+  configs,
+  updatePassword,
+  idCard
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -54,26 +47,6 @@ extension AppRoutesExtension on AppRoutes {
         return '/publisher';
       case AppRoutes.tag:
         return '/tag';
-      case AppRoutes.gameLobby:
-        return '/game';
-      case AppRoutes.gameWithdraw:
-        return '/game/withdraw';
-      case AppRoutes.gameSetFundPassword:
-        return '/game/set_fund_password';
-      case AppRoutes.gameSetBankcard:
-        return '/game/set_bankcard';
-      case AppRoutes.gameDepositList:
-        return '/game/deposit_page_list';
-      case AppRoutes.gameDepositPolling:
-        return '/game/deposit_page_polling';
-      case AppRoutes.gamePaymentResult:
-        return '/game/deposit/payment-result';
-      case AppRoutes.gameWebview:
-        return '/game/webview';
-      case AppRoutes.gameDepositRecord:
-        return '/game/deposit/record';
-      case AppRoutes.gameWithdrawRecord:
-        return '/game/withdraw/record';
       case AppRoutes.login:
         return '/login';
       case AppRoutes.register:
@@ -112,6 +85,12 @@ extension AppRoutesExtension on AppRoutes {
         return '/shorts_by_block';
       case AppRoutes.shortsBySupplier:
         return '/shorts_by_supplier';
+      case AppRoutes.configs:
+        return '/configs';
+      case AppRoutes.updatePassword:
+        return '/update_password';
+      case AppRoutes.idCard:
+        return '/id_card';
       default:
         return '/unknown';
     }
