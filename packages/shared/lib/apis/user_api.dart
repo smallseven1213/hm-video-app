@@ -329,7 +329,7 @@ class UserApi {
 
   Future updatePassword(String origin, String newer) async {
     var value = await fetcher(
-        url: '${systemConfig.apiHost}/user/password',
+        url: '${systemConfig.apiHost}/public/users/user/password',
         method: 'PUT',
         body: {'password': origin, 'newPassword': newer});
     var res = (value.data as Map<String, dynamic>);
