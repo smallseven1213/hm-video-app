@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/onLoading.dart';
 import 'package:game/utils/showFormDialog.dart';
@@ -37,13 +38,13 @@ submitDepositOrder(
         onLoading(context, status: false);
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
         windowRef?.location.href = value;
-        MyRouteDelegate.of(context).push(AppRoutes.gamePaymentResult.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
         // gto('/game/deposit/payment-result/0/$activePayment');
       } else {
         await launch(value, webOnlyWindowName: '_blank');
         onLoading(context, status: false);
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
-        MyRouteDelegate.of(context).push(AppRoutes.gamePaymentResult.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
         // gto('/game/deposit/payment-result/0/$activePayment');
       }
     } else {

@@ -25,9 +25,6 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
       .toString();
   @override
   Widget build(BuildContext context) {
-    // return 一個寬高52的Container，背景色#2c2c2c，borderRadius 8，內部是一個Column，放一個icon跟一個text
-    // active的話，背景色要變成漸層
-    // 漸層css參考 background-image: radial-gradient(circle at 50% 0%, #91d35f, rgba(44, 44, 44, 0) 74%), linear-gradient(to bottom, #2c2c2c, #2c2c2c);
     return Stack(children: [
       Positioned(
         top: 10, // 設定光暈的位置偏移量
@@ -100,7 +97,6 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
           ),
         ),
       ),
-      // 光暈效果的容器，使用 Positioned.fill 使其覆蓋整個 Stack
     ]);
   }
 }

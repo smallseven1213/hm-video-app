@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../enums/game_app_routes.dart';
 import '../../models/user_withdrawal_data.dart';
 
 class GameWithDrawOptions extends StatefulWidget {
@@ -123,7 +124,7 @@ class _GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             text: "前往綁定",
             onPressed: () {
               widget.onBackFromBindingPage();
-              MyRouteDelegate.of(context).push(AppRoutes.gameSetBankcard.value);
+              MyRouteDelegate.of(context).push(GameAppRoutes.setBankcard.value);
             },
             disabled: gameWithdrawalController.hasPaymentData.value,
           )

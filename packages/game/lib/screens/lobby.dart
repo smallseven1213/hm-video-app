@@ -22,6 +22,8 @@ import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../enums/game_app_routes.dart';
+
 class GameLobby extends StatefulWidget {
   final String? bottom;
   const GameLobby({Key? key, this.bottom}) : super(key: key);
@@ -186,8 +188,8 @@ class _GameLobbyState extends State<GameLobby> {
                                     gameConfigController
                                                 .switchPaymentPage.value ==
                                             switchPaymentPageType['list']
-                                        ? AppRoutes.gameDepositList.value
-                                        : AppRoutes.gameDepositPolling.value,
+                                        ? GameAppRoutes.depositList.value
+                                        : GameAppRoutes.depositPolling.value,
                                   );
                                 },
                               ),
@@ -195,7 +197,7 @@ class _GameLobbyState extends State<GameLobby> {
                               UserInfoWithdraw(
                                 onTap: () {
                                   MyRouteDelegate.of(context).push(
-                                    AppRoutes.gameWithdraw.value,
+                                    GameAppRoutes.withdraw.value,
                                   );
                                 },
                               ),
