@@ -7,10 +7,12 @@ import '../models/banner_photo.dart';
 
 class AdBanner extends StatelessWidget {
   final BannerPhoto image;
-  
+  final BoxFit? fit;
+
   const AdBanner({
     Key? key,
     required this.image,
+    this.fit,
   }) : super(key: key);
 
   @override
@@ -18,13 +20,13 @@ class AdBanner extends StatelessWidget {
     return BannerLink(
         id: image.id ?? 0,
         url: image.url ?? '',
-        child: image.photoSid != null && image.photoSid!.isNotEmpty
+        child: image.photoSid.isNotEmpty
             ? SidImage(
                 key: ValueKey(image.photoSid),
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
-                sid: image.photoSid!,
-                fit: BoxFit.cover,
+                sid: image.photoSid,
+                fit: fit ?? BoxFit.cover,
               )
             : Container(
                 width: double.infinity,

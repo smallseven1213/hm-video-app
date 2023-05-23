@@ -19,8 +19,8 @@ class GlowingIcon extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: color.withOpacity(0.5),
-            blurRadius: 15,
+            color: color.withOpacity(0.1),
+            blurRadius: 5,
             spreadRadius: 1,
           ),
         ],

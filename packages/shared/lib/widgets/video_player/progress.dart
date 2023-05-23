@@ -30,15 +30,16 @@ class VideoProgressSlider extends StatelessWidget {
       ),
       child: SliderTheme(
         data: const SliderThemeData(
-          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 5),
           trackHeight: 2,
           thumbColor: Color(0xffFFC700),
           inactiveTrackColor: Color(0xffffffff),
+          thumbShape: RoundSliderThumbShape(enabledThumbRadius: 0.0),
         ),
         child: Slider(
           min: 0,
           max: max,
           value: value,
+          thumbColor: Colors.transparent,
           onChanged: (value) =>
               controller.seekTo(Duration(milliseconds: value.toInt())),
           onChangeStart: (_) => controller.pause(),

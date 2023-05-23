@@ -172,7 +172,7 @@ class ListMenu extends StatelessWidget {
                   const SizedBox(width: 16),
                   Image(
                     image: AssetImage(item.icon),
-                    width: 17,
+                    width: 22,
                   ),
                   const SizedBox(width: 16),
                   Text(

@@ -140,7 +140,7 @@ class VideoPlayerWidget extends StatelessWidget {
                   // )
                 ],
                 Positioned(
-                  bottom: -18,
+                  bottom: -20,
                   left: -24,
                   right: -24,
                   child: ValueListenableBuilder<VideoPlayerValue>(

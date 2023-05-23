@@ -34,7 +34,7 @@ class ShortCardInfo extends StatelessWidget {
       final obsVideoPlayerController =
           Get.find<ObservableVideoPlayerController>(tag: videoUrl);
       return Positioned(
-        bottom: 15,
+        bottom: 10,
         child: Container(
           width: MediaQuery.of(context).size.width,
           padding: const EdgeInsets.all(10),

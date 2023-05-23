@@ -8,6 +8,7 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/ad_banner.dart';
+import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final logger = Logger();
@@ -47,6 +48,7 @@ class NoticeDialogState extends State<NoticeDialog> {
             scrollable: true,
             content: Container(
                 width: 270,
+                height: 320,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     stops: [0.0, 0.9375, 1.0],
@@ -67,21 +69,12 @@ class NoticeDialogState extends State<NoticeDialog> {
                 ),
                 child: Stack(
                   children: [
-                    Positioned(
-                      top: 10,
-                      right: 10,
-                      child: IconButton(
-                        icon: Icon(Icons.close,
-                            color: Colors.white.withOpacity(0.5)),
-                        onPressed: () => Navigator.of(context).pop(),
-                      ),
-                    ),
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 120,
-                        left: 24,
-                        right: 24,
-                        bottom: 24,
+                        top: 95,
+                        left: 25,
+                        right: 25,
+                        bottom: 20,
                       ),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,12 +93,10 @@ class NoticeDialogState extends State<NoticeDialog> {
                           ),
                           Center(
                             child: Container(
-                              width: 172,
                               padding: const EdgeInsets.only(
                                 top: 10,
-                                bottom: 20,
                               ),
-                              height: 110,
+                              height: 132,
                               child: SingleChildScrollView(
                                 physics: const ClampingScrollPhysics(),
                                 child: HtmlWidget(
@@ -211,49 +202,39 @@ class NoticeDialogState extends State<NoticeDialog> {
             title: null,
             contentPadding: EdgeInsets.zero,
             content: SizedBox(
+              width: 270,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 270,
-                    height: 320,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          color: Colors.white.withOpacity(0.5), width: 1),
-                    ),
-                    clipBehavior: Clip.hardEdge,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: AdBanner(image: banner),
+                  SizedBox(
+                    child: AspectRatio(
+                      aspectRatio: 9 / 12,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: AdBanner(image: banner, fit: BoxFit.contain),
+                      ),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Container(
-                          width: 28,
-                          height: 28,
-                          margin: const EdgeInsets.only(top: 20),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                color: Colors.white.withOpacity(0.5), width: 2),
-                            borderRadius: BorderRadius.circular(36.0),
-                          ),
-                          child: Icon(
-                            Icons.close,
-                            weight: 5,
-                            color: Colors.white.withOpacity(0.5),
-                            size: 18,
-                          ),
-                        ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: Container(
+                      width: 28,
+                      height: 28,
+                      margin: const EdgeInsets.only(top: 5),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Colors.white.withOpacity(0.5), width: 2),
+                        borderRadius: BorderRadius.circular(36.0),
                       ),
-                    ],
+                      child: Icon(
+                        Icons.close,
+                        weight: 5,
+                        color: Colors.white.withOpacity(0.5),
+                        size: 18,
+                      ),
+                    ),
                   ),
                 ],
               ),

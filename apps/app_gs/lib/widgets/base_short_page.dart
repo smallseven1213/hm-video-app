@@ -43,6 +43,8 @@ class BaseShortPageState extends State<BaseShortPage> {
               },
               itemBuilder: (BuildContext context, int index) {
                 var isActive = index == currentPage;
+                final paddingBottom = MediaQuery.of(context).padding.bottom;
+
                 return Column(
                   children: [
                     Expanded(
@@ -55,10 +57,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                               )
                             : const SizedBox.shrink()),
                     Container(
-                      height: 100,
-                      margin: const EdgeInsets.only(top: 3),
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).padding.bottom),
+                      height: 76 + paddingBottom,
+                      padding: EdgeInsets.only(bottom: paddingBottom),
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
                           colors: [

@@ -42,13 +42,12 @@ class Header extends StatelessWidget {
                 alignment: Alignment.bottomLeft,
                 children: [
                   Positioned(
-                    bottom: 2,
+                    bottom: 0,
                     child: Container(
                       width: textWidth,
                       height: 5,
                       decoration: BoxDecoration(
-                        color: AppColors.colors[ColorKeys.textPrimary]!
-                            .withOpacity(0.78),
+                        color: AppColors.colors[ColorKeys.textPrimary]!,
                         borderRadius: const BorderRadius.horizontal(
                           left: Radius.circular(5),
                           right: Radius.circular(5),
@@ -64,6 +63,9 @@ class Header extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
+                  SizedBox(
+                    height: 4,
+                  )
                 ],
               ),
               const Spacer(),

@@ -1,5 +1,6 @@
 import 'package:app_gs/config/colors.dart';
 import 'package:app_gs/widgets/channel_area_banner.dart';
+import 'package:app_gs/widgets/glowing_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -9,7 +10,7 @@ import 'package:shared/navigator/delegate.dart';
 
 class CustomButton extends StatefulWidget {
   final String text;
-  final Icon? icon;
+  final Widget? icon;
   final bool? animate;
   final Function onTap;
 
@@ -57,7 +58,8 @@ class _CustomButtonState extends State<CustomButton>
         widget.onTap();
       },
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        height: 38,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
             colors: [Color(0xFF000916), Color(0xFF003F6C)],
@@ -84,8 +86,8 @@ class _CustomButtonState extends State<CustomButton>
             const SizedBox(width: 8),
             Text(
               widget.text,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
                 fontSize: 14,
               ),
             ),
@@ -124,16 +126,10 @@ class VideoBlockFooter extends StatelessWidget {
               Expanded(
                 child: CustomButton(
                   text: '進入櫥窗',
-                  icon: Icon(
-                    Icons.remove_red_eye_outlined,
+                  icon: GlowingIcon(
                     color: AppColors.colors[ColorKeys.textPrimary]!,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 5.0,
-                        color: AppColors.colors[ColorKeys.textPrimary]!
-                            .withOpacity(0.5),
-                      ),
-                    ],
+                    size: 20,
+                    iconData: Icons.remove_red_eye_outlined,
                   ),
                   onTap: () {
                     if (film == 1) {
@@ -156,7 +152,6 @@ class VideoBlockFooter extends StatelessWidget {
                         },
                       );
                     }
-
                     // updateBlock();
                   },
                 ),
@@ -167,16 +162,10 @@ class VideoBlockFooter extends StatelessWidget {
                 child: CustomButton(
                   text: '換一批',
                   animate: true,
-                  icon: Icon(
-                    Icons.refresh,
+                  icon: GlowingIcon(
                     color: AppColors.colors[ColorKeys.textPrimary]!,
-                    shadows: [
-                      Shadow(
-                        blurRadius: 5.0,
-                        color: AppColors.colors[ColorKeys.textPrimary]!
-                            .withOpacity(0.5),
-                      ),
-                    ],
+                    size: 20,
+                    iconData: Icons.refresh,
                   ),
                   onTap: () {
                     updateBlock();
