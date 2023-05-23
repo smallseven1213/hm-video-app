@@ -26,6 +26,7 @@ import 'config/colors.dart';
 import 'pages/actors.dart';
 import 'pages/collection.dart';
 import 'pages/home.dart';
+import 'pages/id.dart';
 import 'pages/login.dart';
 import 'pages/playrecord.dart';
 import 'pages/register.dart';
@@ -38,6 +39,7 @@ import 'pages/supplier.dart';
 import 'pages/supplier_tag_video.dart';
 import 'pages/tag_video.dart';
 import 'pages/publisher.dart';
+import 'pages/update_password.dart';
 import 'pages/video_by_block.dart';
 import 'pages/favorites.dart';
 import 'pages/filter.dart';
@@ -124,6 +126,8 @@ final Map<String, RouteWidgetBuilder> routes = {
         areaId: args['areaId'] as int,
       ),
   AppRoutes.configs.value: (context, args) => ConfigsPage(),
+  AppRoutes.updatePassword.value: (context, args) => const UpdatePasswordPage(),
+  AppRoutes.idCard.value: (context, args) => const IDCardPage(),
 };
 
 class MyApp extends StatelessWidget {

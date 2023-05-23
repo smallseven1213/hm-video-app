@@ -25,7 +25,9 @@ enum AppRoutes {
   shortsByTag,
   shortsByBlock,
   shortsBySupplier,
-  configs
+  configs,
+  updatePassword,
+  idCard
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -85,6 +87,10 @@ extension AppRoutesExtension on AppRoutes {
         return '/shorts_by_supplier';
       case AppRoutes.configs:
         return '/configs';
+      case AppRoutes.updatePassword:
+        return '/update_password';
+      case AppRoutes.idCard:
+        return '/id_card';
       default:
         return '/unknown';
     }
