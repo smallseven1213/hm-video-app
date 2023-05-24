@@ -11,8 +11,8 @@ import '../models/vod.dart';
 
 final userApi = UserApi();
 
-class UserVodCollectionController extends GetxController {
-  static const String _boxName = 'userVideoCollection';
+class UserShortCollectionController extends GetxController {
+  static const String _boxName = 'userShortCollection';
   late Box<String> box;
   var videos = <VideoDatabaseField>[].obs;
 
@@ -34,25 +34,25 @@ class UserVodCollectionController extends GetxController {
         return VideoDatabaseField.fromJson(videoJson);
       }).toList();
     } else {
-      await _fetchAndSaveCollection();
+      // await _fetchAndSaveCollection();
     }
   }
 
   Future<void> _fetchAndSaveCollection() async {
-    var blockData = await userApi.getVideoCollection();
-    videos.value = blockData.vods
-        .map((video) => VideoDatabaseField(
-              id: video.id,
-              title: video.title,
-              coverHorizontal: video.coverHorizontal!,
-              coverVertical: video.coverVertical!,
-              timeLength: video.timeLength!,
-              tags: video.tags!,
-              videoViewTimes: video.videoViewTimes!,
-              // detail: video.detail,
-            ))
-        .toList();
-    await _updateHive();
+    // var blockData = await userApi.getVideoCollection();
+    // videos.value = blockData.vods
+    //     .map((video) => VideoDatabaseField(
+    //           id: video.id,
+    //           title: video.title,
+    //           coverHorizontal: video.coverHorizontal!,
+    //           coverVertical: video.coverVertical!,
+    //           timeLength: video.timeLength!,
+    //           tags: video.tags!,
+    //           videoViewTimes: video.videoViewTimes!,
+    //           // detail: video.detail,
+    //         ))
+    //     .toList();
+    // await _updateHive();
   }
 
   // addVideo to collection

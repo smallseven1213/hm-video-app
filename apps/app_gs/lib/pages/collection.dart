@@ -18,8 +18,8 @@ class CollectionPage extends StatefulWidget {
 }
 
 class _CollectionPageState extends State<CollectionPage> {
-  final UserCollectionController userCollectionController =
-      Get.find<UserCollectionController>();
+  final UserVodCollectionController userVodCollectionController =
+      Get.find<UserVodCollectionController>();
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(tag: 'user_video_collection');
 
@@ -30,13 +30,13 @@ class _CollectionPageState extends State<CollectionPage> {
   }
 
   void _handleSelectAll() {
-    var allData = userCollectionController.videos;
+    var allData = userVodCollectionController.videos;
     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
   }
 
   void _handleDeleteAll() {
     var selectedIds = listEditorController.selectedIds.toList();
-    userCollectionController.removeVideo(selectedIds);
+    userVodCollectionController.removeVideo(selectedIds);
     listEditorController.removeBoundData(selectedIds);
   }
 
@@ -59,7 +59,7 @@ class _CollectionPageState extends State<CollectionPage> {
       body: Stack(
         children: [
           Obx(() {
-            var videos = userCollectionController.videos;
+            var videos = userVodCollectionController.videos;
             if (videos.isEmpty) {
               return const NoDataWidget();
             }

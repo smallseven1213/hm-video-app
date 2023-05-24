@@ -16,7 +16,7 @@ class VideoActions extends StatelessWidget {
   final Vod videoDetail;
   VideoActions({super.key, required this.videoBase, required this.videoDetail});
 
-  final userCollectionController = Get.find<UserCollectionController>();
+  final userVodCollectionController = Get.find<UserVodCollectionController>();
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
 
   @override
@@ -46,7 +46,7 @@ class VideoActions extends StatelessWidget {
         const SizedBox(width: 8),
         Expanded(
           child: Obx(() {
-            var isLiked = userCollectionController.videos
+            var isLiked = userVodCollectionController.videos
                 .any((e) => e.id == videoBase.id);
             return LikeButton(
               text: '收藏',
@@ -54,10 +54,10 @@ class VideoActions extends StatelessWidget {
               isLiked: isLiked,
               onPressed: () {
                 if (isLiked) {
-                  userCollectionController.removeVideo([videoDetail.id]);
+                  userVodCollectionController.removeVideo([videoDetail.id]);
                 } else {
                   var vod = Vod.fromJson(videoBase.toJson());
-                  userCollectionController.addVideo(vod);
+                  userVodCollectionController.addVideo(vod);
                 }
               },
             );

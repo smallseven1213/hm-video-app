@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/user_favorites_short_controlle.dart';
+import 'package:shared/controllers/user_short_collection_controller.dart';
+import 'package:shared/models/vod.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/short/button.dart';
 import 'shortcard/index.dart';
+
+final logger = Logger();
 
 class BaseShortPage extends StatefulWidget {
   final Function() createController;
@@ -28,6 +34,10 @@ class BaseShortPageState extends State<BaseShortPage> {
   @override
   Widget build(BuildContext context) {
     final controller = widget.createController();
+    final userShortCollectionController =
+        Get.find<UserShortCollectionController>();
+    final userFavoritesShortController =
+        Get.find<UserFavoritesShortController>();
 
     return Scaffold(
       body: Stack(
@@ -71,20 +81,51 @@ class BaseShortPageState extends State<BaseShortPage> {
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: const [
-                          ShortButtonButton(
-                            title: '1.9萬',
-                            subscribe: '喜歡就點讚',
-                            activeIcon: Icons.favorite,
-                            unActiveIcon: Icons.favorite_border,
-                          ),
-                          ShortButtonButton(
-                            title: '1.9萬',
-                            subscribe: '添加到收藏',
-                            // icon is star
-                            activeIcon: Icons.star,
-                            unActiveIcon: Icons.star_border,
-                          ),
+                        children: [
+                          Obx(() {
+                            bool isLike = userFavoritesShortController.videos
+                                .any((e) => e.id == widget.videoId);
+                            return ShortButtonButton(
+                              title: '1.9萬',
+                              subscribe: '喜歡就點讚',
+                              activeIcon: Icons.favorite,
+                              unActiveIcon: Icons.favorite_border,
+                              isLike: isLike,
+                              onTap: () {
+                                logger.i(controller.data[index].toJson());
+                                if (isLike) {
+                                  userFavoritesShortController
+                                      .removeVideo([widget.videoId]);
+                                } else {
+                                  var vod = Vod.fromJson(
+                                      controller.data[index].toJson());
+                                  userFavoritesShortController.addVideo(vod);
+                                }
+                              },
+                            );
+                          }),
+                          Obx(() {
+                            bool isLike = userShortCollectionController.videos
+                                .any((e) => e.id == widget.videoId);
+                            return ShortButtonButton(
+                              title: '1.9萬',
+                              subscribe: '添加到收藏',
+                              activeIcon: Icons.favorite,
+                              unActiveIcon: Icons.favorite_border,
+                              isLike: isLike,
+                              onTap: () {
+                                logger.i(controller.data[index].toJson());
+                                if (isLike) {
+                                  userShortCollectionController
+                                      .removeVideo([widget.videoId]);
+                                } else {
+                                  var vod = Vod.fromJson(
+                                      controller.data[index].toJson());
+                                  userShortCollectionController.addVideo(vod);
+                                }
+                              },
+                            );
+                          }),
                         ],
                       ),
                     )

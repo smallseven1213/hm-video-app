@@ -98,7 +98,9 @@ class VideoPreviewWidget extends StatelessWidget {
       this.onOverrideRedirectTap})
       : super(key: key);
 
-  final playrecordController = Get.find<PlayRecordController>();
+  final vodPlayrecordController = Get.find<PlayRecordController>(tag: 'vod');
+  final shortPlayrecordController =
+      Get.find<PlayRecordController>(tag: 'short');
 
   @override
   Widget build(BuildContext context) {
@@ -138,7 +140,7 @@ class VideoPreviewWidget extends StatelessWidget {
                     videoViewTimes: videoViewTimes,
                     // detail: detail!,
                   );
-                  playrecordController.addPlayRecord(playRecord);
+                  vodPlayrecordController.addPlayRecord(playRecord);
                 } else if (film == 2) {
                   logger.i('CLICK TO FILM2 $id, $blockId');
                   MyRouteDelegate.of(context).push(
@@ -146,6 +148,17 @@ class VideoPreviewWidget extends StatelessWidget {
                     args: {'videoId': id, 'areaId': blockId},
                     removeSamePath: true,
                   );
+                  var playRecord = VideoDatabaseField(
+                    id: id,
+                    coverHorizontal: coverHorizontal,
+                    coverVertical: coverVertical,
+                    timeLength: timeLength,
+                    tags: tags,
+                    title: title,
+                    videoViewTimes: videoViewTimes,
+                    // detail: detail!,
+                  );
+                  shortPlayrecordController.addPlayRecord(playRecord);
                 } else if (film == 3) {
                   // MyRouteDelegate.of(context).push(
                   //   AppRoutes.comic.value,

@@ -1,15 +1,14 @@
-import 'package:app_gs/widgets/no_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
-import 'package:shared/models/video_database_field.dart';
 
+import '../screens/playrecord/short.dart';
+import '../screens/playrecord/video.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_page_panel.dart';
-import '../widgets/video_preview_with_edit.dart';
+import '../widgets/tab_bar.dart';
 
 final logger = Logger();
 
@@ -20,27 +19,57 @@ class PlayRecordPage extends StatefulWidget {
   PlayRecordPageState createState() => PlayRecordPageState();
 }
 
-class PlayRecordPageState extends State<PlayRecordPage> {
-  final PlayRecordController playRecordController =
-      Get.find<PlayRecordController>();
-  final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'playrecord');
+class PlayRecordPageState extends State<PlayRecordPage>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(vsync: this, length: 2);
+
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        listEditorController.clearSelected();
+        listEditorController.isEditing.value = false;
+      }
+    });
+  }
 
   @override
   void dispose() {
-    listEditorController.closeEditing();
+    _tabController.dispose();
+    listEditorController.clearSelected();
+    listEditorController.isEditing.value = false;
     super.dispose();
   }
 
+  final ListEditorController listEditorController =
+      Get.find<ListEditorController>(tag: 'playrecord');
+  final vodPlayRecordController = Get.find<PlayRecordController>(tag: 'vod');
+  final shortPlayRecordController =
+      Get.find<PlayRecordController>(tag: 'short');
+
   void _handleSelectAll() {
-    var allData = playRecordController.playRecord;
-    listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    if (_tabController.index == 0) {
+      var allData = vodPlayRecordController.videos;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    } else {
+      var allData = shortPlayRecordController.videos;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    }
   }
 
   void _handleDeleteAll() {
-    var selectedIds = listEditorController.selectedIds.toList();
-    playRecordController.removePlayRecord(selectedIds);
-    listEditorController.removeBoundData(selectedIds);
+    if (_tabController.index == 0) {
+      var selectedIds = listEditorController.selectedIds.toList();
+      vodPlayRecordController.removeVideo(selectedIds);
+      listEditorController.removeBoundData(selectedIds);
+    } else {
+      var selectedIds = listEditorController.selectedIds.toList();
+      shortPlayRecordController.removeVideo(selectedIds);
+      listEditorController.removeBoundData(selectedIds);
+    }
   }
 
   @override
@@ -58,79 +87,22 @@ class PlayRecordPageState extends State<PlayRecordPage> {
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],
+        bottom:
+            GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
       ),
       body: Stack(
         children: [
-          Obx(() {
-            var videos = playRecordController.playRecord;
-            if (videos.isEmpty) {
-              return const NoDataWidget();
-            }
-            return ListView.separated(
-              padding: const EdgeInsets.all(8.0),
-              itemCount: (videos.length / 2).ceil(),
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 8);
-              },
-              itemBuilder: (BuildContext context, int index) {
-                logger.i('RENDER BOX Testing');
-                var video1 = videos[index * 2];
-                VideoDatabaseField? video2;
-                if (index * 2 + 1 < videos.length) {
-                  video2 = videos[index * 2 + 1];
-                }
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: VideoPreviewWithEditWidget(
-                        id: video1.id,
-                        isEditing: listEditorController.isEditing.value,
-                        isSelected: listEditorController.selectedIds
-                            .contains(video1.id),
-                        onEditingTap: () {
-                          listEditorController.toggleSelected(video1.id);
-                        },
-                        title: video1.title,
-                        tags: video1.tags,
-                        timeLength: video1.timeLength,
-                        coverHorizontal: video1.coverHorizontal,
-                        coverVertical: video1.coverVertical,
-                        videoViewTimes: video1.videoViewTimes,
-                        // detail: video1.detail,
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Expanded(
-                      child: video2 != null
-                          ? VideoPreviewWithEditWidget(
-                              id: video2.id,
-                              isEditing: listEditorController.isEditing.value,
-                              isSelected: listEditorController.selectedIds
-                                  .contains(video2.id),
-                              onEditingTap: () {
-                                listEditorController.toggleSelected(video2!.id);
-                              },
-                              title: video2.title,
-                              tags: video2.tags,
-                              timeLength: video2.timeLength,
-                              coverHorizontal: video2.coverHorizontal,
-                              coverVertical: video2.coverVertical,
-                              videoViewTimes: video2.videoViewTimes,
-                              // detail: video2.detail,
-                            )
-                          : const SizedBox(),
-                    ),
-                  ],
-                );
-              },
-            );
-          }),
-          ListPagePanelWidget(
-            listEditorController: listEditorController,
-            onSelectButtonClick: _handleSelectAll,
-            onDeleteButtonClick: _handleDeleteAll,
+          TabBarView(
+            controller: _tabController,
+            children: [
+              PlayRecordVideoScreen(),
+              PlayRecordShortScreen(),
+            ],
           ),
+          ListPagePanelWidget(
+              listEditorController: listEditorController,
+              onSelectButtonClick: _handleSelectAll,
+              onDeleteButtonClick: _handleDeleteAll),
         ],
       ),
     );
