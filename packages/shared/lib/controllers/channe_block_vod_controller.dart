@@ -5,7 +5,7 @@ import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
 final vodApi = VodApi();
-const limit = 20;
+const limit = 30;
 final logger = Logger();
 
 // 目前給Channel Block Style 3用
