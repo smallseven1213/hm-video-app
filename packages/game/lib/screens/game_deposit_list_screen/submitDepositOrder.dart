@@ -7,9 +7,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/onLoading.dart';
 import 'package:game/utils/showFormDialog.dart';
 import 'package:get/get.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:universal_html/html.dart' as html;
 import 'package:url_launcher/url_launcher.dart';
 
 submitDepositOrder(
@@ -23,8 +21,12 @@ submitDepositOrder(
       'amount: $amount, paymentChannelId: $paymentChannelId, userName: $userName');
   onLoading(context, status: true);
   // ignore: avoid_init_to_null
-  var windowRef = null;
-  if (GetPlatform.isWeb) windowRef = html.window.open('', '_blank');
+  if (GetPlatform.isWeb) {
+    // windowRef = html.window.open('', '_blank');
+    if (await canLaunchUrl(Uri.parse(''))) {
+      await launchUrl(Uri.parse(''), webOnlyWindowName: '_blank');
+    }
+  }
   await Future.delayed(const Duration(milliseconds: 66));
   try {
     var value = await GameLobbyApi().makeOrderV2(
@@ -37,11 +39,13 @@ submitDepositOrder(
         await Future.delayed(const Duration(milliseconds: 500));
         onLoading(context, status: false);
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
-        windowRef?.location.href = value;
+        // windowRef?.location.href = value;
+        launchUrl(Uri.parse(value), webOnlyWindowName: '_blank');
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
         // gto('/game/deposit/payment-result/0/$activePayment');
       } else {
-        await launch(value, webOnlyWindowName: '_blank');
+        // await launch(value, webOnlyWindowName: '_blank');
+        await launchUrl(Uri.parse(value), webOnlyWindowName: '_blank');
         onLoading(context, status: false);
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);

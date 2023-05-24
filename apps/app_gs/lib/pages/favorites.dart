@@ -11,6 +11,8 @@ import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
 import '../widgets/list_page_panel.dart';
 
+const tabs = ['長視頻', '短視頻', '演員'];
+
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
 
@@ -25,7 +27,7 @@ class _FavoritesPageState extends State<FavoritesPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: tabs.length);
 
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
@@ -85,8 +87,7 @@ class _FavoritesPageState extends State<FavoritesPage>
                   style: const TextStyle(color: Color(0xff00B0D4)),
                 )))
           ],
-          bottom: GSTabBar(
-              tabs: const ['長視頻', '短視頻', '演員'], controller: _tabController),
+          bottom: GSTabBar(tabs: tabs, controller: _tabController),
         ),
         body: Stack(
           children: [
