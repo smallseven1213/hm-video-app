@@ -209,10 +209,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                   SizedBox(
                     child: AspectRatio(
                       aspectRatio: 9 / 12,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: AdBanner(image: banner, fit: BoxFit.contain),
-                      ),
+                      child: AdBanner(image: banner, fit: BoxFit.contain),
                     ),
                   ),
                   GestureDetector(
