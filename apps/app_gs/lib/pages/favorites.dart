@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
+import '../screens/favorites/short.dart';
 import '../widgets/button.dart';
 import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
@@ -84,8 +85,8 @@ class _FavoritesPageState extends State<FavoritesPage>
                   style: const TextStyle(color: Color(0xff00B0D4)),
                 )))
           ],
-          bottom:
-              GSTabBar(tabs: const ['長視頻', '演員'], controller: _tabController),
+          bottom: GSTabBar(
+              tabs: const ['長視頻', '短視頻', '演員'], controller: _tabController),
         ),
         body: Stack(
           children: [
@@ -93,6 +94,7 @@ class _FavoritesPageState extends State<FavoritesPage>
               controller: _tabController,
               children: [
                 FavoritesVideoScreen(),
+                FavoritesShortScreen(),
                 FavoritesActorScreen(),
               ],
             ),

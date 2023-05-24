@@ -38,12 +38,7 @@ class SupplierTagVideoPage extends StatelessWidget {
               mainAxisSpacing: 1,
             ),
             itemBuilder: (BuildContext context, int index) {
-              logger.i('RENDER BOX: Testing builder');
               var vod = vodController.vodList.value[index];
-              // return Text(
-              //   vod.title,
-              //   style: TextStyle(color: Colors.white, fontSize: 30),
-              // );
               return VideoPreviewWidget(
                   id: vod.id,
                   film: 2,

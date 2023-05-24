@@ -3,16 +3,17 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:shared/controllers/auth_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
 import '../models/video_database_field.dart';
 import '../models/vod.dart';
 
 final userApi = UserApi();
+final logger = Logger();
 
-class UserVodCollectionController extends GetxController {
-  static const String _boxName = 'userVideoCollection';
+class UserFavoritesShortController extends GetxController {
+  static const String _boxName = 'userFavoritesShort';
   late Box<String> box;
   var videos = <VideoDatabaseField>[].obs;
 
@@ -34,25 +35,25 @@ class UserVodCollectionController extends GetxController {
         return VideoDatabaseField.fromJson(videoJson);
       }).toList();
     } else {
-      await _fetchAndSaveCollection();
+      // await _fetchAndSaveCollection();
     }
   }
 
   Future<void> _fetchAndSaveCollection() async {
-    var blockData = await userApi.getVideoCollection();
-    videos.value = blockData.vods
-        .map((video) => VideoDatabaseField(
-              id: video.id,
-              title: video.title,
-              coverHorizontal: video.coverHorizontal!,
-              coverVertical: video.coverVertical!,
-              timeLength: video.timeLength!,
-              tags: video.tags!,
-              videoViewTimes: video.videoViewTimes!,
-              // detail: video.detail,
-            ))
-        .toList();
-    await _updateHive();
+    // var blockData = await userApi.getFavoriteVideo();
+    // videos.value = blockData.vods
+    //     .map((video) => VideoDatabaseField(
+    //           id: video.id,
+    //           title: video.title,
+    //           coverHorizontal: video.coverHorizontal!,
+    //           coverVertical: video.coverVertical!,
+    //           timeLength: video.timeLength!,
+    //           tags: video.tags!,
+    //           videoViewTimes: video.videoViewTimes!,
+    //           // detail: video.detail,
+    //         ))
+    //     .toList();
+    // await _updateHive();
   }
 
   // addVideo to collection
@@ -60,6 +61,7 @@ class UserVodCollectionController extends GetxController {
     if (videos.firstWhereOrNull((v) => v.id == video.id) != null) {
       videos.removeWhere((v) => v.id == video.id);
     }
+
     var formattedVideo = VideoDatabaseField(
       id: video.id,
       title: video.title,
@@ -72,14 +74,14 @@ class UserVodCollectionController extends GetxController {
     );
     videos.add(formattedVideo);
     await _updateHive();
-    userApi.addVideoCollection(video.id);
+    userApi.addFavoriteVideo(video.id);
   }
 
   // removeVideo from collection
   void removeVideo(List<int> ids) async {
     videos.removeWhere((v) => ids.contains(v.id));
     await _updateHive();
-    userApi.deleteVideoCollection(ids);
+    userApi.deleteFavoriteVideo(ids);
   }
 
   Future<void> _updateHive() async {
