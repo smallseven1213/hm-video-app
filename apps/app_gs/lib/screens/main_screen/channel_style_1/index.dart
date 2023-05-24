@@ -20,8 +20,8 @@ Widget buildTitle(String title) {
       ? const SizedBox()
       : Column(
           children: [
-            Header(text: title),
             const SizedBox(height: 8),
+            Header(text: title),
           ],
         );
 }

@@ -32,14 +32,6 @@ class CircleTextItem extends StatelessWidget {
             borderRadius: isRounded
                 ? BorderRadius.circular(40)
                 : BorderRadius.circular(5),
-            boxShadow: hasBorder
-                ? [
-                    BoxShadow(
-                      color: const Color.fromRGBO(69, 110, 255, 1),
-                      blurRadius: isRounded ? 10 : 8,
-                    ),
-                  ]
-                : null,
             gradient: hasBorder
                 ? LinearGradient(
                     begin: Alignment.topCenter,
