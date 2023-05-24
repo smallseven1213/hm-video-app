@@ -118,7 +118,11 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                 ),
                 InkWell(
                   onTap: () async {
-                    MyRouteDelegate.of(context).push(GameAppRoutes.lobby.value);
+                    // MyRouteDelegate.of(context).push(GameAppRoutes.lobby.value);
+                    MyRouteDelegate.of(context).pushAndRemoveUntil(
+                        AppRoutes.home.value,
+                        hasTransition: false,
+                        args: {'defaultScreenKey': '/game'});
                   },
                   child: Container(
                     alignment: Alignment.center,

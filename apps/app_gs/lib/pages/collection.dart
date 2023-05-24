@@ -77,6 +77,7 @@ class _CollectionPageState extends State<CollectionPage> {
                   video2 = videos[index * 2 + 1];
                 }
                 return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: VideoPreviewWithEditWidget(
