@@ -5,6 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
+import '../../widgets/game_startup.dart';
 
 class GamePaymentResult extends StatefulWidget {
   const GamePaymentResult({Key? key}) : super(key: key);
@@ -118,11 +119,7 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                 ),
                 InkWell(
                   onTap: () async {
-                    // MyRouteDelegate.of(context).push(GameAppRoutes.lobby.value);
-                    MyRouteDelegate.of(context).pushAndRemoveUntil(
-                        AppRoutes.home.value,
-                        hasTransition: false,
-                        args: {'defaultScreenKey': '/game'});
+                    Get.find<GameStartupController>().backToAppHome();
                   },
                   child: Container(
                     alignment: Alignment.center,

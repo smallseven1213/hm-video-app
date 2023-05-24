@@ -1,10 +1,13 @@
 import 'package:app_gs/screens/games/game_lobby_screen/lobby.dart';
 import 'package:flutter/material.dart';
+import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../config/layouts.dart';
 import '../screens/apps_screen/index.dart';
@@ -53,6 +56,12 @@ class HomeState extends State<HomePage> {
           tag: 'channel-screen-$layout', permanent: false);
       Get.put(LayoutController(layout), tag: 'layout$layout', permanent: false);
     }
+
+    // include game startup
+    Get.put(GameStartupController(backToAppHome: () {
+      MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.home.value,
+          hasTransition: false, args: {'defaultScreenKey': '/game'});
+    }));
   }
 
   @override

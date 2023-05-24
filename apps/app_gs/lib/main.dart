@@ -4,6 +4,8 @@ import 'package:app_gs/pages/shorts_by_tag.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
 import 'package:app_gs/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:game/widgets/game_startup.dart';
+import 'package:get/get.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
