@@ -62,24 +62,53 @@ class RecommandScreen extends StatelessWidget {
         ),
         Obx(() => SliverPadding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              sliver: SliverAlignedGrid.count(
-                crossAxisCount: 2,
-                itemCount: videoPopularController.data.length,
-                itemBuilder: (BuildContext context, int index) {
-                  var video = videoPopularController.data[index];
-                  return VideoPreviewWidget(
-                      id: video.id,
-                      coverVertical: video.coverVertical!,
-                      coverHorizontal: video.coverHorizontal!,
-                      timeLength: video.timeLength!,
-                      tags: video.tags!,
-                      title: video.title,
-                      videoViewTimes: video.videoViewTimes!);
-                },
-                mainAxisSpacing: 12.0,
-                crossAxisSpacing: 10.0,
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    var firstVideo = videoPopularController.data[index * 2];
+                    var secondVideo =
+                        (index * 2 + 1 < videoPopularController.data.length)
+                            ? videoPopularController.data[index * 2 + 1]
+                            : null;
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: VideoPreviewWidget(
+                              id: firstVideo.id,
+                              coverVertical: firstVideo.coverVertical!,
+                              coverHorizontal: firstVideo.coverHorizontal!,
+                              timeLength: firstVideo.timeLength!,
+                              tags: firstVideo.tags!,
+                              title: firstVideo.title,
+                              videoViewTimes: firstVideo.videoViewTimes!,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: secondVideo != null
+                                ? VideoPreviewWidget(
+                                    id: secondVideo.id,
+                                    coverVertical: secondVideo.coverVertical!,
+                                    coverHorizontal:
+                                        secondVideo.coverHorizontal!,
+                                    timeLength: secondVideo.timeLength!,
+                                    tags: secondVideo.tags!,
+                                    title: secondVideo.title,
+                                    videoViewTimes: secondVideo.videoViewTimes!,
+                                  )
+                                : const SizedBox(),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  childCount: (videoPopularController.data.length / 2).ceil(),
+                ),
               ),
-            )),
+            ))
       ],
     );
   }

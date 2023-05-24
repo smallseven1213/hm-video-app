@@ -53,7 +53,9 @@ void main() {
 }
 
 final Map<String, RouteWidgetBuilder> routes = {
-  AppRoutes.home.value: (context, args) => Home(),
+  AppRoutes.home.value: (context, args) => HomePage(
+        defaultScreenKey: args['defaultScreenKey'] as String?,
+      ),
   AppRoutes.video.value: (context, args) => Video(args: args),
   AppRoutes.videoByBlock.value: (context, args) => VideoByBlockPage(
         id: args['id'] as int,

@@ -37,6 +37,7 @@ class FavoritesVideoScreen extends StatelessWidget {
               video2 = videos[index * 2 + 1];
             }
             return Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                   child: Obx(() => VideoPreviewWithEditWidget(

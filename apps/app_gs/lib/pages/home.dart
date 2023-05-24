@@ -28,22 +28,26 @@ final screens = {
   '/user': () => const UserScreen()
 };
 
-class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  final String? defaultScreenKey;
+  HomePage({Key? key, this.defaultScreenKey = '/layout1'}) : super(key: key);
 
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
   @override
-  _HomeState createState() => _HomeState();
+  HomeState createState() => HomeState();
 }
 
-class _HomeState extends State<Home> {
+class HomeState extends State<HomePage> {
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
   // init
   @override
   void initState() {
     super.initState();
+    if (widget.defaultScreenKey != null) {
+      bottomNavigatorController.changeKey(widget.defaultScreenKey!);
+    }
     for (var layout in layouts) {
       Get.put(ChannelScreenTabController(),
           tag: 'channel-screen-$layout', permanent: false);
@@ -53,7 +57,6 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('RENDER: Home');
     return Obx(
       () {
         var activeKey = bottomNavigatorController.activeKey.value;
@@ -115,7 +118,7 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
-                      const NoticeDialog()
+                      if (widget.defaultScreenKey == null) const NoticeDialog()
                     ],
                   ));
       },
