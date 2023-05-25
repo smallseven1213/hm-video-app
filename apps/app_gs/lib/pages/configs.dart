@@ -216,35 +216,34 @@ class CellItem extends StatelessWidget {
   final Widget image;
   final Widget? label;
   final String text;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   const CellItem(
       {super.key,
       required this.image,
       this.label,
       required this.text,
-      required this.onTap});
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: image,
-      title: Expanded(
-        child: Text(
-          text,
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 14,
-          ),
+      title: Text(
+        text,
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 14,
         ),
       ),
-      trailing: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (label != null) label!,
-          const Icon(Icons.keyboard_arrow_right, color: Colors.white),
-        ],
-      ),
+      trailing: const Icon(Icons.keyboard_arrow_right, color: Colors.white),
+      // trailing: Row(
+      //   mainAxisSize: MainAxisSize.min,
+      //   children: [
+      //     if (label != null) label!,
+      //     const Icon(Icons.keyboard_arrow_right, color: Colors.white),
+      //   ],
+      // ),
       onTap: onTap,
     );
   }
