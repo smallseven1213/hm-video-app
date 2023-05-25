@@ -2,7 +2,7 @@ class BannerPosition {
   const BannerPosition._(this.value);
   final int value;
 
-  static const BannerPosition unused = BannerPosition._(0);
+  static const BannerPosition none = BannerPosition._(0);
   static const BannerPosition channelTopCarousel =
       BannerPosition._(1); // 1: 頻道 - 上方輪播
   static const BannerPosition channelAreaBanner =

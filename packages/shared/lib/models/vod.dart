@@ -9,7 +9,7 @@ import 'actor.dart';
 final systemConfig = SystemConfig();
 
 enum VideoType {
-  unused,
+  none,
   video,
   embeddedAd,
   areaAd,

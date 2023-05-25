@@ -15,13 +15,13 @@ enum OuterFrame {
 }
 
 enum OuterFrameStyle {
-  unused,
+  none,
   circle,
   square,
 }
 
 enum JingangStyle {
-  unused,
+  none,
   single,
   multiLine,
 }
