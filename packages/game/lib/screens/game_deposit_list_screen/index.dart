@@ -8,8 +8,11 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:get/get.dart';
-import 'package:shared/enums/app_routes.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
+
+
+final logger = Logger();
 
 class GameDepositList extends StatefulWidget {
   const GameDepositList({Key? key}) : super(key: key);
@@ -35,7 +38,7 @@ class _GameDepositListState extends State<GameDepositList> {
       depositData = res;
     });
     try {} catch (error) {
-      print('_getDepositChannel $error');
+      logger.i('_getDepositChannel $error');
     }
   }
 

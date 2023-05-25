@@ -9,7 +9,10 @@ import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/user_controller.dart';
+
+final logger = Logger();
 
 class GameDepositPolling extends StatefulWidget {
   const GameDepositPolling({Key? key}) : super(key: key);
@@ -77,7 +80,7 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
         // );
       }
     } catch (error) {
-      print('_getUserWithdrawalData $error');
+      logger.i('_getUserWithdrawalData $error');
 
       // showConfirm(
       //   context,
@@ -115,7 +118,7 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
         var balance = res['data']['balance'].toString();
 
         if (double.parse(balance) > 0) {
-          // print('double.parse(balance) : ${double.parse(balance)}');
+          // logger.i('double.parse(balance) : ${double.parse(balance)}');
           // showConfirm(
           //   context,
           //   title: "仍有遊戲進行中",
@@ -133,7 +136,7 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
         // );
       }
     } catch (error) {
-      print(error);
+      logger.i(error);
     }
   }
 
@@ -146,10 +149,10 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
           stakeLimit = res.data!.stakeLimit;
           validStake = res.data!.validStake;
         });
-        print('reachable: $reachable, $stakeLimit, $validStake');
+        logger.i('reachable: $reachable, $stakeLimit, $validStake');
       }
     } catch (e) {
-      print('_getStackLimit error : $e');
+      logger.i('_getStackLimit error : $e');
     }
   }
 
@@ -161,10 +164,11 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
           withdrawalFee = res.data!.withdrawalFee;
           withdrawalMode = res.data!.withdrawalMode;
         });
-        print('withdrawalFee: $withdrawalFee, withdrawalMode: $withdrawalMode');
+        logger.i(
+            'withdrawalFee: $withdrawalFee, withdrawalMode: $withdrawalMode');
       }
     } catch (error) {
-      print('_getParamConfig $error');
+      logger.i('_getParamConfig $error');
     }
   }
 
@@ -315,7 +319,8 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
                               _enableSubmit =
                                   _formKey.currentState?.validate() ?? false;
                             });
-                            print('驗證表單: ${_formKey.currentState?.validate()}');
+                            logger.i(
+                                '驗證表單: ${_formKey.currentState?.validate()}');
                           },
                           child: Column(
                             children: [
@@ -336,7 +341,7 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
                                 Obx(() => FormBuilderField<String?>(
                                       name: 'amount',
                                       onChanged: (val) =>
-                                          debugPrint(val.toString()),
+                                          logger.i(val.toString()),
                                       validator: FormBuilderValidators.compose([
                                         FormBuilderValidators.required(
                                           errorText: '請輸提現金額',

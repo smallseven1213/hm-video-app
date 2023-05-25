@@ -108,7 +108,7 @@ class _SplashState extends State<Splash> {
 
   // Step3: fetch dl.json get apiHost & maintenance status
   fetchDlJson() async {
-    print('step3: fetch dl.json');
+    logger.i('step3: fetch dl.json');
     var res = await dlApi.fetchDlJson();
     if (res != null) {
       // 設定apiHost & vodHost & imageHost & maintenance
@@ -127,7 +127,7 @@ class _SplashState extends State<Splash> {
 
   // Step4: 檢查維護中
   checkIsMaintenance() async {
-    print('step4: 檢查是否維護中${systemConfig.isMaintenance}');
+    logger.i('step4: 檢查是否維護中${systemConfig.isMaintenance}');
     if (systemConfig.isMaintenance) {
       alertDialog(context, content: '系統維護中，請稍後再試。', actions: []);
     }
@@ -140,12 +140,12 @@ class _SplashState extends State<Splash> {
     if (mounted) {
       setState(() => loadingText = '檢查更新...');
     }
-    print('step5: 檢查是否有更新');
+    logger.i('step5: 檢查是否有更新');
     final apkUpdate = await apkApi.checkVersion(
       version: systemConfig.version,
       agentCode: systemConfig.agentCode,
     );
-    print('apkUpdate: ${apkUpdate.status}');
+    logger.i('apkUpdate: ${apkUpdate.status}');
 
     if (apkUpdate.status == ApkStatus.forceUpdate) {
       if (mounted) {
@@ -204,7 +204,7 @@ class _SplashState extends State<Splash> {
     if (mounted) {
       setState(() => loadingText = '用戶登入...');
     }
-    print('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
+    logger.i('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
 
     logger.i('userApi: ${authController.token.value}');
     if (authController.token.value != '') {
@@ -224,7 +224,7 @@ class _SplashState extends State<Splash> {
         // GameLobby TODO
         gameResponseController.clear();
 
-        print('res.status ${res.code}');
+        logger.i('res.status ${res.code}');
         if (res.code == '00') {
           fetchInitialDataAndNavigate();
         } else {
@@ -248,7 +248,7 @@ class _SplashState extends State<Splash> {
           );
         }
       } catch (err) {
-        print('err: $err');
+        logger.i('err: $err');
         alertDialog(
           context,
           title: '失敗',
@@ -263,7 +263,7 @@ class _SplashState extends State<Splash> {
     if (mounted) {
       setState(() => loadingText = '取得最新資源...');
     }
-    print('step7.1: 取得nav bar內容');
+    logger.i('step7.1: 取得nav bar內容');
     // final NavBarController navBarController = Get.put(NavBarController());
     //  navBarController.fetchNavBar();
   }
@@ -279,16 +279,16 @@ class _SplashState extends State<Splash> {
     }
     Get.put(VideoPopularController());
     Get.put(TagPopularController());
-    print('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
+    logger.i('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
 
     if (landingBanners.isEmpty && mounted) {
-      print('沒有廣告，直接進入首頁');
+      logger.i('沒有廣告，直接進入首頁');
       MyRouteDelegate.of(context)
           .pushAndRemoveUntil(AppRoutes.home.value, hasTransition: false);
     } else {
-      print('有廣告，進入廣告頁');
+      logger.i('有廣告，進入廣告頁');
       MyRouteDelegate.of(context)
           .pushAndRemoveUntil(AppRoutes.ad.value, hasTransition: false);
     }

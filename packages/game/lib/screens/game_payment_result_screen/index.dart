@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:get/get.dart';
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
+import 'package:logger/logger.dart';
 
-import '../../enums/game_app_routes.dart';
 import '../../widgets/game_startup.dart';
+
+final logger = Logger();
 
 class GamePaymentResult extends StatefulWidget {
   const GamePaymentResult({Key? key}) : super(key: key);
@@ -147,10 +147,10 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                     left: 16,
                     right: 16,
                   ),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
+                    children: const [
                       Text(
                         '溫馨提醒',
                         // color is 979797

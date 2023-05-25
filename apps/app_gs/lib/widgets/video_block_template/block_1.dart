@@ -3,8 +3,11 @@ import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_block_grid_view_row.dart';
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
+
+final logger = Logger();
 
 List<List<Vod>> organizeRowData(List<Vod> videos, Blocks block) {
   List<List<Vod>> result = [];
@@ -23,7 +26,7 @@ List<List<Vod>> organizeRowData(List<Vod> videos, Blocks block) {
         // 影片列表
         result.add([videos[i], videos[i + 1]]);
         i += 2;
-        // print('Block1Widget 有兩筆: $i');
+        // logger.i('Block1Widget 有兩筆: $i');
       } else {
         // 落單的一筆
         result.add([videos[i]]);
@@ -31,7 +34,7 @@ List<List<Vod>> organizeRowData(List<Vod> videos, Blocks block) {
       }
     }
   } catch (e) {
-    print('Block1Widget error: $e');
+    logger.i('Block1Widget error: $e');
     return [];
   }
 

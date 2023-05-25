@@ -7,7 +7,10 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/button.dart';
 import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
+
+final logger = Logger();
 
 void showFundingPasswordBottomSheet(BuildContext context,
     {required Function(String? pin) onSuccess, Function()? onClose}) {
@@ -106,7 +109,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                     },
                     child: FormBuilderField<String?>(
                       name: 'password',
-                      onChanged: (val) => debugPrint(val.toString()),
+                      onChanged: (val) => logger.i(val.toString()),
                       validator: FormBuilderValidators.compose([
                         FormBuilderValidators.required(
                           errorText: '請輸入資金密碼',

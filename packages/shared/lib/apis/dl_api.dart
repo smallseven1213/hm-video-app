@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class DlApi {
   static final DlApi _instance = DlApi._internal();
@@ -35,7 +37,7 @@ class DlApi {
       var res = (response.data as Map<String, dynamic>);
       return res;
     } catch (err) {
-      print('fetchDlJson error: $err');
+      logger.i('fetchDlJson error: $err');
     }
   }
 }

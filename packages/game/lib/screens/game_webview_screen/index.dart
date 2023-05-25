@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/controllers/game_config_controller.dart';
+import 'package:logger/logger.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -13,6 +14,9 @@ import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/h5webview.dart';
 
 import '../../enums/game_app_routes.dart';
+
+
+final logger = Logger();
 
 class GameLobbyWebview extends StatefulWidget {
   final String gameUrl;
@@ -62,7 +66,7 @@ class _ButtonWidget extends State<ButtonWidget> {
             children: [
               InkWell(
                 onTap: () {
-                  print('返回大廳');
+                  logger.i('返回大廳');
                   showConfirmDialog(
                     context: context,
                     title: '退出遊戲',
@@ -123,7 +127,7 @@ class _ButtonWidget extends State<ButtonWidget> {
               ),
               InkWell(
                 onTap: () {
-                  print('充值');
+                  logger.i('充值');
                   Navigator.of(context).pop();
                   MyRouteDelegate.of(context).push(
                     gameConfigController.switchPaymentPage.value ==
@@ -191,7 +195,7 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
   }
 
   toggleButtonRow() {
-    print('toggleButtonRow');
+    logger.i('toggleButtonRow');
     setState(() {
       toggleButton = !toggleButton;
     });

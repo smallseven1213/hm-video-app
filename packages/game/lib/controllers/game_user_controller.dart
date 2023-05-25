@@ -51,7 +51,7 @@ class GameUserController extends GetxController {
       var res = await userApi.getCurrentUser();
       info.value = res;
     } catch (error) {
-      print('fetchUserInfo error: $error');
+      logger.i('fetchUserInfo error: $error');
     } finally {
       isLoading.value = false;
     }

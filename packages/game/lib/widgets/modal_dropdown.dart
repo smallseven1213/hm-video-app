@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:logger/logger.dart';
+
+
+final logger = Logger();
 
 class ModalDropDown extends StatefulWidget {
   final List? items;
@@ -197,7 +201,7 @@ class _ModalDropDownState extends State<ModalDropDown> {
         );
       },
     ).whenComplete(() {
-      print('Hey there, I\'m calling after hide bottomSheet');
+      logger.i('Hey there, I\'m calling after hide bottomSheet');
     });
   }
 }

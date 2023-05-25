@@ -78,7 +78,7 @@ class VodApi {
       );
       return bb;
     } catch (e) {
-      print(e);
+      logger.i(e);
     }
     return BlockVod([], 0);
   }
@@ -102,7 +102,7 @@ class VodApi {
       );
       return bb;
     } catch (e) {
-      print(e);
+      logger.i(e);
     }
     return BlockVod([], 0);
   }
@@ -122,7 +122,7 @@ class VodApi {
       );
       return bb;
     } catch (e) {
-      print(e);
+      logger.i(e);
     }
     return BlockVod([], 0);
   }
@@ -138,7 +138,7 @@ class VodApi {
   //     var result = Block.fromJson(res.data['data']);
   //     return List.from([result]);
   //   } catch (e) {
-  //     print(e);
+  //     logger.i(e);
   //   }
   //   return [];
   // }
@@ -162,7 +162,7 @@ class VodApi {
       );
       return bb;
     } catch (e) {
-      print(e);
+      logger.i(e);
     }
     return BlockVod([], 0);
   }
@@ -191,7 +191,7 @@ class VodApi {
   //     // return vod.updateUrl(res.data['data']);
   //     return Vod.fromJson(res.data['data']);
   //   } catch (e) {
-  //     print(e);
+  //     logger.i(e);
   //     return vod;
   //   }
   // }
@@ -203,7 +203,7 @@ class VodApi {
   //   try {
   //     return vod.updateUrl(res['data']);
   //   } catch (e) {
-  //     print(e);
+  //     logger.i(e);
   //     return vod;
   //   }
   // });
@@ -324,7 +324,7 @@ class VodApi {
     try {
       return Blocks.fromJson(res.data['data']);
     } catch (e) {
-      print('getBlockVodsByBlockId error: $e');
+      logger.i('getBlockVodsByBlockId error: $e');
       return Blocks();
     }
   }

@@ -49,7 +49,7 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
     await Future.delayed(const Duration(seconds: 1));
 
     if (gameUrl == '') {
-      print('gameUrl is empty');
+      logger.i('gameUrl is empty');
       // ignore: use_build_context_synchronously
       onLoading(context, status: false);
       // ignore: use_build_context_synchronously
@@ -75,7 +75,7 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
       );
     }
   } catch (error) {
-    print('getGameUrl error: $error');
+    logger.i('getGameUrl error: $error');
     onLoading(context, status: false);
     showConfirmDialog(
       context: context,

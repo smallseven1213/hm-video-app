@@ -6,6 +6,9 @@ import 'package:game/utils/index.dart';
 import 'package:game/widgets/modal_dropdown.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 const auditDate = {
   1: '今天',
@@ -168,7 +171,7 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
         record = value;
       });
     });
-    print('condition: $condition, ');
+    logger.i('condition: $condition, ');
   }
 
   // 判斷condition['auditDate']return對應的日期

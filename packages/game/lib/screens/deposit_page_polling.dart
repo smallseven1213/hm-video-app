@@ -22,7 +22,7 @@ class GameDepositState extends State<GameDeposit> {
 
   @override
   Widget build(BuildContext context) {
-    print('status>>>> isLoading: $isLoading');
+    logger.i('status>>>> isLoading: $isLoading');
     return Scaffold(
       backgroundColor: gameLobbyBgColor,
       appBar: AppBar(

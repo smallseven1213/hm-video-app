@@ -3,6 +3,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 import 'package:uuid/uuid.dart';
@@ -10,6 +11,7 @@ import 'package:android_id/android_id.dart';
 import '../models/index.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class AuthApi {
   static final AuthApi _instance = AuthApi._internal();
@@ -43,7 +45,7 @@ class AuthApi {
       // get android id
       String androidId = await const AndroidId().getId() ?? 'Unknown ID';
       registerDeviceGuid = androidId;
-      print('👺👺 androidId2: $androidId');
+      logger.i('👺👺 androidId2: $androidId');
     } else if (GetPlatform.isIOS) {
       registerDeviceGuid =
           (await (deviceInfo.iosInfo)).identifierForVendor.toString();
@@ -131,7 +133,7 @@ class AuthApi {
     var res = await fetcher(
       url: '${systemConfig.apiHost}/public/auth/auth/code',
     );
-    print('getLoginCode: $res');
+    logger.i('getLoginCode: $res');
     return HMApiResponseBaseWithDataWithData.fromJson(res.data);
   }
 

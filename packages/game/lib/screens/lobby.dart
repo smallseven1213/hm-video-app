@@ -4,10 +4,10 @@ import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'package:game/models/game_list.dart';
@@ -23,6 +23,8 @@ import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../enums/game_app_routes.dart';
+
+final logger = Logger();
 
 class GameLobby extends StatefulWidget {
   final String? bottom;
@@ -60,7 +62,7 @@ class _GameLobbyState extends State<GameLobby> {
       _fetchDataInit();
       userController.fetchUserInfo();
       gameWalletController.fetchWallets();
-      print('token changed');
+      logger.i('token changed');
     });
   }
 

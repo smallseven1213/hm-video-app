@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 import '../models/actor.dart';
 import '../models/block_vod.dart';
@@ -20,6 +21,7 @@ import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class UserApi {
   static final UserApi _instance = UserApi._internal();
@@ -63,7 +65,7 @@ class UserApi {
       }
     } catch (err) {
       if (kDebugMode) {
-        print(err);
+        logger.i(err);
       }
     }
     return status;
@@ -276,7 +278,7 @@ class UserApi {
                   '${systemConfig.apiHost}/public/users/user/promoteRecord?page=$page&limit=$limit')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
-        // print(res['data']);
+        // logger.i(res['data']);
         if (res['code'] != '00') {
           return UserPromoteWithTotalCount([], 0);
         }
@@ -291,7 +293,7 @@ class UserApi {
       fetcher(url: '${systemConfig.apiHost}/public/users/user/userPromote')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
-        // print(res['data']);
+        // logger.i(res['data']);
         if (res['code'] != '00') {
           return UserPromote('', '', -1, -1);
         }
@@ -303,7 +305,7 @@ class UserApi {
                   '${systemConfig.apiHost}/public/users/user/info?ts=${DateTime.now().millisecondsSinceEpoch}')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
-        // print(res['data']);
+        // logger.i(res['data']);
         if (res['code'] != '00') {
           return User('', 0, ['guest']);
         }
@@ -315,7 +317,7 @@ class UserApi {
               method: 'GET')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
-        // print(res['data']);
+        // logger.i(res['data']);
         if (res['code'] != '00') {
           return User('', 0, ['guest']);
         }

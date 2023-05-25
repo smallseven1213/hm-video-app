@@ -3,11 +3,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:logger/logger.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import 'package:game/screens/game_deposit_list_screen/submitDepositOrder.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:get_storage/get_storage.dart';
+
+
+final logger = Logger();
 
 class ConfirmPin extends StatefulWidget {
   final String amount;
@@ -53,7 +57,7 @@ class _ConfirmPinState extends State<ConfirmPin> {
 
   @override
   Widget build(BuildContext context) {
-    print('_code: $_code');
+    logger.i('_code: $_code');
 
     return SizedBox(
       height: 360,
@@ -151,13 +155,13 @@ class _ConfirmPinState extends State<ConfirmPin> {
                 }
               },
               onChanged: (value) {
-                print(value);
+                logger.i(value);
                 setState(() {
                   currentText = value;
                 });
               },
               beforeTextPaste: (text) {
-                print("Allowing to paste $text");
+                logger.i("Allowing to paste $text");
                 return true;
               },
             )),

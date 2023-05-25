@@ -2,9 +2,12 @@ import 'package:app_gs/widgets/channel_area_banner.dart';
 import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_block_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/models/banner_photo.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
+
+
+final logger = Logger();
 
 List<List<Vod>> organizeRowData(List videos, Blocks block) {
   List<List<Vod>> result = [];
@@ -25,24 +28,24 @@ List<List<Vod>> organizeRowData(List videos, Blocks block) {
         // 影片列表
         result.add([videos[i], videos[i + 1], videos[i + 2]]);
         i += 3;
-        // print('Block1Widget 有3筆: $i');
+        // logger.i('Block1Widget 有3筆: $i');
       } else if (i + 1 < videos.length) {
         // 影片列表
         result.add([videos[i], videos[i + 1], Vod(0, '')]);
         i += 2;
-        // print('Block1Widget 有2筆: $i');
+        // logger.i('Block1Widget 有2筆: $i');
       } else {
         // 落單的一筆
         if (i < videos.length) {
           result.add([videos[i], Vod(0, ''), Vod(0, '')]);
           i++;
-          // print('Block1Widget 落單的一筆: $i');
+          // logger.i('Block1Widget 落單的一筆: $i');
         } else {
           break;
         }
       }
     } catch (e) {
-      print('err: $e');
+      logger.i('err: $e');
     }
   }
   return result;

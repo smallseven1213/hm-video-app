@@ -1,15 +1,17 @@
 import 'package:app_gs/screens/video/nested_tab_bar_view/video_actions.dart';
 import 'package:app_gs/screens/video/nested_tab_bar_view/video_list.dart';
-import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/block_videos_by_category_controller.dart';
 import 'package:shared/models/index.dart';
 
 import 'app_download_ad.dart';
 import 'banner.dart';
 import 'video_info.dart';
+
+final logger = Logger();
 
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
@@ -111,7 +113,7 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
               },
               body: TabBarView(
                 children: tabs.map((String name) {
-                  print('name: $name');
+                  logger.i('name: $name');
                   return Builder(
                     builder: (BuildContext context) {
                       return CustomScrollView(

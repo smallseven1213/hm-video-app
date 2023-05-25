@@ -26,7 +26,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('widget.videoData.length: ${videoData}');
+    // logger.i('widget.videoData.length: ${videoData}');
     if (videoData.length == 1) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,

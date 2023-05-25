@@ -3,6 +3,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/showFormDialog.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 void showUserName(
   BuildContext context, {
@@ -22,7 +25,7 @@ void showUserName(
       },
       child: FormBuilderField<String?>(
         name: 'userName',
-        onChanged: (val) => debugPrint(val.toString()),
+        onChanged: (val) => logger.i(val.toString()),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(
             errorText: '請輸入真實姓名',
@@ -31,7 +34,7 @@ void showUserName(
           FormBuilderValidators.maxLength(6, errorText: '請填寫正確姓名'),
         ]),
         builder: (FormFieldState field) {
-          print('field: $field  ${field.errorText}');
+          logger.i('field: $field  ${field.errorText}');
           return TextField(
             controller: userNameController,
             onChanged: (value) => field.didChange(value),
@@ -58,7 +61,7 @@ void showUserName(
     ),
     onConfirm: () {
       if (formKey.currentState!.validate()) {
-        print('on confirm ${userNameController.text}');
+        logger.i('on confirm ${userNameController.text}');
         Navigator.of(context).pop();
         onSuccess(userNameController.text);
       }

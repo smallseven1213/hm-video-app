@@ -54,7 +54,7 @@ class UserController extends GetxController {
       var res = await userApi.getCurrentUser();
       info.value = res;
     } catch (error) {
-      print('fetchUserInfo error: $error');
+      logger.i('fetchUserInfo error: $error');
     } finally {
       isLoading.value = false;
     }
@@ -67,7 +67,7 @@ class UserController extends GetxController {
       var res = await authApi.getLoginCode();
       loginCode.value = res.data['code'];
     } catch (error) {
-      print(error);
+      logger.i(error);
     } finally {
       isLoading.value = false;
     }
@@ -80,7 +80,7 @@ class UserController extends GetxController {
       UserPromote res = await userApi.getUserPromote();
       promoteData.value = res;
     } catch (error) {
-      print(error);
+      logger.i(error);
     } finally {
       isLoading.value = false;
     }

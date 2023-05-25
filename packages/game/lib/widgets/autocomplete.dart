@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:game/models/bank.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class AutoComplete extends StatefulWidget {
   const AutoComplete(
@@ -110,7 +113,7 @@ class _AutoCompleteState extends State<AutoComplete> {
         );
       },
       onSelected: (BankItem selection) {
-        print('Selected: ${selection.bankName}');
+        logger.i('Selected: ${selection.bankName}');
         widget.controller.text = selection.bankName;
       },
       optionsViewBuilder: (BuildContext context,

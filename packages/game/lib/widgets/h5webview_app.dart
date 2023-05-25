@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+final logger = Logger();
 
 class H5WebviewShared extends StatefulWidget {
   final String initialUrl;
@@ -15,7 +18,7 @@ class _H5WebviewSharedState extends State<H5WebviewShared> {
 
   @override
   Widget build(BuildContext context) {
-    print('initialUrl in H5WebviewShared: ${widget.initialUrl}');
+    logger.i('initialUrl in H5WebviewShared: ${widget.initialUrl}');
     return WillPopScope(
       onWillPop: () async => false,
       child: WebView(

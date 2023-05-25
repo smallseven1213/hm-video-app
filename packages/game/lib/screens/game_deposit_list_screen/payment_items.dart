@@ -10,6 +10,9 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/showModel.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class CustomTriangleClipper extends CustomClipper<Path> {
   @override
@@ -141,7 +144,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
     num amountHeight = amountLength > 4 ? (amountLength / 4).ceil() * 80 : 80;
 
-    print(
+    logger.i(
         '======indexssss======: $_paymentActiveIndex, $_channelActiveIndex, $_amountActiveIndex');
 
     return GestureDetector(
@@ -435,7 +438,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                         ['amountType'] ==
                                     depositAmountType['noInput']) {
                                   if (_paymentActiveIndex == 'debit') {
-                                    print('銀行卡');
+                                    logger.i('銀行卡');
                                     showUserName(
                                       context,
                                       onSuccess: (userName) {
@@ -459,7 +462,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                       },
                                     );
                                   } else {
-                                    print('no input && no bank card');
+                                    logger.i('no input && no bank card');
                                     showModel(
                                       context,
                                       content: ConfirmPin(

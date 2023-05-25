@@ -27,7 +27,7 @@ class VideoAdsController extends GetxController {
       videoAds.value = res;
       isFetched = true;
     } catch (error) {
-      print(error);
+      logger.i(error);
     }
   }
 

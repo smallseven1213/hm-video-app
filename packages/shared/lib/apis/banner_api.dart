@@ -32,10 +32,10 @@ class BannerApi {
           .map((e) => BannerPhoto.fromJson(e as Map<String, dynamic>))
           .toList();
 
-      print('getBannerById: $result');
+      logger.i('getBannerById: $result');
       return result;
     } catch (err) {
-      print('getBannerById error: $err');
+      logger.i('getBannerById error: $err');
       return [];
     }
   }

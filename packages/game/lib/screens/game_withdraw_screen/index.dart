@@ -17,13 +17,15 @@ import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
+import 'package:logger/logger.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
+
+final logger = Logger();
 
 class GameWithdraw extends StatefulWidget {
   const GameWithdraw({Key? key}) : super(key: key);
@@ -68,7 +70,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   void _getUserWithdrawalData() async {
     try {
       var res = await Get.put(GameWithdrawController()).getWithDrawalData();
-      print('res: $res');
+      logger.i('res: $res');
 
       if (res['code'] == '00' && res['data'].paymentPin == false) {
         showFundPassword();
@@ -90,7 +92,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
         );
       }
     } catch (error) {
-      print('_getUserWithdrawalData error $error');
+      logger.i('_getUserWithdrawalData error $error');
 
       showConfirmDialog(
         context: context,
@@ -127,7 +129,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
         var balance = res['data']['balance'].toString();
 
         if (double.parse(balance) > 0) {
-          print('double.parse(balance) : ${double.parse(balance)}');
+          logger.i('double.parse(balance) : ${double.parse(balance)}');
           showConfirmDialog(
             context: context,
             title: "仍有遊戲進行中",
@@ -150,7 +152,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
         );
       }
     } catch (error) {
-      print(error);
+      logger.i(error);
     }
   }
 
@@ -163,10 +165,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
           stakeLimit = res.data!.stakeLimit;
           validStake = res.data!.validStake;
         });
-        print('reachable: $reachable, $stakeLimit, $validStake');
+        logger.i('reachable: $reachable, $stakeLimit, $validStake');
       }
     } catch (e) {
-      print('_getStackLimit error : $e');
+      logger.i('_getStackLimit error : $e');
     }
   }
 
@@ -178,10 +180,11 @@ class _GameWithdrawState extends State<GameWithdraw> {
           withdrawalFee = res.data!.withdrawalFee;
           withdrawalMode = res.data!.withdrawalMode;
         });
-        print('withdrawalFee: $withdrawalFee, withdrawalMode: $withdrawalMode');
+        logger.i(
+            'withdrawalFee: $withdrawalFee, withdrawalMode: $withdrawalMode');
       }
     } catch (error) {
-      print('_getParamConfig $error');
+      logger.i('_getParamConfig $error');
     }
   }
 
@@ -350,7 +353,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                               Obx(() => FormBuilderField<String?>(
                                     name: 'amount',
                                     onChanged: (val) =>
-                                        debugPrint(val.toString()),
+                                        logger.i(val.toString()),
                                     validator: FormBuilderValidators.compose([
                                       FormBuilderValidators.required(
                                         errorText: '請輸提現金額',

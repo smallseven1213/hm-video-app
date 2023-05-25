@@ -6,7 +6,11 @@ import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/button.dart';
 import 'package:game/widgets/input2.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
+
+
+final logger = Logger();
 
 class GameSetFundPassword extends StatefulWidget {
   const GameSetFundPassword({Key? key}) : super(key: key);
@@ -53,7 +57,7 @@ class _GameSetFundPasswordState extends State<GameSetFundPassword> {
         },
       );
     } catch (e) {
-      print('res: $e');
+      logger.i('res: $e');
       // 設置失敗
       showConfirmDialog(
         context: context,
@@ -113,8 +117,8 @@ class _GameSetFundPasswordState extends State<GameSetFundPassword> {
                 child: Form(
                   key: _formKey,
                   onChanged: () {
-                    print('_formKey.currentState ${_formKey.currentState}');
-                    print(
+                    logger.i('_formKey.currentState ${_formKey.currentState}');
+                    logger.i(
                         '_formKey.currentState.validate() ${_formKey.currentState?.validate()}');
                     setState(() {
                       isConfirmButtonEnabled =
@@ -211,7 +215,7 @@ class _GameSetFundPasswordState extends State<GameSetFundPassword> {
 //     setState(() {
 //       errorText = widget.validator();
 //     });
-//     print('object: ${widget.controller.text}');
+//     logger.i('object: ${widget.controller.text}');
 //   }
 
 //   @override

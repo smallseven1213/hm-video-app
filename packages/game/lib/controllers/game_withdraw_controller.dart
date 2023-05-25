@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:logger/logger.dart';
+
+
+final logger = Logger();
 
 class GameWithdrawController extends GetxController {
   RxDouble points = 0.00.obs;
@@ -25,7 +29,7 @@ class GameWithdrawController extends GetxController {
         return res;
       }
     } catch (e) {
-      print('GameWithdrawController error: $e');
+      logger.i('GameWithdrawController error: $e');
     }
   }
 

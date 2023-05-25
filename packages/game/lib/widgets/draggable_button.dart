@@ -1,6 +1,8 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class DraggableFloatingActionButton extends StatefulWidget {
   final Widget child;
@@ -56,7 +58,7 @@ class _DraggableFloatingActionButtonState
                 : parentSize.height - size.height);
       });
     } catch (e) {
-      print('catch: $e');
+      logger.i('catch: $e');
     }
   }
 
@@ -95,7 +97,7 @@ class _DraggableFloatingActionButtonState
           });
         },
         onPointerUp: (PointerUpEvent pointerUpEvent) {
-          print('draggable button onPointerUp');
+          logger.i('draggable button onPointerUp');
 
           if (_isDragging) {
             setState(() {

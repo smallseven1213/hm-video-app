@@ -17,7 +17,7 @@ submitDepositOrder(
   required String? userName,
   required String activePayment,
 }) async {
-  print(
+  logger.i(
       'amount: $amount, paymentChannelId: $paymentChannelId, userName: $userName');
   onLoading(context, status: true);
   // ignore: avoid_init_to_null

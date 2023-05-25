@@ -5,6 +5,7 @@ import 'package:game/utils/index.dart';
 import 'package:game/widgets/modal_dropdown.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:logger/logger.dart';
 
 const remittanceType = {
   1: '銀行卡',
@@ -36,6 +37,8 @@ final startDateQuery = {
   3: formattedDate.format(midnight.subtract(const Duration(days: 7))),
   4: formattedDate.format(midnight.subtract(const Duration(days: 30))),
 };
+
+final logger = Logger();
 
 class StatusLabel extends StatelessWidget {
   final int type;
@@ -85,7 +88,7 @@ class RowItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print('RowItem build: $title, $value');
+    // logger.i('RowItem build: $title, $value');
     return Row(
       children: [
         SizedBox(
@@ -159,7 +162,7 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
         record = value;
       });
     });
-    print('condition: $condition, ');
+    logger.i('condition: $condition, ');
   }
 
   // 判斷condition['auditDate']return對應的日期
@@ -181,7 +184,7 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
 
   @override
   Widget build(BuildContext context) {
-    print('record: $record');
+    logger.i('record: $record');
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,

@@ -15,7 +15,7 @@ class BlockController extends GetxController {
   mutateBybBlockId(int id, int offset) async {
     // call api, by block id
     var res = await VodApi().getBlockVodsByBlockId(id, offset: offset);
-    print('res: ${res}');
+    logger.i('res: ${res}');
     return res;
   }
 }

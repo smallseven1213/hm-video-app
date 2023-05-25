@@ -21,7 +21,7 @@ class UserApi {
                   '${systemConfig.apiHost}/public/users/user/info?ts=${DateTime.now().millisecondsSinceEpoch}')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
-        // print(res['data']);
+        // logger.i(res['data']);
         if (res['code'] != '00') {
           return User('', 0, ['guest']);
         }
@@ -61,7 +61,7 @@ class UserApi {
       }
     } catch (err) {
       if (kDebugMode) {
-        print(err);
+        logger.i(err);
       }
     }
     return status;

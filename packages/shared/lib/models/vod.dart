@@ -221,7 +221,7 @@ class Vod {
         dataType: json['dataType'],
       );
     } catch (e) {
-      print('json: $e');
+      logger.i('json: $e');
       return Vod(0, '');
     }
   }
@@ -269,9 +269,9 @@ class Vod {
 
   String? getVideoUrl() {
     if (videoUrl != null && videoUrl!.isNotEmpty) {
-      // print(videoUrlUd);
+      // logger.i(videoUrlUd);
       String uri = videoUrl!.replaceAll('\\', '/').replaceAll('//', '/');
-      // print(uri);
+      // logger.i(uri);
       if (uri.startsWith('http')) {
         return uri;
       }

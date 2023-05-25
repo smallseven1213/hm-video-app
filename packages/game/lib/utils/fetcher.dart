@@ -58,7 +58,7 @@ Future<dynamic> fetcher({
 
     return response;
   } on DioError catch (e) {
-    print('errror: e.response?.statusCode: ${e.response?.statusCode}');
+    logger.i('errror: e.response?.statusCode: ${e.response?.statusCode}');
     if (e.response?.statusCode == 401) {
       // 清除 GetStorage 中的 auth-token
       final storage = GetStorage();

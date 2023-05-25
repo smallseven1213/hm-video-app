@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+
+final logger = Logger();
 
 class Marquee extends StatefulWidget {
   final double iconWidth;
@@ -23,7 +27,7 @@ class Marquee extends StatefulWidget {
 class _MarqueeState extends State<Marquee> {
   @override
   Widget build(BuildContext context) {
-    print('text: ${widget.text}');
+    logger.i('text: ${widget.text}');
     return Row(
       children: widget.text.isEmpty
           ? []

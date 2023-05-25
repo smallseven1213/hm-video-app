@@ -35,10 +35,10 @@ class BannerController extends GetxController {
         bannerController.setBanners(position, result); // 修改这里
         return result;
       } on TimeoutException catch (e) {
-        print(e.message);
+        logger.i(e.message);
         return [];
       } catch (e) {
-        print(e);
+        logger.i(e);
         return [];
       }
     } else {
@@ -53,7 +53,7 @@ class BannerController extends GetxController {
   // 檢查是否有banner by position id
   bool hasBanner(BannerPosition position) {
     return banners[position] != null && banners[position]!.isNotEmpty;
-        banners[position.value]!.isNotEmpty;
+    banners[position.value]!.isNotEmpty;
   }
 
   // 紀錄點擊banner

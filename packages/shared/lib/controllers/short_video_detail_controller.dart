@@ -1,9 +1,12 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/services/system_config.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
+
 
 String? getVideoUrl(String? videoUrl) {
   if (videoUrl != null && videoUrl.isNotEmpty) {
@@ -46,7 +49,7 @@ class ShortVideoDetailController extends GetxController {
       videoUrl.value = getVideoUrl(_video.videoUrl)!;
       video.value = _video;
     } catch (error) {
-      print(error);
+      logger.i(error);
     }
   }
 
@@ -56,7 +59,7 @@ class ShortVideoDetailController extends GetxController {
           await vodApi.getShortVideoDetailById(videoId);
       videoDetail.value = _videoDetail;
     } catch (error) {
-      print(error);
+      logger.i(error);
     }
   }
 }

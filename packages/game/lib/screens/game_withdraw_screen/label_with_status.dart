@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/turnover_content.dart';
 import 'package:game/utils/showFormDialog.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class LabelWithStatus extends StatefulWidget {
   const LabelWithStatus({
@@ -45,8 +48,8 @@ class _LabelWithStatusState extends State<LabelWithStatus> {
 
   @override
   Widget build(BuildContext context) {
-    print(' widget.stakeLimit, ${widget.stakeLimit}');
-    print(' widget.validStake, ${widget.validStake}');
+    logger.i(' widget.stakeLimit, ${widget.stakeLimit}');
+    logger.i(' widget.validStake, ${widget.validStake}');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

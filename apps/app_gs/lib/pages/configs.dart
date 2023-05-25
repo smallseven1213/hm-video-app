@@ -56,7 +56,7 @@ class CellData {
 //     ),
 //     text: '個性設置',
 //     onTap: () {
-//       print('Settings tapped');
+//       logger.i('Settings tapped');
 //     },
 //   ),
 //   CellData(
@@ -68,7 +68,7 @@ class CellData {
 //     text: '安全鎖設置',
 //     label: const Text('未設置'),
 //     onTap: () {
-//       print('Settings tapped');
+//       logger.i('Settings tapped');
 //     },
 //   ),
 //   CellData(
@@ -79,7 +79,7 @@ class CellData {
 //     ),
 //     text: '更新檢查',
 //     onTap: () {
-//       print('Settings tapped');
+//       logger.i('Settings tapped');
 //     },
 //   ),
 // ];
@@ -151,7 +151,7 @@ class ConfigsPage extends StatelessWidget {
       //   ),
       //   text: '個性設置',
       //   onTap: () {
-      //     print('Settings tapped');
+      //     logger.i('Settings tapped');
       //   },
       // ),
       // CellData(
@@ -163,7 +163,7 @@ class ConfigsPage extends StatelessWidget {
       //   text: '安全鎖設置',
       //   label: const Text('未設置'),
       //   onTap: () {
-      //     print('Settings tapped');
+      //     logger.i('Settings tapped');
       //   },
       // ),
       // CellData(
@@ -174,7 +174,7 @@ class ConfigsPage extends StatelessWidget {
       //   ),
       //   text: '更新檢查',
       //   onTap: () {
-      //     print('Settings tapped');
+      //     logger.i('Settings tapped');
       //   },
       // ),
     ];

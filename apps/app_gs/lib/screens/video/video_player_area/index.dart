@@ -92,7 +92,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     super.didChangeMetrics();
     final _orientation =
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
-    // print("@@@@@@@@@ didChangeMetrics: $_orientation");
+    // logger.i("@@@@@@@@@ didChangeMetrics: $_orientation");
     if (_orientation == Orientation.landscape) {
       // 隱藏狀態欄
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
@@ -149,7 +149,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
             obsVideoPlayerController.videoPlayerController?.pause();
             setScreenPortrait();
           }
-          print(
+          logger.i(
               '====? obsVideoPlayerController.isReadyL ${obsVideoPlayerController.isReady.value}');
           return Stack(
             alignment: Alignment.center,

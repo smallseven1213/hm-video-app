@@ -1,6 +1,9 @@
 import 'package:game/apis/game_api.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class GameConfigController extends GetxController {
   var switchPaymentPage = 0.obs;
@@ -29,9 +32,9 @@ class GameConfigController extends GetxController {
         box.write('pageColor', gamePageColor);
       }
 
-      print('switchPaymentPage: $switchPaymentPage');
+      logger.i('switchPaymentPage: $switchPaymentPage');
     } catch (e) {
-      print('_getGameConfig error: $e');
+      logger.i('_getGameConfig error: $e');
     }
   }
 }

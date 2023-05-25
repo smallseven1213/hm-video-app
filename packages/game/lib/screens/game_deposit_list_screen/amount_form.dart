@@ -7,6 +7,9 @@ import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/showModel.dart';
 import 'package:game/widgets/button.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class AmountForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
@@ -57,7 +60,7 @@ class _AmountFormState extends State<AmountForm> {
     var parseMaxText = widget.max.toStringAsFixed(0);
     var parseMinText = widget.min.toStringAsFixed(0);
 
-    print('max: ${widget.max.toString()}, min: ${widget.min.toString()}');
+    logger.i('max: ${widget.max.toString()}, min: ${widget.min.toString()}');
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -70,7 +73,7 @@ class _AmountFormState extends State<AmountForm> {
           setState(() {
             _enableSubmit = widget.formKey.currentState?.validate() ?? false;
           });
-          print('驗證表單: ${widget.formKey.currentState?.validate()}');
+          logger.i('驗證表單: ${widget.formKey.currentState?.validate()}');
         },
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,8 +137,8 @@ class _AmountFormState extends State<AmountForm> {
                     color: gameLobbyPrimaryTextColor,
                   ),
                   onChanged: (val) => {
-                    print('val: $val'),
-                    debugPrint(val.toString()),
+                    logger.i('val: $val'),
+                    logger.i(val.toString()),
                   },
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(
@@ -167,7 +170,7 @@ class _AmountFormState extends State<AmountForm> {
                   onPressed: () {
                     if (widget.formKey.currentState?.validate() == true) {
                       if (widget.activePayment == 'debit') {
-                        print('銀行卡');
+                        logger.i('銀行卡');
                         showModel(
                           context,
                           content: ConfirmName(

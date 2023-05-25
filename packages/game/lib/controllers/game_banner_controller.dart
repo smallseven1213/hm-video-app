@@ -23,7 +23,7 @@ class GameBannerController extends GetxController {
       gameBanner.value = res['banner'];
       gameMarquee.value = res['marquee'];
     } catch (error) {
-      print('fetchGameBanners: $error');
+      logger.i('fetchGameBanners: $error');
     } finally {
       isLoading.value = false;
     }

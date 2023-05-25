@@ -30,7 +30,7 @@ class ApkApi {
       String url = res['data']['download'][0]['content'];
       return ApkUpdate(status: action, url: url);
     } catch (err) {
-      print('checkVersion error: $err');
+      logger.i('checkVersion error: $err');
       return ApkUpdate(status: ApkStatus.noUpdate, url: '');
     }
   }

@@ -7,11 +7,14 @@ import 'package:game/screens/game_withdraw_screen/game_withdraw_options_button.d
 import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/button.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
 import '../../models/user_withdrawal_data.dart';
+
+final logger = Logger();
 
 class GameWithDrawOptions extends StatefulWidget {
   const GameWithDrawOptions(
@@ -145,8 +148,8 @@ class _GameWithDrawOptionsState extends State<GameWithDrawOptions> {
           GameButton(
             text: "確認送出",
             onPressed: () {
-              print('widget.applyAmount: ${widget.applyAmount}');
-              print('widget.withdrawalFee: ${widget.withdrawalFee}');
+              logger.i('widget.applyAmount: ${widget.applyAmount}');
+              logger.i('widget.withdrawalFee: ${widget.withdrawalFee}');
               // showDialog，並計算手續費
               // 點擊Dialog的確認按鈕後，呼叫widget.onConfirm
               showConfirmDialog(

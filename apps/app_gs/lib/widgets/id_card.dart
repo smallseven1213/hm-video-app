@@ -39,7 +39,7 @@ Future<void> _captureAndSaveScreenshot() async {
 
   // 保存到相冊
   final result = await ImageGallerySaver.saveFile(file.path);
-  print('File saved: $result');
+  logger.i('File saved: $result');
 
   // 顯示保存成功提示
   ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(

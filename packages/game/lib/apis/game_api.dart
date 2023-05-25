@@ -66,7 +66,7 @@ class GameLobbyApi {
       box.write('register-game', true);
     }
 
-    print('registerGame: $res');
+    logger.i('registerGame: $res');
     return res['data'];
   }
 
@@ -298,7 +298,7 @@ class GameLobbyApi {
     String? startedAt,
     String? endedAt,
   }) async {
-    print('paymentStatus, $paymentStatus');
+    logger.i('paymentStatus, $paymentStatus');
     var value = await fetcher(
         url:
             '$apiPrefix/deposit?page=$page&limit=$limit${paymentStatus != null ? '&paymentStatus=$paymentStatus' : ''}${startedAt != null ? '&startedAt=$startedAt' : ''}${endedAt != null ? '&endedAt=$endedAt' : ''}');

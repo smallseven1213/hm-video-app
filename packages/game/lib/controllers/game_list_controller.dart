@@ -18,7 +18,7 @@ class GamesListController extends GetxController {
   }
 
   Future<void> fetchGames() async {
-    print('loading game states');
+    logger.i('loading game states');
     var res = await GameLobbyApi().getGames(); // [{}]
     games.assignAll(res);
   }

@@ -13,7 +13,10 @@ import 'package:game/widgets/autocomplete.dart';
 import 'package:game/widgets/button.dart';
 import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
+
+final logger = Logger();
 
 class GameSetBankCard extends StatefulWidget {
   const GameSetBankCard({Key? key}) : super(key: key);
@@ -109,7 +112,7 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
       }
       onLoading(context, status: false);
     } catch (e) {
-      print(e);
+      logger.i(e);
       onLoading(context, status: false);
     }
   }
@@ -141,7 +144,7 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
       });
     } else if (value.isNotEmpty) {
       if (value.length >= 16 && value.length <= 19) {
-        print('account length: ${value.length}');
+        logger.i('account length: ${value.length}');
         setState(() {
           _accountError = null;
         });
@@ -171,7 +174,7 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
     if (value!.isEmpty) {
       _legalNameError = '請輸入您的真實姓名';
     } else if (value.isNotEmpty) {
-      print('value.isNotEmpty');
+      logger.i('value.isNotEmpty');
       _legalNameError = null;
     }
     _checkFormValidity();
@@ -241,7 +244,7 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
                         const SizedBox(height: 10),
                         FormBuilderField<String?>(
                           name: 'bankName',
-                          onChanged: (val) => debugPrint(val.toString()),
+                          onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return AutoComplete(
                               label: '銀行名稱',
@@ -258,7 +261,7 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
                         const SizedBox(height: 10),
                         FormBuilderField<String?>(
                           name: 'branchName',
-                          onChanged: (val) => debugPrint(val.toString()),
+                          onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return GameInput(
                               label: '支行名稱',

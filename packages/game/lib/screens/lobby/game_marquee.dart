@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/marquee.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class GameMarquee extends StatefulWidget {
   final List data;
@@ -18,7 +21,7 @@ class GameMarquee extends StatefulWidget {
 class _GameMarqueeState extends State<GameMarquee> {
   @override
   Widget build(BuildContext context) {
-    print('widget.data: ${widget.data}');
+    logger.i('widget.data: ${widget.data}');
     return SizedBox(
       width: double.infinity,
       child: Marquee(
