@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
-import 'package:shared/models/video_database_field.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/no_data.dart';
 import '../../widgets/video_preview_with_edit.dart';
@@ -19,12 +20,12 @@ class FavoritesShortScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var videos = userFavoritesShortController.videos;
+      var videos = userFavoritesShortController.data;
       if (videos.isEmpty) {
         return const NoDataWidget();
       }
       return GridView.builder(
-        itemCount: userFavoritesShortController.videos.length,
+        itemCount: userFavoritesShortController.data.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           childAspectRatio: gridRatio,
@@ -32,17 +33,17 @@ class FavoritesShortScreen extends StatelessWidget {
           mainAxisSpacing: 1,
         ),
         itemBuilder: (BuildContext context, int index) {
-          var vod = userFavoritesShortController.videos.value[index];
+          var vod = userFavoritesShortController.data.value[index];
           return VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,
-              // onOverrideRedirectTap: () {
-              //   MyRouteDelegate.of(context).push(
-              //     AppRoutes.shortsByTag.value,
-              //     args: {'videoId': vod.id, 'tagId': tagId},
-              //     removeSamePath: true,
-              //   );
-              // },
+              onOverrideRedirectTap: () {
+                MyRouteDelegate.of(context).push(
+                  AppRoutes.shortsByLocal.value,
+                  args: {'videoId': vod.id, 'itemId': 2},
+                  removeSamePath: true,
+                );
+              },
               hasRadius: false,
               hasTitle: false,
               imageRatio: gridRatio,
