@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
+import 'package:shared/models/video_database_field.dart';
 import 'package:shared/widgets/video_player/player.dart';
 
 import '../../pages/video.dart';
@@ -100,6 +102,20 @@ class _ShortCardState extends State<ShortCard> {
     return Obx(() {
       var video = videoDetailController!.video.value;
       var videoDetail = videoDetailController!.videoDetail.value;
+
+      if (video != null && videoDetail != null) {
+        var playRecord = VideoDatabaseField(
+          id: video.id,
+          coverHorizontal: video.coverHorizontal!,
+          coverVertical: video.coverVertical!,
+          timeLength: video.timeLength!,
+          tags: [],
+          title: video.title,
+          // detail: detail!,
+        );
+        logger.i('playRecord -> ${playRecord.toJson()}');
+        Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
+      }
 
       if (video != null && videoDetailController!.videoUrl.value.isNotEmpty) {
         logger.i('RENDER OBX: ShortCard Inside ${videoDetail!.toJson()}');

@@ -9,7 +9,7 @@ class VideoDatabaseField {
   final int timeLength;
   final List<Tag> tags;
   final String title;
-  final int videoViewTimes;
+  final int? videoViewTimes;
   // final Data? detail;
   VideoDatabaseField({
     required this.id,
@@ -18,7 +18,7 @@ class VideoDatabaseField {
     required this.timeLength,
     required this.tags,
     required this.title,
-    required this.videoViewTimes,
+    this.videoViewTimes,
     // this.detail,
   });
 

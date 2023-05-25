@@ -41,6 +41,6 @@ class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
     writer.writeString(obj.coverVertical);
     writer.writeString(obj.coverHorizontal);
     writer.writeList(obj.tags);
-    writer.writeInt(obj.videoViewTimes);
+    writer.writeInt(obj.videoViewTimes ?? 0);
   }
 }
