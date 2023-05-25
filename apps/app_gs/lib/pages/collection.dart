@@ -93,7 +93,7 @@ class _CollectionPageState extends State<CollectionPage> {
                         timeLength: video1.timeLength,
                         coverHorizontal: video1.coverHorizontal,
                         coverVertical: video1.coverVertical,
-                        videoViewTimes: video1.videoViewTimes,
+                        videoViewTimes: video1.videoViewTimes!,
                         // detail: video1.detail,
                       ),
                     ),
@@ -113,7 +113,7 @@ class _CollectionPageState extends State<CollectionPage> {
                               timeLength: video2.timeLength,
                               coverHorizontal: video2.coverHorizontal,
                               coverVertical: video2.coverVertical,
-                              videoViewTimes: video2.videoViewTimes,
+                              videoViewTimes: video2.videoViewTimes!,
                               // detail: video2.detail,
                             )
                           : const SizedBox(),
