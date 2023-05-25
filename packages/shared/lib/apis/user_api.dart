@@ -179,9 +179,10 @@ class UserApi {
       method: 'DELETE');
 
   // 獲得視頻喜愛紀錄清單
-  Future<BlockVod> getFavoriteVideo() async {
+  Future<BlockVod> getFavoriteVideo({int? film = 1}) async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/collectRecord?film=1');
+        url:
+            '${systemConfig.apiHost}/public/users/user/collectRecord?film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -204,9 +205,10 @@ class UserApi {
       method: 'DELETE');
 
   // 獲得視頻收藏紀錄清單
-  Future<BlockVod> getVideoCollection() async {
+  Future<BlockVod> getVideoCollection({int? film = 1}) async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/favoriteRecord?film=1');
+        url:
+            '${systemConfig.apiHost}/public/users/user/favoriteRecord?film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
