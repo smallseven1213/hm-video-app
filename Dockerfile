@@ -1,6 +1,6 @@
 # Builder stage
 # FROM cirrusci/flutter:3.7.5 AS builder
-FROM ghcr.io/cirruslabs/flutter:3.10.0 AS builder
+FROM ghcr.io/cirruslabs/flutter:3.10.2 AS builder
 ARG env
 ENV ENV=${env}
 WORKDIR /app
@@ -21,7 +21,7 @@ RUN rm -rf /sdks/flutter/.pub-cache
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     melos exec --scope="app_gs" -- \
-    flutter build web --web-renderer canvaskit --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
+    flutter build web --web-renderer html --release --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
 
 # Production stage
 FROM nginx:stable-alpine

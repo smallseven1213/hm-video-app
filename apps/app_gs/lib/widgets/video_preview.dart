@@ -1,12 +1,9 @@
 import 'package:app_gs/widgets/video_embedded_ad.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/models/video_database_field.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/view_times.dart';
@@ -98,19 +95,15 @@ class VideoPreviewWidget extends StatelessWidget {
       this.onOverrideRedirectTap})
       : super(key: key);
 
-  final vodPlayrecordController = Get.find<PlayRecordController>(tag: 'vod');
-  final shortPlayrecordController =
-      Get.find<PlayRecordController>(tag: 'short');
-
   @override
   Widget build(BuildContext context) {
     // logger.i('RENDER VIDEO PREVIEW WIDGET!!!');
-    if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
-      return VideoEmbeddedAdWidget(
-        imageRatio: imageRatio ?? 374 / 198,
-        detail: detail!,
-      );
-    }
+    // if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
+    //   return VideoEmbeddedAdWidget(
+    //     imageRatio: imageRatio ?? 374 / 198,
+    //     detail: detail!,
+    //   );
+    // }
     return Column(
       children: [
         InkWell(
@@ -130,35 +123,12 @@ class VideoPreviewWidget extends StatelessWidget {
                     args: {'id': id, 'blockId': blockId},
                     removeSamePath: true,
                   );
-                  var playRecord = VideoDatabaseField(
-                    id: id,
-                    coverHorizontal: coverHorizontal,
-                    coverVertical: coverVertical,
-                    timeLength: timeLength,
-                    tags: tags,
-                    title: title,
-                    videoViewTimes: videoViewTimes,
-                    // detail: detail!,
-                  );
-                  vodPlayrecordController.addPlayRecord(playRecord);
                 } else if (film == 2) {
-                  logger.i('CLICK TO FILM2 $id, $blockId');
                   MyRouteDelegate.of(context).push(
                     AppRoutes.shortsByBlock.value,
                     args: {'videoId': id, 'areaId': blockId},
                     removeSamePath: true,
                   );
-                  var playRecord = VideoDatabaseField(
-                    id: id,
-                    coverHorizontal: coverHorizontal,
-                    coverVertical: coverVertical,
-                    timeLength: timeLength,
-                    tags: tags,
-                    title: title,
-                    videoViewTimes: videoViewTimes,
-                    // detail: detail!,
-                  );
-                  shortPlayrecordController.addPlayRecord(playRecord);
                 } else if (film == 3) {
                   // MyRouteDelegate.of(context).push(
                   //   AppRoutes.comic.value,

@@ -8,6 +8,8 @@ import 'package:shared/widgets/video_time.dart';
 
 final logger = Logger();
 
+const gridRatio = 128 / 227;
+
 class ViewInfo extends StatelessWidget {
   final int viewCount;
   final int duration;
@@ -67,6 +69,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final int? blockId;
   final bool? hasRadius; // 要不要圓角
   final bool? hasTitle; // 要不要標題
+  final bool? hasTags;
 
   const VideoPreviewWithEditWidget(
       {Key? key,
@@ -90,7 +93,8 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       this.noInfoView = false,
       this.blockId,
       this.hasRadius = true,
-      this.hasTitle = true})
+      this.hasTitle = true,
+      this.hasTags = true})
       : super(key: key);
 
   @override
@@ -105,12 +109,16 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       children: [
         VideoPreviewWidget(
             id: id,
+            hasTags: hasTags,
+            hasTitle: hasTitle,
             displayCoverVertical: displayCoverVertical,
             coverVertical: coverVertical,
             coverHorizontal: coverHorizontal,
+            imageRatio: imageRatio,
             timeLength: timeLength,
             tags: tags,
             title: title,
+            hasRadius: hasRadius,
             videoViewTimes: videoViewTimes,
             hasTapEvent: !isEditing),
         if (isEditing)

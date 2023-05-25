@@ -53,7 +53,7 @@ class FavoritesVideoScreen extends StatelessWidget {
                       timeLength: video1.timeLength,
                       tags: video1.tags,
                       title: video1.title,
-                      videoViewTimes: video1.videoViewTimes)),
+                      videoViewTimes: video1.videoViewTimes!)),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
@@ -71,7 +71,7 @@ class FavoritesVideoScreen extends StatelessWidget {
                           timeLength: video2.timeLength,
                           coverHorizontal: video2.coverHorizontal,
                           coverVertical: video2.coverVertical,
-                          videoViewTimes: video2.videoViewTimes,
+                          videoViewTimes: video2.videoViewTimes!,
                           // detail: video2.detail,
                         )
                       : const SizedBox(),

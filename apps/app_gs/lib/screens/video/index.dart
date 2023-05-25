@@ -3,7 +3,9 @@ import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
+import 'package:shared/models/video_database_field.dart';
 
 import 'nested_tab_bar_view/index.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -30,6 +32,21 @@ class VideoScreen extends StatelessWidget {
         body: Obx(() {
           var video = videoDetailController.video.value;
           var videoDetail = videoDetailController.videoDetail.value;
+          if (video != null && videoDetail != null) {
+            var playRecord = VideoDatabaseField(
+              id: id,
+              coverHorizontal: video.coverHorizontal!,
+              coverVertical: video.coverVertical!,
+              timeLength: video.timeLength!,
+              tags: videoDetail!.tags!,
+              title: video.title,
+              videoViewTimes: videoDetail.videoViewTimes!,
+              // detail: detail!,
+            );
+            Get.find<PlayRecordController>(tag: 'vod')
+                .addPlayRecord(playRecord);
+          }
+
           return Column(
             children: [
               video != null

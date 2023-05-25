@@ -52,7 +52,7 @@ class FavoritesShortScreen extends StatelessWidget {
               timeLength: vod.timeLength,
               tags: vod.tags,
               title: vod.title,
-              videoViewTimes: vod.videoViewTimes);
+              videoViewTimes: vod.videoViewTimes!);
         },
       );
     });
