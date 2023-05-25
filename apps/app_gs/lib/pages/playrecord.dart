@@ -25,7 +25,6 @@ class PlayRecordPageState extends State<PlayRecordPage>
 
   @override
   void initState() {
-    super.initState();
     _tabController = TabController(vsync: this, length: 2);
 
     _tabController.addListener(() {
@@ -34,6 +33,8 @@ class PlayRecordPageState extends State<PlayRecordPage>
         listEditorController.isEditing.value = false;
       }
     });
+
+    super.initState();
   }
 
   @override
@@ -52,10 +53,10 @@ class PlayRecordPageState extends State<PlayRecordPage>
 
   void _handleSelectAll() {
     if (_tabController.index == 0) {
-      var allData = vodPlayRecordController.videos;
+      var allData = vodPlayRecordController.data;
       listEditorController.saveBoundData(allData.map((e) => e.id).toList());
     } else {
-      var allData = shortPlayRecordController.videos;
+      var allData = shortPlayRecordController.data;
       listEditorController.saveBoundData(allData.map((e) => e.id).toList());
     }
   }

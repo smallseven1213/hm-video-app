@@ -14,7 +14,7 @@ final userApi = UserApi();
 class UserShortCollectionController extends GetxController {
   static const String _boxName = 'userShortCollection';
   late Box<String> box;
-  var videos = <VideoDatabaseField>[].obs;
+  var data = <VideoDatabaseField>[].obs;
 
   @override
   void onInit() {
@@ -29,7 +29,7 @@ class UserShortCollectionController extends GetxController {
     box = await Hive.openBox<String>(_boxName);
 
     if (box.isNotEmpty) {
-      videos.value = box.values.map((videoStr) {
+      data.value = box.values.map((videoStr) {
         final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
         return VideoDatabaseField.fromJson(videoJson);
       }).toList();
@@ -40,7 +40,7 @@ class UserShortCollectionController extends GetxController {
 
   Future<void> _fetchAndSaveCollection() async {
     var blockData = await userApi.getVideoCollection(film: 2);
-    videos.value = blockData.vods
+    data.value = blockData.vods
         .map((video) => VideoDatabaseField(
               id: video.id,
               title: video.title,
@@ -57,8 +57,8 @@ class UserShortCollectionController extends GetxController {
 
   // addVideo to collection
   void addVideo(Vod video) async {
-    if (videos.firstWhereOrNull((v) => v.id == video.id) != null) {
-      videos.removeWhere((v) => v.id == video.id);
+    if (data.firstWhereOrNull((v) => v.id == video.id) != null) {
+      data.removeWhere((v) => v.id == video.id);
     }
     var formattedVideo = VideoDatabaseField(
       id: video.id,
@@ -70,21 +70,21 @@ class UserShortCollectionController extends GetxController {
       videoViewTimes: video.videoViewTimes!,
       // detail: video.detail,
     );
-    videos.add(formattedVideo);
+    data.add(formattedVideo);
     await _updateHive();
     userApi.addVideoCollection(video.id);
   }
 
   // removeVideo from collection
   void removeVideo(List<int> ids) async {
-    videos.removeWhere((v) => ids.contains(v.id));
+    data.removeWhere((v) => ids.contains(v.id));
     await _updateHive();
     userApi.deleteVideoCollection(ids);
   }
 
   Future<void> _updateHive() async {
     await box.clear();
-    for (var video in videos) {
+    for (var video in data) {
       final videoStr = jsonEncode(video.toJson());
       await box.put(video.id.toString(), videoStr);
     }

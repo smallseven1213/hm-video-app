@@ -14,7 +14,7 @@ final logger = Logger();
 class PlayRecordController extends GetxController {
   late final String _boxName;
   late Box<String> box;
-  var videos = <VideoDatabaseField>[].obs;
+  var data = <VideoDatabaseField>[].obs;
 
   PlayRecordController({required String tag}) {
     _boxName = 'playRecord_$tag';
@@ -33,7 +33,7 @@ class PlayRecordController extends GetxController {
     box = await Hive.openBox<String>(_boxName);
 
     if (box.isNotEmpty) {
-      videos.value = box.values.map((videoStr) {
+      data.value = box.values.map((videoStr) {
         final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
         return VideoDatabaseField.fromJson(videoJson);
       }).toList();
@@ -41,28 +41,28 @@ class PlayRecordController extends GetxController {
   }
 
   void addPlayRecord(VideoDatabaseField video) async {
-    if (videos.firstWhereOrNull((v) => v.id == video.id) != null) {
-      videos.removeWhere((v) => v.id == video.id);
+    if (data.firstWhereOrNull((v) => v.id == video.id) != null) {
+      data.removeWhere((v) => v.id == video.id);
     }
-    videos.insert(0, video);
+    data.insert(0, video);
     await _updateHive();
   }
 
   void removeVideo(List<int> ids) async {
-    videos.removeWhere((v) => ids.contains(v.id));
+    data.removeWhere((v) => ids.contains(v.id));
     for (var id in ids) {
-      videos.removeWhere((v) => v.id == id);
+      data.removeWhere((v) => v.id == id);
     }
     await _updateHive();
   }
 
   VideoDatabaseField? getById(int id) {
-    return videos.firstWhereOrNull((video) => video.id == id);
+    return data.firstWhereOrNull((video) => video.id == id);
   }
 
   Future<void> _updateHive() async {
     await box.clear();
-    for (var video in videos) {
+    for (var video in data) {
       final videoStr = jsonEncode(video.toJson());
       await box.put(video.id.toString(), videoStr);
     }

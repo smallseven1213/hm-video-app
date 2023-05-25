@@ -1,24 +1,26 @@
+// CollectionVideo class, is a stateless widget
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
-import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/video_database_field.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/no_data.dart';
 import '../../widgets/video_preview_with_edit.dart';
 
-class PlayRecordVideoScreen extends StatelessWidget {
-  PlayRecordVideoScreen({Key? key}) : super(key: key);
+class CollectionVideo extends StatelessWidget {
+  CollectionVideo({super.key});
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'playrecord');
-  final userFavoritesVideoController =
-      Get.find<PlayRecordController>(tag: 'vod');
+      Get.find<ListEditorController>(tag: 'collection');
+  final userCollectionVideoController = Get.find<UserVodCollectionController>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var videos = userFavoritesVideoController.data;
+      var videos = userCollectionVideoController.videos;
       if (videos.isEmpty) {
         return const NoDataWidget();
       }

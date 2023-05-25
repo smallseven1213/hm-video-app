@@ -1,5 +1,6 @@
 import 'package:app_gs/pages/actor.dart';
 import 'package:app_gs/pages/configs.dart';
+import 'package:app_gs/pages/shorts_by_local.dart';
 import 'package:app_gs/pages/shorts_by_tag.dart';
 import 'package:app_gs/screens/apps_screen/index.dart';
 import 'package:app_gs/widgets/loading.dart';
@@ -128,6 +129,10 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.shortsByBlock.value: (context, args) => ShortsByBlockPage(
         videoId: args['videoId'] as int,
         areaId: args['areaId'] as int,
+      ),
+  AppRoutes.shortsByLocal.value: (context, args) => ShortsByLocalPage(
+        videoId: args['videoId'] as int,
+        itemId: args['itemId'] as int,
       ),
   AppRoutes.configs.value: (context, args) => ConfigsPage(),
   AppRoutes.updatePassword.value: (context, args) => const UpdatePasswordPage(),

@@ -83,7 +83,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Obx(() {
-                            bool isLike = userFavoritesShortController.videos
+                            bool isLike = userFavoritesShortController.data
                                 .any((e) => e.id == widget.videoId);
                             return ShortButtonButton(
                               title: '1.9萬',
@@ -105,7 +105,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                             );
                           }),
                           Obx(() {
-                            bool isLike = userShortCollectionController.videos
+                            bool isLike = userShortCollectionController.data
                                 .any((e) => e.id == widget.videoId);
                             return ShortButtonButton(
                               title: '1.9萬',

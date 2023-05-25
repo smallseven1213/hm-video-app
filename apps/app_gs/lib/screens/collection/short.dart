@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -13,13 +14,12 @@ const gridRatio = 128 / 227;
 
 final logger = Logger();
 
-class PlayRecordShortScreen extends StatelessWidget {
-  PlayRecordShortScreen({Key? key}) : super(key: key);
+class CollectionShortScreen extends StatelessWidget {
+  CollectionShortScreen({Key? key}) : super(key: key);
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'playrecord');
-  final shortPlayRecordController =
-      Get.find<PlayRecordController>(tag: 'short');
+      Get.find<ListEditorController>(tag: 'collection');
+  final shortPlayRecordController = Get.find<UserShortCollectionController>();
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +43,10 @@ class PlayRecordShortScreen extends StatelessWidget {
           return VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,
-              // onOverrideRedirectTap: () {
-              // MyRouteDelegate.of(context).push(
-              //   AppRoutes.shortsByTag.value,
-              //   args: {'videoId': vod.id, 'tagId': tagId},
-              //   removeSamePath: true,
-              // );
-              // },
               onOverrideRedirectTap: () {
                 MyRouteDelegate.of(context).push(
                   AppRoutes.shortsByLocal.value,
-                  args: {'videoId': vod.id, 'itemId': 1},
+                  args: {'videoId': vod.id, 'itemId': 0},
                   removeSamePath: true,
                 );
               },
