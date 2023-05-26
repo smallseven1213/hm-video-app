@@ -8,15 +8,17 @@ class ShortButtonButton extends StatelessWidget {
   final String subscribe;
   final IconData activeIcon;
   final IconData unActiveIcon;
+  final double? iconSize;
   final bool isLike;
   final Function()? onTap;
 
-  const ShortButtonButton(
-      {Key? key,
-      required this.title,
-      required this.subscribe,
-      required this.activeIcon,
-      required this.unActiveIcon,
+  const ShortButtonButton({
+    Key? key,
+    required this.title,
+    required this.subscribe,
+    required this.activeIcon,
+    required this.unActiveIcon,
+    this.iconSize,
       this.isLike = false,
       this.onTap})
       : super(key: key);
@@ -34,6 +36,7 @@ class ShortButtonButton extends StatelessWidget {
               children: [
                 Icon(
                   isLike ? activeIcon : unActiveIcon,
+                size: iconSize ?? 24,
                   color: Colors.white,
                 ),
                 const SizedBox(width: 10),
