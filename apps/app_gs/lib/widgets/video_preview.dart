@@ -116,7 +116,6 @@ class VideoPreviewWidget extends StatelessWidget {
                 onOverrideRedirectTap!();
               } else {
                 logger.i('CLICK TO FILM $film, $id, $blockId');
-
                 if (film == 1) {
                   MyRouteDelegate.of(context).push(
                     AppRoutes.video.value,

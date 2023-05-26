@@ -61,7 +61,7 @@ final Map<String, RouteWidgetBuilder> routes = {
       ),
   AppRoutes.video.value: (context, args) => Video(args: args),
   AppRoutes.videoByBlock.value: (context, args) => VideoByBlockPage(
-        id: args['id'] as int,
+        blockId: args['blockId'] as int,
         title: args['title'] as String,
         channelId: args['channelId'] as int,
         film: args['film'] == null ? 1 : args['film'] as int,
