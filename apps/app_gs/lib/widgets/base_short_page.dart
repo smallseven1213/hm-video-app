@@ -91,8 +91,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                               key: ValueKey('like-${shortData.id}'),
                               title: '1.9萬',
                               subscribe: '喜歡就點讚',
-                              activeIcon: Icons.favorite,
-                              unActiveIcon: Icons.favorite_border,
+                              icon: Icons.favorite_rounded,
                               isLike: isLike,
                               onTap: () {
                                 if (isLike) {
@@ -113,8 +112,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                               key: ValueKey('collection-${shortData.id}'),
                               title: '1.9萬',
                               subscribe: '添加到收藏',
-                              activeIcon: Icons.favorite,
-                              unActiveIcon: Icons.favorite_border,
+                              icon: Icons.star_rounded,
+                              iconSize: 30,
                               isLike: isLike,
                               onTap: () {
                                 logger.i('shortData => ${shortData.id}');
