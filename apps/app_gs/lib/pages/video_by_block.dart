@@ -3,9 +3,11 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/ad_window_controller.dart';
 import 'package:shared/controllers/block_vod_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/channel_area_banner.dart';
 import '../widgets/custom_app_bar.dart';
@@ -25,7 +27,7 @@ List<List<Vod>> splitVodList(List<Vod> vodList, int chunkSize) {
 }
 
 class VideoByBlockPage extends StatelessWidget {
-  final int id;
+  final int blockId;
   final int channelId;
   final String title;
   final int film;
@@ -33,7 +35,7 @@ class VideoByBlockPage extends StatelessWidget {
 
   VideoByBlockPage(
       {Key? key,
-      required this.id,
+      required this.blockId,
       required this.title,
       required this.channelId,
       this.film = 1})
@@ -44,7 +46,7 @@ class VideoByBlockPage extends StatelessWidget {
     Get.put(AdWindowController(channelId), tag: channelId.toString());
 
     final BlockVodController blockVodController =
-        BlockVodController(areaId: id, scrollController: scrollController);
+        BlockVodController(areaId: blockId, scrollController: scrollController);
 
     return Scaffold(
         appBar: CustomAppBar(
@@ -64,6 +66,7 @@ class VideoByBlockPage extends StatelessWidget {
                   .map((e) => SliverBlockWidget(
                         vods: e,
                         channelId: channelId,
+                        blockId: blockId,
                         film: film,
                       ))
                   .toList(),
@@ -83,10 +86,15 @@ class SliverBlockWidget extends StatelessWidget {
   final List<Vod> vods;
   final int channelId;
   final int film;
+  final int blockId;
 
-  const SliverBlockWidget(
-      {Key? key, required this.vods, required this.channelId, this.film = 1})
-      : super(key: key);
+  const SliverBlockWidget({
+    Key? key,
+    required this.vods,
+    required this.channelId,
+    required this.blockId,
+    this.film = 1,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -112,6 +120,7 @@ class SliverBlockWidget extends StatelessWidget {
                         tags: vods[index * 2].tags!,
                         videoViewTimes: vods[index * 2].videoViewTimes!,
                         film: film,
+                        blockId: blockId,
                         displayCoverVertical: film == 2,
                       ),
                     ),
@@ -131,6 +140,7 @@ class SliverBlockWidget extends StatelessWidget {
                               videoViewTimes:
                                   vods[index * 2 + 1].videoViewTimes!,
                               film: film,
+                              blockId: blockId,
                               displayCoverVertical: film == 2,
                             ),
                           )

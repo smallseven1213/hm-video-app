@@ -70,6 +70,18 @@ class _ShortCardState extends State<ShortCard> {
       logger.i('RENDER OBX: ShortCard didChangeDependencies retry');
       return videoPlayerController!;
     }, tag: videoUrl);
+
+    var video = videoDetailController!.video.value;
+    var playRecord = VideoDatabaseField(
+      id: video!.id,
+      coverHorizontal: video.coverHorizontal!,
+      coverVertical: video.coverVertical!,
+      timeLength: video.timeLength!,
+      tags: [],
+      title: video.title,
+      // detail: detail!,
+    );
+    Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
     setState(() {});
   }
 
@@ -102,20 +114,6 @@ class _ShortCardState extends State<ShortCard> {
     return Obx(() {
       var video = videoDetailController!.video.value;
       var videoDetail = videoDetailController!.videoDetail.value;
-
-      if (video != null && videoDetail != null) {
-        var playRecord = VideoDatabaseField(
-          id: video.id,
-          coverHorizontal: video.coverHorizontal!,
-          coverVertical: video.coverVertical!,
-          timeLength: video.timeLength!,
-          tags: [],
-          title: video.title,
-          // detail: detail!,
-        );
-        logger.i('playRecord -> ${playRecord.toJson()}');
-        Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
-      }
 
       if (video != null && videoDetailController!.videoUrl.value.isNotEmpty) {
         logger.i('RENDER OBX: ShortCard Inside ${videoDetail!.toJson()}');
