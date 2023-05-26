@@ -52,7 +52,6 @@ class BaseShortPageState extends State<BaseShortPage> {
                 });
               },
               itemBuilder: (BuildContext context, int index) {
-                var isActive = index == currentPage;
                 final paddingBottom = MediaQuery.of(context).padding.bottom;
 
                 var shortData = controller.data[index];
@@ -60,14 +59,11 @@ class BaseShortPageState extends State<BaseShortPage> {
                 return Column(
                   children: [
                     Expanded(
-                        child: isActive == true
-                            ? ShortCard(
-                                index: index,
-                                isActive: isActive,
-                                id: shortData.id,
-                                title: shortData.title,
-                              )
-                            : const SizedBox.shrink()),
+                        child: ShortCard(
+                      index: index,
+                      id: shortData.id,
+                      title: shortData.title,
+                    )),
                     Container(
                       height: 76 + paddingBottom,
                       padding: EdgeInsets.only(bottom: paddingBottom),

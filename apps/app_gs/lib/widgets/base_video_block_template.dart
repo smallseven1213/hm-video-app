@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 
@@ -22,7 +24,16 @@ class BaseVideoBlockTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final delegate = templateMap[templateId]!(vods);
-    return SliverList(delegate: delegate);
+    final findTemplate = templateMap[templateId];
+    if (findTemplate != null) {
+      return SliverList(delegate: findTemplate(vods));
+    }
+    return SliverToBoxAdapter(
+        child: Center(
+      child: Text(
+        'Template $templateId not found',
+        style: const TextStyle(color: Colors.white),
+      ),
+    ));
   }
 }

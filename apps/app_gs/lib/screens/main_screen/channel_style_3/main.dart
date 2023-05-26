@@ -105,19 +105,19 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
             ),
           ];
         },
-        body: TabBarView(
-          physics: const NeverScrollableScrollPhysics(),
-          controller: _tabController,
-          // Obx and return channelSharedDataController!.channelSharedData.blocks get id
-          children: channelSharedDataController!.channelSharedData.value?.blocks
-                  ?.map((e) => Vods(
-                        scrollController: _parentScrollController,
-                        areaId: e.id ?? 0,
-                        templateId: e.template,
-                      ))
-                  .toList() ??
-              [],
-        ),
+        body: Obx(() => TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _tabController,
+              children:
+                  channelSharedDataController!.channelSharedData.value?.blocks
+                          ?.map((e) => Vods(
+                                scrollController: _parentScrollController,
+                                areaId: e.id ?? 0,
+                                templateId: e.template,
+                              ))
+                          .toList() ??
+                      [],
+            )),
       ),
     );
   }

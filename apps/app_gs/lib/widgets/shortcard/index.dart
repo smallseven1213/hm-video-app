@@ -20,14 +20,12 @@ class ShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final bool isActive;
 
   const ShortCard({
     Key? key,
     required this.index,
     required this.id,
     required this.title,
-    this.isActive = false,
   }) : super(key: key);
 
   @override
@@ -85,22 +83,6 @@ class _ShortCardState extends State<ShortCard> {
     setState(() {});
   }
 
-  // @override
-  // void didChangeDependencies() async {
-  //   videoDetailController!.videoUrl.listen((videoUrl) {
-  //     if (videoUrl.isNotEmpty) {
-  //       videoPlayerController?.dispose();
-  //       Get.putAsync<ObservableVideoPlayerController>(() async {
-  //         videoPlayerController = ObservableVideoPlayerController(videoUrl);
-  //         setState(() {});
-  //         logger.i('RENDER OBX: ShortCard didChangeDependencies retry');
-  //         return videoPlayerController!;
-  //       }, tag: videoUrl);
-  //     }
-  //   });
-  //   super.didChangeDependencies();
-  // }
-
   @override
   void dispose() {
     videoUrlSubscription.cancel(); // 在dispose方法中取消订阅
@@ -111,37 +93,42 @@ class _ShortCardState extends State<ShortCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      var video = videoDetailController!.video.value;
-      var videoDetail = videoDetailController!.videoDetail.value;
+    try {
+      return Obx(() {
+        var video = videoDetailController!.video.value;
+        var videoDetail = videoDetailController!.videoDetail.value;
 
-      if (video != null && videoDetailController!.videoUrl.value.isNotEmpty) {
-        logger.i('RENDER OBX: ShortCard Inside ${videoDetail!.toJson()}');
-        return Stack(
-          children: [
-            SizedBox(
-              height: double.infinity,
-              width: double.infinity,
-              child: VideoPlayerWidget(
-                video: video,
-                videoUrl: videoDetailController!.videoUrl.value,
+        if (video != null && videoDetailController!.videoUrl.value.isNotEmpty) {
+          logger.i('RENDER OBX: ShortCard Inside ${videoDetail!.toJson()}');
+          return Stack(
+            children: [
+              SizedBox(
+                height: double.infinity,
+                width: double.infinity,
+                child: VideoPlayerWidget(
+                  video: video,
+                  videoUrl: videoDetailController!.videoUrl.value,
+                ),
               ),
-            ),
-            ShortCardInfo(
-              index: widget.index,
-              data: videoDetail,
-              title: widget.title,
-              videoUrl: videoDetailController!.videoUrl.value,
-            )
-          ],
-        );
-      } else {
-        return const Expanded(
-          child: Center(
+              ShortCardInfo(
+                index: widget.index,
+                data: videoDetail,
+                title: widget.title,
+                videoUrl: videoDetailController!.videoUrl.value,
+              )
+            ],
+          );
+        } else {
+          return const Center(
             child: CircularProgressIndicator(),
-          ),
-        );
-      }
-    });
+          );
+        }
+      });
+    } catch (e, s) {
+      logger.e('ShortCard build error', e, s);
+      return const Center(
+        child: CircularProgressIndicator(),
+      );
+    }
   }
 }
