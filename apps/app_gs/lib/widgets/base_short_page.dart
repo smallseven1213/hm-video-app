@@ -55,6 +55,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                 var isActive = index == currentPage;
                 final paddingBottom = MediaQuery.of(context).padding.bottom;
 
+                var shortData = controller.data[index];
+                logger.i('shortData: ${shortData.toJson()}');
                 return Column(
                   children: [
                     Expanded(
@@ -62,8 +64,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                             ? ShortCard(
                                 index: index,
                                 isActive: isActive,
-                                id: controller.data[index].id,
-                                title: controller.data[index].title,
+                                id: shortData.id,
+                                title: shortData.title,
                               )
                             : const SizedBox.shrink()),
                     Container(
@@ -84,18 +86,18 @@ class BaseShortPageState extends State<BaseShortPage> {
                         children: [
                           Obx(() {
                             bool isLike = userFavoritesShortController.data
-                                .any((e) => e.id == widget.videoId);
+                                .any((e) => e.id == shortData.id);
                             return ShortButtonButton(
+                              key: ValueKey('like-${shortData.id}'),
                               title: '1.9萬',
                               subscribe: '喜歡就點讚',
                               activeIcon: Icons.favorite,
                               unActiveIcon: Icons.favorite_border,
                               isLike: isLike,
                               onTap: () {
-                                logger.i(controller.data[index].toJson());
                                 if (isLike) {
                                   userFavoritesShortController
-                                      .removeVideo([widget.videoId]);
+                                      .removeVideo([shortData.id]);
                                 } else {
                                   var vod = Vod.fromJson(
                                       controller.data[index].toJson());
@@ -106,18 +108,19 @@ class BaseShortPageState extends State<BaseShortPage> {
                           }),
                           Obx(() {
                             bool isLike = userShortCollectionController.data
-                                .any((e) => e.id == widget.videoId);
+                                .any((e) => e.id == shortData.id);
                             return ShortButtonButton(
+                              key: ValueKey('collection-${shortData.id}'),
                               title: '1.9萬',
                               subscribe: '添加到收藏',
                               activeIcon: Icons.favorite,
                               unActiveIcon: Icons.favorite_border,
                               isLike: isLike,
                               onTap: () {
-                                logger.i(controller.data[index].toJson());
+                                logger.i('shortData => ${shortData.id}');
                                 if (isLike) {
                                   userShortCollectionController
-                                      .removeVideo([widget.videoId]);
+                                      .removeVideo([shortData.id]);
                                 } else {
                                   var vod = Vod.fromJson(
                                       controller.data[index].toJson());

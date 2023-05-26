@@ -12,13 +12,13 @@ final logger = Logger();
 // const String prefsKey = 'playrecord';
 
 class PlayRecordController extends GetxController {
-  late final String _boxName;
-  late Box<String> box;
+  final String _boxName;
+  Future<Box<String>> boxFuture;
   var data = <VideoDatabaseField>[].obs;
 
-  PlayRecordController({required String tag}) {
-    _boxName = 'playRecord_$tag';
-  }
+  PlayRecordController({required String tag})
+      : _boxName = 'playRecord_$tag',
+        boxFuture = Hive.openBox<String>('playRecord_$tag');
 
   @override
   void onInit() {
@@ -30,7 +30,7 @@ class PlayRecordController extends GetxController {
   }
 
   Future<void> _init() async {
-    box = await Hive.openBox<String>(_boxName);
+    var box = await boxFuture;
 
     if (box.isNotEmpty) {
       data.value = box.values.map((videoStr) {
@@ -61,6 +61,7 @@ class PlayRecordController extends GetxController {
   }
 
   Future<void> _updateHive() async {
+    var box = await boxFuture;
     await box.clear();
     for (var video in data) {
       final videoStr = jsonEncode(video.toJson());
