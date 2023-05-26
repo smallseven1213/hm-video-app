@@ -98,12 +98,12 @@ class VideoPreviewWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // logger.i('RENDER VIDEO PREVIEW WIDGET!!!');
-    // if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
-    //   return VideoEmbeddedAdWidget(
-    //     imageRatio: imageRatio ?? 374 / 198,
-    //     detail: detail!,
-    //   );
-    // }
+    if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
+      return VideoEmbeddedAdWidget(
+        imageRatio: imageRatio ?? 374 / 198,
+        detail: detail!,
+      );
+    }
     return Column(
       children: [
         InkWell(
