@@ -107,8 +107,8 @@ class Block7WidgetState extends State<Block7Widget> {
                 options: CarouselOptions(
                   autoPlay: false,
                   enlargeCenterPage: true,
-                  viewportFraction: 0.5,
-                  height: 283,
+                  viewportFraction: 0.45,
+                  height: 310,
                   initialPage: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
@@ -121,8 +121,8 @@ class Block7WidgetState extends State<Block7Widget> {
                   var vod = videos[itemIndex];
                   return Center(
                     child: SizedBox(
-                      height: 245,
-                      width: 190,
+                      height: 267,
+                      width: 160,
                       child: VideoPreviewWidget(
                         id: vod.id,
                         film: widget.film,
@@ -132,7 +132,7 @@ class Block7WidgetState extends State<Block7Widget> {
                         timeLength: vod.timeLength!,
                         tags: vod.tags!,
                         title: vod.title,
-                        imageRatio: 190 / 245,
+                        imageRatio: 160 / 245,
                         hasTags: false,
                         videoViewTimes: vod.videoViewTimes!,
                         blockId: widget.block.id,
