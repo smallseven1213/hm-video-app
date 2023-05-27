@@ -12,6 +12,7 @@ import '../controllers/user_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
 import '../controllers/user_favorites_short_controlle.dart';
 import '../controllers/user_favorites_video_controlle.dart';
+import '../controllers/user_search_history_controller.dart';
 import '../controllers/user_short_collection_controller.dart';
 import '../controllers/user_video_collection_controller.dart';
 import '../controllers/video_ads_controller.dart';
@@ -47,4 +48,6 @@ void setupDependencies() {
   Get.lazyPut<FilterScreenController>(() => FilterScreenController());
   Get.lazyPut<ActorRegionController>(() => ActorRegionController());
   Get.lazyPut<VideoAdsController>(() => VideoAdsController());
+  // lazyPut UserSearchHistoryController
+  Get.lazyPut<UserSearchHistoryController>(() => UserSearchHistoryController());
 }
