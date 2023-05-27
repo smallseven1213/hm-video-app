@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/tag_popular_controller.dart';
 import 'package:shared/controllers/video_popular_controller.dart';
+import 'package:shared/controllers/user_search_history_controller.dart';
 
 import '../../widgets/header.dart';
 import '../../widgets/video_preview.dart';
@@ -15,12 +16,68 @@ class RecommandScreen extends StatelessWidget {
 
   final TagPopularController tagPopularController = Get.find();
   final VideoPopularController videoPopularController = Get.find();
+  final UserSearchHistoryController userSearchHistoryController = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: <Widget>[
+        Obx(() {
+          if (userSearchHistoryController.searchHistory.isEmpty) {
+            return const SliverToBoxAdapter(
+              child: SizedBox.shrink(),
+            );
+          }
+          return SliverToBoxAdapter(
+            child: Header(
+                text: '搜索紀錄',
+                // moreButton is a Button from Image AssetImage
+                moreButton: InkWell(
+                  onTap: () {
+                    userSearchHistoryController.clear();
+                  },
+                  child: const Icon(
+                    Icons.delete,
+                    color: Color(0xFF79a2c8),
+                  ),
+                  // child: Image.asset(
+                  //   'assets/images/icon_trash.png',
+                  //   width: 20,
+                  //   height: 20,
+                  // ),
+                )),
+          );
+        }),
+        Obx(() {
+          if (userSearchHistoryController.searchHistory.isEmpty) {
+            return const SliverToBoxAdapter(
+              child: SizedBox.shrink(),
+            );
+          }
+          return SliverPadding(
+            padding: const EdgeInsets.only(bottom: 20),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate([
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Wrap(
+                    spacing: 8, // 標籤之間的水平間距
+                    runSpacing: 8, // 標籤之間的垂直間距
+                    children: userSearchHistoryController.searchHistory
+                        .map((keyword) => TagItem(
+                            tag: keyword,
+                            onTap: () {
+                              onClickTag(keyword);
+                            }))
+                        .toList()
+                        .cast<Widget>(),
+                  ),
+                ),
+              ]),
+            ),
+          );
+        }),
         const SliverToBoxAdapter(
           child: Header(
             text: '搜索推薦',
