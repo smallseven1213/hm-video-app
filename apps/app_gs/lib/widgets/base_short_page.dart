@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
@@ -55,7 +56,9 @@ class BaseShortPageState extends State<BaseShortPage> {
                 final paddingBottom = MediaQuery.of(context).padding.bottom;
 
                 var shortData = controller.data[index];
-                logger.i('shortData: ${shortData.toJson()}');
+                var videoDetailController = Get.put(
+                    ShortVideoDetailController(shortData.id),
+                    tag: shortData.id.toString());
                 return Column(
                   children: [
                     Expanded(
@@ -85,7 +88,9 @@ class BaseShortPageState extends State<BaseShortPage> {
                                 .any((e) => e.id == shortData.id);
                             return ShortButtonButton(
                               key: ValueKey('like-${shortData.id}'),
-                              title: '1.9萬',
+                              title: videoDetailController
+                                  .videoDetail.value!.favorites
+                                  .toString(),
                               subscribe: '喜歡就點讚',
                               icon: Icons.favorite_rounded,
                               isLike: isLike,
@@ -106,7 +111,9 @@ class BaseShortPageState extends State<BaseShortPage> {
                                 .any((e) => e.id == shortData.id);
                             return ShortButtonButton(
                               key: ValueKey('collection-${shortData.id}'),
-                              title: '1.9萬',
+                              title: videoDetailController
+                                  .videoDetail.value!.collects
+                                  .toString(),
                               subscribe: '添加到收藏',
                               icon: Icons.star_rounded,
                               iconSize: 30,
