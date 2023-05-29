@@ -1,4 +1,3 @@
-import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/widgets/channe_provider.dart';
 import 'main.dart';

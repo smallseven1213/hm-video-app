@@ -74,7 +74,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        controller: _parentScrollController,
+        controller: PrimaryScrollController.of(context),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(
@@ -123,7 +123,6 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               children:
                   channelSharedDataController!.channelSharedData.value?.blocks
                           ?.map((e) => Vods(
-                                scrollController: _parentScrollController,
                                 areaId: e.id ?? 0,
                                 templateId: e.template,
                               ))
