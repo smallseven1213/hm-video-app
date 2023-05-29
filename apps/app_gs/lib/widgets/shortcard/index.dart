@@ -41,11 +41,13 @@ class _ShortCardState extends State<ShortCard> {
   @override
   void initState() {
     super.initState();
-    if (!Get.isRegistered<ShortVideoDetailController>(
-        tag: widget.id.toString())) {
-      videoDetailController = Get.put(ShortVideoDetailController(widget.id),
-          tag: widget.id.toString());
-    }
+    // if (!Get.isRegistered<ShortVideoDetailController>(
+    //     tag: widget.id.toString())) {
+    //   videoDetailController = Get.find(tag: widget.id.toString());
+    // }
+    logger.i('RENDER OBX: ShortCard initState');
+    videoDetailController =
+        Get.find<ShortVideoDetailController>(tag: widget.id.toString());
 
     var videoUrl = videoDetailController!.videoUrl.value;
     if (videoUrl.isNotEmpty) {
@@ -56,8 +58,6 @@ class _ShortCardState extends State<ShortCard> {
         _putController();
       }
     });
-
-    // videoPlayerController?.setIsPageActive(widget.isActive);
   }
 
   void _putController() async {
@@ -95,11 +95,15 @@ class _ShortCardState extends State<ShortCard> {
   Widget build(BuildContext context) {
     try {
       return Obx(() {
+        if (!Get.isRegistered<ShortVideoDetailController>(
+            tag: widget.id.toString())) {
+          return const SizedBox.shrink();
+        }
         var video = videoDetailController!.video.value;
         var videoDetail = videoDetailController!.videoDetail.value;
-
-        if (video != null && videoDetailController!.videoUrl.value.isNotEmpty) {
-          logger.i('RENDER OBX: ShortCard Inside ${videoDetail!.toJson()}');
+        if (video != null &&
+            videoDetail != null &&
+            videoDetailController!.videoUrl.value.isNotEmpty) {
           return Stack(
             children: [
               SizedBox(
@@ -119,16 +123,11 @@ class _ShortCardState extends State<ShortCard> {
             ],
           );
         } else {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return const SizedBox.shrink();
         }
       });
     } catch (e, s) {
-      logger.e('ShortCard build error', e, s);
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
+      return const SizedBox.shrink();
     }
   }
 }

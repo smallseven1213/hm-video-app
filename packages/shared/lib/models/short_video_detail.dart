@@ -5,8 +5,11 @@ class ShortVideoDetail {
   final int id;
   final List<VideoTag> tag;
   final Supplier? supplier;
+  final int collects;
+  final int favorites;
 
-  ShortVideoDetail(this.id, this.tag, this.supplier);
+  ShortVideoDetail(
+      this.id, this.tag, this.supplier, this.collects, this.favorites);
 
   factory ShortVideoDetail.fromJson(Map<String, dynamic> json) {
     return ShortVideoDetail(
@@ -14,6 +17,8 @@ class ShortVideoDetail {
       List.from(
           (json['tag'] as List<dynamic>).map((e) => VideoTag.fromJson(e))),
       json['supplier'] != null ? Supplier.fromJson(json['supplier']) : null,
+      json['collects'],
+      json['favorites'],
     );
   }
 
@@ -25,6 +30,8 @@ class ShortVideoDetail {
     if (supplier != null) {
       data['supplier'] = supplier!.toJson();
     }
+    data['collects'] = collects;
+    data['favorites'] = favorites;
     return data;
   }
 }

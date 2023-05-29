@@ -7,7 +7,6 @@ import 'package:shared/services/system_config.dart';
 final systemConfig = SystemConfig();
 final logger = Logger();
 
-
 String? getVideoUrl(String? videoUrl) {
   if (videoUrl != null && videoUrl.isNotEmpty) {
     String uri = videoUrl.replaceAll('\\', '/').replaceAll('//', '/');
