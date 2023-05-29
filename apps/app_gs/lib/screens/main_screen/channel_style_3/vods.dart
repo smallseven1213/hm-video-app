@@ -39,7 +39,7 @@ class VodsState extends State<Vods> {
               padding: const EdgeInsets.all(8.0),
               sliver: BaseVideoBlockTemplate(
                 templateId: widget.templateId ?? 3,
-                vods: vodController!.vodList.value,
+                vods: vodController.vodList.value,
               ),
             ),
           ],
