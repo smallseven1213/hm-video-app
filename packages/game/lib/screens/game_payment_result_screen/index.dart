@@ -147,10 +147,10 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                     left: 16,
                     right: 16,
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
+                    children: [
                       Text(
                         '溫馨提醒',
                         // color is 979797
@@ -180,7 +180,7 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                         maxLines: 2,
                       ),
                       Text(
-                        '3：充值成功VIP未到賬，請聯繫在線客服。',
+                        '3：充值成功未到賬，請聯繫在線客服。',
                         style: TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),

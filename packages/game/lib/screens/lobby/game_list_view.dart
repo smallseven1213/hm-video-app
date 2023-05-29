@@ -186,7 +186,7 @@ class _GameListViewState extends State<GameListView>
                 width: Get.width,
                 height: Get.height -
                     widget.deductHeight -
-                    (GetPlatform.isWeb ? 250 : 270),
+                    (GetPlatform.isWeb ? 280 : 244),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -306,6 +306,8 @@ class _GameListViewState extends State<GameListView>
                         context,
                         gameId: gameListResult[index * 2].gameId,
                         updateGameHistory: widget.updateGameHistory,
+                        tpCode: gameListResult[index * 2].tpCode,
+                        direction: gameListResult[index * 2].direction,
                       );
                     },
                     child: GameListItem(
@@ -320,6 +322,8 @@ class _GameListViewState extends State<GameListView>
                           context,
                           gameId: gameListResult[index * 2 + 1].gameId,
                           updateGameHistory: widget.updateGameHistory,
+                          tpCode: gameListResult[index * 2 + 1].tpCode,
+                          direction: gameListResult[index * 2 + 1].direction,
                         );
                       },
                       child: GameListItem(

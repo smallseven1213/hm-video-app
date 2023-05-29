@@ -61,7 +61,7 @@ class _GameInputState extends State<GameInput2> {
             ),
             isPassword
                 ? Container(
-                    width: 14,
+                    width: 16,
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
@@ -76,8 +76,9 @@ class _GameInputState extends State<GameInput2> {
                     ),
                   )
                 : const SizedBox(),
+            const SizedBox(width: 12),
             Container(
-              width: 20,
+              width: 16,
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {

@@ -14,6 +14,7 @@ class GameInput extends StatefulWidget {
     this.isPassword = false,
     this.hasIcon,
     this.inputFormatters,
+    this.focusNode,
   }) : super(key: key);
 
   final String label;
@@ -21,10 +22,11 @@ class GameInput extends StatefulWidget {
   final TextEditingController controller;
   final String? errorMessage;
   final String? warningMessage;
-  final Function? onChanged;
+  final void Function(String value)? onChanged;
   final bool? isPassword;
   final Icon? hasIcon;
   final List<TextInputFormatter>? inputFormatters;
+  final FocusNode? focusNode;
 
   @override
   _GameInputState createState() => _GameInputState();
@@ -79,11 +81,12 @@ class _GameInputState extends State<GameInput> {
                     TextStyle(color: gameLobbyPrimaryTextColor, fontSize: 14),
                 inputFormatters: widget.inputFormatters,
                 cursorColor: gameLobbyPrimaryTextColor,
+                focusNode: widget.focusNode,
               ),
             ),
             isPassword
                 ? Container(
-                    width: 14,
+                    width: 16,
                     alignment: Alignment.centerRight,
                     child: GestureDetector(
                       onTap: () {
@@ -98,12 +101,14 @@ class _GameInputState extends State<GameInput> {
                     ),
                   )
                 : const SizedBox(),
+            const SizedBox(width: 12),
             Container(
-              width: 20,
+              width: 16,
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {
                   widget.controller.clear();
+                  widget.onChanged!('');
                 },
                 child: Icon(
                   Icons.cancel,
