@@ -57,6 +57,11 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
         setState(() {});
       });
     }
+
+    // if tab change , reset scroll top
+    _tabController!.addListener(() {
+      _parentScrollController.jumpTo(0);
+    });
   }
 
   @override
