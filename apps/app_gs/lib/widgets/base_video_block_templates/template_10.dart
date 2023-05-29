@@ -45,7 +45,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate10({
         child: result[index][0].dataType == VideoType.areaAd.index
             ? ChannelAreaBanner(
                 image: BannerPhoto.fromJson({
-                  'id': result[index][0].id ?? 0,
+                  'id': result[index][0].id,
                   'url': result[index][0].adUrl ?? '',
                   'photoSid': result[index][0].coverHorizontal ?? '',
                   'isAutoClose': false,
@@ -56,6 +56,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate10({
                 gridLength: 2,
                 imageRatio: BlockImageRatio.block10.ratio,
                 isEmbeddedAds: true,
+                displayCoverVertical: true,
               ),
       );
     },
