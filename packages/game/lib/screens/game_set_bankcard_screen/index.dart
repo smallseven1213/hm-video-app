@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
@@ -267,8 +266,7 @@ class _GameSetBankCardState extends State<GameSetBankCard> {
                               label: '支行名稱',
                               hint: '請輸入支行名稱(選填)',
                               controller: branchNameController,
-                              onChanged: (value) =>
-                                  branchNameController.text = value,
+                              onChanged: (val) => logger.i(val.toString()),
                               errorMessage: _formKey.currentState!
                                   .fields['branchName']!.errorText,
                             );

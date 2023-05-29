@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class Tips extends StatelessWidget {
+  const Tips({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
       // width is 100%
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const <Widget>[
+        children: <Widget>[
           Text(
             '溫馨提示',
             style: TextStyle(
@@ -43,7 +45,7 @@ class Tips extends StatelessWidget {
             height: 3,
           ),
           Text(
-            '3：充值成功 VIP 未到賬，請聯繫在線客服。',
+            '3：充值成功未到賬，請聯繫在線客服。',
             style: TextStyle(
               fontSize: 12,
               color: Color(0xff999999),

@@ -165,15 +165,14 @@ class _GameLobbyState extends State<GameLobby> {
             child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                 color: gameLobbyBgColor,
                 child: SingleChildScrollView(
                   physics: const NeverScrollableScrollPhysics(),
                   controller: _scrollController,
                   child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Column(
                       children: [
                         GameCarousel(data: gameBannerController.gameBanner),

@@ -1,5 +1,3 @@
-// ChannelStyle3Main is a statefull widget
-
 import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
 import 'package:app_gs/widgets/header.dart';
@@ -8,11 +6,21 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
-import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/tab_bar.dart';
 
 final logger = Logger();
+
+Widget buildTitle(String title) {
+  return title == ''
+      ? const SizedBox()
+      : Column(
+          children: [
+            const SizedBox(height: 8),
+            Header(text: title),
+          ],
+        );
+}
 
 class ChannelStyle3Main extends StatefulWidget {
   final int channelId;
@@ -61,64 +69,63 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-          controller: _parentScrollController,
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              // SliverToBoxAdapter(
-              //   child: Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 8),
-              //     child: ChannelBanners(
-              //       channelId: widget.channelId,
-              //     ),
-              //   ),
-              // ),
-              // ChannelJingangArea(
-              //   channelId: widget.channelId,
-              // ),
-              // ChannelTags(
-              //   channelId: widget.channelId,
-              // ),
-              SliverAppBar(
-                pinned: true,
-                leading: null,
-                automaticallyImplyLeading: false,
-                forceElevated: true,
-                expandedHeight: 0,
-                toolbarHeight: 0,
-                flexibleSpace: const SizedBox.shrink(),
-                // bottom: PreferredSize(
-                //   preferredSize: const Size.fromHeight(60),
-                //   child: SizedBox(
-                //       height: 60,
-                //       child: SizedBox(
-                //         height: 60,
-                //         child: Obx(() => GSTabBar(
-                //               controller: _tabController,
-                //               tabs: (channelSharedDataController
-                //                       ?.channelSharedData.value?.blocks
-                //                       ?.map((e) => e.name ?? '')
-                //                       .toList()) ??
-                //                   [],
-                //             )),
-                //       )),
-                // ),
+        controller: _parentScrollController,
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return <Widget>[
+            SliverToBoxAdapter(
+                child: buildTitle(channelSharedDataController!
+                        .channelSharedData.value?.jingang!.title ??
+                    '')),
+            ChannelJingangArea(
+              channelId: widget.channelId,
+            ),
+            ChannelTags(
+              channelId: widget.channelId,
+            ),
+            SliverAppBar(
+              pinned: true,
+              leading: null,
+              automaticallyImplyLeading: false,
+              forceElevated: true,
+              expandedHeight: 0,
+              toolbarHeight: 0,
+              flexibleSpace: const SizedBox.shrink(),
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(60),
+                child: SizedBox(
+                    height: 60,
+                    child: SizedBox(
+                      height: 60,
+                      child: SizedBox(
+                        height: 60,
+                        child: Obx(() => GSTabBar(
+                              controller: _tabController,
+                              tabs: (channelSharedDataController
+                                      ?.channelSharedData.value?.blocks
+                                      ?.map((e) => e.name ?? '')
+                                      .toList()) ??
+                                  [],
+                            )),
+                      ),
+                    )),
               ),
-            ];
-          },
-          body: Container()
-          // body: Obx(() => TabBarView(
-          //       physics: const NeverScrollableScrollPhysics(),
-          //       controller: _tabController,
-          //       children:
-          //           (channelSharedDataController?.channelSharedData.value?.blocks
-          //                   ?.map((e) => Vods(
-          //                         scrollController: _parentScrollController,
-          //                         areaId: e.id ?? 0,
-          //                         templateId: e.template,
-          //                       ))
-          //                   .toList()) ?? [],
-          //     )),
-          ),
+            ),
+          ];
+        },
+        body: Obx(() => TabBarView(
+              physics: const NeverScrollableScrollPhysics(),
+              controller: _tabController,
+              children:
+                  channelSharedDataController!.channelSharedData.value?.blocks
+                          ?.map((e) => Vods(
+                                scrollController: _parentScrollController,
+                                areaId: e.id ?? 0,
+                                templateId: e.template,
+                              ))
+                          .toList() ??
+                      [],
+            )),
+      ),
     );
   }
 }
