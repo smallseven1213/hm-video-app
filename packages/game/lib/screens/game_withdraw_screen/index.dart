@@ -132,21 +132,20 @@ class _GameWithdrawState extends State<GameWithdraw> {
     try {
       var res = await GameLobbyApi().transfer();
       if (res['code'] == '00') {
-        var points = res['data']['points'];
-        var balance = res['data']['balance'].toString();
+        // var points = res['data']['points'];
+        // var balance = res['data']['balance'].toString();
 
-        if (double.parse(balance) > 0) {
-          logger.i('double.parse(balance) : ${double.parse(balance)}');
-          showConfirmDialog(
-            context: context,
-            title: "仍有遊戲進行中",
-            content: "仍有遊戲進行中，可提現額度為$points",
-            confirmText: "確認",
-            onConfirm: () {
-              Navigator.pop(context);
-            },
-          );
-        }
+        // if (double.parse(balance) > 0) {
+        //   showConfirmDialog(
+        //     context: context,
+        //     title: "仍有遊戲進行中",
+        //     content: "仍有遊戲進行中，可提現額度為$points",
+        //     confirmText: "確認",
+        //     onConfirm: () {
+        //       Navigator.pop(context);
+        //     },
+        //   );
+        // }
       } else {
         showConfirmDialog(
           context: context,
