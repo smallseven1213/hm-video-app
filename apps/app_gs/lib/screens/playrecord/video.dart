@@ -40,19 +40,20 @@ class PlayRecordVideoScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Obx(() => VideoPreviewWithEditWidget(
-                      id: video1.id,
-                      isEditing: listEditorController.isEditing.value,
-                      isSelected:
-                          listEditorController.selectedIds.contains(video1.id),
-                      onEditingTap: () {
-                        listEditorController.toggleSelected(video1.id);
-                      },
-                      coverVertical: video1.coverVertical,
-                      coverHorizontal: video1.coverHorizontal,
-                      timeLength: video1.timeLength,
-                      tags: video1.tags,
-                      title: video1.title,
-                      videoViewTimes: video1.videoViewTimes!)),
+                        id: video1.id,
+                        isEditing: listEditorController.isEditing.value,
+                        isSelected: listEditorController.selectedIds
+                            .contains(video1.id),
+                        onEditingTap: () {
+                          listEditorController.toggleSelected(video1.id);
+                        },
+                        coverVertical: video1.coverVertical,
+                        coverHorizontal: video1.coverHorizontal,
+                        timeLength: video1.timeLength,
+                        tags: video1.tags,
+                        title: video1.title,
+                        videoViewTimes: video1.videoViewTimes!,
+                      )),
                 ),
                 const SizedBox(width: 8),
                 Expanded(

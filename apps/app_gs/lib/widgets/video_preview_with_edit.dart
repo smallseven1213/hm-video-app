@@ -56,6 +56,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final List<Tag> tags;
   final String title;
   final int videoViewTimes;
+  final int videoCollectTimes;
   final double? imageRatio;
   final Vod? detail;
   final bool isEmbeddedAds;
@@ -82,6 +83,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       required this.tags,
       required this.title,
       required this.videoViewTimes,
+      this.videoCollectTimes = 0,
       this.isEmbeddedAds = false,
       this.detail,
       this.isEditing = false,
@@ -122,6 +124,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
             title: title,
             hasRadius: hasRadius,
             videoViewTimes: videoViewTimes,
+            videoCollectTimes: videoCollectTimes,
             hasTapEvent: !isEditing,
             onOverrideRedirectTap: onOverrideRedirectTap),
         if (isEditing)

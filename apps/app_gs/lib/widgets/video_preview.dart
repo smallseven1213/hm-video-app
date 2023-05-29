@@ -6,6 +6,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/video_collection_times.dart';
 import 'package:shared/widgets/view_times.dart';
 import 'package:shared/widgets/video_time.dart';
 import 'package:visibility_detector/visibility_detector.dart';
@@ -15,8 +16,15 @@ final logger = Logger();
 class ViewInfo extends StatelessWidget {
   final int viewCount;
   final int duration;
+  final int? videoCollectTimes;
+  final int? film;
 
-  const ViewInfo({Key? key, required this.viewCount, required this.duration})
+  const ViewInfo(
+      {Key? key,
+      this.film = 1,
+      required this.viewCount,
+      required this.duration,
+      this.videoCollectTimes})
       : super(key: key);
 
   @override
@@ -38,13 +46,16 @@ class ViewInfo extends StatelessWidget {
         // color: Colors.black.withOpacity(0.5),
       ),
       child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ViewTimes(times: viewCount),
-          VideoTime(time: duration),
-        ],
-      ),
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: film == 1
+              ? [
+                  ViewTimes(times: viewCount),
+                  VideoTime(time: duration),
+                ]
+              : [
+                  VideoCollectionTimes(times: videoCollectTimes ?? 0),
+                ]),
     );
   }
 }
@@ -57,7 +68,8 @@ class VideoPreviewWidget extends StatelessWidget {
   final int timeLength;
   final List<Tag> tags;
   final String title;
-  final int videoViewTimes;
+  final int? videoViewTimes;
+  final int? videoCollectTimes;
   final double? imageRatio;
   final Vod? detail;
   final bool isEmbeddedAds;
@@ -71,7 +83,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final Function()? onTap;
   final Function()? onOverrideRedirectTap; // 自定義路由轉址
 
-  VideoPreviewWidget(
+  const VideoPreviewWidget(
       {Key? key,
       required this.id,
       required this.coverVertical,
@@ -80,7 +92,8 @@ class VideoPreviewWidget extends StatelessWidget {
       required this.timeLength,
       required this.tags,
       required this.title,
-      required this.videoViewTimes,
+      this.videoViewTimes = 0,
+      this.videoCollectTimes = 0,
       this.isEmbeddedAds = false,
       this.detail,
       this.imageRatio,
@@ -202,7 +215,9 @@ class VideoPreviewWidget extends StatelessWidget {
                     right: 0,
                     bottom: 0,
                     child: ViewInfo(
-                      viewCount: videoViewTimes,
+                      film: film,
+                      videoCollectTimes: videoCollectTimes,
+                      viewCount: videoViewTimes ?? 0,
                       duration: timeLength,
                     )),
             ],

@@ -122,6 +122,7 @@ class SliverBlockWidget extends StatelessWidget {
                         film: film,
                         blockId: blockId,
                         displayCoverVertical: film == 2,
+                        videoCollectTimes: vods[index * 2].videoCollectTimes!,
                       ),
                     ),
                     const SizedBox(
@@ -142,6 +143,8 @@ class SliverBlockWidget extends StatelessWidget {
                               film: film,
                               blockId: blockId,
                               displayCoverVertical: film == 2,
+                              videoCollectTimes:
+                                  vods[index * 2 + 1].videoCollectTimes!,
                             ),
                           )
                         : const Expanded(

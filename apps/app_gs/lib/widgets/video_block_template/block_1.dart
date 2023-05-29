@@ -91,6 +91,8 @@ class Block1Widget extends StatelessWidget {
                                   result[index][0].coverVertical ?? '',
                               videoViewTimes:
                                   result[index][0].videoViewTimes ?? 0,
+                              videoCollectTimes:
+                                  result[index][0].videoCollectTimes ?? 0,
                               detail: result[index][0],
                               isEmbeddedAds: block.isEmbeddedAds ?? false,
                             )

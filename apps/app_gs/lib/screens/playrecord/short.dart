@@ -41,33 +41,34 @@ class PlayRecordShortScreen extends StatelessWidget {
           var vod = shortPlayRecordController.data.value[index];
           logger.i('TESTING PLAY RECORD SHORT SCREEN - $vod');
           return VideoPreviewWithEditWidget(
-              id: vod.id,
-              film: 2,
-              // onOverrideRedirectTap: () {
-              // MyRouteDelegate.of(context).push(
-              //   AppRoutes.shortsByTag.value,
-              //   args: {'videoId': vod.id, 'tagId': tagId},
-              //   removeSamePath: true,
-              // );
-              // },
-              onOverrideRedirectTap: () {
-                MyRouteDelegate.of(context).push(
-                  AppRoutes.shortsByLocal.value,
-                  args: {'videoId': vod.id, 'itemId': 1},
-                  removeSamePath: true,
-                );
-              },
-              hasRadius: false,
-              hasTitle: false,
-              hasTags: false,
-              imageRatio: gridRatio,
-              displayCoverVertical: true,
-              coverVertical: vod.coverVertical,
-              coverHorizontal: vod.coverHorizontal,
-              timeLength: vod.timeLength,
-              tags: vod.tags,
-              title: vod.title,
-              videoViewTimes: vod.videoViewTimes ?? 0);
+            id: vod.id,
+            film: 2,
+            // onOverrideRedirectTap: () {
+            // MyRouteDelegate.of(context).push(
+            //   AppRoutes.shortsByTag.value,
+            //   args: {'videoId': vod.id, 'tagId': tagId},
+            //   removeSamePath: true,
+            // );
+            // },
+            onOverrideRedirectTap: () {
+              MyRouteDelegate.of(context).push(
+                AppRoutes.shortsByLocal.value,
+                args: {'videoId': vod.id, 'itemId': 1},
+                removeSamePath: true,
+              );
+            },
+            hasRadius: false,
+            hasTitle: false,
+            hasTags: false,
+            imageRatio: gridRatio,
+            displayCoverVertical: true,
+            coverVertical: vod.coverVertical,
+            coverHorizontal: vod.coverHorizontal,
+            timeLength: vod.timeLength,
+            tags: vod.tags,
+            title: vod.title,
+            videoViewTimes: vod.videoViewTimes ?? 0,
+          );
         },
       );
     });
