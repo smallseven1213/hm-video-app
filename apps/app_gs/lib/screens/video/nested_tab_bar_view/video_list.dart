@@ -44,6 +44,7 @@ class VideoList extends StatelessWidget {
                       tags: firstVideo.tags!,
                       title: firstVideo.title,
                       videoViewTimes: firstVideo.videoViewTimes!,
+                      videoCollectTimes: firstVideo.videoCollectTimes!,
                     ),
                   ),
                   const SizedBox(width: 8),
@@ -57,6 +58,7 @@ class VideoList extends StatelessWidget {
                             tags: secondVideo.tags!,
                             title: secondVideo.title,
                             videoViewTimes: secondVideo.videoViewTimes!,
+                            videoCollectTimes: secondVideo.videoCollectTimes!,
                           )
                         : const SizedBox.shrink(),
                   ),

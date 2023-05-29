@@ -48,7 +48,8 @@ class SupplierVods extends StatelessWidget {
                 timeLength: vod.timeLength!,
                 tags: vod.tags!,
                 title: vod.title,
-                videoViewTimes: vod.videoViewTimes!);
+                videoViewTimes: vod.videoViewTimes!,
+                videoCollectTimes: vod.videoCollectTimes!);
           },
           childCount: vodController.vodList.value.length,
         ),

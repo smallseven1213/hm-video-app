@@ -135,6 +135,7 @@ class Block7WidgetState extends State<Block7Widget> {
                         imageRatio: 160 / 245,
                         hasTags: false,
                         videoViewTimes: vod.videoViewTimes!,
+                        videoCollectTimes: vod.videoCollectTimes!,
                         blockId: widget.block.id,
                       ),
                     ),

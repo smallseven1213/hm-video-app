@@ -30,6 +30,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate2({
                 coverHorizontal: video.coverHorizontal ?? '',
                 coverVertical: video.coverVertical ?? '',
                 videoViewTimes: video.videoViewTimes ?? 0,
+                videoCollectTimes: video.videoCollectTimes ?? 0,
                 detail: video,
                 isEmbeddedAds: true,
               ),
