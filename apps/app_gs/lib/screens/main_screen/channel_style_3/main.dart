@@ -14,6 +14,17 @@ import '../../../widgets/tab_bar.dart';
 
 final logger = Logger();
 
+Widget buildTitle(String title) {
+  return title == ''
+      ? const SizedBox()
+      : Column(
+          children: [
+            const SizedBox(height: 8),
+            Header(text: title),
+          ],
+        );
+}
+
 class ChannelStyle3Main extends StatefulWidget {
   final int channelId;
   const ChannelStyle3Main({Key? key, required this.channelId})
@@ -69,6 +80,10 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+                child: buildTitle(channelSharedDataController!
+                        .channelSharedData.value?.jingang!.title ??
+                    '')),
             ChannelJingangArea(
               channelId: widget.channelId,
             ),
