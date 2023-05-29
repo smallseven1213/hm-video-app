@@ -35,22 +35,25 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
     channelSharedDataController = Get.find<ChannelSharedDataController>(
       tag: '${widget.channelId}',
     );
-    var tags = channelSharedDataController!.channelSharedData.value?.blocks
+    var tags = (channelSharedDataController?.channelSharedData.value?.blocks
             ?.map((e) => e.id.toString())
-            .toList() ??
+            .toList()) ??
         [];
     _tabController = TabController(length: tags.length, vsync: this);
-    ever(channelSharedDataController!.channelSharedData, (_) {
-      _tabController!.dispose();
-      _tabController = TabController(length: _!.blocks!.length, vsync: this);
-      setState(() {});
-    });
+    if (channelSharedDataController?.channelSharedData != null) {
+      ever(channelSharedDataController!.channelSharedData!,
+          (channelSharedData) {
+        _tabController!.dispose();
+        var newLength = channelSharedData?.blocks?.length ?? 0;
+        _tabController = TabController(length: newLength, vsync: this);
+        setState(() {});
+      });
+    }
   }
 
   @override
   void dispose() {
     _tabController?.dispose();
-    logger.i('DISPOSE!!!');
     super.dispose();
   }
 
@@ -58,67 +61,64 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        controller: _parentScrollController,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: ChannelBanners(
-                  channelId: widget.channelId,
-                ),
+          controller: _parentScrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              // SliverToBoxAdapter(
+              //   child: Padding(
+              //     padding: const EdgeInsets.symmetric(horizontal: 8),
+              //     child: ChannelBanners(
+              //       channelId: widget.channelId,
+              //     ),
+              //   ),
+              // ),
+              // ChannelJingangArea(
+              //   channelId: widget.channelId,
+              // ),
+              // ChannelTags(
+              //   channelId: widget.channelId,
+              // ),
+              SliverAppBar(
+                pinned: true,
+                leading: null,
+                automaticallyImplyLeading: false,
+                forceElevated: true,
+                expandedHeight: 0,
+                toolbarHeight: 0,
+                flexibleSpace: const SizedBox.shrink(),
+                // bottom: PreferredSize(
+                //   preferredSize: const Size.fromHeight(60),
+                //   child: SizedBox(
+                //       height: 60,
+                //       child: SizedBox(
+                //         height: 60,
+                //         child: Obx(() => GSTabBar(
+                //               controller: _tabController,
+                //               tabs: (channelSharedDataController
+                //                       ?.channelSharedData.value?.blocks
+                //                       ?.map((e) => e.name ?? '')
+                //                       .toList()) ??
+                //                   [],
+                //             )),
+                //       )),
+                // ),
               ),
-            ),
-            ChannelJingangArea(
-              channelId: widget.channelId,
-            ),
-            ChannelTags(
-              channelId: widget.channelId,
-            ),
-            SliverAppBar(
-              pinned: true,
-              leading: null,
-              automaticallyImplyLeading: false,
-              forceElevated: true,
-              expandedHeight: 0,
-              toolbarHeight: 0,
-              flexibleSpace: const SizedBox.shrink(),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(60),
-                child: SizedBox(
-                    height: 60,
-                    child: SizedBox(
-                      height: 60,
-                      child: SizedBox(
-                        height: 60,
-                        child: Obx(() => GSTabBar(
-                              controller: _tabController,
-                              tabs: channelSharedDataController
-                                      ?.channelSharedData.value?.blocks
-                                      ?.map((e) => e.name ?? '')
-                                      .toList() ??
-                                  [],
-                            )),
-                      ),
-                    )),
-              ),
-            ),
-          ];
-        },
-        body: Obx(() => TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _tabController,
-              children:
-                  channelSharedDataController!.channelSharedData.value?.blocks
-                          ?.map((e) => Vods(
-                                scrollController: _parentScrollController,
-                                areaId: e.id ?? 0,
-                                templateId: e.template,
-                              ))
-                          .toList() ??
-                      [],
-            )),
-      ),
+            ];
+          },
+          body: Container()
+          // body: Obx(() => TabBarView(
+          //       physics: const NeverScrollableScrollPhysics(),
+          //       controller: _tabController,
+          //       children:
+          //           (channelSharedDataController?.channelSharedData.value?.blocks
+          //                   ?.map((e) => Vods(
+          //                         scrollController: _parentScrollController,
+          //                         areaId: e.id ?? 0,
+          //                         templateId: e.template,
+          //                       ))
+          //                   .toList()) ?? [],
+          //     )),
+          ),
     );
   }
 }
