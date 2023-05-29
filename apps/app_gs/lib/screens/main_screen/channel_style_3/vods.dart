@@ -22,41 +22,28 @@ class Vods extends StatefulWidget {
 }
 
 class VodsState extends State<Vods> {
-  ChannelBlockVodController? vodController;
-  final ScrollController _parentScrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    vodController = Get.put(
-        ChannelBlockVodController(
-          areaId: widget.areaId,
-          scrollController: _parentScrollController,
-        ),
-        tag: '${widget.areaId}');
-  }
-
   @override
   Widget build(BuildContext context) {
+    var vodController = Get.put(
+        ChannelBlockVodController(
+          areaId: widget.areaId,
+          scrollController: PrimaryScrollController.of(context),
+        ),
+        tag: '${widget.areaId}');
     return Obx(
       () {
-        // check vodController is registry and return result
-        if (vodController != null) {
-          return CustomScrollView(
-            controller: PrimaryScrollController.of(context),
-            slivers: [
-              SliverPadding(
-                padding: const EdgeInsets.all(8.0),
-                sliver: BaseVideoBlockTemplate(
-                  templateId: widget.templateId ?? 3,
-                  vods: vodController!.vodList.value,
-                ),
+        return CustomScrollView(
+          controller: PrimaryScrollController.of(context),
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.all(8.0),
+              sliver: BaseVideoBlockTemplate(
+                templateId: widget.templateId ?? 3,
+                vods: vodController!.vodList.value,
               ),
-            ],
-          );
-        } else {
-          return const SizedBox();
-        }
+            ),
+          ],
+        );
       },
     );
   }
