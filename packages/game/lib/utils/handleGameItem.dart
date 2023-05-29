@@ -39,10 +39,11 @@ _saveGameHistory({gameId}) async {
   prefs.setStringList('gameHistory', gameHistory);
 }
 
-void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
+void handleGameItem(BuildContext context,
+    {gameId, updateGameHistory, tpCode, direction}) async {
   try {
     onLoading(context, status: true);
-    await getGameUrl('wali', gameId);
+    await getGameUrl(tpCode, gameId);
     await _saveGameHistory(gameId: gameId);
     updateGameHistory();
 
@@ -71,6 +72,7 @@ void handleGameItem(BuildContext context, {gameId, updateGameHistory}) async {
         GameAppRoutes.webview.value,
         args: {
           'url': gameUrl,
+          'direction': direction,
         },
       );
     }

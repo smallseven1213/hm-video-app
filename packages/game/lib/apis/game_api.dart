@@ -82,8 +82,7 @@ class GameLobbyApi {
         }
       });
 
-  Future<List<GameItem>> getGames() =>
-      fetcher(url: '$apiPrefix/game?tpCode=wali').then(
+  Future<List<GameItem>> getGames() => fetcher(url: '$apiPrefix/game').then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
           if (res['code'] != '00') {
@@ -110,16 +109,8 @@ class GameLobbyApi {
 
   // 金幣轉帳, post to /tp-game-platform/transfer, data會有tpCode, type, applyAmount 三個值
 
-  Future transfer(
-    int type,
-    double? amount,
-    String tpCode,
-  ) =>
-      fetcher(url: '$apiPrefix/transfer', method: 'POST', body: {
-        'tpCode': tpCode,
-        'type': type,
-        // 'applyAmount': amount.toString()
-      }).then(
+  Future transfer() =>
+      fetcher(url: '$apiPrefix/collect', method: 'POST', body: {}).then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
           if (res['code'] != '00') {

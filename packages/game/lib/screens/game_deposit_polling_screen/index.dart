@@ -112,7 +112,7 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
 
   void _transferInit() async {
     try {
-      var res = await GameLobbyApi().transfer(2, 0, 'wali');
+      var res = await GameLobbyApi().transfer();
       if (res['code'] == '00') {
         var points = res['data']['points'];
         var balance = res['data']['balance'].toString();

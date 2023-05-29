@@ -50,6 +50,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   String validStake = '0.00';
   String withdrawalFee = '0.000';
   String withdrawalMode = '0';
+  FocusNode focusNode = FocusNode(); // 初始化 FocusNode 对象
 
   @override
   void initState() {
@@ -65,6 +66,12 @@ class _GameWithdrawState extends State<GameWithdraw> {
     _getUserWithdrawalData();
     _getStackLimit();
     _getParamConfig();
+  }
+
+  @override
+  void dispose() {
+    focusNode.dispose(); // 释放 FocusNode 对象
+    super.dispose();
   }
 
   void _getUserWithdrawalData() async {
@@ -227,14 +234,16 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   String? _validate(String? value) {
-    if (value == null || value.isEmpty) {
-      return '請輸提現金額';
-    } else if (int.parse(value) < 100) {
-      return '輸入金額不得小於 100元';
-    } else if (int.parse(value) > gameWalletController.wallet.value) {
-      return '輸入金額不得大於餘額';
-    } else if (int.parse(value) % 100 != 0) {
-      return '輸入金額格式錯誤';
+    if (focusNode.hasFocus) {
+      if (value == null || value.isEmpty) {
+        return '請輸提現金額請輸提現金額';
+      } else if (int.parse(value) < 100) {
+        return '輸入金額不得小於 100元';
+      } else if (int.parse(value) > gameWalletController.wallet.value) {
+        return '輸入金額不得大於餘額';
+      } else if (int.parse(value) % 100 != 0) {
+        return '輸入金額格式錯誤';
+      }
     }
     return null;
   }
@@ -393,6 +402,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                         inputFormatters: <TextInputFormatter>[
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
+                                        focusNode: focusNode,
                                       );
                                     },
                                   )),
