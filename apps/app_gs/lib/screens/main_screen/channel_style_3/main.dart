@@ -107,7 +107,10 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                               controller: _tabController,
                               tabs: (channelSharedDataController
                                       ?.channelSharedData.value?.blocks
-                                      ?.map((e) => e.name ?? '')
+                                      ?.map((e) =>
+                                          e.name != null && e.name!.length > 8
+                                              ? e.name!.substring(0, 8)
+                                              : e.name ?? '')
                                       .toList()) ??
                                   [],
                             )),
