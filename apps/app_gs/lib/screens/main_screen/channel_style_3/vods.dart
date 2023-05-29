@@ -24,37 +24,54 @@ class Vods extends StatefulWidget {
 }
 
 class VodsState extends State<Vods> {
+  ChannelBlockVodController? vodController;
+
   @override
-  Widget build(BuildContext context) {
-    final vodController = Get.put(
+  void initState() {
+    super.initState();
+    vodController = Get.put(
         ChannelBlockVodController(
           areaId: widget.areaId,
           scrollController: widget.scrollController,
         ),
         tag: '${widget.areaId}');
 
-    return NotificationListener<ScrollNotification>(
-      onNotification: (scrollNotification) {
-        if (scrollNotification is ScrollStartNotification ||
-            scrollNotification is ScrollUpdateNotification) {
-          widget.scrollController.jumpTo(vodController.scrollController.offset);
-        }
-        return false;
-      },
-      child: Obx(
-        () => CustomScrollView(
-          controller: vodController.scrollController,
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(8.0),
-              sliver: BaseVideoBlockTemplate(
-                templateId: widget.templateId ?? 3,
-                vods: vodController.vodList.value,
+    widget.scrollController.addListener(() {
+      if (widget.scrollController.offset !=
+          vodController!.scrollController.offset) {
+        vodController!.scrollController.jumpTo(widget.scrollController.offset);
+      }
+    });
+    vodController!.scrollController.addListener(() {
+      if (widget.scrollController.offset !=
+          vodController!.scrollController.offset) {
+        widget.scrollController.jumpTo(vodController!.scrollController.offset);
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Obx(
+      () {
+        // check vodController is registry and return result
+        if (vodController != null) {
+          return CustomScrollView(
+            controller: vodController!.scrollController,
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.all(8.0),
+                sliver: BaseVideoBlockTemplate(
+                  templateId: widget.templateId ?? 3,
+                  vods: vodController!.vodList.value,
+                ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          );
+        } else {
+          return const SizedBox();
+        }
+      },
     );
   }
 }

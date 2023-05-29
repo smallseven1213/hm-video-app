@@ -1,5 +1,3 @@
-// ChannelStyle3Main is a statefull widget
-
 import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
 import 'package:app_gs/widgets/header.dart';
@@ -8,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
-import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/tab_bar.dart';
 
@@ -46,22 +43,30 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
     channelSharedDataController = Get.find<ChannelSharedDataController>(
       tag: '${widget.channelId}',
     );
-    var tags = channelSharedDataController!.channelSharedData.value?.blocks
+    var tags = (channelSharedDataController?.channelSharedData.value?.blocks
             ?.map((e) => e.id.toString())
-            .toList() ??
+            .toList()) ??
         [];
     _tabController = TabController(length: tags.length, vsync: this);
-    ever(channelSharedDataController!.channelSharedData, (_) {
-      _tabController!.dispose();
-      _tabController = TabController(length: _!.blocks!.length, vsync: this);
-      setState(() {});
+    if (channelSharedDataController?.channelSharedData != null) {
+      ever(channelSharedDataController!.channelSharedData!,
+          (channelSharedData) {
+        _tabController!.dispose();
+        var newLength = channelSharedData?.blocks?.length ?? 0;
+        _tabController = TabController(length: newLength, vsync: this);
+        setState(() {});
+      });
+    }
+
+    // if tab change , reset scroll top
+    _tabController!.addListener(() {
+      _parentScrollController.jumpTo(0);
     });
   }
 
   @override
   void dispose() {
     _tabController?.dispose();
-    logger.i('DISPOSE!!!');
     super.dispose();
   }
 
@@ -72,14 +77,6 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
         controller: _parentScrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: ChannelBanners(
-                  channelId: widget.channelId,
-                ),
-              ),
-            ),
             SliverToBoxAdapter(
                 child: buildTitle(channelSharedDataController!
                         .channelSharedData.value?.jingang!.title ??
@@ -108,10 +105,10 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                         height: 60,
                         child: Obx(() => GSTabBar(
                               controller: _tabController,
-                              tabs: channelSharedDataController
+                              tabs: (channelSharedDataController
                                       ?.channelSharedData.value?.blocks
                                       ?.map((e) => e.name ?? '')
-                                      .toList() ??
+                                      .toList()) ??
                                   [],
                             )),
                       ),
