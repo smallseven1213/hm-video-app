@@ -108,7 +108,7 @@ class _ModalDropDownState extends State<ModalDropDown> {
             vertical: 8,
             horizontal: 20,
           ),
-          height: GetPlatform.isWeb ? 250 : 260,
+          height: GetPlatform.isWeb ? 250 : 290,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: gameItemMainColor,

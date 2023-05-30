@@ -63,7 +63,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
               topRight: Radius.circular(24),
             ),
           ),
-          height: GetPlatform.isWeb ? 220 : 230,
+          height: GetPlatform.isWeb ? 220 : 250,
           child: Obx(
             () => Column(
               children: [
