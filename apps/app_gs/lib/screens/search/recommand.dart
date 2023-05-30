@@ -37,15 +37,11 @@ class RecommandScreen extends StatelessWidget {
                   onTap: () {
                     userSearchHistoryController.clear();
                   },
-                  child: const Icon(
-                    Icons.delete,
-                    color: Color(0xFF79a2c8),
+                  child: Image.asset(
+                    'assets/images/search_delete.png',
+                    width: 20,
+                    height: 20,
                   ),
-                  // child: Image.asset(
-                  //   'assets/images/icon_trash.png',
-                  //   width: 20,
-                  //   height: 20,
-                  // ),
                 )),
           );
         }),
