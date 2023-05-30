@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
 
 final logger = Logger();
 
@@ -108,7 +108,7 @@ class _ModalDropDownState extends State<ModalDropDown> {
             vertical: 8,
             horizontal: 20,
           ),
-          height: 250,
+          height: GetPlatform.isWeb ? 250 : 260,
           alignment: Alignment.center,
           decoration: BoxDecoration(
             color: gameItemMainColor,
