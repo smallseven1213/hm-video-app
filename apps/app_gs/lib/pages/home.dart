@@ -47,7 +47,6 @@ class HomeState extends State<HomePage> {
   // init
   @override
   void initState() {
-    super.initState();
     if (widget.defaultScreenKey != null) {
       bottomNavigatorController.changeKey(widget.defaultScreenKey!);
     }
@@ -62,6 +61,7 @@ class HomeState extends State<HomePage> {
       MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.home.value,
           hasTransition: false, args: {'defaultScreenKey': '/game'});
     }));
+    super.initState();
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:logger/logger.dart';
+import '../models/area_info_with_block_vod.dart';
 import '../models/block_vod.dart';
 import '../models/channel_info.dart';
 import '../models/short_video_detail.dart';
@@ -414,7 +415,7 @@ class VodApi {
     return names;
   }
 
-  Future<BlockVod> getVideoByAreaId(
+  Future<AreaInfoWithBlockVod?> getVideoByAreaId(
     int areaId, {
     int page = 1,
     int limit = 2,
@@ -423,15 +424,21 @@ class VodApi {
         url:
             '${systemConfig.apiHost}/public/videos/video/v2/areaInfo?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
-      return BlockVod([], 0);
+      return null;
     }
 
+    var info = res.data['data'];
     var videos = res.data['data']['videos'];
     List<Vod> vods = List.from(
         (videos['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
-    return BlockVod(
-      vods,
-      videos['total'],
-    );
+    return AreaInfoWithBlockVod(
+        film: info['film'],
+        id: info['id'],
+        name: info['name'],
+        template: info['template'],
+        videos: BlockVod(
+          vods,
+          videos['total'],
+        ));
   }
 }

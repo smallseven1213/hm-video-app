@@ -54,6 +54,7 @@ class AdState extends State<Ad> {
 
   startTimer() {
     // 倒數五秒
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
         if (currentBanner.isAutoClose == true) {
@@ -95,12 +96,13 @@ class AdState extends State<Ad> {
                   height: size.height,
                   sid: currentBanner.photoSid.toString(),
                   fit: BoxFit.cover,
-                  onLoaded: () {
+                  onLoaded: (result) {
+                    logger.i('AD SID IMAGE ONLOAD');
                     startTimer();
                     setState(() => imageLoaded = true);
                   },
-                  onError: () {
-                    logger.d('loading ad image is Error');
+                  onError: (e) {
+                    logger.i('AD SID IMAGE ERROR: $e');
                     MyRouteDelegate.of(context).pushAndRemoveUntil(
                         AppRoutes.home.value,
                         hasTransition: false);

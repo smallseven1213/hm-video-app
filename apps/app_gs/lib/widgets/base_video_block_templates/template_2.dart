@@ -7,6 +7,8 @@ import '../video_preview.dart';
 
 SliverChildBuilderDelegate baseVideoBlockTemplate2({
   required List<Vod> vods,
+  required int areaId,
+  int? film = 1,
 }) {
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {
@@ -33,6 +35,8 @@ SliverChildBuilderDelegate baseVideoBlockTemplate2({
                 videoCollectTimes: video.videoCollectTimes ?? 0,
                 detail: video,
                 isEmbeddedAds: true,
+                blockId: areaId,
+                film: film,
               ),
       );
     },
