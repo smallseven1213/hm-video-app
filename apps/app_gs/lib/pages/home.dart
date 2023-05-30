@@ -77,7 +77,6 @@ class HomeState extends State<HomePage> {
         final currentScreen = screens[activeKey]!();
         final paddingBottom = MediaQuery.of(context).padding.bottom;
 
-        logger.i('RENDER: Home');
         return Scaffold(
             body: currentScreen,
             bottomNavigationBar: bottomNavigatorController
