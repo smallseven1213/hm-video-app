@@ -58,46 +58,6 @@ class TagApi {
         (res.data['data'] as List<dynamic>).map((e) => VideoTags.fromJson(e)));
   }
 
-  Future<Pager<VideoTag>> getShortVideoById({
-    required String id,
-    required int page,
-    required int limit,
-  }) async {
-    var res = await fetcher(
-        url: '$apiPrefix/tag/shortVideo?page=$page&limit=$limit&id=$id');
-    if (res.data['code'] != '00') {
-      return Pager.fromJson(
-        res.data['data'],
-        [],
-      );
-    }
-    return Pager.fromJson(
-        res.data['data'],
-        List.from((res.data['data']['data'] as List<dynamic>)
-            .map((e) => VideoTag.fromJson(e))));
-  }
-
-  Future<Pager<VideoTag1>> getShortVideo1ById({
-    required String id,
-    required int page,
-    required int limit,
-  }) async {
-    var res = await fetcher(
-        url: '$apiPrefix/tag/shortVideo?page=$page&limit=$limit&id=$id');
-    if (res.data['code'] != '00') {
-      return Pager.fromJson(
-        res.data['data'],
-        [],
-      );
-    }
-
-    return Pager.fromJson(
-      res.data['data'],
-      List.from((res.data['data']['data'] as List<dynamic>)
-          .map((e) => VideoTag1.fromJson(e))),
-    );
-  }
-
   Future<List<VideoTags>> searchShortVideoPopular(String keyword) async {
     var res = await fetcher(
         url: '$apiPrefix/tag/searchShortVideoPopular?keyword=$keyword');
