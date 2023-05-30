@@ -15,6 +15,7 @@ class GameInput extends StatefulWidget {
     this.hasIcon,
     this.inputFormatters,
     this.focusNode,
+    this.onClear,
   }) : super(key: key);
 
   final String label;
@@ -27,6 +28,7 @@ class GameInput extends StatefulWidget {
   final Icon? hasIcon;
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
+  final Function()? onClear;
 
   @override
   _GameInputState createState() => _GameInputState();
@@ -107,8 +109,7 @@ class _GameInputState extends State<GameInput> {
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {
-                  widget.controller.clear();
-                  widget.onChanged!('');
+                  widget.onClear!() ?? widget.controller.clear();
                 },
                 child: Icon(
                   Icons.cancel,
