@@ -114,6 +114,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   void dispose() {
     setScreenPortrait();
     WidgetsBinding.instance.removeObserver(this);
+    videoPlayerController!.dispose();
     logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
     super.dispose();
   }

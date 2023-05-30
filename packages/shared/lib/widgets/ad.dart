@@ -35,7 +35,7 @@ class AdState extends State<Ad> {
 
   int countdownSeconds = 5;
   bool imageLoaded = false;
-  late Timer? _timer;
+  Timer? _timer;
 
   @override
   void initState() {
@@ -99,7 +99,8 @@ class AdState extends State<Ad> {
                     startTimer();
                     setState(() => imageLoaded = true);
                   },
-                  onError: (e, stackTrace) {
+                  onError: () {
+                    logger.d('loading ad image is Error');
                     MyRouteDelegate.of(context).pushAndRemoveUntil(
                         AppRoutes.home.value,
                         hasTransition: false);
