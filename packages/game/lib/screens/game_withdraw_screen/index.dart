@@ -235,7 +235,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   String? _validate(String? value) {
     if (focusNode.hasFocus) {
       if (value == null || value.isEmpty) {
-        return '請輸提現金額請輸提現金額';
+        return '請輸入提現金額';
       } else if (int.parse(value) < 100) {
         return '輸入金額不得小於 100元';
       } else if (int.parse(value) > gameWalletController.wallet.value) {
@@ -402,6 +402,12 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                           FilteringTextInputFormatter.digitsOnly
                                         ],
                                         focusNode: focusNode,
+                                        onClear: () {
+                                          amountController.clear();
+                                          setState(() {
+                                            _enableSubmit = false;
+                                          });
+                                        },
                                       );
                                     },
                                   )),
