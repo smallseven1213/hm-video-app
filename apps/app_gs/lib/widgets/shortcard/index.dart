@@ -75,6 +75,7 @@ class _ShortCardState extends State<ShortCard> {
       coverHorizontal: video.coverHorizontal!,
       coverVertical: video.coverVertical!,
       timeLength: video.timeLength!,
+      videoCollectTimes: videoDetailController!.videoDetail.value!.collects,
       tags: [],
       title: video.title,
       // detail: detail!,
