@@ -42,7 +42,7 @@ class GameCarouselState extends State<GameCarousel> {
             .toList();
         return Carousel(
           images: images,
-          ratio: 359 / 170,
+          ratio: 2.47,
         );
       }
     });

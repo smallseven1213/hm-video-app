@@ -63,7 +63,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
               topRight: Radius.circular(24),
             ),
           ),
-          height: 220,
+          height: GetPlatform.isWeb ? 220 : 230,
           child: Obx(
             () => Column(
               children: [
@@ -77,6 +77,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                           color: Color(0xff979797),
                         ),
                         onPressed: () {
+                          gameWithdrawController.setSubmitButtonDisable(true);
                           Navigator.pop(context);
                           onClose!();
                         },
