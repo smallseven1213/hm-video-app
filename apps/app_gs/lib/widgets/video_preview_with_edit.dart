@@ -113,6 +113,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       children: [
         VideoPreviewWidget(
             id: id,
+            film: film,
             hasTags: hasTags,
             hasTitle: hasTitle,
             displayCoverVertical: displayCoverVertical,

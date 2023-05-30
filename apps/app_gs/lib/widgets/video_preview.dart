@@ -209,6 +209,17 @@ class VideoPreviewWidget extends StatelessWidget {
                       ),
                     )),
               ),
+              // 下面Debug用
+              // if (hasInfoView == true)
+              //   Positioned(
+              //       left: 0,
+              //       right: 0,
+              //       bottom: 20,
+              //       child: Text(film.toString(),
+              //           style: TextStyle(
+              //               color: Colors.white,
+              //               fontSize: 30,
+              //               fontWeight: FontWeight.bold))),
               if (hasInfoView == true)
                 Positioned(
                     left: 0,
