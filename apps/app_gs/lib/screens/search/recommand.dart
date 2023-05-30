@@ -66,7 +66,7 @@ class RecommandScreen extends StatelessWidget {
                     runSpacing: 8, // 標籤之間的垂直間距
                     children: userSearchHistoryController.searchHistory
                         .map((keyword) => TagItem(
-                            tag: keyword,
+                            tag: '#$keyword',
                             onTap: () {
                               onClickTag(keyword);
                             }))
