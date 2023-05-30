@@ -88,9 +88,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                                 .any((e) => e.id == shortData.id);
                             return ShortButtonButton(
                               key: ValueKey('like-${shortData.id}'),
-                              title: videoDetailController
-                                  .videoDetail.value!.favorites
-                                  .toString(),
+                              count: videoDetailController
+                                  .videoDetail.value!.collects,
                               subscribe: '喜歡就點讚',
                               icon: Icons.favorite_rounded,
                               isLike: isLike,
@@ -111,9 +110,8 @@ class BaseShortPageState extends State<BaseShortPage> {
                                 .any((e) => e.id == shortData.id);
                             return ShortButtonButton(
                               key: ValueKey('collection-${shortData.id}'),
-                              title: videoDetailController
-                                  .videoDetail.value!.collects
-                                  .toString(),
+                              count: videoDetailController
+                                  .videoDetail.value!.collects,
                               subscribe: '添加到收藏',
                               icon: Icons.star_rounded,
                               iconSize: 30,
