@@ -1,43 +1,62 @@
-// ExpanededButton, class Name "ShortBottomButton"
-// has props(String title, String subscribe, activeIcon, unActiveIcon)
-
 import 'package:app_gs/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/utils/video_info_formatter.dart';
 
-class ShortButtonButton extends StatelessWidget {
-  final String title;
+class ShortButtonButton extends StatefulWidget {
   final String subscribe;
   final IconData icon;
   final double? iconSize;
   final bool isLike;
+  final int? count;
   final Function()? onTap;
 
   const ShortButtonButton(
       {Key? key,
-      required this.title,
       required this.subscribe,
       required this.icon,
+      this.count = 0,
       this.iconSize,
       this.isLike = false,
       this.onTap})
       : super(key: key);
 
   @override
+  ShortButtonButtonState createState() => ShortButtonButtonState();
+}
+
+class ShortButtonButtonState extends State<ShortButtonButton> {
+  int selfCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    selfCount = widget.count!;
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
         flex: 1,
         child: InkWell(
-          onTap: onTap,
+          onTap: () {
+            setState(() {
+              selfCount = widget.isLike ? selfCount - 1 : selfCount + 1;
+            });
+
+            if (widget.onTap != null) {
+              widget.onTap!();
+            }
+          },
           child: Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  icon,
-                  size: iconSize ?? 24,
-                  color: isLike
+                  widget.icon,
+                  size: widget.iconSize ?? 24,
+                  color: widget.isLike
                       ? AppColors.colors[ColorKeys.primary]
                       : Colors.white,
                 ),
@@ -47,14 +66,14 @@ class ShortButtonButton extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      getViewTimes(selfCount, shouldCalculateThousands: false),
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
                       ),
                     ),
                     Text(
-                      subscribe,
+                      widget.subscribe,
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
