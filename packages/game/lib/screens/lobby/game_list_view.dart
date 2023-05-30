@@ -186,7 +186,7 @@ class _GameListViewState extends State<GameListView>
                 width: Get.width,
                 height: Get.height -
                     widget.deductHeight -
-                    (GetPlatform.isWeb ? 214 : 270),
+                    (GetPlatform.isWeb ? 214 : 280),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -195,7 +195,7 @@ class _GameListViewState extends State<GameListView>
                       child: RotatedBox(
                         quarterTurns: 1,
                         child: SizedBox(
-                          width: Get.height - (GetPlatform.isWeb ? 180 : 420),
+                          width: Get.height - (GetPlatform.isWeb ? 180 : 430),
                           height: 60,
                           child: TabBar(
                             controller: _tabController,
@@ -308,6 +308,7 @@ class _GameListViewState extends State<GameListView>
                         updateGameHistory: widget.updateGameHistory,
                         tpCode: gameListResult[index * 2].tpCode,
                         direction: gameListResult[index * 2].direction,
+                        gameType: gameListResult[index * 2].gameType,
                       );
                     },
                     child: GameListItem(
@@ -324,6 +325,7 @@ class _GameListViewState extends State<GameListView>
                           updateGameHistory: widget.updateGameHistory,
                           tpCode: gameListResult[index * 2 + 1].tpCode,
                           direction: gameListResult[index * 2 + 1].direction,
+                          gameType: gameListResult[index * 2 + 1].gameType,
                         );
                       },
                       child: GameListItem(
