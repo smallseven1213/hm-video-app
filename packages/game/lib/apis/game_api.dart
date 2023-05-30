@@ -36,11 +36,12 @@ class GameLobbyApi {
         },
       );
 
-  Future enterGame(String tpCode, int gameId) async {
+  Future enterGame(String tpCode, int gameId, int gameType) async {
     var value =
         await fetcher(url: '$apiPrefix/enter-game', method: 'POST', body: {
       'tpCode': tpCode,
       'gameId': gameId,
+      'gameType': gameType,
       'device': GetPlatform.isWeb
           ? 1
           : Platform.isAndroid

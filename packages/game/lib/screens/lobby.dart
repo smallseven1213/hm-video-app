@@ -214,7 +214,7 @@ class _GameLobbyState extends State<GameLobby> {
                           gameHistoryList: gameHistoryList,
                           deductHeight:
                               (gameBannerController.gameBanner.isNotEmpty
-                                          ? Get.width / 2.47 - 14
+                                          ? Get.width / 2.47
                                           : 0)
                                       .toInt() +
                                   (gameBannerController.gameMarquee.isNotEmpty
