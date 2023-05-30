@@ -140,24 +140,12 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
         width: MediaQuery.of(context).size.width,
         height: playerHeight,
         child: Obx(() {
-          var aspectRatio = obsVideoPlayerController
-                          .videoPlayerController!.value.size.width ==
-                      0 ||
-                  obsVideoPlayerController
-                          .videoPlayerController!.value.size.height ==
-                      0
+          Size videoSize =
+              obsVideoPlayerController.videoPlayerController!.value.size;
+          var aspectRatio = videoSize.width == 0 || videoSize.height == 0
               ? 16 / 9
-              : obsVideoPlayerController
-                      .videoPlayerController!.value.size.width /
-                  obsVideoPlayerController
-                      .videoPlayerController!.value.size.height;
+              : videoSize.width / videoSize.height;
 
-          var currentRoutePath =
-              MyRouteDelegate.of(context).currentConfiguration;
-          if (currentRoutePath != '/video') {
-            obsVideoPlayerController.videoPlayerController?.pause();
-            setScreenPortrait();
-          }
           logger.i(
               '====? obsVideoPlayerController.isReadyL ${obsVideoPlayerController.isReady.value}');
           return Stack(
