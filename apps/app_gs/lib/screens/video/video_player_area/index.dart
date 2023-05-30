@@ -111,6 +111,15 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   }
 
   @override
+  void dispose() {
+    setScreenPortrait();
+    WidgetsBinding.instance.removeObserver(this);
+    videoPlayerController!.dispose();
+    logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     bool isObsVideoPlayerControllerReady =
         Get.isRegistered<ObservableVideoPlayerController>(tag: widget.videoUrl);
@@ -120,7 +129,7 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
         : MediaQuery.of(context).size.width / 16 * 9;
 
     logger.i(
-        'RENDER OBX: isObsVideoPlayerControllerReady id: ${isObsVideoPlayerControllerReady}');
+        'RENDER OBX: isObsVideoPlayefffrControllerReady id: ${isObsVideoPlayerControllerReady}');
 
     if (isObsVideoPlayerControllerReady) {
       final obsVideoPlayerController =
