@@ -10,6 +10,7 @@ class VideoDatabaseField {
   final List<Tag> tags;
   final String title;
   final int? videoViewTimes;
+  final int? videoCollectTimes;
   // final Data? detail;
   VideoDatabaseField({
     required this.id,
@@ -19,6 +20,7 @@ class VideoDatabaseField {
     required this.tags,
     required this.title,
     this.videoViewTimes,
+    this.videoCollectTimes,
     // this.detail,
   });
 
@@ -31,6 +33,7 @@ class VideoDatabaseField {
       'tags': tags,
       'title': title,
       'videoViewTimes': videoViewTimes,
+      'videoCollectTimes': videoCollectTimes,
       // 'detail': detail,
     };
   }
@@ -46,6 +49,7 @@ class VideoDatabaseField {
           .toList(),
       title: json['title'],
       videoViewTimes: json['videoViewTimes'],
+      videoCollectTimes: json['videoCollectTimes'],
       // detail: json['detail'],
     );
   }
