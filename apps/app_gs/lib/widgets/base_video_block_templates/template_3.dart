@@ -32,6 +32,8 @@ List<List<Vod>> organizeRowData(List videos) {
 
 SliverChildBuilderDelegate baseVideoBlockTemplate3({
   required List<Vod> vods,
+  required int areaId,
+  int? film = 1,
 }) {
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {
@@ -54,6 +56,8 @@ SliverChildBuilderDelegate baseVideoBlockTemplate3({
                 gridLength: 2,
                 imageRatio: BlockImageRatio.block3.ratio,
                 isEmbeddedAds: true,
+                film: film,
+                blockId: areaId,
               ),
       );
     },

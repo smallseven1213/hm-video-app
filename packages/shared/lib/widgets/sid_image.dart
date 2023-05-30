@@ -16,8 +16,8 @@ class SidImage extends StatefulWidget {
   final double height;
   final BoxFit fit;
   final Alignment alignment;
-  final Function? onLoaded;
-  final Function? onError;
+  final Function(dynamic)? onLoaded;
+  final Function(dynamic)? onError;
   final bool noFadeIn;
 
   const SidImage(
@@ -65,7 +65,9 @@ class SidImageState extends State<SidImage> {
             imageData = file;
           });
         }
-        widget.onLoaded != null ? widget.onLoaded!() : null;
+        if (widget.onLoaded != null) {
+          widget.onLoaded!('success');
+        }
       } else {
         try {
           var res = await ImageApi().getSidImageData(widget.sid);
@@ -78,11 +80,15 @@ class SidImageState extends State<SidImage> {
               imageData = file;
             });
           }
-          widget.onLoaded != null ? widget.onLoaded!() : null;
+          if (widget.onLoaded != null) {
+            widget.onLoaded!('success');
+          }
         } catch (e) {
           // logger.d('${widget.sid}==ERROR=\n$e');
           // if widget.onError is not null, call it
-          widget.onError != null ? widget.onError!() : null;
+          if (widget.onError != null) {
+            widget.onError!(e);
+          }
         }
       }
     }
