@@ -161,8 +161,7 @@ class SearchPageState extends State<SearchPage> {
                           searchKeyword = _searchResults[index];
                           displaySearchResult = false;
                         });
-                        Get.find<UserSearchHistoryController>()
-                            .add(_searchResults[index]);
+
                         FocusScope.of(context).requestFocus(FocusNode());
                       },
                       child: Container(
@@ -194,5 +193,3 @@ class SearchPageState extends State<SearchPage> {
     );
   }
 }
-
-// TODO, 如果點擊了input，然後input又有值，然後displaySearchResult為false; displaySearchResult就設定true

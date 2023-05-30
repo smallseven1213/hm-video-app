@@ -3,6 +3,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/controllers/search_vod_controller.dart';
+import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/fade_in_effect.dart';
 
@@ -35,6 +36,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
       keyword: widget.keyword,
       scrollController: scrollController,
     );
+    Get.find<UserSearchHistoryController>().add(widget.keyword);
   }
 
   @override
