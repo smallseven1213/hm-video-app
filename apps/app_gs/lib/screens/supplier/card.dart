@@ -162,7 +162,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(supplier.followTotal.toString(),
+                              Text(supplier.collectTotal.toString(),
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
