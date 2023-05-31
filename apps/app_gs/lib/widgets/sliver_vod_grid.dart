@@ -34,6 +34,8 @@ class SliverVodGrid extends StatelessWidget {
 
     if (onScrollEnd != null) {
       scrollController.addListener(() {
+        logger.i(
+            'sliver $key => position.pixels ${scrollController.position.pixels} position.maxScrollExtent ${scrollController.position.maxScrollExtent}');
         if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent) {
           logger.i('到底了');

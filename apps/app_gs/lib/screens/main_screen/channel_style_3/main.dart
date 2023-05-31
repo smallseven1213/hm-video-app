@@ -24,6 +24,7 @@ Widget buildTitle(String title) {
 
 class ChannelStyle3Main extends StatefulWidget {
   final int channelId;
+
   const ChannelStyle3Main({Key? key, required this.channelId})
       : super(key: key);
 
@@ -33,9 +34,37 @@ class ChannelStyle3Main extends StatefulWidget {
 
 class ChannelStyle3MainState extends State<ChannelStyle3Main>
     with TickerProviderStateMixin {
+  final GlobalKey targetKey = GlobalKey();
   TabController? _tabController;
-  // final ScrollController _parentScrollController = ScrollController();
   late ChannelSharedDataController? channelSharedDataController;
+  final ScrollController _scrollController = ScrollController();
+
+  void _setupTabController() {
+    _tabController?.dispose();
+    var tags = (channelSharedDataController?.channelSharedData.value?.blocks
+            ?.map((e) => e.id.toString())
+            .toList()) ??
+        [];
+    _tabController = TabController(length: tags.length, vsync: this);
+
+    _tabController?.addListener(() {
+      if (_tabController!.indexIsChanging) {
+        // RenderBox? box =
+        //     targetKey.currentContext?.findRenderObject() as RenderBox?;
+        // Offset? position = box?.localToGlobal(Offset.zero);
+        // _scrollController.animateTo(
+        //   position?.dy ?? 0.0,
+        //   duration: const Duration(milliseconds: 200),
+        //   curve: Curves.easeInOut,
+        // );
+        Scrollable.ensureVisible(
+          targetKey.currentContext!,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.ease,
+        );
+      }
+    });
+  }
 
   @override
   void initState() {
@@ -43,25 +72,17 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
     channelSharedDataController = Get.find<ChannelSharedDataController>(
       tag: '${widget.channelId}',
     );
-    var tags = (channelSharedDataController?.channelSharedData.value?.blocks
-            ?.map((e) => e.id.toString())
-            .toList()) ??
-        [];
-    _tabController = TabController(length: tags.length, vsync: this);
+
+    _setupTabController();
+
     if (channelSharedDataController?.channelSharedData != null) {
-      ever(channelSharedDataController!.channelSharedData!,
-          (channelSharedData) {
-        _tabController!.dispose();
-        var newLength = channelSharedData?.blocks?.length ?? 0;
-        _tabController = TabController(length: newLength, vsync: this);
+      ever(channelSharedDataController!.channelSharedData, (channelSharedData) {
+        _setupTabController();
         setState(() {});
       });
     }
 
-    // if tab change , reset scroll top
-    // _tabController!.addListener(() {
-    //   _parentScrollController.jumpTo(0);
-    // });
+    logger.i('tabController before');
   }
 
   @override
@@ -74,7 +95,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
-        controller: PrimaryScrollController.of(context),
+        controller: _scrollController,
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(
@@ -87,6 +108,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
             ChannelTags(
               channelId: widget.channelId,
             ),
+            SliverToBoxAdapter(key: targetKey),
             SliverAppBar(
               pinned: true,
               leading: null,
@@ -125,9 +147,13 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               controller: _tabController,
               children:
                   channelSharedDataController!.channelSharedData.value?.blocks
-                          ?.map((e) => Vods(
-                                areaId: e.id ?? 0,
-                                templateId: e.template,
+                          ?.asMap()
+                          .entries
+                          .map((e) => Vods(
+                                key: Key('${e.key}'),
+                                areaId: e.value.id ?? 0,
+                                templateId: e.value.template,
+                                isActive: e.key == _tabController!.index,
                               ))
                           .toList() ??
                       [],
