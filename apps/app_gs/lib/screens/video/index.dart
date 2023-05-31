@@ -12,7 +12,7 @@ import '../../widgets/custom_app_bar.dart';
 
 final logger = Logger();
 
-class VideoScreen extends StatelessWidget {
+class VideoScreen extends StatefulWidget {
   final int id;
   final String? name;
 
@@ -23,40 +23,59 @@ class VideoScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final VideoDetailController videoDetailController =
-        Get.put(VideoDetailController(id), tag: id.toString());
+  _VideoScreenState createState() => _VideoScreenState();
+}
 
+class _VideoScreenState extends State<VideoScreen> {
+  VideoDetailController? videoDetailController;
+
+  @override
+  void initState() {
+    super.initState();
+    videoDetailController =
+        Get.put(VideoDetailController(widget.id), tag: widget.id.toString());
+    var videoUrl = videoDetailController!.videoUrl.value;
+    if (videoUrl.isNotEmpty) {
+      _putController();
+    }
+  }
+
+  void _putController() async {
+    var video = videoDetailController!.video.value;
+    var videoDetail = videoDetailController!.videoDetail.value;
+
+    var playRecord = VideoDatabaseField(
+      id: video!.id,
+      coverHorizontal: video!.coverHorizontal!,
+      coverVertical: video.coverVertical!,
+      timeLength: video.timeLength!,
+      tags: videoDetail!.tags!,
+      title: video.title,
+      videoViewTimes: videoDetail.videoViewTimes!,
+      // detail: detail!,
+    );
+    Get.find<PlayRecordController>(tag: 'vod').addPlayRecord(playRecord);
+    setState(() {});
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Obx(() {
-          var video = videoDetailController.video.value;
-          var videoDetail = videoDetailController.videoDetail.value;
-          if (video != null && videoDetail != null) {
-            var playRecord = VideoDatabaseField(
-              id: id,
-              coverHorizontal: video.coverHorizontal!,
-              coverVertical: video.coverVertical!,
-              timeLength: video.timeLength!,
-              tags: videoDetail!.tags!,
-              title: video.title,
-              videoViewTimes: videoDetail.videoViewTimes!,
-              // detail: detail!,
-            );
-            Get.find<PlayRecordController>(tag: 'vod')
-                .addPlayRecord(playRecord);
-          }
+          var video = videoDetailController!.video.value;
+          var videoDetail = videoDetailController!.videoDetail.value;
 
           return Column(
             children: [
               video != null
                   ? VideoPlayerArea(
-                      name: name,
-                      videoUrl: videoDetailController.videoUrl.value,
+                      name: widget.name,
+                      videoUrl: videoDetailController!.videoUrl.value,
                       video: video,
                     )
                   : CustomAppBar(
-                      title: name ?? '',
+                      title: widget.name ?? '',
                       backgroundColor: Colors.transparent,
                     ),
               Expanded(
