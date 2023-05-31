@@ -16,8 +16,13 @@ final logger = Logger();
  * 2 - Favorites
  */
 class ShortsByLocalPage extends BaseShortPage {
-  ShortsByLocalPage({super.key, required int videoId, required int itemId})
+  ShortsByLocalPage(
+      {super.key,
+      required int videoId,
+      required int itemId,
+      bool? supportedPlayRecord = true})
       : super(
+          supportedPlayRecord: supportedPlayRecord,
           videoId: videoId,
           itemId: itemId,
           createController: () {

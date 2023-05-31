@@ -16,11 +16,13 @@ class BaseShortPage extends StatefulWidget {
   final Function() createController;
   final int videoId;
   final int itemId; // areaId, tagId, supplierId
+  final bool? supportedPlayRecord;
 
   const BaseShortPage(
       {required this.createController,
       required this.videoId,
       required this.itemId,
+      this.supportedPlayRecord = true,
       Key? key})
       : super(key: key);
 
@@ -78,10 +80,10 @@ class BaseShortPageState extends State<BaseShortPage> {
                   children: [
                     Expanded(
                         child: ShortCard(
-                      index: index,
-                      id: shortData.id,
-                      title: shortData.title,
-                    )),
+                            index: index,
+                            id: shortData.id,
+                            title: shortData.title,
+                            supportedPlayRecord: false)),
                     Container(
                       height: 76 + paddingBottom,
                       padding: EdgeInsets.only(bottom: paddingBottom),

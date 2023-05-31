@@ -4,7 +4,7 @@ import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
 final supplierApi = SupplierApi();
-const limit = 20;
+const limit = 21;
 
 class SupplierVodController extends BaseVodInfinityScrollController {
   final int supplierId;

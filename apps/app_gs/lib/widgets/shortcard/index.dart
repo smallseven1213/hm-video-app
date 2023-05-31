@@ -20,13 +20,15 @@ class ShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
+  final bool? supportedPlayRecord;
 
-  const ShortCard({
-    Key? key,
-    required this.index,
-    required this.id,
-    required this.title,
-  }) : super(key: key);
+  const ShortCard(
+      {Key? key,
+      required this.index,
+      required this.id,
+      required this.title,
+      this.supportedPlayRecord = true})
+      : super(key: key);
 
   @override
   _ShortCardState createState() => _ShortCardState();
@@ -41,10 +43,6 @@ class _ShortCardState extends State<ShortCard> {
   @override
   void initState() {
     super.initState();
-    // if (!Get.isRegistered<ShortVideoDetailController>(
-    //     tag: widget.id.toString())) {
-    //   videoDetailController = Get.find(tag: widget.id.toString());
-    // }
     logger.i('RENDER OBX: ShortCard initState');
     videoDetailController =
         Get.find<ShortVideoDetailController>(tag: widget.id.toString());
@@ -55,6 +53,24 @@ class _ShortCardState extends State<ShortCard> {
     }
     videoUrlSubscription = videoDetailController!.videoUrl.listen((videoUrl) {
       if (videoUrl.isNotEmpty) {
+        logger.i('RENDER OBX: ShortCard (videoUrl.isNotEmpty');
+        var video = videoDetailController!.video.value;
+        if (widget.supportedPlayRecord == true) {
+          var playRecord = VideoDatabaseField(
+            id: video!.id,
+            coverHorizontal: video.coverHorizontal!,
+            coverVertical: video.coverVertical!,
+            timeLength: video.timeLength!,
+            videoCollectTimes:
+                videoDetailController!.videoDetail.value!.collects,
+            tags: [],
+            title: video.title,
+            // detail: detail!,
+          );
+          logger.i('RENDER OBX: ShortCard initState addPlayRecord');
+          Get.find<PlayRecordController>(tag: 'short')
+              .addPlayRecord(playRecord);
+        }
         _putController();
       }
     });
@@ -69,18 +85,6 @@ class _ShortCardState extends State<ShortCard> {
       return videoPlayerController!;
     }, tag: videoUrl);
 
-    var video = videoDetailController!.video.value;
-    var playRecord = VideoDatabaseField(
-      id: video!.id,
-      coverHorizontal: video.coverHorizontal!,
-      coverVertical: video.coverVertical!,
-      timeLength: video.timeLength!,
-      videoCollectTimes: videoDetailController!.videoDetail.value!.collects,
-      tags: [],
-      title: video.title,
-      // detail: detail!,
-    );
-    Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
     setState(() {});
   }
 
