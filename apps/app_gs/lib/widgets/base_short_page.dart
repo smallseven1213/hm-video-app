@@ -111,7 +111,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                             return ShortButtonButton(
                               key: ValueKey('collection-${shortData.id}'),
                               count: videoDetailController
-                                  .videoDetail.value!.collects,
+                                  .videoDetail.value!.favorites,
                               subscribe: '添加到收藏',
                               icon: Icons.star_rounded,
                               iconSize: 30,
