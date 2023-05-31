@@ -6,7 +6,6 @@ import 'package:logger/logger.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
-
 final logger = Logger();
 
 List<List<Vod>> organizeRowData(List videos, Blocks block) {
@@ -81,9 +80,9 @@ class Block4Widget extends StatelessWidget {
                   child: block.isAreaAds == true && index % 3 == 2
                       ? ChannelAreaBanner(
                           image: BannerPhoto.fromJson({
-                            'id': result[index][0].id ?? 0,
+                            'id': result[index][0].id,
                             'url': result[index][0].adUrl ?? '',
-                            'photoSid': result[index][0].coverVertical ?? '',
+                            'photoSid': result[index][0].coverHorizontal ?? '',
                             'isAutoClose': false,
                           }),
                         )

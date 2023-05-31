@@ -70,7 +70,7 @@ class Block10Widget extends StatelessWidget {
                           image: BannerPhoto.fromJson({
                             'id': result[index][0].id,
                             'url': result[index][0].adUrl ?? '',
-                            'photoSid': result[index][0].coverVertical ?? '',
+                            'photoSid': result[index][0].coverHorizontal ?? '',
                             'isAutoClose': false,
                           }),
                         )
@@ -78,7 +78,6 @@ class Block10Widget extends StatelessWidget {
                           videoData: result[index],
                           imageRatio: BlockImageRatio.block10.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
-                          
                           displayCoverVertical: true,
                           blockId: block.id ?? 0,
                           film: 2,
