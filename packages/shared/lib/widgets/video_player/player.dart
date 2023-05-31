@@ -38,6 +38,12 @@ class VideoPlayerWidget extends StatelessWidget {
         color: Colors.black,
         child: Obx(
           () {
+            Size videoSize =
+                obsVideoPlayerController.videoPlayerController!.value.size;
+            var aspectRatio = videoSize.width == 0 || videoSize.height == 0
+                ? 16 / 9
+                : videoSize.width / videoSize.height;
+
             return Stack(
               alignment: Alignment.center,
               children: <Widget>[
@@ -51,11 +57,16 @@ class VideoPlayerWidget extends StatelessWidget {
                   // ),
                   //
                 ] else if (obsVideoPlayerController.isReady.value) ...[
-                  Container(
-                    margin: const EdgeInsets.only(bottom: 5),
-                    child: VideoPlayer(
-                        obsVideoPlayerController.videoPlayerController!),
-                  ),
+                  videoSize.height / videoSize.width >= 1.4
+                      ? SizedBox(
+                          height: double.infinity,
+                          child: VideoPlayer(
+                              obsVideoPlayerController.videoPlayerController!),
+                        )
+                      : AspectRatio(
+                          aspectRatio: aspectRatio,
+                          child: VideoPlayer(
+                              obsVideoPlayerController.videoPlayerController!)),
                   Container(
                     margin: const EdgeInsets.only(bottom: 5),
                     child: GestureDetector(
@@ -140,7 +151,7 @@ class VideoPlayerWidget extends StatelessWidget {
                   // )
                 ],
                 Positioned(
-                  bottom: -20,
+                  bottom: -22,
                   left: -24,
                   right: -24,
                   child: ValueListenableBuilder<VideoPlayerValue>(
