@@ -15,7 +15,6 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   final totalCount = 0.obs;
   RxBool showNoMore = false.obs;
   Timer? _timer;
-  RxBool isLoading = false.obs;
   RxBool hasMoreData = true.obs;
   late final ScrollController scrollController;
   late bool _autoDisposeScrollController = true;
@@ -49,8 +48,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   }
 
   Future<void> loadMoreData() async {
-    if (isLoading.value || !hasMoreData.value) return;
-    isLoading.value = true;
+    if (!hasMoreData.value) return;
 
     int nextPage = page.value + 1;
     InfinityVod newData = await fetchData(nextPage);
@@ -64,8 +62,6 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     } else {
       hasMoreData.value = false;
     }
-
-    isLoading.value = false;
   }
 
   void debounce({required Function() fn, int waitForMs = 200}) {

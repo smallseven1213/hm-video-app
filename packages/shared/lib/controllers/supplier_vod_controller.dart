@@ -10,12 +10,8 @@ class SupplierVodController extends BaseVodInfinityScrollController {
   final int supplierId;
 
   SupplierVodController(
-      {required this.supplierId,
-      required ScrollController scrollController,
-      bool loadDataOnInit = true})
-      : super(
-            loadDataOnInit: loadDataOnInit,
-            customScrollController: scrollController);
+      {required this.supplierId, required ScrollController scrollController})
+      : super(customScrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {

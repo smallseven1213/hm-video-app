@@ -16,7 +16,7 @@ class VideoCollectionTimes extends StatelessWidget {
         children: [
           WidgetSpan(
             child: Icon(
-              Icons.favorite_rounded,
+              Icons.favorite_border_rounded,
               color: color ?? Colors.white,
               size: 16,
             ),
