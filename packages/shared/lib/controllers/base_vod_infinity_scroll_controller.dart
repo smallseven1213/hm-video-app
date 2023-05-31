@@ -68,7 +68,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     isLoading.value = false;
   }
 
-  void debounce({required Function() fn, int waitForMs = 500}) {
+  void debounce({required Function() fn, int waitForMs = 200}) {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(Duration(milliseconds: waitForMs), fn);
   }
