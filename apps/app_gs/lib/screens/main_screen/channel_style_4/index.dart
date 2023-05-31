@@ -54,10 +54,8 @@ class ChannelStyle4 extends StatelessWidget {
                   (BuildContext context, int index) {
                     var data = actorPopularController.actors[index];
                     return Container(
-                      // height: 277,
                       height: 290,
                       margin: const EdgeInsets.only(bottom: 15),
-                      // 圓角10
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -131,7 +129,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                     color: Colors.white,
                                                     fontSize: 14)),
                                             Text(
-                                                '人氣:${data.actor.actorCollectTimes}',
+                                                '人氣:${data.actor.collectTimes}',
                                                 style: TextStyle(
                                                     color: Colors.white
                                                         .withOpacity(0.5))),

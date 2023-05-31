@@ -11,7 +11,7 @@ class Actor {
   final String? detail;
   final int? orderIndex;
   final int? containVideos;
-  final int? actorCollectTimes;
+  final int? collectTimes;
   final bool? isCollect;
   final String? coverVertical;
 
@@ -24,7 +24,7 @@ class Actor {
     this.detail,
     this.orderIndex,
     this.containVideos,
-    this.actorCollectTimes,
+    this.collectTimes,
     this.isCollect,
     this.coverVertical,
   });
@@ -46,7 +46,7 @@ class Actor {
       detail: json['detail'] ?? '',
       orderIndex: json['orderIndex'] ?? 0,
       containVideos: json['containVideos'] ?? 0,
-      actorCollectTimes: json['actorCollectTimes'] ?? 0,
+      collectTimes: json['collectTimes'] ?? 0,
       isCollect: json['isCollect'] ?? false,
       coverVertical: json['coverVertical'] ?? '',
     );
@@ -62,7 +62,7 @@ class Actor {
       'detail': detail,
       'orderIndex': orderIndex,
       'containVideos': containVideos,
-      'actorCollectTimes': actorCollectTimes,
+      'collectTimes': collectTimes,
       'isCollect': isCollect,
       'coverVertical': coverVertical,
     };
