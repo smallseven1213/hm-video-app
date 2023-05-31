@@ -167,7 +167,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        actor.actorCollectTimes.toString(),
+                        actor.collectTimes.toString(),
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white,
