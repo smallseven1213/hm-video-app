@@ -17,7 +17,10 @@ class ActorLatestVodController extends BaseVodInfinityScrollController {
       required ScrollController scrollController,
       bool loadDataOnInit = true})
       : super(
-            loadDataOnInit: loadDataOnInit, scrollController: scrollController);
+            loadDataOnInit: loadDataOnInit,
+            customScrollController: scrollController,
+            autoDisposeScrollController: false,
+            hasLoadMoreEventWithScroller: false);
 
   @override
   Future<InfinityVod> fetchData(int page) async {

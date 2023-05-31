@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/actor_controller.dart';
@@ -31,34 +30,31 @@ class _ActorPageState extends State<ActorPage>
   late ActorHottestVodController actorNewestVodController;
   late ActorController actorController;
   late TabController _tabController;
-  final ScrollController _parentScrollController = ScrollController();
+  late ScrollController _parentScrollController;
 
   int tabIndex = 0;
 
   @override
   void initState() {
     super.initState();
+    actorController = ActorController(actorId: widget.id);
+    _tabController = TabController(vsync: this, length: 2);
+    _parentScrollController = ScrollController();
+
     actorLatestVodController = ActorLatestVodController(
         actorId: widget.id, scrollController: _parentScrollController);
     actorNewestVodController = ActorHottestVodController(
         actorId: widget.id, scrollController: _parentScrollController);
-    actorController = ActorController(actorId: widget.id);
-    _tabController = TabController(vsync: this, length: 2);
-
-    actorLatestVodController.scrollController.addListener(() {
-      _parentScrollController
-          .jumpTo(actorLatestVodController.scrollController.offset);
-    });
-    actorNewestVodController.scrollController.addListener(() {
-      _parentScrollController
-          .jumpTo(actorNewestVodController.scrollController.offset);
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        _parentScrollController.jumpTo(0.0);
+      }
     });
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _parentScrollController.dispose();
     super.dispose();
   }
 
@@ -96,19 +92,23 @@ class _ActorPageState extends State<ActorPage>
                 // physics: const NeverScrollableScrollPhysics(),
                 children: [
                   SliverVodGrid(
-                    key: const Key('actor_latest_vod'),
-                    videos: actorLatestVodController.vodList,
-                    hasMoreData: actorLatestVodController.hasMoreData.value,
-                    noMoreWidget: const ListNoMore(),
-                    scrollController: actorLatestVodController.scrollController,
-                  ),
+                      key: const Key('actor_latest_vod'),
+                      videos: actorLatestVodController.vodList,
+                      hasMoreData: actorLatestVodController.hasMoreData.value,
+                      noMoreWidget: const ListNoMore(),
+                      usePrimaryParentScrollController: true,
+                      onScrollEnd: () {
+                        actorLatestVodController.loadMoreData();
+                      }),
                   SliverVodGrid(
-                    key: const Key('actor_newest_vod'),
-                    videos: actorNewestVodController.vodList,
-                    hasMoreData: actorNewestVodController.hasMoreData.value,
-                    noMoreWidget: const ListNoMore(),
-                    scrollController: actorNewestVodController.scrollController,
-                  ),
+                      key: const Key('actor_newest_vod'),
+                      videos: actorNewestVodController.vodList,
+                      hasMoreData: actorNewestVodController.hasMoreData.value,
+                      noMoreWidget: const ListNoMore(),
+                      usePrimaryParentScrollController: true,
+                      onScrollEnd: () {
+                        actorNewestVodController.loadMoreData();
+                      }),
                 ],
               )),
           const FloatPageBackButton()

@@ -17,9 +17,15 @@ class ChannelBlockVodController extends BaseVodInfinityScrollController {
   ChannelBlockVodController(
       {required this.areaId,
       required ScrollController scrollController,
+      required bool autoDisposeScrollController,
+      required bool hasLoadMoreEventWithScroller,
       bool loadDataOnInit = true})
       : super(
-            loadDataOnInit: loadDataOnInit, scrollController: scrollController);
+          loadDataOnInit: loadDataOnInit,
+          customScrollController: scrollController,
+          autoDisposeScrollController: autoDisposeScrollController,
+          hasLoadMoreEventWithScroller: hasLoadMoreEventWithScroller,
+        );
 
   @override
   Future<InfinityVod> fetchData(int page) async {
