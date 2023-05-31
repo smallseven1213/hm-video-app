@@ -20,6 +20,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   late final ScrollController scrollController;
   late bool _autoDisposeScrollController = true;
   late bool _hasLoadMoreEventWithScroller = true;
+  Timer? _debounceTimer;
 
   BaseVodInfinityScrollController(
       {bool loadDataOnInit = true,
@@ -67,10 +68,19 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     isLoading.value = false;
   }
 
+  void debounce({required Function() fn, int waitForMs = 500}) {
+    _debounceTimer?.cancel();
+    _debounceTimer = Timer(Duration(milliseconds: waitForMs), fn);
+  }
+
   void _scrollListener() {
     if (scrollController.position.pixels ==
         scrollController.position.maxScrollExtent) {
-      loadMoreData();
+      debounce(
+        fn: () {
+          loadMoreData();
+        },
+      );
     }
 
     if (scrollController.position.pixels ==
@@ -103,6 +113,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
       scrollController.dispose();
     }
     _timer?.cancel();
+    _debounceTimer?.cancel();
     super.onClose();
   }
 }
