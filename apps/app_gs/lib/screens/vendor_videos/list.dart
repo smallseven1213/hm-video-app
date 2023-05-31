@@ -28,7 +28,7 @@ class VendorVideoList extends StatelessWidget {
       videos: publisherVodController.vodList,
       hasMoreData: publisherVodController.hasMoreData.value,
       noMoreWidget: const ListNoMore(),
-      scrollController: publisherVodController.scrollController,
+      customScrollController: publisherVodController.scrollController,
     );
   }
 }

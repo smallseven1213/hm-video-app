@@ -17,13 +17,21 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   Timer? _timer;
   RxBool isLoading = false.obs;
   RxBool hasMoreData = true.obs;
-  ScrollController scrollController = ScrollController();
+  late final ScrollController scrollController;
+  late bool _autoDisposeScrollController = true;
+  late bool _hasLoadMoreEventWithScroller = true;
 
   BaseVodInfinityScrollController(
       {bool loadDataOnInit = true,
-      required ScrollController scrollController}) {
-    // this.scrollController = scrollController;
-    this.scrollController.addListener(_scrollListener);
+      bool autoDisposeScrollController = true,
+      bool hasLoadMoreEventWithScroller = true,
+      required ScrollController customScrollController}) {
+    scrollController = customScrollController;
+    _autoDisposeScrollController = autoDisposeScrollController;
+    _hasLoadMoreEventWithScroller = hasLoadMoreEventWithScroller;
+    if (_hasLoadMoreEventWithScroller) {
+      scrollController.addListener(_scrollListener);
+    }
     if (loadDataOnInit) {
       loadMoreData();
     }
@@ -91,7 +99,9 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   @override
   void onClose() {
     scrollController.removeListener(_scrollListener);
-    scrollController.dispose();
+    if (_autoDisposeScrollController == true) {
+      scrollController.dispose();
+    }
     _timer?.cancel();
     super.onClose();
   }

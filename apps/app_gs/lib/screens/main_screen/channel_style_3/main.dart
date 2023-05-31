@@ -34,7 +34,7 @@ class ChannelStyle3Main extends StatefulWidget {
 class ChannelStyle3MainState extends State<ChannelStyle3Main>
     with TickerProviderStateMixin {
   TabController? _tabController;
-  final ScrollController _parentScrollController = ScrollController();
+  // final ScrollController _parentScrollController = ScrollController();
   late ChannelSharedDataController? channelSharedDataController;
 
   @override
@@ -59,9 +59,9 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
     }
 
     // if tab change , reset scroll top
-    _tabController!.addListener(() {
-      _parentScrollController.jumpTo(0);
-    });
+    // _tabController!.addListener(() {
+    //   _parentScrollController.jumpTo(0);
+    // });
   }
 
   @override

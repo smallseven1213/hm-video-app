@@ -9,19 +9,41 @@ class SliverVodGrid extends StatelessWidget {
   final bool hasMoreData;
   final Widget? noMoreWidget;
   final List<Widget>? headerExtends;
-  final ScrollController? scrollController;
+  final Function? onScrollEnd;
+  final bool? usePrimaryParentScrollController;
+  final ScrollController? customScrollController;
 
-  const SliverVodGrid({
-    Key? key,
-    required this.videos,
-    required this.hasMoreData,
-    this.noMoreWidget,
-    this.scrollController,
-    this.headerExtends,
-  }) : super(key: key);
+  const SliverVodGrid(
+      {Key? key,
+      required this.videos,
+      required this.hasMoreData,
+      this.noMoreWidget,
+      this.headerExtends,
+      this.onScrollEnd,
+      this.usePrimaryParentScrollController = false,
+      this.customScrollController})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollController =
+        customScrollController ?? ScrollController();
+    if (usePrimaryParentScrollController == true) {
+      scrollController = PrimaryScrollController.of(context);
+    }
+
+    if (onScrollEnd != null) {
+      scrollController.addListener(() {
+        if (scrollController.position.pixels ==
+            scrollController.position.maxScrollExtent) {
+          logger.i('到底了');
+          if (onScrollEnd != null) {
+            onScrollEnd!();
+          }
+        }
+      });
+    }
+
     return Obx(() {
       int totalRows = (videos.length / 2).ceil();
       logger.i('totalRows $totalRows');

@@ -45,7 +45,7 @@ class _SearchResultPageState extends State<SearchResultPage> {
       videos: searchVodController.vodList,
       hasMoreData: searchVodController.hasMoreData.value,
       noMoreWidget: const ListNoMore(),
-      scrollController: searchVodController.scrollController,
+      customScrollController: searchVodController.scrollController,
     );
   }
 }

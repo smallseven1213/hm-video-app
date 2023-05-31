@@ -45,7 +45,7 @@ class _TagVideoPageState extends State<TagVideoPage> {
           videos: vodController.vodList,
           hasMoreData: vodController.hasMoreData.value,
           noMoreWidget: const ListNoMore(),
-          scrollController: vodController.scrollController,
+          customScrollController: vodController.scrollController,
         );
       }),
     );

@@ -24,27 +24,47 @@ class Vods extends StatefulWidget {
 }
 
 class VodsState extends State<Vods> {
+  ScrollController? _scrollController;
+  late ChannelBlockVodController vodController;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_scrollController == null) {
+      _scrollController = PrimaryScrollController.of(context);
+      vodController = Get.put(
+          ChannelBlockVodController(
+            areaId: widget.areaId,
+            scrollController: _scrollController!,
+            autoDisposeScrollController: false,
+            hasLoadMoreEventWithScroller: false,
+          ),
+          tag: '${widget.areaId}');
+
+      _scrollController!.addListener(() {
+        if (_scrollController!.position.pixels ==
+            _scrollController!.position.maxScrollExtent) {
+          logger.i('到底了');
+          vodController!.loadMoreData();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    // _scrollController!.dispose();
+    // 這裡scroller是父層共用的，不要隨便dispose
+    Get.delete<ChannelBlockVodController>(tag: '${widget.areaId}');
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    var scrollController = PrimaryScrollController.of(context);
-    var vodController = Get.put(
-        ChannelBlockVodController(
-          areaId: widget.areaId,
-          scrollController: scrollController,
-        ),
-        tag: '${widget.areaId}');
-
-    scrollController.addListener(() {
-      if (scrollController.position.pixels ==
-          scrollController.position.maxScrollExtent) {
-        logger.i('到底了');
-        vodController.loadMoreData();
-      }
-    });
     return Obx(
       () {
         return CustomScrollView(
-          controller: scrollController,
+          controller: _scrollController,
           slivers: [
             SliverPadding(
               padding: const EdgeInsets.all(8.0),

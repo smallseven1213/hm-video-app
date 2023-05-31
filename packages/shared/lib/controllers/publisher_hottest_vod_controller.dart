@@ -18,7 +18,8 @@ class PublisherHottestVodController extends BaseVodInfinityScrollController {
       required ScrollController scrollController,
       bool loadDataOnInit = true})
       : super(
-            loadDataOnInit: loadDataOnInit, scrollController: scrollController);
+            loadDataOnInit: loadDataOnInit,
+            customScrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {

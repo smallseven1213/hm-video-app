@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared/apis/tag_api.dart';
 import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
@@ -15,7 +14,8 @@ class TagVodController extends BaseVodInfinityScrollController {
       required ScrollController scrollController,
       bool loadDataOnInit = true})
       : super(
-            loadDataOnInit: loadDataOnInit, scrollController: scrollController);
+            loadDataOnInit: loadDataOnInit,
+            customScrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {
