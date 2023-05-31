@@ -29,8 +29,23 @@ class BaseShortPage extends StatefulWidget {
 }
 
 class BaseShortPageState extends State<BaseShortPage> {
-  final PageController _pageController = PageController();
+  PageController? _pageController;
   int currentPage = 0;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final controller = widget.createController();
+    int initialPageIndex =
+        controller.data.indexWhere((data) => data.id == widget.videoId);
+    if (initialPageIndex == -1) {
+      initialPageIndex = 0;
+    }
+
+    _pageController = PageController(initialPage: initialPageIndex);
+    currentPage = initialPageIndex;
+  }
 
   @override
   Widget build(BuildContext context) {
