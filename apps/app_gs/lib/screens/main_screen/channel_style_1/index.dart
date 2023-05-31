@@ -69,7 +69,7 @@ class _ChannelStyle1State extends State<ChannelStyle1>
                                 MyRouteDelegate.of(context).push(
                                   AppRoutes.videoByBlock.value,
                                   args: {
-                                    'id': block.id,
+                                    'blockId': block.id,
                                     'title': block.name,
                                     'channelId': widget.channelId,
                                   },
