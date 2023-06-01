@@ -44,9 +44,19 @@ class ShortVideoDetailController extends GetxController {
 
   Future<void> fetchVideoUrl(int videoId) async {
     try {
-      Video _video = await vodApi.getVodUrl(videoId);
-      videoUrl.value = getVideoUrl(_video.videoUrl)!;
-      video.value = _video;
+      Video videoFromApi = await vodApi.getVodUrl(videoId);
+
+      if (videoFromApi.videoUrl == null || videoFromApi.videoUrl!.isEmpty) {
+        logger.i('Video URL from API is null or empty');
+      } else {
+        var videoUrlFormatted = getVideoUrl(videoFromApi.videoUrl);
+        if (videoUrlFormatted != null) {
+          videoUrl.value = videoUrlFormatted;
+          video.value = videoFromApi;
+        } else {
+          logger.i('Formatted Video URL is null');
+        }
+      }
     } catch (error) {
       logger.i(error);
     }

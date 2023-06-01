@@ -83,7 +83,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                             index: index,
                             id: shortData.id,
                             title: shortData.title,
-                            supportedPlayRecord: false)),
+                            supportedPlayRecord: widget.supportedPlayRecord)),
                     Container(
                       height: 76 + paddingBottom,
                       padding: EdgeInsets.only(bottom: paddingBottom),

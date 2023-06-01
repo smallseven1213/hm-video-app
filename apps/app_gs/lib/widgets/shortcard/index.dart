@@ -53,7 +53,6 @@ class _ShortCardState extends State<ShortCard> {
     }
     videoUrlSubscription = videoDetailController!.videoUrl.listen((videoUrl) {
       if (videoUrl.isNotEmpty) {
-        logger.i('RENDER OBX: ShortCard (videoUrl.isNotEmpty');
         var video = videoDetailController!.video.value;
         if (widget.supportedPlayRecord == true) {
           var playRecord = VideoDatabaseField(
@@ -67,7 +66,7 @@ class _ShortCardState extends State<ShortCard> {
             title: video.title,
             // detail: detail!,
           );
-          logger.i('RENDER OBX: ShortCard initState addPlayRecord');
+          logger.i('PLAYRECORD TRACE: ShortCard initState addPlayRecord');
           Get.find<PlayRecordController>(tag: 'short')
               .addPlayRecord(playRecord);
         }
