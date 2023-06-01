@@ -184,6 +184,10 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           var paymentChannelId = channels[_channelActiveIndex]['id'];
           MyRouteDelegate.of(context).push(
             GameAppRoutes.depositDetail.value,
+            args: {
+              'payment': _paymentActiveIndex,
+              'paymentChannelId': paymentChannelId,
+            },
           );
           // gto('/game/deposit/detail/$_paymentActiveIndex/$paymentChannelId');
         } else {

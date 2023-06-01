@@ -85,8 +85,10 @@ final Map<String, RouteWidgetBuilder> routes = {
       const GameDepositListScreen(),
   GameAppRoutes.depositPolling.value: (context, args) =>
       const GameDepositPollingScreen(),
-  GameAppRoutes.depositDetail.value: (context, args) =>
-      const GameDepositDetailScreen(),
+  GameAppRoutes.depositDetail.value: (context, args) => GameDepositDetailScreen(
+        payment: args['payment'] as String,
+        paymentChannelId: args['paymentChannelId'] as int,
+      ),
   GameAppRoutes.withdraw.value: (context, args) => const GameWithdrawScreen(),
   GameAppRoutes.setFundPassword.value: (context, args) =>
       const GameSetFundPasswordScreen(),
