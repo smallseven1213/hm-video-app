@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -33,111 +34,115 @@ class VideoPlayerWidget extends StatelessWidget {
     VideoPlayerController? videoPlayerController =
         obsVideoPlayerController.videoPlayerController;
 
-    return Obx(
-      () {
-        if (!obsVideoPlayerController.isReady.value) {
-          return const SizedBox.shrink();
-        }
+    return Container(
+        color: Colors.black,
+        child: Obx(
+          () {
+            if (!obsVideoPlayerController.isReady.value) {
+              return const SizedBox.shrink();
+            }
 
-        var videoAction = obsVideoPlayerController.videoAction.value;
+            var videoAction = obsVideoPlayerController.videoAction.value;
 
-        Size videoSize = videoPlayerController!.value.size;
-        var aspectRatio =
-            videoSize.width / (videoSize.height != 0 ? videoSize.height : 1);
+            Size videoSize = videoPlayerController!.value.size;
+            var aspectRatio = videoSize.width /
+                (videoSize.height != 0 ? videoSize.height : 1);
 
-        return Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            if (videoAction == 'error') ...[
-              // VideoError(
-              //   coverHorizontal: video.coverHorizontal ?? '',
-              //   onTap: () {
-              //     obsVideoPlayerController.play();
-              //   },
-              // ),
-              //
-            ] else ...[
-              videoSize.height / videoSize.width >= 1.4
-                  ? SizedBox(
-                      width: double.infinity,
-                      height: double.infinity,
-                      child: FittedBox(
-                        fit: BoxFit.cover,
-                        child: SizedBox(
-                            width: videoSize.width,
-                            height: videoSize.height,
-                            child: AspectRatio(
-                              aspectRatio:
-                                  videoPlayerController.value.aspectRatio,
-                              child: VideoPlayer(videoPlayerController),
-                            )),
-                      ),
-                    )
-                  : AspectRatio(
-                      aspectRatio: aspectRatio,
-                      child: VideoPlayer(
-                        videoPlayerController,
-                      ),
-                    ),
-              // Controls
-              Container(
-                margin: const EdgeInsets.only(bottom: 5),
-                child: GestureDetector(
-                  onTap: () {
-                    obsVideoPlayerController.toggle();
-                  },
-                  child: Container(
-                    color: Colors.transparent,
-                    width: double.infinity,
-                    height: double.infinity,
-                    child: Center(
-                      child: videoAction == 'pause'
-                          ? Container(
-                              width: 100,
-                              height: 100,
-                              decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.5),
-                                  shape: BoxShape.circle),
-                              child: IconButton(
-                                icon: Icon(
-                                  videoAction == 'pause'
-                                      ? Icons.play_arrow
-                                      : Icons.pause,
-                                  color: Colors.white,
-                                  size: 48.0,
-                                ),
-                                onPressed: () {
-                                  obsVideoPlayerController.toggle();
-                                },
+            return Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                if (videoAction == 'error') ...[
+                  // VideoError(
+                  //   coverHorizontal: video.coverHorizontal ?? '',
+                  //   onTap: () {
+                  //     obsVideoPlayerController.play();
+                  //   },
+                  // ),
+                  //
+                ] else ...[
+                  videoSize.height / videoSize.width >= 1.4
+                      ? kIsWeb
+                          ? VideoPlayer(videoPlayerController)
+                          : SizedBox(
+                              width: double.infinity,
+                              height: double.infinity,
+                              child: FittedBox(
+                                fit: BoxFit.cover,
+                                child: SizedBox(
+                                    width: videoSize.width,
+                                    height: videoSize.height,
+                                    child: AspectRatio(
+                                      aspectRatio: videoPlayerController
+                                          .value.aspectRatio,
+                                      child: VideoPlayer(videoPlayerController),
+                                    )),
                               ),
                             )
-                          : const SizedBox(
-                              width: 100,
-                              height: 100,
-                              child: SizedBox.shrink(),
-                            ),
+                      : AspectRatio(
+                          aspectRatio: aspectRatio,
+                          child: VideoPlayer(
+                            videoPlayerController,
+                          ),
+                        ),
+                  // Controls
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 5),
+                    child: GestureDetector(
+                      onTap: () {
+                        obsVideoPlayerController.toggle();
+                      },
+                      child: Container(
+                        color: Colors.transparent,
+                        width: double.infinity,
+                        height: double.infinity,
+                        child: Center(
+                          child: videoAction == 'pause'
+                              ? Container(
+                                  width: 100,
+                                  height: 100,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black.withOpacity(0.5),
+                                      shape: BoxShape.circle),
+                                  child: IconButton(
+                                    icon: Icon(
+                                      videoAction == 'pause'
+                                          ? Icons.play_arrow
+                                          : Icons.pause,
+                                      color: Colors.white,
+                                      size: 48.0,
+                                    ),
+                                    onPressed: () {
+                                      obsVideoPlayerController.toggle();
+                                    },
+                                  ),
+                                )
+                              : const SizedBox(
+                                  width: 100,
+                                  height: 100,
+                                  child: SizedBox.shrink(),
+                                ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+                Positioned(
+                  bottom: -22,
+                  left: -24,
+                  right: -24,
+                  child: ValueListenableBuilder<VideoPlayerValue>(
+                    valueListenable: videoPlayerController,
+                    builder: (context, value, _) => VideoProgressSlider(
+                      controller: videoPlayerController,
+                      position: value.position,
+                      duration: value.duration,
+                      swatch: const Color(0xffFFC700),
                     ),
                   ),
                 ),
-              ),
-            ],
-            Positioned(
-              bottom: -22,
-              left: -24,
-              right: -24,
-              child: ValueListenableBuilder<VideoPlayerValue>(
-                valueListenable: videoPlayerController,
-                builder: (context, value, _) => VideoProgressSlider(
-                  controller: videoPlayerController,
-                  position: value.position,
-                  duration: value.duration,
-                  swatch: const Color(0xffFFC700),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
+              ],
+            );
+          },
+        ));
   }
 }
