@@ -22,9 +22,8 @@ String? getVideoUrl(String? videoUrl) {
 class ShortVideoDetailController extends GetxController {
   VodApi vodApi = VodApi();
   final int videoId;
-  // var videoDetail = Vod(0, '').obs;
   var videoUrl = ''.obs;
-  // var video = Video(id: 0, title: '').obs;
+  var isLoading = true.obs;
 
   var videoDetail = Rx<ShortVideoDetail?>(null);
   var video = Rx<Video?>(null);
@@ -34,27 +33,27 @@ class ShortVideoDetailController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    mutateAll();
+    await mutateAll();
   }
 
-  void mutateAll() {
-    fetchVideoUrl(videoId);
-    fetchVideoDetail(videoId);
+  Future<void> mutateAll() async {
+    await Future.wait([
+      fetchVideoUrl(videoId),
+      fetchVideoDetail(videoId),
+    ]);
+
+    isLoading.value = false;
   }
 
   Future<void> fetchVideoUrl(int videoId) async {
     try {
       Video videoFromApi = await vodApi.getVodUrl(videoId);
 
-      if (videoFromApi.videoUrl == null || videoFromApi.videoUrl!.isEmpty) {
-        logger.i('Video URL from API is null or empty');
-      } else {
+      if (videoFromApi.videoUrl != null && videoFromApi.videoUrl!.isNotEmpty) {
         var videoUrlFormatted = getVideoUrl(videoFromApi.videoUrl);
         if (videoUrlFormatted != null) {
           videoUrl.value = videoUrlFormatted;
           video.value = videoFromApi;
-        } else {
-          logger.i('Formatted Video URL is null');
         }
       }
     } catch (error) {

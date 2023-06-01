@@ -22,9 +22,8 @@ String? getVideoUrl(String? videoUrl) {
 class VideoDetailController extends GetxController {
   VodApi vodApi = VodApi();
   final int videoId;
-  // var videoDetail = Vod(0, '').obs;
   var videoUrl = ''.obs;
-  // var video = Video(id: 0, title: '').obs;
+  var isLoading = true.obs;
 
   var videoDetail = Rx<Vod?>(null);
   var video = Rx<Video?>(null);
@@ -38,26 +37,29 @@ class VideoDetailController extends GetxController {
   }
 
   void mutateAll() {
-    fetchVideoUrl(videoId);
-    fetchVideoDetail(videoId);
+    fetchAllData(videoId);
+  }
+
+  Future<void> fetchAllData(int videoId) async {
+    try {
+      await Future.wait([
+        fetchVideoUrl(videoId),
+        fetchVideoDetail(videoId),
+      ]);
+      isLoading.value = false;
+    } catch (error) {
+      logger.i(error);
+    }
   }
 
   Future<void> fetchVideoUrl(int videoId) async {
-    try {
-      Video _video = await vodApi.getVodUrl(videoId);
-      videoUrl.value = getVideoUrl(_video.videoUrl)!;
-      video.value = _video;
-    } catch (error) {
-      logger.i(error);
-    }
+    Video _video = await vodApi.getVodUrl(videoId);
+    videoUrl.value = getVideoUrl(_video.videoUrl)!;
+    video.value = _video;
   }
 
   Future<void> fetchVideoDetail(int videoId) async {
-    try {
-      Vod _videoDetail = await vodApi.getVodDetail(videoId);
-      videoDetail.value = _videoDetail;
-    } catch (error) {
-      logger.i(error);
-    }
+    Vod _videoDetail = await vodApi.getVodDetail(videoId);
+    videoDetail.value = _videoDetail;
   }
 }

@@ -35,22 +35,22 @@ class Video {
   });
 
   Video.fromJson(Map<dynamic, dynamic> json)
-      : id = json['id'],
-        title = json['title'],
-        film = json['film'],
-        chargeType = json['chargeType'],
-        points = json['points'],
-        buyPoints = json['buyPoints'],
-        isCollected = json['isCollected'],
-        externalId = json['externalId'],
-        videoUrl = json['videoUrl'],
-        isPreview = json['isPreview'],
-        coverHorizontal = json['coverHorizontal'],
-        coverVertical = json['coverVertical'],
-        timeLength = json['timeLength'];
+      : id = json['id'] ?? 0,
+        title = json['title'] ?? '',
+        film = json['film'] ?? 0,
+        chargeType = json['chargeType'] ?? 0,
+        points = json['points'] ?? '0',
+        buyPoints = json['buyPoints'] ?? '0',
+        isCollected = json['isCollected'] ?? false,
+        externalId = json['externalId'] ?? '',
+        videoUrl = json['videoUrl'] ?? '',
+        isPreview = json['isPreview'] ?? false,
+        coverHorizontal = json['coverHorizontal'] ?? '',
+        coverVertical = json['coverVertical'] ?? '',
+        timeLength = json['timeLength'] ?? 0;
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['title'] = title;
     data['film'] = film;

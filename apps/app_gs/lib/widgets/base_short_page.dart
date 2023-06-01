@@ -63,7 +63,7 @@ class BaseShortPageState extends State<BaseShortPage> {
           Obx(() {
             return PageView.builder(
               controller: _pageController,
-              itemCount: controller.data.length,
+              itemCount: controller.data.length * 50,
               onPageChanged: (int index) {
                 setState(() {
                   currentPage = index;
@@ -71,11 +71,16 @@ class BaseShortPageState extends State<BaseShortPage> {
               },
               itemBuilder: (BuildContext context, int index) {
                 final paddingBottom = MediaQuery.of(context).padding.bottom;
-
-                var shortData = controller.data[index];
-                var videoDetailController = Get.put(
-                    ShortVideoDetailController(shortData.id),
+                var currentIndex = index % controller.data.length;
+                var shortData = controller.data[currentIndex];
+                Get.lazyPut<ShortVideoDetailController>(
+                    () => ShortVideoDetailController(shortData.id),
                     tag: shortData.id.toString());
+                logger.i(
+                    'TRACE SVD Controller in BaseShortPage: id: ${shortData.id}');
+                var videoDetailController =
+                    Get.find<ShortVideoDetailController>(
+                        tag: shortData.id.toString());
                 return Column(
                   children: [
                     Expanded(
@@ -104,7 +109,6 @@ class BaseShortPageState extends State<BaseShortPage> {
                             bool isLike = userFavoritesShortController.data
                                 .any((e) => e.id == shortData.id);
                             return ShortButtonButton(
-                              key: ValueKey('like-${shortData.id}'),
                               count: videoDetailController
                                   .videoDetail.value!.collects,
                               subscribe: '喜歡就點讚',

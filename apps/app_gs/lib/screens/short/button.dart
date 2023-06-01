@@ -18,20 +18,22 @@ class ShortButtonButton extends StatefulWidget {
       this.count = 0,
       this.iconSize,
       this.isLike = false,
-      this.onTap})
+      this.onTap = _defaultOnTap})
       : super(key: key);
+
+  static void _defaultOnTap() {}
 
   @override
   ShortButtonButtonState createState() => ShortButtonButtonState();
 }
 
 class ShortButtonButtonState extends State<ShortButtonButton> {
-  int selfCount = 0;
+  late int selfCount;
 
   @override
   void initState() {
     super.initState();
-    selfCount = widget.count!;
+    selfCount = widget.count ?? 0;
   }
 
   @override
@@ -40,13 +42,10 @@ class ShortButtonButtonState extends State<ShortButtonButton> {
         flex: 1,
         child: InkWell(
           onTap: () {
+            widget.onTap?.call();
             setState(() {
               selfCount = widget.isLike ? selfCount - 1 : selfCount + 1;
             });
-
-            if (widget.onTap != null) {
-              widget.onTap!();
-            }
           },
           child: Center(
             child: Row(

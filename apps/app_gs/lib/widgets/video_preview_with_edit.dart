@@ -133,6 +133,8 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
             child: InkWell(
               onTap: onEditingTap,
               child: Container(
+                width: double.infinity,
+                height: double.infinity,
                 color: Colors.transparent,
               ),
             ),
@@ -145,7 +147,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
                 image: AssetImage('assets/images/video_selected.png'),
                 width: 20,
                 height: 20,
-              ))
+              )),
       ],
     );
 
