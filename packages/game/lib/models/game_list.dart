@@ -5,9 +5,11 @@ class GameItem {
   final int hotOrderIndex;
   final String imgUrl;
   final int orderIndex;
+  final String tpCode;
+  final int direction;
 
   GameItem(this.gameId, this.gameName, this.gameType, this.hotOrderIndex,
-      this.imgUrl, this.orderIndex);
+      this.imgUrl, this.orderIndex, this.tpCode, this.direction);
 
   factory GameItem.fromJson(Map<String, dynamic> json) {
     return GameItem(
@@ -17,6 +19,8 @@ class GameItem {
       json['hotOrderIndex'],
       json['imgUrl'],
       json['orderIndex'],
+      json['tpCode'],
+      json['direction'],
     );
   }
 }

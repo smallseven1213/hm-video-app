@@ -30,7 +30,7 @@ class GSTabBar extends StatelessWidget implements PreferredSizeWidget {
             indicatorPadding: const EdgeInsets.only(
               left: 20,
               right: 20,
-              bottom: 8,
+              bottom: 0,
             ),
             labelStyle: const TextStyle(
               fontSize: 14,

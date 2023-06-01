@@ -118,13 +118,13 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               toolbarHeight: 0,
               flexibleSpace: const SizedBox.shrink(),
               bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(60),
+                preferredSize: const Size.fromHeight(50),
                 child: SizedBox(
-                    height: 60,
+                    height: 50,
                     child: SizedBox(
-                      height: 60,
+                      height: 50,
                       child: SizedBox(
-                        height: 60,
+                        height: 50,
                         child: Obx(() => GSTabBar(
                               controller: _tabController,
                               tabs: (channelSharedDataController

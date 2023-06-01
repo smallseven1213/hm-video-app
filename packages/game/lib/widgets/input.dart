@@ -8,6 +8,7 @@ class GameInput extends StatefulWidget {
     required this.label,
     required this.hint,
     required this.controller,
+    this.isFontBold = false,
     this.warningMessage,
     this.errorMessage,
     this.onChanged,
@@ -15,11 +16,13 @@ class GameInput extends StatefulWidget {
     this.hasIcon,
     this.inputFormatters,
     this.focusNode,
+    this.onClear,
   }) : super(key: key);
 
   final String label;
   final String hint;
   final TextEditingController controller;
+  final bool isFontBold;
   final String? errorMessage;
   final String? warningMessage;
   final void Function(String value)? onChanged;
@@ -27,6 +30,7 @@ class GameInput extends StatefulWidget {
   final Icon? hasIcon;
   final List<TextInputFormatter>? inputFormatters;
   final FocusNode? focusNode;
+  final Function()? onClear;
 
   @override
   _GameInputState createState() => _GameInputState();
@@ -61,9 +65,11 @@ class _GameInputState extends State<GameInput> {
               width: widget.hasIcon != null ? 70 : 100,
               child: Text(
                 widget.label,
-                style: const TextStyle(
-                  color: Color(0xff979797),
+                style: TextStyle(
+                  color: const Color(0xff979797),
                   fontSize: 14,
+                  fontWeight:
+                      widget.isFontBold ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
             ),
@@ -107,8 +113,7 @@ class _GameInputState extends State<GameInput> {
               alignment: Alignment.centerRight,
               child: GestureDetector(
                 onTap: () {
-                  widget.controller.clear();
-                  widget.onChanged!('');
+                  widget.onClear!() ?? widget.controller.clear();
                 },
                 child: Icon(
                   Icons.cancel,

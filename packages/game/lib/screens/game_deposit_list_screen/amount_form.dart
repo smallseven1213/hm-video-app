@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:game/controllers/game_withdraw_controller.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/showModel.dart';
 import 'package:game/widgets/button.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/navigator/delegate.dart';
 
 final logger = Logger();
 
@@ -37,6 +41,7 @@ class AmountForm extends StatefulWidget {
 
 class _AmountFormState extends State<AmountForm> {
   bool _enableSubmit = false;
+  final gameWithdrawController = Get.put(GameWithdrawController());
 
   @override
   void initState() {
@@ -61,6 +66,53 @@ class _AmountFormState extends State<AmountForm> {
     var parseMinText = widget.min.toStringAsFixed(0);
 
     logger.i('max: ${widget.max.toString()}, min: ${widget.min.toString()}');
+
+    handleAmount() {
+      gameWithdrawController.setDepositAmount(widget.controller.text);
+      if (widget.formKey.currentState?.validate() == true) {
+        if (widget.activePayment == 'debit') {
+          logger.i('銀行卡');
+          showModel(
+            context,
+            content: ConfirmName(
+              amount: widget.controller.text,
+              paymentChannelId: widget.paymentChannelId,
+              activePayment: widget.activePayment,
+            ),
+            onClosed: () => Navigator.pop(context),
+          );
+          setState(() {
+            _enableSubmit = false;
+          });
+        } else if (widget.activePayment == 'selfdebit' ||
+            widget.activePayment == 'selfusdt') {
+          setState(() {
+            _enableSubmit = true;
+          });
+          MyRouteDelegate.of(context).push(
+            GameAppRoutes.depositDetail.value,
+            args: {
+              'payment': widget.activePayment,
+              'paymentChannelId': int.parse(widget.paymentChannelId),
+            },
+          );
+        } else {
+          showModel(
+            context,
+            content: ConfirmPin(
+              amount: widget.controller.text,
+              paymentChannelId: widget.paymentChannelId,
+              activePayment: widget.activePayment,
+            ),
+            onClosed: () => Navigator.pop(context),
+          );
+          setState(() {
+            _enableSubmit = false;
+          });
+        }
+      }
+      FocusScope.of(context).unfocus();
+    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -167,36 +219,7 @@ class _AmountFormState extends State<AmountForm> {
                 height: 40,
                 child: GameButton(
                   text: "確認",
-                  onPressed: () {
-                    if (widget.formKey.currentState?.validate() == true) {
-                      if (widget.activePayment == 'debit') {
-                        logger.i('銀行卡');
-                        showModel(
-                          context,
-                          content: ConfirmName(
-                            amount: widget.controller.text,
-                            paymentChannelId: widget.paymentChannelId,
-                            activePayment: widget.activePayment,
-                          ),
-                          onClosed: () => Navigator.pop(context),
-                        );
-                      } else {
-                        showModel(
-                          context,
-                          content: ConfirmPin(
-                            amount: widget.controller.text,
-                            paymentChannelId: widget.paymentChannelId,
-                            activePayment: widget.activePayment,
-                          ),
-                          onClosed: () => Navigator.pop(context),
-                        );
-                      }
-                      setState(() {
-                        _enableSubmit = false;
-                      });
-                    }
-                    FocusScope.of(context).unfocus();
-                  },
+                  onPressed: () => handleAmount(),
                   disabled: !_enableSubmit,
                 ),
               ),

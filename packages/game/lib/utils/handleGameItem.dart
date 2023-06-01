@@ -11,8 +11,8 @@ import '../enums/game_app_routes.dart';
 
 String gameUrl = '';
 
-getGameUrl(String tpCode, int gameId) async {
-  var res = await GameLobbyApi().enterGame(tpCode, gameId);
+getGameUrl(String tpCode, int gameId, int gameType) async {
+  var res = await GameLobbyApi().enterGame(tpCode, gameId, gameType);
 
   if (res == null) {
     gameUrl = '';
@@ -40,10 +40,10 @@ _saveGameHistory({gameId}) async {
 }
 
 void handleGameItem(BuildContext context,
-    {gameId, updateGameHistory, tpCode, direction}) async {
+    {gameId, updateGameHistory, tpCode, direction, gameType}) async {
   try {
     onLoading(context, status: true);
-    await getGameUrl(tpCode, gameId);
+    await getGameUrl(tpCode, gameId, gameType);
     await _saveGameHistory(gameId: gameId);
     updateGameHistory();
 

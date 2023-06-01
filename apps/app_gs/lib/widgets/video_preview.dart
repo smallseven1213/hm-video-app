@@ -115,6 +115,7 @@ class VideoPreviewWidget extends StatelessWidget {
       return VideoEmbeddedAdWidget(
         imageRatio: imageRatio ?? 374 / 198,
         detail: detail!,
+        displayCoverVertical: displayCoverVertical,
       );
     }
     return Column(

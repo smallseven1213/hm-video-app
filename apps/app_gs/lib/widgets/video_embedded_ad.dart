@@ -6,10 +6,12 @@ import 'package:shared/widgets/sid_image.dart';
 class VideoEmbeddedAdWidget extends StatelessWidget {
   final Vod detail;
   final double imageRatio;
+  final bool displayCoverVertical;
   const VideoEmbeddedAdWidget({
     Key? key,
     required this.detail,
     required this.imageRatio,
+    this.displayCoverVertical = false,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,9 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
               child: SidImage(
                 width: double.infinity,
                 height: double.infinity,
-                sid: detail.coverHorizontal ?? '',
+                sid: displayCoverVertical
+                    ? detail.coverVertical ?? ''
+                    : detail.coverHorizontal ?? '',
                 fit: BoxFit.cover,
               ),
             ),

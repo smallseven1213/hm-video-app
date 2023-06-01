@@ -3,6 +3,7 @@ enum GameAppRoutes {
   lobby,
   depositList,
   depositPolling,
+  depositDetail,
   withdraw,
   webview,
   paymentResult,
@@ -27,6 +28,8 @@ extension AppRoutesExtension on GameAppRoutes {
         return '/game/deposit_page_list';
       case GameAppRoutes.depositPolling:
         return '/game/deposit_page_polling';
+      case GameAppRoutes.depositDetail:
+        return '/game/deposit/detail';
       case GameAppRoutes.paymentResult:
         return '/game/deposit/payment-result';
       case GameAppRoutes.webview:
