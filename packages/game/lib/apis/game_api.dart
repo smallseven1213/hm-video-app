@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:game/models/game_payment_channel_detail.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/models/bank.dart';
@@ -267,6 +268,56 @@ class GameLobbyApi {
       "code": "00",
       "data": res['data'],
     };
+  }
+
+  // 遊戲大廳 取得渠道詳情
+  Future<HMApiResponseBaseWithDataWithData<GamePaymentChannelDetail>>
+      getDepositPaymentChannelDetail(int paymentChannelId) async {
+    var value = await fetcher(
+        url:
+            '$apiPrefix/payment-channel-detail?paymentChannelId=$paymentChannelId');
+    var res = (value.data as Map<String, dynamic>);
+    return HMApiResponseBaseWithDataWithData<GamePaymentChannelDetail>(
+      code: res['code'],
+      data: res['data'] == null
+          ? null
+          : GamePaymentChannelDetail.fromJson(res['data']),
+    );
+  }
+
+  // 取得匯率 CNY to USDT
+  Future getCNYToUSDTRate() async {
+    var value = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform?from=CNY&to=USDT');
+
+    var res = (value.data as Map<String, dynamic>);
+    if (res['code'] != '00') {
+      return [];
+    }
+    return res['data'];
+  }
+
+  // 公司入款訂單建立 存款選擇 selfdebit, selfusdt
+  Future<String> companyOrderDeposit(
+    String amount,
+    int paymentChannelId,
+    String remark,
+  ) async {
+    var value = await fetcher(
+        url: '$apiPrefix/company-order-deposit',
+        method: 'POST',
+        body: {
+          'amount': amount,
+          'paymentChannelId': paymentChannelId,
+          'remark': remark,
+        });
+    var res = (value.data as Map<String, dynamic>);
+
+    if (res['code'] != '00') {
+      return res['code'];
+    }
+    return res['data']['data'];
   }
 
   Future<List<Product>> getProductManyBy(

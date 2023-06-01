@@ -91,8 +91,11 @@ class _AmountFormState extends State<AmountForm> {
           });
           MyRouteDelegate.of(context).push(
             GameAppRoutes.depositDetail.value,
+            args: {
+              'payment': widget.activePayment,
+              'paymentChannelId': int.parse(widget.paymentChannelId),
+            },
           );
-          // gto('/game/deposit/detail/${widget.activePayment}/${widget.paymentChannelId}');
         } else {
           showModel(
             context,
