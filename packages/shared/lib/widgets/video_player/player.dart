@@ -60,30 +60,32 @@ class VideoPlayerWidget extends StatelessWidget {
                   // ),
                   //
                 ] else ...[
-                  videoSize.height / videoSize.width >= 1.4
-                      ? kIsWeb
-                          ? VideoPlayer(videoPlayerController)
-                          : SizedBox(
-                              width: double.infinity,
-                              height: double.infinity,
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                child: SizedBox(
-                                    width: videoSize.width,
-                                    height: videoSize.height,
-                                    child: AspectRatio(
-                                      aspectRatio: videoPlayerController
-                                          .value.aspectRatio,
-                                      child: VideoPlayer(videoPlayerController),
-                                    )),
-                              ),
-                            )
-                      : AspectRatio(
-                          aspectRatio: aspectRatio,
-                          child: VideoPlayer(
-                            videoPlayerController,
+                  if (kIsWeb) ...[
+                    VideoPlayer(videoPlayerController)
+                  ] else ...[
+                    videoSize.height / videoSize.width >= 1.4
+                        ? SizedBox(
+                            width: double.infinity,
+                            height: double.infinity,
+                            child: FittedBox(
+                              fit: BoxFit.cover,
+                              child: SizedBox(
+                                  width: videoSize.width,
+                                  height: videoSize.height,
+                                  child: AspectRatio(
+                                    aspectRatio:
+                                        videoPlayerController.value.aspectRatio,
+                                    child: VideoPlayer(videoPlayerController),
+                                  )),
+                            ),
+                          )
+                        : AspectRatio(
+                            aspectRatio: aspectRatio,
+                            child: VideoPlayer(
+                              videoPlayerController,
+                            ),
                           ),
-                        ),
+                  ],
                   // Controls
                   Container(
                     margin: const EdgeInsets.only(bottom: 5),
