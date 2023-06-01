@@ -1,4 +1,5 @@
 // paymentPage:2 列表
+
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/enums/game_app_routes.dart';
@@ -7,10 +8,10 @@ import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+import 'package:game/utils/showConfirmDialog.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
-
 
 final logger = Logger();
 
@@ -22,7 +23,6 @@ class GameDepositList extends StatefulWidget {
 }
 
 class _GameDepositListState extends State<GameDepositList> {
-  bool pointLoading = true;
   bool isLoading = false;
   var depositData;
 
@@ -33,11 +33,26 @@ class _GameDepositListState extends State<GameDepositList> {
   }
 
   void _getDepositChannel() async {
-    var res = await GameLobbyApi().getDepositChannel();
-    setState(() {
-      depositData = res;
-    });
-    try {} catch (error) {
+    try {
+      var res = await GameLobbyApi().getDepositChannel();
+      if (res['code'] != '00') {
+        // ignore: use_build_context_synchronously
+        showConfirmDialog(
+          context: context,
+          title: '',
+          content: '你已被登出，請重新登入',
+          onConfirm: () async {
+            Navigator.pop(context);
+            Navigator.pop(context);
+          },
+        );
+        return;
+      } else {
+        setState(() {
+          depositData = res['data'];
+        });
+      }
+    } catch (error) {
       logger.i('_getDepositChannel $error');
     }
   }
@@ -105,7 +120,7 @@ class _GameDepositListState extends State<GameDepositList> {
                             )
                           : const CircularProgressIndicator(),
                       const SizedBox(height: 36),
-                      Tips(),
+                      const Tips(),
                     ],
                   ),
                   isLoading == true

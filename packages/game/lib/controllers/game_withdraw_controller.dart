@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:logger/logger.dart';
 
-
 final logger = Logger();
 
 class GameWithdrawController extends GetxController {
@@ -12,6 +11,7 @@ class GameWithdrawController extends GetxController {
   var hasPaymentData = false.obs;
   var loadingStatus = true.obs;
   var enableSubmit = true.obs;
+  var paymentAmount = '0.00'.obs;
 
   getWithDrawalData() async {
     try {
@@ -43,6 +43,10 @@ class GameWithdrawController extends GetxController {
 
   void setSubmitButtonDisable(bool status) {
     enableSubmit.value = status;
+  }
+
+  void setDepositAmount(String amount) {
+    paymentAmount.value = amount;
   }
 
   void mutate() {

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:game/controllers/game_withdraw_controller.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_deposit_list_screen/OliveShapeClipper.dart';
 import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
@@ -11,6 +13,7 @@ import 'package:game/utils/showModel.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/navigator/delegate.dart';
 
 final logger = Logger();
 
@@ -75,6 +78,9 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           ? GetStorage().read('pageColor')
           : 1]
       .toString();
+  final gameWithdrawController = Get.put(GameWithdrawController());
+  ScrollController scrollController = ScrollController();
+  GlobalKey scrollKey = GlobalKey();
 
   @override
   void initState() {
@@ -84,12 +90,12 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   }
 
   void setInitFormValue() {
-    if (widget.depositData[_paymentActiveIndex].length > 0 &&
-        widget.depositData[_paymentActiveIndex][_channelActiveIndex]
-                ['amountType'] ==
+    if (widget.depositData[_paymentActiveIndex]['paymentChannel'].length > 0 &&
+        widget.depositData[_paymentActiveIndex]['paymentChannel']
+                [_channelActiveIndex]['amountType'] ==
             depositAmountType['showInput']) {
       amountController.text = widget.depositData[_paymentActiveIndex]
-              [_channelActiveIndex]['minAmount']
+              ['paymentChannel'][_channelActiveIndex]['minAmount']
           .toString();
     }
   }
@@ -132,7 +138,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
     List paymentItem = widget.depositData.keys.toList();
     int paymentLength = paymentItem.isNotEmpty ? paymentItem.length.toInt() : 0;
 
-    List channels = List.from(widget.depositData[_paymentActiveIndex]);
+    List channels =
+        List.from(widget.depositData[_paymentActiveIndex]['paymentChannel']);
     int channelLength = channels.isNotEmpty ? channels.length.toInt() : 0;
     num channelHeight =
         (channelLength > 3 ? (channelLength / 3).ceil() * 54 : 60);
@@ -146,6 +153,58 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
     logger.i(
         '======indexssss======: $_paymentActiveIndex, $_channelActiveIndex, $_amountActiveIndex');
+
+    handleAmount(index) {
+      gameWithdrawController.setDepositAmount(
+          channels[_channelActiveIndex]['specificAmounts'][index]);
+      amountIndexChanged(index);
+      if (channels[_channelActiveIndex]['amountType'] ==
+          depositAmountType['noInput']) {
+        if (_paymentActiveIndex == 'debit') {
+          logger.i('銀行卡');
+          showUserName(
+            context,
+            onSuccess: (userName) {
+              showModel(
+                context,
+                content: ConfirmName(
+                  amount: channels[_channelActiveIndex]['specificAmounts']
+                          [index]
+                      .toString(),
+                  paymentChannelId:
+                      channels[_channelActiveIndex]['id'].toString(),
+                  activePayment: _paymentActiveIndex,
+                ),
+                onClosed: () => Navigator.pop(context),
+              );
+            },
+          );
+        } else if (_paymentActiveIndex == 'selfdebit' ||
+            _paymentActiveIndex == 'selfusdt') {
+          var paymentChannelId = channels[_channelActiveIndex]['id'];
+          MyRouteDelegate.of(context).push(
+            GameAppRoutes.depositDetail.value,
+          );
+          // gto('/game/deposit/detail/$_paymentActiveIndex/$paymentChannelId');
+        } else {
+          logger.i('no input && no bank card');
+          showModel(
+            context,
+            content: ConfirmPin(
+              amount: channels[_channelActiveIndex]['specificAmounts'][index]
+                  .toString(),
+              paymentChannelId: channels[_channelActiveIndex]['id'].toString(),
+              activePayment: _paymentActiveIndex.toString(),
+            ),
+            onClosed: () => Navigator.pop(context),
+          );
+        }
+      } else {
+        // 將金額帶入amountController
+        amountController.text =
+            channels[_channelActiveIndex]['specificAmounts'][index].toString();
+      }
+    }
 
     return GestureDetector(
       onTap: () {
@@ -170,59 +229,84 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           children: [
             // ======支付方式======
             SingleChildScrollView(
+              key: scrollKey,
+              controller: scrollController,
               scrollDirection: Axis.horizontal,
-              child: Row(
+              child: Wrap(
+                spacing: 5,
                 children: List.generate(
                   paymentItem.length,
                   (index) => GestureDetector(
                       onTap: () {
                         paymentIndexChanged(paymentItem[index]);
+                        final double scrollOffset =
+                            index * 45 - Get.width / 2 + Get.width / 4;
+                        scrollController.animateTo(
+                          index >= 4 ? scrollOffset : 0,
+                          duration: const Duration(milliseconds: 200),
+                          curve: Curves.easeInOut,
+                        );
                       },
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 1),
-                        child: Container(
-                          width: Get.width / paymentLength - 18,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 10, horizontal: 15),
-                          decoration: BoxDecoration(
-                            color: _paymentActiveIndex == paymentItem[index]
-                                ? gameLobbyDepositActiveColor
-                                : gameItemMainColor,
-                            borderRadius: BorderRadius.circular(12),
-                            border: Border.all(
-                              color: _paymentActiveIndex == paymentItem[index]
-                                  ? gamePrimaryButtonColor
-                                  : gameItemMainColor,
-                              width: 1.0,
-                            ),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(
-                                paymentsMapper[paymentItem[index]] != null
-                                    ? paymentsMapper[paymentItem[index]]![
-                                            'icon']
-                                        .toString()
-                                    : 'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-                                width: 24,
-                                height: 24,
-                              ),
-                              const SizedBox(height: 6),
-                              Text(
-                                paymentsMapper[paymentItem[index]] != null
-                                    ? paymentsMapper[paymentItem[index]]![
-                                            'title']
-                                        .toString()
-                                    : widget.depositData.keys.toList()[index],
-                                style: TextStyle(
-                                  color: gameLobbyPrimaryTextColor,
-                                  fontSize: 12,
+                      child: Stack(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 1),
+                            child: Container(
+                              width: paymentLength <= 4
+                                  ? Get.width / 4 - 22
+                                  : Get.width / 4 - 32,
+                              padding: const EdgeInsets.symmetric(vertical: 10),
+                              decoration: BoxDecoration(
+                                color: _paymentActiveIndex == paymentItem[index]
+                                    ? gameLobbyDepositActiveColor
+                                    : gameItemMainColor,
+                                borderRadius: BorderRadius.circular(12),
+                                border: Border.all(
+                                  color:
+                                      _paymentActiveIndex == paymentItem[index]
+                                          ? gamePrimaryButtonColor
+                                          : gameItemMainColor,
+                                  width: 1.0,
                                 ),
                               ),
-                            ],
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    paymentsMapper[paymentItem[index]] != null
+                                        ? paymentsMapper[paymentItem[index]]![
+                                                'icon']
+                                            .toString()
+                                        : 'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                                  const SizedBox(height: 6),
+                                  Text(
+                                    widget.depositData[paymentItem[index]]
+                                            ['paymentTypeName']
+                                        .toString(),
+                                    style: TextStyle(
+                                      color: gameLobbyPrimaryTextColor,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
+                          if (widget.depositData[paymentItem[index]]['label'][0]
+                              .isNotEmpty)
+                            const Positioned(
+                              top: 0,
+                              right: 0,
+                              child: OliveShape(
+                                width: 40.0,
+                                type: 'right',
+                                text: '送優惠',
+                              ),
+                            )
+                        ],
                       )),
                 ),
               ),
@@ -343,13 +427,31 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                                   ),
                                                 ),
                                               ),
+                                              if (double.parse(channels[index]
+                                                      ['discountRatio']) >
+                                                  0.00)
+                                                Positioned(
+                                                  top: -1,
+                                                  right: -1,
+                                                  child: OliveShape(
+                                                    type: 'right',
+                                                    bgColor:
+                                                        const Color(0xFFFF00B8),
+                                                    text:
+                                                        '送${channels[index]['discountRatio'].toString()}%',
+                                                  ),
+                                                ),
                                               if (channels[index]
                                                       ['isRecommend'] ==
                                                   true)
                                                 const Positioned(
-                                                    top: -10,
-                                                    left: -5,
-                                                    child: OliveShape())
+                                                  top: 0,
+                                                  left: 0,
+                                                  child: OliveShape(
+                                                    width: 20.0,
+                                                    text: '推',
+                                                  ),
+                                                )
                                             ],
                                           )),
                                     ),
@@ -433,58 +535,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                amountIndexChanged(index);
-                                if (channels[_channelActiveIndex]
-                                        ['amountType'] ==
-                                    depositAmountType['noInput']) {
-                                  if (_paymentActiveIndex == 'debit') {
-                                    logger.i('銀行卡');
-                                    showUserName(
-                                      context,
-                                      onSuccess: (userName) {
-                                        showModel(
-                                          context,
-                                          content: ConfirmName(
-                                            amount:
-                                                channels[_channelActiveIndex]
-                                                            ['specificAmounts']
-                                                        [index]
-                                                    .toString(),
-                                            paymentChannelId:
-                                                channels[_channelActiveIndex]
-                                                        ['id']
-                                                    .toString(),
-                                            activePayment: _paymentActiveIndex,
-                                          ),
-                                          onClosed: () =>
-                                              Navigator.pop(context),
-                                        );
-                                      },
-                                    );
-                                  } else {
-                                    logger.i('no input && no bank card');
-                                    showModel(
-                                      context,
-                                      content: ConfirmPin(
-                                        amount: channels[_channelActiveIndex]
-                                                ['specificAmounts'][index]
-                                            .toString(),
-                                        paymentChannelId:
-                                            channels[_channelActiveIndex]['id']
-                                                .toString(),
-                                        activePayment:
-                                            _paymentActiveIndex.toString(),
-                                      ),
-                                      onClosed: () => Navigator.pop(context),
-                                    );
-                                  }
-                                } else {
-                                  // 將金額帶入amountController
-                                  amountController.text =
-                                      channels[_channelActiveIndex]
-                                              ['specificAmounts'][index]
-                                          .toString();
-                                }
+                                handleAmount(index);
                               },
                               child: Container(
                                 height: 55,

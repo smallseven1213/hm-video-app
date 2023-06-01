@@ -258,12 +258,15 @@ class GameLobbyApi {
   Future<Map> getDepositChannel() async {
     var value = await fetcher(
         url:
-            '$apiPrefix/deposit-channel?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
+            '$apiPrefix/deposit-channel-v2?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       return res;
     }
-    return res['data'];
+    return {
+      "code": "00",
+      "data": res['data'],
+    };
   }
 
   Future<List<Product>> getProductManyBy(
