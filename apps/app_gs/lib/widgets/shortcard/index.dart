@@ -35,43 +35,37 @@ class ShortCard extends StatefulWidget {
 }
 
 class _ShortCardState extends State<ShortCard> {
+  bool obpControllerisReady = false;
   ShortVideoDetailController? videoDetailController;
   ObservableVideoPlayerController? videoPlayerController;
 
-  late StreamSubscription<String> videoUrlSubscription;
+  late StreamSubscription<bool> videoUrlSubscription;
 
   @override
   void initState() {
     super.initState();
-    logger.i('RENDER OBX: ShortCard initState');
+
     videoDetailController =
         Get.find<ShortVideoDetailController>(tag: widget.id.toString());
 
-    var videoUrl = videoDetailController!.videoUrl.value;
-    if (videoUrl.isNotEmpty) {
-      _putController();
-    }
-    videoUrlSubscription = videoDetailController!.videoUrl.listen((videoUrl) {
-      if (videoUrl.isNotEmpty) {
-        logger.i('RENDER OBX: ShortCard (videoUrl.isNotEmpty');
+    videoUrlSubscription = videoDetailController!.isLoading.listen((isLoading) {
+      if (isLoading == false) {
+        _putController();
         var video = videoDetailController!.video.value;
-        if (widget.supportedPlayRecord == true) {
+        if (widget.supportedPlayRecord == true && video != null) {
           var playRecord = VideoDatabaseField(
-            id: video!.id,
+            id: video.id,
             coverHorizontal: video.coverHorizontal!,
             coverVertical: video.coverVertical!,
             timeLength: video.timeLength!,
             videoCollectTimes:
-                videoDetailController!.videoDetail.value!.collects,
+                videoDetailController!.videoDetail.value!.videoCollectTimes,
             tags: [],
             title: video.title,
-            // detail: detail!,
           );
-          logger.i('RENDER OBX: ShortCard initState addPlayRecord');
           Get.find<PlayRecordController>(tag: 'short')
               .addPlayRecord(playRecord);
         }
-        _putController();
       }
     });
   }
@@ -84,55 +78,53 @@ class _ShortCardState extends State<ShortCard> {
       logger.i('RENDER OBX: ShortCard didChangeDependencies retry');
       return videoPlayerController!;
     }, tag: videoUrl);
+    logger.i('OBX CHECK: ShortCard _putController');
 
-    setState(() {});
+    setState(() {
+      obpControllerisReady = true;
+    });
   }
 
   @override
   void dispose() {
-    videoUrlSubscription.cancel(); // 在dispose方法中取消订阅
-    videoDetailController?.dispose();
-    videoPlayerController?.dispose();
+    videoUrlSubscription.cancel();
+    // videoDetailController?.dispose();
+    // videoPlayerController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    try {
-      return Obx(() {
-        if (!Get.isRegistered<ShortVideoDetailController>(
-            tag: widget.id.toString())) {
-          return const SizedBox.shrink();
-        }
-        var video = videoDetailController!.video.value;
-        var videoDetail = videoDetailController!.videoDetail.value;
-        if (video != null &&
-            videoDetail != null &&
-            videoDetailController!.videoUrl.value.isNotEmpty) {
-          return Stack(
-            children: [
-              SizedBox(
-                height: double.infinity,
-                width: double.infinity,
-                child: VideoPlayerWidget(
-                  video: video,
-                  videoUrl: videoDetailController!.videoUrl.value,
-                ),
+    return Obx(() {
+      var isLoading = videoDetailController?.isLoading.value;
+      var video = videoDetailController?.video.value;
+      var videoDetail = videoDetailController?.videoDetail.value;
+      var videoUrl = videoDetailController?.videoUrl.value;
+      if (isLoading == false &&
+          videoUrl!.isNotEmpty &&
+          video != null &&
+          videoDetail != null) {
+        return Stack(
+          children: [
+            SizedBox(
+              height: double.infinity,
+              width: double.infinity,
+              child: VideoPlayerWidget(
+                video: video,
+                videoUrl: videoUrl,
               ),
-              ShortCardInfo(
-                index: widget.index,
-                data: videoDetail,
-                title: widget.title,
-                videoUrl: videoDetailController!.videoUrl.value,
-              )
-            ],
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
-      });
-    } catch (e, s) {
-      return const SizedBox.shrink();
-    }
+            ),
+            ShortCardInfo(
+              index: widget.index,
+              data: videoDetail,
+              title: widget.title,
+              videoUrl: videoUrl,
+            )
+          ],
+        );
+      } else {
+        return const SizedBox.shrink();
+      }
+    });
   }
 }

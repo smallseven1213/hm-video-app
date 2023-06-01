@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
+import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import '../screens/favorites/short.dart';
 import '../widgets/button.dart';
@@ -49,10 +50,14 @@ class _FavoritesPageState extends State<FavoritesPage>
       Get.find<ListEditorController>(tag: 'favorites');
   final userFavoritesActorController = Get.find<UserFavoritesActorController>();
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
+  final userFavoritesShortController = Get.find<UserFavoritesShortController>();
 
   void _handleSelectAll() {
     if (_tabController.index == 0) {
       var allData = userFavoritesVideoController.videos;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    } else if (_tabController.index == 1) {
+      var allData = userFavoritesShortController.data;
       listEditorController.saveBoundData(allData.map((e) => e.id).toList());
     } else {
       var allData = userFavoritesActorController.actors;
@@ -64,6 +69,10 @@ class _FavoritesPageState extends State<FavoritesPage>
     if (_tabController.index == 0) {
       var selectedIds = listEditorController.selectedIds.toList();
       userFavoritesVideoController.removeVideo(selectedIds);
+      listEditorController.removeBoundData(selectedIds);
+    } else if (_tabController.index == 1) {
+      var selectedIds = listEditorController.selectedIds.toList();
+      userFavoritesShortController.removeVideo(selectedIds);
       listEditorController.removeBoundData(selectedIds);
     } else {
       var selectedIds = listEditorController.selectedIds.toList();

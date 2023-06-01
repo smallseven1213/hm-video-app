@@ -34,9 +34,14 @@ class FavoritesShortScreen extends StatelessWidget {
         ),
         itemBuilder: (BuildContext context, int index) {
           var vod = userFavoritesShortController.data.value[index];
-          return VideoPreviewWithEditWidget(
+          return Obx(() => VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,
+              isEditing: listEditorController.isEditing.value,
+              isSelected: listEditorController.selectedIds.contains(vod.id),
+              onEditingTap: () {
+                listEditorController.toggleSelected(vod.id);
+              },
               onOverrideRedirectTap: () {
                 MyRouteDelegate.of(context).push(
                   AppRoutes.shortsByLocal.value,
@@ -53,7 +58,7 @@ class FavoritesShortScreen extends StatelessWidget {
               timeLength: vod.timeLength,
               tags: vod.tags,
               title: vod.title,
-              videoViewTimes: vod.videoViewTimes!);
+              videoViewTimes: vod.videoViewTimes!));
         },
       );
     });

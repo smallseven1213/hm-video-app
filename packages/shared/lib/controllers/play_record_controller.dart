@@ -41,10 +41,12 @@ class PlayRecordController extends GetxController {
   }
 
   void addPlayRecord(VideoDatabaseField video) async {
+    logger.i('PLAYRECORD TRACE: ADD ${video.toJson}');
     if (data.firstWhereOrNull((v) => v.id == video.id) != null) {
       data.removeWhere((v) => v.id == video.id);
     }
     data.insert(0, video);
+    logger.i('PLAYRECORD TRACE: ${data.length}');
     await _updateHive();
   }
 
@@ -63,6 +65,7 @@ class PlayRecordController extends GetxController {
   Future<void> _updateHive() async {
     var box = await boxFuture;
     await box.clear();
+    logger.i('PLAYRECORD TRACE: ${data.length}');
     for (var video in data) {
       final videoStr = jsonEncode(video.toJson());
       await box.put(video.id.toString(), videoStr);

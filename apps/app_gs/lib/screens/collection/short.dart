@@ -40,9 +40,14 @@ class CollectionShortScreen extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           var vod = shortPlayRecordController.data.value[index];
           logger.i('TESTING PLAY RECORD SHORT SCREEN - $vod');
-          return VideoPreviewWithEditWidget(
+          return Obx(() => VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,
+              isEditing: listEditorController.isEditing.value,
+              isSelected: listEditorController.selectedIds.contains(vod.id),
+              onEditingTap: () {
+                listEditorController.toggleSelected(vod.id);
+              },
               onOverrideRedirectTap: () {
                 MyRouteDelegate.of(context).push(
                   AppRoutes.shortsByLocal.value,
@@ -60,7 +65,7 @@ class CollectionShortScreen extends StatelessWidget {
               timeLength: vod.timeLength,
               tags: vod.tags,
               title: vod.title,
-              videoViewTimes: vod.videoViewTimes ?? 0);
+              videoViewTimes: vod.videoViewTimes ?? 0));
         },
       );
     });

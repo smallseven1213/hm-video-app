@@ -51,7 +51,6 @@ class RootWidget extends StatelessWidget {
     final parser = MyRouteParser();
 
     return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
       routerDelegate: delegate,
       routeInformationParser: parser,
       theme: ThemeData(

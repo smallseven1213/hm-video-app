@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
+import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
-import 'package:shared/models/video_database_field.dart';
 
-import '../screens/playrecord/short.dart';
-import '../screens/playrecord/video.dart';
+import '../screens/collection/short.dart';
+import '../screens/collection/video.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_page_panel.dart';
-import '../widgets/no_data.dart';
 import '../widgets/tab_bar.dart';
-import '../widgets/video_preview_with_edit.dart';
 
 class CollectionPage extends StatefulWidget {
   CollectionPage({Key? key}) : super(key: key);
@@ -24,6 +21,8 @@ class _CollectionPageState extends State<CollectionPage>
     with SingleTickerProviderStateMixin {
   final UserVodCollectionController userVodCollectionController =
       Get.find<UserVodCollectionController>();
+  final UserShortCollectionController userShortCollectionController =
+      Get.find<UserShortCollectionController>();
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(tag: 'collection');
   late TabController _tabController;
@@ -49,14 +48,25 @@ class _CollectionPageState extends State<CollectionPage>
   }
 
   void _handleSelectAll() {
-    var allData = userVodCollectionController.videos;
-    listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    if (_tabController.index == 0) {
+      var allData = userVodCollectionController.videos;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    } else if (_tabController.index == 1) {
+      var allData = userShortCollectionController.data;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    }
   }
 
   void _handleDeleteAll() {
-    var selectedIds = listEditorController.selectedIds.toList();
-    userVodCollectionController.removeVideo(selectedIds);
-    listEditorController.removeBoundData(selectedIds);
+    if (_tabController.index == 0) {
+      var selectedIds = listEditorController.selectedIds.toList();
+      userVodCollectionController.removeVideo(selectedIds);
+      listEditorController.removeBoundData(selectedIds);
+    } else if (_tabController.index == 1) {
+      var selectedIds = listEditorController.selectedIds.toList();
+      userShortCollectionController.removeVideo(selectedIds);
+      listEditorController.removeBoundData(selectedIds);
+    }
   }
 
   @override
@@ -82,8 +92,8 @@ class _CollectionPageState extends State<CollectionPage>
           TabBarView(
             controller: _tabController,
             children: [
-              PlayRecordVideoScreen(),
-              PlayRecordShortScreen(),
+              CollectionVideo(),
+              CollectionShortScreen(),
             ],
           ),
           ListPagePanelWidget(

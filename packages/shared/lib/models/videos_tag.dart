@@ -16,6 +16,14 @@ class VideoTag {
       isFollow: json['isFollow'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'coverVertical': coverVertical,
+        'title': title,
+        'name': name,
+        'isFollow': isFollow,
+      };
 }
 
 class VideoTags {

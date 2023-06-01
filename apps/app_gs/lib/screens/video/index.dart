@@ -1,4 +1,6 @@
 // VideoScreen stateless
+import 'dart:async';
+
 import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,6 +29,7 @@ class VideoScreen extends StatefulWidget {
 }
 
 class _VideoScreenState extends State<VideoScreen> {
+  late StreamSubscription<bool> videoUrlSubscription;
   VideoDetailController? videoDetailController;
 
   @override
@@ -34,10 +37,11 @@ class _VideoScreenState extends State<VideoScreen> {
     super.initState();
     videoDetailController =
         Get.put(VideoDetailController(widget.id), tag: widget.id.toString());
-    var videoUrl = videoDetailController!.videoUrl.value;
-    if (videoUrl.isNotEmpty) {
-      _putController();
-    }
+    videoUrlSubscription = videoDetailController!.isLoading.listen((isLoading) {
+      if (isLoading == false) {
+        _putController();
+      }
+    });
   }
 
   void _putController() async {
@@ -56,6 +60,12 @@ class _VideoScreenState extends State<VideoScreen> {
     );
     Get.find<PlayRecordController>(tag: 'vod').addPlayRecord(playRecord);
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    videoUrlSubscription.cancel();
+    super.dispose();
   }
 
   @override
