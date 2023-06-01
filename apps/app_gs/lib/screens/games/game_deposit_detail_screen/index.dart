@@ -3,10 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/game_deposit_detail_screen/index.dart';
 
 class GameDepositDetailScreen extends StatelessWidget {
-  const GameDepositDetailScreen({Key? key}) : super(key: key);
+  final String payment;
+  final int paymentChannelId;
+
+  const GameDepositDetailScreen(
+      {Key? key, required this.payment, required this.paymentChannelId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const GameDepositDetail();
+    return GameDepositDetail(
+        payment: payment, paymentChannelId: paymentChannelId);
   }
 }

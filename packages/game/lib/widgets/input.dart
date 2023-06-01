@@ -8,6 +8,7 @@ class GameInput extends StatefulWidget {
     required this.label,
     required this.hint,
     required this.controller,
+    this.isFontBold = false,
     this.warningMessage,
     this.errorMessage,
     this.onChanged,
@@ -21,6 +22,7 @@ class GameInput extends StatefulWidget {
   final String label;
   final String hint;
   final TextEditingController controller;
+  final bool isFontBold;
   final String? errorMessage;
   final String? warningMessage;
   final void Function(String value)? onChanged;
@@ -63,9 +65,11 @@ class _GameInputState extends State<GameInput> {
               width: widget.hasIcon != null ? 70 : 100,
               child: Text(
                 widget.label,
-                style: const TextStyle(
-                  color: Color(0xff979797),
+                style: TextStyle(
+                  color: const Color(0xff979797),
                   fontSize: 14,
+                  fontWeight:
+                      widget.isFontBold ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
             ),
