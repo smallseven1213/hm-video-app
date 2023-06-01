@@ -43,7 +43,6 @@ class _ActorsTabBarState extends State<ActorsTabBar>
   Widget build(BuildContext context) {
     return Obx(() => GSTabBar(
           controller: _tabController,
-          padding: const EdgeInsets.only(bottom: 0),
           tabs: actorRegionController.regions
               .where((e) => e.name != null)
               .map((e) => e.name!)
