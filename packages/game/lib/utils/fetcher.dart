@@ -58,13 +58,25 @@ Future<dynamic> fetcher({
 
     return response;
   } on DioError catch (e) {
-    logger.i('errror: e.response?.statusCode: ${e.response?.statusCode}');
+    logger.i(
+        'error statusCode: e.response?.statusCode: ${e.response?.statusCode}');
+    logger.i('error data: e.response?.data: ${e.response?.data}');
+
     if (e.response?.statusCode == 401) {
       // 清除 GetStorage 中的 auth-token
       final storage = GetStorage();
       storage.remove('auth-token');
       authController.setToken('');
       responseController.emitEvent(401, 'Unauthorized');
+    } else if (e.response?.statusCode == 400) {
+      final message = e.response?.data['message'] as String?;
+      if (message != null) {
+        // 处理状态码为 400 的错误消息
+        responseController.emitEvent(400, message);
+      } else {
+        // 如果无法获取错误消息，可以使用默认错误消息
+        responseController.emitEvent(400, 'Bad Request');
+      }
     } else {
       // 其他錯誤處理
       responseController.emitEvent(e.response?.statusCode ?? 0, 'Other error');

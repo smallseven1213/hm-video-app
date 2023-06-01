@@ -26,8 +26,8 @@ submitCompanyDepositOrder(
       paymentChannelId,
       remark,
     );
-    logger.i('value: $res');
-    if (res.isNotEmpty) {
+    logger.i('companyOrderDeposit res: $res');
+    if (res['code'] == '00') {
       onLoading(context, status: false);
       MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
     } else {
@@ -39,7 +39,7 @@ submitCompanyDepositOrder(
           height: 24,
           child: Center(
             child: Text(
-              '當前支付人數眾多，請稍後再試',
+              res['message'],
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
@@ -54,6 +54,6 @@ submitCompanyDepositOrder(
   } catch (e) {
     onLoading(context, status: false);
     Navigator.pop(context);
-    print('_submitCompanyDepositOrder error: $e');
+    logger.i('_submitCompanyDepositOrder error: $e');
   }
 }

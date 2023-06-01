@@ -1,7 +1,8 @@
 import 'dart:io';
 
+import 'package:game/controllers/game_response_controller.dart';
 import 'package:game/models/game_payment_channel_detail.dart';
-import 'package:get/get_utils/src/platform/platform.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/models/bank.dart';
 import 'package:game/models/game_list.dart';
@@ -18,6 +19,8 @@ import 'package:game/utils/fetcher.dart';
 final systemConfig = GameSystemConfig();
 String apiPrefix =
     '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform';
+
+final responseController = Get.find<GameApiResponseErrorCatchController>();
 
 class GameLobbyApi {
   Future<void> register() =>
@@ -299,25 +302,34 @@ class GameLobbyApi {
   }
 
   // 公司入款訂單建立 存款選擇 selfdebit, selfusdt
-  Future<String> companyOrderDeposit(
+  Future<Map> companyOrderDeposit(
     String amount,
     int paymentChannelId,
     String remark,
   ) async {
-    var value = await fetcher(
-        url: '$apiPrefix/company-order-deposit',
-        method: 'POST',
-        body: {
-          'amount': amount,
-          'paymentChannelId': paymentChannelId,
-          'remark': remark,
-        });
-    var res = (value.data as Map<String, dynamic>);
-
-    if (res['code'] != '00') {
-      return res['code'];
+    try {
+      var value = await fetcher(
+          url: '$apiPrefix/company-order-deposit',
+          method: 'POST',
+          body: {
+            'amount': amount,
+            'paymentChannelId': paymentChannelId,
+            'remark': remark,
+          });
+      var res = (value.data as Map<String, dynamic>);
+      if (res['code'] != '00') {
+        return res['message'];
+      }
+      return {
+        'code': res['code'],
+        'data': res['data']['data'],
+      };
+    } catch (e) {
+      return {
+        'code': responseController.responseStatus.value,
+        'message': responseController.responseMessage.value,
+      };
     }
-    return res['data']['data'];
   }
 
   Future<List<Product>> getProductManyBy(
