@@ -48,10 +48,19 @@ class BaseShortPageState extends State<BaseShortPage> {
       initialPageIndex = 0;
     }
 
+    logger.i('initialPageIndex: ${controller.data.length}}');
+
     _pageController?.dispose();
     _pageController = PageController(initialPage: initialPageIndex);
 
     cachedVods = controller.data;
+
+    ever(controller.data, (d) {
+      logger.i('initialPageIndex update: ${controller.data.length}}');
+      setState(() {
+        cachedVods = d as List<Vod>;
+      });
+    });
     currentPage = initialPageIndex;
   }
 
