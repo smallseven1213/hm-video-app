@@ -15,7 +15,7 @@ final logger = Logger();
 
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
-  final Video videoBase;
+  final Vod videoBase;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
@@ -78,7 +78,6 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                   ),
                   SliverToBoxAdapter(
                     child: VideoActions(
-                      videoBase: widget.videoBase,
                       videoDetail: widget.videoDetail,
                     ),
                   ),

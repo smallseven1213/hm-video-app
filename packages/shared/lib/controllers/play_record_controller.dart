@@ -5,7 +5,7 @@ import 'package:shared/controllers/auth_controller.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
-import '../models/video_database_field.dart';
+import '../models/vod.dart';
 
 final UserApi userApi = UserApi();
 final logger = Logger();
@@ -14,7 +14,7 @@ final logger = Logger();
 class PlayRecordController extends GetxController {
   final String _boxName;
   Future<Box<String>> boxFuture;
-  var data = <VideoDatabaseField>[].obs;
+  var data = <Vod>[].obs;
 
   PlayRecordController({required String tag})
       : _boxName = 'playRecord_$tag',
@@ -35,12 +35,12 @@ class PlayRecordController extends GetxController {
     if (box.isNotEmpty) {
       data.value = box.values.map((videoStr) {
         final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
-        return VideoDatabaseField.fromJson(videoJson);
+        return Vod.fromJson(videoJson);
       }).toList();
     }
   }
 
-  void addPlayRecord(VideoDatabaseField video) async {
+  void addPlayRecord(Vod video) async {
     logger.i('PLAYRECORD TRACE: ADD ${video.toJson}');
     if (data.firstWhereOrNull((v) => v.id == video.id) != null) {
       data.removeWhere((v) => v.id == video.id);
@@ -58,7 +58,7 @@ class PlayRecordController extends GetxController {
     await _updateHive();
   }
 
-  VideoDatabaseField? getById(int id) {
+  Vod? getById(int id) {
     return data.firstWhereOrNull((video) => video.id == id);
   }
 

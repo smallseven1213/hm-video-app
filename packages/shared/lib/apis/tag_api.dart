@@ -118,7 +118,7 @@ class TagApi {
     return BlockVod(vods, vods.length);
   }
 
-  Future<List<Video>> getPlayList({
+  Future<List<Vod>> getPlayList({
     required int tagId,
     required int videoId,
   }) async {
@@ -128,7 +128,7 @@ class TagApi {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
   Future<BlockVod> getShortVideoByTagId({

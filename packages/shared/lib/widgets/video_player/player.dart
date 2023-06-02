@@ -2,18 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/models/video.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../controllers/video_player_controller.dart';
-import 'error.dart';
+import '../../models/vod.dart';
 import 'progress.dart';
 
 final logger = Logger();
 
 class VideoPlayerWidget extends StatelessWidget {
   final String videoUrl;
-  final Video video;
+  final Vod video;
 
   const VideoPlayerWidget({
     Key? key,

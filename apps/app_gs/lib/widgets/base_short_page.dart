@@ -6,9 +6,11 @@ import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
+import 'package:shared/widgets/short_vod_provider.dart';
 
 import '../screens/short/button.dart';
 import 'shortcard/index.dart';
+import 'short_bottom_area.dart';
 
 final logger = Logger();
 
@@ -33,6 +35,7 @@ class BaseShortPage extends StatefulWidget {
 class BaseShortPageState extends State<BaseShortPage> {
   PageController? _pageController;
   int currentPage = 0;
+  List<Vod> cachedVods = [];
 
   @override
   void initState() {
@@ -45,43 +48,32 @@ class BaseShortPageState extends State<BaseShortPage> {
       initialPageIndex = 0;
     }
 
+    _pageController?.dispose();
     _pageController = PageController(initialPage: initialPageIndex);
+
+    cachedVods = controller.data;
     currentPage = initialPageIndex;
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = widget.createController();
-    final userShortCollectionController =
-        Get.find<UserShortCollectionController>();
-    final userFavoritesShortController =
-        Get.find<UserFavoritesShortController>();
-
     return Scaffold(
       body: Stack(
         children: [
-          Obx(() {
-            return PageView.builder(
-              controller: _pageController,
-              itemCount: controller.data.length * 50,
-              onPageChanged: (int index) {
-                setState(() {
-                  currentPage = index;
-                });
-              },
-              itemBuilder: (BuildContext context, int index) {
-                final paddingBottom = MediaQuery.of(context).padding.bottom;
-                var currentIndex = index % controller.data.length;
-                var shortData = controller.data[currentIndex];
-                Get.lazyPut<ShortVideoDetailController>(
-                    () => ShortVideoDetailController(shortData.id),
-                    tag: shortData.id.toString());
-                logger.i(
-                    'TRACE SVD Controller in BaseShortPage: id: ${shortData.id}');
-                var videoDetailController =
-                    Get.find<ShortVideoDetailController>(
-                        tag: shortData.id.toString());
-                return Column(
+          PageView.builder(
+            controller: _pageController,
+            itemCount: cachedVods.length * 50,
+            onPageChanged: (int index) {
+              setState(() {
+                currentPage = index;
+              });
+            },
+            itemBuilder: (BuildContext context, int index) {
+              var currentIndex = index % cachedVods.length;
+              var shortData = cachedVods[currentIndex];
+              return ShortVodProvider(
+                vodId: shortData.id,
+                child: Column(
                   children: [
                     Expanded(
                         child: ShortCard(
@@ -89,76 +81,15 @@ class BaseShortPageState extends State<BaseShortPage> {
                             id: shortData.id,
                             title: shortData.title,
                             supportedPlayRecord: widget.supportedPlayRecord)),
-                    Container(
-                      height: 76 + paddingBottom,
-                      padding: EdgeInsets.only(bottom: paddingBottom),
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.black,
-                            Color(0xFF002869),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Obx(() {
-                            bool isLike = userFavoritesShortController.data
-                                .any((e) => e.id == shortData.id);
-                            return ShortButtonButton(
-                              count: videoDetailController
-                                  .videoDetail.value!.collects,
-                              subscribe: '喜歡就點讚',
-                              icon: Icons.favorite_rounded,
-                              isLike: isLike,
-                              onTap: () {
-                                if (isLike) {
-                                  userFavoritesShortController
-                                      .removeVideo([shortData.id]);
-                                } else {
-                                  var vod = Vod.fromJson(
-                                      controller.data[index].toJson());
-                                  userFavoritesShortController.addVideo(vod);
-                                }
-                              },
-                            );
-                          }),
-                          Obx(() {
-                            bool isLike = userShortCollectionController.data
-                                .any((e) => e.id == shortData.id);
-                            return ShortButtonButton(
-                              key: ValueKey('collection-${shortData.id}'),
-                              count: videoDetailController
-                                  .videoDetail.value!.favorites,
-                              subscribe: '添加到收藏',
-                              icon: Icons.star_rounded,
-                              iconSize: 30,
-                              isLike: isLike,
-                              onTap: () {
-                                logger.i('shortData => ${shortData.id}');
-                                if (isLike) {
-                                  userShortCollectionController
-                                      .removeVideo([shortData.id]);
-                                } else {
-                                  var vod = Vod.fromJson(
-                                      controller.data[index].toJson());
-                                  userShortCollectionController.addVideo(vod);
-                                }
-                              },
-                            );
-                          }),
-                        ],
-                      ),
-                    )
+                    ShortBottomArea(
+                      shortData: shortData,
+                    ),
                   ],
-                );
-              },
-              scrollDirection: Axis.vertical,
-            );
-          }),
+                ),
+              );
+            },
+            scrollDirection: Axis.vertical,
+          ),
           const FloatPageBackButton()
         ],
       ),

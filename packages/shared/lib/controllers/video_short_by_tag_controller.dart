@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
 import '../apis/tag_api.dart';
-import '../models/video.dart';
+import '../models/vod.dart';
 
 class VideoShortByTagController extends GetxController {
-  var data = <Video>[].obs;
+  var data = <Vod>[].obs;
   int tagId = 0;
   int videoId = 0;
 

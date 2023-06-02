@@ -26,7 +26,7 @@ class ShortVideoDetailController extends GetxController {
   var isLoading = true.obs;
 
   var videoDetail = Rx<ShortVideoDetail?>(null);
-  var video = Rx<Video?>(null);
+  var video = Rx<Vod?>(null);
 
   ShortVideoDetailController(this.videoId);
 
@@ -47,7 +47,7 @@ class ShortVideoDetailController extends GetxController {
 
   Future<void> fetchVideoUrl(int videoId) async {
     try {
-      Video videoFromApi = await vodApi.getVodUrl(videoId);
+      Vod videoFromApi = await vodApi.getVodUrl(videoId);
 
       if (videoFromApi.videoUrl != null && videoFromApi.videoUrl!.isNotEmpty) {
         var videoUrlFormatted = getVideoUrl(videoFromApi.videoUrl);

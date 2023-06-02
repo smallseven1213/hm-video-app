@@ -45,7 +45,7 @@ class SupplierApi {
   }
 
   // get PlayList from "GET" /suppliers/supplier/playlist?supplierId=20&videoId=605
-  Future<List<Video>> getPlayList({
+  Future<List<Vod>> getPlayList({
     required int supplierId,
     required int videoId,
   }) async {
@@ -56,6 +56,6 @@ class SupplierApi {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 }
