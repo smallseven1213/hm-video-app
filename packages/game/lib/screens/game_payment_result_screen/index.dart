@@ -119,7 +119,7 @@ class _GamePaymentResultState extends State<GamePaymentResult> {
                 ),
                 InkWell(
                   onTap: () async {
-                    Get.find<GameStartupController>().backToAppHome();
+                    Get.find<GameStartupController>().goBackToAppHome(context);
                   },
                   child: Container(
                     alignment: Alignment.center,
