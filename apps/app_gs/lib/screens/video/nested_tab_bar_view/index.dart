@@ -103,10 +103,13 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                         toolbarHeight: 0,
                         flexibleSpace: const SizedBox.shrink(),
                         bottom: PreferredSize(
-                            preferredSize: Size.fromHeight(60),
+                            preferredSize: Size.fromHeight(50),
                             child: SizedBox(
-                              height: 60,
-                              child: GSTabBar(tabs: tabs),
+                              height: 50,
+                              child: GSTabBar(
+                                tabs: tabs,
+                                padding: const EdgeInsets.all(0),
+                              ),
                             ))),
                   ),
                 ];

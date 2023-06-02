@@ -127,6 +127,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                         height: 50,
                         child: Obx(() => GSTabBar(
                               controller: _tabController,
+                              padding: EdgeInsets.all(0),
                               tabs: (channelSharedDataController
                                       ?.channelSharedData.value?.blocks
                                       ?.map((e) =>
