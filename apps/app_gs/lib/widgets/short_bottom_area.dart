@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
@@ -7,6 +8,8 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 
 import '../screens/short/button.dart';
+
+final logger = Logger();
 
 class ShortBottomArea extends StatelessWidget {
   final Vod shortData;
@@ -43,6 +46,8 @@ class ShortBottomArea extends StatelessWidget {
           Obx(() {
             bool isLike = userFavoritesShortController.data
                 .any((e) => e.id == shortData.id);
+            logger.i(
+                'SHORT_BOTTOM_AREA FAVORITES ISLIKE: ${shortData.id} => $isLike');
             return ShortMenuButton(
               count: videoDetailController.videoDetail.value?.collects ?? 0,
               subscribe: '喜歡就點讚',
@@ -62,7 +67,6 @@ class ShortBottomArea extends StatelessWidget {
             bool isLike = userShortCollectionController.data
                 .any((e) => e.id == shortData.id);
             return ShortMenuButton(
-              key: ValueKey('collection-${shortData.id}'),
               count: videoDetailController.videoDetail.value?.favorites ?? 0,
               subscribe: '添加到收藏',
               icon: Icons.star_rounded,
