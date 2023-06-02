@@ -45,21 +45,29 @@ class DepositPaymentItems extends StatefulWidget {
 }
 
 var paymentsMapper = {
-  'aliPay': {
-    'title': '支付寶',
+  'alipay': {
+    // 支付寶
     'icon': 'packages/game/assets/images/game_deposit/aliPay.webp',
   },
   'debit': {
-    'title': '銀行卡',
+    // 網銀入款or銀行卡
     'icon': 'packages/game/assets/images/game_deposit/debit.webp',
   },
-  'unionPay': {
-    'title': '雲閃付',
+  'unionpay': {
+    // 雲閃付
     'icon': 'packages/game/assets/images/game_deposit/unionPay.webp',
   },
-  'weChat': {
-    'title': '微信',
+  'wechat': {
+    // 微信
     'icon': 'packages/game/assets/images/game_deposit/weChat.webp',
+  },
+  'selfdebit': {
+    // 銀行轉帳
+    'icon': 'packages/game/assets/images/game_deposit/selfdebit.webp',
+  },
+  'selfusdt': {
+    // USDT轉帳
+    'icon': 'packages/game/assets/images/game_deposit/selfusdt.webp',
   },
 };
 
