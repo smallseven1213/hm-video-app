@@ -79,7 +79,8 @@ final Map<String, RouteWidgetBuilder> routes = {
       ),
   GameAppRoutes.lobby.value: (context, args) => const GameScreen(),
   GameAppRoutes.webview.value: (context, args) => GameWebviewScreen(
-        gameUrl: args['url'],
+        gameUrl: args['url'] as String,
+        direction: args['direction'] as int,
       ),
   GameAppRoutes.depositList.value: (context, args) =>
       const GameDepositListScreen(),

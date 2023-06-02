@@ -42,3 +42,8 @@ class GameConfig {
     );
   }
 }
+
+Map<String, int> gameWebviewDirection = {
+  'vertical': 1,
+  'horizontal': 2,
+};
