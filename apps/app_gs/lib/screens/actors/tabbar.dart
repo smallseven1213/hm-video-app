@@ -47,6 +47,7 @@ class _ActorsTabBarState extends State<ActorsTabBar>
               .where((e) => e.name != null)
               .map((e) => e.name!)
               .toList(),
+          padding: const EdgeInsets.all(0),
         ));
   }
 }
