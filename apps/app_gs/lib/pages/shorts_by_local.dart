@@ -25,6 +25,8 @@ class ShortsByLocalPage extends BaseShortPage {
           supportedPlayRecord: supportedPlayRecord,
           videoId: videoId,
           itemId: itemId,
+          displayFavoriteAndCollectCount: false,
+          useCachedList: true,
           createController: () {
             if (itemId == 0) {
               return Get.find<UserShortCollectionController>();

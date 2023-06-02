@@ -24,6 +24,8 @@ class ShortVideoDetailController extends GetxController {
   final int videoId;
   var videoUrl = ''.obs;
   var isLoading = true.obs;
+  var videoCollects = 0.obs;
+  var videoFavorites = 0.obs;
 
   var videoDetail = Rx<ShortVideoDetail?>(null);
   var video = Rx<Vod?>(null);
@@ -33,6 +35,12 @@ class ShortVideoDetailController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    ever(videoDetail, (_) {
+      if (videoDetail.value != null) {
+        videoCollects.value = videoDetail.value!.collects!;
+        videoFavorites.value = videoDetail.value!.favorites;
+      }
+    });
     await mutateAll();
   }
 
@@ -69,5 +77,16 @@ class ShortVideoDetailController extends GetxController {
     } catch (error) {
       logger.i(error);
     }
+  }
+
+  void updateCollects(int change) {
+    int newCollects = videoCollects.value + change;
+    videoCollects.value = newCollects;
+  }
+
+  void updateFavorites(int change) {
+    int newFavorites = videoFavorites.value + change;
+    logger.i('newFavorites: $newFavorites');
+    videoFavorites.value = newFavorites;
   }
 }
