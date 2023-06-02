@@ -117,7 +117,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                       width: 105,
                                       child: Button(
                                         text: notice.leftButton ?? '取消',
-                                        type: 'secondary',
+                                        type: 'cancel',
                                         onPressed: () {
                                           Navigator.pop(context);
                                           if (notice.leftButtonUrl != '-1' &&
@@ -133,7 +133,6 @@ class NoticeDialogState extends State<NoticeDialog> {
                                       ),
                                     )
                                   : const SizedBox(),
-
                               notice.rightButton != null
                                   ? SizedBox(
                                       width: 105,
@@ -155,19 +154,6 @@ class NoticeDialogState extends State<NoticeDialog> {
                                       ),
                                     )
                                   : const SizedBox(),
-                              // rightButton ?? const SizedBox()
-                              // if (leftButton != null)
-
-                              //   Expanded(
-                              //     flex: 1,
-                              //     child: leftButton ?? const SizedBox(),
-                              //   ),
-                              // const SizedBox(width: 24),
-                              // if (rightButton != null)
-                              //   Expanded(
-                              //     flex: 1,
-                              //     child: rightButton ?? const SizedBox(),
-                              //   ),
                             ],
                           ),
                         ],

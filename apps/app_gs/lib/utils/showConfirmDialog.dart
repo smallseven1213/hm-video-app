@@ -97,7 +97,7 @@ Future<bool?> showConfirmDialog({
                                 }
                                 Navigator.of(context).pop(false);
                               },
-                              type: 'secondary',
+                              type: 'cancel',
                               size: 'small',
                             ),
                           ),

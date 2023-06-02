@@ -6,12 +6,39 @@ const buttonPadding = {
   'large': EdgeInsets.symmetric(horizontal: 10, vertical: 10),
 };
 
+class _GradientBorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Rect rect = Offset.zero & size;
+    const Gradient gradient = LinearGradient(
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      colors: [
+        Color(0xFF00b2ff),
+        Color(0xFFcceaff),
+        Color(0xFF0075ff),
+      ],
+    );
+    final Paint paint = Paint()
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 2.0
+      ..shader = gradient.createShader(rect);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(rect, const Radius.circular(4.0)),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+}
+
 class Button extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
   final dynamic icon; // GlowingIcon or Icon
-  final String? type; // primary, secondary
+  final String? type; // primary, secondary, cancel
   final String? size; // small, medium, large
 
   const Button({
@@ -28,28 +55,18 @@ class Button extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(width: 1, color: Colors.white),
-          color: type == 'primary'
-              ? const Color.fromRGBO(255, 255, 255, 0.8)
-              : const Color.fromRGBO(66, 119, 220, 0.5)),
+        borderRadius: BorderRadius.circular(4),
+        color: type == 'cancel'
+            ? const Color(0xff06275e)
+            : const Color(0xFF1345a5),
+      ),
       clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: GestureDetector(
-        onTap: onPressed,
-        child: Container(
-            clipBehavior: Clip.antiAlias,
+      child: CustomPaint(
+        painter: type == 'cancel' ? null : _GradientBorderPainter(),
+        child: GestureDetector(
+          onTap: onPressed,
+          child: Container(
             padding: buttonPadding[size],
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: type == 'primary'
-                      ? const Color(0xFF4277DC)
-                      : const Color.fromRGBO(18, 18, 69, 0.5),
-                  blurRadius: 20,
-                  spreadRadius: type == 'primary' ? 0 : -10,
-                ),
-              ],
-            ),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -59,14 +76,18 @@ class Button extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: type == 'cancel'
+                          ? const Color(0xffb2bac5)
+                          : Colors.white,
                       fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ],
               ),
-            )),
+            ),
+          ),
+        ),
       ),
     );
   }
