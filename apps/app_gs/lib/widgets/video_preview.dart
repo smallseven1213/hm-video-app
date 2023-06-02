@@ -18,12 +18,14 @@ class ViewInfo extends StatelessWidget {
   final int duration;
   final int? videoCollectTimes;
   final int? film;
+  final bool? displayVideoCollectTimes;
 
   const ViewInfo(
       {Key? key,
       this.film = 1,
       required this.viewCount,
       required this.duration,
+      this.displayVideoCollectTimes = true,
       this.videoCollectTimes})
       : super(key: key);
 
@@ -53,9 +55,11 @@ class ViewInfo extends StatelessWidget {
                   ViewTimes(times: viewCount),
                   VideoTime(time: duration),
                 ]
-              : [
-                  VideoCollectionTimes(times: videoCollectTimes ?? 0),
-                ]),
+              : displayVideoCollectTimes == true
+                  ? [
+                      VideoCollectionTimes(times: videoCollectTimes ?? 0),
+                    ]
+                  : []),
     );
   }
 }
@@ -80,6 +84,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool? hasRadius; // 要不要圓角
   final bool? hasTitle; // 要不要標題
   final bool? hasTapEvent; // 要不要點擊事件
+  final bool? displayVideoCollectTimes;
   final Function()? onTap;
   final Function()? onOverrideRedirectTap; // 自定義路由轉址
 
@@ -105,7 +110,8 @@ class VideoPreviewWidget extends StatelessWidget {
       this.hasTitle = true,
       this.onTap,
       this.hasTapEvent = true,
-      this.onOverrideRedirectTap})
+      this.onOverrideRedirectTap,
+      this.displayVideoCollectTimes = true})
       : super(key: key);
 
   @override
@@ -227,11 +233,11 @@ class VideoPreviewWidget extends StatelessWidget {
                     right: 0,
                     bottom: 0,
                     child: ViewInfo(
-                      film: film,
-                      videoCollectTimes: videoCollectTimes,
-                      viewCount: videoViewTimes ?? 0,
-                      duration: timeLength,
-                    )),
+                        film: film,
+                        videoCollectTimes: videoCollectTimes,
+                        viewCount: videoViewTimes ?? 0,
+                        duration: timeLength,
+                        displayVideoCollectTimes: displayVideoCollectTimes)),
             ],
           ),
         ),
