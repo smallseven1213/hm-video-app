@@ -35,6 +35,7 @@ class BaseShortPage extends StatefulWidget {
 class BaseShortPageState extends State<BaseShortPage> {
   PageController? _pageController;
   int currentPage = 0;
+  List<Vod> cachedVods = [];
 
   @override
   void initState() {
@@ -47,49 +48,48 @@ class BaseShortPageState extends State<BaseShortPage> {
       initialPageIndex = 0;
     }
 
+    _pageController?.dispose();
     _pageController = PageController(initialPage: initialPageIndex);
+
+    cachedVods = controller.data;
     currentPage = initialPageIndex;
   }
 
   @override
   Widget build(BuildContext context) {
-    final controller = widget.createController();
-
     return Scaffold(
       body: Stack(
         children: [
-          Obx(() {
-            return PageView.builder(
-              controller: _pageController,
-              itemCount: controller.data.length * 50,
-              onPageChanged: (int index) {
-                setState(() {
-                  currentPage = index;
-                });
-              },
-              itemBuilder: (BuildContext context, int index) {
-                var currentIndex = index % controller.data.length;
-                var shortData = controller.data[currentIndex];
-                return ShortVodProvider(
-                  vodId: shortData.id,
-                  child: Column(
-                    children: [
-                      Expanded(
-                          child: ShortCard(
-                              index: index,
-                              id: shortData.id,
-                              title: shortData.title,
-                              supportedPlayRecord: widget.supportedPlayRecord)),
-                      ShortBottomArea(
-                        shortData: shortData,
-                      ),
-                    ],
-                  ),
-                );
-              },
-              scrollDirection: Axis.vertical,
-            );
-          }),
+          PageView.builder(
+            controller: _pageController,
+            itemCount: cachedVods.length * 50,
+            onPageChanged: (int index) {
+              setState(() {
+                currentPage = index;
+              });
+            },
+            itemBuilder: (BuildContext context, int index) {
+              var currentIndex = index % cachedVods.length;
+              var shortData = cachedVods[currentIndex];
+              return ShortVodProvider(
+                vodId: shortData.id,
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: ShortCard(
+                            index: index,
+                            id: shortData.id,
+                            title: shortData.title,
+                            supportedPlayRecord: widget.supportedPlayRecord)),
+                    ShortBottomArea(
+                      shortData: shortData,
+                    ),
+                  ],
+                ),
+              );
+            },
+            scrollDirection: Axis.vertical,
+          ),
           const FloatPageBackButton()
         ],
       ),

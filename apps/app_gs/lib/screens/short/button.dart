@@ -37,6 +37,17 @@ class ShortMenuButtonState extends State<ShortMenuButton> {
   }
 
   @override
+  void didUpdateWidget(ShortMenuButton oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.count != oldWidget.count) {
+      setState(() {
+        selfCount = widget.count ?? 0;
+      });
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Expanded(
         flex: 1,
