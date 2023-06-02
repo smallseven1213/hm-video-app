@@ -39,6 +39,7 @@ class FavoritesShortScreen extends StatelessWidget {
               film: 2,
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
+              displayVideoCollectTimes: false,
               onEditingTap: () {
                 listEditorController.toggleSelected(vod.id);
               },
