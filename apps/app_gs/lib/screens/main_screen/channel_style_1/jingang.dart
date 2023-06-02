@@ -12,11 +12,6 @@ class JingangList extends StatelessWidget {
   final int channelId;
   const JingangList({Key? key, required this.channelId}) : super(key: key);
 
-  Widget buildTitle(String title) {
-    if (title == '') return const SizedBox();
-    return Header(text: title);
-  }
-
   @override
   Widget build(BuildContext context) {
     final ChannelDataController channelDataController =

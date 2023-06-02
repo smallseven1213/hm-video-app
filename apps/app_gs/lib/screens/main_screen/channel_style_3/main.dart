@@ -11,17 +11,6 @@ import '../../../widgets/tab_bar.dart';
 
 final logger = Logger();
 
-Widget buildTitle(String title) {
-  return title == ''
-      ? const SizedBox()
-      : Column(
-          children: [
-            const SizedBox(height: 8),
-            Header(text: title),
-          ],
-        );
-}
-
 class ChannelStyle3Main extends StatefulWidget {
   final int channelId;
 
@@ -94,72 +83,78 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        controller: _scrollController,
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverToBoxAdapter(
-                child: buildTitle(channelSharedDataController!
-                        .channelSharedData.value?.jingang!.title ??
-                    '')),
-            ChannelJingangArea(
-              channelId: widget.channelId,
-            ),
-            ChannelTags(
-              channelId: widget.channelId,
-            ),
-            SliverToBoxAdapter(key: targetKey),
-            SliverAppBar(
-              pinned: true,
-              leading: null,
-              automaticallyImplyLeading: false,
-              forceElevated: true,
-              expandedHeight: 0,
-              toolbarHeight: 0,
-              flexibleSpace: const SizedBox.shrink(),
-              bottom: PreferredSize(
-                preferredSize: const Size.fromHeight(50),
-                child: SizedBox(
-                    height: 50,
-                    child: SizedBox(
+      body: Obx(() {
+        final channelSharedData =
+            channelSharedDataController!.channelSharedData.value;
+        return NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              if (channelSharedData?.jingang!.title != '')
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child:
+                        Header(text: channelSharedData?.jingang!.title ?? ''),
+                  ),
+                ),
+              ChannelJingangArea(
+                channelId: widget.channelId,
+              ),
+              ChannelTags(
+                channelId: widget.channelId,
+              ),
+              SliverToBoxAdapter(key: targetKey),
+              SliverAppBar(
+                pinned: true,
+                leading: null,
+                automaticallyImplyLeading: false,
+                forceElevated: true,
+                expandedHeight: 0,
+                toolbarHeight: 0,
+                flexibleSpace: const SizedBox.shrink(),
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(50),
+                  child: SizedBox(
                       height: 50,
                       child: SizedBox(
                         height: 50,
-                        child: Obx(() => GSTabBar(
-                              controller: _tabController,
-                              padding: EdgeInsets.all(0),
-                              tabs: (channelSharedDataController
-                                      ?.channelSharedData.value?.blocks
-                                      ?.map((e) =>
-                                          e.name != null && e.name!.length > 8
-                                              ? e.name!.substring(0, 8)
-                                              : e.name ?? '')
-                                      .toList()) ??
-                                  [],
-                            )),
-                      ),
-                    )),
+                        child: SizedBox(
+                          height: 50,
+                          child: GSTabBar(
+                            controller: _tabController,
+                            padding: const EdgeInsets.all(0),
+                            tabs: (channelSharedData?.blocks
+                                    ?.map((e) =>
+                                        e.name != null && e.name!.length > 8
+                                            ? e.name!.substring(0, 8)
+                                            : e.name ?? '')
+                                    .toList()) ??
+                                [],
+                          ),
+                        ),
+                      )),
+                ),
               ),
-            ),
-          ];
-        },
-        body: Obx(() => TabBarView(
-              physics: const NeverScrollableScrollPhysics(),
-              controller: _tabController,
-              children:
-                  channelSharedDataController!.channelSharedData.value?.blocks
-                          ?.asMap()
-                          .entries
-                          .map((e) => Vods(
-                                key: Key('${e.key}'),
-                                areaId: e.value.id ?? 0,
-                                templateId: e.value.template,
-                                isActive: e.key == _tabController!.index,
-                              ))
-                          .toList() ??
-                      [],
-            )),
-      ),
+            ];
+          },
+          body: TabBarView(
+            physics: const NeverScrollableScrollPhysics(),
+            controller: _tabController,
+            children: channelSharedData?.blocks
+                    ?.asMap()
+                    .entries
+                    .map((e) => Vods(
+                          key: Key('${e.key}'),
+                          areaId: e.value.id ?? 0,
+                          templateId: e.value.template,
+                          isActive: e.key == _tabController!.index,
+                        ))
+                    .toList() ??
+                [],
+          ),
+        );
+      }),
     );
   }
 }

@@ -17,6 +17,8 @@ class Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // logger.i('RENDER HEADER');
+
+    if (text == '') return const SizedBox();
     return Container(
       // height: 36,
       padding: const EdgeInsets.symmetric(horizontal: 8),

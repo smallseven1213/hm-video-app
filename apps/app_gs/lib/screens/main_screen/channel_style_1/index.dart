@@ -15,17 +15,6 @@ import '../../../widgets/videoblock.dart';
 
 final logger = Logger();
 
-Widget buildTitle(String title) {
-  return title == ''
-      ? const SizedBox()
-      : Column(
-          children: [
-            const SizedBox(height: 8),
-            Header(text: title),
-          ],
-        );
-}
-
 class ChannelStyle1 extends StatefulWidget {
   final int channelId;
 
@@ -60,7 +49,7 @@ class _ChannelStyle1State extends State<ChannelStyle1>
         for (var block in channelData.blocks!) {
           sliverBlocks.add(SliverToBoxAdapter(
             child: Header(
-              text: '${block.name} [${block.template}]',
+              text: block.name ?? '',
               moreButton: block.isMore!
                   ? InkWell(
                       onTap: () => {
@@ -127,8 +116,13 @@ class _ChannelStyle1State extends State<ChannelStyle1>
               padding: const EdgeInsets.symmetric(horizontal: 8),
               child: Banners(channelId: widget.channelId),
             )),
-            SliverToBoxAdapter(
-                child: buildTitle(channelData.jingang!.title ?? '')),
+            if (channelData.jingang!.title != '')
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Header(text: channelData.jingang!.title ?? ''),
+                ),
+              ),
             JingangList(channelId: widget.channelId),
             ...sliverBlocks,
             SliverToBoxAdapter(
