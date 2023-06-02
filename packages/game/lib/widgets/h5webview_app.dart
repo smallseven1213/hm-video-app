@@ -6,8 +6,11 @@ final logger = Logger();
 
 class H5WebviewShared extends StatefulWidget {
   final String initialUrl;
+  final int direction;
 
-  const H5WebviewShared({Key? key, required this.initialUrl}) : super(key: key);
+  const H5WebviewShared(
+      {Key? key, required this.initialUrl, required this.direction})
+      : super(key: key);
 
   @override
   _H5WebviewSharedState createState() => _H5WebviewSharedState();
