@@ -19,12 +19,16 @@ class BaseShortPage extends StatefulWidget {
   final int videoId;
   final int itemId; // areaId, tagId, supplierId
   final bool? supportedPlayRecord;
+  final bool? useCachedList;
+  bool? displayFavoriteAndCollectCount;
 
-  const BaseShortPage(
+  BaseShortPage(
       {required this.createController,
       required this.videoId,
       required this.itemId,
+      this.displayFavoriteAndCollectCount = true,
       this.supportedPlayRecord = true,
+      this.useCachedList = false,
       Key? key})
       : super(key: key);
 
@@ -33,6 +37,7 @@ class BaseShortPage extends StatefulWidget {
 }
 
 class BaseShortPageState extends State<BaseShortPage> {
+  bool isInitial = false;
   PageController? _pageController;
   int currentPage = 0;
   List<Vod> cachedVods = [];
@@ -55,12 +60,17 @@ class BaseShortPageState extends State<BaseShortPage> {
 
     cachedVods = controller.data;
 
-    ever(controller.data, (d) {
-      logger.i('initialPageIndex update: ${controller.data.length}}');
-      setState(() {
-        cachedVods = d as List<Vod>;
+    if (widget.useCachedList == false) {
+      ever(controller.data, (d) {
+        if (isInitial == false) {
+          setState(() {
+            isInitial = true;
+            cachedVods = d as List<Vod>;
+          });
+        }
       });
-    });
+    }
+
     currentPage = initialPageIndex;
   }
 
@@ -91,8 +101,9 @@ class BaseShortPageState extends State<BaseShortPage> {
                             title: shortData.title,
                             supportedPlayRecord: widget.supportedPlayRecord)),
                     ShortBottomArea(
-                      shortData: shortData,
-                    ),
+                        shortData: shortData,
+                        displayFavoriteAndCollectCount:
+                            widget.displayFavoriteAndCollectCount),
                   ],
                 ),
               );

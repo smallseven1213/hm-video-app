@@ -1,14 +1,18 @@
 import 'package:app_gs/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-class ShortMenuButton extends StatefulWidget {
+final logger = Logger();
+
+class ShortMenuButton extends StatelessWidget {
   final String subscribe;
   final IconData icon;
   final double? iconSize;
   final bool isLike;
   final int? count;
+  final bool? displayFavoriteAndCollectCount;
   final Function()? onTap;
 
   const ShortMenuButton(
@@ -17,6 +21,7 @@ class ShortMenuButton extends StatefulWidget {
       required this.icon,
       this.count = 0,
       this.iconSize,
+      this.displayFavoriteAndCollectCount = true,
       this.isLike = false,
       this.onTap = _defaultOnTap})
       : super(key: key);
@@ -24,39 +29,12 @@ class ShortMenuButton extends StatefulWidget {
   static void _defaultOnTap() {}
 
   @override
-  ShortMenuButtonState createState() => ShortMenuButtonState();
-}
-
-class ShortMenuButtonState extends State<ShortMenuButton> {
-  late int selfCount;
-
-  @override
-  void initState() {
-    super.initState();
-    selfCount = widget.count ?? 0;
-  }
-
-  @override
-  void didUpdateWidget(ShortMenuButton oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    if (widget.count != oldWidget.count) {
-      setState(() {
-        selfCount = widget.count ?? 0;
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Expanded(
         flex: 1,
         child: InkWell(
           onTap: () {
-            widget.onTap?.call();
-            setState(() {
-              selfCount = widget.isLike ? selfCount - 1 : selfCount + 1;
-            });
+            onTap?.call();
           },
           child: Center(
             child: Row(
@@ -64,9 +42,9 @@ class ShortMenuButtonState extends State<ShortMenuButton> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Icon(
-                  widget.icon,
-                  size: widget.iconSize ?? 24,
-                  color: widget.isLike
+                  icon,
+                  size: iconSize ?? 24,
+                  color: isLike
                       ? AppColors.colors[ColorKeys.primary]
                       : Colors.white,
                 ),
@@ -75,15 +53,17 @@ class ShortMenuButtonState extends State<ShortMenuButton> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      getViewTimes(selfCount, shouldCalculateThousands: false),
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
+                    if (displayFavoriteAndCollectCount == true)
+                      Text(
+                        getViewTimes(count ?? 0,
+                            shouldCalculateThousands: false),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                        ),
                       ),
-                    ),
                     Text(
-                      widget.subscribe,
+                      subscribe,
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
