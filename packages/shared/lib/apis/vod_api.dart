@@ -382,12 +382,13 @@ class VodApi {
   }
 
   // 同演員: 目前只取一位演員
-  Future<BlockVod> getVideoByActorId(
-    String actorId,
-  ) async {
+  Future<BlockVod> getVideoByActorId({
+    String? actorId,
+    String? excludeId,
+  }) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/sameActors?actorId=$actorId');
+            '${systemConfig.apiHost}/public/videos/video/sameActors?actorId=$actorId&excludeId=$excludeId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
