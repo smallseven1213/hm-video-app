@@ -22,7 +22,7 @@ class GSTabBar extends StatelessWidget implements PreferredSizeWidget {
     return Container(
         width: double.infinity,
         color: AppColors.colors[ColorKeys.background],
-        padding: padding ?? const EdgeInsets.only(bottom: 8),
+        padding: padding ?? const EdgeInsets.symmetric(vertical: 8),
         child: Align(
           child: TabBar(
             isScrollable: true,
