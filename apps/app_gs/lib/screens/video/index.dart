@@ -84,9 +84,15 @@ class _VideoScreenState extends State<VideoScreen> {
                       videoUrl: videoDetailController!.videoUrl.value,
                       video: video,
                     )
-                  : CustomAppBar(
-                      title: widget.name ?? '',
-                      backgroundColor: Colors.transparent,
+                  : AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        color: Colors.black,
+                        child: CustomAppBar(
+                          title: widget.name ?? '',
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
                     ),
               Expanded(
                 child: video != null && videoDetail != null

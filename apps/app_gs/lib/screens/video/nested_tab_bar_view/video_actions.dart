@@ -34,9 +34,7 @@ class VideoActions extends StatelessWidget {
                 if (isLiked) {
                   userFavoritesVideoController.removeVideo([videoDetail.id]);
                 } else {
-                  // 將videoBase的值寫入到Vod class
-                  var vod = Vod.fromJson(videoDetail.toJson());
-                  userFavoritesVideoController.addVideo(vod);
+                  userFavoritesVideoController.addVideo(videoDetail);
                 }
               },
             );
@@ -55,8 +53,7 @@ class VideoActions extends StatelessWidget {
                 if (isLiked) {
                   userVodCollectionController.removeVideo([videoDetail.id]);
                 } else {
-                  var vod = Vod.fromJson(videoDetail.toJson());
-                  userVodCollectionController.addVideo(vod);
+                  userVodCollectionController.addVideo(videoDetail);
                 }
               },
             );
