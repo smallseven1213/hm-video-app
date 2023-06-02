@@ -1,10 +1,8 @@
-import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
-import 'package:shared/models/video_database_field.dart';
+import 'package:shared/models/vod.dart';
 
 import '../../widgets/no_data.dart';
 import '../../widgets/video_preview_with_edit.dart';
@@ -32,7 +30,7 @@ class FavoritesVideoScreen extends StatelessWidget {
           },
           itemBuilder: (BuildContext context, int index) {
             var video1 = videos[index * 2];
-            VideoDatabaseField? video2;
+            Vod? video2;
             if (index * 2 + 1 < videos.length) {
               video2 = videos[index * 2 + 1];
             }
@@ -48,10 +46,10 @@ class FavoritesVideoScreen extends StatelessWidget {
                       onEditingTap: () {
                         listEditorController.toggleSelected(video1.id);
                       },
-                      coverVertical: video1.coverVertical,
-                      coverHorizontal: video1.coverHorizontal,
-                      timeLength: video1.timeLength,
-                      tags: video1.tags,
+                      coverVertical: video1.coverVertical ?? '',
+                      coverHorizontal: video1.coverHorizontal ?? '',
+                      timeLength: video1.timeLength ?? 0,
+                      tags: video1.tags ?? [],
                       title: video1.title,
                       videoViewTimes: video1.videoViewTimes!)),
                 ),
@@ -67,10 +65,10 @@ class FavoritesVideoScreen extends StatelessWidget {
                             listEditorController.toggleSelected(video2!.id);
                           },
                           title: video2.title,
-                          tags: video2.tags,
-                          timeLength: video2.timeLength,
-                          coverHorizontal: video2.coverHorizontal,
-                          coverVertical: video2.coverVertical,
+                          tags: video2.tags ?? [],
+                          timeLength: video2.timeLength ?? 0,
+                          coverHorizontal: video2.coverHorizontal ?? '',
+                          coverVertical: video2.coverVertical ?? '',
                           videoViewTimes: video2.videoViewTimes!,
                           // detail: video2.detail,
                         )

@@ -12,9 +12,8 @@ import 'like_button.dart';
 final logger = Logger();
 
 class VideoActions extends StatelessWidget {
-  final Video videoBase;
   final Vod videoDetail;
-  VideoActions({super.key, required this.videoBase, required this.videoDetail});
+  VideoActions({super.key, required this.videoDetail});
 
   final userVodCollectionController = Get.find<UserVodCollectionController>();
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
@@ -27,16 +26,16 @@ class VideoActions extends StatelessWidget {
         Expanded(
           child: Obx(() {
             var isLiked = userFavoritesVideoController.videos
-                .any((e) => e.id == videoBase.id);
+                .any((e) => e.id == videoDetail.id);
             return LikeButton(
               text: '喜歡就點讚',
               isLiked: isLiked,
               onPressed: () {
                 if (isLiked) {
-                  userFavoritesVideoController.removeVideo([videoBase.id]);
+                  userFavoritesVideoController.removeVideo([videoDetail.id]);
                 } else {
                   // 將videoBase的值寫入到Vod class
-                  var vod = Vod.fromJson(videoBase.toJson());
+                  var vod = Vod.fromJson(videoDetail.toJson());
                   userFavoritesVideoController.addVideo(vod);
                 }
               },
@@ -47,7 +46,7 @@ class VideoActions extends StatelessWidget {
         Expanded(
           child: Obx(() {
             var isLiked = userVodCollectionController.videos
-                .any((e) => e.id == videoBase.id);
+                .any((e) => e.id == videoDetail.id);
             return LikeButton(
               text: '收藏',
               type: LikeButtonType.bookmark,
@@ -56,7 +55,7 @@ class VideoActions extends StatelessWidget {
                 if (isLiked) {
                   userVodCollectionController.removeVideo([videoDetail.id]);
                 } else {
-                  var vod = Vod.fromJson(videoBase.toJson());
+                  var vod = Vod.fromJson(videoDetail.toJson());
                   userVodCollectionController.addVideo(vod);
                 }
               },

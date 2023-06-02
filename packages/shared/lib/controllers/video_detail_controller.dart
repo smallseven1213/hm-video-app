@@ -26,7 +26,7 @@ class VideoDetailController extends GetxController {
   var isLoading = true.obs;
 
   var videoDetail = Rx<Vod?>(null);
-  var video = Rx<Video?>(null);
+  var video = Rx<Vod?>(null);
 
   VideoDetailController(this.videoId);
 
@@ -53,7 +53,7 @@ class VideoDetailController extends GetxController {
   }
 
   Future<void> fetchVideoUrl(int videoId) async {
-    Video _video = await vodApi.getVodUrl(videoId);
+    Vod _video = await vodApi.getVodUrl(videoId);
     videoUrl.value = getVideoUrl(_video.videoUrl)!;
     video.value = _video;
   }

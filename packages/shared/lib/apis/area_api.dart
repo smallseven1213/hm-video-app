@@ -1,5 +1,6 @@
 import 'package:logger/logger.dart';
 import '../models/video.dart';
+import '../models/vod.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
@@ -15,7 +16,7 @@ class AreaApi {
     return _instance;
   }
 
-  Future<List<Video>> getPopular(int areaId, int videoId) async {
+  Future<List<Vod>> getPopular(int areaId, int videoId) async {
     var res = await fetcher(
         url:
             '${systemConfig.apiHost}/public/areas/area/shortVideo/popular?areaId=$areaId&videoId=$videoId');
@@ -23,6 +24,6 @@ class AreaApi {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 }

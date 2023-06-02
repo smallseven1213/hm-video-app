@@ -6,7 +6,6 @@ import 'package:shared/controllers/auth_controller.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
-import '../models/video_database_field.dart';
 import '../models/vod.dart';
 
 final userApi = UserApi();
@@ -15,7 +14,7 @@ final logger = Logger();
 class UserFavoritesShortController extends GetxController {
   static const String _boxName = 'userFavoritesShort';
   late Box<String> box;
-  var data = <VideoDatabaseField>[].obs;
+  var data = <Vod>[].obs;
 
   @override
   void onInit() {
@@ -32,7 +31,7 @@ class UserFavoritesShortController extends GetxController {
     if (box.isNotEmpty) {
       data.value = box.values.map((videoStr) {
         final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
-        return VideoDatabaseField.fromJson(videoJson);
+        return Vod.fromJson(videoJson);
       }).toList();
     } else {
       await _fetchAndSaveCollection();
@@ -42,9 +41,9 @@ class UserFavoritesShortController extends GetxController {
   Future<void> _fetchAndSaveCollection() async {
     var blockData = await userApi.getFavoriteVideo(film: 2);
     data.value = blockData.vods
-        .map((video) => VideoDatabaseField(
-              id: video.id,
-              title: video.title,
+        .map((video) => Vod(
+              video.id,
+              video.title,
               coverHorizontal: video.coverHorizontal!,
               coverVertical: video.coverVertical!,
               timeLength: video.timeLength!,
@@ -62,9 +61,9 @@ class UserFavoritesShortController extends GetxController {
       data.removeWhere((v) => v.id == video.id);
     }
 
-    var formattedVideo = VideoDatabaseField(
-      id: video.id,
-      title: video.title,
+    var formattedVideo = Vod(
+      video.id,
+      video.title,
       coverHorizontal: video.coverHorizontal!,
       coverVertical: video.coverVertical!,
       timeLength: video.timeLength!,

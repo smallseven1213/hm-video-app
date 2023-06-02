@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-class ShortButtonButton extends StatefulWidget {
+class ShortMenuButton extends StatefulWidget {
   final String subscribe;
   final IconData icon;
   final double? iconSize;
@@ -11,7 +11,7 @@ class ShortButtonButton extends StatefulWidget {
   final int? count;
   final Function()? onTap;
 
-  const ShortButtonButton(
+  const ShortMenuButton(
       {Key? key,
       required this.subscribe,
       required this.icon,
@@ -24,10 +24,10 @@ class ShortButtonButton extends StatefulWidget {
   static void _defaultOnTap() {}
 
   @override
-  ShortButtonButtonState createState() => ShortButtonButtonState();
+  ShortMenuButtonState createState() => ShortMenuButtonState();
 }
 
-class ShortButtonButtonState extends State<ShortButtonButton> {
+class ShortMenuButtonState extends State<ShortMenuButton> {
   late int selfCount;
 
   @override

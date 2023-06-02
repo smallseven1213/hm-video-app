@@ -1,5 +1,7 @@
 import 'package:shared/models/video.dart';
 
+import 'vod.dart';
+
 class Tags {
   String? title;
   bool? outerFrame;
@@ -57,7 +59,7 @@ class Tag {
 class TagVideos {
   final int id;
   final String? name;
-  List<Video>? videos;
+  List<Vod>? videos;
 
   TagVideos(
     this.id, {
@@ -70,7 +72,7 @@ class TagVideos {
       json['id'],
       name: json['name'],
       videos: List.from(
-          (json['videos'] as List<dynamic>).map((e) => Video.fromJson(e))),
+          (json['videos'] as List<dynamic>).map((e) => Vod.fromJson(e))),
     );
   }
 }
