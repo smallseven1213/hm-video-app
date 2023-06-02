@@ -5,13 +5,12 @@ import 'package:shared/models/vod.dart';
 import '../apis/vod_api.dart';
 import '../models/block_vod.dart';
 
-
 final logger = Logger();
 final vodApi = VodApi();
 
 class BlockVideosByCategoryController extends GetxController {
   String excludeId;
-  String actorId;
+  String? actorId;
   String tagId;
   String internalTagId;
 
@@ -43,8 +42,9 @@ class BlockVideosByCategoryController extends GetxController {
         await vodApi.getVideoByInternalTag(excludeId, internalTagId);
     final tagVideos =
         await vodApi.getVideoByTags(excludeId: excludeId, tagId: tagId);
-    if (actorId != '') {
-      actorVideos = await vodApi.getVideoByActorId(actorId);
+    if (actorId != null) {
+      actorVideos = await vodApi.getVideoByActorId(
+          actorId: actorId, excludeId: excludeId);
     }
 
     // logger.i('log internalTagVideos: ${internalTagVideos.vods}');

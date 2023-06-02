@@ -36,7 +36,7 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
       BlockVideosByCategoryController(
         tagId: getIdList(widget.videoDetail.tags!),
         actorId: widget.videoDetail.actors!.isEmpty
-            ? ''
+            ? null
             : widget.videoDetail.actors![0].id.toString(),
         excludeId: widget.videoDetail.id.toString(),
         internalTagId: widget.videoDetail.internalTagIds!.join(',').toString(),
