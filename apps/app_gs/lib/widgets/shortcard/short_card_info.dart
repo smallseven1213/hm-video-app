@@ -12,14 +12,12 @@ import 'short_card_info_tag.dart';
 final logger = Logger();
 
 class ShortCardInfo extends StatelessWidget {
-  final int index;
   final ShortVideoDetail data;
   final String title;
   final String videoUrl;
 
   const ShortCardInfo({
     Key? key,
-    required this.index,
     required this.data,
     required this.title,
     required this.videoUrl,

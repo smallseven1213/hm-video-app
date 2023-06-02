@@ -5,13 +5,10 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
-import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
-import 'package:shared/models/video_database_field.dart';
+import 'package:shared/models/vod.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/widgets/video_player/player.dart';
-
-import '../../pages/video.dart';
-import '../../screens/video/video_player_area/index.dart';
 import 'short_card_info.dart';
 
 final logger = Logger();
@@ -45,23 +42,23 @@ class _ShortCardState extends State<ShortCard> {
   void initState() {
     super.initState();
 
-    videoDetailController =
-        Get.find<ShortVideoDetailController>(tag: widget.id.toString());
+    videoDetailController = Get.find<ShortVideoDetailController>(
+        tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
     videoUrlSubscription = videoDetailController!.isLoading.listen((isLoading) {
       if (isLoading == false) {
         _putController();
         var video = videoDetailController!.video.value;
         if (widget.supportedPlayRecord == true && video != null) {
-          var playRecord = VideoDatabaseField(
-            id: video.id,
+          var playRecord = Vod(
+            video.id,
+            video.title,
             coverHorizontal: video.coverHorizontal!,
             coverVertical: video.coverVertical!,
             timeLength: video.timeLength!,
             videoCollectTimes:
                 videoDetailController!.videoDetail.value!.videoCollectTimes,
             tags: [],
-            title: video.title,
           );
           Get.find<PlayRecordController>(tag: 'short')
               .addPlayRecord(playRecord);
@@ -115,11 +112,10 @@ class _ShortCardState extends State<ShortCard> {
               ),
             ),
             ShortCardInfo(
-              index: widget.index,
               data: videoDetail,
               title: widget.title,
               videoUrl: videoUrl,
-            )
+            ),
           ],
         );
       } else {

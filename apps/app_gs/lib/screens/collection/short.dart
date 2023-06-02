@@ -45,6 +45,7 @@ class CollectionShortScreen extends StatelessWidget {
               film: 2,
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
+              displayVideoCollectTimes: false,
               onEditingTap: () {
                 listEditorController.toggleSelected(vod.id);
               },
@@ -60,10 +61,10 @@ class CollectionShortScreen extends StatelessWidget {
               hasTags: false,
               imageRatio: gridRatio,
               displayCoverVertical: true,
-              coverVertical: vod.coverVertical,
-              coverHorizontal: vod.coverHorizontal,
-              timeLength: vod.timeLength,
-              tags: vod.tags,
+              coverVertical: vod.coverVertical ?? '',
+              coverHorizontal: vod.coverHorizontal ?? '',
+              timeLength: vod.timeLength ?? 0,
+              tags: vod.tags ?? [],
               title: vod.title,
               videoViewTimes: vod.videoViewTimes ?? 0));
         },

@@ -168,16 +168,16 @@ class VodApi {
     return BlockVod([], 0);
   }
 
-  Future<Video> getVodUrl(int vodId) async {
+  Future<Vod> getVodUrl(int vodId) async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/videoUrl?id=$vodId');
     if (res.data['code'] != '00') {
-      return Video(id: 0, title: '');
+      return Vod(0, '');
     }
     try {
-      return Video.fromJson(res.data['data']);
+      return Vod.fromJson(res.data['data']);
     } catch (e) {
-      return Video(id: 0, title: '');
+      return Vod(0, '');
     }
   }
 
@@ -223,27 +223,27 @@ class VodApi {
     }
   }
 
-  Future<List<Video>> getFollows() async {
+  Future<List<Vod>> getFollows() async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/shortVideo/follow');
     if (res.data['code'] != '00') {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
-  Future<List<Video>> getRecommends() async {
+  Future<List<Vod>> getRecommends() async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/recommend');
     if (res.data['code'] != '00') {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
-  Future<List<Video>> getPopular(int areaId, int videoId) async {
+  Future<List<Vod>> getPopular(int areaId, int videoId) async {
     var res = await fetcher(
         url:
             '${systemConfig.apiHost}/public/videos/video/shortVideo/popular?areaId=$areaId&videoId=$videoId');
@@ -251,7 +251,7 @@ class VodApi {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
   Future<ShortVideoDetail> getShortVideoDetailById(int id) async {
@@ -264,15 +264,15 @@ class VodApi {
     return ShortVideoDetail.fromJson(res.data['data']);
   }
 
-  Future<Video> getById(int videoId) async {
+  Future<Vod> getById(int videoId) async {
     var res = await fetcher(
         url:
             '${systemConfig.apiHost}/public/videos/video/shortVideoDetail?id=$videoId');
 
     try {
-      return Video.fromJson(res.data['data']);
+      return Vod.fromJson(res.data['data']);
     } catch (e) {
-      return Video.fromJson({});
+      return Vod.fromJson({});
     }
   }
 

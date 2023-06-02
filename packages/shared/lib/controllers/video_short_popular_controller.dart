@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
 import '../apis/area_api.dart';
-import '../models/video.dart';
+import '../models/vod.dart';
 
 class VideoShortPopularController extends GetxController {
-  var data = <Video>[].obs;
+  var data = <Vod>[].obs;
   int areaId = 0;
   int videoId = 0;
 

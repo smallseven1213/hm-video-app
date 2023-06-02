@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
-import 'package:shared/models/video_database_field.dart';
+import 'package:shared/models/vod.dart';
 
 import 'nested_tab_bar_view/index.dart';
 import '../../widgets/custom_app_bar.dart';
@@ -48,13 +48,13 @@ class _VideoScreenState extends State<VideoScreen> {
     var video = videoDetailController!.video.value;
     var videoDetail = videoDetailController!.videoDetail.value;
 
-    var playRecord = VideoDatabaseField(
-      id: video!.id,
+    var playRecord = Vod(
+      video!.id,
+      video.title,
       coverHorizontal: video!.coverHorizontal!,
       coverVertical: video.coverVertical!,
       timeLength: video.timeLength!,
       tags: videoDetail!.tags!,
-      title: video.title,
       videoViewTimes: videoDetail.videoViewTimes!,
       // detail: detail!,
     );

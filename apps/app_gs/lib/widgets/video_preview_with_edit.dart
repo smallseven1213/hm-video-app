@@ -71,6 +71,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final bool? hasRadius; // 要不要圓角
   final bool? hasTitle; // 要不要標題
   final bool? hasTags;
+  final bool? displayVideoCollectTimes;
   final Function()? onOverrideRedirectTap; // 自定義路由轉址
 
   const VideoPreviewWithEditWidget(
@@ -98,6 +99,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       this.hasRadius = true,
       this.hasTitle = true,
       this.hasTags = true,
+      this.displayVideoCollectTimes = true,
       this.onOverrideRedirectTap})
       : super(key: key);
 
@@ -127,6 +129,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
             videoViewTimes: videoViewTimes,
             videoCollectTimes: videoCollectTimes,
             hasTapEvent: !isEditing,
+            displayVideoCollectTimes: displayVideoCollectTimes,
             onOverrideRedirectTap: onOverrideRedirectTap),
         if (isEditing)
           Positioned.fill(

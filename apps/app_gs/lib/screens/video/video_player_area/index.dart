@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/video.dart';
+import 'package:shared/models/vod.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:video_player/video_player.dart';
@@ -21,7 +22,7 @@ final logger = Logger();
 class VideoPlayerArea extends StatefulWidget {
   final String? name;
   final String videoUrl;
-  final Video video;
+  final Vod video;
   final VideoPlayerController? controller;
 
   VideoPlayerArea({

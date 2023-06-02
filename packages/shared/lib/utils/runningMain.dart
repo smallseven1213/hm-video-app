@@ -22,10 +22,10 @@ void realMain(Widget widget) async {
   }
 
   // Hive 會crash,暫時先不用
-  Hive.registerAdapter(VideoDatabaseFieldAdapter());
-  Hive.registerAdapter(TagsAdapter());
-  Hive.registerAdapter(VideoDetailAdapter());
-  Hive.registerAdapter(ActorAdapter());
+  // Hive.registerAdapter(VideoDatabaseFieldAdapter());
+  // Hive.registerAdapter(TagsAdapter());
+  // Hive.registerAdapter(VideoDetailAdapter());
+  // Hive.registerAdapter(ActorAdapter());
 
   // DI shared package
   setupDependencies();

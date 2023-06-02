@@ -4,9 +4,10 @@ import 'package:shared/controllers/auth_controller.dart';
 
 import '../apis/supplier_api.dart';
 import '../models/video.dart';
+import '../models/vod.dart';
 
 class VideoShortBySupplierController extends GetxController {
-  var data = <Video>[].obs;
+  var data = <Vod>[].obs;
   int supplierId = 0;
   int videoId = 0;
 
