@@ -15,13 +15,15 @@ class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
   final Vod video;
   final bool isActive;
+  final String coverHorizontal;
 
-  const VideoPlayerWidget({
-    Key? key,
-    required this.videoUrl,
-    required this.video,
-    required this.isActive,
-  }) : super(key: key);
+  const VideoPlayerWidget(
+      {Key? key,
+      required this.videoUrl,
+      required this.video,
+      required this.isActive,
+      required this.coverHorizontal})
+      : super(key: key);
 
   @override
   _VideoPlayerWidgetState createState() => _VideoPlayerWidgetState();
@@ -66,6 +68,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       if (kIsWeb) {
         Future.delayed(const Duration(milliseconds: 200), () {
           obsVideoPlayerController.play();
+          obsVideoPlayerController.changeVolumeToFull();
         });
       } else {
         obsVideoPlayerController.play();
@@ -94,18 +97,18 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           children: <Widget>[
             if (obsVideoPlayerController.videoAction.value == 'error') ...[
               // Text and return a error wording
-              Center(
-                child: Text(
-                  obsVideoPlayerController.errorMessage.value,
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-              // VideoError(
-              //   coverHorizontal: obsVideoPlayerController..coverHorizontal ?? '',
-              //   onTap: () {
-              //     toggleAction();
-              //   },
+              // Center(
+              //   child: Text(
+              //     obsVideoPlayerController.errorMessage.value,
+              //     style: const TextStyle(color: Colors.white),
+              //   ),
               // ),
+              VideoError(
+                coverHorizontal: widget.coverHorizontal,
+                onTap: () {
+                  obsVideoPlayerController.videoPlayerController!.play();
+                },
+              ),
             ] else ...[
               if (kIsWeb) ...[
                 VideoPlayer(obsVideoPlayerController.videoPlayerController!)
@@ -186,21 +189,21 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 ),
               ),
             ),
-            if (kIsWeb)
-              Positioned(
-                bottom: 50,
-                left: 0,
-                right: 0,
-                child: Text(
-                  obsVideoPlayerController.videoAction.value,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 50,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
+            // if (kIsWeb)
+            //   Positioned(
+            //     bottom: 50,
+            //     left: 0,
+            //     right: 0,
+            //     child: Text(
+            //       obsVideoPlayerController.videoAction.value,
+            //       textAlign: TextAlign.center,
+            //       style: const TextStyle(
+            //         fontSize: 50,
+            //         fontWeight: FontWeight.bold,
+            //         color: Colors.white,
+            //       ),
+            //     ),
+            //   ),
           ],
         );
       }),

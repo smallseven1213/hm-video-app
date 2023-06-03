@@ -96,6 +96,7 @@ class ShortCardState extends State<ShortCard> {
               height: double.infinity,
               width: double.infinity,
               child: VideoPlayerWidget(
+                coverHorizontal: video.coverHorizontal!,
                 isActive: widget.isActive,
                 video: video,
                 videoUrl: videoUrl,
