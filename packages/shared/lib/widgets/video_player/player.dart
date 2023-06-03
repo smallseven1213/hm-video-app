@@ -50,21 +50,26 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    if (widget.isActive == true &&
-        obsVideoPlayerController.videoAction.value == 'pause') {
-      obsVideoPlayerController.play();
-    } else {
-      obsVideoPlayerController.pause();
-    }
+    _playOrPauseVideo();
   }
 
   @override
   void didUpdateWidget(covariant VideoPlayerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    _playOrPauseVideo();
+  }
+
+  void _playOrPauseVideo() {
     if (widget.isActive == true &&
         obsVideoPlayerController.videoAction.value == 'pause') {
-      obsVideoPlayerController.play();
+      if (kIsWeb) {
+        Future.delayed(const Duration(milliseconds: 200), () {
+          obsVideoPlayerController.play();
+        });
+      } else {
+        obsVideoPlayerController.play();
+      }
     } else {
       obsVideoPlayerController.pause();
     }
