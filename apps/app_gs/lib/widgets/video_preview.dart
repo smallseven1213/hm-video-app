@@ -31,6 +31,20 @@ class ViewInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> infoItems = film == 1
+        ? [
+            ViewTimes(times: viewCount),
+            VideoTime(time: duration),
+          ]
+        : displayVideoCollectTimes == true
+            ? [
+                VideoCollectionTimes(times: videoCollectTimes ?? 0),
+              ]
+            : [];
+    if (infoItems.isEmpty) {
+      return Container();
+    }
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(5),
@@ -50,16 +64,7 @@ class ViewInfo extends StatelessWidget {
       child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: film == 1
-              ? [
-                  ViewTimes(times: viewCount),
-                  VideoTime(time: duration),
-                ]
-              : displayVideoCollectTimes == true
-                  ? [
-                      VideoCollectionTimes(times: videoCollectTimes ?? 0),
-                    ]
-                  : []),
+          children: infoItems),
     );
   }
 }
