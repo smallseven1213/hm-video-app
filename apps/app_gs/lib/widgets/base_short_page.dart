@@ -53,8 +53,6 @@ class BaseShortPageState extends State<BaseShortPage> {
       initialPageIndex = 0;
     }
 
-    logger.i('initialPageIndex: ${controller.data.length}}');
-
     _pageController?.dispose();
     _pageController = PageController(initialPage: initialPageIndex);
 
@@ -90,12 +88,14 @@ class BaseShortPageState extends State<BaseShortPage> {
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
+              var isActive = currentPage == index;
               return ShortVodProvider(
                 vodId: shortData.id,
                 child: Column(
                   children: [
                     Expanded(
                         child: ShortCard(
+                            isActive: isActive,
                             index: index,
                             id: shortData.id,
                             title: shortData.title,

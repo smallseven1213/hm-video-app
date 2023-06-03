@@ -13,11 +13,13 @@ final logger = Logger();
 class VideoPlayerWidget extends StatelessWidget {
   final String videoUrl;
   final Vod video;
+  final bool isActive;
 
   const VideoPlayerWidget({
     Key? key,
     required this.videoUrl,
     required this.video,
+    required this.isActive,
   }) : super(key: key);
 
   @override
@@ -25,20 +27,21 @@ class VideoPlayerWidget extends StatelessWidget {
     final obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: videoUrl);
 
-    if (obsVideoPlayerController == null) {
-      logger.e('😡😡😡😡 obsVideoPlayerController is null');
-      return const SizedBox.shrink();
-    }
-
-    VideoPlayerController? videoPlayerController =
-        obsVideoPlayerController.videoPlayerController;
-
     return Container(
         color: Colors.black,
         child: Obx(
           () {
             if (!obsVideoPlayerController.isReady.value) {
               return const SizedBox.shrink();
+            }
+
+            VideoPlayerController? videoPlayerController =
+                obsVideoPlayerController.videoPlayerController;
+
+            if (isActive == true) {
+              videoPlayerController?.play();
+            } else {
+              videoPlayerController?.pause();
             }
 
             var videoAction = obsVideoPlayerController.videoAction.value;
