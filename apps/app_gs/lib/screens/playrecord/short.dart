@@ -54,6 +54,7 @@ class PlayRecordShortScreen extends StatelessWidget {
                     removeSamePath: true,
                   );
                 },
+                displayVideoCollectTimes: false,
                 hasRadius: false,
                 hasTitle: false,
                 hasTags: false,
