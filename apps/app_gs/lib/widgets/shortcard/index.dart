@@ -35,7 +35,7 @@ class ShortCard extends StatefulWidget {
 
 class ShortCardState extends State<ShortCard> {
   bool obpControllerisReady = false;
-  ShortVideoDetailController? videoDetailController;
+  late ShortVideoDetailController videoDetailController;
 
   @override
   void initState() {
@@ -43,6 +43,40 @@ class ShortCardState extends State<ShortCard> {
 
     videoDetailController = Get.find<ShortVideoDetailController>(
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
+
+    logger.i('PLAYRECORD TESTING: initial');
+
+    if (widget.supportedPlayRecord == true) {
+      logger.i('PLAYRECORD TESTING: initial');
+      var videoVal = videoDetailController.video.value;
+      var playRecord = Vod(
+        videoVal!.id,
+        videoVal.title,
+        coverHorizontal: videoVal.coverHorizontal!,
+        coverVertical: videoVal.coverVertical!,
+        timeLength: videoVal.timeLength!,
+        tags: videoVal.tags!,
+        videoViewTimes: videoVal.videoViewTimes!,
+      );
+      Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
+    }
+
+    // ever(videoDetailController.video, (video) {
+    //   logger.i('PLAYRECORD TESTING:');
+    //   if (video != null) {
+    //     var videoVal = videoDetailController.video.value;
+    //     var playRecord = Vod(
+    //       videoVal!.id,
+    //       videoVal.title,
+    //       coverHorizontal: videoVal.coverHorizontal!,
+    //       coverVertical: videoVal.coverVertical!,
+    //       timeLength: videoVal.timeLength!,
+    //       tags: videoVal.tags!,
+    //       videoViewTimes: videoVal.videoViewTimes!,
+    //     );
+    //     Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
+    //   }
+    // });
   }
 
   @override
