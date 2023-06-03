@@ -59,6 +59,10 @@ class ObservableVideoPlayerController extends GetxController {
     }
   }
 
+  void changeVolumeToFull() {
+    videoPlayerController!.setVolume(1);
+  }
+
   void _disposePlayer() {
     if (videoPlayerController != null) {
       videoPlayerController?.removeListener(_onControllerValueChanged);
