@@ -14,6 +14,7 @@ import 'short_card_info.dart';
 final logger = Logger();
 
 class ShortCard extends StatefulWidget {
+  final bool isActive;
   final int index;
   final int id;
   final String title;
@@ -24,19 +25,17 @@ class ShortCard extends StatefulWidget {
       required this.index,
       required this.id,
       required this.title,
+      required this.isActive,
       this.supportedPlayRecord = true})
       : super(key: key);
 
   @override
-  _ShortCardState createState() => _ShortCardState();
+  ShortCardState createState() => ShortCardState();
 }
 
-class _ShortCardState extends State<ShortCard> {
+class ShortCardState extends State<ShortCard> {
   bool obpControllerisReady = false;
   ShortVideoDetailController? videoDetailController;
-  ObservableVideoPlayerController? videoPlayerController;
-
-  late StreamSubscription<bool> videoUrlSubscription;
 
   @override
   void initState() {
@@ -44,61 +43,17 @@ class _ShortCardState extends State<ShortCard> {
 
     videoDetailController = Get.find<ShortVideoDetailController>(
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
-
-    videoUrlSubscription = videoDetailController!.isLoading.listen((isLoading) {
-      if (isLoading == false) {
-        _putController();
-        var video = videoDetailController!.video.value;
-        if (widget.supportedPlayRecord == true && video != null) {
-          var playRecord = Vod(
-            video.id,
-            video.title,
-            coverHorizontal: video.coverHorizontal!,
-            coverVertical: video.coverVertical!,
-            timeLength: video.timeLength!,
-            videoCollectTimes:
-                videoDetailController!.videoDetail.value!.videoCollectTimes,
-            tags: [],
-          );
-          Get.find<PlayRecordController>(tag: 'short')
-              .addPlayRecord(playRecord);
-        }
-      }
-    });
-  }
-
-  void _putController() async {
-    var videoUrl = videoDetailController!.videoUrl.value;
-    videoPlayerController?.dispose();
-    await Get.putAsync<ObservableVideoPlayerController>(() async {
-      videoPlayerController = ObservableVideoPlayerController(videoUrl);
-      logger.i('RENDER OBX: ShortCard didChangeDependencies retry');
-      return videoPlayerController!;
-    }, tag: videoUrl);
-    logger.i('OBX CHECK: ShortCard _putController');
-
-    setState(() {
-      obpControllerisReady = true;
-    });
-  }
-
-  @override
-  void dispose() {
-    videoUrlSubscription.cancel();
-    // videoDetailController?.dispose();
-    // videoPlayerController?.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var isLoading = videoDetailController?.isLoading.value;
-      var video = videoDetailController?.video.value;
-      var videoDetail = videoDetailController?.videoDetail.value;
-      var videoUrl = videoDetailController?.videoUrl.value;
-      if (isLoading == false &&
-          videoUrl!.isNotEmpty &&
+      var isLoading = videoDetailController!.isLoading.value;
+      var video = videoDetailController!.video.value;
+      var videoDetail = videoDetailController!.videoDetail.value;
+      var videoUrl = videoDetailController!.videoUrl.value;
+      if (!isLoading &&
+          videoUrl.isNotEmpty &&
           video != null &&
           videoDetail != null) {
         return Stack(
@@ -107,6 +62,7 @@ class _ShortCardState extends State<ShortCard> {
               height: double.infinity,
               width: double.infinity,
               child: VideoPlayerWidget(
+                isActive: widget.isActive,
                 video: video,
                 videoUrl: videoUrl,
               ),
