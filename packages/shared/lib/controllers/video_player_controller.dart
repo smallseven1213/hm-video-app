@@ -19,6 +19,7 @@ class ObservableVideoPlayerController extends GetxController {
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
   late Future<void> initialization;
+  var errorMessage = ''.obs;
 
   ObservableVideoPlayerController(this.videoUrl);
 
@@ -45,11 +46,15 @@ class ObservableVideoPlayerController extends GetxController {
       await videoPlayerController!.initialize();
       // videoPlayerController!.pause();
       videoPlayerController!.setLooping(true);
+      if (kIsWeb) {
+        videoPlayerController!.setVolume(0);
+      }
       isReady.value = true;
     } catch (error) {
       logger.e('👹👹👹 Error occurred: $error');
       if (videoPlayerController!.value.hasError) {
         videoAction.value = 'error';
+        errorMessage.value = videoPlayerController!.value.errorDescription!;
       }
     }
   }
@@ -67,6 +72,7 @@ class ObservableVideoPlayerController extends GetxController {
       logger.i(
           'VPC LISTEN: error ${videoPlayerController!.value.errorDescription}');
       videoAction.value = 'error';
+      errorMessage.value = videoPlayerController!.value.errorDescription!;
     }
 
     if (!kIsWeb && videoPlayerController!.value.isPlaying) {

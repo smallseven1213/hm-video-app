@@ -6,6 +6,7 @@ import 'package:video_player/video_player.dart';
 
 import '../../controllers/video_player_controller.dart';
 import '../../models/vod.dart';
+import 'error.dart';
 import 'progress.dart';
 
 final logger = Logger();
@@ -87,8 +88,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           alignment: Alignment.center,
           children: <Widget>[
             if (obsVideoPlayerController.videoAction.value == 'error') ...[
+              // Text and return a error wording
+              Center(
+                child: Text(
+                  obsVideoPlayerController.errorMessage.value,
+                  style: const TextStyle(color: Colors.white),
+                ),
+              ),
               // VideoError(
-              //   coverHorizontal: video.coverHorizontal ?? '',
+              //   coverHorizontal: obsVideoPlayerController..coverHorizontal ?? '',
               //   onTap: () {
               //     toggleAction();
               //   },
@@ -173,21 +181,21 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                 ),
               ),
             ),
-            // test wording with videoAction, 50size, bold ,and in the center
-            // Positioned(
-            //   bottom: 50,
-            //   left: 0,
-            //   right: 0,
-            //   child: Text(
-            //     videoAction,
-            //     textAlign: TextAlign.center,
-            //     style: const TextStyle(
-            //       fontSize: 50,
-            //       fontWeight: FontWeight.bold,
-            //       color: Colors.white,
-            //     ),
-            //   ),
-            // ),
+            if (kIsWeb)
+              Positioned(
+                bottom: 50,
+                left: 0,
+                right: 0,
+                child: Text(
+                  obsVideoPlayerController.videoAction.value,
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
           ],
         );
       }),
