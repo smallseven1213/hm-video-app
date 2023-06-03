@@ -13,7 +13,8 @@ bool isFirstTimeForIOSSafari = true;
 
 class ObservableVideoPlayerController extends GetxController {
   final isReady = false.obs;
-  final RxString videoAction = kIsWeb ? 'pause'.obs : 'play'.obs;
+  // final RxString videoAction = kIsWeb ? 'pause'.obs : 'play'.obs;
+  final RxString videoAction = 'pause'.obs;
   VideoPlayerController? videoPlayerController;
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
@@ -42,6 +43,7 @@ class ObservableVideoPlayerController extends GetxController {
       videoPlayerController = VideoPlayerController.network(videoUrl);
       videoPlayerController!.addListener(_onControllerValueChanged);
       await videoPlayerController!.initialize();
+      // videoPlayerController!.pause();
       videoPlayerController!.setLooping(true);
       isReady.value = true;
     } catch (error) {
