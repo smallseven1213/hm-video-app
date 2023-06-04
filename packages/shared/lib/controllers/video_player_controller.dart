@@ -46,9 +46,9 @@ class ObservableVideoPlayerController extends GetxController {
       await videoPlayerController!.initialize();
       // videoPlayerController!.pause();
       videoPlayerController!.setLooping(true);
-      if (kIsWeb) {
-        videoPlayerController!.setVolume(0);
-      }
+      // if (kIsWeb) {
+      //   videoPlayerController!.setVolume(0);
+      // }
       isReady.value = true;
     } catch (error) {
       logger.e('👹👹👹 Error occurred: $error');

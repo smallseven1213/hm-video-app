@@ -38,16 +38,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
     obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
-
-    // if (widget.isActive == true &&
-    //     obsVideoPlayerController.videoAction.value == 'pause') {
-    //   obsVideoPlayerController.play();
-    // } else {
-    //   obsVideoPlayerController.pause();
-    // }
   }
 
-  // if mounted, exec play()
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -68,7 +60,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
       if (kIsWeb) {
         Future.delayed(const Duration(milliseconds: 200), () {
           obsVideoPlayerController.play();
-          obsVideoPlayerController.changeVolumeToFull();
+          // obsVideoPlayerController.changeVolumeToFull();
         });
       } else {
         obsVideoPlayerController.play();

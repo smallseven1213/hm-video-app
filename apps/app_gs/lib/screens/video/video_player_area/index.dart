@@ -38,13 +38,13 @@ class VideoPlayerArea extends StatefulWidget {
 }
 
 class _VideoPlayerAreaState extends State<VideoPlayerArea>
-    with WidgetsBindingObserver {
+    with WidgetsBindingObserver, RouteAware {
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
   bool hasError = false;
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
-  ObservableVideoPlayerController? videoPlayerController;
+  late ObservableVideoPlayerController videoPlayerController;
 
   @override
   void initState() {
@@ -58,17 +58,10 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   void _putController() async {
     var videoUrl = widget.videoUrl;
 
-    // videoPlayerController =
-    //     Get.put(ObservableVideoPlayerController(videoUrl), tag: videoUrl);
+    videoPlayerController =
+        Get.find<ObservableVideoPlayerController>(tag: videoUrl);
 
-    await Get.putAsync<ObservableVideoPlayerController>(() async {
-      videoPlayerController = ObservableVideoPlayerController(videoUrl);
-      logger.i('RENDER OBX: ShortCard didChangeDependencies retry');
-      return videoPlayerController!;
-    }, tag: videoUrl);
-    setState(() {
-      videoPlayerController!.play();
-    });
+    videoPlayerController.play();
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
@@ -115,89 +108,79 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
   void dispose() {
     setScreenPortrait();
     WidgetsBinding.instance.removeObserver(this);
-    videoPlayerController!.dispose();
+    videoPlayerController.dispose();
     logger.i('👹👹👹 LEAVE VIDEO PAGE!!!');
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    bool isObsVideoPlayerControllerReady =
-        Get.isRegistered<ObservableVideoPlayerController>(tag: widget.videoUrl);
-
     double playerHeight = isFullscreen
         ? MediaQuery.of(context).size.height
         : MediaQuery.of(context).size.width / 16 * 9;
 
-    logger.i(
-        'RENDER OBX: isObsVideoPlayefffrControllerReady id: ${isObsVideoPlayerControllerReady}');
+    final obsVideoPlayerController =
+        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
-    if (isObsVideoPlayerControllerReady) {
-      final obsVideoPlayerController =
-          Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+    return Container(
+      color: Colors.black,
+      width: MediaQuery.of(context).size.width,
+      height: playerHeight,
+      child: Obx(() {
+        Size videoSize =
+            obsVideoPlayerController.videoPlayerController!.value.size;
+        var aspectRatio = videoSize.width == 0 || videoSize.height == 0
+            ? 16 / 9
+            : videoSize.width / videoSize.height;
 
-      return Container(
-        color: Colors.black,
-        width: MediaQuery.of(context).size.width,
-        height: playerHeight,
-        child: Obx(() {
-          Size videoSize =
-              obsVideoPlayerController.videoPlayerController!.value.size;
-          var aspectRatio = videoSize.width == 0 || videoSize.height == 0
-              ? 16 / 9
-              : videoSize.width / videoSize.height;
-
-          logger.i(
-              '====? obsVideoPlayerController.isReadyL ${obsVideoPlayerController.isReady.value}');
-          return Stack(
-            alignment: Alignment.center,
-            children: <Widget>[
-              if (obsVideoPlayerController.videoAction.value == 'error') ...[
-                VideoError(
-                  coverHorizontal: widget.video.coverHorizontal ?? '',
-                  onTap: () {
-                    // setState(() {
-                    //   hasError = false;
-                    // });
-                    // obsVideoPlayerController._initializePlayer()  ;
-                  },
-                ),
-              ] else if (obsVideoPlayerController.isReady.value) ...[
-                AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: VideoPlayer(
-                      obsVideoPlayerController.videoPlayerController!),
-                ),
-                ControlsOverlay(
-                  controller: obsVideoPlayerController.videoPlayerController!,
-                  name: widget.video.title,
-                  isFullscreen: isFullscreen,
-                  toggleFullscreen: (status) {
-                    toggleFullscreen(fullScreen: status);
-                  },
-                  isScreenLocked: isScreenLocked,
-                  onScreenLock: (bool isLocked) {
-                    setState(() {
-                      isScreenLocked = isLocked;
-                    });
-                    if (isLocked) {
-                      toggleFullscreen(fullScreen: true);
-                    } else {
-                      setScreenRotation();
-                    }
-                  },
-                ),
-              ] else ...[
-                VideoLoading(
-                  coverHorizontal: widget.video.coverHorizontal ?? '',
-                )
-              ],
+        logger.i(
+            '====? obsVideoPlayerController.isReadyL ${obsVideoPlayerController.isReady.value}');
+        return Stack(
+          alignment: Alignment.center,
+          children: <Widget>[
+            if (obsVideoPlayerController.videoAction.value == 'error') ...[
+              VideoError(
+                coverHorizontal: widget.video.coverHorizontal ?? '',
+                onTap: () {
+                  // setState(() {
+                  //   hasError = false;
+                  // });
+                  // obsVideoPlayerController._initializePlayer()  ;
+                },
+              ),
+            ] else if (obsVideoPlayerController.isReady.value) ...[
+              AspectRatio(
+                aspectRatio: aspectRatio,
+                child: VideoPlayer(
+                    obsVideoPlayerController.videoPlayerController!),
+              ),
+              ControlsOverlay(
+                controller: obsVideoPlayerController.videoPlayerController!,
+                name: widget.video.title,
+                isFullscreen: isFullscreen,
+                toggleFullscreen: (status) {
+                  toggleFullscreen(fullScreen: status);
+                },
+                isScreenLocked: isScreenLocked,
+                onScreenLock: (bool isLocked) {
+                  setState(() {
+                    isScreenLocked = isLocked;
+                  });
+                  if (isLocked) {
+                    toggleFullscreen(fullScreen: true);
+                  } else {
+                    setScreenRotation();
+                  }
+                },
+              ),
+            ] else ...[
+              VideoLoading(
+                coverHorizontal: widget.video.coverHorizontal ?? '',
+              )
             ],
-          );
-        }),
-      );
-    } else {
-      return const SizedBox.shrink();
-    }
+          ],
+        );
+      }),
+    );
   }
 }

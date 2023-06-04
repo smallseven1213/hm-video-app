@@ -5,11 +5,11 @@ import '../controllers/short_video_detail_controller.dart';
 import '../controllers/video_player_controller.dart';
 import '../utils/controller_tag_genarator.dart';
 
-class ShortVodProvider extends StatelessWidget {
+class VideoProvider extends StatelessWidget {
   final int vodId;
   final Widget child;
 
-  const ShortVodProvider({Key? key, required this.child, required this.vodId})
+  const VideoProvider({Key? key, required this.child, required this.vodId})
       : super(key: key);
 
   @override
