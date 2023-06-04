@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/short_video_detail_controller.dart';
-import 'package:shared/controllers/user_favorites_short_controlle.dart';
-import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import 'package:shared/widgets/short_vod_provider.dart';
+import 'package:shared/widgets/video_provider.dart';
 
-import '../screens/short/button.dart';
 import 'shortcard/index.dart';
 import 'short_bottom_area.dart';
 
@@ -89,7 +85,7 @@ class BaseShortPageState extends State<BaseShortPage> {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
               var isActive = currentPage == index;
-              return ShortVodProvider(
+              return VideoProvider(
                 vodId: shortData.id,
                 child: Column(
                   children: [

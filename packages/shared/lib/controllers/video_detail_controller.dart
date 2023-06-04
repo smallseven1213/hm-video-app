@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
@@ -27,17 +29,23 @@ class VideoDetailController extends GetxController {
 
   var videoDetail = Rx<Vod?>(null);
   var video = Rx<Vod?>(null);
+  final _videoUrlReady = Completer<void>();
+  Future<void> get videoUrlReady => _videoUrlReady.future;
 
   VideoDetailController(this.videoId);
 
   @override
   void onInit() async {
     super.onInit();
-    mutateAll();
+    await mutateAll();
   }
 
-  void mutateAll() {
-    fetchAllData(videoId);
+  Future<void> mutateAll() async {
+    await Future.wait([
+      fetchAllData(videoId),
+    ]);
+
+    isLoading.value = false;
   }
 
   Future<void> fetchAllData(int videoId) async {
@@ -53,9 +61,15 @@ class VideoDetailController extends GetxController {
   }
 
   Future<void> fetchVideoUrl(int videoId) async {
-    Vod _video = await vodApi.getVodUrl(videoId);
-    videoUrl.value = getVideoUrl(_video.videoUrl)!;
-    video.value = _video;
+    try {
+      Vod _video = await vodApi.getVodUrl(videoId);
+      videoUrl.value = getVideoUrl(_video.videoUrl)!;
+      video.value = _video;
+      _videoUrlReady.complete();
+    } catch (error) {
+      logger.i(error);
+      _videoUrlReady.completeError(error);
+    }
   }
 
   Future<void> fetchVideoDetail(int videoId) async {

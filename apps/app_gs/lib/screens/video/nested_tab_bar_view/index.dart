@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/block_videos_by_category_controller.dart';
+import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/index.dart';
 
 import 'app_download_ad.dart';
@@ -16,10 +17,12 @@ final logger = Logger();
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
   final Vod videoBase;
+  final String videoUrl;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
     required this.videoBase,
+    required this.videoUrl,
   }) : super(key: key);
 
   @override
@@ -56,6 +59,11 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
         ? ['同類型', '同標籤']
         : ['同演員', '同類型', '同標籤'];
 
+    logger.i('LOGN VIDEO TRACE: TAB BAR: ${widget.videoBase.videoUrl}');
+
+    final obsVideoPlayerController =
+        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+
     return Padding(
         padding: const EdgeInsets.only(top: 0, left: 8, right: 8, bottom: 8),
         child: DefaultTabController(
@@ -68,6 +76,12 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                 return <Widget>[
                   SliverToBoxAdapter(
                     child: VideoInfo(
+                      playVideo: () {
+                        obsVideoPlayerController.play();
+                      },
+                      pauseVideo: () {
+                        obsVideoPlayerController.pause();
+                      },
                       title: widget.videoDetail.title,
                       tags: widget.videoDetail.tags ?? [],
                       timeLength: widget.videoDetail.timeLength ?? 0,
@@ -81,7 +95,7 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                       videoDetail: widget.videoDetail,
                     ),
                   ),
-                  SliverToBoxAdapter(
+                  const SliverToBoxAdapter(
                     child: AppDownloadAd(),
                   ),
                   const SliverToBoxAdapter(

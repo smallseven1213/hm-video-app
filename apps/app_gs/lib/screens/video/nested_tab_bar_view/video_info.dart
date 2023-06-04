@@ -7,7 +7,6 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video_time.dart';
 import 'package:shared/widgets/view_times.dart';
 
-
 final logger = Logger();
 
 class VideoInfo extends StatelessWidget {
@@ -17,6 +16,8 @@ class VideoInfo extends StatelessWidget {
   final int viewTimes;
   final List<Actor>? actor;
   final Publisher? publisher;
+  final Function() playVideo;
+  final Function() pauseVideo;
 
   const VideoInfo({
     super.key,
@@ -24,6 +25,8 @@ class VideoInfo extends StatelessWidget {
     required this.tags,
     required this.timeLength,
     required this.viewTimes,
+    required this.playVideo,
+    required this.pauseVideo,
     this.actor,
     this.publisher,
   });
@@ -55,14 +58,18 @@ class VideoInfo extends StatelessWidget {
                     children: [
                       if (publisher != null) ...[
                         InkWell(
-                          onTap: () => MyRouteDelegate.of(context).push(
-                            AppRoutes.publisher.value,
-                            args: {
-                              'id': publisher!.id,
-                              'title': publisher!.name
-                            },
-                            removeSamePath: true,
-                          ),
+                          onTap: () async {
+                            pauseVideo();
+                            await MyRouteDelegate.of(context).push(
+                              AppRoutes.publisher.value,
+                              args: {
+                                'id': publisher!.id,
+                                'title': publisher!.name
+                              },
+                              removeSamePath: true,
+                            );
+                            playVideo();
+                          },
                           child: Text(
                             publisher!.name,
                             style: const TextStyle(
@@ -77,8 +84,9 @@ class VideoInfo extends StatelessWidget {
                       ],
                       if (actor != null && actor!.isNotEmpty)
                         InkWell(
-                          onTap: () {
-                            MyRouteDelegate.of(context).push(
+                          onTap: () async {
+                            pauseVideo();
+                            await MyRouteDelegate.of(context).push(
                               AppRoutes.actor.value,
                               args: {
                                 'id': actor![0].id,
@@ -86,6 +94,7 @@ class VideoInfo extends StatelessWidget {
                               },
                               removeSamePath: true,
                             );
+                            playVideo();
                           },
                           child: Text(
                             actor![0].name,
@@ -125,9 +134,11 @@ class VideoInfo extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: tags.map((tag) {
               return InkWell(
-                onTap: () {
-                  MyRouteDelegate.of(context).push(AppRoutes.tag.value,
+                onTap: () async {
+                  pauseVideo();
+                  await MyRouteDelegate.of(context).push(AppRoutes.tag.value,
                       args: {'id': tag.id, 'title': tag.name});
+                  playVideo();
                 },
                 child: Text(
                   '#${tag.name}',
