@@ -58,7 +58,7 @@ class ShortCardInfo extends StatelessWidget {
               InkWell(
                 onTap: () async {
                   obsVideoPlayerController.pause();
-                  logger.i('RENDER OBX toGo!!');
+                  // logger.i('RENDER OBX toGo!!');
                   await MyRouteDelegate.of(context)
                       .push(AppRoutes.supplier.value, args: {
                     'id': data.supplier!.id,

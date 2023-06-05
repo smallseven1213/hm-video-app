@@ -48,11 +48,19 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   }
 
   @override
-  void didUpdateWidget(covariant VideoPlayerWidget oldWidget) {
-    super.didUpdateWidget(oldWidget);
-
-    _playOrPauseVideo();
+  void dispose() {
+    // videoDetailController.dispose();
+    obsVideoPlayerController.pause();
+    // obsVideoPlayerController.dispose();
+    super.dispose();
   }
+
+  // @override
+  // void didUpdateWidget(covariant VideoPlayerWidget oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+
+  //   _playOrPauseVideo();
+  // }
 
   void _playOrPauseVideo() {
     if (widget.isActive == true &&

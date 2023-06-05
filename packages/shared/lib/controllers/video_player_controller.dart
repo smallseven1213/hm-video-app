@@ -33,9 +33,16 @@ class ObservableVideoPlayerController extends GetxController {
   // @override
   // void onClose() {
   //   logger.i('VPC LISTEN: CTX Life CLOSE VIDEO PLAYER CTRL id: $videoUrl');
-  //   _disposePlayer();
+  //   // _disposePlayer();
   //   super.onClose();
   // }
+
+  @override
+  void dispose() {
+    logger.i('VPC LISTEN: DISPOSE VIDEO PLAYER CTRL id: $videoUrl');
+    _disposePlayer();
+    super.dispose();
+  }
 
   Future<void> _initializePlayer() async {
     logger.i('VPC LISTEN: INIT VIDEO PLAYER CTRL id: $videoUrl');
@@ -65,6 +72,7 @@ class ObservableVideoPlayerController extends GetxController {
 
   void _disposePlayer() {
     if (videoPlayerController != null) {
+      videoPlayerController?.pause();
       videoPlayerController?.removeListener(_onControllerValueChanged);
       videoPlayerController?.dispose();
       videoPlayerController = null;

@@ -69,6 +69,12 @@ class BaseShortPageState extends State<BaseShortPage> {
   }
 
   @override
+  void dispose() {
+    _pageController?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
@@ -91,7 +97,7 @@ class BaseShortPageState extends State<BaseShortPage> {
                   children: [
                     Expanded(
                         child: ShortCard(
-                            isActive: isActive,
+                            isActive: true,
                             index: index,
                             id: shortData.id,
                             title: shortData.title,

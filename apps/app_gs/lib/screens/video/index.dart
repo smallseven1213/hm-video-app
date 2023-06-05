@@ -24,8 +24,11 @@ class VideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controllerTag = genaratorLongVideoDetailTag(id.toString());
-    Get.lazyPut<VideoDetailController>(() => VideoDetailController(id),
-        tag: controllerTag);
+
+    if (!Get.isRegistered(tag: controllerTag)) {
+      Get.lazyPut<VideoDetailController>(() => VideoDetailController(id),
+          tag: controllerTag);
+    }
 
     final controller = Get.find<VideoDetailController>(tag: controllerTag);
 
@@ -38,10 +41,16 @@ class VideoScreen extends StatelessWidget {
           } else {
             logger
                 .i('LOGN VIDEO TRACE: VIDEO URL: ${controller.videoUrl.value}');
-            Get.lazyPut<ObservableVideoPlayerController>(
-              () => ObservableVideoPlayerController(controller.videoUrl.value),
+            if (!Get.isRegistered(
               tag: controller.videoUrl.value,
-            );
+            )) {
+              Get.lazyPut<ObservableVideoPlayerController>(
+                () =>
+                    ObservableVideoPlayerController(controller.videoUrl.value),
+                tag: controller.videoUrl.value,
+              );
+            }
+
             var videoDetail = controller.videoDetail.value;
             var video = controller.video.value;
             return Column(
