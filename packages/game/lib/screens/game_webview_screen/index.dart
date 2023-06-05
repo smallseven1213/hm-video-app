@@ -63,8 +63,8 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
             DraggableFloatingActionButton(
               initialOffset:
                   widget.direction == gameWebviewDirection['vertical']
-                      ? Offset(Get.width - 70, Get.height - 70)
-                      : Offset(20, Get.height - 70),
+                      ? Offset(Get.width - 70, Get.height - 120)
+                      : Offset(20, Get.height - 120),
               parentKey: _parentKey,
               child: RotatedBox(
                 quarterTurns:
