@@ -112,13 +112,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           alignment: Alignment.center,
           children: <Widget>[
             if (obsVideoPlayerController.videoAction.value == 'error') ...[
-              // Text and return a error wording
-              // Center(
-              //   child: Text(
-              //     obsVideoPlayerController.errorMessage.value,
-              //     style: const TextStyle(color: Colors.white),
-              //   ),
-              // ),
+              if (kIsWeb)
+                Center(
+                  child: Text(
+                    obsVideoPlayerController.errorMessage.value,
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
               VideoError(
                 coverHorizontal: widget.coverHorizontal,
                 onTap: () {
