@@ -71,16 +71,17 @@ class VideoScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                Expanded(
-                  child: video != null && videoDetail != null
-                      ? NestedTabBarView(
-                          videoUrl: controller.videoUrl.value,
-                          videoBase: video,
-                          videoDetail: videoDetail,
-                        )
-                      : const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                Obx(
+                  () => Expanded(
+                      child: video != null && videoDetail != null
+                          ? NestedTabBarView(
+                              videoUrl: controller.videoUrl.value,
+                              videoBase: video,
+                              videoDetail: videoDetail,
+                            )
+                          : const Center(
+                              child: CircularProgressIndicator(),
+                            )),
                 )
               ],
             );
