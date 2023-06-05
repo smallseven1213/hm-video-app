@@ -49,11 +49,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     //   }
     // });
     if (kIsWeb) {
-      Future.delayed(Duration(milliseconds: 500), () {
-        if (mounted) {
-          obsVideoPlayerController.play();
-        }
-      });
+      obsVideoPlayerController.play();
+      setState(() {});
     } else {
       obsVideoPlayerController.play();
     }

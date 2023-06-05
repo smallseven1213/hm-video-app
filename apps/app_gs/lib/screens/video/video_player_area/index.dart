@@ -61,7 +61,12 @@ class _VideoPlayerAreaState extends State<VideoPlayerArea>
     videoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: videoUrl);
 
-    videoPlayerController.play();
+    if (kIsWeb) {
+      videoPlayerController.play();
+      setState(() {});
+    } else {
+      videoPlayerController.play();
+    }
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
