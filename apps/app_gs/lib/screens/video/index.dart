@@ -53,38 +53,40 @@ class VideoScreen extends StatelessWidget {
 
             var videoDetail = controller.videoDetail.value;
             var video = controller.video.value;
-            return Column(
-              children: [
-                video != null
-                    ? VideoPlayerArea(
-                        name: name,
-                        videoUrl: controller.videoUrl.value,
-                        video: video,
-                      )
-                    : AspectRatio(
-                        aspectRatio: 16 / 9,
-                        child: Container(
-                          color: Colors.black,
-                          child: CustomAppBar(
-                            title: name ?? '',
-                            backgroundColor: Colors.transparent,
+            return Obx(() {
+              logger.i('LOGN VIDEO TRACE: VIDEO URL: ${controller.videoUrl}');
+              return Column(
+                children: [
+                  video != null
+                      ? VideoPlayerArea(
+                          name: name,
+                          videoUrl: controller.videoUrl.value,
+                          video: video,
+                        )
+                      : AspectRatio(
+                          aspectRatio: 16 / 9,
+                          child: Container(
+                            color: Colors.black,
+                            child: CustomAppBar(
+                              title: name ?? '',
+                              backgroundColor: Colors.transparent,
+                            ),
                           ),
                         ),
-                      ),
-                Obx(
-                  () => Expanded(
-                      child: video != null && videoDetail != null
-                          ? NestedTabBarView(
-                              videoUrl: controller.videoUrl.value,
-                              videoBase: video,
-                              videoDetail: videoDetail,
-                            )
-                          : const Center(
-                              child: CircularProgressIndicator(),
-                            )),
-                )
-              ],
-            );
+                  Expanded(
+                    child: video != null && videoDetail != null
+                        ? NestedTabBarView(
+                            videoUrl: controller.videoUrl.value,
+                            videoBase: video,
+                            videoDetail: videoDetail,
+                          )
+                        : const Center(
+                            child: CircularProgressIndicator(),
+                          ),
+                  )
+                ],
+              );
+            });
           }
         } else {
           return Container();
