@@ -61,7 +61,7 @@ class _RegisterPageState extends State<RegisterPage> {
       return '請輸入驗證密碼';
     }
     if (value != _passwordController.text) {
-      return '驗證密碼不一緻';
+      return '驗證密碼不一致';
     }
     // 可在此添加其他驗證邏輯
     return null;
@@ -155,8 +155,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     Expanded(
                       child: Button(
                         text: '註冊',
-                        size: 'small',
-                        type: 'secondary',
                         onPressed: () {
                           _handleRegister(context);
                         },
@@ -166,7 +164,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Expanded(
                       child: Button(
                         text: '取消',
-                        size: 'small',
+                        type: 'cancel',
                         onPressed: () {
                           MyRouteDelegate.of(context).popRoute();
                         },

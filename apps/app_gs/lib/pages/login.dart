@@ -138,7 +138,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: Button(
                   text: '登入',
                   onPressed: () => _handleLogin(context),
-                  size: 'small',
                 ),
               ),
 

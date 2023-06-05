@@ -47,7 +47,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
       return '請輸入驗證密碼';
     }
     if (value != _passwordController.text) {
-      return '驗證密碼不一緻';
+      return '驗證密碼不一致';
     }
     return null;
   }
@@ -75,8 +75,8 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         } else {
           showConfirmDialog(
             context: context,
-            title: '錯誤0',
-            message: '密碼不正確',
+            title: '密碼錯誤',
+            message: '原密碼錯誤',
             showCancelButton: false,
             onConfirm: () {
               Navigator.of(context).pop();
@@ -87,8 +87,8 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         logger.i(error);
         showConfirmDialog(
           context: context,
-          title: '錯誤1',
-          message: '密碼不正確',
+          title: '密碼錯誤',
+          message: '原密碼錯誤',
           showCancelButton: false,
           onConfirm: () {
             Navigator.of(context).pop();
@@ -148,7 +148,6 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                     Expanded(
                       child: Button(
                         text: '確認修改',
-                        size: 'medium',
                         type: 'secondary',
                         onPressed: () {
                           _handleUpdatePassword(context);

@@ -12,6 +12,7 @@ class IDCardPage extends StatelessWidget {
       appBar: CustomAppBar(
         title: '帳號憑證',
       ),
+      extendBodyBehindAppBar: true,
       body: Center(
         child: IDCard(),
       ),

@@ -227,24 +227,30 @@ class CellItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: image,
-      title: Text(
-        text,
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 14,
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                const SizedBox(width: 20.0),
+                image,
+                const SizedBox(width: 15.0),
+                Text(
+                  text,
+                  style: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            const Icon(Icons.keyboard_arrow_right, color: Colors.white),
+          ],
         ),
       ),
-      trailing: const Icon(Icons.keyboard_arrow_right, color: Colors.white),
-      // trailing: Row(
-      //   mainAxisSize: MainAxisSize.min,
-      //   children: [
-      //     if (label != null) label!,
-      //     const Icon(Icons.keyboard_arrow_right, color: Colors.white),
-      //   ],
-      // ),
-      onTap: onTap,
     );
   }
 }
