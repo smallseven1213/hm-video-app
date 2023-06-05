@@ -3,6 +3,8 @@ import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
+import 'package:game/screens/lobby/login_tabs.dart';
+import 'package:game/utils/showModel.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
@@ -117,49 +119,46 @@ class _GameLobbyState extends State<GameLobby> {
               ),
             ),
             // 如果roles是'guest'，就顯示登入按鈕
-            // actions: userController.info.value.roles.contains('guest')
-            //     ? [
-            //         InkWell(
-            //           onTap: () {
-            //             MyRouteDelegate.of(context)
-            //                 .push(AppRoutes.gameSetFundPassword.value);
-            //             showModel(
-            //               context,
-            //               content: GameLobbyLoginTabs(
-            //                 type: Type.login,
-            //                 onSuccess: () {
-            //                   _refreshData();
-            //                   userState.mutateAll();
-            //                   gameWalletController.mutate();
-            //                   Navigator.pop(context);
-            //                 },
-            //               ),
-            //               onClosed: () => Navigator.pop(context),
-            //             );
-            //           },
-            //           child: Padding(
-            //             padding: const EdgeInsets.all(8),
-            //             child: Container(
-            //               width: 85,
-            //               decoration: BoxDecoration(
-            //                 borderRadius: BorderRadius.circular(24),
-            //                 color: gamePrimaryButtonColor,
-            //               ),
-            //               child: Center(
-            //                 child: Text(
-            //                   '註冊/登入',
-            //                   style: TextStyle(
-            //                     color: gamePrimaryButtonTextColor,
-            //                     fontSize: 14,
-            //                     fontWeight: FontWeight.w600,
-            //                   ),
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //       ]
-            //     : null,
+            actions: userController.info.value.roles.contains('guest')
+                ? [
+                    InkWell(
+                      onTap: () {
+                        showModel(
+                          context,
+                          content: GameLobbyLoginTabs(
+                            type: Type.login,
+                            onSuccess: () {
+                              // userState.mutateAll();
+                              gameWalletController.mutate();
+                              Navigator.pop(context);
+                            },
+                          ),
+                          onClosed: () => Navigator.pop(context),
+                        );
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Container(
+                          width: 85,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(24),
+                            color: gamePrimaryButtonColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              '註冊/登入',
+                              style: TextStyle(
+                                color: gamePrimaryButtonTextColor,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ]
+                : null,
           ),
           body: SafeArea(
             child: Container(

@@ -175,6 +175,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             onSuccess: (userName) {
               showModel(
                 context,
+                title: '訂單確認',
                 content: ConfirmName(
                   amount: channels[_channelActiveIndex]['specificAmounts']
                           [index]
@@ -202,6 +203,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           logger.i('no input && no bank card');
           showModel(
             context,
+            title: '訂單確認',
             content: ConfirmPin(
               amount: channels[_channelActiveIndex]['specificAmounts'][index]
                   .toString(),
