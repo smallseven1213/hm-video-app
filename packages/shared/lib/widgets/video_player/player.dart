@@ -37,17 +37,26 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (kIsWeb) {
-        Future.delayed(Duration(milliseconds: 500), () {
-          if (mounted) {
-            obsVideoPlayerController.play();
-          }
-        });
-      } else {
-        obsVideoPlayerController.play();
-      }
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   if (kIsWeb) {
+    //     Future.delayed(Duration(milliseconds: 500), () {
+    //       if (mounted) {
+    //         obsVideoPlayerController.play();
+    //       }
+    //     });
+    //   } else {
+    //     obsVideoPlayerController.play();
+    //   }
+    // });
+    if (kIsWeb) {
+      Future.delayed(Duration(milliseconds: 500), () {
+        if (mounted) {
+          obsVideoPlayerController.play();
+        }
+      });
+    } else {
+      obsVideoPlayerController.play();
+    }
   }
 
   // @override
