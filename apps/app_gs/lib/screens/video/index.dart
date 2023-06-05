@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
+import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 
 import 'nested_tab_bar_view/index.dart';
@@ -11,7 +12,7 @@ import '../../widgets/custom_app_bar.dart';
 
 final logger = Logger();
 
-class VideoScreen extends StatelessWidget {
+class VideoScreen extends StatefulWidget {
   final int id;
   final String? name;
 
@@ -22,76 +23,127 @@ class VideoScreen extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final controllerTag = genaratorLongVideoDetailTag(id.toString());
+  _VideoScreenState createState() => _VideoScreenState();
+}
 
-    if (!Get.isRegistered(tag: controllerTag)) {
-      Get.lazyPut<VideoDetailController>(() => VideoDetailController(id),
+class _VideoScreenState extends State<VideoScreen> {
+  late final String controllerTag;
+  late final VideoDetailController controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
+
+    if (!Get.isRegistered<VideoDetailController>(tag: controllerTag)) {
+      Get.lazyPut<VideoDetailController>(() => VideoDetailController(widget.id),
           tag: controllerTag);
     }
 
-    final controller = Get.find<VideoDetailController>(tag: controllerTag);
+    controller = Get.find<VideoDetailController>(tag: controllerTag);
+  }
 
-    return FutureBuilder(
-      future: controller.videoUrlReady,
-      builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) {
-          if (snapshot.hasError) {
-            return Text('Error: ${snapshot.error}');
-          } else {
-            logger
-                .i('LOGN VIDEO TRACE: VIDEO URL: ${controller.videoUrl.value}');
-            if (!Get.isRegistered(
-              tag: controller.videoUrl.value,
-            )) {
-              Get.lazyPut<ObservableVideoPlayerController>(
-                () =>
-                    ObservableVideoPlayerController(controller.videoUrl.value),
-                tag: controller.videoUrl.value,
-              );
-            }
+  @override
+  void dispose() {
+    controller.dispose();
+    Get.delete<VideoDetailController>(tag: controllerTag);
+    super.dispose();
+  }
 
-            var videoDetail = controller.videoDetail.value;
-            var video = controller.video.value;
-            return Obx(() {
-              logger.i('LOGN VIDEO TRACE: VIDEO URL: ${controller.videoUrl}');
-              return Column(
-                children: [
-                  video != null
-                      ? VideoPlayerArea(
-                          name: name,
-                          videoUrl: controller.videoUrl.value,
-                          video: video,
-                        )
-                      : AspectRatio(
-                          aspectRatio: 16 / 9,
-                          child: Container(
-                            color: Colors.black,
-                            child: CustomAppBar(
-                              title: name ?? '',
-                              backgroundColor: Colors.transparent,
-                            ),
-                          ),
-                        ),
-                  Expanded(
-                    child: video != null && videoDetail != null
-                        ? NestedTabBarView(
-                            videoUrl: controller.videoUrl.value,
-                            videoBase: video,
-                            videoDetail: videoDetail,
-                          )
-                        : const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                  )
-                ],
-              );
-            });
-          }
-        } else {
-          return Container();
-        }
-      },
+  @override
+  Widget build(BuildContext context) {
+    return Obx(() {
+      var videoUrl = controller.videoUrl.value;
+      var video = controller.video.value;
+      var videoDetail = controller.videoDetail.value;
+      if (videoUrl.isEmpty) {
+        return Container();
+      }
+      return VideoScreenWithVideoUrl(
+          name: widget.name ?? '',
+          videoDetail: videoDetail,
+          video: video,
+          videoUrl: videoUrl);
+    });
+  }
+}
+
+class VideoScreenWithVideoUrl extends StatefulWidget {
+  final String name;
+  final String videoUrl;
+  final Vod? video;
+  final Vod? videoDetail;
+  const VideoScreenWithVideoUrl(
+      {Key? key,
+      this.video,
+      this.videoDetail,
+      required this.name,
+      required this.videoUrl})
+      : super(key: key);
+
+  @override
+  _VideoScreenWithVideoUrlState createState() =>
+      _VideoScreenWithVideoUrlState();
+}
+
+class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
+  late ObservableVideoPlayerController observableVideoPlayerController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (!Get.isRegistered<ObservableVideoPlayerController>(
+        tag: widget.videoUrl)) {
+      Get.lazyPut<ObservableVideoPlayerController>(
+          () => ObservableVideoPlayerController(widget.videoUrl),
+          tag: widget.videoUrl);
+    }
+
+    observableVideoPlayerController =
+        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+  }
+
+  @override
+  void dispose() {
+    observableVideoPlayerController.dispose();
+    Get.delete<ObservableVideoPlayerController>(tag: widget.videoUrl);
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        widget.video != null
+            ? VideoPlayerArea(
+                name: widget.name,
+                videoUrl: widget.videoUrl,
+                video: widget.video!,
+              )
+            : AspectRatio(
+                aspectRatio: 16 / 9,
+                child: Container(
+                  color: Colors.black,
+                  child: CustomAppBar(
+                    title: widget.name,
+                    backgroundColor: Colors.transparent,
+                  ),
+                ),
+              ),
+        Expanded(
+          child: widget.video != null && widget.videoDetail != null
+              ? NestedTabBarView(
+                  videoUrl: widget.videoUrl,
+                  videoBase: widget.video!,
+                  videoDetail: widget.videoDetail!,
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
+        )
+      ],
     );
   }
 }
