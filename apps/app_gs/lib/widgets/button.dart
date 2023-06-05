@@ -6,6 +6,12 @@ const buttonPadding = {
   'large': EdgeInsets.symmetric(horizontal: 10, vertical: 10),
 };
 
+const buttonBg = {
+  'primary': Color.fromRGBO(19, 69, 165, 0.4),
+  'secondary': Color(0xFF1345a5),
+  'cancel': Color(0xff06275e),
+};
+
 class _GradientBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -58,9 +64,7 @@ class Button extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
-          color: type == 'cancel'
-              ? const Color(0xff06275e)
-              : const Color(0xFF1345a5),
+          color: buttonBg[type],
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: CustomPaint(

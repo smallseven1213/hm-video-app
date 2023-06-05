@@ -42,11 +42,12 @@ class LikeButtonState extends State<LikeButton> {
     }
     return Button(
       text: widget.text,
+      type: widget.isLiked ? 'secondary' : 'primary',
       onPressed: () {
         widget.onPressed();
       },
-      icon: GlowingIcon(
-        iconData: iconData,
+      icon: Icon(
+        iconData,
         color: widget.isLiked ? Colors.yellow.shade700 : Colors.white,
         size: 20,
       ),

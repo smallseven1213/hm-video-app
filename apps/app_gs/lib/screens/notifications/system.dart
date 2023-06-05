@@ -26,28 +26,25 @@ class SystemScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Stack(
-        children: [
-          Obx(() => ListView(
-                children: [
-                  ...eventsController.data.map((e) => SystemEventCard(
-                        title: e.title,
-                        content: e.content,
-                        time: e.createdAt,
-                        isSelected:
-                            listEditorController.selectedIds.contains(e.id),
-                        id: e.id!,
-                      )),
-                ],
-              )),
-          ListPagePanelWidget(
-              listEditorController: listEditorController,
-              onSelectButtonClick: _handleSelectAll,
-              onDeleteButtonClick: _handleDeleteAll),
-        ],
-      ),
+    return Stack(
+      children: [
+        Obx(() => ListView(
+              children: [
+                ...eventsController.data.map((e) => SystemEventCard(
+                      title: e.title,
+                      content: e.content,
+                      time: e.createdAt,
+                      isSelected:
+                          listEditorController.selectedIds.contains(e.id),
+                      id: e.id!,
+                    )),
+              ],
+            )),
+        ListPagePanelWidget(
+            listEditorController: listEditorController,
+            onSelectButtonClick: _handleSelectAll,
+            onDeleteButtonClick: _handleDeleteAll),
+      ],
     );
   }
 }

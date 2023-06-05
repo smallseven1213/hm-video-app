@@ -73,11 +73,11 @@ class IDCard extends StatelessWidget {
             end: Alignment.bottomRight,
             colors: [
               Color(0xFF00386A),
-              Color(0xFF000916),
+              Color.fromRGBO(0, 9, 22, 1),
               Color(0xFF003F6C),
               Color(0xFF005B9C),
             ],
-            stops: [0.032, 0.2198, 0.8544, 0.9092],
+            stops: [0.03, 0.22, 0.85, 0.91],
             // transform: GradientRotation(
             //     156.33 * (3.141592 / 180)), // Convert degrees to radians
           ),
@@ -119,15 +119,6 @@ class IDCardContentState extends State<IDCardContent> {
                 border:
                     Border.all(color: Colors.white.withOpacity(0.5), width: 1),
                 borderRadius: BorderRadius.circular(10),
-                gradient: const LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(66, 119, 220, 0),
-                    Color.fromRGBO(67, 120, 220, 0.5),
-                  ],
-                  stops: [0, 1],
-                ),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -223,7 +214,6 @@ class IDCardContentState extends State<IDCardContent> {
           const SizedBox(height: 33),
           const Button(
             text: '請截圖保存',
-            size: 'small',
             type: 'secondary',
             onPressed: _captureAndSaveScreenshot,
           ),
