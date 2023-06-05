@@ -3,6 +3,7 @@ import 'package:game/screens/game_theme_config.dart';
 
 void showModel(
   BuildContext context, {
+  String? title,
   required Widget content,
   required Function() onClosed,
 }) {
@@ -24,20 +25,21 @@ void showModel(
           title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Expanded(flex: 1, child: SizedBox.shrink()),
-              Expanded(
-                flex: 7,
-                child: Center(
-                  child: Text(
-                    '訂單確認',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: gameLobbyPrimaryTextColor,
+              Expanded(flex: title != null ? 1 : 8, child: Container()),
+              if (title != null)
+                Expanded(
+                  flex: 7,
+                  child: Center(
+                    child: Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: gameLobbyPrimaryTextColor,
+                      ),
                     ),
                   ),
                 ),
-              ),
               Expanded(
                 flex: 1,
                 child: InkWell(
