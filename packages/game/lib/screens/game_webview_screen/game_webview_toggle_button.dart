@@ -6,6 +6,7 @@ import 'package:game/enums/game_app_routes.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -62,8 +63,9 @@ class _GameWebviewToggleButtonWidget
                         ? (orientation == Orientation.portrait ? false : true)
                         : (orientation == Orientation.portrait ? true : false),
                     onConfirm: () {
-                      Navigator.of(context).pop();
                       MyRouteDelegate.of(context).popRoute();
+                      Get.find<GameStartupController>()
+                          .goBackToAppHome(context);
                     },
                     onCancel: () {
                       MyRouteDelegate.of(context).popRoute();

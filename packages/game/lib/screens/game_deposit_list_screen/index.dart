@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/enums/game_app_routes.dart';
+import 'package:game/screens/game_deposit_list_screen/channel_empty.dart';
 import 'package:game/screens/game_deposit_list_screen/payment_items.dart';
 import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -113,12 +114,12 @@ class _GameDepositListState extends State<GameDepositList> {
                           child: UserInfoService(),
                         ),
                       ),
-                      (depositData != null)
+                      (depositData != null && depositData.isNotEmpty)
                           ? DepositPaymentItems(
                               depositData: depositData,
                               initialIndex: depositData.keys.first.toString(),
                             )
-                          : const CircularProgressIndicator(),
+                          : const DepositChannelEmpty(),
                       const SizedBox(height: 36),
                       const Tips(),
                     ],
