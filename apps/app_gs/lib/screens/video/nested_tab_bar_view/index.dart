@@ -92,7 +92,10 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                   ),
                   SliverToBoxAdapter(
                     child: VideoActions(
-                      videoDetail: widget.videoDetail,
+                      videoDetail: Vod.fromJson({
+                        ...widget.videoDetail.toJson(),
+                        ...widget.videoBase.toJson(),
+                      }),
                     ),
                   ),
                   const SliverToBoxAdapter(
