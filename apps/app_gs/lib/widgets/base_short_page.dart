@@ -82,22 +82,20 @@ class BaseShortPageState extends State<BaseShortPage> {
           PageView.builder(
             controller: _pageController,
             itemCount: cachedVods.length * 50,
-            onPageChanged: (int index) {
-              setState(() {
-                currentPage = index;
-              });
-            },
+            // onPageChanged: (int index) {
+            //   setState(() {
+            //     currentPage = index;
+            //   });
+            // },
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
-              var isActive = currentPage == index;
               return VideoProvider(
                 vodId: shortData.id,
                 child: Column(
                   children: [
                     Expanded(
                         child: ShortCard(
-                            isActive: true,
                             index: index,
                             id: shortData.id,
                             title: shortData.title,

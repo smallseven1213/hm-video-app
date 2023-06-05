@@ -14,14 +14,12 @@ final logger = Logger();
 class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
   final Vod video;
-  final bool isActive;
   final String coverHorizontal;
 
   const VideoPlayerWidget(
       {Key? key,
       required this.videoUrl,
       required this.video,
-      required this.isActive,
       required this.coverHorizontal})
       : super(key: key);
 
@@ -38,14 +36,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
     obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+    obsVideoPlayerController.play();
   }
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
 
-    _playOrPauseVideo();
-  }
+  //   _playOrPauseVideo();
+  // }
 
   @override
   void dispose() {
@@ -62,21 +61,21 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   //   _playOrPauseVideo();
   // }
 
-  void _playOrPauseVideo() {
-    if (widget.isActive == true &&
-        obsVideoPlayerController.videoAction.value == 'pause') {
-      if (kIsWeb) {
-        Future.delayed(const Duration(milliseconds: 200), () {
-          obsVideoPlayerController.play();
-          // obsVideoPlayerController.changeVolumeToFull();
-        });
-      } else {
-        obsVideoPlayerController.play();
-      }
-    } else {
-      obsVideoPlayerController.pause();
-    }
-  }
+  // void _playOrPauseVideo() {
+  //   if (widget.isActive == true &&
+  //       obsVideoPlayerController.videoAction.value == 'pause') {
+  //     if (kIsWeb) {
+  //       Future.delayed(const Duration(milliseconds: 200), () {
+  //         obsVideoPlayerController.play();
+  //         // obsVideoPlayerController.changeVolumeToFull();
+  //       });
+  //     } else {
+  //       obsVideoPlayerController.play();
+  //     }
+  //   } else {
+  //     obsVideoPlayerController.pause();
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
