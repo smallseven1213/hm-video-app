@@ -80,6 +80,14 @@ class ShortCardState extends State<ShortCard> {
   }
 
   @override
+  void dispose() {
+    // videoDetailController.dispose();
+    Get.delete(
+        tag: genaratorShortVideoDetailTag(widget.id.toString()), force: true);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Obx(() {
       var isLoading = videoDetailController!.isLoading.value;

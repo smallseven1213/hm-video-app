@@ -15,9 +15,11 @@ class VideoProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controllerTag = genaratorShortVideoDetailTag(vodId.toString());
-    Get.lazyPut<ShortVideoDetailController>(
-        () => ShortVideoDetailController(vodId),
-        tag: controllerTag);
+    if (!Get.isRegistered(tag: controllerTag)) {
+      Get.lazyPut<ShortVideoDetailController>(
+          () => ShortVideoDetailController(vodId),
+          tag: controllerTag);
+    }
 
     final controller = Get.find<ShortVideoDetailController>(tag: controllerTag);
 
