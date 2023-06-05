@@ -52,19 +52,19 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
-        color: type == 'cancel'
-            ? const Color(0xff06275e)
-            : const Color(0xFF1345a5),
-      ),
-      clipBehavior: Clip.antiAliasWithSaveLayer,
-      child: CustomPaint(
-        painter: type == 'cancel' ? null : _GradientBorderPainter(),
-        child: GestureDetector(
-          onTap: onPressed,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          color: type == 'cancel'
+              ? const Color(0xff06275e)
+              : const Color(0xFF1345a5),
+        ),
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        child: CustomPaint(
+          painter: type == 'cancel' ? null : _GradientBorderPainter(),
           child: Container(
             padding: buttonPadding[size],
             child: Center(
