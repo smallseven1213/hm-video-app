@@ -14,7 +14,6 @@ import 'short_card_info.dart';
 final logger = Logger();
 
 class ShortCard extends StatefulWidget {
-  final bool isActive;
   final int index;
   final int id;
   final String title;
@@ -25,7 +24,6 @@ class ShortCard extends StatefulWidget {
       required this.index,
       required this.id,
       required this.title,
-      required this.isActive,
       this.supportedPlayRecord = true})
       : super(key: key);
 
@@ -34,7 +32,6 @@ class ShortCard extends StatefulWidget {
 }
 
 class ShortCardState extends State<ShortCard> {
-  bool obpControllerisReady = false;
   late ShortVideoDetailController videoDetailController;
 
   @override
@@ -80,14 +77,6 @@ class ShortCardState extends State<ShortCard> {
   }
 
   @override
-  void dispose() {
-    // videoDetailController.dispose();
-    Get.delete(
-        tag: genaratorShortVideoDetailTag(widget.id.toString()), force: true);
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Obx(() {
       var isLoading = videoDetailController!.isLoading.value;
@@ -105,7 +94,6 @@ class ShortCardState extends State<ShortCard> {
               width: double.infinity,
               child: VideoPlayerWidget(
                 coverHorizontal: video.coverHorizontal!,
-                isActive: widget.isActive,
                 video: video,
                 videoUrl: videoUrl,
               ),
