@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -38,10 +40,10 @@ class _VideoProviderState extends State<VideoProvider> {
 
   @override
   void dispose() {
-    controller.dispose();
-    Get.delete(
-        tag:
-            controllerTag); // Deleting the controller when the widget is disposed
+    if (Get.isRegistered(tag: controllerTag)) {
+      controller.dispose();
+      Get.delete(tag: controllerTag);
+    }
     super.dispose();
   }
 

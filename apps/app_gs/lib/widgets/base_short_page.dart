@@ -91,6 +91,7 @@ class BaseShortPageState extends State<BaseShortPage> {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
               return VideoProvider(
+                key: Key(shortData.id.toString()),
                 vodId: shortData.id,
                 child: Column(
                   children: [

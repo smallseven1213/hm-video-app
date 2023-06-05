@@ -49,8 +49,13 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     //   }
     // });
     if (kIsWeb) {
-      obsVideoPlayerController.play();
-      setState(() {});
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          if (mounted) {
+            obsVideoPlayerController.play();
+          }
+        });
+      });
     } else {
       obsVideoPlayerController.play();
     }
