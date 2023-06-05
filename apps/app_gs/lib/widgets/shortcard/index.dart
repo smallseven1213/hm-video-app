@@ -41,8 +41,6 @@ class ShortCardState extends State<ShortCard> {
     videoDetailController = Get.find<ShortVideoDetailController>(
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
-    logger.i('PLAYRECORD TESTING: initial');
-
     if (widget.supportedPlayRecord == true) {
       logger.i('PLAYRECORD TESTING: initial');
       var videoVal = videoDetailController.video.value;
@@ -57,32 +55,15 @@ class ShortCardState extends State<ShortCard> {
       );
       Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
     }
-
-    // ever(videoDetailController.video, (video) {
-    //   logger.i('PLAYRECORD TESTING:');
-    //   if (video != null) {
-    //     var videoVal = videoDetailController.video.value;
-    //     var playRecord = Vod(
-    //       videoVal!.id,
-    //       videoVal.title,
-    //       coverHorizontal: videoVal.coverHorizontal!,
-    //       coverVertical: videoVal.coverVertical!,
-    //       timeLength: videoVal.timeLength!,
-    //       tags: videoVal.tags!,
-    //       videoViewTimes: videoVal.videoViewTimes!,
-    //     );
-    //     Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
-    //   }
-    // });
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var isLoading = videoDetailController!.isLoading.value;
-      var video = videoDetailController!.video.value;
-      var videoDetail = videoDetailController!.videoDetail.value;
-      var videoUrl = videoDetailController!.videoUrl.value;
+      var isLoading = videoDetailController.isLoading.value;
+      var video = videoDetailController.video.value;
+      var videoDetail = videoDetailController.videoDetail.value;
+      var videoUrl = videoDetailController.videoUrl.value;
       if (!isLoading &&
           videoUrl.isNotEmpty &&
           video != null &&
