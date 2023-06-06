@@ -18,9 +18,11 @@ class ShortCard extends StatefulWidget {
   final int id;
   final String title;
   final bool? supportedPlayRecord;
+  final String obsKey;
 
   const ShortCard(
       {Key? key,
+      required this.obsKey,
       required this.index,
       required this.id,
       required this.title,
@@ -74,12 +76,14 @@ class ShortCardState extends State<ShortCard> {
               height: double.infinity,
               width: double.infinity,
               child: VideoPlayerWidget(
+                obsKey: widget.obsKey,
                 coverHorizontal: video.coverHorizontal!,
                 video: video,
                 videoUrl: videoUrl,
               ),
             ),
             ShortCardInfo(
+              obsKey: widget.obsKey,
               data: videoDetail,
               title: widget.title,
               videoUrl: videoUrl,

@@ -12,8 +12,13 @@ import '../utils/controller_tag_genarator.dart';
 class VideoProvider extends StatefulWidget {
   final int vodId;
   final Widget child;
+  final String obsKey;
 
-  const VideoProvider({Key? key, required this.child, required this.vodId})
+  const VideoProvider(
+      {Key? key,
+      required this.obsKey,
+      required this.child,
+      required this.vodId})
       : super(key: key);
 
   @override
@@ -57,6 +62,7 @@ class _VideoProviderState extends State<VideoProvider> {
         return Container();
       }
       return VideoScreenWithVideoUrl(
+          obsKey: widget.obsKey,
           videoDetail: videoDetail,
           video: video,
           videoUrl: videoUrl,
@@ -68,11 +74,13 @@ class _VideoProviderState extends State<VideoProvider> {
 class VideoScreenWithVideoUrl extends StatefulWidget {
   final Widget child;
   final String videoUrl;
+  final String obsKey;
   final Vod? video;
   final ShortVideoDetail? videoDetail;
   const VideoScreenWithVideoUrl(
       {Key? key,
       required this.child,
+      required this.obsKey,
       this.video,
       this.videoDetail,
       required this.videoUrl})
@@ -90,21 +98,25 @@ class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
   void initState() {
     super.initState();
 
+    var ovpControllerKey = widget.obsKey;
+
     if (!Get.isRegistered<ObservableVideoPlayerController>(
-        tag: widget.videoUrl)) {
+        tag: ovpControllerKey)) {
       Get.lazyPut<ObservableVideoPlayerController>(
-          () => ObservableVideoPlayerController(widget.videoUrl),
-          tag: widget.videoUrl);
+          () => ObservableVideoPlayerController(
+              ovpControllerKey, widget.videoUrl),
+          tag: ovpControllerKey);
     }
 
     observableVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+        Get.find<ObservableVideoPlayerController>(tag: ovpControllerKey);
   }
 
   @override
   void dispose() {
+    var ovpControllerKey = widget.obsKey;
     observableVideoPlayerController.dispose();
-    Get.delete<ObservableVideoPlayerController>(tag: widget.videoUrl);
+    Get.delete<ObservableVideoPlayerController>(tag: ovpControllerKey);
     super.dispose();
   }
 

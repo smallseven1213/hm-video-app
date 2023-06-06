@@ -33,10 +33,18 @@ class PlayRecordController extends GetxController {
     var box = await boxFuture;
 
     if (box.isNotEmpty) {
-      data.value = box.values.map((videoStr) {
+      var records = box.values.map((videoStr) {
         final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
         return Vod.fromJson(videoJson);
       }).toList();
+
+      if (box.keys.length > 20) {
+        for (var key in box.keys.skip(20)) {
+          await box.delete(key);
+        }
+      }
+
+      data.value = records.take(20).toList();
     }
   }
 
@@ -45,8 +53,16 @@ class PlayRecordController extends GetxController {
     if (data.firstWhereOrNull((v) => v.id == video.id) != null) {
       data.removeWhere((v) => v.id == video.id);
     }
+
+    // If the list already has 20 elements, remove the last one.
+    if (data.length >= 20) {
+      data.removeLast();
+    }
+
+    // Add the new record at the beginning of the list.
     data.insert(0, video);
     logger.i('PLAYRECORD TRACE: ${data.length}');
+
     await _updateHive();
   }
 
