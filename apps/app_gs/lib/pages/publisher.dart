@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/publisher_controller.dart';
 import '../screens/vendor_videos/list.dart';
-import '../widgets/button.dart';
 import '../widgets/tab_bar.dart';
 
 class PublisherPage extends StatefulWidget {

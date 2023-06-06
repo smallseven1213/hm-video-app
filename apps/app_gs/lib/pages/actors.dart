@@ -1,7 +1,6 @@
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/search_input.dart';
-import 'package:app_gs/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -17,6 +16,7 @@ import '../widgets/circle_sidimage_text_item.dart';
 final logger = Logger();
 
 class ActorsPage extends StatefulWidget {
+  const ActorsPage({Key? key}) : super(key: key);
   @override
   _ActorsPageState createState() => _ActorsPageState();
 }

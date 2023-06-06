@@ -27,7 +27,7 @@ class ShortVideoDetail {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    if (tag != null) {
+    if (tag.isNotEmpty) {
       data['tag'] = tag.map((e) => e.toJson()).toList();
     }
     if (supplier != null) {

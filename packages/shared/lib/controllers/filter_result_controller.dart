@@ -6,7 +6,6 @@ import '../apis/publisher_api.dart';
 import '../apis/region_api.dart';
 import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
-import '../models/vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 import 'filter_screen_controller.dart';
 

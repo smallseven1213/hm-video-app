@@ -114,7 +114,7 @@ class CellData {
 // }
 
 class ConfigsPage extends StatelessWidget {
-  ConfigsPage({Key? key}) : super(key: key);
+  const ConfigsPage({Key? key}) : super(key: key);
 
   UserController get userController => Get.find<UserController>();
 

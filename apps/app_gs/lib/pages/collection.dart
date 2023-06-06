@@ -11,7 +11,7 @@ import '../widgets/list_page_panel.dart';
 import '../widgets/tab_bar.dart';
 
 class CollectionPage extends StatefulWidget {
-  CollectionPage({Key? key}) : super(key: key);
+  const CollectionPage({Key? key}) : super(key: key);
 
   @override
   _CollectionPageState createState() => _CollectionPageState();

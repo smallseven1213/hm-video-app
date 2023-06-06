@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../apis/event_api.dart';
 import '../models/event.dart';
 import 'auth_controller.dart';
-import 'user_controller.dart';
 
 class EventController extends GetxController {
   List<Event> data = <Event>[].obs;

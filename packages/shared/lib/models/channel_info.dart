@@ -1,5 +1,3 @@
-import 'package:logger/logger.dart';
-import 'package:shared/models/tag.dart';
 import 'package:shared/models/vod.dart';
 
 import 'banner_photo.dart';

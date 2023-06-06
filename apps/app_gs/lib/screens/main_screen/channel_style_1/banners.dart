@@ -8,7 +8,7 @@ import 'package:shared/models/channel_info.dart';
 
 class Banners extends StatelessWidget {
   final int channelId;
-  Banners({Key? key, required this.channelId}) : super(key: key);
+  const Banners({Key? key, required this.channelId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -69,11 +69,11 @@ Widget buildPage(
                 Container(
                   width: 40,
                   height: 40,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Colors.white,
                   ),
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'A',
                       style: TextStyle(
@@ -84,8 +84,8 @@ Widget buildPage(
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
-                Container(
+                const SizedBox(width: 10),
+                const SizedBox(
                   width: 40,
                   height: 40,
                   child: Center(
@@ -96,8 +96,8 @@ Widget buildPage(
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
-                Container(
+                const SizedBox(width: 10),
+                const SizedBox(
                   width: 40,
                   height: 40,
                   child: Center(

@@ -53,7 +53,7 @@ class BannerController extends GetxController {
   // 檢查是否有banner by position id
   bool hasBanner(BannerPosition position) {
     return banners[position] != null && banners[position]!.isNotEmpty;
-    banners[position.value]!.isNotEmpty;
+    // banners[position.value]!.isNotEmpty;
   }
 
   // 紀錄點擊banner

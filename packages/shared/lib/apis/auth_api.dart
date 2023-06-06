@@ -127,6 +127,7 @@ class AuthApi {
     } catch (err) {
       // return HMApiResponseBaseWithDataWithData.fromJson(res.data);
     }
+    return null;
   }
 
   Future<HMApiResponseBaseWithDataWithData> getLoginCode() async {

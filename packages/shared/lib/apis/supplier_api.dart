@@ -1,6 +1,5 @@
 import '../models/block_vod.dart';
 import '../models/supplier.dart';
-import '../models/video.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';

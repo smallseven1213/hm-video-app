@@ -13,6 +13,7 @@ class SystemEventCard extends StatelessWidget {
       Get.find<ListEditorController>(tag: 'notifications');
 
   SystemEventCard({
+    super.key,
     required this.id,
     required this.title,
     required this.content,
@@ -44,14 +45,14 @@ class SystemEventCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 14, color: Colors.white),
+                style: const TextStyle(fontSize: 14, color: Colors.white),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               Text(
                 content,
-                style: TextStyle(fontSize: 12, color: Colors.white),
+                style: const TextStyle(fontSize: 12, color: Colors.white),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(

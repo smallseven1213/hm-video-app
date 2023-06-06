@@ -13,7 +13,6 @@ import 'package:shared/navigator/delegate.dart';
 import '../utils/showConfirmDialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
-import '../widgets/login/button.dart';
 
 final logger = Logger();
 
@@ -187,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 AppRoutes.login.value,
                                 deletePreviousCount: 1);
                           },
-                          child: Column(children: const [
+                          child: const Column(children: [
                             Text('前往登入',
                                 style: TextStyle(
                                   color: Color(0xFF00B2FF),

@@ -81,7 +81,7 @@ class _FilterBarState extends State<FilterBar> {
           for (int i = 0; i < children.length; i++) {
             childrenWithSpacing.add(children[i]);
             if (i < children.length - 1) {
-              childrenWithSpacing.add(SizedBox(width: 10));
+              childrenWithSpacing.add(const SizedBox(width: 10));
             }
           }
 

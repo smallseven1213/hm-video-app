@@ -1,6 +1,5 @@
 import 'package:logger/logger.dart';
 
-import '../models/ad.dart';
 import '../models/channel_banner.dart';
 import '../models/video_ads.dart';
 import '../services/system_config.dart';

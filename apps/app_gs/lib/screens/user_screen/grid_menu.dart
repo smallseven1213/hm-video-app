@@ -16,7 +16,7 @@ class GridMenuItem {
 }
 
 class GridMenu extends StatelessWidget {
-  GridMenu({Key? key}) : super(key: key);
+  const GridMenu({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

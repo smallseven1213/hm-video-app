@@ -45,7 +45,7 @@ class _NotificationItemState extends State<NotificationItem>
       children: [
         // title
         ListTile(
-          contentPadding: EdgeInsets.only(left: 8.0, right: 0),
+          contentPadding: const EdgeInsets.only(left: 8.0, right: 0),
           leading: AnimatedBuilder(
             animation: _arrowAnimation,
             builder: (_, child) {
@@ -93,7 +93,7 @@ class _NotificationItemState extends State<NotificationItem>
                 color: const Color(0xFF7AA2C8).withOpacity(0.3),
               ),
               ListTile(
-                contentPadding: EdgeInsets.all(0),
+                contentPadding: const EdgeInsets.all(0),
                 title: HtmlWidget(
                   widget.content,
                   textStyle: const TextStyle(

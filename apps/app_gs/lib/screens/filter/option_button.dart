@@ -30,7 +30,7 @@ class OptionButton extends StatelessWidget {
               child: Text(
                 name,
                 style: TextStyle(
-                    color: isSelected ? Color(0xFFF4D743) : Colors.white),
+                    color: isSelected ? const Color(0xFFF4D743) : Colors.white),
               ),
             ),
           ),
@@ -63,7 +63,8 @@ class _GradientBorderPainter extends CustomPainter {
 
     final path = Path()
       ..addRRect(RRect.fromRectAndRadius(
-          Rect.fromLTWH(0, 0, size.width, size.height), Radius.circular(16)));
+          Rect.fromLTWH(0, 0, size.width, size.height),
+          const Radius.circular(16)));
 
     canvas.drawPath(path, paint);
   }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 
@@ -18,7 +17,7 @@ class AdBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BannerLink(
-        id: image.id ?? 0,
+        id: image.id,
         url: image.url ?? '',
         child: image.photoSid.isNotEmpty
             ? SidImage(

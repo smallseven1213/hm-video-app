@@ -18,7 +18,7 @@ final logger = Logger();
 final authApi = AuthApi();
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -154,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                               AppRoutes.register.value,
                               deletePreviousCount: 1);
                         },
-                        child: Column(children: const [
+                        child: const Column(children: [
                           Text('還沒有帳號',
                               style: TextStyle(
                                 color: Color(0xFF00B2FF),

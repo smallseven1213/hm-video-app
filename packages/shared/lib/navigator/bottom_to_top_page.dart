@@ -2,13 +2,11 @@ import 'package:flutter/cupertino.dart';
 
 class BottomToTopPage extends Page {
   final Widget child;
-  final String name;
 
   const BottomToTopPage({
     required this.child,
-    required this.name,
     LocalKey? key,
-  }) : super(key: key, name: name);
+  }) : super(key: key);
 
   @override
   Route createRoute(BuildContext context) {

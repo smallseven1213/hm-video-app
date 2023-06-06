@@ -12,10 +12,10 @@ class Region {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['orderIndex'] = this.orderIndex;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['orderIndex'] = orderIndex;
     return data;
   }
 }
