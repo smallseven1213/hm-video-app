@@ -1,5 +1,3 @@
-import 'package:get/get.dart';
-
 class Video {
   int id;
   String title;

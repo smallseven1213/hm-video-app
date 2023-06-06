@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 class VideoTime extends StatelessWidget {

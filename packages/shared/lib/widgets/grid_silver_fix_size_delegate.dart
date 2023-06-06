@@ -10,7 +10,7 @@ class SliverGridDelegateWithFixedSize extends SliverGridDelegate {
 
   @override
   SliverGridLayout getLayout(SliverConstraints constraints) {
-    final crossAxisCount = 2;
+    const crossAxisCount = 2;
     final crossAxisSpacing = this.crossAxisSpacing;
 
     return SliverGridRegularTileLayout(

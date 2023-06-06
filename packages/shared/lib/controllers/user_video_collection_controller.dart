@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:shared/controllers/auth_controller.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../apis/user_api.dart';
 import '../models/vod.dart';

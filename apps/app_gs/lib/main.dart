@@ -1,5 +1,3 @@
-import 'dart:math';
-import 'package:uuid/uuid.dart';
 import 'package:app_gs/pages/actor.dart';
 import 'package:app_gs/pages/configs.dart';
 import 'package:app_gs/pages/shorts_by_local.dart';
@@ -103,7 +101,7 @@ final Map<String, RouteWidgetBuilder> routes = {
       const GameDepositRecordScreen(),
   GameAppRoutes.withdrawRecord.value: (context, args) =>
       const GameWithdrawRecordScreen(),
-  AppRoutes.login.value: (context, args) => LoginPage(),
+  AppRoutes.login.value: (context, args) => const LoginPage(),
   AppRoutes.nickname.value: (context, args) => NicknamePage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),
   AppRoutes.share.value: (context, args) => const SharePage(),
@@ -111,14 +109,14 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.shareRecord.value: (context, args) => const ShareRecord(),
   AppRoutes.apps.value: (context, args) => const AppsScreen(),
   AppRoutes.favorites.value: (context, args) => const FavoritesPage(),
-  AppRoutes.collection.value: (context, args) => CollectionPage(),
+  AppRoutes.collection.value: (context, args) => const CollectionPage(),
   AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
   AppRoutes.search.value: (context, args) => SearchPage(
         inputDefaultValue: args['inputDefaultValue'] as String,
         dontSearch: args['dontSearch'] as bool,
       ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
-  AppRoutes.actors.value: (context, args) => ActorsPage(),
+  AppRoutes.actors.value: (context, args) => const ActorsPage(),
   AppRoutes.supplier.value: (context, args) => SupplierPage(
         id: args['id'] as int,
       ),
@@ -144,7 +142,7 @@ final Map<String, RouteWidgetBuilder> routes = {
         videoId: args['videoId'] as int,
         itemId: args['itemId'] as int,
       ),
-  AppRoutes.configs.value: (context, args) => ConfigsPage(),
+  AppRoutes.configs.value: (context, args) => const ConfigsPage(),
   AppRoutes.updatePassword.value: (context, args) => const UpdatePasswordPage(),
   AppRoutes.idCard.value: (context, args) => const IDCardPage(),
 };

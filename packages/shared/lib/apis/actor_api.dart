@@ -32,7 +32,7 @@ class ActorApi {
     String regionQuery = region != null ? '&region=$region' : '';
     var res = await fetcher(
         url:
-            '$apiPrefix/actor/list?page=$page&limit=$limit${nameQuery}${regionQuery}&isSortByVideos=${sortBy ?? 0}');
+            '$apiPrefix/actor/list?page=$page&limit=$limit$nameQuery$regionQuery&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }

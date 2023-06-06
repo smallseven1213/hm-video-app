@@ -169,7 +169,7 @@ class _ContentAndButtonState extends State<ContentAndButton> {
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
                       '${userController.promoteData.value.promotedMembers}人推廣',
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         fontSize: 14,

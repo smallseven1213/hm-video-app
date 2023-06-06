@@ -1,5 +1,4 @@
 import 'package:app_gs/widgets/button.dart';
-import 'package:app_gs/widgets/glowing_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 

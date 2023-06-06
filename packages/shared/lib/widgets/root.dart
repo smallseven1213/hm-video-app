@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:game/widgets/game_startup.dart';
-import 'package:get/get.dart';
 import 'package:shared/models/color_keys.dart';
-import '../enums/app_routes.dart';
 import '../navigator/delegate.dart';
 import '../navigator/parser.dart';
 import 'ad.dart';

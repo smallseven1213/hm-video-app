@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
-import 'package:shared/utils/navigation_helper.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/response_controller.dart';
 

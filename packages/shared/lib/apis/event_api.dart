@@ -1,7 +1,5 @@
 import 'package:logger/logger.dart';
 
-import '../models/ad.dart';
-import '../models/channel_banner.dart';
 import '../models/event.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';
@@ -29,7 +27,7 @@ class EventApi {
   }
 
   void deleteEvents(List<int> ids) async {
-    var res = await fetcher(
+    await fetcher(
         url: '$apiPrefix/event/id=${ids.join(',')}', method: 'delete');
   }
 }

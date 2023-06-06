@@ -93,10 +93,10 @@ class PopularWidget extends StatelessWidget {
                                   bottomRight: Radius.circular(15),
                                 ),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Image(
                                       image: AssetImage(
                                           'assets/images/apps_download.png'),

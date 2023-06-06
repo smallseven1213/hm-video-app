@@ -11,7 +11,6 @@ import 'package:uuid/uuid.dart';
 
 import '../controllers/response_controller.dart';
 import '../widgets/error_overlay.dart';
-import 'bottom_to_top_page.dart';
 import 'no_transition_page.dart';
 
 typedef RouteWidgetBuilder = Widget Function(
@@ -97,8 +96,6 @@ class MyRouteDelegate extends RouterDelegate<String>
       _stack.removeRange(
           _stack.length - deletePreviousCount - 1, _stack.length - 1);
     }
-    var stackCount = _stack.length;
-    logger.i(_stack);
     notifyListeners();
 
     return completer.future; // Return the future of the completer

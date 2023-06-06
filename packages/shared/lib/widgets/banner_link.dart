@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 

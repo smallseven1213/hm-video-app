@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
 import '../apis/supplier_api.dart';
-import '../models/video.dart';
 import '../models/vod.dart';
 
 class VideoShortBySupplierController extends GetxController {

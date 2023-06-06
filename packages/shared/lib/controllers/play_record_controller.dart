@@ -12,13 +12,11 @@ final logger = Logger();
 // const String prefsKey = 'playrecord';
 
 class PlayRecordController extends GetxController {
-  final String _boxName;
   Future<Box<String>> boxFuture;
   var data = <Vod>[].obs;
 
   PlayRecordController({required String tag})
-      : _boxName = 'playRecord_$tag',
-        boxFuture = Hive.openBox<String>('playRecord_$tag');
+      : boxFuture = Hive.openBox<String>('playRecord_$tag');
 
   @override
   void onInit() {

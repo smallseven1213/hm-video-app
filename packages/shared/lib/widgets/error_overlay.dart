@@ -10,10 +10,10 @@ class ErrorOverlayWidget extends StatefulWidget {
   final Widget child;
   const ErrorOverlayWidget({super.key, required this.child});
   @override
-  _ErrorOverlayWidgetState createState() => _ErrorOverlayWidgetState();
+  ErrorOverlayWidgetState createState() => ErrorOverlayWidgetState();
 }
 
-class _ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
+class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   final responseController = Get.find<ApiResponseErrorCatchController>();
   bool showErrorMessage = false;
 

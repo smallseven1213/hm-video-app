@@ -97,7 +97,7 @@ class SidImageState extends State<SidImage> {
   @override
   Widget build(BuildContext context) {
     if (imageData.isEmpty) {
-      return Container(
+      return SizedBox(
         // decoration: const BoxDecoration(
         //   gradient: LinearGradient(
         //     colors: [Color(0xFF00234D), Color(0xFF002D62)],

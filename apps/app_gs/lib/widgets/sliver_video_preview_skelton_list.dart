@@ -23,33 +23,34 @@ class SliverVideoPreviewSkeletonList extends StatelessWidget {
     final random = Random();
     final message = messages[random.nextInt(messages.length)];
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 20),
-      child: Center(
-        child: SizedBox(
-          height: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Image(
-                image: AssetImage('assets/images/list_no_more.png'),
-                width: 20,
-                height: 20,
+    return SliverPadding(
+        padding: const EdgeInsets.only(bottom: 20),
+        sliver: SliverToBoxAdapter(
+          child: Center(
+            child: SizedBox(
+              height: 100,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Image(
+                    image: AssetImage('assets/images/list_no_more.png'),
+                    width: 20,
+                    height: 20,
+                  ),
+                  const SizedBox(
+                      width: 8), // Add some space between the icon and the text
+                  Text(
+                    message, // Use the random message
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Color(0xFF486a89),
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(
-                  width: 8), // Add some space between the icon and the text
-              Text(
-                message, // Use the random message
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: Color(0xFF486a89),
-                ),
-              ),
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 
   // @override

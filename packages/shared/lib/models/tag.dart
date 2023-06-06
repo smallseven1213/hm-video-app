@@ -1,5 +1,3 @@
-import 'package:shared/models/video.dart';
-
 import 'vod.dart';
 
 class Tags {

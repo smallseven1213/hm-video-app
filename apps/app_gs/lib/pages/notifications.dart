@@ -5,10 +5,6 @@ import 'package:app_gs/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
-import '../screens/vendor_videos/list.dart';
-import '../widgets/button.dart';
-import '../screens/favorites/video.dart';
-import '../screens/favorites/actor.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);

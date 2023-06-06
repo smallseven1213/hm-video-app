@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/models/channel_info.dart';
 
 import '../apis/vod_api.dart';
-import '../models/block_vod.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 

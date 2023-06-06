@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 import '../models/actor.dart';
@@ -112,7 +111,6 @@ class UserApi {
           List.from((res['data']['data'] as List<dynamic>).map((e) => e));
       return record;
     });
-    ;
     /*
     return fetcher(url: path, method: 'GET').then((value) {
       var res = (value.data as Map<String, dynamic>);
@@ -287,7 +285,7 @@ class UserApi {
         List<UserPromoteRecord> record = List.from(
             (res['data']['data'] as List<dynamic>)
                 .map((e) => UserPromoteRecord.fromJson(e)));
-        ;
+
         return UserPromoteWithTotalCount(record, res['data']['total']);
       });
 

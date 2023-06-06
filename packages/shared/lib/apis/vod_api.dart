@@ -5,7 +5,6 @@ import '../models/area_info_with_block_vod.dart';
 import '../models/block_vod.dart';
 import '../models/channel_info.dart';
 import '../models/short_video_detail.dart';
-import '../models/video.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';
@@ -212,7 +211,7 @@ class VodApi {
   Future<Vod> getVodDetail(int vodId) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=${vodId}');
+            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=$vodId');
     if (res.data['code'] != '00') {
       return res.data['data'];
     }
@@ -365,7 +364,7 @@ class VodApi {
     }
 
     if (queryParams.isNotEmpty) {
-      url += '?' + queryParams.join('&');
+      url += '?${queryParams.join('&')}';
     }
 
     var res = await fetcher(url: url);
