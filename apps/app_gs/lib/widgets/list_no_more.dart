@@ -15,7 +15,6 @@ class ListNoMore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 随机选择一个消息
     final random = Random();
     final message = messages[random.nextInt(messages.length)];
 
