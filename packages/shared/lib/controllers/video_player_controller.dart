@@ -18,10 +18,11 @@ class ObservableVideoPlayerController extends GetxController {
   VideoPlayerController? videoPlayerController;
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
+  final String obsKey;
   late Future<void> initialization;
   var errorMessage = ''.obs;
 
-  ObservableVideoPlayerController(this.videoUrl);
+  ObservableVideoPlayerController(this.obsKey, this.videoUrl);
 
   @override
   void onInit() {

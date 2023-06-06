@@ -1,6 +1,7 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
@@ -97,7 +98,7 @@ class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
     if (!Get.isRegistered<ObservableVideoPlayerController>(
         tag: widget.videoUrl)) {
       Get.lazyPut<ObservableVideoPlayerController>(
-          () => ObservableVideoPlayerController(widget.videoUrl),
+          () => ObservableVideoPlayerController(Uuid().v4(), widget.videoUrl),
           tag: widget.videoUrl);
     }
 

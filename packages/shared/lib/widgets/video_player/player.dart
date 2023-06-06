@@ -15,9 +15,11 @@ class VideoPlayerWidget extends StatefulWidget {
   final String videoUrl;
   final Vod video;
   final String coverHorizontal;
+  final String obsKey;
 
   const VideoPlayerWidget(
       {Key? key,
+      required this.obsKey,
       required this.videoUrl,
       required this.video,
       required this.coverHorizontal})
@@ -35,65 +37,36 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
     super.initState();
 
     obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+        Get.find<ObservableVideoPlayerController>(tag: widget.obsKey);
 
-    if (kIsWeb) {
-      // WidgetsBinding.instance.addPostFrameCallback((_) {
-      //   Future.delayed(const Duration(milliseconds: 500), () {
-      //     if (mounted) {
-      //       obsVideoPlayerController.play();
-      //     }
-      //   });
-      // });
-    } else {
-      obsVideoPlayerController.play();
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (kIsWeb) {
+        // WidgetsBinding.instance.addPostFrameCallback((_) {
+        //   Future.delayed(const Duration(milliseconds: 500), () {
+        //     if (mounted) {
+        //       obsVideoPlayerController.play();
+        //     }
+        //   });
+        // });
+      } else {
+        obsVideoPlayerController.play();
+      }
+    });
   }
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-
-  //   _playOrPauseVideo();
-  // }
 
   @override
   void dispose() {
-    // videoDetailController.dispose();
     obsVideoPlayerController.pause();
-    // obsVideoPlayerController.dispose();
     super.dispose();
   }
-
-  // @override
-  // void didUpdateWidget(covariant VideoPlayerWidget oldWidget) {
-  //   super.didUpdateWidget(oldWidget);
-
-  //   _playOrPauseVideo();
-  // }
-
-  // void _playOrPauseVideo() {
-  //   if (widget.isActive == true &&
-  //       obsVideoPlayerController.videoAction.value == 'pause') {
-  //     if (kIsWeb) {
-  //       Future.delayed(const Duration(milliseconds: 200), () {
-  //         obsVideoPlayerController.play();
-  //         // obsVideoPlayerController.changeVolumeToFull();
-  //       });
-  //     } else {
-  //       obsVideoPlayerController.play();
-  //     }
-  //   } else {
-  //     obsVideoPlayerController.pause();
-  //   }
-  // }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.black,
       child: Obx(() {
-        if (!obsVideoPlayerController.isReady.value) {
+        if (!obsVideoPlayerController.isReady.value ||
+            obsVideoPlayerController.videoPlayerController == null) {
           return const SizedBox.shrink();
         }
 

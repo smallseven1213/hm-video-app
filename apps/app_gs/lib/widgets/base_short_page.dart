@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 import 'package:logger/logger.dart';
@@ -18,15 +19,15 @@ class BaseShortPage extends StatefulWidget {
   final bool? useCachedList;
   bool? displayFavoriteAndCollectCount;
 
-  BaseShortPage(
-      {required this.createController,
-      required this.videoId,
-      required this.itemId,
-      this.displayFavoriteAndCollectCount = true,
-      this.supportedPlayRecord = true,
-      this.useCachedList = false,
-      Key? key})
-      : super(key: key);
+  BaseShortPage({
+    required this.createController,
+    required this.videoId,
+    required this.itemId,
+    this.displayFavoriteAndCollectCount = true,
+    this.supportedPlayRecord = true,
+    this.useCachedList = false,
+    Key? key,
+  }) : super(key: key ?? Key('BaseShortPage-${const Uuid().v4()}'));
 
   @override
   BaseShortPageState createState() => BaseShortPageState();
@@ -90,13 +91,16 @@ class BaseShortPageState extends State<BaseShortPage> {
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
+              String obsKey = '${widget.key}-${shortData.id.toString()}';
               return VideoProvider(
-                key: Key(shortData.id.toString()),
+                key: Key('video-provider-$obsKey'),
+                obsKey: obsKey,
                 vodId: shortData.id,
                 child: Column(
                   children: [
                     Expanded(
                         child: ShortCard(
+                            obsKey: obsKey.toString(),
                             index: index,
                             id: shortData.id,
                             title: shortData.title,
