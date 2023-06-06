@@ -105,7 +105,7 @@ class _GameLobbyState extends State<GameLobby> {
                           content: GameLobbyLoginTabs(
                             type: Type.login,
                             onSuccess: () {
-                              // userState.mutateAll();
+                              userController.fetchUserInfo();
                               gameWalletController.mutate();
                               Navigator.pop(context);
                             },
