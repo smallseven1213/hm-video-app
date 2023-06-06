@@ -69,7 +69,7 @@ class SupplierTagVideoPage extends StatelessWidget {
                 ),
               ),
               if (vodController.hasMoreData.value)
-                const SliverVideoPreviewSkeletonList(),
+                SliverVideoPreviewSkeletonList(),
               if (!vodController.hasMoreData.value)
                 SliverToBoxAdapter(
                   child: ListNoMore(),

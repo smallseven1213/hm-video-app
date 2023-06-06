@@ -28,7 +28,6 @@ class _SearchResultPageState extends State<SearchResultPage> {
       keyword: widget.keyword,
       scrollController: scrollController,
     );
-    Get.find<UserSearchHistoryController>().add(widget.keyword);
   }
 
   @override

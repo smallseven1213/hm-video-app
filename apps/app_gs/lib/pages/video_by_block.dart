@@ -71,7 +71,7 @@ class VideoByBlockPage extends StatelessWidget {
                       ))
                   .toList(),
               if (blockVodController.hasMoreData.value)
-                const SliverVideoPreviewSkeletonList(),
+                SliverVideoPreviewSkeletonList(),
               if (!blockVodController.hasMoreData.value)
                 SliverToBoxAdapter(
                   child: ListNoMore(),
