@@ -118,7 +118,6 @@ class _GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
                 label: "帳號",
                 hint: "6~12位字母及數字",
                 controller: userNameController,
-                onChanged: (value) => field.didChange(value),
                 hasIcon: Icon(
                   Icons.person,
                   color: gameLobbyIconColor,
@@ -159,7 +158,6 @@ class _GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
                 hint: "請輸入密碼",
                 isPassword: true,
                 controller: passwordController,
-                onChanged: (value) => field.didChange(value),
                 hasIcon: Icon(
                   Icons.lock,
                   color: gameLobbyIconColor,
@@ -201,7 +199,6 @@ class _GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
                 hint: "請輸入密碼",
                 isPassword: true,
                 controller: passwordCheckController,
-                onChanged: (value) => field.didChange(value),
                 hasIcon: Icon(
                   Icons.lock,
                   color: gameLobbyIconColor,
