@@ -16,7 +16,7 @@ void showModel(
           FocusScope.of(context).unfocus();
         },
         child: AlertDialog(
-          titlePadding: const EdgeInsets.all(15),
+          titlePadding: EdgeInsets.all(title != null ? 15 : 0),
           buttonPadding: EdgeInsets.zero,
           backgroundColor: gameLobbyBgColor,
           shape: RoundedRectangleBorder(
@@ -41,18 +41,22 @@ void showModel(
                   ),
                 ),
               Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    onClosed();
-                  },
-                  child: Icon(
-                    Icons.close,
-                    color: gameLobbyLoginFormColor,
-                    size: 24,
-                  ),
-                ),
-              ),
+                  flex: 1,
+                  child: Padding(
+                    padding: title != null
+                        ? const EdgeInsets.all(0)
+                        : const EdgeInsets.only(right: 10, top: 10),
+                    child: InkWell(
+                      onTap: () {
+                        onClosed();
+                      },
+                      child: Icon(
+                        Icons.close,
+                        color: gameLobbyLoginFormColor,
+                        size: 24,
+                      ),
+                    ),
+                  )),
             ],
           ),
           content: SizedBox(
