@@ -32,7 +32,6 @@ class SupplierVods extends StatelessWidget {
                 MyRouteDelegate.of(context).push(
                   AppRoutes.shortsBySupplier.value,
                   args: {'videoId': vod.id, 'supplierId': id},
-                  removeSamePath: true,
                 );
               },
               film: 2,

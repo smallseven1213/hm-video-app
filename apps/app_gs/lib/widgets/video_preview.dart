@@ -151,7 +151,6 @@ class VideoPreviewWidget extends StatelessWidget {
                   MyRouteDelegate.of(context).push(
                     AppRoutes.shortsByBlock.value,
                     args: {'videoId': id, 'areaId': blockId},
-                    removeSamePath: true,
                   );
                 } else if (film == 3) {
                   // MyRouteDelegate.of(context).push(

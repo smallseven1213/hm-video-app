@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/utils/navigation_helper.dart';
+import 'package:uuid/uuid.dart';
 
 import '../controllers/response_controller.dart';
 import '../widgets/error_overlay.dart';
@@ -75,14 +76,18 @@ class MyRouteDelegate extends RouterDelegate<String>
       bool useBottomToTopAnimation = false, // 添加新参数
       Map<String, dynamic>? args}) {
     final Completer<void> completer = Completer<void>();
+    final uuid = const Uuid().v4(); // 生成新的UUID
 
-    if (removeSamePath) {
-      _stack.removeWhere((stackData) => stackData.path == routeName);
-    }
+    // if (removeSamePath) {
+    //   _stack.removeWhere((stackData) => stackData.path == routeName);
+    // }
 
     _stack.add(StackData(
       path: routeName,
-      args: args ?? {},
+      args: {
+        ...args ?? {},
+        'uuid': uuid,
+      },
       hasTransition: hasTransition,
       useBottomToTopAnimation: useBottomToTopAnimation, // 传递新参数
       completer: completer, // Pass the completer to your stack data
@@ -92,6 +97,7 @@ class MyRouteDelegate extends RouterDelegate<String>
       _stack.removeRange(
           _stack.length - deletePreviousCount - 1, _stack.length - 1);
     }
+    var stackCount = _stack.length;
     logger.i(_stack);
     notifyListeners();
 
@@ -106,9 +112,13 @@ class MyRouteDelegate extends RouterDelegate<String>
   void pushAndRemoveUntil(String newRoute,
       {bool hasTransition = true, Map<String, dynamic>? args}) {
     _stack.clear();
+    var uuid = const Uuid().v4();
     _stack.add(StackData(
       path: newRoute,
-      args: args ?? {},
+      args: {
+        ...args ?? {},
+        'uuid': uuid,
+      },
       hasTransition: hasTransition,
       completer: Completer<void>(), // Add this line
     ));
@@ -122,11 +132,12 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Future<void> setNewRoutePath(String configuration) {
+    var uuid = const Uuid().v4();
     _stack
       ..clear()
       ..add(StackData(
         path: configuration,
-        args: {},
+        args: {'uuid': uuid},
         completer: Completer<void>(),
       ));
     return SynchronousFuture<void>(null);

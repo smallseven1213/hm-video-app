@@ -53,7 +53,6 @@ class CollectionShortScreen extends StatelessWidget {
                 MyRouteDelegate.of(context).push(
                   AppRoutes.shortsByLocal.value,
                   args: {'videoId': vod.id, 'itemId': 0},
-                  removeSamePath: true,
                 );
               },
               hasRadius: false,

@@ -6,8 +6,13 @@ import '../widgets/base_short_page.dart';
 final logger = Logger();
 
 class ShortsByBlockPage extends BaseShortPage {
-  ShortsByBlockPage({super.key, required int videoId, required int areaId})
+  ShortsByBlockPage(
+      {super.key,
+      required String uuid,
+      required int videoId,
+      required int areaId})
       : super(
+          uuid: uuid,
           videoId: videoId,
           itemId: areaId,
           createController: () => Get.put(

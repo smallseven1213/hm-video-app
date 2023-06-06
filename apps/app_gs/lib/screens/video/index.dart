@@ -1,6 +1,7 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/play_record_controller.dart';
 import 'package:uuid/uuid.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
