@@ -1,6 +1,8 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/play_record_controller.dart';
+import 'package:uuid/uuid.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
@@ -97,12 +99,26 @@ class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
     if (!Get.isRegistered<ObservableVideoPlayerController>(
         tag: widget.videoUrl)) {
       Get.lazyPut<ObservableVideoPlayerController>(
-          () => ObservableVideoPlayerController(widget.videoUrl),
+          () => ObservableVideoPlayerController(Uuid().v4(), widget.videoUrl),
           tag: widget.videoUrl);
     }
 
     observableVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      // 將會觸發狀態變化的操作放在這裡
+      var playRecord = Vod(
+        widget.video!.id,
+        widget.video!.title,
+        coverHorizontal: widget.video!.coverHorizontal!,
+        coverVertical: widget.video!.coverVertical!,
+        timeLength: widget.video!.timeLength!,
+        tags: widget.video!.tags!,
+        videoViewTimes: widget.videoDetail!.videoViewTimes!,
+      );
+      Get.find<PlayRecordController>(tag: 'vod').addPlayRecord(playRecord);
+    });
   }
 
   @override

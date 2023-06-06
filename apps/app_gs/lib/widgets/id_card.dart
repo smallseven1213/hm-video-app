@@ -212,11 +212,15 @@ class IDCardContentState extends State<IDCardContent> {
 
           // Add the button widget here
           const SizedBox(height: 33),
-          const Button(
-            text: '請截圖保存',
-            type: 'secondary',
-            onPressed: _captureAndSaveScreenshot,
+          const SizedBox(
+            width: 208,
+            child: Button(
+              text: '請截圖保存',
+              type: 'secondary',
+              onPressed: _captureAndSaveScreenshot,
+            ),
           ),
+
           const SizedBox(height: 10),
         ],
       ),

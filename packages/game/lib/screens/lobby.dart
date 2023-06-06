@@ -14,7 +14,6 @@ import 'package:shared/navigator/delegate.dart';
 
 import 'package:game/models/game_list.dart';
 import 'package:game/controllers/game_banner_controller.dart';
-import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/game_list_view.dart';
@@ -22,7 +21,6 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../enums/game_app_routes.dart';
 
@@ -50,7 +48,7 @@ class _GameLobbyState extends State<GameLobby> {
   List gameHistoryList = [];
   bool isShowFab = false;
 
-  final gamesListController = GamesListController();
+  // final gamesListController = GamesListController();
   final ScrollController _scrollController = ScrollController();
   UserController get userController => Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
@@ -73,31 +71,10 @@ class _GameLobbyState extends State<GameLobby> {
       GameLobbyApi().registerGame(),
     ]).then((value) {
       GameBannerController();
-      getGameHistory();
     });
   }
 
   // 先取得當前的localStorage的遊戲歷史紀錄
-  Future<void> getGameHistory() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    List<String> gameHistoryList = prefs.getStringList('gameHistory') ?? [];
-
-    // 宣告一個filter過的list
-    // gameHistoryList中的gameId如果在gameListFromController中有的話，就把gameListFromController中的資料塞進去
-    dynamic filteredGameList;
-    if (gamesListController.games.isNotEmpty) {
-      filteredGameList = gameHistoryList.map((gameId) {
-        return gamesListController.games
-            .firstWhere((game) => game.gameId.toString() == gameId.toString());
-      });
-    }
-
-    if (gameHistoryList.isNotEmpty && filteredGameList != null) {
-      setState(() {
-        this.gameHistoryList = filteredGameList.toList(growable: false);
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +105,7 @@ class _GameLobbyState extends State<GameLobby> {
                           content: GameLobbyLoginTabs(
                             type: Type.login,
                             onSuccess: () {
-                              // userState.mutateAll();
+                              userController.fetchUserInfo();
                               gameWalletController.mutate();
                               Navigator.pop(context);
                             },
@@ -207,10 +184,6 @@ class _GameLobbyState extends State<GameLobby> {
                           ),
                         ),
                         GameListView(
-                          updateGameHistory: () {
-                            getGameHistory();
-                          },
-                          gameHistoryList: gameHistoryList,
                           deductHeight:
                               (gameBannerController.gameBanner.isNotEmpty
                                           ? Get.width / 2.47
@@ -220,52 +193,52 @@ class _GameLobbyState extends State<GameLobby> {
                                           ? 20
                                           : 0)
                                       .toInt(),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 )),
           ),
-          floatingActionButton: gamesListController.isShowFab == true &&
-                  userController.info.value.roles.contains('guest')
-              ? Container(
-                  width: 65,
-                  height: 65,
-                  decoration: const BoxDecoration(
-                    color: Colors.transparent,
-                    image: DecorationImage(
-                      image: AssetImage(
-                          'packages/game/assets/images/game_lobby/red-envelope.webp'),
-                    ),
-                  ),
-                  child: Wrap(
-                    direction: Axis.vertical,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          setState(() {
-                            isShowFab = false;
-                          });
-                        },
-                        child: const SizedBox(
-                          width: 65,
-                          height: 15,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          // gto('/member/upgrade');
-                        },
-                        child: const SizedBox(
-                          width: 65,
-                          height: 50,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              : null,
-          floatingActionButtonLocation: CustomFabPosition(),
+          // floatingActionButton:
+          //     userController.info.value.roles.contains('guest')
+          //         ? Container(
+          //             width: 65,
+          //             height: 65,
+          //             decoration: const BoxDecoration(
+          //               color: Colors.transparent,
+          //               image: DecorationImage(
+          //                 image: AssetImage(
+          //                     'packages/game/assets/images/game_lobby/red-envelope.webp'),
+          //               ),
+          //             ),
+          //             child: Wrap(
+          //               direction: Axis.vertical,
+          //               children: [
+          //                 InkWell(
+          //                   onTap: () {
+          //                     setState(() {
+          //                       isShowFab = false;
+          //                     });
+          //                   },
+          //                   child: const SizedBox(
+          //                     width: 65,
+          //                     height: 15,
+          //                   ),
+          //                 ),
+          //                 InkWell(
+          //                   onTap: () {
+          //                     // gto('/member/upgrade');
+          //                   },
+          //                   child: const SizedBox(
+          //                     width: 65,
+          //                     height: 50,
+          //                   ),
+          //                 ),
+          //               ],
+          //             ),
+          //           )
+          //         : null,
+          // floatingActionButtonLocation: CustomFabPosition(),
         ));
   }
 }

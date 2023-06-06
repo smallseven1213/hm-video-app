@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'package:uuid/uuid.dart';
 import 'package:app_gs/pages/actor.dart';
 import 'package:app_gs/pages/configs.dart';
 import 'package:app_gs/pages/shorts_by_local.dart';
@@ -123,18 +125,22 @@ final Map<String, RouteWidgetBuilder> routes = {
   AppRoutes.supplierTag.value: (context, args) => SupplierTagVideoPage(
       tagId: args['tagId'] as int, tagName: args['tagName']),
   AppRoutes.shortsByTag.value: (context, args) => ShortsByTagPage(
+        uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,
         tagId: args['tagId'] as int,
       ),
   AppRoutes.shortsBySupplier.value: (context, args) => ShortsBySupplierPage(
+        uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,
         supplierId: args['supplierId'] as int,
       ),
   AppRoutes.shortsByBlock.value: (context, args) => ShortsByBlockPage(
+        uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,
         areaId: args['areaId'] as int,
       ),
   AppRoutes.shortsByLocal.value: (context, args) => ShortsByLocalPage(
+        uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,
         itemId: args['itemId'] as int,
       ),

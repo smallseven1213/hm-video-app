@@ -7,8 +7,12 @@ final logger = Logger();
 
 class ShortsBySupplierPage extends BaseShortPage {
   ShortsBySupplierPage(
-      {super.key, required int videoId, required int supplierId})
+      {super.key,
+      required String uuid,
+      required int videoId,
+      required int supplierId})
       : super(
+          uuid: uuid,
           videoId: videoId,
           itemId: supplierId,
           createController: () => Get.put(

@@ -1,13 +1,13 @@
-import 'package:game/apis/auth_api.dart';
+import 'package:get/get.dart';
+import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+import 'package:shared/apis/auth_api.dart';
+import 'package:shared/controllers/auth_controller.dart';
+
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/input.dart';
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:logger/logger.dart';
-import 'package:shared/controllers/auth_controller.dart';
 
 final logger = Logger();
 
@@ -34,9 +34,10 @@ class _GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
   final authApi = AuthApi();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormBuilderState>();
   bool enableUsername = false;
   bool enablePassword = false;
+  String? _usernameError;
+  String? _passwordError;
 
   @override
   void initState() {
@@ -74,190 +75,188 @@ class _GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(
-            'error: ${e.toString()}',
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+      showConfirmDialog(
+        context: context,
+        title: '登入錯誤',
+        content: '帳號或密碼不正確',
+        onConfirm: () {
+          Navigator.of(context).pop();
+        },
       );
+      logger.i(e);
       return;
     }
   }
 
+  void _checkFormValidity() {
+    setState(() {
+      enableUsername =
+          _usernameError == null && userNameController.text.isNotEmpty;
+      enablePassword =
+          _passwordError == null && passwordController.text.isNotEmpty;
+    });
+  }
+
+  void _validateUsername(String? value) {
+    RegExp regString = RegExp(r'^[a-z0-9]{6,12}$');
+    if (value!.isEmpty) {
+      setState(() {
+        _usernameError = '請輸入帳號';
+      });
+    } else if (value.isNotEmpty) {
+      if (value.length >= 6 && value.length <= 12) {
+        setState(() {
+          _usernameError = null;
+        });
+      } else if (value.length < 6 ||
+          value.length > 12 ||
+          !regString.hasMatch(value)) {
+        setState(() {
+          _usernameError = '帳號為 6~12 位字母及數字';
+        });
+      }
+    }
+    _checkFormValidity();
+  }
+
+  void _validatePassword(String? value) {
+    RegExp regString = RegExp(r'^[a-z0-9]{8,20}$');
+    if (value!.isEmpty) {
+      setState(() {
+        _passwordError = '請輸入密碼';
+      });
+    } else if (value.isNotEmpty) {
+      if (value.length >= 8 && value.length <= 20) {
+        setState(() {
+          _passwordError = null;
+        });
+      } else if (value.length < 8 ||
+          value.length > 20 ||
+          !regString.hasMatch(value)) {
+        setState(() {
+          _passwordError = '*密碼為 8-20 位字母及數字';
+        });
+      }
+    }
+    _checkFormValidity();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return FormBuilder(
-      key: _formKey,
-      onChanged: () {
-        _formKey.currentState!.save();
-      },
-      child: Column(
-        children: [
-          FormBuilderField<String?>(
-            name: 'username',
-            onChanged: (val) => {
-              if (_formKey.currentState?.fields['username']?.validate() == true)
-                {
-                  setState(() {
-                    enableUsername = true;
-                  }),
-                }
-              else
-                {
-                  setState(() {
-                    enableUsername = false;
-                  }),
-                },
-              logger.i(val.toString())
-            },
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: '請輸入帳號',
-              ),
-              FormBuilderValidators.match(r'^[a-z0-9]{6,12}$',
-                  errorText: '*帳號為 6~12 位字母及數字'),
-            ]),
-            builder: (FormFieldState field) {
-              return GameInput(
-                label: "帳號",
-                hint: "6~12位字母及數字",
-                controller: userNameController,
-                hasIcon: Icon(
-                  Icons.person,
-                  color: gameLobbyIconColor,
-                  size: 16,
-                ),
-                errorMessage: field.errorText,
-              );
-            },
+    return Column(
+      children: [
+        GameInput(
+          label: "帳號",
+          hint: "6~12位字母及數字",
+          controller: userNameController,
+          onChanged: (value) => _validateUsername(value),
+          onClear: () {
+            userNameController.clear();
+            setState(() {
+              enableUsername = false;
+            });
+          },
+          hasIcon: Icon(
+            Icons.person,
+            color: gameLobbyIconColor,
+            size: 16,
           ),
-          const SizedBox(height: 20),
-          FormBuilderField<String?>(
-            name: 'password',
-            onChanged: (val) => {
-              if (_formKey.currentState?.fields['password']?.validate() == true)
-                {
-                  setState(() {
-                    enablePassword = true;
-                  }),
-                }
-              else
-                {
-                  setState(() {
-                    enablePassword = false;
-                  }),
-                },
-              logger.i(val.toString())
-            },
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: '請輸入密碼',
-              ),
-              FormBuilderValidators.match(r'^[a-z0-9]{8,20}$',
-                  errorText: '*密碼為 8-20 位字母及數字'),
-            ]),
-            builder: (FormFieldState field) {
-              return GameInput(
-                label: "密碼",
-                hint: "請輸入密碼",
-                isPassword: true,
-                controller: passwordController,
-                hasIcon: Icon(
-                  Icons.lock,
-                  color: gameLobbyIconColor,
-                  size: 16,
-                ),
-                errorMessage: field.errorText,
-              );
-            },
+          errorMessage: _usernameError,
+        ),
+        const SizedBox(height: 20),
+        GameInput(
+          label: "密碼",
+          hint: "請輸入密碼",
+          isPassword: true,
+          controller: passwordController,
+          onChanged: (value) => _validatePassword(value),
+          onClear: () => {
+            passwordController.clear(),
+            setState(() {
+              enablePassword = false;
+            })
+          },
+          hasIcon: Icon(
+            Icons.lock,
+            color: gameLobbyIconColor,
+            size: 16,
           ),
-          const SizedBox(height: 30),
-          // 這邊要放入一個確認按鈕，點擊後送出表單
-          TextButton(
-            onPressed: () {
-              // 表單驗證ok才能點擊，否則按鈕不能點擊
-              if (enableUsername && enablePassword) {
-                // 送出表單
-                _formKey.currentState!.save();
-                logger.i(_formKey.currentState!.value.toString());
-                _onLogin(context);
-              } else {
-                null;
-              }
-            },
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
-              decoration: BoxDecoration(
-                // 表單驗證ok才能點擊，否則按鈕不能點擊，背景色要換成灰色
-                color: enableUsername && enablePassword
-                    ? gamePrimaryButtonColor
-                    : gameLobbyButtonDisableColor,
-                borderRadius: BorderRadius.circular(24),
-              ),
-              child: Center(
-                child: Text("立即登錄",
-                    style: TextStyle(
-                        color: enableUsername && enablePassword
-                            ? gamePrimaryButtonTextColor
-                            : gameLobbyButtonDisableTextColor,
-                        fontWeight: FontWeight.bold)),
-              ),
+          errorMessage: _passwordError,
+        ),
+        const SizedBox(height: 30),
+        TextButton(
+          onPressed: () {
+            // 表單驗證ok才能點擊，否則按鈕不能點擊
+            if (enableUsername && enablePassword) {
+              _onLogin(context);
+            } else {
+              null;
+            }
+          },
+          child: Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+            decoration: BoxDecoration(
+              // 表單驗證ok才能點擊，否則按鈕不能點擊，背景色要換成灰色
+              color: enableUsername && enablePassword
+                  ? gamePrimaryButtonColor
+                  : gameLobbyButtonDisableColor,
+              borderRadius: BorderRadius.circular(24),
+            ),
+            child: Center(
+              child: Text("立即登錄",
+                  style: TextStyle(
+                      color: enableUsername && enablePassword
+                          ? gamePrimaryButtonTextColor
+                          : gameLobbyButtonDisableTextColor,
+                      fontWeight: FontWeight.bold)),
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Wrap(
-            // 這邊要放兩個Inkwell，分別是還沒有帳號和忘記密碼，中間有一個divider
-            // 還沒有帳號的文字顏色要換成gamePrimaryButtonColor
-            // 還沒有帳號要跳轉到註冊tab
-            // 忘記密碼要show一個dialog，顯示忘記密碼的文字
-            children: [
-              InkWell(
-                onTap: () {
-                  widget.onToggleTab();
-                },
-                child: Text(
-                  "還沒有帳號",
-                  style: TextStyle(color: gamePrimaryButtonColor, fontSize: 14),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Wrap(
+          children: [
+            InkWell(
+              onTap: () {
+                widget.onToggleTab();
+              },
+              child: Text(
+                "還沒有帳號",
+                style: TextStyle(color: gamePrimaryButtonColor, fontSize: 14),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
+              child: Container(
+                color: gameSecondButtonColor,
+                width: 1,
+                height: 15,
+              ),
+            ),
+            InkWell(
+              onTap: () {
+                showConfirmDialog(
+                  context: context,
+                  title: '忘記密碼',
+                  content: '請聯繫客服，或用身份卡登入',
+                  onConfirm: () {
+                    Navigator.of(context).pop();
+                  },
+                );
+              },
+              child: Text(
+                "忘記密碼",
+                style: TextStyle(
+                  color: gameLobbyButtonDisableTextColor,
+                  fontSize: 14,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Container(
-                  color: gameSecondButtonColor,
-                  width: 1,
-                  height: 15,
-                ),
-              ),
-              InkWell(
-                onTap: () {
-                  showConfirmDialog(
-                    context: context,
-                    title: '忘記密碼',
-                    content: '請聯繫客服，或用身份卡登入',
-                    onConfirm: () {
-                      Navigator.of(context).pop();
-                    },
-                  );
-                },
-                child: Text(
-                  "忘記密碼",
-                  style: TextStyle(
-                    color: gameLobbyButtonDisableTextColor,
-                    fontSize: 14,
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
-      ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

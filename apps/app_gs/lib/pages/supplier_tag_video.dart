@@ -44,7 +44,6 @@ class SupplierTagVideoPage extends StatelessWidget {
                           MyRouteDelegate.of(context).push(
                             AppRoutes.shortsByTag.value,
                             args: {'videoId': vod.id, 'tagId': tagId},
-                            removeSamePath: true,
                           );
                         },
                         hasRadius: false,

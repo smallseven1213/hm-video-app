@@ -4,7 +4,6 @@ import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/user_controller.dart';
@@ -38,6 +37,9 @@ class _GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
   bool enableUsername = false;
   bool enablePassword = false;
   bool enablePasswordCheck = false;
+  String? _usernameError;
+  String? _passwordError;
+  String? _passwordCheckError;
 
   @override
   void initState() {
@@ -68,16 +70,91 @@ class _GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
             },
           );
     } catch (e) {
+      logger.i(e.toString());
       showConfirmDialog(
         context: context,
-        title: '',
-        content: e.toString(),
+        title: '註冊錯誤',
+        content: '帳號或密碼不正確',
         onConfirm: () {
           Navigator.of(context).pop();
         },
       );
       return;
     }
+  }
+
+  void _checkFormValidity() {
+    setState(() {
+      enableUsername =
+          _usernameError == null && userNameController.text.isNotEmpty;
+      enablePassword =
+          _passwordError == null && passwordController.text.isNotEmpty;
+      enablePasswordCheck = _passwordCheckError == null &&
+          passwordCheckController.text.isNotEmpty;
+    });
+  }
+
+  void _validateUsername(String? value) {
+    RegExp regString = RegExp(r'^[a-z0-9]{6,12}$');
+    if (value!.isEmpty) {
+      setState(() {
+        _usernameError = '請輸入帳號';
+      });
+    } else if (value.isNotEmpty) {
+      if (value.length >= 6 && value.length <= 12) {
+        setState(() {
+          _usernameError = null;
+        });
+      } else if (value.length < 6 ||
+          value.length > 12 ||
+          !regString.hasMatch(value)) {
+        setState(() {
+          _usernameError = '帳號為 6~12 位字母及數字';
+        });
+      }
+    }
+    _checkFormValidity();
+  }
+
+  void _validatePassword(String? value) {
+    RegExp regString = RegExp(r'^[a-z0-9]{8,20}$');
+    if (value!.isEmpty) {
+      setState(() {
+        _passwordError = '請輸入密碼';
+      });
+    } else if (value.isNotEmpty) {
+      if (value.length >= 8 && value.length <= 20) {
+        setState(() {
+          _passwordError = null;
+        });
+      } else if (value.length < 8 ||
+          value.length > 20 ||
+          !regString.hasMatch(value)) {
+        setState(() {
+          _passwordError = '*密碼為 8-20 位字母及數字';
+        });
+      }
+    }
+    _checkFormValidity();
+  }
+
+  void _validatePasswordCheck(String? value) {
+    if (value!.isEmpty) {
+      setState(() {
+        _passwordCheckError = '請輸入密碼';
+      });
+    } else if (value.isNotEmpty) {
+      if (value == passwordController.text) {
+        setState(() {
+          _passwordCheckError = null;
+        });
+      } else {
+        setState(() {
+          _passwordCheckError = '*二次密碼不正確';
+        });
+      }
+    }
+    _checkFormValidity();
   }
 
   @override
@@ -89,127 +166,63 @@ class _GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
       },
       child: Column(
         children: [
-          FormBuilderField<String?>(
-            name: 'username',
-            onChanged: (val) => {
-              if (_formKey.currentState?.fields['username']?.validate() == true)
-                {
-                  setState(() {
-                    enableUsername = true;
-                  }),
-                }
-              else
-                {
-                  setState(() {
-                    enableUsername = false;
-                  }),
-                },
-              logger.i(val.toString())
+          GameInput(
+            label: "帳號",
+            hint: "6~12位字母及數字",
+            controller: userNameController,
+            onChanged: (value) => _validateUsername(value),
+            onClear: () => {
+              userNameController.clear(),
+              setState(() {
+                enableUsername = false;
+              }),
             },
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: '請輸入帳號',
-              ),
-              FormBuilderValidators.match(r'^[a-z0-9]{6,12}$',
-                  errorText: '*帳號為 6~12 位字母及數字'),
-            ]),
-            builder: (FormFieldState field) {
-              return GameInput(
-                label: "帳號",
-                hint: "6~12位字母及數字",
-                controller: userNameController,
-                onChanged: (value) => field.didChange(value),
-                hasIcon: Icon(
-                  Icons.person,
-                  color: gameLobbyIconColor,
-                  size: 16,
-                ),
-                errorMessage: field.errorText,
-              );
-            },
+            hasIcon: Icon(
+              Icons.person,
+              color: gameLobbyIconColor,
+              size: 16,
+            ),
+            errorMessage: _usernameError,
           ),
           const SizedBox(height: 5),
-          FormBuilderField<String?>(
-            name: 'password',
-            onChanged: (val) => {
-              if (_formKey.currentState?.fields['password']?.validate() == true)
-                {
-                  setState(() {
-                    enablePassword = true;
-                  }),
-                }
-              else
-                {
-                  setState(() {
-                    enablePassword = false;
-                  }),
-                },
-              logger.i(val.toString())
+          GameInput(
+            label: "密碼",
+            hint: "請輸入密碼",
+            isPassword: true,
+            controller: passwordController,
+            onChanged: (value) => _validatePassword(value),
+            onClear: () => {
+              passwordController.clear(),
+              setState(() {
+                enablePassword = false;
+              }),
             },
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: '請輸入密碼',
-              ),
-              FormBuilderValidators.match(r'^[a-z0-9]{8,20}$',
-                  errorText: '*密碼為 8-20 位字母及數字'),
-            ]),
-            builder: (FormFieldState field) {
-              return GameInput(
-                label: "密碼",
-                hint: "請輸入密碼",
-                isPassword: true,
-                controller: passwordController,
-                onChanged: (value) => field.didChange(value),
-                hasIcon: Icon(
-                  Icons.lock,
-                  color: gameLobbyIconColor,
-                  size: 16,
-                ),
-                errorMessage: field.errorText,
-              );
-            },
+            hasIcon: Icon(
+              Icons.lock,
+              color: gameLobbyIconColor,
+              size: 16,
+            ),
+            errorMessage: _passwordError,
           ),
           const SizedBox(height: 5),
-          FormBuilderField<String?>(
-            name: 'passwordCheck',
-            onChanged: (val) => {
-              if (_formKey.currentState?.fields['passwordCheck']?.validate() ==
-                  true)
-                {
-                  setState(() {
-                    enablePasswordCheck = true;
-                  }),
-                }
-              else
-                {
-                  setState(() {
-                    enablePasswordCheck = false;
-                  }),
-                },
-              logger.i(val.toString())
+          GameInput(
+            label: "驗證密碼",
+            hint: "請輸入密碼",
+            isPassword: true,
+            controller: passwordCheckController,
+            onChanged: (value) => _validatePasswordCheck(value),
+            onClear: () => {
+              passwordCheckController.clear(),
+              setState(() {
+                enablePasswordCheck = false;
+              }),
             },
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: '請輸入密碼',
-              ),
-              FormBuilderValidators.equal(passwordController.text,
-                  errorText: '*二次密碼不正確'),
-            ]),
-            builder: (FormFieldState field) {
-              return GameInput(
-                label: "驗證密碼",
-                hint: "請輸入密碼",
-                isPassword: true,
-                controller: passwordCheckController,
-                onChanged: (value) => field.didChange(value),
-                hasIcon: Icon(
-                  Icons.lock,
-                  color: gameLobbyIconColor,
-                  size: 16,
-                ),
-                errorMessage: field.errorText,
-              );
-            },
+            hasIcon: Icon(
+              Icons.lock,
+              color: gameLobbyIconColor,
+              size: 16,
+            ),
+            errorMessage: _passwordCheckError,
           ),
           const SizedBox(height: 30),
           // 這邊要放入一個確認按鈕，點擊後送出表單
