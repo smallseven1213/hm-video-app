@@ -26,10 +26,10 @@ class GameDepositDetail extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GameDepositDetailState createState() => _GameDepositDetailState();
+  GameDepositDetailState createState() => GameDepositDetailState();
 }
 
-class _GameDepositDetailState extends State<GameDepositDetail> {
+class GameDepositDetailState extends State<GameDepositDetail> {
   UserController get userController => Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

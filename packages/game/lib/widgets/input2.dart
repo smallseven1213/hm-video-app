@@ -23,10 +23,10 @@ class GameInput2 extends StatefulWidget {
   final bool? isPassword;
 
   @override
-  _GameInputState createState() => _GameInputState();
+  GameInputState createState() => GameInputState();
 }
 
-class _GameInputState extends State<GameInput2> {
+class GameInputState extends State<GameInput2> {
   bool obscureText = true;
   bool isPassword = true;
 

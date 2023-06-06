@@ -26,10 +26,10 @@ class GameLobbyLoginForm extends StatefulWidget {
   final Function() onToggleTab;
 
   @override
-  _GameLobbyLoginFormState createState() => _GameLobbyLoginFormState();
+  GameLobbyLoginFormState createState() => GameLobbyLoginFormState();
 }
 
-class _GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
+class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
   Type tabsType = Type.login;
   final authApi = AuthApi();
   final userNameController = TextEditingController();

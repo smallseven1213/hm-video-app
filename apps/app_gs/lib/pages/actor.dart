@@ -21,10 +21,10 @@ class ActorPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ActorPageState createState() => _ActorPageState();
+  ActorPageState createState() => ActorPageState();
 }
 
-class _ActorPageState extends State<ActorPage>
+class ActorPageState extends State<ActorPage>
     with SingleTickerProviderStateMixin {
   late ActorLatestVodController actorLatestVodController;
   late ActorHottestVodController actorNewestVodController;

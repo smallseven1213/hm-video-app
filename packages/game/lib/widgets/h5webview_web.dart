@@ -1,3 +1,4 @@
+// ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'dart:ui' as ui;
 
@@ -17,10 +18,10 @@ class H5WebviewShared extends StatefulWidget {
       : super(key: key);
 
   @override
-  _H5WebviewSharedState createState() => _H5WebviewSharedState();
+  H5WebviewSharedState createState() => H5WebviewSharedState();
 }
 
-class _H5WebviewSharedState extends State<H5WebviewShared> {
+class H5WebviewSharedState extends State<H5WebviewShared> {
   final String viewType = 'game-html-${DateTime.now().microsecondsSinceEpoch}';
   html.IFrameElement? iframeElement;
   bool toggleButton = false;

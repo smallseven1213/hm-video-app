@@ -82,9 +82,9 @@ class ShortVideoDetailController extends GetxController {
 
   Future<void> fetchVideoDetail(int videoId) async {
     try {
-      ShortVideoDetail _videoDetail =
+      ShortVideoDetail videoDetailFromApi =
           await vodApi.getShortVideoDetailById(videoId);
-      videoDetail.value = _videoDetail;
+      videoDetail.value = videoDetailFromApi;
     } catch (error) {
       logger.i(error);
     }

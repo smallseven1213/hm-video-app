@@ -18,10 +18,10 @@ class TurnOverContent extends StatefulWidget {
   final double withdrawalFee;
 
   @override
-  _TurnOverContentState createState() => _TurnOverContentState();
+  TurnOverContentState createState() => TurnOverContentState();
 }
 
-class _TurnOverContentState extends State<TurnOverContent> {
+class TurnOverContentState extends State<TurnOverContent> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(

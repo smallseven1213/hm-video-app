@@ -18,9 +18,9 @@ class BaseShortPage extends StatefulWidget {
   final int itemId; // areaId, tagId, supplierId
   final bool? supportedPlayRecord;
   final bool? useCachedList;
-  bool? displayFavoriteAndCollectCount;
+  final bool? displayFavoriteAndCollectCount;
 
-  BaseShortPage({
+  const BaseShortPage({
     required this.createController,
     required this.videoId,
     required this.itemId,

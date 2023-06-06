@@ -17,16 +17,15 @@ final authApi = AuthApi();
 final userApi = UserApi();
 
 class NicknamePage extends StatefulWidget {
-  NicknamePage({Key? key}) : super(key: key);
+  const NicknamePage({Key? key}) : super(key: key);
 
   @override
-  _NicknamePageState createState() => _NicknamePageState();
+  NicknamePageState createState() => NicknamePageState();
 }
 
-class _NicknamePageState extends State<NicknamePage> {
+class NicknamePageState extends State<NicknamePage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _accountController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   UserController get userController => Get.find<UserController>();
 
   String? _validateUsername(String? value) {

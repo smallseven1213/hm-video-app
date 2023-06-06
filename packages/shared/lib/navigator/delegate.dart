@@ -102,7 +102,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   }
 
   void remove(String routeName) {
-    _stack.remove(routeName);
+    _stack.removeWhere((stackData) => stackData.path == routeName);
     notifyListeners();
   }
 

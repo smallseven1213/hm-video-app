@@ -7,7 +7,7 @@ class ChannelSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color baseColor = const Color(0xFF003068);
+    const Color baseColor = Color(0xFF003068);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -57,7 +57,7 @@ class ChannelSkeleton extends StatelessWidget {
                           Container(
                             width: 60,
                             height: 60,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                               color: baseColor,
                               shape: BoxShape.circle,
                             ),

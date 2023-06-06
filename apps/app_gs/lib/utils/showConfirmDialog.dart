@@ -63,18 +63,18 @@ Future<bool?> showConfirmDialog({
                 Expanded(
                   flex: 1,
                   child: SingleChildScrollView(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
+                    padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: message != null
                         ? Text(
                             message,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),
                             textAlign: TextAlign.center,
                           )
-                        : SizedBox.shrink(),
+                        : const SizedBox.shrink(),
                   ),
                 ),
                 // 以下是按鈕區

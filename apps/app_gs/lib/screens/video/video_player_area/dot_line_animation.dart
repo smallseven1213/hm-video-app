@@ -4,10 +4,10 @@ class DotLineAnimation extends StatefulWidget {
   const DotLineAnimation({super.key});
 
   @override
-  _DotLineAnimationState createState() => _DotLineAnimationState();
+  DotLineAnimationState createState() => DotLineAnimationState();
 }
 
-class _DotLineAnimationState extends State<DotLineAnimation>
+class DotLineAnimationState extends State<DotLineAnimation>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _animation;
@@ -54,14 +54,14 @@ class _DotLineAnimationState extends State<DotLineAnimation>
         width: 5 * scale,
         height: 5 * scale,
         decoration: BoxDecoration(
-            color: Color(0xffF4D743),
+            color: const Color(0xffF4D743),
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: Color(0xffF4D743).withOpacity(0.5),
+                color: const Color(0xffF4D743).withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 2,
-                offset: Offset(0, 1), // changes position of shadow
+                offset: const Offset(0, 1), // changes position of shadow
               ),
             ]));
   }
@@ -71,14 +71,14 @@ class _DotLineAnimationState extends State<DotLineAnimation>
       width: 15 * scale + 5,
       height: 5,
       decoration: BoxDecoration(
-          color: Color(0xffF4D743),
+          color: const Color(0xffF4D743),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-              color: Color(0xffF4D743).withOpacity(0.5),
+              color: const Color(0xffF4D743).withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 2,
-              offset: Offset(0, 1), // changes position of shadow
+              offset: const Offset(0, 1), // changes position of shadow
             ),
           ]),
     );

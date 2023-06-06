@@ -34,10 +34,10 @@ class SearchInput extends StatefulWidget {
   final VoidCallback? onSearchButtonClick; // 新的回調
 
   @override
-  _SearchInputState createState() => _SearchInputState();
+  SearchInputState createState() => SearchInputState();
 }
 
-class _SearchInputState extends State<SearchInput> {
+class SearchInputState extends State<SearchInput> {
   TextEditingController? _controller;
 
   @override

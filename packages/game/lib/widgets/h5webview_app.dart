@@ -13,10 +13,10 @@ class H5WebviewShared extends StatefulWidget {
       : super(key: key);
 
   @override
-  _H5WebviewSharedState createState() => _H5WebviewSharedState();
+  H5WebviewSharedState createState() => H5WebviewSharedState();
 }
 
-class _H5WebviewSharedState extends State<H5WebviewShared> {
+class H5WebviewSharedState extends State<H5WebviewShared> {
   final _controller = ValueNotifier<WebViewController?>(null);
 
   @override

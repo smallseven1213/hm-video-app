@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-
 import '../controllers/actor_region_controller.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/banner_controller.dart';

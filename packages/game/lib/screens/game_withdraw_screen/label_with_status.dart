@@ -29,10 +29,10 @@ class LabelWithStatus extends StatefulWidget {
   final IconData? rightIcon;
 
   @override
-  _LabelWithStatusState createState() => _LabelWithStatusState();
+  LabelWithStatusState createState() => LabelWithStatusState();
 }
 
-class _LabelWithStatusState extends State<LabelWithStatus> {
+class LabelWithStatusState extends State<LabelWithStatus> {
   _handleClickStatus() {
     showFormDialog(context, title: '', onClosed: () {
       Navigator.pop(context);

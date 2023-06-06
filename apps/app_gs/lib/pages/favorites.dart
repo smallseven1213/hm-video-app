@@ -7,7 +7,6 @@ import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import '../screens/favorites/short.dart';
-import '../widgets/button.dart';
 import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
 import '../widgets/list_page_panel.dart';
@@ -18,10 +17,10 @@ class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
 
   @override
-  _FavoritesPageState createState() => _FavoritesPageState();
+  FavoritesPageState createState() => FavoritesPageState();
 }
 
-class _FavoritesPageState extends State<FavoritesPage>
+class FavoritesPageState extends State<FavoritesPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 

@@ -21,10 +21,10 @@ class ChannelStyle1 extends StatefulWidget {
   const ChannelStyle1({Key? key, required this.channelId}) : super(key: key);
 
   @override
-  _ChannelStyle1State createState() => _ChannelStyle1State();
+  ChannelStyle1State createState() => ChannelStyle1State();
 }
 
-class _ChannelStyle1State extends State<ChannelStyle1>
+class ChannelStyle1State extends State<ChannelStyle1>
     with AutomaticKeepAliveClientMixin {
   late ChannelDataController channelDataController;
 

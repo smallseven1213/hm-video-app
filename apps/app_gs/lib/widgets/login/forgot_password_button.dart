@@ -16,7 +16,7 @@ class ForgotPasswordButton extends StatelessWidget {
             showCancelButton: false,
             onConfirm: () {});
       },
-      child: Column(children: [
+      child: const Column(children: [
         Text('忘記密碼', style: TextStyle(color: Colors.white)),
       ]),
     );

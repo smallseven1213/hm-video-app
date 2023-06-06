@@ -11,10 +11,10 @@ class ScreenLock extends StatefulWidget {
   });
 
   @override
-  _ScreenLockState createState() => _ScreenLockState();
+  ScreenLockState createState() => ScreenLockState();
 }
 
-class _ScreenLockState extends State<ScreenLock> {
+class ScreenLockState extends State<ScreenLock> {
   String? message;
 
   @override
@@ -62,7 +62,7 @@ class _ScreenLockState extends State<ScreenLock> {
               child: Center(
                 child: Text(
                   message!,
-                  style: TextStyle(color: Colors.white, fontSize: 12),
+                  style: const TextStyle(color: Colors.white, fontSize: 12),
                 ),
               ),
             ),

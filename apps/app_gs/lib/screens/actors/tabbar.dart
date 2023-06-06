@@ -6,11 +6,12 @@ import 'package:shared/controllers/actors_controller.dart';
 import '../../widgets/tab_bar.dart';
 
 class ActorsTabBar extends StatefulWidget {
+  const ActorsTabBar({Key? key}) : super(key: key);
   @override
-  _ActorsTabBarState createState() => _ActorsTabBarState();
+  ActorsTabBarState createState() => ActorsTabBarState();
 }
 
-class _ActorsTabBarState extends State<ActorsTabBar>
+class ActorsTabBarState extends State<ActorsTabBar>
     with TickerProviderStateMixin {
   TabController? _tabController;
   final actorsController = Get.put(ActorsController());

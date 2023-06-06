@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-
 final logger = Logger();
 
 class Marquee extends StatefulWidget {
@@ -21,10 +20,10 @@ class Marquee extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MarqueeState createState() => _MarqueeState();
+  MarqueeState createState() => MarqueeState();
 }
 
-class _MarqueeState extends State<Marquee> {
+class MarqueeState extends State<Marquee> {
   @override
   Widget build(BuildContext context) {
     logger.i('text: ${widget.text}');

@@ -325,11 +325,11 @@ class SidImageVisibilityDetector extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SidImageVisibilityDetectorState createState() =>
-      _SidImageVisibilityDetectorState();
+  SidImageVisibilityDetectorState createState() =>
+      SidImageVisibilityDetectorState();
 }
 
-class _SidImageVisibilityDetectorState
+class SidImageVisibilityDetectorState
     extends State<SidImageVisibilityDetector> {
   final _visibilityDetectorKey = GlobalKey();
 
