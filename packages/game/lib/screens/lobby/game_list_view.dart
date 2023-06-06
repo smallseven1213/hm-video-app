@@ -6,6 +6,10 @@ import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/game_scroll_view_tabs.dart';
 import 'package:game/widgets/cache_image.dart';
+import 'package:logger/logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+final logger = Logger();
 
 class GameListItem extends StatelessWidget {
   final String imageUrl;
@@ -64,16 +68,9 @@ class GameListItem extends StatelessWidget {
 }
 
 class GameListView extends StatefulWidget {
-  final Function updateGameHistory;
-  final List? gameHistoryList;
   final int deductHeight;
 
-  const GameListView(
-      {Key? key,
-      required this.updateGameHistory,
-      this.gameHistoryList,
-      required this.deductHeight})
-      : super(key: key);
+  const GameListView({Key? key, required this.deductHeight}) : super(key: key);
   @override
   _GameListViewState createState() => _GameListViewState();
 }
@@ -85,6 +82,7 @@ class _GameListViewState extends State<GameListView>
   final ScrollController _scrollController = ScrollController();
   TabController? _tabController;
   var filteredGameCategories = [];
+  List gameHistoryList = [];
 
   @override
   void initState() {
@@ -97,16 +95,38 @@ class _GameListViewState extends State<GameListView>
         initialIndex: 0,
       );
       _tabController!.addListener(_handleTabSelection);
-      setState(() {});
-      widget.updateGameHistory();
+      gamesListController.updateSelectedCategoryIndex(0);
+      _getGameHistory();
     });
+  }
+
+  _getGameHistory() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> gameHistoryList = prefs.getStringList('gameHistory') ?? [];
+
+    // 宣告一個filter過的list
+    // gameHistoryList中的gameId如果在gameListFromController中有的話，就把gameListFromController中的資料塞進去
+    dynamic filteredGameList;
+    if (gamesListController.games.isNotEmpty) {
+      filteredGameList = gameHistoryList.map((gameId) {
+        return gamesListController.games
+            .firstWhere((game) => game.gameId.toString() == gameId.toString());
+      });
+    }
+    if (gameHistoryList.isNotEmpty && filteredGameList != null) {
+      setState(() {
+        this.gameHistoryList = filteredGameList.toList(growable: false);
+      });
+    }
+
+    logger.i('lobby gameHistoryList: $gameHistoryList');
   }
 
   _handleTabSelection() {
     gamesListController
         .updateSelectedCategoryIndex(_tabController!.index ?? -1);
     if (_tabController?.index == -1) {
-      widget.updateGameHistory();
+      _getGameHistory();
     }
   }
 
@@ -250,13 +270,13 @@ class _GameListViewState extends State<GameListView>
   Widget _buildGameList(int gameType) {
     final gameListResult = gameType == 0
         ? gamesListController.games
-        : widget.gameHistoryList!.isNotEmpty && gameType == -1
-            ? widget.gameHistoryList
+        : gameHistoryList.isNotEmpty && gameType == -1
+            ? gameHistoryList
             : gamesListController.games
                 .where((game) => game.gameType == gameType)
                 .toList()
                 .obs;
-    final totalItemCount = gameListResult!.length.isOdd
+    final totalItemCount = gameListResult.length.isOdd
         ? (gamesListController.games.length ~/ 2).toInt() + 1 // 如果是奇數就加1
         : gamesListController.games.length ~/ 2;
 
@@ -264,9 +284,9 @@ class _GameListViewState extends State<GameListView>
         ? (gameListResult.length ~/ 2).toInt() + 1 // 如果是奇數就加1
         : gameListResult.length ~/ 2;
 
-    final historyItemCount = widget.gameHistoryList!.length.isOdd
-        ? (widget.gameHistoryList!.length ~/ 2).toInt() + 1
-        : widget.gameHistoryList!.length ~/ 2;
+    final historyItemCount = gameHistoryList.length.isOdd
+        ? (gameHistoryList.length ~/ 2).toInt() + 1
+        : gameHistoryList.length ~/ 2;
 
     return gameListResult.isEmpty
         ? Center(
@@ -305,7 +325,7 @@ class _GameListViewState extends State<GameListView>
                       handleGameItem(
                         context,
                         gameId: gameListResult[index * 2].gameId,
-                        updateGameHistory: widget.updateGameHistory,
+                        updateGameHistory: _getGameHistory,
                         tpCode: gameListResult[index * 2].tpCode,
                         direction: gameListResult[index * 2].direction,
                         gameType: gameListResult[index * 2].gameType,
@@ -322,7 +342,7 @@ class _GameListViewState extends State<GameListView>
                         handleGameItem(
                           context,
                           gameId: gameListResult[index * 2 + 1].gameId,
-                          updateGameHistory: widget.updateGameHistory,
+                          updateGameHistory: _getGameHistory,
                           tpCode: gameListResult[index * 2 + 1].tpCode,
                           direction: gameListResult[index * 2 + 1].direction,
                           gameType: gameListResult[index * 2 + 1].gameType,

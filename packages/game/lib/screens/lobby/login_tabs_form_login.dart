@@ -92,53 +92,27 @@ class _GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _formKey,
-      onChanged: () {
-        _formKey.currentState!.save();
-      },
+      autovalidateMode: AutovalidateMode.always, // 设置为始终即时验证
       child: Column(
         children: [
-          FormBuilderField<String?>(
+          FormBuilderTextField(
+            key: const ValueKey('username_field'), // 设置稳定的键
             name: 'username',
-            onChanged: (val) => {
-              if (_formKey.currentState?.fields['username']?.validate() == true)
-                {
-                  setState(() {
-                    enableUsername = true;
-                  }),
-                }
-              else
-                {
-                  setState(() {
-                    enableUsername = false;
-                  }),
-                },
-              logger.i(val.toString())
-            },
+            decoration: const InputDecoration(labelText: 'Username'),
             validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: '請輸入帳號',
-              ),
-              FormBuilderValidators.match(r'^[a-z0-9]{6,12}$',
-                  errorText: '*帳號為 6~12 位字母及數字'),
+              FormBuilderValidators.required(),
+              FormBuilderValidators.minLength(6),
+              FormBuilderValidators.maxLength(12),
+              FormBuilderValidators.match(r'^[a-z0-9]{6,12}$'),
             ]),
-            builder: (FormFieldState field) {
-              return GameInput(
-                label: "帳號",
-                hint: "6~12位字母及數字",
-                controller: userNameController,
-                hasIcon: Icon(
-                  Icons.person,
-                  color: gameLobbyIconColor,
-                  size: 16,
-                ),
-                errorMessage: field.errorText,
-              );
-            },
           ),
           const SizedBox(height: 20),
           FormBuilderField<String?>(
             name: 'password',
             onChanged: (val) => {
+              logger.i('val: $val'),
+              logger.i(
+                  '_formKey password ${_formKey.currentState?.fields['password']?.validate()}'),
               if (_formKey.currentState?.fields['password']?.validate() == true)
                 {
                   setState(() {
@@ -151,7 +125,7 @@ class _GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
                     enablePassword = false;
                   }),
                 },
-              logger.i(val.toString())
+              logger.i('password:', val.toString())
             },
             validator: FormBuilderValidators.compose([
               FormBuilderValidators.required(
@@ -171,6 +145,12 @@ class _GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
                   color: gameLobbyIconColor,
                   size: 16,
                 ),
+                onClear: () {
+                  passwordController.clear();
+                  setState(() {
+                    enablePassword = false;
+                  });
+                },
                 errorMessage: field.errorText,
               );
             },
