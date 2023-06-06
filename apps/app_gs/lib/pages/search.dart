@@ -5,7 +5,6 @@ import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
-import 'package:shared/models/index.dart';
 
 import '../screens/search/recommand.dart';
 import '../screens/search/search_result.dart';
@@ -139,6 +138,7 @@ class SearchPageState extends State<SearchPage> {
                       searchKeyword = tag;
                       displaySearchResult = false;
                     });
+                    Get.find<UserSearchHistoryController>().add(tag);
                     _searchController.text = tag;
                   },
                 )
@@ -161,6 +161,9 @@ class SearchPageState extends State<SearchPage> {
                           searchKeyword = _searchResults[index];
                           displaySearchResult = false;
                         });
+
+                        Get.find<UserSearchHistoryController>()
+                            .add(_searchResults[index]);
 
                         FocusScope.of(context).requestFocus(FocusNode());
                       },

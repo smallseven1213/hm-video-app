@@ -95,7 +95,7 @@ class _ActorPageState extends State<ActorPage>
                       key: const Key('actor_latest_vod'),
                       videos: actorLatestVodController.vodList,
                       hasMoreData: actorLatestVodController.hasMoreData.value,
-                      noMoreWidget: const ListNoMore(),
+                      noMoreWidget: ListNoMore(),
                       usePrimaryParentScrollController: true,
                       onScrollEnd: () {
                         actorLatestVodController.loadMoreData();
@@ -104,7 +104,7 @@ class _ActorPageState extends State<ActorPage>
                       key: const Key('actor_newest_vod'),
                       videos: actorNewestVodController.vodList,
                       hasMoreData: actorNewestVodController.hasMoreData.value,
-                      noMoreWidget: const ListNoMore(),
+                      noMoreWidget: ListNoMore(),
                       usePrimaryParentScrollController: true,
                       onScrollEnd: () {
                         actorNewestVodController.loadMoreData();

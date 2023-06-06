@@ -44,7 +44,7 @@ class _TagVideoPageState extends State<TagVideoPage> {
         return SliverVodGrid(
           videos: vodController.vodList,
           hasMoreData: vodController.hasMoreData.value,
-          noMoreWidget: const ListNoMore(),
+          noMoreWidget: ListNoMore(),
           customScrollController: vodController.scrollController,
         );
       }),
