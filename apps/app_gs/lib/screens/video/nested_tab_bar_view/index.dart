@@ -95,6 +95,7 @@ class _NestedTabBarViewState extends State<NestedTabBarView> {
                       videoDetail: Vod.fromJson({
                         ...widget.videoDetail.toJson(),
                         ...widget.videoBase.toJson(),
+                        'videoViewTimes': widget.videoDetail.videoViewTimes!,
                       }),
                     ),
                   ),

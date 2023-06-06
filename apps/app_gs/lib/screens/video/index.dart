@@ -1,6 +1,7 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/play_record_controller.dart';
 import 'package:uuid/uuid.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
@@ -104,6 +105,17 @@ class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
 
     observableVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+
+    var playRecord = Vod(
+      widget.video!.id,
+      widget.video!.title,
+      coverHorizontal: widget.video!.coverHorizontal!,
+      coverVertical: widget.video!.coverVertical!,
+      timeLength: widget.video!.timeLength!,
+      tags: widget.video!.tags!,
+      videoViewTimes: widget.videoDetail!.videoViewTimes!,
+    );
+    Get.find<PlayRecordController>(tag: 'vod').addPlayRecord(playRecord);
   }
 
   @override
