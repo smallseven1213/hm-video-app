@@ -4,9 +4,10 @@ class ListNoMore extends StatelessWidget {
   const ListNoMore({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-        padding: EdgeInsets.only(bottom: 20),
-        child: Center(
+    return Padding(
+        padding: EdgeInsets.only(
+            top: 60, bottom: 60 + MediaQuery.of(context).padding.bottom),
+        child: const Center(
             child: SizedBox(
                 height: 100,
                 child: Text(
