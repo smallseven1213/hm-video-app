@@ -71,7 +71,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   Future<void> push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,
-      bool removeSamePath = true,
+      bool removeSamePath = false,
       bool useBottomToTopAnimation = false, // 添加新参数
       Map<String, dynamic>? args}) {
     final Completer<void> completer = Completer<void>();
