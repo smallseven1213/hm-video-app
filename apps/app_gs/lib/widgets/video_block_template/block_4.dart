@@ -11,14 +11,10 @@ final logger = Logger();
 List<List<Vod>> organizeRowData(List videos, Blocks block) {
   List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
-  int blockLength = 7;
 
   for (int i = 0; i < blockQuantity;) {
     if (i != 0 && i == videos.length - 1) break;
-
-    bool hasAreaAd =
-        block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;
-
+    bool hasAreaAd = videos[i].dataType == VideoType.areaAd.index;
     try {
       if (hasAreaAd) {
         result.add([videos[i]]);
@@ -77,7 +73,7 @@ class Block4Widget extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Container(
-                  child: block.isAreaAds == true && index % 3 == 2
+                  child: result[index][0].dataType == VideoType.areaAd.index
                       ? ChannelAreaBanner(
                           image: BannerPhoto.fromJson({
                             'id': result[index][0].id,

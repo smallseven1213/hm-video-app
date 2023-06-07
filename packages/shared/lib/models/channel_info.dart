@@ -52,7 +52,7 @@ class Blocks {
   bool? isMore;
   bool? isCheckMore;
   bool? isChange;
-  bool? isAreaAds;
+  bool? isAreaAds; // 暫時沒用
   bool? isTitle;
   bool? isLoading;
   bool? isEmbeddedAds;
