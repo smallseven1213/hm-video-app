@@ -18,8 +18,8 @@ final logger = Logger();
 class AmountForm extends StatefulWidget {
   final GlobalKey<FormBuilderState> formKey;
   final TextEditingController controller;
-  final double max;
-  final double min;
+  final double? max;
+  final double? min;
   final Function? onChanged;
   final String activePayment;
   final String paymentChannelId;
@@ -62,8 +62,8 @@ class _AmountFormState extends State<AmountForm> {
     // 如果驗證失敗會顯示"輸入金額小於或大於可存款金額"，並且按鈕disabled
     // input的onChanged要把值傳到amountController.text
 
-    var parseMaxText = widget.max.toStringAsFixed(0);
-    var parseMinText = widget.min.toStringAsFixed(0);
+    var parseMaxText = widget.max?.toStringAsFixed(0);
+    var parseMinText = widget.min?.toStringAsFixed(0);
 
     logger.i('max: ${widget.max.toString()}, min: ${widget.min.toString()}');
 
@@ -203,10 +203,10 @@ class _AmountFormState extends State<AmountForm> {
                       errorText: '輸入金額格式錯誤',
                     ),
                     if (widget.min != null)
-                      FormBuilderValidators.min(widget.min,
+                      FormBuilderValidators.min(widget.min ?? 0,
                           errorText: '輸入金額小於可存款金額'),
                     if (widget.max != null)
-                      FormBuilderValidators.max(widget.max,
+                      FormBuilderValidators.max(widget.max ?? 0,
                           errorText: '輸入金額大於可存款金額'),
                   ]),
                 ),

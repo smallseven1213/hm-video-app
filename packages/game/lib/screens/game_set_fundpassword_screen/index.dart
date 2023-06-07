@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/button.dart';
 import 'package:game/widgets/input2.dart';
 import 'package:get/get.dart';

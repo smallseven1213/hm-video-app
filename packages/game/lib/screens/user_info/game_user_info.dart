@@ -114,7 +114,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                                 color: gameLobbyPrimaryTextColor)),
                         Row(children: [
                           Obx(() => Text(
-                                gameWalletController.wallet != null
+                                gameWalletController.wallet > 0
                                     ? NumberFormat.currency(symbol: '').format(
                                         DecimalIntl(
                                           Decimal.parse(gameWalletController
@@ -159,7 +159,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                     ),
                   ],
                 ),
-                Obx(() => userController.info.value.uid != ''
+                Obx(() => userController.info.value.uid != 0
                     ? Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
                         child: Text(

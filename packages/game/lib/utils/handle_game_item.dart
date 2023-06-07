@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared/navigator/delegate.dart';

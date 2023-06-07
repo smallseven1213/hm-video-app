@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import '../models/banner_photo.dart';
 import '../models/channel_info.dart';
 import '../models/channel_shared_data.dart';

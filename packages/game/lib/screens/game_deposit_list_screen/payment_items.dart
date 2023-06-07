@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
-import 'package:game/screens/game_deposit_list_screen/OliveShapeClipper.dart';
+import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
 import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';

@@ -40,12 +40,12 @@ submitDepositOrder(
         onLoading(context, status: false);
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
         // windowRef?.location.href = value;
-        launchUrl(Uri.parse(value), webOnlyWindowName: '_blank');
+        launch(value, webOnlyWindowName: '_blank');
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
         // gto('/game/deposit/payment-result/0/$activePayment');
       } else {
         // await launch(value, webOnlyWindowName: '_blank');
-        await launchUrl(Uri.parse(value), webOnlyWindowName: '_blank');
+        await launch(value, webOnlyWindowName: '_blank');
         onLoading(context, status: false);
         Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);

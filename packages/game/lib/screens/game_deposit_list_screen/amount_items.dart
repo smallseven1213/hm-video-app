@@ -14,10 +14,10 @@ class AmountItems extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AmountItemsState createState() => _AmountItemsState();
+  AmountItemsState createState() => AmountItemsState();
 }
 
-class _AmountItemsState extends State<AmountItems> {
+class AmountItemsState extends State<AmountItems> {
   bool selected = false;
 
   @override

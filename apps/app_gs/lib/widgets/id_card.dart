@@ -20,38 +20,42 @@ Future<void> _captureAndSaveScreenshot() async {
     await Permission.storage.request();
   }
 
-  RenderRepaintBoundary boundary =
-      _globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-  final image = await boundary.toImage(pixelRatio: 3.0);
-  ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
-  Uint8List pngBytes = byteData!.buffer.asUint8List();
+  // Get the RenderObject before the async operation
+  RenderObject? renderObject = _globalKey.currentContext?.findRenderObject();
 
-  // 獲取應用文檔目錄
-  Directory directory = await getTemporaryDirectory();
-  String tempPath = directory.path;
+  if (renderObject is RenderRepaintBoundary) {
+    final image = await renderObject.toImage(pixelRatio: 3.0);
+    ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
+    Uint8List pngBytes = byteData!.buffer.asUint8List();
 
-  // 生成文件名
-  String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
+    // 獲取應用文檔目錄
+    Directory directory = await getTemporaryDirectory();
+    String tempPath = directory.path;
 
-  // 保存到臨時文件
-  File file = File('$tempPath/$fileName');
-  await file.writeAsBytes(pngBytes);
+    // 生成文件名
+    String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
 
-  // 保存到相冊
-  final result = await ImageGallerySaver.saveFile(file.path);
-  logger.i('File saved: $result');
+    // 保存到臨時文件
+    File file = File('$tempPath/$fileName');
+    await file.writeAsBytes(pngBytes);
 
-  // 顯示保存成功提示
-  ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(
-    const SnackBar(
-      content: Text(
-        '已成功保存身份卡',
-        style: TextStyle(
-          color: Colors.white,
+    // 保存到相冊
+    final result = await ImageGallerySaver.saveFile(file.path);
+    logger.i('File saved: $result');
+
+    // 顯示保存成功提示
+    // 注意这里我们再次获取context，因为此处的context可能已经发生改变
+    ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(
+      const SnackBar(
+        content: Text(
+          '已成功保存身份卡',
+          style: TextStyle(
+            color: Colors.white,
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
 class IDCard extends StatelessWidget {
@@ -182,7 +186,14 @@ class IDCardContentState extends State<IDCardContent> {
                       version: QrVersions.auto,
                       size: 95.0,
                       backgroundColor: Colors.white,
-                      foregroundColor: const Color.fromARGB(255, 2, 44, 108),
+                      eyeStyle: const QrEyeStyle(
+                        eyeShape: QrEyeShape.square,
+                        color: Color.fromARGB(255, 2, 44, 108),
+                      ),
+                      dataModuleStyle: const QrDataModuleStyle(
+                        dataModuleShape: QrDataModuleShape.square,
+                        color: Color.fromARGB(255, 2, 44, 108),
+                      ),
                     ),
                   ),
 

@@ -9,7 +9,7 @@ import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -20,12 +20,12 @@ class GameDepositList extends StatefulWidget {
   const GameDepositList({Key? key}) : super(key: key);
 
   @override
-  _GameDepositListState createState() => _GameDepositListState();
+  GameDepositListState createState() => GameDepositListState();
 }
 
-class _GameDepositListState extends State<GameDepositList> {
+class GameDepositListState extends State<GameDepositList> {
   bool isLoading = false;
-  var depositData;
+  dynamic depositData;
 
   @override
   void initState() {

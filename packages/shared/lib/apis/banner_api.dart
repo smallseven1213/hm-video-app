@@ -2,7 +2,6 @@ import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 
 import '../models/banner_photo.dart';
-import 'channel_api.dart';
 
 final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/banners';

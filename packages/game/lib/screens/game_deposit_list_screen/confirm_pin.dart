@@ -27,10 +27,10 @@ class ConfirmPin extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ConfirmPinState createState() => _ConfirmPinState();
+  ConfirmPinState createState() => ConfirmPinState();
 }
 
-class _ConfirmPinState extends State<ConfirmPin> {
+class ConfirmPinState extends State<ConfirmPin> {
   String _code = '';
   bool enableSubmit = false;
   bool hasError = false;

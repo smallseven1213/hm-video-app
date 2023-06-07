@@ -1,7 +1,6 @@
 import 'package:hive/hive.dart';
 
 import '../enums/adapters.dart';
-import '../models/channel_info.dart';
 import '../models/tag.dart';
 import '../models/vod.dart';
 
@@ -33,9 +32,9 @@ class VideoDetailAdapter extends TypeAdapter<Vod> {
 
   @override
   void write(BinaryWriter writer, Vod obj) {
-    writer.writeInt(obj.id!);
+    writer.writeInt(obj.id);
     writer.writeInt(obj.dataType!);
-    writer.writeString(obj.title!);
+    writer.writeString(obj.title);
     writer.writeString(obj.titleSub!);
     writer.writeString(obj.externalId!);
     writer.writeInt(obj.chargeType!);

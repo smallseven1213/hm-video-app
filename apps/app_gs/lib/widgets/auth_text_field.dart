@@ -60,7 +60,7 @@ class AuthTextField extends StatelessWidget {
                       isDense: true,
                       hintText: placeholderText,
                       hintStyle: TextStyle(
-                          color: const Color(0xFFFFFF).withOpacity(0.3)),
+                          color: const Color(0xFFFFFFFF).withOpacity(0.3)),
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 10, vertical: 10),
                       border: OutlineInputBorder(

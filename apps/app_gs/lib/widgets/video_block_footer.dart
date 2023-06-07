@@ -21,10 +21,10 @@ class CustomButton extends StatefulWidget {
     required this.onTap,
   }) : super(key: key);
   @override
-  _CustomButtonState createState() => _CustomButtonState();
+  CustomButtonState createState() => CustomButtonState();
 }
 
-class _CustomButtonState extends State<CustomButton>
+class CustomButtonState extends State<CustomButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;

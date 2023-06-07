@@ -80,7 +80,6 @@ class _SplashState extends State<Splash> {
       Get.find<ApiResponseErrorCatchController>();
   String loadingText = '線路檢查中...';
 
-  // GameLobby TODO
   GameApiResponseErrorCatchController gameResponseController =
       Get.find<GameApiResponseErrorCatchController>();
 
@@ -118,7 +117,6 @@ class _SplashState extends State<Splash> {
       systemConfig.setImageHost('https://${res['pl']?.first}');
       systemConfig.setMaintenance(res['maintenance'] == 'true' ? true : false);
 
-      // GameLobby TODO
       gameSystemConfig.setApiHost('https://api.${res['apl']?.first}');
     }
 
@@ -221,7 +219,6 @@ class _SplashState extends State<Splash> {
         authController.setToken(res.data['token']);
         responseController.clear();
 
-        // GameLobby TODO
         gameResponseController.clear();
 
         logger.i('res.status ${res.code}');

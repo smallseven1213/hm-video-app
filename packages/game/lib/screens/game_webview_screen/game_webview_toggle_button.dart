@@ -5,7 +5,7 @@ import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/services/game_system_config.dart';
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -94,8 +94,8 @@ class _GameWebviewToggleButtonWidget
               ),
               InkWell(
                 onTap: () {
-                  launch(
-                      '${systemConfig.apiHost}/public/domains/domain/customer-services');
+                  launchUrl(Uri.parse(
+                      '${systemConfig.apiHost}/public/domains/domain/customer-services'));
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
