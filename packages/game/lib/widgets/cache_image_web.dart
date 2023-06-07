@@ -20,10 +20,10 @@ class CacheImageWeb extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CacheImageWebState createState() => _CacheImageWebState();
+  CacheImageWebState createState() => CacheImageWebState();
 }
 
-class _CacheImageWebState extends State<CacheImageWeb> {
+class CacheImageWebState extends State<CacheImageWeb> {
   Uint8List imageData = Uint8List(0);
 
   @override

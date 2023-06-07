@@ -9,17 +9,16 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-
 final logger = Logger();
 
 class GameSetFundPassword extends StatefulWidget {
   const GameSetFundPassword({Key? key}) : super(key: key);
 
   @override
-  _GameSetFundPasswordState createState() => _GameSetFundPasswordState();
+  GameSetFundPasswordState createState() => GameSetFundPasswordState();
 }
 
-class _GameSetFundPasswordState extends State<GameSetFundPassword> {
+class GameSetFundPasswordState extends State<GameSetFundPassword> {
   final passwordController = TextEditingController();
   final passwordConfirmController = TextEditingController();
   bool isConfirmButtonEnabled = false;

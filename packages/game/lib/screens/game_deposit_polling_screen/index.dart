@@ -114,7 +114,6 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
     try {
       var res = await GameLobbyApi().transfer();
       if (res['code'] == '00') {
-        var points = res['data']['points'];
         var balance = res['data']['balance'].toString();
 
         if (double.parse(balance) > 0) {
@@ -170,37 +169,6 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
     } catch (error) {
       logger.i('_getParamConfig $error');
     }
-  }
-
-  // onConfirm function
-  void _onConfirm(Type type) async {
-    int intType = type == Type.backcard ? 1 : 2;
-
-    // showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
-    //   // call applyWithdrawal
-    //   var res = await GameLobbyApi().applyWithdrawalV2(
-    //       intType,
-    //       amountController.text,
-    //       pin.toString(),
-    //       stakeLimit.toString(),
-    //       validStake.toString());
-    //   if (res.code == '00') {
-    //     showConfirm(context,
-    //         title: "申請完成",
-    //         content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
-    //         confirmText: "確認", onConfirm: () {
-    //       userState.mutateAll();
-    //       gameWalletState.mutate();
-    //       Get.toNamed('/default', arguments: 2);
-    //       Get.find<AppController>().updateNavigationIndex('/game', 2);
-    //     });
-    //   } else {
-    //     Fluttertoast.showToast(
-    //       msg: res.message.toString(),
-    //       gravity: ToastGravity.CENTER,
-    //     );
-    //   }
-    // });
   }
 
   @override

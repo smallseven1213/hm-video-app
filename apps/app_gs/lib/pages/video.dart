@@ -1,10 +1,7 @@
 import 'package:app_gs/screens/video/index.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/user_api.dart';
-import 'package:shared/utils/screen_control.dart';
-import 'package:shared/widgets/video_provider.dart';
 
 final logger = Logger();
 

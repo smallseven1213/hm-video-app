@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:game/screens/game_deposit_list_screen/submitDepositOrder.dart';
+import 'package:game/screens/game_deposit_list_screen/submit_deposit_order.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/button.dart';
 import 'package:get_storage/get_storage.dart';

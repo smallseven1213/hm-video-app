@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
-import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -38,7 +37,7 @@ class CollectionShortScreen extends StatelessWidget {
           mainAxisSpacing: 1,
         ),
         itemBuilder: (BuildContext context, int index) {
-          var vod = shortPlayRecordController.data.value[index];
+          var vod = shortPlayRecordController.data[index];
           logger.i('TESTING PLAY RECORD SHORT SCREEN - $vod');
           return Obx(() => VideoPreviewWithEditWidget(
               id: vod.id,

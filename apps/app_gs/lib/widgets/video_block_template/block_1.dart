@@ -73,7 +73,7 @@ class Block1Widget extends StatelessWidget {
                       ? result[index][0].dataType == VideoType.areaAd.index
                           ? ChannelAreaBanner(
                               image: BannerPhoto.fromJson({
-                                'id': result[index][0].id ?? 0,
+                                'id': result[index][0].id,
                                 'url': result[index][0].adUrl ?? '',
                                 'photoSid':
                                     result[index][0].coverHorizontal ?? '',
@@ -81,8 +81,8 @@ class Block1Widget extends StatelessWidget {
                               }),
                             )
                           : VideoPreviewWidget(
-                              id: result[index][0].id!,
-                              title: result[index][0].title ?? '',
+                              id: result[index][0].id,
+                              title: result[index][0].title,
                               tags: result[index][0].tags ?? [],
                               timeLength: result[index][0].timeLength ?? 0,
                               coverHorizontal:

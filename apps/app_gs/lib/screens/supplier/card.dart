@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/actor_avatar.dart';
 
@@ -19,7 +18,7 @@ class SupplierCard extends StatelessWidget {
     );
     return Obx(() {
       if (supplierController.supplier.value.id == null) {
-        return SliverToBoxAdapter(
+        return const SliverToBoxAdapter(
           child: SizedBox.shrink(),
         );
       }

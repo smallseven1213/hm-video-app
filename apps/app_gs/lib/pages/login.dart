@@ -11,7 +11,7 @@ import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../utils/showConfirmDialog.dart';
+import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 
 final logger = Logger();

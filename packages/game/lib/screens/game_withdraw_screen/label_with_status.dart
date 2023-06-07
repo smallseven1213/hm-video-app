@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/turnover_content.dart';
-import 'package:game/utils/showFormDialog.dart';
+import 'package:game/utils/show_form_dialog.dart';
 import 'package:logger/logger.dart';
 
 final logger = Logger();

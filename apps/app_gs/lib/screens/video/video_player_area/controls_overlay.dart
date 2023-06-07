@@ -68,7 +68,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   void startCountdown() {
     if (controlsType == ControlsOverlayType.progress ||
         controlsType == ControlsOverlayType.playPause) {
-      Future.delayed(Duration(seconds: 3), () {
+      Future.delayed(const Duration(seconds: 3), () {
         if (mounted) {
           setState(() {
             controlsType = ControlsOverlayType.none;
@@ -137,9 +137,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             final double relative =
                 math.min(1.0, math.max(0.0, tapPos.dy / box.size.height));
 
-            final deltaY = startVerticalDragY - details.globalPosition.dy;
-            const sensitivity = 0.05;
-            final percentageDelta = deltaY / box.size.height;
+            // final deltaY = startVerticalDragY - details.globalPosition.dy;
+            // const sensitivity = 0.05;
+            // final percentageDelta = deltaY / box.size.height;
 
             // Adjust volume when swipe on the right side of the screen
             if (isVolume) {

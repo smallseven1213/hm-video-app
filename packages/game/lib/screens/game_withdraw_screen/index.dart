@@ -12,7 +12,7 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 
 import 'package:game/utils/showConfirmDialog.dart';
-import 'package:game/utils/showFundingPasswordBottomSheet.dart';
+import 'package:game/utils/show_funding_password_bottom_sheet.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_wallet_controller.dart';

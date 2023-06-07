@@ -13,10 +13,10 @@ class BannerWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BannerWidgetState createState() => _BannerWidgetState();
+  BannerWidgetState createState() => BannerWidgetState();
 }
 
-class _BannerWidgetState extends State<BannerWidget> {
+class BannerWidgetState extends State<BannerWidget> {
   BannerController bannerController = Get.find<BannerController>();
 
   @override

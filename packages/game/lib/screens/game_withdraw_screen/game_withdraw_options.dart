@@ -8,7 +8,6 @@ import 'package:game/utils/showConfirmDialog.dart';
 import 'package:game/widgets/button.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
@@ -43,12 +42,12 @@ class GameWithDrawOptions extends StatefulWidget {
   final String applyAmount;
 
   @override
-  _GameWithDrawOptionsState createState() => _GameWithDrawOptionsState();
+  GameWithDrawOptionsState createState() => GameWithDrawOptionsState();
 }
 
 enum Type { bankcard, crypto }
 
-class _GameWithDrawOptionsState extends State<GameWithDrawOptions> {
+class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
   Type type = Type.bankcard;
   double exchangeRate = 0.00;
   double amount = 0.00;

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/controllers/search_vod_controller.dart';
-import 'package:shared/controllers/user_search_history_controller.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
 
@@ -14,10 +12,10 @@ class SearchResultPage extends StatefulWidget {
   final String keyword;
 
   @override
-  _SearchResultPageState createState() => _SearchResultPageState();
+  SearchResultPageState createState() => SearchResultPageState();
 }
 
-class _SearchResultPageState extends State<SearchResultPage> {
+class SearchResultPageState extends State<SearchResultPage> {
   final scrollController = ScrollController();
   late final SearchVodController searchVodController;
 

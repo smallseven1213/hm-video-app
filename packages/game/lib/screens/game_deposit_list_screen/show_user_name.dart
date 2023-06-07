@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/showFormDialog.dart';
+import 'package:game/utils/show_form_dialog.dart';
 import 'package:logger/logger.dart';
 
 final logger = Logger();
@@ -15,7 +15,7 @@ void showUserName(
   final userNameController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
 
-  final formDialog = showFormDialog(
+  showFormDialog(
     context,
     title: '輸入真實姓名',
     content: FormBuilder(

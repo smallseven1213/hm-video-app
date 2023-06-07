@@ -57,7 +57,7 @@ class BaseShortPageState extends State<BaseShortPage> {
     // 如果getx有值，就用getx的值
     var keyuuid = widget.uuid;
 
-    initialPageIndex = pageviewIndexController.pageIndexes.value[keyuuid] ?? 0;
+    initialPageIndex = pageviewIndexController.pageIndexes[keyuuid] ?? 0;
 
     _pageController?.dispose();
     _pageController = PageController(initialPage: initialPageIndex);

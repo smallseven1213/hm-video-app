@@ -3,7 +3,6 @@
 import 'package:app_gs/widgets/video_block_footer.dart';
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/index.dart';
 
 class Block5Widget extends StatelessWidget {
@@ -39,8 +38,8 @@ class Block5Widget extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 8.0),
                       width: (MediaQuery.of(context).size.width - 16) / 2.5,
                       child: VideoPreviewWidget(
-                        id: videos[index].id!,
-                        title: videos[index].title ?? '',
+                        id: videos[index].id,
+                        title: videos[index].title,
                         tags: videos[index].tags ?? [],
                         timeLength: videos[index].timeLength ?? 0,
                         coverHorizontal: videos[index].coverHorizontal ?? '',

@@ -7,7 +7,7 @@ import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/showModel.dart';
+import 'package:game/utils/show_model.dart';
 import 'package:game/widgets/button.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';

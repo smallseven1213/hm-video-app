@@ -6,12 +6,9 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/controllers/video_player_controller.dart';
-import 'package:shared/models/video.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
 
 import 'controls_overlay.dart';
 import 'error.dart';
@@ -25,7 +22,7 @@ class VideoPlayerArea extends StatefulWidget {
   final Vod video;
   final VideoPlayerController? controller;
 
-  VideoPlayerArea({
+  const VideoPlayerArea({
     Key? key,
     required this.videoUrl,
     required this.video,
@@ -34,10 +31,10 @@ class VideoPlayerArea extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VideoPlayerAreaState createState() => _VideoPlayerAreaState();
+  VideoPlayerAreaState createState() => VideoPlayerAreaState();
 }
 
-class _VideoPlayerAreaState extends State<VideoPlayerArea>
+class VideoPlayerAreaState extends State<VideoPlayerArea>
     with WidgetsBindingObserver, RouteAware {
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;

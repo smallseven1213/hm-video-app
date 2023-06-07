@@ -36,7 +36,7 @@ class Block2Widget extends StatelessWidget {
               child: videos[index].dataType == VideoType.areaAd.index
                   ? ChannelAreaBanner(
                       image: BannerPhoto.fromJson({
-                        'id': videos[index].id ?? 0,
+                        'id': videos[index].id,
                         'url': videos[index].adUrl ?? '',
                         'photoSid': videos[index].coverHorizontal ?? '',
                         'isAutoClose': false,

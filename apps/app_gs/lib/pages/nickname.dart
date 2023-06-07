@@ -9,7 +9,7 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../utils/showConfirmDialog.dart';
+import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 
 final logger = Logger();

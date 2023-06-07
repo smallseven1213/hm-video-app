@@ -1,7 +1,5 @@
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/controllers/supplier_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/navigator/delegate.dart';

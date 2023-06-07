@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/showConfirmDialog.dart';
+import '../../utils/show_confirm_dialog.dart';
 
 class ForgotPasswordButton extends StatelessWidget {
   const ForgotPasswordButton({Key? key}) : super(key: key);

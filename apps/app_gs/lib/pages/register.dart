@@ -10,7 +10,7 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../utils/showConfirmDialog.dart';
+import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
 
@@ -22,10 +22,10 @@ class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  RegisterPageState createState() => RegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class RegisterPageState extends State<RegisterPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _accountController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();

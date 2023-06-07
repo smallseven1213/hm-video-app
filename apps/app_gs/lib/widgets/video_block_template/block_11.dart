@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 
 class Block11Widget extends StatelessWidget {
-  List<Vod> videos = [];
-  Block11Widget({Key? key, required this.videos}) : super(key: key);
+  final List<Vod> videos;
+  const Block11Widget({Key? key, required this.videos}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

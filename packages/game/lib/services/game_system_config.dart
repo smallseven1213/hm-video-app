@@ -2,7 +2,7 @@ import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/services/platform_service.app.dart'
     if (dart.library.html) 'package:shared/services/platform_service.web.dart'
-    as appPlatformService;
+    as app_platform_service;
 
 enum ColorKeys {
   primary,
@@ -35,7 +35,7 @@ class GameSystemConfig {
 
   // STT | GP | 51SS | SV
   String project = const String.fromEnvironment('PROJECT', defaultValue: 'STT');
-  String agentCode = appPlatformService.AppPlatformService().getHost();
+  String agentCode = app_platform_service.AppPlatformService().getHost();
   String version = const String.fromEnvironment('VERSION',
       defaultValue: '--'); // 格式: 22.0713.1.0 之後改 --
   bool isMaintenance = false;
