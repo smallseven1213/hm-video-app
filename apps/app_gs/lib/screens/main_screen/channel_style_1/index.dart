@@ -1,4 +1,5 @@
 import 'package:app_gs/widgets/button.dart';
+import 'package:app_gs/widgets/refresh_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -27,13 +28,27 @@ class ChannelStyle1 extends StatefulWidget {
 class ChannelStyle1State extends State<ChannelStyle1>
     with AutomaticKeepAliveClientMixin {
   late ChannelDataController channelDataController;
+  int offset = 1;
 
   @override
   void initState() {
     super.initState();
-    channelDataController = Get.find<ChannelDataController>(
+    channelDataController = Get.put(
+      ChannelDataController(channelId: widget.channelId),
       tag: 'channelId-${widget.channelId}',
     );
+  }
+
+  void _onLoading() async {
+    print('onLoading');
+  }
+
+  void _onRefresh() async {
+    setState(() {
+      offset = offset <= 5 ? offset + 1 : 1;
+    });
+    channelDataController.mutateByChannelId(widget.channelId, offset: offset);
+    await Future.delayed(const Duration(milliseconds: 1000)); // 加延遲
   }
 
   @override
@@ -47,7 +62,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
       } else {
         List<Widget> sliverBlocks = [];
         for (var block in channelData.blocks!) {
+          print('頁數: $offset, 影片資料 ${block.videos!.data![0].title}');
           sliverBlocks.add(SliverToBoxAdapter(
+            key: Key('block${block.id}_${widget.channelId}_$offset'),
             child: Header(
               text: block.name ?? '',
               moreButton: block.isMore!
@@ -107,56 +124,59 @@ class ChannelStyle1State extends State<ChannelStyle1>
             child: SizedBox(height: 10),
           ));
         }
-
-        return CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(
-                child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Banners(channelId: widget.channelId),
-            )),
-            if (channelData.jingang!.title != '')
+        return RefreshList(
+          onRefresh: _onRefresh,
+          onLoading: _onLoading,
+          child: CustomScrollView(
+            physics: const BouncingScrollPhysics(),
+            slivers: [
               SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 8.0),
-                  child: Header(text: channelData.jingang!.title ?? ''),
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                child: Banners(channelId: widget.channelId),
+              )),
+              if (channelData.jingang!.title != '')
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 8.0),
+                    child: Header(text: channelData.jingang!.title ?? ''),
+                  ),
                 ),
-              ),
-            JingangList(channelId: widget.channelId),
-            ...sliverBlocks,
-            SliverToBoxAdapter(
-              child: AspectRatio(
-                aspectRatio: 390 / 190,
-                child: Stack(
-                  children: [
-                    const Positioned.fill(
-                      child: Image(
-                        image: AssetImage(
-                            'assets/images/channel_more_button.webp'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Center(
-                      child: SizedBox(
-                        height: 38,
-                        width: 183,
-                        child: Button(
-                          text: '探索更多內容',
-                          onPressed: () {
-                            MyRouteDelegate.of(context)
-                                .push(AppRoutes.filter.value);
-                          },
-                          type: 'primary',
-                          size: 'small',
+              JingangList(channelId: widget.channelId),
+              ...sliverBlocks,
+              SliverToBoxAdapter(
+                child: AspectRatio(
+                  aspectRatio: 390 / 190,
+                  child: Stack(
+                    children: [
+                      const Positioned.fill(
+                        child: Image(
+                          image: AssetImage(
+                              'assets/images/channel_more_button.webp'),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                    )
-                  ],
+                      Center(
+                        child: SizedBox(
+                          height: 38,
+                          width: 183,
+                          child: Button(
+                            text: '探索更多內容',
+                            onPressed: () {
+                              MyRouteDelegate.of(context)
+                                  .push(AppRoutes.filter.value);
+                            },
+                            type: 'primary',
+                            size: 'small',
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       }
     });
