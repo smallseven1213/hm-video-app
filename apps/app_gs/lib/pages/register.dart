@@ -69,7 +69,6 @@ class RegisterPageState extends State<RegisterPage> {
   void _handleRegister(context) async {
     if (_formKey.currentState!.validate()) {
       try {
-        // TODO: var invitationCode = Get.find<AppController>().invitationCode;
         var res = await authApi.register(
             uid: userController.info.value.uid,
             username: _accountController.text,

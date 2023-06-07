@@ -4,7 +4,7 @@ import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/screens/game_deposit_list_screen/payment_detail_tips.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/utils/submit_company_deposit_order.dart';
 import 'package:game/widgets/game_label.dart';
 import 'package:game/widgets/game_withdraw_field.dart';
@@ -63,15 +63,17 @@ class GameDepositDetailState extends State<GameDepositDetail> {
       var res = await GameLobbyApi()
           .getDepositPaymentChannelDetail(widget.paymentChannelId);
       if (res.code != '00') {
-        showConfirmDialog(
-          context: context,
-          title: '',
-          content: '你已被登出，請重新登入',
-          onConfirm: () async {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-        );
+        if (mounted) {
+          showConfirmDialog(
+            context: context,
+            title: '',
+            content: '你已被登出，請重新登入',
+            onConfirm: () async {
+              Navigator.pop(context);
+              Navigator.pop(context);
+            },
+          );
+        }
         return;
       } else {
         setState(() {

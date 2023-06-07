@@ -20,10 +20,10 @@ class ConfirmName extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ConfirmNameState createState() => _ConfirmNameState();
+  ConfirmNameState createState() => ConfirmNameState();
 }
 
-class _ConfirmNameState extends State<ConfirmName> {
+class ConfirmNameState extends State<ConfirmName> {
   bool enableSubmit = false;
   final _formKey = GlobalKey<FormBuilderState>();
   TextEditingController textEditingController = TextEditingController();

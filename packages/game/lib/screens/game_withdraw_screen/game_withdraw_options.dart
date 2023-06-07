@@ -4,7 +4,7 @@ import 'package:game/models/game_withdraw_stack_limit.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options_bankcard.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options_button.dart';
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/button.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';

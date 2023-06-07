@@ -25,7 +25,7 @@ class GameSetBankCard extends StatefulWidget {
 }
 
 class GameSetBankCardState extends State<GameSetBankCard> {
-  List<BankItem> BankList = [];
+  List<BankItem> bankList = [];
   final accountController = TextEditingController();
   final bankNameController = TextEditingController();
   final legalNameController = TextEditingController();
@@ -123,7 +123,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
     // ignore: unnecessary_null_comparison
     if (res != null) {
       setState(() {
-        BankList = res;
+        bankList = res;
       });
     }
   }
@@ -249,7 +249,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                               label: '銀行名稱',
                               hint: '請輸入銀行名稱',
                               controller: bankNameController,
-                              listContent: BankList,
+                              listContent: bankList,
                               onChanged: (value) => {
                                 _validateBankName(value),
                               },

@@ -11,9 +11,9 @@ class ModalDropDown extends StatefulWidget {
   final BoxDecoration? decoration;
   final bool isLast;
   final String title;
-  Function onChange;
+  final Function onChange;
 
-  ModalDropDown({
+  const ModalDropDown({
     super.key,
     this.items,
     this.onChanged,
@@ -24,10 +24,10 @@ class ModalDropDown extends StatefulWidget {
   });
 
   @override
-  _ModalDropDownState createState() => _ModalDropDownState();
+  ModalDropDownState createState() => ModalDropDownState();
 }
 
-class _ModalDropDownState extends State<ModalDropDown> {
+class ModalDropDownState extends State<ModalDropDown> {
   String _selected = '';
   List _items = [];
 

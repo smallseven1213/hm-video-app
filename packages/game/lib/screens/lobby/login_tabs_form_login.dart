@@ -6,7 +6,7 @@ import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/input.dart';
 
 final logger = Logger();

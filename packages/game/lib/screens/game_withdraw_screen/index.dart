@@ -11,7 +11,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 
-import 'package:game/utils/showConfirmDialog.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/utils/show_funding_password_bottom_sheet.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/apis/game_api.dart';
@@ -426,7 +426,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                 withdrawalFee: withdrawalFee,
                                 applyAmount: amountController.text,
                                 bankData: gameWithdrawController
-                                        .userPaymentSecurity.value
+                                        .userPaymentSecurity
                                         .firstWhere(
                                             (element) =>
                                                 element.remittanceType == 1,

@@ -29,7 +29,7 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
   String callbackPin = '';
   TextEditingController amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
-  bool _enableSubmit = false;
+  // bool _enableSubmit = false;
   final userController = Get.put(UserController());
   final gameWalletController = Get.put(GameWalletController());
   bool reachable = false;
@@ -283,10 +283,10 @@ class _GameDepositPollingState extends State<GameDepositPolling> {
                           key: _formKey,
                           onChanged: () {
                             _formKey.currentState!.save();
-                            setState(() {
-                              _enableSubmit =
-                                  _formKey.currentState?.validate() ?? false;
-                            });
+                            // setState(() {
+                            //   _enableSubmit =
+                            //       _formKey.currentState?.validate() ?? false;
+                            // });
                             logger.i(
                                 '驗證表單: ${_formKey.currentState?.validate()}');
                           },

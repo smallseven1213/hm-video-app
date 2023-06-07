@@ -104,18 +104,16 @@ void showConfirmDialog({
                             begin: Alignment.topCenter,
                             end: Alignment.bottomCenter,
                           ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: const Radius.circular(24),
-                            bottomRight:
-                                Radius.circular(onConfirm == null ? 24 : 0),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(24),
+                            bottomRight: Radius.circular(24),
                           ),
                         ),
                         child: InkWell(
                           onTap: onCancel,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: const Radius.circular(24),
-                            bottomRight:
-                                Radius.circular(onConfirm == null ? 24 : 0),
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(24),
+                            bottomRight: Radius.circular(24),
                           ),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -131,45 +129,44 @@ void showConfirmDialog({
                         ),
                       ),
                     ),
-                  if (onConfirm != null)
-                    Expanded(
-                      child: Ink(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              gamePrimaryButtonColor,
-                              gamePrimaryButtonColor
-                            ],
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                          ),
-                          borderRadius: BorderRadius.only(
-                            bottomLeft:
-                                Radius.circular(onCancel == null ? 24 : 0),
-                            bottomRight: const Radius.circular(24),
-                          ),
+                  Expanded(
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            gamePrimaryButtonColor,
+                            gamePrimaryButtonColor
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
                         ),
-                        child: InkWell(
-                          onTap: onConfirm,
-                          borderRadius: BorderRadius.only(
-                            bottomLeft:
-                                Radius.circular(onCancel == null ? 24 : 0),
-                            bottomRight: const Radius.circular(24),
-                          ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            child: Center(
-                              child: Text(
-                                confirmText,
-                                style: TextStyle(
-                                    color: gamePrimaryButtonTextColor,
-                                    fontSize: 16),
-                              ),
+                        borderRadius: BorderRadius.only(
+                          bottomLeft:
+                              Radius.circular(onCancel == null ? 24 : 0),
+                          bottomRight: const Radius.circular(24),
+                        ),
+                      ),
+                      child: InkWell(
+                        onTap: onConfirm,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft:
+                              Radius.circular(onCancel == null ? 24 : 0),
+                          bottomRight: const Radius.circular(24),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(vertical: 16),
+                          child: Center(
+                            child: Text(
+                              confirmText,
+                              style: TextStyle(
+                                  color: gamePrimaryButtonTextColor,
+                                  fontSize: 16),
                             ),
                           ),
                         ),
                       ),
                     ),
+                  ),
                 ],
               ),
             ],

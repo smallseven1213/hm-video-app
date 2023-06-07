@@ -19,7 +19,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
   final gameWithdrawController = Get.put(GameWithdrawController());
   final GlobalKey globalKey = GlobalKey();
 
-  void _onSubmit(context) async {
+  void onSubmit(context) async {
     gameWithdrawController.setSubmitButtonDisable(true);
     final response =
         await Get.put(GameLobbyApi()).checkPaymentPin(passwordController.text);
@@ -146,7 +146,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                   height: 44,
                   child: GameButton(
                     text: "確認送出",
-                    onPressed: () => _onSubmit(context),
+                    onPressed: () => onSubmit(context),
                     disabled: gameWithdrawController.enableSubmit.value,
                   ),
                 ),
