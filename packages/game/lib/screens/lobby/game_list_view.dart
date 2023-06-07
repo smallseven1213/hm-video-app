@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/utils/handle_game_item.dart';
+import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
@@ -198,7 +199,7 @@ class GameListViewState extends State<GameListView>
   Widget build(BuildContext context) {
     return Obx(() {
       if (gamesListController.games.isEmpty || _tabController == null) {
-        return const CircularProgressIndicator();
+        return const GameLoading();
       } else {
         return gamesListController.games.isNotEmpty
             ? SizedBox(
@@ -261,7 +262,7 @@ class GameListViewState extends State<GameListView>
                   ],
                 ),
               )
-            : const CircularProgressIndicator();
+            : const GameLoading();
       }
     });
   }

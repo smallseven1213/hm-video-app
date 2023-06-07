@@ -128,6 +128,7 @@ class ModalDropDownState extends State<ModalDropDown> {
                       icon: const Icon(
                         Icons.close,
                         color: Color(0xff979797),
+                        size: 16,
                       ),
                       onPressed: () {
                         Navigator.pop(context);
@@ -180,6 +181,7 @@ class ModalDropDownState extends State<ModalDropDown> {
                                       const Icon(
                                         Icons.check_circle_rounded,
                                         color: Color(0xff3de965),
+                                        size: 16,
                                       ),
                                   ],
                                 ),

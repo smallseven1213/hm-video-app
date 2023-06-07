@@ -45,7 +45,7 @@ void showModel(
                   child: Padding(
                     padding: title != null
                         ? const EdgeInsets.all(0)
-                        : const EdgeInsets.only(right: 10, top: 10),
+                        : const EdgeInsets.only(right: 15, top: 15),
                     child: InkWell(
                       onTap: () {
                         onClosed();

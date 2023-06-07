@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:game/utils/loading.dart';
 import 'package:hive_flutter/adapters.dart';
 
 class CacheImageWeb extends StatefulWidget {
@@ -85,7 +86,7 @@ class CacheImageWebState extends State<CacheImageWeb> {
       return widget.emptyImageUrl != null
           ? Stack(
               children: [
-                const Center(child: CircularProgressIndicator()),
+                const Center(child: GameLoading()),
                 Image.asset(
                   widget.emptyImageUrl!,
                   width: widget.width,
@@ -94,7 +95,7 @@ class CacheImageWebState extends State<CacheImageWeb> {
                 ),
               ],
             )
-          : const CircularProgressIndicator();
+          : const GameLoading();
     }
 
     return Image.memory(

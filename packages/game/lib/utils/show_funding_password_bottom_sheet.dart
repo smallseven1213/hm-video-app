@@ -75,6 +75,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                         icon: const Icon(
                           Icons.close,
                           color: Color(0xff979797),
+                          size: 16,
                         ),
                         onPressed: () {
                           gameWithdrawController.setSubmitButtonDisable(true);

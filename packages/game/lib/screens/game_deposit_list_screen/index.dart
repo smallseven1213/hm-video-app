@@ -9,6 +9,7 @@ import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -138,7 +139,7 @@ class GameDepositListState extends State<GameDepositList> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                const CircularProgressIndicator(),
+                                const GameLoading(),
                                 const SizedBox(
                                   height: 10,
                                 ),

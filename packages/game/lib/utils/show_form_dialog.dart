@@ -67,6 +67,7 @@ void showFormDialog(
                         child: Icon(
                           Icons.close,
                           color: gameLobbyLoginFormColor,
+                          size: 16,
                         ),
                       ),
                     ),
