@@ -152,7 +152,9 @@ class SliverBlockWidget extends StatelessWidget {
                 const SizedBox(
                   height: 10,
                 ),
-                if (index > 0 && (index + 1) % 3 == 0)
+                if (index > 0 &&
+                    (index + 1) % 3 == 0 &&
+                    index != vods.length - 1)
                   Obx(() {
                     var bannerIndex = (index / 3 - 1).ceil() %
                         (adWindowController.data.value.channelBanners.length);
