@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/tag_vod_controller.dart';
 
@@ -11,17 +10,17 @@ class TagVideoPage extends StatefulWidget {
   final int id;
   final String title;
 
-  TagVideoPage({
+  const TagVideoPage({
     Key? key,
     required this.id,
     required this.title,
   }) : super(key: key);
 
   @override
-  _TagVideoPageState createState() => _TagVideoPageState();
+  TagVideoPageState createState() => TagVideoPageState();
 }
 
-class _TagVideoPageState extends State<TagVideoPage> {
+class TagVideoPageState extends State<TagVideoPage> {
   final scrollController = ScrollController();
   late final TagVodController vodController;
 

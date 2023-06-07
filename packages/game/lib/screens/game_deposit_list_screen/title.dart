@@ -9,10 +9,10 @@ class DepositTitle extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _DepositTitleState createState() => _DepositTitleState();
+  DepositTitleState createState() => DepositTitleState();
 }
 
-class _DepositTitleState extends State<DepositTitle> {
+class DepositTitleState extends State<DepositTitle> {
   bool selected = false;
 
   @override

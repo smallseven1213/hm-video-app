@@ -106,7 +106,7 @@ class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
     observableVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       // 將會觸發狀態變化的操作放在這裡
       var playRecord = Vod(
         widget.video!.id,

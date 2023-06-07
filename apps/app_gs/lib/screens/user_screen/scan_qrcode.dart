@@ -8,7 +8,7 @@ import 'package:game/services/game_system_config.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
-import '../../utils/showConfirmDialog.dart';
+import '../../utils/show_confirm_dialog.dart';
 
 final authApi = AuthApi();
 final logger = Logger();
@@ -46,23 +46,27 @@ class _ScanQRViewState extends State<ScanQRView> {
       if (res != null) {
         logger.i('register success  ${res.data?['token']} }');
         Get.find<AuthController>().setToken(res.data?['token']);
-        showConfirmDialog(
-            context: context,
-            title: '提示',
-            message: '登入成功',
-            showCancelButton: false,
-            onConfirm: () {
-              Navigator.of(context).pop();
-            });
+        if (mounted) {
+          showConfirmDialog(
+              context: context,
+              title: '提示',
+              message: '登入成功',
+              showCancelButton: false,
+              onConfirm: () {
+                Navigator.of(context).pop();
+              });
+        }
       } else {
-        showConfirmDialog(
-            context: context,
-            title: '提示',
-            message: '登入失敗，用戶不存在。',
-            showCancelButton: false,
-            onConfirm: () {
-              controller.resumeCamera();
-            });
+        if (mounted) {
+          showConfirmDialog(
+              context: context,
+              title: '提示',
+              message: '登入失敗，用戶不存在。',
+              showCancelButton: false,
+              onConfirm: () {
+                controller.resumeCamera();
+              });
+        }
       }
     });
   }

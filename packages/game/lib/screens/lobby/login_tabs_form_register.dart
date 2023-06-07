@@ -23,10 +23,10 @@ class GameLobbyRegisterForm extends StatefulWidget {
   final Function() onSuccess;
 
   @override
-  _GameLobbyRegisterFormState createState() => _GameLobbyRegisterFormState();
+  GameLobbyRegisterFormState createState() => GameLobbyRegisterFormState();
 }
 
-class _GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
+class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
   Type tabsType = Type.register;
   final authApi = AuthApi();
   final UserController userController = Get.find<UserController>();

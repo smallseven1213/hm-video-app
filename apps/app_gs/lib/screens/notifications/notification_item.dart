@@ -13,10 +13,10 @@ class NotificationItem extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _NotificationItemState createState() => _NotificationItemState();
+  NotificationItemState createState() => NotificationItemState();
 }
 
-class _NotificationItemState extends State<NotificationItem>
+class NotificationItemState extends State<NotificationItem>
     with SingleTickerProviderStateMixin {
   bool _isExpanded = false;
   late AnimationController _animationController;

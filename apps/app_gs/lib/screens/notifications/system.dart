@@ -36,7 +36,7 @@ class SystemScreen extends StatelessWidget {
                       time: e.createdAt,
                       isSelected:
                           listEditorController.selectedIds.contains(e.id),
-                      id: e.id!,
+                      id: e.id,
                     )),
               ],
             )),

@@ -70,7 +70,7 @@ class Block3Widget extends StatelessWidget {
                 child: block.isAreaAds == true && index % 4 == 3
                     ? ChannelAreaBanner(
                         image: BannerPhoto.fromJson({
-                          'id': result[index][0].id ?? 0,
+                          'id': result[index][0].id,
                           'url': result[index][0].adUrl ?? '',
                           'photoSid': result[index][0].coverHorizontal ?? '',
                           'isAutoClose': false,

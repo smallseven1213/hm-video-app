@@ -11,10 +11,10 @@ class GamePaymentResult extends StatefulWidget {
   const GamePaymentResult({Key? key}) : super(key: key);
 
   @override
-  _GamePaymentResultState createState() => _GamePaymentResultState();
+  GamePaymentResultState createState() => GamePaymentResultState();
 }
 
-class _GamePaymentResultState extends State<GamePaymentResult> {
+class GamePaymentResultState extends State<GamePaymentResult> {
   Future<void> alertModal(
       {String title = '', String content = '', VoidCallback? onTap}) async {
     return showDialog(

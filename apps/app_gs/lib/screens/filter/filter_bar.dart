@@ -13,10 +13,10 @@ class FilterBar extends StatefulWidget {
   const FilterBar({Key? key, required this.scrollController}) : super(key: key);
 
   @override
-  _FilterBarState createState() => _FilterBarState();
+  FilterBarState createState() => FilterBarState();
 }
 
-class _FilterBarState extends State<FilterBar> {
+class FilterBarState extends State<FilterBar> {
   bool isOpen = false;
   final controller = Get.find<FilterScreenController>();
 

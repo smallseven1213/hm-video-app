@@ -10,10 +10,10 @@ class AppDownloadAd extends StatefulWidget {
   const AppDownloadAd({super.key});
 
   @override
-  _AppDownloadAdState createState() => _AppDownloadAdState();
+  AppDownloadAdState createState() => AppDownloadAdState();
 }
 
-class _AppDownloadAdState extends State<AppDownloadAd> {
+class AppDownloadAdState extends State<AppDownloadAd> {
   final VideoAdsController controller = Get.find<VideoAdsController>();
 
   @override
@@ -53,7 +53,7 @@ class _AppDownloadAdState extends State<AppDownloadAd> {
           BannerLink(
             id: appDownloadAd.id,
             url: appDownloadAd.url ?? '',
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               height: 120,
               child: Flex(
@@ -120,10 +120,10 @@ class _AppDownloadAdState extends State<AppDownloadAd> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
-                              child: Center(
+                              child: const Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: const [
+                                  children: [
                                     Icon(
                                       Icons.download,
                                       color: Color(0xffffffff),

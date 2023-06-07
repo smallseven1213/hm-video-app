@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../utils/showConfirmDialog.dart';
+import '../../utils/show_confirm_dialog.dart';
 
 class ForgotPasswordButton extends StatelessWidget {
   const ForgotPasswordButton({Key? key}) : super(key: key);
@@ -16,7 +16,7 @@ class ForgotPasswordButton extends StatelessWidget {
             showCancelButton: false,
             onConfirm: () {});
       },
-      child: Column(children: [
+      child: const Column(children: [
         Text('忘記密碼', style: TextStyle(color: Colors.white)),
       ]),
     );

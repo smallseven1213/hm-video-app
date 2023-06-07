@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
-import 'package:shared/controllers/layout_controller.dart';
 import 'package:shared/models/color_keys.dart';
 
 import '../../config/colors.dart';
@@ -22,10 +21,10 @@ class LayoutTabBarItem extends StatefulWidget {
   final String name;
 
   @override
-  _LayoutTabBarItemState createState() => _LayoutTabBarItemState();
+  LayoutTabBarItemState createState() => LayoutTabBarItemState();
 }
 
-class _LayoutTabBarItemState extends State<LayoutTabBarItem> {
+class LayoutTabBarItemState extends State<LayoutTabBarItem> {
   late ChannelScreenTabController channelScreenTabController;
 
   @override

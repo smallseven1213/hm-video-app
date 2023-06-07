@@ -6,10 +6,9 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:logger/logger.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-import 'package:game/screens/game_deposit_list_screen/submitDepositOrder.dart';
+import 'package:game/screens/game_deposit_list_screen/submit_deposit_order.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:get_storage/get_storage.dart';
-
 
 final logger = Logger();
 

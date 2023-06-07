@@ -33,7 +33,7 @@ class FavoritesShortScreen extends StatelessWidget {
           mainAxisSpacing: 1,
         ),
         itemBuilder: (BuildContext context, int index) {
-          var vod = userFavoritesShortController.data.value[index];
+          var vod = userFavoritesShortController.data[index];
           return Obx(() => VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,

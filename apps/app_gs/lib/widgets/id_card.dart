@@ -82,7 +82,7 @@ class IDCard extends StatelessWidget {
             //     156.33 * (3.141592 / 180)), // Convert degrees to radians
           ),
         ),
-        child: IDCardContent(),
+        child: const IDCardContent(),
       ),
     );
   }

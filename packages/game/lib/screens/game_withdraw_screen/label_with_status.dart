@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/turnover_content.dart';
-import 'package:game/utils/showFormDialog.dart';
+import 'package:game/utils/show_form_dialog.dart';
 import 'package:logger/logger.dart';
 
 final logger = Logger();
@@ -29,10 +29,10 @@ class LabelWithStatus extends StatefulWidget {
   final IconData? rightIcon;
 
   @override
-  _LabelWithStatusState createState() => _LabelWithStatusState();
+  LabelWithStatusState createState() => LabelWithStatusState();
 }
 
-class _LabelWithStatusState extends State<LabelWithStatus> {
+class LabelWithStatusState extends State<LabelWithStatus> {
   _handleClickStatus() {
     showFormDialog(context, title: '', onClosed: () {
       Navigator.pop(context);

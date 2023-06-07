@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared/navigator/delegate.dart';
 
 class TagItem extends StatelessWidget {
   final VoidCallback onTap;

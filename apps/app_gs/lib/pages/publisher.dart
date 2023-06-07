@@ -10,10 +10,10 @@ class PublisherPage extends StatefulWidget {
   const PublisherPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  _VendorVideosPageState createState() => _VendorVideosPageState();
+  VendorVideosPageState createState() => VendorVideosPageState();
 }
 
-class _VendorVideosPageState extends State<PublisherPage>
+class VendorVideosPageState extends State<PublisherPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late PublisherController publisherController;

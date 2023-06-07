@@ -3,7 +3,6 @@ import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 
 import '../../widgets/header.dart';
-import 'ad.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
@@ -38,7 +37,7 @@ class UserScreen extends StatelessWidget {
                 height: 10,
               ),
             ),
-            GridMenu(),
+            const GridMenu(),
             const SliverToBoxAdapter(
               child: SizedBox(
                 height: 10,

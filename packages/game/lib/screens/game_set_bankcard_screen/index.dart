@@ -6,8 +6,8 @@ import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/models/bank.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/onLoading.dart';
-import 'package:game/utils/showFundingPasswordBottomSheet.dart';
+import 'package:game/utils/on_loading.dart';
+import 'package:game/utils/show_funding_password_bottom_sheet.dart';
 import 'package:game/widgets/autocomplete.dart';
 import 'package:game/widgets/button.dart';
 import 'package:game/widgets/input.dart';
@@ -21,10 +21,10 @@ class GameSetBankCard extends StatefulWidget {
   const GameSetBankCard({Key? key}) : super(key: key);
 
   @override
-  _GameSetBankCardState createState() => _GameSetBankCardState();
+  GameSetBankCardState createState() => GameSetBankCardState();
 }
 
-class _GameSetBankCardState extends State<GameSetBankCard> {
+class GameSetBankCardState extends State<GameSetBankCard> {
   List<BankItem> BankList = [];
   final accountController = TextEditingController();
   final bankNameController = TextEditingController();

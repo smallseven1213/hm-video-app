@@ -1,6 +1,5 @@
 import 'package:app_gs/screens/search/tag_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/tag_popular_controller.dart';
 import 'package:shared/controllers/video_popular_controller.dart';

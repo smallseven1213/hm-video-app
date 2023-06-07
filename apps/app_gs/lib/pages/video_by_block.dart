@@ -3,11 +3,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/ad_window_controller.dart';
 import 'package:shared/controllers/block_vod_controller.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/banner_photo.dart';
-import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/channel_area_banner.dart';
 import '../widgets/custom_app_bar.dart';
@@ -55,7 +52,7 @@ class VideoByBlockPage extends StatelessWidget {
         body: Obx(() {
           // 使用 splitVodList 函數將 vodList 按每100個Vod分割成子列表
           List<List<Vod>> vodChunks =
-              splitVodList(blockVodController.vodList.value, 100);
+              splitVodList(blockVodController.vodList, 100);
 
           return CustomScrollView(
             controller: blockVodController.scrollController,

@@ -20,10 +20,10 @@ class VideoProvider extends StatefulWidget {
       : super(key: key);
 
   @override
-  _VideoProviderState createState() => _VideoProviderState();
+  VideoProviderState createState() => VideoProviderState();
 }
 
-class _VideoProviderState extends State<VideoProvider> {
+class VideoProviderState extends State<VideoProvider> {
   late final String controllerTag;
   late final ShortVideoDetailController controller;
 
@@ -85,11 +85,10 @@ class VideoScreenWithVideoUrl extends StatefulWidget {
       : super(key: key);
 
   @override
-  _VideoScreenWithVideoUrlState createState() =>
-      _VideoScreenWithVideoUrlState();
+  VideoScreenWithVideoUrlState createState() => VideoScreenWithVideoUrlState();
 }
 
-class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
+class VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
   late ObservableVideoPlayerController observableVideoPlayerController;
 
   @override

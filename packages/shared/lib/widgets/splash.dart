@@ -241,11 +241,13 @@ class _SplashState extends State<Splash> {
           } else {
             message = '帳號建立失敗。';
           }
-          alertDialog(
-            context,
-            title: '失敗',
-            content: message,
-          );
+          if (mounted) {
+            alertDialog(
+              context,
+              title: '失敗',
+              content: message,
+            );
+          }
         }
       } catch (err) {
         logger.i('err: $err');

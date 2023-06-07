@@ -7,7 +7,7 @@ final logger = Logger();
 
 class VideoError extends StatelessWidget {
   final String coverHorizontal;
-  final onTap;
+  final Function() onTap;
 
   const VideoError({
     Key? key,

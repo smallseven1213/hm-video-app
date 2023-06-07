@@ -2,17 +2,16 @@ import 'package:app_gs/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
 class UserSreenBanner extends StatefulWidget {
   const UserSreenBanner({Key? key}) : super(key: key);
 
   @override
-  _UserSreenBannerState createState() => _UserSreenBannerState();
+  UserSreenBannerState createState() => UserSreenBannerState();
 }
 
-class _UserSreenBannerState extends State<UserSreenBanner> {
+class UserSreenBannerState extends State<UserSreenBanner> {
   final BannerController bannerController = Get.find<BannerController>();
 
   @override

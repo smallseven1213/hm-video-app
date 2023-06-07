@@ -18,9 +18,9 @@ class BaseShortPage extends StatefulWidget {
   final int itemId; // areaId, tagId, supplierId
   final bool? supportedPlayRecord;
   final bool? useCachedList;
-  bool? displayFavoriteAndCollectCount;
+  final bool? displayFavoriteAndCollectCount;
 
-  BaseShortPage({
+  const BaseShortPage({
     required this.createController,
     required this.videoId,
     required this.itemId,
@@ -57,7 +57,7 @@ class BaseShortPageState extends State<BaseShortPage> {
     // 如果getx有值，就用getx的值
     var keyuuid = widget.uuid;
 
-    initialPageIndex = pageviewIndexController.pageIndexes.value[keyuuid] ?? 0;
+    initialPageIndex = pageviewIndexController.pageIndexes[keyuuid] ?? 0;
 
     _pageController?.dispose();
     _pageController = PageController(initialPage: initialPageIndex);

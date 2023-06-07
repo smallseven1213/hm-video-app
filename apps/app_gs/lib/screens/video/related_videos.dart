@@ -41,17 +41,17 @@ class RelatedVideos extends StatelessWidget {
           controller: tabController,
           children: [
             VideoList(
-              videos: blockVideosController.videoByActor.value,
+              videos: blockVideosController.videoByActor,
               tabController: tabController,
               category: VideoFilterType.actor,
             ),
             VideoList(
-              videos: blockVideosController.videoByTag.value,
+              videos: blockVideosController.videoByTag,
               tabController: tabController,
               category: VideoFilterType.category,
             ),
             VideoList(
-              videos: blockVideosController.videoByInternalTag.value,
+              videos: blockVideosController.videoByInternalTag,
               tabController: tabController,
               category: VideoFilterType.tag,
             ),

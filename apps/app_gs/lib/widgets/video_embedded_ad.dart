@@ -114,9 +114,9 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                     ], // 圓角大小
                   ),
                   padding: const EdgeInsets.all(4),
-                  child: Row(
+                  child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
+                    children: [
                       Icon(
                         Icons.download,
                         color: Colors.black,

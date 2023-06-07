@@ -100,7 +100,7 @@ class VodsState extends State<Vods> {
                 film: vodController!.film.value,
                 templateId: widget.templateId ?? 3,
                 areaId: widget.areaId,
-                vods: vodController!.vodList.value,
+                vods: vodController!.vodList,
               ),
             ),
             if (vodController!.hasMoreData.value)

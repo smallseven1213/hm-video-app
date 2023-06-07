@@ -14,10 +14,10 @@ class GameLabel extends StatefulWidget {
   final Icon? hasIcon;
 
   @override
-  _GameLabelState createState() => _GameLabelState();
+  GameLabelState createState() => GameLabelState();
 }
 
-class _GameLabelState extends State<GameLabel> {
+class GameLabelState extends State<GameLabel> {
   @override
   Widget build(BuildContext context) {
     return Column(

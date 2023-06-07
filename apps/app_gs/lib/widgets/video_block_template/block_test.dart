@@ -3,9 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class BlockTest extends StatelessWidget {
-  final Key? key;
-
-  const BlockTest({required this.key}) : super(key: key);
+  const BlockTest({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

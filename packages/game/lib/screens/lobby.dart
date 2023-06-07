@@ -4,7 +4,7 @@ import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:game/screens/lobby/login_tabs.dart';
-import 'package:game/utils/showModel.dart';
+import 'package:game/utils/show_model.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';

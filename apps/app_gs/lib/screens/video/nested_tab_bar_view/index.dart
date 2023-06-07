@@ -27,10 +27,10 @@ class NestedTabBarView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _NestedTabBarViewState createState() => _NestedTabBarViewState();
+  NestedTabBarViewState createState() => NestedTabBarViewState();
 }
 
-class _NestedTabBarViewState extends State<NestedTabBarView>
+class NestedTabBarViewState extends State<NestedTabBarView>
     with SingleTickerProviderStateMixin {
   late BlockVideosByCategoryController blockVideosController;
   late TabController _tabController;

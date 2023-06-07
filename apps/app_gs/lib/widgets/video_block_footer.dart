@@ -2,7 +2,6 @@ import 'package:app_gs/config/colors.dart';
 import 'package:app_gs/widgets/channel_area_banner.dart';
 import 'package:app_gs/widgets/glowing_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/color_keys.dart';

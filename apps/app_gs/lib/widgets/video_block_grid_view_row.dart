@@ -65,7 +65,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
         children: videoData
             .expand(
               (e) => [
-                e.id == null
+                e.id.isNaN
                     ? const Expanded(
                         child: SizedBox(
                           height: 100,

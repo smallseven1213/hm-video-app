@@ -6,10 +6,10 @@ class Loading extends StatefulWidget {
   const Loading({Key? key, this.loadingText}) : super(key: key);
 
   @override
-  _LoadingState createState() => _LoadingState();
+  LoadingState createState() => LoadingState();
 }
 
-class _LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
+class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _animation;
 

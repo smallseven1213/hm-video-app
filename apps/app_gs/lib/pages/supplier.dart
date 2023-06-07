@@ -34,7 +34,7 @@ class SupplierPage extends StatelessWidget {
                     ),
                   ),
                   SupplierCard(id: id),
-                  SupplierVods(id: id, vodList: vodController.vodList.value),
+                  SupplierVods(id: id, vodList: vodController.vodList),
                   if (vodController.hasMoreData.value)
                     SliverVideoPreviewSkeletonList(),
                   if (!vodController.hasMoreData.value)

@@ -9,13 +9,12 @@ class AuthTextFieldSuffixIcon extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AuthTextFieldSuffixIconState createState() =>
-      _AuthTextFieldSuffixIconState();
+  AuthTextFieldSuffixIconState createState() => AuthTextFieldSuffixIconState();
 }
 
 double newSize = 20;
 
-class _AuthTextFieldSuffixIconState extends State<AuthTextFieldSuffixIcon> {
+class AuthTextFieldSuffixIconState extends State<AuthTextFieldSuffixIcon> {
   bool display = false;
 
   @override

@@ -1,8 +1,6 @@
 import 'package:app_gs/config/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
-import 'package:shared/navigator/delegate.dart';
 
 class Header extends StatelessWidget {
   final String text;
@@ -65,7 +63,7 @@ class Header extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 4,
                   )
                 ],

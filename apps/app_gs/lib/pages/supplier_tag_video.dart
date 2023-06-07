@@ -36,7 +36,7 @@ class SupplierTagVideoPage extends StatelessWidget {
               SliverGrid(
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    var vod = vodController.vodList.value[index];
+                    var vod = vodController.vodList[index];
                     return VideoPreviewWidget(
                         id: vod.id,
                         film: 2,

@@ -4,7 +4,7 @@ import 'package:shimmer/shimmer.dart';
 class VideoPreviewSkeleton extends StatelessWidget {
   final double imageRatio;
 
-  VideoPreviewSkeleton({Key? key, this.imageRatio = 374 / 198})
+  const VideoPreviewSkeleton({Key? key, this.imageRatio = 374 / 198})
       : super(key: key);
 
   @override
@@ -18,26 +18,26 @@ class VideoPreviewSkeleton extends StatelessWidget {
           AspectRatio(
             aspectRatio: imageRatio,
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(10)),
                 color: Colors.white,
               ),
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Container(
             width: double.infinity,
             height: 12,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(5)),
               color: Colors.white,
             ),
           ),
-          SizedBox(height: 5),
+          const SizedBox(height: 5),
           Container(
             width: 100,
             height: 20,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               color: Colors.white,
             ),

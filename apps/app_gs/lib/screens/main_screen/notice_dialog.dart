@@ -8,7 +8,6 @@ import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/ad_banner.dart';
-import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 final logger = Logger();
@@ -38,7 +37,7 @@ class NoticeDialogState extends State<NoticeDialog> {
     if (notice != null && mounted) {
       showDialog(
         context: context,
-        builder: (BuildContext _ctx) {
+        builder: (BuildContext ctx) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
                 side:
@@ -170,7 +169,7 @@ class NoticeDialogState extends State<NoticeDialog> {
   }
 
   showAdDialog(int index) {
-    double dialogWidth = MediaQuery.of(context).size.width * 0.8;
+    MediaQuery.of(context).size.width * 0.8;
     List<BannerPhoto>? banners =
         bannerController.banners[BannerPosition.lobbyPopup];
     if (banners!.isEmpty || banners.length < index) {
@@ -180,7 +179,7 @@ class NoticeDialogState extends State<NoticeDialog> {
     return showDialog(
         context: context,
         barrierDismissible: false,
-        builder: (_ctx) {
+        builder: (ctx) {
           return AlertDialog(
             elevation: 0,
             backgroundColor: Colors.transparent,

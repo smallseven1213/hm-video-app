@@ -1,5 +1,5 @@
 import 'package:app_gs/screens/user_screen/scan_qrcode.dart';
-import 'package:app_gs/utils/showConfirmDialog.dart';
+import 'package:app_gs/utils/show_confirm_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,8 +43,9 @@ class ListMenu extends StatelessWidget {
                 title: const Text('拍照'),
                 onTap: () async {
                   Navigator.of(context).pop();
-                  PermissionStatus status = await Permission.camera.request();
-                  scanQRCode(context, status);
+                  Permission.camera.request().then((PermissionStatus status) {
+                    scanQRCode(context, status);
+                  });
                 },
               ),
               ListTile(
@@ -93,7 +94,7 @@ class ListMenu extends StatelessWidget {
       source: ImageSource.gallery,
     );
     if (image != null) {
-      String? str = await Scan.parse(image!.path);
+      String? str = await Scan.parse(image.path);
       var res = await authApi.loginByCode(str ?? '');
       if (res != null) {
         // do login

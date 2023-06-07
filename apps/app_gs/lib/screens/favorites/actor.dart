@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/circle_sidimage_text_item.dart';
 import '../../widgets/no_data.dart';

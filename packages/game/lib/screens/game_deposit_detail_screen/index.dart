@@ -5,7 +5,7 @@ import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/screens/game_deposit_list_screen/payment_detail_tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/showConfirmDialog.dart';
-import 'package:game/utils/submitCompanyDepositOrder.dart';
+import 'package:game/utils/submit_company_deposit_order.dart';
 import 'package:game/widgets/game_label.dart';
 import 'package:game/widgets/game_withdraw_field.dart';
 import 'package:game/widgets/input.dart';
@@ -26,10 +26,10 @@ class GameDepositDetail extends StatefulWidget {
       : super(key: key);
 
   @override
-  _GameDepositDetailState createState() => _GameDepositDetailState();
+  GameDepositDetailState createState() => GameDepositDetailState();
 }
 
-class _GameDepositDetailState extends State<GameDepositDetail> {
+class GameDepositDetailState extends State<GameDepositDetail> {
   UserController get userController => Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();

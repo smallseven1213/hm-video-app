@@ -131,10 +131,10 @@ class ContentAndButton extends StatefulWidget {
   const ContentAndButton({Key? key}) : super(key: key);
 
   @override
-  _ContentAndButtonState createState() => _ContentAndButtonState();
+  ContentAndButtonState createState() => ContentAndButtonState();
 }
 
-class _ContentAndButtonState extends State<ContentAndButton> {
+class ContentAndButtonState extends State<ContentAndButton> {
   UserController get userController => Get.find<UserController>();
 
   @override

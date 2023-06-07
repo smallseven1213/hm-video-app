@@ -18,10 +18,10 @@ final logger = Logger();
 class ActorsPage extends StatefulWidget {
   const ActorsPage({Key? key}) : super(key: key);
   @override
-  _ActorsPageState createState() => _ActorsPageState();
+  ActorsPageState createState() => ActorsPageState();
 }
 
-class _ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
+class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   final actorsController = Get.put(ActorsController());
   final actorRegionController = Get.find<ActorRegionController>();
 
@@ -98,7 +98,7 @@ class _ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
       ),
       body: Column(
         children: [
-          ActorsTabBar(),
+          const ActorsTabBar(),
           Row(
             children: [
               const SizedBox(

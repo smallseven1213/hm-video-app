@@ -4,7 +4,7 @@ import 'package:game/utils/showConfirmDialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import 'package:game/utils/onLoading.dart';
+import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
 
 import '../enums/game_app_routes.dart';

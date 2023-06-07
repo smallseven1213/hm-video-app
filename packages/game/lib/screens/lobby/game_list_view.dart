@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:game/utils/handleGameItem.dart';
+import 'package:game/utils/handle_game_item.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
@@ -72,10 +72,10 @@ class GameListView extends StatefulWidget {
 
   const GameListView({Key? key, required this.deductHeight}) : super(key: key);
   @override
-  _GameListViewState createState() => _GameListViewState();
+  GameListViewState createState() => GameListViewState();
 }
 
-class _GameListViewState extends State<GameListView>
+class GameListViewState extends State<GameListView>
     with SingleTickerProviderStateMixin {
   final GamesListController gamesListController =
       Get.put(GamesListController());
@@ -123,8 +123,7 @@ class _GameListViewState extends State<GameListView>
   }
 
   _handleTabSelection() {
-    gamesListController
-        .updateSelectedCategoryIndex(_tabController!.index ?? -1);
+    gamesListController.updateSelectedCategoryIndex(_tabController!.index);
     if (_tabController?.index == -1) {
       _getGameHistory();
     }

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/no_data.dart';
 import '../../widgets/video_preview_with_edit.dart';

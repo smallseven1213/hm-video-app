@@ -16,10 +16,10 @@ class GameLobbyLoginTabs extends StatefulWidget {
   final Function() onSuccess;
 
   @override
-  _GameLobbyLoginTabsState createState() => _GameLobbyLoginTabsState();
+  GameLobbyLoginTabsState createState() => GameLobbyLoginTabsState();
 }
 
-class _GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
+class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
   Type tabsType = Type.login;
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();

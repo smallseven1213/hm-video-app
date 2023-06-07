@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/runningMain.dart';
+import 'package:shared/utils/running_main.dart';
 import 'package:shared/widgets/root.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 
@@ -102,7 +102,7 @@ final Map<String, RouteWidgetBuilder> routes = {
   GameAppRoutes.withdrawRecord.value: (context, args) =>
       const GameWithdrawRecordScreen(),
   AppRoutes.login.value: (context, args) => const LoginPage(),
-  AppRoutes.nickname.value: (context, args) => NicknamePage(),
+  AppRoutes.nickname.value: (context, args) => const NicknamePage(),
   AppRoutes.register.value: (context, args) => const RegisterPage(),
   AppRoutes.share.value: (context, args) => const SharePage(),
   AppRoutes.playRecord.value: (context, args) => const PlayRecordPage(),
