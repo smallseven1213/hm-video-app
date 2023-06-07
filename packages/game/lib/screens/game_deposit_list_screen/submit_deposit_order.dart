@@ -21,11 +21,8 @@ submitDepositOrder(
       'amount: $amount, paymentChannelId: $paymentChannelId, userName: $userName');
   onLoading(context, status: true);
   // ignore: avoid_init_to_null
-  if (GetPlatform.isWeb) {
-    // windowRef = html.window.open('', '_blank');
-    if (await canLaunchUrl(Uri.parse(''))) {
-      await launchUrl(Uri.parse(''), webOnlyWindowName: '_blank');
-    }
+  if (await canLaunchUrl(Uri.parse(''))) {
+    await launchUrl(Uri.parse(''), webOnlyWindowName: '_blank');
   }
   await Future.delayed(const Duration(milliseconds: 66));
   try {
@@ -38,18 +35,15 @@ submitDepositOrder(
       if (GetPlatform.isWeb) {
         await Future.delayed(const Duration(milliseconds: 500));
         onLoading(context, status: false);
-        Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
+        Navigator.pop(context);
         // windowRef?.location.href = value;
         launch(value, webOnlyWindowName: '_blank');
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
-        // gto('/game/deposit/payment-result/0/$activePayment');
       } else {
-        // await launch(value, webOnlyWindowName: '_blank');
         await launch(value, webOnlyWindowName: '_blank');
         onLoading(context, status: false);
-        Navigator.pop(context); // 把驗證pin和真實姓名的dialog關掉
+        Navigator.pop(context);
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
-        // gto('/game/deposit/payment-result/0/$activePayment');
       }
     } else {
       onLoading(context, status: false);
