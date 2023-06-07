@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:game/utils/loading.dart';
 import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
 
@@ -317,10 +318,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                     ? Container(
                         padding: const EdgeInsets.all(10),
                         child: const Center(
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2.0,
-                            color: Color.fromARGB(208, 255, 255, 255),
-                          ),
+                          child: GameLoading(),
                         ),
                       )
                     : Container(

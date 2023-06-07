@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/models/game_order.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:game/utils/loading.dart';
 
 class AmountItems extends StatefulWidget {
   final Function updateLoading;
@@ -142,7 +143,7 @@ class AmountItemsState extends State<AmountItems> {
                         .toList(),
                   );
                 } else {
-                  return const Center(child: CircularProgressIndicator());
+                  return const Center(child: GameLoading());
                 }
               },
             ),

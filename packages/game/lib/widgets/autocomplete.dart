@@ -90,6 +90,7 @@ class _AutoCompleteState extends State<AutoComplete> {
                     child: Icon(
                       Icons.cancel,
                       color: gameLobbyIconColor,
+                      size: 16,
                     ),
                   ),
                 ),

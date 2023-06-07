@@ -176,6 +176,7 @@ class _AmountFormState extends State<AmountForm> {
                       icon: Icon(
                         Icons.cancel,
                         color: gameLobbyIconColor,
+                        size: 16,
                       ),
                       onPressed: () {
                         widget.controller.clear();

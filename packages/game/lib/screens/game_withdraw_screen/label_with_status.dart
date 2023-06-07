@@ -66,6 +66,7 @@ class LabelWithStatusState extends State<LabelWithStatus> {
                   child: Icon(
                     widget.leftIcon,
                     color: gameLobbyIconColor,
+                    size: 16,
                   ),
                 ),
               ),
@@ -116,6 +117,7 @@ class LabelWithStatusState extends State<LabelWithStatus> {
                   child: Icon(
                     widget.rightIcon,
                     color: gameLobbyIconColor,
+                    size: 16,
                   ),
                 ),
               ),

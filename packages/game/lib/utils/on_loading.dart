@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game/utils/loading.dart';
 
 void onLoading(BuildContext context, {status}) {
   if (status == true) {
@@ -7,10 +8,7 @@ void onLoading(BuildContext context, {status}) {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return const Center(
-          child: CircularProgressIndicator(
-            strokeWidth: 2.0,
-            color: Color.fromARGB(208, 255, 255, 255),
-          ),
+          child: GameLoading(),
         );
       },
     );

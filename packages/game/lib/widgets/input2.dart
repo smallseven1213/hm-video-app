@@ -72,6 +72,7 @@ class GameInputState extends State<GameInput2> {
                       child: Icon(
                         obscureText ? Icons.visibility_off : Icons.visibility,
                         color: gameLobbyIconColor,
+                        size: 16,
                       ),
                     ),
                   )
@@ -88,6 +89,7 @@ class GameInputState extends State<GameInput2> {
                 child: Icon(
                   Icons.cancel,
                   color: gameLobbyIconColor,
+                  size: 16,
                 ),
               ),
             ),
