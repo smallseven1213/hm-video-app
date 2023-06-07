@@ -77,9 +77,9 @@ class MyRouteDelegate extends RouterDelegate<String>
     final Completer<void> completer = Completer<void>();
     final uuid = const Uuid().v4(); // 生成新的UUID
 
-    // if (removeSamePath) {
-    //   _stack.removeWhere((stackData) => stackData.path == routeName);
-    // }
+    if (removeSamePath) {
+      _stack.removeWhere((stackData) => stackData.path == routeName);
+    }
 
     _stack.add(StackData(
       path: routeName,
