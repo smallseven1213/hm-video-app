@@ -40,8 +40,10 @@ class Block3Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
+  final int film;
   const Block3Widget({
     Key? key,
+    required this.film,
     required this.block,
     required this.updateBlock,
     required this.channelId,
@@ -59,7 +61,10 @@ class Block3Widget extends StatelessWidget {
           (BuildContext context, int index) {
             if (index == result.length) {
               return VideoBlockFooter(
-                  block: block, updateBlock: updateBlock, channelId: channelId);
+                  film: film,
+                  block: block,
+                  updateBlock: updateBlock,
+                  channelId: channelId);
             }
 
             return Padding(

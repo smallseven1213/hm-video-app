@@ -102,7 +102,7 @@ class VideoBlockFooter extends StatelessWidget {
   final int channelId;
   final Function updateBlock;
   final double? imageRatio;
-  final int? film;
+  final int film;
 
   const VideoBlockFooter(
       {Key? key,
@@ -110,7 +110,7 @@ class VideoBlockFooter extends StatelessWidget {
       required this.updateBlock,
       required this.channelId,
       this.imageRatio,
-      this.film = 1})
+      required this.film})
       : super(key: key);
 
   @override
@@ -144,7 +144,7 @@ class VideoBlockFooter extends StatelessWidget {
                       MyRouteDelegate.of(context).push(
                         AppRoutes.videoByBlock.value,
                         args: {
-                          'id': block.id,
+                          'blockId': block.id,
                           'title': block.name,
                           'channelId': channelId,
                           'film': 2,

@@ -40,13 +40,13 @@ class Block10Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
-  final int? film;
+  final int film;
   const Block10Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
     required this.channelId,
-    this.film,
+    required this.film,
   }) : super(key: key);
 
   @override

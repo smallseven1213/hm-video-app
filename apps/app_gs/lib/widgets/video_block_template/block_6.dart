@@ -10,11 +10,13 @@ class Block6Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
+  final int film;
   const Block6Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
     required this.channelId,
+    required this.film,
   }) : super(key: key);
 
   @override
@@ -57,7 +59,10 @@ class Block6Widget extends StatelessWidget {
               ),
             ),
             VideoBlockFooter(
-                block: block, updateBlock: updateBlock, channelId: channelId),
+                film: film,
+                block: block,
+                updateBlock: updateBlock,
+                channelId: channelId),
           ],
         ),
       ),
