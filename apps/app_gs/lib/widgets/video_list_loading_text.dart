@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 final List<String> loadingTextList = [
@@ -12,36 +11,33 @@ final List<String> loadingTextList = [
   '拼命搬磚中',
 ];
 
-class VideoListLoadingText extends StatelessWidget {
+class VideoListLoadingText extends StatefulWidget {
   const VideoListLoadingText({Key? key}) : super(key: key);
 
   @override
+  VideoListLoadingTextState createState() => VideoListLoadingTextState();
+}
+
+class VideoListLoadingTextState extends State<VideoListLoadingText> {
+  var rng = Random();
+  var text = '';
+
+  @override
+  void initState() {
+    setState(() {
+      text = loadingTextList[rng.nextInt(loadingTextList.length)];
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var rng = Random();
-    // add CircularProgressIndicator
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const SizedBox(
-          height: 15.0,
-          width: 15.0,
-          child: Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              color: Color(0xFF486a89),
-            ),
-          ),
-        ),
-        const SizedBox(width: 8),
-        Text(
-          // loadingText,
-          loadingTextList[rng.nextInt(loadingTextList.length)],
-          style: const TextStyle(
-            fontSize: 13,
-            color: Color(0xFF486a89),
-          ),
-        ),
-      ],
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 13,
+        color: Color(0xFF486a89),
+      ),
     );
   }
 }

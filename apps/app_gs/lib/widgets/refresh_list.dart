@@ -4,7 +4,6 @@ import 'package:app_gs/widgets/video_list_loading_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-
 class RefreshList extends StatefulWidget {
   final Function? onRefresh;
   final Function? onLoading;
@@ -66,13 +65,30 @@ class RefreshListState extends State<RefreshList> {
             child: Center(
               child: Column(
                 children: [
-                  mode == RefreshStatus.completed
-                      ? const Text('內容已更新',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF486a89),
-                          ))
-                      : VideoListLoadingText(),
+                  if (mode == RefreshStatus.completed)
+                    const Text('內容已更新',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Color(0xFF486a89),
+                        )),
+                  if (mode == RefreshStatus.refreshing)
+                    const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          height: 15.0,
+                          width: 15.0,
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Color(0xFF486a89),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 8),
+                        VideoListLoadingText(),
+                      ],
+                    ),
                   const SizedBox(height: 15),
                 ],
               ),

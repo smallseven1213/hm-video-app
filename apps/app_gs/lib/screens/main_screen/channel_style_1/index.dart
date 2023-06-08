@@ -28,7 +28,6 @@ class ChannelStyle1 extends StatefulWidget {
 class ChannelStyle1State extends State<ChannelStyle1>
     with AutomaticKeepAliveClientMixin {
   late ChannelDataController channelDataController;
-  int offset = 1;
 
   @override
   void initState() {
@@ -44,10 +43,10 @@ class ChannelStyle1State extends State<ChannelStyle1>
   }
 
   void _onRefresh() async {
-    setState(() {
-      offset = offset <= 5 ? offset + 1 : 1;
-    });
-    channelDataController.mutateByChannelId(widget.channelId, offset: offset);
+    channelDataController.offset = channelDataController.offset <= 5
+        ? channelDataController.offset + 1
+        : 1;
+    channelDataController.mutateByChannelId(widget.channelId);
     await Future.delayed(const Duration(milliseconds: 1000)); // 加延遲
   }
 
@@ -62,9 +61,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
       } else {
         List<Widget> sliverBlocks = [];
         for (var block in channelData.blocks!) {
-          print('頁數: $offset, 影片資料 ${block.videos!.data![0].title}');
           sliverBlocks.add(SliverToBoxAdapter(
-            key: Key('block${block.id}_${widget.channelId}_$offset'),
+            key: Key(
+                'block${block.id}_${widget.channelId}_${channelDataController.offset}'),
             child: Header(
               text: block.name ?? '',
               moreButton: block.isMore!
