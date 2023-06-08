@@ -36,6 +36,8 @@ class SupplierVods extends StatelessWidget {
               hasRadius: false,
               hasTitle: false,
               imageRatio: gridRatio,
+              displayVideoTimes: false,
+              displayViewTimes: false,
               displayCoverVertical: true,
               coverVertical: vod.coverVertical!,
               coverHorizontal: vod.coverHorizontal!,

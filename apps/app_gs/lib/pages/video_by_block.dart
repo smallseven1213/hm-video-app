@@ -118,6 +118,8 @@ class SliverBlockWidget extends StatelessWidget {
                         videoViewTimes: vods[index * 2].videoViewTimes!,
                         film: film,
                         blockId: blockId,
+                        displayVideoTimes: film == 1,
+                        displayViewTimes: film == 1,
                         displayCoverVertical: film == 2,
                         videoCollectTimes: vods[index * 2].videoCollectTimes!,
                       ),
@@ -139,6 +141,8 @@ class SliverBlockWidget extends StatelessWidget {
                                   vods[index * 2 + 1].videoViewTimes!,
                               film: film,
                               blockId: blockId,
+                              displayVideoTimes: film == 1,
+                              displayViewTimes: film == 1,
                               displayCoverVertical: film == 2,
                               videoCollectTimes:
                                   vods[index * 2 + 1].videoCollectTimes!,

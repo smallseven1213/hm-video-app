@@ -58,6 +58,9 @@ class Block2Widget extends StatelessWidget {
                       videoCollectTimes: videos[index].videoCollectTimes ?? 0,
                       detail: videos[index],
                       isEmbeddedAds: block.isEmbeddedAds ?? false,
+                      displayVideoTimes: film == 1,
+                      displayViewTimes: film == 1,
+                      displayVideoCollectTimes: film == 2,
                     ),
             );
           },

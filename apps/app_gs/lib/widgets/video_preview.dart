@@ -17,30 +17,36 @@ class ViewInfo extends StatelessWidget {
   final int viewCount;
   final int duration;
   final int? videoCollectTimes;
-  final int? film;
   final bool? displayVideoCollectTimes;
+  final bool? displayVideoTimes;
+  final bool? displayViewTimes;
 
-  const ViewInfo(
-      {Key? key,
-      this.film = 1,
-      required this.viewCount,
-      required this.duration,
-      this.displayVideoCollectTimes = true,
-      this.videoCollectTimes})
-      : super(key: key);
+  const ViewInfo({
+    Key? key,
+    required this.viewCount,
+    required this.duration,
+    this.displayVideoCollectTimes = true,
+    this.displayVideoTimes = true,
+    this.displayViewTimes = true,
+    this.videoCollectTimes,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> infoItems = film == 1
-        ? [
-            ViewTimes(times: viewCount),
-            VideoTime(time: duration),
-          ]
-        : displayVideoCollectTimes == true
-            ? [
-                VideoCollectionTimes(times: videoCollectTimes ?? 0),
-              ]
-            : [];
+    List<Widget> infoItems = [];
+
+    if (displayViewTimes == true) {
+      infoItems.add(ViewTimes(times: viewCount));
+    }
+
+    if (displayVideoTimes == true) {
+      infoItems.add(VideoTime(time: duration));
+    }
+
+    if (displayVideoCollectTimes == true) {
+      infoItems.add(VideoCollectionTimes(times: videoCollectTimes ?? 0));
+    }
+
     if (infoItems.isEmpty) {
       return Container();
     }
@@ -59,12 +65,12 @@ class ViewInfo extends StatelessWidget {
           ],
           stops: const [0.05, 1.0],
         ),
-        // color: Colors.black.withOpacity(0.5),
       ),
       child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: infoItems),
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: infoItems,
+      ),
     );
   }
 }
@@ -90,34 +96,38 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool? hasTitle; // 要不要標題
   final bool? hasTapEvent; // 要不要點擊事件
   final bool? displayVideoCollectTimes;
+  final bool? displayVideoTimes;
+  final bool? displayViewTimes;
   final Function()? onTap;
   final Function()? onOverrideRedirectTap; // 自定義路由轉址
 
-  const VideoPreviewWidget(
-      {Key? key,
-      required this.id,
-      required this.coverVertical,
-      required this.coverHorizontal,
-      this.displayCoverVertical = false,
-      required this.timeLength,
-      required this.tags,
-      required this.title,
-      this.videoViewTimes = 0,
-      this.videoCollectTimes = 0,
-      this.isEmbeddedAds = false,
-      this.detail,
-      this.imageRatio,
-      this.film = 1,
-      this.hasTags = true,
-      this.hasInfoView = true,
-      this.blockId,
-      this.hasRadius = true,
-      this.hasTitle = true,
-      this.onTap,
-      this.hasTapEvent = true,
-      this.onOverrideRedirectTap,
-      this.displayVideoCollectTimes = true})
-      : super(key: key);
+  const VideoPreviewWidget({
+    Key? key,
+    required this.id,
+    required this.coverVertical,
+    required this.coverHorizontal,
+    this.displayCoverVertical = false,
+    required this.timeLength,
+    required this.tags,
+    required this.title,
+    this.videoViewTimes = 0,
+    this.videoCollectTimes = 0,
+    this.isEmbeddedAds = false,
+    this.detail,
+    this.imageRatio,
+    this.film = 1,
+    this.hasTags = true,
+    this.hasInfoView = true,
+    this.blockId,
+    this.hasRadius = true,
+    this.hasTitle = true,
+    this.onTap,
+    this.hasTapEvent = true,
+    this.onOverrideRedirectTap,
+    this.displayVideoCollectTimes = true,
+    this.displayVideoTimes = true,
+    this.displayViewTimes = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -237,10 +247,11 @@ class VideoPreviewWidget extends StatelessWidget {
                     right: 0,
                     bottom: 0,
                     child: ViewInfo(
-                        film: film,
                         videoCollectTimes: videoCollectTimes,
                         viewCount: videoViewTimes ?? 0,
                         duration: timeLength,
+                        displayVideoTimes: displayVideoTimes,
+                        displayViewTimes: displayViewTimes,
                         displayVideoCollectTimes: displayVideoCollectTimes)),
             ],
           ),

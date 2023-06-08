@@ -91,6 +91,7 @@ class SliverVodGrid extends StatelessWidget {
                                 videoViewTimes: firstVideo.videoViewTimes!,
                                 videoCollectTimes:
                                     firstVideo.videoCollectTimes!,
+                                displayVideoCollectTimes: false,
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -108,7 +109,9 @@ class SliverVodGrid extends StatelessWidget {
                                         videoViewTimes:
                                             secondVideo.videoViewTimes!,
                                         videoCollectTimes:
-                                            secondVideo.videoCollectTimes!)
+                                            secondVideo.videoCollectTimes!,
+                                        displayVideoCollectTimes: false,
+                                      )
                                     : const SizedBox.shrink()),
                           ],
                         ),

@@ -99,6 +99,9 @@ class Block1Widget extends StatelessWidget {
                                   result[index][0].videoCollectTimes ?? 0,
                               detail: result[index][0],
                               isEmbeddedAds: block.isEmbeddedAds ?? false,
+                              displayVideoTimes: film == 1,
+                              displayViewTimes: film == 1,
+                              displayVideoCollectTimes: film == 2,
                             )
                       : VideoBlockGridViewRow(
                           videoData: result[index],

@@ -190,6 +190,9 @@ class ChannelStyle4 extends StatelessWidget {
                                               videoCollectTimes:
                                                   vod.videoCollectTimes!,
                                               imageRatio: 119 / 159,
+                                              displayVideoTimes: false,
+                                              displayViewTimes: false,
+                                              displayVideoCollectTimes: false,
                                             )),
                                       );
                                     },
