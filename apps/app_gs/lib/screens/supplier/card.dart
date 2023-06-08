@@ -7,15 +7,27 @@ import 'package:shared/models/supplier.dart';
 
 import '../../widgets/actor_avatar.dart';
 
-class SupplierCard extends StatelessWidget {
+class SupplierCard extends StatefulWidget {
   final int id;
+
   const SupplierCard({Key? key, required this.id}) : super(key: key);
 
   @override
+  _SupplierCardState createState() => _SupplierCardState();
+}
+
+class _SupplierCardState extends State<SupplierCard> {
+  late final SupplierController supplierController;
+
+  @override
+  void initState() {
+    super.initState();
+    supplierController = Get.put(SupplierController(supplierId: widget.id),
+        tag: widget.id.toString());
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final supplierController = SupplierController(
-      supplierId: id,
-    );
     return Obx(() {
       if (supplierController.supplier.value.id == null) {
         return const SliverToBoxAdapter(
