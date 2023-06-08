@@ -8,6 +8,7 @@ var logger = Logger();
 
 class ChannelDataController extends GetxController {
   final int channelId;
+  int offset = 1;
   var channelData = Rx<ChannelInfo?>(null);
 
   ChannelDataController({required this.channelId}) {
@@ -15,7 +16,8 @@ class ChannelDataController extends GetxController {
   }
 
   void mutateByChannelId(int channelId) async {
-    var res = await VodApi().getBlockVodsByChannelAds(channelId);
+    var res =
+        await VodApi().getBlockVodsByChannelAds(channelId, offset: offset);
     channelData.value = res;
   }
 }

@@ -1,30 +1,16 @@
-import 'dart:math';
-
+import 'package:app_gs/widgets/video_list_loading_text.dart';
 import 'package:flutter/material.dart';
 
 class SliverVideoPreviewSkeletonList extends StatelessWidget {
   final double imageRatio;
 
-  SliverVideoPreviewSkeletonList({Key? key, this.imageRatio = 374 / 198})
+  const SliverVideoPreviewSkeletonList({Key? key, this.imageRatio = 374 / 198})
       : super(key: key);
-
-  final List<String> messages = [
-    '檔案很大，你忍一下',
-    '還沒準備好，你先悠著來',
-    '精彩即將呈現',
-    '努力加載中',
-    '讓檔案載一會兒',
-    '美好事物，值得等待',
-    '拼命搬磚中'
-  ];
 
   @override
   Widget build(BuildContext context) {
-    final random = Random();
-    final message = messages[random.nextInt(messages.length)];
-
-    return SliverPadding(
-        padding: const EdgeInsets.only(bottom: 20),
+    return const SliverPadding(
+        padding: EdgeInsets.only(bottom: 20),
         sliver: SliverToBoxAdapter(
           child: Center(
             child: SizedBox(
@@ -32,20 +18,14 @@ class SliverVideoPreviewSkeletonList extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Image(
+                  Image(
                     image: AssetImage('assets/images/list_no_more.png'),
                     width: 20,
                     height: 20,
                   ),
-                  const SizedBox(
+                  SizedBox(
                       width: 8), // Add some space between the icon and the text
-                  Text(
-                    message, // Use the random message
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF486a89),
-                    ),
-                  ),
+                  VideoListLoadingText(),
                 ],
               ),
             ),
