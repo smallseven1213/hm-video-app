@@ -129,6 +129,8 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
             videoViewTimes: videoViewTimes,
             videoCollectTimes: videoCollectTimes,
             hasTapEvent: !isEditing,
+            displayVideoTimes: film == 1,
+            displayViewTimes: film == 1,
             displayVideoCollectTimes: displayVideoCollectTimes,
             onOverrideRedirectTap: onOverrideRedirectTap),
         if (isEditing)

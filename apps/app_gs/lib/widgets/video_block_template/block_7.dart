@@ -137,6 +137,9 @@ class Block7WidgetState extends State<Block7Widget> {
                         videoViewTimes: vod.videoViewTimes!,
                         videoCollectTimes: vod.videoCollectTimes!,
                         blockId: widget.block.id,
+                        displayVideoTimes: widget.film == 1,
+                        displayViewTimes: widget.film == 1,
+                        displayVideoCollectTimes: widget.film == 2,
                       ),
                     ),
                   );

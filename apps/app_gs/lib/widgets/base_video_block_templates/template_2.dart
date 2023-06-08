@@ -37,6 +37,9 @@ SliverChildBuilderDelegate baseVideoBlockTemplate2({
                 isEmbeddedAds: true,
                 blockId: areaId,
                 film: film,
+                displayVideoTimes: film == 1,
+                displayViewTimes: film == 1,
+                displayVideoCollectTimes: film == 2,
               ),
       );
     },
