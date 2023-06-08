@@ -135,7 +135,8 @@ class SliverVodGrid extends StatelessWidget {
                 ),
               ),
             ),
-          if (hasMoreData && totalRows > 0) SliverVideoPreviewSkeletonList(),
+          if (hasMoreData && totalRows > 0)
+            const SliverVideoPreviewSkeletonList(),
           if (!hasMoreData && totalRows > 0)
             SliverToBoxAdapter(
               child: noMoreWidget,

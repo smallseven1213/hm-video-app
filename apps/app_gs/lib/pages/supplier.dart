@@ -93,7 +93,7 @@ class _SupplierPageState extends State<SupplierPage>
                   SupplierCard(id: widget.id),
                   SupplierVods(id: widget.id, vodList: vodController.vodList),
                   if (vodController.hasMoreData.value)
-                    SliverVideoPreviewSkeletonList(),
+                    const SliverVideoPreviewSkeletonList(),
                   if (!vodController.hasMoreData.value)
                     SliverToBoxAdapter(
                       child: ListNoMore(),
