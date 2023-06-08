@@ -13,6 +13,7 @@ class AutoComplete extends StatefulWidget {
       required this.hint,
       required this.controller,
       this.onChanged,
+      this.onClear,
       this.errorMessage})
       : super(key: key);
   final List<BankItem> listContent;
@@ -20,6 +21,7 @@ class AutoComplete extends StatefulWidget {
   final String hint;
   final TextEditingController controller;
   final Function? onChanged;
+  final Function? onClear;
   final String? errorMessage;
 
   @override
@@ -86,6 +88,8 @@ class _AutoCompleteState extends State<AutoComplete> {
                   child: GestureDetector(
                     onTap: () {
                       fieldTextEditingController.clear();
+                      widget.controller.clear();
+                      widget.onClear!();
                     },
                     child: Icon(
                       Icons.cancel,
