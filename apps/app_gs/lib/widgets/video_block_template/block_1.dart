@@ -13,8 +13,11 @@ List<List<Vod>> organizeRowData(List<Vod> videos, Blocks block) {
   List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
   int blockLength = block.isAreaAds == true ? 6 : 5;
+  int videoLength =
+      videos.length > blockQuantity ? blockQuantity : videos.length;
+
   try {
-    for (int i = 0; i < blockQuantity;) {
+    for (int i = 0; i < videoLength;) {
       if (i != 0 && i == videos.length) break;
       bool hasAreaAd =
           block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;

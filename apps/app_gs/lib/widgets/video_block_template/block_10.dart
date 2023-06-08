@@ -8,8 +8,11 @@ import 'package:shared/models/index.dart';
 List<List<Vod>> organizeRowData(List videos, Blocks block) {
   List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
+  int videoLength =
+      videos.length > blockQuantity ? blockQuantity : videos.length;
+
   try {
-    for (int i = 0; i < blockQuantity;) {
+    for (int i = 0; i < videoLength;) {
       if (i != 0 && i == videos.length) break;
       bool hasAreaAd = videos[i].dataType == VideoType.areaAd.index;
       if (hasAreaAd) {

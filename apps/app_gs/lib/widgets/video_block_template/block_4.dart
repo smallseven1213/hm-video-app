@@ -11,8 +11,10 @@ final logger = Logger();
 List<List<Vod>> organizeRowData(List videos, Blocks block) {
   List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
+  int videoLength =
+      videos.length > blockQuantity ? blockQuantity : videos.length;
 
-  for (int i = 0; i < blockQuantity;) {
+  for (int i = 0; i < videoLength;) {
     if (i != 0 && i == videos.length - 1) break;
     bool hasAreaAd = videos[i].dataType == VideoType.areaAd.index;
     try {

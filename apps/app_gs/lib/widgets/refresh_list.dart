@@ -51,53 +51,55 @@ class RefreshListState extends State<RefreshList> {
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-      enablePullDown: true,
-      enablePullUp: false,
-      controller: _refreshController,
-      // dragStartBehavior: DragStartBehavior.down,
-      onLoading: _onLoading,
-      onRefresh: _onRefresh,
-      header: CustomHeader(
-        height: 40,
-        completeDuration: const Duration(milliseconds: 300),
-        builder: (_ctx, RefreshStatus? mode) {
-          return SizedBox(
-            child: Center(
-              child: Column(
-                children: [
-                  if (mode == RefreshStatus.completed)
-                    const Text('內容已更新',
-                        style: TextStyle(
-                          fontSize: 13,
-                          color: Color(0xFF486a89),
-                        )),
-                  if (mode == RefreshStatus.refreshing)
-                    const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: 15.0,
-                          width: 15.0,
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Color(0xFF486a89),
+    return RefreshConfiguration(
+      headerTriggerDistance: 40.0,
+      child: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: false,
+        controller: _refreshController,
+        onLoading: _onLoading,
+        onRefresh: _onRefresh,
+        header: CustomHeader(
+          height: 40,
+          completeDuration: const Duration(milliseconds: 300),
+          builder: (_ctx, RefreshStatus? mode) {
+            return SizedBox(
+              child: Center(
+                child: Column(
+                  children: [
+                    if (mode == RefreshStatus.completed)
+                      const Text('內容已更新',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Color(0xFF486a89),
+                          )),
+                    if (mode == RefreshStatus.refreshing)
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            height: 15.0,
+                            width: 15.0,
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Color(0xFF486a89),
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(width: 8),
-                        VideoListLoadingText(),
-                      ],
-                    ),
-                  const SizedBox(height: 15),
-                ],
+                          SizedBox(width: 8),
+                          VideoListLoadingText(),
+                        ],
+                      ),
+                    const SizedBox(height: 15),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
+        child: widget.child,
       ),
-      child: widget.child,
     );
   }
 }
