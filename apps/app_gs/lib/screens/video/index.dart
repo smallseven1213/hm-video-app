@@ -1,5 +1,6 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:uuid/uuid.dart' as uuid;
@@ -94,6 +95,8 @@ class VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.black));
 
     if (!Get.isRegistered<ObservableVideoPlayerController>(
         tag: widget.videoUrl)) {
@@ -128,6 +131,8 @@ class VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
   void dispose() {
     observableVideoPlayerController.dispose();
     Get.delete<ObservableVideoPlayerController>(tag: widget.videoUrl);
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     super.dispose();
   }
 

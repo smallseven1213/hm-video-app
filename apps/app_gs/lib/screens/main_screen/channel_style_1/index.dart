@@ -47,7 +47,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
         ? channelDataController.offset + 1
         : 1;
     channelDataController.mutateByChannelId(widget.channelId);
-    await Future.delayed(const Duration(milliseconds: 1000)); // 加延遲
+    await Future.delayed(const Duration(milliseconds: 300)); // 加延遲
   }
 
   @override
