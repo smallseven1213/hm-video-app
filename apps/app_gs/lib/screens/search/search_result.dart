@@ -31,6 +31,7 @@ class SearchResultPageState extends State<SearchResultPage> {
   @override
   Widget build(BuildContext context) {
     return SliverVodGrid(
+      displayVideoCollectTimes: false,
       videos: searchVodController.vodList,
       hasMoreData: searchVodController.hasMoreData.value,
       noMoreWidget: ListNoMore(),

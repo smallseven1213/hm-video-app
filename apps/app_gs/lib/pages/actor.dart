@@ -97,6 +97,7 @@ class ActorPageState extends State<ActorPage>
                       hasMoreData: actorLatestVodController.hasMoreData.value,
                       noMoreWidget: ListNoMore(),
                       usePrimaryParentScrollController: true,
+                      displayVideoCollectTimes: false,
                       onScrollEnd: () {
                         actorLatestVodController.loadMoreData();
                       }),
@@ -106,6 +107,7 @@ class ActorPageState extends State<ActorPage>
                       hasMoreData: actorNewestVodController.hasMoreData.value,
                       noMoreWidget: ListNoMore(),
                       usePrimaryParentScrollController: true,
+                      displayVideoCollectTimes: false,
                       onScrollEnd: () {
                         actorNewestVodController.loadMoreData();
                       }),

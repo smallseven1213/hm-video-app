@@ -45,6 +45,8 @@ class CollectionShortScreen extends StatelessWidget {
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
               displayVideoCollectTimes: false,
+              displayVideoTimes: false,
+              displayViewTimes: false,
               onEditingTap: () {
                 listEditorController.toggleSelected(vod.id);
               },

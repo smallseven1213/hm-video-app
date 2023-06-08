@@ -22,7 +22,7 @@ class VideoCollectionTimes extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: ' ${getViewTimes(times)}',
+            text: ' ${getViewTimes(times, shouldCalculateThousands: false)}',
             style: TextStyle(
               color: color ?? Colors.white,
               letterSpacing: 0.1,

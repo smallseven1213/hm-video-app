@@ -152,8 +152,6 @@ class RecommandScreen extends StatelessWidget {
                                     timeLength: secondVideo.timeLength!,
                                     tags: secondVideo.tags!,
                                     title: secondVideo.title,
-                                    displayVideoTimes: true,
-                                    displayViewTimes: true,
                                     videoViewTimes: secondVideo.videoViewTimes!,
                                     videoCollectTimes:
                                         secondVideo.videoCollectTimes!,

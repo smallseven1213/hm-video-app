@@ -41,6 +41,7 @@ class TagVideoPageState extends State<TagVideoPage> {
       ),
       body: Obx(() {
         return SliverVodGrid(
+          displayVideoCollectTimes: false,
           videos: vodController.vodList,
           hasMoreData: vodController.hasMoreData.value,
           noMoreWidget: ListNoMore(),
