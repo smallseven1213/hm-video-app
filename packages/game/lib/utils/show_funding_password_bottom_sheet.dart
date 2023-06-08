@@ -132,6 +132,10 @@ void showFundingPasswordBottomSheet(BuildContext context,
                                   : true,
                             )
                           },
+                          onClear: () => {
+                            passwordController.clear(),
+                            gameWithdrawController.setSubmitButtonDisable(true),
+                          },
                           errorMessage: formKey
                               .currentState!.fields['password']!.errorText,
                         );

@@ -62,7 +62,7 @@ class GameInputState extends State<GameInput> {
                 child: widget.hasIcon,
               ),
             SizedBox(
-              width: widget.hasIcon != null ? 70 : 100,
+              width: widget.hasIcon != null ? 60 : 100,
               child: Text(
                 widget.label,
                 style: TextStyle(
