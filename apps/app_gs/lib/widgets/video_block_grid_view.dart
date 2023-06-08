@@ -15,6 +15,9 @@ class VideoBlockGridView extends StatelessWidget {
   final int? blockId;
   final bool? hasInfoView;
   final int? film;
+  final bool? displayVideoCollectTimes;
+  final bool? displayVideoTimes;
+  final bool? displayViewTimes;
 
   const VideoBlockGridView({
     Key? key,
@@ -26,6 +29,9 @@ class VideoBlockGridView extends StatelessWidget {
     this.blockId,
     this.hasInfoView = true,
     this.film = 1,
+    this.displayVideoCollectTimes = true,
+    this.displayVideoTimes = true,
+    this.displayViewTimes = true,
   }) : super(key: key);
 
   @override
@@ -52,6 +58,9 @@ class VideoBlockGridView extends StatelessWidget {
               blockId: blockId,
               hasInfoView: hasInfoView,
               film: film,
+              displayVideoCollectTimes: displayVideoCollectTimes,
+              displayVideoTimes: displayVideoTimes,
+              displayViewTimes: displayViewTimes,
             ),
             const SizedBox(height: 8),
           ],

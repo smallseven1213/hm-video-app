@@ -93,6 +93,9 @@ class Block4Widget extends StatelessWidget {
                           displayCoverVertical: true,
                           hasInfoView: false,
                           film: 2,
+                          displayVideoCollectTimes: false,
+                          displayVideoTimes: false,
+                          displayViewTimes: false,
                         ),
                 ),
               );

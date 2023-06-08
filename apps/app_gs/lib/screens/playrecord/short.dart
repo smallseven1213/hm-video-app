@@ -67,6 +67,8 @@ class PlayRecordShortScreen extends StatelessWidget {
               title: vod.title,
               videoViewTimes: vod.videoViewTimes ?? 0,
               videoCollectTimes: vod.videoCollectTimes ?? 0,
+              displayVideoTimes: false,
+              displayViewTimes: false,
             );
           });
         },

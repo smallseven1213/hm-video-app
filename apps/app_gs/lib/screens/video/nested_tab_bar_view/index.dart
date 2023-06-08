@@ -141,6 +141,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                     hasMoreData: false,
                     noMoreWidget: ListNoMore(),
                     usePrimaryParentScrollController: true,
+                    displayVideoCollectTimes: false,
                     onScrollEnd: () {}),
               SliverVodGrid(
                   key: const Key('video_by_internal_tag'),
@@ -148,6 +149,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                   hasMoreData: false,
                   noMoreWidget: ListNoMore(),
                   usePrimaryParentScrollController: true,
+                  displayVideoCollectTimes: false,
                   onScrollEnd: () {}),
               SliverVodGrid(
                   key: const Key('video_by_tag'),
@@ -155,6 +157,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                   hasMoreData: false,
                   noMoreWidget: ListNoMore(),
                   usePrimaryParentScrollController: true,
+                  displayVideoCollectTimes: false,
                   onScrollEnd: () {}),
             ]),
         //   )

@@ -56,6 +56,8 @@ class SupplierTagVideoPage extends StatelessWidget {
                         hasTags: false,
                         tags: vod.tags!,
                         title: vod.title,
+                        displayVideoTimes: false,
+                        displayViewTimes: false,
                         videoViewTimes: vod.videoViewTimes!,
                         videoCollectTimes: vod.videoCollectTimes!);
                   },

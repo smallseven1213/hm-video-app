@@ -12,6 +12,9 @@ class SliverVodGrid extends StatelessWidget {
   final Function? onScrollEnd;
   final bool? usePrimaryParentScrollController;
   final ScrollController? customScrollController;
+  final bool? displayVideoCollectTimes;
+  final bool? displayVideoTimes;
+  final bool? displayViewTimes;
 
   const SliverVodGrid(
       {Key? key,
@@ -21,6 +24,9 @@ class SliverVodGrid extends StatelessWidget {
       this.headerExtends,
       this.onScrollEnd,
       this.usePrimaryParentScrollController = false,
+      this.displayVideoCollectTimes = true,
+      this.displayVideoTimes = true,
+      this.displayViewTimes = true,
       this.customScrollController})
       : super(key: key);
 
@@ -91,7 +97,10 @@ class SliverVodGrid extends StatelessWidget {
                                 videoViewTimes: firstVideo.videoViewTimes!,
                                 videoCollectTimes:
                                     firstVideo.videoCollectTimes!,
-                                displayVideoCollectTimes: false,
+                                displayVideoCollectTimes:
+                                    displayVideoCollectTimes,
+                                displayVideoTimes: displayVideoTimes,
+                                displayViewTimes: displayViewTimes,
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -110,7 +119,10 @@ class SliverVodGrid extends StatelessWidget {
                                             secondVideo.videoViewTimes!,
                                         videoCollectTimes:
                                             secondVideo.videoCollectTimes!,
-                                        displayVideoCollectTimes: false,
+                                        displayVideoCollectTimes:
+                                            displayVideoCollectTimes,
+                                        displayVideoTimes: displayVideoTimes,
+                                        displayViewTimes: displayViewTimes,
                                       )
                                     : const SizedBox.shrink()),
                           ],

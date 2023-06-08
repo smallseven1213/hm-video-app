@@ -91,6 +91,7 @@ class FilterScrollViewState extends State<FilterScrollView> {
           ],
           videos: vodController.vodList,
           hasMoreData: vodController.hasMoreData.value,
+          displayVideoCollectTimes: false,
           noMoreWidget: ListNoMore(),
           customScrollController: vodController.scrollController,
         ),

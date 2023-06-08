@@ -52,6 +52,7 @@ class PlayRecordVideoScreen extends StatelessWidget {
                         timeLength: video1.timeLength ?? 0,
                         tags: video1.tags ?? [],
                         title: video1.title,
+                        displayVideoCollectTimes: false,
                         videoViewTimes: video1.videoViewTimes!,
                       )),
                 ),
