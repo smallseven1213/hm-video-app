@@ -27,8 +27,8 @@ class _UserInfoService extends State<UserInfoService> {
       height: 60,
       child: InkWell(
         onTap: () {
-          launch(
-              '${systemConfig.apiHost}/public/domains/domain/customer-services');
+          launchUrl(Uri.parse(
+              '${systemConfig.apiHost}/public/domains/domain/customer-services'));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

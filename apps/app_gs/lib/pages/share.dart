@@ -215,7 +215,14 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       version: QrVersions.auto,
                       size: 90.0,
                       backgroundColor: Colors.white,
-                      foregroundColor: const Color.fromARGB(255, 2, 44, 108),
+                      eyeStyle: const QrEyeStyle(
+                        eyeShape: QrEyeShape.square,
+                        color: Color.fromARGB(255, 2, 44, 108),
+                      ),
+                      dataModuleStyle: const QrDataModuleStyle(
+                        dataModuleShape: QrDataModuleShape.square,
+                        color: Color.fromARGB(255, 2, 44, 108),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 30),

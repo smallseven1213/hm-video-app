@@ -60,7 +60,7 @@ class RefreshListState extends State<RefreshList> {
       onRefresh: _onRefresh,
       header: CustomHeader(
         height: 40,
-        builder: (_ctx, RefreshStatus? mode) {
+        builder: (ctx, RefreshStatus? mode) {
           return SizedBox(
             child: Center(
               child: Column(

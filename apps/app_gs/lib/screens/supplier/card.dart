@@ -13,10 +13,10 @@ class SupplierCard extends StatefulWidget {
   const SupplierCard({Key? key, required this.id}) : super(key: key);
 
   @override
-  _SupplierCardState createState() => _SupplierCardState();
+  SupplierCardState createState() => SupplierCardState();
 }
 
-class _SupplierCardState extends State<SupplierCard> {
+class SupplierCardState extends State<SupplierCard> {
   late final SupplierController supplierController;
 
   @override
