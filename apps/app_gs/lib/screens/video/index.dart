@@ -134,36 +134,38 @@ class _VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        widget.video != null
-            ? VideoPlayerArea(
-                name: widget.name,
-                videoUrl: widget.videoUrl,
-                video: widget.video!,
-              )
-            : AspectRatio(
-                aspectRatio: 16 / 9,
-                child: Container(
-                  color: Colors.black,
-                  child: CustomAppBar(
-                    title: widget.name,
-                    backgroundColor: Colors.transparent,
+    return SafeArea(
+      child: Column(
+        children: [
+          widget.video != null
+              ? VideoPlayerArea(
+                  name: widget.name,
+                  videoUrl: widget.videoUrl,
+                  video: widget.video!,
+                )
+              : AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    color: Colors.black,
+                    child: CustomAppBar(
+                      title: widget.name,
+                      backgroundColor: Colors.transparent,
+                    ),
                   ),
                 ),
-              ),
-        Expanded(
-          child: widget.video != null && widget.videoDetail != null
-              ? NestedTabBarView(
-                  videoUrl: widget.videoUrl,
-                  videoBase: widget.video!,
-                  videoDetail: widget.videoDetail!,
-                )
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
-        )
-      ],
+          Expanded(
+            child: widget.video != null && widget.videoDetail != null
+                ? NestedTabBarView(
+                    videoUrl: widget.videoUrl,
+                    videoBase: widget.video!,
+                    videoDetail: widget.videoDetail!,
+                  )
+                : const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+          )
+        ],
+      ),
     );
   }
 }

@@ -12,11 +12,14 @@ final logger = Logger();
 List<List<Vod>> organizeRowData(List<Vod> videos, Blocks block) {
   List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
+  int blockLength = block.isAreaAds == true ? 6 : 5;
   try {
     for (int i = 0; i < blockQuantity;) {
       if (i != 0 && i == videos.length) break;
-      bool hasAreaAd = videos[i].dataType == VideoType.areaAd.index;
-      if (hasAreaAd) {
+      bool hasAreaAd =
+          block.isAreaAds == true ? i % blockLength == blockLength - 1 : false;
+
+      if (i % blockLength == 0 || hasAreaAd) {
         result.add([videos[i]]);
         i++;
       } else if (i + 1 < videos.length) {
@@ -44,6 +47,7 @@ class Block1Widget extends StatelessWidget {
   final Function updateBlock;
   final int channelId;
   final int film;
+
   const Block1Widget({
     Key? key,
     required this.block,
@@ -55,6 +59,7 @@ class Block1Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Vod> videos = block.videos?.data ?? [];
+    // bool containsAreaAd = videos.any((item) => item.dataType == 3);
     List<List<Vod>> result = organizeRowData(videos, block);
 
     return SliverList(
@@ -67,17 +72,19 @@ class Block1Widget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  child: result[index][0].dataType == VideoType.areaAd.index
-                      ? ChannelAreaBanner(
-                          image: BannerPhoto.fromJson({
-                            'id': result[index][0].id,
-                            'url': result[index][0].adUrl ?? '',
-                            'photoSid': result[index][0].coverHorizontal ?? '',
-                            'isAutoClose': false,
-                          }),
-                        )
-                      : index % 4 == 0
-                          ? VideoPreviewWidget(
+                  child: index % 4 == 0 ||
+                          (block.isAreaAds == true && index % 4 == 3)
+                      ? result[index][0].dataType == VideoType.areaAd.index
+                          ? ChannelAreaBanner(
+                              image: BannerPhoto.fromJson({
+                                'id': result[index][0].id,
+                                'url': result[index][0].adUrl ?? '',
+                                'photoSid':
+                                    result[index][0].coverHorizontal ?? '',
+                                'isAutoClose': false,
+                              }),
+                            )
+                          : VideoPreviewWidget(
                               id: result[index][0].id,
                               title: result[index][0].title,
                               tags: result[index][0].tags ?? [],
@@ -93,11 +100,11 @@ class Block1Widget extends StatelessWidget {
                               detail: result[index][0],
                               isEmbeddedAds: block.isEmbeddedAds ?? false,
                             )
-                          : VideoBlockGridViewRow(
-                              videoData: result[index],
-                              imageRatio: BlockImageRatio.block1.ratio,
-                              isEmbeddedAds: block.isEmbeddedAds ?? false,
-                            ),
+                      : VideoBlockGridViewRow(
+                          videoData: result[index],
+                          imageRatio: BlockImageRatio.block1.ratio,
+                          isEmbeddedAds: block.isEmbeddedAds ?? false,
+                        ),
                 ),
                 if (index == result.length - 1) ...[
                   const SizedBox(height: 16),
