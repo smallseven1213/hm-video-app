@@ -35,7 +35,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
   bool _legalNameEnable = false;
   bool _accountEnable = false;
-  bool _bankNameEnable = false;
+  final RxBool _bankNameEnable = false.obs;
   String? _legalNameError;
   String? _accountError;
   String? _bankNameError;
@@ -131,7 +131,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
   void _checkFormValidity() {
     setState(() {
       _accountEnable = _accountError == null;
-      _bankNameEnable = _bankNameError == null;
+      _bankNameEnable.value = _bankNameError == null;
       _legalNameEnable = _legalNameError == null;
     });
   }
@@ -254,6 +254,11 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                                 _validateBankName(value),
                               },
                               errorMessage: _bankNameError,
+                              onClear: () => {
+                                setState(() {
+                                  _bankNameEnable.value = false;
+                                })
+                              },
                             );
                           },
                         ),
@@ -267,12 +272,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                               hint: '請輸入支行名稱(選填)',
                               controller: branchNameController,
                               onChanged: (val) => logger.i(val.toString()),
-                              onClear: () {
-                                branchNameController.clear();
-                                setState(() {
-                                  _bankNameEnable = false;
-                                });
-                              },
+                              onClear: () => branchNameController.clear(),
                               errorMessage: _formKey.currentState!
                                   .fields['branchName']!.errorText,
                             );
@@ -325,7 +325,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           text: '確認',
                           onPressed: () => _onSubmit(),
                           disabled: _legalNameEnable == false ||
-                              _bankNameEnable == false ||
+                              _bankNameEnable.value == false ||
                               _accountEnable == false ||
                               _accountError != null ||
                               _bankNameError != null ||
