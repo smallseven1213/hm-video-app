@@ -72,21 +72,24 @@ class MyRouteDelegate extends RouterDelegate<String>
       {bool hasTransition = true,
       int deletePreviousCount = 0,
       bool removeSamePath = false,
-      bool useBottomToTopAnimation = false, // 添加新参数
+      bool useBottomToTopAnimation = false,
       Map<String, dynamic>? args}) {
     final Completer<void> completer = Completer<void>();
-    final uuid = const Uuid().v4(); // 生成新的UUID
 
     if (removeSamePath) {
       _stack.removeWhere((stackData) => stackData.path == routeName);
     }
 
+    Map<String, dynamic> nextArgs = args ?? {};
+    final uuid = const Uuid().v4();
+    nextArgs = {
+      ...args ?? {},
+      'uuid': uuid,
+    };
+
     _stack.add(StackData(
       path: routeName,
-      args: {
-        ...args ?? {},
-        'uuid': uuid,
-      },
+      args: nextArgs,
       hasTransition: hasTransition,
       useBottomToTopAnimation: useBottomToTopAnimation, // 传递新参数
       completer: completer, // Pass the completer to your stack data
@@ -109,12 +112,12 @@ class MyRouteDelegate extends RouterDelegate<String>
   void pushAndRemoveUntil(String newRoute,
       {bool hasTransition = true, Map<String, dynamic>? args}) {
     _stack.clear();
-    var uuid = const Uuid().v4();
+    // var uuid = const Uuid().v4();
     _stack.add(StackData(
       path: newRoute,
       args: {
         ...args ?? {},
-        'uuid': uuid,
+        // 'uuid': uuid,
       },
       hasTransition: hasTransition,
       completer: Completer<void>(), // Add this line
@@ -129,12 +132,13 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Future<void> setNewRoutePath(String configuration) {
-    var uuid = const Uuid().v4();
+    // var uuid = const Uuid().v4();
     _stack
       ..clear()
       ..add(StackData(
         path: configuration,
-        args: {'uuid': uuid},
+        // args: {'uuid': uuid},
+        args: {},
         completer: Completer<void>(),
       ));
     return SynchronousFuture<void>(null);
@@ -162,11 +166,6 @@ class MyRouteDelegate extends RouterDelegate<String>
           onPopPage: _onPopPage,
           pages: _stack.map<Page<dynamic>>((stack) {
             final widget = routes[stack.path]!(context, stack.args);
-            Widget buildScreen() {
-              return ErrorOverlayWidget(
-                child: widget,
-              );
-            }
 
             // 判断是否为Web平台
             final bool isWeb = kIsWeb ||
@@ -175,12 +174,15 @@ class MyRouteDelegate extends RouterDelegate<String>
             if (stack.hasTransition == true && !isWeb) {
               logger.i('NAVI!! ==> , ${stack.path}');
               return CupertinoPage(
-                key: ValueKey(stack.path + stack.args.toString()),
+                // key: ValueKey(stack.args['uuid']),
+                maintainState: false,
                 name: stack.path,
                 child: Stack(
                   children: [
-                    // widget,
-                    buildScreen(),
+                    ErrorOverlayWidget(
+                      child: widget,
+                    ),
+                    const TestWidget(),
                     Positioned(
                         top: 0,
                         left: 0,
@@ -197,7 +199,9 @@ class MyRouteDelegate extends RouterDelegate<String>
               return NoAnimationPage(
                 key: ValueKey(stack.path + stack.args.toString()),
                 name: stack.path,
-                child: buildScreen(),
+                child: ErrorOverlayWidget(
+                  child: widget,
+                ),
               );
             }
             return CupertinoPage(
@@ -209,5 +213,15 @@ class MyRouteDelegate extends RouterDelegate<String>
         ),
       ],
     );
+  }
+}
+
+// TestWidget statelss widget, empty container
+class TestWidget extends StatelessWidget {
+  const TestWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
