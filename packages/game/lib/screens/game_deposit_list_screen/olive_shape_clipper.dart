@@ -37,14 +37,16 @@ class _OliveShapeState extends State<OliveShape> {
         width: widget.width ?? widget.text.length * 10,
         height: 12,
         color: widget.bgColor,
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            text: widget.text,
-            style: TextStyle(
-              color: widget.textColor,
-              fontSize: 10,
-              height: 1.0, // 调整行高
+        child: Center(
+          child: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: widget.text,
+              style: TextStyle(
+                color: widget.textColor,
+                fontSize: 10,
+                height: 1.0, // 调整行高
+              ),
             ),
           ),
         ),

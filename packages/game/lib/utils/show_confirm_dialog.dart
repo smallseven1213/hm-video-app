@@ -106,15 +106,11 @@ void showConfirmDialog({
                           ),
                           borderRadius: const BorderRadius.only(
                             bottomLeft: Radius.circular(24),
-                            bottomRight: Radius.circular(24),
+                            bottomRight: Radius.circular(0),
                           ),
                         ),
                         child: InkWell(
                           onTap: onCancel,
-                          borderRadius: const BorderRadius.only(
-                            bottomLeft: Radius.circular(24),
-                            bottomRight: Radius.circular(24),
-                          ),
                           child: Container(
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             child: Center(

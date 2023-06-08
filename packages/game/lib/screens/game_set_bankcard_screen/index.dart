@@ -267,6 +267,12 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                               hint: '請輸入支行名稱(選填)',
                               controller: branchNameController,
                               onChanged: (val) => logger.i(val.toString()),
+                              onClear: () {
+                                branchNameController.clear();
+                                setState(() {
+                                  _bankNameEnable = false;
+                                });
+                              },
                               errorMessage: _formKey.currentState!
                                   .fields['branchName']!.errorText,
                             );
@@ -283,6 +289,12 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                               onChanged: (value) => {
                                 _validateAccount(value),
                               },
+                              onClear: () {
+                                accountController.clear();
+                                setState(() {
+                                  _accountEnable = false;
+                                });
+                              },
                               errorMessage: _accountError,
                             );
                           },
@@ -297,6 +309,12 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                               controller: legalNameController,
                               onChanged: (value) => {
                                 _validateLegalName(value),
+                              },
+                              onClear: () {
+                                legalNameController.clear();
+                                setState(() {
+                                  _legalNameEnable = false;
+                                });
                               },
                               errorMessage: _legalNameError,
                             );
