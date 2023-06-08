@@ -43,11 +43,13 @@ class Block1Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
   final int channelId;
+  final int film;
   const Block1Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
     required this.channelId,
+    required this.film,
   }) : super(key: key);
 
   @override
@@ -100,6 +102,7 @@ class Block1Widget extends StatelessWidget {
                 if (index == result.length - 1) ...[
                   const SizedBox(height: 16),
                   VideoBlockFooter(
+                    film: film,
                     block: block,
                     updateBlock: updateBlock,
                     channelId: channelId,
