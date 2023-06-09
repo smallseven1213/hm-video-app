@@ -85,14 +85,14 @@ class VodsState extends State<Vods> {
 
   @override
   Widget build(BuildContext context) {
+    if (vodController == null) {
+      // The controller is not ready yet.
+      return const SizedBox();
+    }
     return Obx(
       () {
-        if (vodController == null) {
-          // The controller is not ready yet.
-          return const SizedBox();
-        }
         return CustomScrollView(
-          controller: vodController?.scrollController ?? _scrollController,
+          controller: _scrollController,
           slivers: [
             SliverPadding(
               padding: const EdgeInsets.all(8.0),
@@ -100,7 +100,7 @@ class VodsState extends State<Vods> {
                 film: vodController!.film.value,
                 templateId: widget.templateId ?? 3,
                 areaId: widget.areaId,
-                vods: vodController!.vodList,
+                vods: vodController!.vodList.value,
               ),
             ),
             if (vodController!.hasMoreData.value)
