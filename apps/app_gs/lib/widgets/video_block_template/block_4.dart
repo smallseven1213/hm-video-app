@@ -94,7 +94,7 @@ class Block4Widget extends StatelessWidget {
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
                           displayCoverVertical: true,
                           hasInfoView: false,
-                          film: 2,
+                          film: film,
                           displayVideoCollectTimes: false,
                           displayVideoTimes: false,
                           displayViewTimes: false,
