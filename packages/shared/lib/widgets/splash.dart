@@ -14,6 +14,7 @@ import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/controllers/response_controller.dart';
 import 'package:shared/services/system_config.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/tag_popular_controller.dart';
 import '../controllers/video_popular_controller.dart';
@@ -139,13 +140,13 @@ class _SplashState extends State<Splash> {
       setState(() => loadingText = '檢查更新...');
     }
     logger.i('step5: 檢查是否有更新');
-    final apkUpdate = await apkApi.checkVersion(
+    ApkUpdate apkUpdate = await apkApi.checkVersion(
       version: systemConfig.version,
       agentCode: systemConfig.agentCode,
     );
     logger.i('apkUpdate: ${apkUpdate.status}');
 
-    if (apkUpdate.status == ApkStatus.forceUpdate) {
+    if (apkUpdate.status == ApkStatus.suggestUpdate) {
       if (mounted) {
         alertDialog(
           context,
@@ -156,15 +157,12 @@ class _SplashState extends State<Splash> {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('確認'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                userLogin();
-              },
+              onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
           ],
         );
       }
-    } else if (apkUpdate.status == ApkStatus.suggestUpdate) {
+    } else if (apkUpdate.status == ApkStatus.forceUpdate) {
       if (mounted) {
         alertDialog(
           context,
@@ -176,9 +174,7 @@ class _SplashState extends State<Splash> {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('確認'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
             TextButton(
               style: TextButton.styleFrom(

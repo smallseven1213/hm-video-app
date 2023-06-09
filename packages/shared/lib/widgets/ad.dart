@@ -157,7 +157,18 @@ class AdState extends State<Ad> {
                 child: widget.loading!(text: '取得最新資源...') ??
                     const CircularProgressIndicator(),
               ),
-            ]
+            ],
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Text(
+                '版本 ${systemConfig.version}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
           ],
         ),
       ),
