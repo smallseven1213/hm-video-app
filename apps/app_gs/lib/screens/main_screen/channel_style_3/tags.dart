@@ -51,6 +51,13 @@ class ChannelTags extends StatelessWidget {
                             ? TagWidget(
                                 id: tags.details![rowIndex + i].id,
                                 name: tags.details![rowIndex + i].name,
+                                photoSid: tags.details![rowIndex + i].photoSid,
+                                outerFrame: channelSharedDataController
+                                        .channelSharedData
+                                        .value!
+                                        .tags!
+                                        .outerFrame ??
+                                    false,
                               )
                             : Container(), // Empty container for no data
                       ),

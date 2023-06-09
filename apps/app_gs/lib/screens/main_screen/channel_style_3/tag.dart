@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 class TagWidget extends StatelessWidget {
   final int id;
   final String name;
+  final bool outerFrame;
+  final String? photoSid;
 
-  const TagWidget({super.key, required this.id, required this.name});
+  const TagWidget(
+      {super.key,
+      required this.id,
+      required this.name,
+      required this.outerFrame,
+      this.photoSid});
 
   @override
   Widget build(BuildContext context) {
@@ -21,15 +29,35 @@ class TagWidget extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
-        child: CustomPaint(
-          painter: _GradientBorderPainter(),
-          child: Center(
-            child: Text(
-              name,
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-              ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: CustomPaint(
+            painter: outerFrame == true ? _GradientBorderPainter() : null,
+            child: Stack(
+              children: [
+                photoSid != null ? SidImage(sid: photoSid!) : Container(),
+                outerFrame == false
+                    ? Container(
+                        width: 100, // 你可以根据需要设置宽度
+                        height: 100, // 你可以根据需要设置高度
+                        decoration: BoxDecoration(
+                          color: const Color.fromRGBO(
+                              0, 0, 0, 0.7), // 设置背景颜色为半透明的黑色
+                          borderRadius:
+                              BorderRadius.circular(10), // 如果需要圆角，你可以设置这个属性
+                        ),
+                      )
+                    : Container(),
+                Center(
+                  child: Text(
+                    name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
