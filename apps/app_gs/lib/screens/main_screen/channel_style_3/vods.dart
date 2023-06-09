@@ -92,7 +92,7 @@ class VodsState extends State<Vods> {
           return const SizedBox();
         }
         return CustomScrollView(
-          controller: _scrollController,
+          controller: vodController?.scrollController ?? _scrollController,
           slivers: [
             SliverPadding(
               padding: const EdgeInsets.all(8.0),
@@ -104,7 +104,7 @@ class VodsState extends State<Vods> {
               ),
             ),
             if (vodController!.hasMoreData.value)
-              SliverVideoPreviewSkeletonList(),
+              const SliverVideoPreviewSkeletonList(),
             if (!vodController!.hasMoreData.value)
               SliverToBoxAdapter(
                 child: ListNoMore(),

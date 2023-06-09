@@ -11,11 +11,12 @@ final logger = Logger();
 
 abstract class BaseVodInfinityScrollController extends GetxController {
   RxList<Vod> vodList = <Vod>[].obs;
+  bool hasInitial = false;
   final page = 0.obs;
   final totalCount = 0.obs;
   RxBool showNoMore = false.obs;
   Timer? _timer;
-  RxBool hasMoreData = true.obs;
+  RxBool hasMoreData = false.obs;
   late final ScrollController scrollController;
   late bool _autoDisposeScrollController = true;
   late bool _hasLoadMoreEventWithScroller = true;
@@ -43,16 +44,15 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     vodList.clear();
     page.value = 0;
     totalCount.value = 0;
-    hasMoreData.value = true;
+    hasMoreData.value = false;
     showNoMore.value = false;
   }
 
   Future<void> loadMoreData() async {
-    if (!hasMoreData.value) return;
+    if (!hasMoreData.value && hasInitial) return;
 
     int nextPage = page.value + 1;
     InfinityVod newData = await fetchData(nextPage);
-    logger.i(newData.vods.isNotEmpty);
 
     if (newData.vods.isNotEmpty) {
       vodList.addAll(newData.vods);
@@ -62,6 +62,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     } else {
       hasMoreData.value = false;
     }
+    hasInitial = true;
   }
 
   void debounce({required Function() fn, int waitForMs = 200}) {
