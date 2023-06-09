@@ -33,8 +33,7 @@ class UserApi {
   }
 
   // 使用者登入紀錄
-  Future<String> writeUserLoginRecord() async {
-    var status = 'login'; // login | logout
+  Future writeUserLoginRecord() async {
     try {
       DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
       var registerDeviceGuid = const Uuid().v4();
@@ -51,24 +50,40 @@ class UserApi {
             (await deviceInfo.webBrowserInfo).userAgent.toString();
       }
 
-      var res = await fetcher(
-          url: '${systemConfig.apiHost}/public/users/user/userLoginRecord',
-          method: 'POST',
-          body: {
-            'device': systemConfig.userDevice,
-            'version': systemConfig.version,
-            'userAgent': registerDeviceGuid,
-          });
-
-      if (res.statusCode == 401) {
-        status = 'logout';
-      }
+      fetcher(
+        url: '${systemConfig.apiHost}/public/users/user/userLoginRecord',
+        method: 'POST',
+        body: {
+          'device': systemConfig.userDevice,
+          'version': systemConfig.version,
+          'userAgent': registerDeviceGuid,
+        },
+      );
     } catch (err) {
       if (kDebugMode) {
         logger.i(err);
       }
     }
-    return status;
+  }
+
+  // 使用者進入大廳（只記錄初次）
+  Future writeUserEnterHallRecord() async {
+    if (systemConfig.box.read('entry-count') == null) {
+      try {
+        fetcher(
+          url:
+              '${systemConfig.apiHost}/public/users/user/userEventRecord/enterHall',
+          method: 'POST',
+          body: {
+            'version': systemConfig.version,
+          },
+        );
+      } catch (err) {
+        if (kDebugMode) {
+          logger.i(err);
+        }
+      }
+    }
   }
 
   //withdraw資訊

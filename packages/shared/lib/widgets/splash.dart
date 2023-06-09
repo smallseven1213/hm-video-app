@@ -269,6 +269,7 @@ class _SplashState extends State<Splash> {
   // DI一些登入後才能用的資料(Controllers)
   fetchInitialDataAndNavigate() async {
     userApi.writeUserLoginRecord();
+    userApi.writeUserEnterHallRecord();
     if (mounted) {
       setState(() => loadingText = '取得最新資源...');
     }
