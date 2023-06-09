@@ -15,19 +15,7 @@ class SliverVideoPreviewSkeletonList extends StatelessWidget {
           child: Center(
             child: SizedBox(
               height: 100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image(
-                    image: AssetImage('assets/images/list_no_more.png'),
-                    width: 20,
-                    height: 20,
-                  ),
-                  SizedBox(
-                      width: 8), // Add some space between the icon and the text
-                  VideoListLoadingText(),
-                ],
-              ),
+              child: VideoListLoadingText(),
             ),
           ),
         ));

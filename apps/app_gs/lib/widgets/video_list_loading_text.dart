@@ -32,12 +32,29 @@ class VideoListLoadingTextState extends State<VideoListLoadingText> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: const TextStyle(
-        fontSize: 13,
-        color: Color(0xFF486a89),
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const SizedBox(
+          height: 15.0,
+          width: 15.0,
+          child: Center(
+            child: CircularProgressIndicator(
+              strokeWidth: 2,
+              color: Color(0xFF486a89),
+            ),
+          ),
+        ),
+        const SizedBox(
+            width: 8), // Add some space between the icon and the text
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 13,
+            color: Color(0xFF486a89),
+          ),
+        )
+      ],
     );
   }
 }

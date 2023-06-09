@@ -74,23 +74,7 @@ class RefreshListState extends State<RefreshList> {
                             color: Color(0xFF486a89),
                           )),
                     if (mode == RefreshStatus.refreshing)
-                      const Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 15.0,
-                            width: 15.0,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Color(0xFF486a89),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          VideoListLoadingText(),
-                        ],
-                      ),
+                      const VideoListLoadingText(),
                     const SizedBox(height: 15),
                   ],
                 ),
