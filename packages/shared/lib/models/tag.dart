@@ -32,8 +32,9 @@ class Tag {
   final String name;
   final int? parent;
   final int? orderIndex;
+  final String? photoSid;
 
-  Tag(this.id, this.name, {this.parent, this.orderIndex});
+  Tag(this.id, this.name, {this.parent, this.orderIndex, this.photoSid});
 
   factory Tag.fromJson(Map<String, dynamic> json) {
     return Tag(
@@ -41,6 +42,7 @@ class Tag {
       json['name'],
       parent: json['parent'],
       orderIndex: json['orderIndex'],
+      photoSid: json['photoSid'],
     );
   }
 
@@ -50,6 +52,7 @@ class Tag {
     data['name'] = name;
     data['parent'] = parent;
     data['orderIndex'] = orderIndex;
+    data['photoSid'] = photoSid;
     return data;
   }
 }
