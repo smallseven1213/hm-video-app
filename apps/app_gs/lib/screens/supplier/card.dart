@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/actor_avatar.dart';
 
@@ -95,6 +96,16 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
             child: Image(
               image: AssetImage('assets/images/supplier_card_bg.webp'),
               fit: BoxFit.fill,
+            ),
+          ),
+          Opacity(
+            opacity: opacity,
+            child: SidImage(
+              key: ValueKey(supplier.coverVertical),
+              sid: supplier.coverVertical!,
+              width: 500,
+              height: 500,
+              fit: BoxFit.cover,
             ),
           ),
           if (opacity > 0)
