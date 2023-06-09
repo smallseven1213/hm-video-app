@@ -11,6 +11,7 @@ import '../controllers/response_controller.dart';
 import '../controllers/user_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
 import '../controllers/user_favorites_short_controlle.dart';
+import '../controllers/user_favorites_supplier_controller.dart';
 import '../controllers/user_favorites_video_controlle.dart';
 import '../controllers/user_search_history_controller.dart';
 import '../controllers/user_short_collection_controller.dart';
@@ -36,6 +37,8 @@ void setupDependencies() {
       tag: 'favorites');
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
       tag: 'notifications');
+  Get.lazyPut<UserFavoritesSupplierController>(
+      () => UserFavoritesSupplierController());
   Get.lazyPut<UserFavoritesActorController>(
       () => UserFavoritesActorController());
   Get.lazyPut<UserFavoritesVideoController>(

@@ -10,6 +10,7 @@ import '../models/actor.dart';
 import '../models/block_vod.dart';
 import '../models/hm_api_response.dart';
 import '../models/hm_api_response_with_data.dart';
+import '../models/supplier.dart';
 import '../models/user.dart';
 import '../models/user_promote.dart';
 import '../models/user_promote_record.dart';
@@ -166,6 +167,11 @@ class UserApi {
       method: 'POST',
       body: {'videoId': vodId});
 
+  Future<void> addFavoritSupplier(int supplierId) => fetcher(
+      url: '${systemConfig.apiHost}/public/users/user/supplierFollowRecord',
+      method: 'POST',
+      body: {'supplierId': supplierId});
+
   Future<void> deleteFavoriteVideo(List<int> vodId) => fetcher(
       url:
           '${systemConfig.apiHost}/public/users/user/collectRecord?videoId=${vodId.join(',')}',
@@ -174,6 +180,11 @@ class UserApi {
   Future<void> deleteActorFavorite(List<int> vodId) => fetcher(
       url:
           '${systemConfig.apiHost}/public/users/user/actorCollectRecord?actorId=${vodId.join(',')}',
+      method: 'DELETE');
+
+  Future<void> deleteSupplierFavorite(List<int> supplierId) => fetcher(
+      url:
+          '${systemConfig.apiHost}/public/users/user/supplierFollowRecord?supplierId=${supplierId.join(',')}',
       method: 'DELETE');
 
   // 獲得視頻喜愛紀錄清單
@@ -241,6 +252,21 @@ class UserApi {
     List<Actor> actors = List.from(
         (res.data['data'] as List<dynamic>).map((e) => Actor.fromJson(e)));
     return actors;
+  }
+
+  // UP主(供應商)喜愛紀錄清單
+  Future<List<Supplier>> getFavoriteSupplier() async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/users/user/supplierFollowRecord?film=1',
+        method: 'GET',
+        shouldValidate: true);
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    List<Supplier> suppliers = List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Supplier.fromJson(e)));
+    return suppliers;
   }
 
   Future<void> deleteTagFollowRecord(int tagId) => fetcher(

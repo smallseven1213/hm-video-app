@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
+import 'package:shared/controllers/user_favorites_supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/widgets/sid_image.dart';
 
@@ -46,6 +47,8 @@ class SupplierCardState extends State<SupplierCard> {
 class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
   final Supplier supplier;
   final BuildContext context;
+  final userFavoritesSupplierController =
+      Get.find<UserFavoritesSupplierController>();
 
   SupplierHeaderDelegate({
     required this.supplier,
@@ -98,16 +101,17 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
               fit: BoxFit.fill,
             ),
           ),
-          Opacity(
-            opacity: opacity,
-            child: SidImage(
-              key: ValueKey(supplier.coverVertical),
-              sid: supplier.coverVertical!,
-              width: 500,
-              height: 500,
-              fit: BoxFit.cover,
+          if (supplier.coverVertical != null)
+            Opacity(
+              opacity: opacity,
+              child: SidImage(
+                key: ValueKey(supplier.coverVertical),
+                sid: supplier.coverVertical!,
+                width: 500,
+                height: 500,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
           if (opacity > 0)
             Container(
               height: 200,
@@ -141,7 +145,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                120,
+                108,
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
@@ -218,48 +222,48 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                           ))
                     ],
                   ))),
-          // Positioned(
-          //   top: lerpDouble(
-          //       105, (kToolbarHeight - 12) / 2 + fontSize, percentage),
-          //   right: 8,
-          //   child: Obx(() {
-          //     // var isLiked = userFavoritesActorController.actors
-          //     //     .any((e) => e.id == actor.id);
-          //     var isLiked = false;
-          //     IconData iconData =
-          //         isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
-          //     return Opacity(
-          //       opacity: opacity,
-          //       child: InkWell(
-          //         onTap: () {
-          //           // if (isLiked) {
-          //           //   userFavoritesActorController.removeActor([actor.id]);
-          //           //   return;
-          //           // } else {
-          //           //   userFavoritesActorController.addActor(actor);
-          //           // }
-          //         },
-          //         child: Row(
-          //           children: [
-          //             Icon(
-          //               iconData,
-          //               size: 20,
-          //               color: const Color(0xFF21AFFF),
-          //             ),
-          //             const SizedBox(width: 6),
-          //             Text(
-          //               supplier.followTotal.toString(),
-          //               style: const TextStyle(
-          //                 fontSize: 12,
-          //                 color: Colors.white,
-          //               ),
-          //             ),
-          //           ],
-          //         ),
-          //       ),
-          //     );
-          //   }),
-          // ),
+          Positioned(
+            top: lerpDouble(
+                114, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+            right: 8,
+            child: Obx(() {
+              var isLiked = userFavoritesSupplierController.suppliers
+                  .any((e) => e.id == supplier.id);
+              IconData iconData =
+                  isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
+              return Opacity(
+                opacity: opacity,
+                child: InkWell(
+                  onTap: () {
+                    if (isLiked) {
+                      userFavoritesSupplierController
+                          .removeSupplier([supplier.id!]);
+                      return;
+                    } else {
+                      userFavoritesSupplierController.addSupplier(supplier);
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        iconData,
+                        size: 20,
+                        color: const Color(0xFF21AFFF),
+                      ),
+                      const SizedBox(width: 6),
+                      Text(
+                        supplier.followTotal.toString(),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }),
+          ),
         ],
       ),
     );

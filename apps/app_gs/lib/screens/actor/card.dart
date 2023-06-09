@@ -30,9 +30,6 @@ class ActorCard extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final UserFavoritesActorController userFavoritesActorController =
-        Get.find<UserFavoritesActorController>();
-
     final double opacity = 1 - shrinkOffset / maxExtent;
     final double percentage = shrinkOffset / maxExtent;
 
@@ -142,42 +139,11 @@ class ActorCard extends SliverPersistentHeaderDelegate {
             top: lerpDouble(
                 105, (kToolbarHeight - 12) / 2 + fontSize, percentage),
             right: 8,
-            child: Obx(() {
-              var isLiked = userFavoritesActorController.actors
-                  .any((e) => e.id == actor.id);
-              IconData iconData =
-                  isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
-              return Opacity(
+            child: Opacity(
                 opacity: opacity,
-                child: InkWell(
-                  onTap: () {
-                    if (isLiked) {
-                      userFavoritesActorController.removeActor([actor.id]);
-                      return;
-                    } else {
-                      userFavoritesActorController.addActor(actor);
-                    }
-                  },
-                  child: Row(
-                    children: [
-                      Icon(
-                        iconData,
-                        size: 20,
-                        color: const Color(0xFF21AFFF),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        actor.collectTimes.toString(),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }),
+                child: UserLike(
+                  actor: actor,
+                )),
           ),
         ],
       ),
@@ -187,5 +153,53 @@ class ActorCard extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant ActorCard oldDelegate) {
     return oldDelegate.actor != actor || oldDelegate.context != context;
+  }
+}
+
+class UserLike extends StatelessWidget {
+  const UserLike({
+    Key? key,
+    required this.actor,
+  }) : super(key: key);
+
+  final Actor actor;
+
+  @override
+  Widget build(BuildContext context) {
+    final UserFavoritesActorController userFavoritesActorController =
+        Get.find<UserFavoritesActorController>();
+    return Obx(() {
+      var isLiked =
+          userFavoritesActorController.actors.any((e) => e.id == actor.id);
+      IconData iconData =
+          isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
+      return InkWell(
+        onTap: () {
+          if (isLiked) {
+            userFavoritesActorController.removeActor([actor.id]);
+            return;
+          } else {
+            userFavoritesActorController.addActor(actor);
+          }
+        },
+        child: Row(
+          children: [
+            Icon(
+              iconData,
+              size: 20,
+              color: const Color(0xFF21AFFF),
+            ),
+            const SizedBox(width: 6),
+            Text(
+              actor.collectTimes.toString(),
+              style: const TextStyle(
+                fontSize: 12,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
