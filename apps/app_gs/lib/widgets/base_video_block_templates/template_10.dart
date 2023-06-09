@@ -62,6 +62,8 @@ SliverChildBuilderDelegate baseVideoBlockTemplate10({
                 film: film,
                 blockId: areaId,
                 displayVideoCollectTimes: false,
+                displayVideoTimes: false,
+                displayViewTimes: false,
               ),
       );
     },

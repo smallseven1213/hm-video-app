@@ -50,7 +50,8 @@ class ChannelTags extends StatelessWidget {
                         child: tags.details!.length > rowIndex + i
                             ? TagWidget(
                                 id: tags.details![rowIndex + i].id,
-                                name: tags.details![rowIndex + i].name)
+                                name: tags.details![rowIndex + i].name,
+                              )
                             : Container(), // Empty container for no data
                       ),
                   ],
