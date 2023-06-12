@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:game/controllers/game_response_controller.dart';
@@ -325,8 +326,8 @@ class _SplashState extends State<Splash> {
                   const CircularProgressIndicator(),
             ),
             Positioned(
-              bottom: 10,
-              right: 10,
+              bottom: kIsWeb ? 20 : 70,
+              right: 20,
               child: Text(
                 '版本 ${systemConfig.version}',
                 style: const TextStyle(

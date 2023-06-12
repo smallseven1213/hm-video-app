@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -157,18 +158,18 @@ class AdState extends State<Ad> {
                 child: widget.loading!(text: '取得最新資源...') ??
                     const CircularProgressIndicator(),
               ),
-            ],
-            Positioned(
-              bottom: 10,
-              right: 10,
-              child: Text(
-                '版本 ${systemConfig.version}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
+              Positioned(
+                bottom: kIsWeb ? 20 : 70,
+                right: 20,
+                child: Text(
+                  '版本 ${systemConfig.version}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
               ),
-            ),
+            ],
           ],
         ),
       ),
