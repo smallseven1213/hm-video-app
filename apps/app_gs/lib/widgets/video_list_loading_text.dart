@@ -24,10 +24,20 @@ class VideoListLoadingTextState extends State<VideoListLoadingText> {
 
   @override
   void initState() {
+    super.initState();
+    _updateLoadingText();
+  }
+
+  @override
+  void didUpdateWidget(VideoListLoadingText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _updateLoadingText();
+  }
+
+  void _updateLoadingText() {
     setState(() {
       text = loadingTextList[rng.nextInt(loadingTextList.length)];
     });
-    super.initState();
   }
 
   @override

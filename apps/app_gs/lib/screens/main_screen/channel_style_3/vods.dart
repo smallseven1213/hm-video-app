@@ -104,7 +104,8 @@ class VodsState extends State<Vods> {
               ),
             ),
             if (vodController!.hasMoreData.value)
-              const SliverVideoPreviewSkeletonList(),
+              // ignore: prefer_const_constructors
+              SliverVideoPreviewSkeletonList(),
             if (!vodController!.hasMoreData.value)
               SliverToBoxAdapter(
                 child: ListNoMore(),
