@@ -2,12 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/controllers/user_favorites_supplier_controller.dart';
-import 'package:shared/models/supplier.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/actor_avatar.dart';
+
+final logger = Logger();
 
 class SupplierCard extends StatefulWidget {
   final int id;
@@ -38,20 +40,22 @@ class SupplierCardState extends State<SupplierCard> {
       }
       return SliverPersistentHeader(
           delegate: SupplierHeaderDelegate(
-              supplier: supplierController.supplier.value, context: context),
+            supplierController: supplierController,
+            context: context,
+          ),
           pinned: true);
     });
   }
 }
 
 class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final Supplier supplier;
+  final SupplierController supplierController;
   final BuildContext context;
   final userFavoritesSupplierController =
       Get.find<UserFavoritesSupplierController>();
 
   SupplierHeaderDelegate({
-    required this.supplier,
+    required this.supplierController,
     required this.context,
   });
 
@@ -68,8 +72,8 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // final UserFavoritesActorController userFavoritesActorController =
-    // Get.find<UserFavoritesActorController>();
+    var supplier = supplierController.supplier.value;
+    logger.i(supplier.followTotal);
 
     final double opacity = 1 - shrinkOffset / maxExtent;
     final double percentage = shrinkOffset / maxExtent;
@@ -206,12 +210,20 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(supplier.followTotal.toString(),
+                              // Text(supplier.followTotal.toString(),
+                              //     style: const TextStyle(
+                              //       color: Colors.white,
+                              //       fontWeight: FontWeight.w500,
+                              //       fontSize: 15,
+                              //     )),
+                              Obx(() => Text(
+                                  supplierController.supplier.value.followTotal
+                                      .toString(),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,
                                     fontSize: 15,
-                                  )),
+                                  ))),
                               const SizedBox(width: 5),
                               const Text('點讚',
                                   style: TextStyle(
@@ -238,25 +250,29 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                     if (isLiked) {
                       userFavoritesSupplierController
                           .removeSupplier([supplier.id!]);
+                      supplierController.decrementTotal('follow');
                       return;
                     } else {
                       userFavoritesSupplierController.addSupplier(supplier);
+                      supplierController.incrementTotal('follow');
                     }
                   },
                   child: Row(
                     children: [
+                      Opacity(
+                        opacity: 0,
+                        child: Text(
+                          supplier.followTotal.toString(),
+                          style: const TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
                       Icon(
                         iconData,
                         size: 20,
                         color: const Color(0xFF21AFFF),
-                      ),
-                      const SizedBox(width: 6),
-                      Text(
-                        supplier.followTotal.toString(),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.white,
-                        ),
                       ),
                     ],
                   ),
@@ -271,6 +287,6 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant SupplierHeaderDelegate oldDelegate) {
-    return oldDelegate.supplier != supplier || oldDelegate.context != context;
+    return oldDelegate.context != context;
   }
 }
