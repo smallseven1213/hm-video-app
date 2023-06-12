@@ -9,7 +9,8 @@ class SliverVideoPreviewSkeletonList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SliverPadding(
+    // ignore: prefer_const_constructors
+    return SliverPadding(
         padding: EdgeInsets.only(bottom: 20),
         sliver: SliverToBoxAdapter(
           child: Center(
