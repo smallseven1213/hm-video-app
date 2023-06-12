@@ -68,7 +68,7 @@ class UserApi {
 
   // 使用者進入大廳（只記錄初次）
   Future writeUserEnterHallRecord() async {
-    if (systemConfig.box.read('entry-count') == null) {
+    if (systemConfig.box.read('entry-count') == 1) {
       try {
         fetcher(
           url:

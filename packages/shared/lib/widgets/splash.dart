@@ -146,41 +146,42 @@ class _SplashState extends State<Splash> {
     );
     logger.i('apkUpdate: ${apkUpdate.status}');
 
-    if (apkUpdate.status == ApkStatus.suggestUpdate) {
+    if (apkUpdate.status == ApkStatus.forceUpdate) {
       if (mounted) {
         alertDialog(
           context,
-          content: '請更新至最新版本',
+          title: '已有新版本',
+          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
           actions: [
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('確認'),
+              child: const Text('更新版本'),
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
           ],
         );
       }
-    } else if (apkUpdate.status == ApkStatus.forceUpdate) {
+    } else if (apkUpdate.status == ApkStatus.suggestUpdate) {
       if (mounted) {
         alertDialog(
           context,
           title: '已有新版本',
-          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本',
+          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('確認'),
+              child: const Text('立即體驗'),
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('取消'),
+              child: const Text('暫不升級'),
               onPressed: () {
                 Navigator.of(context).pop();
                 userLogin();
@@ -199,7 +200,6 @@ class _SplashState extends State<Splash> {
       setState(() => loadingText = '用戶登入...');
     }
     logger.i('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
-
     logger.i('userApi: ${authController.token.value}');
     if (authController.token.value != '') {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
@@ -221,13 +221,6 @@ class _SplashState extends State<Splash> {
         if (res.code == '00') {
           fetchInitialDataAndNavigate();
         } else {
-          // if (mounted) {
-          //   alertDialog(
-          //     context,
-          //     title: '失敗',
-          //     content: res.message,
-          //   );
-          // }
           var message = '';
           if (res.code == '51633') {
             message = '帳號建立失敗，裝置停用。';
@@ -269,7 +262,6 @@ class _SplashState extends State<Splash> {
   // DI一些登入後才能用的資料(Controllers)
   fetchInitialDataAndNavigate() async {
     userApi.writeUserLoginRecord();
-    userApi.writeUserEnterHallRecord();
     if (mounted) {
       setState(() => loadingText = '取得最新資源...');
     }

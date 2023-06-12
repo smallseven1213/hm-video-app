@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
@@ -40,6 +41,7 @@ class HomePage extends StatefulWidget {
 
 class HomeState extends State<HomePage> {
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
+  UserApi userApi = UserApi();
 
   // init
   @override
@@ -55,6 +57,7 @@ class HomeState extends State<HomePage> {
 
     Get.put(GameStartupController());
 
+    userApi.writeUserEnterHallRecord();
     super.initState();
   }
 
