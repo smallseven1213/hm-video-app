@@ -79,7 +79,7 @@ class Block10Widget extends StatelessWidget {
                           videoData: result[index],
                           imageRatio: BlockImageRatio.block10.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
-                          displayCoverVertical: false,
+                          displayCoverVertical: true,
                           blockId: block.id ?? 0,
                           film: film,
                           displayVideoCollectTimes: false,
