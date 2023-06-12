@@ -11,12 +11,14 @@ final logger = Logger();
 
 abstract class BaseVodInfinityScrollController extends GetxController {
   var vodList = <Vod>[].obs;
-  bool hasInitial = false;
+  var isLoading = false.obs;
+  var isListEmpty = false.obs;
+  var hasMoreData = false.obs;
+  var displayNoMoreData = false.obs;
+  var displayLoading = true.obs;
   final page = 0.obs;
   final totalCount = 0.obs;
-  RxBool showNoMore = false.obs;
   Timer? _timer;
-  RxBool hasMoreData = false.obs;
   late final ScrollController scrollController;
   late bool _autoDisposeScrollController = true;
   late bool _hasLoadMoreEventWithScroller = true;
@@ -45,11 +47,11 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     page.value = 0;
     totalCount.value = 0;
     hasMoreData.value = false;
-    showNoMore.value = false;
   }
 
   Future<void> loadMoreData() async {
-    if (!hasMoreData.value && hasInitial) return;
+    if (!hasMoreData.value && vodList.isNotEmpty) return;
+    isLoading.value = true;
 
     int nextPage = page.value + 1;
     InfinityVod newData = await fetchData(nextPage);
@@ -62,7 +64,12 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     } else {
       hasMoreData.value = false;
     }
-    hasInitial = true;
+
+    isListEmpty.value = vodList.isEmpty;
+    isLoading.value = false;
+    displayNoMoreData.value =
+        !isLoading.value && !hasMoreData.value && !isListEmpty.value;
+    displayLoading.value = hasMoreData.value || isLoading.value;
   }
 
   void debounce({required Function() fn, int waitForMs = 200}) {
@@ -82,8 +89,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
 
     if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent &&
-        !hasMoreData.value &&
-        !showNoMore.value) {
+        !hasMoreData.value) {
       Future.delayed(const Duration(milliseconds: 5), () {
         scrollController.animateTo(
           scrollController.position.maxScrollExtent,
@@ -91,16 +97,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
           curve: Curves.easeOut,
         );
       });
-      showNoMore.value = true;
-      _startTimer();
     }
-  }
-
-  void _startTimer() {
-    _timer?.cancel();
-    _timer = Timer(const Duration(seconds: 3), () {
-      showNoMore.value = false;
-    });
   }
 
   @override

@@ -7,6 +7,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/list_no_more.dart';
+import '../widgets/no_data.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
@@ -70,9 +71,14 @@ class SupplierTagVideoPage extends StatelessWidget {
                   mainAxisSpacing: 1,
                 ),
               ),
-              if (vodController.hasMoreData.value)
-                const SliverVideoPreviewSkeletonList(),
-              if (!vodController.hasMoreData.value)
+              if (vodController.isListEmpty.value)
+                const SliverToBoxAdapter(
+                  child: NoDataWidget(),
+                ),
+              if (vodController.displayLoading.value)
+                // ignore: prefer_const_constructors
+                SliverVideoPreviewSkeletonList(),
+              if (vodController.displayNoMoreData.value)
                 SliverToBoxAdapter(
                   child: ListNoMore(),
                 )

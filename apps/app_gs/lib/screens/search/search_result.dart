@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/controllers/search_vod_controller.dart';
 import '../../widgets/list_no_more.dart';
@@ -30,12 +31,14 @@ class SearchResultPageState extends State<SearchResultPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverVodGrid(
-      displayVideoCollectTimes: false,
-      videos: searchVodController.vodList,
-      hasMoreData: searchVodController.hasMoreData.value,
-      noMoreWidget: ListNoMore(),
-      customScrollController: searchVodController.scrollController,
-    );
+    return Obx(() => SliverVodGrid(
+          isListEmpty: searchVodController.isListEmpty.value,
+          displayVideoCollectTimes: false,
+          videos: searchVodController.vodList,
+          displayNoMoreData: searchVodController.displayNoMoreData.value,
+          displayLoading: searchVodController.displayLoading.value,
+          noMoreWidget: ListNoMore(),
+          customScrollController: searchVodController.scrollController,
+        ));
   }
 }
