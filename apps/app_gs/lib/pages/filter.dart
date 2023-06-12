@@ -78,23 +78,25 @@ class FilterScrollViewState extends State<FilterScrollView> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SliverVodGrid(
-          headerExtends: [
-            SliverToBoxAdapter(
-              child: FilterOptions(),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
-              ),
-            )
-          ],
-          videos: vodController.vodList,
-          hasMoreData: vodController.hasMoreData.value,
-          displayVideoCollectTimes: false,
-          noMoreWidget: ListNoMore(),
-          customScrollController: vodController.scrollController,
-        ),
+        Obx(() => SliverVodGrid(
+              headerExtends: [
+                SliverToBoxAdapter(
+                  child: FilterOptions(),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 10,
+                  ),
+                )
+              ],
+              videos: vodController.vodList,
+              isListEmpty: vodController.isListEmpty.value,
+              displayNoMoreData: vodController.displayNoMoreData.value,
+              displayLoading: vodController.displayLoading.value,
+              displayVideoCollectTimes: false,
+              noMoreWidget: ListNoMore(),
+              customScrollController: vodController.scrollController,
+            )),
         if (_showSelectedBar)
           FilterBar(
             scrollController: vodController.scrollController,

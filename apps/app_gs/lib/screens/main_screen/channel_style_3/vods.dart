@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_gs/widgets/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -103,10 +104,14 @@ class VodsState extends State<Vods> {
                 vods: vodController!.vodList.value,
               ),
             ),
-            if (vodController!.hasMoreData.value)
+            if (vodController!.isListEmpty.value)
+              const SliverToBoxAdapter(
+                child: NoDataWidget(),
+              ),
+            if (vodController!.displayLoading.value)
               // ignore: prefer_const_constructors
               SliverVideoPreviewSkeletonList(),
-            if (!vodController!.hasMoreData.value)
+            if (vodController!.displayNoMoreData.value)
               SliverToBoxAdapter(
                 child: ListNoMore(),
               )

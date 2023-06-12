@@ -94,7 +94,11 @@ class ActorPageState extends State<ActorPage>
                   SliverVodGrid(
                       key: const Key('actor_latest_vod'),
                       videos: actorLatestVodController.vodList,
-                      hasMoreData: actorLatestVodController.hasMoreData.value,
+                      displayLoading:
+                          actorLatestVodController.displayLoading.value,
+                      displayNoMoreData:
+                          actorLatestVodController.displayNoMoreData.value,
+                      isListEmpty: actorLatestVodController.isListEmpty.value,
                       noMoreWidget: ListNoMore(),
                       usePrimaryParentScrollController: true,
                       displayVideoCollectTimes: false,
@@ -104,7 +108,11 @@ class ActorPageState extends State<ActorPage>
                   SliverVodGrid(
                       key: const Key('actor_newest_vod'),
                       videos: actorNewestVodController.vodList,
-                      hasMoreData: actorNewestVodController.hasMoreData.value,
+                      displayLoading:
+                          actorLatestVodController.displayLoading.value,
+                      displayNoMoreData:
+                          actorNewestVodController.displayNoMoreData.value,
+                      isListEmpty: actorNewestVodController.isListEmpty.value,
                       noMoreWidget: ListNoMore(),
                       usePrimaryParentScrollController: true,
                       displayVideoCollectTimes: false,

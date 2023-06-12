@@ -6,6 +6,7 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
+import '../widgets/no_data.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 
 // class SupplierPage extends StatelessWidget {
@@ -92,9 +93,14 @@ class _SupplierPageState extends State<SupplierPage>
                   ),
                   SupplierCard(id: widget.id),
                   SupplierVods(id: widget.id, vodList: vodController.vodList),
-                  if (vodController.hasMoreData.value)
-                    const SliverVideoPreviewSkeletonList(),
-                  if (!vodController.hasMoreData.value)
+                  if (vodController.isListEmpty.value)
+                    const SliverToBoxAdapter(
+                      child: NoDataWidget(),
+                    ),
+                  if (vodController.displayLoading.value)
+                    // ignore: prefer_const_constructors
+                    SliverVideoPreviewSkeletonList(),
+                  if (vodController.displayNoMoreData.value)
                     SliverToBoxAdapter(
                       child: ListNoMore(),
                     )

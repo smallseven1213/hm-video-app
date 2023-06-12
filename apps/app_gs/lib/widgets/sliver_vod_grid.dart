@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 
 class SliverVodGrid extends StatelessWidget {
   final List videos;
-  final bool hasMoreData;
+  final bool displayNoMoreData;
+  final bool isListEmpty;
+  final bool displayLoading;
   final Widget? noMoreWidget;
   final List<Widget>? headerExtends;
   final Function? onScrollEnd;
@@ -19,7 +21,9 @@ class SliverVodGrid extends StatelessWidget {
   const SliverVodGrid(
       {Key? key,
       required this.videos,
-      required this.hasMoreData,
+      required this.displayNoMoreData,
+      required this.isListEmpty,
+      required this.displayLoading,
       this.noMoreWidget,
       this.headerExtends,
       this.onScrollEnd,
@@ -60,7 +64,7 @@ class SliverVodGrid extends StatelessWidget {
         controller: scrollController,
         slivers: [
           ...?headerExtends,
-          if (totalRows == 0)
+          if (isListEmpty)
             const SliverToBoxAdapter(
               child: NoDataWidget(),
             ),
@@ -135,9 +139,8 @@ class SliverVodGrid extends StatelessWidget {
                 ),
               ),
             ),
-          if (hasMoreData && totalRows > 0)
-            const SliverVideoPreviewSkeletonList(),
-          if (!hasMoreData && totalRows > 0)
+          if (displayLoading) const SliverVideoPreviewSkeletonList(),
+          if (displayNoMoreData)
             SliverToBoxAdapter(
               child: noMoreWidget,
             ),

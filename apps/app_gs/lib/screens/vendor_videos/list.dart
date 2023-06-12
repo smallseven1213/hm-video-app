@@ -21,8 +21,10 @@ class VendorVideoList extends StatelessWidget {
             publisherId: publisherId, scrollController: scrollController);
 
     return SliverVodGrid(
+      isListEmpty: publisherVodController.isListEmpty.value,
       videos: publisherVodController.vodList,
-      hasMoreData: publisherVodController.hasMoreData.value,
+      displayNoMoreData: publisherVodController.displayNoMoreData.value,
+      displayLoading: publisherVodController.displayLoading.value,
       noMoreWidget: ListNoMore(),
       customScrollController: publisherVodController.scrollController,
     );
