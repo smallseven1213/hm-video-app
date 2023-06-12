@@ -110,6 +110,9 @@ class Block1Widget extends StatelessWidget {
                           videoData: result[index],
                           imageRatio: BlockImageRatio.block1.ratio,
                           isEmbeddedAds: block.isEmbeddedAds ?? false,
+                          displayVideoTimes: film == 1,
+                          displayViewTimes: film == 1,
+                          displayVideoCollectTimes: film == 2,
                         ),
                 ),
                 if (index == result.length - 1) ...[
