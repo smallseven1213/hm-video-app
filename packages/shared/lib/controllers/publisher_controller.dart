@@ -1,5 +1,3 @@
-// ActorController is a getx controller for the Actor class.
-
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/publisher_api.dart';

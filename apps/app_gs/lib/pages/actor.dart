@@ -37,7 +37,9 @@ class ActorPageState extends State<ActorPage>
   @override
   void initState() {
     super.initState();
-    actorController = ActorController(actorId: widget.id);
+    Get.lazyPut(() => ActorController(actorId: widget.id),
+        tag: 'actor-${widget.id}');
+    actorController = Get.find(tag: 'actor-${widget.id}');
     _tabController = TabController(vsync: this, length: 2);
     _parentScrollController = ScrollController();
 

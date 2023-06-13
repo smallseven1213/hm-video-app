@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -166,8 +167,12 @@ class UserLike extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (actor.id == 0) {
+      return const SizedBox();
+    }
     final UserFavoritesActorController userFavoritesActorController =
         Get.find<UserFavoritesActorController>();
+    ActorController actorController = Get.find(tag: 'actor-${actor.id}');
     return Obx(() {
       var isLiked =
           userFavoritesActorController.actors.any((e) => e.id == actor.id);
@@ -177,9 +182,11 @@ class UserLike extends StatelessWidget {
         onTap: () {
           if (isLiked) {
             userFavoritesActorController.removeActor([actor.id]);
+            actorController.decrementActorCollectTimes();
             return;
           } else {
             userFavoritesActorController.addActor(actor);
+            actorController.incrementActorCollectTimes();
           }
         },
         child: Row(
@@ -191,7 +198,7 @@ class UserLike extends StatelessWidget {
             ),
             const SizedBox(width: 6),
             Text(
-              actor.collectTimes.toString(),
+              actorController.actor.value.actorCollectTimes.toString(),
               style: const TextStyle(
                 fontSize: 12,
                 color: Colors.white,
