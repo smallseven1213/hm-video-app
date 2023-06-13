@@ -25,7 +25,7 @@ void setScreenPortrait() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
     SystemUiOverlay.bottom,
     SystemUiOverlay.top,
   ]);
