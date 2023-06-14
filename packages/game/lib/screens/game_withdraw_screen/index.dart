@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:game/utils/loading.dart';
 import 'package:game/widgets/input.dart';
@@ -219,15 +220,9 @@ class _GameWithdrawState extends State<GameWithdraw> {
               MyRouteDelegate.of(context).popRoute();
             });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              res.message.toString(),
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
+        Fluttertoast.showToast(
+          msg: res.message.toString(),
+          gravity: ToastGravity.CENTER,
         );
       }
     });

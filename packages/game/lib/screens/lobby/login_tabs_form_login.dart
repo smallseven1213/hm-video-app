@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -63,15 +64,9 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
       } else {
         Get.find<AuthController>().setToken(authToken);
         widget.onSuccess();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              '登入成功',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
+        Fluttertoast.showToast(
+          msg: '登入成功',
+          gravity: ToastGravity.CENTER,
         );
       }
     } catch (e) {
