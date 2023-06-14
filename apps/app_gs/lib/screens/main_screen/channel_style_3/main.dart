@@ -7,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
 import '../../../widgets/channel_jingang_area.dart';
+import '../../../widgets/channel_jingang_area_title.dart';
 import '../../../widgets/tab_bar.dart';
 
 final logger = Logger();
@@ -90,14 +91,9 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
           controller: _scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
-              if (channelSharedData?.jingang!.title != '')
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 8.0),
-                    child:
-                        Header(text: channelSharedData?.jingang!.title ?? ''),
-                  ),
-                ),
+              ChannelJingangAreaTitle(
+                channelId: widget.channelId,
+              ),
               ChannelJingangArea(
                 channelId: widget.channelId,
               ),
