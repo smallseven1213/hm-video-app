@@ -1,3 +1,4 @@
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/input.dart';
@@ -56,15 +57,9 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
           )
           .then(
             (value) => {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    '註冊成功',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
+              Fluttertoast.showToast(
+                msg: '註冊成功',
+                gravity: ToastGravity.CENTER,
               ),
               widget.onSuccess(),
             },

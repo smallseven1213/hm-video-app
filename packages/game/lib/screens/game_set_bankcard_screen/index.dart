@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/models/bank.dart';
@@ -83,30 +84,18 @@ class GameSetBankCardState extends State<GameSetBankCard> {
           formData['legalName'],
           formData['branchName']);
       if (res.code == '00') {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              '設置成功',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
+        Fluttertoast.showToast(
+          msg: '設置成功',
+          gravity: ToastGravity.CENTER,
         );
         gameWithdrawController.setLoadingStatus(false);
         gameWithdrawController.mutate();
         Navigator.of(context).pop();
         MyRouteDelegate.of(context).popRoute();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              res.message.toString(),
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
+        Fluttertoast.showToast(
+          msg: res.message.toString(),
+          gravity: ToastGravity.CENTER,
         );
       }
       onLoading(context, status: false);

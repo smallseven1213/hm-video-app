@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:game/screens/game_theme_config.dart';
 
 class GameWithDrawField extends StatelessWidget {
@@ -53,15 +54,9 @@ class GameWithDrawField extends StatelessWidget {
                   InkWell(
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: value));
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            '已複製',
-                            style: TextStyle(color: gamePrimaryButtonTextColor),
-                          ),
-                          backgroundColor: gamePrimaryButtonColor,
-                          duration: const Duration(seconds: 1),
-                        ),
+                      Fluttertoast.showToast(
+                        msg: '已複製',
+                        gravity: ToastGravity.CENTER,
                       );
                     },
                     child: Icon(

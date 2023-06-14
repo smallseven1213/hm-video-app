@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -18,6 +18,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
   final formKey = GlobalKey<FormBuilderState>();
   final gameWithdrawController = Get.put(GameWithdrawController());
   final GlobalKey globalKey = GlobalKey();
+  String? passwordCheckError;
 
   void onSubmit(context) async {
     gameWithdrawController.setSubmitButtonDisable(true);
@@ -28,17 +29,24 @@ void showFundingPasswordBottomSheet(BuildContext context,
       onSuccess(passwordController.text);
       MyRouteDelegate.of(context).popRoute();
     } else {
-      ScaffoldMessenger.of(globalKey.currentContext!).showSnackBar(
-        const SnackBar(
-          content: Text(
-            '密碼錯誤',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+      Fluttertoast.showToast(
+        msg: '密碼錯誤',
+        gravity: ToastGravity.CENTER,
       );
     }
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      passwordCheckError = '請輸入密碼';
+    } else if (value.isNotEmpty) {
+      if (value.length < 6) {
+        passwordCheckError = '密碼長度不足';
+      } else if (value.length >= 6) {
+        passwordCheckError = null;
+      }
+    }
+    return null;
   }
 
   showModalBottomSheet(
@@ -112,12 +120,6 @@ void showFundingPasswordBottomSheet(BuildContext context,
                     child: FormBuilderField<String?>(
                       name: 'password',
                       onChanged: (val) => logger.i(val.toString()),
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                          errorText: '請輸入資金密碼',
-                        ),
-                        FormBuilderValidators.minLength(6, errorText: '密碼長度不足'),
-                      ]),
                       builder: (FormFieldState field) {
                         return GameInput(
                           label: '資金密碼',
@@ -126,6 +128,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                           isPassword: true,
                           onChanged: (value) => {
                             field.didChange(value),
+                            _validatePassword(value),
                             gameWithdrawController.setSubmitButtonDisable(
                               passwordController.text.length >= 6
                                   ? false
@@ -136,8 +139,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                             passwordController.clear(),
                             gameWithdrawController.setSubmitButtonDisable(true),
                           },
-                          errorMessage: formKey
-                              .currentState!.fields['password']!.errorText,
+                          errorMessage: passwordCheckError,
                         );
                       },
                     ),
