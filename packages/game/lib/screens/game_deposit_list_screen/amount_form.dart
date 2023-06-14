@@ -23,6 +23,7 @@ class AmountForm extends StatefulWidget {
   final Function? onChanged;
   final String activePayment;
   final String paymentChannelId;
+  final FocusNode focusNode;
 
   const AmountForm(
       {Key? key,
@@ -32,6 +33,7 @@ class AmountForm extends StatefulWidget {
       required this.min,
       required this.activePayment,
       required this.paymentChannelId,
+      required this.focusNode,
       this.onChanged})
       : super(key: key);
 
@@ -141,6 +143,7 @@ class _AmountFormState extends State<AmountForm> {
                 child: FormBuilderTextField(
                   controller: widget.controller,
                   name: 'amount',
+                  focusNode: widget.focusNode,
                   decoration: InputDecoration(
                     hintText: '$parseMinText ~ $parseMaxText',
                     hintStyle: TextStyle(color: gameLobbyLoginPlaceholderColor),

@@ -89,6 +89,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   final gameWithdrawController = Get.put(GameWithdrawController());
   ScrollController scrollController = ScrollController();
   GlobalKey scrollKey = GlobalKey();
+  FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
@@ -222,7 +223,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
     return GestureDetector(
       onTap: () {
-        FocusScope.of(context).unfocus();
+        focusNode.unfocus();
       },
       child: Container(
         width: double.infinity,
@@ -521,6 +522,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                     AmountForm(
                       formKey: _formKey,
                       controller: amountController,
+                      focusNode: focusNode,
                       max:
                           channels[_channelActiveIndex]['maxAmount'].toDouble(),
                       min:
