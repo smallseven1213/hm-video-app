@@ -17,6 +17,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   var displayNoMoreData = false.obs;
   var displayLoading = true.obs;
   final page = 0.obs;
+  final offset = 1.obs;
   final totalCount = 0.obs;
   Timer? _timer;
   late final ScrollController scrollController;
@@ -49,15 +50,27 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     hasMoreData.value = false;
   }
 
-  Future<void> loadMoreData() async {
+  Future<void> _fetchData({bool refresh = false}) async {
     if (!hasMoreData.value && vodList.isNotEmpty) return;
     isLoading.value = true;
 
-    int nextPage = page.value + 1;
-    InfinityVod newData = await fetchData(nextPage);
+    int nextPage;
+    if (refresh) {
+      offset.value = offset.value <= 5 ? offset.value + 1 : 1;
+      nextPage = offset.value;
+    } else {
+      nextPage = page.value + 1;
+    }
 
-    if (newData.vods.isNotEmpty) {
-      vodList.addAll(newData.vods);
+    InfinityVod newData = await fetchData(nextPage);
+    List<Vod> newVods = newData.vods;
+
+    if (newVods.isNotEmpty) {
+      if (refresh) {
+        vodList.value = newVods; // 替換現有的列表
+      } else {
+        vodList.addAll(newVods); // 加入到現有的列表
+      }
       page.value = nextPage;
       totalCount.value = vodList.length;
       hasMoreData.value = newData.hasMoreData;
@@ -70,6 +83,16 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     displayNoMoreData.value =
         !isLoading.value && !hasMoreData.value && !isListEmpty.value;
     displayLoading.value = hasMoreData.value || isLoading.value;
+  }
+
+  // 下拉更新
+  Future<void> pullToRefresh() async {
+    _fetchData(refresh: true);
+  }
+
+  // 下滑取得更多
+  Future<void> loadMoreData() async {
+    _fetchData(refresh: false);
   }
 
   void debounce({required Function() fn, int waitForMs = 200}) {
