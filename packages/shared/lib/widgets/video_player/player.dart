@@ -158,35 +158,61 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> {
               ),
             ],
             Positioned(
-              bottom: -22,
-              left: -24,
-              right: -24,
-              child: ValueListenableBuilder<VideoPlayerValue>(
-                valueListenable:
-                    obsVideoPlayerController.videoPlayerController!,
-                builder: (context, value, _) => VideoProgressSlider(
-                  controller: obsVideoPlayerController.videoPlayerController!,
-                  position: value.position,
-                  duration: value.duration,
-                  swatch: const Color(0xffFFC700),
-                ),
-              ),
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: GestureDetector(
+                  onHorizontalDragUpdate: (DragUpdateDetails details) {
+                    VideoPlayerController videoController =
+                        obsVideoPlayerController.videoPlayerController!;
+                    // 取得影片總長度，並將其切分成100格
+                    double videoLengthInSeconds =
+                        videoController.value.duration.inSeconds.toDouble();
+                    double oneTickInSeconds = videoLengthInSeconds / 500;
+
+                    // 使用details.delta.dx來判斷滑動的方向
+                    if (details.delta.dx > 0) {
+                      // dx大於0，手勢向右滑動，快進
+                      videoController.seekTo(videoController.value.position +
+                          Duration(
+                              seconds: (oneTickInSeconds * details.delta.dx)
+                                  .round()));
+                    } else if (details.delta.dx < 0) {
+                      // dx小於0，手勢向左滑動，快退
+                      videoController.seekTo(videoController.value.position +
+                          Duration(
+                              seconds: (oneTickInSeconds * details.delta.dx)
+                                  .round()));
+                    }
+                  },
+                  child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      Container(
+                        color: Colors.black.withOpacity(0.0),
+                        height: 20,
+                      ),
+                      SizedBox(
+                        height: 3,
+                        child: ValueListenableBuilder<VideoPlayerValue>(
+                          valueListenable:
+                              obsVideoPlayerController.videoPlayerController!,
+                          builder: (context, value, _) =>
+                              VideoProgressIndicator(
+                            obsVideoPlayerController.videoPlayerController!,
+                            allowScrubbing: true,
+                            padding: const EdgeInsets.all(0),
+                            colors: VideoProgressColors(
+                              playedColor: const Color(0xffFFC700),
+                              bufferedColor: Colors.grey,
+                              backgroundColor: Colors.white.withOpacity(0.3),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
             ),
-            // if (kIsWeb)
-            //   Positioned(
-            //     bottom: 50,
-            //     left: 0,
-            //     right: 0,
-            //     child: Text(
-            //       obsVideoPlayerController.videoAction.value,
-            //       textAlign: TextAlign.center,
-            //       style: const TextStyle(
-            //         fontSize: 50,
-            //         fontWeight: FontWeight.bold,
-            //         color: Colors.white,
-            //       ),
-            //     ),
-            //   ),
           ],
         );
       }),

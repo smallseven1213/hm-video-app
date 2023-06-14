@@ -30,10 +30,10 @@ class ShortCardInfo extends StatelessWidget {
     final obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: obsKey);
     return Positioned(
-      bottom: 10,
+      bottom: 20,
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
         // color: Colors.tealAccent.withOpacity(0.3),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
