@@ -7,12 +7,14 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class RefreshList extends StatefulWidget {
   final Function? onRefresh;
   final Function? onLoading;
+  final Function? onRefreshEnd;
   final Widget? child;
 
   const RefreshList({
     Key? key,
     this.onLoading,
     this.onRefresh,
+    this.onRefreshEnd,
     this.child,
   }) : super(key: key);
 
@@ -24,7 +26,6 @@ class RefreshListState extends State<RefreshList> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   var rng = Random();
-  // String loadingText = '';
 
   void _onLoading() async {
     widget.onLoading!();
@@ -32,15 +33,11 @@ class RefreshListState extends State<RefreshList> {
   }
 
   void _onRefresh() async {
-    // setState(() {
-    //   loadingText = loadingTextList[rng.nextInt(loadingTextList.length)];
-    // });
     // 刷新完成后，需要调用这个方法
     await widget.onRefresh!();
+    await Future.delayed(const Duration(milliseconds: 300)); // 加延遲
     _refreshController.refreshCompleted();
-    // setState(() {
-    //   loadingText = '';
-    // });
+    widget.onRefreshEnd!();
   }
 
   @override

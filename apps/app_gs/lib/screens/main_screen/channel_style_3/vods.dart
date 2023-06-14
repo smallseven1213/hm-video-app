@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:app_gs/widgets/no_data.dart';
+import 'package:app_gs/widgets/refresh_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -32,8 +33,10 @@ class VodsState extends State<Vods> {
   ScrollController? _scrollController;
   ChannelBlockVodController? vodController;
   Timer? _debounceTimer;
+  bool isRefreshing = false;
 
   void _scrollListener() {
+    if (isRefreshing) return;
     if (_scrollController!.position.pixels ==
         _scrollController!.position.maxScrollExtent) {
       debounce(
@@ -84,6 +87,14 @@ class VodsState extends State<Vods> {
     _debounceTimer = Timer(Duration(milliseconds: waitForMs), fn);
   }
 
+  void _onRefresh() async {
+    setState(() {
+      isRefreshing = true;
+    });
+    vodController!.reset();
+    vodController!.pullToRefresh();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (vodController == null) {
@@ -92,30 +103,38 @@ class VodsState extends State<Vods> {
     }
     return Obx(
       () {
-        return CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(8.0),
-              sliver: BaseVideoBlockTemplate(
-                film: vodController!.film.value,
-                templateId: widget.templateId ?? 3,
-                areaId: widget.areaId,
-                vods: vodController!.vodList.value,
+        return RefreshList(
+          onRefresh: _onRefresh,
+          onRefreshEnd: () {
+            setState(() {
+              isRefreshing = false;
+            });
+          },
+          child: CustomScrollView(
+            controller: _scrollController,
+            slivers: [
+              SliverPadding(
+                padding: const EdgeInsets.all(8.0),
+                sliver: BaseVideoBlockTemplate(
+                  film: vodController!.film.value,
+                  templateId: widget.templateId ?? 3,
+                  areaId: widget.areaId,
+                  vods: vodController!.vodList.value,
+                ),
               ),
-            ),
-            if (vodController!.isListEmpty.value)
-              const SliverToBoxAdapter(
-                child: NoDataWidget(),
-              ),
-            if (vodController!.displayLoading.value)
-              // ignore: prefer_const_constructors
-              SliverVideoPreviewSkeletonList(),
-            if (vodController!.displayNoMoreData.value)
-              SliverToBoxAdapter(
-                child: ListNoMore(),
-              )
-          ],
+              if (vodController!.isListEmpty.value)
+                const SliverToBoxAdapter(
+                  child: NoDataWidget(),
+                ),
+              if (vodController!.displayLoading.value && !isRefreshing)
+                // ignore: prefer_const_constructors
+                SliverVideoPreviewSkeletonList(),
+              if (vodController!.displayNoMoreData.value)
+                SliverToBoxAdapter(
+                  child: ListNoMore(),
+                )
+            ],
+          ),
         );
       },
     );
