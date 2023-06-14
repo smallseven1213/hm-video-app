@@ -127,11 +127,14 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
   @override
   void initState() {
     super.initState();
-    fetchData(null, null, null);
+    fetchData();
   }
 
-  Future<List<GameOrder>> fetchData(
-      String? startedAt, String? endedAt, int? paymentStatus) async {
+  Future<List<GameOrder>> fetchData({
+    String? startedAt,
+    String? endedAt,
+    int? paymentStatus,
+  }) async {
     Get.find<GameLobbyApi>()
         .getManyBy(
       startedAt: startedAt,
@@ -163,14 +166,16 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
       condition['endDate'] = formattedDate.format(endOfDay).toString();
     }
     await fetchData(
-      condition['startDate'] + 'Z',
-      condition['endDate'] + 'Z',
-      condition['paymentStatus'],
+      startedAt:
+          condition['startDate'] != null ? condition['startDate'] + 'Z' : null,
+      endedAt: condition['endDate'] != null ? condition['endDate'] + 'Z' : null,
+      paymentStatus: condition['paymentStatus'],
     ).then((value) {
       setState(() {
         record = value;
       });
     });
+
     logger.i('condition: $condition, ');
   }
 

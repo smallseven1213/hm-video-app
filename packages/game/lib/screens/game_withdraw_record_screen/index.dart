@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -154,8 +155,9 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
         .getWithdrawalRecord(
       remittanceType: condition['remittanceType'],
       status: condition['status'],
-      startedAt: condition['startDate'] + 'Z',
-      endedAt: condition['endDate'] + 'Z',
+      startedAt:
+          condition['startDate'] != null ? condition['startDate'] + 'Z' : null,
+      endedAt: condition['endDate'] != null ? condition['endDate'] + 'Z' : null,
     )
         .then((value) {
       setState(() {
