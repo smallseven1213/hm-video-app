@@ -70,12 +70,14 @@ submitDepositOrder(
     onLoading(context, status: false);
     showFormDialog(
       context,
-      title: '_submitOrder error',
+      title: '交易失敗',
       content: SizedBox(
         height: 60,
-        child: Text(
-          e.toString(),
-          style: TextStyle(color: gameLobbyPrimaryTextColor),
+        child: Center(
+          child: Text(
+            '訂單建立失敗，請聯繫客服',
+            style: TextStyle(color: gameLobbyPrimaryTextColor),
+          ),
         ),
       ),
       confirmText: '確認',
@@ -84,5 +86,6 @@ submitDepositOrder(
         Navigator.pop(context),
       },
     );
+    logger.i('submitDepositOrder error: $e');
   }
 }
