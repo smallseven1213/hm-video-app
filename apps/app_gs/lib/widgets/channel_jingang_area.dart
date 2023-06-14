@@ -20,13 +20,10 @@ class ChannelJingangArea extends StatelessWidget {
       tag: '$channelId',
     );
 
-    if (channelSharedDataController.channelSharedData.value == null) {
-      return const SliverToBoxAdapter(child: SizedBox());
-    }
     return Obx(
       () {
         Jingang? jingang =
-            channelSharedDataController.channelSharedData.value!.jingang;
+            channelSharedDataController.channelSharedData.value?.jingang;
         if (jingang == null ||
             jingang.jingangDetail == null ||
             jingang.jingangDetail!.isEmpty) {
