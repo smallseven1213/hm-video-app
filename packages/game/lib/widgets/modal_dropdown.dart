@@ -7,7 +7,6 @@ final logger = Logger();
 
 class ModalDropDown extends StatefulWidget {
   final List? items;
-  final Function? onChanged;
   final BoxDecoration? decoration;
   final bool isLast;
   final String title;
@@ -16,7 +15,6 @@ class ModalDropDown extends StatefulWidget {
   const ModalDropDown({
     super.key,
     this.items,
-    this.onChanged,
     this.decoration,
     this.title = '',
     this.isLast = false,
@@ -187,6 +185,7 @@ class ModalDropDownState extends State<ModalDropDown> {
                                 ),
                               ),
                               onTap: () {
+                                print('onTap $item[\'value\']');
                                 widget.onChange(item['value']);
                                 setState(() {
                                   _selected = item['label'];
