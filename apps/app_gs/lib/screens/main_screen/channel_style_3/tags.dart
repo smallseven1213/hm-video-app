@@ -15,7 +15,10 @@ class ChannelTags extends StatelessWidget {
       tag: '$channelId',
     );
 
-    if (channelSharedDataController.channelSharedData.value == null) {
+    if (channelSharedDataController.channelSharedData.value == null ||
+        channelSharedDataController.channelSharedData.value!.tags == null ||
+        channelSharedDataController
+            .channelSharedData.value!.tags!.details!.isEmpty) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
     return SliverToBoxAdapter(
@@ -25,8 +28,8 @@ class ChannelTags extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 15),
             child: Header(
                 text: channelSharedDataController
-                        .channelSharedData.value!.tags!.title ??
-                    ''),
+                        .channelSharedData.value?.tags?.title ??
+                    '--'),
           ),
           ListView.builder(
             physics: const NeverScrollableScrollPhysics(),

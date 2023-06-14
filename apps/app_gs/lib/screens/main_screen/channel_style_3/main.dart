@@ -100,7 +100,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               ChannelTags(
                 channelId: widget.channelId,
               ),
-              SliverToBoxAdapter(key: targetKey),
+              // SliverToBoxAdapter(key: targetKey),
               SliverAppBar(
                 pinned: true,
                 leading: null,
