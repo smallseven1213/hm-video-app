@@ -39,7 +39,7 @@ submitCompanyDepositOrder(
           height: 24,
           child: Center(
             child: Text(
-              res['message'],
+              '訂單建立失敗，請聯繫客服',
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
@@ -53,7 +53,21 @@ submitCompanyDepositOrder(
     }
   } catch (e) {
     onLoading(context, status: false);
-    Navigator.pop(context);
+    showFormDialog(
+      context,
+      title: '交易失敗',
+      content: Center(
+        child: Text(
+          '訂單建立失敗，請聯繫客服',
+          style: TextStyle(color: gameLobbyPrimaryTextColor),
+        ),
+      ),
+      confirmText: '確認',
+      onConfirm: () => {
+        Navigator.pop(context),
+        Navigator.pop(context),
+      },
+    );
     logger.i('_submitCompanyDepositOrder error: $e');
   }
 }
