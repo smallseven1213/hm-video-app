@@ -111,6 +111,8 @@ class SearchPageState extends State<SearchPage> {
                 searchKeyword = _searchController.text;
                 displaySearchResult = false;
               });
+              Get.find<UserSearchHistoryController>()
+                  .add(_searchController.text);
             },
             onTap: () {
               // 處理點擊事件的邏輯，如果需要

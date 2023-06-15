@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
+import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_jingang_area_title.dart';
 import '../../../widgets/tab_bar.dart';
@@ -91,6 +92,9 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
           controller: _scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
+              ChannelBanners(
+                channelId: widget.channelId,
+              ),
               ChannelJingangAreaTitle(
                 channelId: widget.channelId,
               ),
