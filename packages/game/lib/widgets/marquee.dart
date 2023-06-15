@@ -35,7 +35,7 @@ class GameMarqueeWidgetState extends State<GameMarqueeWidget> {
               SizedBox(
                 width: widget.iconWidth,
                 child: const Icon(
-                  Icons.arrow_right,
+                  Icons.volume_down,
                   size: 20,
                   color: Colors.white,
                 ),
