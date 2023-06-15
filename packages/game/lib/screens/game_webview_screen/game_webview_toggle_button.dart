@@ -40,9 +40,11 @@ class _GameWebviewToggleButtonWidget
     final orientation = MediaQuery.of(context).orientation;
     return PointerInterceptor(
       child: RotatedBox(
-        quarterTurns: widget.direction == gameWebviewDirection['vertical']
-            ? (orientation == Orientation.portrait ? 0 : 1)
-            : (orientation == Orientation.portrait ? 1 : 0),
+        quarterTurns: !GetPlatform.isWeb
+            ? 0
+            : widget.direction == gameWebviewDirection['vertical']
+                ? (orientation == Orientation.portrait ? 0 : 1)
+                : (orientation == Orientation.portrait ? 1 : 0),
         child: Container(
           height: 88,
           width: 288,
@@ -59,16 +61,22 @@ class _GameWebviewToggleButtonWidget
                     context: context,
                     title: '退出遊戲',
                     content: '你真的要退出遊戲嗎？',
-                    rotate: widget.direction == gameWebviewDirection['vertical']
-                        ? (orientation == Orientation.portrait ? false : true)
-                        : (orientation == Orientation.portrait ? true : false),
+                    rotate: !GetPlatform.isWeb
+                        ? false
+                        : widget.direction == gameWebviewDirection['vertical']
+                            ? (orientation == Orientation.portrait
+                                ? false
+                                : true)
+                            : (orientation == Orientation.portrait
+                                ? true
+                                : false),
                     onConfirm: () {
                       MyRouteDelegate.of(context).popRoute();
                       Get.find<GameStartupController>()
                           .goBackToAppHome(context);
                     },
                     onCancel: () {
-                      MyRouteDelegate.of(context).popRoute();
+                      Navigator.pop(context);
                     },
                   );
                 },

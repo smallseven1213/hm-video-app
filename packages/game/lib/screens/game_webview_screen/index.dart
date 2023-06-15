@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:game/models/game_list.dart';
+import 'package:flutter/services.dart';
 import 'package:game/screens/game_webview_screen/game_webview_toggle_button.dart';
 import 'package:game/widgets/draggable_button.dart';
 import 'package:logger/logger.dart';
@@ -28,6 +28,29 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
   @override
   void initState() {
     super.initState();
+    if (!GetPlatform.isWeb) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+        DeviceOrientation.landscapeRight,
+        DeviceOrientation.landscapeLeft,
+      ]);
+
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (!GetPlatform.isWeb) {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge,
+          overlays: SystemUiOverlay.values);
+    }
   }
 
   toggleButtonRow() {
@@ -39,38 +62,29 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-
-    return Scaffold(
-      body: Stack(
-        key: _parentKey,
-        children: [
-          H5Webview(
-            initialUrl: widget.gameUrl,
-            direction: widget.direction,
-          ),
-          if (!GetPlatform.isWeb)
-            Center(
-              child: toggleButton
-                  ? PointerInterceptor(
-                      child: GameWebviewToggleButtonWidget(
-                      toggleButtonRow: () => toggleButtonRow(),
-                      direction: widget.direction,
-                    ))
-                  : Container(),
+    return Scaffold(body: OrientationBuilder(builder: (context, orientation) {
+      return LayoutBuilder(builder: (context, constraints) {
+        return Stack(
+          key: _parentKey,
+          children: [
+            H5Webview(
+              initialUrl: widget.gameUrl,
+              direction: widget.direction,
             ),
-          if (!GetPlatform.isWeb)
-            DraggableFloatingActionButton(
-              initialOffset:
-                  widget.direction == gameWebviewDirection['vertical']
-                      ? Offset(Get.width - 70, Get.height - 120)
-                      : Offset(20, Get.height - 120),
-              parentKey: _parentKey,
-              child: RotatedBox(
-                quarterTurns:
-                    widget.direction == gameWebviewDirection['vertical']
-                        ? (orientation == Orientation.portrait ? 0 : 1)
-                        : (orientation == Orientation.portrait ? 1 : 0),
+            if (!GetPlatform.isWeb)
+              Center(
+                child: toggleButton
+                    ? PointerInterceptor(
+                        child: GameWebviewToggleButtonWidget(
+                        toggleButtonRow: () => toggleButtonRow(),
+                        direction: widget.direction,
+                      ))
+                    : Container(),
+              ),
+            if (!GetPlatform.isWeb)
+              DraggableFloatingActionButton(
+                initialOffset: Offset(
+                    constraints.maxWidth - 70, constraints.maxHeight - 70),
                 child: PointerInterceptor(
                   child: InkWell(
                     onTap: () => toggleButtonRow(),
@@ -88,9 +102,9 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
                   ),
                 ),
               ),
-            ),
-        ],
-      ),
-    );
+          ],
+        );
+      });
+    }));
   }
 }
