@@ -20,6 +20,7 @@ class TagItem extends StatelessWidget {
         child: Text(
           tag,
           style: const TextStyle(
+            fontSize: 12,
             color: Colors.white,
           ),
         ),

@@ -116,12 +116,16 @@ class SearchPageState extends State<SearchPage> {
               // 處理點擊事件的邏輯，如果需要
             },
             onSearchButtonClick: () {
+              var searchKeyword = _searchController.text.isEmpty
+                  ? widget.inputDefaultValue
+                  : _searchController.text;
               setState(() {
-                searchKeyword = _searchController.text.isEmpty
-                    ? widget.inputDefaultValue
-                    : _searchController.text;
+                searchKeyword = searchKeyword;
                 displaySearchResult = false;
               });
+              if (searchKeyword != null) {
+                Get.find<UserSearchHistoryController>().add(searchKeyword!);
+              }
             },
             defaultValue:
                 widget.dontSearch == true ? null : widget.inputDefaultValue,
