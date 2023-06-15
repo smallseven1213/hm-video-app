@@ -2,6 +2,10 @@ import 'package:app_gs/widgets/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/services/system_config.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final systemConfig = SystemConfig();
 
 class GridMenuItem {
   final String name;
@@ -68,7 +72,12 @@ class GridMenu extends StatelessWidget {
       GridMenuItem(
         name: '在線客服',
         icon: 'assets/images/user_screen_online_service.png',
-        onTap: () {},
+        onTap: () {
+          logger.i(
+              '${systemConfig.apiHost}/public/domains/domain/customer-services');
+          launchUrl(Uri.parse(
+              '${systemConfig.apiHost}/public/domains/domain/customer-services'));
+        },
       ),
       GridMenuItem(
         name: '應用中心',
