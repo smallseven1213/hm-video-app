@@ -1,85 +1,82 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-
-final logger = Logger();
 
 class DraggableFloatingActionButton extends StatefulWidget {
   final Widget child;
   final Offset initialOffset;
   final VoidCallback? onPressed;
-  final GlobalKey parentKey;
 
   const DraggableFloatingActionButton({
     Key? key,
     required this.child,
     required this.initialOffset,
     this.onPressed,
-    required this.parentKey,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _DraggableFloatingActionButtonState();
+  DraggableFloatingActionButtonState createState() =>
+      DraggableFloatingActionButtonState();
 }
 
-class _DraggableFloatingActionButtonState
+class DraggableFloatingActionButtonState
     extends State<DraggableFloatingActionButton> {
-  final GlobalKey _key = GlobalKey();
-
   bool _isDragging = false;
-  Offset _offset = const Offset(0, 0);
-  Offset _minOffset = const Offset(0, 0);
-  Offset _maxOffset = const Offset(0, 0);
+  Offset _offset = Offset.zero;
+  Offset _startPosition = Offset.zero;
+  Offset _dragOffset = Offset.zero;
+  double _deviceWidth = 0.0;
+  double _deviceHeight = 0.0;
+  final double _buttonSize = 70.0;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      didChangeDependencies();
+    });
     _offset = widget.initialOffset;
-
-    WidgetsBinding.instance.addPostFrameCallback(_setBoundary);
   }
 
-  void _setBoundary(_) {
-    final RenderBox parentRenderBox =
-        widget.parentKey.currentContext?.findRenderObject() as RenderBox;
-    final RenderBox renderBox =
-        _key.currentContext?.findRenderObject() as RenderBox;
-
-    try {
-      final Size parentSize = parentRenderBox.size;
-      final Size size = renderBox.size;
-
-      setState(() {
-        _minOffset = const Offset(0, 0);
-        _maxOffset = Offset(
-            parentSize.width - size.width,
-            GetPlatform.isWeb
-                ? parentSize.width - size.width
-                : parentSize.height - size.height);
-      });
-    } catch (e) {
-      logger.i('catch: $e');
-    }
-  }
-
-  void _updatePosition(PointerMoveEvent pointerMoveEvent) {
-    double newOffsetX = _offset.dx + pointerMoveEvent.delta.dx;
-    double newOffsetY = _offset.dy + pointerMoveEvent.delta.dy;
-
-    if (newOffsetX < _minOffset.dx) {
-      newOffsetX = _minOffset.dx;
-    } else if (newOffsetX > _maxOffset.dx) {
-      newOffsetX = _maxOffset.dx;
-    }
-
-    if (newOffsetY < _minOffset.dy) {
-      newOffsetY = _minOffset.dy;
-    } else if (newOffsetY > _maxOffset.dy) {
-      newOffsetY = _maxOffset.dy;
-    }
-
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     setState(() {
+      _deviceWidth = MediaQuery.of(context).size.width;
+      _deviceHeight = MediaQuery.of(context).size.height;
+      _offset = Offset(_deviceWidth - _buttonSize, _deviceHeight - _buttonSize);
+
+      _updatePosition(
+        DragUpdateDetails(
+          globalPosition: _offset,
+          localPosition: _offset,
+          delta: _offset,
+        ),
+      );
+    });
+  }
+
+  void _startDragging(DragStartDetails details) {
+    setState(() {
+      _isDragging = true;
+      _startPosition = _offset;
+      _dragOffset = details.localPosition;
+    });
+  }
+
+  void _updatePosition(DragUpdateDetails details) {
+    setState(() {
+      double newOffsetX =
+          (_startPosition.dx + details.localPosition.dx - _dragOffset.dx)
+              .clamp(0.0, _deviceWidth - _buttonSize);
+      double newOffsetY =
+          (_startPosition.dy + details.localPosition.dy - _dragOffset.dy)
+              .clamp(0.0, _deviceHeight - _buttonSize);
       _offset = Offset(newOffsetX, newOffsetY);
+    });
+  }
+
+  void _stopDragging(DragEndDetails details) {
+    setState(() {
+      _isDragging = false;
     });
   }
 
@@ -88,28 +85,21 @@ class _DraggableFloatingActionButtonState
     return Positioned(
       left: _offset.dx,
       top: _offset.dy,
-      child: Listener(
-        onPointerMove: (PointerMoveEvent pointerMoveEvent) {
-          _updatePosition(pointerMoveEvent);
-
-          setState(() {
-            _isDragging = true;
-          });
-        },
-        onPointerUp: (PointerUpEvent pointerUpEvent) {
-          logger.i('draggable button onPointerUp');
-
-          if (_isDragging) {
-            setState(() {
-              _isDragging = false;
-            });
-          } else {
-            widget.onPressed!();
-          }
-        },
-        child: Container(
-          key: _key,
-          child: widget.child,
+      child: GestureDetector(
+        onPanStart: _startDragging,
+        onPanUpdate: _updatePosition,
+        onPanEnd: _stopDragging,
+        child: Stack(
+          children: [
+            widget.child,
+            if (_isDragging)
+              Positioned.fill(
+                child: Container(
+                  color: Colors.transparent,
+                  child: const IgnorePointer(),
+                ),
+              ),
+          ],
         ),
       ),
     );
