@@ -22,11 +22,16 @@ class ChannelBanners extends StatelessWidget {
           channelSharedDataController.channelSharedData.value;
 
       if (channelSharedData == null || channelSharedData.banner == null) {
-        return const SizedBox.shrink();
+        return const SliverToBoxAdapter(child: SizedBox());
       } else {
-        return Carousel(
-          images: channelSharedData.banner,
-          ratio: 359 / 170,
+        return SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Carousel(
+              images: channelSharedData.banner,
+              ratio: 359 / 170,
+            ),
+          ),
         );
       }
     });

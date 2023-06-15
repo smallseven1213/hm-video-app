@@ -10,6 +10,7 @@ import 'package:shared/widgets/channe_provider.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../../widgets/actor_avatar.dart';
+import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_jingang_area_title.dart';
 import '../channel_style_3/tags.dart';
@@ -33,6 +34,9 @@ class ChannelStyle4 extends StatelessWidget {
         widget: Scaffold(
           body: CustomScrollView(
             slivers: [
+              ChannelBanners(
+                channelId: channelId,
+              ),
               ChannelJingangAreaTitle(
                 channelId: channelId,
               ),
