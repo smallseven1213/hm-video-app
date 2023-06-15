@@ -103,7 +103,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   textStyle: const TextStyle(
                                     color: Colors.white,
                                   ),
-                                  onTapUrl: (url) => launch('https://$url'),
+                                  onTapUrl: (url) => launch(url),
                                 ),
                               ),
                             ),
