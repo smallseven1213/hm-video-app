@@ -27,7 +27,7 @@ class NoticeDialogState extends State<NoticeDialog> {
   void initState() {
     super.initState();
     bannerController.fetchBanner(BannerPosition.lobbyPopup);
-    showNoticeDialog();
+    // showNoticeDialog();
   }
 
   // call notice api and show notice dialog
@@ -103,6 +103,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   textStyle: const TextStyle(
                                     color: Colors.white,
                                   ),
+                                  onTapUrl: (url) => launch('https://$url'),
                                 ),
                               ),
                             ),
