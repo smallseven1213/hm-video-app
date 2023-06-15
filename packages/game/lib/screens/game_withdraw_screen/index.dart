@@ -200,6 +200,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   // onConfirm function
   void _onConfirm(Type type, context) {
     int intType = type == Type.bankcard ? 1 : 2;
+    Navigator.of(context).pop();
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
       // call applyWithdrawal
       var res = await GameLobbyApi().applyWithdrawalV2(
@@ -215,10 +216,13 @@ class _GameWithdrawState extends State<GameWithdraw> {
             content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
             confirmText: "確認",
             onConfirm: () {
+              setState(() {
+                _enableSubmit = false;
+              });
               userController.fetchUserInfo();
               gameWalletController.mutate();
+              amountController.clear();
               Navigator.of(context).pop();
-              MyRouteDelegate.of(context).popRoute();
             });
       } else {
         Fluttertoast.showToast(

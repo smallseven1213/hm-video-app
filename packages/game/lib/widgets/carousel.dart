@@ -57,7 +57,8 @@ class CarouselState extends State<Carousel> {
             ),
             if (multipleImages)
               Positioned(
-                right: 10,
+                left: 0,
+                right: 0,
                 bottom: 0,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,

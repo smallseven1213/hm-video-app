@@ -22,17 +22,19 @@ void showFundingPasswordBottomSheet(BuildContext context,
 
   void onSubmit(context) async {
     gameWithdrawController.setSubmitButtonDisable(true);
-    final response =
-        await Get.put(GameLobbyApi()).checkPaymentPin(passwordController.text);
-
-    if (response.data == true) {
-      onSuccess(passwordController.text);
-      MyRouteDelegate.of(context).popRoute();
-    } else {
+    try {
+      final response = await Get.put(GameLobbyApi())
+          .checkPaymentPin(passwordController.text);
+      if (response.data == true) {
+        onSuccess(passwordController.text);
+        MyRouteDelegate.of(context).popRoute();
+      }
+    } catch (e) {
       Fluttertoast.showToast(
         msg: '密碼錯誤',
         gravity: ToastGravity.CENTER,
       );
+      logger.i('onSubmit error:${e.toString()}');
     }
   }
 

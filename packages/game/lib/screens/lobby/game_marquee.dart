@@ -21,10 +21,9 @@ class GameMarquee extends StatefulWidget {
 class _GameMarqueeState extends State<GameMarquee> {
   @override
   Widget build(BuildContext context) {
-    logger.i('widget.data: ${widget.data}');
     return SizedBox(
       width: double.infinity,
-      child: Marquee(
+      child: GameMarqueeWidget(
         icon: Icon(
           Icons.volume_down,
           size: 25,
