@@ -14,12 +14,15 @@ class UserSearchHistoryController extends GetxController {
   }
 
   void add(String keyword) async {
-    if (searchHistory.contains(keyword)) {
-      searchHistory.remove(keyword);
-    }
-    searchHistory.insert(0, keyword);
     var box = await Hive.openBox<String>('searchHistoryBox');
-    box.add(keyword);
+
+    if (!box.values.contains(keyword)) {
+      if (searchHistory.contains(keyword)) {
+        searchHistory.remove(keyword);
+      }
+      searchHistory.insert(0, keyword);
+      box.add(keyword);
+    }
   }
 
   void remove(String keyword) async {
