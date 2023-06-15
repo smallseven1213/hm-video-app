@@ -6,6 +6,7 @@ import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/actor_avatar.dart';
 
@@ -108,13 +109,26 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
-            child: Text(
-              actor.name,
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: fontSize,
-                  color: Colors.white),
-            ),
+            child: (actor.name == null || actor.name!.isEmpty)
+                ? Shimmer.fromColors(
+                    baseColor: const Color(0xFF003068),
+                    highlightColor: const Color(0xFF00234d),
+                    child: Container(
+                      width: 100,
+                      height: fontSize,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  )
+                : Text(
+                    actor.name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: fontSize,
+                        color: Colors.white),
+                  ),
           ),
           Positioned(
             top: lerpDouble(
@@ -124,15 +138,28 @@ class ActorCard extends SliverPersistentHeaderDelegate {
               opacity: opacity,
               child: SizedBox(
                 width: screenWidth - 108,
-                child: Text(
-                  actor.description!,
-                  softWrap: true,
-                  maxLines: null,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 12,
-                      color: Colors.white),
-                ),
+                child: (actor.description == null || actor.description!.isEmpty)
+                    ? Shimmer.fromColors(
+                        baseColor: const Color(0xFF003068),
+                        highlightColor: const Color(0xFF00234d),
+                        child: Container(
+                          width: screenWidth - 108,
+                          height: 12,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      )
+                    : Text(
+                        actor.description!,
+                        softWrap: true,
+                        maxLines: null,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12,
+                            color: Colors.white),
+                      ),
               ),
             ),
           ),
