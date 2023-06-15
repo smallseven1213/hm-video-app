@@ -52,6 +52,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   String validStake = '0.00';
   String withdrawalFee = '0.000';
   String withdrawalMode = '0';
+  String withdrawalLowerLimit = '0.00';
   FocusNode focusNode = FocusNode(); // 初始化 FocusNode 对象
 
   @override
@@ -187,9 +188,9 @@ class _GameWithdrawState extends State<GameWithdraw> {
         setState(() {
           withdrawalFee = res.data!.withdrawalFee;
           withdrawalMode = res.data!.withdrawalMode;
+          withdrawalLowerLimit = res.data!.withdrawalLowerLimit;
         });
-        logger.i(
-            'withdrawalFee: $withdrawalFee, withdrawalMode: $withdrawalMode');
+        logger.i('最低可提現金額: $withdrawalLowerLimit');
       }
     } catch (error) {
       logger.i('_getParamConfig $error');
@@ -232,12 +233,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
     if (focusNode.hasFocus) {
       if (value == null || value.isEmpty) {
         return '請輸入提現金額';
-      } else if (int.parse(value) < 100) {
-        return '輸入金額不得小於 100元';
+      } else if (double.parse(value) < double.parse(withdrawalLowerLimit)) {
+        return '輸入金額不得小於$withdrawalLowerLimit元';
       } else if (int.parse(value) > gameWalletController.wallet.value) {
         return '輸入金額不得大於餘額';
-      } else if (int.parse(value) % 100 != 0) {
-        return '輸入金額格式錯誤';
       }
     }
     return null;
@@ -359,10 +358,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                       FormBuilderValidators.required(
                                         errorText: '請輸提現金額',
                                       ),
-                                      // 不得小於100
                                       FormBuilderValidators.min(
-                                        100,
-                                        errorText: '輸入金額不得小於 100元',
+                                        double.parse(withdrawalLowerLimit),
+                                        errorText:
+                                            '輸入金額不得小於$withdrawalLowerLimit元',
                                       ),
                                       // 不得大於餘額
                                       FormBuilderValidators.max(
@@ -388,7 +387,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                                 null;
                                           })
                                         },
-                                        warningMessage: "*最低可提金額為 100 CNY",
+                                        warningMessage:
+                                            "*最低可提金額為 $withdrawalLowerLimit CNY",
                                         errorMessage:
                                             _validate(amountController.text),
                                         inputFormatters: <TextInputFormatter>[
