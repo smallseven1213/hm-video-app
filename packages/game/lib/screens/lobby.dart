@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
+import 'package:game/screens/lobby/game_list_view.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:game/screens/lobby/login_tabs.dart';
 import 'package:game/utils/show_model.dart';
@@ -16,7 +17,6 @@ import 'package:game/models/game_list.dart';
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/screens/lobby/game_list_view.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
@@ -73,8 +73,6 @@ class _GameLobbyState extends State<GameLobby> {
       GameBannerController();
     });
   }
-
-  // 先取得當前的localStorage的遊戲歷史紀錄
 
   @override
   Widget build(BuildContext context) {
@@ -137,67 +135,75 @@ class _GameLobbyState extends State<GameLobby> {
                   ]
                 : null,
           ),
-          body: SafeArea(
-            child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                color: gameLobbyBgColor,
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  controller: _scrollController,
-                  child: Container(
+          body: OrientationBuilder(
+            builder: (BuildContext context, Orientation orientation) {
+              return SafeArea(
+                child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Column(
-                      children: [
-                        GameCarousel(data: gameBannerController.gameBanner),
-                        GameMarquee(data: gameBannerController.gameMarquee),
-                        GameUserInfo(
-                          type: 'lobby',
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // 存款
-                              UserInfoDeposit(
-                                onTap: () {
-                                  MyRouteDelegate.of(context).push(
-                                    gameConfigController
-                                                .switchPaymentPage.value ==
-                                            switchPaymentPageType['list']
-                                        ? GameAppRoutes.depositList.value
-                                        : GameAppRoutes.depositPolling.value,
-                                  );
-                                },
+                    height: double.infinity,
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                    color: gameLobbyBgColor,
+                    child: SingleChildScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      controller: _scrollController,
+                      child: Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Column(
+                          children: [
+                            GameCarousel(data: gameBannerController.gameBanner),
+                            GameMarquee(data: gameBannerController.gameMarquee),
+                            GameUserInfo(
+                              type: 'lobby',
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // 存款
+                                  UserInfoDeposit(
+                                    onTap: () {
+                                      MyRouteDelegate.of(context).push(
+                                        gameConfigController
+                                                    .switchPaymentPage.value ==
+                                                switchPaymentPageType['list']
+                                            ? GameAppRoutes.depositList.value
+                                            : GameAppRoutes
+                                                .depositPolling.value,
+                                      );
+                                    },
+                                  ),
+                                  // 提現
+                                  UserInfoWithdraw(
+                                    onTap: () {
+                                      MyRouteDelegate.of(context).push(
+                                        GameAppRoutes.withdraw.value,
+                                      );
+                                    },
+                                  ),
+                                  // 客服
+                                  const UserInfoService(),
+                                ],
                               ),
-                              // 提現
-                              UserInfoWithdraw(
-                                onTap: () {
-                                  MyRouteDelegate.of(context).push(
-                                    GameAppRoutes.withdraw.value,
-                                  );
-                                },
+                            ),
+                            if (orientation == Orientation.portrait)
+                              GameListView(
+                                deductHeight: (gameBannerController
+                                                .gameBanner.isNotEmpty
+                                            ? Get.width / 2.47
+                                            : 0)
+                                        .toInt() +
+                                    (gameBannerController.gameMarquee.isNotEmpty
+                                            ? 20
+                                            : 0)
+                                        .toInt(),
                               ),
-                              // 客服
-                              const UserInfoService(),
-                            ],
-                          ),
+                          ],
                         ),
-                        GameListView(
-                          deductHeight:
-                              (gameBannerController.gameBanner.isNotEmpty
-                                          ? Get.width / 2.47
-                                          : 0)
-                                      .toInt() +
-                                  (gameBannerController.gameMarquee.isNotEmpty
-                                          ? 20
-                                          : 0)
-                                      .toInt(),
-                        ),
-                      ],
-                    ),
-                  ),
-                )),
+                      ),
+                    )),
+              );
+            },
           ),
           // floatingActionButton:
           //     userController.info.value.roles.contains('guest')
