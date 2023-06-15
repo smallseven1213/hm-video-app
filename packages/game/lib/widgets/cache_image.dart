@@ -36,10 +36,10 @@ class CacheImage extends StatelessWidget {
         width: width,
         height: height,
         fit: fit,
-        placeholder: (context, url) => Image.asset(
-          emptyImageUrl,
-          fit: BoxFit.cover,
-        ),
+        // placeholder: (context, url) => Image.asset(
+        //   emptyImageUrl,
+        //   fit: BoxFit.cover,
+        // ),
         errorWidget: (context, url, error) => const Icon(Icons.error),
       );
     }
