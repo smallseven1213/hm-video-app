@@ -24,18 +24,13 @@ class TurnOverContent extends StatefulWidget {
 class TurnOverContentState extends State<TurnOverContent> {
   @override
   Widget build(BuildContext context) {
+    var feeParse = (widget.withdrawalFee.toDouble() * 100)
+        .toStringAsFixed(2)
+        .replaceAll(RegExp(r'\.?0*$'), '');
     return SizedBox(
       height: 230,
       child: Column(
         children: [
-          // Column裡面依序放入以下
-          // 1. 根據status顯示icon
-          // 2. 文字"流水限額詳情"
-          // 3. 放入一個row，水平排列spaceBetween
-          // 4. row裡面放入兩個text，分別是"流水限額"和傳進來的金額
-          // 5. row裡面放入一個text，"累積有效流水"和"和傳進來的金額
-          // 放入一個divider
-          // 最後放入文字"未達流水限額提現需支付提現手續費0.02%"
           Icon(
             widget.status ? Icons.check_circle : Icons.cancel,
             color: widget.status ? Colors.green : Colors.red,
@@ -124,7 +119,7 @@ class TurnOverContentState extends State<TurnOverContent> {
           ),
           const SizedBox(height: 10),
           Text(
-            '未達流水限額提現需支付提現手續費 ${widget.withdrawalFee.toDouble() * 100} %',
+            '未達流水限額提現需支付提現手續費 $feeParse %',
             style: TextStyle(
               color: gameLobbyHintColor,
               fontSize: 12,
