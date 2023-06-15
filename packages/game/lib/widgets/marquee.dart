@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
+import 'package:marquee/marquee.dart';
 
 final logger = Logger();
 
-class Marquee extends StatefulWidget {
+class GameMarqueeWidget extends StatefulWidget {
   final double iconWidth;
   final double width;
   final String text;
   final TextStyle? style;
   final Icon? icon;
 
-  const Marquee({
+  const GameMarqueeWidget({
     Key? key,
     this.iconWidth = 30,
     this.width = 100,
@@ -20,13 +22,12 @@ class Marquee extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  MarqueeState createState() => MarqueeState();
+  GameMarqueeWidgetState createState() => GameMarqueeWidgetState();
 }
 
-class MarqueeState extends State<Marquee> {
+class GameMarqueeWidgetState extends State<GameMarqueeWidget> {
   @override
   Widget build(BuildContext context) {
-    logger.i('text: ${widget.text}');
     return Row(
       children: widget.text.isEmpty
           ? []
@@ -45,7 +46,8 @@ class MarqueeState extends State<Marquee> {
                 child: Marquee(
                   key: widget.key,
                   text: widget.text,
-                  style: widget.style ?? const TextStyle(fontSize: 12),
+                  style: widget.style ??
+                      TextStyle(fontSize: 12, color: gameLobbyPrimaryTextColor),
                 ),
               )
             ],
