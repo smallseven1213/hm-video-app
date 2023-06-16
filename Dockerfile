@@ -18,6 +18,9 @@ RUN rm -rf /root/.pub-cache/_temp/*
 # Clear Flutter cache
 RUN rm -rf /sdks/flutter/.pub-cache
 
+# Install sentry-cli
+RUN curl -sL https://sentry.io/get-cli/ | bash
+
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     melos exec --scope="app_gs" -- \
