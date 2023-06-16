@@ -48,11 +48,13 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
         //   duration: const Duration(milliseconds: 200),
         //   curve: Curves.easeInOut,
         // );
-        Scrollable.ensureVisible(
-          targetKey.currentContext!,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.ease,
-        );
+        if (targetKey.currentContext != null) {
+          Scrollable.ensureVisible(
+            targetKey.currentContext!,
+            duration: const Duration(milliseconds: 200),
+            curve: Curves.ease,
+          );
+        }
       }
     });
   }
