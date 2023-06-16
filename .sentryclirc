@@ -1,0 +1,27 @@
+[auth]
+token=2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
+
+[defaults]
+url=https://sentry.hmtech.site/
+org = sentry
+project = hm-video-app
+
+# 指令參考
+# sentry-cli releases files local.testing.001 upload-sourcemaps './apps/app_gs/build/web' --url-prefix <线上资源URI>
+
+
+; 下方是pubspec.yaml版本，用flutter packages pub run sentry_dart_plugin跑的
+; sentry:
+;   upload_debug_symbols: true
+;   upload_source_maps: false
+;   upload_sources: false
+;   project: hm-video-app
+;   org: sentry
+;   auth_token: 2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
+;   url: https://sentry.hmtech.site/
+;   wait_for_processing: false
+;   log_level: error # possible values: trace, debug, info, warn, error
+;   release: local.testing.002
+;   web_build_path: build/web/
+;   commits: auto
+;   ignore_missing: true

@@ -21,7 +21,8 @@ RUN rm -rf /sdks/flutter/.pub-cache
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     melos exec --scope="app_gs" -- \
-    flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
+    flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
+    sentry-cli releases files ${DATE_VERSION} upload-sourcemaps './apps/app_gs/build/web'
 
 # Production stage
 FROM nginx:stable-alpine
