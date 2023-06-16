@@ -336,23 +336,23 @@ class GameListViewState extends State<GameListView>
                       gameType: gameListResult[index * 2].gameType,
                     ),
                   ),
-                  // if (index * 2 + 1 < gameListResult.length)
-                  //   GestureDetector(
-                  //     onTap: () {
-                  //       handleGameItem(
-                  //         context,
-                  //         gameId: gameListResult[index * 2 + 1].gameId,
-                  //         updateGameHistory: _getGameHistory,
-                  //         tpCode: gameListResult[index * 2 + 1].tpCode,
-                  //         direction: gameListResult[index * 2 + 1].direction,
-                  //         gameType: gameListResult[index * 2 + 1].gameType,
-                  //       );
-                  //     },
-                  //     child: GameListItem(
-                  //       imageUrl: gameListResult[index * 2 + 1].imgUrl,
-                  //       gameType: gameListResult[index * 2 + 1].gameType,
-                  //     ),
-                  //   ),
+                  if (index * 2 + 1 < gameListResult.length)
+                    GestureDetector(
+                      onTap: () {
+                        handleGameItem(
+                          context,
+                          gameId: gameListResult[index * 2 + 1].gameId,
+                          updateGameHistory: _getGameHistory,
+                          tpCode: gameListResult[index * 2 + 1].tpCode,
+                          direction: gameListResult[index * 2 + 1].direction,
+                          gameType: gameListResult[index * 2 + 1].gameType,
+                        );
+                      },
+                      child: GameListItem(
+                        imageUrl: gameListResult[index * 2 + 1].imgUrl,
+                        gameType: gameListResult[index * 2 + 1].gameType,
+                      ),
+                    ),
                   const SizedBox(width: double.infinity, height: 8)
                 ],
               );
