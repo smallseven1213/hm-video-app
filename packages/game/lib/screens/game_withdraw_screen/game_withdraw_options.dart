@@ -19,7 +19,6 @@ class GameWithDrawOptions extends StatefulWidget {
   const GameWithDrawOptions(
       {Key? key,
       required this.onConfirm,
-      required this.onBackFromBindingPage,
       required this.enableSubmit,
       required this.hasPaymentData,
       required this.bankData,
@@ -31,7 +30,6 @@ class GameWithDrawOptions extends StatefulWidget {
       : super(key: key);
 
   final void Function(Type) onConfirm;
-  final Function() onBackFromBindingPage;
   final bool enableSubmit;
   final TextEditingController? controller;
   final bool hasPaymentData;
@@ -56,6 +54,22 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
   @override
   void initState() {
     super.initState();
+  }
+
+  showFundPassword() {
+    showConfirmDialog(
+      context: context,
+      title: "",
+      content: "請先設置資金密碼",
+      barrierDismissible: false,
+      confirmText: "前往設定",
+      onConfirm: () {
+        gameWithdrawalController.setLoadingStatus(false);
+        Navigator.of(context).pop();
+        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword.value);
+      },
+      onCancel: () => Navigator.of(context).pop(),
+    );
   }
 
   @override
@@ -125,8 +139,14 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
           GameButton(
             text: "前往綁定",
             onPressed: () {
-              widget.onBackFromBindingPage();
-              MyRouteDelegate.of(context).push(GameAppRoutes.setBankcard.value);
+              logger.i(
+                  'has paymentPin?: ${gameWithdrawalController.paymentPin.value}');
+              if (gameWithdrawalController.paymentPin.value == false) {
+                showFundPassword();
+              } else {
+                MyRouteDelegate.of(context)
+                    .push(GameAppRoutes.setBankcard.value);
+              }
             },
             disabled: gameWithdrawalController.hasPaymentData.value,
           )
