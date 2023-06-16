@@ -25,7 +25,7 @@ RUN curl -sL https://sentry.io/get-cli/ | bash
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     melos exec --scope="app_gs" -- \
     flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
-    sentry-cli releases files ${DATE_VERSION} upload-sourcemaps './apps/app_gs/build/web'
+    sentry-cli releases files ${DATE_VERSION} upload-sourcemaps './apps/app_gs/build/web' --log-level=debug
 
 # Production stage
 FROM nginx:stable-alpine
