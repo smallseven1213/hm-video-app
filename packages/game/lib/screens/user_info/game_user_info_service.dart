@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/services/game_system_config.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UserInfoService extends StatefulWidget {
   const UserInfoService({Key? key}) : super(key: key);
-  // final String points;
-  // final VoidCallback onTap;
 
   @override
   State<UserInfoService> createState() => _UserInfoService();
@@ -14,6 +14,7 @@ class UserInfoService extends StatefulWidget {
 
 class _UserInfoService extends State<UserInfoService> {
   final systemConfig = GameSystemConfig();
+  final gameBannerController = Get.put(GameBannerController());
 
   @override
   void initState() {
@@ -27,8 +28,7 @@ class _UserInfoService extends State<UserInfoService> {
       height: 60,
       child: InkWell(
         onTap: () {
-          launchUrl(Uri.parse(
-              '${systemConfig.apiHost}/public/domains/domain/customer-services'));
+          launchUrl(Uri.parse(gameBannerController.customerServiceUrl.value));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:game/models/game_list.dart';
@@ -34,6 +35,7 @@ class _GameWebviewToggleButtonWidget
     extends State<GameWebviewToggleButtonWidget> {
   final systemConfig = GameSystemConfig();
   final gameConfigController = Get.put(GameConfigController());
+  final gameBannerController = Get.put(GameBannerController());
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +104,8 @@ class _GameWebviewToggleButtonWidget
               ),
               InkWell(
                 onTap: () {
-                  launchUrl(Uri.parse(
-                      '${systemConfig.apiHost}/public/domains/domain/customer-services'));
+                  launchUrl(
+                      Uri.parse(gameBannerController.customerServiceUrl.value));
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
