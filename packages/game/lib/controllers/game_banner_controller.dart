@@ -6,6 +6,7 @@ class GameBannerController extends GetxController {
   var isLoading = false.obs;
   var gameMarquee = [].obs;
   var gameBanner = [].obs;
+  var customerServiceUrl = ''.obs;
 
   @override
   void onInit() {
@@ -22,6 +23,9 @@ class GameBannerController extends GetxController {
       var res = await Get.put(GameLobbyApi()).getMarqueeAndBanner();
       gameBanner.value = res['banner'];
       gameMarquee.value = res['marquee'];
+      customerServiceUrl.value = res['customerServiceUrl'].isNotEmpty
+          ? res['customerServiceUrl'][0]['url']
+          : '';
     } catch (error) {
       logger.i('fetchGameBanners: $error');
     } finally {
