@@ -194,7 +194,7 @@ class _GameLobbyState extends State<GameLobby> {
                                             : 0)
                                         .toInt() +
                                     (gameBannerController.gameMarquee.isNotEmpty
-                                            ? 29
+                                            ? 31
                                             : 0)
                                         .toInt(),
                               ),
