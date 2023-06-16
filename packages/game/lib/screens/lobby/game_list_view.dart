@@ -97,7 +97,7 @@ class GameListViewState extends State<GameListView>
       );
       _tabController!.addListener(_handleTabSelection);
       gamesListController.updateSelectedCategoryIndex(0);
-      // _getGameHistory();
+      _getGameHistory();
     });
   }
 
@@ -125,9 +125,9 @@ class GameListViewState extends State<GameListView>
 
   _handleTabSelection() {
     gamesListController.updateSelectedCategoryIndex(_tabController!.index);
-    // if (_tabController?.index == -1) {
-    //   _getGameHistory();
-    // }
+    if (_tabController?.index == -1) {
+      _getGameHistory();
+    }
   }
 
   // 寫一個篩選遊戲類別的方法
@@ -245,20 +245,20 @@ class GameListViewState extends State<GameListView>
                     ),
                     const VerticalDivider(
                         thickness: 1, width: 10, color: Colors.transparent),
-                    Flexible(
-                      flex: 1,
-                      child: TabBarView(
-                        controller: _tabController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: filteredGameCategories
-                            .map(
-                              (category) => gamesListController.games.isNotEmpty
-                                  ? _buildGameList(category['gameType'] as int)
-                                  : const SizedBox(),
-                            )
-                            .toList(),
-                      ),
-                    ),
+                    // Flexible(
+                    //   flex: 1,
+                    //   child: TabBarView(
+                    //     controller: _tabController,
+                    //     physics: const NeverScrollableScrollPhysics(),
+                    //     children: filteredGameCategories
+                    //         .map(
+                    //           (category) => gamesListController.games.isNotEmpty
+                    //               ? _buildGameList(category['gameType'] as int)
+                    //               : const SizedBox(),
+                    //         )
+                    //         .toList(),
+                    //   ),
+                    // ),
                   ],
                 ),
               )
