@@ -110,20 +110,15 @@ class BaseShortPageState extends State<BaseShortPage> {
                 key: Key('video-provider-$obsKey'),
                 obsKey: obsKey,
                 vodId: shortData.id,
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: ShortCard(
-                            obsKey: obsKey.toString(),
-                            index: index,
-                            id: shortData.id,
-                            title: shortData.title,
-                            supportedPlayRecord: widget.supportedPlayRecord)),
-                    ShortBottomArea(
-                        shortData: shortData,
-                        displayFavoriteAndCollectCount:
-                            widget.displayFavoriteAndCollectCount),
-                  ],
+                child: ShortCard(
+                  obsKey: obsKey.toString(),
+                  index: index,
+                  id: shortData.id,
+                  title: shortData.title,
+                  supportedPlayRecord: widget.supportedPlayRecord,
+                  shortData: shortData,
+                  displayFavoriteAndCollectCount:
+                      widget.displayFavoriteAndCollectCount,
                 ),
               );
             },

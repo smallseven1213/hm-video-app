@@ -31,49 +31,47 @@ class ShortMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        flex: 1,
-        child: InkWell(
-          onTap: () {
-            onTap?.call();
-          },
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Icon(
-                  icon,
-                  size: iconSize ?? 24,
-                  color: isLike
-                      ? AppColors.colors[ColorKeys.primary]
-                      : Colors.white,
-                ),
-                const SizedBox(width: 10),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (displayFavoriteAndCollectCount == true)
-                      Text(
-                        getViewTimes(count ?? 0,
-                            shouldCalculateThousands: false),
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.white,
-                        ),
-                      ),
-                    Text(
-                      subscribe,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                )
-              ],
+      flex: 1,
+      child: InkWell(
+        onTap: () {
+          onTap?.call();
+        },
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: iconSize ?? 24,
+              color:
+                  isLike ? AppColors.colors[ColorKeys.primary] : Colors.white,
             ),
-          ),
-        ));
+            const SizedBox(width: 10),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (displayFavoriteAndCollectCount == true)
+                  Text(
+                    getViewTimes(count ?? 0, shouldCalculateThousands: false),
+                    style: const TextStyle(
+                      fontSize: 13,
+                      color: Colors.white,
+                    ),
+                  ),
+                Text(
+                  subscribe,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
