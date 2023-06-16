@@ -1,6 +1,9 @@
 [auth]
 token=2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
 
+[http]
+keepalive=false
+
 [defaults]
 url=https://sentry.hmtech.site/
 org = sentry
