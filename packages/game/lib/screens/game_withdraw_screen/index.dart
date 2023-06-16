@@ -403,8 +403,6 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                 onConfirm: (type) =>
                                     _onConfirm(Type.bankcard, context),
                                 enableSubmit: _enableSubmit,
-                                hasPaymentPin:
-                                    gameWithdrawController.paymentPin.value,
                                 hasPaymentData:
                                     gameWithdrawController.hasPaymentData.value,
                                 reachable: reachable,

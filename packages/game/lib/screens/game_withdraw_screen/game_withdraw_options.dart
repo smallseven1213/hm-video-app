@@ -26,7 +26,6 @@ class GameWithDrawOptions extends StatefulWidget {
       required this.withdrawalMode,
       required this.withdrawalFee,
       required this.applyAmount,
-      required this.hasPaymentPin,
       this.controller})
       : super(key: key);
 
@@ -39,7 +38,6 @@ class GameWithDrawOptions extends StatefulWidget {
   final String withdrawalMode;
   final String withdrawalFee;
   final String applyAmount;
-  final bool hasPaymentPin;
 
   @override
   GameWithDrawOptionsState createState() => GameWithDrawOptionsState();
