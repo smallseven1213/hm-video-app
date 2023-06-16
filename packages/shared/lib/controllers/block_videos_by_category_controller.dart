@@ -1,13 +1,16 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/models/vod.dart';
 import '../apis/vod_api.dart';
 import '../models/block_vod.dart';
 
+final logger = Logger();
 final vodApi = VodApi();
 
 class BlockVideosByCategoryController extends GetxController {
   String excludeId;
-  String actorId;
+  String? actorId;
   String tagId;
   String internalTagId;
 
@@ -25,20 +28,28 @@ class BlockVideosByCategoryController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print('@@@@@@ init');
+    logger.i('@@@@@@ init');
     mutateAll();
+
+    Get.find<AuthController>().token.listen((event) {
+      mutateAll();
+    });
   }
 
   Future mutateAll() async {
+    BlockVod actorVideos = BlockVod([], 0);
     final internalTagVideos =
         await vodApi.getVideoByInternalTag(excludeId, internalTagId);
     final tagVideos =
         await vodApi.getVideoByTags(excludeId: excludeId, tagId: tagId);
-    final actorVideos = await vodApi.getVideoByActorId(actorId);
+    if (actorId != null) {
+      actorVideos = await vodApi.getVideoByActorId(
+          actorId: actorId, excludeId: excludeId);
+    }
 
-    // print('log internalTagVideos: ${internalTagVideos.vods}');
-    // print('log tagVideos: ${tagVideos.vods}');
-    // print('log actorVideos: ${actorVideos.vods}');
+    // logger.i('log internalTagVideos: ${internalTagVideos.vods}');
+    // logger.i('log tagVideos: ${tagVideos.vods}');
+    // logger.i('log actorVideos: ${actorVideos.vods}');
 
     // Assign fetched videos to respective observable lists
     videoByInternalTag.assignAll(internalTagVideos.vods);

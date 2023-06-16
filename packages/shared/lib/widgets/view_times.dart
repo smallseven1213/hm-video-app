@@ -9,6 +9,9 @@ class ViewTimes extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text.rich(
+      style: const TextStyle(
+        height: 1,
+      ),
       TextSpan(
         children: [
           WidgetSpan(
@@ -23,6 +26,7 @@ class ViewTimes extends StatelessWidget {
             style: TextStyle(
               color: color ?? Colors.white,
               letterSpacing: 0.1,
+              fontSize: 12,
             ),
           ),
         ],

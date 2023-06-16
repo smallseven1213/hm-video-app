@@ -1,22 +1,23 @@
 import 'package:hive/hive.dart';
 
-import '../models/channel_info.dart';
+import '../enums/adapters.dart';
 import '../models/tag.dart';
+import '../models/vod.dart';
 
-class VideoDetailAdapter extends TypeAdapter<Data> {
+class VideoDetailAdapter extends TypeAdapter<Vod> {
   @override
-  final int typeId = 3;
+  final int typeId = adapterId(Adapters.videoDetail);
 
   @override
-  Data read(BinaryReader reader) {
-    return Data(
-      id: reader.readInt(),
+  Vod read(BinaryReader reader) {
+    return Vod(
+      reader.readInt(),
+      reader.readString(),
       dataType: reader.readInt(),
-      title: reader.readString(),
       titleSub: reader.readString(),
       externalId: reader.readString(),
       chargeType: reader.readInt(),
-      points: reader.readInt(),
+      // points: reader.readInt(),
       subScript: reader.readInt(),
       timeLength: reader.readInt(),
       coverVertical: reader.readString(),
@@ -30,14 +31,14 @@ class VideoDetailAdapter extends TypeAdapter<Data> {
   }
 
   @override
-  void write(BinaryWriter writer, Data obj) {
-    writer.writeInt(obj.id!);
+  void write(BinaryWriter writer, Vod obj) {
+    writer.writeInt(obj.id);
     writer.writeInt(obj.dataType!);
-    writer.writeString(obj.title!);
+    writer.writeString(obj.title);
     writer.writeString(obj.titleSub!);
     writer.writeString(obj.externalId!);
     writer.writeInt(obj.chargeType!);
-    writer.writeInt(obj.points!);
+    // writer.writeInt(obj.points!);
     writer.writeInt(obj.subScript!);
     writer.writeInt(obj.timeLength!);
     writer.writeString(obj.coverVertical!);

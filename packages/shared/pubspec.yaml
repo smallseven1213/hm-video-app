@@ -1,13 +1,17 @@
 name: shared
 description: A new Flutter plugin project.
 version: 0.0.2
+publish_to: none
 homepage:
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
-  flutter: ">=2.5.0"
+  flutter: '>=2.5.0'
 
 dependencies:
+  game:
+    path: ../../packages/game
+  android_id: ^0.2.0
   build_runner: ^2.3.3
   device_info_plus: ^8.1.0
   dio: ^5.1.1
@@ -27,8 +31,14 @@ dependencies:
   path_provider: ^2.0.12
   plugin_platform_interface: ^2.0.2
   sentry_flutter: ^6.22.0
+  shared_preferences: ^2.1.0
   url_launcher: ^6.1.10
   uuid: ^3.0.7
+  cached_network_image: ^3.2.0
+  decimal: ^2.2.0
+  intl: ^0.18.0
+  video_player: ^2.6.1
+  wakelock: ^0.6.2
 
 dev_dependencies:
   flutter_test:
@@ -52,11 +62,11 @@ flutter:
   # adding or updating assets for this project.
   plugin:
     platforms:
-    # This plugin project was generated without specifying any
-    # platforms with the `--platform` argument. If you see the `some_platform` map below, remove it and
-    # then add platforms following the instruction here:
-    # https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms
-    # -------------------
+      # This plugin project was generated without specifying any
+      # platforms with the `--platform` argument. If you see the `some_platform` map below, remove it and
+      # then add platforms following the instruction here:
+      # https://flutter.dev/docs/development/packages-and-plugins/developing-packages#plugin-platforms
+      # -------------------
       some_platform:
         pluginClass: somePluginClass
     # -------------------

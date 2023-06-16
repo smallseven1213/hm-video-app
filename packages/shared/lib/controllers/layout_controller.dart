@@ -1,27 +1,35 @@
 import 'package:get/get.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import '../apis/channel_api.dart';
-import '../models/channel.dart';
+import '../models/slim_channel.dart';
 import 'channel_data_controller.dart';
 
 class LayoutController extends GetxController {
-  final String layoutId;
-  var layout = <Channel>[].obs;
+  final int layoutId;
+  var layout = <SlimChannel>[].obs;
   final chnnaleApi = ChannelApi();
-
-  final ChannelDataController channelDataController = Get.find();
 
   LayoutController(this.layoutId);
 
   @override
   void onInit() async {
     super.onInit();
-    var res = await chnnaleApi.getManyByLayout(int.parse(layoutId));
+    fetchData();
+    Get.find<AuthController>().token.listen((event) {
+      fetchData();
+    });
+    update();
+  }
 
-    for (var element in res) {
-      channelDataController.mutateByChannelId(element.id);
+  Future<void> fetchData() async {
+    var res = await chnnaleApi.getManyByLayout(layoutId);
+
+    for (var item in res) {
+      Get.lazyPut<ChannelDataController>(
+          () => ChannelDataController(channelId: item.id),
+          tag: 'channelId-${item.id}');
     }
 
     layout.value = res;
-    update();
   }
 }

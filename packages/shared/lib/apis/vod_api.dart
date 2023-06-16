@@ -1,10 +1,10 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:logger/logger.dart';
+import '../models/area_info_with_block_vod.dart';
 import '../models/block_vod.dart';
 import '../models/channel_info.dart';
 import '../models/short_video_detail.dart';
-import '../models/video.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
 import '../utils/fetcher.dart';
@@ -13,6 +13,14 @@ final systemConfig = SystemConfig();
 final logger = Logger();
 
 class VodApi {
+  static final VodApi _instance = VodApi._internal();
+
+  VodApi._internal();
+
+  factory VodApi() {
+    return _instance;
+  }
+
   Future<String> purchase(int videoId) async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/purchase',
@@ -55,15 +63,48 @@ class VodApi {
     );
   }
 
-  Future<List<Vod>> searchMany(String keyword) async {
+  Future<BlockVod> searchMany(String keyword, int page, int limit) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=1&limit=10');
+            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
-      return [];
+      return BlockVod([], 0);
     }
-    return List.from((res.data['data']['data'] as List<dynamic>)
-        .map((e) => Vod.fromJson(e)));
+    try {
+      var bb = BlockVod(
+        List.from((res.data['data']['data'] as List<dynamic>)
+            .map((e) => Vod.fromJson(e))),
+        res.data['data']['total'],
+      );
+      return bb;
+    } catch (e) {
+      logger.i(e);
+    }
+    return BlockVod([], 0);
+  }
+
+  Future<BlockVod> getSameTagVod({
+    required int tagId,
+    required int page,
+    required int limit,
+  }) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/sameTags?id=$tagId&film=1&page=$page&limit=$limit');
+    if (res.data['code'] != '00') {
+      return BlockVod([], 0);
+    }
+    try {
+      var bb = BlockVod(
+        List.from((res.data['data']['data'] as List<dynamic>)
+            .map((e) => Vod.fromJson(e))),
+        res.data['data']['total'],
+      );
+      return bb;
+    } catch (e) {
+      logger.i(e);
+    }
+    return BlockVod([], 0);
   }
 
   Future<BlockVod> getManyByChannel(int blockId, {int? offset = 1}) async {
@@ -81,7 +122,7 @@ class VodApi {
       );
       return bb;
     } catch (e) {
-      print(e);
+      logger.i(e);
     }
     return BlockVod([], 0);
   }
@@ -97,7 +138,7 @@ class VodApi {
   //     var result = Block.fromJson(res.data['data']);
   //     return List.from([result]);
   //   } catch (e) {
-  //     print(e);
+  //     logger.i(e);
   //   }
   //   return [];
   // }
@@ -121,7 +162,7 @@ class VodApi {
       );
       return bb;
     } catch (e) {
-      print(e);
+      logger.i(e);
     }
     return BlockVod([], 0);
   }
@@ -139,21 +180,21 @@ class VodApi {
     }
   }
 
-  Future<Vod> refreshVodUrl(Vod vod) async {
-    var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/videoUrl?id=${vod.id}');
-    if (res.data['code'] != '00') {
-      return Vod(0, '');
-    }
-    try {
-      // return vod.updateUrl(res.data['data']);
-      return Vod.fromJson(res.data['data']);
-    } catch (e) {
-      print(e);
-      return vod;
-    }
-  }
+  // Future<Vod> refreshVodUrl(Vod vod) async {
+  //   var res = await fetcher(
+  //       url:
+  //           '${systemConfig.apiHost}/public/videos/video/videoUrl?id=${vod.id}');
+  //   if (res.data['code'] != '00') {
+  //     return Vod(0, '');
+  //   }
+  //   try {
+  //     // return vod.updateUrl(res.data['data']);
+  //     return Vod.fromJson(res.data['data']);
+  //   } catch (e) {
+  //     logger.i(e);
+  //     return vod;
+  //   }
+  // }
   // get('/video/videoUrl?id=${vod.id}').then((value) {
   //   var res = (value.body as Map<String, dynamic>);
   //   if (res['code'] != '00') {
@@ -162,7 +203,7 @@ class VodApi {
   //   try {
   //     return vod.updateUrl(res['data']);
   //   } catch (e) {
-  //     print(e);
+  //     logger.i(e);
   //     return vod;
   //   }
   // });
@@ -170,7 +211,7 @@ class VodApi {
   Future<Vod> getVodDetail(int vodId) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=${vodId}');
+            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=$vodId');
     if (res.data['code'] != '00') {
       return res.data['data'];
     }
@@ -181,34 +222,35 @@ class VodApi {
     }
   }
 
-  Future<List<Video>> getFollows() async {
+  Future<List<Vod>> getFollows() async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/shortVideo/follow');
     if (res.data['code'] != '00') {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
-  Future<List<Video>> getRecommends() async {
+  Future<List<Vod>> getRecommends() async {
     var res = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/recommend');
     if (res.data['code'] != '00') {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
-  Future<List<Video>> getPopular() async {
+  Future<List<Vod>> getPopular(int areaId, int videoId) async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/videos/video/shortVideo/popular');
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideo/popular?areaId=$areaId&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }
     return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Video.fromJson(e)));
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
   Future<ShortVideoDetail> getShortVideoDetailById(int id) async {
@@ -221,74 +263,17 @@ class VodApi {
     return ShortVideoDetail.fromJson(res.data['data']);
   }
 
-  Future<Video> getById(int videoId) async {
+  Future<Vod> getById(int videoId) async {
     var res = await fetcher(
         url:
             '${systemConfig.apiHost}/public/videos/video/shortVideoDetail?id=$videoId');
 
     try {
-      return Video.fromJson(res.data['data']);
+      return Vod.fromJson(res.data['data']);
     } catch (e) {
-      return Video.fromJson({});
+      return Vod.fromJson({});
     }
   }
-
-  // Future<List<Block>> getBlockVodsByChannel(int channelId,
-  //     {int offset = 1}) async {
-  //   const device = {
-  //     'web': 1,
-  //     'ios': 2,
-  //     'android': 3,
-  //   };
-  //   int? deviceId = device['web'];
-
-  //   if (!kIsWeb) {
-  //     if (Platform.isIOS) {
-  //       deviceId = device['ios'];
-  //     } else {
-  //       deviceId = device['android'];
-  //     }
-  //   }
-
-  //   var res = await fetcher(
-  //       url:
-  //           '${systemConfig.apiHost}/public/videos/video/index?offset=$offset&channelId=$channelId&deviceId=$deviceId');
-
-  //   try {
-  //     return List.from(
-  //         (res.data as List<dynamic>).map((e) => Block.fromJson(e)));
-  //   } catch (e) {
-  //     return [];
-  //   }
-  // }
-
-  // Future<List<Block>> getBlockVodsByChannelAds(int channelId,
-  //     {int offset = 1}) async {
-  //   const device = {
-  //     'web': 1,
-  //     'ios': 2,
-  //     'android': 3,
-  //   };
-  //   int? deviceId = device['web'];
-
-  //   if (!kIsWeb) {
-  //     if (Platform.isIOS) {
-  //       deviceId = device['ios'];
-  //     } else {
-  //       deviceId = device['android'];
-  //     }
-  //   }
-
-  //   var res = await fetcher(
-  //       url:
-  //           '${systemConfig.apiHost}/public/videos/video/index/channelAreaBanner?offset=$offset&channelId=$channelId&deviceId=$deviceId');
-  //   try {
-  //     return List.from((res.data['data']['videoIntegrateAds'] as List<dynamic>)
-  //         .map((e) => Block.fromJson(e)));
-  //   } catch (e) {
-  //     return [];
-  //   }
-  // }
 
   Future<ChannelInfo> getBlockVodsByChannelAds(int channelId,
       {int offset = 1}) async {
@@ -339,7 +324,7 @@ class VodApi {
     try {
       return Blocks.fromJson(res.data['data']);
     } catch (e) {
-      print('getBlockVodsByBlockId error: $e');
+      logger.i('getBlockVodsByBlockId error: $e');
       return Blocks();
     }
   }
@@ -379,7 +364,7 @@ class VodApi {
     }
 
     if (queryParams.isNotEmpty) {
-      url += '?' + queryParams.join('&');
+      url += '?${queryParams.join('&')}';
     }
 
     var res = await fetcher(url: url);
@@ -396,12 +381,13 @@ class VodApi {
   }
 
   // 同演員: 目前只取一位演員
-  Future<BlockVod> getVideoByActorId(
-    String actorId,
-  ) async {
+  Future<BlockVod> getVideoByActorId({
+    String? actorId,
+    String? excludeId,
+  }) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/sameActors?actorId=$actorId');
+            '${systemConfig.apiHost}/public/videos/video/sameActors?actorId=$actorId&excludeId=$excludeId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -427,5 +413,32 @@ class VodApi {
         .toList();
 
     return names;
+  }
+
+  Future<AreaInfoWithBlockVod?> getVideoByAreaId(
+    int areaId, {
+    int page = 1,
+    int limit = 2,
+  }) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/v2/areaInfo?page=$page&limit=$limit&areaId=$areaId');
+    if (res.data['code'] != '00') {
+      return null;
+    }
+
+    var info = res.data['data'];
+    var videos = res.data['data']['videos'];
+    List<Vod> vods = List.from(
+        (videos['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return AreaInfoWithBlockVod(
+        film: info['film'],
+        id: info['id'],
+        name: info['name'],
+        template: info['template'],
+        videos: BlockVod(
+          vods,
+          videos['total'],
+        ));
   }
 }

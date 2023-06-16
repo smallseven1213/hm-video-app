@@ -8,7 +8,7 @@ export 'channel.dart';
 export 'channel_info.dart';
 export 'hm_api_response.dart';
 export 'hm_api_response_with_data.dart';
-export 'jingang.dart';
+export 'jingang_detail.dart';
 export 'pager.dart';
 export 'product.dart';
 export 'publisher.dart';

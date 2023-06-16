@@ -86,7 +86,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   }
 
   void remove(String routeName) {
-    _stack.remove(routeName);
+    _stack.removeWhere((element) => element.path == routeName);
     notifyListeners();
   }
 
@@ -124,7 +124,7 @@ class MyRouteDelegate extends RouterDelegate<String>
         if (stack.hasTransition == true && stack.hasFadeEffect == true) {
           return FadeInPage(
             key: ValueKey(stack.path),
-            name: stack.path,
+            // name: stack.path,
             child: routes[stack.path]!(context, stack.args),
           );
         }

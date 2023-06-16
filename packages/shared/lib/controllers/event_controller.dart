@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 
 import '../apis/event_api.dart';
 import '../models/event.dart';
-import 'user_controller.dart';
+import 'auth_controller.dart';
 
 class EventController extends GetxController {
   List<Event> data = <Event>[].obs;
@@ -12,7 +12,7 @@ class EventController extends GetxController {
     super.onInit();
     fetchBanner();
 
-    Get.find<UserController>().token.listen((event) {
+    Get.find<AuthController>().token.listen((event) {
       fetchBanner();
     });
   }

@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:shared/models/publisher.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/models/tag.dart';
@@ -9,7 +8,7 @@ import 'actor.dart';
 final systemConfig = SystemConfig();
 
 enum VideoType {
-  unused,
+  none,
   video,
   embeddedAd,
   areaAd,
@@ -153,15 +152,12 @@ class Vod {
   factory Vod.fromJson(Map<String, dynamic> json) {
     try {
       return Vod(
-        json['id'],
+        json['id'] ?? 0,
         json['title'] ?? '',
         subScript: json['subScript'] ?? 0,
         timeLength: json['timeLength'] ?? 0,
         coverVertical: json['coverVertical'] ?? '',
         coverHorizontal: json['coverHorizontal'] ?? '',
-        // videoUrlHd: json['videoUrlHd'],
-        // videoUrlSd: json['videoUrlSd'],
-        // videoUrlUd: json['videoUrlUd'],
         videoUrl: json['videoUrl'] ?? '',
         externalId: json['externalId'] ?? '',
         titleSub: json['titleSub'] ?? '',
@@ -207,12 +203,13 @@ class Vod {
             ? []
             : List.from(
                 (json['internalTag'] ?? json['internalTags']) as List<dynamic>),
-
         region: json['region'],
         publisher: (json['publisher'] == null)
             ? null
             : Publisher.fromJson(json['publisher']),
-        supplier: null,
+        supplier: (json['supplier'] == null)
+            ? null
+            : Supplier.fromJson(json['supplier']),
         belongVods: json['belongVods'] == null
             ? null
             : List.from((json['belongVods'] as List<dynamic>)
@@ -223,7 +220,7 @@ class Vod {
         dataType: json['dataType'],
       );
     } catch (e) {
-      print('json: $e');
+      logger.i('json: $e');
       return Vod(0, '');
     }
   }
@@ -271,9 +268,9 @@ class Vod {
 
   String? getVideoUrl() {
     if (videoUrl != null && videoUrl!.isNotEmpty) {
-      // print(videoUrlUd);
+      // logger.i(videoUrlUd);
       String uri = videoUrl!.replaceAll('\\', '/').replaceAll('//', '/');
-      // print(uri);
+      // logger.i(uri);
       if (uri.startsWith('http')) {
         return uri;
       }

@@ -1,40 +1,46 @@
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 import '../apis/user_api.dart';
 import '../models/actor.dart';
-import '../models/video_database_field.dart';
 
 final userApi = UserApi();
+final logger = Logger();
 
 class UserFavoritesActorController extends GetxController {
   static const String _boxName = 'userFavoritesActor';
-  late Box<Actor> _userFavoritesActorBox;
+  late Box<String> box;
   var actors = <Actor>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     _init();
+    Get.find<AuthController>().token.listen((event) {
+      _init();
+    });
   }
 
   Future<void> _init() async {
-    _userFavoritesActorBox = await Hive.openBox<Actor>(_boxName);
+    box = await Hive.openBox<String>(_boxName);
 
-    if (_userFavoritesActorBox.isEmpty) {
-      await _fetchAndSaveCollection();
+    if (box.isNotEmpty) {
+      actors.value = box.values.map((actorStr) {
+        final actorJson = jsonDecode(actorStr) as Map<String, dynamic>;
+        return Actor.fromJson(actorJson);
+      }).toList();
     } else {
-      actors.value = _userFavoritesActorBox.values.toList();
+      await _fetchAndSaveCollection();
     }
   }
 
   Future<void> _fetchAndSaveCollection() async {
     var actorList = await userApi.getFavoriteActor();
-
-    for (Actor actor in actorList) {
-      await _userFavoritesActorBox.put(actor.id, actor);
-      actors.add(actor);
-    }
+    actors.value = actorList;
+    await _updateHive();
   }
 
   void addActor(Actor actor) async {
@@ -42,15 +48,21 @@ class UserFavoritesActorController extends GetxController {
       actors.removeWhere((v) => v.id == actor.id);
     }
     actors.add(actor);
-    await _userFavoritesActorBox.put(actor.id, actor);
+    await _updateHive();
     userApi.addFavoriteActor(actor.id);
   }
 
   void removeActor(List<int> ids) async {
     actors.removeWhere((v) => ids.contains(v.id));
-    for (var id in ids) {
-      await _userFavoritesActorBox.delete(id);
-    }
+    await _updateHive();
     userApi.deleteActorFavorite(ids);
+  }
+
+  Future<void> _updateHive() async {
+    await box.clear();
+    for (var actor in actors) {
+      final actorStr = jsonEncode(actor.toJson());
+      await box.put(actor.id.toString(), actorStr);
+    }
   }
 }

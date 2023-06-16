@@ -1,8 +1,16 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/utils/navigation_helper.dart';
+import 'package:uuid/uuid.dart';
 
+import '../controllers/response_controller.dart';
+import '../widgets/error_overlay.dart';
 import 'no_transition_page.dart';
 
 typedef RouteWidgetBuilder = Widget Function(
@@ -12,16 +20,25 @@ class StackData {
   final String path;
   final Map<String, dynamic> args;
   final bool? hasTransition;
+  final bool useBottomToTopAnimation;
+  final Completer<void> completer;
 
-  StackData(
-      {required this.path, required this.args, this.hasTransition = true});
+  StackData({
+    required this.path,
+    required this.args,
+    required this.completer,
+    this.hasTransition = true,
+    this.useBottomToTopAnimation = false,
+  });
 }
 
 final logger = Logger();
 
 class MyRouteDelegate extends RouterDelegate<String>
     with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
-  final List<StackData> _stack = [StackData(path: '/', args: {})];
+  final List<StackData> _stack = [
+    StackData(path: '/', args: {}, completer: Completer<void>())
+  ];
 
   static MyRouteDelegate of(BuildContext context) {
     final delegate = Router.of(context).routerDelegate;
@@ -40,6 +57,7 @@ class MyRouteDelegate extends RouterDelegate<String>
   final RouteFactory? onGenerateRoute;
   final Map<String, RouteWidgetBuilder> routes;
   final String homePath;
+  final responseController = Get.find<ApiResponseErrorCatchController>();
 
   @override
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -50,38 +68,60 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   List<String> get stack => List.unmodifiable(_stack);
 
-  // void push, from newRoute and add to _stack
-  void push(String routeName,
+  Future<void> push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,
       bool removeSamePath = false,
+      bool useBottomToTopAnimation = false,
       Map<String, dynamic>? args}) {
+    final Completer<void> completer = Completer<void>();
+
     if (removeSamePath) {
       _stack.removeWhere((stackData) => stackData.path == routeName);
     }
 
+    Map<String, dynamic> nextArgs = args ?? {};
+    final uuid = const Uuid().v4();
+    nextArgs = {
+      ...args ?? {},
+      'uuid': uuid,
+    };
+
     _stack.add(StackData(
-        path: routeName, args: args ?? {}, hasTransition: hasTransition));
+      path: routeName,
+      args: nextArgs,
+      hasTransition: hasTransition,
+      useBottomToTopAnimation: useBottomToTopAnimation, // 传递新参数
+      completer: completer, // Pass the completer to your stack data
+    ));
 
     if (deletePreviousCount > 0) {
       _stack.removeRange(
           _stack.length - deletePreviousCount - 1, _stack.length - 1);
     }
-    logger.i(_stack);
     notifyListeners();
+
+    return completer.future; // Return the future of the completer
   }
 
   void remove(String routeName) {
-    _stack.remove(routeName);
+    _stack.removeWhere((stackData) => stackData.path == routeName);
     notifyListeners();
   }
 
-  // implement pushAndRemoveUntil
   void pushAndRemoveUntil(String newRoute,
       {bool hasTransition = true, Map<String, dynamic>? args}) {
     _stack.clear();
+    // var uuid = const Uuid().v4();
     _stack.add(StackData(
-        path: newRoute, args: args ?? {}, hasTransition: hasTransition));
+      path: newRoute,
+      args: {
+        ...args ?? {},
+        // 'uuid': uuid,
+      },
+      hasTransition: hasTransition,
+      completer: Completer<void>(), // Add this line
+    ));
     notifyListeners();
   }
 
@@ -92,9 +132,15 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Future<void> setNewRoutePath(String configuration) {
+    // var uuid = const Uuid().v4();
     _stack
       ..clear()
-      ..add(StackData(path: configuration, args: {}));
+      ..add(StackData(
+        path: configuration,
+        // args: {'uuid': uuid},
+        args: {},
+        completer: Completer<void>(),
+      ));
     return SynchronousFuture<void>(null);
   }
 
@@ -102,7 +148,8 @@ class MyRouteDelegate extends RouterDelegate<String>
     if (_stack.isNotEmpty) {
       logger.i(route.settings.name);
       if (_stack.last.path == route.settings.name) {
-        _stack.removeLast();
+        final lastStackData = _stack.removeLast();
+        lastStackData.completer.complete();
         notifyListeners();
       }
     }
@@ -111,30 +158,70 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: navigatorKey,
-      onPopPage: _onPopPage,
-      pages: _stack.map((stack) {
-        if (stack.hasTransition == true) {
-          return CupertinoPage(
-            key: ValueKey(stack.path),
-            name: stack.path,
-            child: routes[stack.path]!(context, stack.args),
-          );
-        }
-        if (stack.hasTransition == false) {
-          return NoAnimationPage(
-            key: ValueKey(stack.path),
-            name: stack.path,
-            child: routes[stack.path]!(context, stack.args),
-          );
-        }
-        return CupertinoPage(
-          key: const ValueKey('/'),
-          name: '/',
-          child: routes['/']!(context, stack.args),
-        );
-      }).toList(),
+    logger.i('NAVI!! ==> , $_stack');
+    return Stack(
+      children: [
+        Navigator(
+          key: navigatorKey,
+          onPopPage: _onPopPage,
+          pages: _stack.map<Page<dynamic>>((stack) {
+            final widget = routes[stack.path]!(context, stack.args);
+
+            // 判断是否为Web平台
+            final bool isWeb = kIsWeb ||
+                (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
+
+            if (stack.hasTransition == true && !isWeb) {
+              logger.i('NAVI!! ==> , ${stack.path}');
+              return CupertinoPage(
+                // key: ValueKey(stack.args['uuid']),
+                maintainState: false,
+                name: stack.path,
+                child: Stack(
+                  children: [
+                    ErrorOverlayWidget(
+                      child: widget,
+                    ),
+                    const TestWidget(),
+                    Positioned(
+                        top: 0,
+                        left: 0,
+                        child: Container(
+                            width: 16,
+                            height: MediaQuery.of(context).size.height,
+                            color: Colors.transparent))
+                  ],
+                ),
+                fullscreenDialog: stack.useBottomToTopAnimation,
+              );
+            }
+            if (stack.hasTransition == false || isWeb) {
+              return NoAnimationPage(
+                key: ValueKey(stack.path + stack.args.toString()),
+                name: stack.path,
+                child: ErrorOverlayWidget(
+                  child: widget,
+                ),
+              );
+            }
+            return CupertinoPage(
+              key: const ValueKey('/'),
+              name: '/',
+              child: routes['/']!(context, {}),
+            );
+          }).toList(),
+        ),
+      ],
     );
+  }
+}
+
+// TestWidget statelss widget, empty container
+class TestWidget extends StatelessWidget {
+  const TestWidget({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }

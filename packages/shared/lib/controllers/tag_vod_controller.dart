@@ -1,20 +1,26 @@
-import 'package:shared/apis/tag_api.dart';
+import 'package:flutter/material.dart';
+import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
-final tagApi = TagApi();
-const limit = 100;
+final vodApi = VodApi();
+const limit = 20;
 
 class TagVodController extends BaseVodInfinityScrollController {
   final int tagId;
 
-  TagVodController({required this.tagId, bool loadDataOnInit = true})
-      : super(loadDataOnInit: loadDataOnInit);
+  TagVodController(
+      {required this.tagId,
+      required ScrollController scrollController,
+      bool loadDataOnInit = true})
+      : super(
+            loadDataOnInit: loadDataOnInit,
+            customScrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {
     var res =
-        await tagApi.getRecommendVod(page: page, tagId: tagId, limit: limit);
+        await vodApi.getSameTagVod(page: page, tagId: tagId, limit: limit);
 
     bool hasMoreData = res.total > limit * page;
 

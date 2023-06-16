@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
-
-import '../controllers/user_controller.dart';
+import '../controllers/auth_controller.dart';
+import '../controllers/response_controller.dart';
 
 // create a dio instance
 final logger = Logger();
@@ -27,8 +28,10 @@ Future<dynamic> fetcher({
   // Map? authorization = shouldValidate!
   //     ? null
   //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
+  final responseController = Get.find<ApiResponseErrorCatchController>();
 
-  final token = Get.find<UserController>().token;
+  final token = Get.find<AuthController>().token;
+  AuthController authController = Get.find<AuthController>();
 
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
@@ -50,13 +53,26 @@ Future<dynamic> fetcher({
     };
   }
 
-  final response = await dio.request(
-    url,
-    data: data,
-    options: options,
-  );
+  try {
+    final response = await dio.request(
+      url,
+      data: data,
+      options: options,
+    );
 
+    return response;
+  } on DioError catch (e) {
+    if (e.response?.statusCode == 401 && e.response?.data['code'] == '04') {
+      // 清除 GetStorage 中的 auth-token
+      final storage = GetStorage();
+      storage.remove('auth-token');
+      authController.setToken('');
+      responseController.emitEvent(401, 'Unauthorized');
+    } else {
+      // 其他錯誤處理
+      responseController.emitEvent(e.response?.statusCode ?? 0, 'Other error');
+    }
+    rethrow;
+  }
   // logger.d('in testing fetcher : $url\n======\n$response');
-
-  return response;
 }

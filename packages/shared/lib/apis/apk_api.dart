@@ -5,6 +5,13 @@ import 'package:shared/utils/fetcher.dart';
 final systemConfig = SystemConfig();
 
 class ApkApi {
+  static final ApkApi _instance = ApkApi._internal();
+
+  ApkApi._internal();
+
+  factory ApkApi() {
+    return _instance;
+  }
   // 1: 不更新、2: 建議更新、3: 強制更新
   Future<ApkUpdate> checkVersion({
     required String version,
@@ -23,7 +30,7 @@ class ApkApi {
       String url = res['data']['download'][0]['content'];
       return ApkUpdate(status: action, url: url);
     } catch (err) {
-      print('checkVersion error: $err');
+      logger.i('checkVersion error: $err');
       return ApkUpdate(status: ApkStatus.noUpdate, url: '');
     }
   }

@@ -1,4 +1,7 @@
+import 'package:logger/logger.dart';
+
 import '../models/actor.dart';
+import '../models/actor_with_vods.dart';
 import '../models/block_vod.dart';
 import '../models/vod.dart';
 import '../services/system_config.dart';
@@ -7,17 +10,29 @@ import '../utils/fetcher.dart';
 final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/actors';
 
+final logger = Logger();
+
 class ActorApi {
+  static final ActorApi _instance = ActorApi._internal();
+
+  ActorApi._internal();
+
+  factory ActorApi() {
+    return _instance;
+  }
+
   Future<List<Actor>> getManyBy({
     required int page,
     int limit = 100,
     String? name,
     int? sortBy,
-    required int region,
+    int? region,
   }) async {
+    String nameQuery = name != null ? '&name=$name' : '';
+    String regionQuery = region != null ? '&region=$region' : '';
     var res = await fetcher(
         url:
-            '$apiPrefix/actor/list?page=$page&limit=$limit&name=$name&region=$region&isSortByVideos=${sortBy ?? 0}');
+            '$apiPrefix/actor/list?page=$page&limit=$limit$nameQuery$regionQuery&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -75,5 +90,22 @@ class ActorApi {
           .toList()),
       res.data['data']['total'],
     );
+  }
+
+  Future<List<ActorWithVod>> getManyPopularActorBy(
+      {int page = 1, int limit = 10}) async {
+    var res = await fetcher(
+        url: '$apiPrefix/actor/popular-actor-channel?page=$page&limit=$limit');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from((res.data['data'] as List<dynamic>)
+        .map((e) => ActorWithVod(
+              Actor.fromJson(e['actor']),
+              List.from((e['video'] as List<dynamic>)
+                  .map((e) => Vod.fromJson(e))
+                  .toList()),
+            ))
+        .toList());
   }
 }

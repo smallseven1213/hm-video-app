@@ -1,21 +1,29 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:game/controllers/game_response_controller.dart';
+import 'package:game/services/game_system_config.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/apis/apk_api.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/apis/dl_api.dart';
 import 'package:shared/apis/user_api.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/banner_controller.dart';
+import 'package:shared/controllers/response_controller.dart';
 import 'package:shared/services/system_config.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/tag_popular_controller.dart';
-import '../controllers/user_controller.dart';
 import '../controllers/video_popular_controller.dart';
 import '../enums/app_routes.dart';
 import '../models/index.dart';
 import '../navigator/delegate.dart';
+
+final logger = Logger();
 
 class Splash extends StatefulWidget {
   final String backgroundAssetPath;
@@ -40,8 +48,8 @@ void alertDialog(
   showDialog<int>(
     context: context,
     barrierDismissible: false,
-    builder: (_ctx) => AlertDialog(
-      title: Text(content ?? ''),
+    builder: (ctx) => AlertDialog(
+      title: title != null ? Text(title) : const SizedBox.shrink(),
       content: Text(content ?? ''),
       actions: actions ??
           <Widget>[
@@ -62,14 +70,20 @@ void alertDialog(
 
 class _SplashState extends State<Splash> {
   SystemConfig systemConfig = SystemConfig();
+  GameSystemConfig gameSystemConfig = GameSystemConfig();
   DlApi dlApi = DlApi();
   ApkApi apkApi = ApkApi();
   UserApi userApi = UserApi();
   AuthApi authApi = AuthApi();
   BannerController bannerController = Get.put(BannerController());
   Timer? timer;
-  UserController userController = Get.find<UserController>();
+  AuthController authController = Get.find<AuthController>();
+  ApiResponseErrorCatchController responseController =
+      Get.find<ApiResponseErrorCatchController>();
   String loadingText = '線路檢查中...';
+
+  GameApiResponseErrorCatchController gameResponseController =
+      Get.find<GameApiResponseErrorCatchController>();
 
   // 取得invitationCode
   getInvitationCode() async {
@@ -95,7 +109,7 @@ class _SplashState extends State<Splash> {
 
   // Step3: fetch dl.json get apiHost & maintenance status
   fetchDlJson() async {
-    print('step3: fetch dl.json');
+    logger.i('step3: fetch dl.json');
     var res = await dlApi.fetchDlJson();
     if (res != null) {
       // 設定apiHost & vodHost & imageHost & maintenance
@@ -104,6 +118,8 @@ class _SplashState extends State<Splash> {
       systemConfig.setVodHost('https://${res['dl']?.first}');
       systemConfig.setImageHost('https://${res['pl']?.first}');
       systemConfig.setMaintenance(res['maintenance'] == 'true' ? true : false);
+
+      gameSystemConfig.setApiHost('https://api.${res['apl']?.first}');
     }
 
     return res;
@@ -111,41 +127,39 @@ class _SplashState extends State<Splash> {
 
   // Step4: 檢查維護中
   checkIsMaintenance() async {
-    print('step4: 檢查是否維護中');
+    logger.i('step4: 檢查是否維護中${systemConfig.isMaintenance}');
     if (systemConfig.isMaintenance) {
-      alertDialog(
-        context,
-        content: '維護中',
-      );
+      alertDialog(context, content: '系統維護中，請稍後再試。', actions: []);
     }
     return systemConfig.isMaintenance;
   }
 
   // Step5: 檢查是否有更新
   checkApkUpdate() async {
-    setState(() => loadingText = '檢查更新...');
-    print('step5: 檢查是否有更新');
-    final apkUpdate = await apkApi.checkVersion(
+    if (GetPlatform.isWeb) return true;
+    if (mounted) {
+      setState(() => loadingText = '檢查更新...');
+    }
+    logger.i('step5: 檢查是否有更新');
+    ApkUpdate apkUpdate = await apkApi.checkVersion(
       version: systemConfig.version,
       agentCode: systemConfig.agentCode,
     );
-    print('apkUpdate: ${apkUpdate.status}');
+    logger.i('apkUpdate: ${apkUpdate.status}');
 
     if (apkUpdate.status == ApkStatus.forceUpdate) {
       if (mounted) {
         alertDialog(
           context,
-          content: '請更新至最新版本',
+          title: '已有新版本',
+          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
           actions: [
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('確認'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                userLogin();
-              },
+              child: const Text('更新版本'),
+              onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
           ],
         );
@@ -155,22 +169,20 @@ class _SplashState extends State<Splash> {
         alertDialog(
           context,
           title: '已有新版本',
-          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本',
+          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('確認'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              child: const Text('立即體驗'),
+              onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('取消'),
+              child: const Text('暫不升級'),
               onPressed: () {
                 Navigator.of(context).pop();
                 userLogin();
@@ -185,46 +197,47 @@ class _SplashState extends State<Splash> {
 
   // Step6: 檢查是否登入 - key: 'auth-token'
   userLogin() async {
-    setState(() => loadingText = '用戶登入...');
-    print('step6: 檢查是否有token (是否登入)');
-    print('userApi: ${userApi}');
-    if (userController.token.value != '') {
+    if (mounted) {
+      setState(() => loadingText = '用戶登入...');
+    }
+    logger.i('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
+    logger.i('userApi: ${authController.token.value}');
+    if (authController.token.value != '') {
       // Step6-1: 有: 記錄用戶登入 401 > 訪客登入 > 取得入站廣告 > 有廣告 > 廣告頁
       fetchInitialDataAndNavigate();
     } else {
       // Step6-2: 無: 訪客登入
-      print('step6.2: 無token (訪客登入)');
+      logger.i('step6.2: 無token (訪客登入)');
       try {
         String invitationCode = await getInvitationCode();
         final res = await authApi.guestLogin(
           invitationCode: invitationCode,
         );
-        userController.setToken(res.data['token']);
-        print('res.status ${res.code}');
+        authController.setToken(res.data['token']);
+        responseController.clear();
+
+        gameResponseController.clear();
+
+        logger.i('res.status ${res.code}');
         if (res.code == '00') {
           fetchInitialDataAndNavigate();
         } else {
-          // if (mounted) {
-          //   alertDialog(
-          //     context,
-          //     title: '失敗',
-          //     content: res.message,
-          //   );
-          // }
           var message = '';
           if (res.code == '51633') {
             message = '帳號建立失敗，裝置停用。';
           } else {
             message = '帳號建立失敗。';
           }
-          alertDialog(
-            context,
-            title: '失敗',
-            content: message,
-          );
+          if (mounted) {
+            alertDialog(
+              context,
+              title: '失敗',
+              content: message,
+            );
+          }
         }
       } catch (err) {
-        print('err: $err');
+        logger.i('err: $err');
         alertDialog(
           context,
           title: '失敗',
@@ -236,8 +249,10 @@ class _SplashState extends State<Splash> {
 
   // Step7.1: 取得nav bar內容
   getNavBar() {
-    setState(() => loadingText = '取得最新資源...');
-    print('step7.1: 取得nav bar內容');
+    if (mounted) {
+      setState(() => loadingText = '取得最新資源...');
+    }
+    logger.i('step7.1: 取得nav bar內容');
     // final NavBarController navBarController = Get.put(NavBarController());
     //  navBarController.fetchNavBar();
   }
@@ -248,31 +263,24 @@ class _SplashState extends State<Splash> {
   // DI一些登入後才能用的資料(Controllers)
   fetchInitialDataAndNavigate() async {
     userApi.writeUserLoginRecord();
-    getNavBar();
+    if (mounted) {
+      setState(() => loadingText = '取得最新資源...');
+    }
     Get.put(VideoPopularController());
     Get.put(TagPopularController());
-    print('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
+    logger.i('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
-    // 停留在閃屏一下，再跳轉
 
-    int count = 2;
-    timer = Timer.periodic(const Duration(seconds: 1), (_timer) {
-      count--;
-      if (count == 0) {
-        _timer.cancel();
-        // Get.offNamed(path);
-        if (landingBanners.isEmpty) {
-          print('沒有廣告，直接進入首頁');
-          MyRouteDelegate.of(context)
-              .pushAndRemoveUntil(AppRoutes.home.value, hasTransition: false);
-        } else {
-          print('有廣告，進入廣告頁');
-          MyRouteDelegate.of(context)
-              .pushAndRemoveUntil(AppRoutes.ad.value, hasTransition: false);
-        }
-      }
-    });
+    if (landingBanners.isEmpty && mounted) {
+      logger.i('沒有廣告，直接進入首頁');
+      MyRouteDelegate.of(context)
+          .pushAndRemoveUntil(AppRoutes.home.value, hasTransition: false);
+    } else {
+      logger.i('有廣告，進入廣告頁');
+      MyRouteDelegate.of(context)
+          .pushAndRemoveUntil(AppRoutes.ad.value, hasTransition: false);
+    }
   }
 
   @override
@@ -300,22 +308,36 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          Image.asset(
-            widget.backgroundAssetPath,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
-          Center(
-            child: widget.loading!(text: loadingText) ??
-                const CircularProgressIndicator(),
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Image.asset(
+              widget.backgroundAssetPath,
+              width: double.infinity,
+              height: double.infinity,
+              fit: BoxFit.cover,
+            ),
+            Center(
+              child: widget.loading!(text: loadingText) ??
+                  const CircularProgressIndicator(),
+            ),
+            Positioned(
+              bottom: kIsWeb ? 20 : 70,
+              right: 20,
+              child: Text(
+                '版本 ${systemConfig.version}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

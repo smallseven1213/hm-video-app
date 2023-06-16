@@ -2,13 +2,11 @@ import 'package:flutter/widgets.dart';
 
 class FadeInPage extends Page {
   final Widget child;
-  final String name;
 
   const FadeInPage({
     required this.child,
-    required this.name,
     LocalKey? key,
-  }) : super(key: key, name: name);
+  }) : super(key: key);
 
   @override
   Route createRoute(BuildContext context) {

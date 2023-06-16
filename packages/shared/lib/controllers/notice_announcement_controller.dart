@@ -44,7 +44,7 @@ class NoticeAnnouncementController extends GetxController {
     _isLoading.value = false;
   }
 
-  Future<void> refresh() async {
+  Future<void> refreshData() async {
     _announcement.clear();
     _page.value = 1;
     _fetchMoreAnnouncement();

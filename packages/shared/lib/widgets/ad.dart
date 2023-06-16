@@ -1,8 +1,11 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import '../enums/app_routes.dart';
 import '../models/banner_photo.dart';
@@ -11,6 +14,7 @@ import '../services/system_config.dart';
 import '../controllers/banner_controller.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class Ad extends StatefulWidget {
   final String backgroundAssetPath;
@@ -32,26 +36,26 @@ class AdState extends State<Ad> {
 
   int countdownSeconds = 5;
   bool imageLoaded = false;
-  late Timer? _timer;
+  Timer? _timer;
 
   @override
   void initState() {
-    print('AdState initState');
-
+    super.initState();
     // 紀錄入站次數，用來取得對應的廣告圖片
     final entryCount = systemConfig.box.read('entry-count') ?? 0;
     systemConfig.box.write('entry-count', entryCount + 1);
-    final landingBanners =
-        bannerController.banners[BannerPosition.landing.index];
-    setState(() {
-      currentBanner = landingBanners[entryCount % landingBanners.length];
-    });
-
-    super.initState();
+    final landingBanners = bannerController.banners[BannerPosition.landing];
+    logger.i(landingBanners);
+    if (mounted) {
+      setState(() {
+        currentBanner = landingBanners![entryCount % landingBanners.length];
+      });
+    }
   }
 
   startTimer() {
     // 倒數五秒
+    _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
         if (currentBanner.isAutoClose == true) {
@@ -59,90 +63,115 @@ class AdState extends State<Ad> {
         }
         timer.cancel();
       } else {
-        setState(() {
-          countdownSeconds--;
-        });
+        if (mounted) {
+          setState(() {
+            countdownSeconds--;
+          });
+        }
       }
     });
   }
 
   @override
   void dispose() {
-    super.dispose();
     _timer?.cancel();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      width: double.infinity,
-      height: double.infinity,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: SidImage(
-              width: size.width,
-              height: size.height,
-              sid: currentBanner.photoSid.toString(),
-              fit: BoxFit.cover,
-              onLoaded: () {
-                startTimer();
-                setState(() => imageLoaded = true);
-              },
-              onError: (e, stackTrace) {
-                MyRouteDelegate.of(context)
-                    .pushAndRemoveUntil(AppRoutes.home.value);
-              },
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: BannerLink(
+                id: currentBanner.id,
+                url: currentBanner.url ?? '',
+                child: SidImage(
+                  width: size.width,
+                  height: size.height,
+                  sid: currentBanner.photoSid.toString(),
+                  fit: BoxFit.cover,
+                  onLoaded: (result) {
+                    logger.i('AD SID IMAGE ONLOAD');
+                    startTimer();
+                    setState(() => imageLoaded = true);
+                  },
+                  onError: (e) {
+                    logger.i('AD SID IMAGE ERROR: $e');
+                    MyRouteDelegate.of(context).pushAndRemoveUntil(
+                        AppRoutes.home.value,
+                        hasTransition: false);
+                  },
+                ),
+              ),
             ),
-          ),
-          if (imageLoaded)
-            Positioned(
-              top: 20,
-              right: 20,
-              child: TextButton(
-                onPressed: () => {
-                  // if (countdownSeconds == 0)
-                  MyRouteDelegate.of(context)
-                      .pushAndRemoveUntil(AppRoutes.home.value)
-                },
-                child: Container(
-                  width: 90,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  decoration: BoxDecoration(
-                    color: const Color.fromRGBO(255, 255, 255, .5),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: Center(
-                    child: Text(
-                      countdownSeconds == 0
-                          ? '立即進入'
-                          : '倒數${countdownSeconds.toString()}s',
-                      style: const TextStyle(
-                        color: Color.fromRGBO(34, 34, 34, 0.949),
-                        fontSize: 16,
+            if (imageLoaded)
+              Positioned(
+                top: 20,
+                right: 20,
+                child: TextButton(
+                  onPressed: () => {
+                    if (countdownSeconds == 0)
+                      MyRouteDelegate.of(context).pushAndRemoveUntil(
+                          AppRoutes.home.value,
+                          hasTransition: false)
+                  },
+                  child: Container(
+                    width: 90,
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(0, 0, 0, .5),
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white, width: 1),
+                    ),
+                    child: Center(
+                      child: Text(
+                        countdownSeconds == 0
+                            ? '立即進入'
+                            : '倒數 ${countdownSeconds.toString()}S',
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          if (!imageLoaded) ...[
-            Positioned.fill(
-              child: Image.asset(
-                widget.backgroundAssetPath,
-                width: double.infinity,
-                height: double.infinity,
-                fit: BoxFit.cover,
+            if (!imageLoaded) ...[
+              Positioned.fill(
+                child: Image.asset(
+                  widget.backgroundAssetPath,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Center(
-              child: widget.loading!(text: '取得最新資源...') ??
-                  const CircularProgressIndicator(),
-            ),
-          ]
-        ],
+              Center(
+                child: widget.loading!(text: '取得最新資源...') ??
+                    const CircularProgressIndicator(),
+              ),
+              Positioned(
+                bottom: kIsWeb ? 20 : 70,
+                right: 20,
+                child: Text(
+                  '版本 ${systemConfig.version}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
       ),
     );
   }

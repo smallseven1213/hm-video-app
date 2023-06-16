@@ -7,6 +7,14 @@ final systemConfig = SystemConfig();
 String apiPrefix = '${systemConfig.apiHost}/public/banners';
 
 class BannerApi {
+  static final BannerApi _instance = BannerApi._internal();
+
+  BannerApi._internal();
+
+  factory BannerApi() {
+    return _instance;
+  }
+
   // 取得banner by id
   Future<List<BannerPhoto>> getBannerById({
     required int positionId,
@@ -23,10 +31,10 @@ class BannerApi {
           .map((e) => BannerPhoto.fromJson(e as Map<String, dynamic>))
           .toList();
 
-      print('getBannerById: $result');
+      logger.i('getBannerById: $result');
       return result;
     } catch (err) {
-      print('getBannerById error: $err');
+      logger.i('getBannerById error: $err');
       return [];
     }
   }

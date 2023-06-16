@@ -1,62 +1,88 @@
+import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
-import '../models/video_database_field.dart';
+import '../models/vod.dart';
 
 final UserApi userApi = UserApi();
 final logger = Logger();
-const String hiveKey = 'playrecord';
+// const String prefsKey = 'playrecord';
 
 class PlayRecordController extends GetxController {
-  final playRecord = <VideoDatabaseField>[].obs;
-  late Box<VideoDatabaseField> playrecordBox;
+  Future<Box<String>> boxFuture;
+  var data = <Vod>[].obs;
+
+  PlayRecordController({required String tag})
+      : boxFuture = Hive.openBox<String>('playRecord_$tag');
 
   @override
   void onInit() {
     super.onInit();
-    _initialData();
+    _init();
+    Get.find<AuthController>().token.listen((event) {
+      _init();
+    });
   }
 
-  @override
-  void onClose() {
-    super.onClose();
-    playrecordBox.close();
-  }
+  Future<void> _init() async {
+    var box = await boxFuture;
 
-  void _initialData() async {
-    try {
-      playrecordBox = await Hive.openBox<VideoDatabaseField>(hiveKey);
+    if (box.isNotEmpty) {
+      var records = box.values.map((videoStr) {
+        final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
+        return Vod.fromJson(videoJson);
+      }).toList();
 
-      logger.i('INITIAL=======playrecordBox');
-      logger.i('INITIAL=======playrecordBox DB, $playrecordBox');
-      if (playrecordBox.isEmpty) {
-        playRecord.value = playrecordBox.values.toList();
-        logger.i('INITIAL=======playrecordBox 2222');
+      if (box.keys.length > 20) {
+        for (var key in box.keys.skip(20)) {
+          await box.delete(key);
+        }
       }
-    } catch (error) {
-      print(error);
+
+      data.value = records.take(20).toList();
     }
   }
 
-  void addPlayRecord(VideoDatabaseField video) async {
-    if (playRecord.firstWhereOrNull((v) => v.id == video.id) != null) {
-      playRecord.removeWhere((v) => v.id == video.id);
+  void addPlayRecord(Vod video) async {
+    logger.i('PLAYRECORD TRACE: ADD ${video.toJson}');
+    if (data.firstWhereOrNull((v) => v.id == video.id) != null) {
+      data.removeWhere((v) => v.id == video.id);
     }
-    playRecord.add(video);
-    playrecordBox.put(video.id, video);
+
+    // If the list already has 20 elements, remove the last one.
+    if (data.length >= 20) {
+      data.removeLast();
+    }
+
+    // Add the new record at the beginning of the list.
+    data.insert(0, video);
+    logger.i('PLAYRECORD TRACE: ${data.length}');
+
+    await _updateHive();
   }
 
-  void removePlayRecord(List<int> ids) async {
-    playRecord.removeWhere((v) => ids.contains(v.id));
-    // for (var id in ids) {
-    //   playRecord.removeWhere((v) => v.id == int.parse(id));
-    //   playrecordBox.delete(int.parse(id));
-    // }
+  void removeVideo(List<int> ids) async {
+    data.removeWhere((v) => ids.contains(v.id));
+    for (var id in ids) {
+      data.removeWhere((v) => v.id == id);
+    }
+    await _updateHive();
   }
 
-  VideoDatabaseField? getById(int id) {
-    return playRecord.firstWhereOrNull((video) => video.id == id);
+  Vod? getById(int id) {
+    return data.firstWhereOrNull((video) => video.id == id);
+  }
+
+  Future<void> _updateHive() async {
+    var box = await boxFuture;
+    await box.clear();
+    logger.i('PLAYRECORD TRACE: ${data.length}');
+    for (var video in data) {
+      final videoStr = jsonEncode(video.toJson());
+      await box.put(video.id.toString(), videoStr);
+    }
   }
 }

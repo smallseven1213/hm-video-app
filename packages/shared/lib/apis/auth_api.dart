@@ -1,15 +1,27 @@
 // import 'package:device_info_plus/device_info_plus.dart';
+
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 import 'package:uuid/uuid.dart';
+import 'package:android_id/android_id.dart';
 import '../models/index.dart';
 
 final systemConfig = SystemConfig();
+final logger = Logger();
 
 class AuthApi {
+  static final AuthApi _instance = AuthApi._internal();
+
+  AuthApi._internal();
+
+  factory AuthApi() {
+    return _instance;
+  }
+
   // 訪客登入
   Future<HMApiResponseBaseWithDataWithData> guestLogin({
     String? invitationCode,
@@ -31,7 +43,9 @@ class AuthApi {
       }
     } else if (GetPlatform.isAndroid) {
       // get android id
-      registerDeviceGuid = (await deviceInfo.androidInfo).data['id'];
+      String androidId = await const AndroidId().getId() ?? 'Unknown ID';
+      registerDeviceGuid = androidId;
+      logger.i('👺👺 androidId2: $androidId');
     } else if (GetPlatform.isIOS) {
       registerDeviceGuid =
           (await (deviceInfo.iosInfo)).identifierForVendor.toString();
@@ -103,11 +117,24 @@ class AuthApi {
     return HMApiResponseBaseWithDataWithData.fromJson(res.data);
   }
 
+  Future<HMApiResponseBaseWithDataWithData?> loginByCode(String code) async {
+    try {
+      var res = await fetcher(
+          url: '${systemConfig.apiHost}/public/auth/auth/code',
+          method: 'POST',
+          body: {"code": code});
+      return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+    } catch (err) {
+      // return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+    }
+    return null;
+  }
+
   Future<HMApiResponseBaseWithDataWithData> getLoginCode() async {
     var res = await fetcher(
       url: '${systemConfig.apiHost}/public/auth/auth/code',
     );
-    print('getLoginCode: $res');
+    logger.i('getLoginCode: $res');
     return HMApiResponseBaseWithDataWithData.fromJson(res.data);
   }
 
@@ -116,7 +143,7 @@ class AuthApi {
     required String password,
   }) async {
     var value = await fetcher(
-      url: '${systemConfig.apiHost}/public/auth/auth/login',
+      url: '${systemConfig.apiHost}/public/auth/auth/v2/login',
       method: 'POST',
       body: {
         'username': username,

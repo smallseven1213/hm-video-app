@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/widgets/fade_in_effect.dart';
 
 import '../apis/image_api.dart';
 import '../utils/sid_image_result_decode.dart';
@@ -15,19 +16,20 @@ class SidImage extends StatefulWidget {
   final double height;
   final BoxFit fit;
   final Alignment alignment;
-  final Function? onLoaded;
-  final Function? onError;
+  final Function(dynamic)? onLoaded;
+  final Function(dynamic)? onError;
+  final bool noFadeIn;
 
-  const SidImage({
-    super.key,
-    required this.sid,
-    this.width = 200,
-    this.height = 200,
-    this.fit = BoxFit.cover,
-    this.alignment = Alignment.center,
-    this.onLoaded,
-    this.onError,
-  });
+  const SidImage(
+      {super.key,
+      required this.sid,
+      this.width = 200,
+      this.height = 200,
+      this.fit = BoxFit.cover,
+      this.alignment = Alignment.center,
+      this.onLoaded,
+      this.onError,
+      this.noFadeIn = false});
 
   @override
   State<SidImage> createState() => SidImageState();
@@ -58,10 +60,14 @@ class SidImageState extends State<SidImage> {
       // logger.d('hasFileInHive ===== $hasFileInHive');
       if (hasFileInHive) {
         var file = await sidImageBox.get(widget.sid);
-        setState(() {
-          imageData = file;
-        });
-        widget.onLoaded != null ? widget.onLoaded!() : null;
+        if (mounted) {
+          setState(() {
+            imageData = file;
+          });
+        }
+        if (widget.onLoaded != null) {
+          widget.onLoaded!('success');
+        }
       } else {
         try {
           var res = await ImageApi().getSidImageData(widget.sid);
@@ -69,14 +75,20 @@ class SidImageState extends State<SidImage> {
           var file = base64Decode(decoded);
           await sidImageBox.put(widget.sid, file);
 
-          setState(() {
-            imageData = file;
-          });
-          widget.onLoaded != null ? widget.onLoaded!() : null;
+          if (mounted) {
+            setState(() {
+              imageData = file;
+            });
+          }
+          if (widget.onLoaded != null) {
+            widget.onLoaded!('success');
+          }
         } catch (e) {
           // logger.d('${widget.sid}==ERROR=\n$e');
           // if widget.onError is not null, call it
-          widget.onError != null ? widget.onError!() : null;
+          if (widget.onError != null) {
+            widget.onError!(e);
+          }
         }
       }
     }
@@ -85,25 +97,35 @@ class SidImageState extends State<SidImage> {
   @override
   Widget build(BuildContext context) {
     if (imageData.isEmpty) {
-      return Container(
-        // todo: 顏色應該以brand分類 & add no-image
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFF00234D), Color(0xFF002D62)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      return SizedBox(
+        // decoration: const BoxDecoration(
+        //   gradient: LinearGradient(
+        //     colors: [Color(0xFF00234D), Color(0xFF002D62)],
+        //     begin: Alignment.topCenter,
+        //     end: Alignment.bottomCenter,
+        //   ),
+        // ),
         width: widget.width,
         height: widget.height,
       );
     }
-    return Image.memory(
-      imageData,
-      width: widget.width,
-      height: widget.height,
-      fit: widget.fit,
-      alignment: widget.alignment,
+    if (widget.noFadeIn) {
+      return Image.memory(
+        imageData,
+        width: widget.width,
+        height: widget.height,
+        fit: widget.fit,
+        alignment: widget.alignment,
+      );
+    }
+    return FadeInEffect(
+      child: Image.memory(
+        imageData,
+        width: widget.width,
+        height: widget.height,
+        fit: widget.fit,
+        alignment: widget.alignment,
+      ),
     );
   }
 }

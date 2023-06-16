@@ -1,12 +1,40 @@
-import 'package:shared/models/video.dart';
+import 'vod.dart';
+
+class Tags {
+  String? title;
+  bool? outerFrame;
+  List<Tag>? details;
+
+  Tags({title, outerFrame, details});
+
+  Tags.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    outerFrame = json['outerFrame'];
+    if (json['details'] != null) {
+      details = <Tag>[];
+      json['details'].forEach((v) {
+        details!.add(Tag.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    data['outerFrame'] = outerFrame;
+    data['details'] = details;
+    return data;
+  }
+}
 
 class Tag {
   final int id;
   final String name;
   final int? parent;
   final int? orderIndex;
+  final String? photoSid;
 
-  Tag(this.id, this.name, {this.parent, this.orderIndex});
+  Tag(this.id, this.name, {this.parent, this.orderIndex, this.photoSid});
 
   factory Tag.fromJson(Map<String, dynamic> json) {
     return Tag(
@@ -14,6 +42,7 @@ class Tag {
       json['name'],
       parent: json['parent'],
       orderIndex: json['orderIndex'],
+      photoSid: json['photoSid'],
     );
   }
 
@@ -23,6 +52,7 @@ class Tag {
     data['name'] = name;
     data['parent'] = parent;
     data['orderIndex'] = orderIndex;
+    data['photoSid'] = photoSid;
     return data;
   }
 }
@@ -30,7 +60,7 @@ class Tag {
 class TagVideos {
   final int id;
   final String? name;
-  List<Video>? videos;
+  List<Vod>? videos;
 
   TagVideos(
     this.id, {
@@ -43,7 +73,7 @@ class TagVideos {
       json['id'],
       name: json['name'],
       videos: List.from(
-          (json['videos'] as List<dynamic>).map((e) => Video.fromJson(e))),
+          (json['videos'] as List<dynamic>).map((e) => Vod.fromJson(e))),
     );
   }
 }

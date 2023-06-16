@@ -1,7 +1,10 @@
-import 'package:shared/models/tag.dart';
+import 'package:shared/models/vod.dart';
+
+import 'banner_photo.dart';
+import 'jingang.dart';
 
 class ChannelInfo {
-  List<BannerImage>? banner;
+  List<BannerPhoto>? banner;
   Jingang? jingang;
   List<Blocks>? blocks;
 
@@ -9,9 +12,9 @@ class ChannelInfo {
 
   ChannelInfo.fromJson(Map<String, dynamic> json) {
     if (json['banner'] != null) {
-      banner = <BannerImage>[];
+      banner = <BannerPhoto>[];
       json['banner'].forEach((v) {
-        banner!.add(BannerImage.fromJson(v));
+        banner!.add(BannerPhoto.fromJson(v));
       });
     }
     jingang =
@@ -39,101 +42,6 @@ class ChannelInfo {
   }
 }
 
-class BannerImage {
-  int? id;
-  String? photoSid;
-  String? url;
-  bool? isAutoClose;
-
-  BannerImage({id, photoSid, url, isAutoClose});
-
-  BannerImage.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    photoSid = json['photoSid'];
-    url = json['url'];
-    isAutoClose = json['isAutoClose'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['photoSid'] = photoSid;
-    data['url'] = url;
-    data['isAutoClose'] = isAutoClose;
-    return data;
-  }
-}
-
-class Jingang {
-  List<JingangDetail>? jingangDetail;
-  bool? outerFrame;
-  int? outerFrameStyle;
-  String? title;
-  int? jingangStyle;
-  int? quantity;
-
-  Jingang({
-    jingangDetail,
-    outerFrame, // 是否有外框
-    outerFrameStyle, // 1: 圓形, 2: 方形
-    title, // 金剛區標題
-    jingangStyle, // 1: 單排, 2: 多排
-    quantity, // 一排的數量，預設: 4
-  });
-
-  Jingang.fromJson(Map<String, dynamic> json) {
-    if (json['jingangDetail'] != null) {
-      jingangDetail = <JingangDetail>[];
-      json['jingangDetail'].forEach((v) {
-        jingangDetail!.add(JingangDetail.fromJson(v));
-      });
-    }
-    outerFrame = json['outerFrame'];
-    outerFrameStyle = json['outerFrameStyle'];
-    title = json['title'];
-    jingangStyle = json['jingangStyle'];
-    quantity = json['quantity'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (jingangDetail != null) {
-      data['jingangDetail'] = jingangDetail!.map((v) => v.toJson()).toList();
-    }
-    data['outerFrame'] = outerFrame;
-    data['outerFrameStyle'] = outerFrameStyle;
-    data['title'] = title;
-    data['jingangStyle'] = jingangStyle;
-    data['quantity'] = quantity;
-    return data;
-  }
-}
-
-class JingangDetail {
-  int? id;
-  String? photoSid;
-  String? url;
-  String? name;
-
-  JingangDetail({id, photoSid, url, name});
-
-  JingangDetail.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    photoSid = json['photoSid'];
-    url = json['url'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['photoSid'] = photoSid;
-    data['url'] = url;
-    data['name'] = name;
-    return data;
-  }
-}
-
 class Blocks {
   int? id;
   String? name;
@@ -144,11 +52,11 @@ class Blocks {
   bool? isMore;
   bool? isCheckMore;
   bool? isChange;
-  bool? isAreaAds;
+  bool? isAreaAds; // 暫時沒用
   bool? isTitle;
   bool? isLoading;
   bool? isEmbeddedAds;
-  BannerImage? banner;
+  BannerPhoto? banner;
   Videos? videos;
 
   Blocks(
@@ -183,7 +91,7 @@ class Blocks {
     isLoading = json['isLoading'];
     isEmbeddedAds = json['isEmbeddedAds'];
     banner =
-        json['banner'] != null ? BannerImage.fromJson(json['banner']) : null;
+        json['banner'] != null ? BannerPhoto.fromJson(json['banner']) : null;
     videos = json['videos'] != null ? Videos.fromJson(json['videos']) : null;
   }
 
@@ -216,7 +124,7 @@ class Videos {
   num? total;
   String? current;
   num? limit;
-  List<Data>? data;
+  List<Vod>? data;
 
   Videos({total, current, limit, data});
 
@@ -225,9 +133,9 @@ class Videos {
     current = json['current'];
     limit = json['limit'];
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Vod>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(Vod.fromJson(v));
       });
     }
   }
@@ -237,91 +145,9 @@ class Videos {
     data['total'] = total;
     data['current'] = current;
     data['limit'] = limit;
-    data['data'] = this.data!.map((v) => v.toJson()).toList();
-    return data;
-  }
-}
-
-class Data {
-  int? id;
-  int? dataType;
-  String? title;
-  String? titleSub;
-  String? externalId;
-  int? chargeType;
-  int? points;
-  int? subScript;
-  int? timeLength;
-  String? coverVertical;
-  String? coverHorizontal;
-  List<Tag>? tags;
-  int? videoViewTimes;
-  int? videoCollectTimes;
-  String? appIcon;
-  String? adUrl;
-
-  Data(
-      {id,
-      dataType,
-      title,
-      titleSub,
-      externalId,
-      chargeType,
-      points,
-      subScript,
-      timeLength,
-      coverVertical,
-      coverHorizontal,
-      tags,
-      videoViewTimes,
-      videoCollectTimes,
-      appIcon,
-      adUrl});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    dataType = json['dataType'];
-    title = json['title'];
-    titleSub = json['titleSub'];
-    externalId = json['externalId'];
-    chargeType = json['chargeType'];
-    points = json['points'];
-    subScript = json['subScript'];
-    timeLength = json['timeLength'];
-    coverVertical = json['coverVertical'];
-    coverHorizontal = json['coverHorizontal'];
-    if (json['tags'] != null) {
-      tags = <Tag>[];
-      json['tags'].forEach((v) {
-        tags!.add(Tag.fromJson(v));
-      });
+    if (data['data'].isNotEmpty) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    videoViewTimes = json['videoViewTimes'];
-    videoCollectTimes = json['videoCollectTimes'];
-    appIcon = json['appIcon'];
-    adUrl = json['adUrl'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['dataType'] = dataType;
-    data['title'] = title;
-    data['titleSub'] = titleSub;
-    data['externalId'] = externalId;
-    data['chargeType'] = chargeType;
-    data['points'] = points;
-    data['subScript'] = subScript;
-    data['timeLength'] = timeLength;
-    data['coverVertical'] = coverVertical;
-    data['coverHorizontal'] = coverHorizontal;
-    if (tags != null) {
-      data['tags'] = tags!.map((v) => v.toJson()).toList();
-    }
-    data['videoViewTimes'] = videoViewTimes;
-    data['videoCollectTimes'] = videoCollectTimes;
-    data['appIcon'] = appIcon;
-    data['adUrl'] = adUrl;
     return data;
   }
 }

@@ -4,9 +4,8 @@ enum AppRoutes {
   home,
   video,
   videoByBlock,
-  vendorVideos,
+  publisher,
   tag,
-  gameDeposit,
   login,
   register,
   share,
@@ -19,6 +18,17 @@ enum AppRoutes {
   search,
   filter,
   actor,
+  actors,
+  nickname,
+  supplier,
+  supplierTag,
+  shortsByTag,
+  shortsByBlock,
+  shortsBySupplier,
+  shortsByLocal,
+  configs,
+  updatePassword,
+  idCard
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -34,12 +44,10 @@ extension AppRoutesExtension on AppRoutes {
         return '/video';
       case AppRoutes.videoByBlock:
         return '/video_by_block';
-      case AppRoutes.vendorVideos:
-        return '/vendor_videos';
+      case AppRoutes.publisher:
+        return '/publisher';
       case AppRoutes.tag:
         return '/tag';
-      case AppRoutes.gameDeposit:
-        return '/game/deposit';
       case AppRoutes.login:
         return '/login';
       case AppRoutes.register:
@@ -62,8 +70,30 @@ extension AppRoutesExtension on AppRoutes {
         return '/search';
       case AppRoutes.filter:
         return '/filter';
+      case AppRoutes.actors:
+        return '/actors';
       case AppRoutes.actor:
         return '/actor';
+      case AppRoutes.nickname:
+        return '/user/nickname';
+      case AppRoutes.supplier:
+        return '/supplier';
+      case AppRoutes.supplierTag:
+        return '/supplier_tag';
+      case AppRoutes.shortsByTag:
+        return '/shorts_by_tag';
+      case AppRoutes.shortsByBlock:
+        return '/shorts_by_block';
+      case AppRoutes.shortsBySupplier:
+        return '/shorts_by_supplier';
+      case AppRoutes.configs:
+        return '/configs';
+      case AppRoutes.updatePassword:
+        return '/update_password';
+      case AppRoutes.idCard:
+        return '/id_card';
+      case AppRoutes.shortsByLocal:
+        return '/shorts_by_local';
       default:
         return '/unknown';
     }

@@ -2,16 +2,16 @@
 
 import 'package:hive/hive.dart';
 
-import '../models/channel_info.dart';
+import '../enums/adapters.dart';
 import '../models/tag.dart';
-import '../models/video_database_field.dart';
+import '../models/vod.dart';
 
-class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
+class VideoDatabaseFieldAdapter extends TypeAdapter<Vod> {
   @override
-  final int typeId = 1;
+  final int typeId = adapterId(Adapters.video);
 
   @override
-  VideoDatabaseField read(BinaryReader reader) {
+  Vod read(BinaryReader reader) {
     final id = reader.readInt();
     final coverVertical = reader.readString();
     final coverHorizontal = reader.readString();
@@ -19,34 +19,28 @@ class VideoDatabaseFieldAdapter extends TypeAdapter<VideoDatabaseField> {
     final tags = reader.readList().cast<Tag>();
     final title = reader.readString();
     final videoViewTimes = reader.readInt();
-    final imageRatio = reader.readDouble();
-    final detail = reader.read() as Data;
-    final isEmbeddedAds = reader.readBool();
-    final isEditing = reader.readBool();
+    // final detail = reader.read() as Data;
 
-    return VideoDatabaseField(
-      id: id,
+    return Vod(
+      id,
+      title,
       coverVertical: coverVertical,
       coverHorizontal: coverHorizontal,
       timeLength: timeLength,
       tags: tags,
-      title: title,
       videoViewTimes: videoViewTimes,
-      isEmbeddedAds: isEmbeddedAds,
-      detail: detail,
-      isEditing: isEditing,
-      imageRatio: imageRatio,
+      // detail: detail,
     );
   }
 
   @override
-  void write(BinaryWriter writer, VideoDatabaseField obj) {
-    writer.writeInt(obj.id ?? 0);
-    writer.writeString(obj.title ?? '');
-    writer.writeInt(obj.timeLength ?? 0);
-    writer.writeString(obj.coverVertical ?? '');
-    writer.writeString(obj.coverHorizontal ?? '');
-    writer.writeList(obj.tags ?? []);
+  void write(BinaryWriter writer, Vod obj) {
+    writer.writeInt(obj.id);
+    writer.writeString(obj.title);
+    writer.writeInt(obj.timeLength!);
+    writer.writeString(obj.coverVertical!);
+    writer.writeString(obj.coverHorizontal!);
+    writer.writeList(obj.tags!);
     writer.writeInt(obj.videoViewTimes ?? 0);
   }
 }

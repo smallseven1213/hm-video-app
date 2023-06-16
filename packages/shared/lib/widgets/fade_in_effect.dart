@@ -4,17 +4,17 @@ class FadeInEffect extends StatefulWidget {
   final Widget child;
   final Duration duration;
 
-  FadeInEffect(
+  const FadeInEffect(
       {Key? key,
       required this.child,
-      this.duration = const Duration(milliseconds: 300)})
+      this.duration = const Duration(milliseconds: 100)})
       : super(key: key);
 
   @override
-  _FadeInEffectState createState() => _FadeInEffectState();
+  FadeInEffectState createState() => FadeInEffectState();
 }
 
-class _FadeInEffectState extends State<FadeInEffect>
+class FadeInEffectState extends State<FadeInEffect>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
