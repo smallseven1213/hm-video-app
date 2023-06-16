@@ -69,16 +69,16 @@ class GridMenu extends StatelessWidget {
           MyRouteDelegate.of(context).push(AppRoutes.share.value);
         },
       ),
-      GridMenuItem(
-        name: '在線客服',
-        icon: 'assets/images/user_screen_online_service.png',
-        onTap: () {
-          logger.i(
-              '${systemConfig.apiHost}/public/domains/domain/customer-services');
-          launchUrl(Uri.parse(
-              '${systemConfig.apiHost}/public/domains/domain/customer-services'));
-        },
-      ),
+      // GridMenuItem(
+      //   name: '在線客服',
+      //   icon: 'assets/images/user_screen_online_service.png',
+      //   onTap: () {
+      //     logger.i(
+      //         '${systemConfig.apiHost}/public/domains/domain/customer-services');
+      //     launchUrl(Uri.parse(
+      //         '${systemConfig.apiHost}/public/domains/domain/customer-services'));
+      //   },
+      // ),
       GridMenuItem(
         name: '應用中心',
         icon: 'assets/images/user_screen_app_center.png',
