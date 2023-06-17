@@ -82,24 +82,14 @@ class _GameWithdrawState extends State<GameWithdraw> {
       var res = await Get.put(GameWithdrawController()).getWithDrawalData();
       logger.i('res: $res');
 
-      if (res['code'] == '00' && res['data'].paymentPin == false) {
-        showFundPassword();
-      } else if (res['code'] == '00' &&
+      // if (res['code'] == '00' && res['data'].paymentPin == false) {
+      //   showFundPassword();
+      // } else
+      if (res['code'] == '00' &&
           res['data'].paymentPin &&
           res['data'].userPaymentSecurity != null) {
         // ignore: use_build_context_synchronously
         _transferInit(context);
-      } else {
-        gameWithdrawController.setLoadingStatus(false);
-        // ignore: use_build_context_synchronously
-        showConfirmDialog(
-          context: context,
-          title: 'error',
-          content: res['data'].toString(),
-          onConfirm: () {
-            Navigator.pop(context);
-          },
-        );
       }
     } catch (error) {
       logger.i('_getUserWithdrawalData error $error');
@@ -200,7 +190,6 @@ class _GameWithdrawState extends State<GameWithdraw> {
   // onConfirm function
   void _onConfirm(Type type, context) {
     int intType = type == Type.bankcard ? 1 : 2;
-    Navigator.of(context).pop();
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
       // call applyWithdrawal
       var res = await GameLobbyApi().applyWithdrawalV2(
@@ -413,8 +402,6 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                 controller: amountController,
                                 onConfirm: (type) =>
                                     _onConfirm(Type.bankcard, context),
-                                onBackFromBindingPage: () =>
-                                    _getUserWithdrawalData(),
                                 enableSubmit: _enableSubmit,
                                 hasPaymentData:
                                     gameWithdrawController.hasPaymentData.value,

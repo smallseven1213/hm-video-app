@@ -97,7 +97,7 @@ class GameListViewState extends State<GameListView>
       );
       _tabController!.addListener(_handleTabSelection);
       gamesListController.updateSelectedCategoryIndex(0);
-      _getGameHistory();
+      // _getGameHistory();
     });
   }
 
@@ -125,9 +125,9 @@ class GameListViewState extends State<GameListView>
 
   _handleTabSelection() {
     gamesListController.updateSelectedCategoryIndex(_tabController!.index);
-    if (_tabController?.index == -1) {
-      _getGameHistory();
-    }
+    // if (_tabController?.index == -1) {
+    //   _getGameHistory();
+    // }
   }
 
   // 寫一個篩選遊戲類別的方法

@@ -50,6 +50,7 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
         barrierDismissible: false,
         confirmText: "確認",
         onConfirm: () => {
+          gameWithdrawController.mutate(),
           gameWithdrawController.setLoadingStatus(false),
           Navigator.pop(context),
           MyRouteDelegate.of(context).popRoute(),

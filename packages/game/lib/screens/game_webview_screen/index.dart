@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:game/screens/game_webview_screen/game_webview_toggle_button.dart';
 import 'package:game/widgets/draggable_button.dart';
-import 'package:logger/logger.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import 'package:game/widgets/h5webview.dart';
-
-final logger = Logger();
 
 class GameLobbyWebview extends StatefulWidget {
   final String gameUrl;
@@ -54,7 +51,6 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
   }
 
   toggleButtonRow() {
-    logger.i('toggleButtonRow');
     setState(() {
       toggleButton = !toggleButton;
     });
