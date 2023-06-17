@@ -93,32 +93,32 @@ class ShortCardState extends State<ShortCard> {
       var video = videoDetailController.video.value;
       var videoDetail = videoDetailController.videoDetail.value;
       var videoUrl = videoDetailController.videoUrl.value;
-      if (!obsVideoPlayerController.isReady.value ||
-          obsVideoPlayerController.videoPlayerController == null) {
-        return const SizedBox.shrink();
-      }
 
-      if (!isLoading &&
-          videoUrl.isNotEmpty &&
-          video != null &&
-          videoDetail != null) {
-        return Stack(
+      return Container(
+        color: Colors.black,
+        child: Stack(
           children: [
             SizedBox(
               height: screen.size.height - 76 - screen.padding.bottom,
               width: double.infinity,
               child: Stack(
                 children: [
-                  VideoPlayerDisplayWidget(
-                    controller: obsVideoPlayerController,
-                    video: video,
-                  ),
-                  ShortCardInfo(
-                    obsKey: widget.obsKey,
-                    data: videoDetail,
-                    title: widget.title,
-                    videoUrl: videoUrl,
-                  ),
+                  if (obsVideoPlayerController.isReady.value &&
+                      obsVideoPlayerController.videoPlayerController != null &&
+                      !isLoading &&
+                      videoUrl.isNotEmpty &&
+                      video != null)
+                    VideoPlayerDisplayWidget(
+                      controller: obsVideoPlayerController,
+                      video: video,
+                    ),
+                  if (videoDetail != null)
+                    ShortCardInfo(
+                      obsKey: widget.obsKey,
+                      data: videoDetail,
+                      title: widget.title,
+                      videoUrl: videoUrl,
+                    ),
                 ],
               ),
             ),
@@ -155,10 +155,8 @@ class ShortCardState extends State<ShortCard> {
               ),
             ),
           ],
-        );
-      } else {
-        return const SizedBox.shrink();
-      }
+        ),
+      );
     });
   }
 }
