@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/supplier_vod_controller.dart';
+import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/supplier/card.dart';
@@ -67,12 +67,12 @@ class SupplierPage extends StatefulWidget {
 class _SupplierPageState extends State<SupplierPage>
     with AutomaticKeepAliveClientMixin {
   final ScrollController scrollController = ScrollController();
-  late final SupplierVodController vodController;
+  late final SupplierVideoController vodController;
 
   @override
   void initState() {
     super.initState();
-    vodController = SupplierVodController(
+    vodController = SupplierVideoController(
         supplierId: widget.id, scrollController: scrollController);
   }
 
