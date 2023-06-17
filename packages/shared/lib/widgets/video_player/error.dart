@@ -5,12 +5,12 @@ import 'package:shared/widgets/sid_image.dart';
 final logger = Logger();
 
 class VideoError extends StatelessWidget {
-  final String coverHorizontal;
+  final String videoCover;
   final Function() onTap;
 
   const VideoError({
     Key? key,
-    required this.coverHorizontal,
+    required this.videoCover,
     required this.onTap,
   }) : super(key: key);
 
@@ -32,8 +32,8 @@ class VideoError extends StatelessWidget {
             ),
           ),
           child: SidImage(
-            key: ValueKey(coverHorizontal),
-            sid: coverHorizontal,
+            key: ValueKey(videoCover),
+            sid: videoCover,
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,

@@ -46,6 +46,9 @@ class ChannelStyle4 extends StatelessWidget {
               ChannelTags(
                 channelId: channelId,
               ),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: 4),
+              ),
               SliverToBoxAdapter(
                 child: Header(
                     text: '人氣女優',
@@ -231,15 +234,26 @@ class ChannelStyle4 extends StatelessWidget {
                                 right: 0,
                                 child: ClipPath(
                                   clipper: CustomClipperWithRoundedCorners(),
-                                  child: Container(
-                                    color: const Color(0xfff32a2a),
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 9, vertical: 4),
-                                      child: Text(
-                                        '${data.actor.containVideos}部影片',
-                                        style: const TextStyle(
-                                            fontSize: 12, color: Colors.white),
+                                  child: InkWell(
+                                    onTap: () =>
+                                        MyRouteDelegate.of(context).push(
+                                      AppRoutes.actor.value,
+                                      args: {
+                                        'id': data.actor.id,
+                                        'title': data.actor.name,
+                                      },
+                                    ),
+                                    child: Container(
+                                      color: const Color(0xfff32a2a),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 9, vertical: 4),
+                                        child: Text(
+                                          '${data.actor.containVideos}部影片',
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                        ),
                                       ),
                                     ),
                                   ),

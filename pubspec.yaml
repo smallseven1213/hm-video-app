@@ -5,7 +5,24 @@ environment:
   
 dev_dependencies:
   melos: ^2.9.0
+  sentry_dart_plugin: ^1.3.0
 dependencies:
   path: ^1.8.3
   path_provider: ^2.0.12
+
+# 下方是pubspec.yaml版本，用flutter packages pub run sentry_dart_plugin跑的
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  upload_sources: true
+  project: hm-video-app
+  org: sentry
+  auth_token: 2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
+  url: https://sentry.hmtech.site/
+  wait_for_processing: true
+  log_level: info # possible values: trace, debug, info, warn, error
+  release: local.testing.002
+  web_build_path: app/apps/app_gs/build/web
+  commits: auto
+  ignore_missing: true
   

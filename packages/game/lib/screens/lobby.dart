@@ -49,7 +49,6 @@ class _GameLobbyState extends State<GameLobby> {
   bool isShowFab = false;
 
   // final gamesListController = GamesListController();
-  final ScrollController _scrollController = ScrollController();
   UserController get userController => Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
 
@@ -146,7 +145,6 @@ class _GameLobbyState extends State<GameLobby> {
                     color: gameLobbyBgColor,
                     child: SingleChildScrollView(
                       physics: const NeverScrollableScrollPhysics(),
-                      controller: _scrollController,
                       child: Container(
                         width: double.infinity,
                         padding: const EdgeInsets.symmetric(horizontal: 8),

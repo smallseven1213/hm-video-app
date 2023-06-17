@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
@@ -5,6 +6,7 @@ import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/header.dart';
+import '../../widgets/id_card.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
 import 'info.dart';
@@ -26,15 +28,28 @@ class _UserScreenState extends State<UserScreen> {
   checkFirstSeen() {
     final accountProtectionShown = storage.read('account-protection-shown');
     if (accountProtectionShown == null) {
-      showConfirmDialog(
-        context: context,
-        title: '提示',
-        message: '為保持您的帳號，請先註冊防止丟失',
-        showCancelButton: false,
-        onConfirm: () {
-          storage.write('account-protection-shown', true);
-        },
-      );
+      if (kIsWeb) {
+        showConfirmDialog(
+          context: context,
+          title: '提示',
+          message: '為保持您的帳號，請先註冊防止丟失',
+          showCancelButton: false,
+          onConfirm: () {
+            storage.write('account-protection-shown', true);
+          },
+        );
+      } else {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const Dialog(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              child: IDCard(),
+            );
+          },
+        );
+      }
     }
   }
 

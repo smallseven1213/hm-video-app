@@ -39,8 +39,9 @@ class SystemConfig {
               : 'H5';
 
   List<String> vodHostList = [
-    'https://dl.dlsv.net/$env/dl.json',
-    'https://dl.dlsv.app/$env/dl.json'
+    'https://dl.dlgs.app/$env/dl.json',
+    'https://dl.dlgs.one/$env/dl.json',
+    'https://dl.dlgs.info/$env/dl.json',
   ];
 
   int timeout = 5000;

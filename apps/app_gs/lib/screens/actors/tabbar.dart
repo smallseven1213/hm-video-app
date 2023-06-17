@@ -14,28 +14,48 @@ class ActorsTabBar extends StatefulWidget {
 class ActorsTabBarState extends State<ActorsTabBar>
     with TickerProviderStateMixin {
   TabController? _tabController;
-  final actorsController = Get.put(ActorsController());
+  final actorsController = Get.find<ActorsController>();
   final actorRegionController = Get.find<ActorRegionController>();
 
-  // init
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 0, vsync: this);
+
+    // Listener function
+    void tabControllerListener() {
+      if (_tabController?.indexIsChanging ?? false) {
+        final index = _tabController!.index;
+        if (index < actorRegionController.regions.length) {
+          actorsController.setRegion(actorRegionController.regions[index].id);
+        }
+      }
+    }
+
+    // Initial creation of the TabController with the current length of regions.
+    _tabController = TabController(
+        length: actorRegionController.regions.value.length, vsync: this);
+
+    // Adding listener to TabController to update the selected region.
+    _tabController?.addListener(tabControllerListener);
+
+    // Listen for changes in regions.
     actorRegionController.regions.listen((regions) {
-      _tabController?.dispose();
-      _tabController = TabController(length: regions.length, vsync: this);
-      _tabController?.addListener(() {
-        actorsController.region.value =
-            actorRegionController.regions[_tabController!.index].id;
-      });
-      setState(() {});
+      if (_tabController?.length != regions.length) {
+        // If the length changes, create a new TabController with the new length.
+        _tabController?.removeListener(
+            tabControllerListener); // Remove listener from old controller.
+        _tabController = TabController(length: regions.length, vsync: this);
+
+        // Re-attach the listener to the new TabController.
+        _tabController?.addListener(tabControllerListener);
+      }
     });
   }
 
   // dispose
   @override
   void dispose() {
+    actorsController.setRegion(actorRegionController.regions[0].id);
     _tabController?.dispose();
     super.dispose();
   }

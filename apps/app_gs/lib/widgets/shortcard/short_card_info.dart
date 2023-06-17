@@ -68,21 +68,24 @@ class ShortCardInfo extends StatelessWidget {
                   logger.i('RENDER OBX isBack!!');
                   obsVideoPlayerController.play();
                 },
-                child: Row(children: [
-                  ActorAvatar(
-                    photoSid: data.supplier!.photoSid,
-                    width: 40,
-                    height: 40,
-                  ),
-                  const SizedBox(width: 8),
-                  const SizedBox(height: 8),
-                  Text(data.supplier!.aliasName ?? '',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                      )),
-                  const SizedBox(height: 8),
-                ]),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    ActorAvatar(
+                      photoSid: data.supplier!.photoSid,
+                      width: 40,
+                      height: 40,
+                    ),
+                    const SizedBox(width: 8),
+                    const SizedBox(height: 8),
+                    Text(data.supplier!.aliasName ?? '',
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.white,
+                        )),
+                    const SizedBox(height: 8),
+                  ],
+                ),
               )
             ],
 

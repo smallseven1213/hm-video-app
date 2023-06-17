@@ -23,10 +23,24 @@ class ActorsController extends GetxController {
         _fetchData();
       }
     });
+  }
 
-    ever(region, (_) => _fetchData());
-    ever(name, (_) => _fetchData());
-    ever(sortBy, (_) => _fetchData());
+  // 提供给外部的方法，以改变region并重新获取数据
+  void setRegion(int? newRegion) {
+    region.value = newRegion;
+    _fetchData();
+  }
+
+  // 提供给外部的方法，以改变name并重新获取数据
+  void setName(String? newName) {
+    name.value = newName;
+    _fetchData();
+  }
+
+  // 提供给外部的方法，以改变sortBy并重新获取数据
+  void setSortBy(int newSortBy) {
+    sortBy.value = newSortBy;
+    _fetchData();
   }
 
   _fetchData() async {

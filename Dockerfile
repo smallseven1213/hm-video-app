@@ -8,6 +8,7 @@ COPY . /app
 
 # Install Melos
 RUN flutter pub global activate melos 2.9.0
+RUN flutter pub global activate sentry_dart_plugin 1.3.0
 
 # Set PATH for melos executable
 ENV PATH="/root/.pub-cache/bin:$PATH"
@@ -18,10 +19,17 @@ RUN rm -rf /root/.pub-cache/_temp/*
 # Clear Flutter cache
 RUN rm -rf /sdks/flutter/.pub-cache
 
+# Install sentry-cli
+RUN curl -sL https://sentry.io/get-cli/ | bash
+
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
+    # 使用 sed 命令修改 pubspec.yaml 文件中的 release 值
+    sed -i "s|release:.*|release: ${DATE_VERSION}|g" pubspec.yaml && \
     melos exec --scope="app_gs" -- \
-    flutter build web --web-renderer canvaskit --release --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
+    flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
+    flutter packages pub run sentry_dart_plugin
+    #sentry-cli releases files ${DATE_VERSION} upload-sourcemaps /app/apps/app_gs/build/web --log-level=info
 
 # Production stage
 FROM nginx:stable-alpine

@@ -105,7 +105,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                110,
+                105,
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
@@ -132,7 +132,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                135, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+                130, (kToolbarHeight - 12) / 2 + fontSize, percentage),
             left: 100,
             child: Opacity(
               opacity: opacity,
