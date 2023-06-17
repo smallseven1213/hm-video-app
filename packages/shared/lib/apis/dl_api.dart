@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/services/system_config.dart';
@@ -15,24 +17,27 @@ class DlApi {
   }
 
   // 1: 不更新、2: 建議更新、3: 強制更新
+
   fetchDlJson() async {
     try {
       Future<Response> getResponse(
         List<String> apiList,
         Dio dio,
-        RequestOptions options,
       ) async {
-        List<Future<Response>> futures = [];
+        var completer = Completer<Response>();
         for (String api in apiList) {
-          futures.add(dio.get(api));
+          dio.get(api).then((res) {
+            if (!completer.isCompleted) {
+              completer.complete(res);
+            }
+          }).catchError((_) {});
         }
-        return await Future.any(futures);
+        return completer.future;
       }
 
       Response response = await getResponse(
         systemConfig.vodHostList,
         Dio(),
-        RequestOptions(),
       );
       var res = (response.data as Map<String, dynamic>);
       return res;
