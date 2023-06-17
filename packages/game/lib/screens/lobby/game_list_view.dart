@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
+import 'package:game/widgets/cache_image.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
@@ -20,10 +21,11 @@ class GameListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = themeMode[GetStorage().hasData('pageColor')
-            ? GetStorage().read('pageColor')
-            : 1]
-        .toString();
+    const theme = '1';
+    // themeMode[GetStorage().hasData('pageColor')
+    //         ? GetStorage().read('pageColor')
+    //         : 1]
+    //     .toString();
 
     return Container(
       width: (Get.width - 110) / 2,
@@ -46,20 +48,14 @@ class GameListItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: imageUrl != '' || imageUrl.isNotEmpty
-              ? Image.network(
-                  imageUrl,
+              ? CacheImage(
+                  url: imageUrl,
                   width: double.infinity,
                   height: (Get.width - 110) / 3,
                   fit: BoxFit.cover,
+                  emptyImageUrl:
+                      'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
                 )
-              // CacheImage(
-              //     url: imageUrl,
-              //     width: double.infinity,
-              //     height: (Get.width - 110) / 3,
-              //     fit: BoxFit.cover,
-              //     emptyImageUrl:
-              //         'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-              //   )
               : SizedBox(
                   child: Image.asset(
                     'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
@@ -102,7 +98,7 @@ class GameListViewState extends State<GameListView>
       );
       _tabController!.addListener(_handleTabSelection);
       gamesListController.updateSelectedCategoryIndex(0);
-      // _getGameHistory();
+      _getGameHistory();
     });
   }
 
@@ -130,9 +126,9 @@ class GameListViewState extends State<GameListView>
 
   _handleTabSelection() {
     gamesListController.updateSelectedCategoryIndex(_tabController!.index);
-    // if (_tabController?.index == -1) {
-    //   _getGameHistory();
-    // }
+    if (_tabController?.index == -1) {
+      _getGameHistory();
+    }
   }
 
   // 寫一個篩選遊戲類別的方法
