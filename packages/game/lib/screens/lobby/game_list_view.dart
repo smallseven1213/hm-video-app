@@ -102,7 +102,7 @@ class GameListViewState extends State<GameListView>
       );
       _tabController!.addListener(_handleTabSelection);
       gamesListController.updateSelectedCategoryIndex(0);
-      _getGameHistory();
+      // _getGameHistory();
     });
   }
 
@@ -130,9 +130,9 @@ class GameListViewState extends State<GameListView>
 
   _handleTabSelection() {
     gamesListController.updateSelectedCategoryIndex(_tabController!.index);
-    if (_tabController?.index == -1) {
-      _getGameHistory();
-    }
+    // if (_tabController?.index == -1) {
+    //   _getGameHistory();
+    // }
   }
 
   // 寫一個篩選遊戲類別的方法
@@ -234,8 +234,12 @@ class GameListViewState extends State<GameListView>
                                   (category) => RotatedBox(
                                     quarterTurns: 3,
                                     child: GameScrollViewTabs(
-                                      text: category['name'].toString(),
-                                      icon: category['icon'].toString(),
+                                      text: category['name']
+                                          ? category['name'].toString()
+                                          : 'null',
+                                      icon: category['icon']
+                                          ? category['icon'].toString()
+                                          : 'null',
                                       isActive: gamesListController
                                               .selectedCategoryIndex.value ==
                                           filteredGameCategories
