@@ -26,13 +26,15 @@ class SupplierApi {
   }
 
   // Get /supplier/shortVideo?page=1&limit=100&id=20
-  Future<BlockVod> getManyShortVideoBy({
+  Future<BlockVod> getManyVideoBy({
     required int page,
     int limit = 100,
     required int id,
+    int film = 2,
   }) async {
     var res = await fetcher(
-        url: '$apiPrefix/supplier/shortVideo?page=$page&limit=$limit&id=$id');
+        url:
+            '$apiPrefix/supplier/video?page=$page&limit=$limit&id=$id&film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }

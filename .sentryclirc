@@ -4,6 +4,9 @@ token=2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
 [http]
 keepalive=false
 
+[dif]
+max_item_size=100000000
+
 [defaults]
 url=https://sentry.hmtech.site/
 org = sentry
