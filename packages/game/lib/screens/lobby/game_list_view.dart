@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
-import 'package:game/widgets/cache_image.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/game_scroll_view_tabs.dart';
@@ -48,14 +46,20 @@ class GameListItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: imageUrl != '' || imageUrl.isNotEmpty
-              ? CacheImage(
-                  url: imageUrl,
+              ? Image.network(
+                  imageUrl,
                   width: double.infinity,
                   height: (Get.width - 110) / 3,
                   fit: BoxFit.cover,
-                  emptyImageUrl:
-                      'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
                 )
+              // CacheImage(
+              //     url: imageUrl,
+              //     width: double.infinity,
+              //     height: (Get.width - 110) / 3,
+              //     fit: BoxFit.cover,
+              //     emptyImageUrl:
+              //         'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+              //   )
               : SizedBox(
                   child: Image.asset(
                     'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
