@@ -30,7 +30,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
         flex: 1,
         child: InkWell(
             onTap: () {
-              actorsController.sortBy.value = value;
+              actorsController.setSortBy(value);
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -109,7 +109,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                   child: SearchInput(
                     placeHolder: '輸入名稱',
                     onSubmitted: (val) {
-                      actorsController.name.value = val;
+                      actorsController.setName(val);
                     },
                   )),
               Expanded(
