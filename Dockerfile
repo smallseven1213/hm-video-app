@@ -29,8 +29,7 @@ RUN sed -i "s|release:.*|release: ${DATE_VERSION}|g" /app/apps/app_gs/pubspec.ya
 
 # Build web app using Melos with a specific scope
 RUN melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
-    melos exec --scope="app_gs" -- flutter packages pub run sentry_dart_plugin && \
-    echo "Current DATE_VERSION is: ${DATE_VERSION}"
+    melos exec --scope="app_gs" -- flutter packages pub run sentry_dart_plugin
 
 # Production stage
 FROM nginx:stable-alpine
