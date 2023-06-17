@@ -25,7 +25,7 @@ RUN curl -sL https://sentry.io/get-cli/ | bash
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M")
 
 # Modify pubspec.yaml file
-RUN sed -i "s|release:.*|release: ${DATE_VERSION}|g" app/app_gs/pubspec.yaml
+RUN sed -i "s|release:.*|release: ${DATE_VERSION}|g" /app/apps/app_gs/pubspec.yaml
 
 # Build web app using Melos with a specific scope
 RUN melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
