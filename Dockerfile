@@ -8,6 +8,7 @@ COPY . /app
 
 # Install Melos
 RUN flutter pub global activate melos 2.9.0
+RUN flutter pub global activate sentry_dart_plugin 1.3.0
 
 # Set PATH for melos executable
 ENV PATH="/root/.pub-cache/bin:$PATH"
