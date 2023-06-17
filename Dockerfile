@@ -21,15 +21,13 @@ RUN rm -rf /sdks/flutter/.pub-cache
 # Install sentry-cli
 RUN curl -sL https://sentry.io/get-cli/ | bash
 
-# Set DATE_VERSION
-RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M")
-
-# Modify pubspec.yaml file
-RUN sed -i "s|release:.*|release: ${DATE_VERSION}|g" /app/apps/app_gs/pubspec.yaml
-
 # Build web app using Melos with a specific scope
-RUN melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
-    melos exec --scope="app_gs" -- flutter packages pub run sentry_dart_plugin
+RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
+    sed -i "s|release: RELEASE_CHANGE_ME|release: ${DATE_VERSION}|g" /app/apps/app_gs/pubspec.yaml && \
+    melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
+    melos exec --scope="app_gs" -- flutter packages pub run sentry_dart_plugin && \
+    echo "Current DATE_VERSION is: ${DATE_VERSION}"
+
 
 # Production stage
 FROM nginx:stable-alpine
@@ -40,5 +38,3 @@ RUN apk add bash && \
 # RUN ls -la /app/
 COPY --from=builder /app/apps/app_gs/build/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
-
-RUN echo "Current DATE_VERSION is: ${DATE_VERSION}"

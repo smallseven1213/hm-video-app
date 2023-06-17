@@ -131,4 +131,4 @@ sentry:
   auth_token: 2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
   url: https://sentry.hmtech.site/
   log_level: error # possible values: trace, debug, info, warn, error
-  release: 2023_06_17_10_21
+  release: RELEASE_CHANGE_ME
