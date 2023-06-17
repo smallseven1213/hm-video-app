@@ -16,11 +16,12 @@ void main() async {
   usePathUrlStrategy();
 
   await SentryFlutter.init((options) {
-    options.dsn =
-        'https://1b4441d1f4464b93a69208281ab77d4b@sentry.hmtech.site/2';
+    options.dsn = kDebugMode
+        ? null
+        : 'https://1b4441d1f4464b93a69208281ab77d4b@sentry.hmtech.site/2';
     // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
     // We recommend adjusting this value in production.
-    options.tracesSampleRate = 1.0;
+    options.tracesSampleRate = kDebugMode ? 0 : 1.0;
     options.release = SystemConfig().version;
     options.environment = kDebugMode ? 'development' : 'production';
   }, appRunner: () => runningMain(const MyApp(), AppColors.colors));
