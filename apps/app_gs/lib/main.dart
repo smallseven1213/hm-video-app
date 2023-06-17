@@ -37,11 +37,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _loadAppRoutes();
-    _loadGameRoutes();
-
     return FutureBuilder(
-      // 等待两个模块都加载完毕
+      // 直接在这里加载模块
       future: Future.wait([_loadAppRoutes(), _loadGameRoutes()]),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -57,7 +54,7 @@ class MyApp extends StatelessWidget {
             splashImage: 'assets/images/splash.png',
             appColors: AppColors.colors,
             loading: ({text}) => Loading(
-              loadingText: text ?? '正在加載...',
+              loadingText: text ?? '正在加载...',
             ),
           );
         } else {
