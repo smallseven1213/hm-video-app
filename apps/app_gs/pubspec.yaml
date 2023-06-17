@@ -126,6 +126,7 @@ flutter:
 #下方是pubspec.yaml版本，用flutter packages pub run sentry_dart_plugin跑的
 sentry:
   upload_source_maps: true
+  upload_sources: true
   project: hm-video-app
   org: sentry
   auth_token: 2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
