@@ -25,8 +25,11 @@ class DlApi {
         Dio dio,
       ) async {
         var completer = Completer<Response>();
-        for (String api in apiList) {
-          dio.get(api).then((res) {
+        for (String url in apiList) {
+          var now = DateTime.now().millisecondsSinceEpoch;
+          var newUrl = '$url?timestamp=$now';
+
+          dio.get(newUrl).then((res) {
             if (!completer.isCompleted) {
               completer.complete(res);
             }
