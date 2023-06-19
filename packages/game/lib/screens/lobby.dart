@@ -149,6 +149,8 @@ class _GameLobbyState extends State<GameLobby>
                 child: Container(
                   color: gameLobbyBgColor,
                   height: double.infinity,
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
                   child: Column(
                     children: <Widget>[
                       GameCarousel(data: gameBannerController.gameBanner),
