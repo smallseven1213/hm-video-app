@@ -16,9 +16,8 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
         'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8')
       ..initialize().then((_) {
         // 确保要在初始化视频播放器后刷新组件
-        setState(() {
-          _controller!.play();
-        });
+        setState(() {});
+        _controller!.play();
       });
   }
 
