@@ -8,6 +8,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'game_scroll_view_tabs.dart';
+
 final logger = Logger();
 
 class GameListItem extends StatelessWidget {
@@ -225,27 +227,40 @@ class GameListViewState extends State<GameListView>
                         quarterTurns: 1,
                         child: TabBar(
                           controller: _tabController,
-                          tabs: [
-                            Tab(text: 'Tab 1'),
-                            Tab(text: 'Tab 2'),
-                            Tab(text: 'Tab 3'),
-                          ],
                           isScrollable: true,
+                          labelColor: Colors.white,
+                          labelPadding: const EdgeInsets.only(right: 0),
+                          indicatorColor: Colors.transparent,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          tabs: filteredGameCategories
+                              .map(
+                                (category) => RotatedBox(
+                                  quarterTurns: 3,
+                                  child: GameScrollViewTabs(
+                                    text: category['name'].toString(),
+                                    icon: category['icon'].toString(),
+                                    isActive: gamesListController
+                                            .selectedCategoryIndex.value ==
+                                        filteredGameCategories
+                                            .indexOf(category),
+                                  ),
+                                ),
+                              )
+                              .toList(),
                         ),
                       ),
                     ),
                     Expanded(
                       child: TabBarView(
                         controller: _tabController,
-                        children: [
-                          ListView.builder(
-                            itemCount: 100000,
-                            itemBuilder: (context, index) {
-                              return ListTile(title: Text('Item ${index + 1}'));
-                            },
-                          ),
-                          // Add more TabBarView here
-                        ],
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: filteredGameCategories
+                            .map(
+                              (category) => gamesListController.games.isNotEmpty
+                                  ? _buildGameList(category['gameType'] as int)
+                                  : const SizedBox(),
+                            )
+                            .toList(),
                       ),
                     ),
                   ],
