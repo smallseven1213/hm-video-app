@@ -73,9 +73,12 @@ class GameListItem extends StatelessWidget {
 }
 
 class GameListView extends StatefulWidget {
-  final int deductHeight;
+  // final int deductHeight;
 
-  const GameListView({Key? key, required this.deductHeight}) : super(key: key);
+  const GameListView({
+    Key? key,
+    // required this.deductHeight,
+  }) : super(key: key);
   @override
   GameListViewState createState() => GameListViewState();
 }
@@ -213,66 +216,100 @@ class GameListViewState extends State<GameListView>
         return const GameLoading();
       } else {
         return gamesListController.games.isNotEmpty
-            ? SizedBox(
-                width: Get.width,
-                height: Get.height -
-                    widget.deductHeight -
-                    (GetPlatform.isWeb ? 214 : 280),
+            ? Expanded(
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Flexible(
-                    //   flex: 0,
-                    //   child: RotatedBox(
-                    //     quarterTurns: 1,
-                    //     child: SizedBox(
-                    //       width: Get.height - (GetPlatform.isWeb ? 180 : 430),
-                    //       height: 60,
-                    //       child: TabBar(
-                    //         controller: _tabController,
-                    //         isScrollable: true,
-                    //         labelColor: Colors.white,
-                    //         labelPadding: const EdgeInsets.only(right: 0),
-                    //         indicatorColor: Colors.transparent,
-                    //         indicatorSize: TabBarIndicatorSize.label,
-                    //         tabs: filteredGameCategories
-                    //             .map(
-                    //               (category) => RotatedBox(
-                    //                 quarterTurns: 3,
-                    //                 child: GameScrollViewTabs(
-                    //                   text: category['name'].toString(),
-                    //                   icon: category['icon'].toString(),
-                    //                   isActive: gamesListController
-                    //                           .selectedCategoryIndex.value ==
-                    //                       filteredGameCategories
-                    //                           .indexOf(category),
-                    //                 ),
-                    //               ),
-                    //             )
-                    //             .toList(),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    const VerticalDivider(
-                        thickness: 1, width: 10, color: Colors.transparent),
-                    Flexible(
-                      flex: 1,
+                    Container(
+                      width: 50,
+                      child: RotatedBox(
+                        quarterTurns: 1,
+                        child: TabBar(
+                          controller: _tabController,
+                          tabs: [
+                            Tab(text: 'Tab 1'),
+                            Tab(text: 'Tab 2'),
+                            Tab(text: 'Tab 3'),
+                          ],
+                          isScrollable: true,
+                        ),
+                      ),
+                    ),
+                    Expanded(
                       child: TabBarView(
                         controller: _tabController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: filteredGameCategories
-                            .map(
-                              (category) => gamesListController.games.isNotEmpty
-                                  ? _buildGameList(category['gameType'] as int)
-                                  : const SizedBox(),
-                            )
-                            .toList(),
+                        children: [
+                          ListView.builder(
+                            itemCount: 100,
+                            itemBuilder: (context, index) {
+                              return ListTile(title: Text('Item ${index + 1}'));
+                            },
+                          ),
+                          // Add more TabBarView here
+                        ],
                       ),
                     ),
                   ],
                 ),
               )
+
+            // Container(
+            //     width: Get.width,
+            //     color: Colors.red,
+            //     child: Row(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: [
+            //         Flexible(
+            //           flex: 0,
+            //           child: RotatedBox(
+            //             quarterTurns: 1,
+            //             child: SizedBox(
+            //               width: Get.height - (GetPlatform.isWeb ? 180 : 430),
+            //               height: 60,
+            //               child: TabBar(
+            //                 controller: _tabController,
+            //                 isScrollable: true,
+            //                 labelColor: Colors.white,
+            //                 labelPadding: const EdgeInsets.only(right: 0),
+            //                 indicatorColor: Colors.transparent,
+            //                 indicatorSize: TabBarIndicatorSize.label,
+            //                 tabs: filteredGameCategories
+            //                     .map(
+            //                       (category) => RotatedBox(
+            //                         quarterTurns: 3,
+            //                         child: GameScrollViewTabs(
+            //                           text: category['name'].toString(),
+            //                           icon: category['icon'].toString(),
+            //                           isActive: gamesListController
+            //                                   .selectedCategoryIndex.value ==
+            //                               filteredGameCategories
+            //                                   .indexOf(category),
+            //                         ),
+            //                       ),
+            //                     )
+            //                     .toList(),
+            //               ),
+            //             ),
+            //           ),
+            //         ),
+            //         const VerticalDivider(
+            //             thickness: 1, width: 10, color: Colors.transparent),
+            //         Flexible(
+            //           flex: 1,
+            //           child: TabBarView(
+            //             controller: _tabController,
+            //             physics: const NeverScrollableScrollPhysics(),
+            //             children: filteredGameCategories
+            //                 .map(
+            //                   (category) => gamesListController.games.isNotEmpty
+            //                       ? _buildGameList(category['gameType'] as int)
+            //                       : const SizedBox(),
+            //                 )
+            //                 .toList(),
+            //           ),
+            //         ),
+            //       ],
+            //     ),
+            //   )
             : const GameLoading();
       }
     });

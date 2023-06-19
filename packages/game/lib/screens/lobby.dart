@@ -41,12 +41,14 @@ class CustomFabPosition extends FloatingActionButtonLocation {
   }
 }
 
-class _GameLobbyState extends State<GameLobby> {
+class _GameLobbyState extends State<GameLobby>
+    with SingleTickerProviderStateMixin {
   bool isShowGameList = false;
   bool updatedUserInfo = false;
   List<GameItem> gameList = [];
   List gameHistoryList = [];
   bool isShowFab = false;
+  TabController? _tabController;
 
   // final gamesListController = GamesListController();
   UserController get userController => Get.find<UserController>();
@@ -56,6 +58,7 @@ class _GameLobbyState extends State<GameLobby> {
   void initState() {
     super.initState();
     _fetchDataInit();
+    _tabController = TabController(length: 3, vsync: this);
 
     Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
@@ -71,6 +74,12 @@ class _GameLobbyState extends State<GameLobby> {
     ]).then((value) {
       GameBannerController();
     });
+  }
+
+  @override
+  void dispose() {
+    _tabController!.dispose();
+    super.dispose();
   }
 
   @override
@@ -138,68 +147,46 @@ class _GameLobbyState extends State<GameLobby> {
             builder: (BuildContext context, Orientation orientation) {
               return SafeArea(
                 child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                    color: gameLobbyBgColor,
-                    child: SingleChildScrollView(
-                      physics: const NeverScrollableScrollPhysics(),
-                      child: Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Column(
+                  color: Colors.amber,
+                  height: double.infinity,
+                  child: Column(
+                    children: <Widget>[
+                      GameCarousel(data: gameBannerController.gameBanner),
+                      GameMarquee(data: gameBannerController.gameMarquee),
+                      GameUserInfo(
+                        type: 'lobby',
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            GameCarousel(data: gameBannerController.gameBanner),
-                            GameMarquee(data: gameBannerController.gameMarquee),
-                            GameUserInfo(
-                              type: 'lobby',
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  // 存款
-                                  UserInfoDeposit(
-                                    onTap: () {
-                                      MyRouteDelegate.of(context).push(
-                                        gameConfigController
-                                                    .switchPaymentPage.value ==
-                                                switchPaymentPageType['list']
-                                            ? GameAppRoutes.depositList.value
-                                            : GameAppRoutes
-                                                .depositPolling.value,
-                                      );
-                                    },
-                                  ),
-                                  // 提現
-                                  UserInfoWithdraw(
-                                    onTap: () {
-                                      MyRouteDelegate.of(context).push(
-                                        GameAppRoutes.withdraw.value,
-                                      );
-                                    },
-                                  ),
-                                  // 客服
-                                  const UserInfoService(),
-                                ],
-                              ),
+                            // 存款
+                            UserInfoDeposit(
+                              onTap: () {
+                                MyRouteDelegate.of(context).push(
+                                  gameConfigController
+                                              .switchPaymentPage.value ==
+                                          switchPaymentPageType['list']
+                                      ? GameAppRoutes.depositList.value
+                                      : GameAppRoutes.depositPolling.value,
+                                );
+                              },
                             ),
-                            if (orientation == Orientation.portrait)
-                              GameListView(
-                                deductHeight: (gameBannerController
-                                                .gameBanner.isNotEmpty
-                                            ? Get.width / 2.47
-                                            : 0)
-                                        .toInt() +
-                                    (gameBannerController.gameMarquee.isNotEmpty
-                                            ? 31
-                                            : 0)
-                                        .toInt(),
-                              ),
+                            // 提現
+                            UserInfoWithdraw(
+                              onTap: () {
+                                MyRouteDelegate.of(context).push(
+                                  GameAppRoutes.withdraw.value,
+                                );
+                              },
+                            ),
+                            // 客服
+                            const UserInfoService(),
                           ],
                         ),
                       ),
-                    )),
+                      GameListView(),
+                    ],
+                  ),
+                ),
               );
             },
           ),
