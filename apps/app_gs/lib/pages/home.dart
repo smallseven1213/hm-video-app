@@ -7,6 +7,7 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../config/layouts.dart';
 import '../screens/apps_screen/index.dart';
@@ -76,6 +77,14 @@ class HomeState extends State<HomePage> {
 
         return Scaffold(
             body: currentScreen,
+            floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                MyRouteDelegate.of(context).push('/demo');
+              },
+              child: Icon(Icons.play_arrow), // 设置按钮的内容，例如一个图标
+              backgroundColor: Colors.blue, // 设置一个可见的背景颜色
+              elevation: 4.0, // 设置阴影大小
+            ),
             bottomNavigationBar: bottomNavigatorController
                     .navigatorItems.isEmpty
                 ? null
