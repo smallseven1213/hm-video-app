@@ -147,7 +147,7 @@ class _GameLobbyState extends State<GameLobby>
             builder: (BuildContext context, Orientation orientation) {
               return SafeArea(
                 child: Container(
-                  color: Colors.amber,
+                  color: gameLobbyBgColor,
                   height: double.infinity,
                   child: Column(
                     children: <Widget>[
@@ -183,7 +183,7 @@ class _GameLobbyState extends State<GameLobby>
                           ],
                         ),
                       ),
-                      GameListView(),
+                      const GameListView(),
                     ],
                   ),
                 ),

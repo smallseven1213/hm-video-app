@@ -250,6 +250,8 @@ class GameListViewState extends State<GameListView>
                         ),
                       ),
                     ),
+                    const VerticalDivider(
+                        thickness: 1, width: 10, color: Colors.transparent),
                     Expanded(
                       child: TabBarView(
                         controller: _tabController,
@@ -340,16 +342,16 @@ class GameListViewState extends State<GameListView>
                 .toList()
                 .obs;
     final totalItemCount = gameListResult.length.isOdd
-        ? (gamesListController.games.length ~/ 2).toInt() + 1 // 如果是奇數就加1
-        : gamesListController.games.length ~/ 2;
-
-    final filterItemCount = gameListResult.length.isOdd
-        ? (gameListResult.length ~/ 2).toInt() + 1 // 如果是奇數就加1
+        ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
         : gameListResult.length ~/ 2;
 
-    final historyItemCount = gameHistoryList.length.isOdd
-        ? (gameHistoryList.length ~/ 2).toInt() + 1
-        : gameHistoryList.length ~/ 2;
+    // final filterItemCount = gameListResult.length.isOdd
+    //     ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
+    //     : gameListResult.length ~/ 2;
+
+    // final historyItemCount = gameHistoryList.length.isOdd
+    //     ? (gameHistoryList.length ~/ 2) + 1
+    //     : gameHistoryList.length ~/ 2;
 
     return gameListResult.isEmpty
         ? Center(
@@ -375,19 +377,26 @@ class GameListViewState extends State<GameListView>
               crossAxisCount: 2,
               crossAxisSpacing: 1,
               mainAxisSpacing: 1,
+              childAspectRatio: 143 / 104,
             ),
             itemCount: totalItemCount,
             itemBuilder: (BuildContext context, int index) {
-              int gameIndex = index * 2;
-              if (index < gameListResult.length) {
-                return GestureDetector(
-                  child: GameListItem(
-                    imageUrl: gameListResult[gameIndex].imgUrl,
-                    gameType: gameListResult[gameIndex].gameType,
-                  ),
-                );
-              }
-              return null;
+              return GestureDetector(
+                onTap: () {
+                  handleGameItem(
+                    context,
+                    gameId: gameListResult[index].gameId,
+                    updateGameHistory: _getGameHistory,
+                    tpCode: gameListResult[index].tpCode,
+                    direction: gameListResult[index].direction,
+                    gameType: gameListResult[index].gameType,
+                  );
+                },
+                child: GameListItem(
+                  imageUrl: gameListResult[index].imgUrl,
+                  gameType: gameListResult[index].gameType,
+                ),
+              );
             },
           );
   }
