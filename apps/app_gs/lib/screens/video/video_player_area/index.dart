@@ -58,9 +58,16 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
     videoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: videoUrl);
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      videoPlayerController.play();
+    videoPlayerController.isReady.listen((isReady) {
+      if (isReady) {
+        setState(() {
+          videoPlayerController.play();
+        });
+      }
     });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   videoPlayerController.play();
+    // });
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
