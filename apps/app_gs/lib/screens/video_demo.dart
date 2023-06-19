@@ -1,5 +1,16 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
+
+final logger = Logger();
+
+const testUrls = [
+  'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8',
+  'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8'
+];
 
 class VideoDemoPage extends StatefulWidget {
   @override
@@ -12,18 +23,40 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(
-      'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8',
-    )..initialize().then((_) {
-        _controller?.pause();
-        _controller?.setVolume(0);
-        // 确保要在初始化视频播放器后刷新组件
-        setState(() {});
-      });
+
+    var random = Random();
+    int index = random.nextInt(testUrls.length);
+    _controller = null;
+    _controller = VideoPlayerController.network(testUrls[index]);
+    // _controller = VideoPlayerController.network(
+    //     'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8');
+
+    // _controller?.addListener(() {
+    //   setState(() {});
+    // });
+    _controller?.setLooping(true);
+    _controller?.initialize().then((_) {
+      logger.i('TESTING LIFECYCLE -> INITIALIZE VIDEO PLAYER');
+      setState(() {});
+    }).catchError((onError) {
+      logger.e('TESTING LIFECYCLE -> ERROR: $onError');
+    });
+    // _controller?.play();
+    // logger.i('TESTING LIFECYCLE -> a');
+    // _controller = VideoPlayerController.network(
+    //   'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8',
+    // )..initialize().then((_) {
+    //     logger.i('TESTING LIFECYCLE -> b');
+    //     _controller?.pause();
+    //     _controller?.setVolume(0);
+    //     // 确保要在初始化视频播放器后刷新组件
+    //     setState(() {});
+    //   });
   }
 
   // void _play and play() with setVolumn is 1
   void _playMe() {
+    logger.i('TESTING LIFECYCLE -> c');
     _controller?.setVolume(1);
     _controller?.play();
   }
@@ -31,13 +64,16 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
   // dispose
   @override
   void dispose() {
+    logger.i('TESTING LIFECYCLE -> d');
     super.dispose();
     _controller?.pause();
     _controller?.dispose();
+    _controller = null;
   }
 
   @override
   Widget build(BuildContext context) {
+    logger.i('TESTING LIFECYCLE -> e');
     return Scaffold(
       appBar: AppBar(
         title: Text('Video Demo'),
@@ -54,6 +90,7 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
+                        logger.i('TESTING LIFECYCLE -> f');
                         _controller!.value.isPlaying
                             ? _controller!.pause()
                             : _playMe();
