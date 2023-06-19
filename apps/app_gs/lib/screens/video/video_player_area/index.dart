@@ -60,6 +60,14 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
 
     videoPlayerController.isReady.listen((isReady) {
       if (isReady) {
+        if (kIsWeb) {
+          Future.delayed(const Duration(seconds: 2), () {
+            setState(() {
+              videoPlayerController.play();
+            });
+          });
+        }
+
         setState(() {
           videoPlayerController.play();
         });
