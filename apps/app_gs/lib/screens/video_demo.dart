@@ -27,6 +27,14 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
     _controller?.play();
   }
 
+  // dispose
+  @override
+  void dispose() {
+    super.dispose();
+    _controller?.pause();
+    _controller?.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,11 +69,5 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
             : CircularProgressIndicator(), // 加载中
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _controller?.dispose();
   }
 }
