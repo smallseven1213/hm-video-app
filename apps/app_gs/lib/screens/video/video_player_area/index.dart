@@ -58,12 +58,9 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
     videoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: videoUrl);
 
-    if (kIsWeb) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       videoPlayerController.play();
-      setState(() {});
-    } else {
-      videoPlayerController.play();
-    }
+    });
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
@@ -145,7 +142,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                   // setState(() {
                   //   hasError = false;
                   // });
-                  // obsVideoPlayerController._initializePlayer()  ;
+                  obsVideoPlayerController.play();
                 },
               ),
             ] else if (obsVideoPlayerController.isReady.value) ...[
