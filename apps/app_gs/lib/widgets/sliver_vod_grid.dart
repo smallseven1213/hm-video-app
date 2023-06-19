@@ -45,9 +45,6 @@ class _SliverVodGridState extends State<SliverVodGrid> {
   void initState() {
     // DISPOSED SCROLL CONTROLLER
     scrollController = widget.customScrollController ?? ScrollController();
-    if (widget.usePrimaryParentScrollController == true) {
-      scrollController = PrimaryScrollController.of(context);
-    }
 
     if (widget.onScrollEnd != null) {
       scrollController.addListener(() {
@@ -63,6 +60,16 @@ class _SliverVodGridState extends State<SliverVodGrid> {
       });
     }
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.usePrimaryParentScrollController == true) {
+      scrollController = PrimaryScrollController.of(context);
+    } else {
+      scrollController = widget.customScrollController ?? ScrollController();
+    }
   }
 
   @override
