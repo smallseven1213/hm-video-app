@@ -64,6 +64,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
 
   @override
   void dispose() {
+    // _parentScrollController.dispose();
     _tabController.dispose();
     super.dispose();
   }

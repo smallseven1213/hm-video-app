@@ -106,6 +106,13 @@ class GameListViewState extends State<GameListView>
     });
   }
 
+  @override
+  void dispose() {
+    _tabController?.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   _getGameHistory() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     List<String> gameHistoryList = prefs.getStringList('gameHistory') ?? [];

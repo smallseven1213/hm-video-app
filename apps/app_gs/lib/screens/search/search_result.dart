@@ -17,6 +17,7 @@ class SearchResultPage extends StatefulWidget {
 }
 
 class SearchResultPageState extends State<SearchResultPage> {
+  // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
   late final SearchVodController searchVodController;
 
@@ -27,6 +28,13 @@ class SearchResultPageState extends State<SearchResultPage> {
       keyword: widget.keyword,
       scrollController: scrollController,
     );
+  }
+
+  // dispose scrollController
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override
