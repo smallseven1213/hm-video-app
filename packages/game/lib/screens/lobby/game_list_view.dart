@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/screens/lobby/game_scroll_view_tabs.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -222,39 +221,39 @@ class GameListViewState extends State<GameListView>
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Flexible(
-                      flex: 0,
-                      child: RotatedBox(
-                        quarterTurns: 1,
-                        child: SizedBox(
-                          width: Get.height - (GetPlatform.isWeb ? 180 : 430),
-                          height: 60,
-                          child: TabBar(
-                            controller: _tabController,
-                            isScrollable: true,
-                            labelColor: Colors.white,
-                            labelPadding: const EdgeInsets.only(right: 0),
-                            indicatorColor: Colors.transparent,
-                            indicatorSize: TabBarIndicatorSize.label,
-                            tabs: filteredGameCategories
-                                .map(
-                                  (category) => RotatedBox(
-                                    quarterTurns: 3,
-                                    child: GameScrollViewTabs(
-                                      text: category['name'].toString(),
-                                      icon: category['icon'].toString(),
-                                      isActive: gamesListController
-                                              .selectedCategoryIndex.value ==
-                                          filteredGameCategories
-                                              .indexOf(category),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Flexible(
+                    //   flex: 0,
+                    //   child: RotatedBox(
+                    //     quarterTurns: 1,
+                    //     child: SizedBox(
+                    //       width: Get.height - (GetPlatform.isWeb ? 180 : 430),
+                    //       height: 60,
+                    //       child: TabBar(
+                    //         controller: _tabController,
+                    //         isScrollable: true,
+                    //         labelColor: Colors.white,
+                    //         labelPadding: const EdgeInsets.only(right: 0),
+                    //         indicatorColor: Colors.transparent,
+                    //         indicatorSize: TabBarIndicatorSize.label,
+                    //         tabs: filteredGameCategories
+                    //             .map(
+                    //               (category) => RotatedBox(
+                    //                 quarterTurns: 3,
+                    //                 child: GameScrollViewTabs(
+                    //                   text: category['name'].toString(),
+                    //                   icon: category['icon'].toString(),
+                    //                   isActive: gamesListController
+                    //                           .selectedCategoryIndex.value ==
+                    //                       filteredGameCategories
+                    //                           .indexOf(category),
+                    //                 ),
+                    //               ),
+                    //             )
+                    //             .toList(),
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     const VerticalDivider(
                         thickness: 1, width: 10, color: Colors.transparent),
                     Flexible(
