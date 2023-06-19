@@ -48,6 +48,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     // initializePlayer();
+
     setScreenRotation();
     _putController();
   }
