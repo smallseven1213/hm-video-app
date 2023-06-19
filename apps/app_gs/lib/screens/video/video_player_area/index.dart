@@ -58,6 +58,20 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
     videoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: videoUrl);
 
+    if (videoPlayerController.isReady.value) {
+      if (kIsWeb) {
+        Future.delayed(const Duration(seconds: 2), () {
+          setState(() {
+            videoPlayerController.play();
+          });
+        });
+      }
+
+      setState(() {
+        videoPlayerController.play();
+      });
+    }
+
     videoPlayerController.isReady.listen((isReady) {
       if (isReady) {
         if (kIsWeb) {
