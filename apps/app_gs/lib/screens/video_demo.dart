@@ -13,8 +13,9 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(
-        'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8')
-      ..initialize().then((_) {
+      'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8',
+    )..initialize().then((_) {
+        _controller?.pause();
         _controller?.setVolume(0);
         // 确保要在初始化视频播放器后刷新组件
         setState(() {});
