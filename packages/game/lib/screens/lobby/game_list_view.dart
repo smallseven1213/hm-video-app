@@ -221,7 +221,7 @@ class GameListViewState extends State<GameListView>
             ? Expanded(
                 child: Row(
                   children: [
-                    Container(
+                    SizedBox(
                       width: 50,
                       child: RotatedBox(
                         quarterTurns: 1,
@@ -369,56 +369,25 @@ class GameListViewState extends State<GameListView>
               ],
             ),
           )
-        : ListView.separated(
+        : GridView.builder(
             controller: _scrollController,
-            itemCount: gameType == 0
-                ? gameType == -1
-                    ? historyItemCount
-                    : totalItemCount
-                : filterItemCount,
-            separatorBuilder: (context, index) =>
-                const VerticalDivider(thickness: 1, width: 12),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2,
+              crossAxisSpacing: 1,
+              mainAxisSpacing: 1,
+            ),
+            itemCount: totalItemCount,
             itemBuilder: (BuildContext context, int index) {
-              return Wrap(
-                spacing: 6,
-                crossAxisAlignment: WrapCrossAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      handleGameItem(
-                        context,
-                        gameId: gameListResult[index * 2].gameId,
-                        updateGameHistory: _getGameHistory,
-                        tpCode: gameListResult[index * 2].tpCode,
-                        direction: gameListResult[index * 2].direction,
-                        gameType: gameListResult[index * 2].gameType,
-                      );
-                    },
-                    child: GameListItem(
-                      imageUrl: gameListResult[index * 2].imgUrl,
-                      gameType: gameListResult[index * 2].gameType,
-                    ),
+              int gameIndex = index * 2;
+              if (index < gameListResult.length) {
+                return GestureDetector(
+                  child: GameListItem(
+                    imageUrl: gameListResult[gameIndex].imgUrl,
+                    gameType: gameListResult[gameIndex].gameType,
                   ),
-                  if (index * 2 + 1 < gameListResult.length)
-                    GestureDetector(
-                      onTap: () {
-                        handleGameItem(
-                          context,
-                          gameId: gameListResult[index * 2 + 1].gameId,
-                          updateGameHistory: _getGameHistory,
-                          tpCode: gameListResult[index * 2 + 1].tpCode,
-                          direction: gameListResult[index * 2 + 1].direction,
-                          gameType: gameListResult[index * 2 + 1].gameType,
-                        );
-                      },
-                      child: GameListItem(
-                        imageUrl: gameListResult[index * 2 + 1].imgUrl,
-                        gameType: gameListResult[index * 2 + 1].gameType,
-                      ),
-                    ),
-                  const SizedBox(width: double.infinity, height: 8)
-                ],
-              );
+                );
+              }
+              return null;
             },
           );
   }
