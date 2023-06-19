@@ -15,10 +15,16 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
     _controller = VideoPlayerController.network(
         'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8')
       ..initialize().then((_) {
+        _controller?.setVolume(0);
         // 确保要在初始化视频播放器后刷新组件
         setState(() {});
-        _controller!.play();
       });
+  }
+
+  // void _play and play() with setVolumn is 1
+  void _playMe() {
+    _controller?.setVolume(1);
+    _controller?.play();
   }
 
   @override
@@ -41,7 +47,7 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
                       setState(() {
                         _controller!.value.isPlaying
                             ? _controller!.pause()
-                            : _controller!.play();
+                            : _playMe();
                       });
                     },
                     child: Icon(
