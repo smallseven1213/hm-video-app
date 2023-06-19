@@ -1,6 +1,5 @@
 import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
-import 'package:app_gs/widgets/header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -28,6 +27,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   final GlobalKey targetKey = GlobalKey();
   TabController? _tabController;
   late ChannelSharedDataController? channelSharedDataController;
+  // DISPOSED SCROLL CONTROLLER
   final ScrollController _scrollController = ScrollController();
 
   void _setupTabController() {
@@ -81,6 +81,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   @override
   void dispose() {
     _tabController?.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 

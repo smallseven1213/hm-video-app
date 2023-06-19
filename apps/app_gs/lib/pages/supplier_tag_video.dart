@@ -14,7 +14,7 @@ import '../widgets/video_preview.dart';
 const gridRatio = 128 / 227;
 final logger = Logger();
 
-class SupplierTagVideoPage extends StatelessWidget {
+class SupplierTagVideoPage extends StatefulWidget {
   final int tagId;
   final String tagName;
 
@@ -25,12 +25,20 @@ class SupplierTagVideoPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _SupplierTagVideoPageState createState() => _SupplierTagVideoPageState();
+}
+
+class _SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
+  // DISPOSED SCROLL CONTROLLER
+  final ScrollController scrollController = ScrollController();
+
+  @override
   Widget build(BuildContext context) {
-    final ScrollController scrollController = ScrollController();
-    final vodController =
-        ShortTagVodController(tagId: tagId, scrollController: scrollController);
+    final vodController = ShortTagVodController(
+        tagId: widget.tagId, scrollController: scrollController);
+
     return Scaffold(
-      appBar: CustomAppBar(title: '#$tagName'),
+      appBar: CustomAppBar(title: '#${widget.tagName}'),
       body: Obx(() => CustomScrollView(
             controller: vodController.scrollController,
             slivers: [
@@ -44,7 +52,7 @@ class SupplierTagVideoPage extends StatelessWidget {
                         onOverrideRedirectTap: () {
                           MyRouteDelegate.of(context).push(
                             AppRoutes.shortsByTag.value,
-                            args: {'videoId': vod.id, 'tagId': tagId},
+                            args: {'videoId': vod.id, 'tagId': widget.tagId},
                           );
                         },
                         hasRadius: false,
@@ -85,5 +93,11 @@ class SupplierTagVideoPage extends StatelessWidget {
             ],
           )),
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }
