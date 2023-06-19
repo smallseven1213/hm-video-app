@@ -1,6 +1,6 @@
 # Builder stage
 # FROM cirrusci/flutter:3.7.5 AS builder
-FROM ghcr.io/cirruslabs/flutter:3.10.2 AS builder
+FROM ghcr.io/cirruslabs/flutter:3.10.5 AS builder
 ARG env
 ENV ENV=${env}
 WORKDIR /app
