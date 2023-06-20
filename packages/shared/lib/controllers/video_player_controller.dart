@@ -18,51 +18,36 @@ class ObservableVideoPlayerController extends GetxController {
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
   final String obsKey;
-  late Future<void> initialization;
   var errorMessage = ''.obs;
 
   ObservableVideoPlayerController(this.obsKey, this.videoUrl);
 
   @override
   void onInit() {
-    initialization = _initializePlayer();
+    _initializePlayer();
 
     super.onInit();
   }
 
-  // @override
-  // void onClose() {
-  //   logger.i('VPC LISTEN: CTX Life CLOSE VIDEO PLAYER CTRL id: $videoUrl');
-  //   // _disposePlayer();
-  //   super.onClose();
-  // }
-
   @override
   void dispose() {
-    logger.i('VPC LISTEN: DISPOSE VIDEO PLAYER CTRL id: $videoUrl');
     _disposePlayer();
     super.dispose();
   }
 
   Future<void> _initializePlayer() async {
-    logger.i('VPC LISTEN: INIT VIDEO PLAYER CTRL id: $videoUrl');
-    try {
-      videoPlayerController = VideoPlayerController.network(videoUrl);
-      videoPlayerController.addListener(_onControllerValueChanged);
-      await videoPlayerController.initialize().then((value) {
-        /// `isReady` is a boolean observable variable that is used to track whether the video player
-        /// controller has been initialized and is ready to play the video. It is set to `false` by
-        /// default and is set to `true` once the video player controller has been successfully
-        /// initialized.
-        isReady.value = true;
-      });
-    } catch (error) {
-      logger.e('👹👹👹 Error occurred: $error');
+    videoPlayerController = VideoPlayerController.network(videoUrl);
+    videoPlayerController.addListener(_onControllerValueChanged);
+    videoPlayerController.initialize().then((value) {
+      logger.i('VPC safari trace : initialize');
+      isReady.value = true;
+    }).catchError((error) {
+      logger.i('VPC safari trace : Error: $error');
       if (videoPlayerController.value.hasError) {
         videoAction.value = 'error';
         errorMessage.value = videoPlayerController.value.errorDescription!;
       }
-    }
+    });
   }
 
   void changeVolumeToFull() {
@@ -77,12 +62,11 @@ class ObservableVideoPlayerController extends GetxController {
 
   void _onControllerValueChanged() {
     if (videoPlayerController.value.hasError) {
-      logger.i(
-          'VPC LISTEN: error ${videoPlayerController.value.errorDescription}');
       videoAction.value = 'error';
       errorMessage.value = videoPlayerController.value.errorDescription!;
     }
 
+    // TODO: 有待分析
     if (!kIsWeb && videoPlayerController.value.isPlaying) {
       Wakelock.enable();
     } else {
