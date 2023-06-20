@@ -227,7 +227,7 @@ class GameListViewState extends State<GameListView>
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 50,
+                      width: 60,
                       child: RotatedBox(
                         quarterTurns: 1,
                         child: TabBar(
