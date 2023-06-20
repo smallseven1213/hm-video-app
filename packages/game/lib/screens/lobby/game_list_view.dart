@@ -47,11 +47,10 @@ class GameListItem extends StatelessWidget {
           child: imageUrl != '' || imageUrl.isNotEmpty
               ? Stack(
                   children: [
-                    Image.asset(
-                      'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+                    Container(
                       width: double.infinity,
                       height: double.infinity,
-                      fit: BoxFit.cover,
+                      color: gameLobbyTabBgColor,
                     ),
                     Image.network(
                       imageUrl,
