@@ -104,9 +104,7 @@ class ShortCardState extends State<ShortCard> {
               width: double.infinity,
               child: Stack(
                 children: [
-                  if (obsVideoPlayerController.isReady.value == false &&
-                      video != null)
-                    VideoCover(imageSid: video.coverVertical!),
+                  if (video != null) VideoCover(imageSid: video.coverVertical!),
                   if (obsVideoPlayerController.isReady.value &&
                       !isLoading &&
                       videoUrl.isNotEmpty &&
