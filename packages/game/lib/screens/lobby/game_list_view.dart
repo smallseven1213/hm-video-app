@@ -47,11 +47,16 @@ class GameListItem extends StatelessWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
           child: imageUrl != '' || imageUrl.isNotEmpty
-              ? Image.network(
-                  imageUrl,
-                  width: double.infinity,
-                  height: (Get.width - 110) / 3,
-                  fit: BoxFit.cover,
+              ? Stack(
+                  children: [
+                    const Center(child: GameLoading()),
+                    Image.network(
+                      imageUrl,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  ],
                 )
               // CacheImage(
               //     url: imageUrl,
@@ -75,11 +80,8 @@ class GameListItem extends StatelessWidget {
 }
 
 class GameListView extends StatefulWidget {
-  // final int deductHeight;
-
   const GameListView({
     Key? key,
-    // required this.deductHeight,
   }) : super(key: key);
   @override
   GameListViewState createState() => GameListViewState();
@@ -105,7 +107,7 @@ class GameListViewState extends State<GameListView>
       );
       _tabController!.addListener(_handleTabSelection);
       gamesListController.updateSelectedCategoryIndex(0);
-      // _getGameHistory();
+      _getGameHistory();
     });
   }
 
@@ -139,9 +141,9 @@ class GameListViewState extends State<GameListView>
 
   _handleTabSelection() {
     gamesListController.updateSelectedCategoryIndex(_tabController!.index);
-    // if (_tabController?.index == -1) {
-    //   _getGameHistory();
-    // }
+    if (_tabController?.index == -1) {
+      _getGameHistory();
+    }
   }
 
   // 寫一個篩選遊戲類別的方法
@@ -220,7 +222,7 @@ class GameListViewState extends State<GameListView>
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 65,
+                      width: 50,
                       child: RotatedBox(
                         quarterTurns: 1,
                         child: TabBar(
@@ -280,9 +282,9 @@ class GameListViewState extends State<GameListView>
                 .where((game) => game.gameType == gameType)
                 .toList()
                 .obs;
-    final totalItemCount = gameListResult.length.isOdd
-        ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
-        : gameListResult.length ~/ 2;
+    // final totalItemCount = gameListResult.length.isOdd
+    //     ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
+    //     : gameListResult.length ~/ 2;
 
     return gameListResult.isNotEmpty
         ? CustomScrollView(
@@ -290,8 +292,8 @@ class GameListViewState extends State<GameListView>
               SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 1,
-                  mainAxisSpacing: 1,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
                   childAspectRatio: 143 / 104,
                 ),
                 delegate: SliverChildBuilderDelegate(
@@ -313,7 +315,7 @@ class GameListViewState extends State<GameListView>
                       ),
                     );
                   },
-                  childCount: totalItemCount,
+                  childCount: gameListResult.length,
                 ),
               )
             ],
