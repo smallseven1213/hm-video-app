@@ -130,6 +130,14 @@ class MyRouteDelegate extends RouterDelegate<String>
     return setNewRoutePath(configuration);
   }
 
+  void pop() {
+    if (_stack.isNotEmpty) {
+      final lastStackData = _stack.removeLast();
+      lastStackData.completer.complete();
+      notifyListeners();
+    }
+  }
+
   @override
   Future<void> setNewRoutePath(String configuration) {
     // var uuid = const Uuid().v4();

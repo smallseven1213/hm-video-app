@@ -46,7 +46,7 @@ class _SliverVodGridState extends State<SliverVodGrid> {
     // DISPOSED SCROLL CONTROLLER
     scrollController = widget.customScrollController ?? ScrollController();
 
-    if (widget.onScrollEnd != null) {
+    if (widget.onScrollEnd != null && scrollController.hasClients) {
       scrollController.addListener(() {
         logger.i(
             'sliver ${widget.key} => position.pixels ${scrollController.position.pixels} position.maxScrollExtent ${scrollController.position.maxScrollExtent}');
@@ -74,7 +74,10 @@ class _SliverVodGridState extends State<SliverVodGrid> {
 
   @override
   void dispose() {
-    scrollController.dispose();
+    if (widget.usePrimaryParentScrollController == false) {
+      scrollController.dispose();
+    }
+
     super.dispose();
   }
 
