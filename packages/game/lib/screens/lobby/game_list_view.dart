@@ -89,7 +89,6 @@ class GameListViewState extends State<GameListView>
     with SingleTickerProviderStateMixin {
   final GamesListController gamesListController =
       Get.put(GamesListController());
-  final ScrollController _scrollController = ScrollController();
   TabController? _tabController;
   var filteredGameCategories = [];
   List gameHistoryList = [];
@@ -113,7 +112,6 @@ class GameListViewState extends State<GameListView>
   @override
   void dispose() {
     _tabController?.dispose();
-    _scrollController.dispose();
     super.dispose();
   }
 
@@ -222,7 +220,7 @@ class GameListViewState extends State<GameListView>
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 50,
+                      width: 65,
                       child: RotatedBox(
                         quarterTurns: 1,
                         child: TabBar(
@@ -268,65 +266,6 @@ class GameListViewState extends State<GameListView>
                   ],
                 ),
               )
-
-            // Container(
-            //     width: Get.width,
-            //     color: Colors.red,
-            //     child: Row(
-            //       crossAxisAlignment: CrossAxisAlignment.start,
-            //       children: [
-            //         Flexible(
-            //           flex: 0,
-            //           child: RotatedBox(
-            //             quarterTurns: 1,
-            //             child: SizedBox(
-            //               width: Get.height - (GetPlatform.isWeb ? 180 : 430),
-            //               height: 60,
-            //               child: TabBar(
-            //                 controller: _tabController,
-            //                 isScrollable: true,
-            //                 labelColor: Colors.white,
-            //                 labelPadding: const EdgeInsets.only(right: 0),
-            //                 indicatorColor: Colors.transparent,
-            //                 indicatorSize: TabBarIndicatorSize.label,
-            //                 tabs: filteredGameCategories
-            //                     .map(
-            //                       (category) => RotatedBox(
-            //                         quarterTurns: 3,
-            //                         child: GameScrollViewTabs(
-            //                           text: category['name'].toString(),
-            //                           icon: category['icon'].toString(),
-            //                           isActive: gamesListController
-            //                                   .selectedCategoryIndex.value ==
-            //                               filteredGameCategories
-            //                                   .indexOf(category),
-            //                         ),
-            //                       ),
-            //                     )
-            //                     .toList(),
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            //         const VerticalDivider(
-            //             thickness: 1, width: 10, color: Colors.transparent),
-            //         Flexible(
-            //           flex: 1,
-            //           child: TabBarView(
-            //             controller: _tabController,
-            //             physics: const NeverScrollableScrollPhysics(),
-            //             children: filteredGameCategories
-            //                 .map(
-            //                   (category) => gamesListController.games.isNotEmpty
-            //                       ? _buildGameList(category['gameType'] as int)
-            //                       : const SizedBox(),
-            //                 )
-            //                 .toList(),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
-            //   )
             : const GameLoading();
       }
     });
@@ -345,16 +284,41 @@ class GameListViewState extends State<GameListView>
         ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
         : gameListResult.length ~/ 2;
 
-    // final filterItemCount = gameListResult.length.isOdd
-    //     ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
-    //     : gameListResult.length ~/ 2;
-
-    // final historyItemCount = gameHistoryList.length.isOdd
-    //     ? (gameHistoryList.length ~/ 2) + 1
-    //     : gameHistoryList.length ~/ 2;
-
-    return gameListResult.isEmpty
-        ? Center(
+    return gameListResult.isNotEmpty
+        ? CustomScrollView(
+            slivers: [
+              SliverGrid(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 1,
+                  mainAxisSpacing: 1,
+                  childAspectRatio: 143 / 104,
+                ),
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    return GestureDetector(
+                      onTap: () {
+                        handleGameItem(
+                          context,
+                          gameId: gameListResult[index].gameId,
+                          updateGameHistory: _getGameHistory,
+                          tpCode: gameListResult[index].tpCode,
+                          direction: gameListResult[index].direction,
+                          gameType: gameListResult[index].gameType,
+                        );
+                      },
+                      child: GameListItem(
+                        imageUrl: gameListResult[index].imgUrl,
+                        gameType: gameListResult[index].gameType,
+                      ),
+                    );
+                  },
+                  childCount: totalItemCount,
+                ),
+              )
+            ],
+          )
+        : Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -370,34 +334,6 @@ class GameListViewState extends State<GameListView>
                 )
               ],
             ),
-          )
-        : GridView.builder(
-            controller: _scrollController,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 1,
-              mainAxisSpacing: 1,
-              childAspectRatio: 143 / 104,
-            ),
-            itemCount: totalItemCount,
-            itemBuilder: (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  handleGameItem(
-                    context,
-                    gameId: gameListResult[index].gameId,
-                    updateGameHistory: _getGameHistory,
-                    tpCode: gameListResult[index].tpCode,
-                    direction: gameListResult[index].direction,
-                    gameType: gameListResult[index].gameType,
-                  );
-                },
-                child: GameListItem(
-                  imageUrl: gameListResult[index].imgUrl,
-                  gameType: gameListResult[index].gameType,
-                ),
-              );
-            },
           );
   }
 }
