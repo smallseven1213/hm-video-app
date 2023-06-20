@@ -42,6 +42,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
   late ObservableVideoPlayerController videoPlayerController;
+  bool isFirstLookForWeb = true; // 給web feature專用，如果是web都要檢查此值做些事情
 
   @override
   void initState() {
@@ -58,7 +59,9 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
       if (isReady) {
         logger.i('VPC safari trace : isReady');
         setState(() {});
-        // videoPlayerController.play();
+        if (!kIsWeb) {
+          videoPlayerController.play();
+        }
       }
     });
   }
@@ -146,17 +149,17 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 .videoPlayerController.value.isInitialized) ...[
               AspectRatio(
                 aspectRatio: aspectRatio,
-                child:
-                    VideoPlayer(videoPlayerController.videoPlayerController!),
+                child: VideoPlayer(videoPlayerController.videoPlayerController),
               ),
               ControlsOverlay(
-                controller: videoPlayerController.videoPlayerController!,
+                controller: videoPlayerController.videoPlayerController,
                 name: widget.video.title,
                 isFullscreen: isFullscreen,
                 toggleFullscreen: (status) {
                   toggleFullscreen(fullScreen: status);
                 },
                 isScreenLocked: isScreenLocked,
+                isPlaying: videoPlayerController.videoAction.value == 'play',
                 onScreenLock: (bool isLocked) {
                   setState(() {
                     isScreenLocked = isLocked;
@@ -168,11 +171,41 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                   }
                 },
               ),
-            ] else ...[
+            ] else if (videoPlayerController
+                    .videoPlayerController.value.isInitialized ==
+                false) ...[
               VideoLoading(
                 coverHorizontal: widget.video.coverHorizontal ?? '',
               )
             ],
+            if (isFirstLookForWeb &&
+                !videoPlayerController
+                    .videoPlayerController.value.isInitialized)
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    isFirstLookForWeb = false;
+                    videoPlayerController.play();
+                  });
+                },
+                child: Center(
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.5),
+                        shape: BoxShape.circle),
+                    child: const Center(
+                      child: Icon(
+                        Icons.play_arrow,
+                        color: Colors.white,
+                        size: 45.0,
+                        semanticLabel: 'Play',
+                      ),
+                    ),
+                  ),
+                ),
+              )
           ],
         );
       }),

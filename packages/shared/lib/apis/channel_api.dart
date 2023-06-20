@@ -24,7 +24,7 @@ class ChannelApi {
     if (res.data['code'] != '00') {
       return [];
     }
-    return List.from((res.data['data']['channel'] as List<dynamic>)
+    return List.from((res.data['data'] as List<dynamic>)
         .map((e) => SlimChannel.fromJson(e)));
   }
 

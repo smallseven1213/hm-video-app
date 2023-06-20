@@ -77,14 +77,15 @@ class HomeState extends State<HomePage> {
 
         return Scaffold(
             body: currentScreen,
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                MyRouteDelegate.of(context).push('/demo');
-              },
-              child: Icon(Icons.play_arrow), // 设置按钮的内容，例如一个图标
-              backgroundColor: Colors.blue, // 设置一个可见的背景颜色
-              elevation: 4.0, // 设置阴影大小
-            ),
+            // 通往異世界的入口
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () {
+            //     MyRouteDelegate.of(context).push('/demo');
+            //   },
+            //   child: Icon(Icons.play_arrow),
+            //   backgroundColor: Colors.blue,
+            //   elevation: 4.0,
+            // ),
             bottomNavigationBar: bottomNavigatorController
                     .navigatorItems.isEmpty
                 ? null

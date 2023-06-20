@@ -20,12 +20,14 @@ class ControlsOverlay extends StatefulWidget {
   final Function toggleFullscreen;
   final Function onScreenLock;
   final bool isFullscreen;
+  final bool isPlaying;
   final bool isScreenLocked;
 
   const ControlsOverlay({
     super.key,
     required this.controller,
     this.name,
+    required this.isPlaying,
     required this.toggleFullscreen,
     required this.onScreenLock,
     required this.isFullscreen,
@@ -90,7 +92,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             startCountdown();
           },
           onDoubleTap: () {
-            widget.controller.value.isPlaying
+            widget.isPlaying
                 ? widget.controller.pause()
                 : widget.controller.play();
             setState(() {
@@ -224,8 +226,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               ),
               // 點兩下出現：播放暫停鍵
               AnimatedOpacity(
-                opacity:
-                    controlsType == ControlsOverlayType.playPause ? 1.0 : 0.0,
+                opacity: !widget.isPlaying ||
+                        controlsType == ControlsOverlayType.playPause
+                    ? 1.0
+                    : 0.0,
                 duration: const Duration(milliseconds: 300),
                 child: PlayPauseButton(controller: widget.controller),
               ),
