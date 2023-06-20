@@ -27,8 +27,6 @@ class GameListItem extends StatelessWidget {
         .toString();
 
     return Container(
-      width: (Get.width - 110) / 2,
-      height: (Get.width - 110) / 3,
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -299,7 +297,7 @@ class GameListViewState extends State<GameListView>
                   crossAxisCount: 2,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 143 / 104,
+                  childAspectRatio: 600 / 400,
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
