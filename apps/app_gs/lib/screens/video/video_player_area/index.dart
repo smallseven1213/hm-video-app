@@ -47,50 +47,20 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    // initializePlayer();
 
     setScreenRotation();
-    _putController();
-  }
-
-  void _putController() async {
     var videoUrl = widget.videoUrl;
 
     videoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: videoUrl);
 
-    if (videoPlayerController.isReady.value) {
-      if (kIsWeb) {
-        Future.delayed(const Duration(seconds: 2), () {
-          setState(() {
-            videoPlayerController.play();
-          });
-        });
-      }
-
-      setState(() {
-        videoPlayerController.play();
-      });
-    }
-
     videoPlayerController.isReady.listen((isReady) {
       if (isReady) {
-        if (kIsWeb) {
-          Future.delayed(const Duration(seconds: 2), () {
-            setState(() {
-              videoPlayerController.play();
-            });
-          });
-        }
-
-        setState(() {
-          videoPlayerController.play();
-        });
+        logger.i('VPC safari trace : isReady');
+        setState(() {});
+        // videoPlayerController.play();
       }
     });
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   videoPlayerController.play();
-    // });
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
@@ -137,6 +107,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
   void dispose() {
     setScreenPortrait();
     WidgetsBinding.instance.removeObserver(this);
+    videoPlayerController.dispose();
     super.dispose();
   }
 
@@ -146,43 +117,40 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
         ? MediaQuery.of(context).size.height
         : MediaQuery.of(context).size.width / 16 * 9;
 
-    final obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+    logger.i('VPC safari trace : obs testing ');
 
     return Container(
       color: Colors.black,
       width: MediaQuery.of(context).size.width,
       height: playerHeight,
       child: Obx(() {
-        Size videoSize =
-            obsVideoPlayerController.videoPlayerController!.value.size;
+        Size videoSize = videoPlayerController.videoPlayerController.value.size;
         var aspectRatio = videoSize.width == 0 || videoSize.height == 0
             ? 16 / 9
             : videoSize.width / videoSize.height;
 
-        logger.i(
-            '====? obsVideoPlayerController.isReadyL ${obsVideoPlayerController.isReady.value}');
         return Stack(
           alignment: Alignment.center,
           children: <Widget>[
-            if (obsVideoPlayerController.videoAction.value == 'error') ...[
+            if (videoPlayerController.videoAction.value == 'error') ...[
               VideoError(
                 coverHorizontal: widget.video.coverHorizontal ?? '',
                 onTap: () {
                   // setState(() {
                   //   hasError = false;
                   // });
-                  obsVideoPlayerController.play();
+                  videoPlayerController.play();
                 },
               ),
-            ] else if (obsVideoPlayerController.isReady.value) ...[
+            ] else if (videoPlayerController
+                .videoPlayerController.value.isInitialized) ...[
               AspectRatio(
                 aspectRatio: aspectRatio,
-                child: VideoPlayer(
-                    obsVideoPlayerController.videoPlayerController!),
+                child:
+                    VideoPlayer(videoPlayerController.videoPlayerController!),
               ),
               ControlsOverlay(
-                controller: obsVideoPlayerController.videoPlayerController!,
+                controller: videoPlayerController.videoPlayerController!,
                 name: widget.video.title,
                 isFullscreen: isFullscreen,
                 toggleFullscreen: (status) {
