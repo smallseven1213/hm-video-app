@@ -49,7 +49,14 @@ class GameListItem extends StatelessWidget {
           child: imageUrl != '' || imageUrl.isNotEmpty
               ? Stack(
                   children: [
-                    const Center(child: GameLoading()),
+                    SizedBox(
+                      child: Image.asset(
+                        'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+                        width: double.infinity,
+                        height: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                     Image.network(
                       imageUrl,
                       width: double.infinity,
