@@ -9,6 +9,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:shared/widgets/video_player/progress.dart';
+import 'package:shared/widgets/video_player/video_cover.dart';
 import 'package:video_player/video_player.dart';
 import '../short_bottom_area.dart';
 import 'short_card_info.dart';
@@ -103,8 +104,10 @@ class ShortCardState extends State<ShortCard> {
               width: double.infinity,
               child: Stack(
                 children: [
+                  if (obsVideoPlayerController.isReady.value == false &&
+                      video != null)
+                    VideoCover(imageSid: video.coverVertical!),
                   if (obsVideoPlayerController.isReady.value &&
-                      obsVideoPlayerController.videoPlayerController != null &&
                       !isLoading &&
                       videoUrl.isNotEmpty &&
                       video != null)
