@@ -52,7 +52,10 @@ class GameListItem extends StatelessWidget {
                   width: double.infinity,
                   height: (Get.width - 110) / 3,
                   fit: BoxFit.cover,
+                  cacheHeight: (Get.width - 110) ~/ 3,
+                  cacheWidth: Get.width.toInt(),
                 )
+
               // CacheImage(
               //     url: imageUrl,
               //     width: double.infinity,
