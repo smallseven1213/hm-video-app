@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class PlayerHeader extends StatelessWidget {
   final String? title;
@@ -33,7 +34,7 @@ class PlayerHeader extends StatelessWidget {
             if (isFullscreen) {
               toggleFullscreen(false);
             } else {
-              Navigator.pop(context);
+              MyRouteDelegate.of(context).pop();
             }
           },
         ),

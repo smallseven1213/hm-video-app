@@ -66,6 +66,10 @@ class ObservableVideoPlayerController extends GetxController {
       errorMessage.value = videoPlayerController.value.errorDescription!;
     }
 
+    if (videoPlayerController.value.isPlaying && videoAction.value == 'pause') {
+      videoAction.value = 'play';
+    }
+
     // TODO: 有待分析
     if (!kIsWeb && videoPlayerController.value.isPlaying) {
       Wakelock.enable();

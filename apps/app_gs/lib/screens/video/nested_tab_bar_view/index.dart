@@ -34,7 +34,6 @@ class NestedTabBarViewState extends State<NestedTabBarView>
     with SingleTickerProviderStateMixin {
   late BlockVideosByCategoryController blockVideosController;
   late TabController _tabController;
-  late ScrollController _parentScrollController;
 
   int tabIndex = 0;
 
@@ -48,7 +47,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
     super.initState();
     _tabController = TabController(
         vsync: this, length: widget.videoDetail.actors!.isEmpty ? 2 : 3);
-    _parentScrollController = ScrollController();
+
     blockVideosController = Get.put(
       BlockVideosByCategoryController(
         tagId: getIdList(widget.videoDetail.tags!),
@@ -79,7 +78,6 @@ class NestedTabBarViewState extends State<NestedTabBarView>
 
     return Scaffold(
       body: NestedScrollView(
-        controller: _parentScrollController,
         physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
