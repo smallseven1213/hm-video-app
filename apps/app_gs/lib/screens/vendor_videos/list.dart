@@ -5,20 +5,29 @@ import 'package:shared/controllers/publisher_latest_vod_controller.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
 
-class VendorVideoList extends StatelessWidget {
+class VendorVideoList extends StatefulWidget {
   final String type;
   final int publisherId;
-  final scrollController = ScrollController();
+
   VendorVideoList({Key? key, required this.type, required this.publisherId})
       : super(key: key);
 
   @override
+  _VendorVideoListState createState() => _VendorVideoListState();
+}
+
+class _VendorVideoListState extends State<VendorVideoList> {
+  // DISPOSED SCROLL CONTROLLER
+  final scrollController = ScrollController();
+
+  @override
   Widget build(BuildContext context) {
-    final publisherVodController = type == 'hot'
+    final publisherVodController = widget.type == 'hot'
         ? PublisherHottestVodController(
-            publisherId: publisherId, scrollController: scrollController)
+            publisherId: widget.publisherId, scrollController: scrollController)
         : PublisherLatestVodController(
-            publisherId: publisherId, scrollController: scrollController);
+            publisherId: widget.publisherId,
+            scrollController: scrollController);
 
     return SliverVodGrid(
       isListEmpty: publisherVodController.isListEmpty.value,
@@ -28,5 +37,11 @@ class VendorVideoList extends StatelessWidget {
       noMoreWidget: ListNoMore(),
       customScrollController: publisherVodController.scrollController,
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }

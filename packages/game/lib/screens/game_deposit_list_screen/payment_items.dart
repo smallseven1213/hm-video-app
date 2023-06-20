@@ -98,6 +98,15 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
     setInitFormValue();
   }
 
+  // dispose
+  @override
+  void dispose() {
+    amountController.dispose();
+    scrollController.dispose();
+    focusNode.dispose();
+    super.dispose();
+  }
+
   void setInitFormValue() {
     if (widget.depositData[_paymentActiveIndex]['paymentChannel'].length > 0 &&
         widget.depositData[_paymentActiveIndex]['paymentChannel']

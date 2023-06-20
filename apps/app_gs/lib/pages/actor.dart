@@ -57,6 +57,7 @@ class ActorPageState extends State<ActorPage>
   @override
   void dispose() {
     _tabController.dispose();
+    _parentScrollController.dispose();
     super.dispose();
   }
 

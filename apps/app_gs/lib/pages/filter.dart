@@ -33,6 +33,7 @@ class FilterScrollView extends StatefulWidget {
 }
 
 class FilterScrollViewState extends State<FilterScrollView> {
+  // DISPOSED SCROLL CONTROLLER
   final ScrollController scrollController = ScrollController();
   final FilterScreenController filterScreenController =
       Get.find<FilterScreenController>();

@@ -4,7 +4,7 @@ import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SliverVodGrid extends StatelessWidget {
+class SliverVodGrid extends StatefulWidget {
   final List videos;
   final bool displayNoMoreData;
   final bool isListEmpty;
@@ -35,36 +35,66 @@ class SliverVodGrid extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    ScrollController scrollController =
-        customScrollController ?? ScrollController();
-    if (usePrimaryParentScrollController == true) {
-      scrollController = PrimaryScrollController.of(context);
-    }
+  _SliverVodGridState createState() => _SliverVodGridState();
+}
 
-    if (onScrollEnd != null) {
+class _SliverVodGridState extends State<SliverVodGrid> {
+  late ScrollController scrollController;
+
+  @override
+  void initState() {
+    // DISPOSED SCROLL CONTROLLER
+    scrollController = widget.customScrollController ?? ScrollController();
+
+    if (widget.onScrollEnd != null && scrollController.hasClients) {
       scrollController.addListener(() {
         logger.i(
-            'sliver $key => position.pixels ${scrollController.position.pixels} position.maxScrollExtent ${scrollController.position.maxScrollExtent}');
+            'sliver ${widget.key} => position.pixels ${scrollController.position.pixels} position.maxScrollExtent ${scrollController.position.maxScrollExtent}');
         if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent) {
           logger.i('到底了');
-          if (onScrollEnd != null) {
-            onScrollEnd!();
+          if (widget.onScrollEnd != null) {
+            widget.onScrollEnd!();
           }
         }
       });
     }
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (widget.usePrimaryParentScrollController == true) {
+      scrollController = PrimaryScrollController.of(context);
+    } else {
+      scrollController = widget.customScrollController ?? ScrollController();
+    }
+  }
+
+  @override
+  void dispose() {
+    if (widget.usePrimaryParentScrollController == false) {
+      scrollController.dispose();
+    }
+
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    int totalRows = (widget.videos.length / 2).ceil();
+    logger.i('totalRows $totalRows');
 
     return Obx(() {
-      int totalRows = (videos.length / 2).ceil();
+      int totalRows = (widget.videos.length / 2).ceil();
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
         controller: scrollController,
         slivers: [
-          ...?headerExtends,
-          if (isListEmpty)
+          ...?widget.headerExtends,
+          if (widget.isListEmpty)
             const SliverToBoxAdapter(
               child: NoDataWidget(),
             ),
@@ -77,9 +107,9 @@ class SliverVodGrid extends StatelessWidget {
                     int firstVideoIndex = index * 2;
                     int secondVideoIndex = firstVideoIndex + 1;
 
-                    var firstVideo = videos[firstVideoIndex];
-                    var secondVideo = secondVideoIndex < videos.length
-                        ? videos[secondVideoIndex]
+                    var firstVideo = widget.videos[firstVideoIndex];
+                    var secondVideo = secondVideoIndex < widget.videos.length
+                        ? widget.videos[secondVideoIndex]
                         : null;
 
                     // logger.i('RENDER SLIVER VOD GRID');
@@ -102,9 +132,9 @@ class SliverVodGrid extends StatelessWidget {
                                 videoCollectTimes:
                                     firstVideo.videoCollectTimes!,
                                 displayVideoCollectTimes:
-                                    displayVideoCollectTimes,
-                                displayVideoTimes: displayVideoTimes,
-                                displayViewTimes: displayViewTimes,
+                                    widget.displayVideoCollectTimes,
+                                displayVideoTimes: widget.displayVideoTimes,
+                                displayViewTimes: widget.displayViewTimes,
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -124,9 +154,11 @@ class SliverVodGrid extends StatelessWidget {
                                         videoCollectTimes:
                                             secondVideo.videoCollectTimes!,
                                         displayVideoCollectTimes:
-                                            displayVideoCollectTimes,
-                                        displayVideoTimes: displayVideoTimes,
-                                        displayViewTimes: displayViewTimes,
+                                            widget.displayVideoCollectTimes,
+                                        displayVideoTimes:
+                                            widget.displayVideoTimes,
+                                        displayViewTimes:
+                                            widget.displayViewTimes,
                                       )
                                     : const SizedBox.shrink()),
                           ],
@@ -140,10 +172,10 @@ class SliverVodGrid extends StatelessWidget {
               ),
             ),
           // ignore: prefer_const_constructors
-          if (displayLoading) SliverVideoPreviewSkeletonList(),
-          if (displayNoMoreData)
+          if (widget.displayLoading) SliverVideoPreviewSkeletonList(),
+          if (widget.displayNoMoreData)
             SliverToBoxAdapter(
-              child: noMoreWidget,
+              child: widget.noMoreWidget,
             ),
         ],
       );

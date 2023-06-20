@@ -60,7 +60,7 @@ void handleGameItem(BuildContext context,
         content: '遊戲維護中，請稍後再試',
         confirmText: '確認',
         onConfirm: () {
-          MyRouteDelegate.of(context).popRoute();
+          Navigator.pop(context);
         },
       );
       return;
@@ -85,7 +85,7 @@ void handleGameItem(BuildContext context,
       content: '遊戲維護中，請稍後再試',
       confirmText: '確認',
       onConfirm: () {
-        MyRouteDelegate.of(context).popRoute();
+        Navigator.pop(context);
       },
     );
   }

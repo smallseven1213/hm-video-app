@@ -24,12 +24,11 @@ List<List<Vod>> splitVodList(List<Vod> vodList, int chunkSize) {
   return chunks;
 }
 
-class VideoByBlockPage extends StatelessWidget {
+class VideoByBlockPage extends StatefulWidget {
   final int blockId;
   final int channelId;
   final String title;
   final int film;
-  final scrollController = ScrollController();
 
   VideoByBlockPage(
       {Key? key,
@@ -40,15 +39,24 @@ class VideoByBlockPage extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Get.put(AdWindowController(channelId), tag: channelId.toString());
+  _VideoByBlockPageState createState() => _VideoByBlockPageState();
+}
 
-    final BlockVodController blockVodController =
-        BlockVodController(areaId: blockId, scrollController: scrollController);
+class _VideoByBlockPageState extends State<VideoByBlockPage> {
+  // DISPOSED SCROLL CONTROLLER
+  final scrollController = ScrollController();
+
+  @override
+  Widget build(BuildContext context) {
+    Get.put(AdWindowController(widget.channelId),
+        tag: widget.channelId.toString());
+
+    final BlockVodController blockVodController = BlockVodController(
+        areaId: widget.blockId, scrollController: scrollController);
 
     return Scaffold(
         appBar: CustomAppBar(
-          title: title,
+          title: widget.title,
         ),
         body: Obx(() {
           // 使用 splitVodList 函數將 vodList 按每100個Vod分割成子列表
@@ -63,9 +71,9 @@ class VideoByBlockPage extends StatelessWidget {
               ...vodChunks
                   .map((e) => SliverBlockWidget(
                         vods: e,
-                        channelId: channelId,
-                        blockId: blockId,
-                        film: film,
+                        channelId: widget.channelId,
+                        blockId: widget.blockId,
+                        film: widget.film,
                       ))
                   .toList(),
               if (blockVodController.isListEmpty.value)
@@ -82,6 +90,12 @@ class VideoByBlockPage extends StatelessWidget {
             ],
           );
         }));
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 }
 

@@ -1,4 +1,5 @@
 enum AppRoutes {
+  demo,
   splash,
   ad,
   home,
@@ -34,6 +35,8 @@ enum AppRoutes {
 extension AppRoutesExtension on AppRoutes {
   String get value {
     switch (this) {
+      case AppRoutes.demo:
+        return '/demo';
       case AppRoutes.splash:
         return '/';
       case AppRoutes.ad:

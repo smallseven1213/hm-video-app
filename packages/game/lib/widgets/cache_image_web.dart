@@ -40,6 +40,8 @@ class CacheImageWebState extends State<CacheImageWeb> {
   }
 
   void _loadImageFromUrl(String url) async {
+    if (!mounted) return;
+
     await Hive.openBox('images');
     final box = await Hive.openBox('images'); // 等待Hive初始化完成
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/video_player/video_cover.dart';
 
 final logger = Logger();
 
@@ -18,26 +19,8 @@ class VideoError extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          foregroundDecoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.8),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.black.withOpacity(0.8),
-                const Color.fromARGB(255, 0, 34, 79),
-              ],
-              stops: const [0.8, 1.0],
-            ),
-          ),
-          child: SidImage(
-            key: ValueKey(videoCover),
-            sid: videoCover,
-            width: double.infinity,
-            height: double.infinity,
-            fit: BoxFit.cover,
-          ),
+        VideoCover(
+          imageSid: videoCover,
         ),
         Center(
           child: Column(

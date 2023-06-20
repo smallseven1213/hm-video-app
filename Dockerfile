@@ -1,6 +1,6 @@
 # Builder stage
 # FROM cirrusci/flutter:3.7.5 AS builder
-FROM ghcr.io/cirruslabs/flutter:3.10.2 AS builder
+FROM ghcr.io/cirruslabs/flutter:3.10.5 AS builder
 ARG env
 ENV ENV=${env}
 WORKDIR /app
@@ -23,11 +23,9 @@ RUN curl -sL https://sentry.io/get-cli/ | bash
 
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
-    # 使用 sed 命令修改 pubspec.yaml 文件中的 release 值
-    sed -i "s|release:.*|release: ${DATE_VERSION}|g" pubspec.yaml && \
-    melos exec --scope="app_gs" -- \
-    flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
-    sentry-cli releases files ${DATE_VERSION} upload-sourcemaps /app/apps/app_gs/build/web --log-level=info
+    sed -i "s|release: RELEASE_CHANGE_ME|release: ${DATE_VERSION}|g" /app/apps/app_gs/pubspec.yaml && \
+    melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
+    melos exec --scope="app_gs" -- flutter packages pub run sentry_dart_plugin
 
 # Production stage
 FROM nginx:stable-alpine

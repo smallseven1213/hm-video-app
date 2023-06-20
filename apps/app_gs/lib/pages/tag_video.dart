@@ -21,6 +21,7 @@ class TagVideoPage extends StatefulWidget {
 }
 
 class TagVideoPageState extends State<TagVideoPage> {
+  // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
   late final TagVodController vodController;
 
@@ -31,6 +32,12 @@ class TagVideoPageState extends State<TagVideoPage> {
       tagId: widget.id,
       scrollController: scrollController,
     );
+  }
+
+  @override
+  void dispose() {
+    scrollController.dispose();
+    super.dispose();
   }
 
   @override

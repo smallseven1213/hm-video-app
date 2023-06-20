@@ -39,6 +39,7 @@ class _UserScreenState extends State<UserScreen> {
           },
         );
       } else {
+        storage.write('account-protection-shown', true);
         showDialog(
           context: context,
           builder: (BuildContext context) {
