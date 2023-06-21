@@ -97,43 +97,28 @@ class ShortCardState extends State<ShortCard> {
       var videoUrl = videoDetailController.videoUrl.value;
 
       return Container(
-        color: Colors.red,
+        color: Colors.black,
         child: Stack(
           children: [
             SizedBox(
               height: screen.size.height - 76 - screen.padding.bottom,
               width: double.infinity,
-              child: Stack(
-                children: [
-                  // if (video != null)
-                  //   const WaveLoading(
-                  //     color: Color.fromRGBO(255, 255, 255, 0.3),
-                  //     duration: Duration(milliseconds: 1000),
-                  //     size: 17,
-                  //     itemCount: 3,
-                  //   ),
-                  if (obsVideoPlayerController.isReady.value &&
-                      !isLoading &&
-                      videoUrl.isNotEmpty &&
-                      video != null &&
-                      obsVideoPlayerController
-                          .videoPlayerController.value.isInitialized)
-                    // VideoPlayerDisplayWidget(
-                    //   controller: obsVideoPlayerController,
-                    //   video: video,
-                    // ),
-
-                    VideoPlayer(
+              child: Stack(children: [
+                if (obsVideoPlayerController.isReady.value &&
+                    !isLoading &&
+                    videoUrl.isNotEmpty &&
+                    video != null &&
+                    obsVideoPlayerController
+                        .videoPlayerController.value.isInitialized)
+                  AspectRatio(
+                    aspectRatio: obsVideoPlayerController
+                        .videoPlayerController.value.aspectRatio,
+                    child: VideoPlayer(
                         obsVideoPlayerController.videoPlayerController!),
-                  // if (videoDetail != null)
-                  //   ShortCardInfo(
-                  //     obsKey: widget.obsKey,
-                  //     data: videoDetail,
-                  //     title: widget.title,
-                  //     videoUrl: videoUrl,
-                  //   ),
-                ],
-              ),
+                  )
+                else
+                  Container(color: Colors.black) // or a loading indicator
+              ]),
             ),
             Positioned(
               bottom: 0,
