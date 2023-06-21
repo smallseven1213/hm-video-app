@@ -12,6 +12,7 @@ import 'package:shared/widgets/video_player/progress.dart';
 import 'package:shared/widgets/video_player/video_cover.dart';
 import 'package:video_player/video_player.dart';
 import '../short_bottom_area.dart';
+import '../wave_loading.dart';
 import 'short_card_info.dart';
 
 final logger = Logger();
@@ -104,7 +105,13 @@ class ShortCardState extends State<ShortCard> {
               width: double.infinity,
               child: Stack(
                 children: [
-                  if (video != null) VideoCover(imageSid: video.coverVertical!),
+                  if (video != null)
+                    const WaveLoading(
+                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                      duration: Duration(milliseconds: 1000),
+                      size: 17,
+                      itemCount: 3,
+                    ),
                   if (obsVideoPlayerController.isReady.value &&
                       !isLoading &&
                       videoUrl.isNotEmpty &&
