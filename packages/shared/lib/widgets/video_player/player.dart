@@ -46,7 +46,8 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   controller.videoPlayerController!.play();
                 },
               ),
-            ] else ...[
+            ] else if (controller
+                .videoPlayerController.value.isInitialized) ...[
               if (kIsWeb) ...[
                 VideoPlayer(controller.videoPlayerController!)
               ] else ...[
