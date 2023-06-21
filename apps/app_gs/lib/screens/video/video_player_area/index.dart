@@ -177,38 +177,38 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 coverHorizontal: widget.video.coverHorizontal ?? '',
               )
             ],
-            if (kIsWeb &&
-                isFirstLookForWeb &&
-                videoPlayerController.videoPlayerController.value.isInitialized)
-              InkWell(
-                onTap: () {
-                  setState(() {
-                    isFirstLookForWeb = false;
-                    videoPlayerController.play();
-                  });
-                },
-                child: SizedBox(
-                  width: double.infinity,
-                  height: double.infinity,
-                  child: Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
-                          shape: BoxShape.circle),
-                      child: const Center(
-                        child: Icon(
-                          Icons.play_arrow,
-                          color: Colors.white,
-                          size: 45.0,
-                          semanticLabel: 'Play',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              )
+            // if (kIsWeb &&
+            //     isFirstLookForWeb &&
+            //     videoPlayerController.videoPlayerController.value.isInitialized)
+            //   InkWell(
+            //     onTap: () {
+            //       setState(() {
+            //         isFirstLookForWeb = false;
+            //         videoPlayerController.play();
+            //       });
+            //     },
+            //     child: SizedBox(
+            //       width: double.infinity,
+            //       height: double.infinity,
+            //       child: Center(
+            //         child: Container(
+            //           width: 100,
+            //           height: 100,
+            //           decoration: BoxDecoration(
+            //               color: Colors.black.withOpacity(0.5),
+            //               shape: BoxShape.circle),
+            //           child: const Center(
+            //             child: Icon(
+            //               Icons.play_arrow,
+            //               color: Colors.white,
+            //               size: 45.0,
+            //               semanticLabel: 'Play',
+            //             ),
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   )
           ],
         );
       }),
