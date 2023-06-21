@@ -97,7 +97,7 @@ class ShortCardState extends State<ShortCard> {
       var videoUrl = videoDetailController.videoUrl.value;
 
       return Container(
-        color: Colors.black,
+        color: Colors.red,
         child: Stack(
           children: [
             SizedBox(
@@ -105,28 +105,33 @@ class ShortCardState extends State<ShortCard> {
               width: double.infinity,
               child: Stack(
                 children: [
-                  if (video != null)
-                    const WaveLoading(
-                      color: Color.fromRGBO(255, 255, 255, 0.3),
-                      duration: Duration(milliseconds: 1000),
-                      size: 17,
-                      itemCount: 3,
-                    ),
+                  // if (video != null)
+                  //   const WaveLoading(
+                  //     color: Color.fromRGBO(255, 255, 255, 0.3),
+                  //     duration: Duration(milliseconds: 1000),
+                  //     size: 17,
+                  //     itemCount: 3,
+                  //   ),
                   if (obsVideoPlayerController.isReady.value &&
                       !isLoading &&
                       videoUrl.isNotEmpty &&
-                      video != null)
-                    VideoPlayerDisplayWidget(
-                      controller: obsVideoPlayerController,
-                      video: video,
-                    ),
-                  if (videoDetail != null)
-                    ShortCardInfo(
-                      obsKey: widget.obsKey,
-                      data: videoDetail,
-                      title: widget.title,
-                      videoUrl: videoUrl,
-                    ),
+                      video != null &&
+                      obsVideoPlayerController
+                          .videoPlayerController.value.isInitialized)
+                    // VideoPlayerDisplayWidget(
+                    //   controller: obsVideoPlayerController,
+                    //   video: video,
+                    // ),
+
+                    VideoPlayer(
+                        obsVideoPlayerController.videoPlayerController!),
+                  // if (videoDetail != null)
+                  //   ShortCardInfo(
+                  //     obsKey: widget.obsKey,
+                  //     data: videoDetail,
+                  //     title: widget.title,
+                  //     videoUrl: videoUrl,
+                  //   ),
                 ],
               ),
             ),
