@@ -108,11 +108,7 @@ class VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
 
     observableVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
-  }
 
-  @override
-  void didUpdateWidget(covariant VideoScreenWithVideoUrl oldWidget) {
-    super.didUpdateWidget(oldWidget);
     if (widget.videoDetail != null && widget.video != null) {
       var playRecord = Vod(
         widget.video!.id,
