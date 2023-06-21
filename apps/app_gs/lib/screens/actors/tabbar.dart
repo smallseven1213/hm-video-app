@@ -14,12 +14,17 @@ class ActorsTabBar extends StatefulWidget {
 class ActorsTabBarState extends State<ActorsTabBar>
     with TickerProviderStateMixin {
   TabController? _tabController;
-  final actorsController = Get.find<ActorsController>();
-  final actorRegionController = Get.find<ActorRegionController>();
+  late ActorsController actorsController;
+  late ActorRegionController actorRegionController;
 
   @override
   void initState() {
     super.initState();
+
+    actorsController = Get.put(ActorsController());
+    actorRegionController = Get.find<ActorRegionController>();
+
+    // actorsController.setRegion(actorRegionController.regions[0].id);
 
     // Listener function
     void tabControllerListener() {
@@ -34,6 +39,10 @@ class ActorsTabBarState extends State<ActorsTabBar>
     // Initial creation of the TabController with the current length of regions.
     _tabController = TabController(
         length: actorRegionController.regions.value.length, vsync: this);
+
+    if (actorRegionController.regions.isNotEmpty) {
+      actorsController.setRegion(actorRegionController.regions[0].id);
+    }
 
     // Adding listener to TabController to update the selected region.
     _tabController?.addListener(tabControllerListener);
@@ -55,7 +64,6 @@ class ActorsTabBarState extends State<ActorsTabBar>
   // dispose
   @override
   void dispose() {
-    actorsController.setRegion(actorRegionController.regions[0].id);
     _tabController?.dispose();
     super.dispose();
   }

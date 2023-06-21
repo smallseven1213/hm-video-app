@@ -22,8 +22,15 @@ class ActorsPage extends StatefulWidget {
 }
 
 class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
-  final actorsController = Get.put(ActorsController());
-  final actorRegionController = Get.find<ActorRegionController>();
+  late ActorsController actorsController;
+  late ActorRegionController actorRegionController;
+
+  @override
+  void initState() {
+    super.initState();
+    actorsController = Get.put(ActorsController());
+    actorRegionController = Get.find<ActorRegionController>();
+  }
 
   Widget _buildCustomRadioButton(int value, String label) {
     return Expanded(
