@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
@@ -8,6 +9,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../widgets/cache_image.dart';
 import 'game_scroll_view_tabs.dart';
 
 final logger = Logger();
@@ -52,12 +54,21 @@ class GameListItem extends StatelessWidget {
                       height: double.infinity,
                       color: gameLobbyTabBgColor,
                     ),
-                    Image.network(
-                      imageUrl,
-                      width: double.infinity,
-                      height: double.infinity,
-                      fit: BoxFit.cover,
-                    )
+                    kIsWeb
+                        ? Image.network(
+                            imageUrl,
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.cover,
+                          )
+                        : CacheImage(
+                            url: imageUrl,
+                            width: double.infinity,
+                            height: (Get.width - 110) / 3,
+                            fit: BoxFit.cover,
+                            emptyImageUrl:
+                                'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+                          )
                   ],
                 )
               // CacheImage(

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../controllers/short_video_detail_controller.dart';
 import '../controllers/video_player_controller.dart';
 import '../models/short_video_detail.dart';
 import '../models/vod.dart';
 import '../utils/controller_tag_genarator.dart';
+
+final logger = Logger();
 
 class VideoProvider extends StatefulWidget {
   final int vodId;
@@ -33,6 +36,7 @@ class VideoProviderState extends State<VideoProvider> {
 
     controllerTag = genaratorShortVideoDetailTag(widget.vodId.toString());
     if (!Get.isRegistered(tag: controllerTag)) {
+      logger.i('VP TRACE: init controller $controllerTag');
       Get.lazyPut<ShortVideoDetailController>(
           () => ShortVideoDetailController(widget.vodId),
           tag: controllerTag);
@@ -43,10 +47,13 @@ class VideoProviderState extends State<VideoProvider> {
 
   @override
   void dispose() {
-    if (Get.isRegistered(tag: controllerTag)) {
-      controller.dispose();
-      Get.delete(tag: controllerTag);
-    }
+    // var ss = genaratorShortVideoDetailTag(widget.vodId.toString());
+    // if (Get.isRegistered(tag: ss) == true) {
+    //   controller.dispose();
+    //   Get.delete(tag: ss);
+    // }
+    controller.dispose();
+    Get.delete(tag: controllerTag);
     super.dispose();
   }
 
