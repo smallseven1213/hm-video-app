@@ -1,14 +1,13 @@
-// AmountItems Widget, 最外是個圓角區間, padding 16
-// 裡面有grid樣式的按鈕, 一行有3個按鈕, 行數則不固定, 以api回傳資料為主
-
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/models/game_order.dart';
+import 'package:game/screens/game_deposit_polling_screen/show_payment_method.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/loading.dart';
 
 class AmountItems extends StatefulWidget {
   final Function updateLoading;
+
   const AmountItems({
     Key? key,
     required this.updateLoading,
@@ -102,17 +101,17 @@ class AmountItemsState extends State<AmountItems> {
                                 setState(() {
                                   selected = !selected;
                                 });
-                                // showGamePaymentMethod(
-                                //   context: context,
-                                //   productId: e.id ?? 0,
-                                //   balanceFiatMoneyPrice:
-                                //       e.balanceFiatMoneyPrice ?? '',
-                                //   name: e.name ?? '',
-                                //   updateLoading: widget.updateLoading,
-                                //   onClose: () => setState(() {
-                                //     selected = false;
-                                //   }),
-                                // );
+                                showPaymentMethod(
+                                  context: context,
+                                  productId: e.id ?? 0,
+                                  balanceFiatMoneyPrice:
+                                      e.balanceFiatMoneyPrice ?? '',
+                                  name: e.name ?? '',
+                                  updateLoading: widget.updateLoading,
+                                  onClose: () => setState(() {
+                                    selected = false;
+                                  }),
+                                );
                               }
                             },
                             child: Column(

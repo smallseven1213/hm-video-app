@@ -1,6 +1,6 @@
 class Payment {
   final int id;
-  final String type;
+  final String? type;
 
   Payment(
     this.id,
@@ -10,7 +10,7 @@ class Payment {
   factory Payment.fromJson(Map<String, dynamic> json) {
     return Payment(
       json['id'],
-      json['paymentType'],
+      json['paymentType'] ?? '',
     );
   }
 }
