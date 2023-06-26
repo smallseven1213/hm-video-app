@@ -61,7 +61,7 @@ Future<dynamic> fetcher({
     );
 
     return response;
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     if (e.response?.statusCode == 401 && e.response?.data['code'] == '04') {
       // 清除 GetStorage 中的 auth-token
       final storage = GetStorage();

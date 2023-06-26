@@ -57,7 +57,7 @@ Future<dynamic> fetcher({
     );
 
     return response;
-  } on DioError catch (e) {
+  } on DioException catch (e) {
     logger.i(
         'error statusCode: e.response?.statusCode: ${e.response?.statusCode}');
     logger.i('error data: e.response?.data: ${e.response?.data}');

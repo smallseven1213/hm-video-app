@@ -19,10 +19,10 @@ class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
 
   @override
-  _UserScreenState createState() => _UserScreenState();
+  UserScreenState createState() => UserScreenState();
 }
 
-class _UserScreenState extends State<UserScreen> {
+class UserScreenState extends State<UserScreen> {
   final storage = GetStorage();
 
   checkFirstSeen() {

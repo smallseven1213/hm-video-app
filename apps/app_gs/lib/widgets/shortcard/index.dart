@@ -9,7 +9,6 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:shared/widgets/video_player/progress.dart';
-import 'package:shared/widgets/video_player/video_cover.dart';
 import 'package:video_player/video_player.dart';
 import '../short_bottom_area.dart';
 import '../wave_loading.dart';
@@ -145,10 +144,9 @@ class ShortCardState extends State<ShortCard> {
               left: -24,
               right: -24,
               child: ValueListenableBuilder<VideoPlayerValue>(
-                valueListenable:
-                    obsVideoPlayerController.videoPlayerController!,
+                valueListenable: obsVideoPlayerController.videoPlayerController,
                 builder: (context, value, _) => VideoProgressSlider(
-                  controller: obsVideoPlayerController.videoPlayerController!,
+                  controller: obsVideoPlayerController.videoPlayerController,
                   position: value.position,
                   duration: value.duration,
                   swatch: const Color(0xffFFC700),

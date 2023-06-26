@@ -7,7 +7,6 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_provider.dart';
 
 import 'shortcard/index.dart';
-import 'short_bottom_area.dart';
 
 final logger = Logger();
 

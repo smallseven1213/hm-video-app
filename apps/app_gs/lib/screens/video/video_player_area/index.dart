@@ -86,7 +86,9 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
+    // ignore: no_leading_underscores_for_local_identifiers
     final _orientation =
+        // ignore: deprecated_member_use
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
     // logger.i("@@@@@@@@@ didChangeMetrics: $_orientation");
     if (_orientation == Orientation.landscape) {

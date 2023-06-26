@@ -9,14 +9,15 @@ class VendorVideoList extends StatefulWidget {
   final String type;
   final int publisherId;
 
-  VendorVideoList({Key? key, required this.type, required this.publisherId})
+  const VendorVideoList(
+      {Key? key, required this.type, required this.publisherId})
       : super(key: key);
 
   @override
-  _VendorVideoListState createState() => _VendorVideoListState();
+  VendorVideoListState createState() => VendorVideoListState();
 }
 
-class _VendorVideoListState extends State<VendorVideoList> {
+class VendorVideoListState extends State<VendorVideoList> {
   // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
 

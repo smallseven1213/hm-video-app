@@ -159,6 +159,7 @@ class _SplashState extends State<Splash> {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('更新版本'),
+              // ignore: deprecated_member_use
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
           ],
@@ -176,6 +177,7 @@ class _SplashState extends State<Splash> {
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
               child: const Text('立即體驗'),
+              // ignore: deprecated_member_use
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
             TextButton(

@@ -22,6 +22,7 @@ class BannerLink extends StatelessWidget {
       onTap: () {
         Get.find<BannerController>().recordBannerClick(id);
         if (url.startsWith('http://') || url.startsWith('https://')) {
+          // ignore: deprecated_member_use
           launch(url, webOnlyWindowName: '_blank');
         } else {
           MyRouteDelegate.of(context).push(url);

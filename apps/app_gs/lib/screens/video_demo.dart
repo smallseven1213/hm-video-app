@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:uuid/uuid.dart';
 import 'package:video_player/video_player.dart';
 
 final logger = Logger();
@@ -13,11 +12,12 @@ const testUrls = [
 ];
 
 class VideoDemoPage extends StatefulWidget {
+  const VideoDemoPage({Key? key}) : super(key: key);
   @override
-  _VideoDemoPageState createState() => _VideoDemoPageState();
+  VideoDemoPageState createState() => VideoDemoPageState();
 }
 
-class _VideoDemoPageState extends State<VideoDemoPage> {
+class VideoDemoPageState extends State<VideoDemoPage> {
   VideoPlayerController? _controller;
 
   @override
@@ -76,7 +76,7 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
     logger.i('TESTING LIFECYCLE -> e');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Video Demo'),
+        title: const Text('Video Demo'),
       ),
       body: Center(
         child: _controller!.value.isInitialized
@@ -104,7 +104,7 @@ class _VideoDemoPageState extends State<VideoDemoPage> {
                   ),
                 ],
               )
-            : CircularProgressIndicator(), // 加载中
+            : const CircularProgressIndicator(), // 加载中
       ),
     );
   }

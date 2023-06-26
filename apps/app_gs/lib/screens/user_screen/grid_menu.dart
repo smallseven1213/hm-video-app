@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/services/system_config.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 final systemConfig = SystemConfig();
 

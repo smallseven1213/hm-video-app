@@ -119,6 +119,7 @@ class VodsState extends State<Vods> {
                   film: vodController!.film.value,
                   templateId: widget.templateId ?? 3,
                   areaId: widget.areaId,
+                  // ignore: invalid_use_of_protected_member
                   vods: vodController!.vodList.value,
                 ),
               ),
