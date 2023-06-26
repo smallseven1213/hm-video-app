@@ -7,7 +7,7 @@ WORKDIR /app
 COPY . /app
 
 # Install Melos
-RUN flutter pub global activate melos 2.9.0
+RUN flutter pub global activate melos 3.1.0
 
 # Set PATH for melos executable
 ENV PATH="/root/.pub-cache/bin:$PATH"
