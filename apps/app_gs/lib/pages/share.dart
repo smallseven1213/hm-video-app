@@ -24,6 +24,7 @@ Future<void> _captureAndSaveScreenshot() async {
   }
 
   RenderRepaintBoundary boundary =
+      // ignore: use_build_context_synchronously
       _globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
   final image = await boundary.toImage(pixelRatio: 3.0);
   ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);

@@ -7,7 +7,6 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../config/layouts.dart';
 import '../screens/apps_screen/index.dart';

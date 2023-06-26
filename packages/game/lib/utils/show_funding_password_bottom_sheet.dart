@@ -17,7 +17,6 @@ void showFundingPasswordBottomSheet(BuildContext context,
   final passwordController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
   final gameWithdrawController = Get.put(GameWithdrawController());
-  final GlobalKey globalKey = GlobalKey();
   String? passwordCheckError;
 
   void onSubmit(context) async {
@@ -38,7 +37,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
     }
   }
 
-  String? _validatePassword(String? value) {
+  String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
       passwordCheckError = '請輸入密碼';
     } else if (value.isNotEmpty) {
@@ -130,7 +129,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                           isPassword: true,
                           onChanged: (value) => {
                             field.didChange(value),
-                            _validatePassword(value),
+                            validatePassword(value),
                             gameWithdrawController.setSubmitButtonDisable(
                               passwordController.text.length >= 6
                                   ? false

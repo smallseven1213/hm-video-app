@@ -37,9 +37,11 @@ submitDepositOrder(
         onLoading(context, status: false);
         Navigator.pop(context);
         // windowRef?.location.href = value;
+        // ignore: deprecated_member_use
         launch(value, webOnlyWindowName: '_blank');
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
       } else {
+        // ignore: deprecated_member_use
         await launch(value, webOnlyWindowName: '_blank');
         onLoading(context, status: false);
         Navigator.pop(context);

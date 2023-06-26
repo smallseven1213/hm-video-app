@@ -193,35 +193,26 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           });
         },
         onHorizontalDragUpdate: (details) {
-          final double videoDurationInSeconds =
-              widget.controller.value.duration.inSeconds.toDouble();
-          final double deltaX =
-              details.globalPosition.dx - startHorizontalDragX;
+          final box = context.findRenderObject()! as RenderBox;
+          final deltaX = startHorizontalDragX - details.globalPosition.dx;
+          final percentageDelta = deltaX / box.size.width;
+          final videoDuration = widget.controller.value.duration.inSeconds;
+          final newPositionSeconds =
+              widget.controller.value.position.inSeconds -
+                  (videoDuration * percentageDelta);
 
-          const double sensitivityFactor = 0.5;
-
-          // Calculate the proportion of the screen width that the gesture moved
-          double percentage = sensitivityFactor * deltaX / screenWidth;
-          logger.i('OH: percentage $percentage');
-
-          // Add the percentage to the current video position
-          double currentVideoPositionInSeconds =
-              widget.controller.value.position.inSeconds.toDouble();
-          double secondsToSeek = currentVideoPositionInSeconds +
-              videoDurationInSeconds * percentage;
-
-          // Ensure we are not seeking past the video duration or before 0
-          secondsToSeek = secondsToSeek.clamp(0, videoDurationInSeconds);
-
-          // Create a new Duration object
-          Duration newDuration = Duration(seconds: secondsToSeek.toInt());
-
-          // Call seekTo method on video controller
-          widget.controller.seekTo(newDuration);
-
+          // 拖動影片進度
+          if (newPositionSeconds >= 0 && newPositionSeconds <= videoDuration) {
+            final newPosition = Duration(seconds: newPositionSeconds.round());
+            widget.controller.seekTo(newPosition);
+          }
+          // Determine whether the video is fast-forwarding or rewinding
+          // setState(() {
+          //   isForward = percentageDelta < 0;
+          //   controlsType = ControlsOverlayType.middleTime;
+          // });
+          // Update the startHorizontalDragX to the current position
           startHorizontalDragX = details.globalPosition.dx;
-
-          setState(() {});
         },
         onHorizontalDragEnd: (details) {
           setState(() {

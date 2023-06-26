@@ -1,10 +1,9 @@
 import 'package:app_gs/widgets/loading.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:sentry_flutter/sentry_flutter.dart';
-import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/running_main.dart';
 import 'package:shared/widgets/root.dart';
+// ignore: depend_on_referenced_packages
 import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'config/colors.dart';

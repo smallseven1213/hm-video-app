@@ -30,7 +30,7 @@ class VideoByBlockPage extends StatefulWidget {
   final String title;
   final int film;
 
-  VideoByBlockPage(
+  const VideoByBlockPage(
       {Key? key,
       required this.blockId,
       required this.title,
@@ -39,10 +39,10 @@ class VideoByBlockPage extends StatefulWidget {
       : super(key: key);
 
   @override
-  _VideoByBlockPageState createState() => _VideoByBlockPageState();
+  VideoByBlockPageState createState() => VideoByBlockPageState();
 }
 
-class _VideoByBlockPageState extends State<VideoByBlockPage> {
+class VideoByBlockPageState extends State<VideoByBlockPage> {
   // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
 

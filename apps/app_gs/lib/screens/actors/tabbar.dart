@@ -38,7 +38,9 @@ class ActorsTabBarState extends State<ActorsTabBar>
 
     // Initial creation of the TabController with the current length of regions.
     _tabController = TabController(
-        length: actorRegionController.regions.value.length, vsync: this);
+        // ignore: invalid_use_of_protected_member
+        length: actorRegionController.regions.value.length,
+        vsync: this);
 
     if (actorRegionController.regions.isNotEmpty) {
       actorsController.setRegion(actorRegionController.regions[0].id);

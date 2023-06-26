@@ -103,7 +103,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   textStyle: const TextStyle(
                                     color: Colors.white,
                                   ),
-                                  onTapUrl: (url) => launch(url),
+                                  onTapUrl: (url) => launchUrl(Uri.parse(url)),
                                 ),
                               ),
                             ),
@@ -126,6 +126,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                                   notice.leftButtonUrl!
                                                       .startsWith(
                                                           'https://'))) {
+                                            // ignore: deprecated_member_use
                                             launch(notice.leftButtonUrl!,
                                                 webOnlyWindowName: '_blank');
                                           }
@@ -147,6 +148,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                                   notice.rightButtonUrl!
                                                       .startsWith(
                                                           'https://'))) {
+                                            // ignore: deprecated_member_use
                                             launch(notice.rightButtonUrl!,
                                                 webOnlyWindowName: '_blank');
                                           }

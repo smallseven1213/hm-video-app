@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video_player/video_cover.dart';
 
 final logger = Logger();

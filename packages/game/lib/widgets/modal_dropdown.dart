@@ -185,7 +185,6 @@ class ModalDropDownState extends State<ModalDropDown> {
                                 ),
                               ),
                               onTap: () {
-                                print('onTap $item[\'value\']');
                                 widget.onChange(item['value']);
                                 setState(() {
                                   _selected = item['label'];
