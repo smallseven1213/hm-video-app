@@ -10,6 +10,7 @@ import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 
+import '../../widgets/wave_loading.dart';
 import 'nested_tab_bar_view/index.dart';
 import '../../widgets/custom_app_bar.dart';
 
@@ -61,7 +62,12 @@ class VideoScreenState extends State<VideoScreen> {
       var video = controller.video.value;
       var videoDetail = controller.videoDetail.value;
       if (videoUrl.isEmpty) {
-        return Container();
+        return const WaveLoading(
+          color: Color.fromRGBO(255, 255, 255, 0.3),
+          duration: Duration(milliseconds: 1000),
+          size: 17,
+          itemCount: 3,
+        );
       }
       return VideoScreenWithVideoUrl(
           name: widget.name ?? '',
