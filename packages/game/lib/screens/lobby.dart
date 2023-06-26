@@ -166,7 +166,7 @@ class _GameLobbyState extends State<GameLobby>
                                 MyRouteDelegate.of(context).push(
                                   gameConfigController
                                               .switchPaymentPage.value ==
-                                          switchPaymentPageType['list']
+                                          switchPaymentPageType['polling']
                                       ? GameAppRoutes.depositList.value
                                       : GameAppRoutes.depositPolling.value,
                                 );
