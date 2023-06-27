@@ -43,6 +43,7 @@ class _ProgressBarState extends State<ProgressBar> {
         Duration duration =
             Duration(hours: hours, minutes: minutes, seconds: seconds);
         int totalSeconds = duration.inSeconds;
+        print('PD: initial position: $totalSeconds');
         setState(() {
           position = totalSeconds;
         });
@@ -58,6 +59,7 @@ class _ProgressBarState extends State<ProgressBar> {
 
   @override
   Widget build(BuildContext context) {
+    print('PD: build position: $position');
     return Positioned(
       bottom: widget.isFullscreen ? 30 : 0,
       left: 0,
