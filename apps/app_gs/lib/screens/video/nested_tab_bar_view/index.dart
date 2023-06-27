@@ -136,7 +136,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               if (widget.videoDetail.actors!.isNotEmpty)
                 SliverVodGrid(
                     key: const Key('video_by_actor'),
-                    isListEmpty: blockVideosController.videoByActor.isEmpty,
+                    isListEmpty: false,
                     videos: blockVideosController.videoByActor,
                     displayNoMoreData: false,
                     displayLoading: false,
@@ -146,7 +146,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                     onScrollEnd: () {}),
               SliverVodGrid(
                   key: const Key('video_by_internal_tag'),
-                  isListEmpty: blockVideosController.videoByInternalTag.isEmpty,
+                  isListEmpty: false,
                   videos: blockVideosController.videoByInternalTag,
                   displayNoMoreData: false,
                   displayLoading: false,
@@ -156,7 +156,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                   onScrollEnd: () {}),
               SliverVodGrid(
                   key: const Key('video_by_tag'),
-                  isListEmpty: blockVideosController.videoByTag.isEmpty,
+                  isListEmpty: false,
                   videos: blockVideosController.videoByTag,
                   displayNoMoreData: false,
                   displayLoading: false,
