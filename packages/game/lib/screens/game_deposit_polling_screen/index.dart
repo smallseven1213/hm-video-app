@@ -5,7 +5,6 @@ import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
-import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -17,9 +16,6 @@ class GameDepositPolling extends StatefulWidget {
 }
 
 class GameDepositPollingState extends State<GameDepositPolling> {
-  bool pointLoading = true;
-  bool isLoading = false;
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -66,54 +62,22 @@ class GameDepositPollingState extends State<GameDepositPolling> {
           child: SingleChildScrollView(
             child: SizedBox(
               width: Get.width,
-              child: Stack(
+              child: const Stack(
                 children: [
                   Column(
                     children: [
-                      const Padding(
+                      Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                         child: GameUserInfo(
                           child: UserInfoService(),
                         ),
                       ),
-                      AmountItems(
-                        updateLoading: (status) =>
-                            setState(() => isLoading = status),
-                      ),
-                      const SizedBox(height: 36),
-                      const Tips(),
+                      AmountItems(),
+                      SizedBox(height: 36),
+                      Tips(),
                     ],
                   ),
-                  isLoading == true
-                      ? Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            width: Get.width,
-                            height: Get.height,
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const GameLoading(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  '訂單生成中...',
-                                  style: TextStyle(
-                                    color: gameLobbyPrimaryTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
                 ],
               ),
             ),

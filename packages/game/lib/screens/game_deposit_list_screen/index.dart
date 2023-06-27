@@ -9,7 +9,6 @@ import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
-import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -25,7 +24,6 @@ class GameDepositList extends StatefulWidget {
 }
 
 class GameDepositListState extends State<GameDepositList> {
-  bool isLoading = false;
   dynamic depositData;
 
   @override
@@ -125,35 +123,6 @@ class GameDepositListState extends State<GameDepositList> {
                       const Tips(),
                     ],
                   ),
-                  isLoading == true
-                      ? Positioned(
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          child: Container(
-                            width: Get.width,
-                            height: Get.height,
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                const GameLoading(),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  '訂單生成中...',
-                                  style: TextStyle(
-                                    color: gameLobbyPrimaryTextColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        )
-                      : const SizedBox(),
                 ],
               ),
             ),
