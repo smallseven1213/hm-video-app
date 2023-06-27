@@ -6,9 +6,9 @@ import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:video_player/video_player.dart';
 import 'package:volume_control/volume_control.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'enums.dart';
+import 'new_progress_bar.dart';
 import 'play_pause_button.dart';
 import 'player_header.dart';
 import 'progress_bar.dart';
@@ -87,7 +87,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      var screenWidth = MediaQuery.of(context).size.width;
+      var boxWidth = constraints.maxWidth;
       return GestureDetector(
         onTap: () {
           setState(() {
@@ -200,23 +200,17 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
           const double sensitivityFactor = 0.5;
 
-          // Calculate the proportion of the screen width that the gesture moved
-          double percentage = sensitivityFactor * deltaX / screenWidth;
-          logger.i('OH: percentage $percentage');
+          double percentage = sensitivityFactor * deltaX / boxWidth;
 
-          // Add the percentage to the current video position
           double currentVideoPositionInSeconds =
               widget.controller.value.position.inSeconds.toDouble();
           double secondsToSeek = currentVideoPositionInSeconds +
               videoDurationInSeconds * percentage;
 
-          // Ensure we are not seeking past the video duration or before 0
           secondsToSeek = secondsToSeek.clamp(0, videoDurationInSeconds);
 
-          // Create a new Duration object
           Duration newDuration = Duration(seconds: secondsToSeek.toInt());
 
-          // Call seekTo method on video controller
           widget.controller.seekTo(newDuration);
 
           startHorizontalDragX = details.globalPosition.dx;
@@ -265,11 +259,15 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               ScreenLock(
                   isScreenLocked: widget.isScreenLocked,
                   onScreenLock: widget.onScreenLock),
+
             ProgressBar(
               controller: widget.controller,
               toggleFullscreen: () =>
                   widget.toggleFullscreen(!widget.isFullscreen),
               isFullscreen: widget.isFullscreen,
+              onDragUpdate: () {
+                setState(() {});
+              },
               opacity: controlsType == ControlsOverlayType.progress ||
                       controlsType == ControlsOverlayType.middleTime ||
                       controlsType == ControlsOverlayType.playPause
