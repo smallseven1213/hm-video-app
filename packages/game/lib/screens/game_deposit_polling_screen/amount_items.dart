@@ -6,12 +6,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/loading.dart';
 
 class AmountItems extends StatefulWidget {
-  final Function updateLoading;
-
-  const AmountItems({
-    Key? key,
-    required this.updateLoading,
-  }) : super(key: key);
+  const AmountItems({Key? key}) : super(key: key);
 
   @override
   AmountItemsState createState() => AmountItemsState();
@@ -107,7 +102,6 @@ class AmountItemsState extends State<AmountItems> {
                                   balanceFiatMoneyPrice:
                                       e.balanceFiatMoneyPrice ?? '',
                                   name: e.name ?? '',
-                                  updateLoading: widget.updateLoading,
                                   onClose: () => setState(() {
                                     selected = false;
                                   }),
