@@ -56,6 +56,7 @@ class JingangButton extends StatelessWidget {
           jingangApi.recordJingangClick(item?.id ?? 0);
           if (item!.url!.startsWith('http://') ||
               item!.url!.startsWith('https://')) {
+            // ignore: deprecated_member_use
             launch(item!.url ?? '', webOnlyWindowName: '_blank');
           } else {
             List<String> parts = item!.url!.split('/');

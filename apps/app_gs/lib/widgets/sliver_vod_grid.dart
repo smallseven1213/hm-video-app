@@ -35,10 +35,10 @@ class SliverVodGrid extends StatefulWidget {
       : super(key: key);
 
   @override
-  _SliverVodGridState createState() => _SliverVodGridState();
+  SliverVodGridState createState() => SliverVodGridState();
 }
 
-class _SliverVodGridState extends State<SliverVodGrid> {
+class SliverVodGridState extends State<SliverVodGrid> {
   late ScrollController scrollController;
 
   @override

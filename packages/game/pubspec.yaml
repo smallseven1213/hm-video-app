@@ -9,7 +9,7 @@ environment:
   flutter: '>=2.5.0'
 
 dependencies:
-  dio: ^5.1.1
+  dio: ^5.2.1+1
   flutter:
     sdk: flutter
   shared:
@@ -28,11 +28,7 @@ dependencies:
   shared_preferences: ^2.1.0
   url_launcher: ^6.1.10
   uuid: ^3.0.7
-  cached_network_image:
-    git:
-      url: https://github.com/lucasmiranda5/flutter_cached_network_image.git
-      ref: dart3
-      path: cached_network_image
+  cached_network_image: ^3.2.3
   decimal: ^2.2.0
   intl: ^0.18.0
   flutter_form_builder: ^9.0.0

@@ -39,7 +39,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
   }
 
   void _onLoading() async {
-    print('onLoading');
+    // print('onLoading');
   }
 
   void _onRefresh() async {

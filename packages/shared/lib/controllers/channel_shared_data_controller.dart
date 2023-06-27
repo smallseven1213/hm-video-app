@@ -10,14 +10,22 @@ final channelApi = ChannelApi();
 class ChannelSharedDataController extends GetxController {
   final int channelId;
   var channelSharedData = Rx<ChannelSharedData?>(null);
+  var isLoading = false.obs;
 
   ChannelSharedDataController({required this.channelId}) {
     mutateByChannelId(channelId);
   }
 
   void mutateByChannelId(int channelId) async {
-    var res = await channelApi.getOneById(channelId);
-    logger.i(res);
-    channelSharedData.value = res;
+    isLoading.value = true;
+    try {
+      var res = await channelApi.getOneById(channelId);
+      logger.i(res);
+      channelSharedData.value = res;
+    } catch (error) {
+      logger.i('fetchUserInfo error: $error');
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

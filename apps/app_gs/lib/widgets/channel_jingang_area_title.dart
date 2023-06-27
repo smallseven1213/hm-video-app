@@ -23,8 +23,6 @@ class ChannelJingangAreaTitle extends StatelessWidget {
         if (channelSharedDataController
                 .channelSharedData.value?.jingang?.title !=
             null) {
-          var test =
-              channelSharedDataController.channelSharedData.value?.jingang;
           return SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.only(top: 8.0),

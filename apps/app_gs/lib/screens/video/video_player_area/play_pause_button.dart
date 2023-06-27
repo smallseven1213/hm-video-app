@@ -12,23 +12,27 @@ class PlayPauseButton extends StatelessWidget {
       reverseDuration: const Duration(milliseconds: 200),
       child: controller.value.isPlaying
           ? const SizedBox.shrink()
-          : Center(
-              child: Container(
-                width: 100,
-                height: 100,
-                decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
-                    shape: BoxShape.circle),
-                child: const Center(
-                  child: Icon(
-                    Icons.play_arrow,
-                    color: Colors.white,
-                    size: 45.0,
-                    semanticLabel: 'Play',
+          : InkWell(
+              onTap: () {
+                controller.play();
+              },
+              child: Center(
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.5),
+                      shape: BoxShape.circle),
+                  child: const Center(
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 45.0,
+                      semanticLabel: 'Play',
+                    ),
                   ),
                 ),
-              ),
-            ),
+              )),
     );
   }
 }

@@ -109,7 +109,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
-            child: (actor.name == null || actor.name!.isEmpty)
+            child: (actor.name.isEmpty)
                 ? Shimmer.fromColors(
                     baseColor: const Color(0xFF003068),
                     highlightColor: const Color(0xFF00234d),

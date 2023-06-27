@@ -25,10 +25,10 @@ class SupplierTagVideoPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SupplierTagVideoPageState createState() => _SupplierTagVideoPageState();
+  SupplierTagVideoPageState createState() => SupplierTagVideoPageState();
 }
 
-class _SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
+class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
   // DISPOSED SCROLL CONTROLLER
   final ScrollController scrollController = ScrollController();
 

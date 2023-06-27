@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:app_gs/screens/filter/filter_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,33 +14,21 @@ import '../widgets/sliver_vod_grid.dart';
 
 final logger = Logger();
 
-class FilterPage extends StatelessWidget {
-  const FilterPage({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-        appBar: CustomAppBar(
-          title: '篩選',
-        ),
-        body: FilterScrollView());
-  }
-}
-
-class FilterScrollView extends StatefulWidget {
-  const FilterScrollView({super.key});
+class FilterPage extends StatefulWidget {
+  const FilterPage({super.key});
 
   @override
   FilterScrollViewState createState() => FilterScrollViewState();
 }
 
-class FilterScrollViewState extends State<FilterScrollView> {
+class FilterScrollViewState extends State<FilterPage> {
   // DISPOSED SCROLL CONTROLLER
   final ScrollController scrollController = ScrollController();
   final FilterScreenController filterScreenController =
       Get.find<FilterScreenController>();
   late FilterScreenResultController vodController;
   bool _showSelectedBar = false;
+  late Worker everWorker;
 
   @override
   void initState() {
@@ -63,7 +53,7 @@ class FilterScrollViewState extends State<FilterScrollView> {
       }
     });
 
-    ever(filterScreenController.selectedOptions, (_) {
+    everWorker = ever(filterScreenController.selectedOptions, (_) {
       vodController.reset();
       vodController.loadMoreData();
     });
@@ -71,38 +61,45 @@ class FilterScrollViewState extends State<FilterScrollView> {
 
   @override
   void dispose() {
+    everWorker.dispose();
     scrollController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Obx(() => SliverVodGrid(
-              headerExtends: [
-                SliverToBoxAdapter(
-                  child: FilterOptions(),
-                ),
-                const SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 10,
+    return Scaffold(
+      appBar: const CustomAppBar(
+        title: '篩選',
+      ),
+      body: Stack(
+        children: [
+          Obx(() => SliverVodGrid(
+                headerExtends: [
+                  SliverToBoxAdapter(
+                    child: FilterOptions(),
                   ),
-                )
-              ],
-              videos: vodController.vodList,
-              isListEmpty: vodController.isListEmpty.value,
-              displayNoMoreData: vodController.displayNoMoreData.value,
-              displayLoading: vodController.displayLoading.value,
-              displayVideoCollectTimes: false,
-              noMoreWidget: ListNoMore(),
-              customScrollController: vodController.scrollController,
-            )),
-        if (_showSelectedBar)
-          FilterBar(
-            scrollController: vodController.scrollController,
-          ),
-      ],
+                  const SliverToBoxAdapter(
+                    child: SizedBox(
+                      height: 10,
+                    ),
+                  )
+                ],
+                videos: vodController.vodList,
+                isListEmpty: vodController.isListEmpty.value,
+                displayNoMoreData: vodController.displayNoMoreData.value,
+                displayLoading: vodController.displayLoading.value,
+                displayVideoCollectTimes: false,
+                noMoreWidget: ListNoMore(),
+                customScrollController: vodController.scrollController,
+              )),
+          if (_showSelectedBar)
+            FilterBar(
+              scrollController: vodController.scrollController,
+            ),
+        ],
+      ),
     );
   }
 }
