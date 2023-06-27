@@ -5,6 +5,7 @@ import 'package:game/enums/game_app_routes.dart';
 import 'package:game/models/game_payment.dart';
 import 'package:game/screens/game_deposit_list_screen/show_user_name.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:game/utils/on_loading.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -18,7 +19,6 @@ Future<void> showPaymentMethod({
   int productId = 0,
   String balanceFiatMoneyPrice = '',
   String name = '',
-  Function? updateLoading,
   Function? onClose,
 }) async {
   int paymentMethod = 0;
@@ -49,13 +49,12 @@ Future<void> showPaymentMethod({
   }
 
   void submitOrder(int productId, String? userName) async {
-    // onLoading(context, status: true);
-    updateLoading!(true);
+    onLoading(context, status: true);
     // ignore: avoid_init_to_null
     if (await canLaunchUrl(Uri.parse(''))) {
       await launchUrl(Uri.parse(''), webOnlyWindowName: '_blank');
     }
-    await Future.delayed(const Duration(milliseconds: 66));
+    await Future.delayed(const Duration(milliseconds: 100));
     try {
       var value = await GameLobbyApi().makeOrder(
         productId: productId,
@@ -65,18 +64,18 @@ Future<void> showPaymentMethod({
       if (value.isNotEmpty && value.startsWith('http')) {
         if (GetPlatform.isWeb) {
           await Future.delayed(const Duration(milliseconds: 500));
-          // onLoading(context, status: false);
+          onLoading(context, status: false);
           Navigator.pop(context);
           launch(value, webOnlyWindowName: '_blank');
           MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
         } else {
           await launch(value, webOnlyWindowName: '_blank');
-          // onLoading(context, status: false);
+          onLoading(context, status: false);
           Navigator.pop(context);
           MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
         }
-        updateLoading(false);
       } else {
+        onLoading(context, status: false);
         showFormDialog(
           context,
           title: '交易失敗',
@@ -95,10 +94,9 @@ Future<void> showPaymentMethod({
             Navigator.pop(context),
           },
         );
-        updateLoading(false);
       }
     } catch (e) {
-      // onLoading(context, status: false);
+      onLoading(context, status: false);
       showFormDialog(
         context,
         title: '交易失敗',
@@ -116,7 +114,6 @@ Future<void> showPaymentMethod({
           Navigator.of(context).pop(),
         },
       );
-      updateLoading(false);
       logger.i('submitDepositOrder error: $e');
     }
   }
@@ -323,10 +320,12 @@ Future<void> showPaymentMethod({
                       showUserName(
                         context,
                         onSuccess: (userName) {
+                          Navigator.of(context).pop();
                           submitOrder(productId, userName);
                         },
                       );
                     } else {
+                      Navigator.of(context).pop();
                       submitOrder(productId, null);
                     }
                   },
