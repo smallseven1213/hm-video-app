@@ -15,8 +15,10 @@ class ControlsOverlay extends StatefulWidget {
 
 class ControlsOverlayState extends State<ControlsOverlay> {
   late ObservableVideoPlayerController ovpController;
+  String videoDurationString = '';
   int videoDuration = 0; // 影片總長度
   int videoPosition = 0; // 影片目前進度
+  // int sliderPosition = 0;
 
   @override
   void initState() {
@@ -24,11 +26,28 @@ class ControlsOverlayState extends State<ControlsOverlay> {
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
     ovpController.videoPlayerController.addListener(() {
-      if (mounted) {
+      if (mounted && ovpController.videoPlayerController.value.isInitialized) {
         setState(() {
-          videoDuration = ovpController
-              .videoPlayerController.value.duration.inSeconds
-              .toInt();
+          videoDurationString = ovpController
+              .videoPlayerController.value.duration
+              .toString()
+              .split('.')
+              .first;
+          // 將videoDurationString的HH MM SS拆出來，最後換算成秒數
+          List<String> durationList = videoDurationString.split(':');
+          if (durationList.length == 3) {
+            videoDuration = int.parse(durationList[0]) * 3600 +
+                int.parse(durationList[1]) * 60 +
+                int.parse(durationList[2]);
+          } else if (durationList.length == 2) {
+            videoDuration =
+                int.parse(durationList[0]) * 60 + int.parse(durationList[1]);
+          } else {
+            videoDuration = int.parse(durationList[0]);
+          }
+          // videoDuration = ovpController
+          //     .videoPlayerController.value.duration.inSeconds
+          //     .toInt();
           videoPosition = ovpController
               .videoPlayerController.value.position.inSeconds
               .toInt();
@@ -61,16 +80,18 @@ class ControlsOverlayState extends State<ControlsOverlay> {
         child: Stack(
           children: <Widget>[
             Positioned(
+                top: 0,
                 child: Container(
-              color: Colors.white,
-              child: Column(
-                children: [
-                  Text('boxWidth: $boxWidth'),
-                  Text('videoDurationInSeconds: $videoDuration'),
-                  Text('videoPositionInSeconds: $videoPosition'),
-                ],
-              ),
-            )),
+                  height: 50,
+                  color: Colors.white,
+                  child: Column(
+                    children: [
+                      Text('videoDurationString: $videoDurationString'),
+                      Text('videoDurationInSeconds: $videoDuration'),
+                      Text('videoPositionInSeconds: $videoPosition'),
+                    ],
+                  ),
+                )),
             Positioned(
               bottom: 0,
               child: Slider(
@@ -79,6 +100,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 max: videoDuration.toDouble(),
                 onChanged: (double value) {
                   updateVideoPosition(Duration(seconds: value.toInt()));
+                  // setState(() {
+                  //   sliderPosition = value.toInt();
+                  // });
                 },
               ),
             )
