@@ -78,14 +78,14 @@ class HomeState extends State<HomePage> {
         return Scaffold(
             body: currentScreen,
             // 通往異世界的入口
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {
-                MyRouteDelegate.of(context).push('/demo');
-              },
-              child: Icon(Icons.play_arrow),
-              backgroundColor: Colors.blue,
-              elevation: 4.0,
-            ),
+            // floatingActionButton: FloatingActionButton(
+            //   onPressed: () {
+            //     MyRouteDelegate.of(context).push('/demo');
+            //   },
+            //   child: Icon(Icons.play_arrow),
+            //   backgroundColor: Colors.blue,
+            //   elevation: 4.0,
+            // ),
             bottomNavigationBar: bottomNavigatorController
                     .navigatorItems.isEmpty
                 ? null
