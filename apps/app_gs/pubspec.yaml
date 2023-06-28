@@ -30,6 +30,8 @@ environment:
 dependencies:
   game:
     path: ../../packages/game
+  shared:
+    path: ../../packages/shared
   android_id: ^0.2.0
   build_runner: ^2.3.3
   device_info_plus: ^8.1.0

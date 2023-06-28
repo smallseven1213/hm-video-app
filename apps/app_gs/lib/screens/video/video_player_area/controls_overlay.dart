@@ -18,7 +18,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   String videoDurationString = '';
   int videoDuration = 0; // 影片總長度
   int videoPosition = 0; // 影片目前進度
-  // int sliderPosition = 0;
+  bool displayControls = false; // 是否要呈現影片控制區塊
 
   @override
   void initState() {
@@ -62,17 +62,26 @@ class ControlsOverlayState extends State<ControlsOverlay> {
     ovpController.videoPlayerController.seekTo(newPosition);
   }
 
+  void toggleDisplayControls() {
+    setState(() {
+      displayControls = !displayControls;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
-      var boxWidth = constraints.maxWidth;
       return GestureDetector(
+        onTap: toggleDisplayControls,
         onHorizontalDragUpdate: (details) {
           int newPositionSeconds = videoPosition + details.delta.dx.toInt();
-          // Make sure we are within the video duration
+
           if (newPositionSeconds < 0) newPositionSeconds = 0;
           if (newPositionSeconds > videoDuration) {
             newPositionSeconds = videoDuration;
+          }
+          if (!displayControls) {
+            toggleDisplayControls();
           }
 
           updateVideoPosition(Duration(seconds: newPositionSeconds));
@@ -82,30 +91,30 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             Positioned(
                 top: 0,
                 child: Container(
-                  height: 50,
-                  color: Colors.white,
-                  child: Column(
-                    children: [
-                      Text('videoDurationString: $videoDurationString'),
-                      Text('videoDurationInSeconds: $videoDuration'),
-                      Text('videoPositionInSeconds: $videoPosition'),
-                    ],
-                  ),
+                  height: constraints.maxHeight,
+                  width: constraints.maxWidth,
+                  color: Colors.transparent,
                 )),
-            Positioned(
-              bottom: 0,
-              child: Slider(
-                value: videoPosition.toDouble(),
-                min: 0,
-                max: videoDuration.toDouble(),
-                onChanged: (double value) {
-                  updateVideoPosition(Duration(seconds: value.toInt()));
-                  // setState(() {
-                  //   sliderPosition = value.toInt();
-                  // });
-                },
-              ),
-            )
+            if (displayControls)
+              // 下方控制區塊
+              Positioned(
+                bottom: 0,
+                child: Row(
+                  children: [
+                    Slider(
+                      value: videoPosition.toDouble(),
+                      min: 0,
+                      max: videoDuration.toDouble(),
+                      onChanged: (double value) {
+                        updateVideoPosition(Duration(seconds: value.toInt()));
+                        // setState(() {
+                        //   sliderPosition = value.toInt();
+                        // });
+                      },
+                    )
+                  ],
+                ),
+              )
           ],
         ),
       );
