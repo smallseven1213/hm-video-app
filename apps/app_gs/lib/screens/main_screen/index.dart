@@ -1,4 +1,5 @@
 import 'package:app_gs/screens/main_screen/channels.dart';
+import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
@@ -17,6 +18,18 @@ class HomeMainScreen extends StatelessWidget {
       child: GetBuilder<LayoutController>(
         tag: 'layout$layoutId',
         builder: (controller) {
+          if (controller.isLoading.value) {
+            return const Scaffold(
+              body: Center(
+                child: WaveLoading(
+                  color: Color.fromRGBO(255, 255, 255, 0.3),
+                  duration: Duration(milliseconds: 1000),
+                  size: 17,
+                  itemCount: 3,
+                ),
+              ),
+            );
+          }
           return Scaffold(
             appBar: PreferredSize(
               preferredSize: const Size.fromHeight(88),

@@ -1,4 +1,5 @@
 import 'package:app_gs/screens/games/game_lobby_screen/lobby.dart';
+import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
@@ -69,7 +70,16 @@ class HomeState extends State<HomePage> {
         var activeKey = bottomNavigatorController.activeKey.value;
 
         if (!screens.containsKey(activeKey)) {
-          return Container();
+          return const Scaffold(
+            body: Center(
+              child: WaveLoading(
+                color: Color.fromRGBO(255, 255, 255, 0.3),
+                duration: Duration(milliseconds: 1000),
+                size: 17,
+                itemCount: 3,
+              ),
+            ),
+          );
         }
 
         final currentScreen = screens[activeKey]!();

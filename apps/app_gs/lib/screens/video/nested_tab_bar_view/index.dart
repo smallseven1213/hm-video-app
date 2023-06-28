@@ -129,14 +129,15 @@ class NestedTabBarViewState extends State<NestedTabBarView>
             )
           ];
         },
-        body: TabBarView(
+        body: Obx(
+          () => TabBarView(
             controller: _tabController,
             physics: const BouncingScrollPhysics(),
             children: [
               if (widget.videoDetail.actors!.isNotEmpty)
                 SliverVodGrid(
                     key: const Key('video_by_actor'),
-                    isListEmpty: false,
+                    isListEmpty: blockVideosController.videoByActor.isEmpty,
                     videos: blockVideosController.videoByActor,
                     displayNoMoreData: false,
                     displayLoading: false,
@@ -146,7 +147,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                     onScrollEnd: () {}),
               SliverVodGrid(
                   key: const Key('video_by_internal_tag'),
-                  isListEmpty: false,
+                  isListEmpty: blockVideosController.videoByInternalTag.isEmpty,
                   videos: blockVideosController.videoByInternalTag,
                   displayNoMoreData: false,
                   displayLoading: false,
@@ -156,7 +157,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                   onScrollEnd: () {}),
               SliverVodGrid(
                   key: const Key('video_by_tag'),
-                  isListEmpty: false,
+                  isListEmpty: blockVideosController.videoByTag.isEmpty,
                   videos: blockVideosController.videoByTag,
                   displayNoMoreData: false,
                   displayLoading: false,
@@ -164,7 +165,9 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                   usePrimaryParentScrollController: true,
                   displayVideoCollectTimes: false,
                   onScrollEnd: () {}),
-            ]),
+            ],
+          ),
+        ),
         //   )
         // ],
       ),

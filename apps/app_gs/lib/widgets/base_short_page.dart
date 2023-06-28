@@ -7,6 +7,7 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_provider.dart';
 
 import 'shortcard/index.dart';
+import 'wave_loading.dart';
 
 final logger = Logger();
 
@@ -91,8 +92,18 @@ class BaseShortPageState extends State<BaseShortPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
+          if (cachedVods.isEmpty)
+            const Center(
+              child: WaveLoading(
+                color: Color.fromRGBO(255, 255, 255, 0.3),
+                duration: Duration(milliseconds: 1000),
+                size: 17,
+                itemCount: 3,
+              ),
+            ),
           PageView.builder(
             controller: _pageController,
             itemCount: cachedVods.length * 50,
