@@ -1,12 +1,17 @@
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import '../apis/channel_api.dart';
 import '../models/slim_channel.dart';
 import 'channel_data_controller.dart';
 
+var logger = Logger();
+
 class LayoutController extends GetxController {
   final int layoutId;
   var layout = <SlimChannel>[].obs;
+  var isLoading = false.obs;
+
   final chnnaleApi = ChannelApi();
 
   LayoutController(this.layoutId);
@@ -22,14 +27,19 @@ class LayoutController extends GetxController {
   }
 
   Future<void> fetchData() async {
-    var res = await chnnaleApi.getManyByLayout(layoutId);
-
-    for (var item in res) {
-      Get.lazyPut<ChannelDataController>(
-          () => ChannelDataController(channelId: item.id),
-          tag: 'channelId-${item.id}');
+    isLoading.value = true;
+    try {
+      var res = await chnnaleApi.getManyByLayout(layoutId);
+      for (var item in res) {
+        Get.lazyPut<ChannelDataController>(
+            () => ChannelDataController(channelId: item.id),
+            tag: 'channelId-${item.id}');
+      }
+      layout.value = res;
+    } catch (error) {
+      logger.i('fetchUserInfo error: $error');
+    } finally {
+      isLoading.value = false;
     }
-
-    layout.value = res;
   }
 }
