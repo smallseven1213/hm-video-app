@@ -1,4 +1,5 @@
 import 'package:app_gs/screens/games/game_lobby_screen/lobby.dart';
+import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
