@@ -129,7 +129,8 @@ class NestedTabBarViewState extends State<NestedTabBarView>
             )
           ];
         },
-        body: TabBarView(
+        body: Obx(
+          () => TabBarView(
             controller: _tabController,
             physics: const BouncingScrollPhysics(),
             children: [
@@ -164,7 +165,9 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                   usePrimaryParentScrollController: true,
                   displayVideoCollectTimes: false,
                   onScrollEnd: () {}),
-            ]),
+            ],
+          ),
+        ),
         //   )
         // ],
       ),
