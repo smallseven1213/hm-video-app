@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -145,51 +146,49 @@ class ShortCardState extends State<ShortCard> {
               bottom: 52 + screen.padding.bottom,
               left: -24,
               right: -24,
-              child: GestureDetector(
-                onHorizontalDragUpdate: (details) {
-                  final box = context.findRenderObject()! as RenderBox;
-                  final deltaX =
-                      startHorizontalDragX - details.globalPosition.dx;
-                  final percentageDelta = deltaX / box.size.width;
-                  final videoDuration = obsVideoPlayerController
-                      .videoPlayerController.value.duration.inSeconds;
-                  final newPositionSeconds = obsVideoPlayerController
-                          .videoPlayerController.value.position.inSeconds -
-                      (videoDuration * percentageDelta);
-
-                  // 拖動影片進度
-                  if (newPositionSeconds >= 0 &&
-                      newPositionSeconds <= videoDuration) {
-                    final newPosition =
-                        Duration(seconds: newPositionSeconds.round());
-                    obsVideoPlayerController.videoPlayerController
-                        .seekTo(newPosition);
-                  }
-                  startHorizontalDragX = details.globalPosition.dx;
-                },
-                onHorizontalDragStart: (details) {
-                  startHorizontalDragX = details.globalPosition.dx;
+              child: Listener(
+                onPointerDown: (details) {
                   setState(() {
                     isDragging = true;
                   });
                 },
-                onHorizontalDragEnd: (details) {
+                onPointerUp: (details) {
                   setState(() {
                     isDragging = false;
                   });
                 },
-                child: AnimatedContainer(
-                  color: Colors.white.withOpacity(0),
-                  duration: const Duration(milliseconds: 300),
-                  height: isDragging ? 40 : 35,
-                  child: VideoProgressIndicator(
-                    obsVideoPlayerController.videoPlayerController,
-                    allowScrubbing: false,
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    colors: VideoProgressColors(
-                      playedColor: const Color(0xffFFC700),
-                      bufferedColor: Colors.grey,
-                      backgroundColor: Colors.white.withOpacity(0.3),
+                child: RawGestureDetector(
+                  gestures: <Type, GestureRecognizerFactory>{
+                    HorizontalDragGestureRecognizer:
+                        GestureRecognizerFactoryWithHandlers<
+                            HorizontalDragGestureRecognizer>(
+                      () => HorizontalDragGestureRecognizer(),
+                      (HorizontalDragGestureRecognizer instance) {
+                        instance
+                          ..onStart = (DragStartDetails details) {
+                            // 可以处理拖动开始的事件
+                          }
+                          ..onUpdate = (DragUpdateDetails details) {
+                            // 可以处理拖动更新的事件
+                          }
+                          ..onEnd = (DragEndDetails details) {
+                            // 可以处理拖动结束的事件
+                          };
+                      },
+                    ),
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: isDragging ? 40 : 35,
+                    child: VideoProgressIndicator(
+                      obsVideoPlayerController.videoPlayerController,
+                      allowScrubbing: true,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      colors: VideoProgressColors(
+                        playedColor: const Color(0xffFFC700),
+                        bufferedColor: Colors.grey,
+                        backgroundColor: Colors.white.withOpacity(0.3),
+                      ),
                     ),
                   ),
                 ),
