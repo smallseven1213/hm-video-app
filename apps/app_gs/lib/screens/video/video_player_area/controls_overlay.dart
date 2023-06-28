@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 
 import 'play_pause_button.dart';
+import 'player_header.dart';
 import 'volume_brightness.dart';
 
 final logger = Logger();
@@ -20,8 +21,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   late ObservableVideoPlayerController ovpController;
   String videoDurationString = '';
   String videoPositionString = '';
+  bool displayAppBar = true;
   bool isPlaying = false;
   bool isForward = false;
+  bool inBuffering = false;
   int videoDuration = 0; // 影片總長度
   int videoPosition = 0; // 影片目前進度
   bool isScrolling = false; // 正在拖動影片
@@ -32,9 +35,15 @@ class ControlsOverlayState extends State<ControlsOverlay> {
     ovpController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        displayAppBar = false;
+      });
+    });
     ovpController.videoPlayerController.addListener(() {
       if (mounted && ovpController.videoPlayerController.value.isInitialized) {
         setState(() {
+          inBuffering = ovpController.videoPlayerController.value.isBuffering;
           isPlaying = ovpController.videoPlayerController.value.isPlaying;
           videoDurationString = ovpController
               .videoPlayerController.value.duration
@@ -67,6 +76,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
     super.initState();
   }
 
+  void showControls() {
+    setState(() {
+      displayControls = true;
+    });
+  }
+
   // 主動更新影片進度
   void updateVideoPosition(Duration newPosition) {
     ovpController.videoPlayerController.seekTo(newPosition);
@@ -78,14 +93,27 @@ class ControlsOverlayState extends State<ControlsOverlay> {
     });
   }
 
+  void startScrolling() {
+    setState(() {
+      isScrolling = true;
+    });
+  }
+
+  // Add a function to set isScrolling to false
+  void stopScrolling() {
+    setState(() {
+      isScrolling = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return GestureDetector(
         onTap: () {
-          toggleDisplayControls();
+          showControls();
           Future.delayed(Duration(seconds: 2), () {
-            if (displayControls) {
+            if (displayControls && !isScrolling) {
               toggleDisplayControls();
             }
           });
@@ -97,6 +125,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             ovpController.videoPlayerController.play();
           }
         },
+        onHorizontalDragStart: (details) {
+          startScrolling();
+          showControls();
+        },
         onHorizontalDragUpdate: (details) {
           int newPositionSeconds = videoPosition + details.delta.dx.toInt();
           // Make sure we are within the video duration
@@ -105,22 +137,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             newPositionSeconds = videoDuration;
           }
 
-          if (!displayControls) {
-            setState(() {
-              displayControls = true;
-            });
-          }
-          if (!isScrolling) {
-            setState(() {
-              isScrolling = true;
-            });
-          }
           updateVideoPosition(Duration(seconds: newPositionSeconds));
         },
         onHorizontalDragEnd: (details) {
-          setState(() {
-            isScrolling = false;
-          });
+          stopScrolling();
           Future.delayed(Duration(seconds: 2), () {
             if (displayControls) {
               toggleDisplayControls();
@@ -136,6 +156,18 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   width: constraints.maxWidth,
                   color: Colors.transparent,
                 )),
+            if (displayAppBar)
+              PlayerHeader(
+                isFullscreen: widget.isFullscreen,
+                title: widget.name,
+                toggleFullscreen: widget.toggleFullscreen,
+              ),
+            if (inBuffering)
+              const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                ),
+              ),
             if (isScrolling)
               Center(
                 child: RichText(
@@ -175,7 +207,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   ),
                 ),
               ),
-            if (!isPlaying && !isScrolling)
+            if (!isPlaying && !isScrolling && !inBuffering)
               // 中間播放按鈕
               InkWell(
                 onTap: () {
@@ -199,7 +231,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   ),
                 ),
               ),
-            if (displayControls)
+            if (displayControls || !isPlaying)
               // 下方控制區塊
               Positioned(
                 bottom: 0,
@@ -226,10 +258,17 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                       min: 0,
                       max: videoDuration.toDouble(),
                       onChanged: (double value) {
+                        startScrolling();
+                        showControls();
                         updateVideoPosition(Duration(seconds: value.toInt()));
-                        // setState(() {
-                        //   sliderPosition = value.toInt();
-                        // });
+                      },
+                      onChangeEnd: (double value) {
+                        stopScrolling();
+                        Future.delayed(Duration(seconds: 2), () {
+                          if (displayControls) {
+                            toggleDisplayControls();
+                          }
+                        });
                       },
                     ),
                     const SizedBox(width: 5.0),
