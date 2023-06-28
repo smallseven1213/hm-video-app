@@ -143,7 +143,7 @@ class ShortCardState extends State<ShortCard> {
               ),
             ),
             Positioned(
-              bottom: 52 + screen.padding.bottom,
+              bottom: 57 + screen.padding.bottom,
               left: -24,
               right: -24,
               child: Listener(
