@@ -28,18 +28,13 @@ class LayoutController extends GetxController {
 
   Future<void> fetchData() async {
     isLoading.value = true;
-    try {
-      var res = await chnnaleApi.getManyByLayout(layoutId);
-      for (var item in res) {
-        Get.lazyPut<ChannelDataController>(
-            () => ChannelDataController(channelId: item.id),
-            tag: 'channelId-${item.id}');
-      }
-      layout.value = res;
-    } catch (error) {
-      logger.i('fetchUserInfo error: $error');
-    } finally {
-      isLoading.value = false;
+    var res = await chnnaleApi.getManyByLayout(layoutId);
+    for (var item in res) {
+      Get.lazyPut<ChannelDataController>(
+          () => ChannelDataController(channelId: item.id),
+          tag: 'channelId-${item.id}');
     }
+    layout.value = res;
+    isLoading.value = false;
   }
 }

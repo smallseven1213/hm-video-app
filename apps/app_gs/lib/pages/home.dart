@@ -69,7 +69,16 @@ class HomeState extends State<HomePage> {
         var activeKey = bottomNavigatorController.activeKey.value;
 
         if (!screens.containsKey(activeKey)) {
-          return Container();
+          return const Scaffold(
+            body: Center(
+              child: WaveLoading(
+                color: Color.fromRGBO(255, 255, 255, 0.3),
+                duration: Duration(milliseconds: 1000),
+                size: 17,
+                itemCount: 3,
+              ),
+            ),
+          );
         }
 
         final currentScreen = screens[activeKey]!();
