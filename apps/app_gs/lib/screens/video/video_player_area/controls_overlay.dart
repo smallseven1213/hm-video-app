@@ -41,7 +41,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   late ObservableVideoPlayerController ovpController;
   String videoDurationString = '';
   String videoPositionString = '';
-  bool hasH5FirstPlay = kIsWeb ? true : false;
+  bool hasH5FirstPlay = kIsWeb ? false : true;
   bool isPlaying = false;
   bool isForward = false;
   bool inBuffering = false;
@@ -299,11 +299,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   ),
                 ),
               ),
-            if (kIsWeb &&
-                !hasH5FirstPlay &&
-                !isPlaying &&
-                !isScrolling &&
-                !inBuffering)
+            if (kIsWeb && !hasH5FirstPlay && !isPlaying)
               // 中間播放按鈕
               InkWell(
                 onTap: () {
