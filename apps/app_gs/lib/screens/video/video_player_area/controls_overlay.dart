@@ -41,6 +41,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   late ObservableVideoPlayerController ovpController;
   String videoDurationString = '';
   String videoPositionString = '';
+  bool hasH5FirstPlay = kIsWeb ? true : false;
   bool isPlaying = false;
   bool isForward = false;
   bool inBuffering = false;
@@ -247,7 +248,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   width: constraints.maxWidth,
                   color: Colors.transparent,
                 )),
-            if (displayControls)
+            if (displayControls || !isPlaying)
               PlayerHeader(
                 isFullscreen: widget.isFullscreen,
                 title: widget.name,
@@ -298,11 +299,20 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   ),
                 ),
               ),
-            if (!isPlaying && !isScrolling && !inBuffering)
+            if (kIsWeb &&
+                !hasH5FirstPlay &&
+                !isPlaying &&
+                !isScrolling &&
+                !inBuffering)
               // 中間播放按鈕
               InkWell(
                 onTap: () {
                   ovpController.videoPlayerController.play();
+                  if (kIsWeb && !hasH5FirstPlay) {
+                    setState(() {
+                      hasH5FirstPlay = true;
+                    });
+                  }
                 },
                 child: Center(
                   child: Container(
@@ -329,7 +339,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             if (displayControls || !isPlaying)
               // 下方控制區塊
               Positioned(
-                bottom: -5,
+                bottom: -10,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
@@ -354,11 +364,14 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                         // 使用Expanded讓SliderTheme填充剩餘的空間
                         child: SliderTheme(
                           data: SliderThemeData(
+                            trackShape: CustomTrackShape(),
                             trackHeight: 4.0, // 這可以設定滑塊軌道的高度
                             thumbShape: SliderComponentShape.noThumb, // 不顯示拖拽點
                             activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
                             inactiveTrackColor:
                                 Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
+                            overlayShape:
+                                RoundSliderOverlayShape(overlayRadius: 0.0),
                           ),
                           child: Slider(
                             value: videoPosition.toDouble(),
@@ -415,5 +428,22 @@ class ControlsOverlayState extends State<ControlsOverlay> {
         ),
       );
     });
+  }
+}
+
+class CustomTrackShape extends RoundedRectSliderTrackShape {
+  @override
+  Rect getPreferredRect({
+    required RenderBox parentBox,
+    Offset offset = Offset.zero,
+    required SliderThemeData sliderTheme,
+    bool isEnabled = false,
+    bool isDiscrete = false,
+  }) {
+    final trackHeight = sliderTheme.trackHeight;
+    final trackLeft = offset.dx + 5;
+    final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
+    final trackWidth = parentBox.size.width - 5;
+    return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
   }
 }
