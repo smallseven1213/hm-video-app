@@ -154,14 +154,30 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
               ),
               ControlsOverlay(
                 videoUrl: widget.videoUrl,
+                name: widget.video.title,
+                isFullscreen: isFullscreen,
+                onScreenLock: (bool isLocked) {
+                  setState(() {
+                    isScreenLocked = isLocked;
+                  });
+                  if (isLocked) {
+                    toggleFullscreen(fullScreen: true);
+                  } else {
+                    setScreenRotation();
+                  }
+                },
+                isScreenLocked: isScreenLocked,
+                toggleFullscreen: (status) {
+                  toggleFullscreen(fullScreen: status);
+                },
               )
               // ControlsOverlay(
               //   controller: videoPlayerController.videoPlayerController,
-              //   name: widget.video.title,
-              //   isFullscreen: isFullscreen,
-              //   toggleFullscreen: (status) {
-              //     toggleFullscreen(fullScreen: status);
-              //   },
+              // name: widget.video.title,
+              // isFullscreen: isFullscreen,
+              // toggleFullscreen: (status) {
+              //   toggleFullscreen(fullScreen: status);
+              // },
               //   isScreenLocked: isScreenLocked,
               //   isPlaying: videoPlayerController.videoAction.value == 'play',
               //   onScreenLock: (bool isLocked) {
