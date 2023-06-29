@@ -21,7 +21,7 @@ String getViewTimes(int videoViewTimes,
       ? '${(times / 1000000000).floor()}G'
       : (timeStr.length > 6
           ? '${(times / 1000000).floor()}M'
-          : (shouldCalculateThousands && timeStr.length > 3
+          : (shouldCalculateThousands && timeStr.length > 4
               ? '${formatNumber(times / 10000)}萬'
               : timeStr));
 }

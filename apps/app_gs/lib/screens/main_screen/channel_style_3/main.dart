@@ -1,5 +1,6 @@
 import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
+import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -91,6 +92,16 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
       body: Obx(() {
         final channelSharedData =
             channelSharedDataController!.channelSharedData.value;
+        if (channelSharedDataController!.isLoading.value) {
+          return const Center(
+            child: WaveLoading(
+              color: Color.fromRGBO(255, 255, 255, 0.3),
+              duration: Duration(milliseconds: 1000),
+              size: 17,
+              itemCount: 3,
+            ),
+          );
+        }
         return NestedScrollView(
           controller: _scrollController,
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {

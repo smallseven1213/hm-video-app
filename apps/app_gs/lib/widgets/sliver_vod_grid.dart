@@ -83,9 +83,6 @@ class SliverVodGridState extends State<SliverVodGrid> {
 
   @override
   Widget build(BuildContext context) {
-    int totalRows = (widget.videos.length / 2).ceil();
-    logger.i('totalRows $totalRows');
-
     return Obx(() {
       int totalRows = (widget.videos.length / 2).ceil();
       logger.i('totalRows $totalRows');

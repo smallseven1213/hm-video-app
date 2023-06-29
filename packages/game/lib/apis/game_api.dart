@@ -336,7 +336,7 @@ class GameLobbyApi {
           {int type = 1, int page = 1, int limit = 100}) =>
       fetcher(
               url:
-                  '${systemConfig.apiHost}/public/product/list?page=$page&limit=$limit&type=$type')
+                  '${systemConfig.apiHost}/public/products/product/list?page=$page&limit=$limit&type=$type')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
         if (res['code'] != '00') {
@@ -410,6 +410,29 @@ class GameLobbyApi {
               .map((e) => WithdrawalRecord.fromJson(e)));
       return record;
     });
+  }
+
+  // 遊戲大廳 存款申請
+  Future<String> makeOrder({
+    String agentAccount = '',
+    required int productId,
+    required int paymentChannelId,
+    String? name,
+  }) async {
+    var value = await fetcher(
+      url: '$apiPrefix/deposit',
+      method: 'POST',
+      body: {
+        'name': name,
+        'productId': productId,
+        'paymentChannelId': paymentChannelId,
+      },
+    );
+    var res = (value.data as Map<String, dynamic>);
+    if (res['code'] != '00') {
+      return res['code'];
+    }
+    return res['data']['paymentLink'];
   }
 
   // new version 遊戲大廳 存款申請v2

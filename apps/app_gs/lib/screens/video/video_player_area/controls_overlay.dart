@@ -7,11 +7,10 @@ import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:volume_control/volume_control.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'enums.dart';
-import 'play_pause_button.dart';
 import 'player_header.dart';
-import 'progress_bar.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
 

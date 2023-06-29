@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -8,7 +9,6 @@ import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/widgets/video_player/player.dart';
-import 'package:shared/widgets/video_player/progress.dart';
 import 'package:video_player/video_player.dart';
 import '../short_bottom_area.dart';
 import '../wave_loading.dart';
@@ -45,6 +45,8 @@ class ShortCardState extends State<ShortCard> {
   late ObservableVideoPlayerController obsVideoPlayerController;
   double trackHeight = 2.0;
   double startHorizontalDragX = 0.0;
+
+  bool isDragging = false;
 
   @override
   void initState() {
@@ -88,6 +90,7 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+    var screenWidth = MediaQuery.of(context).size.width;
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
@@ -140,23 +143,54 @@ class ShortCardState extends State<ShortCard> {
               ),
             ),
             Positioned(
-              bottom: 52 + screen.padding.bottom,
+              bottom: 57 + screen.padding.bottom,
               left: -24,
               right: -24,
-              child: ValueListenableBuilder<VideoPlayerValue>(
-                valueListenable: obsVideoPlayerController.videoPlayerController,
-                builder: (context, value, _) => VideoProgressSlider(
-                  controller: obsVideoPlayerController.videoPlayerController,
-                  position: value.position,
-                  duration: value.duration,
-                  swatch: const Color(0xffFFC700),
-                  trackHeight: trackHeight,
-                  onChangeStart: (value) => setState(() {
-                    trackHeight = 4;
-                  }),
-                  onChangeEnd: (value) => setState(() {
-                    trackHeight = 2;
-                  }),
+              child: Listener(
+                onPointerDown: (details) {
+                  setState(() {
+                    isDragging = true;
+                  });
+                },
+                onPointerUp: (details) {
+                  setState(() {
+                    isDragging = false;
+                  });
+                },
+                child: RawGestureDetector(
+                  gestures: <Type, GestureRecognizerFactory>{
+                    HorizontalDragGestureRecognizer:
+                        GestureRecognizerFactoryWithHandlers<
+                            HorizontalDragGestureRecognizer>(
+                      () => HorizontalDragGestureRecognizer(),
+                      (HorizontalDragGestureRecognizer instance) {
+                        instance
+                          ..onStart = (DragStartDetails details) {
+                            // 可以处理拖动开始的事件
+                          }
+                          ..onUpdate = (DragUpdateDetails details) {
+                            // 可以处理拖动更新的事件
+                          }
+                          ..onEnd = (DragEndDetails details) {
+                            // 可以处理拖动结束的事件
+                          };
+                      },
+                    ),
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    height: isDragging ? 40 : 35,
+                    child: VideoProgressIndicator(
+                      obsVideoPlayerController.videoPlayerController,
+                      allowScrubbing: true,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
+                      colors: VideoProgressColors(
+                        playedColor: const Color(0xffFFC700),
+                        bufferedColor: Colors.grey,
+                        backgroundColor: Colors.white.withOpacity(0.3),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ),
