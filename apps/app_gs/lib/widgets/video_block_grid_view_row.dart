@@ -30,45 +30,51 @@ class VideoBlockGridViewRow extends StatelessWidget {
     this.film = 1,
   }) : super(key: key);
 
+  Widget _buildVideoPreviewWidget(Vod video) {
+    return Expanded(
+      child: VideoPreviewWidget(
+        id: video.id,
+        title: video.title,
+        tags: video.tags ?? [],
+        timeLength: video.timeLength ?? 0,
+        coverHorizontal: video.coverHorizontal ?? '',
+        coverVertical: video.coverVertical ?? '',
+        videoViewTimes: video.videoViewTimes ?? 0,
+        videoCollectTimes: video.videoCollectTimes ?? 0,
+        imageRatio: imageRatio,
+        detail: video,
+        isEmbeddedAds: isEmbeddedAds,
+        displayCoverVertical: displayCoverVertical ?? false,
+        blockId: blockId,
+        film: film,
+        displayVideoCollectTimes: displayVideoCollectTimes,
+        displayVideoTimes: displayVideoTimes,
+        displayViewTimes: displayViewTimes,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     // logger.i('widget.videoData.length: ${videoData}');
-    if (videoData.length == 1) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: VideoPreviewWidget(
-              id: videoData[0].id,
-              title: videoData[0].title,
-              tags: videoData[0].tags ?? [],
-              timeLength: videoData[0].timeLength ?? 0,
-              coverHorizontal: videoData[0].coverHorizontal ?? '',
-              coverVertical: videoData[0].coverVertical ?? '',
-              videoViewTimes: videoData[0].videoViewTimes ?? 0,
-              videoCollectTimes: videoData[0].videoCollectTimes ?? 0,
-              imageRatio: imageRatio,
-              detail: videoData[0],
-              isEmbeddedAds: isEmbeddedAds,
-              displayCoverVertical: displayCoverVertical ?? false,
-              blockId: blockId,
-              hasInfoView: hasInfoView,
-              film: film,
-              displayVideoCollectTimes: displayVideoCollectTimes,
-              displayVideoTimes: displayVideoTimes,
-              displayViewTimes: displayViewTimes,
+    if (gridLength == 3) {
+      if (videoData.length == 2) {
+        return Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(child: _buildVideoPreviewWidget(videoData[0])),
+            const SizedBox(width: 10),
+            Expanded(child: _buildVideoPreviewWidget(videoData[1])),
+            const SizedBox(width: 10),
+            const Expanded(
+              child: SizedBox(
+                height: 100,
+                width: double.infinity,
+              ),
             ),
-          ),
-          const SizedBox(width: 10),
-          const Expanded(
-            child: SizedBox(
-              height: 100,
-              width: double.infinity,
-            ),
-          ),
-        ],
-      );
-    } else if (gridLength == 3) {
+          ],
+        );
+      }
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: videoData
@@ -103,10 +109,34 @@ class VideoBlockGridViewRow extends StatelessWidget {
                         ),
                       ),
                 const SizedBox(width: 10),
+                if (videoData.length == 1)
+                  for (var i = 0; i < 2; i++) ...[
+                    const Expanded(
+                      child: SizedBox(
+                        height: 100,
+                        width: double.infinity,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                  ],
               ],
             )
             .toList()
           ..removeLast(),
+      );
+    } else if (gridLength != 3 && videoData.length == 1) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(child: _buildVideoPreviewWidget(videoData[0])),
+          const SizedBox(width: 10),
+          const Expanded(
+            child: SizedBox(
+              height: 100,
+              width: double.infinity,
+            ),
+          ),
+        ],
       );
     }
 
