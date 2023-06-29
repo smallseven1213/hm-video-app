@@ -18,40 +18,44 @@ class HomeMainScreen extends StatelessWidget {
       child: GetBuilder<LayoutController>(
         tag: 'layout$layoutId',
         builder: (controller) {
-          if (controller.isLoading.value) {
-            return const Scaffold(
-              body: Center(
-                child: WaveLoading(
-                  color: Color.fromRGBO(255, 255, 255, 0.3),
-                  duration: Duration(milliseconds: 1000),
-                  size: 17,
-                  itemCount: 3,
+          return Obx(
+            () {
+              if (controller.isLoading.value) {
+                return const Scaffold(
+                  body: Center(
+                    child: WaveLoading(
+                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                      duration: Duration(milliseconds: 1000),
+                      size: 17,
+                      itemCount: 3,
+                    ),
+                  ),
+                );
+              }
+              return Scaffold(
+                appBar: PreferredSize(
+                  preferredSize: const Size.fromHeight(88),
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top),
+                    child: Column(children: [
+                      Expanded(
+                          child: LayoutTabBar(
+                        key: Key('layout-tab-bar-$layoutId'),
+                        layoutId: layoutId,
+                      )),
+                      Expanded(
+                        child: ChannelSearchBar(),
+                      )
+                    ]),
+                    // Expanded(
+                    //   child: Marquee(),
+                    // ),
+                  ),
                 ),
-              ),
-            );
-          }
-          return Scaffold(
-            appBar: PreferredSize(
-              preferredSize: const Size.fromHeight(88),
-              child: Padding(
-                padding:
-                    EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-                child: Column(children: [
-                  Expanded(
-                      child: LayoutTabBar(
-                    key: Key('layout-tab-bar-$layoutId'),
-                    layoutId: layoutId,
-                  )),
-                  Expanded(
-                    child: ChannelSearchBar(),
-                  )
-                ]),
-                // Expanded(
-                //   child: Marquee(),
-                // ),
-              ),
-            ),
-            body: Channels(layoutId: layoutId),
+                body: Channels(layoutId: layoutId),
+              );
+            },
           );
         },
       ),
