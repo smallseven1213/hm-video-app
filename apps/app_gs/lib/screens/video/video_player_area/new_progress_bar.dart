@@ -42,7 +42,7 @@ class _ProgressBarState extends State<NewProgressBar> {
         trackHeight: 4.0,
         thumbColor: Colors.transparent,
         thumbShape: const RoundSliderThumbShape(
-            enabledThumbRadius: 0.0), // Remove the thumb
+            enabledThumbRadius: 8.0), // Remove the thumb
         overlayColor: Colors.blue,
         overlayShape: const RoundSliderOverlayShape(
             overlayRadius: 0.0), // Remove the overlay
@@ -51,7 +51,7 @@ class _ProgressBarState extends State<NewProgressBar> {
         value: _sliderValue,
         onChanged: (value) {
           setState(() {
-            _sliderValue = value;
+            // _sliderValue = value;
             widget.onDragUpdate(
                 value * widget.videoDuration); // Call the provided callback
           });
