@@ -33,42 +33,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // logger.i('widget.videoData.length: ${videoData}');
-    if (videoData.length == 1) {
-      return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: VideoPreviewWidget(
-              id: videoData[0].id,
-              title: videoData[0].title,
-              tags: videoData[0].tags ?? [],
-              timeLength: videoData[0].timeLength ?? 0,
-              coverHorizontal: videoData[0].coverHorizontal ?? '',
-              coverVertical: videoData[0].coverVertical ?? '',
-              videoViewTimes: videoData[0].videoViewTimes ?? 0,
-              videoCollectTimes: videoData[0].videoCollectTimes ?? 0,
-              imageRatio: imageRatio,
-              detail: videoData[0],
-              isEmbeddedAds: isEmbeddedAds,
-              displayCoverVertical: displayCoverVertical ?? false,
-              blockId: blockId,
-              hasInfoView: hasInfoView,
-              film: film,
-              displayVideoCollectTimes: displayVideoCollectTimes,
-              displayVideoTimes: displayVideoTimes,
-              displayViewTimes: displayViewTimes,
-            ),
-          ),
-          const SizedBox(width: 10),
-          const Expanded(
-            child: SizedBox(
-              height: 100,
-              width: double.infinity,
-            ),
-          ),
-        ],
-      );
-    } else if (gridLength == 3) {
+    if (gridLength == 3) {
       return Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: videoData
@@ -103,10 +68,64 @@ class VideoBlockGridViewRow extends StatelessWidget {
                         ),
                       ),
                 const SizedBox(width: 10),
+                if (videoData.length == 1)
+                  for (var i = 0; i < 2; i++) ...[
+                    const Expanded(
+                      child: SizedBox(
+                        height: 100,
+                        width: double.infinity,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                  ],
+                if (videoData.length == 2) ...[
+                  const Expanded(
+                    child: SizedBox(
+                      height: 100,
+                      width: double.infinity,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                ]
               ],
             )
             .toList()
           ..removeLast(),
+      );
+    } else if (gridLength != 3 && videoData.length == 1) {
+      return Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: VideoPreviewWidget(
+              id: videoData[0].id,
+              title: videoData[0].title,
+              tags: videoData[0].tags ?? [],
+              timeLength: videoData[0].timeLength ?? 0,
+              coverHorizontal: videoData[0].coverHorizontal ?? '',
+              coverVertical: videoData[0].coverVertical ?? '',
+              videoViewTimes: videoData[0].videoViewTimes ?? 0,
+              videoCollectTimes: videoData[0].videoCollectTimes ?? 0,
+              imageRatio: imageRatio,
+              detail: videoData[0],
+              isEmbeddedAds: isEmbeddedAds,
+              displayCoverVertical: displayCoverVertical ?? false,
+              blockId: blockId,
+              hasInfoView: hasInfoView,
+              film: film,
+              displayVideoCollectTimes: displayVideoCollectTimes,
+              displayVideoTimes: displayVideoTimes,
+              displayViewTimes: displayViewTimes,
+            ),
+          ),
+          const SizedBox(width: 10),
+          const Expanded(
+            child: SizedBox(
+              height: 100,
+              width: double.infinity,
+            ),
+          ),
+        ],
       );
     }
 
