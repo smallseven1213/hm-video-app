@@ -217,13 +217,17 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           });
         },
         onHorizontalDragStart: (details) {
+          if (details.localPosition.dy > constraints.maxHeight - 30) {
+            return;
+          }
           if (mounted) {
             startScrolling();
             showControls();
           }
         },
         onHorizontalDragUpdate: (details) {
-          if (!mounted) {
+          if (!mounted ||
+              details.localPosition.dy > constraints.maxHeight - 30) {
             return;
           }
           double dragPercentage = details.delta.dx /
