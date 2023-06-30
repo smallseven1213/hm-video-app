@@ -15,8 +15,6 @@ dependencies:
   shared:
     path: ../../packages/shared
   device_info_plus: ^8.1.0
-  android_id: ^0.2.0
-  flutter_dotenv: ^5.0.2
   get: ^4.6.5
   get_storage: ^2.0.3
   hive: ^2.2.3

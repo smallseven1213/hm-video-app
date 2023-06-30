@@ -71,7 +71,8 @@ class RefreshListState extends State<RefreshList> {
                             color: Color(0xFF486a89),
                           )),
                     if (mode == RefreshStatus.refreshing)
-                      const VideoListLoadingText(),
+                      // ignore: prefer_const_constructors
+                      VideoListLoadingText(),
                     const SizedBox(height: 15),
                   ],
                 ),
