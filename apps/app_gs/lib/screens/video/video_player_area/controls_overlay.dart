@@ -151,11 +151,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
       return GestureDetector(
         onTap: () {
           showControls();
-          Future.delayed(Duration(seconds: 2), () {
-            if (displayControls && !isScrolling) {
-              toggleDisplayControls();
-            }
-          });
+          startToggleControlsTimer();
         },
         onDoubleTap: () {
           if (isPlaying) {
@@ -165,7 +161,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           }
         },
         onVerticalDragStart: (DragStartDetails details) {
-          if (GetPlatform.isWeb) {
+          if (GetPlatform.isWeb || !mounted) {
             return;
           }
           setState(() {
@@ -180,6 +176,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           });
         },
         onVerticalDragUpdate: (DragUpdateDetails details) {
+          if (!mounted) {
+            return;
+          }
           lastDragPosition ??= details.globalPosition.dy;
           // 計算滑動距離並將其正規化到0到1之間
           double deltaY = details.globalPosition.dy - lastDragPosition!;
@@ -214,10 +213,19 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           });
         },
         onHorizontalDragStart: (details) {
-          startScrolling();
-          showControls();
+          if (details.localPosition.dy > constraints.maxHeight - 30) {
+            return;
+          }
+          if (mounted) {
+            startScrolling();
+            showControls();
+          }
         },
         onHorizontalDragUpdate: (details) {
+          if (!mounted ||
+              details.localPosition.dy > constraints.maxHeight - 30) {
+            return;
+          }
           double dragPercentage = details.delta.dx /
               (MediaQuery.of(context).size.width * 0.3); // 计算滑动距离占屏幕宽度的比例
           int newPositionSeconds = videoPosition +
@@ -233,11 +241,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
         },
         onHorizontalDragEnd: (details) {
           stopScrolling();
-          Future.delayed(Duration(seconds: 2), () {
-            if (displayControls) {
-              toggleDisplayControls();
-            }
-          });
+          startToggleControlsTimer();
         },
         child: Stack(
           children: <Widget>[
@@ -335,7 +339,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             if (displayControls || !isPlaying)
               // 下方控制區塊
               Positioned(
-                bottom: -10,
+                bottom: 0,
                 child: Container(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
@@ -360,9 +364,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                         // 使用Expanded讓SliderTheme填充剩餘的空間
                         child: SliderTheme(
                           data: SliderThemeData(
-                            trackShape: CustomTrackShape(),
+                            // trackShape: CustomTrackShape(),
                             trackHeight: 4.0, // 這可以設定滑塊軌道的高度
-                            thumbShape: SliderComponentShape.noThumb, // 不顯示拖拽點
+                            thumbShape: TransparentSliderThumbShape(),
                             activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
                             inactiveTrackColor:
                                 Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
@@ -374,18 +378,16 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                             min: 0,
                             max: videoDuration.toDouble(),
                             onChanged: (double value) {
-                              startScrolling();
-                              showControls();
-                              updateVideoPosition(
-                                  Duration(seconds: value.toInt()));
+                              if (mounted) {
+                                startScrolling();
+                                showControls();
+                                updateVideoPosition(
+                                    Duration(seconds: value.toInt()));
+                              }
                             },
                             onChangeEnd: (double value) {
                               stopScrolling();
-                              Future.delayed(Duration(seconds: 2), () {
-                                if (displayControls) {
-                                  toggleDisplayControls();
-                                }
-                              });
+                              startToggleControlsTimer();
                             },
                           ),
                         ),
@@ -441,5 +443,41 @@ class CustomTrackShape extends RoundedRectSliderTrackShape {
     final trackTop = offset.dy + (parentBox.size.height - trackHeight!) / 2;
     final trackWidth = parentBox.size.width - 5;
     return Rect.fromLTWH(trackLeft, trackTop, trackWidth, trackHeight);
+  }
+}
+
+class TransparentSliderThumbShape extends SliderComponentShape {
+  final double thumbRadius;
+
+  TransparentSliderThumbShape({this.thumbRadius = 6.0});
+
+  @override
+  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
+    return Size.fromRadius(thumbRadius);
+  }
+
+  @override
+  void paint(
+    PaintingContext context,
+    Offset center, {
+    required Animation<double> activationAnimation,
+    required Animation<double> enableAnimation,
+    bool? isDiscrete,
+    TextPainter? labelPainter,
+    RenderBox? parentBox,
+    SliderThemeData? sliderTheme,
+    TextDirection? textDirection,
+    double? value,
+    double? textScaleFactor,
+    Size? sizeWithOverflow,
+  }) {
+    final Canvas canvas = context.canvas;
+    final Paint paintThumb = Paint()..color = Colors.transparent; // 设置为透明色
+
+    canvas.drawCircle(
+      center,
+      thumbRadius * enableAnimation.value,
+      paintThumb,
+    );
   }
 }

@@ -52,7 +52,7 @@ class GameListItem extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: double.infinity,
-                      color: gameLobbyTabBgColor,
+                      color: gameLobbyEmptyColor,
                     ),
                     kIsWeb
                         ? Image.network(

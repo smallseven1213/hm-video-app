@@ -90,6 +90,8 @@ final gameLobbyBoxBgColor =
     gameTheme[theme]!['gameLobbyBoxBgColor'] ?? Colors.transparent;
 final gameRecordLabelTextColor =
     gameTheme[theme]!['gameRecordLabelTextColor'] ?? Colors.transparent;
+final gameLobbyEmptyColor =
+    gameTheme[theme]!['gameLobbyEmptyColor'] ?? Colors.transparent;
 
 class DarkThemeColors {
   static const gameLobbyBgColor = Color(0xff1E2123);
@@ -131,6 +133,7 @@ class DarkThemeColors {
   static const gameLobbyLoginPlaceholderColor = Color(0xff979797);
   static const gameLobbyBoxBgColor = Color(0xff383d44);
   static const gameRecordLabelTextColor = Colors.white;
+  static const gameLobbyEmptyColor = Color(0xff2c2c2c);
 }
 
 class LightThemeColors {
@@ -173,6 +176,7 @@ class LightThemeColors {
   static const gameLobbyLoginPlaceholderColor = Color(0xffd2deda);
   static const gameLobbyBoxBgColor = Color(0xffe6f9f2);
   static const gameRecordLabelTextColor = Color(0xFF979797);
+  static const gameLobbyEmptyColor = Color(0xffededed);
 }
 
 Map<String, Map<String, Color>> gameTheme = {
@@ -219,6 +223,7 @@ Map<String, Map<String, Color>> gameTheme = {
         LightThemeColors.gameLobbyLoginPlaceholderColor,
     'gameLobbyBoxBgColor': LightThemeColors.gameLobbyBoxBgColor,
     'gameRecordLabelTextColor': LightThemeColors.gameRecordLabelTextColor,
+    'gameLobbyEmptyColor': LightThemeColors.gameLobbyEmptyColor,
   },
   'dark': {
     'gameLobbyBgColor': DarkThemeColors.gameLobbyBgColor,
@@ -263,5 +268,6 @@ Map<String, Map<String, Color>> gameTheme = {
         DarkThemeColors.gameLobbyLoginPlaceholderColor,
     'gameLobbyBoxBgColor': DarkThemeColors.gameLobbyBoxBgColor,
     'gameRecordLabelTextColor': DarkThemeColors.gameRecordLabelTextColor,
+    'gameLobbyEmptyColor': DarkThemeColors.gameLobbyEmptyColor,
   }
 };
