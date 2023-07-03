@@ -73,7 +73,6 @@ class _GameWebviewToggleButtonWidget
                                 ? true
                                 : false),
                     onConfirm: () {
-                      MyRouteDelegate.of(context).popRoute();
                       Get.find<GameStartupController>()
                           .goBackToAppHome(context);
                     },
