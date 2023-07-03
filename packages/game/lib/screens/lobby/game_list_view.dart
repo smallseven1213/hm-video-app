@@ -32,14 +32,14 @@ class GameListItem extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, .10),
-            offset: Offset(0.5, 0.5),
-            spreadRadius: 1.5,
-            blurRadius: 5.0,
-          ),
-        ],
+        // boxShadow: const [
+        //   BoxShadow(
+        //     color: Color.fromRGBO(0, 0, 0, .10),
+        //     offset: Offset(0.5, 0.5),
+        //     spreadRadius: 1.5,
+        //     blurRadius: 5.0,
+        //   ),
+        // ],
       ),
       child: AnimatedOpacity(
         opacity: 1.0,
