@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class OliveShape extends StatefulWidget {
   final String text;
   final String? type;
-  final Color? bgColor;
+  final LinearGradient? bgColor;
   final Color? textColor;
   final double? width;
 
@@ -11,7 +11,8 @@ class OliveShape extends StatefulWidget {
     Key? key,
     required this.text,
     this.type = 'left', // 'left' or 'right
-    this.bgColor = const Color(0xfffd5900),
+    this.bgColor =
+        const LinearGradient(colors: [Color(0xfffd5900), Color(0xfffd5900)]),
     this.textColor = Colors.white,
     this.width,
   }) : super(key: key);
@@ -36,18 +37,13 @@ class _OliveShapeState extends State<OliveShape> {
       child: Container(
         width: widget.width ?? widget.text.length * 10,
         height: 12,
-        color: widget.bgColor,
-        child: Center(
-          child: RichText(
-            textAlign: TextAlign.center,
-            text: TextSpan(
-              text: widget.text,
-              style: TextStyle(
-                color: widget.textColor,
-                fontSize: 10,
-                height: 1.0, // 调整行高
-              ),
-            ),
+        decoration: BoxDecoration(gradient: widget.bgColor),
+        child: Text(
+          widget.text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: widget.textColor,
+            fontSize: 10,
           ),
         ),
       ),
