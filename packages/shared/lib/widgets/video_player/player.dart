@@ -13,11 +13,13 @@ final logger = Logger();
 class VideoPlayerDisplayWidget extends StatelessWidget {
   final ObservableVideoPlayerController controller;
   final Vod video;
+  final Function toggleFullscreen;
 
   const VideoPlayerDisplayWidget({
     super.key,
     required this.controller,
     required this.video,
+    required this.toggleFullscreen,
   });
 
   @override
@@ -25,8 +27,6 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
     Size videoSize = controller.videoPlayerController.value.size;
     var aspectRatio =
         videoSize.width / (videoSize.height != 0 ? videoSize.height : 1);
-
-    print('videoSize: ${videoSize.height} / ${videoSize.width}');
 
     return Container(
       color: Colors.black,
@@ -119,7 +119,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   bottom: 150,
                   child: Center(
                       child: ElevatedButton.icon(
-                    onPressed: () => controller.toggleFullScreen(),
+                    onPressed: () => toggleFullscreen(),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor:

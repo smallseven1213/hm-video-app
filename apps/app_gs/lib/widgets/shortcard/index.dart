@@ -1,13 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
@@ -26,6 +29,8 @@ class ShortCard extends StatefulWidget {
   final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
+  // final bool isFullscreen;
+  final Function toggleFullScreen;
 
   const ShortCard({
     Key? key,
@@ -34,6 +39,8 @@ class ShortCard extends StatefulWidget {
     required this.id,
     required this.title,
     required this.shortData,
+    required this.toggleFullScreen,
+    // required this.isFullscreen,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
@@ -47,6 +54,8 @@ class ShortCardState extends State<ShortCard> {
   late ObservableVideoPlayerController obsVideoPlayerController;
   double trackHeight = 2.0;
   double startHorizontalDragX = 0.0;
+  final PageViewIndexController pageviewIndexController =
+      Get.find<PageViewIndexController>();
 
   bool isDragging = false;
 
@@ -100,35 +109,36 @@ class ShortCardState extends State<ShortCard> {
       var videoDetail = videoDetailController.videoDetail.value;
       var videoUrl = videoDetailController.videoUrl.value;
 
-      if (obsVideoPlayerController.isFullscreen.value == true &&
-          video != null) {
+      if (pageviewIndexController.isFullscreen.value == true && video != null) {
         Size videoSize =
             obsVideoPlayerController.videoPlayerController.value.size;
         var aspectRatio =
-            videoSize.width / (videoSize.height != 0 ? videoSize.height : 1);
+            videoSize.width / (videoSize.height != 0.0 ? videoSize.height : 1);
 
         return Stack(
           children: [
-            Center(
-              child: AspectRatio(
-                aspectRatio: aspectRatio,
-                child: VideoPlayer(
-                  obsVideoPlayerController.videoPlayerController,
+            if (obsVideoPlayerController.isReady.value &&
+                !isLoading &&
+                videoUrl.isNotEmpty)
+              Center(
+                child: AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: VideoPlayer(
+                    obsVideoPlayerController.videoPlayerController,
+                  ),
                 ),
               ),
-            ),
             FullScreenControls(
               videoUrl: videoUrl,
-              isFullscreen: obsVideoPlayerController.isFullscreen.value,
+              isFullscreen: pageviewIndexController.isFullscreen.value,
               toggleFullscreen: () {
-                obsVideoPlayerController.toggleFullScreen();
+                widget.toggleFullScreen();
               },
               ovpController: obsVideoPlayerController,
             ),
           ],
         );
       }
-
       return Container(
         color: Colors.black,
         child: Stack(
@@ -138,7 +148,7 @@ class ShortCardState extends State<ShortCard> {
               width: double.infinity,
               child: Stack(
                 children: [
-                  if (video != null)
+                  if (video == null)
                     const WaveLoading(
                       color: Color.fromRGBO(255, 255, 255, 0.3),
                       duration: Duration(milliseconds: 1000),
@@ -152,6 +162,9 @@ class ShortCardState extends State<ShortCard> {
                     VideoPlayerDisplayWidget(
                       controller: obsVideoPlayerController,
                       video: video,
+                      toggleFullscreen: () {
+                        widget.toggleFullScreen();
+                      },
                     ),
                   if (videoDetail != null)
                     ShortCardInfo(
