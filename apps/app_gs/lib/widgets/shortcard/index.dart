@@ -8,10 +8,12 @@ import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../short_bottom_area.dart';
 import '../wave_loading.dart';
+import 'fullscreen_controls.dart';
 import 'short_card_info.dart';
 
 final logger = Logger();
@@ -97,6 +99,35 @@ class ShortCardState extends State<ShortCard> {
       var video = videoDetailController.video.value;
       var videoDetail = videoDetailController.videoDetail.value;
       var videoUrl = videoDetailController.videoUrl.value;
+
+      if (obsVideoPlayerController.isFullscreen.value == true &&
+          video != null) {
+        Size videoSize =
+            obsVideoPlayerController.videoPlayerController.value.size;
+        var aspectRatio =
+            videoSize.width / (videoSize.height != 0 ? videoSize.height : 1);
+
+        return Stack(
+          children: [
+            Center(
+              child: AspectRatio(
+                aspectRatio: aspectRatio,
+                child: VideoPlayer(
+                  obsVideoPlayerController.videoPlayerController,
+                ),
+              ),
+            ),
+            FullScreenControls(
+              videoUrl: videoUrl,
+              isFullscreen: obsVideoPlayerController.isFullscreen.value,
+              toggleFullscreen: () {
+                obsVideoPlayerController.toggleFullScreen();
+              },
+              ovpController: obsVideoPlayerController,
+            ),
+          ],
+        );
+      }
 
       return Container(
         color: Colors.black,
@@ -194,6 +225,7 @@ class ShortCardState extends State<ShortCard> {
                 ),
               ),
             ),
+            const FloatPageBackButton()
           ],
         ),
       );

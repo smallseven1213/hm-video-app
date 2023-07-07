@@ -134,7 +134,6 @@ class BaseShortPageState extends State<BaseShortPage> {
             },
             scrollDirection: Axis.vertical,
           ),
-          const FloatPageBackButton()
         ],
       ),
     );
