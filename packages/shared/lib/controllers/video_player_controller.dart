@@ -1,10 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
+
+import '../utils/screen_control.dart';
 
 final logger = Logger();
 
@@ -18,6 +22,8 @@ class ObservableVideoPlayerController extends GetxController {
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
   final String obsKey;
+  final RxBool isFullscreen = false.obs;
+
   var errorMessage = ''.obs;
 
   ObservableVideoPlayerController(this.obsKey, this.videoUrl);
@@ -109,6 +115,19 @@ class ObservableVideoPlayerController extends GetxController {
 
   void toggleControls() {
     isVisibleControls.value = !isVisibleControls.value;
+    update();
+  }
+
+  void toggleFullScreen() {
+    isFullscreen.value = !isFullscreen.value;
+    if (isFullscreen.value) {
+      setScreenLandScape();
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+    }
     update();
   }
 }
