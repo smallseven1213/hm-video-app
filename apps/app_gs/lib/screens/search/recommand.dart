@@ -27,13 +27,12 @@ class _RecommandScreenState extends State<RecommandScreen> {
   void initState() {
     super.initState();
     tagPopularController = Get.put(TagPopularController());
-    videoPopularController = Get.put(VideoPopularController());
+    videoPopularController = Get.find<VideoPopularController>();
   }
 
   @override
   void dispose() {
     Get.delete<TagPopularController>();
-    Get.delete<VideoPopularController>();
     super.dispose();
   }
 
