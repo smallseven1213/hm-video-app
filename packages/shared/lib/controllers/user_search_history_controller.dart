@@ -16,6 +16,10 @@ class UserSearchHistoryController extends GetxController {
   void add(String keyword) async {
     var box = await Hive.openBox<String>('searchHistoryBox');
 
+    if (keyword.length > 8) {
+      keyword = keyword.substring(0, 8);
+    }
+
     if (!box.values.contains(keyword)) {
       if (searchHistory.contains(keyword)) {
         searchHistory.remove(keyword);
