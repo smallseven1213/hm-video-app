@@ -118,6 +118,11 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                     onSubmitted: (val) {
                       actorsController.setName(val);
                     },
+                    onChanged: (val) {
+                      if (val.isEmpty) {
+                        actorsController.setName('');
+                      }
+                    },
                   )),
               Expanded(
                 child: Row(
