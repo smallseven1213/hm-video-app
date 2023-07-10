@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
 import 'package:shared/controllers/banner_controller.dart';
+import 'package:shared/controllers/search_page_data_controller.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
 
 import '../screens/search/recommand.dart';
@@ -26,18 +27,20 @@ class SearchPage extends StatefulWidget {
 class SearchPageState extends State<SearchPage> {
   BannerController bannerController = Get.find<BannerController>();
   Timer? _debounceTimer;
-  String? searchKeyword;
   final TextEditingController _searchController = TextEditingController();
   List<String> _searchResults = [];
   bool displaySearchResult = false;
+  final searchPageDataController = Get.put(SearchPageDataController());
 
   @override
   void initState() {
     super.initState();
-    if (widget.dontSearch == false) {
-      searchKeyword = widget.inputDefaultValue;
+    if (widget.dontSearch == false &&
+        searchPageDataController.keyword.value == '') {
+      // Set keyword value in SearchPageDataController.
+      searchPageDataController.setKeyword(widget.inputDefaultValue ?? '');
     } else {
-      // _searchController.value = null;
+      _searchController.text = searchPageDataController.keyword.value;
     }
   }
 
@@ -59,8 +62,8 @@ class SearchPageState extends State<SearchPage> {
     if (_searchController.text.isEmpty) {
       setState(() {
         displaySearchResult = false;
-        searchKeyword = null;
       });
+      searchPageDataController.setKeyword('');
     } else {
       setState(() {
         displaySearchResult = true;
@@ -69,7 +72,8 @@ class SearchPageState extends State<SearchPage> {
   }
 
   Future<void> _search() async {
-    String keyword = _searchController.text;
+    // Get keyword from SearchPageDataController.
+    String keyword = searchPageDataController.keyword.value;
 
     var results = await vodApi.getSearchKeyword(keyword);
     setState(() {
@@ -79,130 +83,137 @@ class SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-          onPressed: () {
-            if (searchKeyword != null) {
-              setState(() {
-                searchKeyword = null;
-                displaySearchResult = false;
-              });
-              _searchController.value = TextEditingValue.empty;
-              FocusScope.of(context).requestFocus(FocusNode());
-            } else {
-              Navigator.pop(context);
-            }
-          },
-        ),
-        titleSpacing: 0,
-        title: Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: SearchInput(
-            controller: _searchController,
-            onChanged: (value) {
-              _onSearchChanged(value);
-            },
-            onSubmitted: (value) {
-              setState(() {
-                searchKeyword = _searchController.text;
-                displaySearchResult = false;
-              });
-              Get.find<UserSearchHistoryController>()
-                  .add(_searchController.text);
-            },
-            onTap: () {
-              // 處理點擊事件的邏輯，如果需要
-            },
-            onSearchButtonClick: () {
-              var getSearchKeyword = _searchController.text.isEmpty
-                  ? widget.inputDefaultValue
-                  : _searchController.text;
-              searchKeyword = getSearchKeyword;
-
-              if (searchKeyword != null) {
-                displaySearchResult = false;
-                _searchController.text = getSearchKeyword!;
-                Get.find<UserSearchHistoryController>().add(getSearchKeyword);
+    return Obx(() {
+      var searchKeyword = searchPageDataController.keyword.value;
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+            onPressed: () {
+              if (searchKeyword != '') {
+                setState(() {
+                  displaySearchResult = false;
+                });
+                searchPageDataController.setKeyword('');
+                _searchController.value = TextEditingValue.empty;
+                FocusScope.of(context).requestFocus(FocusNode());
+              } else {
+                Navigator.pop(context);
               }
-              setState(() {});
             },
-            defaultValue:
-                widget.dontSearch == true ? null : widget.inputDefaultValue,
-            placeHolder: widget.inputDefaultValue,
+          ),
+          titleSpacing: 0,
+          title: Padding(
+            padding: const EdgeInsets.only(right: 8),
+            child: SearchInput(
+              controller: _searchController,
+              onChanged: (value) {
+                _onSearchChanged(value);
+              },
+              onSubmitted: (value) {
+                setState(() {
+                  displaySearchResult = false;
+                });
+                searchPageDataController.setKeyword(_searchController.text);
+                Get.find<UserSearchHistoryController>()
+                    .add(_searchController.text);
+              },
+              onTap: () {
+                // 處理點擊事件的邏輯，如果需要
+              },
+              onSearchButtonClick: (value) {
+                var getSearchKeyword = _searchController.text.isEmpty
+                    ? widget.inputDefaultValue
+                    : _searchController.text;
+                searchPageDataController.setKeyword(getSearchKeyword!);
+
+                if (searchKeyword != '') {
+                  displaySearchResult = false;
+                  _searchController.text = getSearchKeyword!;
+                  Get.find<UserSearchHistoryController>().add(getSearchKeyword);
+                }
+                setState(() {});
+              },
+              defaultValue: searchKeyword != ''
+                  ? searchKeyword
+                  : widget.dontSearch == true
+                      ? null
+                      : widget.inputDefaultValue,
+              placeHolder: widget.inputDefaultValue,
+            ),
           ),
         ),
-      ),
-      body: Stack(
-        children: [
-          searchKeyword == null
-              // 預設的搜尋頁面
-              ? RecommandScreen(
-                  onClickTag: (tag) {
-                    setState(() {
-                      searchKeyword = tag;
-                      displaySearchResult = false;
-                    });
-                    Get.find<UserSearchHistoryController>().add(tag);
-                    _searchController.text = tag;
-                  },
-                )
-              // 點擊"文字搜尋結果"後呈現的影片列表
-              : SearchResultPage(
-                  keyword: searchKeyword!,
-                  key: ValueKey(searchKeyword),
-                ),
-          if (displaySearchResult)
-            // 文字搜尋結果
-            Container(
-              color: const Color(0xFF001A40),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ListView.builder(
-                  itemCount: _searchResults.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      onTap: () {
-                        setState(() {
-                          searchKeyword = _searchResults[index];
-                          displaySearchResult = false;
-                        });
-                        _searchController.text = _searchResults[index];
+        body: Stack(
+          children: [
+            searchKeyword == ''
+                // 預設的搜尋頁面
+                ? RecommandScreen(
+                    onClickTag: (tag) {
+                      setState(() {
+                        displaySearchResult = false;
+                      });
+                      searchPageDataController.setKeyword(tag);
+                      Get.find<UserSearchHistoryController>().add(tag);
+                      _searchController.text = tag;
+                    },
+                  )
+                // 點擊"文字搜尋結果"後呈現的影片列表
+                : SearchResultPage(
+                    keyword: searchKeyword!,
+                    key: ValueKey(searchKeyword),
+                  ),
+            if (displaySearchResult)
+              // 文字搜尋結果
+              Container(
+                color: const Color(0xFF001A40),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ListView.builder(
+                    itemCount: _searchResults.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        onTap: () {
+                          setState(() {
+                            displaySearchResult = false;
+                          });
+                          searchPageDataController
+                              .setKeyword(_searchResults[index]);
+                          _searchController.text = _searchResults[index];
 
-                        Get.find<UserSearchHistoryController>()
-                            .add(_searchResults[index]);
+                          Get.find<UserSearchHistoryController>()
+                              .add(_searchResults[index]);
 
-                        FocusScope.of(context).requestFocus(FocusNode());
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: const Color(0xff7AA2C8).withOpacity(0.3),
-                              width: 1.0,
+                          FocusScope.of(context).requestFocus(FocusNode());
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                color: const Color(0xff7AA2C8).withOpacity(0.3),
+                                width: 1.0,
+                              ),
+                            ),
+                          ),
+                          child: ListTile(
+                            title: Text(
+                              _searchResults[index],
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
                             ),
                           ),
                         ),
-                        child: ListTile(
-                          title: Text(
-                            _searchResults[index],
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            )
-        ],
-      ),
-    );
+              )
+          ],
+        ),
+      );
+    });
   }
 }
