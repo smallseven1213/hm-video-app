@@ -118,16 +118,17 @@ class SearchPageState extends State<SearchPage> {
               // 處理點擊事件的邏輯，如果需要
             },
             onSearchButtonClick: () {
-              var searchKeyword = _searchController.text.isEmpty
+              var getSearchKeyword = _searchController.text.isEmpty
                   ? widget.inputDefaultValue
                   : _searchController.text;
-              setState(() {
-                searchKeyword = searchKeyword;
-                displaySearchResult = false;
-              });
+              searchKeyword = getSearchKeyword;
+
               if (searchKeyword != null) {
-                Get.find<UserSearchHistoryController>().add(searchKeyword!);
+                displaySearchResult = false;
+                _searchController.text = getSearchKeyword!;
+                Get.find<UserSearchHistoryController>().add(getSearchKeyword);
               }
+              setState(() {});
             },
             defaultValue:
                 widget.dontSearch == true ? null : widget.inputDefaultValue,
@@ -138,6 +139,7 @@ class SearchPageState extends State<SearchPage> {
       body: Stack(
         children: [
           searchKeyword == null
+              // 預設的搜尋頁面
               ? RecommandScreen(
                   onClickTag: (tag) {
                     setState(() {
@@ -148,6 +150,7 @@ class SearchPageState extends State<SearchPage> {
                     _searchController.text = tag;
                   },
                 )
+              // 點擊"文字搜尋結果"後呈現的影片列表
               : SearchResultPage(
                   keyword: searchKeyword!,
                   key: ValueKey(searchKeyword),
@@ -167,6 +170,7 @@ class SearchPageState extends State<SearchPage> {
                           searchKeyword = _searchResults[index];
                           displaySearchResult = false;
                         });
+                        _searchController.text = _searchResults[index];
 
                         Get.find<UserSearchHistoryController>()
                             .add(_searchResults[index]);
