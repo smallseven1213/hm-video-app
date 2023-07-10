@@ -93,9 +93,11 @@ class ControlsOverlayState extends State<FullScreenControls> {
   }
 
   void showControls() {
-    setState(() {
-      displayControls = true;
-    });
+    if (mounted) {
+      setState(() {
+        displayControls = true;
+      });
+    }
   }
 
   // 主動更新影片進度
@@ -104,22 +106,28 @@ class ControlsOverlayState extends State<FullScreenControls> {
   }
 
   void toggleDisplayControls() {
-    setState(() {
-      displayControls = !displayControls;
-    });
+    if (mounted) {
+      setState(() {
+        displayControls = !displayControls;
+      });
+    }
   }
 
   void startScrolling() {
-    setState(() {
-      isScrolling = true;
-    });
+    if (mounted) {
+      setState(() {
+        isScrolling = true;
+      });
+    }
   }
 
   // Add a function to set isScrolling to false
   void stopScrolling() {
-    setState(() {
-      isScrolling = false;
-    });
+    if (mounted) {
+      setState(() {
+        isScrolling = false;
+      });
+    }
   }
 
   @override

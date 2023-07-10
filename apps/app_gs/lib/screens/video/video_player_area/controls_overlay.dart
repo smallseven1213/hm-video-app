@@ -116,9 +116,11 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   }
 
   void showControls() {
-    setState(() {
-      displayControls = true;
-    });
+    if (mounted) {
+      setState(() {
+        displayControls = true;
+      });
+    }
   }
 
   // 主動更新影片進度
@@ -127,22 +129,28 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   }
 
   void toggleDisplayControls() {
-    setState(() {
-      displayControls = !displayControls;
-    });
+    if (mounted) {
+      setState(() {
+        displayControls = !displayControls;
+      });
+    }
   }
 
   void startScrolling() {
-    setState(() {
-      isScrolling = true;
-    });
+    if (mounted) {
+      setState(() {
+        isScrolling = true;
+      });
+    }
   }
 
   // Add a function to set isScrolling to false
   void stopScrolling() {
-    setState(() {
-      isScrolling = false;
-    });
+    if (mounted) {
+      setState(() {
+        isScrolling = false;
+      });
+    }
   }
 
   @override
@@ -207,10 +215,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
         },
         onVerticalDragEnd: (DragEndDetails details) {
           lastDragPosition = null;
-          setState(() {
-            // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
-            sideControlsType = SideControlsType.none;
-          });
+          if (mounted) {
+            setState(() {
+              // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
+              sideControlsType = SideControlsType.none;
+            });
+          }
         },
         onHorizontalDragStart: (details) {
           if (details.localPosition.dy > constraints.maxHeight - 30) {
