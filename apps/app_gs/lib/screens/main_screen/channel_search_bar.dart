@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/controllers/video_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
@@ -50,6 +51,7 @@ class ChannelSearchBar extends StatelessWidget {
                         'inputDefaultValue': randomTitle,
                         'dontSearch': false
                       });
+                  Get.find<UserSearchHistoryController>().add(randomTitle);
                 },
                 onInputClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
