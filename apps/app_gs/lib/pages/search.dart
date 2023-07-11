@@ -18,8 +18,8 @@ final logger = Logger();
 
 class SearchPage extends StatefulWidget {
   final String? inputDefaultValue;
-  final bool? dontSearch;
-  const SearchPage({Key? key, this.inputDefaultValue, this.dontSearch = false})
+  final bool? autoSearch;
+  const SearchPage({Key? key, this.inputDefaultValue, this.autoSearch = false})
       : super(key: key);
 
   @override
@@ -37,10 +37,9 @@ class SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    if (widget.dontSearch == false &&
-        searchPageDataController.keyword.value == '') {
+    if (widget.autoSearch == true) {
       // Set keyword value in SearchPageDataController.
-      searchPageDataController.setKeyword('');
+      searchPageDataController.setKeyword(widget.inputDefaultValue ?? '');
     } else {
       _searchController.text = searchPageDataController.keyword.value;
     }

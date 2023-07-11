@@ -71,7 +71,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.notifications.value: (context, args) => const NotificationsPage(),
   AppRoutes.search.value: (context, args) => SearchPage(
         inputDefaultValue: args['inputDefaultValue'] as String,
-        dontSearch: args['dontSearch'] as bool,
+        autoSearch: args['autoSearch'] as bool,
       ),
   AppRoutes.filter.value: (context, args) => const FilterPage(),
   AppRoutes.actors.value: (context, args) => const ActorsPage(),
