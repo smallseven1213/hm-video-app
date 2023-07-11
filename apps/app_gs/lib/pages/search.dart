@@ -6,7 +6,9 @@ import 'dart:async';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/controllers/search_page_data_controller.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
+import 'package:shared/models/color_keys.dart';
 
+import '../config/colors.dart';
 import '../screens/search/recommand.dart';
 import '../screens/search/search_result.dart';
 import '../widgets/search_input.dart';
@@ -38,7 +40,7 @@ class SearchPageState extends State<SearchPage> {
     if (widget.dontSearch == false &&
         searchPageDataController.keyword.value == '') {
       // Set keyword value in SearchPageDataController.
-      searchPageDataController.setKeyword(widget.inputDefaultValue ?? '');
+      searchPageDataController.setKeyword('');
     } else {
       _searchController.text = searchPageDataController.keyword.value;
     }
@@ -87,7 +89,7 @@ class SearchPageState extends State<SearchPage> {
       var searchKeyword = searchPageDataController.keyword.value;
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.primary,
           elevation: 0,
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios_new, size: 16),
@@ -136,11 +138,7 @@ class SearchPageState extends State<SearchPage> {
                 }
                 setState(() {});
               },
-              defaultValue: searchKeyword != ''
-                  ? searchKeyword
-                  : widget.dontSearch == true
-                      ? null
-                      : widget.inputDefaultValue,
+              defaultValue: searchKeyword,
               placeHolder: widget.inputDefaultValue,
             ),
           ),
