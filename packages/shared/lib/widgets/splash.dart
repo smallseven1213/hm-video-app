@@ -312,10 +312,8 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
+      child: Scaffold(
+        body: Stack(
           children: [
             Image.asset(
               widget.backgroundAssetPath,
