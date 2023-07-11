@@ -31,8 +31,13 @@ class ListEditorController extends GetxController {
   }
 
   void saveBoundData(List<int> ids) {
-    selectedIds.clear();
-    selectedIds.addAll(ids);
+    // 如果selectedIds有值，就直接清控不加入，反之則會addAll一次
+    if (selectedIds.isEmpty) {
+      selectedIds.clear();
+      selectedIds.addAll(ids);
+    } else {
+      selectedIds.clear();
+    }
   }
 
   void removeBoundData(List<int> ids) {
