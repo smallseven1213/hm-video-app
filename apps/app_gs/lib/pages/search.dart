@@ -75,12 +75,18 @@ class SearchPageState extends State<SearchPage> {
 
   Future<void> _search() async {
     // Get keyword from SearchPageDataController.
-    String keyword = searchPageDataController.keyword.value;
+    String keyword = _searchController.text;
 
-    var results = await vodApi.getSearchKeyword(keyword);
-    setState(() {
-      _searchResults = results;
-    });
+    if (keyword.isNotEmpty) {
+      var results = await vodApi.getSearchKeyword(keyword);
+      setState(() {
+        _searchResults = results;
+      });
+    } else {
+      setState(() {
+        _searchResults = [];
+      });
+    }
   }
 
   @override
