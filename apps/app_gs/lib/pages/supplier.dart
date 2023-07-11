@@ -50,6 +50,7 @@ class _SupplierPageState extends State<SupplierPage>
 
   @override
   void dispose() {
+    _tabController.dispose();
     _parentScrollController.dispose();
     super.dispose();
   }
@@ -123,11 +124,10 @@ class _SupplierPageState extends State<SupplierPage>
                   SupplierVods(
                     id: widget.id,
                     videos: shortVideoController.vodList,
-                    displayLoading:
-                        supplierVideoController.displayLoading.value,
+                    displayLoading: shortVideoController.displayLoading.value,
                     displayNoMoreData:
-                        supplierVideoController.displayNoMoreData.value,
-                    isListEmpty: supplierVideoController.isListEmpty.value,
+                        shortVideoController.displayNoMoreData.value,
+                    isListEmpty: shortVideoController.isListEmpty.value,
                   ),
                   SliverVodGrid(
                       key: const Key('supplier_short'),
