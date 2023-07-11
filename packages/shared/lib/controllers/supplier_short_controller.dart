@@ -6,17 +6,17 @@ import 'base_vod_infinity_scroll_controller.dart';
 final supplierApi = SupplierApi();
 const limit = 21;
 
-class SupplierVideoController extends BaseVodInfinityScrollController {
+class SupplierShortController extends BaseVodInfinityScrollController {
   final int supplierId;
 
-  SupplierVideoController(
+  SupplierShortController(
       {required this.supplierId, required ScrollController scrollController})
       : super(customScrollController: scrollController);
 
   @override
   Future<InfinityVod> fetchData(int page) async {
     var res = await supplierApi.getManyVideoBy(
-        page: page, id: supplierId, limit: limit, film: 1);
+        page: page, id: supplierId, limit: limit, film: 2);
 
     bool hasMoreData = res.total > limit * page;
 
