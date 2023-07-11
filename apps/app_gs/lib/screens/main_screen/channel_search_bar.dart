@@ -49,7 +49,7 @@ class ChannelSearchBar extends StatelessWidget {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
                       args: {
                         'inputDefaultValue': randomTitle,
-                        'dontSearch': false
+                        'autoSearch': true
                       });
                   Get.find<UserSearchHistoryController>().add(randomTitle);
                 },
@@ -57,7 +57,7 @@ class ChannelSearchBar extends StatelessWidget {
                   MyRouteDelegate.of(context).push(AppRoutes.search.value,
                       args: {
                         'inputDefaultValue': randomTitle,
-                        'dontSearch': true
+                        'autoSearch': false
                       });
                 },
               );
