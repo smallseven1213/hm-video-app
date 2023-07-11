@@ -1,5 +1,6 @@
 import 'package:app_gs/widgets/button.dart';
 import 'package:app_gs/widgets/refresh_list.dart';
+import 'package:app_gs/widgets/reload_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -55,7 +56,14 @@ class ChannelStyle1State extends State<ChannelStyle1>
     return Obx(() {
       ChannelInfo? channelData = channelDataController.channelData.value;
 
-      if (channelData == null) {
+      if (channelDataController.isError.value) {
+        return Center(
+          child: ReloadButton(
+            onPressed: () =>
+                channelDataController.mutateByChannelId(widget.channelId),
+          ),
+        );
+      } else if (channelData == null) {
         return const ChannelSkeleton();
       } else {
         List<Widget> sliverBlocks = [];
