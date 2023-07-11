@@ -89,9 +89,9 @@ class SearchPageState extends State<SearchPage> {
       var searchKeyword = searchPageDataController.keyword.value;
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          elevation: 0,
+          backgroundColor: AppColors.colors[ColorKeys.background],
           leading: IconButton(
+            color: Colors.white,
             icon: const Icon(Icons.arrow_back_ios_new, size: 16),
             onPressed: () {
               if (searchKeyword != '') {
