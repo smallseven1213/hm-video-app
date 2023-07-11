@@ -35,7 +35,7 @@ class SupplierVods extends StatelessWidget {
       return CustomScrollView(
         // controller: scrollController,
         // controller is ParentScroller
-        primary: true,
+        controller: PrimaryScrollController.of(context),
         slivers: [
           if (isListEmpty)
             const SliverToBoxAdapter(
