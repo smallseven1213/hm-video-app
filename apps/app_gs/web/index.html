@@ -33,7 +33,9 @@
 
   <title>app_gs</title>
   <link rel="manifest" href="manifest.json">
-
+  <script text="text/javascript">
+    window.flutterWebRenderer = "html";
+  </script>
   <script>
     // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
@@ -41,9 +43,7 @@
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
-  <script text="text/javascript">
-    window.flutterWebRenderer = "html";
-  </script>
+  
 
   <style>
     html, body {
