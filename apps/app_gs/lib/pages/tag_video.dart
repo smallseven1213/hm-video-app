@@ -36,7 +36,6 @@ class TagVideoPageState extends State<TagVideoPage> {
 
   @override
   void dispose() {
-    scrollController.dispose();
     super.dispose();
   }
 
