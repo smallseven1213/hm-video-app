@@ -123,10 +123,15 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                 child: VideoScreenBanner(),
               ),
             ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: TabBarHeaderDelegate(_tabController, tabs),
-            )
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
+                child: GSTabBar(
+                  controller: _tabController,
+                  tabs: tabs,
+                ),
+              ),
+            ),
           ];
         },
         body: Obx(
