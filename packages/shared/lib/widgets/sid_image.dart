@@ -37,8 +37,8 @@ class SidImage extends StatefulWidget {
 }
 
 class SidImageState extends State<SidImage> {
-  late Uint8List imageData = Uint8List(0);
-  late bool imageError = false; // 用於追蹤是否有圖像解碼錯誤
+  Uint8List? imageData;
+  ImageProvider? image; // 用于存储解码后的图像
 
   @override
   void initState() {
@@ -53,41 +53,34 @@ class SidImageState extends State<SidImage> {
       var hasFileInHive = sidImageBox.containsKey(widget.sid);
       if (hasFileInHive) {
         var file = await sidImageBox.get(widget.sid);
-        if (mounted) {
-          setState(() {
-            imageData = file;
-          });
-        }
-        if (widget.onLoaded != null) {
-          widget.onLoaded!('success');
+        try {
+          image = await _decodeImage(file);
+          if (mounted) {
+            setState(() {});
+          }
+          if (widget.onLoaded != null) {
+            widget.onLoaded!('success');
+          }
+        } catch (e) {
+          // 解码失败，处理错误
+          if (widget.onError != null) {
+            widget.onError!(e);
+          }
         }
       } else {
         try {
           var res = await ImageApi().getSidImageData(widget.sid);
           var decoded = getSidImageDecode(res);
           var file = base64Decode(decoded);
-
-          // 嘗試解碼圖像
-          try {
-            await decodeImageFromList(file);
-            // 如果上面的行没有抛出异常，那么就可以安全地认为解码成功
-          } catch (e) {
-            // 解码失败
-            imageError = true;
-          }
-
-          if (!imageError) {
+          image = await _decodeImage(file);
+          if (image != null) {
             await sidImageBox.put(widget.sid, file);
             if (mounted) {
-              setState(() {
-                imageData = file;
-              });
+              setState(() {});
             }
             if (widget.onLoaded != null) {
               widget.onLoaded!('success');
             }
-          } else {
-            // 處理錯誤，如果需要的話
           }
         } catch (e) {
           if (widget.onError != null) {
@@ -98,17 +91,22 @@ class SidImageState extends State<SidImage> {
     }
   }
 
+  Future<ImageProvider> _decodeImage(Uint8List file) async {
+    await decodeImageFromList(file);
+    return MemoryImage(file);
+  }
+
   @override
   Widget build(BuildContext context) {
-    if (imageData.isEmpty || imageError) {
+    if (image == null) {
       return SizedBox(
         width: widget.width,
         height: widget.height,
       );
     }
     if (widget.noFadeIn || kIsWeb) {
-      return Image.memory(
-        imageData,
+      return Image(
+        image: image!,
         width: widget.width,
         height: widget.height,
         fit: widget.fit,
@@ -116,8 +114,8 @@ class SidImageState extends State<SidImage> {
       );
     }
     return FadeInEffect(
-      child: Image.memory(
-        imageData,
+      child: Image(
+        image: image!,
         width: widget.width,
         height: widget.height,
         fit: widget.fit,
