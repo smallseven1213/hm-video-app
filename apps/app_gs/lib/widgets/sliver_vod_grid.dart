@@ -64,11 +64,11 @@ class SliverVodGridState extends State<SliverVodGrid> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
     if (widget.usePrimaryParentScrollController == true &&
         scrollController != PrimaryScrollController.of(context)) {
-      // only change the ScrollController if it hasn't been initialized yet
       scrollController = PrimaryScrollController.of(context);
+    } else {
+      scrollController = widget.customScrollController ?? ScrollController();
     }
   }
 
