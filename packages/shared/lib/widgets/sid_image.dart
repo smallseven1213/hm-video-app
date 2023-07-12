@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
@@ -37,6 +38,7 @@ class SidImage extends StatefulWidget {
 
 class SidImageState extends State<SidImage> {
   late Uint8List imageData = Uint8List(0);
+  late bool imageError = false; // 用於追蹤是否有圖像解碼錯誤
 
   @override
   void initState() {
@@ -44,20 +46,11 @@ class SidImageState extends State<SidImage> {
     getImage();
   }
 
-  // async void getImage
   void getImage() async {
     var sidImageBox = await Hive.openBox('sidImage');
 
-    //. print widget.sid
-    // logger.d('widget.sid ===== ${widget.sid}');
-    /**
-     * 由sid當key, 去找hive中有沒有對應到的值
-     * 有的話，由hive中取得並setState
-     * 沒的話，呼叫ImageApi的getSidImageData，並存入hive以及setState
-     */
     if (widget.sid.isNotEmpty) {
       var hasFileInHive = sidImageBox.containsKey(widget.sid);
-      // logger.d('hasFileInHive ===== $hasFileInHive');
       if (hasFileInHive) {
         var file = await sidImageBox.get(widget.sid);
         if (mounted) {
@@ -73,19 +66,30 @@ class SidImageState extends State<SidImage> {
           var res = await ImageApi().getSidImageData(widget.sid);
           var decoded = getSidImageDecode(res);
           var file = base64Decode(decoded);
-          await sidImageBox.put(widget.sid, file);
 
-          if (mounted) {
-            setState(() {
-              imageData = file;
-            });
+          // 嘗試解碼圖像
+          try {
+            await decodeImageFromList(file);
+            // 如果上面的行没有抛出异常，那么就可以安全地认为解码成功
+          } catch (e) {
+            // 解码失败
+            imageError = true;
           }
-          if (widget.onLoaded != null) {
-            widget.onLoaded!('success');
+
+          if (!imageError) {
+            await sidImageBox.put(widget.sid, file);
+            if (mounted) {
+              setState(() {
+                imageData = file;
+              });
+            }
+            if (widget.onLoaded != null) {
+              widget.onLoaded!('success');
+            }
+          } else {
+            // 處理錯誤，如果需要的話
           }
         } catch (e) {
-          // logger.d('${widget.sid}==ERROR=\n$e');
-          // if widget.onError is not null, call it
           if (widget.onError != null) {
             widget.onError!(e);
           }
@@ -96,20 +100,13 @@ class SidImageState extends State<SidImage> {
 
   @override
   Widget build(BuildContext context) {
-    if (imageData.isEmpty) {
+    if (imageData.isEmpty || imageError) {
       return SizedBox(
-        // decoration: const BoxDecoration(
-        //   gradient: LinearGradient(
-        //     colors: [Color(0xFF00234D), Color(0xFF002D62)],
-        //     begin: Alignment.topCenter,
-        //     end: Alignment.bottomCenter,
-        //   ),
-        // ),
         width: widget.width,
         height: widget.height,
       );
     }
-    if (widget.noFadeIn) {
+    if (widget.noFadeIn || kIsWeb) {
       return Image.memory(
         imageData,
         width: widget.width,
