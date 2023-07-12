@@ -68,18 +68,17 @@ class ShortCardState extends State<ShortCard> {
 
     if (widget.supportedPlayRecord == true) {
       logger.i('PLAYRECORD TESTING: initial');
-      // TODO: 深試
-      // var videoVal = videoDetailController.video.value;
-      // var playRecord = Vod(
-      //   videoVal!.id,
-      //   videoVal.title,
-      //   coverHorizontal: videoVal.coverHorizontal!,
-      //   coverVertical: videoVal.coverVertical!,
-      //   timeLength: videoVal.timeLength!,
-      //   tags: videoVal.tags!,
-      //   videoViewTimes: videoVal.videoViewTimes!,
-      // );
-      // Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
+      var videoVal = videoDetailController.video.value;
+      var playRecord = Vod(
+        videoVal!.id,
+        videoVal.title,
+        coverHorizontal: videoVal.coverHorizontal!,
+        coverVertical: videoVal.coverVertical!,
+        timeLength: videoVal.timeLength!,
+        tags: videoVal.tags!,
+        videoViewTimes: videoVal.videoViewTimes!,
+      );
+      Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
     }
 
     obsVideoPlayerController =
