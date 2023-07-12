@@ -11,7 +11,10 @@ class SupplierVideoController extends BaseVodInfinityScrollController {
 
   SupplierVideoController(
       {required this.supplierId, required ScrollController scrollController})
-      : super(customScrollController: scrollController);
+      : super(
+            customScrollController: scrollController,
+            hasLoadMoreEventWithScroller: false,
+            autoDisposeScrollController: false);
 
   @override
   Future<InfinityVod> fetchData(int page) async {
