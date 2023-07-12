@@ -43,7 +43,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
 
   @override
   void initState() {
-    // DISPOSED SCROLL CONTROLLER
+    super.initState();
     scrollController = widget.customScrollController ?? ScrollController();
 
     if (widget.onScrollEnd != null && scrollController.hasClients) {
@@ -59,16 +59,16 @@ class SliverVodGridState extends State<SliverVodGrid> {
         }
       });
     }
-    super.initState();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if (widget.usePrimaryParentScrollController == true) {
+
+    if (widget.usePrimaryParentScrollController == true &&
+        scrollController != PrimaryScrollController.of(context)) {
+      // only change the ScrollController if it hasn't been initialized yet
       scrollController = PrimaryScrollController.of(context);
-    } else {
-      scrollController = widget.customScrollController ?? ScrollController();
     }
   }
 
@@ -88,7 +88,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
-        controller: scrollController,
+        controller: ScrollController(),
         slivers: [
           ...?widget.headerExtends,
           if (widget.isListEmpty)
