@@ -12,25 +12,25 @@ class SliverVodGrid extends StatefulWidget {
   final Widget? noMoreWidget;
   final List<Widget>? headerExtends;
   final Function? onScrollEnd;
-  final ScrollController? customScrollController;
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
+  final ScrollController? customScrollController;
 
-  const SliverVodGrid(
-      {Key? key,
-      required this.videos,
-      required this.displayNoMoreData,
-      required this.isListEmpty,
-      required this.displayLoading,
-      this.noMoreWidget,
-      this.headerExtends,
-      this.onScrollEnd,
-      this.displayVideoCollectTimes = true,
-      this.displayVideoTimes = true,
-      this.displayViewTimes = true,
-      this.customScrollController})
-      : super(key: key);
+  const SliverVodGrid({
+    Key? key,
+    required this.videos,
+    required this.displayNoMoreData,
+    required this.isListEmpty,
+    required this.displayLoading,
+    this.noMoreWidget,
+    this.headerExtends,
+    this.onScrollEnd,
+    this.displayVideoCollectTimes = true,
+    this.displayVideoTimes = true,
+    this.displayViewTimes = true,
+    this.customScrollController,
+  }) : super(key: key);
 
   @override
   SliverVodGridState createState() => SliverVodGridState();
@@ -44,6 +44,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
+        controller: widget.customScrollController,
         scrollBehavior:
             ScrollConfiguration.of(context).copyWith(scrollbars: false),
         slivers: [

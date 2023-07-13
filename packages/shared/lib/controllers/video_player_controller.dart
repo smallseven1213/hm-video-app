@@ -57,7 +57,9 @@ class ObservableVideoPlayerController extends GetxController {
   }
 
   void changeVolumeToFull() {
-    videoPlayerController.setVolume(1);
+    if (!kIsWeb) {
+      videoPlayerController.setVolume(1);
+    }
   }
 
   void _disposePlayer() {

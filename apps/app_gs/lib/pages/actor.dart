@@ -67,6 +67,8 @@ class ActorPageState extends State<ActorPage>
   void dispose() {
     _tabController.dispose();
     _parentScrollController.dispose();
+    actorLatestVodController.dispose();
+    actorNewestVodController.dispose();
     super.dispose();
   }
 
