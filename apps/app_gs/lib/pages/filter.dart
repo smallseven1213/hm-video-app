@@ -37,8 +37,8 @@ class FilterScrollViewState extends State<FilterPage> {
     vodController =
         FilterScreenResultController(scrollController: scrollController);
 
-    vodController.scrollController.addListener(() {
-      if (vodController.scrollController.position.pixels > 100) {
+    vodController.scrollController?.addListener(() {
+      if (vodController.scrollController!.position.pixels > 100) {
         if (!_showSelectedBar) {
           setState(() {
             _showSelectedBar = true;
@@ -96,7 +96,7 @@ class FilterScrollViewState extends State<FilterPage> {
               )),
           if (_showSelectedBar)
             FilterBar(
-              scrollController: vodController.scrollController,
+              scrollController: vodController.scrollController!,
             ),
         ],
       ),

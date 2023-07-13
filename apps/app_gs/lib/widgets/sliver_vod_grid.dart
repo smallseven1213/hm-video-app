@@ -12,7 +12,6 @@ class SliverVodGrid extends StatefulWidget {
   final Widget? noMoreWidget;
   final List<Widget>? headerExtends;
   final Function? onScrollEnd;
-  final bool? usePrimaryParentScrollController;
   final ScrollController? customScrollController;
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
@@ -27,7 +26,6 @@ class SliverVodGrid extends StatefulWidget {
       this.noMoreWidget,
       this.headerExtends,
       this.onScrollEnd,
-      this.usePrimaryParentScrollController = false,
       this.displayVideoCollectTimes = true,
       this.displayVideoTimes = true,
       this.displayViewTimes = true,
@@ -39,43 +37,18 @@ class SliverVodGrid extends StatefulWidget {
 }
 
 class SliverVodGridState extends State<SliverVodGrid> {
-  late ScrollController scrollController;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
-    // DISPOSED SCROLL CONTROLLER
-    scrollController = widget.customScrollController ?? ScrollController();
-
-    if (widget.onScrollEnd != null && scrollController.hasClients) {
-      scrollController.addListener(() {
-        logger.i(
-            'sliver ${widget.key} => position.pixels ${scrollController.position.pixels} position.maxScrollExtent ${scrollController.position.maxScrollExtent}');
-        if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent) {
-          logger.i('到底了');
-          if (widget.onScrollEnd != null) {
-            widget.onScrollEnd!();
-          }
-        }
-      });
-    }
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (widget.usePrimaryParentScrollController == true) {
-      scrollController = PrimaryScrollController.of(context);
-    } else {
-      scrollController = widget.customScrollController ?? ScrollController();
-    }
+    _scrollController = widget.customScrollController ?? ScrollController();
   }
 
   @override
   void dispose() {
-    if (widget.usePrimaryParentScrollController == false) {
-      scrollController.dispose();
+    if (widget.customScrollController == null) {
+      _scrollController.dispose();
     }
 
     super.dispose();
@@ -88,7 +61,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
-        controller: scrollController,
+        controller: widget.customScrollController,
         slivers: [
           ...?widget.headerExtends,
           if (widget.isListEmpty)

@@ -31,6 +31,8 @@ class ActorPageState extends State<ActorPage>
   late ActorController actorController;
   late TabController _tabController;
   late ScrollController _parentScrollController;
+  late ScrollController actorLatestVodScrollController;
+  late ScrollController actorNewestVodScrollController;
 
   int tabIndex = 0;
 
@@ -43,15 +45,22 @@ class ActorPageState extends State<ActorPage>
     _tabController = TabController(vsync: this, length: 2);
     _parentScrollController = ScrollController();
 
-    actorLatestVodController = ActorLatestVodController(
-        actorId: widget.id, scrollController: _parentScrollController);
-    actorNewestVodController = ActorHottestVodController(
-        actorId: widget.id, scrollController: _parentScrollController);
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        _parentScrollController.jumpTo(0.0);
-      }
-    });
+    actorLatestVodController = ActorLatestVodController(actorId: widget.id);
+    actorNewestVodController = ActorHottestVodController(actorId: widget.id);
+    // _tabController.addListener(() {
+    //   if (_tabController.indexIsChanging) {
+    //     _parentScrollController.jumpTo(0.0);
+    //     if (_tabController.index == 0) {
+    //       if (actorLatestVodScrollController.hasClients) {
+    //         actorLatestVodScrollController.jumpTo(0.0);
+    //       }
+    //     } else {
+    //       if (actorNewestVodScrollController.hasClients) {
+    //         actorNewestVodScrollController.jumpTo(0.0);
+    //       }
+    //     }
+    //   }
+    // });
   }
 
   @override
@@ -68,7 +77,7 @@ class ActorPageState extends State<ActorPage>
       return Stack(
         children: [
           NestedScrollView(
-              controller: _parentScrollController,
+              // controller: _parentScrollController,
               physics: const BouncingScrollPhysics(),
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
@@ -94,34 +103,56 @@ class ActorPageState extends State<ActorPage>
                 physics: const BouncingScrollPhysics(),
                 // physics: const NeverScrollableScrollPhysics(),
                 children: [
-                  SliverVodGrid(
-                      key: const Key('actor_latest_vod'),
-                      videos: actorLatestVodController.vodList,
-                      displayLoading:
-                          actorLatestVodController.displayLoading.value,
-                      displayNoMoreData:
-                          actorLatestVodController.displayNoMoreData.value,
-                      isListEmpty: actorLatestVodController.isListEmpty.value,
-                      noMoreWidget: ListNoMore(),
-                      usePrimaryParentScrollController: true,
-                      displayVideoCollectTimes: false,
-                      onScrollEnd: () {
+                  NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification scrollInfo) {
+                      if (_tabController.index == 0 &&
+                          scrollInfo is ScrollEndNotification &&
+                          scrollInfo.metrics.pixels ==
+                              scrollInfo.metrics.maxScrollExtent) {
                         actorLatestVodController.loadMoreData();
-                      }),
-                  SliverVodGrid(
-                      key: const Key('actor_newest_vod'),
-                      videos: actorNewestVodController.vodList,
-                      displayLoading:
-                          actorLatestVodController.displayLoading.value,
-                      displayNoMoreData:
-                          actorNewestVodController.displayNoMoreData.value,
-                      isListEmpty: actorNewestVodController.isListEmpty.value,
-                      noMoreWidget: ListNoMore(),
-                      usePrimaryParentScrollController: true,
-                      displayVideoCollectTimes: false,
-                      onScrollEnd: () {
+                      }
+                      return false;
+                    },
+                    child: Obx(() => SliverVodGrid(
+                          key: const PageStorageKey<String>('actor_latest_vod'),
+                          // customScrollController:
+                          //     actorLatestVodScrollController,
+                          videos: actorLatestVodController.vodList,
+                          displayLoading:
+                              actorLatestVodController.displayLoading.value,
+                          displayNoMoreData:
+                              actorLatestVodController.displayNoMoreData.value,
+                          isListEmpty:
+                              actorLatestVodController.isListEmpty.value,
+                          noMoreWidget: ListNoMore(),
+                          displayVideoCollectTimes: false,
+                        )),
+                  ),
+                  NotificationListener<ScrollNotification>(
+                    onNotification: (ScrollNotification scrollInfo) {
+                      if (_tabController.index == 1 &&
+                          scrollInfo is ScrollEndNotification &&
+                          scrollInfo.metrics.pixels ==
+                              scrollInfo.metrics.maxScrollExtent) {
                         actorNewestVodController.loadMoreData();
-                      }),
+                      }
+                      return false;
+                    },
+                    child: Obx(() => SliverVodGrid(
+                          key: const PageStorageKey<String>('actor_newest_vod'),
+                          // customScrollController:
+                          //     actorNewestVodScrollController,
+                          videos: actorNewestVodController.vodList,
+                          displayLoading:
+                              actorNewestVodController.displayLoading.value,
+                          displayNoMoreData:
+                              actorNewestVodController.displayNoMoreData.value,
+                          isListEmpty:
+                              actorNewestVodController.isListEmpty.value,
+                          noMoreWidget: ListNoMore(),
+                          displayVideoCollectTimes: false,
+                        )),
+                  ),
                 ],
               )),
           const FloatPageBackButton()
