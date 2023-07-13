@@ -219,15 +219,23 @@ class VideoPreviewWidget extends StatelessWidget {
                       ),
                     ),
                     clipBehavior: Clip.antiAlias,
-                    child: SidImageVisibilityDetector(
-                      child: SidImage(
-                        key: ValueKey('video-preview-$id'),
-                        sid: displayCoverVertical
-                            ? coverVertical
-                            : coverHorizontal,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
-                      ),
+                    // child: SidImageVisibilityDetector(
+                    //   child: SidImage(
+                    //     key: ValueKey('video-preview-$id'),
+                    //     sid: displayCoverVertical
+                    //         ? coverVertical
+                    //         : coverHorizontal,
+                    //     width: double.infinity,
+                    //     fit: BoxFit.cover,
+                    //   ),
+                    // )),
+                    child: SidImage(
+                      key: ValueKey('video-preview-$id'),
+                      sid: displayCoverVertical
+                          ? coverVertical
+                          : coverHorizontal,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     )),
               ),
               // 下面Debug用

@@ -23,7 +23,7 @@ class BottonNavigatorController extends GetxController {
 
   // _fetchData
   void fetchData() async {
-    var value = await NavigatorApi().getNavigations();
+    var value = await NavigatorApi().getNavigations(1);
     var sidImageBox = await Hive.openBox('sidImage');
     for (var item in value) {
       var photoSid = item.photoSid;
