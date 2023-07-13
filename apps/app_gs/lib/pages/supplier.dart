@@ -44,6 +44,14 @@ class _SupplierPageState extends State<SupplierPage>
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
+
+        if (_tabController.index == 0) {
+          shortVideoController.reset();
+          shortVideoController.loadMoreData();
+        } else {
+          supplierVideoController.reset();
+          supplierVideoController.loadMoreData();
+        }
       }
     });
   }
@@ -52,84 +60,72 @@ class _SupplierPageState extends State<SupplierPage>
   void dispose() {
     _tabController.dispose();
     _parentScrollController.dispose();
+    shortVideoController.dispose();
+    supplierVideoController.dispose();
     super.dispose();
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   super.build(context);
-  //   return Scaffold(
-  //     body: Stack(
-  //       children: [
-  //         Obx(() => CustomScrollView(
-  //               controller: vodController.scrollController,
-  //               physics: const BouncingScrollPhysics(),
-  //               slivers: [
-  // SliverToBoxAdapter(
-  //   child: SizedBox(
-  //     height: MediaQuery.of(context).padding.top,
-  //   ),
-  // ),
-  // SupplierCard(id: widget.id),
-  //                 SupplierVods(id: widget.id, vodList: vodController.vodList),
-  //                 if (vodController.isListEmpty.value)
-  //                   const SliverToBoxAdapter(
-  //                     child: NoDataWidget(),
-  //                   ),
-  //                 if (vodController.displayLoading.value)
-  //                   // ignore: prefer_const_constructors
-  //                   SliverVideoPreviewSkeletonList(),
-  //                 if (vodController.displayNoMoreData.value)
-  //                   SliverToBoxAdapter(
-  //                     child: ListNoMore(),
-  //                   )
-  //               ],
-  //             )),
-  //         const FloatPageBackButton()
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(body: Obx(() {
-      return Stack(
-        children: [
-          NestedScrollView(
-              controller: _parentScrollController,
+    return Scaffold(
+        body: Stack(
+      children: [
+        NestedScrollView(
+            controller: _parentScrollController,
+            physics: const BouncingScrollPhysics(),
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              // 返回一个 Sliver 数组给外部可滚动组件。
+              return <Widget>[
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).padding.top,
+                  ),
+                ),
+                SupplierCard(id: widget.id),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: TabBarHeaderDelegate(_tabController),
+                )
+              ];
+            },
+            body: TabBarView(
+              controller: _tabController,
               physics: const BouncingScrollPhysics(),
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                // 返回一个 Sliver 数组给外部可滚动组件。
-                return <Widget>[
-                  SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).padding.top,
-                    ),
-                  ),
-                  SupplierCard(id: widget.id),
-                  SliverPersistentHeader(
-                    pinned: true,
-                    delegate: TabBarHeaderDelegate(_tabController),
-                  )
-                ];
-              },
-              body: TabBarView(
-                controller: _tabController,
-                physics: const BouncingScrollPhysics(),
-                // physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  SupplierVods(
-                    id: widget.id,
-                    videos: shortVideoController.vodList,
-                    displayLoading: shortVideoController.displayLoading.value,
-                    displayNoMoreData:
-                        shortVideoController.displayNoMoreData.value,
-                    isListEmpty: shortVideoController.isListEmpty.value,
-                  ),
-                  SliverVodGrid(
+              // physics: const NeverScrollableScrollPhysics(),
+              children: [
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo is ScrollEndNotification &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        _tabController.index == 0) {
+                      shortVideoController.loadMoreData();
+                    }
+                    return false;
+                  },
+                  child: Obx(() => SupplierVods(
+                        id: widget.id,
+                        videos: shortVideoController.vodList,
+                        displayLoading:
+                            shortVideoController.displayLoading.value,
+                        displayNoMoreData:
+                            shortVideoController.displayNoMoreData.value,
+                        isListEmpty: shortVideoController.isListEmpty.value,
+                      )),
+                ),
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo is ScrollEndNotification &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        _tabController.index == 1) {
+                      supplierVideoController.loadMoreData();
+                    }
+                    return false;
+                  },
+                  child: Obx(() => SliverVodGrid(
                       key: const Key('supplier_short'),
                       videos: supplierVideoController.vodList,
                       displayLoading:
@@ -138,17 +134,16 @@ class _SupplierPageState extends State<SupplierPage>
                           supplierVideoController.displayNoMoreData.value,
                       isListEmpty: supplierVideoController.isListEmpty.value,
                       noMoreWidget: ListNoMore(),
-                      usePrimaryParentScrollController: true,
                       displayVideoCollectTimes: false,
                       onScrollEnd: () {
                         supplierVideoController.loadMoreData();
-                      }),
-                ],
-              )),
-          const FloatPageBackButton()
-        ],
-      );
-    }));
+                      })),
+                ),
+              ],
+            )),
+        const FloatPageBackButton()
+      ],
+    ));
   }
 
   @override

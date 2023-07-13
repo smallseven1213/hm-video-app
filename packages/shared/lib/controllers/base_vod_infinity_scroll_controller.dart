@@ -20,7 +20,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   final offset = 1.obs;
   final totalCount = 0.obs;
   Timer? _timer;
-  late final ScrollController scrollController;
+  late final ScrollController? scrollController;
   late bool _autoDisposeScrollController = true;
   late bool _hasLoadMoreEventWithScroller = true;
   Timer? _debounceTimer;
@@ -29,12 +29,12 @@ abstract class BaseVodInfinityScrollController extends GetxController {
       {bool loadDataOnInit = true,
       bool autoDisposeScrollController = true,
       bool hasLoadMoreEventWithScroller = true,
-      required ScrollController customScrollController}) {
+      ScrollController? customScrollController}) {
     scrollController = customScrollController;
     _autoDisposeScrollController = autoDisposeScrollController;
     _hasLoadMoreEventWithScroller = hasLoadMoreEventWithScroller;
-    if (_hasLoadMoreEventWithScroller) {
-      scrollController.addListener(_scrollListener);
+    if (_hasLoadMoreEventWithScroller && scrollController != null) {
+      scrollController!.addListener(_scrollListener);
     }
     if (loadDataOnInit) {
       loadMoreData();
@@ -101,8 +101,8 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   }
 
   void _scrollListener() {
-    if (scrollController.position.pixels ==
-        scrollController.position.maxScrollExtent) {
+    if (scrollController?.position.pixels ==
+        scrollController?.position.maxScrollExtent) {
       debounce(
         fn: () {
           loadMoreData();
@@ -110,12 +110,12 @@ abstract class BaseVodInfinityScrollController extends GetxController {
       );
     }
 
-    if (scrollController.position.pixels ==
-            scrollController.position.maxScrollExtent &&
+    if (scrollController?.position.pixels ==
+            scrollController?.position.maxScrollExtent &&
         !hasMoreData.value) {
       Future.delayed(const Duration(milliseconds: 5), () {
-        scrollController.animateTo(
-          scrollController.position.maxScrollExtent,
+        scrollController?.animateTo(
+          scrollController!.position.maxScrollExtent,
           duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
@@ -125,9 +125,9 @@ abstract class BaseVodInfinityScrollController extends GetxController {
 
   @override
   void onClose() {
-    scrollController.removeListener(_scrollListener);
+    scrollController?.removeListener(_scrollListener);
     if (_autoDisposeScrollController == true) {
-      scrollController.dispose();
+      scrollController?.dispose();
     }
     _timer?.cancel();
     _debounceTimer?.cancel();

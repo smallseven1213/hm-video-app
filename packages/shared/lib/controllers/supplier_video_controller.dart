@@ -4,14 +4,17 @@ import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 
 final supplierApi = SupplierApi();
-const limit = 21;
+const limit = 20;
 
 class SupplierVideoController extends BaseVodInfinityScrollController {
   final int supplierId;
 
   SupplierVideoController(
       {required this.supplierId, required ScrollController scrollController})
-      : super(customScrollController: scrollController);
+      : super(
+            customScrollController: scrollController,
+            hasLoadMoreEventWithScroller: false,
+            autoDisposeScrollController: false);
 
   @override
   Future<InfinityVod> fetchData(int page) async {
