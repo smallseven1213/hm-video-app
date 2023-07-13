@@ -82,52 +82,52 @@ class NestedTabBarViewState extends State<NestedTabBarView>
         physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoInfo(
-                  playVideo: () {
-                    obsVideoPlayerController.play();
-                  },
-                  pauseVideo: () {
-                    obsVideoPlayerController.pause();
-                  },
-                  title: widget.videoDetail.title,
-                  tags: widget.videoDetail.tags ?? [],
-                  timeLength: widget.videoDetail.timeLength ?? 0,
-                  viewTimes: widget.videoDetail.videoViewTimes ?? 0,
-                  actor: widget.videoDetail.actors,
-                  publisher: widget.videoDetail.publisher,
-                ),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoActions(
-                  videoDetail: Vod.fromJson({
-                    ...widget.videoDetail.toJson(),
-                    ...widget.videoBase.toJson(),
-                  }),
-                ),
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: AppDownloadAd(),
-              ),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoScreenBanner(),
-              ),
-            ),
-            SliverPersistentHeader(
-              pinned: true,
-              delegate: TabBarHeaderDelegate(_tabController, tabs),
-            )
+            // SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
+            //     child: VideoInfo(
+            //       playVideo: () {
+            //         obsVideoPlayerController.play();
+            //       },
+            //       pauseVideo: () {
+            //         obsVideoPlayerController.pause();
+            //       },
+            //       title: widget.videoDetail.title,
+            //       tags: widget.videoDetail.tags ?? [],
+            //       timeLength: widget.videoDetail.timeLength ?? 0,
+            //       viewTimes: widget.videoDetail.videoViewTimes ?? 0,
+            //       actor: widget.videoDetail.actors,
+            //       publisher: widget.videoDetail.publisher,
+            //     ),
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
+            //     child: VideoActions(
+            //       videoDetail: Vod.fromJson({
+            //         ...widget.videoDetail.toJson(),
+            //         ...widget.videoBase.toJson(),
+            //       }),
+            //     ),
+            //   ),
+            // ),
+            // const SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: EdgeInsets.only(top: 8, right: 8, left: 8),
+            //     child: AppDownloadAd(),
+            //   ),
+            // ),
+            // const SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: EdgeInsets.only(top: 8, right: 8, left: 8),
+            //     child: VideoScreenBanner(),
+            //   ),
+            // ),
+            // SliverPersistentHeader(
+            //   pinned: true,
+            //   delegate: TabBarHeaderDelegate(_tabController, tabs),
+            // ),
           ];
         },
         body: Obx(
