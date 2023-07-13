@@ -47,66 +47,44 @@ class SidImageState extends State<SidImage> {
   }
 
   void getImage() async {
-    // 在Web上跳过Hive的操作
-    if (kIsWeb) {
-      try {
-        var res = await ImageApi().getSidImageData(widget.sid);
-        var decoded = getSidImageDecode(res);
-        var file = base64Decode(decoded);
-        image = await _decodeImage(file);
-        if (image != null) {
+    var sidImageBox = await Hive.openBox('sidImage');
+
+    if (widget.sid.isNotEmpty) {
+      var hasFileInHive = sidImageBox.containsKey(widget.sid);
+      if (hasFileInHive) {
+        var file = await sidImageBox.get(widget.sid);
+        try {
+          image = await _decodeImage(file);
           if (mounted) {
             setState(() {});
           }
           if (widget.onLoaded != null) {
             widget.onLoaded!('success');
           }
+        } catch (e) {
+          // 解码失败，处理错误
+          if (widget.onError != null) {
+            widget.onError!(e);
+          }
         }
-      } catch (e) {
-        if (widget.onError != null) {
-          widget.onError!(e);
-        }
-      }
-    } else {
-      var sidImageBox = await Hive.openBox('sidImage');
-
-      if (widget.sid.isNotEmpty) {
-        var hasFileInHive = sidImageBox.containsKey(widget.sid);
-        if (hasFileInHive) {
-          var file = await sidImageBox.get(widget.sid);
-          try {
-            image = await _decodeImage(file);
+      } else {
+        try {
+          var res = await ImageApi().getSidImageData(widget.sid);
+          var decoded = getSidImageDecode(res);
+          var file = base64Decode(decoded);
+          image = await _decodeImage(file);
+          if (image != null) {
+            await sidImageBox.put(widget.sid, file);
             if (mounted) {
               setState(() {});
             }
             if (widget.onLoaded != null) {
               widget.onLoaded!('success');
             }
-          } catch (e) {
-            // 解码失败，处理错误
-            if (widget.onError != null) {
-              widget.onError!(e);
-            }
           }
-        } else {
-          try {
-            var res = await ImageApi().getSidImageData(widget.sid);
-            var decoded = getSidImageDecode(res);
-            var file = base64Decode(decoded);
-            image = await _decodeImage(file);
-            if (image != null) {
-              await sidImageBox.put(widget.sid, file);
-              if (mounted) {
-                setState(() {});
-              }
-              if (widget.onLoaded != null) {
-                widget.onLoaded!('success');
-              }
-            }
-          } catch (e) {
-            if (widget.onError != null) {
-              widget.onError!(e);
-            }
+        } catch (e) {
+          if (widget.onError != null) {
+            widget.onError!(e);
           }
         }
       }
