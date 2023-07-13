@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
+import 'package:game/models/game_payment_channel_detail.dart';
 import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
 import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
@@ -460,20 +461,33 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                                   child: OliveShape(
                                                     type: 'right',
                                                     bgColor:
-                                                        const Color(0xFFFF00B8),
+                                                        const LinearGradient(
+                                                      colors: [
+                                                        Color(0xFFFF00B8),
+                                                        Color(0xFFFF00B8)
+                                                      ],
+                                                    ),
                                                     text:
                                                         '送${channels[index]['discountRatio'].toString()}%',
                                                   ),
                                                 ),
-                                              if (channels[index]
-                                                      ['isRecommend'] ==
-                                                  true)
-                                                const Positioned(
+                                              if (channels[index]['tag'] !=
+                                                      null &&
+                                                  channels[index]['tag'] != 0)
+                                                Positioned(
                                                   top: 0,
                                                   left: 0,
                                                   child: OliveShape(
-                                                    width: 20.0,
-                                                    text: '推',
+                                                    width: 28,
+                                                    bgColor: depositChannelLabel[
+                                                                channels[index]
+                                                                    ['tag']]![
+                                                            'color']
+                                                        as LinearGradient,
+                                                    text: depositChannelLabel[
+                                                            channels[index][
+                                                                'tag']]!['text']
+                                                        .toString(),
                                                   ),
                                                 )
                                             ],

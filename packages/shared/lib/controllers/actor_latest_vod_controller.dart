@@ -12,15 +12,10 @@ const limit = 20;
 class ActorLatestVodController extends BaseVodInfinityScrollController {
   final int actorId;
 
-  ActorLatestVodController(
-      {required this.actorId,
-      required ScrollController scrollController,
-      bool loadDataOnInit = true})
+  ActorLatestVodController({required this.actorId, bool loadDataOnInit = true})
       : super(
-            loadDataOnInit: loadDataOnInit,
-            customScrollController: scrollController,
-            autoDisposeScrollController: false,
-            hasLoadMoreEventWithScroller: false);
+          loadDataOnInit: loadDataOnInit,
+        );
 
   @override
   Future<InfinityVod> fetchData(int page) async {

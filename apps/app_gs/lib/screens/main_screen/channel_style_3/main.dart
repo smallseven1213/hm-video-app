@@ -1,5 +1,6 @@
 import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
+import 'package:app_gs/widgets/reload_button.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -99,6 +100,16 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               duration: Duration(milliseconds: 1000),
               size: 17,
               itemCount: 3,
+            ),
+          );
+        } else if (channelSharedDataController!.isError.value) {
+          return Center(
+            child: ReloadButton(
+              onPressed: () {
+                channelSharedDataController!
+                    .mutateByChannelId(widget.channelId);
+                _setupTabController();
+              },
             ),
           );
         }

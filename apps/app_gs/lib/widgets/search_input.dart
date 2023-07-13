@@ -31,7 +31,7 @@ class SearchInput extends StatefulWidget {
   final bool autoFocus;
   final bool? readOnly;
   final bool? enableInteractiveSelection;
-  final VoidCallback? onSearchButtonClick; // 新的回調
+  final void Function(String)? onSearchButtonClick; // 新的回調
 
   @override
   SearchInputState createState() => SearchInputState();
@@ -97,7 +97,11 @@ class SearchInputState extends State<SearchInput> {
               filled: true,
               fillColor: const Color(0xFF002865),
               suffixIcon: InkWell(
-                onTap: widget.onSearchButtonClick,
+                onTap: () {
+                  if (widget.onSearchButtonClick != null) {
+                    widget.onSearchButtonClick!(_controller!.text);
+                  }
+                },
                 child: const Image(
                   width: 48,
                   height: 48,

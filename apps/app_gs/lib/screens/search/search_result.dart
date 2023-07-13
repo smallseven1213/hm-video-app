@@ -33,7 +33,7 @@ class SearchResultPageState extends State<SearchResultPage> {
   // dispose scrollController
   @override
   void dispose() {
-    scrollController.dispose();
+    searchVodController.dispose();
     super.dispose();
   }
 
@@ -46,7 +46,6 @@ class SearchResultPageState extends State<SearchResultPage> {
           displayNoMoreData: searchVodController.displayNoMoreData.value,
           displayLoading: searchVodController.displayLoading.value,
           noMoreWidget: ListNoMore(),
-          customScrollController: searchVodController.scrollController,
         ));
   }
 }

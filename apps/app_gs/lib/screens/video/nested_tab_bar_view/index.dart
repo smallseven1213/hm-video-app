@@ -65,6 +65,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
   void dispose() {
     // _parentScrollController.dispose();
     _tabController.dispose();
+
     super.dispose();
   }
 
@@ -136,35 +137,32 @@ class NestedTabBarViewState extends State<NestedTabBarView>
             children: [
               if (widget.videoDetail.actors!.isNotEmpty)
                 SliverVodGrid(
-                    key: const Key('video_by_actor'),
-                    isListEmpty: blockVideosController.videoByActor.isEmpty,
-                    videos: blockVideosController.videoByActor,
-                    displayNoMoreData: false,
-                    displayLoading: false,
-                    noMoreWidget: ListNoMore(),
-                    usePrimaryParentScrollController: true,
-                    displayVideoCollectTimes: false,
-                    onScrollEnd: () {}),
-              SliverVodGrid(
-                  key: const Key('video_by_internal_tag'),
-                  isListEmpty: blockVideosController.videoByInternalTag.isEmpty,
-                  videos: blockVideosController.videoByInternalTag,
+                  key: const Key('video_by_actor'),
+                  isListEmpty: blockVideosController.videoByActor.isEmpty,
+                  videos: blockVideosController.videoByActor,
                   displayNoMoreData: false,
                   displayLoading: false,
                   noMoreWidget: ListNoMore(),
-                  usePrimaryParentScrollController: true,
                   displayVideoCollectTimes: false,
-                  onScrollEnd: () {}),
+                ),
               SliverVodGrid(
-                  key: const Key('video_by_tag'),
-                  isListEmpty: blockVideosController.videoByTag.isEmpty,
-                  videos: blockVideosController.videoByTag,
-                  displayNoMoreData: false,
-                  displayLoading: false,
-                  noMoreWidget: ListNoMore(),
-                  usePrimaryParentScrollController: true,
-                  displayVideoCollectTimes: false,
-                  onScrollEnd: () {}),
+                key: const Key('video_by_internal_tag'),
+                isListEmpty: blockVideosController.videoByInternalTag.isEmpty,
+                videos: blockVideosController.videoByInternalTag,
+                displayNoMoreData: false,
+                displayLoading: false,
+                noMoreWidget: ListNoMore(),
+                displayVideoCollectTimes: false,
+              ),
+              SliverVodGrid(
+                key: const Key('video_by_tag'),
+                isListEmpty: blockVideosController.videoByTag.isEmpty,
+                videos: blockVideosController.videoByTag,
+                displayNoMoreData: false,
+                displayLoading: false,
+                noMoreWidget: ListNoMore(),
+                displayVideoCollectTimes: false,
+              ),
             ],
           ),
         ),

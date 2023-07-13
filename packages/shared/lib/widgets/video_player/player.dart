@@ -13,11 +13,13 @@ final logger = Logger();
 class VideoPlayerDisplayWidget extends StatelessWidget {
   final ObservableVideoPlayerController controller;
   final Vod video;
+  final Function toggleFullscreen;
 
   const VideoPlayerDisplayWidget({
     super.key,
     required this.controller,
     required this.video,
+    required this.toggleFullscreen,
   });
 
   @override
@@ -75,6 +77,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                         ),
                       ),
               ],
+
               // Controls
               GestureDetector(
                 onTap: () {
@@ -111,6 +114,37 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   ),
                 ),
               ),
+              if (videoSize.width > videoSize.height)
+                Positioned(
+                  bottom: 150,
+                  child: Center(
+                      child: ElevatedButton.icon(
+                    onPressed: () => toggleFullscreen(),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white,
+                      backgroundColor:
+                          const Color(0xFF0e0e0e).withOpacity(0.5), // 文本和圖示顏色
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 5, horizontal: 10), // 內間距
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25), // 圓角半徑
+                        side: const BorderSide(
+                            color: Color(0xFF353535), width: 0.5), // 邊框
+                      ),
+                    ),
+                    icon: const Icon(
+                      Icons.screen_rotation_rounded,
+                      size: 15.0, // 圖示大小
+                    ),
+                    label: const Text(
+                      '全屏觀看',
+                      style: TextStyle(
+                        fontSize: 12, // 字體大小
+                        color: Color(0xFFE7E7E7), // 字體顏色
+                      ),
+                    ),
+                  )),
+                ),
             ],
           ],
         );

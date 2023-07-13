@@ -10,20 +10,29 @@ final logger = Logger();
 
 class ActorPopularController extends GetxController {
   var actors = <ActorWithVod>[].obs;
+  var isLoading = false.obs;
+  var isError = false.obs;
 
   ActorPopularController() {
-    _fetchData();
+    fetchData();
     Get.find<AuthController>().token.listen((event) {
-      _fetchData();
+      fetchData();
     });
   }
 
-  _fetchData() async {
-    var res = await actorApi.getManyPopularActorBy(
-      page: 1,
-      limit: 10,
-    );
-
-    actors.value = res;
+  fetchData() async {
+    try {
+      isLoading.value = true;
+      isError.value = false;
+      var res = await actorApi.getManyPopularActorBy(
+        page: 1,
+        limit: 10,
+      );
+      actors.value = res;
+    } catch (e) {
+      isError.value = true;
+    } finally {
+      isLoading.value = false;
+    }
   }
 }

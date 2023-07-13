@@ -83,10 +83,8 @@ class AdState extends State<Ad> {
     final Size size = MediaQuery.of(context).size;
     return WillPopScope(
       onWillPop: () async => false,
-      child: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
-        child: Stack(
+      child: Scaffold(
+        body: Stack(
           children: [
             Positioned.fill(
               child: BannerLink(

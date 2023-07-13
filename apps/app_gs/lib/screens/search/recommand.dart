@@ -8,14 +8,33 @@ import 'package:shared/controllers/user_search_history_controller.dart';
 import '../../widgets/header.dart';
 import '../../widgets/video_preview.dart';
 
-class RecommandScreen extends StatelessWidget {
+class RecommandScreen extends StatefulWidget {
   final Function onClickTag;
 
   RecommandScreen({Key? key, required this.onClickTag}) : super(key: key);
 
-  final TagPopularController tagPopularController = Get.find();
-  final VideoPopularController videoPopularController = Get.find();
-  final UserSearchHistoryController userSearchHistoryController = Get.find();
+  @override
+  _RecommandScreenState createState() => _RecommandScreenState();
+}
+
+class _RecommandScreenState extends State<RecommandScreen> {
+  late final TagPopularController tagPopularController;
+  late final VideoPopularController videoPopularController;
+  final UserSearchHistoryController userSearchHistoryController =
+      Get.find<UserSearchHistoryController>();
+
+  @override
+  void initState() {
+    super.initState();
+    tagPopularController = Get.put(TagPopularController());
+    videoPopularController = Get.find<VideoPopularController>();
+  }
+
+  @override
+  void dispose() {
+    Get.delete<TagPopularController>();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +82,7 @@ class RecommandScreen extends StatelessWidget {
                         .map((keyword) => TagItem(
                             tag: '#$keyword',
                             onTap: () {
-                              onClickTag(keyword);
+                              widget.onClickTag(keyword);
                             }))
                         .toList()
                         .cast<Widget>(),
@@ -89,7 +108,7 @@ class RecommandScreen extends StatelessWidget {
                         .map((tag) => TagItem(
                             tag: '#${tag.name}',
                             onTap: () {
-                              onClickTag(tag.name);
+                              widget.onClickTag(tag.name);
                             }))
                         .toList()
                         .cast<Widget>(),

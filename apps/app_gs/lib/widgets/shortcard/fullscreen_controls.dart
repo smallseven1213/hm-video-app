@@ -2,43 +2,32 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:screen_brightness/screen_brightness.dart';
 import 'package:shared/controllers/video_player_controller.dart';
-import 'package:volume_control/volume_control.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
-import 'enums.dart';
-import 'player_header.dart';
-import 'screen_lock.dart';
-import 'volume_brightness.dart';
 
 final logger = Logger();
 
-class ControlsOverlay extends StatefulWidget {
+class FullScreenControls extends StatefulWidget {
   final String videoUrl;
   final String? name;
   final Function toggleFullscreen;
   final bool isFullscreen;
-  final Function onScreenLock;
-  final bool isScreenLocked;
-  const ControlsOverlay(
-      {Key? key,
-      this.name,
-      required this.toggleFullscreen,
-      required this.isFullscreen,
-      required this.videoUrl,
-      required this.onScreenLock,
-      required this.isScreenLocked})
-      : super(key: key);
+  final ObservableVideoPlayerController ovpController;
+
+  const FullScreenControls({
+    Key? key,
+    this.name,
+    required this.toggleFullscreen,
+    required this.isFullscreen,
+    required this.videoUrl,
+    required this.ovpController,
+  }) : super(key: key);
 
   @override
   ControlsOverlayState createState() => ControlsOverlayState();
 }
 
-class ControlsOverlayState extends State<ControlsOverlay> {
-  late ObservableVideoPlayerController ovpController;
+class ControlsOverlayState extends State<FullScreenControls> {
   String videoDurationString = '';
   String videoPositionString = '';
   bool hasH5FirstPlay = kIsWeb ? false : true;
@@ -57,7 +46,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   double? lastDragPosition; // 添加这一行
   double brightness = 0.5; // 初始值，表示亮度，範圍在 0.0 到 1.0 之間
   double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
-  SideControlsType sideControlsType = SideControlsType.none; // 初始值
   double verticalDragPosition = 0.0; // 初始值
 
   void startToggleControlsTimer() {
@@ -73,41 +61,30 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
   @override
   void initState() {
-    ovpController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
     startToggleControlsTimer();
-    ovpController.videoPlayerController.addListener(() {
-      if (mounted && ovpController.videoPlayerController.value.isInitialized) {
+    widget.ovpController.videoPlayerController.addListener(() {
+      if (mounted &&
+          widget.ovpController.videoPlayerController.value.isInitialized) {
         setState(() {
-          inBuffering = ovpController.videoPlayerController.value.isBuffering;
-          isPlaying = ovpController.videoPlayerController.value.isPlaying;
-          videoDurationString = ovpController
-              .videoPlayerController.value.duration
+          inBuffering =
+              widget.ovpController.videoPlayerController.value.isBuffering;
+          isPlaying =
+              widget.ovpController.videoPlayerController.value.isPlaying;
+          videoDurationString = widget
+              .ovpController.videoPlayerController.value.duration
               .toString()
               .split('.')
               .first;
-          videoDuration = ovpController
-              .videoPlayerController.value.duration.inSeconds
+          videoDuration = widget
+              .ovpController.videoPlayerController.value.duration.inSeconds
               .toInt();
-          // 將videoDurationString的HH MM SS拆出來，最後換算成秒數
-          // List<String> durationList = videoDurationString.split(':');
-          // if (durationList.length == 3) {
-          //   videoDuration = int.parse(durationList[0]) * 3600 +
-          //       int.parse(durationList[1]) * 60 +
-          //       int.parse(durationList[2]);
-          // } else if (durationList.length == 2) {
-          //   videoDuration =
-          //       int.parse(durationList[0]) * 60 + int.parse(durationList[1]);
-          // } else {
-          //   videoDuration = int.parse(durationList[0]);
-          // }
-          videoPositionString = ovpController
-              .videoPlayerController.value.position
+          videoPositionString = widget
+              .ovpController.videoPlayerController.value.position
               .toString()
               .split('.')
               .first;
-          videoPosition = ovpController
-              .videoPlayerController.value.position.inSeconds
+          videoPosition = widget
+              .ovpController.videoPlayerController.value.position.inSeconds
               .toInt();
         });
       }
@@ -125,7 +102,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
   // 主動更新影片進度
   void updateVideoPosition(Duration newPosition) {
-    ovpController.videoPlayerController.seekTo(newPosition);
+    widget.ovpController.videoPlayerController.seekTo(newPosition);
   }
 
   void toggleDisplayControls() {
@@ -163,64 +140,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
         },
         onDoubleTap: () {
           if (isPlaying) {
-            ovpController.videoPlayerController.pause();
+            widget.ovpController.videoPlayerController.pause();
           } else {
-            ovpController.videoPlayerController.play();
-          }
-        },
-        onVerticalDragStart: (DragStartDetails details) {
-          if (GetPlatform.isWeb || !mounted) {
-            return;
-          }
-          setState(() {
-            // 根據滑動的開始位置來決定我們將要修改哪一個值
-            if (details.localPosition.dx < constraints.maxWidth / 2) {
-              // 如果用戶在畫面的左半邊開始滑動，那麼我們將會更新亮度的值
-              sideControlsType = SideControlsType.brightness;
-            } else {
-              // 如果用戶在畫面的右半邊開始滑動，那麼我們將會更新音量的值
-              sideControlsType = SideControlsType.sound;
-            }
-          });
-        },
-        onVerticalDragUpdate: (DragUpdateDetails details) {
-          if (!mounted || !kIsWeb) {
-            return;
-          }
-          lastDragPosition ??= details.globalPosition.dy;
-          // 計算滑動距離並將其正規化到0到1之間
-          double deltaY = details.globalPosition.dy - lastDragPosition!;
-          verticalDragPosition -= deltaY / (constraints.maxHeight * 0.3);
-          verticalDragPosition = verticalDragPosition.clamp(0.0, 1.0);
-
-          // 檢查滑動是發生在畫面的左半邊還是右半邊
-          bool isVolume =
-              details.globalPosition.dx > MediaQuery.of(context).size.width / 2;
-          if (isVolume) {
-            volume = verticalDragPosition;
-            volume = volume.clamp(0.0, 1.0);
-
-            VolumeControl.setVolume(volume);
-            ovpController.videoPlayerController.setVolume(volume);
-            logger.i('volume: $volume');
-          } else {
-            brightness = verticalDragPosition;
-            brightness = brightness.clamp(0.0, 1.0);
-            ScreenBrightness().setScreenBrightness(brightness);
-            logger.i('brightness: $brightness');
-          }
-
-          // 更新lastDragPosition以便于下次計算
-          lastDragPosition = details.globalPosition.dy;
-          setState(() {});
-        },
-        onVerticalDragEnd: (DragEndDetails details) {
-          lastDragPosition = null;
-          if (mounted && !kIsWeb) {
-            setState(() {
-              // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
-              sideControlsType = SideControlsType.none;
-            });
+            widget.ovpController.videoPlayerController.play();
           }
         },
         onHorizontalDragStart: (details) {
@@ -264,10 +186,20 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   color: Colors.transparent,
                 )),
             if (displayControls || !isPlaying)
-              PlayerHeader(
-                isFullscreen: widget.isFullscreen,
-                title: widget.name,
-                toggleFullscreen: widget.toggleFullscreen,
+              Positioned(
+                top: 0,
+                left: 0,
+                right: 0,
+                child: AppBar(
+                  title: Text(''),
+                  elevation: 0,
+                  centerTitle: false,
+                  backgroundColor: Colors.transparent,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                    onPressed: () => widget.toggleFullscreen(),
+                  ),
+                ),
               ),
             if (inBuffering && !isScrolling)
               const Center(
@@ -318,7 +250,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               // 中間播放按鈕
               InkWell(
                 onTap: () {
-                  ovpController.videoPlayerController.play();
+                  widget.ovpController.videoPlayerController.play();
                   if (kIsWeb && !hasH5FirstPlay) {
                     setState(() {
                       hasH5FirstPlay = true;
@@ -343,23 +275,21 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   ),
                 ),
               ),
-            if (widget.isFullscreen && !kIsWeb && displayControls)
-              ScreenLock(
-                  isScreenLocked: widget.isScreenLocked,
-                  onScreenLock: widget.onScreenLock),
             if (displayControls || !isPlaying)
               // 下方控制區塊
               Positioned(
                 bottom: 0,
-                child: Container(
+                child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   child: Row(
                     children: [
                       IconButton(
                         onPressed: () {
                           isPlaying
-                              ? ovpController.videoPlayerController.pause()
-                              : ovpController.videoPlayerController.play();
+                              ? widget.ovpController.videoPlayerController
+                                  .pause()
+                              : widget.ovpController.videoPlayerController
+                                  .play();
                         },
                         icon: Icon(
                           isPlaying ? Icons.pause : Icons.play_arrow,
@@ -408,31 +338,11 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                         videoDurationString,
                         style: const TextStyle(color: Colors.white),
                       ),
-                      IconButton(
-                        onPressed: () =>
-                            widget.toggleFullscreen(!widget.isFullscreen),
-                        icon: Icon(
-                          widget.isFullscreen
-                              ? Icons.close_fullscreen_rounded
-                              : Icons.fullscreen,
-                          color: Colors.white,
-                        ),
-                      ),
+                      const SizedBox(width: 15.0),
                     ],
                   ),
                 ),
               ),
-
-            //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
-            if (!GetPlatform.isWeb &&
-                    sideControlsType == SideControlsType.brightness ||
-                sideControlsType == SideControlsType.sound)
-              VolumeBrightness(
-                controller: ovpController.videoPlayerController,
-                verticalDragPosition: verticalDragPosition,
-                sideControlsType: sideControlsType,
-                height: constraints.maxHeight,
-              )
           ],
         ),
       );

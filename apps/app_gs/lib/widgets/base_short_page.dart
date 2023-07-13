@@ -129,12 +129,13 @@ class BaseShortPageState extends State<BaseShortPage> {
                   shortData: shortData,
                   displayFavoriteAndCollectCount:
                       widget.displayFavoriteAndCollectCount,
+                  toggleFullScreen: () =>
+                      pageviewIndexController.toggleFullscreen(),
                 ),
               );
             },
             scrollDirection: Axis.vertical,
           ),
-          const FloatPageBackButton()
         ],
       ),
     );

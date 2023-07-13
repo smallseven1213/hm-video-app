@@ -87,7 +87,6 @@ class NicknamePageState extends State<NicknamePage> {
                 child: Button(
                   text: '設置完成',
                   onPressed: () => _handleLogin(context),
-                  size: 'small',
                 ),
               ),
             ],
