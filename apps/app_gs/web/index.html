@@ -33,9 +33,6 @@
 
   <title>app_gs</title>
   <link rel="manifest" href="manifest.json">
-  <script text="text/javascript">
-    window.flutterWebRenderer = "html";
-  </script>
   <script>
     // The value below is injected by flutter build, do not touch.
     var serviceWorkerVersion = null;
@@ -83,7 +80,9 @@
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+          engineInitializer.initializeEngine({
+            renderer: "canvaskit"
+          }).then(function(appRunner) {
             appRunner.runApp();
             setTimeout(function() {
               //  隐藏 SplashScreen 
