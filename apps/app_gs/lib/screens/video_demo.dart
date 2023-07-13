@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
@@ -57,7 +58,10 @@ class VideoDemoPageState extends State<VideoDemoPage> {
   // void _play and play() with setVolumn is 1
   void _playMe() {
     logger.i('TESTING LIFECYCLE -> c');
-    _controller?.setVolume(1);
+    if (!kIsWeb) {
+      _controller?.setVolume(1);
+    }
+
     _controller?.play();
   }
 

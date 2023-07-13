@@ -184,7 +184,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           });
         },
         onVerticalDragUpdate: (DragUpdateDetails details) {
-          if (!mounted) {
+          if (!mounted || !kIsWeb) {
             return;
           }
           lastDragPosition ??= details.globalPosition.dy;
@@ -199,6 +199,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           if (isVolume) {
             volume = verticalDragPosition;
             volume = volume.clamp(0.0, 1.0);
+
             VolumeControl.setVolume(volume);
             ovpController.videoPlayerController.setVolume(volume);
             logger.i('volume: $volume');
@@ -215,7 +216,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
         },
         onVerticalDragEnd: (DragEndDetails details) {
           lastDragPosition = null;
-          if (mounted) {
+          if (mounted && !kIsWeb) {
             setState(() {
               // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
               sideControlsType = SideControlsType.none;

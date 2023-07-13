@@ -46,7 +46,6 @@ class SearchResultPageState extends State<SearchResultPage> {
           displayNoMoreData: searchVodController.displayNoMoreData.value,
           displayLoading: searchVodController.displayLoading.value,
           noMoreWidget: ListNoMore(),
-          customScrollController: searchVodController.scrollController,
         ));
   }
 }
