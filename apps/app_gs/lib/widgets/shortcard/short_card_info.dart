@@ -103,7 +103,10 @@ class ShortCardInfo extends StatelessWidget {
 
             // 標籤
             if (data.tag.isNotEmpty)
-              Row(
+              Wrap(
+                direction: Axis.horizontal,
+                spacing: 4,
+                runSpacing: 4,
                 children: data.tag
                     .map((e) => InkWell(
                         onTap: () async {
