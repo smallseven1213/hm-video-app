@@ -15,10 +15,11 @@ class NavigatorApi {
     return _instance;
   }
 
-  Future<List<Navigation>> getNavigations() async {
+  Future<List<Navigation>> getNavigations(int type) async {
     try {
       var res = await fetcher(
-          url: '${systemConfig.apiHost}/public/navigations/navigation');
+          url:
+              '${systemConfig.apiHost}/public/navigations/navigation?type=$type');
       if (res.data['code'] != '00') {
         return [];
       }
