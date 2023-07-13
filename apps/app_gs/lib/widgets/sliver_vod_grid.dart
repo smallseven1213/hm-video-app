@@ -37,23 +37,6 @@ class SliverVodGrid extends StatefulWidget {
 }
 
 class SliverVodGridState extends State<SliverVodGrid> {
-  late ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = widget.customScrollController ?? ScrollController();
-  }
-
-  @override
-  void dispose() {
-    if (widget.customScrollController == null) {
-      _scrollController.dispose();
-    }
-
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Obx(() {
@@ -61,7 +44,8 @@ class SliverVodGridState extends State<SliverVodGrid> {
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
-        controller: widget.customScrollController,
+        scrollBehavior:
+            ScrollConfiguration.of(context).copyWith(scrollbars: false),
         slivers: [
           ...?widget.headerExtends,
           if (widget.isListEmpty)
