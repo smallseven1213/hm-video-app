@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared/utils/navigation_helper.dart';
 import 'package:uuid/uuid.dart';
 
@@ -171,6 +172,9 @@ class MyRouteDelegate extends RouterDelegate<String>
       children: [
         Navigator(
           key: navigatorKey,
+          observers: [
+            SentryNavigatorObserver(),
+          ],
           onPopPage: _onPopPage,
           pages: _stack.map<Page<dynamic>>((stack) {
             final widget = routes[stack.path]!(context, stack.args);
