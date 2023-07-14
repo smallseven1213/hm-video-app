@@ -34,9 +34,11 @@ class RefreshListState extends State<RefreshList> {
 
   void _onRefresh() async {
     // 刷新完成后，需要调用这个方法
+    if (widget.onRefresh == null) return;
     await widget.onRefresh!();
     await Future.delayed(const Duration(milliseconds: 500)); // 加延遲
     _refreshController.refreshCompleted();
+    if (widget.onRefreshEnd == null) return;
     widget.onRefreshEnd!();
   }
 
