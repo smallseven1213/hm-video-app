@@ -27,6 +27,7 @@ enum AppRoutes {
   shortsByBlock,
   shortsBySupplier,
   shortsByLocal,
+  shortsByChannel,
   configs,
   updatePassword,
   idCard,
@@ -90,6 +91,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/shorts_by_block';
       case AppRoutes.shortsBySupplier:
         return '/shorts_by_supplier';
+      case AppRoutes.shortsByChannel:
+        return '/shorts_by_channel';
       case AppRoutes.configs:
         return '/configs';
       case AppRoutes.updatePassword:

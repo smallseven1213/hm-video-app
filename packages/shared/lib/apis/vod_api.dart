@@ -63,10 +63,11 @@ class VodApi {
     );
   }
 
-  Future<BlockVod> searchMany(String keyword, int page, int limit) async {
+  Future<BlockVod> searchMany(
+      String keyword, int page, int limit, int film) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit');
+            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit&film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -440,5 +441,19 @@ class VodApi {
           vods,
           videos['total'],
         ));
+  }
+
+  Future<List<Vod>> getPlayList({
+    required int supplierId,
+    required int videoId,
+  }) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideo/playlist?supplierId=$supplierId&videoId=$videoId');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 }

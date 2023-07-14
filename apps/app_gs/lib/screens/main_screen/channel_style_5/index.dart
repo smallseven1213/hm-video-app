@@ -52,7 +52,7 @@ class ChannelStyle5 extends StatelessWidget {
               ),
               SliverToBoxAdapter(
                 child: Header(
-                    text: '人氣女優',
+                    text: '精選UP主',
                     moreButton: InkWell(
                         onTap: () => {
                               MyRouteDelegate.of(context).push(
@@ -216,6 +216,21 @@ class ChannelStyle5 extends StatelessWidget {
                                                   child: VideoPreviewWidget(
                                                     id: vod.id,
                                                     title: vod.title,
+                                                    film: 2,
+                                                    onOverrideRedirectTap: () {
+                                                      MyRouteDelegate.of(
+                                                              context)
+                                                          .push(
+                                                        AppRoutes
+                                                            .shortsByChannel
+                                                            .value,
+                                                        args: {
+                                                          'videoId': vod.id,
+                                                          'supplierId':
+                                                              data.supplier.id,
+                                                        },
+                                                      );
+                                                    },
                                                     displayCoverVertical: true,
                                                     coverHorizontal:
                                                         vod.coverHorizontal!,
