@@ -442,4 +442,18 @@ class VodApi {
           videos['total'],
         ));
   }
+
+  Future<List<Vod>> getPlayList({
+    required int supplierId,
+    required int videoId,
+  }) async {
+    var res = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideo/playlist?supplierId=$supplierId&videoId=$videoId');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from(
+        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+  }
 }

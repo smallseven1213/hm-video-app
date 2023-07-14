@@ -19,6 +19,7 @@ import '../pages/share.dart' deferred as share_page;
 import '../pages/sharerecord.dart' deferred as sharerecord_page;
 import '../pages/shorts_by_block.dart' deferred as shorts_by_block_page;
 import '../pages/shorts_by_local.dart' deferred as shorts_by_local_page;
+import '../pages/shorts_by_channel.dart' deferred as shorts_by_channel_page;
 import '../pages/shorts_by_supplier.dart' deferred as shorts_by_supplier_page;
 import '../pages/shorts_by_tag.dart' deferred as shorts_by_tag_page;
 import '../pages/supplier.dart' deferred as supplier_page;
@@ -180,6 +181,14 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           uuid: args['uuid'] as String,
           videoId: args['videoId'] as int,
           itemId: args['itemId'] as int,
+        ),
+      ),
+  AppRoutes.shortsByChannel.value: (context, args) => PageLoader(
+        loadLibrary: shorts_by_channel_page.loadLibrary,
+        createPage: () => shorts_by_channel_page.ShortsByChannelPage(
+          uuid: args['uuid'] as String,
+          videoId: args['videoId'] as int,
+          supplierId: args['supplierId'] as int,
         ),
       ),
   AppRoutes.configs.value: (context, args) => PageLoader(
