@@ -29,7 +29,8 @@ enum AppRoutes {
   shortsByLocal,
   configs,
   updatePassword,
-  idCard
+  idCard,
+  suppliers
 }
 
 extension AppRoutesExtension on AppRoutes {
@@ -97,6 +98,8 @@ extension AppRoutesExtension on AppRoutes {
         return '/id_card';
       case AppRoutes.shortsByLocal:
         return '/shorts_by_local';
+      case AppRoutes.suppliers:
+        return '/suppliers';
       default:
         return '/unknown';
     }
