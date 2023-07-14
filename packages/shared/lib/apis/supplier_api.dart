@@ -72,7 +72,7 @@ class SupplierApi {
     }
     return List.from((res.data['data'] as List<dynamic>)
         .map((e) => SupplierWithVod(
-              Supplier.fromJson(e['supplier']),
+              SupplierForVods.fromJson(e['supplier']),
               List.from((e['video'] as List<dynamic>)
                   .map((e) => Vod.fromJson(e))
                   .toList()),

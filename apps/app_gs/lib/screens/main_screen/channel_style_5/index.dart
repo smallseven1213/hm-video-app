@@ -55,9 +55,24 @@ class ChannelStyle5 extends StatelessWidget {
                     text: '人氣女優',
                     moreButton: InkWell(
                         onTap: () => {
-                              MyRouteDelegate.of(context).push(
-                                AppRoutes.actors.value,
-                              )
+                              // MyRouteDelegate.of(context).push(
+                              //   AppRoutes.actors.value,
+                              // )
+                              // display dialog 'Coming Soon'
+                              showDialog(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                        title: Text('Coming Soon'),
+                                        content:
+                                            Text('This feature is coming soon'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context, 'OK'),
+                                            child: Text('OK'),
+                                          )
+                                        ],
+                                      ))
                             },
                         child: const Text(
                           '更多 >',
@@ -98,7 +113,7 @@ class ChannelStyle5 extends StatelessWidget {
                                     child: SidImage(
                                       key:
                                           ValueKey(data.supplier.coverVertical),
-                                      sid: data.supplier.coverVertical!,
+                                      sid: data.supplier.coverVertical,
                                       // sid: data.vods[0].coverHorizontal!,
                                       fit: BoxFit.cover,
                                     ),
@@ -157,12 +172,12 @@ class ChannelStyle5 extends StatelessWidget {
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Text(data.supplier.aliasName!,
+                                                  Text(data.supplier.name,
                                                       style: const TextStyle(
                                                           color: Colors.white,
                                                           fontSize: 14)),
                                                   Text(
-                                                      '人氣:${data.supplier.collectTotal}',
+                                                      '人氣:${data.supplier.followTimes}',
                                                       style: TextStyle(
                                                           color: Colors.white
                                                               .withOpacity(
@@ -176,11 +191,9 @@ class ChannelStyle5 extends StatelessWidget {
                                                 onPressed: () {
                                                   MyRouteDelegate.of(context)
                                                       .push(
-                                                    AppRoutes.actor.value,
+                                                    AppRoutes.supplier.value,
                                                     args: {
                                                       'id': data.supplier.id,
-                                                      'title': data
-                                                          .supplier.aliasName,
                                                     },
                                                   );
                                                 },
@@ -250,10 +263,9 @@ class ChannelStyle5 extends StatelessWidget {
                                     child: InkWell(
                                       onTap: () =>
                                           MyRouteDelegate.of(context).push(
-                                        AppRoutes.actor.value,
+                                        AppRoutes.supplier.value,
                                         args: {
                                           'id': data.supplier.id,
-                                          'title': data.supplier.aliasName,
                                         },
                                       ),
                                       child: Container(
@@ -262,7 +274,7 @@ class ChannelStyle5 extends StatelessWidget {
                                           padding: const EdgeInsets.symmetric(
                                               horizontal: 9, vertical: 4),
                                           child: Text(
-                                            '${data.supplier.shortVideoTotal}部影片',
+                                            '${data.supplier.containVideos}部影片',
                                             style: const TextStyle(
                                                 fontSize: 12,
                                                 color: Colors.white),
