@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared/controllers/user_navigator_controller.dart';
 import '../controllers/actor_region_controller.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/banner_controller.dart';
@@ -24,6 +25,7 @@ void setupDependencies() {
   Get.lazyPut<ApiResponseErrorCatchController>(
       () => ApiResponseErrorCatchController());
   Get.lazyPut<UserController>(() => UserController());
+  Get.lazyPut<UserNavigatorController>(() => UserNavigatorController());
   Get.lazyPut<BottonNavigatorController>(() => BottonNavigatorController());
   Get.lazyPut<BannerController>(() => BannerController());
   Get.lazyPut<PlayRecordController>(() => PlayRecordController(tag: 'vod'),

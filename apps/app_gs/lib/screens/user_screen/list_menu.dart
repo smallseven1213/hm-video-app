@@ -8,6 +8,10 @@ import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:scan/scan.dart';
 import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/controllers/user_navigator_controller.dart';
+import 'package:shared/models/navigation.dart';
+import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 final logger = Logger();
 
@@ -23,8 +27,21 @@ class ListMenuItem {
   });
 }
 
-class ListMenu extends StatelessWidget {
+class ListMenu extends StatefulWidget {
   const ListMenu({Key? key}) : super(key: key);
+
+  @override
+  ListMenuState createState() => ListMenuState();
+}
+
+class ListMenuState extends State<ListMenu> {
+  final userNavigatorController = Get.put(UserNavigatorController());
+
+  @override
+  void initState() {
+    userNavigatorController.fetchData();
+    super.initState();
+  }
 
   void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -124,72 +141,88 @@ class ListMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      ListMenuItem(
-        name: '找回帳號',
-        icon: 'assets/images/user_screen_find_account.png',
-        onTap: () {
-          if (kIsWeb) {
-            showConfirmDialog(
-              context: context,
-              title: '提示',
-              message: '請使用手機應用程式找回帳號',
-              showCancelButton: false,
-            );
-          } else {
-            showBottomSheet(context);
-          }
-        },
-      ),
-    ];
-    return SliverList(
-      delegate: SliverChildListDelegate(
-        items.map((item) {
-          return Container(
-            height: 38,
-            margin: const EdgeInsets.fromLTRB(8, 0, 8, 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(38),
-              border: Border.all(
-                color: const Color(0xFF8594E2),
-                width: 1,
-              ),
-              gradient: const LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Color(0xFF000916),
-                  Color(0xFF003F6C),
-                ],
-                stops: [0.0, 1.0],
-              ),
-            ),
-            child: InkWell(
-              onTap: item.onTap as void Function()?,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(width: 16),
-                  Image(
-                    image: AssetImage(item.icon),
-                    width: 22,
-                  ),
-                  const SizedBox(width: 16),
-                  Text(
-                    item.name,
-                    style: const TextStyle(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+    return Obx(() {
+      final items =
+          userNavigatorController.moreLink.value.map((Navigation item) {
+        if (item.name == '找回帳號') {
+          return ListMenuItem(
+            name: item.name ?? '',
+            icon: item.photoSid ?? '',
+            onTap: () {
+              if (kIsWeb) {
+                showConfirmDialog(
+                  context: context,
+                  title: '提示',
+                  message: '請使用手機應用程式找回帳號',
+                  showCancelButton: false,
+                );
+              } else {
+                showBottomSheet(context);
+              }
+            },
           );
-        }).toList(),
-      ),
-    );
+        }
+        return ListMenuItem(
+          name: item.name ?? '',
+          icon: item.photoSid ?? '',
+          onTap: () {
+            MyRouteDelegate.of(context).push(item.path ?? '');
+          },
+        );
+      });
+
+      return SliverList(
+        delegate: SliverChildListDelegate(
+          items.map((item) {
+            return Container(
+              height: 38,
+              margin: const EdgeInsets.fromLTRB(8, 0, 8, 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(38),
+                border: Border.all(
+                  color: const Color(0xFF8594E2),
+                  width: 1,
+                ),
+                gradient: const LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFF000916),
+                    Color(0xFF003F6C),
+                  ],
+                  stops: [0.0, 1.0],
+                ),
+              ),
+              child: InkWell(
+                onTap: item.onTap as void Function()?,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const SizedBox(width: 16),
+                    Padding(
+                      padding: const EdgeInsets.all(5),
+                      child: SidImage(
+                        sid: item.icon,
+                        width: 20,
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Text(
+                      item.name,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      );
+    });
   }
 }
