@@ -34,6 +34,7 @@ import '../pages/search.dart' deferred as search_page;
 import '../pages/video.dart' as video_page;
 import '../screens/apps_screen/index.dart' deferred as apps_screen;
 import '../screens/demo.dart' deferred as demo_screen;
+import '../pages/suppliers.dart' deferred as suppliers_screen;
 // import '../screens/video_demo.dart' deferred as video_demo_screen;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
@@ -192,5 +193,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.idCard.value: (context, args) => PageLoader(
         loadLibrary: id_page.loadLibrary,
         createPage: () => id_page.IDCardPage(),
+      ),
+  // suppliers to suppliers_screen
+  AppRoutes.suppliers.value: (context, args) => PageLoader(
+        loadLibrary: suppliers_screen.loadLibrary,
+        createPage: () => suppliers_screen.SuppliersPage(),
       ),
 };

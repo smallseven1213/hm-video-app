@@ -79,4 +79,22 @@ class SupplierApi {
             ))
         .toList());
   }
+
+  // supplier/list?page
+  Future<List<Supplier>> getManyBy({
+    int page = 1,
+    int limit = 10,
+    String? name,
+    int sortBy = 0,
+  }) async {
+    var res = await fetcher(
+        url:
+            '$apiPrefix/supplier/list?page=$page&limit=$limit&name=$name&sortBy=$sortBy');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from((res.data['data']['data'] as List<dynamic>)
+        .map((e) => Supplier.fromJson(e))
+        .toList());
+  }
 }

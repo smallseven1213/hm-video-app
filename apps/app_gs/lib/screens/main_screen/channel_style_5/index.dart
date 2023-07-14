@@ -55,24 +55,9 @@ class ChannelStyle5 extends StatelessWidget {
                     text: '人氣女優',
                     moreButton: InkWell(
                         onTap: () => {
-                              // MyRouteDelegate.of(context).push(
-                              //   AppRoutes.actors.value,
-                              // )
-                              // display dialog 'Coming Soon'
-                              showDialog(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                        title: Text('Coming Soon'),
-                                        content:
-                                            Text('This feature is coming soon'),
-                                        actions: [
-                                          TextButton(
-                                            onPressed: () =>
-                                                Navigator.pop(context, 'OK'),
-                                            child: Text('OK'),
-                                          )
-                                        ],
-                                      ))
+                              MyRouteDelegate.of(context).push(
+                                AppRoutes.suppliers.value,
+                              )
                             },
                         child: const Text(
                           '更多 >',
