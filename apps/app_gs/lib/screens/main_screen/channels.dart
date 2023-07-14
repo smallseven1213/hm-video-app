@@ -8,6 +8,7 @@ import 'channel_style_1/index.dart';
 import 'channel_style_2/index.dart';
 import 'channel_style_3/index.dart';
 import 'channel_style_4/index.dart';
+import 'channel_style_5/index.dart';
 import 'channel_style_not_found/index.dart';
 
 Map<int, Function> styleWidgetMap = {
@@ -24,6 +25,10 @@ Map<int, Function> styleWidgetMap = {
         channelId: item.id,
       ),
   4: (item) => ChannelStyle4(
+        key: ValueKey(item.id),
+        channelId: item.id,
+      ),
+  5: (item) => ChannelStyle5(
         key: ValueKey(item.id),
         channelId: item.id,
       ),
