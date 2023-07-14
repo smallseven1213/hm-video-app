@@ -31,10 +31,10 @@ import '../pages/favorites.dart' deferred as favorites_page;
 import '../pages/filter.dart' deferred as filter_page;
 import '../pages/notifications.dart' deferred as notifications_page;
 import '../pages/search.dart' deferred as search_page;
-import '../pages/video.dart' deferred as video_page;
+import '../pages/video.dart' as video_page;
 import '../screens/apps_screen/index.dart' deferred as apps_screen;
 import '../screens/demo.dart' deferred as demo_screen;
-import '../screens/video_demo.dart' deferred as video_demo_screen;
+// import '../screens/video_demo.dart' deferred as video_demo_screen;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.demo.value: (context, args) => PageLoader(
@@ -47,10 +47,11 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           defaultScreenKey: args['defaultScreenKey'] as String?,
         ),
       ),
-  AppRoutes.video.value: (context, args) => PageLoader(
-        loadLibrary: video_page.loadLibrary,
-        createPage: () => video_page.Video(args: args),
-      ),
+  // AppRoutes.video.value: (context, args) => PageLoader(
+  //       loadLibrary: video_page.loadLibrary,
+  //       createPage: () => video_page.Video(args: args),
+  //     ),
+  AppRoutes.video.value: (context, args) => video_page.Video(args: args),
   AppRoutes.videoByBlock.value: (context, args) => PageLoader(
         loadLibrary: video_by_block_page.loadLibrary,
         createPage: () => video_by_block_page.VideoByBlockPage(

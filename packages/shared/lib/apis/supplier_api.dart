@@ -1,3 +1,5 @@
+import 'package:shared/models/supplier_with_vods.dart';
+
 import '../models/block_vod.dart';
 import '../models/supplier.dart';
 import '../models/vod.dart';
@@ -58,5 +60,23 @@ class SupplierApi {
     }
     return List.from(
         (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+  }
+
+  Future<List<SupplierWithVod>> getManyPopularActorBy(
+      {int page = 1, int limit = 10}) async {
+    var res = await fetcher(
+        url:
+            '$apiPrefix/supplier/popular-supplier-channel?page=$page&limit=$limit');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from((res.data['data'] as List<dynamic>)
+        .map((e) => SupplierWithVod(
+              Supplier.fromJson(e['supplier']),
+              List.from((e['video'] as List<dynamic>)
+                  .map((e) => Vod.fromJson(e))
+                  .toList()),
+            ))
+        .toList());
   }
 }
