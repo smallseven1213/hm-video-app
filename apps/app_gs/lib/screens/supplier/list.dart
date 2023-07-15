@@ -56,7 +56,7 @@ class SupplierVods extends StatelessWidget {
                     var vod = videos[index];
                     return VideoPreviewWidget(
                         id: id,
-                        onOverrideRedirectTap: () {
+                        onOverrideRedirectTap: (id) {
                           MyRouteDelegate.of(context).push(
                             AppRoutes.shortsBySupplier.value,
                             args: {'videoId': vod.id, 'supplierId': id},

@@ -49,7 +49,7 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                     return VideoPreviewWidget(
                         id: vod.id,
                         film: 2,
-                        onOverrideRedirectTap: () {
+                        onOverrideRedirectTap: (id) {
                           MyRouteDelegate.of(context).push(
                             AppRoutes.shortsByTag.value,
                             args: {'videoId': vod.id, 'tagId': widget.tagId},

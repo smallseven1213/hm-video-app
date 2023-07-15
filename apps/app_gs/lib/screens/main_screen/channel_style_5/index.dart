@@ -217,7 +217,8 @@ class ChannelStyle5 extends StatelessWidget {
                                                     id: vod.id,
                                                     title: vod.title,
                                                     film: 2,
-                                                    onOverrideRedirectTap: () {
+                                                    onOverrideRedirectTap:
+                                                        (id) {
                                                       MyRouteDelegate.of(
                                                               context)
                                                           .push(
