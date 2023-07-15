@@ -99,7 +99,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final Function()? onTap;
-  final Function()? onOverrideRedirectTap; // 自定義路由轉址
+  final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
   const VideoPreviewWidget({
     Key? key,
@@ -148,7 +148,7 @@ class VideoPreviewWidget extends StatelessWidget {
             }
             if (hasTapEvent == true) {
               if (onOverrideRedirectTap != null) {
-                onOverrideRedirectTap!();
+                onOverrideRedirectTap!(id);
               } else {
                 logger.i('CLICK TO FILM $film, $id, $blockId');
                 if (film == 1) {

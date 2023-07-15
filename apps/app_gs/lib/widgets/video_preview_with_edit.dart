@@ -74,7 +74,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
-  final Function()? onOverrideRedirectTap; // 自定義路由轉址
+  final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
   const VideoPreviewWithEditWidget(
       {Key? key,

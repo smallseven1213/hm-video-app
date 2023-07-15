@@ -10,6 +10,7 @@ import '../controllers/pageview_index_controller.dart';
 import '../controllers/play_record_controller.dart';
 import '../controllers/response_controller.dart';
 import '../controllers/search_page_data_controller.dart';
+import '../controllers/search_temp_controller.dart';
 import '../controllers/user_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
 import '../controllers/user_favorites_short_controlle.dart';
@@ -58,4 +59,5 @@ void setupDependencies() {
   Get.lazyPut<UserSearchHistoryController>(() => UserSearchHistoryController());
   Get.lazyPut<PageViewIndexController>(() => PageViewIndexController());
   Get.lazyPut<SearchPageDataController>(() => SearchPageDataController());
+  Get.lazyPut<SearchTempShortController>(() => SearchTempShortController());
 }
