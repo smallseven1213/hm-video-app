@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/widgets/sid_image.dart';
 
@@ -19,15 +20,17 @@ class ActorAvatar extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF00B2FF),
-            Color(0xFFCCEAFF),
-            Color(0xFF00B2FF),
-          ],
-        ),
+        gradient: kIsWeb
+            ? null
+            : LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xFF00B2FF),
+                  Color(0xFFCCEAFF),
+                  Color(0xFF00B2FF),
+                ],
+              ),
       ),
       child: SizedBox(
         width: width,

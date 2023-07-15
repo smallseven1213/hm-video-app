@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class Loading extends StatefulWidget {
@@ -47,25 +48,29 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.25),
-            spreadRadius: 0,
-            blurRadius: 4,
-            offset: const Offset(0, 4), // changes position of shadow
-          ),
-        ],
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color.fromRGBO(0, 0, 0, 0.8),
-            Color.fromRGBO(0, 16, 28, 0.8),
-            Color.fromRGBO(0, 47, 81, 0.8)
-          ],
-          stops: [0.0, 0.7, 1.0],
-        ),
+        borderRadius: kIsWeb ? null : BorderRadius.circular(20),
+        boxShadow: kIsWeb
+            ? []
+            : [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.25),
+                  spreadRadius: 0,
+                  blurRadius: 4,
+                  offset: const Offset(0, 4), // changes position of shadow
+                ),
+              ],
+        gradient: kIsWeb
+            ? null
+            : const LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color.fromRGBO(0, 0, 0, 0.8),
+                  Color.fromRGBO(0, 16, 28, 0.8),
+                  Color.fromRGBO(0, 47, 81, 0.8)
+                ],
+                stops: [0.0, 0.7, 1.0],
+              ),
       ),
       width: 90,
       height: 90,

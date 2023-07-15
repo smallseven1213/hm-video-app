@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/login_tabs_form_login.dart';
@@ -57,20 +58,25 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                   margin: const EdgeInsets.only(right: 10),
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    gradient: LinearGradient(
-                      // 設定漸層的背景顏色
-                      colors: tabsType == Type.login
-                          ? [gamePrimaryButtonColor, gamePrimaryButtonColor]
-                          : [
-                              gameSecondButtonColor1,
-                              gameSecondButtonColor2
-                            ], // 漸層的顏色列表
-                      begin: Alignment.topCenter, // 漸層的起點位置
-                      end: Alignment.bottomCenter, // 漸層的終點位置
-                    ),
-                  ),
+                  decoration: kIsWeb
+                      ? null
+                      : BoxDecoration(
+                          borderRadius: BorderRadius.circular(24),
+                          gradient: LinearGradient(
+                            // 設定漸層的背景顏色
+                            colors: tabsType == Type.login
+                                ? [
+                                    gamePrimaryButtonColor,
+                                    gamePrimaryButtonColor
+                                  ]
+                                : [
+                                    gameSecondButtonColor1,
+                                    gameSecondButtonColor2
+                                  ], // 漸層的顏色列表
+                            begin: Alignment.topCenter, // 漸層的起點位置
+                            end: Alignment.bottomCenter, // 漸層的終點位置
+                          ),
+                        ),
                   child: Text(
                     "登入",
                     style: TextStyle(
@@ -94,18 +100,23 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(24),
-                    gradient: LinearGradient(
-                      // 設定漸層的背景顏色
-                      colors: tabsType == Type.register
-                          ? [gamePrimaryButtonColor, gamePrimaryButtonColor]
-                          : [
-                              gameSecondButtonColor1,
-                              gameSecondButtonColor2
-                            ], // 漸層的顏色列表
-                      begin: Alignment.topCenter, // 漸層的起點位置
-                      end: Alignment.bottomCenter, // 漸層的終點位置
-                    ),
+                    borderRadius: kIsWeb ? null : BorderRadius.circular(24),
+                    gradient: kIsWeb
+                        ? null
+                        : LinearGradient(
+                            // 設定漸層的背景顏色
+                            colors: tabsType == Type.register
+                                ? [
+                                    gamePrimaryButtonColor,
+                                    gamePrimaryButtonColor
+                                  ]
+                                : [
+                                    gameSecondButtonColor1,
+                                    gameSecondButtonColor2
+                                  ], // 漸層的顏色列表
+                            begin: Alignment.topCenter, // 漸層的起點位置
+                            end: Alignment.bottomCenter, // 漸層的終點位置
+                          ),
                   ),
                   child: Text(
                     "註冊",

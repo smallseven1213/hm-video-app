@@ -1,6 +1,7 @@
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/search_input.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
@@ -48,20 +49,22 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                       width: 16,
                       height: 16,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: kIsWeb ? null : BorderRadius.circular(8),
                         // border: Border.all(
                         //   color: Colors.black.withOpacity(0.5),
                         //   width: 1,
                         // ),
-                        gradient: const LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFF00B2FF),
-                            Color(0xFFCCEAFF),
-                            Color(0xFF00B2FF),
-                          ],
-                        ),
+                        gradient: kIsWeb
+                            ? null
+                            : const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [
+                                  Color(0xFF00B2FF),
+                                  Color(0xFFCCEAFF),
+                                  Color(0xFF00B2FF),
+                                ],
+                              ),
                       ),
                     ),
                     Positioned(
