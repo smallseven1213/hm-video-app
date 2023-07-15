@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
@@ -58,21 +59,23 @@ class Avatar extends StatelessWidget {
               //       spreadRadius: 0,
               //     ),
               // ],
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: hasNoAvatar
-                    ? [
-                        const Color(0xFF00B2FF),
-                        const Color(0xFFCCEAFF),
-                        const Color(0xFF00B2FF),
-                      ]
-                    : [
-                        const Color(0xFFFFC700),
-                        const Color(0xFFFE8900),
-                        const Color(0xFFFFC700),
-                      ],
-              ),
+              gradient: kIsWeb
+                  ? null
+                  : LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: hasNoAvatar
+                          ? [
+                              const Color(0xFF00B2FF),
+                              const Color(0xFFCCEAFF),
+                              const Color(0xFF00B2FF),
+                            ]
+                          : [
+                              const Color(0xFFFFC700),
+                              const Color(0xFFFE8900),
+                              const Color(0xFFFFC700),
+                            ],
+                    ),
             ),
             child: hasNoAvatar
                 ? Container(
@@ -80,14 +83,16 @@ class Avatar extends StatelessWidget {
                     height: 60,
                     decoration: const BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Color(0xFF002D46),
-                          Color(0xFF0085D0),
-                        ],
-                      ),
+                      gradient: kIsWeb
+                          ? null
+                          : LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Color(0xFF002D46),
+                                Color(0xFF0085D0),
+                              ],
+                            ),
                     ),
                     child: const Center(
                       child: Image(

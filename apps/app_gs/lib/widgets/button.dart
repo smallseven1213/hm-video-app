@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 const buttonPadding = {
@@ -28,7 +29,7 @@ class _GradientBorderPainter extends CustomPainter {
     final Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
-      ..shader = gradient.createShader(rect);
+      ..shader = kIsWeb ? null : gradient.createShader(rect);
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, const Radius.circular(4.0)),
       paint,

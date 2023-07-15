@@ -178,7 +178,7 @@ class ListMenuState extends State<ListMenu> {
               height: 38,
               margin: const EdgeInsets.fromLTRB(8, 0, 8, 10),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(38),
+                borderRadius: kIsWeb ? null : BorderRadius.circular(38),
                 border: Border.all(
                   color: const Color(0xFF8594E2),
                   width: 1,

@@ -2,6 +2,7 @@
 
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
@@ -88,17 +89,19 @@ class Block7WidgetState extends State<Block7Widget> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color(0xFF040405),
-                      Color.fromRGBO(20, 49, 104, 0.7),
-                    ],
-                    stops: [0.0, 1],
-                  ),
-                ),
+                decoration: kIsWeb
+                    ? null
+                    : const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xFF040405),
+                            Color.fromRGBO(20, 49, 104, 0.7),
+                          ],
+                          stops: [0.0, 1],
+                        ),
+                      ),
               ),
             ),
             CarouselSlider.builder(

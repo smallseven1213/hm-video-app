@@ -56,15 +56,17 @@ class ViewInfo extends StatelessWidget {
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.black.withOpacity(0.1),
-            Colors.black.withOpacity(0.7),
-          ],
-          stops: const [0.05, 1.0],
-        ),
+        gradient: kIsWeb
+            ? null
+            : LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.1),
+                  Colors.black.withOpacity(0.7),
+                ],
+                stops: const [0.05, 1.0],
+              ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -202,21 +204,23 @@ class VideoPreviewWidget extends StatelessWidget {
                     (displayCoverVertical == true ? 119 / 179 : 374 / 198),
                 child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: hasRadius == true
+                      borderRadius: !kIsWeb && hasRadius == true
                           ? const BorderRadius.all(Radius.circular(10))
                           : null,
                       // color: Colors.white,
                     ),
                     foregroundDecoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.0),
-                          Colors.black.withOpacity(0.3),
-                        ],
-                        stops: const [0.9, 1.0],
-                      ),
+                      gradient: kIsWeb
+                          ? null
+                          : LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.0),
+                                Colors.black.withOpacity(0.3),
+                              ],
+                              stops: const [0.9, 1.0],
+                            ),
                     ),
                     clipBehavior: Clip.antiAlias,
                     // child: SidImageVisibilityDetector(

@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/actor_controller.dart';
@@ -76,20 +77,22 @@ class ActorCard extends SliverPersistentHeaderDelegate {
             Container(
               height: 200,
               width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(67, 120, 220, 0.65),
-                    Color(0xFF001C46),
-                  ],
-                  stops: [
-                    -0.06,
-                    1.0,
-                  ],
-                ),
-              ),
+              decoration: kIsWeb
+                  ? null
+                  : const BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color.fromRGBO(67, 120, 220, 0.65),
+                          Color(0xFF001C46),
+                        ],
+                        stops: [
+                          -0.06,
+                          1.0,
+                        ],
+                      ),
+                    ),
             ),
           Positioned(
             top: lerpDouble(

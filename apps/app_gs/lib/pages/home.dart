@@ -1,5 +1,6 @@
 import 'package:app_gs/screens/games/game_lobby_screen/lobby.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
@@ -105,18 +106,22 @@ class HomeState extends State<HomePage> {
                         padding: EdgeInsets.only(bottom: paddingBottom),
                         height: 76 + paddingBottom,
                         decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Color(0xFF000000),
-                              Color(0xFF002869),
-                            ],
-                          ),
+                          borderRadius: kIsWeb
+                              ? null
+                              : BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                  topRight: Radius.circular(10),
+                                ),
+                          gradient: kIsWeb
+                              ? null
+                              : LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: [
+                                    Color(0xFF000000),
+                                    Color(0xFF002869),
+                                  ],
+                                ),
                         ),
                         child: ClipRRect(
                           borderRadius: const BorderRadius.only(
