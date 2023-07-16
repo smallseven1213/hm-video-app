@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
@@ -97,7 +98,7 @@ class ChannelsState extends State<Channels> {
             onPageChanged: (value) =>
                 channelScreenTabController.tabIndex.value = value,
             allowImplicitScrolling: false,
-            physics: const CustomPageViewScrollPhysics(),
+            physics: kIsWeb ? null : const CustomPageViewScrollPhysics(),
             children: layoutController.layout
                 .asMap()
                 .map(

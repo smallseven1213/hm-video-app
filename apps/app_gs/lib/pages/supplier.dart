@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_short_controller.dart';
@@ -73,7 +74,7 @@ class _SupplierPageState extends State<SupplierPage>
       children: [
         NestedScrollView(
             controller: _parentScrollController,
-            physics: const BouncingScrollPhysics(),
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
             headerSliverBuilder:
                 (BuildContext context, bool innerBoxIsScrolled) {
               // 返回一个 Sliver 数组给外部可滚动组件。
@@ -92,7 +93,7 @@ class _SupplierPageState extends State<SupplierPage>
             },
             body: TabBarView(
               controller: _tabController,
-              physics: const BouncingScrollPhysics(),
+              physics: kIsWeb ? null : const BouncingScrollPhysics(),
               // physics: const NeverScrollableScrollPhysics(),
               children: [
                 NotificationListener<ScrollNotification>(

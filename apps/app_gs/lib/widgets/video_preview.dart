@@ -319,7 +319,8 @@ class VideoPreviewWidget extends StatelessWidget {
                                 horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
                                 color: const Color(0xff4277DC).withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(10)),
+                                borderRadius:
+                                    kIsWeb ? null : BorderRadius.circular(10)),
                             child: Text(
                               tag.name,
                               style: const TextStyle(

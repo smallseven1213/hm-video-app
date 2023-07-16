@@ -1,4 +1,5 @@
 import 'package:app_gs/config/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -110,7 +111,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
       color: AppColors.colors[ColorKeys.background],
       padding: const EdgeInsets.only(top: 8),
       child: TabBar(
-          physics: const BouncingScrollPhysics(),
+          physics: kIsWeb ? null : const BouncingScrollPhysics(),
           isScrollable: true,
           controller: tabController,
           labelStyle: TextStyle(

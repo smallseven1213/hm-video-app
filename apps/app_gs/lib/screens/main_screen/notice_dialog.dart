@@ -1,4 +1,5 @@
 import 'package:app_gs/widgets/button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
@@ -97,7 +98,9 @@ class NoticeDialogState extends State<NoticeDialog> {
                               ),
                               height: 132,
                               child: SingleChildScrollView(
-                                physics: const ClampingScrollPhysics(),
+                                physics: kIsWeb
+                                    ? null
+                                    : const ClampingScrollPhysics(),
                                 child: HtmlWidget(
                                   notice.content ?? '',
                                   textStyle: const TextStyle(

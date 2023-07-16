@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -79,7 +80,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
 
     return Scaffold(
       body: NestedScrollView(
-        physics: const BouncingScrollPhysics(),
+        physics: kIsWeb ? null : const BouncingScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(
@@ -133,7 +134,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
         body: Obx(
           () => TabBarView(
             controller: _tabController,
-            physics: const BouncingScrollPhysics(),
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
             children: [
               if (widget.videoDetail.actors!.isNotEmpty)
                 SliverVodGrid(

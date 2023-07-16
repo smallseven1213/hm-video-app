@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
@@ -109,6 +110,7 @@ class BaseShortPageState extends State<BaseShortPage> {
           PageView.builder(
             controller: _pageController,
             itemCount: cachedVods.length * 50,
+            physics: const NeverScrollableScrollPhysics(),
             // onPageChanged: (int index) {
             //   setState(() {
             //     currentPage = index;

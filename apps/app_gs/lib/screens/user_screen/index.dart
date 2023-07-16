@@ -69,7 +69,7 @@ class UserScreenState extends State<UserScreen> {
       onWillPop: () async => false,
       child: Scaffold(
         body: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
+          physics: kIsWeb ? null : const BouncingScrollPhysics(),
           slivers: [
             SliverToBoxAdapter(
               child: SizedBox(

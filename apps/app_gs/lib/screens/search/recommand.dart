@@ -1,4 +1,5 @@
 import 'package:app_gs/screens/search/tag_item.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/tag_popular_controller.dart';
@@ -39,7 +40,7 @@ class _RecommandScreenState extends State<RecommandScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      physics: const BouncingScrollPhysics(),
+      physics: kIsWeb ? null : const BouncingScrollPhysics(),
       slivers: <Widget>[
         Obx(() {
           if (userSearchHistoryController.searchHistory.isEmpty) {

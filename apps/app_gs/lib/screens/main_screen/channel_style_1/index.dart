@@ -1,6 +1,7 @@
 import 'package:app_gs/widgets/button.dart';
 import 'package:app_gs/widgets/refresh_list.dart';
 import 'package:app_gs/widgets/reload_button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -136,7 +137,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
           onRefresh: _onRefresh,
           onLoading: _onLoading,
           child: CustomScrollView(
-            physics: const BouncingScrollPhysics(),
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
             slivers: [
               SliverToBoxAdapter(
                   child: Padding(
