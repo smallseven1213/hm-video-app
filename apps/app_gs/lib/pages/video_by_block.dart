@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -65,7 +66,7 @@ class VideoByBlockPageState extends State<VideoByBlockPage> {
 
           return CustomScrollView(
             controller: blockVodController.scrollController,
-            physics: const BouncingScrollPhysics(),
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
             slivers: [
               // split every 100 record from blockVodController.vodList
               ...vodChunks

@@ -101,7 +101,6 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
-    var screenWidth = MediaQuery.of(context).size.width;
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;

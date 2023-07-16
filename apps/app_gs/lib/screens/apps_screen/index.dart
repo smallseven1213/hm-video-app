@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
@@ -21,7 +22,7 @@ class AppsScreen extends StatelessWidget {
           title: '應用中心',
         ),
         body: CustomScrollView(
-          physics: BouncingScrollPhysics(),
+          physics: kIsWeb ? null : BouncingScrollPhysics(),
           slivers: <Widget>[
             SliverToBoxAdapter(
               child: Padding(
