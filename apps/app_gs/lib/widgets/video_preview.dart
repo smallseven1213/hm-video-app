@@ -289,15 +289,17 @@ class VideoPreviewWidget extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Container(
               height: 20,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              clipBehavior: Clip.antiAlias,
+              decoration: kIsWeb
+                  ? null
+                  : BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+              clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.start,
                 spacing: 5.0,
                 runSpacing: 5.0,
-                clipBehavior: Clip.antiAlias,
+                clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
                 children: tags
                     .map(
                       (tag) => InkWell(
@@ -317,10 +319,12 @@ class VideoPreviewWidget extends StatelessWidget {
                         child: Container(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 2),
-                            decoration: BoxDecoration(
-                                color: const Color(0xff4277DC).withOpacity(0.5),
-                                borderRadius:
-                                    kIsWeb ? null : BorderRadius.circular(10)),
+                            decoration: kIsWeb
+                                ? null
+                                : BoxDecoration(
+                                    color: const Color(0xff4277DC)
+                                        .withOpacity(0.5),
+                                    borderRadius: BorderRadius.circular(10)),
                             child: Text(
                               tag.name,
                               style: const TextStyle(

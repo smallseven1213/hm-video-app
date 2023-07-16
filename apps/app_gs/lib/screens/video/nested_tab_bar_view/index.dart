@@ -80,7 +80,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
 
     return Scaffold(
       body: NestedScrollView(
-        physics: kIsWeb ? null : const BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
           return <Widget>[
             SliverToBoxAdapter(

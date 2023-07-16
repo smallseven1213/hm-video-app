@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class TagItem extends StatelessWidget {
@@ -13,10 +14,12 @@ class TagItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 3),
-        decoration: BoxDecoration(
-          color: const Color(0xff4277DC).withOpacity(0.5),
-          borderRadius: BorderRadius.circular(24),
-        ),
+        decoration: kIsWeb
+            ? null
+            : BoxDecoration(
+                color: const Color(0xff4277DC).withOpacity(0.5),
+                borderRadius: BorderRadius.circular(24),
+              ),
         child: Text(
           tag,
           style: const TextStyle(
