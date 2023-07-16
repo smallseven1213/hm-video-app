@@ -1,6 +1,7 @@
 import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/sliver_video_preview_skelton_list.dart';
 import 'package:app_gs/widgets/video_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -48,6 +49,9 @@ class SliverVodGridState extends State<SliverVodGrid> {
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
+        physics: kIsWeb
+            ? const NeverScrollableScrollPhysics()
+            : const BouncingScrollPhysics(),
         controller: widget.customScrollController,
         scrollBehavior:
             ScrollConfiguration.of(context).copyWith(scrollbars: false),
