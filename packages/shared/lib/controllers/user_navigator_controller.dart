@@ -43,9 +43,11 @@ class UserNavigatorController extends GetxController {
         var hasFileInHive = sidImageBox.containsKey(photoSid);
         if (!hasFileInHive) {
           var res = await ImageApi().getSidImageData(photoSid);
-          var decoded = getSidImageDecode(res!);
-          var file = base64Decode(decoded);
-          sidImageBox.put(photoSid, file);
+          if (res != null) {
+            var decoded = getSidImageDecode(res!);
+            var file = base64Decode(decoded);
+            sidImageBox.put(photoSid, file);
+          }
         }
       }
     }
