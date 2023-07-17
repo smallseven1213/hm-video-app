@@ -70,7 +70,7 @@ class SidImageState extends State<SidImage> {
       } else {
         try {
           var res = await ImageApi().getSidImageData(widget.sid);
-          var decoded = getSidImageDecode(res);
+          var decoded = getSidImageDecode(res!);
           var file = base64Decode(decoded);
           image = await _decodeImage(file);
           if (image != null) {

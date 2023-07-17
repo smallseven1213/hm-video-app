@@ -15,9 +15,14 @@ class ImageApi {
     return _instance;
   }
 
-  Future<String> getSidImageData(String sid) async {
-    var res = await fetcher(url: '${systemConfig.imgHost}/images/$sid');
-    var result = res.data;
-    return result;
+  Future<String?> getSidImageData(String sid) async {
+    try {
+      var res = await fetcher(url: '${systemConfig.imgHost}/images/$sid');
+      var result = res.data;
+      return result;
+    } catch (e) {
+      // throw err
+      logger.i('err: get sid image');
+    }
   }
 }
