@@ -169,7 +169,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           }
         },
         onVerticalDragStart: (DragStartDetails details) {
-          if (GetPlatform.isWeb || !mounted) {
+          if (kIsWeb || !mounted) {
             return;
           }
           setState(() {
@@ -184,7 +184,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
           });
         },
         onVerticalDragUpdate: (DragUpdateDetails details) {
-          if (!mounted || !kIsWeb) {
+          if (!mounted || kIsWeb) {
             return;
           }
           lastDragPosition ??= details.globalPosition.dy;
