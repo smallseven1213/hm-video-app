@@ -1,4 +1,5 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -115,7 +116,7 @@ class VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
     observableVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
-    if (widget.videoDetail != null && widget.video != null) {
+    if (widget.videoDetail != null && widget.video != null && !kIsWeb) {
       var playRecord = Vod(
         widget.video!.id,
         widget.video!.title,
