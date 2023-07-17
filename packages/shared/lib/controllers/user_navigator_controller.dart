@@ -19,6 +19,8 @@ class UserNavigatorController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchData();
+    fetchQuickLinkData();
   }
 
   fetchData() async {
