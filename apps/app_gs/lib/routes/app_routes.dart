@@ -60,26 +60,29 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.actor.value: (context, args) => actor_page.ActorPage(
         id: args['id'] as int,
       ),
-  AppRoutes.login.value: (context, args) => login_page.LoginPage(),
-  AppRoutes.nickname.value: (context, args) => nickname_page.NicknamePage(),
-  AppRoutes.register.value: (context, args) => register_page.RegisterPage(),
-  AppRoutes.share.value: (context, args) => share_page.SharePage(),
+  AppRoutes.login.value: (context, args) => const login_page.LoginPage(),
+  AppRoutes.nickname.value: (context, args) =>
+      const nickname_page.NicknamePage(),
+  AppRoutes.register.value: (context, args) =>
+      const register_page.RegisterPage(),
+  AppRoutes.share.value: (context, args) => const share_page.SharePage(),
   AppRoutes.playRecord.value: (context, args) =>
-      playrecord_page.PlayRecordPage(),
+      const playrecord_page.PlayRecordPage(),
   AppRoutes.shareRecord.value: (context, args) =>
-      sharerecord_page.ShareRecord(),
-  AppRoutes.apps.value: (context, args) => apps_screen.AppsScreen(),
-  AppRoutes.favorites.value: (context, args) => favorites_page.FavoritesPage(),
+      const sharerecord_page.ShareRecord(),
+  AppRoutes.apps.value: (context, args) => const apps_screen.AppsScreen(),
+  AppRoutes.favorites.value: (context, args) =>
+      const favorites_page.FavoritesPage(),
   AppRoutes.collection.value: (context, args) =>
-      collection_page.CollectionPage(),
+      const collection_page.CollectionPage(),
   AppRoutes.notifications.value: (context, args) =>
-      notifications_page.NotificationsPage(),
+      const notifications_page.NotificationsPage(),
   AppRoutes.search.value: (context, args) => search_page.SearchPage(
         inputDefaultValue: args['inputDefaultValue'] as String,
         autoSearch: args['autoSearch'] as bool,
       ),
-  AppRoutes.filter.value: (context, args) => filter_page.FilterPage(),
-  AppRoutes.actors.value: (context, args) => actors_page.ActorsPage(),
+  AppRoutes.filter.value: (context, args) => const filter_page.FilterPage(),
+  AppRoutes.actors.value: (context, args) => const actors_page.ActorsPage(),
   AppRoutes.supplier.value: (context, args) => supplier_page.SupplierPage(
         id: args['id'] as int,
       ),
@@ -118,10 +121,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         videoId: args['videoId'] as int,
         supplierId: args['supplierId'] as int,
       ),
-  AppRoutes.configs.value: (context, args) => configs_page.ConfigsPage(),
+  AppRoutes.configs.value: (context, args) => const configs_page.ConfigsPage(),
   AppRoutes.updatePassword.value: (context, args) =>
-      update_password_page.UpdatePasswordPage(),
-  AppRoutes.idCard.value: (context, args) => id_page.IDCardPage(),
+      const update_password_page.UpdatePasswordPage(),
+  AppRoutes.idCard.value: (context, args) => const id_page.IDCardPage(),
   AppRoutes.suppliers.value: (context, args) =>
-      suppliers_screen.SuppliersPage(),
+      const suppliers_screen.SuppliersPage(),
 };
