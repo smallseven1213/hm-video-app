@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
@@ -8,6 +9,7 @@ import 'channel_style_1/index.dart';
 import 'channel_style_2/index.dart';
 import 'channel_style_3/index.dart';
 import 'channel_style_4/index.dart';
+import 'channel_style_5/index.dart';
 import 'channel_style_not_found/index.dart';
 
 Map<int, Function> styleWidgetMap = {
@@ -24,6 +26,10 @@ Map<int, Function> styleWidgetMap = {
         channelId: item.id,
       ),
   4: (item) => ChannelStyle4(
+        key: ValueKey(item.id),
+        channelId: item.id,
+      ),
+  5: (item) => ChannelStyle5(
         key: ValueKey(item.id),
         channelId: item.id,
       ),
@@ -92,7 +98,7 @@ class ChannelsState extends State<Channels> {
             onPageChanged: (value) =>
                 channelScreenTabController.tabIndex.value = value,
             allowImplicitScrolling: false,
-            physics: const CustomPageViewScrollPhysics(),
+            physics: kIsWeb ? null : const CustomPageViewScrollPhysics(),
             children: layoutController.layout
                 .asMap()
                 .map(

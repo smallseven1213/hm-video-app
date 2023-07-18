@@ -10,9 +10,9 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 
 import 'config/colors.dart';
 
-// import './routes/app_routes.dart' deferred as app_routes;
-// import './routes/game_routes.dart' deferred as game_routes;
-import './routes/app_routes.dart' as app_routes;
+// 載入非Web版的路由設定
+import './routes/app_routes.dart'
+    if (dart.library.html) './routes/app_routes_web.dart' as app_routes;
 import './routes/game_routes.dart' as game_routes;
 
 void main() async {

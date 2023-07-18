@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/user_navigator_controller.dart';
 import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
@@ -24,6 +26,7 @@ class UserScreen extends StatefulWidget {
 
 class UserScreenState extends State<UserScreen> {
   final storage = GetStorage();
+  final userNavigatorController = Get.find<UserNavigatorController>();
 
   checkFirstSeen() {
     final accountProtectionShown = storage.read('account-protection-shown');
@@ -67,65 +70,67 @@ class UserScreenState extends State<UserScreen> {
     logger.i('RENDER: UserScreen');
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        body: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            SliverToBoxAdapter(
-              child: SizedBox(
-                height: MediaQuery.of(context).padding.top,
+      child: Obx(
+        () => Scaffold(
+          body: CustomScrollView(
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: MediaQuery.of(context).padding.top,
+                ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: UserInfo(),
-            ),
-            // height 10
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
+              const SliverToBoxAdapter(
+                child: UserInfo(),
               ),
-            ),
-            const GridMenu(),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
+              // height 10
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10,
+                ),
               ),
-            ),
-            const SliverToBoxAdapter(
-                child: Padding(
-              // padding x 8
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              child: UserSreenBanner(),
-            )),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 20,
+              GridMenu(items: userNavigatorController.quickLink.value),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10,
+                ),
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: Header(text: '更多服務'),
-            ),
-            const SliverToBoxAdapter(
-              child: SizedBox(
-                height: 10,
+              const SliverToBoxAdapter(
+                  child: Padding(
+                // padding x 8
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: UserSreenBanner(),
+              )),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 20,
+                ),
               ),
-            ),
-            const ListMenu(),
-            SliverFillRemaining(
-              hasScrollBody: false,
-              child: Container(
-                padding: const EdgeInsets.only(bottom: 20, right: 20),
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Text(
-                    '版本號:${systemConfig.version}',
-                    style:
-                        const TextStyle(color: Color(0xFFFFFFFF), fontSize: 12),
+              const SliverToBoxAdapter(
+                child: Header(text: '更多服務'),
+              ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10,
+                ),
+              ),
+              ListMenu(items: userNavigatorController.moreLink.value),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 20, right: 20),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      '版本號:${systemConfig.version}',
+                      style: const TextStyle(
+                          color: Color(0xFFFFFFFF), fontSize: 12),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

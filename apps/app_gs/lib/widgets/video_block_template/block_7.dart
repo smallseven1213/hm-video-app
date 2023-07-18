@@ -2,6 +2,7 @@
 
 import 'package:app_gs/widgets/video_preview.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
@@ -88,6 +89,7 @@ class Block7WidgetState extends State<Block7Widget> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
+                // TODO: kIsWeb testing
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
@@ -112,7 +114,7 @@ class Block7WidgetState extends State<Block7Widget> {
                   initialPage: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
-                      backgroundPhotoSid = videos[index].coverHorizontal;
+                      backgroundPhotoSid = videos[index].coverVertical;
                     });
                   },
                 ),

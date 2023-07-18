@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared/controllers/user_navigator_controller.dart';
 import '../controllers/actor_region_controller.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/banner_controller.dart';
@@ -9,6 +10,7 @@ import '../controllers/pageview_index_controller.dart';
 import '../controllers/play_record_controller.dart';
 import '../controllers/response_controller.dart';
 import '../controllers/search_page_data_controller.dart';
+import '../controllers/search_temp_controller.dart';
 import '../controllers/user_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
 import '../controllers/user_favorites_short_controlle.dart';
@@ -24,6 +26,7 @@ void setupDependencies() {
   Get.lazyPut<ApiResponseErrorCatchController>(
       () => ApiResponseErrorCatchController());
   Get.lazyPut<UserController>(() => UserController());
+  Get.lazyPut<UserNavigatorController>(() => UserNavigatorController());
   Get.lazyPut<BottonNavigatorController>(() => BottonNavigatorController());
   Get.lazyPut<BannerController>(() => BannerController());
   Get.lazyPut<PlayRecordController>(() => PlayRecordController(tag: 'vod'),
@@ -56,4 +59,5 @@ void setupDependencies() {
   Get.lazyPut<UserSearchHistoryController>(() => UserSearchHistoryController());
   Get.lazyPut<PageViewIndexController>(() => PageViewIndexController());
   Get.lazyPut<SearchPageDataController>(() => SearchPageDataController());
+  Get.lazyPut<SearchTempShortController>(() => SearchTempShortController());
 }

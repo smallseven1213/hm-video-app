@@ -50,7 +50,9 @@ class SidImageState extends State<SidImage> {
     var sidImageBox = await Hive.openBox('sidImage');
 
     if (widget.sid.isNotEmpty) {
+      logger.i('GET IMAGE: ${widget.sid}');
       var hasFileInHive = sidImageBox.containsKey(widget.sid);
+      logger.i('GET IMAGE: $hasFileInHive');
       if (hasFileInHive) {
         var file = await sidImageBox.get(widget.sid);
         try {
@@ -70,7 +72,7 @@ class SidImageState extends State<SidImage> {
       } else {
         try {
           var res = await ImageApi().getSidImageData(widget.sid);
-          var decoded = getSidImageDecode(res);
+          var decoded = getSidImageDecode(res!);
           var file = base64Decode(decoded);
           image = await _decodeImage(file);
           if (image != null) {

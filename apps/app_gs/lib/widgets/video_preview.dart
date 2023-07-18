@@ -55,16 +55,20 @@ class ViewInfo extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.black.withOpacity(0.1),
-            Colors.black.withOpacity(0.7),
-          ],
-          stops: const [0.05, 1.0],
-        ),
+        borderRadius: kIsWeb
+            ? null
+            : const BorderRadius.vertical(bottom: Radius.circular(10)),
+        gradient: kIsWeb
+            ? null
+            : LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.1),
+                  Colors.black.withOpacity(0.7),
+                ],
+                stops: const [0.05, 1.0],
+              ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -99,7 +103,7 @@ class VideoPreviewWidget extends StatelessWidget {
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final Function()? onTap;
-  final Function()? onOverrideRedirectTap; // 自定義路由轉址
+  final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
   const VideoPreviewWidget({
     Key? key,
@@ -148,7 +152,7 @@ class VideoPreviewWidget extends StatelessWidget {
             }
             if (hasTapEvent == true) {
               if (onOverrideRedirectTap != null) {
-                onOverrideRedirectTap!();
+                onOverrideRedirectTap!(id);
               } else {
                 logger.i('CLICK TO FILM $film, $id, $blockId');
                 if (film == 1) {
@@ -202,53 +206,36 @@ class VideoPreviewWidget extends StatelessWidget {
                     (displayCoverVertical == true ? 119 / 179 : 374 / 198),
                 child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: hasRadius == true
+                      borderRadius: !kIsWeb && hasRadius == true
                           ? const BorderRadius.all(Radius.circular(10))
                           : null,
                       // color: Colors.white,
                     ),
                     foregroundDecoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: [
-                          Colors.black.withOpacity(0.0),
-                          Colors.black.withOpacity(0.3),
-                        ],
-                        stops: const [0.9, 1.0],
-                      ),
+                      gradient: kIsWeb
+                          ? null
+                          : LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.0),
+                                Colors.black.withOpacity(0.3),
+                              ],
+                              stops: const [0.9, 1.0],
+                            ),
                     ),
                     clipBehavior: Clip.antiAlias,
-                    // child: SidImageVisibilityDetector(
-                    //   child: SidImage(
-                    //     key: ValueKey('video-preview-$id'),
-                    //     sid: displayCoverVertical
-                    //         ? coverVertical
-                    //         : coverHorizontal,
-                    //     width: double.infinity,
-                    //     fit: BoxFit.cover,
-                    //   ),
-                    // )),
-                    child: SidImage(
-                      key: ValueKey('video-preview-$id'),
-                      sid: displayCoverVertical
-                          ? coverVertical
-                          : coverHorizontal,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
+                    child: SidImageVisibilityDetector(
+                      child: SidImage(
+                        key: ValueKey('video-preview-$id'),
+                        sid: displayCoverVertical
+                            ? coverVertical
+                            : coverHorizontal,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
                     )),
               ),
-              // 下面Debug用
-              // if (hasInfoView == true)
-              //   Positioned(
-              //       left: 0,
-              //       right: 0,
-              //       bottom: 20,
-              //       child: Text(film.toString(),
-              //           style: TextStyle(
-              //               color: Colors.white,
-              //               fontSize: 30,
-              //               fontWeight: FontWeight.bold))),
               if (hasInfoView == true)
                 Positioned(
                     left: 0,
@@ -285,16 +272,19 @@ class VideoPreviewWidget extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Container(
               height: 20,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              clipBehavior: Clip.antiAlias,
+              decoration: kIsWeb
+                  ? null
+                  : BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+              clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.start,
                 spacing: 5.0,
                 runSpacing: 5.0,
                 clipBehavior: Clip.antiAlias,
                 children: tags
+                    .take(3)
                     .map(
                       (tag) => InkWell(
                         onTap: () {
@@ -314,10 +304,12 @@ class VideoPreviewWidget extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
-                                color: const Color(0xff4277DC).withOpacity(0.5),
-                                borderRadius: BorderRadius.circular(10)),
+                                color: const Color(0xff21488E),
+                                borderRadius: kIsWeb
+                                    ? BorderRadius.zero
+                                    : BorderRadius.circular(10)),
                             child: Text(
-                              tag.name,
+                              '${kIsWeb ? '#' : ''}${tag.name}',
                               style: const TextStyle(
                                 color: Color(0xff21AFFF),
                                 fontSize: 10,

@@ -8,6 +8,9 @@ import 'package:logger/logger.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:scan/scan.dart';
 import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/models/navigation.dart';
+import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 final logger = Logger();
 
@@ -23,9 +26,19 @@ class ListMenuItem {
   });
 }
 
-class ListMenu extends StatelessWidget {
-  const ListMenu({Key? key}) : super(key: key);
+class ListMenu extends StatefulWidget {
+  final List<Navigation> items;
 
+  const ListMenu({
+    Key? key,
+    required this.items,
+  }) : super(key: key);
+
+  @override
+  ListMenuState createState() => ListMenuState();
+}
+
+class ListMenuState extends State<ListMenu> {
   void showBottomSheet(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -124,24 +137,34 @@ class ListMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final items = [
-      ListMenuItem(
-        name: '找回帳號',
-        icon: 'assets/images/user_screen_find_account.png',
+    final items = widget.items.map((Navigation item) {
+      if (item.name == '找回帳號') {
+        return ListMenuItem(
+          name: item.name ?? '',
+          icon: item.photoSid ?? '',
+          onTap: () {
+            if (kIsWeb) {
+              showConfirmDialog(
+                context: context,
+                title: '提示',
+                message: '請使用手機應用程式找回帳號',
+                showCancelButton: false,
+              );
+            } else {
+              showBottomSheet(context);
+            }
+          },
+        );
+      }
+      return ListMenuItem(
+        name: item.name ?? '',
+        icon: item.photoSid ?? '',
         onTap: () {
-          if (kIsWeb) {
-            showConfirmDialog(
-              context: context,
-              title: '提示',
-              message: '請使用手機應用程式找回帳號',
-              showCancelButton: false,
-            );
-          } else {
-            showBottomSheet(context);
-          }
+          MyRouteDelegate.of(context).push(item.path ?? '');
         },
-      ),
-    ];
+      );
+    });
+
     return SliverList(
       delegate: SliverChildListDelegate(
         items.map((item) {
@@ -149,7 +172,7 @@ class ListMenu extends StatelessWidget {
             height: 38,
             margin: const EdgeInsets.fromLTRB(8, 0, 8, 10),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(38),
+              borderRadius: kIsWeb ? null : BorderRadius.circular(38),
               border: Border.all(
                 color: const Color(0xFF8594E2),
                 width: 1,
@@ -171,9 +194,12 @@ class ListMenu extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   const SizedBox(width: 16),
-                  Image(
-                    image: AssetImage(item.icon),
-                    width: 22,
+                  Padding(
+                    padding: const EdgeInsets.all(5),
+                    child: SidImage(
+                      sid: item.icon,
+                      width: 20,
+                    ),
                   ),
                   const SizedBox(width: 16),
                   Text(

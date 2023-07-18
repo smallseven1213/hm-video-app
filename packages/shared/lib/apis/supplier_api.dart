@@ -1,3 +1,5 @@
+import 'package:shared/models/supplier_with_vods.dart';
+
 import '../models/block_vod.dart';
 import '../models/supplier.dart';
 import '../models/vod.dart';
@@ -58,5 +60,41 @@ class SupplierApi {
     }
     return List.from(
         (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+  }
+
+  Future<List<SupplierWithVod>> getManyPopularActorBy(
+      {int page = 1, int limit = 10}) async {
+    var res = await fetcher(
+        url:
+            '$apiPrefix/supplier/popular-supplier-channel?page=$page&limit=$limit');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from((res.data['data'] as List<dynamic>)
+        .map((e) => SupplierWithVod(
+              SupplierForVods.fromJson(e['supplier']),
+              List.from((e['video'] as List<dynamic>)
+                  .map((e) => Vod.fromJson(e))
+                  .toList()),
+            ))
+        .toList());
+  }
+
+  // supplier/list?page
+  Future<List<Supplier>> getManyBy({
+    int page = 1,
+    int limit = 10,
+    String? name,
+    int sortBy = 0,
+  }) async {
+    var res = await fetcher(
+        url:
+            '$apiPrefix/supplier/list?page=$page&limit=$limit&name=$name&sortBy=$sortBy');
+    if (res.data['code'] != '00') {
+      return [];
+    }
+    return List.from((res.data['data']['data'] as List<dynamic>)
+        .map((e) => Supplier.fromJson(e))
+        .toList());
   }
 }

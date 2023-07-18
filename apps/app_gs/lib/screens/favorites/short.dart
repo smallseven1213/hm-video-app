@@ -45,7 +45,7 @@ class FavoritesShortScreen extends StatelessWidget {
               onEditingTap: () {
                 listEditorController.toggleSelected(vod.id);
               },
-              onOverrideRedirectTap: () {
+              onOverrideRedirectTap: (id) {
                 MyRouteDelegate.of(context).push(
                   AppRoutes.shortsByLocal.value,
                   args: {'videoId': vod.id, 'itemId': 2},

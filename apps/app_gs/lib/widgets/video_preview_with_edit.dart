@@ -1,5 +1,6 @@
 import 'package:app_gs/widgets/video_embedded_ad.dart';
 import 'package:app_gs/widgets/video_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
@@ -22,19 +23,22 @@ class ViewInfo extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(5),
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Colors.black.withOpacity(0.1),
-            Colors.black.withOpacity(0.7),
-          ],
-          stops: const [0.05, 1.0],
-        ),
-        // color: Colors.black.withOpacity(0.5),
-      ),
+      decoration: kIsWeb
+          ? null
+          : BoxDecoration(
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(10)),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.1),
+                  Colors.black.withOpacity(0.7),
+                ],
+                stops: const [0.05, 1.0],
+              ),
+              // color: Colors.black.withOpacity(0.5),
+            ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -74,7 +78,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
-  final Function()? onOverrideRedirectTap; // 自定義路由轉址
+  final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
   const VideoPreviewWithEditWidget(
       {Key? key,

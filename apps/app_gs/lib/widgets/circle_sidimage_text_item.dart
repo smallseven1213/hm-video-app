@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/widgets/sid_image.dart';
 
@@ -28,27 +29,33 @@ class CircleTextItem extends StatelessWidget {
         width: imageWidth,
         height: imageHeight,
         margin: const EdgeInsets.only(bottom: 5),
-        decoration: BoxDecoration(
-            borderRadius: isRounded
-                ? BorderRadius.circular(40)
-                : BorderRadius.circular(5),
-            gradient: hasBorder
-                ? LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: isRounded
-                        ? const [
-                            Color(0xff00B2FF),
-                            Color(0xffCCEAFF),
-                            Color(0xff0075FF),
-                          ]
-                        : const [
-                            Color(0xff000000),
-                            Color(0xff00145B),
-                            Color(0xff000000),
-                          ],
-                    stops: isRounded ? null : [0, 0.99, 1.0])
-                : null),
+        decoration: kIsWeb
+            ? BoxDecoration(
+                borderRadius: isRounded
+                    ? BorderRadius.circular(40)
+                    : BorderRadius.circular(5),
+                color: const Color(0xFF00b2ff))
+            : BoxDecoration(
+                borderRadius: isRounded
+                    ? BorderRadius.circular(40)
+                    : BorderRadius.circular(5),
+                gradient: !kIsWeb && hasBorder
+                    ? LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: isRounded
+                            ? const [
+                                Color(0xff00B2FF),
+                                Color(0xffCCEAFF),
+                                Color(0xff0075FF),
+                              ]
+                            : const [
+                                Color(0xff000000),
+                                Color(0xff00145B),
+                                Color(0xff000000),
+                              ],
+                        stops: isRounded ? null : [0, 0.99, 1.0])
+                    : null),
         child: Container(
             margin: isRounded ? const EdgeInsets.all(1) : null,
             decoration: BoxDecoration(

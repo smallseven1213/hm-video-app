@@ -9,6 +9,7 @@ import 'package:shimmer/shimmer.dart';
 import '../../widgets/avatar.dart';
 
 final logger = Logger();
+const Color baseColor = Color(0xFF003068);
 
 class UserInfo extends StatelessWidget {
   const UserInfo({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class UserInfo extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: baseColor,
           borderRadius: BorderRadius.circular(4),
         ),
       ),

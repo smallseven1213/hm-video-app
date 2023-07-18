@@ -8,10 +8,12 @@ const limit = 20;
 
 class SearchVodController extends BaseVodInfinityScrollController {
   final String keyword;
+  final int film;
 
   SearchVodController(
       {required this.keyword,
       required ScrollController scrollController,
+      required this.film,
       bool loadDataOnInit = true})
       : super(
             loadDataOnInit: loadDataOnInit,
@@ -19,7 +21,7 @@ class SearchVodController extends BaseVodInfinityScrollController {
 
   @override
   Future<InfinityVod> fetchData(int page) async {
-    var res = await vodApi.searchMany(keyword, page, limit);
+    var res = await vodApi.searchMany(keyword, page, limit, film);
 
     bool hasMoreData = res.total > limit * page;
 

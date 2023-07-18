@@ -164,7 +164,7 @@ class SearchPageState extends State<SearchPage> {
                   )
                 // 點擊"文字搜尋結果"後呈現的影片列表
                 : SearchResultPage(
-                    keyword: searchKeyword!,
+                    keyword: searchKeyword,
                     key: ValueKey(searchKeyword),
                   ),
             if (displaySearchResult)

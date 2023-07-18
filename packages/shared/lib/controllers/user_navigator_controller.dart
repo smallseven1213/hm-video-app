@@ -3,27 +3,39 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/apis/image_api.dart';
+import 'package:shared/utils/sid_image_result_decode.dart';
 
-import '../apis/image_api.dart';
 import '../apis/navigator_api.dart';
 import '../models/navigation.dart';
-import '../utils/sid_image_result_decode.dart';
 
 final logger = Logger();
 
-class BottonNavigatorController extends GetxController {
+class UserNavigatorController extends GetxController {
   final activeKey = ''.obs;
-  final navigatorItems = <Navigation>[].obs;
+  final quickLink = <Navigation>[].obs;
+  final moreLink = <Navigation>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchData();
+    fetchQuickLinkData();
   }
 
-  // _fetchData
-  void fetchData() async {
-    var value = await NavigatorApi().getNavigations(1);
+  fetchData() async {
+    var moreLinkData = await NavigatorApi().getNavigations(3);
+    moreLink.value = moreLinkData;
+    saveImage(moreLinkData);
+  }
+
+  fetchQuickLinkData() async {
+    var quickLinkData = await NavigatorApi().getNavigations(2);
+    quickLink.value = quickLinkData;
+    saveImage(quickLinkData);
+  }
+
+  void saveImage(List<Navigation> value) async {
     var sidImageBox = await Hive.openBox('sidImage');
     for (var item in value) {
       var photoSid = item.photoSid;
@@ -39,15 +51,5 @@ class BottonNavigatorController extends GetxController {
         }
       }
     }
-    setNavigatorItems(value);
-    changeKey(value.first.path!);
-  }
-
-  void changeKey(String key) {
-    activeKey.value = key;
-  }
-
-  void setNavigatorItems(List<Navigation> items) {
-    navigatorItems.value = items;
   }
 }

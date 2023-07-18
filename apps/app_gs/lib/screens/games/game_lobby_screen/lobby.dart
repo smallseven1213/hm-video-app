@@ -6,6 +6,9 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const GameLobby();
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: const GameLobby(),
+    );
   }
 }

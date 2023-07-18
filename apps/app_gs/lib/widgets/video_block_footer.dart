@@ -1,6 +1,7 @@
 import 'package:app_gs/config/colors.dart';
 import 'package:app_gs/widgets/channel_area_banner.dart';
 import 'package:app_gs/widgets/glowing_icon.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
@@ -60,11 +61,13 @@ class CustomButtonState extends State<CustomButton>
         height: 38,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFF000916), Color(0xFF003F6C)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          gradient: kIsWeb
+              ? null
+              : const LinearGradient(
+                  colors: [Color(0xFF000916), Color(0xFF003F6C)],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
           // opacity: 0.5,
           border: Border.all(color: const Color(0xFF8594E2), width: 1),
           borderRadius: BorderRadius.circular(40),

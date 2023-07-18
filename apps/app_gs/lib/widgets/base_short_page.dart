@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
@@ -57,7 +58,9 @@ class BaseShortPageState extends State<BaseShortPage> {
     // 如果getx有值，就用getx的值
     var keyuuid = widget.uuid;
 
-    initialPageIndex = pageviewIndexController.pageIndexes[keyuuid] ?? 0;
+    if (pageviewIndexController.pageIndexes[keyuuid] != null) {
+      initialPageIndex = pageviewIndexController.pageIndexes[keyuuid]!;
+    }
 
     _pageController?.dispose();
     _pageController = PageController(initialPage: initialPageIndex);

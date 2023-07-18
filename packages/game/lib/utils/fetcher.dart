@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:sentry_dio/sentry_dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:game/services/game_system_config.dart';
@@ -50,6 +51,7 @@ Future<dynamic> fetcher({
   }
 
   try {
+    // dio.addSentry();
     final response = await dio.request(
       url,
       data: data,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/banner_link.dart';
@@ -27,19 +28,22 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
             aspectRatio: imageRatio,
             child: Container(
               decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+                borderRadius:
+                    kIsWeb ? null : BorderRadius.all(Radius.circular(10)),
                 color: Colors.white,
               ),
               foregroundDecoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.0),
-                    Colors.black.withOpacity(0.3),
-                  ],
-                  stops: const [0.9, 1.0],
-                ),
+                gradient: kIsWeb
+                    ? null
+                    : LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.black.withOpacity(0.0),
+                          Colors.black.withOpacity(0.3),
+                        ],
+                        stops: const [0.9, 1.0],
+                      ),
               ),
               clipBehavior: Clip.antiAlias,
               child: SidImage(

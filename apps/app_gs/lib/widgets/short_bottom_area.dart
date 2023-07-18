@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -36,14 +37,16 @@ class ShortBottomArea extends StatelessWidget {
       height: 76 + paddingBottom,
       padding: EdgeInsets.only(bottom: paddingBottom),
       decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Colors.black,
-            Color(0xFF002869),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        gradient: kIsWeb
+            ? null
+            : LinearGradient(
+                colors: [
+                  Colors.black,
+                  Color(0xFF002869),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,

@@ -55,20 +55,21 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
             width: 60,
             height: 60,
             decoration: BoxDecoration(
+              color: gameLobbyBgColor,
               borderRadius: BorderRadius.circular(8),
-              gradient: RadialGradient(
-                center: const Alignment(0, -1.3), // 設定放射狀的中心位置
-                radius: 1, // 設定放射狀的半徑
-                colors: widget.isActive
-                    ? [
-                        const Color(0xff91d35f),
-                        gameLobbyBgColor,
-                      ]
-                    : [
-                        gameLobbyTabBgColor,
-                        gameLobbyTabBgColor,
-                      ],
-              ),
+              // gradient: RadialGradient(
+              //   center: const Alignment(0, -1.3), // 設定放射狀的中心位置
+              //   radius: 1, // 設定放射狀的半徑
+              //   colors: widget.isActive
+              //       ? [
+              //           const Color(0xff91d35f),
+              //           gameLobbyBgColor,
+              //         ]
+              //       : [
+              //           gameLobbyTabBgColor,
+              //           gameLobbyTabBgColor,
+              //         ],
+              // ),
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

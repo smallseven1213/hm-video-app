@@ -1,6 +1,7 @@
 import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/sliver_video_preview_skelton_list.dart';
 import 'package:app_gs/widgets/video_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,7 +16,9 @@ class SliverVodGrid extends StatefulWidget {
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
+  final bool? displayCoverVertical;
   final ScrollController? customScrollController;
+  final Function(int id)? onOverrideRedirectTap;
 
   const SliverVodGrid({
     Key? key,
@@ -23,9 +26,11 @@ class SliverVodGrid extends StatefulWidget {
     required this.displayNoMoreData,
     required this.isListEmpty,
     required this.displayLoading,
+    this.onOverrideRedirectTap,
     this.noMoreWidget,
     this.headerExtends,
     this.onScrollEnd,
+    this.displayCoverVertical = false,
     this.displayVideoCollectTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
@@ -44,6 +49,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
+        physics: kIsWeb ? null : const BouncingScrollPhysics(),
         controller: widget.customScrollController,
         scrollBehavior:
             ScrollConfiguration.of(context).copyWith(scrollbars: false),
@@ -78,6 +84,8 @@ class SliverVodGridState extends State<SliverVodGrid> {
                             Expanded(
                               child: VideoPreviewWidget(
                                 id: firstVideo.id,
+                                displayCoverVertical:
+                                    widget.displayCoverVertical ?? false,
                                 coverVertical: firstVideo.coverVertical!,
                                 coverHorizontal: firstVideo.coverHorizontal!,
                                 timeLength: firstVideo.timeLength!,
@@ -90,6 +98,8 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                     widget.displayVideoCollectTimes,
                                 displayVideoTimes: widget.displayVideoTimes,
                                 displayViewTimes: widget.displayViewTimes,
+                                onOverrideRedirectTap:
+                                    widget.onOverrideRedirectTap,
                               ),
                             ),
                             const SizedBox(width: 8),
@@ -97,6 +107,9 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                 child: secondVideo != null
                                     ? VideoPreviewWidget(
                                         id: secondVideo.id,
+                                        displayCoverVertical:
+                                            widget.displayCoverVertical ??
+                                                false,
                                         coverVertical:
                                             secondVideo.coverVertical!,
                                         coverHorizontal:
@@ -114,6 +127,8 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                             widget.displayVideoTimes,
                                         displayViewTimes:
                                             widget.displayViewTimes,
+                                        onOverrideRedirectTap:
+                                            widget.onOverrideRedirectTap,
                                       )
                                     : const SizedBox.shrink()),
                           ],

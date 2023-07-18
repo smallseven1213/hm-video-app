@@ -1,6 +1,7 @@
 class Supplier {
   int? id;
   String? aliasName;
+  String? name;
   int? shortVideoTotal;
   int? followTotal;
   int? collectTotal;
@@ -10,6 +11,7 @@ class Supplier {
   Supplier(
       {this.id,
       this.aliasName,
+      this.name,
       this.shortVideoTotal,
       this.followTotal,
       this.collectTotal,
@@ -19,6 +21,7 @@ class Supplier {
   Supplier.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     aliasName = json['aliasName'];
+    name = json['name'];
     shortVideoTotal = json['shortVideoTotal'];
     followTotal = json['followTotal'];
     collectTotal = json['collectTotal'];
@@ -30,6 +33,7 @@ class Supplier {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['aliasName'] = aliasName;
+    data['name'] = name;
     data['shortVideoTotal'] = shortVideoTotal;
     data['followTotal'] = followTotal;
     data['collectTotal'] = collectTotal;

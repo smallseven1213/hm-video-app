@@ -2,6 +2,7 @@ import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
 import 'package:app_gs/widgets/reload_button.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -129,38 +130,47 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               ChannelTags(
                 channelId: widget.channelId,
               ),
-              // SliverToBoxAdapter(key: targetKey),
-              SliverAppBar(
+              SliverPersistentHeader(
                 pinned: true,
-                leading: null,
-                automaticallyImplyLeading: false,
-                forceElevated: true,
-                expandedHeight: 0,
-                toolbarHeight: 0,
-                flexibleSpace: const SizedBox.shrink(),
-                bottom: PreferredSize(
-                  preferredSize: const Size.fromHeight(50),
-                  child: SizedBox(
-                      height: 50,
-                      child: SizedBox(
-                        height: 50,
-                        child: SizedBox(
-                          height: 50,
-                          child: GSTabBar(
-                            controller: _tabController,
-                            padding: const EdgeInsets.all(0),
-                            tabs: (channelSharedData?.blocks
-                                    ?.map((e) =>
-                                        e.name != null && e.name!.length > 8
-                                            ? e.name!.substring(0, 8)
-                                            : e.name ?? '')
-                                    .toList()) ??
-                                [],
-                          ),
-                        ),
-                      )),
+                delegate: _SliverAppBarDelegate(
+                  preferredHeight: 50,
+                  bottom: GSTabBar(
+                    controller: _tabController,
+                    padding: const EdgeInsets.all(0),
+                    tabs: (channelSharedData?.blocks
+                            ?.map((e) => e.name != null && e.name!.length > 8
+                                ? e.name!.substring(0, 8)
+                                : e.name ?? '')
+                            .toList()) ??
+                        [],
+                  ),
                 ),
               ),
+              // SliverAppBar(
+              //   pinned: true,
+              //   leading: null,
+              //   automaticallyImplyLeading: false,
+              //   forceElevated: true,
+              //   expandedHeight: 0,
+              //   toolbarHeight: 0,
+              //   flexibleSpace: const SizedBox.shrink(),
+              //   bottom: PreferredSize(
+              //     preferredSize: const Size.fromHeight(50),
+              //     child: SizedBox(
+              //         height: 50,
+              //         child: GSTabBar(
+              //           controller: _tabController,
+              //           padding: const EdgeInsets.all(0),
+              //           tabs: (channelSharedData?.blocks
+              //                   ?.map((e) =>
+              //                       e.name != null && e.name!.length > 8
+              //                           ? e.name!.substring(0, 8)
+              //                           : e.name ?? '')
+              //                   .toList()) ??
+              //               [],
+              //         )),
+              //   ),
+              // ),
             ];
           },
           body: TabBarView(
@@ -181,5 +191,32 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
         );
       }),
     );
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  final double preferredHeight;
+  final Widget bottom;
+
+  _SliverAppBarDelegate({required this.preferredHeight, required this.bottom});
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      color: Colors.white, // 根据需要设置背景色
+      child: bottom,
+    );
+  }
+
+  @override
+  double get maxExtent => preferredHeight;
+
+  @override
+  double get minExtent => preferredHeight;
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return bottom != oldDelegate.bottom;
   }
 }

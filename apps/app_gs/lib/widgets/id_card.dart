@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:app_gs/widgets/button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
@@ -71,7 +72,7 @@ class IDCard extends StatelessWidget {
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: kIsWeb ? null : BorderRadius.circular(10),
           gradient: const LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,

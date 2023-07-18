@@ -33,28 +33,77 @@ class HomeMainScreen extends StatelessWidget {
                 );
               }
               return Scaffold(
-                appBar: PreferredSize(
-                  preferredSize: const Size.fromHeight(88),
-                  child: Padding(
+                  body: Stack(
+                children: [
+                  Positioned(
+                      child: Column(
+                    children: [
+                      SizedBox(
+                        height: MediaQuery.of(context).padding.top,
+                      ),
+                      SizedBox(
+                        height: 38,
+                        child: LayoutTabBar(
+                          key: Key('layout-tab-bar-$layoutId'),
+                          layoutId: layoutId,
+                        ),
+                      ),
+                      ChannelSearchBar()
+                    ],
+                  )),
+
+                  // Positioned(
+                  //   top: 0,
+                  //   child: SizedBox(
+                  //     height: 125,
+                  //     width: MediaQuery.of(context).size.width,
+                  //     child: Column(children: [
+                  //       Expanded(
+                  //     child: LayoutTabBar(
+                  //   key: Key('layout-tab-bar-$layoutId'),
+                  //   layoutId: layoutId,
+                  // )),
+                  //       Expanded(
+                  //         child: ChannelSearchBar(),
+                  //       )
+                  //     ]),
+                  //   ),
+                  // ),
+
+                  // Positioned(
+                  //     top: 0,
+                  //     child: Padding(
+                  // padding: EdgeInsets.only(
+                  //     top: MediaQuery.of(context).padding.top),
+                  // child: Column(children: [
+                  //   Expanded(
+                  //       child: LayoutTabBar(
+                  //     key: Key('layout-tab-bar-$layoutId'),
+                  //     layoutId: layoutId,
+                  //   )),
+                  //   Expanded(
+                  //     child: ChannelSearchBar(),
+                  //   )
+                  // ]),
+                  //       // Expanded(
+                  //       //   child: Marquee(),
+                  //       // ),
+                  //     )),
+                  Padding(
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top),
-                    child: Column(children: [
-                      Expanded(
-                          child: LayoutTabBar(
-                        key: Key('layout-tab-bar-$layoutId'),
-                        layoutId: layoutId,
-                      )),
-                      Expanded(
-                        child: ChannelSearchBar(),
-                      )
-                    ]),
-                    // Expanded(
-                    //   child: Marquee(),
-                    // ),
+                        top: MediaQuery.of(context).padding.top + 90),
+                    child: Channels(
+                      key: Key('channels-$layoutId'),
+                      layoutId: layoutId,
+                    ),
                   ),
-                ),
-                body: Channels(layoutId: layoutId),
-              );
+                  // if (controller.isShowSearch.value)
+                  //   ChannelSearchBar(
+                  //     key: Key('channel-search-bar-$layoutId'),
+                  //     layoutId: layoutId,
+                  //   ),
+                ],
+              ));
             },
           );
         },

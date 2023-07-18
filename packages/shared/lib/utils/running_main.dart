@@ -1,5 +1,3 @@
-import 'package:dio/dio.dart';
-import 'package:sentry_dio/sentry_dio.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -59,10 +57,6 @@ Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
   //   },
   //   appRunner: () => realMain(widget),
   // );
-  final dio = Dio();
 
-  /// This *must* be the last initialization step of the Dio setup, otherwise
-  /// your configuration of Dio might overwrite the Sentry configuration.
-  dio.addSentry();
   realMain(widget);
 }

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -133,7 +134,9 @@ class NestedTabBarViewState extends State<NestedTabBarView>
         body: Obx(
           () => TabBarView(
             controller: _tabController,
-            physics: const BouncingScrollPhysics(),
+            physics: kIsWeb
+                ? const NeverScrollableScrollPhysics()
+                : const BouncingScrollPhysics(),
             children: [
               if (widget.videoDetail.actors!.isNotEmpty)
                 SliverVodGrid(
