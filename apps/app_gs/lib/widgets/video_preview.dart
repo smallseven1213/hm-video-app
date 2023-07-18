@@ -55,7 +55,9 @@ class ViewInfo extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
+        borderRadius: kIsWeb
+            ? null
+            : const BorderRadius.vertical(bottom: Radius.circular(10)),
         gradient: kIsWeb
             ? null
             : LinearGradient(
@@ -326,7 +328,7 @@ class VideoPreviewWidget extends StatelessWidget {
                                         .withOpacity(0.5),
                                     borderRadius: BorderRadius.circular(10)),
                             child: Text(
-                              tag.name,
+                              '${kIsWeb ? '#' : ''}${tag.name}',
                               style: const TextStyle(
                                 color: Color(0xff21AFFF),
                                 fontSize: 10,
