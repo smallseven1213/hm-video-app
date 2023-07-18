@@ -1,6 +1,5 @@
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -56,19 +55,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-      decoration: BoxDecoration(
-        borderRadius: kIsWeb ? null : BorderRadius.circular(8),
-        gradient: kIsWeb
-            ? null
-            : LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  gameLobbyUserInfoColor1,
-                  gameLobbyUserInfoColor2,
-                ],
-              ),
-      ),
+      color: gameLobbyUserInfoColor1,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
