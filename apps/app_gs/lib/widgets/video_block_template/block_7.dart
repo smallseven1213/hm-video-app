@@ -89,6 +89,7 @@ class Block7WidgetState extends State<Block7Widget> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
+                // TODO: kIsWeb testing
                 decoration: kIsWeb
                     ? null
                     : const BoxDecoration(

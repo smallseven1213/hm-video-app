@@ -39,6 +39,9 @@ class HomeMainScreen extends StatelessWidget {
                       child: Column(
                     children: [
                       SizedBox(
+                        height: MediaQuery.of(context).padding.top,
+                      ),
+                      SizedBox(
                         height: 38,
                         child: LayoutTabBar(
                           key: Key('layout-tab-bar-$layoutId'),
