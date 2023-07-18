@@ -25,7 +25,10 @@ class StaticSearchInput extends StatelessWidget {
         height: 30,
         child: Container(
           decoration: kIsWeb
-              ? null
+              ? const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                  color: Color(0xFF00B2FF),
+                )
               : const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20)),
                   gradient: LinearGradient(
