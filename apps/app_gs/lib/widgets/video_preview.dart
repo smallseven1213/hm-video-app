@@ -303,6 +303,7 @@ class VideoPreviewWidget extends StatelessWidget {
                 runSpacing: 5.0,
                 clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
                 children: tags
+                    .take(3)
                     .map(
                       (tag) => InkWell(
                         onTap: () {
