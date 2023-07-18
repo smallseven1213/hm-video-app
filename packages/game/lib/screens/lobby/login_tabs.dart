@@ -57,9 +57,26 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                   margin: const EdgeInsets.only(right: 10),
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                  color: tabsType == Type.login
-                      ? gamePrimaryButtonColor
-                      : gameSecondButtonColor2,
+                  decoration: BoxDecoration(
+                    color: tabsType == Type.login
+                        ? gamePrimaryButtonColor
+                        : gameSecondButtonColor2,
+                    borderRadius: BorderRadius.circular(24),
+                    // gradient: LinearGradient(
+                    //   // 設定漸層的背景顏色
+                    //   colors: tabsType == Type.login
+                    //       ? [
+                    //           gamePrimaryButtonColor,
+                    //           gamePrimaryButtonColor
+                    //         ]
+                    //       : [
+                    //           gameSecondButtonColor1,
+                    //           gameSecondButtonColor2
+                    //         ], // 漸層的顏色列表
+                    //   begin: Alignment.topCenter, // 漸層的起點位置
+                    //   end: Alignment.bottomCenter, // 漸層的終點位置
+                    // ),
+                  ),
                   child: Text(
                     "登入",
                     style: TextStyle(
@@ -82,9 +99,28 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                   margin: const EdgeInsets.only(right: 10),
                   padding:
                       const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
-                  color: tabsType == Type.register
-                      ? gamePrimaryButtonColor
-                      : gameSecondButtonColor1,
+                  decoration: BoxDecoration(
+                    color: tabsType == Type.register
+                        ? gamePrimaryButtonColor
+                        : gameSecondButtonColor1,
+                    borderRadius: BorderRadius.circular(24),
+                    // gradient: kIsWeb
+                    //     ? null
+                    //     : LinearGradient(
+                    //         // 設定漸層的背景顏色
+                    //         colors: tabsType == Type.register
+                    //             ? [
+                    //                 gamePrimaryButtonColor,
+                    //                 gamePrimaryButtonColor
+                    //               ]
+                    //             : [
+                    //                 gameSecondButtonColor1,
+                    //                 gameSecondButtonColor2
+                    //               ], // 漸層的顏色列表
+                    //         begin: Alignment.topCenter, // 漸層的起點位置
+                    //         end: Alignment.bottomCenter, // 漸層的終點位置
+                    //       ),
+                  ),
                   child: Text(
                     "註冊",
                     style: TextStyle(
