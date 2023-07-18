@@ -49,9 +49,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
       logger.i('totalRows $totalRows');
 
       return CustomScrollView(
-        physics: kIsWeb
-            ? const NeverScrollableScrollPhysics()
-            : const BouncingScrollPhysics(),
+        physics: kIsWeb ? null : const BouncingScrollPhysics(),
         controller: widget.customScrollController,
         scrollBehavior:
             ScrollConfiguration.of(context).copyWith(scrollbars: false),

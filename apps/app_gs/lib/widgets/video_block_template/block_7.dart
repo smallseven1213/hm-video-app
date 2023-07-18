@@ -115,7 +115,7 @@ class Block7WidgetState extends State<Block7Widget> {
                   initialPage: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
-                      backgroundPhotoSid = videos[index].coverHorizontal;
+                      backgroundPhotoSid = videos[index].coverVertical;
                     });
                   },
                 ),
