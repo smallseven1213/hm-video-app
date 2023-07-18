@@ -66,19 +66,19 @@ class ShortCardState extends State<ShortCard> {
     videoDetailController = Get.find<ShortVideoDetailController>(
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
-    if (widget.supportedPlayRecord == true) {
+    if (widget.supportedPlayRecord == true && !kIsWeb) {
       logger.i('PLAYRECORD TESTING: initial');
-      // var videoVal = videoDetailController.video.value;
-      // var playRecord = Vod(
-      //   videoVal!.id,
-      //   videoVal.title,
-      //   coverHorizontal: videoVal.coverHorizontal!,
-      //   coverVertical: videoVal.coverVertical!,
-      //   timeLength: videoVal.timeLength!,
-      //   tags: videoVal.tags!,
-      //   videoViewTimes: videoVal.videoViewTimes!,
-      // );
-      // Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
+      var videoVal = videoDetailController.video.value;
+      var playRecord = Vod(
+        videoVal!.id,
+        videoVal.title,
+        coverHorizontal: videoVal.coverHorizontal!,
+        coverVertical: videoVal.coverVertical!,
+        timeLength: videoVal.timeLength!,
+        tags: videoVal.tags!,
+        videoViewTimes: videoVal.videoViewTimes!,
+      );
+      Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
     }
 
     obsVideoPlayerController =
@@ -101,6 +101,7 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+    var screenWidth = MediaQuery.of(context).size.width;
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
