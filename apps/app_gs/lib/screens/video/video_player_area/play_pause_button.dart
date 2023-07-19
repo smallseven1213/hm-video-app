@@ -12,7 +12,7 @@ class PlayPauseButton extends StatelessWidget {
       reverseDuration: const Duration(milliseconds: 200),
       child: controller.value.isPlaying
           ? const SizedBox.shrink()
-          : InkWell(
+          : GestureDetector(
               onTap: () {
                 controller.play();
               },

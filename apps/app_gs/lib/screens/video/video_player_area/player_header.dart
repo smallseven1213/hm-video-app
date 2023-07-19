@@ -28,15 +28,15 @@ class PlayerHeader extends StatelessWidget {
         elevation: 0,
         centerTitle: false,
         backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-          onPressed: () {
+        leading: GestureDetector(
+          onTap: () {
             if (isFullscreen) {
               toggleFullscreen(false);
             } else {
               MyRouteDelegate.of(context).pop();
             }
           },
+          child: const Icon(Icons.arrow_back_ios_new, size: 16),
         ),
       ),
     );

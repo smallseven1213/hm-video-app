@@ -18,7 +18,7 @@ class TagWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         MyRouteDelegate.of(context)
             .push(AppRoutes.tag.value, args: {'id': id, 'title': name});

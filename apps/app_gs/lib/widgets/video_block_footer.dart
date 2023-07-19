@@ -48,7 +48,7 @@ class CustomButtonState extends State<CustomButton>
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: () {
         setState(() {
           _animationController.isCompleted

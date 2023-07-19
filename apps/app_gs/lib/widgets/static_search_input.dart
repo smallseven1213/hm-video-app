@@ -52,7 +52,7 @@ class StaticSearchInput extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   flex: 1,
-                  child: InkWell(
+                  child: GestureDetector(
                     onTap: onInputClick,
                     child: Text(
                       defaultValue,
@@ -62,7 +62,7 @@ class StaticSearchInput extends StatelessWidget {
                     ),
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: onSearchButtonClick,
                   child: const SizedBox(
                     width: 17,

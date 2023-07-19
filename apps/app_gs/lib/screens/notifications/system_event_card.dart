@@ -66,7 +66,7 @@ class SystemEventCard extends StatelessWidget {
           Obx(() {
             if (listEditorController.isEditing.value) {
               return Positioned.fill(
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     listEditorController.toggleSelected(id);
                   },

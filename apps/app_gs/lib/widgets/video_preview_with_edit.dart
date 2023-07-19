@@ -143,7 +143,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
             onOverrideRedirectTap: onOverrideRedirectTap),
         if (isEditing)
           Positioned.fill(
-            child: InkWell(
+            child: GestureDetector(
               onTap: onEditingTap,
               child: Container(
                 width: double.infinity,
@@ -164,7 +164,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       ],
     );
 
-    // return InkWell(
+    // return GestureDetector(
     //   onTap: isEditing ? onEditingTap : null,
     //   child: Stack(
     //     children: [

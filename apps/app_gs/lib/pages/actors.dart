@@ -36,7 +36,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   Widget _buildCustomRadioButton(int value, String label) {
     return Expanded(
         flex: 1,
-        child: InkWell(
+        child: GestureDetector(
             onTap: () {
               actorsController.setSortBy(value);
             },
@@ -166,7 +166,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                   var actor = actorsController.actors[actorIndex];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 10),
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {
                         MyRouteDelegate.of(context).push(
                           AppRoutes.actor.value,

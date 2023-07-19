@@ -316,7 +316,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               ),
             if (kIsWeb && !hasH5FirstPlay && !isPlaying)
               // 中間播放按鈕
-              InkWell(
+              GestureDetector(
                 onTap: () {
                   ovpController.videoPlayerController.play();
                   if (kIsWeb && !hasH5FirstPlay) {

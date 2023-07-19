@@ -17,7 +17,7 @@ class PopularWidget extends StatelessWidget {
               (BuildContext context, int index) {
                 return Column(
                   children: [
-                    InkWell(
+                    GestureDetector(
                       onTap: () {
                         dynamic idDynamic = snapshot.data[index].id;
                         int id;

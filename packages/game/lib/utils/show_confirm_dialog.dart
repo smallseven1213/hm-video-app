@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
@@ -36,17 +35,18 @@ void showConfirmDialog({
                 height: 140,
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
-                  gradient: kIsWeb
-                      ? null
-                      : LinearGradient(
-                          // 設定漸層的背景顏色
-                          colors: [
-                            gameLobbyDialogColor1,
-                            gameLobbyDialogColor2
-                          ], // 漸層的顏色列表
-                          begin: Alignment.topCenter, // 漸層的起點位置
-                          end: Alignment.bottomCenter, // 漸層的終點位置
-                        ),
+                  color: gameLobbyDialogColor1,
+                  // gradient: kIsWeb
+                  //     ? null
+                  //     : LinearGradient(
+                  //         // 設定漸層的背景顏色
+                  //         colors: [
+                  //           gameLobbyDialogColor1,
+                  //           gameLobbyDialogColor2
+                  //         ], // 漸層的顏色列表
+                  //         begin: Alignment.topCenter, // 漸層的起點位置
+                  //         end: Alignment.bottomCenter, // 漸層的終點位置
+                  //       ),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(24),
                     topRight: Radius.circular(24),
@@ -101,16 +101,17 @@ void showConfirmDialog({
                       Expanded(
                         child: Ink(
                           decoration: BoxDecoration(
-                            gradient: kIsWeb
-                                ? null
-                                : LinearGradient(
-                                    colors: [
-                                      gameSecondButtonColor1,
-                                      gameSecondButtonColor2
-                                    ],
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                  ),
+                            color: gameSecondButtonColor1,
+                            // gradient: kIsWeb
+                            //     ? null
+                            //     : LinearGradient(
+                            //         colors: [
+                            //           gameSecondButtonColor1,
+                            //           gameSecondButtonColor2
+                            //         ],
+                            //         begin: Alignment.topCenter,
+                            //         end: Alignment.bottomCenter,
+                            //       ),
                             borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(24),
                               bottomRight: Radius.circular(0),
@@ -135,16 +136,17 @@ void showConfirmDialog({
                     Expanded(
                       child: Ink(
                         decoration: BoxDecoration(
-                          gradient: kIsWeb
-                              ? null
-                              : LinearGradient(
-                                  colors: [
-                                    gamePrimaryButtonColor,
-                                    gamePrimaryButtonColor
-                                  ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                ),
+                          color: gamePrimaryButtonColor,
+                          // gradient: kIsWeb
+                          //     ? null
+                          //     : LinearGradient(
+                          //         colors: [
+                          //           gamePrimaryButtonColor,
+                          //           gamePrimaryButtonColor
+                          //         ],
+                          //         begin: Alignment.topCenter,
+                          //         end: Alignment.bottomCenter,
+                          //       ),
                           borderRadius: BorderRadius.only(
                             bottomLeft:
                                 Radius.circular(onCancel == null ? 24 : 0),

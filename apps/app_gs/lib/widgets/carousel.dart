@@ -78,7 +78,7 @@ class CarouselState extends State<Carousel> {
                                   : Colors.white.withOpacity(0.5),
                               borderRadius: BorderRadius.circular(4.0),
                             ),
-                            child: InkWell(
+                            child: GestureDetector(
                               onTap: () => controller
                                   .animateToPage(widget.images!.indexOf(item)),
                             ),

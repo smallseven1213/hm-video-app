@@ -67,7 +67,7 @@ class GridMenuState extends State<GridMenu> {
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
           var item = menuItems[index];
-          return InkWell(
+          return GestureDetector(
             onTap: item.onTap as void Function()?,
             child: Align(
               alignment: Alignment.center,

@@ -30,7 +30,7 @@ class Avatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap as void Function()?,
       child: Obx(() {
         var isLoading = userController.isLoading.value;

@@ -63,7 +63,7 @@ class ChannelSearchBar extends StatelessWidget {
               );
             }),
           ),
-          InkWell(
+          GestureDetector(
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter.value);
             },

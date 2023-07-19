@@ -64,7 +64,7 @@ class CircleTextItem extends StatelessWidget {
                   : BorderRadius.circular(5),
             ),
             clipBehavior: Clip.antiAlias,
-            child: InkWell(
+            child: GestureDetector(
               onTap: onTap,
               child: SidImage(
                 key: ValueKey(photoSid),

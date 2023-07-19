@@ -143,18 +143,17 @@ class ShortCardState extends State<ShortCard> {
         color: Colors.black,
         child: Stack(
           children: [
+            const WaveLoading(
+              color: Color.fromRGBO(255, 255, 255, 0.3),
+              duration: Duration(milliseconds: 1000),
+              size: 17,
+              itemCount: 3,
+            ),
             SizedBox(
               height: screen.size.height - 76 - screen.padding.bottom,
               width: double.infinity,
               child: Stack(
                 children: [
-                  if (video == null)
-                    const WaveLoading(
-                      color: Color.fromRGBO(255, 255, 255, 0.3),
-                      duration: Duration(milliseconds: 1000),
-                      size: 17,
-                      itemCount: 3,
-                    ),
                   if (obsVideoPlayerController.isReady.value &&
                       !isLoading &&
                       videoUrl.isNotEmpty &&
