@@ -30,17 +30,15 @@ Future<bool?> showConfirmDialog({
             width: 280,
             decoration: BoxDecoration(
               borderRadius: kIsWeb ? null : BorderRadius.circular(10),
-              gradient: kIsWeb
-                  ? null
-                  : const LinearGradient(
-                      colors: [
-                        Color(0xFF000916),
-                        Color(0xFF003F6C),
-                        Color(0xFF005B9C),
-                      ],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
+              gradient: const LinearGradient(
+                colors: [
+                  Color(0xFF000916),
+                  Color(0xFF003F6C),
+                  Color(0xFF005B9C),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               border: Border.all(
                 color: const Color(0x80FFFFFF),
                 width: 0.5,

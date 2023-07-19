@@ -116,7 +116,7 @@ class VideoScreenWithVideoUrlState extends State<VideoScreenWithVideoUrl> {
     observableVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
-    if (widget.videoDetail != null && widget.video != null && !kIsWeb) {
+    if (widget.videoDetail != null && widget.video != null) {
       var playRecord = Vod(
         widget.video!.id,
         widget.video!.title,
