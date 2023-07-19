@@ -66,7 +66,7 @@ class ShortCardState extends State<ShortCard> {
     videoDetailController = Get.find<ShortVideoDetailController>(
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
-    if (widget.supportedPlayRecord == true && !kIsWeb) {
+    if (widget.supportedPlayRecord == true) {
       logger.i('PLAYRECORD TESTING: initial');
       var videoVal = videoDetailController.video.value;
       var playRecord = Vod(
