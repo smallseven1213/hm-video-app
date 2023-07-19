@@ -30,7 +30,11 @@ class CircleTextItem extends StatelessWidget {
         height: imageHeight,
         margin: const EdgeInsets.only(bottom: 5),
         decoration: kIsWeb
-            ? null
+            ? BoxDecoration(
+                borderRadius: isRounded
+                    ? BorderRadius.circular(40)
+                    : BorderRadius.circular(5),
+                color: const Color(0xFF00b2ff))
             : BoxDecoration(
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)

@@ -89,19 +89,18 @@ class Block7WidgetState extends State<Block7Widget> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                decoration: kIsWeb
-                    ? null
-                    : const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xFF040405),
-                            Color.fromRGBO(20, 49, 104, 0.7),
-                          ],
-                          stops: [0.0, 1],
-                        ),
-                      ),
+                // TODO: kIsWeb testing
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [
+                      Color(0xFF040405),
+                      Color.fromRGBO(20, 49, 104, 0.7),
+                    ],
+                    stops: [0.0, 1],
+                  ),
+                ),
               ),
             ),
             CarouselSlider.builder(

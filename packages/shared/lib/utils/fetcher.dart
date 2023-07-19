@@ -55,7 +55,7 @@ Future<dynamic> fetcher({
   }
 
   try {
-    dio.addSentry();
+    // dio.addSentry();
     final response = await dio.request(
       url,
       data: data,

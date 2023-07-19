@@ -50,7 +50,9 @@ class SidImageState extends State<SidImage> {
     var sidImageBox = await Hive.openBox('sidImage');
 
     if (widget.sid.isNotEmpty) {
+      logger.i('GET IMAGE: ${widget.sid}');
       var hasFileInHive = sidImageBox.containsKey(widget.sid);
+      logger.i('GET IMAGE: $hasFileInHive');
       if (hasFileInHive) {
         var file = await sidImageBox.get(widget.sid);
         try {
