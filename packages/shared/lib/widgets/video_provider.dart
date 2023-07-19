@@ -14,13 +14,15 @@ class VideoProvider extends StatefulWidget {
   final int vodId;
   final Widget child;
   final String obsKey;
+  final Widget? loading;
 
-  const VideoProvider(
-      {Key? key,
-      required this.obsKey,
-      required this.child,
-      required this.vodId})
-      : super(key: key);
+  const VideoProvider({
+    Key? key,
+    required this.obsKey,
+    required this.child,
+    required this.vodId,
+    this.loading,
+  }) : super(key: key);
 
   @override
   VideoProviderState createState() => VideoProviderState();
@@ -64,7 +66,7 @@ class VideoProviderState extends State<VideoProvider> {
       var video = controller.video.value;
       var videoDetail = controller.videoDetail.value;
       if (videoUrl.isEmpty) {
-        return Container();
+        return widget.loading ?? Container();
       }
       return VideoScreenWithVideoUrl(
           obsKey: widget.obsKey,

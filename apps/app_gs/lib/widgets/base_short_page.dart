@@ -123,6 +123,14 @@ class BaseShortPageState extends State<BaseShortPage> {
                 key: Key('video-provider-$obsKey'),
                 obsKey: obsKey,
                 vodId: shortData.id,
+                loading: const Center(
+                  child: WaveLoading(
+                    color: Color.fromRGBO(255, 255, 255, 0.3),
+                    duration: Duration(milliseconds: 1000),
+                    size: 17,
+                    itemCount: 3,
+                  ),
+                ),
                 child: ShortCard(
                   obsKey: obsKey.toString(),
                   index: index,
