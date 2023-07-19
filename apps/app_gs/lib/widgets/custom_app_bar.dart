@@ -29,12 +29,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       centerTitle: true,
       leading: Navigator.canPop(context)
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-              onPressed: () {
+          ? GestureDetector(
+              onTap: () {
                 Navigator.pop(context);
               },
-            )
+              child: const Icon(Icons.arrow_back_ios_new, size: 16))
           : Container(),
       backgroundColor:
           backgroundColor ?? AppColors.colors[ColorKeys.background],

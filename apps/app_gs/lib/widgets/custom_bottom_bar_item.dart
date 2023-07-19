@@ -20,32 +20,34 @@ class CustomBottomBarItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          isActive
-              ? SidImage(
-                  key: const Key('activeIcon'),
-                  sid: activeIconSid,
-                  width: 30,
-                  height: 30,
-                  noFadeIn: true,
-                )
-              : SidImage(
-                  key: const Key('unactiveIcon'),
-                  sid: iconSid,
-                  width: 30,
-                  height: 30,
-                  noFadeIn: true,
-                ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: const TextStyle(color: Colors.white),
+        onTap: onTap,
+        child: Container(
+          color: Color(0xFF001a3e),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              isActive
+                  ? SidImage(
+                      key: const Key('activeIcon'),
+                      sid: activeIconSid,
+                      width: 30,
+                      height: 30,
+                      noFadeIn: true,
+                    )
+                  : SidImage(
+                      key: const Key('unactiveIcon'),
+                      sid: iconSid,
+                      width: 30,
+                      height: 30,
+                      noFadeIn: true,
+                    ),
+              const SizedBox(height: 4),
+              Text(
+                label,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
