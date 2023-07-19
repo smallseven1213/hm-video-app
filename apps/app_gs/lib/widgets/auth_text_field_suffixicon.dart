@@ -36,7 +36,7 @@ class AuthTextFieldSuffixIconState extends State<AuthTextFieldSuffixIcon> {
   @override
   Widget build(BuildContext context) {
     return display
-        ? InkWell(
+        ? GestureDetector(
             onTap: () {
               widget.controller.clear();
             },

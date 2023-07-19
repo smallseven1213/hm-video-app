@@ -53,7 +53,7 @@ class ChannelStyle4 extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Header(
                     text: '人氣女優',
-                    moreButton: InkWell(
+                    moreButton: GestureDetector(
                         onTap: () => {
                               MyRouteDelegate.of(context).push(
                                 AppRoutes.actors.value,
@@ -245,7 +245,7 @@ class ChannelStyle4 extends StatelessWidget {
                                   right: 0,
                                   child: ClipPath(
                                     clipper: CustomClipperWithRoundedCorners(),
-                                    child: InkWell(
+                                    child: GestureDetector(
                                       onTap: () =>
                                           MyRouteDelegate.of(context).push(
                                         AppRoutes.actor.value,

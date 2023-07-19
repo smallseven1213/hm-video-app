@@ -31,7 +31,7 @@ class SuppliersPageState extends State<SuppliersPage>
   Widget _buildCustomRadioButton(int value, String label) {
     return Expanded(
         flex: 1,
-        child: InkWell(
+        child: GestureDetector(
             onTap: () {
               suppliersController.setSortBy(value);
             },
@@ -158,7 +158,7 @@ class SuppliersPageState extends State<SuppliersPage>
                   var actor = suppliersController.actors[actorIndex];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 10),
-                    child: InkWell(
+                    child: GestureDetector(
                       onTap: () {
                         MyRouteDelegate.of(context).push(
                           AppRoutes.supplier.value,

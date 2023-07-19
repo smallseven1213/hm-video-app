@@ -53,7 +53,7 @@ class ChannelStyle5 extends StatelessWidget {
               SliverToBoxAdapter(
                 child: Header(
                     text: '精選UP主',
-                    moreButton: InkWell(
+                    moreButton: GestureDetector(
                         onTap: () => {
                               MyRouteDelegate.of(context).push(
                                 AppRoutes.suppliers.value,
@@ -261,7 +261,7 @@ class ChannelStyle5 extends StatelessWidget {
                                   right: 0,
                                   child: ClipPath(
                                     clipper: CustomClipperWithRoundedCorners(),
-                                    child: InkWell(
+                                    child: GestureDetector(
                                       onTap: () =>
                                           MyRouteDelegate.of(context).push(
                                         AppRoutes.supplier.value,

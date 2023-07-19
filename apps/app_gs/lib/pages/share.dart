@@ -78,7 +78,7 @@ class SharePage extends StatelessWidget {
             backgroundColor: Colors.transparent,
             actions: [
               Center(
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     // MyRouteDelegate.of(context)
                     //     .push(AppRoutes.login.value, deletePreviousCount: 1);

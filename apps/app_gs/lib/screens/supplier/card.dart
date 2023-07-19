@@ -245,7 +245,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                   isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
               return Opacity(
                 opacity: opacity,
-                child: InkWell(
+                child: GestureDetector(
                   onTap: () {
                     if (isLiked) {
                       userFavoritesSupplierController

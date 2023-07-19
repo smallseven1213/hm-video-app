@@ -87,7 +87,7 @@ class UserInfo extends StatelessWidget {
                             ),
                           if (!userController.info.value.roles
                               .contains('guest'))
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 MyRouteDelegate.of(context)
                                     .push('/user/nickname');
@@ -147,7 +147,7 @@ class UserInfo extends StatelessWidget {
             Positioned(
               top: 0,
               right: 0,
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   MyRouteDelegate.of(context).push(AppRoutes.configs.value);
                 },
@@ -164,7 +164,7 @@ class UserInfo extends StatelessWidget {
             Positioned(
               top: 0,
               right: 30,
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   MyRouteDelegate.of(context)
                       .push(AppRoutes.notifications.value);

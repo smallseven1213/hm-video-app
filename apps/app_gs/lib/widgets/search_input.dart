@@ -102,7 +102,7 @@ class SearchInputState extends State<SearchInput> {
               hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
               fillColor: const Color(0xFF002865),
-              suffixIcon: InkWell(
+              suffixIcon: GestureDetector(
                 onTap: () {
                   if (widget.onSearchButtonClick != null) {
                     widget.onSearchButtonClick!(_controller!.text);

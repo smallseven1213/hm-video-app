@@ -187,7 +187,7 @@ class ListMenuState extends State<ListMenu> {
                 stops: [0.0, 1.0],
               ),
             ),
-            child: InkWell(
+            child: GestureDetector(
               onTap: item.onTap as void Function()?,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,

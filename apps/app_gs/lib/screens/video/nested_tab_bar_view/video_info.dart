@@ -56,7 +56,7 @@ class VideoInfo extends StatelessWidget {
                   child: Row(
                     children: [
                       if (publisher != null) ...[
-                        InkWell(
+                        GestureDetector(
                           onTap: () async {
                             pauseVideo();
                             await MyRouteDelegate.of(context).push(
@@ -82,7 +82,7 @@ class VideoInfo extends StatelessWidget {
                         )
                       ],
                       if (actor != null && actor!.isNotEmpty)
-                        InkWell(
+                        GestureDetector(
                           onTap: () async {
                             pauseVideo();
                             await MyRouteDelegate.of(context).push(
@@ -132,7 +132,7 @@ class VideoInfo extends StatelessWidget {
             runSpacing: 4,
             crossAxisAlignment: WrapCrossAlignment.center,
             children: tags.map((tag) {
-              return InkWell(
+              return GestureDetector(
                 onTap: () async {
                   pauseVideo();
                   await MyRouteDelegate.of(context).push(AppRoutes.tag.value,

@@ -76,7 +76,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
               child: Header(
                 text: block.name ?? '',
                 moreButton: block.isMore!
-                    ? InkWell(
+                    ? GestureDetector(
                         onTap: () => {
                               if (block.film == 1)
                                 {

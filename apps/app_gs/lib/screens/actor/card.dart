@@ -206,7 +206,7 @@ class UserLike extends StatelessWidget {
           userFavoritesActorController.actors.any((e) => e.id == actor.id);
       IconData iconData =
           isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
-      return InkWell(
+      return GestureDetector(
         onTap: () {
           if (isLiked) {
             userFavoritesActorController.removeActor([actor.id]);

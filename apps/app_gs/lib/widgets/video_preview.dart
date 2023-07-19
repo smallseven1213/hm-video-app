@@ -145,7 +145,7 @@ class VideoPreviewWidget extends StatelessWidget {
     }
     return Column(
       children: [
-        InkWell(
+        GestureDetector(
           onTap: () {
             if (onTap != null) {
               onTap!();
@@ -286,7 +286,7 @@ class VideoPreviewWidget extends StatelessWidget {
                 children: tags
                     .take(3)
                     .map(
-                      (tag) => InkWell(
+                      (tag) => GestureDetector(
                         onTap: () {
                           if (film == 1) {
                             MyRouteDelegate.of(context).push(
