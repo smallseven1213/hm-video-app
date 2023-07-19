@@ -121,8 +121,8 @@ class UserInfo extends StatelessWidget {
                 if (userController.info.value.roles.contains('guest'))
                   Expanded(
                     flex: 1,
-                    child: TextButton(
-                      onPressed: () {
+                    child: GestureDetector(
+                      onTap: () {
                         MyRouteDelegate.of(context).push(AppRoutes.login.value);
                       },
                       child: const Text(
