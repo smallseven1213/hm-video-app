@@ -36,7 +36,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Container(
                 height: 56.0,
                 width: 56.0,
-                color: Colors.blue,
+                color: Colors.transparent,
                 child: const Center(
                   child: Icon(Icons.arrow_back_ios_new, size: 16),
                 ),
