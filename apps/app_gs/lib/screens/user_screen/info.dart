@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -74,7 +75,7 @@ class UserInfo extends StatelessWidget {
                         ),
                       Row(
                         children: [
-                          if (isLoading)
+                          if (isLoading && !kIsWeb)
                             _buildShimmer(width: 80, height: 14)
                           else
                             Text(
@@ -104,7 +105,7 @@ class UserInfo extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 5),
-                      if (isLoading)
+                      if (isLoading && !kIsWeb)
                         _buildShimmer(width: 50, height: 12)
                       else
                         Text(

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class PageLoader extends StatelessWidget {
+  final Widget loadingWidget;
   final Future Function() loadLibrary;
   final Widget Function() createPage;
 
   const PageLoader({
     Key? key,
+    required this.loadingWidget,
     required this.loadLibrary,
     required this.createPage,
   }) : super(key: key);
@@ -18,7 +20,7 @@ class PageLoader extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.done) {
           return createPage();
         } else {
-          return CircularProgressIndicator(); // Or any loading indicator you like
+          return loadingWidget; // Or any loading indicator you like
         }
       },
     );

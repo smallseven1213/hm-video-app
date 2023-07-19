@@ -8,10 +8,13 @@ class ChannelStyle3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChannelProvider(
-        channelId: channelId,
-        widget: ChannelStyle3Main(
+    return Padding(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 90),
+      child: ChannelProvider(
           channelId: channelId,
-        ));
+          widget: ChannelStyle3Main(
+            channelId: channelId,
+          )),
+    );
   }
 }
