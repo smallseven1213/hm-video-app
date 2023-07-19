@@ -65,13 +65,14 @@ class StaticSearchInput extends StatelessWidget {
                 InkWell(
                   onTap: onSearchButtonClick,
                   child: const SizedBox(
-                    width: 48,
-                    height: 48,
+                    width: 17,
+                    height: 17,
                     child: Image(
                       image: AssetImage('assets/images/search_button.png'),
                     ),
                   ),
                 ),
+                const SizedBox(width: 10),
               ],
             ),
           ),
