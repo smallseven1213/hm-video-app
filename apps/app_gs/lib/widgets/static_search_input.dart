@@ -20,7 +20,7 @@ class StaticSearchInput extends StatelessWidget {
     return Container(
       height: 60,
       alignment: Alignment.center,
-      color: AppColors.colors[ColorKeys.background],
+      // color: AppColors.colors[ColorKeys.background],
       child: SizedBox(
         height: 30,
         child: Container(

@@ -21,7 +21,7 @@ class ChannelSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     logger.i('RENDER SearchBar');
     return SizedBox(
-      height: 60,
+      height: 50,
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,7 +70,7 @@ class ChannelSearchBar extends StatelessWidget {
             child: Container(
                 width: 40,
                 height: 60,
-                color: AppColors.colors[ColorKeys.background],
+                // color: AppColors.colors[ColorKeys.background],
                 child: const Center(
                   child: SizedBox(
                     width: 24,

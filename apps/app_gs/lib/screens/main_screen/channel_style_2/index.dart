@@ -14,7 +14,7 @@ class ChannelStyle2 extends StatelessWidget {
         // return ShortCard(
         //   index: index, id: null,
         // );
-        return Container();
+        return Container(color: Colors.blue);
       },
     );
   }
