@@ -29,7 +29,7 @@ RUN echo $(ls -1 /app/apps/${scope})
 
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
-    sed -i "s|release: RELEASE_CHANGE_ME|release: ${DATE_VERSION}|g" /app/apps/${scope}/pubspec.yaml && \
+    sed -i "s|release: RELEASE_CHANGE_ME|release: ${DATE_VERSION}|g" /app/apps/app_gs/pubspec.yaml && \
     melos exec --scope=\"${scope}\" -- flutter build web --web-renderer html --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
     # melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
     # melos exec --scope=\"${scope}\" -- flutter packages pub run sentry_dart_plugin
@@ -47,5 +47,5 @@ RUN apk add bash && \
 # RUN ls -la /app/
 RUN echo "PWD is: $PWD"
 RUN echo $(ls -1 ./app/apps/)
-COPY --from=builder /app/apps/${scope}/web /usr/share/nginx/html
+COPY --from=builder /app/apps/${scope}/build/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
