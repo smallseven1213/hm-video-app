@@ -38,5 +38,5 @@ RUN apk add bash && \
     echo Asia/Taipei > /etc/timezone
 # COPY --from=builder /app/ /app/
 # RUN ls -la /app/
-COPY --from=builder /app/apps/${scope}/build/web /usr/share/nginx/html
+COPY --from=builder ./app/apps/${scope}/build/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
