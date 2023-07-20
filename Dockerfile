@@ -4,7 +4,7 @@ FROM ghcr.io/cirruslabs/flutter:3.12.0 AS builder
 ARG env
 ENV ENV=${env}
 ARG scope
-ENV SCOPE=${scope}
+
 WORKDIR /app
 COPY . /app
 
@@ -34,10 +34,11 @@ RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
 
 # Production stage
 FROM nginx:stable-alpine
+ARG test
 RUN apk add bash && \
     ln -snf /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
     echo Asia/Taipei > /etc/timezone
 # COPY --from=builder /app/ /app/
 # RUN ls -la /app/
-COPY --from=builder ./app/apps/${SCOPE}/build/web /usr/share/nginx/html
+COPY --from=builder ./app/apps/${test}/build/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
