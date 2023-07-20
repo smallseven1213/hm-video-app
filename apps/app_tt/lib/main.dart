@@ -16,5 +16,6 @@ void main() async {
       allRoutes.keys.first,
       allRoutes,
       AppColors.colors,
-      ({String? text}) => Loading(loadingText: text ?? '正在加载...'));
+      ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
+      null);
 }

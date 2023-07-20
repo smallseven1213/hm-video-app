@@ -49,7 +49,8 @@ Future<void> runningMain(
     String homePath,
     RouteObject routes,
     Map<ColorKeys, Color> appColors,
-    GlobalLoadingWidget globalLoadingWidget) async {
+    GlobalLoadingWidget globalLoadingWidget,
+    ThemeData? theme) async {
   url_strategy.usePathUrlStrategy();
 
   SentryFlutter.init((options) {
@@ -64,5 +65,6 @@ Future<void> runningMain(
             splashImage: 'assets/images/splash.png',
             appColors: appColors,
             loading: globalLoadingWidget,
+            theme: theme,
           )));
 }

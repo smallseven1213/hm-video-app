@@ -33,7 +33,9 @@ class HomeState extends State<HomePage> {
   // return a empty container
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Container(
+      color: Colors.yellow,
+    );
   }
 
   // final bottomNavigatorController = Get.find<BottonNavigatorController>();

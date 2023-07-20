@@ -1,4 +1,6 @@
 import 'package:app_gs/widgets/loading.dart';
+import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
 
@@ -17,5 +19,9 @@ void main() async {
       allRoutes.keys.first,
       allRoutes,
       AppColors.colors,
-      ({String? text}) => Loading(loadingText: text ?? '正在加载...'));
+      ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
+      ThemeData(
+          scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent));
 }
