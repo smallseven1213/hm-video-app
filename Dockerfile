@@ -4,6 +4,7 @@ FROM ghcr.io/cirruslabs/flutter:3.12.0 AS builder
 ARG env
 ENV ENV=${env}
 ARG scope
+ENV SCOPE=${scope}
 WORKDIR /app
 COPY . /app
 
@@ -38,5 +39,5 @@ RUN apk add bash && \
     echo Asia/Taipei > /etc/timezone
 # COPY --from=builder /app/ /app/
 # RUN ls -la /app/
-COPY --from=builder ./app/apps/${scope}/build/web /usr/share/nginx/html
+COPY --from=builder ./app/apps/${SCOPE}/build/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
