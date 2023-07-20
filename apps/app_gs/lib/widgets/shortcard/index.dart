@@ -176,7 +176,7 @@ class ShortCardState extends State<ShortCard> {
                 ],
               ),
             ),
-            if (widget.hiddenBottomArea != false)
+            if (widget.hiddenBottomArea == false)
               Positioned(
                 bottom: 0,
                 left: 0,
