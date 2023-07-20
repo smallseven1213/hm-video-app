@@ -51,8 +51,9 @@ class RootWidget extends StatelessWidget {
       routerDelegate: delegate,
       routeInformationParser: parser,
       theme: ThemeData(
-        scaffoldBackgroundColor: appColors[ColorKeys.background],
-      ),
+          scaffoldBackgroundColor: appColors[ColorKeys.background],
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent),
     );
   }
 }

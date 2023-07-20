@@ -30,7 +30,7 @@ class LayoutTabBarState extends State<LayoutTabBar>
   late Worker screenTabWorker;
 
   late TabController tabController;
-  List<Tab> tabItems = <Tab>[];
+  List<LayoutTabBarItem> tabItems = <LayoutTabBarItem>[];
 
   @override
   void initState() {
@@ -66,16 +66,10 @@ class LayoutTabBarState extends State<LayoutTabBar>
 
   void _updateTabItems() {
     tabItems = layoutController.layout
-        .map((e) => Tab(
-              child: Builder(
-                builder: (BuildContext context) {
-                  return LayoutTabBarItem(
-                    layoutId: widget.layoutId,
-                    index: layoutController.layout.indexOf(e),
-                    name: e.name,
-                  );
-                },
-              ),
+        .map((e) => LayoutTabBarItem(
+              layoutId: widget.layoutId,
+              index: layoutController.layout.indexOf(e),
+              name: e.name,
             ))
         .toList();
   }

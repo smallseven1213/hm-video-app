@@ -36,17 +36,23 @@ class LayoutTabBarItemState extends State<LayoutTabBarItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Tab(
-      child: Obx(() {
-        return Text(
-          widget.name,
-          style: TextStyle(
-            color: channelScreenTabController.tabIndex.value == widget.index
-                ? AppColors.colors[ColorKeys.primary]
-                : const Color(0xffCFCECE),
+    return Obx(() {
+      return GestureDetector(
+        onTap: () {
+          channelScreenTabController.tabIndex.value = widget.index;
+        },
+        child: Container(
+          color: Colors.transparent,
+          child: Text(
+            widget.name,
+            style: TextStyle(
+              color: channelScreenTabController.tabIndex.value == widget.index
+                  ? AppColors.colors[ColorKeys.primary]
+                  : const Color(0xffCFCECE),
+            ),
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }
