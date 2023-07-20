@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
@@ -47,16 +48,20 @@ class _GradientBorderPainter extends CustomPainter {
       ..shader = const LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFF00B2FF),
-          Color(0xFFCCEAFF),
-          Color(0xFF0075FF),
-        ],
-        stops: [
-          0.0,
-          0.5,
-          1.0,
-        ],
+        colors: kIsWeb
+            ? [Color(0xFF00B2FF)]
+            : [
+                Color(0xFF00B2FF),
+                Color(0xFFCCEAFF),
+                Color(0xFF0075FF),
+              ],
+        stops: kIsWeb
+            ? [1.0]
+            : [
+                0.0,
+                0.5,
+                1.0,
+              ],
       ).createShader(Rect.fromLTWH(0, 0, size.width, size.height))
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2;

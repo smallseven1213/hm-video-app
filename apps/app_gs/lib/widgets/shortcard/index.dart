@@ -31,19 +31,21 @@ class ShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   // final bool isFullscreen;
   final Function toggleFullScreen;
+  final bool? hiddenBottomArea;
 
-  const ShortCard({
-    Key? key,
-    required this.obsKey,
-    required this.index,
-    required this.id,
-    required this.title,
-    required this.shortData,
-    required this.toggleFullScreen,
-    // required this.isFullscreen,
-    this.supportedPlayRecord = true,
-    this.displayFavoriteAndCollectCount = true,
-  }) : super(key: key);
+  const ShortCard(
+      {Key? key,
+      required this.obsKey,
+      required this.index,
+      required this.id,
+      required this.title,
+      required this.shortData,
+      required this.toggleFullScreen,
+      // required this.isFullscreen,
+      this.supportedPlayRecord = true,
+      this.displayFavoriteAndCollectCount = true,
+      this.hiddenBottomArea = false})
+      : super(key: key);
 
   @override
   ShortCardState createState() => ShortCardState();
@@ -66,7 +68,7 @@ class ShortCardState extends State<ShortCard> {
     videoDetailController = Get.find<ShortVideoDetailController>(
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
-    if (widget.supportedPlayRecord == true && !kIsWeb) {
+    if (widget.supportedPlayRecord == true) {
       logger.i('PLAYRECORD TESTING: initial');
       var videoVal = videoDetailController.video.value;
       var playRecord = Vod(
@@ -101,7 +103,6 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
-    var screenWidth = MediaQuery.of(context).size.width;
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
@@ -143,18 +144,17 @@ class ShortCardState extends State<ShortCard> {
         color: Colors.black,
         child: Stack(
           children: [
+            const WaveLoading(
+              color: Color.fromRGBO(255, 255, 255, 0.3),
+              duration: Duration(milliseconds: 1000),
+              size: 17,
+              itemCount: 3,
+            ),
             SizedBox(
               height: screen.size.height - 76 - screen.padding.bottom,
               width: double.infinity,
               child: Stack(
                 children: [
-                  if (video == null)
-                    const WaveLoading(
-                      color: Color.fromRGBO(255, 255, 255, 0.3),
-                      duration: Duration(milliseconds: 1000),
-                      size: 17,
-                      itemCount: 3,
-                    ),
                   if (obsVideoPlayerController.isReady.value &&
                       !isLoading &&
                       videoUrl.isNotEmpty &&
@@ -176,18 +176,21 @@ class ShortCardState extends State<ShortCard> {
                 ],
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: ShortBottomArea(
-                shortData: widget.shortData,
-                displayFavoriteAndCollectCount:
-                    widget.displayFavoriteAndCollectCount,
+            if (widget.hiddenBottomArea != false)
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: ShortBottomArea(
+                  shortData: widget.shortData,
+                  displayFavoriteAndCollectCount:
+                      widget.displayFavoriteAndCollectCount,
+                ),
               ),
-            ),
             Positioned(
-              bottom: 57 + screen.padding.bottom,
+              bottom: widget.hiddenBottomArea == true
+                  ? 0
+                  : 57 + screen.padding.bottom,
               left: -24,
               right: -24,
               child: Listener(

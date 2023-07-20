@@ -43,7 +43,7 @@ class HotWidget extends StatelessWidget {
                               if (itemIndex < end) {
                                 // 如果當前索引在資料範圍內，則顯示相應的物件
                                 return Expanded(
-                                  child: InkWell(
+                                  child: GestureDetector(
                                     onTap: () {
                                       dynamic idDynamic =
                                           snapshot.data[itemIndex].id;

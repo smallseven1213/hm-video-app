@@ -108,7 +108,6 @@ class LayoutTabBarState extends State<LayoutTabBar>
     return Container(
       height: 65,
       width: double.infinity,
-      color: AppColors.colors[ColorKeys.background],
       padding: const EdgeInsets.only(top: 8),
       child: TabBar(
           physics: kIsWeb ? null : const BouncingScrollPhysics(),

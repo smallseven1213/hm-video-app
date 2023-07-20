@@ -52,7 +52,7 @@ class _RecommandScreenState extends State<RecommandScreen> {
             child: Header(
                 text: '搜索紀錄',
                 // moreButton is a Button from Image AssetImage
-                moreButton: InkWell(
+                moreButton: GestureDetector(
                   onTap: () {
                     userSearchHistoryController.clear();
                   },

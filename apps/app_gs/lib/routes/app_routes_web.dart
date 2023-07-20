@@ -36,25 +36,30 @@ import '../pages/video.dart' deferred as video_page;
 import '../screens/apps_screen/index.dart' deferred as apps_screen;
 import '../screens/demo.dart' deferred as demo_screen;
 import '../pages/suppliers.dart' deferred as suppliers_screen;
+import '../widgets/page_loader.dart';
 // import '../screens/video_demo.dart' deferred as video_demo_screen;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.demo.value: (context, args) => PageLoader(
         loadLibrary: demo_screen.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => demo_screen.Demo(),
       ),
   AppRoutes.home.value: (context, args) => PageLoader(
         loadLibrary: home_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => home_page.HomePage(
           defaultScreenKey: args['defaultScreenKey'] as String?,
         ),
       ),
   AppRoutes.video.value: (context, args) => PageLoader(
         loadLibrary: video_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => video_page.Video(args: args),
       ),
   AppRoutes.videoByBlock.value: (context, args) => PageLoader(
         loadLibrary: video_by_block_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => video_by_block_page.VideoByBlockPage(
           blockId: args['blockId'] as int,
           title: args['title'] as String,
@@ -64,12 +69,14 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.publisher.value: (context, args) => PageLoader(
         loadLibrary: publisher_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => publisher_page.PublisherPage(
           id: args['id'] as int,
         ),
       ),
   AppRoutes.tag.value: (context, args) => PageLoader(
         loadLibrary: tag_video_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => tag_video_page.TagVideoPage(
           key: ValueKey('tag-video-${args['id']}'),
           id: args['id'] as int,
@@ -78,52 +85,64 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.actor.value: (context, args) => PageLoader(
         loadLibrary: actor_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => actor_page.ActorPage(
           id: args['id'] as int,
         ),
       ),
   AppRoutes.login.value: (context, args) => PageLoader(
         loadLibrary: login_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => login_page.LoginPage(),
       ),
   AppRoutes.nickname.value: (context, args) => PageLoader(
         loadLibrary: nickname_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => nickname_page.NicknamePage(),
       ),
   AppRoutes.register.value: (context, args) => PageLoader(
         loadLibrary: register_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => register_page.RegisterPage(),
       ),
   AppRoutes.share.value: (context, args) => PageLoader(
         loadLibrary: share_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => share_page.SharePage(),
       ),
   AppRoutes.playRecord.value: (context, args) => PageLoader(
         loadLibrary: playrecord_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => playrecord_page.PlayRecordPage(),
       ),
   AppRoutes.shareRecord.value: (context, args) => PageLoader(
         loadLibrary: sharerecord_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => sharerecord_page.ShareRecord(),
       ),
   AppRoutes.apps.value: (context, args) => PageLoader(
         loadLibrary: apps_screen.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => apps_screen.AppsScreen(),
       ),
   AppRoutes.favorites.value: (context, args) => PageLoader(
         loadLibrary: favorites_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => favorites_page.FavoritesPage(),
       ),
   AppRoutes.collection.value: (context, args) => PageLoader(
         loadLibrary: collection_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => collection_page.CollectionPage(),
       ),
   AppRoutes.notifications.value: (context, args) => PageLoader(
         loadLibrary: notifications_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => notifications_page.NotificationsPage(),
       ),
   AppRoutes.search.value: (context, args) => PageLoader(
         loadLibrary: search_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => search_page.SearchPage(
           inputDefaultValue: args['inputDefaultValue'] as String,
           autoSearch: args['autoSearch'] as bool,
@@ -131,20 +150,24 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.filter.value: (context, args) => PageLoader(
         loadLibrary: filter_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => filter_page.FilterPage(),
       ),
   AppRoutes.actors.value: (context, args) => PageLoader(
         loadLibrary: actors_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => actors_page.ActorsPage(),
       ),
   AppRoutes.supplier.value: (context, args) => PageLoader(
         loadLibrary: supplier_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => supplier_page.SupplierPage(
           id: args['id'] as int,
         ),
       ),
   AppRoutes.supplierTag.value: (context, args) => PageLoader(
         loadLibrary: supplier_tag_video_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => supplier_tag_video_page.SupplierTagVideoPage(
           tagId: args['tagId'] as int,
           tagName: args['tagName'],
@@ -152,6 +175,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.shortsByTag.value: (context, args) => PageLoader(
         loadLibrary: shorts_by_tag_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_tag_page.ShortsByTagPage(
           uuid: args['uuid'] as String,
           videoId: args['videoId'] as int,
@@ -160,6 +184,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.shortsBySupplier.value: (context, args) => PageLoader(
         loadLibrary: shorts_by_supplier_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_supplier_page.ShortsBySupplierPage(
           uuid: args['uuid'] as String,
           videoId: args['videoId'] as int,
@@ -168,6 +193,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.shortsByBlock.value: (context, args) => PageLoader(
         loadLibrary: shorts_by_block_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_block_page.ShortsByBlockPage(
           uuid: args['uuid'] as String,
           videoId: args['videoId'] as int,
@@ -176,6 +202,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.shortsByLocal.value: (context, args) => PageLoader(
         loadLibrary: shorts_by_local_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_local_page.ShortsByLocalPage(
           uuid: args['uuid'] as String,
           videoId: args['videoId'] as int,
@@ -184,6 +211,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.shortsByChannel.value: (context, args) => PageLoader(
         loadLibrary: shorts_by_channel_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_channel_page.ShortsByChannelPage(
           uuid: args['uuid'] as String,
           videoId: args['videoId'] as int,
@@ -192,19 +220,23 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.configs.value: (context, args) => PageLoader(
         loadLibrary: configs_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => configs_page.ConfigsPage(),
       ),
   AppRoutes.updatePassword.value: (context, args) => PageLoader(
         loadLibrary: update_password_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => update_password_page.UpdatePasswordPage(),
       ),
   AppRoutes.idCard.value: (context, args) => PageLoader(
         loadLibrary: id_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => id_page.IDCardPage(),
       ),
   // suppliers to suppliers_screen
   AppRoutes.suppliers.value: (context, args) => PageLoader(
         loadLibrary: suppliers_screen.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
         createPage: () => suppliers_screen.SuppliersPage(),
       ),
 };

@@ -179,7 +179,7 @@ class RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Column(children: [
-                        InkWell(
+                        GestureDetector(
                           onTap: () {
                             MyRouteDelegate.of(context).push(
                                 AppRoutes.login.value,

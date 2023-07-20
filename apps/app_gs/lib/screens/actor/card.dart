@@ -111,18 +111,20 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                 percentage),
             left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
             child: (actor.name.isEmpty)
-                ? Shimmer.fromColors(
-                    baseColor: const Color(0xFF003068),
-                    highlightColor: const Color(0xFF00234d),
-                    child: Container(
-                      width: 100,
-                      height: fontSize,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
-                  )
+                ? !kIsWeb
+                    ? Shimmer.fromColors(
+                        baseColor: const Color(0xFF003068),
+                        highlightColor: const Color(0xFF00234d),
+                        child: Container(
+                          width: 100,
+                          height: fontSize,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink()
                 : Text(
                     actor.name,
                     style: TextStyle(
@@ -140,18 +142,20 @@ class ActorCard extends SliverPersistentHeaderDelegate {
               child: SizedBox(
                 width: screenWidth - 108,
                 child: (actor.description == null || actor.description!.isEmpty)
-                    ? Shimmer.fromColors(
-                        baseColor: const Color(0xFF003068),
-                        highlightColor: const Color(0xFF00234d),
-                        child: Container(
-                          width: screenWidth - 108,
-                          height: 12,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                        ),
-                      )
+                    ? !kIsWeb
+                        ? Shimmer.fromColors(
+                            baseColor: const Color(0xFF003068),
+                            highlightColor: const Color(0xFF00234d),
+                            child: Container(
+                              width: screenWidth - 108,
+                              height: 12,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(4),
+                              ),
+                            ),
+                          )
+                        : const SizedBox.shrink()
                     : Text(
                         actor.description!,
                         softWrap: true,
@@ -206,7 +210,7 @@ class UserLike extends StatelessWidget {
           userFavoritesActorController.actors.any((e) => e.id == actor.id);
       IconData iconData =
           isLiked ? Icons.favorite_sharp : Icons.favorite_outline;
-      return InkWell(
+      return GestureDetector(
         onTap: () {
           if (isLiked) {
             userFavoritesActorController.removeActor([actor.id]);

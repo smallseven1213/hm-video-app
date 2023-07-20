@@ -39,7 +39,7 @@ class FavoritesActorScreen extends StatelessWidget {
                   return SizedBox(
                     width: (size.width - 16) / 5,
                     child: Center(
-                      child: InkWell(
+                      child: GestureDetector(
                         onTap: () {
                           if (listEditorController.isEditing.value) {
                             listEditorController.toggleSelected(actor.id);

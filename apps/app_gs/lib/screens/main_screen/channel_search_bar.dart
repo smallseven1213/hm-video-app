@@ -21,7 +21,7 @@ class ChannelSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     logger.i('RENDER SearchBar');
     return SizedBox(
-      height: 60,
+      height: 50,
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,20 +63,24 @@ class ChannelSearchBar extends StatelessWidget {
               );
             }),
           ),
-          InkWell(
+          GestureDetector(
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter.value);
             },
             child: Container(
-              width: 40,
-              height: 60,
-              color: AppColors.colors[ColorKeys.background],
-              child: const Image(
-                image: AssetImage('assets/images/home_search_bar_filter.png'),
-                width: 50.0,
-                height: 50.0,
-              ),
-            ),
+                width: 40,
+                height: 60,
+                // color: AppColors.colors[ColorKeys.background],
+                child: const Center(
+                  child: SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: Image(
+                      image: AssetImage(
+                          'assets/images/home_search_bar_filter.png'),
+                    ),
+                  ),
+                )),
           ),
         ],
       ),

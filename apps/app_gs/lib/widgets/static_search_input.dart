@@ -20,7 +20,7 @@ class StaticSearchInput extends StatelessWidget {
     return Container(
       height: 60,
       alignment: Alignment.center,
-      color: AppColors.colors[ColorKeys.background],
+      // color: AppColors.colors[ColorKeys.background],
       child: SizedBox(
         height: 30,
         child: Container(
@@ -52,7 +52,7 @@ class StaticSearchInput extends StatelessWidget {
                 const SizedBox(width: 10),
                 Expanded(
                   flex: 1,
-                  child: InkWell(
+                  child: GestureDetector(
                     onTap: onInputClick,
                     child: Text(
                       defaultValue,
@@ -62,16 +62,17 @@ class StaticSearchInput extends StatelessWidget {
                     ),
                   ),
                 ),
-                InkWell(
+                GestureDetector(
                   onTap: onSearchButtonClick,
                   child: const SizedBox(
-                    width: 48,
-                    height: 48,
+                    width: 17,
+                    height: 17,
                     child: Image(
                       image: AssetImage('assets/images/search_button.png'),
                     ),
                   ),
                 ),
+                const SizedBox(width: 10),
               ],
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -74,7 +75,7 @@ class UserInfo extends StatelessWidget {
                         ),
                       Row(
                         children: [
-                          if (isLoading)
+                          if (isLoading && !kIsWeb)
                             _buildShimmer(width: 80, height: 14)
                           else
                             Text(
@@ -87,7 +88,7 @@ class UserInfo extends StatelessWidget {
                             ),
                           if (!userController.info.value.roles
                               .contains('guest'))
-                            InkWell(
+                            GestureDetector(
                               onTap: () {
                                 MyRouteDelegate.of(context)
                                     .push('/user/nickname');
@@ -104,7 +105,7 @@ class UserInfo extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 5),
-                      if (isLoading)
+                      if (isLoading && !kIsWeb)
                         _buildShimmer(width: 50, height: 12)
                       else
                         Text(
@@ -121,8 +122,8 @@ class UserInfo extends StatelessWidget {
                 if (userController.info.value.roles.contains('guest'))
                   Expanded(
                     flex: 1,
-                    child: TextButton(
-                      onPressed: () {
+                    child: GestureDetector(
+                      onTap: () {
                         MyRouteDelegate.of(context).push(AppRoutes.login.value);
                       },
                       child: const Text(
@@ -147,7 +148,7 @@ class UserInfo extends StatelessWidget {
             Positioned(
               top: 0,
               right: 0,
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   MyRouteDelegate.of(context).push(AppRoutes.configs.value);
                 },
@@ -164,7 +165,7 @@ class UserInfo extends StatelessWidget {
             Positioned(
               top: 0,
               right: 30,
-              child: InkWell(
+              child: GestureDetector(
                 onTap: () {
                   MyRouteDelegate.of(context)
                       .push(AppRoutes.notifications.value);

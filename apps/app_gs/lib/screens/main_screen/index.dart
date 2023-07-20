@@ -35,6 +35,10 @@ class HomeMainScreen extends StatelessWidget {
               return Scaffold(
                   body: Stack(
                 children: [
+                  Channels(
+                    key: Key('channels-$layoutId'),
+                    layoutId: layoutId,
+                  ),
                   Positioned(
                       child: Column(
                     children: [
@@ -51,52 +55,6 @@ class HomeMainScreen extends StatelessWidget {
                       ChannelSearchBar()
                     ],
                   )),
-
-                  // Positioned(
-                  //   top: 0,
-                  //   child: SizedBox(
-                  //     height: 125,
-                  //     width: MediaQuery.of(context).size.width,
-                  //     child: Column(children: [
-                  //       Expanded(
-                  //     child: LayoutTabBar(
-                  //   key: Key('layout-tab-bar-$layoutId'),
-                  //   layoutId: layoutId,
-                  // )),
-                  //       Expanded(
-                  //         child: ChannelSearchBar(),
-                  //       )
-                  //     ]),
-                  //   ),
-                  // ),
-
-                  // Positioned(
-                  //     top: 0,
-                  //     child: Padding(
-                  // padding: EdgeInsets.only(
-                  //     top: MediaQuery.of(context).padding.top),
-                  // child: Column(children: [
-                  //   Expanded(
-                  //       child: LayoutTabBar(
-                  //     key: Key('layout-tab-bar-$layoutId'),
-                  //     layoutId: layoutId,
-                  //   )),
-                  //   Expanded(
-                  //     child: ChannelSearchBar(),
-                  //   )
-                  // ]),
-                  //       // Expanded(
-                  //       //   child: Marquee(),
-                  //       // ),
-                  //     )),
-                  Padding(
-                    padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 90),
-                    child: Channels(
-                      key: Key('channels-$layoutId'),
-                      layoutId: layoutId,
-                    ),
-                  ),
                   // if (controller.isShowSearch.value)
                   //   ChannelSearchBar(
                   //     key: Key('channel-search-bar-$layoutId'),

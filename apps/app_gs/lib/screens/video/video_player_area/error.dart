@@ -47,7 +47,7 @@ class VideoError extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              InkWell(
+              GestureDetector(
                 onTap: onTap,
                 child: Center(
                   child: Container(

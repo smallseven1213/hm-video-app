@@ -145,7 +145,7 @@ class VideoPreviewWidget extends StatelessWidget {
     }
     return Column(
       children: [
-        InkWell(
+        GestureDetector(
           onTap: () {
             if (onTap != null) {
               onTap!();
@@ -206,7 +206,7 @@ class VideoPreviewWidget extends StatelessWidget {
                     (displayCoverVertical == true ? 119 / 179 : 374 / 198),
                 child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: !kIsWeb && hasRadius == true
+                      borderRadius: hasRadius == true
                           ? const BorderRadius.all(Radius.circular(10))
                           : null,
                       // color: Colors.white,
@@ -286,7 +286,7 @@ class VideoPreviewWidget extends StatelessWidget {
                 children: tags
                     .take(3)
                     .map(
-                      (tag) => InkWell(
+                      (tag) => GestureDetector(
                         onTap: () {
                           if (film == 1) {
                             MyRouteDelegate.of(context).push(

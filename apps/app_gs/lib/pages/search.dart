@@ -176,7 +176,7 @@ class SearchPageState extends State<SearchPage> {
                   child: ListView.builder(
                     itemCount: _searchResults.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
+                      return GestureDetector(
                         onTap: () {
                           setState(() {
                             displaySearchResult = false;

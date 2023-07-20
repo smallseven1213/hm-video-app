@@ -57,7 +57,7 @@ class ShortCardInfo extends StatelessWidget {
             //   ),
             // 供應商
             if (data.supplier != null) ...[
-              InkWell(
+              GestureDetector(
                 onTap: () async {
                   obsVideoPlayerController.pause();
                   // logger.i('RENDER OBX toGo!!');
@@ -108,7 +108,7 @@ class ShortCardInfo extends StatelessWidget {
                 spacing: 4,
                 runSpacing: 4,
                 children: data.tag
-                    .map((e) => InkWell(
+                    .map((e) => GestureDetector(
                         onTap: () async {
                           obsVideoPlayerController.pause();
                           await MyRouteDelegate.of(context).push(

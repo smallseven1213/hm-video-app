@@ -248,7 +248,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
               ),
             if (kIsWeb && !hasH5FirstPlay && !isPlaying)
               // 中間播放按鈕
-              InkWell(
+              GestureDetector(
                 onTap: () {
                   widget.ovpController.videoPlayerController.play();
                   if (kIsWeb && !hasH5FirstPlay) {
