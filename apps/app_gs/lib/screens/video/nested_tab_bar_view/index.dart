@@ -134,9 +134,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
         body: Obx(
           () => TabBarView(
             controller: _tabController,
-            physics: kIsWeb
-                ? const NeverScrollableScrollPhysics()
-                : const BouncingScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             children: [
               if (widget.videoDetail.actors!.isNotEmpty)
                 SliverVodGrid(
