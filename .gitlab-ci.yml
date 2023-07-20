@@ -49,7 +49,7 @@ deploy-tt-job:      # This job runs in the deploy stage.
       - develop
   script:
     - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt -n video-dev
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-tt" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt -n video-dev
     - echo "Application successfully deployed."
 
 build-prod-job: 
