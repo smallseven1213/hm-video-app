@@ -3,7 +3,6 @@
 FROM ghcr.io/cirruslabs/flutter:3.12.0 AS builder
 ARG env
 ENV ENV=${env}
-ARG scope
 WORKDIR /app
 COPY . /app
 
@@ -25,9 +24,9 @@ RUN curl -sL https://sentry.io/get-cli/ | bash
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     sed -i "s|release: RELEASE_CHANGE_ME|release: ${DATE_VERSION}|g" /app/apps/app_gs/pubspec.yaml && \
-    melos exec --scope=${scope} -- flutter build web --web-renderer html --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
+    melos exec --scope="app_gs" -- flutter build web --web-renderer html --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
     # melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
-    melos exec --scope=${scope} -- flutter packages pub run sentry_dart_plugin
+    melos exec --scope="app_gs" -- flutter packages pub run sentry_dart_plugin
 
 # Production stage
 FROM nginx:stable-alpine
