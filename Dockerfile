@@ -33,7 +33,7 @@ RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     melos exec --scope=\"${scope}\" -- flutter packages pub run sentry_dart_plugin
 
 RUN echo "PWD is: $PWD"
-RUN echo $(ls -1 ./app/apps/)
+RUN echo $(ls -1 /app/apps/app_gs)
 
 # Production stage
 FROM nginx:stable-alpine
