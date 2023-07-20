@@ -111,7 +111,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
                 percentage),
             left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
             child: (actor.name.isEmpty)
-                ? kIsWeb
+                ? !kIsWeb
                     ? Shimmer.fromColors(
                         baseColor: const Color(0xFF003068),
                         highlightColor: const Color(0xFF00234d),
@@ -142,7 +142,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
               child: SizedBox(
                 width: screenWidth - 108,
                 child: (actor.description == null || actor.description!.isEmpty)
-                    ? kIsWeb
+                    ? !kIsWeb
                         ? Shimmer.fromColors(
                             baseColor: const Color(0xFF003068),
                             highlightColor: const Color(0xFF00234d),
