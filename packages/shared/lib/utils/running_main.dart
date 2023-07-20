@@ -1,4 +1,5 @@
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:flutter_web_plugins/url_strategy.dart' as url_strategy;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,10 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared/utils/setup_dependencies.dart';
 
 import '../models/color_keys.dart';
+import '../services/system_config.dart';
+import '../widgets/root.dart';
+
+typedef GlobalLoadingWidget = Widget Function({String? text});
 
 void realMain(Widget widget) async {
   await Hive.initFlutter();
@@ -17,13 +22,6 @@ void realMain(Widget widget) async {
     Hive.init(dir.path);
   }
 
-  // Hive 會crash,暫時先不用
-  // Hive.registerAdapter(VideoDatabaseFieldAdapter());
-  // Hive.registerAdapter(TagsAdapter());
-  // Hive.registerAdapter(VideoDetailAdapter());
-  // Hive.registerAdapter(ActorAdapter());
-
-  // DI shared package
   setupDependencies();
   setupGameDependencies();
 
@@ -46,17 +44,25 @@ void realMain(Widget widget) async {
   });
 }
 
-Future<void> runningMain(Widget widget, Map<ColorKeys, Color> appColors) async {
-  // start app
+Future<void> runningMain(
+    String sentryDSN,
+    String homePath,
+    RouteObject routes,
+    Map<ColorKeys, Color> appColors,
+    GlobalLoadingWidget globalLoadingWidget) async {
+  url_strategy.usePathUrlStrategy();
 
-  // await SentryFlutter.init(
-  //   (options) {
-  //     options.dsn =
-  //         'https://c7999b4a8ee6400c887489947f5f43fd@o996294.ingest.sentry.io/4505050671415296';
-  //     options.tracesSampleRate = 1.0;
-  //   },
-  //   appRunner: () => realMain(widget),
-  // );
-
-  realMain(widget);
+  SentryFlutter.init((options) {
+    options.dsn = sentryDSN;
+    options.tracesSampleRate = kDebugMode ? 0 : 1.0;
+    options.release = SystemConfig().version;
+    options.environment = kDebugMode ? 'development' : 'production';
+  },
+      appRunner: () => realMain(RootWidget(
+            homePath: homePath,
+            routes: routes,
+            splashImage: 'assets/images/splash.png',
+            appColors: appColors,
+            loading: globalLoadingWidget,
+          )));
 }
