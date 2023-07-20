@@ -39,7 +39,8 @@ class LayoutTabBarItemState extends State<LayoutTabBarItem> {
     return Obx(() {
       return GestureDetector(
         onTap: () {
-          channelScreenTabController.tabIndex.value = widget.index;
+          // channelScreenTabController.tabIndex.value = widget.index;
+          channelScreenTabController.pageViewIndex.value = widget.index;
         },
         child: Container(
           color: Colors.transparent,
