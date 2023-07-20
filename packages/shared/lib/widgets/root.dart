@@ -13,13 +13,15 @@ class RootWidget extends StatelessWidget {
   final String splashImage;
   final Map<ColorKeys, Color> appColors;
   final Function? loading;
+  ThemeData? theme;
 
-  const RootWidget({
+  RootWidget({
     Key? key,
     required this.homePath,
     required this.routes,
     required this.splashImage,
     required this.appColors,
+    this.theme,
     this.loading,
   }) : super(key: key);
 
@@ -35,14 +37,6 @@ class RootWidget extends StatelessWidget {
     final delegate = MyRouteDelegate(
       homePath: homePath,
       routes: {...baseRoutes, ...routes},
-      // onGenerateRoute: (RouteSettings settings) {
-      //   return MaterialPageRoute(
-      //     settings: settings,
-      //     builder: (BuildContext context) {
-      //       return Splash();
-      //     },
-      //   );
-      // },
     );
 
     final parser = MyRouteParser();
@@ -50,10 +44,7 @@ class RootWidget extends StatelessWidget {
     return MaterialApp.router(
       routerDelegate: delegate,
       routeInformationParser: parser,
-      theme: ThemeData(
-          scaffoldBackgroundColor: appColors[ColorKeys.background],
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent),
+      theme: theme,
     );
   }
 }
