@@ -45,5 +45,5 @@ RUN apk add bash && \
 # RUN ls -la /app/
 RUN echo "PWD is: $PWD"
 RUN echo $(ls -1 ./app/apps/)
-COPY --from=builder /app/apps/app_gs/build/web /usr/share/nginx/html
+COPY --from=builder /app/apps/app_gs/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
