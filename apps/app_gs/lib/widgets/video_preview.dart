@@ -206,7 +206,7 @@ class VideoPreviewWidget extends StatelessWidget {
                     (displayCoverVertical == true ? 119 / 179 : 374 / 198),
                 child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: !kIsWeb && hasRadius == true
+                      borderRadius: hasRadius == true
                           ? const BorderRadius.all(Radius.circular(10))
                           : null,
                       // color: Colors.white,
