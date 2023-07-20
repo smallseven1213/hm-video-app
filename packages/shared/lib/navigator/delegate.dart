@@ -179,11 +179,7 @@ class MyRouteDelegate extends RouterDelegate<String>
           pages: _stack.map<Page<dynamic>>((stack) {
             final widget = routes[stack.path]!(context, stack.args);
 
-            // 判断是否为Web平台
-            final bool isWeb = kIsWeb ||
-                (Platform.isWindows || Platform.isMacOS || Platform.isLinux);
-
-            if (stack.hasTransition == true && !isWeb) {
+            if (stack.hasTransition == true) {
               logger.i('NAVI!! ==> , ${stack.path}');
               return CupertinoPage(
                 // key: ValueKey(stack.args['uuid']),
@@ -207,7 +203,7 @@ class MyRouteDelegate extends RouterDelegate<String>
                 fullscreenDialog: stack.useBottomToTopAnimation,
               );
             }
-            if (stack.hasTransition == false || isWeb) {
+            if (stack.hasTransition == false) {
               return NoAnimationPage(
                 key: ValueKey(stack.path + stack.args.toString()),
                 name: stack.path,
