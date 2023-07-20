@@ -23,10 +23,14 @@ RUN rm -rf /sdks/flutter/.pub-cache
 # Install sentry-cli
 RUN curl -sL https://sentry.io/get-cli/ | bash
 
+RUN echo "TESTING is: $PWD"
+RUN echo $(ls -1 /app/apps/)
+RUN echo $(ls -1 /app/apps/${scope})
+
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     sed -i "s|release: RELEASE_CHANGE_ME|release: ${DATE_VERSION}|g" /app/apps/${scope}/pubspec.yaml && \
-    melos exec --scope="app_gs" -- flutter build web --web-renderer html --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
+    melos exec --scope=\"${scope}\" -- flutter build web --web-renderer html --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env}
     # melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
     # melos exec --scope=\"${scope}\" -- flutter packages pub run sentry_dart_plugin
 
