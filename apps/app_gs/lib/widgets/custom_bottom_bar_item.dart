@@ -22,7 +22,7 @@ class CustomBottomBarItem extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-          color: Color(0xFF001a3e),
+          color: Colors.transparent,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
