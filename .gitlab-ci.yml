@@ -2,7 +2,7 @@ stages:          # List of stages for jobs, and their order of execution
   - build
   - deploy
 
-build-job:       # This job runs in the build stage, which runs first.
+build-gs-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
     - hm-dev-runner
@@ -10,12 +10,25 @@ build-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
   script:
-    - docker build -f Dockerfile --build-arg env=dev -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev .
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev
     - echo "Compile complete."
 
-deploy-job:      # This job runs in the deploy stage.
+build-tt-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  tags:
+    - hm-dev-runner
+  only:
+    refs:
+      - develop
+  script:
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_tt -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev .
+    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev
+    - echo "Compile complete."
+
+deploy-gs-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   tags:
     - hm-dev-runner
@@ -25,6 +38,18 @@ deploy-job:      # This job runs in the deploy stage.
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n video-dev
+    - echo "Application successfully deployed."
+  
+deploy-tt-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  tags:
+    - hm-dev-runner
+  only:
+    refs:
+      - develop
+  script:
+    - echo "Deploying application..."
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt -n video-dev
     - echo "Application successfully deployed."
 
 build-prod-job: 
