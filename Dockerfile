@@ -23,8 +23,6 @@ RUN rm -rf /sdks/flutter/.pub-cache
 # Install sentry-cli
 RUN curl -sL https://sentry.io/get-cli/ | bash
 
-RUN export SENTRY_LOG_LEVEL=debug
-
 # Build web app using Melos with a specific scope
 RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     sed -i "s|release: RELEASE_CHANGE_ME|release: ${DATE_VERSION}|g" /app/apps/${scope}/pubspec.yaml && \
@@ -37,7 +35,7 @@ RUN echo $(ls -1 /app/apps/app_gs)
 
 # Production stage
 FROM nginx:stable-alpine
-ARG test
+ARG scope
 RUN apk add bash && \
     ln -snf /usr/share/zoneinfo/Asia/Taipei /etc/localtime && \
     echo Asia/Taipei > /etc/timezone
@@ -45,5 +43,5 @@ RUN apk add bash && \
 # RUN ls -la /app/
 RUN echo "PWD is: $PWD"
 RUN echo $(ls -1 ./app/apps/)
-COPY --from=builder /app/apps/${test}/web /usr/share/nginx/html
+COPY --from=builder /app/apps/${scope}/web /usr/share/nginx/html
 ENTRYPOINT nginx -g "daemon off;"
