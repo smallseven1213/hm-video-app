@@ -32,6 +32,9 @@ RUN DATE_VERSION=$(date +"%Y_%m_%d_%H_%M") && \
     # melos exec --scope="app_gs" -- flutter build web --web-renderer canvaskit --release --source-maps --dart-define=VERSION=${DATE_VERSION} --dart-define=ENV=${env} && \
     melos exec --scope=\"${scope}\" -- flutter packages pub run sentry_dart_plugin
 
+RUN echo "PWD is: $PWD"
+RUN echo $(ls -1 ./app/apps/)
+
 # Production stage
 FROM nginx:stable-alpine
 ARG test
