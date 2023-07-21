@@ -37,16 +37,14 @@ class ShortBottomArea extends StatelessWidget {
       height: 76 + paddingBottom,
       padding: EdgeInsets.only(bottom: paddingBottom),
       decoration: const BoxDecoration(
-        gradient: kIsWeb
-            ? null
-            : LinearGradient(
-                colors: [
-                  Colors.black,
-                  Color(0xFF002869),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
+        gradient: LinearGradient(
+          colors: [
+            Colors.black,
+            Color(0xFF002869),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
