@@ -106,7 +106,7 @@ class SidImageState extends State<SidImage> {
         height: widget.height,
       );
     }
-    if (widget.noFadeIn || kIsWeb) {
+    if (widget.noFadeIn) {
       return Image(
         image: image!,
         width: widget.width,
