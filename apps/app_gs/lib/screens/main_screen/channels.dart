@@ -19,7 +19,6 @@ Map<int, Function> styleWidgetMap = {
       ),
   2: (item) => ChannelStyle2(
         key: ValueKey(item.id),
-        channelId: item.id,
       ),
   3: (item) => ChannelStyle3(
         key: ValueKey(item.id),
