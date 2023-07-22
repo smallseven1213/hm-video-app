@@ -235,12 +235,13 @@ class VodApi {
 
   Future<List<Vod>> getRecommends() async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/videos/video/recommend');
+        url:
+            '${systemConfig.apiHost}/public/videos/video/recommend?page=1&limit=20');
     if (res.data['code'] != '00') {
       return [];
     }
-    return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    return List.from((res.data['data']['data'] as List<dynamic>)
+        .map((e) => Vod.fromJson(e)));
   }
 
   Future<List<Vod>> getPopular(int areaId, int videoId) async {

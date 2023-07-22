@@ -1,28 +1,16 @@
-// ChannelStyle2 is a stateless widget, return Text 'STYLE 2
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/video_short_by_channel_style2.dart';
+import 'package:uuid/uuid.dart';
 
-import '../../../pages/shorts_by_local.dart';
+import '../../../widgets/base_short_page.dart';
 
-class ChannelStyle2 extends StatelessWidget {
-  final int channelId;
-  const ChannelStyle2({Key? key, required this.channelId}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    // return PageView.builder(
-    //   scrollDirection: Axis.vertical,
-    //   itemCount: 1000,
-    //   itemBuilder: (BuildContext context, int index) {
-    //     // return ShortCard(
-    //     //   index: index, id: null,
-    //     // );
-    //     return Container(color: Colors.blue);
-    //   },
-    // );
-    return ShortsByLocalPage(
-      uuid: '1123',
-      videoId: 123123,
-      itemId: 1,
-    );
-  }
+class ChannelStyle2 extends BaseShortPage {
+  ChannelStyle2({
+    super.key,
+  }) : super(
+          uuid: const Uuid().v4(),
+          hiddenBottomArea: true,
+          createController: () =>
+              Get.put(VideoShortByChannelStyle2Controller()),
+        );
 }
