@@ -47,11 +47,14 @@ void realMain(Widget widget) async {
 Future<void> runningMain(
     String sentryDSN,
     String homePath,
+    List<String> dlJsonHosts,
     RouteObject routes,
     Map<ColorKeys, Color> appColors,
     GlobalLoadingWidget globalLoadingWidget,
     ThemeData? theme) async {
   url_strategy.usePathUrlStrategy();
+
+  SystemConfig().setDlJsonHosts(dlJsonHosts);
 
   SentryFlutter.init((options) {
     options.dsn = sentryDSN;

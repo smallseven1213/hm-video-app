@@ -39,7 +39,7 @@ class DlApi {
       }
 
       Response response = await getResponse(
-        systemConfig.vodHostList,
+        systemConfig.dlJsonHostList,
         Dio(),
       );
       var res = (response.data as Map<String, dynamic>);
