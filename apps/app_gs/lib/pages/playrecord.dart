@@ -13,7 +13,8 @@ import '../widgets/tab_bar.dart';
 final logger = Logger();
 
 class PlayRecordPage extends StatefulWidget {
-  const PlayRecordPage({Key? key}) : super(key: key);
+  final int? activeTabId;
+  const PlayRecordPage({Key? key, this.activeTabId}) : super(key: key);
 
   @override
   PlayRecordPageState createState() => PlayRecordPageState();
@@ -25,7 +26,12 @@ class PlayRecordPageState extends State<PlayRecordPage>
 
   @override
   void initState() {
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(
+        vsync: this,
+        length: 2,
+        initialIndex:
+            widget.activeTabId ?? 0 // set the initial index to activeTabId
+        );
 
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
@@ -101,9 +107,10 @@ class PlayRecordPageState extends State<PlayRecordPage>
             ],
           ),
           ListPagePanelWidget(
-              listEditorController: listEditorController,
-              onSelectButtonClick: _handleSelectAll,
-              onDeleteButtonClick: _handleDeleteAll),
+            listEditorController: listEditorController,
+            onSelectButtonClick: _handleSelectAll,
+            onDeleteButtonClick: _handleDeleteAll,
+          ),
         ],
       ),
     );

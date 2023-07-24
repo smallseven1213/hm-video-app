@@ -66,8 +66,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.register.value: (context, args) =>
       const register_page.RegisterPage(),
   AppRoutes.share.value: (context, args) => const share_page.SharePage(),
-  AppRoutes.playRecord.value: (context, args) =>
-      const playrecord_page.PlayRecordPage(),
+  AppRoutes.playRecord.value: (context, args) => playrecord_page.PlayRecordPage(
+        activeTabId:
+            args['activeTabId'] == null ? 0 : args['activeTabId'] as int,
+      ),
   AppRoutes.shareRecord.value: (context, args) =>
       const sharerecord_page.ShareRecord(),
   AppRoutes.apps.value: (context, args) => const apps_screen.AppsScreen(),
@@ -114,6 +116,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,
         itemId: args['itemId'] as int,
+        floatBackRoute: args['floatBackRoute'] as Map?,
       ),
   AppRoutes.shortsByChannel.value: (context, args) =>
       shorts_by_channel_page.ShortsByChannelPage(
