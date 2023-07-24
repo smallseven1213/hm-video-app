@@ -60,7 +60,7 @@ build-prod-job:
     refs: 
       - tags
   script: 
-    - docker build -f Dockerfile --build-arg env=prod -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
+    - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}
 

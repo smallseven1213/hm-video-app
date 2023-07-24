@@ -96,12 +96,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
             channelSharedDataController!.channelSharedData.value;
         if (channelSharedDataController!.isLoading.value) {
           return const Center(
-            child: WaveLoading(
-              color: Color.fromRGBO(255, 255, 255, 0.3),
-              duration: Duration(milliseconds: 1000),
-              size: 17,
-              itemCount: 3,
-            ),
+            child: WaveLoading(),
           );
         } else if (channelSharedDataController!.isError.value) {
           return Center(

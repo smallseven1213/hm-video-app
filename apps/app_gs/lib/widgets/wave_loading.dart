@@ -20,12 +20,12 @@ enum WaveLoadingType { start, end, center }
 class WaveLoading extends StatefulWidget {
   const WaveLoading({
     Key? key,
-    this.color = Colors.white,
+    this.color = const Color.fromRGBO(255, 255, 255, 0.3),
     this.type = WaveLoadingType.start,
-    this.size = 50.0,
+    this.size = 17.0,
     this.itemBuilder,
-    this.itemCount = 5,
-    this.duration = const Duration(milliseconds: 1200),
+    this.itemCount = 3,
+    this.duration = const Duration(milliseconds: 1000),
     this.controller,
   })  : assert(
             !(itemBuilder is IndexedWidgetBuilder && color is Color) &&
