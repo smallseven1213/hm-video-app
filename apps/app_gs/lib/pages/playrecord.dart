@@ -25,12 +25,18 @@ class PlayRecordPageState extends State<PlayRecordPage>
 
   @override
   void initState() {
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(
+      vsync: this,
+      length: 2,
+      initialIndex: vodPlayRecordController.activeTabId.value,
+    );
 
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         listEditorController.clearSelected();
         listEditorController.isEditing.value = false;
+
+        vodPlayRecordController.activeTabId.value = _tabController.index;
       }
     });
 
