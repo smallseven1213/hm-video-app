@@ -89,21 +89,14 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   height: double.infinity,
                   child: Center(
                     child: controller.videoAction.value == 'pause'
-                        ? Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.5),
-                                shape: BoxShape.circle),
-                            child: IconButton(
-                              icon: const Icon(
-                                Icons.play_arrow,
-                                color: Colors.white,
-                                size: 48.0,
+                        ? const Center(
+                            child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Image(
+                                image: AssetImage(
+                                    'assets/images/short_play_button.png'),
                               ),
-                              onPressed: () {
-                                controller.toggle();
-                              },
                             ),
                           )
                         : const SizedBox(
