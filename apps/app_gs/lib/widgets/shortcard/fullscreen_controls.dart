@@ -257,20 +257,12 @@ class ControlsOverlayState extends State<FullScreenControls> {
                     });
                   }
                 },
-                child: Center(
-                  child: Container(
+                child: const Center(
+                  child: SizedBox(
                     width: 100,
                     height: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                        size: 45.0,
-                        semanticLabel: 'Play',
-                      ),
+                    child: Image(
+                      image: AssetImage('assets/images/short_play_button.png'),
                     ),
                   ),
                 ),

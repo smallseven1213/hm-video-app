@@ -191,7 +191,7 @@ class ShortCardState extends State<ShortCard> {
               ),
             Positioned(
               bottom: widget.hiddenBottomArea == true
-                  ? 0
+                  ? -17
                   : 57 + screen.padding.bottom,
               left: -24,
               right: -24,

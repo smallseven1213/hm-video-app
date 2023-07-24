@@ -13,8 +13,8 @@ final logger = Logger();
 class BaseShortPage extends StatefulWidget {
   final Function() createController;
   final String uuid;
-  final int videoId;
-  final int itemId; // areaId, tagId, supplierId
+  final int? videoId;
+  final int? itemId; // areaId, tagId, supplierId
   final bool? supportedPlayRecord;
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
@@ -23,8 +23,8 @@ class BaseShortPage extends StatefulWidget {
 
   const BaseShortPage({
     required this.createController,
-    required this.videoId,
-    required this.itemId,
+    this.videoId,
+    this.itemId,
     required this.uuid,
     this.displayFavoriteAndCollectCount = true,
     this.supportedPlayRecord = true,

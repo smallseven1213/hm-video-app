@@ -3,6 +3,7 @@ import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
+import 'package:shared/widgets/display_layout_tab_search.dart';
 
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
@@ -52,7 +53,10 @@ class HomeMainScreen extends StatelessWidget {
                           layoutId: layoutId,
                         ),
                       ),
-                      ChannelSearchBar()
+                      DisplayLayoutTabSearch(
+                        layoutId: layoutId,
+                        child: ChannelSearchBar(),
+                      )
                     ],
                   )),
                   // if (controller.isShowSearch.value)
