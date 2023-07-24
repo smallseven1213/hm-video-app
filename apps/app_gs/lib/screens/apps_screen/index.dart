@@ -32,52 +32,54 @@ class AppsScreenState extends State<AppsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        appBar: const CustomAppBar(
-          title: '應用中心',
-        ),
-        body: CustomScrollView(
-          physics: kIsWeb ? null : const BouncingScrollPhysics(),
-          slivers: <Widget>[
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: BannerWidget(),
-              ),
-            ),
-            if (appsController.isLoading.value)
+      child: Obx(
+        () => Scaffold(
+          appBar: const CustomAppBar(
+            title: '應用中心',
+          ),
+          body: CustomScrollView(
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
+            slivers: <Widget>[
               const SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(top: 150),
-                  child: WaveLoading(),
+                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  child: BannerWidget(),
                 ),
-              )
-            else ...[
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 20),
               ),
-              const SliverToBoxAdapter(
-                child: Header(text: '熱門推薦'),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 20),
-              ),
-              Obx(() => HotWidget(items: appsController.hot.value)),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 20),
-              ),
-              const SliverToBoxAdapter(
-                child: Header(text: '大家都在玩'),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 20),
-              ),
-              Obx(() => PopularWidget(items: appsController.popular.value)),
-              const SliverToBoxAdapter(
-                child: SizedBox(height: 90),
-              )
+              if (appsController.isLoading.value)
+                const SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 150),
+                    child: WaveLoading(),
+                  ),
+                )
+              else ...[
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 20),
+                ),
+                const SliverToBoxAdapter(
+                  child: Header(text: '熱門推薦'),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 20),
+                ),
+                HotWidget(items: appsController.hot.value),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 20),
+                ),
+                const SliverToBoxAdapter(
+                  child: Header(text: '大家都在玩'),
+                ),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 20),
+                ),
+                PopularWidget(items: appsController.popular.value),
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 90),
+                )
+              ],
             ],
-          ],
+          ),
         ),
       ),
     );

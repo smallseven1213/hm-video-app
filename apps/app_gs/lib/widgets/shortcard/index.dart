@@ -32,22 +32,20 @@ class ShortCard extends StatefulWidget {
   // final bool isFullscreen;
   final Function toggleFullScreen;
   final bool? hiddenBottomArea;
-  final Map? floatBackRoute;
 
-  const ShortCard({
-    Key? key,
-    required this.obsKey,
-    required this.index,
-    required this.id,
-    required this.title,
-    required this.shortData,
-    required this.toggleFullScreen,
-    // required this.isFullscreen,
-    this.supportedPlayRecord = true,
-    this.displayFavoriteAndCollectCount = true,
-    this.hiddenBottomArea = false,
-    this.floatBackRoute,
-  }) : super(key: key);
+  const ShortCard(
+      {Key? key,
+      required this.obsKey,
+      required this.index,
+      required this.id,
+      required this.title,
+      required this.shortData,
+      required this.toggleFullScreen,
+      // required this.isFullscreen,
+      this.supportedPlayRecord = true,
+      this.displayFavoriteAndCollectCount = true,
+      this.hiddenBottomArea = false})
+      : super(key: key);
 
   @override
   ShortCardState createState() => ShortCardState();
@@ -243,7 +241,7 @@ class ShortCardState extends State<ShortCard> {
                 ),
               ),
             ),
-            FloatPageBackButton(floatBackRoute: widget.floatBackRoute)
+            const FloatPageBackButton()
           ],
         ),
       );

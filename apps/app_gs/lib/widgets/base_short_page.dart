@@ -19,7 +19,6 @@ class BaseShortPage extends StatefulWidget {
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
   final bool? hiddenBottomArea;
-  final Map? floatBackRoute;
 
   const BaseShortPage({
     required this.createController,
@@ -30,7 +29,6 @@ class BaseShortPage extends StatefulWidget {
     this.supportedPlayRecord = true,
     this.useCachedList = false,
     this.hiddenBottomArea = false,
-    this.floatBackRoute,
     Key? key,
   }) : super(key: key);
 
@@ -134,19 +132,17 @@ class BaseShortPageState extends State<BaseShortPage> {
                   ),
                 ),
                 child: ShortCard(
-                  obsKey: obsKey.toString(),
-                  index: index,
-                  id: shortData.id,
-                  title: shortData.title,
-                  supportedPlayRecord: widget.supportedPlayRecord,
-                  shortData: shortData,
-                  displayFavoriteAndCollectCount:
-                      widget.displayFavoriteAndCollectCount,
-                  toggleFullScreen: () =>
-                      pageviewIndexController.toggleFullscreen(),
-                  hiddenBottomArea: widget.hiddenBottomArea,
-                  floatBackRoute: widget.floatBackRoute,
-                ),
+                    obsKey: obsKey.toString(),
+                    index: index,
+                    id: shortData.id,
+                    title: shortData.title,
+                    supportedPlayRecord: widget.supportedPlayRecord,
+                    shortData: shortData,
+                    displayFavoriteAndCollectCount:
+                        widget.displayFavoriteAndCollectCount,
+                    toggleFullScreen: () =>
+                        pageviewIndexController.toggleFullscreen(),
+                    hiddenBottomArea: widget.hiddenBottomArea),
               );
             },
             scrollDirection: Axis.vertical,

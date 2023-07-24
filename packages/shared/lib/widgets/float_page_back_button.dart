@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
 
 class FloatPageBackButton extends StatelessWidget {
-  final Map? floatBackRoute;
-  const FloatPageBackButton({Key? key, this.floatBackRoute}) : super(key: key);
+  const FloatPageBackButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,12 +16,7 @@ class FloatPageBackButton extends StatelessWidget {
             color: Colors.white,
             icon: const Icon(Icons.arrow_back_ios_new, size: 16),
             onPressed: () {
-              if (floatBackRoute != null) {
-                MyRouteDelegate.of(context).push(floatBackRoute!['path'],
-                    args: floatBackRoute!['args']);
-              } else {
-                Navigator.pop(context);
-              }
+              Navigator.pop(context);
             },
           ),
         ),

@@ -113,10 +113,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.playRecord.value: (context, args) => PageLoader(
         loadLibrary: playrecord_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
-        createPage: () => playrecord_page.PlayRecordPage(
-          activeTabId:
-              args['activeTabId'] == null ? 0 : args['activeTabId'] as int,
-        ),
+        createPage: () => playrecord_page.PlayRecordPage(),
       ),
   AppRoutes.shareRecord.value: (context, args) => PageLoader(
         loadLibrary: sharerecord_page.loadLibrary,
@@ -210,7 +207,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           uuid: args['uuid'] as String,
           videoId: args['videoId'] as int,
           itemId: args['itemId'] as int,
-          floatBackRoute: args['floatBackRoute'] as Map?,
         ),
       ),
   AppRoutes.shortsByChannel.value: (context, args) => PageLoader(

@@ -14,19 +14,14 @@ final logger = Logger();
 /// 1 - Playrecord
 /// 2 - Favorites
 class ShortsByLocalPage extends BaseShortPage {
-  ShortsByLocalPage({
-    super.key,
-    required uuid,
-    required int videoId,
-    required int itemId,
-    Map? floatBackRoute,
-  }) : super(
+  ShortsByLocalPage(
+      {super.key, required uuid, required int videoId, required int itemId})
+      : super(
           uuid: uuid,
           supportedPlayRecord: itemId != 1,
           videoId: videoId,
           itemId: itemId,
           displayFavoriteAndCollectCount: false,
-          floatBackRoute: floatBackRoute,
           useCachedList: true,
           createController: () {
             if (itemId == 0) {
