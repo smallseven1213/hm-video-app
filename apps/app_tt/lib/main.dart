@@ -14,12 +14,10 @@ void main() async {
   };
 
   runningMain(
-      'https://1b4441d1f4464b93a69208281ab77d4b@sentry.hmtech.site/2',
+      'https://5975596ddf0f4a6b95b09de1adda3d53@sentry.hmtech.site/3',
       allRoutes.keys.first,
       [
-        'https://dl.dlgs.app/$env/dl.json',
-        'https://dl.dlgs.one/$env/dl.json',
-        'https://dl.dlgs.info/$env/dl.json',
+        'https://dl.dlsv.net/$env/dl.json',
       ],
       allRoutes,
       AppColors.colors,
