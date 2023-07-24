@@ -125,47 +125,23 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               ChannelTags(
                 channelId: widget.channelId,
               ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _SliverAppBarDelegate(
-                  preferredHeight: 50,
-                  bottom: GSTabBar(
-                    controller: _tabController,
-                    padding: const EdgeInsets.all(0),
-                    tabs: (channelSharedData?.blocks
-                            ?.map((e) => e.name != null && e.name!.length > 8
-                                ? e.name!.substring(0, 8)
-                                : e.name ?? '')
-                            .toList()) ??
-                        [],
+              if (_tabController!.length > 1)
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverAppBarDelegate(
+                    preferredHeight: 50,
+                    bottom: GSTabBar(
+                      controller: _tabController,
+                      padding: const EdgeInsets.all(0),
+                      tabs: (channelSharedData?.blocks
+                              ?.map((e) => e.name != null && e.name!.length > 8
+                                  ? e.name!.substring(0, 8)
+                                  : e.name ?? '')
+                              .toList()) ??
+                          [],
+                    ),
                   ),
                 ),
-              ),
-              // SliverAppBar(
-              //   pinned: true,
-              //   leading: null,
-              //   automaticallyImplyLeading: false,
-              //   forceElevated: true,
-              //   expandedHeight: 0,
-              //   toolbarHeight: 0,
-              //   flexibleSpace: const SizedBox.shrink(),
-              //   bottom: PreferredSize(
-              //     preferredSize: const Size.fromHeight(50),
-              //     child: SizedBox(
-              //         height: 50,
-              //         child: GSTabBar(
-              //           controller: _tabController,
-              //           padding: const EdgeInsets.all(0),
-              //           tabs: (channelSharedData?.blocks
-              //                   ?.map((e) =>
-              //                       e.name != null && e.name!.length > 8
-              //                           ? e.name!.substring(0, 8)
-              //                           : e.name ?? '')
-              //                   .toList()) ??
-              //               [],
-              //         )),
-              //   ),
-              // ),
             ];
           },
           body: TabBarView(
