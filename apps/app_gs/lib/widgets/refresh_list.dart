@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:app_gs/widgets/video_list_loading_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
