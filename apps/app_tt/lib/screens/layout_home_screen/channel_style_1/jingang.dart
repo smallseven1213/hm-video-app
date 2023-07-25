@@ -1,30 +1,29 @@
+// JingangList
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:shared/controllers/channel_shared_data_controller.dart';
+import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/jingang.dart';
 import 'package:shared/models/jingang.dart';
 
-import 'jingang_button.dart';
+import '../jingang_button.dart';
 
-final logger = Logger();
-
-class ChannelJingangArea extends StatelessWidget {
+class JingangList extends StatelessWidget {
   final int channelId;
-  const ChannelJingangArea({Key? key, required this.channelId})
-      : super(key: key);
+  const JingangList({Key? key, required this.channelId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final channelSharedDataController = Get.find<ChannelSharedDataController>(
-      tag: '$channelId',
-    );
+    final ChannelDataController channelDataController =
+        Get.find<ChannelDataController>(
+            tag: 'channelId-${channelId.toString()}');
 
+    if (channelDataController.channelData.value == null) {
+      return const SliverToBoxAdapter(child: SizedBox());
+    }
     return Obx(
       () {
-        Jingang? jingang =
-            channelSharedDataController.channelSharedData.value?.jingang;
+        Jingang? jingang = channelDataController.channelData.value!.jingang;
         if (jingang == null ||
             jingang.jingangDetail == null ||
             jingang.jingangDetail!.isEmpty) {
@@ -44,7 +43,7 @@ class ChannelJingangArea extends StatelessWidget {
                         horizontal: 8, vertical: 16.0),
                     child: JingangButton(
                       item: jingang.jingangDetail![index],
-                      outerFrame: OuterFrame.border.value,
+                      outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
                       outerFrameStyle: jingang.outerFrameStyle ??
                           OuterFrameStyle.circle.index,
                     ),
@@ -55,7 +54,7 @@ class ChannelJingangArea extends StatelessWidget {
           );
         }
         return SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
           sliver: SliverAlignedGrid.count(
             crossAxisCount: jingang.quantity ?? 4,
             itemCount: jingang.jingangDetail?.length ?? 0,

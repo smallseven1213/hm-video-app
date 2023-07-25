@@ -1,7 +1,5 @@
-import 'package:app_gs/widgets/video_embedded_ad.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -11,7 +9,7 @@ import 'package:shared/widgets/view_times.dart';
 import 'package:shared/widgets/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 
-final logger = Logger();
+import 'video_embedded_ad.dart';
 
 class ViewInfo extends StatelessWidget {
   final int viewCount;
@@ -154,7 +152,6 @@ class VideoPreviewWidget extends StatelessWidget {
               if (onOverrideRedirectTap != null) {
                 onOverrideRedirectTap!(id);
               } else {
-                logger.i('CLICK TO FILM $film, $id, $blockId');
                 if (film == 1) {
                   MyRouteDelegate.of(context).push(
                     AppRoutes.video,

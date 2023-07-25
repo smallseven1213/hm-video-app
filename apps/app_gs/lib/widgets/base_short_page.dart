@@ -110,11 +110,6 @@ class BaseShortPageState extends State<BaseShortPage> {
           PageView.builder(
             controller: _pageController,
             itemCount: cachedVods.length * 50,
-            // onPageChanged: (int index) {
-            //   setState(() {
-            //     currentPage = index;
-            //   });
-            // },
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];

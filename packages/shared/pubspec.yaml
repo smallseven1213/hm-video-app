@@ -38,6 +38,7 @@ dependencies:
   wakelock: ^0.6.2
   sentry_dio: ^7.8.0
   sentry_flutter: ^7.8.0
+  visibility_detector: ^0.4.0+2
 
 dev_dependencies:
   flutter_test:

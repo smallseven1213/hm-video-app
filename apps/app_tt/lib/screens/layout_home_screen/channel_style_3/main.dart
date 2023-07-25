@@ -1,19 +1,14 @@
-import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
-import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
-import 'package:app_gs/widgets/reload_button.dart';
-import 'package:app_gs/widgets/wave_loading.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
-import '../../../widgets/channel_banners.dart';
-import '../../../widgets/channel_jingang_area.dart';
-import '../../../widgets/channel_jingang_area_title.dart';
-import '../../../widgets/tab_bar.dart';
-
-final logger = Logger();
+import '../../../widgets/wave_loading.dart';
+import '../channel_banners.dart';
+import '../channel_jingang_area.dart';
+import '../channel_jingang_area_title.dart';
+import '../reload_button.dart';
+import 'tags.dart';
+import 'vods.dart';
 
 class ChannelStyle3Main extends StatefulWidget {
   final int channelId;
