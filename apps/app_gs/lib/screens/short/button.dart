@@ -54,7 +54,8 @@ class ShortMenuButton extends StatelessWidget {
               children: [
                 if (displayFavoriteAndCollectCount == true)
                   Text(
-                    getViewTimes(count ?? 0, shouldCalculateThousands: false),
+                    formatNumberToUnit(count ?? 0,
+                        shouldCalculateThousands: false),
                     style: const TextStyle(
                       fontSize: 13,
                       color: Colors.white,
