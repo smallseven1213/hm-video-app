@@ -91,8 +91,8 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                     child: controller.videoAction.value == 'pause'
                         ? const Center(
                             child: SizedBox(
-                              width: 100,
-                              height: 100,
+                              width: 40,
+                              height: 40,
                               child: Image(
                                 image: AssetImage(
                                     'assets/images/short_play_button.png'),
