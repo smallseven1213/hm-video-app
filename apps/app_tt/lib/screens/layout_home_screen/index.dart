@@ -1,16 +1,15 @@
-import 'package:app_gs/screens/main_screen/channels.dart';
-import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
 import 'package:shared/widgets/display_layout_tab_search.dart';
 
+import '../../widgets/wave_loading.dart';
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
 
-class HomeMainScreen extends StatelessWidget {
+class LayoutHomeScreen extends StatelessWidget {
   final int layoutId;
-  const HomeMainScreen({Key? key, required this.layoutId}) : super(key: key);
+  const LayoutHomeScreen({Key? key, required this.layoutId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +33,10 @@ class HomeMainScreen extends StatelessWidget {
           return Scaffold(
               body: Stack(
             children: [
-              Channels(
-                key: Key('channels-$layoutId'),
-                layoutId: layoutId,
-              ),
+              // Channels(
+              //   key: Key('channels-$layoutId'),
+              //   layoutId: layoutId,
+              // ),
               Positioned(
                   child: Column(
                 children: [
