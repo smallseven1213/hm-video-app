@@ -49,7 +49,7 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
                       showErrorMessage = false;
                     });
                     MyRouteDelegate.of(context)
-                        .push(AppRoutes.splash.value, removeSamePath: true);
+                        .push(AppRoutes.splash, removeSamePath: true);
                   },
                   child: const Text('確認'),
                 ),

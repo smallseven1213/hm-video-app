@@ -58,7 +58,7 @@ class ChannelStyle5 extends StatelessWidget {
                         moreButton: GestureDetector(
                             onTap: () => {
                                   MyRouteDelegate.of(context).push(
-                                    AppRoutes.suppliers.value,
+                                    AppRoutes.suppliers,
                                   )
                                 },
                             child: const Text(
@@ -185,8 +185,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                       MyRouteDelegate.of(
                                                               context)
                                                           .push(
-                                                        AppRoutes
-                                                            .supplier.value,
+                                                        AppRoutes.supplier,
                                                         args: {
                                                           'id':
                                                               data.supplier.id,
@@ -237,8 +236,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                                   context)
                                                               .push(
                                                             AppRoutes
-                                                                .shortsByChannel
-                                                                .value,
+                                                                .shortsByChannel,
                                                             args: {
                                                               'videoId': vod.id,
                                                               'supplierId': data
@@ -282,7 +280,7 @@ class ChannelStyle5 extends StatelessWidget {
                                         child: GestureDetector(
                                           onTap: () =>
                                               MyRouteDelegate.of(context).push(
-                                            AppRoutes.supplier.value,
+                                            AppRoutes.supplier,
                                             args: {
                                               'id': data.supplier.id,
                                             },

@@ -60,7 +60,7 @@ class VideoInfo extends StatelessWidget {
                           onTap: () async {
                             pauseVideo();
                             await MyRouteDelegate.of(context).push(
-                              AppRoutes.publisher.value,
+                              AppRoutes.publisher,
                               args: {
                                 'id': publisher!.id,
                                 'title': publisher!.name
@@ -86,7 +86,7 @@ class VideoInfo extends StatelessWidget {
                           onTap: () async {
                             pauseVideo();
                             await MyRouteDelegate.of(context).push(
-                              AppRoutes.actor.value,
+                              AppRoutes.actor,
                               args: {
                                 'id': actor![0].id,
                                 'title': actor![0].name
@@ -135,7 +135,7 @@ class VideoInfo extends StatelessWidget {
               return GestureDetector(
                 onTap: () async {
                   pauseVideo();
-                  await MyRouteDelegate.of(context).push(AppRoutes.tag.value,
+                  await MyRouteDelegate.of(context).push(AppRoutes.tag,
                       args: {'id': tag.id, 'title': tag.name});
                   playVideo();
                 },

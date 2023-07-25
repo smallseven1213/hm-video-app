@@ -129,7 +129,7 @@ class ConfigsPage extends StatelessWidget {
         ),
         text: '修改密碼',
         onTap: () {
-          MyRouteDelegate.of(context).push(AppRoutes.updatePassword.value);
+          MyRouteDelegate.of(context).push(AppRoutes.updatePassword);
         },
       ),
       CellData(
@@ -140,7 +140,7 @@ class ConfigsPage extends StatelessWidget {
         ),
         text: '帳號憑證',
         onTap: () {
-          MyRouteDelegate.of(context).push(AppRoutes.idCard.value);
+          MyRouteDelegate.of(context).push(AppRoutes.idCard);
         },
       ),
       // CellData(

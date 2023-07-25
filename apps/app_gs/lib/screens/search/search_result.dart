@@ -86,8 +86,7 @@ class SearchResultPageState extends State<SearchResultPage>
                   noMoreWidget: ListNoMore(),
                   displayCoverVertical: true,
                   onOverrideRedirectTap: (id) {
-                    MyRouteDelegate.of(context).push(
-                        AppRoutes.shortsByLocal.value,
+                    MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
                         args: {'itemId': 3, 'videoId': id});
                   })),
             ],
@@ -95,13 +94,5 @@ class SearchResultPageState extends State<SearchResultPage>
         ),
       ],
     );
-    // return Obx(() => SliverVodGrid(
-    //       isListEmpty: searchVodController.isListEmpty.value,
-    //       displayVideoCollectTimes: false,
-    //       videos: searchVodController.vodList,
-    //       displayNoMoreData: searchVodController.displayNoMoreData.value,
-    //       displayLoading: searchVodController.displayLoading.value,
-    //       noMoreWidget: ListNoMore(),
-    //     ));
   }
 }

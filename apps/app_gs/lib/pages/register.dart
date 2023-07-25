@@ -181,9 +181,8 @@ class RegisterPageState extends State<RegisterPage> {
                       Column(children: [
                         GestureDetector(
                           onTap: () {
-                            MyRouteDelegate.of(context).push(
-                                AppRoutes.login.value,
-                                deletePreviousCount: 1);
+                            MyRouteDelegate.of(context)
+                                .push(AppRoutes.login, deletePreviousCount: 1);
                           },
                           child: const Column(children: [
                             Text('前往登入',

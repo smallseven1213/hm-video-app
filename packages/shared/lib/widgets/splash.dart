@@ -277,11 +277,11 @@ class _SplashState extends State<Splash> {
     if (landingBanners.isEmpty && mounted) {
       logger.i('沒有廣告，直接進入首頁');
       MyRouteDelegate.of(context)
-          .pushAndRemoveUntil(AppRoutes.home.value, hasTransition: false);
+          .pushAndRemoveUntil(AppRoutes.home, hasTransition: false);
     } else {
       logger.i('有廣告，進入廣告頁');
       MyRouteDelegate.of(context)
-          .pushAndRemoveUntil(AppRoutes.ad.value, hasTransition: false);
+          .pushAndRemoveUntil(AppRoutes.ad, hasTransition: false);
     }
   }
 

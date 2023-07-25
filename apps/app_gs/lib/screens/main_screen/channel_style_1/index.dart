@@ -83,7 +83,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                 if (block.film == 1)
                                   {
                                     MyRouteDelegate.of(context).push(
-                                      AppRoutes.videoByBlock.value,
+                                      AppRoutes.videoByBlock,
                                       args: {
                                         'blockId': block.id,
                                         'title': block.name,
@@ -94,7 +94,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                 else if (block.film == 2)
                                   {
                                     MyRouteDelegate.of(context).push(
-                                      AppRoutes.videoByBlock.value,
+                                      AppRoutes.videoByBlock,
                                       args: {
                                         'blockId': block.id,
                                         'title': block.name,
@@ -106,7 +106,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                 else if (block.film == 3)
                                   {
                                     MyRouteDelegate.of(context).push(
-                                      AppRoutes.videoByBlock.value,
+                                      AppRoutes.videoByBlock,
                                       args: {
                                         'id': block.id,
                                         'title': block.name,
@@ -175,7 +175,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                               text: '探索更多內容',
                               onPressed: () {
                                 MyRouteDelegate.of(context)
-                                    .push(AppRoutes.filter.value);
+                                    .push(AppRoutes.filter);
                               },
                               type: 'primary',
                               size: 'small',

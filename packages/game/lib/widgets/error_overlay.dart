@@ -35,7 +35,7 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
                   onPressed: () {
                     responseController.setAlertDialogShown(false);
                     MyRouteDelegate.of(context)
-                        .push(AppRoutes.home.value, removeSamePath: true);
+                        .push(AppRoutes.home, removeSamePath: true);
                   },
                   child: const Text('確認'),
                 ),
