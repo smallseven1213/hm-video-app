@@ -10,6 +10,7 @@ import 'package:shared/widgets/view_times.dart';
 final logger = Logger();
 
 class VideoInfo extends StatelessWidget {
+  final String? externalId;
   final String title;
   final List<Tag> tags;
   final int timeLength;
@@ -28,6 +29,7 @@ class VideoInfo extends StatelessWidget {
     required this.playVideo,
     required this.pauseVideo,
     this.actor,
+    this.externalId,
     this.publisher,
   });
 
@@ -37,7 +39,7 @@ class VideoInfo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          title,
+          externalId != '' ? '$externalId $title' : title,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w400,
