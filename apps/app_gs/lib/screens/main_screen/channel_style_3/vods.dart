@@ -125,7 +125,7 @@ class VodsState extends State<Vods> {
                 ),
               ),
               if (vodController?.isError.value == true)
-                SliverToBoxAdapter(
+                SliverFillRemaining(
                   child: Center(
                     child: ReloadButton(
                       onPressed: () {
