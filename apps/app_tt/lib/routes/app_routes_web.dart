@@ -8,7 +8,7 @@ import '../pages/home.dart' deferred as home_page;
 import '../widgets/page_loader.dart';
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
-  AppRoutes.home.value: (context, args) => PageLoader(
+  AppRoutes.home: (context, args) => PageLoader(
         loadLibrary: home_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => home_page.HomePage(

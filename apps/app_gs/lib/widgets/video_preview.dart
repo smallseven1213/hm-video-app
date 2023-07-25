@@ -157,13 +157,13 @@ class VideoPreviewWidget extends StatelessWidget {
                 logger.i('CLICK TO FILM $film, $id, $blockId');
                 if (film == 1) {
                   MyRouteDelegate.of(context).push(
-                    AppRoutes.video.value,
+                    AppRoutes.video,
                     args: {'id': id, 'blockId': blockId},
                     removeSamePath: true,
                   );
                 } else if (film == 2) {
                   MyRouteDelegate.of(context).push(
-                    AppRoutes.shortsByBlock.value,
+                    AppRoutes.shortsByBlock,
                     args: {'videoId': id, 'areaId': blockId},
                   );
                 } else if (film == 3) {
@@ -290,13 +290,13 @@ class VideoPreviewWidget extends StatelessWidget {
                         onTap: () {
                           if (film == 1) {
                             MyRouteDelegate.of(context).push(
-                              AppRoutes.tag.value,
+                              AppRoutes.tag,
                               args: {'id': tag.id, 'title': tag.name},
                               removeSamePath: true,
                             );
                           } else if (film == 2) {
                             MyRouteDelegate.of(context).push(
-                                AppRoutes.supplierTag.value,
+                                AppRoutes.supplierTag,
                                 args: {'tagId': tag.id, 'tagName': tag.name});
                           } else if (film == 3) {}
                         },

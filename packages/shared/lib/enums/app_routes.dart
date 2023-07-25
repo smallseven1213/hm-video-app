@@ -1,110 +1,35 @@
-enum AppRoutes {
-  demo,
-  splash,
-  ad,
-  home,
-  video,
-  videoByBlock,
-  publisher,
-  tag,
-  login,
-  register,
-  share,
-  playRecord,
-  shareRecord,
-  apps,
-  favorites,
-  collection,
-  notifications,
-  search,
-  filter,
-  actor,
-  actors,
-  nickname,
-  supplier,
-  supplierTag,
-  shortsByTag,
-  shortsByBlock,
-  shortsBySupplier,
-  shortsByLocal,
-  shortsByChannel,
-  configs,
-  updatePassword,
-  idCard,
-  suppliers
-}
-
-extension AppRoutesExtension on AppRoutes {
-  String get value {
-    switch (this) {
-      case AppRoutes.demo:
-        return '/demo';
-      case AppRoutes.splash:
-        return '/';
-      case AppRoutes.ad:
-        return '/ad';
-      case AppRoutes.home:
-        return '/home';
-      case AppRoutes.video:
-        return '/video';
-      case AppRoutes.videoByBlock:
-        return '/video_by_block';
-      case AppRoutes.publisher:
-        return '/publisher';
-      case AppRoutes.tag:
-        return '/tag';
-      case AppRoutes.login:
-        return '/login';
-      case AppRoutes.register:
-        return '/register';
-      case AppRoutes.share:
-        return '/share';
-      case AppRoutes.playRecord:
-        return '/playrecord';
-      case AppRoutes.shareRecord:
-        return '/sharerecord';
-      case AppRoutes.apps:
-        return '/apps';
-      case AppRoutes.favorites:
-        return '/favorites';
-      case AppRoutes.collection:
-        return '/collection';
-      case AppRoutes.notifications:
-        return '/notifications';
-      case AppRoutes.search:
-        return '/search';
-      case AppRoutes.filter:
-        return '/filter';
-      case AppRoutes.actors:
-        return '/actors';
-      case AppRoutes.actor:
-        return '/actor';
-      case AppRoutes.nickname:
-        return '/user/nickname';
-      case AppRoutes.supplier:
-        return '/supplier';
-      case AppRoutes.supplierTag:
-        return '/supplier_tag';
-      case AppRoutes.shortsByTag:
-        return '/shorts_by_tag';
-      case AppRoutes.shortsByBlock:
-        return '/shorts_by_block';
-      case AppRoutes.shortsBySupplier:
-        return '/shorts_by_supplier';
-      case AppRoutes.shortsByChannel:
-        return '/shorts_by_channel';
-      case AppRoutes.configs:
-        return '/configs';
-      case AppRoutes.updatePassword:
-        return '/update_password';
-      case AppRoutes.idCard:
-        return '/id_card';
-      case AppRoutes.shortsByLocal:
-        return '/shorts_by_local';
-      case AppRoutes.suppliers:
-        return '/suppliers';
-      default:
-        return '/unknown';
-    }
-  }
+class AppRoutes {
+  static const String demo = '/demo';
+  static const String splash = '/';
+  static const String ad = '/ad';
+  static const String home = '/home';
+  static const String video = '/video';
+  static const String videoByBlock = '/video_by_block';
+  static const String publisher = '/publisher';
+  static const String tag = '/tag';
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String share = '/share';
+  static const String playRecord = '/playrecord';
+  static const String shareRecord = '/sharerecord';
+  static const String apps = '/apps';
+  static const String favorites = '/favorites';
+  static const String collection = '/collection';
+  static const String notifications = '/notifications';
+  static const String search = '/search';
+  static const String filter = '/filter';
+  static const String actors = '/actors';
+  static const String actor = '/actor';
+  static const String nickname = '/user/nickname';
+  static const String supplier = '/supplier';
+  static const String supplierTag = '/supplier_tag';
+  static const String shortsByTag = '/shorts_by_tag';
+  static const String shortsByBlock = '/shorts_by_block';
+  static const String shortsBySupplier = '/shorts_by_supplier';
+  static const String shortsByLocal = '/shorts_by_local';
+  static const String shortsByChannel = '/shorts_by_channel';
+  static const String configs = '/configs';
+  static const String updatePassword = '/update_password';
+  static const String idCard = '/id_card';
+  static const String suppliers = '/suppliers';
 }

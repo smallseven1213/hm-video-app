@@ -58,7 +58,7 @@ class ChannelStyle4 extends StatelessWidget {
                       moreButton: GestureDetector(
                           onTap: () => {
                                 MyRouteDelegate.of(context).push(
-                                  AppRoutes.actors.value,
+                                  AppRoutes.actors,
                                 )
                               },
                           child: const Text(
@@ -177,7 +177,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                   onPressed: () {
                                                     MyRouteDelegate.of(context)
                                                         .push(
-                                                      AppRoutes.actor.value,
+                                                      AppRoutes.actor,
                                                       args: {
                                                         'id': data.actor.id,
                                                         'title':
@@ -254,7 +254,7 @@ class ChannelStyle4 extends StatelessWidget {
                                       child: GestureDetector(
                                         onTap: () =>
                                             MyRouteDelegate.of(context).push(
-                                          AppRoutes.actor.value,
+                                          AppRoutes.actor,
                                           args: {
                                             'id': data.actor.id,
                                             'title': data.actor.name,

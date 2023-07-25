@@ -21,7 +21,7 @@ class TagWidget extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         MyRouteDelegate.of(context)
-            .push(AppRoutes.tag.value, args: {'id': id, 'title': name});
+            .push(AppRoutes.tag, args: {'id': id, 'title': name});
       },
       child: Container(
         height: 35,

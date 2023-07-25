@@ -9,7 +9,7 @@ import 'package:shared/navigator/delegate.dart';
 class GameStartupController extends GetxController {
   void goBackToAppHome(context) {
     MyRouteDelegate.of(context).pushAndRemoveUntil(
-      AppRoutes.home.value,
+      AppRoutes.home,
       hasTransition: false,
       args: {'defaultScreenKey': '/game'},
     );

@@ -161,7 +161,7 @@ class SuppliersPageState extends State<SuppliersPage>
                     child: GestureDetector(
                       onTap: () {
                         MyRouteDelegate.of(context).push(
-                          AppRoutes.supplier.value,
+                          AppRoutes.supplier,
                           args: {
                             'id': actor.id,
                           },

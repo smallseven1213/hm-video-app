@@ -59,7 +59,7 @@ class AdState extends State<Ad> {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdownSeconds == 0) {
         if (currentBanner.isAutoClose == true) {
-          MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.home.value);
+          MyRouteDelegate.of(context).pushAndRemoveUntil(AppRoutes.home);
         }
         timer.cancel();
       } else {
@@ -103,7 +103,7 @@ class AdState extends State<Ad> {
                   onError: (e) {
                     logger.i('AD SID IMAGE ERROR: $e');
                     MyRouteDelegate.of(context).pushAndRemoveUntil(
-                        AppRoutes.home.value,
+                        AppRoutes.home,
                         hasTransition: false);
                   },
                 ),
@@ -117,7 +117,7 @@ class AdState extends State<Ad> {
                   onPressed: () => {
                     if (countdownSeconds == 0)
                       MyRouteDelegate.of(context).pushAndRemoveUntil(
-                          AppRoutes.home.value,
+                          AppRoutes.home,
                           hasTransition: false)
                   },
                   child: Container(

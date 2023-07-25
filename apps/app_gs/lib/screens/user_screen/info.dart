@@ -124,7 +124,7 @@ class UserInfo extends StatelessWidget {
                     flex: 1,
                     child: GestureDetector(
                       onTap: () {
-                        MyRouteDelegate.of(context).push(AppRoutes.login.value);
+                        MyRouteDelegate.of(context).push(AppRoutes.login);
                       },
                       child: const Text(
                         '註冊/登入',
@@ -150,7 +150,7 @@ class UserInfo extends StatelessWidget {
               right: 0,
               child: GestureDetector(
                 onTap: () {
-                  MyRouteDelegate.of(context).push(AppRoutes.configs.value);
+                  MyRouteDelegate.of(context).push(AppRoutes.configs);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(5),
@@ -167,8 +167,7 @@ class UserInfo extends StatelessWidget {
               right: 30,
               child: GestureDetector(
                 onTap: () {
-                  MyRouteDelegate.of(context)
-                      .push(AppRoutes.notifications.value);
+                  MyRouteDelegate.of(context).push(AppRoutes.notifications);
                 },
                 child: Container(
                   padding: const EdgeInsets.all(5),

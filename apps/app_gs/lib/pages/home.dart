@@ -9,6 +9,7 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
 import 'package:shared/controllers/layout_controller.dart';
+import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../config/layouts.dart';
@@ -20,22 +21,23 @@ import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
 final screens = {
-  '/layout1': () => HomeMainScreen(
+  HomeNavigatorPathes.layout1: () => HomeMainScreen(
         key: Key('layout${layouts[0]}'),
         layoutId: layouts[0],
       ),
-  '/layout2': () => HomeMainScreen(
+  HomeNavigatorPathes.layout2: () => HomeMainScreen(
         key: Key('layout${layouts[1]}'),
         layoutId: layouts[1],
       ),
-  '/game': () => const GameScreen(),
-  '/apps': () => const AppsScreen(),
-  '/user': () => const UserScreen()
+  HomeNavigatorPathes.game: () => const GameScreen(),
+  HomeNavigatorPathes.apps: () => const AppsScreen(),
+  HomeNavigatorPathes.user: () => const UserScreen()
 };
 
 class HomePage extends StatefulWidget {
   final String? defaultScreenKey;
-  HomePage({Key? key, this.defaultScreenKey = '/layout1'}) : super(key: key);
+  HomePage({Key? key, this.defaultScreenKey = HomeNavigatorPathes.layout1})
+      : super(key: key);
 
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
   @override
@@ -88,15 +90,6 @@ class HomeState extends State<HomePage> {
 
         return Scaffold(
             body: currentScreen,
-            // 通往異世界的入口
-            // floatingActionButton: FloatingActionButton(
-            //   onPressed: () {
-            //     MyRouteDelegate.of(context).push('/demo');
-            //   },
-            //   child: Icon(Icons.play_arrow),
-            //   backgroundColor: Colors.blue,
-            //   elevation: 4.0,
-            // ),
             bottomNavigationBar: bottomNavigatorController
                     .navigatorItems.isEmpty
                 ? null
