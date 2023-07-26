@@ -22,7 +22,7 @@ class ViewTimes extends StatelessWidget {
             ),
           ),
           TextSpan(
-            text: ' ${getViewTimes(times)}',
+            text: ' ${formatNumberToUnit(times)}',
             style: TextStyle(
               color: color ?? Colors.white,
               letterSpacing: 0.1,

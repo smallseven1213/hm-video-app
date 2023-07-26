@@ -8,6 +8,7 @@ class SupplierForVods {
   int id;
   String name;
   String photoSid;
+  String? description;
 
   SupplierForVods({
     required this.containVideos,
@@ -16,6 +17,7 @@ class SupplierForVods {
     required this.id,
     required this.name,
     required this.photoSid,
+    this.description,
   });
 
   // fromJson method
@@ -27,6 +29,7 @@ class SupplierForVods {
       id: json['id'],
       name: json['name'],
       photoSid: json['photoSid'],
+      description: json['description'],
     );
   }
 }
