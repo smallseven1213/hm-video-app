@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/refresh_list.dart';
+import 'package:app_gs/widgets/reload_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -123,7 +124,18 @@ class VodsState extends State<Vods> {
                   vods: vodController!.vodList.value,
                 ),
               ),
-              if (vodController!.isListEmpty.value)
+              if (vodController?.isError.value == true)
+                SliverFillRemaining(
+                  child: Center(
+                    child: ReloadButton(
+                      onPressed: () {
+                        _onRefresh();
+                      },
+                    ),
+                  ),
+                ),
+              if (vodController?.isError.value == false &&
+                  vodController!.isListEmpty.value)
                 const SliverToBoxAdapter(
                   child: NoDataWidget(),
                 ),

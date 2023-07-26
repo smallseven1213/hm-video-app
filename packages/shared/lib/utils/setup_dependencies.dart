@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_navigator_controller.dart';
 import '../controllers/actor_region_controller.dart';
+import '../controllers/apps_controller.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/banner_controller.dart';
 import '../controllers/bottom_navigator_controller.dart';
@@ -25,6 +26,7 @@ void setupDependencies() {
   Get.lazyPut<AuthController>(() => AuthController());
   Get.lazyPut<ApiResponseErrorCatchController>(
       () => ApiResponseErrorCatchController());
+  Get.lazyPut<AppsController>(() => AppsController());
   Get.lazyPut<UserController>(() => UserController());
   Get.lazyPut<UserNavigatorController>(() => UserNavigatorController());
   Get.lazyPut<BottonNavigatorController>(() => BottonNavigatorController());

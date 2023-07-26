@@ -1,6 +1,9 @@
+import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/models/ad.dart';
+import 'package:shared/widgets/apps_builder.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/header.dart';
@@ -15,44 +18,58 @@ class AppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: const Scaffold(
-        appBar: CustomAppBar(
+    return Scaffold(
+        appBar: const CustomAppBar(
           title: '應用中心',
         ),
-        body: CustomScrollView(
-          physics: kIsWeb ? null : BouncingScrollPhysics(),
-          slivers: <Widget>[
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: BannerWidget(),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Header(text: '熱門推薦'),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
-            HotWidget(),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
-            SliverToBoxAdapter(
-              child: Header(text: '大家都在玩'),
-            ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 20),
-            ),
-            PopularWidget(),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 90),
-            )
-          ],
-        ),
-      ),
-    );
+        body: AppsBuilder(
+          child: ((
+                  {required List<Ads> popularAds,
+                  required List<Ads> hotAds,
+                  required bool isLoading}) =>
+              CustomScrollView(
+                physics: kIsWeb ? null : const BouncingScrollPhysics(),
+                slivers: <Widget>[
+                  const SliverToBoxAdapter(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: BannerWidget(),
+                    ),
+                  ),
+                  if (isLoading)
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 150),
+                        child: WaveLoading(),
+                      ),
+                    )
+                  else ...[
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 20),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: Header(text: '熱門推薦'),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 20),
+                    ),
+                    HotWidget(items: hotAds),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 20),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: Header(text: '大家都在玩'),
+                    ),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 20),
+                    ),
+                    PopularWidget(items: popularAds),
+                    const SliverToBoxAdapter(
+                      child: SizedBox(height: 90),
+                    )
+                  ],
+                ],
+              )),
+        ));
   }
 }

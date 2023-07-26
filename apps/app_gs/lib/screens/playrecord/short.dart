@@ -50,7 +50,7 @@ class PlayRecordShortScreen extends StatelessWidget {
               },
               onOverrideRedirectTap: (id) {
                 MyRouteDelegate.of(context).push(
-                  AppRoutes.shortsByLocal.value,
+                  AppRoutes.shortsByLocal,
                   args: {'videoId': vod.id, 'itemId': 1},
                 );
               },

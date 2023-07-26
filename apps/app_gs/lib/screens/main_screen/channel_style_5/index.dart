@@ -16,7 +16,7 @@ import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_jingang_area_title.dart';
 import '../channel_style_3/tags.dart';
 
-const gradiens = {
+const gradients = {
   1: [Color(0xFF00091A), Color(0xFF45abb1)],
   2: [Color(0xFF00091a), Color(0xFFc08e53)],
   3: [Color(0xFF00091A), Color(0xFFff4545)],
@@ -58,7 +58,7 @@ class ChannelStyle5 extends StatelessWidget {
                         moreButton: GestureDetector(
                             onTap: () => {
                                   MyRouteDelegate.of(context).push(
-                                    AppRoutes.suppliers.value,
+                                    AppRoutes.suppliers,
                                   )
                                 },
                             child: const Text(
@@ -117,10 +117,10 @@ class ChannelStyle5 extends StatelessWidget {
                                                 begin: Alignment.topCenter,
                                                 end: Alignment.bottomCenter,
                                                 colors: index % 3 == 0
-                                                    ? gradiens[1]!
+                                                    ? gradients[1]!
                                                     : index % 3 == 1
-                                                        ? gradiens[2]!
-                                                        : gradiens[3]!,
+                                                        ? gradients[2]!
+                                                        : gradients[3]!,
                                               ),
                                             ),
                                           ),
@@ -168,6 +168,26 @@ class ChannelStyle5 extends StatelessWidget {
                                                                       .white,
                                                                   fontSize:
                                                                       14)),
+                                                      if (data.supplier
+                                                                  .description !=
+                                                              null &&
+                                                          data
+                                                              .supplier
+                                                              .description!
+                                                              .isNotEmpty)
+                                                        Text(
+                                                          data.supplier
+                                                                  .description ??
+                                                              '',
+                                                          style: TextStyle(
+                                                              color: Colors
+                                                                  .white
+                                                                  .withOpacity(
+                                                                      0.75),
+                                                              fontSize: 11),
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
                                                       Text(
                                                           '人氣:${data.supplier.followTimes}',
                                                           style: TextStyle(
@@ -185,8 +205,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                       MyRouteDelegate.of(
                                                               context)
                                                           .push(
-                                                        AppRoutes
-                                                            .supplier.value,
+                                                        AppRoutes.supplier,
                                                         args: {
                                                           'id':
                                                               data.supplier.id,
@@ -237,8 +256,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                                   context)
                                                               .push(
                                                             AppRoutes
-                                                                .shortsByChannel
-                                                                .value,
+                                                                .shortsByChannel,
                                                             args: {
                                                               'videoId': vod.id,
                                                               'supplierId': data
@@ -282,7 +300,7 @@ class ChannelStyle5 extends StatelessWidget {
                                         child: GestureDetector(
                                           onTap: () =>
                                               MyRouteDelegate.of(context).push(
-                                            AppRoutes.supplier.value,
+                                            AppRoutes.supplier,
                                             args: {
                                               'id': data.supplier.id,
                                             },

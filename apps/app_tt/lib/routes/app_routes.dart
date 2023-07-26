@@ -7,7 +7,7 @@ import 'package:shared/navigator/delegate.dart';
 import '../pages/home.dart' as home_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
-  AppRoutes.home.value: (context, args) => home_page.HomePage(
+  AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),
 };

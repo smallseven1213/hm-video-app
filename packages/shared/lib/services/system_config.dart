@@ -5,17 +5,11 @@ import 'package:shared/services/platform_service.app.dart'
     if (dart.library.html) 'package:shared/services/platform_service.web.dart'
     as app_platform_ervice;
 
-const env = String.fromEnvironment('ENV', defaultValue: 'prod');
-
 class SystemConfig {
   static final SystemConfig _instance = SystemConfig._internal();
 
   // Color
   Map<ColorKeys, dynamic> appColors = {};
-  // API ENDPOINT
-  // String apiHost = 'dl.dlsv.net/$env/dl.json';
-  // String vodHost = 'https://dl.dlsv.net/$env/dl.json';
-  // String imgHost = 'https://dl.dlsv.net/$env/dl.json';
   String? apiHost;
   String? vodHost;
   String? imgHost;
@@ -38,11 +32,7 @@ class SystemConfig {
               ? 'ANDROID'
               : 'H5';
 
-  List<String> vodHostList = [
-    'https://dl.dlgs.app/$env/dl.json',
-    'https://dl.dlgs.one/$env/dl.json',
-    'https://dl.dlgs.info/$env/dl.json',
-  ];
+  List<String> dlJsonHostList = [];
 
   int timeout = 5000;
 
@@ -53,6 +43,10 @@ class SystemConfig {
   SystemConfig._internal();
 
   // settle
+  void setDlJsonHosts(List<String> hosts) {
+    dlJsonHostList = hosts;
+  }
+
   void setApiHost(String host) {
     apiHost = host;
   }

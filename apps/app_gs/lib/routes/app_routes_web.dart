@@ -40,24 +40,24 @@ import '../widgets/page_loader.dart';
 // import '../screens/video_demo.dart' deferred as video_demo_screen;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
-  AppRoutes.demo.value: (context, args) => PageLoader(
+  AppRoutes.demo: (context, args) => PageLoader(
         loadLibrary: demo_screen.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => demo_screen.Demo(),
       ),
-  AppRoutes.home.value: (context, args) => PageLoader(
+  AppRoutes.home: (context, args) => PageLoader(
         loadLibrary: home_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => home_page.HomePage(
           defaultScreenKey: args['defaultScreenKey'] as String?,
         ),
       ),
-  AppRoutes.video.value: (context, args) => PageLoader(
+  AppRoutes.video: (context, args) => PageLoader(
         loadLibrary: video_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => video_page.Video(args: args),
       ),
-  AppRoutes.videoByBlock.value: (context, args) => PageLoader(
+  AppRoutes.videoByBlock: (context, args) => PageLoader(
         loadLibrary: video_by_block_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => video_by_block_page.VideoByBlockPage(
@@ -67,14 +67,14 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           film: args['film'] == null ? 1 : args['film'] as int,
         ),
       ),
-  AppRoutes.publisher.value: (context, args) => PageLoader(
+  AppRoutes.publisher: (context, args) => PageLoader(
         loadLibrary: publisher_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => publisher_page.PublisherPage(
           id: args['id'] as int,
         ),
       ),
-  AppRoutes.tag.value: (context, args) => PageLoader(
+  AppRoutes.tag: (context, args) => PageLoader(
         loadLibrary: tag_video_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => tag_video_page.TagVideoPage(
@@ -83,64 +83,64 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           title: args['title'] as String,
         ),
       ),
-  AppRoutes.actor.value: (context, args) => PageLoader(
+  AppRoutes.actor: (context, args) => PageLoader(
         loadLibrary: actor_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => actor_page.ActorPage(
           id: args['id'] as int,
         ),
       ),
-  AppRoutes.login.value: (context, args) => PageLoader(
+  AppRoutes.login: (context, args) => PageLoader(
         loadLibrary: login_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => login_page.LoginPage(),
       ),
-  AppRoutes.nickname.value: (context, args) => PageLoader(
+  AppRoutes.nickname: (context, args) => PageLoader(
         loadLibrary: nickname_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => nickname_page.NicknamePage(),
       ),
-  AppRoutes.register.value: (context, args) => PageLoader(
+  AppRoutes.register: (context, args) => PageLoader(
         loadLibrary: register_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => register_page.RegisterPage(),
       ),
-  AppRoutes.share.value: (context, args) => PageLoader(
+  AppRoutes.share: (context, args) => PageLoader(
         loadLibrary: share_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => share_page.SharePage(),
       ),
-  AppRoutes.playRecord.value: (context, args) => PageLoader(
+  AppRoutes.playRecord: (context, args) => PageLoader(
         loadLibrary: playrecord_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => playrecord_page.PlayRecordPage(),
       ),
-  AppRoutes.shareRecord.value: (context, args) => PageLoader(
+  AppRoutes.shareRecord: (context, args) => PageLoader(
         loadLibrary: sharerecord_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => sharerecord_page.ShareRecord(),
       ),
-  AppRoutes.apps.value: (context, args) => PageLoader(
+  AppRoutes.apps: (context, args) => PageLoader(
         loadLibrary: apps_screen.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => apps_screen.AppsScreen(),
       ),
-  AppRoutes.favorites.value: (context, args) => PageLoader(
+  AppRoutes.favorites: (context, args) => PageLoader(
         loadLibrary: favorites_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => favorites_page.FavoritesPage(),
       ),
-  AppRoutes.collection.value: (context, args) => PageLoader(
+  AppRoutes.collection: (context, args) => PageLoader(
         loadLibrary: collection_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => collection_page.CollectionPage(),
       ),
-  AppRoutes.notifications.value: (context, args) => PageLoader(
+  AppRoutes.notifications: (context, args) => PageLoader(
         loadLibrary: notifications_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => notifications_page.NotificationsPage(),
       ),
-  AppRoutes.search.value: (context, args) => PageLoader(
+  AppRoutes.search: (context, args) => PageLoader(
         loadLibrary: search_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => search_page.SearchPage(
@@ -148,24 +148,24 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           autoSearch: args['autoSearch'] as bool,
         ),
       ),
-  AppRoutes.filter.value: (context, args) => PageLoader(
+  AppRoutes.filter: (context, args) => PageLoader(
         loadLibrary: filter_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => filter_page.FilterPage(),
       ),
-  AppRoutes.actors.value: (context, args) => PageLoader(
+  AppRoutes.actors: (context, args) => PageLoader(
         loadLibrary: actors_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => actors_page.ActorsPage(),
       ),
-  AppRoutes.supplier.value: (context, args) => PageLoader(
+  AppRoutes.supplier: (context, args) => PageLoader(
         loadLibrary: supplier_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => supplier_page.SupplierPage(
           id: args['id'] as int,
         ),
       ),
-  AppRoutes.supplierTag.value: (context, args) => PageLoader(
+  AppRoutes.supplierTag: (context, args) => PageLoader(
         loadLibrary: supplier_tag_video_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => supplier_tag_video_page.SupplierTagVideoPage(
@@ -173,7 +173,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           tagName: args['tagName'],
         ),
       ),
-  AppRoutes.shortsByTag.value: (context, args) => PageLoader(
+  AppRoutes.shortsByTag: (context, args) => PageLoader(
         loadLibrary: shorts_by_tag_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_tag_page.ShortsByTagPage(
@@ -182,7 +182,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           tagId: args['tagId'] as int,
         ),
       ),
-  AppRoutes.shortsBySupplier.value: (context, args) => PageLoader(
+  AppRoutes.shortsBySupplier: (context, args) => PageLoader(
         loadLibrary: shorts_by_supplier_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_supplier_page.ShortsBySupplierPage(
@@ -191,7 +191,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           supplierId: args['supplierId'] as int,
         ),
       ),
-  AppRoutes.shortsByBlock.value: (context, args) => PageLoader(
+  AppRoutes.shortsByBlock: (context, args) => PageLoader(
         loadLibrary: shorts_by_block_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_block_page.ShortsByBlockPage(
@@ -200,7 +200,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           areaId: args['areaId'] as int,
         ),
       ),
-  AppRoutes.shortsByLocal.value: (context, args) => PageLoader(
+  AppRoutes.shortsByLocal: (context, args) => PageLoader(
         loadLibrary: shorts_by_local_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_local_page.ShortsByLocalPage(
@@ -209,7 +209,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           itemId: args['itemId'] as int,
         ),
       ),
-  AppRoutes.shortsByChannel.value: (context, args) => PageLoader(
+  AppRoutes.shortsByChannel: (context, args) => PageLoader(
         loadLibrary: shorts_by_channel_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => shorts_by_channel_page.ShortsByChannelPage(
@@ -218,23 +218,23 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
           supplierId: args['supplierId'] as int,
         ),
       ),
-  AppRoutes.configs.value: (context, args) => PageLoader(
+  AppRoutes.configs: (context, args) => PageLoader(
         loadLibrary: configs_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => configs_page.ConfigsPage(),
       ),
-  AppRoutes.updatePassword.value: (context, args) => PageLoader(
+  AppRoutes.updatePassword: (context, args) => PageLoader(
         loadLibrary: update_password_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => update_password_page.UpdatePasswordPage(),
       ),
-  AppRoutes.idCard.value: (context, args) => PageLoader(
+  AppRoutes.idCard: (context, args) => PageLoader(
         loadLibrary: id_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => id_page.IDCardPage(),
       ),
   // suppliers to suppliers_screen
-  AppRoutes.suppliers.value: (context, args) => PageLoader(
+  AppRoutes.suppliers: (context, args) => PageLoader(
         loadLibrary: suppliers_screen.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => suppliers_screen.SuppliersPage(),

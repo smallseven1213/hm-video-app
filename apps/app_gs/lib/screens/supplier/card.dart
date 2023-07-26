@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/controllers/user_favorites_supplier_controller.dart';
+import 'package:shared/models/supplier.dart';
+import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/actor_avatar.dart';
@@ -72,7 +74,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    var supplier = supplierController.supplier.value;
+    Supplier supplier = supplierController.supplier.value;
     logger.i(supplier.followTotal);
 
     final double opacity = 1 - shrinkOffset / maxExtent;
@@ -94,6 +96,8 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
     final textWidth = textPainter.width;
     final systemTopBarHeight = MediaQuery.of(context).padding.top;
     final leftPadding = (screenWidth - imageSize - textWidth - 8) / 2;
+    final bool hasDescription =
+        supplier.description != null && supplier.description!.isNotEmpty;
 
     return Container(
       color: const Color(0xFF001a40).withOpacity(1 - opacity),
@@ -148,22 +152,32 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            top: lerpDouble(
-                108,
-                ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
-                percentage),
-            left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
-            child: Text(
-              '@${supplier.aliasName}',
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: fontSize,
-                  color: Colors.white),
-            ),
-          ),
+              top: lerpDouble(
+                  108,
+                  ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
+                  percentage),
+              left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '@${supplier.aliasName}',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: fontSize,
+                        color: Colors.white),
+                  ),
+                  if (hasDescription)
+                    Text(
+                      supplier.description ?? '',
+                      style: const TextStyle(color: Colors.white, fontSize: 11),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                ],
+              )),
           Positioned(
-              top: 148,
-              left: 107,
+              top: hasDescription ? 156 : 148,
+              left: 85,
               child: SizedBox(
                   width: screenWidth - 100,
                   child: Row(
@@ -171,10 +185,30 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                     children: [
                       Expanded(
                           flex: 1,
-                          child: Row(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(supplier.shortVideoTotal.toString(),
+                              Text(formatNumberToUnit(supplier.videoCount ?? 0),
+                                  style: const TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w500)),
+                              const SizedBox(width: 5),
+                              const Text('長視頻',
+                                  style: TextStyle(
+                                    color: Color(0xFFD4D4D4),
+                                    fontSize: 12,
+                                  ))
+                            ],
+                          )),
+                      Expanded(
+                          flex: 1,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                  formatNumberToUnit(
+                                      supplier.shortVideoTotal ?? 0),
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
@@ -189,10 +223,12 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                           )),
                       Expanded(
                           flex: 1,
-                          child: Row(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Text(supplier.collectTotal.toString(),
+                              Text(
+                                  formatNumberToUnit(
+                                      supplier.collectTotal ?? 0),
                                   style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 15,
@@ -207,7 +243,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                           )),
                       Expanded(
                           flex: 1,
-                          child: Row(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               // Text(supplier.followTotal.toString(),
@@ -217,8 +253,9 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                               //       fontSize: 15,
                               //     )),
                               Obx(() => Text(
-                                  supplierController.supplier.value.followTotal
-                                      .toString(),
+                                  formatNumberToUnit(supplierController
+                                          .supplier.value.followTotal ??
+                                      0),
                                   style: const TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w500,

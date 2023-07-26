@@ -45,7 +45,7 @@ class FavoritesActorScreen extends StatelessWidget {
                             listEditorController.toggleSelected(actor.id);
                           } else {
                             MyRouteDelegate.of(context).push(
-                              AppRoutes.actor.value,
+                              AppRoutes.actor,
                               args: {'id': actor.id, 'title': actor.name},
                               removeSamePath: true,
                             );

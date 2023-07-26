@@ -14,6 +14,7 @@ final logger = Logger();
 class PlayRecordController extends GetxController {
   Future<Box<String>> boxFuture;
   var data = <Vod>[].obs;
+  var activeTabId = 0.obs;
 
   PlayRecordController({required String tag})
       : boxFuture = Hive.openBox<String>('playRecord_$tag');

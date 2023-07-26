@@ -93,6 +93,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                   pauseVideo: () {
                     obsVideoPlayerController.pause();
                   },
+                  externalId: widget.videoDetail.externalId ?? '',
                   title: widget.videoDetail.title,
                   tags: widget.videoDetail.tags ?? [],
                   timeLength: widget.videoDetail.timeLength ?? 0,

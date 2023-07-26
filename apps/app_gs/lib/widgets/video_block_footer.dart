@@ -136,7 +136,7 @@ class VideoBlockFooter extends StatelessWidget {
                   onTap: () {
                     if (film == 1) {
                       MyRouteDelegate.of(context).push(
-                        AppRoutes.videoByBlock.value,
+                        AppRoutes.videoByBlock,
                         args: {
                           'blockId': block.id,
                           'title': block.name,
@@ -145,7 +145,7 @@ class VideoBlockFooter extends StatelessWidget {
                       );
                     } else if (film == 2) {
                       MyRouteDelegate.of(context).push(
-                        AppRoutes.videoByBlock.value,
+                        AppRoutes.videoByBlock,
                         args: {
                           'blockId': block.id,
                           'title': block.name,

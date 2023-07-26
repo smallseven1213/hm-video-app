@@ -169,7 +169,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                     child: GestureDetector(
                       onTap: () {
                         MyRouteDelegate.of(context).push(
-                          AppRoutes.actor.value,
+                          AppRoutes.actor,
                           args: {
                             'id': actor.id,
                             'title': actor.name,

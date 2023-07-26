@@ -1,139 +1,95 @@
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
+import 'package:get/get.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
-import 'package:shared/controllers/channel_screen_tab_controller.dart';
-import 'package:shared/controllers/layout_controller.dart';
+import 'package:shared/enums/home_navigator_pathes.dart';
+import 'package:shared/models/navigation.dart';
+import 'package:shared/widgets/layouts_builder.dart';
 
 import '../config/layouts.dart';
+import '../screens/layout_game_screen.dart';
+import '../screens/layout_home_screen/index.dart';
+import '../screens/layout_user_screen.dart';
+import '../screens/apps_screen.dart';
+import '../widgets/layout_tab_item.dart';
 
+UserApi userApi = UserApi();
 final screens = {
-  '/layout1': () => Container(
+  HomeNavigatorPathes.layout1: () => LayoutHomeScreen(
         key: Key('layout${layouts[0]}'),
+        layoutId: layouts[0],
       ),
-  '/layout2': () => Container(
-        key: Key('layout${layouts[0]}'),
+  HomeNavigatorPathes.layout2: () => LayoutHomeScreen(
+        key: Key('layout${layouts[1]}'),
+        layoutId: layouts[1],
       ),
-  '/game': () => Container(),
-  '/apps': () => Container(),
-  '/user': () => Container()
+  HomeNavigatorPathes.game: () => const LayoutGameScreen(),
+  HomeNavigatorPathes.apps: () => const AppsScreen(),
+  HomeNavigatorPathes.user: () => const LayoutUserScreen()
 };
 
 class HomePage extends StatefulWidget {
   final String? defaultScreenKey;
-  HomePage({Key? key, this.defaultScreenKey = '/layout1'}) : super(key: key);
+  HomePage({Key? key, this.defaultScreenKey = HomeNavigatorPathes.layout1})
+      : super(key: key);
 
-  // final bottomNavigatorController = Get.find<BottonNavigatorController>();
-
+  final bottomNavigatorController = Get.find<BottonNavigatorController>();
   @override
   HomeState createState() => HomeState();
 }
 
 class HomeState extends State<HomePage> {
-  // return a empty container
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.yellow,
-    );
+    return LayoutsBuilder(
+        layoutIds: const [1, 2],
+        screens: screens,
+        doOnInitState: () {
+          Get.put(GameStartupController());
+
+          userApi.writeUserEnterHallRecord();
+        },
+        screenNotFoundWidget: const Center(
+          child: Center(
+            child: Text('loading...'),
+          ),
+        ),
+        bottomNavigationBarWidget: (
+            {required String activeKey,
+            required List<Navigation> navigatorItems,
+            required Function(String tabKey) changeTabKey}) {
+          final paddingBottom = MediaQuery.of(context).padding.bottom;
+          return Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.only(bottom: paddingBottom),
+                height: 76 + paddingBottom,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: Color(0xFFe4e4e5),
+                      width: 1,
+                    ),
+                  ),
+                ),
+                child: Row(
+                  children: navigatorItems
+                      .asMap()
+                      .entries
+                      .map(
+                        (entry) => Expanded(
+                          child: LayoutTabItem(
+                              isActive: entry.value.path! == activeKey,
+                              label: entry.value.name!,
+                              onTap: () => changeTabKey(entry.value.path!)),
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ],
+          );
+        });
   }
-
-  // final bottomNavigatorController = Get.find<BottonNavigatorController>();
-  // UserApi userApi = UserApi();
-
-  // // init
-  // @override
-  // void initState() {
-  //   if (widget.defaultScreenKey != null) {
-  //     bottomNavigatorController.changeKey(widget.defaultScreenKey!);
-  //   }
-  //   for (var layout in layouts) {
-  //     Get.put(ChannelScreenTabController(),
-  //         tag: 'channel-screen-$layout', permanent: false);
-  //     Get.put(LayoutController(layout), tag: 'layout$layout', permanent: false);
-  //   }
-
-  //   Get.put(GameStartupController());
-
-  //   userApi.writeUserEnterHallRecord();
-  //   super.initState();
-  // }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Obx(
-  //     () {
-  //       var activeKey = bottomNavigatorController.activeKey.value;
-
-  //       if (!screens.containsKey(activeKey)) {
-  //         return const Scaffold(
-  //           body: Center(
-  //             child: Text('讀取中...'),
-  //           ),
-  //         );
-  //       }
-
-  //       final currentScreen = screens[activeKey]!();
-  //       final paddingBottom = MediaQuery.of(context).padding.bottom;
-
-  //       return Scaffold(
-  //           body: currentScreen,
-  //           bottomNavigationBar: bottomNavigatorController
-  //                   .navigatorItems.isEmpty
-  //               ? null
-  //               : Stack(
-  //                   children: [
-  //                     Container(
-  //                       padding: EdgeInsets.only(bottom: paddingBottom),
-  //                       height: 76 + paddingBottom,
-  //                       decoration: const BoxDecoration(
-  //                         borderRadius: kIsWeb
-  //                             ? null
-  //                             : BorderRadius.only(
-  //                                 topLeft: Radius.circular(10),
-  //                                 topRight: Radius.circular(10),
-  //                               ),
-  //                         gradient: kIsWeb
-  //                             ? null
-  //                             : LinearGradient(
-  //                                 begin: Alignment.topCenter,
-  //                                 end: Alignment.bottomCenter,
-  //                                 colors: [
-  //                                   Color(0xFF000000),
-  //                                   Color(0xFF002869),
-  //                                 ],
-  //                               ),
-  //                       ),
-  //                       child: ClipRRect(
-  //                         borderRadius: const BorderRadius.only(
-  //                           topLeft: Radius.circular(10),
-  //                           topRight: Radius.circular(10),
-  //                         ),
-  //                         child: Row(
-  //                           children: bottomNavigatorController.navigatorItems
-  //                               .asMap()
-  //                               .entries
-  //                               .map(
-  //                                 (entry) => Expanded(
-  //                                   child: Container(),
-  //                                   // child: CustomBottomBarItem(
-  //                                   //   isActive: entry.value.path! == activeKey,
-  //                                   //   iconSid: entry.value.photoSid!,
-  //                                   //   activeIconSid: entry.value.clickEffect!,
-  //                                   //   label: entry.value.name!,
-  //                                   //   onTap: () => bottomNavigatorController
-  //                                   //       .changeKey(entry.value.path!),
-  //                                   // ),
-  //                                 ),
-  //                               )
-  //                               .toList(),
-  //                         ),
-  //                       ),
-  //                     ),
-  //                     if (widget.defaultScreenKey == null) const NoticeDialog()
-  //                   ],
-  //                 ));
-  //     },
-  //   );
-  // }
 }

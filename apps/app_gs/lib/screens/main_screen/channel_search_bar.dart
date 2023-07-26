@@ -5,10 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/controllers/video_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
-
-import '../../config/colors.dart';
 import '../../widgets/static_search_input.dart';
 
 class ChannelSearchBar extends StatelessWidget {
@@ -46,26 +43,24 @@ class ChannelSearchBar extends StatelessWidget {
               return StaticSearchInput(
                 defaultValue: randomTitle,
                 onSearchButtonClick: () {
-                  MyRouteDelegate.of(context).push(AppRoutes.search.value,
-                      args: {
-                        'inputDefaultValue': randomTitle,
-                        'autoSearch': true
-                      });
+                  MyRouteDelegate.of(context).push(AppRoutes.search, args: {
+                    'inputDefaultValue': randomTitle,
+                    'autoSearch': true
+                  });
                   Get.find<UserSearchHistoryController>().add(randomTitle);
                 },
                 onInputClick: () {
-                  MyRouteDelegate.of(context).push(AppRoutes.search.value,
-                      args: {
-                        'inputDefaultValue': randomTitle,
-                        'autoSearch': false
-                      });
+                  MyRouteDelegate.of(context).push(AppRoutes.search, args: {
+                    'inputDefaultValue': randomTitle,
+                    'autoSearch': false
+                  });
                 },
               );
             }),
           ),
           GestureDetector(
             onTap: () {
-              MyRouteDelegate.of(context).push(AppRoutes.filter.value);
+              MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
             child: Container(
                 width: 40,

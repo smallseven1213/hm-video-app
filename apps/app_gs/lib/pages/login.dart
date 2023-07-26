@@ -142,9 +142,8 @@ class LoginPageState extends State<LoginPage> {
                     children: [
                       InkWell(
                         onTap: () {
-                          MyRouteDelegate.of(context).push(
-                              AppRoutes.register.value,
-                              deletePreviousCount: 1);
+                          MyRouteDelegate.of(context)
+                              .push(AppRoutes.register, deletePreviousCount: 1);
                         },
                         child: const Column(children: [
                           Text('還沒有帳號',
