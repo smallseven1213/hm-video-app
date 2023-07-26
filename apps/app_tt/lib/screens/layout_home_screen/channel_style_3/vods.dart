@@ -1,22 +1,18 @@
 import 'dart:async';
 
-import 'package:app_gs/widgets/no_data.dart';
-import 'package:app_gs/widgets/video_preview.dart';
-import 'package:shared/models/banner_photo.dart';
-import 'package:shared/widgets/refresh_list.dart';
-import 'package:app_gs/widgets/reload_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/channe_block_vod_controller.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/widgets/base_video_block_template.dart';
+import 'package:shared/widgets/refresh_list.dart';
 
-import '../../../widgets/channel_area_banner.dart';
 import '../../../widgets/list_no_more.dart';
+import '../../../widgets/no_data.dart';
 import '../../../widgets/sliver_video_preview_skelton_list.dart';
-import '../../../widgets/video_list_loading_text.dart';
-
-final logger = Logger();
+import '../../../widgets/video_preview.dart';
+import '../channel_area_banner.dart';
+import '../reload_button.dart';
 
 class Vods extends StatefulWidget {
   final int areaId;
@@ -115,7 +111,6 @@ class VodsState extends State<Vods> {
               isRefreshing = false;
             });
           },
-          loadingWidget: const VideoListLoadingText(),
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -149,7 +144,6 @@ class VodsState extends State<Vods> {
                     blockId: widget.areaId,
                     film: vodController!.film.value,
                     displayVideoCollectTimes: false,
-                    displayCoverVertical: vodController!.film.value == 2,
                   ),
                 ),
               ),
@@ -169,7 +163,6 @@ class VodsState extends State<Vods> {
                   child: NoDataWidget(),
                 ),
               if (vodController!.displayLoading.value && !isRefreshing)
-                // ignore: prefer_const_constructors
                 SliverVideoPreviewSkeletonList(),
               if (vodController!.displayNoMoreData.value)
                 SliverToBoxAdapter(

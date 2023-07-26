@@ -5,7 +5,7 @@ import 'package:shared/models/jingang_detail.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'circle_sidimage_text_item.dart';
+import '../../widgets/circle_sidimage_text_item.dart';
 
 class JingangButton extends StatelessWidget {
   final JinGangDetail? item;

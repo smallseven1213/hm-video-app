@@ -5,6 +5,7 @@ import 'package:shared/widgets/display_layout_tab_search.dart';
 
 import '../../widgets/wave_loading.dart';
 import 'channel_search_bar.dart';
+import 'channels.dart';
 import 'layout_tab_bar.dart';
 
 class LayoutHomeScreen extends StatelessWidget {
@@ -33,10 +34,10 @@ class LayoutHomeScreen extends StatelessWidget {
           return Scaffold(
               body: Stack(
             children: [
-              // Channels(
-              //   key: Key('channels-$layoutId'),
-              //   layoutId: layoutId,
-              // ),
+              Channels(
+                key: Key('channels-$layoutId'),
+                layoutId: layoutId,
+              ),
               Positioned(
                   child: Column(
                 children: [

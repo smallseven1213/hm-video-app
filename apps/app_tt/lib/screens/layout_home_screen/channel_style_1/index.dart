@@ -1,6 +1,4 @@
-import 'package:app_gs/widgets/button.dart';
-import 'package:shared/widgets/refresh_list.dart';
-import 'package:app_gs/widgets/reload_button.dart';
+import 'package:app_tt/screens/layout_home_screen/block_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,10 +7,11 @@ import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:app_gs/widgets/video_list_loading_text.dart';
+import 'package:shared/widgets/refresh_list.dart';
 
+import '../../../widgets/button.dart';
 import '../../../widgets/channel_skelton.dart';
-import '../../../widgets/header.dart';
+import '../reload_button.dart';
 import '../videoblock.dart';
 import 'banners.dart';
 import 'jingang.dart';
@@ -76,7 +75,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
               sliverBlocks.add(SliverToBoxAdapter(
                 key: Key(
                     'block${block.id}_${widget.channelId}_${channelDataController.offset}'),
-                child: Header(
+                child: BlockHeader(
                   text: block.name ?? '',
                   moreButton: block.isMore!
                       ? InkWell(
@@ -139,7 +138,6 @@ class ChannelStyle1State extends State<ChannelStyle1>
           return RefreshList(
             onRefresh: _onRefresh,
             onLoading: _onLoading,
-            loadingWidget: const VideoListLoadingText(),
             child: CustomScrollView(
               physics: kIsWeb ? null : const BouncingScrollPhysics(),
               slivers: [
@@ -152,7 +150,8 @@ class ChannelStyle1State extends State<ChannelStyle1>
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.only(top: 8.0),
-                      child: Header(text: channelData.jingang!.title ?? ''),
+                      child:
+                          BlockHeader(text: channelData.jingang!.title ?? ''),
                     ),
                   ),
                 JingangList(channelId: widget.channelId),

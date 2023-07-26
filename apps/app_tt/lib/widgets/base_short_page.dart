@@ -5,7 +5,6 @@ import 'package:shared/models/vod.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/video_provider.dart';
 
-import 'shortcard/index.dart';
 import 'wave_loading.dart';
 
 final logger = Logger();
@@ -115,30 +114,31 @@ class BaseShortPageState extends State<BaseShortPage> {
               var shortData = cachedVods[currentIndex];
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
               return VideoProvider(
-                key: Key('video-provider-$obsKey'),
-                obsKey: obsKey,
-                vodId: shortData.id,
-                loading: const Center(
-                  child: WaveLoading(
-                    color: Color.fromRGBO(255, 255, 255, 0.3),
-                    duration: Duration(milliseconds: 1000),
-                    size: 17,
-                    itemCount: 3,
+                  key: Key('video-provider-$obsKey'),
+                  obsKey: obsKey,
+                  vodId: shortData.id,
+                  loading: const Center(
+                    child: WaveLoading(
+                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                      duration: Duration(milliseconds: 1000),
+                      size: 17,
+                      itemCount: 3,
+                    ),
                   ),
-                ),
-                child: ShortCard(
-                    obsKey: obsKey.toString(),
-                    index: index,
-                    id: shortData.id,
-                    title: shortData.title,
-                    supportedPlayRecord: widget.supportedPlayRecord,
-                    shortData: shortData,
-                    displayFavoriteAndCollectCount:
-                        widget.displayFavoriteAndCollectCount,
-                    toggleFullScreen: () =>
-                        pageviewIndexController.toggleFullscreen(),
-                    hiddenBottomArea: widget.hiddenBottomArea),
-              );
+                  child: Container()
+                  // child: ShortCard(
+                  //     obsKey: obsKey.toString(),
+                  //     index: index,
+                  //     id: shortData.id,
+                  //     title: shortData.title,
+                  //     supportedPlayRecord: widget.supportedPlayRecord,
+                  //     shortData: shortData,
+                  //     displayFavoriteAndCollectCount:
+                  //         widget.displayFavoriteAndCollectCount,
+                  //     toggleFullScreen: () =>
+                  //         pageviewIndexController.toggleFullscreen(),
+                  //     hiddenBottomArea: widget.hiddenBottomArea),
+                  );
             },
             scrollDirection: Axis.vertical,
           ),
