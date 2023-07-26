@@ -33,8 +33,16 @@ class Tag {
   final int? parent;
   final int? orderIndex;
   final String? photoSid;
+  final int? film;
 
-  Tag(this.id, this.name, {this.parent, this.orderIndex, this.photoSid});
+  Tag(
+    this.id,
+    this.name, {
+    this.parent,
+    this.orderIndex,
+    this.photoSid,
+    this.film,
+  });
 
   factory Tag.fromJson(Map<String, dynamic> json) {
     return Tag(
@@ -43,6 +51,7 @@ class Tag {
       parent: json['parent'],
       orderIndex: json['orderIndex'],
       photoSid: json['photoSid'],
+      film: json['film'],
     );
   }
 
@@ -53,6 +62,7 @@ class Tag {
     data['parent'] = parent;
     data['orderIndex'] = orderIndex;
     data['photoSid'] = photoSid;
+    data['film'] = film;
     return data;
   }
 }

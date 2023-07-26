@@ -9,11 +9,14 @@ import '../widgets/sliver_vod_grid.dart';
 class TagVideoPage extends StatefulWidget {
   final int id;
   final String title;
+  final int film;
 
   const TagVideoPage({
     Key? key,
     required this.id,
     required this.title,
+    this.film = 1,
+
   }) : super(key: key);
 
   @override
