@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
-import 'video_preview.dart';
+import 'package:shared/widgets/base_video_preview.dart';
 
 class VideoBlockGridViewRow extends StatelessWidget {
   final List<Vod> videoData;
@@ -14,6 +14,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
+  final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
 
   const VideoBlockGridViewRow({
     Key? key,
@@ -28,30 +29,31 @@ class VideoBlockGridViewRow extends StatelessWidget {
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.film = 1,
+    required this.buildVideoPreview,
   }) : super(key: key);
 
   Widget _buildVideoPreviewWidget(Vod video) {
-    return Expanded(
-      child: VideoPreviewWidget(
-        id: video.id,
-        title: video.title,
-        tags: video.tags ?? [],
-        timeLength: video.timeLength ?? 0,
-        coverHorizontal: video.coverHorizontal ?? '',
-        coverVertical: video.coverVertical ?? '',
-        videoViewTimes: video.videoViewTimes ?? 0,
-        videoCollectTimes: video.videoCollectTimes ?? 0,
-        imageRatio: imageRatio,
-        detail: video,
-        isEmbeddedAds: isEmbeddedAds,
-        displayCoverVertical: displayCoverVertical ?? false,
-        blockId: blockId,
-        film: film,
-        displayVideoCollectTimes: displayVideoCollectTimes,
-        displayVideoTimes: displayVideoTimes,
-        displayViewTimes: displayViewTimes,
-      ),
-    );
+    return Expanded(child: buildVideoPreview(video)
+        // VideoPreviewWidget(
+        //   id: video.id,
+        //   title: video.title,
+        //   tags: video.tags ?? [],
+        //   timeLength: video.timeLength ?? 0,
+        //   coverHorizontal: video.coverHorizontal ?? '',
+        //   coverVertical: video.coverVertical ?? '',
+        //   videoViewTimes: video.videoViewTimes ?? 0,
+        //   videoCollectTimes: video.videoCollectTimes ?? 0,
+        //   imageRatio: imageRatio,
+        //   detail: video,
+        //   isEmbeddedAds: isEmbeddedAds,
+        //   displayCoverVertical: displayCoverVertical ?? false,
+        //   blockId: blockId,
+        //   film: film,
+        //   displayVideoCollectTimes: displayVideoCollectTimes,
+        //   displayVideoTimes: displayVideoTimes,
+        //   displayViewTimes: displayViewTimes,
+        // ),
+        );
   }
 
   @override
@@ -87,27 +89,27 @@ class VideoBlockGridViewRow extends StatelessWidget {
                           width: double.infinity,
                         ),
                       )
-                    : Expanded(
-                        child: VideoPreviewWidget(
-                          id: e.id,
-                          title: e.title,
-                          tags: e.tags ?? [],
-                          timeLength: e.timeLength ?? 0,
-                          coverHorizontal: e.coverHorizontal ?? '',
-                          coverVertical: e.coverVertical ?? '',
-                          videoViewTimes: e.videoViewTimes ?? 0,
-                          videoCollectTimes: e.videoCollectTimes ?? 0,
-                          imageRatio: imageRatio,
-                          detail: e,
-                          isEmbeddedAds: isEmbeddedAds,
-                          displayCoverVertical: displayCoverVertical ?? false,
-                          blockId: blockId,
-                          film: film,
-                          displayVideoCollectTimes: displayVideoCollectTimes,
-                          displayVideoTimes: displayVideoTimes,
-                          displayViewTimes: displayViewTimes,
+                    : Expanded(child: buildVideoPreview(e)
+                        // VideoPreviewWidget(
+                        //   id: e.id,
+                        //   title: e.title,
+                        //   tags: e.tags ?? [],
+                        //   timeLength: e.timeLength ?? 0,
+                        //   coverHorizontal: e.coverHorizontal ?? '',
+                        //   coverVertical: e.coverVertical ?? '',
+                        //   videoViewTimes: e.videoViewTimes ?? 0,
+                        //   videoCollectTimes: e.videoCollectTimes ?? 0,
+                        //   imageRatio: imageRatio,
+                        //   detail: e,
+                        //   isEmbeddedAds: isEmbeddedAds,
+                        //   displayCoverVertical: displayCoverVertical ?? false,
+                        //   blockId: blockId,
+                        //   film: film,
+                        //   displayVideoCollectTimes: displayVideoCollectTimes,
+                        //   displayVideoTimes: displayVideoTimes,
+                        //   displayViewTimes: displayViewTimes,
+                        // ),
                         ),
-                      ),
                 const SizedBox(width: 10),
                 if (videoData.length == 1)
                   for (var i = 0; i < 2; i++) ...[
@@ -146,25 +148,26 @@ class VideoBlockGridViewRow extends StatelessWidget {
           .expand(
             (e) => [
               Expanded(
-                child: VideoPreviewWidget(
-                  id: e.id,
-                  title: e.title,
-                  tags: e.tags ?? [],
-                  timeLength: e.timeLength ?? 0,
-                  coverHorizontal: e.coverHorizontal ?? '',
-                  coverVertical: e.coverVertical ?? '',
-                  videoViewTimes: e.videoViewTimes ?? 0,
-                  videoCollectTimes: e.videoCollectTimes ?? 0,
-                  imageRatio: imageRatio,
-                  detail: e,
-                  isEmbeddedAds: isEmbeddedAds,
-                  displayCoverVertical: displayCoverVertical ?? false,
-                  blockId: blockId,
-                  film: film,
-                  displayVideoCollectTimes: displayVideoCollectTimes,
-                  displayVideoTimes: displayVideoTimes,
-                  displayViewTimes: displayViewTimes,
-                ),
+                child: buildVideoPreview(e),
+                // child: VideoPreviewWidget(
+                //   id: e.id,
+                //   title: e.title,
+                //   tags: e.tags ?? [],
+                //   timeLength: e.timeLength ?? 0,
+                //   coverHorizontal: e.coverHorizontal ?? '',
+                //   coverVertical: e.coverVertical ?? '',
+                //   videoViewTimes: e.videoViewTimes ?? 0,
+                //   videoCollectTimes: e.videoCollectTimes ?? 0,
+                //   imageRatio: imageRatio,
+                //   detail: e,
+                //   isEmbeddedAds: isEmbeddedAds,
+                //   displayCoverVertical: displayCoverVertical ?? false,
+                //   blockId: blockId,
+                //   film: film,
+                //   displayVideoCollectTimes: displayVideoCollectTimes,
+                //   displayVideoTimes: displayVideoTimes,
+                //   displayViewTimes: displayViewTimes,
+                // ),
               ),
               const SizedBox(width: 10),
             ],

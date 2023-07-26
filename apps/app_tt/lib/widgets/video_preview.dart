@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/base_video_preview.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video_collection_times.dart';
 import 'package:shared/widgets/view_times.dart';
@@ -77,63 +78,63 @@ class ViewInfo extends StatelessWidget {
   }
 }
 
-class VideoPreviewWidget extends StatelessWidget {
-  final int id;
-  final String coverVertical;
-  final String coverHorizontal;
-  final bool displayCoverVertical;
-  final int timeLength;
-  final List<Tag> tags;
-  final String title;
-  final int? videoViewTimes;
-  final int? videoCollectTimes;
-  final double? imageRatio;
-  final Vod? detail;
-  final bool isEmbeddedAds;
-  final bool? hasTags;
-  final bool? hasInfoView;
-  final int? film; // 1長視頻, 2短視頻, 3漫畫
-  final int? blockId;
-  final bool? hasRadius; // 要不要圓角
-  final bool? hasTitle; // 要不要標題
-  final bool? hasTapEvent; // 要不要點擊事件
-  final bool? displayVideoCollectTimes;
-  final bool? displayVideoTimes;
-  final bool? displayViewTimes;
-  final Function()? onTap;
-  final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
-
-  const VideoPreviewWidget({
+class VideoPreviewWidget extends BaseVideoPreviewWidget {
+  VideoPreviewWidget({
     Key? key,
-    required this.id,
-    required this.coverVertical,
-    required this.coverHorizontal,
-    this.displayCoverVertical = false,
-    required this.timeLength,
-    required this.tags,
-    required this.title,
-    this.videoViewTimes = 0,
-    this.videoCollectTimes = 0,
-    this.isEmbeddedAds = false,
-    this.detail,
-    this.imageRatio,
-    this.film = 1,
-    this.hasTags = true,
-    this.hasInfoView = true,
-    this.blockId,
-    this.hasRadius = true,
-    this.hasTitle = true,
-    this.onTap,
-    this.hasTapEvent = true,
-    this.onOverrideRedirectTap,
-    this.displayVideoCollectTimes = true,
-    this.displayVideoTimes = true,
-    this.displayViewTimes = true,
-  }) : super(key: key);
+    required int id,
+    required String coverVertical,
+    required String coverHorizontal,
+    bool displayCoverVertical = false,
+    required int timeLength,
+    required List<Tag> tags,
+    required String title,
+    int? videoViewTimes = 0,
+    int? videoCollectTimes = 0,
+    bool isEmbeddedAds = false,
+    Vod? detail,
+    double? imageRatio,
+    int? film = 1,
+    bool? hasTags = true,
+    bool? hasInfoView = true,
+    int? blockId,
+    bool? hasRadius = true,
+    bool? hasTitle = true,
+    Function()? onTap,
+    bool? hasTapEvent = true,
+    Function(int id)? onOverrideRedirectTap,
+    bool? displayVideoCollectTimes = true,
+    bool? displayVideoTimes = true,
+    bool? displayViewTimes = true,
+  }) : super(
+          key: key,
+          id: id,
+          coverVertical: coverVertical,
+          coverHorizontal: coverHorizontal,
+          displayCoverVertical: displayCoverVertical,
+          timeLength: timeLength,
+          tags: tags,
+          title: title,
+          videoViewTimes: videoViewTimes,
+          videoCollectTimes: videoCollectTimes,
+          isEmbeddedAds: isEmbeddedAds,
+          detail: detail,
+          imageRatio: imageRatio,
+          film: film,
+          hasTags: hasTags,
+          hasInfoView: hasInfoView,
+          blockId: blockId,
+          hasRadius: hasRadius,
+          hasTitle: hasTitle,
+          onTap: onTap,
+          hasTapEvent: hasTapEvent,
+          onOverrideRedirectTap: onOverrideRedirectTap,
+          displayVideoCollectTimes: displayVideoCollectTimes,
+          displayVideoTimes: displayVideoTimes,
+          displayViewTimes: displayViewTimes,
+        );
 
   @override
   Widget build(BuildContext context) {
-    // logger.i('RENDER VIDEO PREVIEW WIDGET!!!');
     if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
       return VideoEmbeddedAdWidget(
         imageRatio: imageRatio ?? 374 / 198,
@@ -141,112 +142,83 @@ class VideoPreviewWidget extends StatelessWidget {
         displayCoverVertical: displayCoverVertical,
       );
     }
+
     return Column(
       children: [
         GestureDetector(
-          onTap: () {
-            if (onTap != null) {
-              onTap!();
-            }
-            if (hasTapEvent == true) {
-              if (onOverrideRedirectTap != null) {
-                onOverrideRedirectTap!(id);
-              } else {
-                if (film == 1) {
-                  MyRouteDelegate.of(context).push(
-                    AppRoutes.video,
-                    args: {'id': id, 'blockId': blockId},
-                    removeSamePath: true,
-                  );
-                } else if (film == 2) {
-                  MyRouteDelegate.of(context).push(
-                    AppRoutes.shortsByBlock,
-                    args: {'videoId': id, 'areaId': blockId},
-                  );
-                } else if (film == 3) {
-                  // MyRouteDelegate.of(context).push(
-                  //   AppRoutes.comic.value,
-                  //   args: {'id': id, 'blockId': blockId},
-                  //   removeSamePath: true,
-                  // );
-                }
-              }
-            }
-          },
-          child: Stack(
-            children: [
-              // 背景
-              AspectRatio(
-                aspectRatio: imageRatio ??
-                    (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-                child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: hasRadius == true
-                            ? const BorderRadius.all(Radius.circular(10))
-                            : null,
-                        color: const Color(0xFF00234D)
-                        // color: Colors.white,
-                        ),
-                    clipBehavior: Clip.antiAlias,
-                    child: const Center(
-                      child: Image(
-                        image: AssetImage(
-                            'assets/images/video_preview_loading.png'),
-                        width: 102,
-                        height: 70,
-                      ),
-                    )),
-              ),
-              // 主體
-              AspectRatio(
-                aspectRatio: imageRatio ??
-                    (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-                child: Container(
-                    decoration: BoxDecoration(
+          onTap: () => super.onVideoTap(context),
+          child: Stack(children: [
+            // 背景
+            AspectRatio(
+              aspectRatio: imageRatio ??
+                  (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+              child: Container(
+                  decoration: BoxDecoration(
                       borderRadius: hasRadius == true
                           ? const BorderRadius.all(Radius.circular(10))
                           : null,
+                      color: const Color(0xFF00234D)
                       // color: Colors.white,
-                    ),
-                    foregroundDecoration: BoxDecoration(
-                      gradient: kIsWeb
-                          ? null
-                          : LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Colors.black.withOpacity(0.0),
-                                Colors.black.withOpacity(0.3),
-                              ],
-                              stops: const [0.9, 1.0],
-                            ),
-                    ),
-                    clipBehavior: Clip.antiAlias,
-                    child: SidImageVisibilityDetector(
-                      child: SidImage(
-                        key: ValueKey('video-preview-$id'),
-                        sid: displayCoverVertical
-                            ? coverVertical
-                            : coverHorizontal,
-                        width: double.infinity,
-                        fit: BoxFit.cover,
                       ),
-                    )),
-              ),
-              if (hasInfoView == true)
-                Positioned(
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    child: ViewInfo(
-                        videoCollectTimes: videoCollectTimes,
-                        viewCount: videoViewTimes ?? 0,
-                        duration: timeLength,
-                        displayVideoTimes: displayVideoTimes,
-                        displayViewTimes: displayViewTimes,
-                        displayVideoCollectTimes: displayVideoCollectTimes)),
-            ],
-          ),
+                  clipBehavior: Clip.antiAlias,
+                  child: const Center(
+                    child: Image(
+                      image:
+                          AssetImage('assets/images/video_preview_loading.png'),
+                      width: 102,
+                      height: 70,
+                    ),
+                  )),
+            ),
+            // 主體
+            AspectRatio(
+              aspectRatio: imageRatio ??
+                  (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+              child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: hasRadius == true
+                        ? const BorderRadius.all(Radius.circular(10))
+                        : null,
+                    // color: Colors.white,
+                  ),
+                  foregroundDecoration: BoxDecoration(
+                    gradient: kIsWeb
+                        ? null
+                        : LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.black.withOpacity(0.0),
+                              Colors.black.withOpacity(0.3),
+                            ],
+                            stops: const [0.9, 1.0],
+                          ),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: SidImageVisibilityDetector(
+                    child: SidImage(
+                      key: ValueKey('video-preview-$id'),
+                      sid: displayCoverVertical
+                          ? coverVertical
+                          : coverHorizontal,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  )),
+            ),
+            if (hasInfoView == true)
+              Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  child: ViewInfo(
+                      videoCollectTimes: videoCollectTimes,
+                      viewCount: videoViewTimes ?? 0,
+                      duration: timeLength,
+                      displayVideoTimes: displayVideoTimes,
+                      displayViewTimes: displayViewTimes,
+                      displayVideoCollectTimes: displayVideoCollectTimes)),
+          ]),
         ),
         const SizedBox(height: 5),
         if (hasTitle == true)
@@ -320,6 +292,8 @@ class VideoPreviewWidget extends StatelessWidget {
             ),
           )
         ]
+        // The rest of your UI logic
+        // ...
       ],
     );
   }

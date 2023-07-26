@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/widgets/video_block_grid_view_row.dart';
 
-import 'video_block_grid_view_row.dart';
+import 'base_video_preview.dart';
 
 final logger = Logger();
 
@@ -18,6 +19,7 @@ class VideoBlockGridView extends StatelessWidget {
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
+  final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
 
   const VideoBlockGridView({
     Key? key,
@@ -32,6 +34,7 @@ class VideoBlockGridView extends StatelessWidget {
     this.displayVideoCollectTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
+    required this.buildVideoPreview,
   }) : super(key: key);
 
   @override
@@ -61,6 +64,7 @@ class VideoBlockGridView extends StatelessWidget {
               displayVideoCollectTimes: displayVideoCollectTimes,
               displayVideoTimes: displayVideoTimes,
               displayViewTimes: displayViewTimes,
+              buildVideoPreview: (video) => buildVideoPreview(video),
             ),
             const SizedBox(height: 8),
           ],

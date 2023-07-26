@@ -1,9 +1,8 @@
-// // Block6Widget
-import 'package:app_gs/widgets/video_block_footer.dart';
-import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
+
+import '../base_video_preview.dart';
 
 // 六小
 class Block6Widget extends StatelessWidget {
@@ -11,12 +10,16 @@ class Block6Widget extends StatelessWidget {
   final Function updateBlock;
   final int channelId;
   final int film;
+  final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
+  final Widget? buildFooter;
   const Block6Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
     required this.channelId,
     required this.film,
+    required this.buildVideoPreview,
+    this.buildFooter,
   }) : super(key: key);
 
   @override
@@ -41,31 +44,13 @@ class Block6Widget extends StatelessWidget {
                     (index) => Container(
                       padding: const EdgeInsets.only(right: 8.0),
                       width: (MediaQuery.of(context).size.width - 16) * 0.7,
-                      child: VideoPreviewWidget(
-                        id: videos[index].id,
-                        title: videos[index].title,
-                        tags: videos[index].tags ?? [],
-                        timeLength: videos[index].timeLength ?? 0,
-                        coverHorizontal: videos[index].coverHorizontal ?? '',
-                        coverVertical: videos[index].coverVertical ?? '',
-                        videoViewTimes: videos[index].videoViewTimes ?? 0,
-                        videoCollectTimes: videos[index].videoCollectTimes ?? 0,
-                        detail: videos[index],
-                        isEmbeddedAds: block.isEmbeddedAds ?? false,
-                        displayVideoTimes: film == 1,
-                        displayViewTimes: film == 1,
-                        displayVideoCollectTimes: film == 2,
-                      ),
+                      child: buildVideoPreview(videos[index]),
                     ),
                   ),
                 ),
               ),
             ),
-            VideoBlockFooter(
-                film: film,
-                block: block,
-                updateBlock: updateBlock,
-                channelId: channelId),
+            buildFooter ?? const SizedBox.shrink(),
           ],
         ),
       ),

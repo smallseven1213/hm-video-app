@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:app_gs/widgets/video_list_loading_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -7,6 +6,7 @@ class RefreshList extends StatefulWidget {
   final Function? onRefresh;
   final Function? onLoading;
   final Function? onRefreshEnd;
+  final Widget? loadingWidget;
   final Widget? child;
 
   const RefreshList({
@@ -15,6 +15,7 @@ class RefreshList extends StatefulWidget {
     this.onRefresh,
     this.onRefreshEnd,
     this.child,
+    this.loadingWidget,
   }) : super(key: key);
 
   @override
@@ -73,7 +74,7 @@ class RefreshListState extends State<RefreshList> {
                           )),
                     if (mode == RefreshStatus.refreshing)
                       // ignore: prefer_const_constructors
-                      VideoListLoadingText(),
+                      widget.loadingWidget ?? Container(),
                     const SizedBox(height: 15),
                   ],
                 ),

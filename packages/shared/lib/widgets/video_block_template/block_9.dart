@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 
-class Block11Widget extends StatelessWidget {
+class Block9Widget extends StatelessWidget {
   final List<Vod> videos;
-  const Block11Widget({Key? key, required this.videos}) : super(key: key);
+  const Block9Widget({Key? key, required this.videos}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +21,5 @@ class Block11Widget extends StatelessWidget {
                   height: 60,
                   color: Colors.white,
                 )));
-    // children: List.generate(
-    //   10,
-    //   (index) => VideoPreviewWidget(
-    //     title: videos[index].title ?? '',
-    //     tags: videos[index].tags ?? [],
-    //     timeLength: videos[index].timeLength ?? 0,
-    //     coverHorizontal: videos[index].coverHorizontal ?? '',
-    //     coverVertical: videos[index].coverVertical ?? '',
-    //     videoViewTimes: videos[index].videoViewTimes ?? 0,
-    //   ),
-    // ));
   }
 }

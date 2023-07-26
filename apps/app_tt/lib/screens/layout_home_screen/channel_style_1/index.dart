@@ -7,8 +7,12 @@ import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/refresh_list.dart';
 
+import '../../../widgets/button.dart';
+import '../../../widgets/channel_skelton.dart';
 import '../reload_button.dart';
+import '../videoblock.dart';
 import 'banners.dart';
 import 'jingang.dart';
 

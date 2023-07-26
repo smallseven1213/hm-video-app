@@ -1,13 +1,11 @@
-// Block1Widget
-
-import 'package:app_gs/widgets/video_preview.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/sid_image.dart';
+
+import '../base_video_preview.dart';
 
 final logger = Logger();
 
@@ -16,12 +14,14 @@ class Block7Widget extends StatefulWidget {
   final Function updateBlock;
   final int channelId;
   final int film;
+  final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
   const Block7Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
     required this.channelId,
     required this.film,
+    required this.buildVideoPreview,
   }) : super(key: key);
 
   @override
@@ -68,20 +68,6 @@ class Block7WidgetState extends State<Block7Widget> {
                           fit: BoxFit.cover,
                         ),
                       ),
-                      // child: Stack(
-                      //   alignment: Alignment.centerLeft,
-                      //   children: [
-                      //     FractionallySizedBox(
-                      //       widthFactor: 2.0,
-                      //       child: SidImage(
-                      //         key: ValueKey(backgroundPhotoSid),
-                      //         sid: backgroundPhotoSid!,
-                      //         width: double.infinity,
-                      //         fit: BoxFit.cover,
-                      //       ),
-                      //     ),
-                      //   ],
-                      // ),
                     ),
                   ),
             ClipRRect(
@@ -125,24 +111,7 @@ class Block7WidgetState extends State<Block7Widget> {
                     child: SizedBox(
                       height: 267,
                       width: 160,
-                      child: VideoPreviewWidget(
-                        id: vod.id,
-                        film: widget.film,
-                        displayCoverVertical: true,
-                        coverVertical: vod.coverVertical!,
-                        coverHorizontal: vod.coverHorizontal!,
-                        timeLength: vod.timeLength!,
-                        tags: vod.tags!,
-                        title: vod.title,
-                        imageRatio: 160 / 245,
-                        hasTags: false,
-                        videoViewTimes: vod.videoViewTimes!,
-                        videoCollectTimes: vod.videoCollectTimes!,
-                        blockId: widget.block.id,
-                        displayVideoTimes: widget.film == 1,
-                        displayViewTimes: widget.film == 1,
-                        displayVideoCollectTimes: widget.film == 2,
-                      ),
+                      child: widget.buildVideoPreview(vod),
                     ),
                   );
                 })

@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/block_image_ratio.dart';
 import 'package:shared/models/vod.dart';
 
-import '../channel_area_banner.dart';
+import '../base_video_preview.dart';
 import '../video_block_grid_view_row.dart';
 
 List<List<Vod>> organizeRowData(List videos) {
@@ -30,10 +29,12 @@ List<List<Vod>> organizeRowData(List videos) {
   return resultArray;
 }
 
-SliverChildBuilderDelegate baseVideoBlockTemplate3({
+SliverChildBuilderDelegate baseVideoBlockTemplate10({
   required List<Vod> vods,
-  required int areaId,
+  required BaseVideoPreviewWidget Function(Vod video) buildVideoPreview,
+  required Widget Function(Vod video) buildBanner,
   int? film = 1,
+  required int areaId,
 }) {
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {
@@ -43,25 +44,21 @@ SliverChildBuilderDelegate baseVideoBlockTemplate3({
         // padding bottom 8
         padding: const EdgeInsets.only(bottom: 8.0),
         child: result[index][0].dataType == VideoType.areaAd.index
-            ? ChannelAreaBanner(
-                image: BannerPhoto.fromJson({
-                  'id': result[index][0].id,
-                  'url': result[index][0].adUrl ?? '',
-                  'photoSid': result[index][0].coverHorizontal ?? '',
-                  'isAutoClose': false,
-                }),
-              )
+            ? buildBanner(result[index][0])
             : VideoBlockGridViewRow(
                 videoData: result[index],
                 gridLength: 2,
-                imageRatio: BlockImageRatio.block3.ratio,
+                imageRatio: BlockImageRatio.block10.ratio,
                 isEmbeddedAds: true,
+                displayCoverVertical: true,
                 film: film,
                 blockId: areaId,
                 displayVideoCollectTimes: false,
-              ),
+                displayVideoTimes: true,
+                displayViewTimes: true,
+                buildVideoPreview: buildVideoPreview),
       );
     },
-    childCount: organizeRowData(vods).length,
+    childCount: vods.length ~/ 2,
   );
 }

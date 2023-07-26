@@ -1,9 +1,6 @@
-import 'package:app_gs/widgets/channel_area_banner.dart';
-import 'package:app_gs/widgets/video_block_footer.dart';
-import 'package:app_gs/widgets/video_block_grid_view.dart';
+import 'package:shared/widgets/base_video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
 final logger = Logger();
@@ -54,14 +51,20 @@ class Block4Widget extends StatelessWidget {
   final Function updateBlock;
   final int channelId;
   final int film;
+  final Widget Function(Vod video) buildBanner;
+  final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
+  final Widget? buildFooter;
 
-  const Block4Widget({
-    Key? key,
-    required this.block,
-    required this.updateBlock,
-    required this.channelId,
-    required this.film,
-  }) : super(key: key);
+  const Block4Widget(
+      {Key? key,
+      required this.block,
+      required this.updateBlock,
+      required this.channelId,
+      required this.film,
+      required this.buildBanner,
+      required this.buildVideoPreview,
+      this.buildFooter})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -78,35 +81,12 @@ class Block4Widget extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: Container(
                   child: result[index][0].dataType == VideoType.areaAd.index
-                      ? ChannelAreaBanner(
-                          image: BannerPhoto.fromJson({
-                            'id': result[index][0].id,
-                            'url': result[index][0].adUrl ?? '',
-                            'photoSid': result[index][0].coverHorizontal ?? '',
-                            'isAutoClose': false,
-                          }),
-                        )
-                      : VideoBlockGridView(
-                          blockId: block.id ?? 0,
-                          videos: result[index],
-                          gridLength: 3,
-                          imageRatio: BlockImageRatio.block4.ratio,
-                          isEmbeddedAds: block.isEmbeddedAds ?? false,
-                          displayCoverVertical: true,
-                          hasInfoView: false,
-                          film: film,
-                          displayVideoCollectTimes: false,
-                          displayVideoTimes: false,
-                          displayViewTimes: false,
-                        ),
+                      ? buildBanner(result[index][0])
+                      : buildVideoPreview(result[index][0]),
                 ),
               );
             } else {
-              return VideoBlockFooter(
-                  film: film,
-                  block: block,
-                  updateBlock: updateBlock,
-                  channelId: channelId);
+              return buildFooter ?? const SizedBox.shrink();
             }
           },
           childCount: result.length + 1,

@@ -1,8 +1,6 @@
-import 'package:app_gs/widgets/channel_area_banner.dart';
-import 'package:app_gs/widgets/video_block_footer.dart';
-import 'package:app_gs/widgets/video_block_grid_view_row.dart';
+import 'package:shared/widgets/base_video_preview.dart';
+import 'package:shared/widgets/video_block_grid_view_row.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
 
 List<List<Vod>> organizeRowData(List videos, Blocks block) {
@@ -44,12 +42,18 @@ class Block3Widget extends StatelessWidget {
   final Function updateBlock;
   final int channelId;
   final int film;
+  final Widget Function(Vod video) buildBanner;
+  final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
+  final Widget? buildFooter;
   const Block3Widget({
     Key? key,
     required this.film,
     required this.block,
     required this.updateBlock,
     required this.channelId,
+    required this.buildBanner,
+    required this.buildVideoPreview,
+    this.buildFooter,
   }) : super(key: key);
 
   @override
@@ -63,30 +67,19 @@ class Block3Widget extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
             if (index == result.length) {
-              return VideoBlockFooter(
-                  film: film,
-                  block: block,
-                  updateBlock: updateBlock,
-                  channelId: channelId);
+              return buildFooter ?? const SizedBox.shrink();
             }
 
             return Padding(
               padding: const EdgeInsets.only(bottom: 8.0),
               child: Container(
                 child: result[index][0].dataType == VideoType.areaAd.index
-                    ? ChannelAreaBanner(
-                        image: BannerPhoto.fromJson({
-                          'id': result[index][0].id,
-                          'url': result[index][0].adUrl ?? '',
-                          'photoSid': result[index][0].coverHorizontal ?? '',
-                          'isAutoClose': false,
-                        }),
-                      )
+                    ? buildBanner(result[index][0])
                     : VideoBlockGridViewRow(
                         videoData: result[index],
                         imageRatio: BlockImageRatio.block3.ratio,
                         isEmbeddedAds: block.isEmbeddedAds ?? false,
-                      ),
+                        buildVideoPreview: buildVideoPreview),
               ),
             );
           },

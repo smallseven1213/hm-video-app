@@ -1,5 +1,5 @@
 import 'package:app_gs/widgets/button.dart';
-import 'package:app_gs/widgets/refresh_list.dart';
+import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_gs/widgets/reload_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +9,13 @@ import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:app_gs/widgets/video_list_loading_text.dart';
 
 import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/header.dart';
+import '../videoblock.dart';
 import 'banners.dart';
 import 'jingang.dart';
-import '../../../widgets/videoblock.dart';
 
 final logger = Logger();
 
@@ -138,6 +139,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
           return RefreshList(
             onRefresh: _onRefresh,
             onLoading: _onLoading,
+            loadingWidget: const VideoListLoadingText(),
             child: CustomScrollView(
               physics: kIsWeb ? null : const BouncingScrollPhysics(),
               slivers: [

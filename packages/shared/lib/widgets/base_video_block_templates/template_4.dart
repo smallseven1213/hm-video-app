@@ -1,11 +1,8 @@
-// class Template3 is a stateless widget, only has props: List<Vod> vods
-
-import 'package:app_gs/widgets/channel_area_banner.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/block_image_ratio.dart';
 import 'package:shared/models/vod.dart';
 
+import '../base_video_preview.dart';
 import '../video_block_grid_view_row.dart';
 
 List<List<Vod>> organizeRowData(List videos) {
@@ -19,7 +16,7 @@ List<List<Vod>> organizeRowData(List videos) {
     if (hasAreaAd) {
       resultArray.add(tempArray);
       tempArray = [];
-    } else if (tempArray.length == 2) {
+    } else if (tempArray.length == 3) {
       resultArray.add(tempArray);
       tempArray = [];
     }
@@ -32,9 +29,11 @@ List<List<Vod>> organizeRowData(List videos) {
   return resultArray;
 }
 
-SliverChildBuilderDelegate baseVideoBlockTemplate10({
+SliverChildBuilderDelegate baseVideoBlockTemplate4({
   required List<Vod> vods,
   int? film = 1,
+  required BaseVideoPreviewWidget Function(Vod video) buildVideoPreview,
+  required Widget Function(Vod video) buildBanner,
   required int areaId,
 }) {
   return SliverChildBuilderDelegate(
@@ -45,28 +44,21 @@ SliverChildBuilderDelegate baseVideoBlockTemplate10({
         // padding bottom 8
         padding: const EdgeInsets.only(bottom: 8.0),
         child: result[index][0].dataType == VideoType.areaAd.index
-            ? ChannelAreaBanner(
-                image: BannerPhoto.fromJson({
-                  'id': result[index][0].id,
-                  'url': result[index][0].adUrl ?? '',
-                  'photoSid': result[index][0].coverHorizontal ?? '',
-                  'isAutoClose': false,
-                }),
-              )
+            ? buildBanner(result[index][0])
             : VideoBlockGridViewRow(
                 videoData: result[index],
-                gridLength: 2,
-                imageRatio: BlockImageRatio.block10.ratio,
+                gridLength: 3,
+                imageRatio: BlockImageRatio.block4.ratio,
                 isEmbeddedAds: true,
                 displayCoverVertical: true,
                 film: film,
                 blockId: areaId,
                 displayVideoCollectTimes: false,
-                displayVideoTimes: true,
-                displayViewTimes: true,
-              ),
+                displayVideoTimes: false,
+                displayViewTimes: false,
+                buildVideoPreview: buildVideoPreview),
       );
     },
-    childCount: vods.length ~/ 2,
+    childCount: organizeRowData(vods).length,
   );
 }

@@ -1,16 +1,20 @@
 import 'dart:async';
 
 import 'package:app_gs/widgets/no_data.dart';
-import 'package:app_gs/widgets/refresh_list.dart';
+import 'package:app_gs/widgets/video_preview.dart';
+import 'package:shared/models/banner_photo.dart';
+import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_gs/widgets/reload_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/channe_block_vod_controller.dart';
+import 'package:shared/widgets/base_video_block_template.dart';
 
-import '../../../widgets/base_video_block_template.dart';
+import '../../../widgets/channel_area_banner.dart';
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/sliver_video_preview_skelton_list.dart';
+import '../../../widgets/video_list_loading_text.dart';
 
 final logger = Logger();
 
@@ -111,6 +115,7 @@ class VodsState extends State<Vods> {
               isRefreshing = false;
             });
           },
+          loadingWidget: const VideoListLoadingText(),
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -122,6 +127,30 @@ class VodsState extends State<Vods> {
                   areaId: widget.areaId,
                   // ignore: invalid_use_of_protected_member
                   vods: vodController!.vodList.value,
+                  buildBanner: (video) => ChannelAreaBanner(
+                    image: BannerPhoto.fromJson({
+                      'id': video.id,
+                      'url': video.adUrl ?? '',
+                      'photoSid': video.coverHorizontal ?? '',
+                      'isAutoClose': false,
+                    }),
+                  ),
+                  buildVideoPreview: (video) => VideoPreviewWidget(
+                    id: video.id,
+                    title: video.title,
+                    tags: video.tags ?? [],
+                    timeLength: video.timeLength ?? 0,
+                    coverHorizontal: video.coverHorizontal ?? '',
+                    coverVertical: video.coverVertical ?? '',
+                    videoViewTimes: video.videoViewTimes ?? 0,
+                    videoCollectTimes: video.videoCollectTimes ?? 0,
+                    detail: video,
+                    isEmbeddedAds: true,
+                    blockId: widget.areaId,
+                    film: vodController!.film.value,
+                    displayVideoCollectTimes: false,
+                    displayCoverVertical: vodController!.film.value == 2,
+                  ),
                 ),
               ),
               if (vodController?.isError.value == true)

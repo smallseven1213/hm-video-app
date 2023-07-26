@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
+import '../../../widgets/tt_tab_bar.dart';
 import '../../../widgets/wave_loading.dart';
 import '../channel_banners.dart';
 import '../channel_jingang_area.dart';
@@ -116,7 +117,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                   pinned: true,
                   delegate: _SliverAppBarDelegate(
                     preferredHeight: 50,
-                    bottom: GSTabBar(
+                    bottom: TTTabBar(
                       controller: _tabController,
                       padding: const EdgeInsets.all(0),
                       tabs: (channelSharedData?.blocks

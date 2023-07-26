@@ -21,16 +21,5 @@ class Block8Widget extends StatelessWidget {
                   height: 60,
                   color: Colors.white,
                 )));
-    // children: List.generate(
-    //   10,
-    //   (index) => VideoPreviewWidget(
-    //     title: videos[index].title ?? '',
-    //     tags: videos[index].tags ?? [],
-    //     timeLength: videos[index].timeLength ?? 0,
-    //     coverHorizontal: videos[index].coverHorizontal ?? '',
-    //     coverVertical: videos[index].coverVertical ?? '',
-    //     videoViewTimes: videos[index].videoViewTimes ?? 0,
-    //   ),
-    // ));
   }
 }
