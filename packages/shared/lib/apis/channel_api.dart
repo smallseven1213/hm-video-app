@@ -35,14 +35,27 @@ class ChannelApi {
     if (res.data['code'] != '00') {
       return ChannelSharedData();
     }
-    ChannelSharedData channelSharedData = ChannelSharedData(
-        banner: List.from((res.data['data']['banner'] as List<dynamic>)
-            .map((e) => BannerPhoto.fromJson(e))),
-        jingang: Jingang.fromJson(res.data['data']['jingang']),
-        tags: Tags.fromJson(res.data['data']['tags']),
-        blocks: List.from((res.data['data']['blocks'] as List<dynamic>)
-            .map((e) => Blocks.fromJson(e))));
+    try {
+      ChannelSharedData channelSharedData = ChannelSharedData(
+          banner: List.from((res.data['data']['banner'] as List<dynamic>)
+              .map((e) => BannerPhoto.fromJson(e))),
+          jingang: Jingang.fromJson(res.data['data']['jingang']),
+          tags: Tags.fromJson(res.data['data']['tagAreas']),
+          blocks: List.from((res.data['data']['blocks'] as List<dynamic>)
+              .map((e) => Blocks.fromJson(e))));
+      return channelSharedData;
+    } catch (e) {
+      print('Error: ChannelSharedData: $e');
+      return ChannelSharedData();
+    }
+    // ChannelSharedData channelSharedData = ChannelSharedData(
+    //     banner: List.from((res.data['data']['banner'] as List<dynamic>)
+    //         .map((e) => BannerPhoto.fromJson(e))),
+    //     jingang: Jingang.fromJson(res.data['data']['jingang']),
+    //     tags: Tags.fromJson(res.data['data']['tagAreas']),
+    //     blocks: List.from((res.data['data']['blocks'] as List<dynamic>)
+    //         .map((e) => Blocks.fromJson(e))));
 
-    return channelSharedData;
+    // return channelSharedData;
   }
 }

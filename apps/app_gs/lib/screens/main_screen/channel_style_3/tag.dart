@@ -8,20 +8,26 @@ class TagWidget extends StatelessWidget {
   final String name;
   final bool outerFrame;
   final String? photoSid;
+  final int film;
 
-  const TagWidget(
-      {super.key,
-      required this.id,
-      required this.name,
-      required this.outerFrame,
-      this.photoSid});
+  const TagWidget({
+    super.key,
+    required this.id,
+    required this.name,
+    required this.outerFrame,
+    required this.film,
+    this.photoSid,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        MyRouteDelegate.of(context)
-            .push(AppRoutes.tag, args: {'id': id, 'title': name});
+        MyRouteDelegate.of(context).push(AppRoutes.tag, args: {
+          'id': id,
+          'title': name,
+          'film': film,
+        });
       },
       child: Container(
         height: 35,

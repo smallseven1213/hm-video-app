@@ -152,123 +152,130 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-              top: lerpDouble(
-                  108,
-                  ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
-                  percentage),
-              left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '@${supplier.aliasName}',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: fontSize,
-                        color: Colors.white),
-                  ),
-                  if (hasDescription)
-                    Text(
-                      supplier.description ?? '',
-                      style: const TextStyle(color: Colors.white, fontSize: 11),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                ],
-              )),
+            top: lerpDouble(
+                108,
+                ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
+                percentage),
+            left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
+            child: Text(
+              '@${supplier.aliasName}',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: fontSize,
+                  color: Colors.white),
+            ),
+          ),
           Positioned(
-              top: hasDescription ? 156 : 148,
-              left: 85,
+              top: 135,
+              left: 90,
               child: SizedBox(
                   width: screenWidth - 100,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(formatNumberToUnit(supplier.videoCount ?? 0),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(width: 5),
-                              const Text('長視頻',
-                                  style: TextStyle(
-                                    color: Color(0xFFD4D4D4),
-                                    fontSize: 12,
-                                  ))
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                  formatNumberToUnit(
-                                      supplier.shortVideoTotal ?? 0),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(width: 5),
-                              const Text('短視頻',
-                                  style: TextStyle(
-                                    color: Color(0xFFD4D4D4),
-                                    fontSize: 12,
-                                  ))
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                  formatNumberToUnit(
-                                      supplier.collectTotal ?? 0),
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w500)),
-                              const SizedBox(width: 5),
-                              const Text('收藏',
-                                  style: TextStyle(
-                                    color: Color(0xFFD4D4D4),
-                                    fontSize: 12,
-                                  ))
-                            ],
-                          )),
-                      Expanded(
-                          flex: 1,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              // Text(supplier.followTotal.toString(),
-                              //     style: const TextStyle(
-                              //       color: Colors.white,
-                              //       fontWeight: FontWeight.w500,
-                              //       fontSize: 15,
-                              //     )),
-                              Obx(() => Text(
-                                  formatNumberToUnit(supplierController
-                                          .supplier.value.followTotal ??
-                                      0),
-                                  style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 15,
-                                  ))),
-                              const SizedBox(width: 5),
-                              const Text('點讚',
-                                  style: TextStyle(
-                                    color: Color(0xFFD4D4D4),
-                                    fontSize: 12,
-                                  ))
-                            ],
-                          ))
+                      if (hasDescription)
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, bottom: 8),
+                          child: Text(
+                            supplier.description ?? '',
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 11),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      formatNumberToUnit(
+                                          supplier.videoCount ?? 0),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500)),
+                                  const SizedBox(width: 5),
+                                  const Text('長視頻',
+                                      style: TextStyle(
+                                        color: Color(0xFFD4D4D4),
+                                        fontSize: 12,
+                                      ))
+                                ],
+                              )),
+                          Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      formatNumberToUnit(
+                                          supplier.shortVideoTotal ?? 0),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500)),
+                                  const SizedBox(width: 5),
+                                  const Text('短視頻',
+                                      style: TextStyle(
+                                        color: Color(0xFFD4D4D4),
+                                        fontSize: 12,
+                                      ))
+                                ],
+                              )),
+                          Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                      formatNumberToUnit(
+                                          supplier.collectTotal ?? 0),
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500)),
+                                  const SizedBox(width: 5),
+                                  const Text('收藏',
+                                      style: TextStyle(
+                                        color: Color(0xFFD4D4D4),
+                                        fontSize: 12,
+                                      ))
+                                ],
+                              )),
+                          Expanded(
+                              flex: 1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  // Text(supplier.followTotal.toString(),
+                                  //     style: const TextStyle(
+                                  //       color: Colors.white,
+                                  //       fontWeight: FontWeight.w500,
+                                  //       fontSize: 15,
+                                  //     )),
+                                  Obx(() => Text(
+                                      formatNumberToUnit(supplierController
+                                              .supplier.value.followTotal ??
+                                          0),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 15,
+                                      ))),
+                                  const SizedBox(width: 5),
+                                  const Text('點讚',
+                                      style: TextStyle(
+                                        color: Color(0xFFD4D4D4),
+                                        fontSize: 12,
+                                      ))
+                                ],
+                              ))
+                        ],
+                      ),
                     ],
                   ))),
           Positioned(

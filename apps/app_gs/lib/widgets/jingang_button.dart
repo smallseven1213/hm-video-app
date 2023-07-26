@@ -1,30 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared/apis/jingang_api.dart';
+import 'package:shared/enums/jingang.dart';
 import 'package:shared/models/jingang_detail.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'circle_sidimage_text_item.dart';
-
-enum OuterFrame {
-  border(true),
-  noBorder(false);
-
-  final bool value;
-  const OuterFrame(this.value);
-}
-
-enum OuterFrameStyle {
-  none,
-  circle,
-  square,
-}
-
-enum JingangStyle {
-  none,
-  single,
-  multiLine,
-}
 
 class JingangButton extends StatelessWidget {
   final JinGangDetail? item;

@@ -46,7 +46,6 @@ class SliverVodGridState extends State<SliverVodGrid> {
   Widget build(BuildContext context) {
     return Obx(() {
       int totalRows = (widget.videos.length / 2).ceil();
-      logger.i('totalRows $totalRows');
 
       return CustomScrollView(
         physics: kIsWeb ? null : const BouncingScrollPhysics(),

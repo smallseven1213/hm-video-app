@@ -2,7 +2,6 @@ import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
 import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
 import 'package:app_gs/widgets/reload_button.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -30,7 +29,6 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   final GlobalKey targetKey = GlobalKey();
   TabController? _tabController;
   late ChannelSharedDataController? channelSharedDataController;
-  // DISPOSED SCROLL CONTROLLER
   final ScrollController _scrollController = ScrollController();
 
   void _setupTabController() {
@@ -43,14 +41,6 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
 
     _tabController?.addListener(() {
       if (_tabController!.indexIsChanging) {
-        // RenderBox? box =
-        //     targetKey.currentContext?.findRenderObject() as RenderBox?;
-        // Offset? position = box?.localToGlobal(Offset.zero);
-        // _scrollController.animateTo(
-        //   position?.dy ?? 0.0,
-        //   duration: const Duration(milliseconds: 200),
-        //   curve: Curves.easeInOut,
-        // );
         if (targetKey.currentContext != null) {
           Scrollable.ensureVisible(
             targetKey.currentContext!,

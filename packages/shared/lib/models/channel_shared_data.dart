@@ -22,7 +22,7 @@ class ChannelSharedData {
     }
     jingang =
         json['jingang'] != null ? Jingang.fromJson(json['jingang']) : null;
-    tags = json['tags'] != null ? Tags.fromJson(json['tags']) : null;
+    tags = json['tagAreas'] != null ? Tags.fromJson(json['tagAreas']) : null;
 
     if (json['blocks'] != null) {
       blocks = <Blocks>[];
