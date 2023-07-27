@@ -42,21 +42,27 @@ class ChannelsBuilderState extends State<ChannelsBuilder> {
     layoutController =
         Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
 
-    // 只執行一次，如果layoutController中的layout裡的物件，如果為isDefault
-    // 就要將此物件的channelScreenTabController的pageViewIndex設定為isDefault的index
-    // for (var i = 0; i < layoutController.layout.length; i++) {
-    //   if (layoutController.layout[i].isDefault) {
-    //     channelScreenTabController.pageViewIndex.value = i;
-    //     break;
-    //   }
-    // }
+    // everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     if (controller.hasClients) {
+    //       controller.jumpToPage(page);
+    //     }
+    //   });
+    // });
 
-    everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
         if (controller.hasClients) {
           controller.jumpToPage(page);
         }
       });
+      for (var i = 0; i < layoutController.layout.length; i++) {
+        if (layoutController.layout[i].isDefault == 1) {
+          channelScreenTabController.pageViewIndex.value = i;
+          controller.jumpToPage(i);
+          break;
+        }
+      }
     });
 
     super.initState();

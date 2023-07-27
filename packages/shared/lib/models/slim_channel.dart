@@ -4,7 +4,7 @@ class SlimChannel {
   final String name;
   final int style;
   final bool isSearch;
-  final bool isDefault;
+  final int isDefault; //0 不是, 1 是
 
   SlimChannel(this.id, this.name, this.style, this.isSearch, this.isDefault);
 
