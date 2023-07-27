@@ -9,7 +9,8 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
-import 'package:shared/widgets/layouts_builder.dart';
+import 'package:shared/widgets/channel_layout_builder.dart';
+import 'package:shared/widgets/home_builder.dart';
 
 import '../config/layouts.dart';
 import '../screens/apps_screen/index.dart';
@@ -21,13 +22,19 @@ import '../widgets/custom_bottom_bar_item.dart';
 final logger = Logger();
 UserApi userApi = UserApi();
 final screens = {
-  HomeNavigatorPathes.layout1: () => HomeMainScreen(
+  HomeNavigatorPathes.layout1: () => ChannelLayoutBuilder(
         key: Key('layout${layouts[0]}'),
         layoutId: layouts[0],
+        child: HomeMainScreen(
+          layoutId: layouts[0],
+        ),
       ),
-  HomeNavigatorPathes.layout2: () => HomeMainScreen(
+  HomeNavigatorPathes.layout2: () => ChannelLayoutBuilder(
         key: Key('layout${layouts[1]}'),
         layoutId: layouts[1],
+        child: HomeMainScreen(
+          layoutId: layouts[1],
+        ),
       ),
   HomeNavigatorPathes.game: () => const GameScreen(),
   HomeNavigatorPathes.apps: () => const AppsScreen(),
@@ -47,8 +54,7 @@ class HomePage extends StatefulWidget {
 class HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return LayoutsBuilder(
-        layoutIds: const [1, 2],
+    return HomeBuilder(
         screens: screens,
         doOnInitState: () {
           Get.put(GameStartupController());

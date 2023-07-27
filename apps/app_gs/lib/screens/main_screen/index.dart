@@ -19,46 +19,44 @@ class HomeMainScreen extends StatelessWidget {
       child: GetBuilder<LayoutController>(
         tag: 'layout$layoutId',
         builder: (controller) {
-          if (controller.isLoading.value) {
-            return const Scaffold(
-              body: Center(
-                child: WaveLoading(
-                  color: Color.fromRGBO(255, 255, 255, 0.3),
-                  duration: Duration(milliseconds: 1000),
-                  size: 17,
-                  itemCount: 3,
+          return Obx(() {
+            if (controller.isLoading.value) {
+              return const Scaffold(
+                body: Center(
+                  child:
+                      Text('loading 2', style: TextStyle(color: Colors.white)),
                 ),
-              ),
-            );
-          }
-          return Scaffold(
-              body: Stack(
-            children: [
-              Channels(
-                key: Key('channels-$layoutId'),
-                layoutId: layoutId,
-              ),
-              Positioned(
-                  child: Column(
-                children: [
-                  SizedBox(
-                    height: MediaQuery.of(context).padding.top,
-                  ),
-                  SizedBox(
-                    height: 38,
-                    child: LayoutTabBar(
-                      key: Key('layout-tab-bar-$layoutId'),
-                      layoutId: layoutId,
+              );
+            }
+            return Scaffold(
+                body: Stack(
+              children: [
+                Channels(
+                  key: Key('channels-$layoutId'),
+                  layoutId: layoutId,
+                ),
+                Positioned(
+                    child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).padding.top,
                     ),
-                  ),
-                  DisplayLayoutTabSearch(
-                    layoutId: layoutId,
-                    child: ChannelSearchBar(),
-                  )
-                ],
-              )),
-            ],
-          ));
+                    SizedBox(
+                      height: 38,
+                      child: LayoutTabBar(
+                        key: Key('layout-tab-bar-$layoutId'),
+                        layoutId: layoutId,
+                      ),
+                    ),
+                    DisplayLayoutTabSearch(
+                      layoutId: layoutId,
+                      child: ChannelSearchBar(),
+                    )
+                  ],
+                )),
+              ],
+            ));
+          });
         },
       ),
     );

@@ -41,6 +41,7 @@ class ChannelBlockVodController extends BaseVodInfinityScrollController {
         return InfinityVod([], 0, false);
       }
     } catch (e) {
+      logger.e(e);
       isError.value = true;
       return InfinityVod([], 0, false);
     }
