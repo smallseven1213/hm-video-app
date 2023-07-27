@@ -22,8 +22,7 @@ build-tt-job:       # This job runs in the build stage, which runs first.
   only:
     refs:
       - develop
-  rules: 
-    - allow_failure: true
+  allow_failure: true
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_tt -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
