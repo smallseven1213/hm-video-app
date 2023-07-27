@@ -23,8 +23,12 @@ class HomeMainScreen extends StatelessWidget {
             if (controller.isLoading.value) {
               return const Scaffold(
                 body: Center(
-                  child:
-                      Text('loading 2', style: TextStyle(color: Colors.white)),
+                  child: WaveLoading(
+                    color: Color.fromRGBO(255, 255, 255, 0.3),
+                    duration: Duration(milliseconds: 1000),
+                    size: 17,
+                    itemCount: 3,
+                  ),
                 ),
               );
             }
