@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/tag_vod_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
@@ -16,7 +18,6 @@ class TagVideoPage extends StatefulWidget {
     required this.id,
     required this.title,
     this.film = 1,
-
   }) : super(key: key);
 
   @override
@@ -53,6 +54,20 @@ class TagVideoPageState extends State<TagVideoPage> {
         title: '#${widget.title}',
       ),
       body: Obx(() {
+        if (widget.film == 2) {
+          return SliverVodGrid(
+              isListEmpty: vodController.isListEmpty.value,
+              displayVideoCollectTimes: false,
+              videos: vodController.vodList,
+              displayNoMoreData: vodController.displayNoMoreData.value,
+              displayLoading: vodController.displayLoading.value,
+              noMoreWidget: ListNoMore(),
+              displayCoverVertical: true,
+              onOverrideRedirectTap: (id) {
+                MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
+                    args: {'itemId': 3, 'videoId': id});
+              });
+        }
         return SliverVodGrid(
           isListEmpty: vodController.isListEmpty.value,
           displayVideoCollectTimes: false,

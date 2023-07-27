@@ -2,12 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/bottom_navigator_controller.dart';
-import '../controllers/channel_screen_tab_controller.dart';
-import '../controllers/layout_controller.dart';
 import '../models/navigation.dart';
 
-class LayoutsBuilder extends StatefulWidget {
-  final List<int> layoutIds;
+class HomeBuilder extends StatefulWidget {
   final String? defaultScreenKey;
   final Map<String, Widget Function()> screens;
   final Widget? screenNotFoundWidget;
@@ -17,9 +14,8 @@ class LayoutsBuilder extends StatefulWidget {
       required List<Navigation> navigatorItems,
       required Function(String tabKey) changeTabKey}) bottomNavigationBarWidget;
 
-  const LayoutsBuilder(
+  const HomeBuilder(
       {Key? key,
-      required this.layoutIds,
       required this.screens,
       this.defaultScreenKey,
       this.screenNotFoundWidget,
@@ -28,10 +24,10 @@ class LayoutsBuilder extends StatefulWidget {
       : super(key: key);
 
   @override
-  LayoutsBuilderState createState() => LayoutsBuilderState();
+  HomeBuilderState createState() => HomeBuilderState();
 }
 
-class LayoutsBuilderState extends State<LayoutsBuilder> {
+class HomeBuilderState extends State<HomeBuilder> {
   final bottomNavigatorController = Get.find<BottonNavigatorController>();
 
   // init
@@ -39,11 +35,6 @@ class LayoutsBuilderState extends State<LayoutsBuilder> {
   void initState() {
     if (widget.defaultScreenKey != null) {
       bottomNavigatorController.changeKey(widget.defaultScreenKey!);
-    }
-    for (var layout in widget.layoutIds) {
-      Get.put(ChannelScreenTabController(),
-          tag: 'channel-screen-$layout', permanent: false);
-      Get.put(LayoutController(layout), tag: 'layout$layout', permanent: false);
     }
 
     if (widget.doOnInitState != null) {
