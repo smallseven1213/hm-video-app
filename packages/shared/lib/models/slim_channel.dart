@@ -4,8 +4,9 @@ class SlimChannel {
   final String name;
   final int style;
   final bool isSearch;
+  final bool isDefault;
 
-  SlimChannel(this.id, this.name, this.style, this.isSearch);
+  SlimChannel(this.id, this.name, this.style, this.isSearch, this.isDefault);
 
   factory SlimChannel.fromJson(Map<String, dynamic> json) {
     return SlimChannel(
@@ -13,6 +14,7 @@ class SlimChannel {
       json['name'],
       json['style'],
       json['isSearch'],
+      json['isDefault'],
     );
   }
 }
