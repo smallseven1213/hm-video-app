@@ -15,9 +15,11 @@ final regionApi = RegionApi();
 final publisherApi = PublisherApi();
 
 const limit = 20;
+const film = 2;
 
-class FilterScreenResultController extends BaseVodInfinityScrollController {
-  FilterScreenResultController(
+class FilterScreenShortResultController
+    extends BaseVodInfinityScrollController {
+  FilterScreenShortResultController(
       {required ScrollController scrollController, bool loadDataOnInit = true})
       : super(
             loadDataOnInit: loadDataOnInit,
@@ -40,7 +42,7 @@ class FilterScreenResultController extends BaseVodInfinityScrollController {
     logger.i(queryString);
 
     var res = await vodApi.getSimpleManyBy(
-        page: page, limit: limit, queryString: queryString, film: 1);
+        page: page, limit: limit, queryString: queryString, film: film);
     bool hasMoreData = res.total > limit * page;
 
     return InfinityVod(res.vods, res.total, hasMoreData);
