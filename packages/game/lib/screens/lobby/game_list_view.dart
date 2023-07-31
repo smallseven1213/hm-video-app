@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:game/models/game_list.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';
@@ -150,49 +151,6 @@ class GameListViewState extends State<GameListView>
   _filterGameCategories() {
     Set<int> gameTypes = <int>{};
 
-    var gameCategoriesMapper = [
-      {
-        'name': '全部',
-        'gameType': 0,
-        'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
-      },
-      {
-        'name': '最近',
-        'gameType': -1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
-      },
-      {
-        'name': '捕魚',
-        'gameType': 1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
-      },
-      {
-        'name': '真人',
-        'gameType': 2,
-        'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
-      },
-      {
-        'name': '棋牌',
-        'gameType': 3,
-        'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
-      },
-      {
-        'name': '電子',
-        'gameType': 4,
-        'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
-      },
-      {
-        'name': '體育',
-        'gameType': 5,
-        'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
-      },
-      {
-        'name': '彩票',
-        'gameType': 6,
-        'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
-      }
-    ];
-
     for (var game in gamesListController.games) {
       gameTypes.add(game.gameType);
     }
@@ -212,22 +170,23 @@ class GameListViewState extends State<GameListView>
   }
 
   void _scrollToItem(int index) {
-    // Calculate the position to scroll to based on the item's height and index
-    double offset = 30.0 * index;
+    double itemHeight = 60.0; // 假設每個項目的高度是 60.0
+    double minScrollExtent = _scrollController.position.minScrollExtent;
+    double maxScrollExtent = _scrollController.position.maxScrollExtent;
 
-    if (index == filteredGameCategories.length - 1 ||
-        index == filteredGameCategories.length - 2) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    } else if (index == 0 || index == 1) {
-      _scrollController.jumpTo(_scrollController.position.minScrollExtent);
-    }
-    // else {
-    //   _scrollController.animateTo(
-    //     offset,
-    //     duration: const Duration(milliseconds: 500),
-    //     curve: Curves.easeInOut,
-    //   );
-    // }
+    // 計算將該項目滾動到捲軸中間的偏移量
+    double scrollToOffset = itemHeight * index -
+        (_scrollController.position.viewportDimension - itemHeight) / 2;
+
+    // 確保滾動位置在捲軸範圍內
+    scrollToOffset = scrollToOffset.clamp(minScrollExtent, maxScrollExtent);
+
+    // 使用 animateTo 將該項目滾動到捲軸中間或最底部或最頂部
+    _scrollController.animateTo(
+      scrollToOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.linear,
+    );
   }
 
   @override
