@@ -25,79 +25,46 @@ class _GameScrollViewTabsState extends State<GameScrollViewTabs> {
       .toString();
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Positioned(
-        top: 10, // 設定光暈的位置偏移量
-        left: 10,
+    return PhysicalModel(
+      color: Colors.transparent,
+      clipBehavior: Clip.antiAlias,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 6),
         child: Container(
-          width: 35, // 設定光暈的尺寸
-          height: 45,
-          decoration: const BoxDecoration(
-            shape: BoxShape.rectangle, // 設定光暈的形狀
-            color: Color.fromRGBO(0, 0, 0, .1), // 設定光暈的顏色
-            boxShadow: [
-              BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, .1), // 設定光暈的顏色
-                blurRadius: 15, // 設定光暈的模糊半徑
-                spreadRadius: 1.5, // 設定光暈的擴散半徑
-                offset: Offset(0, 0), // 設定光暈的偏移量
+          width: 54,
+          height: 54,
+          decoration: BoxDecoration(
+            color: widget.isActive
+                ? gameLobbyTabActiveBgColor
+                : gameLobbyTabBgColor,
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                widget.icon ??
+                    'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+                width: 24,
+                height: 24,
+              ),
+              Text(
+                widget.text,
+                style: TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 12,
+                  color: widget.isActive
+                      ? gamePrimaryButtonColor
+                      : gameLobbyPrimaryTextColor,
+                  fontFeatures: const [
+                    FontFeature.proportionalFigures(),
+                  ],
+                ),
               ),
             ],
           ),
         ),
       ),
-      PhysicalModel(
-        color: Colors.transparent,
-        clipBehavior: Clip.antiAlias,
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 6),
-          child: Container(
-            width: 60,
-            height: 60,
-            decoration: BoxDecoration(
-              color: gameLobbyBgColor,
-              borderRadius: BorderRadius.circular(8),
-              // gradient: RadialGradient(
-              //   center: const Alignment(0, -1.3), // 設定放射狀的中心位置
-              //   radius: 1, // 設定放射狀的半徑
-              //   colors: widget.isActive
-              //       ? [
-              //           const Color(0xff91d35f),
-              //           gameLobbyBgColor,
-              //         ]
-              //       : [
-              //           gameLobbyTabBgColor,
-              //           gameLobbyTabBgColor,
-              //         ],
-              // ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  widget.icon ??
-                      'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-                  width: 24,
-                  height: 24,
-                ),
-                Text(
-                  widget.text,
-                  style: TextStyle(
-                    fontWeight: FontWeight.normal,
-                    fontSize: 12,
-                    color: widget.isActive
-                        ? gamePrimaryButtonColor
-                        : gameLobbyPrimaryTextColor,
-                    fontFeatures: const [
-                      FontFeature.proportionalFigures(),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    ]);
+    );
   }
 }
