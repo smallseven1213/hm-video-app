@@ -47,3 +47,46 @@ Map<String, int> gameWebviewDirection = {
   'vertical': 1,
   'horizontal': 2,
 };
+
+List gameCategoriesMapper = [
+  {
+    'name': '全部',
+    'gameType': 0,
+    'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
+  },
+  {
+    'name': '最近',
+    'gameType': -1,
+    'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
+  },
+  {
+    'name': '捕魚',
+    'gameType': 1,
+    'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
+  },
+  {
+    'name': '真人',
+    'gameType': 2,
+    'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
+  },
+  {
+    'name': '棋牌',
+    'gameType': 3,
+    'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
+  },
+  {
+    'name': '電子',
+    'gameType': 4,
+    'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
+  },
+  {
+    'name': '體育',
+    'gameType': 5,
+    'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
+  },
+  {
+    'name': '彩票',
+    'gameType': 6,
+    'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
+  }
+];
