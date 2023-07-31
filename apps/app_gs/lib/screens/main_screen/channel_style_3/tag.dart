@@ -9,6 +9,7 @@ class TagWidget extends StatelessWidget {
   final bool outerFrame;
   final String? photoSid;
   final int film;
+  final int channelId;
 
   const TagWidget({
     super.key,
@@ -16,6 +17,7 @@ class TagWidget extends StatelessWidget {
     required this.name,
     required this.outerFrame,
     required this.film,
+    required this.channelId,
     this.photoSid,
   });
 
@@ -23,11 +25,15 @@ class TagWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        MyRouteDelegate.of(context).push(AppRoutes.tag, args: {
-          'id': id,
-          'title': name,
-          'film': film,
-        });
+        MyRouteDelegate.of(context).push(
+          AppRoutes.videoByBlock,
+          args: {
+            'blockId': id,
+            'title': '#$name',
+            'channelId': channelId,
+            'film': film,
+          },
+        );
       },
       child: Container(
         height: 35,

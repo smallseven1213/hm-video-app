@@ -66,6 +66,7 @@ class ChannelTags extends StatelessWidget {
                                             .outerFrame ??
                                         false,
                                     film: tags.details![rowIndex + i].film ?? 1,
+                                    channelId: channelId,
                                   )
                                 : Container(), // Empty container for no data
                           ),
