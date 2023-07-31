@@ -200,7 +200,7 @@ class GameListViewState extends State<GameListView>
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 60,
+                      width: 54,
                       child: ListView.builder(
                         controller:
                             _scrollController, // Assign the scroll controller
