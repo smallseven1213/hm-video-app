@@ -98,7 +98,8 @@ class FilterShortScreenController extends GetxController {
 
   void _handleInitSuppliersData() async {
     try {
-      var res = await supplierApi.getManyBy();
+      var res =
+          await supplierApi.getManyBy(isRecommend: true, sortBy: 1, name: '');
       var suppliersData =
           res.map((item) => {'name': item.name, 'value': item.id}).toList();
 

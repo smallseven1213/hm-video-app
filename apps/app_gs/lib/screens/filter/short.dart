@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_short_result_controller.dart';
 import 'package:shared/controllers/filter_short_screen_controller.dart';
+import 'package:shared/controllers/filter_temp_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -24,6 +25,8 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
   final FilterShortScreenController filterScreenController =
       Get.find<FilterShortScreenController>();
   final ScrollController scrollController = ScrollController();
+  final searchTempShortController = Get.find<FilterTempShortController>();
+
   bool _showSelectedBar = false;
   late Worker everWorker;
 
@@ -43,6 +46,10 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
           _showSelectedBar = false;
         });
       }
+    });
+
+    vodController.vodList.listen((p0) {
+      searchTempShortController.replaceVideos(p0);
     });
 
     everWorker = ever(filterScreenController.selectedOptions, (_) {
