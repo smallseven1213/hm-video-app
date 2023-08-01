@@ -3,7 +3,10 @@ import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/display_layout_tab_search.dart';
+import 'package:shared/widgets/popular_search_title_builder.dart';
 
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
@@ -47,15 +50,56 @@ class HomeMainScreen extends StatelessWidget {
                     ),
                     SizedBox(
                       height: 38,
-                      child: LayoutTabBar(
-                        key: Key('layout-tab-bar-$layoutId'),
-                        layoutId: layoutId,
+                      child: Row(
+                        children: [
+                          Expanded(
+                              child: LayoutTabBar(
+                            key: Key('layout-tab-bar-$layoutId'),
+                            layoutId: layoutId,
+                          )),
+                          DisplayLayoutTabSearch(
+                            layoutId: layoutId,
+                            child: ({required bool displaySearchBar}) =>
+                                displaySearchBar
+                                    ? Container()
+                                    : PopularSearchTitleBuilder(
+                                        child:
+                                            ({required String searchKeyword}) =>
+                                                SizedBox(
+                                          width: 56,
+                                          height: 56,
+                                          child: Center(
+                                              child: IconButton(
+                                            icon: const Image(
+                                              width: 22,
+                                              height: 22,
+                                              image: AssetImage(
+                                                  'assets/images/layout_tabbar_search.png'),
+                                            ),
+                                            onPressed: () {
+                                              MyRouteDelegate.of(context).push(
+                                                  AppRoutes.search,
+                                                  args: {
+                                                    'inputDefaultValue':
+                                                        searchKeyword,
+                                                    'autoSearch': true
+                                                  });
+                                            },
+                                          )),
+                                        ),
+                                      ),
+                          )
+                        ],
                       ),
                     ),
                     DisplayLayoutTabSearch(
-                      layoutId: layoutId,
-                      child: ChannelSearchBar(),
-                    )
+                        layoutId: layoutId,
+                        child: (({required bool displaySearchBar}) =>
+                            displaySearchBar
+                                ? ChannelSearchBar(
+                                    key: Key('channel-search-bar-$layoutId'),
+                                  )
+                                : Container()))
                   ],
                 )),
               ],

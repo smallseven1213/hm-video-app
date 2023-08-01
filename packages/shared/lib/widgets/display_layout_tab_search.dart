@@ -11,7 +11,7 @@ import '../controllers/channel_screen_tab_controller.dart';
 import '../controllers/layout_controller.dart';
 
 class DisplayLayoutTabSearch extends StatelessWidget {
-  final Widget child;
+  final Widget Function({required bool displaySearchBar}) child;
   final int layoutId;
 
   const DisplayLayoutTabSearch(
@@ -24,15 +24,16 @@ class DisplayLayoutTabSearch extends StatelessWidget {
     var channelScreenTabController =
         Get.find<ChannelScreenTabController>(tag: 'channel-screen-$layoutId');
     return Obx(() {
+      var displaySearchBar = false;
       var layout = layoutController.layout;
       var tabIndex = channelScreenTabController.tabIndex.value;
       if (layout.length > tabIndex) {
         var isSearch = layout[tabIndex].isSearch;
         if (isSearch) {
-          return FadeInEffect(child: child);
+          displaySearchBar = true;
         }
       }
-      return Container();
+      return child(displaySearchBar: displaySearchBar);
     });
   }
 }
