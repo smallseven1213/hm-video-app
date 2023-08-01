@@ -14,12 +14,14 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
   final ObservableVideoPlayerController controller;
   final Vod video;
   final Function toggleFullscreen;
+  final bool? hiddenBottomArea;
 
   const VideoPlayerDisplayWidget({
     super.key,
     required this.controller,
     required this.video,
     required this.toggleFullscreen,
+    this.hiddenBottomArea,
   });
 
   @override
@@ -107,7 +109,8 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              if (videoSize.width > videoSize.height)
+              if (videoSize.width > videoSize.height &&
+                  hiddenBottomArea != true)
                 Positioned(
                   bottom: 150,
                   child: Center(
