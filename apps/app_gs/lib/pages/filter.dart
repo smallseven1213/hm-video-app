@@ -9,6 +9,7 @@ import 'package:shared/controllers/filter_short_result_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import '../screens/filter/options.dart';
+import '../screens/filter/short.dart';
 import '../screens/filter/video.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
@@ -58,7 +59,7 @@ class FilterScrollViewState extends State<FilterPage>
       ),
       body: TabBarView(
         controller: _tabController,
-        children: [VideoFilterPage(), Container()],
+        children: [VideoFilterPage(), ShortVideoFilterPage()],
       ),
     );
   }

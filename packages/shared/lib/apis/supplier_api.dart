@@ -86,10 +86,11 @@ class SupplierApi {
     int limit = 10,
     String? name,
     int sortBy = 0,
+    bool? isRecommend = true,
   }) async {
     var res = await fetcher(
         url:
-            '$apiPrefix/supplier/list?page=$page&limit=$limit&name=$name&sortBy=$sortBy');
+            '$apiPrefix/supplier/list?page=$page&limit=$limit&isRecommend=$isRecommend');
     if (res.data['code'] != '00') {
       return [];
     }

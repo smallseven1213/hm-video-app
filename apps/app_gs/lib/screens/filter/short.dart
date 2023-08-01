@@ -1,15 +1,17 @@
 import 'package:app_gs/screens/filter/filter_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/filter_result_controller.dart';
-import 'package:shared/controllers/filter_screen_controller.dart';
+import 'package:shared/controllers/filter_short_result_controller.dart';
+import 'package:shared/controllers/filter_short_screen_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
 import 'options.dart';
 
-class VideoFilterPage extends StatefulWidget {
-  const VideoFilterPage({
+class ShortVideoFilterPage extends StatefulWidget {
+  const ShortVideoFilterPage({
     super.key,
   });
 
@@ -17,10 +19,10 @@ class VideoFilterPage extends StatefulWidget {
   VideoFilterScrollViewState createState() => VideoFilterScrollViewState();
 }
 
-class VideoFilterScrollViewState extends State<VideoFilterPage> {
-  late FilterScreenResultController vodController;
-  final FilterScreenController filterScreenController =
-      Get.find<FilterScreenController>();
+class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
+  late FilterScreenShortResultController vodController;
+  final FilterShortScreenController filterScreenController =
+      Get.find<FilterShortScreenController>();
   final ScrollController scrollController = ScrollController();
   bool _showSelectedBar = false;
   late Worker everWorker;
@@ -29,7 +31,7 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
   void initState() {
     super.initState();
     vodController =
-        FilterScreenResultController(scrollController: scrollController);
+        FilterScreenShortResultController(scrollController: scrollController);
 
     scrollController.addListener(() {
       if (scrollController.offset > 500 && !_showSelectedBar) {
@@ -66,8 +68,8 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
               SliverToBoxAdapter(
                 child: FilterOptions(
                   menuData: filterScreenController.menuData,
-                  selectedOptions: filterScreenController.selectedOptions,
                   handleOptionChange: filterScreenController.handleOptionChange,
+                  selectedOptions: filterScreenController.selectedOptions,
                 ),
               ),
               const SliverToBoxAdapter(
@@ -83,6 +85,11 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
             displayVideoCollectTimes: false,
             noMoreWidget: ListNoMore(),
             customScrollController: vodController.scrollController,
+            displayCoverVertical: true,
+            onOverrideRedirectTap: (id) {
+              MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
+                  args: {'itemId': 4, 'videoId': id});
+            },
           ),
           if (_showSelectedBar)
             FilterBar(

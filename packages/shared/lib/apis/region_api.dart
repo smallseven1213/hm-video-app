@@ -29,10 +29,10 @@ class RegionApi {
     return regions;
   }
 
-  Future<List<Region>> getRegions() async {
+  Future<List<Region>> getRegions(int film) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/regions/region/list/videoFilter?page=1&limit=10');
+            '${systemConfig.apiHost}/public/regions/region/list/videoFilter?page=1&limit=10&film=$film');
     if (res.data['code'] != '00') {
       return [];
     }
