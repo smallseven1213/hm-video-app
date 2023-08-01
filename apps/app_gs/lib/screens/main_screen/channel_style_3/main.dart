@@ -32,24 +32,30 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   final ScrollController _scrollController = ScrollController();
 
   void _setupTabController() {
-    _tabController?.dispose();
-    var tags = (channelSharedDataController?.channelSharedData.value?.blocks
-            ?.map((e) => e.id.toString())
-            .toList()) ??
-        [];
-    _tabController = TabController(length: tags.length, vsync: this);
-
-    _tabController?.addListener(() {
-      if (_tabController!.indexIsChanging) {
-        if (targetKey.currentContext != null) {
-          Scrollable.ensureVisible(
-            targetKey.currentContext!,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.ease,
-          );
-        }
+    if (mounted) {
+      if (_tabController != null) {
+        _tabController?.dispose();
+        _tabController = null;
       }
-    });
+
+      var tags = (channelSharedDataController?.channelSharedData.value?.blocks
+              ?.map((e) => e.id.toString())
+              .toList()) ??
+          [];
+      _tabController = TabController(length: tags.length, vsync: this);
+
+      _tabController?.addListener(() {
+        if (_tabController!.indexIsChanging) {
+          if (targetKey.currentContext != null) {
+            Scrollable.ensureVisible(
+              targetKey.currentContext!,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.ease,
+            );
+          }
+        }
+      });
+    }
   }
 
   @override
@@ -64,7 +70,9 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
     if (channelSharedDataController?.channelSharedData != null) {
       ever(channelSharedDataController!.channelSharedData, (channelSharedData) {
         _setupTabController();
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       });
     }
 
