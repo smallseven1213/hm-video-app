@@ -183,7 +183,7 @@ class MyRouteDelegate extends RouterDelegate<String>
               logger.i('NAVI!! ==> , ${stack.path}');
               return CupertinoPage(
                 // key: ValueKey(stack.args['uuid']),
-                maintainState: false,
+                maintainState: true,
                 name: stack.path,
                 child: Stack(
                   children: [
