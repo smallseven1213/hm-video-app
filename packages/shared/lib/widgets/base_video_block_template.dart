@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 
-import '../models/banner_photo.dart';
 import 'base_video_block_templates/template_10.dart';
 import 'base_video_block_templates/template_2.dart';
 import 'base_video_block_templates/template_3.dart';

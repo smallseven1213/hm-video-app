@@ -13,6 +13,7 @@ class ChannelStyle3 extends StatelessWidget {
       child: ChannelProvider(
           channelId: channelId,
           widget: ChannelStyle3Main(
+            key: Key('$channelId'),
             channelId: channelId,
           )),
     );

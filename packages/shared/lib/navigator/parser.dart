@@ -12,6 +12,6 @@ class MyRouteParser extends RouteInformationParser<String> {
 
   @override
   RouteInformation restoreRouteInformation(String configuration) {
-    return RouteInformation(location: '/');
+    return const RouteInformation(location: '/');
   }
 }

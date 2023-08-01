@@ -7,13 +7,13 @@ class Demo extends StatefulWidget {
 
 class _DemoState extends State<Demo> {
   double _value = 0;
-  Duration _duration = Duration(seconds: 0);
+  Duration _duration = const Duration(seconds: 0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Time Slider'),
+        title: const Text('Time Slider'),
       ),
       body: Center(
         child: Column(
@@ -33,7 +33,7 @@ class _DemoState extends State<Demo> {
               label:
                   '${_duration.inHours.toString().padLeft(2, '0')}:${(_duration.inMinutes % 60).toString().padLeft(2, '0')}:${(_duration.inSeconds % 60).toString().padLeft(2, '0')}',
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Text(
               'Slider Value in Seconds: ${_duration.inSeconds}',
             ),

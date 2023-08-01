@@ -24,5 +24,6 @@ class ImageApi {
       // throw err
       logger.i('err: get sid image');
     }
+    return null;
   }
 }

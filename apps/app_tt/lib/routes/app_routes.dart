@@ -1,6 +1,5 @@
 library app_routes;
 
-import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
