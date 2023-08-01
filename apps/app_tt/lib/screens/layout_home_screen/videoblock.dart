@@ -1,11 +1,6 @@
-import 'package:app_tt/screens/layout_home_screen/channel_area_banner.dart';
 import 'package:app_tt/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/models/channel_banner.dart';
 import 'package:shared/models/channel_info.dart';
-import 'package:shared/controllers/block_controller.dart';
-import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/base_video_block.dart';
 import 'package:shared/widgets/video_block_template/block_1.dart';
 import 'package:shared/widgets/video_block_template/block_10.dart';
@@ -17,14 +12,14 @@ import 'package:shared/widgets/video_block_template/block_6.dart';
 import 'package:shared/widgets/video_block_template/block_7.dart';
 
 class VideoBlock extends BaseVideoBlock {
-  VideoBlock({Key? key, required Blocks block, required int channelId})
+  const VideoBlock({Key? key, required Blocks block, required int channelId})
       : super(key: key, block: block, channelId: channelId);
 
   @override
-  _VideoBlockState createState() => _VideoBlockState();
+  VideoBlockState createState() => VideoBlockState();
 }
 
-class _VideoBlockState extends BaseVideoBlockState<VideoBlock> {
+class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
   @override
   Widget buildBlockWidget(
       Blocks block, Function updateBlock, int channelId, int film) {

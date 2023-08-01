@@ -14,11 +14,17 @@ final logger = Logger();
 class BottonNavigatorController extends GetxController {
   final activeKey = ''.obs;
   final navigatorItems = <Navigation>[].obs;
+  final displayItems = true.obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchData();
+  }
+
+  // set display function
+  void setDisplay(bool value) {
+    displayItems.value = value;
   }
 
   // _fetchData
@@ -32,7 +38,7 @@ class BottonNavigatorController extends GetxController {
         if (!hasFileInHive) {
           var res = await ImageApi().getSidImageData(photoSid);
           if (res != null) {
-            var decoded = getSidImageDecode(res!);
+            var decoded = getSidImageDecode(res);
             var file = base64Decode(decoded);
             sidImageBox.put(photoSid, file);
           }

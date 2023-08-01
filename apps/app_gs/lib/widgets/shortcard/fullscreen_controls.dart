@@ -191,7 +191,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
                 left: 0,
                 right: 0,
                 child: AppBar(
-                  title: Text(''),
+                  title: const Text(''),
                   elevation: 0,
                   centerTitle: false,
                   backgroundColor: Colors.transparent,
@@ -303,8 +303,8 @@ class ControlsOverlayState extends State<FullScreenControls> {
                             activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
                             inactiveTrackColor:
                                 Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 0.0),
+                            overlayShape: const RoundSliderOverlayShape(
+                                overlayRadius: 0.0),
                           ),
                           child: Slider(
                             value: videoPosition.toDouble(),

@@ -38,7 +38,6 @@ class VideoProviderState extends State<VideoProvider> {
 
     controllerTag = genaratorShortVideoDetailTag(widget.vodId.toString());
     if (!Get.isRegistered(tag: controllerTag)) {
-      logger.i('VP TRACE: init controller $controllerTag');
       Get.lazyPut<ShortVideoDetailController>(
           () => ShortVideoDetailController(widget.vodId),
           tag: controllerTag);

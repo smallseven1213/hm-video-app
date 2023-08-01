@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
-import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/models/vod.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/video_provider.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 
 final logger = Logger();
 
@@ -42,7 +42,7 @@ class BaseShortPageBuilder extends StatefulWidget {
 
 class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
   bool isInitial = false;
-  PageController? _pageController;
+  PreloadPageController? _pageController;
   int currentPage = 0;
   List<Vod> cachedVods = [];
   final PageViewIndexController pageviewIndexController =
@@ -67,7 +67,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
     }
 
     _pageController?.dispose();
-    _pageController = PageController(initialPage: initialPageIndex);
+    _pageController = PreloadPageController(initialPage: initialPageIndex);
 
     _pageController?.addListener(() {
       pageviewIndexController.setPageIndex(
@@ -106,8 +106,9 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
             Center(
               child: widget.loadingWidget,
             ),
-          PageView.builder(
+          PreloadPageView.builder(
             controller: _pageController,
+            preloadPagesCount: 2,
             itemCount: cachedVods.length * 50,
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;

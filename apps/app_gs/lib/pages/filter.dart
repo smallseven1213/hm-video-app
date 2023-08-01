@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:app_gs/screens/filter/filter_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';

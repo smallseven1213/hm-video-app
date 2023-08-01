@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 class LayoutTabItem extends StatelessWidget {
   final bool isActive;

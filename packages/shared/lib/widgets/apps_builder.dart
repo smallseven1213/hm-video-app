@@ -21,7 +21,9 @@ class AppsBuilderState extends State<AppsBuilder> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => widget.child(
+          // ignore: invalid_use_of_protected_member
           popularAds: appsController.popular.value,
+          // ignore: invalid_use_of_protected_member
           hotAds: appsController.hot.value,
           isLoading: appsController.isLoading.value,
         ));

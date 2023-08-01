@@ -8,8 +8,6 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
-import '../widgets/no_data.dart';
-import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/sliver_vod_grid.dart';
 import '../widgets/tab_bar.dart';
 

@@ -138,7 +138,7 @@ class SearchPageState extends State<SearchPage> {
 
                 if (searchKeyword != '') {
                   displaySearchResult = false;
-                  _searchController.text = getSearchKeyword!;
+                  _searchController.text = getSearchKeyword;
                   Get.find<UserSearchHistoryController>().add(getSearchKeyword);
                 }
                 setState(() {});

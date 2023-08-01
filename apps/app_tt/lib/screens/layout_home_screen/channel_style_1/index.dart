@@ -2,7 +2,6 @@ import 'package:app_tt/screens/layout_home_screen/block_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
@@ -15,8 +14,6 @@ import '../reload_button.dart';
 import '../videoblock.dart';
 import 'banners.dart';
 import 'jingang.dart';
-
-final logger = Logger();
 
 class ChannelStyle1 extends StatefulWidget {
   final int channelId;
