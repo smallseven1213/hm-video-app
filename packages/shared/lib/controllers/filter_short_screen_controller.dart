@@ -2,18 +2,19 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
-import '../apis/publisher_api.dart';
 import '../apis/region_api.dart';
+import '../apis/supplier_api.dart';
 import '../apis/vod_api.dart';
 
 final logger = Logger();
 final vodApi = VodApi();
 final regionApi = RegionApi();
-final publisherApi = PublisherApi();
+final supplierApi = SupplierApi();
 
 const limit = 20;
 
-class FilterScreenController extends GetxController {
+class FilterShortScreenController extends GetxController {
+  final film = 2;
   final RxList<Map<String, dynamic>> menuData = [
     {
       'key': 'order',
@@ -32,7 +33,7 @@ class FilterScreenController extends GetxController {
     {
       'key': 'publisherId',
       'options': [
-        {'name': '全部廠商', 'value': 0},
+        {'name': '全部UP主', 'value': 0},
         // 這裡使用 API 請求填充其他選項
       ],
     },
@@ -68,11 +69,11 @@ class FilterScreenController extends GetxController {
     super.onInit();
     logger.i('FILTER SCREEN INITIAL====================');
     _handleInitRegionData();
-    _handleInitPublisherRecommendData();
+    _handleInitSuppliersData();
 
     Get.find<AuthController>().token.listen((event) {
       _handleInitRegionData();
-      _handleInitPublisherRecommendData();
+      _handleInitSuppliersData();
     });
   }
 
@@ -84,7 +85,7 @@ class FilterScreenController extends GetxController {
   }
 
   void _handleInitRegionData() async {
-    var res = await regionApi.getRegions(1);
+    var res = await regionApi.getRegions(film);
     var regionData =
         res.map((item) => {'name': item.name, 'value': item.id}).toList();
 
@@ -95,16 +96,22 @@ class FilterScreenController extends GetxController {
     menuData.refresh();
   }
 
-  void _handleInitPublisherRecommendData() async {
-    var res = await publisherApi.getRecommend();
-    var publisherData =
-        res.map((item) => {'name': item.name, 'value': item.id}).toList();
+  void _handleInitSuppliersData() async {
+    try {
+      var res =
+          await supplierApi.getManyBy(isRecommend: true, sortBy: 1, name: '');
+      var suppliersData =
+          res.map((item) => {'name': item.name, 'value': item.id}).toList();
 
-    int indexToUpdate = 2;
-    menuData[indexToUpdate].update('options', (existingOptions) {
-      return [...existingOptions, ...publisherData];
-    });
-    menuData.refresh();
+      int indexToUpdate = 2;
+      menuData[indexToUpdate].update('options', (existingOptions) {
+        return [...existingOptions, ...suppliersData];
+      });
+      // print()
+      menuData.refresh();
+    } catch (e) {
+      print('@@@error: $e');
+    }
   }
 
   void handleOptionChange(String key, dynamic value) {

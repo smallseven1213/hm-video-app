@@ -8,6 +8,7 @@ import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
 import 'filter_screen_controller.dart';
+import 'filter_short_screen_controller.dart';
 
 final logger = Logger();
 final vodApi = VodApi();
@@ -29,7 +30,7 @@ class FilterScreenShortResultController
   Future<InfinityVod> fetchData(int page) async {
     List<String> queryItems = [];
 
-    var selectedOptions = Get.find<FilterScreenController>().selectedOptions;
+    var selectedOptions = Get.find<FilterShortScreenController>().selectedOptions;
 
     selectedOptions.forEach((key, values) {
       if (values.isNotEmpty && values.first != 0) {
