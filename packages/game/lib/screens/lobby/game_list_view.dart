@@ -198,6 +198,7 @@ class GameListViewState extends State<GameListView>
         return gamesListController.games.isNotEmpty
             ? Expanded(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
                       width: 54,
