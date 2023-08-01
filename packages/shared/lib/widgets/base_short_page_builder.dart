@@ -108,7 +108,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
             ),
           PreloadPageView.builder(
             controller: _pageController,
-            preloadPagesCount: 2,
+            preloadPagesCount: 0,
             itemCount: cachedVods.length * 50,
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;
@@ -127,20 +127,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
                     shortData: shortData,
                     toggleFullScreen: () =>
                         pageviewIndexController.toggleFullscreen(),
-                  )
-                  // child: ShortCard(
-                  //     obsKey: obsKey.toString(),
-                  //     index: index,
-                  //     id: shortData.id,
-                  //     title: shortData.title,
-                  //     supportedPlayRecord: widget.supportedPlayRecord,
-                  //     shortData: shortData,
-                  //     displayFavoriteAndCollectCount:
-                  //         widget.displayFavoriteAndCollectCount,
-                  //     toggleFullScreen: () =>
-                  //         pageviewIndexController.toggleFullscreen(),
-                  //     hiddenBottomArea: widget.hiddenBottomArea),
-                  );
+                  ));
             },
             scrollDirection: Axis.vertical,
           ),
