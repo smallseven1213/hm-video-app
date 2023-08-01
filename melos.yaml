@@ -8,4 +8,4 @@ scripts:
   analyze:
     exec: dart analyze .
 
-sdkPath: .fvm/flutter_sdk
+# sdkPath: .fvm/flutter_sdk
