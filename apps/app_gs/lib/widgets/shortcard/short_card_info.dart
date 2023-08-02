@@ -60,12 +60,11 @@ class ShortCardInfo extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   obsVideoPlayerController.pause();
-                  // logger.i('RENDER OBX toGo!!');
                   await MyRouteDelegate.of(context)
                       .push(AppRoutes.supplier, args: {
                     'id': data.supplier!.id,
                   });
-                  logger.i('RENDER OBX isBack!!');
+                  // logger.i('RENDER OBX isBack!!');
                   obsVideoPlayerController.play();
                 },
                 child: Row(

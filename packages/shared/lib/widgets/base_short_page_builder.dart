@@ -128,7 +128,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
               logger.i('index: $index, currentIndex: $currentPage');
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
               return VideoProvider(
-                  key: Key('video-provider-$obsKey'),
+                  key: ValueKey('video-provider-$obsKey'),
                   obsKey: obsKey,
                   vodId: shortData.id,
                   loading: Center(
