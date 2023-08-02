@@ -113,6 +113,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
             ),
           // PreloadPageView.builder(
           PageView.builder(
+            key: const PageStorageKey<String>('base_short_page_builder'),
             controller: _pageController,
             onPageChanged: (int index) {
               setState(() {
