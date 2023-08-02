@@ -106,7 +106,9 @@ class ShortCardState extends State<ShortCard> {
     if (widget.isActive == false) {
       obsVideoPlayerController.pause();
     } else {
-      obsVideoPlayerController.play();
+      if (!kIsWeb) {
+        obsVideoPlayerController.play();
+      }
     }
 
     return Obx(() {
