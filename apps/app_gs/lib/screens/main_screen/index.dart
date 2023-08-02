@@ -66,25 +66,30 @@ class HomeMainScreen extends StatelessWidget {
                                         child:
                                             ({required String searchKeyword}) =>
                                                 SizedBox(
-                                          width: 56,
-                                          height: 76,
+                                          width: 36,
+                                          height: 56,
                                           child: Center(
-                                              child: IconButton(
-                                            icon: const Image(
-                                              width: 22,
-                                              height: 22,
-                                              image: AssetImage(
-                                                  'assets/images/layout_tabbar_search.png'),
+                                              child: Padding(
+                                            // padding top 5
+                                            padding:
+                                                const EdgeInsets.only(top: 6),
+                                            child: IconButton(
+                                              icon: const Image(
+                                                width: 22,
+                                                height: 22,
+                                                image: AssetImage(
+                                                    'assets/images/layout_tabbar_search.png'),
+                                              ),
+                                              onPressed: () {
+                                                MyRouteDelegate.of(context)
+                                                    .push(AppRoutes.search,
+                                                        args: {
+                                                      'inputDefaultValue':
+                                                          searchKeyword,
+                                                      'autoSearch': true
+                                                    });
+                                              },
                                             ),
-                                            onPressed: () {
-                                              MyRouteDelegate.of(context).push(
-                                                  AppRoutes.search,
-                                                  args: {
-                                                    'inputDefaultValue':
-                                                        searchKeyword,
-                                                    'autoSearch': true
-                                                  });
-                                            },
                                           )),
                                         ),
                                       ),
