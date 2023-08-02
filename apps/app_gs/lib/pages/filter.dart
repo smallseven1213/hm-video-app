@@ -29,7 +29,6 @@ class FilterScrollViewState extends State<FilterPage>
     _tabController = TabController(vsync: this, length: 2);
 
     _tabController.addListener(() {
-      
       print('tabController index: ${_tabController.indexIsChanging}');
       filterScreenController.handleOption(showTab: true, openOption: false);
     });
@@ -53,6 +52,7 @@ class FilterScrollViewState extends State<FilterPage>
         ),
         body: TabBarView(
           controller: _tabController,
+          physics: const NeverScrollableScrollPhysics(),
           children: const [VideoFilterPage(), ShortVideoFilterPage()],
         ),
       );
