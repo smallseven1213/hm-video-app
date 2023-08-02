@@ -29,9 +29,9 @@ class FilterScrollViewState extends State<FilterPage>
     _tabController = TabController(vsync: this, length: 2);
 
     _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        filterScreenController.handleOption(showTab: true, openOption: false);
-      }
+      
+      print('tabController index: ${_tabController.indexIsChanging}');
+      filterScreenController.handleOption(showTab: true, openOption: false);
     });
   }
 
