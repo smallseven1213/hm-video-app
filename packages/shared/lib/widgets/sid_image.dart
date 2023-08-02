@@ -3,13 +3,10 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/widgets/fade_in_effect.dart';
 
 import '../apis/image_api.dart';
 import '../utils/sid_image_result_decode.dart';
-
-var logger = Logger();
 
 class SidImage extends StatefulWidget {
   final String sid;
@@ -50,9 +47,8 @@ class SidImageState extends State<SidImage> {
     var sidImageBox = await Hive.openBox('sidImage');
 
     if (widget.sid.isNotEmpty) {
-      logger.i('GET IMAGE: ${widget.sid}');
       var hasFileInHive = sidImageBox.containsKey(widget.sid);
-      logger.i('GET IMAGE: $hasFileInHive');
+
       if (hasFileInHive) {
         var file = await sidImageBox.get(widget.sid);
         try {

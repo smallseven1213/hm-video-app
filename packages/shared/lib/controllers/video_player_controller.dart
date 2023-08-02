@@ -3,13 +3,10 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../utils/screen_control.dart';
-
-final logger = Logger();
 
 bool isFirstTimeForIOSSafari = true;
 
@@ -44,10 +41,8 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController = VideoPlayerController.network(videoUrl);
     videoPlayerController.addListener(_onControllerValueChanged);
     videoPlayerController.initialize().then((value) {
-      logger.i('VPC safari trace : initialize');
       isReady.value = true;
     }).catchError((error) {
-      logger.i('VPC safari trace : Error: $error');
       if (videoPlayerController.value.hasError) {
         videoAction.value = 'error';
         errorMessage.value = videoPlayerController.value.errorDescription!;
@@ -86,27 +81,22 @@ class ObservableVideoPlayerController extends GetxController {
   }
 
   void play() {
-    logger.i('RENDER OBX: PLAY VIDEO PLAYER CTRL id: $videoUrl');
     videoAction.value = 'play';
     videoPlayerController.play();
   }
 
   void replay() {
-    logger.i('RENDER OBX: REPLAY VIDEO PLAYER CTRL id: $videoUrl');
     videoAction.value = 'play';
     videoPlayerController.seekTo(Duration.zero);
     videoPlayerController.play();
   }
 
   void pause() {
-    logger.i('RENDER OBX: PAUSE VIDEO PLAYER CTRL id: $videoUrl');
     videoAction.value = 'pause';
     videoPlayerController.pause();
   }
 
   void toggle() {
-    logger
-        .i('RENDER OBX: TOGGLE VIDEO PLAYER CTRL toggle: ${videoAction.value}');
     if (videoAction.value == 'play') {
       pause();
     } else {

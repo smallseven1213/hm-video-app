@@ -105,7 +105,6 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
     if (_stack.isNotEmpty) {
-      logger.i(route.settings.name);
       if (_stack.last.path == route.settings.name) {
         _stack.removeLast();
         notifyListeners();

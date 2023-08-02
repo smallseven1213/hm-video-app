@@ -2,13 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
-import 'package:logger/logger.dart';
-import 'package:preload_page_view/preload_page_view.dart';
-import 'package:shared/widgets/video_screen_builder/video_screen_builder.dart';
 
 import 'video_provider.dart';
-
-final logger = Logger();
 
 class BaseShortPageBuilder extends StatefulWidget {
   final Function() createController;
@@ -83,7 +78,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
 
     if (widget.useCachedList == false) {
       ever(controller.data, (d) {
-        if (isInitial == false) {
+        if (isInitial == false && mounted) {
           setState(() {
             isInitial = true;
             cachedVods = d as List<Vod>;
@@ -113,12 +108,13 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
             ),
           // PreloadPageView.builder(
           PageView.builder(
-            key: const PageStorageKey<String>('base_short_page_builder'),
             controller: _pageController,
             onPageChanged: (int index) {
-              setState(() {
-                currentPage = index;
-              });
+              if (mounted) {
+                setState(() {
+                  currentPage = index;
+                });
+              }
             },
             // preloadPagesCount: 2,
             itemCount: cachedVods.length * 50,
@@ -126,10 +122,9 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
               bool isItemActive = index == currentPage;
-              logger.i('index: $index, currentIndex: $currentPage');
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
               return VideoProvider(
-                  key: ValueKey('video-provider-$obsKey'),
+                  // key: ValueKey('video-provider-$obsKey'),
                   obsKey: obsKey,
                   vodId: shortData.id,
                   loading: Center(

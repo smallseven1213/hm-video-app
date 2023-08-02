@@ -52,10 +52,12 @@ class LayoutTabBuilderState extends State<LayoutTabBuilder>
     _initializeTabController();
 
     layoutWorker = ever(layoutController.layout, (channels) {
-      setState(() {
-        _updateTabItems();
-        _initializeTabController();
-      });
+      if (mounted) {
+        setState(() {
+          _updateTabItems();
+          _initializeTabController();
+        });
+      }
     });
 
     screenTabWorker = ever(channelScreenTabController.tabIndex, (callback) {

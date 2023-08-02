@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
@@ -16,8 +15,6 @@ import '../short_bottom_area.dart';
 import '../wave_loading.dart';
 import 'fullscreen_controls.dart';
 import 'short_card_info.dart';
-
-final logger = Logger();
 
 class ShortCard extends StatefulWidget {
   final int index;
@@ -68,7 +65,6 @@ class ShortCardState extends State<ShortCard> {
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
     if (widget.supportedPlayRecord == true) {
-      logger.i('PLAYRECORD TESTING: initial');
       var videoVal = videoDetailController.video.value;
       var playRecord = Vod(
         videoVal!.id,
