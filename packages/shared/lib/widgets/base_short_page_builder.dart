@@ -20,6 +20,7 @@ class BaseShortPageBuilder extends StatefulWidget {
   final Function(
       {required int index,
       required String obsKey,
+      required bool isActive,
       required Vod shortData,
       required Function toggleFullScreen}) shortCardBuilder;
 
@@ -108,11 +109,18 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
             ),
           PreloadPageView.builder(
             controller: _pageController,
-            preloadPagesCount: 0,
+            onPageChanged: (int index) {
+              setState(() {
+                currentPage = index;
+              });
+            },
+            preloadPagesCount: 2,
             itemCount: cachedVods.length * 50,
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
+              bool isItemActive = index == currentPage;
+              logger.i('index: $index, currentIndex: $currentPage');
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
               return VideoProvider(
                   key: Key('video-provider-$obsKey'),
@@ -125,6 +133,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
                     index: index,
                     obsKey: obsKey,
                     shortData: shortData,
+                    isActive: isItemActive,
                     toggleFullScreen: () =>
                         pageviewIndexController.toggleFullscreen(),
                   ));
