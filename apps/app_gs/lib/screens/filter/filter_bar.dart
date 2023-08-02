@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
-import 'package:shared/controllers/filter_video_screen_controller.dart';
 
 import 'option_button.dart';
 import 'options.dart';
