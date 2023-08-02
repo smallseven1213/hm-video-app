@@ -1,8 +1,9 @@
 import 'package:app_gs/screens/filter/filter_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/filter_result_controller.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
+import 'package:shared/controllers/filter_video_result_controller.dart';
+import 'package:shared/controllers/filter_video_screen_controller.dart';
 
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
@@ -18,32 +19,29 @@ class VideoFilterPage extends StatefulWidget {
 }
 
 class VideoFilterScrollViewState extends State<VideoFilterPage> {
-  late FilterScreenResultController vodController;
-  final FilterScreenController filterScreenController =
-      Get.find<FilterScreenController>();
+  final FilterScreenController filterScreenController = Get.find();
+  late FilterVideoScreenResultController vodController;
+  final FilterVideoScreenController filterVideoScreenController =
+      Get.find<FilterVideoScreenController>();
   final ScrollController scrollController = ScrollController();
-  bool _showSelectedBar = false;
   late Worker everWorker;
 
   @override
   void initState() {
     super.initState();
     vodController =
-        FilterScreenResultController(scrollController: scrollController);
-
+        FilterVideoScreenResultController(scrollController: scrollController);
     scrollController.addListener(() {
-      if (scrollController.offset > 500 && !_showSelectedBar) {
-        setState(() {
-          _showSelectedBar = true;
-        });
-      } else if (scrollController.offset < 500 && _showSelectedBar) {
-        setState(() {
-          _showSelectedBar = false;
-        });
+      if (scrollController.offset > 150 &&
+          filterScreenController.showTabBar.value) {
+        filterScreenController.handleOption(showTab: false, openOption: false);
+      } else if (scrollController.offset < 150 &&
+          !filterScreenController.showTabBar.value) {
+        filterScreenController.handleOption(showTab: true, openOption: true);
       }
     });
 
-    everWorker = ever(filterScreenController.selectedOptions, (_) {
+    everWorker = ever(filterVideoScreenController.selectedOptions, (_) {
       vodController.reset();
       vodController.loadMoreData();
     });
@@ -65,9 +63,10 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
             headerExtends: [
               SliverToBoxAdapter(
                 child: FilterOptions(
-                  menuData: filterScreenController.menuData,
-                  selectedOptions: filterScreenController.selectedOptions,
-                  handleOptionChange: filterScreenController.handleOptionChange,
+                  menuData: filterVideoScreenController.menuData,
+                  selectedOptions: filterVideoScreenController.selectedOptions,
+                  handleOptionChange:
+                      filterVideoScreenController.handleOptionChange,
                 ),
               ),
               const SliverToBoxAdapter(
@@ -84,13 +83,12 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
             noMoreWidget: ListNoMore(),
             customScrollController: vodController.scrollController,
           ),
-          if (_showSelectedBar)
-            FilterBar(
-              scrollController: scrollController,
-              menuData: filterScreenController.menuData,
-              selectedOptions: filterScreenController.selectedOptions,
-              handleOptionChange: filterScreenController.handleOptionChange,
-            ),
+          FilterBar(
+            menuData: filterVideoScreenController.menuData,
+            selectedOptions: filterVideoScreenController.selectedOptions,
+            handleOptionChange: filterVideoScreenController.handleOptionChange,
+            film: 1,
+          ),
         ],
       ),
     );

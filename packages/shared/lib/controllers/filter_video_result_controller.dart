@@ -7,7 +7,7 @@ import '../apis/region_api.dart';
 import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';
-import 'filter_screen_controller.dart';
+import 'filter_video_screen_controller.dart';
 
 final logger = Logger();
 final vodApi = VodApi();
@@ -16,8 +16,9 @@ final publisherApi = PublisherApi();
 
 const limit = 20;
 
-class FilterScreenResultController extends BaseVodInfinityScrollController {
-  FilterScreenResultController(
+class FilterVideoScreenResultController
+    extends BaseVodInfinityScrollController {
+  FilterVideoScreenResultController(
       {required ScrollController scrollController, bool loadDataOnInit = true})
       : super(
             loadDataOnInit: loadDataOnInit,
@@ -27,7 +28,8 @@ class FilterScreenResultController extends BaseVodInfinityScrollController {
   Future<InfinityVod> fetchData(int page) async {
     List<String> queryItems = [];
 
-    var selectedOptions = Get.find<FilterScreenController>().selectedOptions;
+    var selectedOptions =
+        Get.find<FilterVideoScreenController>().selectedOptions;
 
     selectedOptions.forEach((key, values) {
       if (values.isNotEmpty && values.first != 0) {

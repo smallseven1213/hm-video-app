@@ -1,15 +1,12 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/controllers/filter_screen_controller.dart';
 
 class OptionButton extends StatelessWidget {
   final bool isSelected;
   final String name;
   final VoidCallback? onTap;
-  final FilterScreenController controller = Get.find();
 
-  OptionButton({
+  const OptionButton({
     Key? key,
     required this.isSelected,
     required this.name,

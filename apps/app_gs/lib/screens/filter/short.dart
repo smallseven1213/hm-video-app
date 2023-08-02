@@ -1,6 +1,7 @@
 import 'package:app_gs/screens/filter/filter_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/filter_screen_controller.dart';
 import 'package:shared/controllers/filter_short_result_controller.dart';
 import 'package:shared/controllers/filter_short_screen_controller.dart';
 import 'package:shared/controllers/filter_temp_controller.dart';
@@ -21,13 +22,13 @@ class ShortVideoFilterPage extends StatefulWidget {
 }
 
 class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
+  final FilterScreenController filterScreenController = Get.find();
   late FilterScreenShortResultController vodController;
-  final FilterShortScreenController filterScreenController =
+  final FilterShortScreenController filterShortScreenController =
       Get.find<FilterShortScreenController>();
   final ScrollController scrollController = ScrollController();
   final searchTempShortController = Get.find<FilterTempShortController>();
 
-  bool _showSelectedBar = false;
   late Worker everWorker;
 
   @override
@@ -37,14 +38,12 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
         FilterScreenShortResultController(scrollController: scrollController);
 
     scrollController.addListener(() {
-      if (scrollController.offset > 500 && !_showSelectedBar) {
-        setState(() {
-          _showSelectedBar = true;
-        });
-      } else if (scrollController.offset < 500 && _showSelectedBar) {
-        setState(() {
-          _showSelectedBar = false;
-        });
+      if (scrollController.offset > 150 &&
+          filterScreenController.showTabBar.value) {
+        filterScreenController.handleOption(showTab: false, openOption: false);
+      } else if (scrollController.offset < 150 &&
+          !filterScreenController.showTabBar.value) {
+        filterScreenController.handleOption(showTab: true, openOption: true);
       }
     });
 
@@ -52,7 +51,7 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
       searchTempShortController.replaceVideos(p0);
     });
 
-    everWorker = ever(filterScreenController.selectedOptions, (_) {
+    everWorker = ever(filterShortScreenController.selectedOptions, (_) {
       vodController.reset();
       vodController.loadMoreData();
     });
@@ -74,9 +73,10 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
             headerExtends: [
               SliverToBoxAdapter(
                 child: FilterOptions(
-                  menuData: filterScreenController.menuData,
-                  handleOptionChange: filterScreenController.handleOptionChange,
-                  selectedOptions: filterScreenController.selectedOptions,
+                  menuData: filterShortScreenController.menuData,
+                  handleOptionChange:
+                      filterShortScreenController.handleOptionChange,
+                  selectedOptions: filterShortScreenController.selectedOptions,
                 ),
               ),
               const SliverToBoxAdapter(
@@ -98,13 +98,12 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
                   args: {'itemId': 4, 'videoId': id});
             },
           ),
-          if (_showSelectedBar)
-            FilterBar(
-              scrollController: scrollController,
-              menuData: filterScreenController.menuData,
-              selectedOptions: filterScreenController.selectedOptions,
-              handleOptionChange: filterScreenController.handleOptionChange,
-            ),
+          FilterBar(
+            menuData: filterShortScreenController.menuData,
+            selectedOptions: filterShortScreenController.selectedOptions,
+            handleOptionChange: filterShortScreenController.handleOptionChange,
+            film: 2,
+          ),
         ],
       ),
     );
