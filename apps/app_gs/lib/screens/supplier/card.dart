@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/controllers/user_favorites_supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
@@ -10,8 +9,6 @@ import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/actor_avatar.dart';
-
-final logger = Logger();
 
 class SupplierCard extends StatefulWidget {
   final int id;
@@ -75,7 +72,6 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     Supplier supplier = supplierController.supplier.value;
-    logger.i(supplier.followTotal);
 
     final double opacity = 1 - shrinkOffset / maxExtent;
     final double percentage = shrinkOffset / maxExtent;
