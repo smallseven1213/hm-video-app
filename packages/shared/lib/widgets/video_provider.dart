@@ -48,11 +48,6 @@ class VideoProviderState extends State<VideoProvider> {
 
   @override
   void dispose() {
-    // var ss = genaratorShortVideoDetailTag(widget.vodId.toString());
-    // if (Get.isRegistered(tag: ss) == true) {
-    //   controller.dispose();
-    //   Get.delete(tag: ss);
-    // }
     controller.dispose();
     Get.delete(tag: controllerTag);
     super.dispose();
