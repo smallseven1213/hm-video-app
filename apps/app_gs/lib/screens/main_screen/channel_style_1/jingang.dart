@@ -1,6 +1,7 @@
 // JingangList
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/jingang.dart';
@@ -33,14 +34,14 @@ class JingangList extends StatelessWidget {
         if (jingang.jingangStyle == JingangStyle.single.index) {
           return SliverToBoxAdapter(
             child: SizedBox(
-              height: 108,
+              height: 113,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: jingang.jingangDetail?.length ?? 0,
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 16.0),
+                        horizontal: 8, vertical: 8.0),
                     child: JingangButton(
                       item: jingang.jingangDetail![index],
                       outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
@@ -54,7 +55,7 @@ class JingangList extends StatelessWidget {
           );
         }
         return SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
           sliver: SliverAlignedGrid.count(
             crossAxisCount: jingang.quantity ?? 4,
             itemCount: jingang.jingangDetail?.length ?? 0,
@@ -65,7 +66,7 @@ class JingangList extends StatelessWidget {
                   jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
             ),
             mainAxisSpacing: 12.0,
-            crossAxisSpacing: 10.0,
+            crossAxisSpacing: 8.0,
           ),
         );
       },

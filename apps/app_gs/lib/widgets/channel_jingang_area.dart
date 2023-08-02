@@ -41,7 +41,7 @@ class ChannelJingangArea extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 16.0),
+                        horizontal: 8, vertical: 8.0),
                     child: JingangButton(
                       item: jingang.jingangDetail![index],
                       outerFrame: OuterFrame.border.value,
@@ -55,18 +55,20 @@ class ChannelJingangArea extends StatelessWidget {
           );
         }
         return SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
+          padding: const EdgeInsets.only(top: 8.0),
           sliver: SliverAlignedGrid.count(
             crossAxisCount: jingang.quantity ?? 4,
             itemCount: jingang.jingangDetail?.length ?? 0,
-            itemBuilder: (BuildContext context, int index) => JingangButton(
-              item: jingang.jingangDetail![index],
-              outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
-              outerFrameStyle:
-                  jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+            itemBuilder: (BuildContext context, int index) => Container(
+              child: JingangButton(
+                item: jingang.jingangDetail![index],
+                outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+                outerFrameStyle:
+                    jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
+              ),
             ),
             mainAxisSpacing: 12.0,
-            crossAxisSpacing: 10.0,
+            crossAxisSpacing: 8.0,
           ),
         );
       },

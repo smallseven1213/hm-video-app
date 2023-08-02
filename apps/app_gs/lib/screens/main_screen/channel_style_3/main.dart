@@ -123,7 +123,10 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               ChannelTags(
                 channelId: widget.channelId,
               ),
-              if (_tabController!.length > 1)
+              if (_tabController!.length > 1) ...[
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 8),
+                ),
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: _SliverAppBarDelegate(
@@ -140,6 +143,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                     ),
                   ),
                 ),
+              ]
             ];
           },
           body: TabBarView(
