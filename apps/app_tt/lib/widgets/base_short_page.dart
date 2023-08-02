@@ -43,6 +43,7 @@ class BaseShortPage extends StatelessWidget {
         ),
         shortCardBuilder: (
                 {required int index,
+                required bool isActive,
                 required String obsKey,
                 required Vod shortData,
                 required Function toggleFullScreen}) =>

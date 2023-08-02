@@ -3,8 +3,10 @@ import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/widgets/video_provider.dart';
 import 'package:preload_page_view/preload_page_view.dart';
+import 'package:shared/widgets/video_screen_builder/video_screen_builder.dart';
+
+import 'video_provider.dart';
 
 final logger = Logger();
 
@@ -20,6 +22,7 @@ class BaseShortPageBuilder extends StatefulWidget {
   final Function(
       {required int index,
       required String obsKey,
+      required bool isActive,
       required Vod shortData,
       required Function toggleFullScreen}) shortCardBuilder;
 
@@ -42,7 +45,8 @@ class BaseShortPageBuilder extends StatefulWidget {
 
 class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
   bool isInitial = false;
-  PreloadPageController? _pageController;
+  // PreloadPageController? _pageController;
+  PageController? _pageController;
   int currentPage = 0;
   List<Vod> cachedVods = [];
   final PageViewIndexController pageviewIndexController =
@@ -67,7 +71,8 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
     }
 
     _pageController?.dispose();
-    _pageController = PreloadPageController(initialPage: initialPageIndex);
+    // _pageController = PreloadPageController(initialPage: initialPageIndex);
+    _pageController = PageController(initialPage: initialPageIndex);
 
     _pageController?.addListener(() {
       pageviewIndexController.setPageIndex(
@@ -106,13 +111,21 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
             Center(
               child: widget.loadingWidget,
             ),
-          PreloadPageView.builder(
+          // PreloadPageView.builder(
+          PageView.builder(
             controller: _pageController,
-            preloadPagesCount: 0,
+            onPageChanged: (int index) {
+              setState(() {
+                currentPage = index;
+              });
+            },
+            // preloadPagesCount: 2,
             itemCount: cachedVods.length * 50,
             itemBuilder: (BuildContext context, int index) {
               var currentIndex = index % cachedVods.length;
               var shortData = cachedVods[currentIndex];
+              bool isItemActive = index == currentPage;
+              logger.i('index: $index, currentIndex: $currentPage');
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
               return VideoProvider(
                   key: Key('video-provider-$obsKey'),
@@ -125,6 +138,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
                     index: index,
                     obsKey: obsKey,
                     shortData: shortData,
+                    isActive: isItemActive,
                     toggleFullScreen: () =>
                         pageviewIndexController.toggleFullscreen(),
                   ));

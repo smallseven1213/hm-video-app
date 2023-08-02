@@ -27,7 +27,7 @@ class ShortCard extends StatefulWidget {
   final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
-  // final bool isFullscreen;
+  final bool? isActive;
   final Function toggleFullScreen;
   final bool? hiddenBottomArea;
 
@@ -40,6 +40,7 @@ class ShortCard extends StatefulWidget {
       required this.shortData,
       required this.toggleFullScreen,
       // required this.isFullscreen,
+      this.isActive = true,
       this.supportedPlayRecord = true,
       this.displayFavoriteAndCollectCount = true,
       this.hiddenBottomArea = false})
@@ -101,6 +102,14 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+
+    if (widget.isActive == false) {
+      obsVideoPlayerController.pause();
+    } else {
+      if (!kIsWeb) {
+        obsVideoPlayerController.play();
+      }
+    }
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
