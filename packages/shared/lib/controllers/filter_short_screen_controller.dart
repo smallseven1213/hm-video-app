@@ -31,7 +31,7 @@ class FilterShortScreenController extends GetxController {
       ],
     },
     {
-      'key': 'publisherId',
+      'key': 'supplierId',
       'options': [
         {'name': '全部UP主', 'value': 0},
         // 這裡使用 API 請求填充其他選項
@@ -59,7 +59,7 @@ class FilterShortScreenController extends GetxController {
   final RxMap<String, Set<dynamic>> selectedOptions = {
     'order': {1}.obs,
     'regionId': {0}.obs,
-    'publisherId': {0}.obs,
+    'supplierId': {0}.obs,
     'chargeType': {0}.obs,
     // 'film': {1}.obs,
   }.obs;
@@ -75,13 +75,6 @@ class FilterShortScreenController extends GetxController {
       _handleInitRegionData();
       _handleInitSuppliersData();
     });
-  }
-
-  String findName(String key, int value) {
-    // find name from menuData by key and value, return name
-    var options = menuData.firstWhere((item) => item['key'] == key)['options'];
-    var name = options.firstWhere((item) => item['value'] == value)['name'];
-    return name;
   }
 
   void _handleInitRegionData() async {
@@ -118,7 +111,7 @@ class FilterShortScreenController extends GetxController {
     if (key == 'order' ||
         key == 'chargeType' ||
         key == 'regionId' ||
-        key == 'publisherId') {
+        key == 'supplierId') {
       // 如果選擇了 "order" 中的任何一個選項，則清除所有其他選項並選擇當前選項
       selectedOptions[key]!.clear();
       selectedOptions[key]!.add(value);
