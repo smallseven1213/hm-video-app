@@ -1,5 +1,6 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared/widgets/video_screen_builder/video_screen_builder.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/vod.dart';
@@ -25,6 +26,20 @@ class VideoScreen extends StatefulWidget {
 }
 
 class VideoScreenState extends State<VideoScreen> {
+  @override
+  void initState() {
+    super.initState();
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.black));
+  }
+
+  @override
+  void dispose() {
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return VideoScreenBuilder(
