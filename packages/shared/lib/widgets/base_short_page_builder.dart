@@ -6,6 +6,8 @@ import 'package:logger/logger.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:shared/widgets/video_screen_builder/video_screen_builder.dart';
 
+import 'video_provider.dart';
+
 final logger = Logger();
 
 class BaseShortPageBuilder extends StatefulWidget {
@@ -125,30 +127,21 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
               bool isItemActive = index == currentPage;
               logger.i('index: $index, currentIndex: $currentPage');
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
-              return VideoScreenBuilder(
-                key: Key('video-provider-$obsKey'),
-                name: obsKey,
-                id: shortData.id,
-                child: (
-                    {required String? videoUrl,
-                    required Vod? video,
-                    required Vod? videoDetail}) {
-                  if (videoUrl == null) {
-                    if (widget.loadingWidget != null) {
-                      return widget.loadingWidget!;
-                    }
-                    return Container();
-                  }
-                  return widget.shortCardBuilder(
+              return VideoProvider(
+                  key: Key('video-provider-$obsKey'),
+                  obsKey: obsKey,
+                  vodId: shortData.id,
+                  loading: Center(
+                    child: widget.loadingWidget,
+                  ),
+                  child: widget.shortCardBuilder(
                     index: index,
                     obsKey: obsKey,
                     shortData: shortData,
                     isActive: isItemActive,
                     toggleFullScreen: () =>
                         pageviewIndexController.toggleFullscreen(),
-                  );
-                },
-              );
+                  ));
             },
             scrollDirection: Axis.vertical,
           ),
