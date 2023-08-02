@@ -67,7 +67,7 @@ class HomeMainScreen extends StatelessWidget {
                                             ({required String searchKeyword}) =>
                                                 SizedBox(
                                           width: 56,
-                                          height: 56,
+                                          height: 76,
                                           child: Center(
                                               child: IconButton(
                                             icon: const Image(
