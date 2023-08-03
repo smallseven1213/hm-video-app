@@ -7,12 +7,13 @@ import 'package:shared/widgets/popular_search_title_builder.dart';
 import '../../widgets/static_search_input.dart';
 
 class ChannelSearchBar extends StatelessWidget {
-  ChannelSearchBar({Key? key}) : super(key: key);
+  const ChannelSearchBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 50,
+    return Container(
+      color: Colors.transparent,
+      height: 30,
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
