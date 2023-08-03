@@ -1,4 +1,3 @@
-import 'package:app_gs/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -60,27 +59,22 @@ class ShortCardInfo extends StatelessWidget {
               GestureDetector(
                 onTap: () async {
                   obsVideoPlayerController.pause();
+                  // logger.i('RENDER OBX toGo!!');
                   await MyRouteDelegate.of(context)
                       .push(AppRoutes.supplier, args: {
                     'id': data.supplier!.id,
                   });
-                  // logger.i('RENDER OBX isBack!!');
+                  logger.i('RENDER OBX isBack!!');
                   obsVideoPlayerController.play();
                 },
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    ActorAvatar(
-                      photoSid: data.supplier!.photoSid,
-                      width: 40,
-                      height: 40,
-                    ),
-                    const SizedBox(width: 8),
-                    const SizedBox(height: 8),
-                    Text(data.supplier!.aliasName ?? '',
+                    Text('@${data.supplier!.aliasName}',
                         style: const TextStyle(
-                          fontSize: 13,
+                          fontSize: 15,
                           color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         )),
                     const SizedBox(height: 8),
                   ],

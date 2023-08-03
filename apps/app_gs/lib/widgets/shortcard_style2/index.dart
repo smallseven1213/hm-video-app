@@ -1,3 +1,4 @@
+import 'package:app_gs/widgets/shortcard_style2/Side_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +15,11 @@ import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 import '../wave_loading.dart';
-import 'short_bottom_area.dart';
 import 'short_card_info.dart';
 
 final logger = Logger();
 
-class ShortCard extends StatefulWidget {
+class ShortCardStyle2 extends StatefulWidget {
   final int index;
   final int id;
   final String title;
@@ -30,7 +30,7 @@ class ShortCard extends StatefulWidget {
   final bool? isActive;
   final Function toggleFullScreen;
 
-  const ShortCard({
+  const ShortCardStyle2({
     Key? key,
     required this.obsKey,
     required this.index,
@@ -38,17 +38,16 @@ class ShortCard extends StatefulWidget {
     required this.title,
     required this.shortData,
     required this.toggleFullScreen,
-    // required this.isFullscreen,
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
   @override
-  ShortCardState createState() => ShortCardState();
+  ShortCardStyle2State createState() => ShortCardStyle2State();
 }
 
-class ShortCardState extends State<ShortCard> {
+class ShortCardStyle2State extends State<ShortCardStyle2> {
   late ShortVideoDetailController videoDetailController;
   late ObservableVideoPlayerController obsVideoPlayerController;
   double trackHeight = 2.0;
@@ -167,7 +166,7 @@ class ShortCardState extends State<ShortCard> {
                     VideoPlayerDisplayWidget(
                       controller: obsVideoPlayerController,
                       video: video,
-                      allowFullsreen: false,
+                      allowFullsreen: true,
                       toggleFullscreen: () {
                         widget.toggleFullScreen();
                       },
@@ -179,21 +178,19 @@ class ShortCardState extends State<ShortCard> {
                       title: widget.title,
                       videoUrl: videoUrl,
                     ),
+                  if (videoDetail != null)
+                    SideInfo(
+                      obsKey: widget.obsKey,
+                      data: videoDetail,
+                      title: widget.title,
+                      videoUrl: videoUrl,
+                      shortData: widget.shortData,
+                    ),
                 ],
               ),
             ),
             Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: ShortBottomArea(
-                shortData: widget.shortData,
-                displayFavoriteAndCollectCount:
-                    widget.displayFavoriteAndCollectCount,
-              ),
-            ),
-            Positioned(
-              bottom: 57 + screen.padding.bottom,
+              bottom: -17,
               left: -24,
               right: -24,
               child: Listener(
