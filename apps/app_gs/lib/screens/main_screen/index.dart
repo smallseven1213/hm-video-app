@@ -49,14 +49,15 @@ class HomeMainScreen extends StatelessWidget {
                       height: MediaQuery.of(context).padding.top,
                     ),
                     SizedBox(
-                      height: 38,
+                      height: 55,
                       child: Row(
                         children: [
                           Expanded(
-                              child: LayoutTabBar(
-                            key: Key('layout-tab-bar-$layoutId'),
-                            layoutId: layoutId,
-                          )),
+                              child: SizedBox(
+                                  height: 45,
+                                  child: LayoutTabBar(
+                                    layoutId: layoutId,
+                                  ))),
                           DisplayLayoutTabSearch(
                             layoutId: layoutId,
                             child: ({required bool displaySearchBar}) =>
@@ -67,7 +68,7 @@ class HomeMainScreen extends StatelessWidget {
                                             ({required String searchKeyword}) =>
                                                 SizedBox(
                                           width: 36,
-                                          height: 56,
+                                          height: 65,
                                           child: Center(
                                               child: Padding(
                                             // padding top 5
@@ -75,8 +76,9 @@ class HomeMainScreen extends StatelessWidget {
                                                 const EdgeInsets.only(top: 6),
                                             child: IconButton(
                                               icon: const Image(
-                                                width: 22,
-                                                height: 22,
+                                                width: 32,
+                                                height: 32,
+                                                fit: BoxFit.cover,
                                                 image: AssetImage(
                                                     'assets/images/layout_tabbar_search.png'),
                                               ),
