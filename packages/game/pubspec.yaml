@@ -74,6 +74,7 @@ flutter:
   # To add assets to your plugin package, add an assets section, like this:
   assets:
     - assets/svg/
+    - assets/images/
     - assets/images/game_lobby/
     - assets/images/game_deposit/
   #   - images/a_dot_burr.jpeg

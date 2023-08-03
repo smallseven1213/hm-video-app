@@ -8,14 +8,7 @@ class GamesListController extends GetxController {
   var games = <GameItem>[].obs;
   var isShowFab = false.obs;
   final RxInt selectedCategoryIndex = 0.obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    Get.find<GameAuthController>().token.listen((event) {
-      fetchGames();
-    });
-  }
+  var isMaintenance = false.obs;
 
   Future<void> fetchGames() async {
     logger.i('loading game states');
@@ -32,5 +25,9 @@ class GamesListController extends GetxController {
 
   void updateSelectedCategoryIndex(int index) {
     selectedCategoryIndex.value = index;
+  }
+
+  void setMaintenanceStatus(bool status) {
+    isMaintenance.value = status;
   }
 }
