@@ -1,9 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
-import 'package:shared/controllers/video_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/popular_search_title_builder.dart';
@@ -14,7 +11,6 @@ class ChannelSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('RENDER SearchBar');
     return SizedBox(
       height: 50,
       width: double.infinity,

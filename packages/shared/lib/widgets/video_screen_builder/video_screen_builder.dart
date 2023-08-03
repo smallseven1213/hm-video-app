@@ -71,11 +71,14 @@ class VideoScreenBuilderState extends State<VideoScreenBuilder> {
         var video = controller.video.value;
         var videoDetail = controller.videoDetail.value;
 
-        setState(() {
-          stateVideoUrl = controller.videoUrl.value;
-          stateVideo = controller.video.value;
-          stateVideoDetail = controller.videoDetail.value;
-        });
+        if (mounted) {
+          setState(() {
+            stateVideoUrl = controller.videoUrl.value;
+            stateVideo = controller.video.value;
+            stateVideoDetail = controller.videoDetail.value;
+          });
+        }
+
         // 下一步Get訂閱和操作
         if (!Get.isRegistered<ObservableVideoPlayerController>(
           tag: videoUrl,
