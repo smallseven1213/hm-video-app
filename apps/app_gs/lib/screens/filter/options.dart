@@ -1,38 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/filter_screen_controller.dart';
+import 'package:shared/controllers/filter_video_screen_controller.dart';
 
 import 'option_button.dart';
 
 class FilterOptions extends StatelessWidget {
-  FilterOptions({Key? key}) : super(key: key);
+  final RxList<Map<String, dynamic>> menuData;
+  final RxMap<String, Set> selectedOptions;
+  final void Function(String key, dynamic value) handleOptionChange;
 
-  final FilterScreenController controller = Get.find();
+  FilterOptions({
+    Key? key,
+    required this.menuData,
+    required this.selectedOptions,
+    required this.handleOptionChange,
+  }) : super(key: key);
+
+  final FilterVideoScreenController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(() {
-        logger.i('controller.menuData => ${controller.menuData}');
+        logger.i('menuData => ${menuData}');
         return Column(
           children: List.generate(
-            controller.menuData.length,
+            menuData.length,
             (index) {
               return Container(
                 height: 30,
                 color: const Color(0xFF001A40),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  itemCount: controller.menuData[index]['options'].length,
+                  itemCount: menuData[index]['options'].length,
                   itemBuilder: (context, itemIndex) {
                     return Obx(() {
-                      final option =
-                          controller.menuData[index]['options'][itemIndex];
+                      final option = menuData[index]['options'][itemIndex];
 
-                      final isSelected = controller
-                          .selectedOptions[controller.menuData[index]['key']]!
-                          .contains(option['value']);
+                      final isSelected =
+                          selectedOptions[menuData[index]['key']]!
+                              .contains(option['value']);
 
                       return Padding(
                         padding: const EdgeInsets.symmetric(
@@ -41,9 +49,8 @@ class FilterOptions extends StatelessWidget {
                             isSelected: isSelected,
                             name: option['name'],
                             onTap: () {
-                              var key = controller.menuData[index]['key'];
-                              controller.handleOptionChange(
-                                  key, option['value']);
+                              var key = menuData[index]['key'];
+                              handleOptionChange(key, option['value']);
                             }),
                       );
                     });

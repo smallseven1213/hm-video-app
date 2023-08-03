@@ -14,19 +14,18 @@ import 'package:shared/widgets/video_block_template/block_5.dart';
 import 'package:shared/widgets/video_block_template/block_6.dart';
 import 'package:shared/widgets/video_block_template/block_7.dart';
 
-import '../../pages/video.dart';
 import '../../widgets/video_block_footer.dart';
 import '../../widgets/video_preview.dart';
 
 class VideoBlock extends BaseVideoBlock {
-  VideoBlock({Key? key, required Blocks block, required int channelId})
+  const VideoBlock({Key? key, required Blocks block, required int channelId})
       : super(key: key, block: block, channelId: channelId);
 
   @override
-  _VideoBlockState createState() => _VideoBlockState();
+  VideoBlockState createState() => VideoBlockState();
 }
 
-class _VideoBlockState extends BaseVideoBlockState<VideoBlock> {
+class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
   BaseVideoPreviewWidget _buildVideoPreview(int film, Vod video) {
     return VideoPreviewWidget(
       id: video.id,

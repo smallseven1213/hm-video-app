@@ -8,7 +8,7 @@ abstract class BaseVideoBlock extends StatefulWidget {
   final Blocks block;
   final int channelId;
 
-  BaseVideoBlock({Key? key, required this.block, required this.channelId})
+  const BaseVideoBlock({Key? key, required this.block, required this.channelId})
       : super(key: key);
 }
 

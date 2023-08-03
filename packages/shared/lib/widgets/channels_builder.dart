@@ -41,12 +41,28 @@ class ChannelsBuilderState extends State<ChannelsBuilder> {
         tag: 'channel-screen-${widget.layoutId}');
     layoutController =
         Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
-    everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+
+    // everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     if (controller.hasClients) {
+    //       controller.jumpToPage(page);
+    //     }
+    //   });
+    // });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
         if (controller.hasClients) {
           controller.jumpToPage(page);
         }
       });
+      for (var i = 0; i < layoutController.layout.length; i++) {
+        if (layoutController.layout[i].isDefault == 1) {
+          channelScreenTabController.pageViewIndex.value = i;
+          controller.jumpToPage(i);
+          break;
+        }
+      }
     });
 
     super.initState();

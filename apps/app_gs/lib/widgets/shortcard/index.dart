@@ -1,16 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
-import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
@@ -18,8 +15,6 @@ import '../short_bottom_area.dart';
 import '../wave_loading.dart';
 import 'fullscreen_controls.dart';
 import 'short_card_info.dart';
-
-final logger = Logger();
 
 class ShortCard extends StatefulWidget {
   final int index;
@@ -29,7 +24,7 @@ class ShortCard extends StatefulWidget {
   final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
-  // final bool isFullscreen;
+  final bool? isActive;
   final Function toggleFullScreen;
   final bool? hiddenBottomArea;
 
@@ -42,6 +37,7 @@ class ShortCard extends StatefulWidget {
       required this.shortData,
       required this.toggleFullScreen,
       // required this.isFullscreen,
+      this.isActive = true,
       this.supportedPlayRecord = true,
       this.displayFavoriteAndCollectCount = true,
       this.hiddenBottomArea = false})
@@ -69,7 +65,6 @@ class ShortCardState extends State<ShortCard> {
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
     if (widget.supportedPlayRecord == true) {
-      logger.i('PLAYRECORD TESTING: initial');
       var videoVal = videoDetailController.video.value;
       var playRecord = Vod(
         videoVal!.id,
@@ -103,6 +98,14 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+
+    if (widget.isActive == false) {
+      obsVideoPlayerController.pause();
+    } else {
+      if (!kIsWeb) {
+        obsVideoPlayerController.play();
+      }
+    }
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
@@ -162,6 +165,7 @@ class ShortCardState extends State<ShortCard> {
                     VideoPlayerDisplayWidget(
                       controller: obsVideoPlayerController,
                       video: video,
+                      hiddenBottomArea: widget.hiddenBottomArea,
                       toggleFullscreen: () {
                         widget.toggleFullScreen();
                       },

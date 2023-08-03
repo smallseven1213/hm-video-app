@@ -42,14 +42,15 @@ class VodApi {
     int belong = 0,
     int order = 0,
     int chargeTypeId = 0,
+    int film = 1,
   }) async {
-    // if (chargeTypeId != 0) {
-    //   queryString += '&chargeType=$chargeTypeId';
-    // }
+    if (belong != 0 && queryString != null) {
+      queryString += '&belong=$belong';
+    }
 
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/list?page=$page&limit=$limit&belong=$belong&film=1&$queryString');
+            '${systemConfig.apiHost}/public/videos/video/list?page=$page&limit=$limit&film=$film&$queryString');
 
     if (res.data['code'] != '00') {
       return BlockVod([], 0);

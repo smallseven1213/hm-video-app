@@ -1,4 +1,3 @@
-import 'actor.dart';
 import 'vod.dart';
 
 class SupplierForVods {

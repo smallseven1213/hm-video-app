@@ -21,17 +21,26 @@ class ChannelTags extends StatelessWidget {
             .channelSharedData.value!.tags!.details!.isEmpty) {
       return const SliverToBoxAdapter(child: SizedBox());
     }
+
+    bool hasTitle = channelSharedDataController
+                .channelSharedData.value?.tags?.title !=
+            null &&
+        channelSharedDataController.channelSharedData.value?.tags?.title != '';
     return SliverToBoxAdapter(
       child: Column(
         children: [
+          hasTitle
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Header(
+                      text: channelSharedDataController
+                              .channelSharedData.value?.tags?.title ??
+                          ''),
+                )
+              : const SizedBox(height: 8),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 15),
-            child: Header(
-                text: channelSharedDataController
-                        .channelSharedData.value?.tags?.title ??
-                    '--'),
-          ),
-          MediaQuery.removePadding(
+            padding: const EdgeInsets.symmetric(horizontal: 4),
+            child: MediaQuery.removePadding(
               removeTop: true,
               context: context,
               child: ListView.builder(
@@ -66,6 +75,7 @@ class ChannelTags extends StatelessWidget {
                                             .outerFrame ??
                                         false,
                                     film: tags.details![rowIndex + i].film ?? 1,
+                                    channelId: channelId,
                                   )
                                 : Container(), // Empty container for no data
                           ),
@@ -73,7 +83,9 @@ class ChannelTags extends StatelessWidget {
                     ),
                   );
                 },
-              ))
+              ),
+            ),
+          ),
         ],
       ),
     );

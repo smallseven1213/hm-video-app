@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/video_block_grid_view_row.dart';
 
 import 'base_video_preview.dart';
-
-final logger = Logger();
 
 class VideoBlockGridView extends StatelessWidget {
   final List<Vod> videos;

@@ -7,7 +7,6 @@ import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:volume_control/volume_control.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 import 'enums.dart';
 import 'player_header.dart';
@@ -381,8 +380,8 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                             activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
                             inactiveTrackColor:
                                 Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
-                            overlayShape:
-                                RoundSliderOverlayShape(overlayRadius: 0.0),
+                            overlayShape: const RoundSliderOverlayShape(
+                                overlayRadius: 0.0),
                           ),
                           child: Slider(
                             value: videoPosition.toDouble(),

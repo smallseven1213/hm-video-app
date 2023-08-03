@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared/utils/navigation_helper.dart';
 import 'package:uuid/uuid.dart';
@@ -32,8 +30,6 @@ class StackData {
     this.useBottomToTopAnimation = false,
   });
 }
-
-final logger = Logger();
 
 class MyRouteDelegate extends RouterDelegate<String>
     with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
@@ -155,7 +151,6 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
     if (_stack.isNotEmpty) {
-      logger.i(route.settings.name);
       if (_stack.last.path == route.settings.name) {
         final lastStackData = _stack.removeLast();
         lastStackData.completer.complete();
@@ -167,11 +162,10 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Widget build(BuildContext context) {
-    logger.i('NAVI!! ==> , $_stack');
     return Stack(
       children: [
         Navigator(
-          key: navigatorKey,
+          // key: navigatorKey,
           observers: [
             SentryNavigatorObserver(),
           ],
@@ -180,10 +174,9 @@ class MyRouteDelegate extends RouterDelegate<String>
             final widget = routes[stack.path]!(context, stack.args);
 
             if (stack.hasTransition == true) {
-              logger.i('NAVI!! ==> , ${stack.path}');
               return CupertinoPage(
                 // key: ValueKey(stack.args['uuid']),
-                maintainState: false,
+                maintainState: true,
                 name: stack.path,
                 child: Stack(
                   children: [

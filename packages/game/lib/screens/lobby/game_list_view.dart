@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:game/models/game_list.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';
@@ -104,29 +105,23 @@ class GameListViewState extends State<GameListView>
     with SingleTickerProviderStateMixin {
   final GamesListController gamesListController =
       Get.put(GamesListController());
-  TabController? _tabController;
   var filteredGameCategories = [];
   List gameHistoryList = [];
+  final ScrollController _scrollController = ScrollController();
+  int _currentIndex = 0;
 
   @override
   void initState() {
     super.initState();
     gamesListController.fetchGames().then((value) {
       _filterGameCategories();
-      _tabController = TabController(
-        length: filteredGameCategories.length,
-        vsync: this,
-        initialIndex: 0,
-      );
-      _tabController!.addListener(_handleTabSelection);
-      gamesListController.updateSelectedCategoryIndex(0);
       _getGameHistory();
     });
   }
 
   @override
   void dispose() {
-    _tabController?.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -152,59 +147,9 @@ class GameListViewState extends State<GameListView>
     logger.i('lobby gameHistoryList: $gameHistoryList');
   }
 
-  _handleTabSelection() {
-    gamesListController.updateSelectedCategoryIndex(_tabController!.index);
-    if (_tabController?.index == -1) {
-      _getGameHistory();
-    }
-  }
-
   // 寫一個篩選遊戲類別的方法
   _filterGameCategories() {
     Set<int> gameTypes = <int>{};
-
-    var gameCategoriesMapper = [
-      {
-        'name': '全部',
-        'gameType': 0,
-        'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
-      },
-      {
-        'name': '最近',
-        'gameType': -1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
-      },
-      {
-        'name': '捕魚',
-        'gameType': 1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
-      },
-      {
-        'name': '真人',
-        'gameType': 2,
-        'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
-      },
-      {
-        'name': '棋牌',
-        'gameType': 3,
-        'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
-      },
-      {
-        'name': '電子',
-        'gameType': 4,
-        'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
-      },
-      {
-        'name': '體育',
-        'gameType': 5,
-        'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
-      },
-      {
-        'name': '彩票',
-        'gameType': 6,
-        'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
-      }
-    ];
 
     for (var game in gamesListController.games) {
       gameTypes.add(game.gameType);
@@ -224,58 +169,73 @@ class GameListViewState extends State<GameListView>
     filteredGameCategories.assignAll(filteredCategories);
   }
 
+  void _scrollToItem(int index) {
+    double itemHeight = 60.0; // 假設每個項目的高度是 60.0
+    double minScrollExtent = _scrollController.position.minScrollExtent;
+    double maxScrollExtent = _scrollController.position.maxScrollExtent;
+
+    // 計算將該項目滾動到捲軸中間的偏移量
+    double scrollToOffset = itemHeight * index -
+        (_scrollController.position.viewportDimension - itemHeight) / 2;
+
+    // 確保滾動位置在捲軸範圍內
+    scrollToOffset = scrollToOffset.clamp(minScrollExtent, maxScrollExtent);
+
+    // 使用 animateTo 將該項目滾動到捲軸中間或最底部或最頂部
+    _scrollController.animateTo(
+      scrollToOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.linear,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (gamesListController.games.isEmpty || _tabController == null) {
+      if (gamesListController.games.isEmpty) {
         return const GameLoading();
       } else {
         return gamesListController.games.isNotEmpty
             ? Expanded(
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SizedBox(
-                      width: 60,
-                      child: RotatedBox(
-                        quarterTurns: 1,
-                        child: TabBar(
-                          controller: _tabController,
-                          isScrollable: true,
-                          labelColor: Colors.white,
-                          labelPadding: const EdgeInsets.only(right: 0),
-                          indicatorColor: Colors.transparent,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          tabs: filteredGameCategories
-                              .map(
-                                (category) => RotatedBox(
-                                  quarterTurns: 3,
-                                  child: GameScrollViewTabs(
-                                    text: category['name'].toString(),
-                                    icon: category['icon'].toString(),
-                                    isActive: gamesListController
-                                            .selectedCategoryIndex.value ==
-                                        filteredGameCategories
-                                            .indexOf(category),
-                                  ),
-                                ),
-                              )
-                              .toList(),
-                        ),
+                      width: 54,
+                      child: ListView.builder(
+                        controller:
+                            _scrollController, // Assign the scroll controller
+                        shrinkWrap: true,
+                        itemCount: filteredGameCategories.length,
+                        itemBuilder: (context, index) {
+                          final category = filteredGameCategories[index];
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                _currentIndex = index;
+                              });
+                              _scrollToItem(index);
+                            },
+                            child: GameScrollViewTabs(
+                              text: category['name'].toString(),
+                              icon: category['icon'].toString(),
+                              isActive: _currentIndex == index,
+                            ),
+                          );
+                        },
                       ),
                     ),
                     const VerticalDivider(
                         thickness: 1, width: 10, color: Colors.transparent),
                     Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: filteredGameCategories
-                            .map(
-                              (category) => gamesListController.games.isNotEmpty
-                                  ? _buildGameList(category['gameType'] as int)
-                                  : const SizedBox(),
-                            )
-                            .toList(),
+                      child: IndexedStack(
+                        index: _currentIndex,
+                        children: filteredGameCategories.map((category) {
+                          final gameType = category['gameType'] as int;
+                          return gamesListController.games.isNotEmpty
+                              ? _buildGameList(gameType)
+                              : const SizedBox();
+                        }).toList(),
                       ),
                     ),
                   ],

@@ -163,6 +163,7 @@ class VodsState extends State<Vods> {
                   child: NoDataWidget(),
                 ),
               if (vodController!.displayLoading.value && !isRefreshing)
+                // ignore: prefer_const_constructors
                 SliverVideoPreviewSkeletonList(),
               if (vodController!.displayNoMoreData.value)
                 SliverToBoxAdapter(

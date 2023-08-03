@@ -6,6 +6,9 @@ import '../controllers/auth_controller.dart';
 import '../controllers/banner_controller.dart';
 import '../controllers/bottom_navigator_controller.dart';
 import '../controllers/filter_screen_controller.dart';
+import '../controllers/filter_short_screen_controller.dart';
+import '../controllers/filter_temp_controller.dart';
+import '../controllers/filter_video_screen_controller.dart';
 import '../controllers/list_editor_controller.dart';
 import '../controllers/pageview_index_controller.dart';
 import '../controllers/play_record_controller.dart';
@@ -55,6 +58,9 @@ void setupDependencies() {
   Get.lazyPut<UserShortCollectionController>(
       () => UserShortCollectionController());
   Get.lazyPut<FilterScreenController>(() => FilterScreenController());
+  Get.lazyPut<FilterVideoScreenController>(() => FilterVideoScreenController());
+  Get.lazyPut<FilterShortScreenController>(() => FilterShortScreenController());
+  Get.lazyPut<FilterTempShortController>(() => FilterTempShortController());
   Get.lazyPut<ActorRegionController>(() => ActorRegionController());
   Get.lazyPut<VideoAdsController>(() => VideoAdsController());
   // lazyPut UserSearchHistoryController

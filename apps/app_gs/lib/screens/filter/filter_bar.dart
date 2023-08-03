@@ -9,89 +9,100 @@ import 'option_button.dart';
 import 'options.dart';
 
 class FilterBar extends StatefulWidget {
-  final ScrollController scrollController;
-  const FilterBar({Key? key, required this.scrollController}) : super(key: key);
+  final RxList<Map<String, dynamic>> menuData;
+  final RxMap<String, Set> selectedOptions;
+  final void Function(String key, dynamic value) handleOptionChange;
+  final int film;
+  const FilterBar({
+    Key? key,
+    required this.menuData,
+    required this.selectedOptions,
+    required this.handleOptionChange,
+    required this.film,
+  }) : super(key: key);
 
   @override
   FilterBarState createState() => FilterBarState();
 }
 
 class FilterBarState extends State<FilterBar> {
-  bool isOpen = false;
-  final controller = Get.find<FilterScreenController>();
-
-  @override
-  void initState() {
-    super.initState();
-    widget.scrollController.addListener(_scrollListener);
-  }
-
-  @override
-  void dispose() {
-    widget.scrollController.removeListener(_scrollListener);
-    super.dispose();
-  }
-
-  void _scrollListener() {
-    if (widget.scrollController.position.userScrollDirection !=
-        ScrollDirection.idle) {
-      if (mounted) {
-        setState(() {
-          isOpen = false;
-        });
-      }
-    }
-  }
+  final filterScreenController = Get.find<FilterScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          setState(() {
-            isOpen = true;
-          });
-        },
-        child: isOpen ? _buildOpen() : _buildClosed());
+    return Obx(
+      () {
+        if (filterScreenController.showTabBar.value &&
+            !filterScreenController.selectedBarOpen.value) {
+          return const SizedBox();
+        }
+        return GestureDetector(
+          onTap: () {
+            filterScreenController.handleOption(
+                showTab: true, openOption: true);
+          },
+          child: filterScreenController.selectedBarOpen.value
+              ? _buildOpen()
+              : _buildClosed(),
+        );
+      },
+    );
   }
 
   Widget _buildOpen() {
-    return FilterOptions();
+    return Container(
+      color: const Color(0xFF001A40),
+      // padding: const EdgeInsets.all(8),
+      // color: Colors.red,
+      width: double.infinity,
+      height: 130,
+      child: FilterOptions(
+        menuData: widget.menuData,
+        selectedOptions: widget.selectedOptions,
+        handleOptionChange: widget.handleOptionChange,
+      ),
+    );
+  }
+
+  String findName(String key, int value) {
+    // find name from menuData by key and value, return name
+    var options =
+        widget.menuData.firstWhere((item) => item['key'] == key)['options'];
+    var name = options.firstWhere((item) => item['value'] == value)['name'];
+    return name;
   }
 
   Widget _buildClosed() {
+    List<Widget> childrenWithSpacing = [
+      OptionButton(isSelected: true, name: widget.film == 1 ? '長視頻' : '短視頻'),
+      const SizedBox(width: 10),
+    ];
+    List<Widget> children = widget.selectedOptions.entries
+        .map((entry) => entry.value
+            .where((element) => element != null)
+            .map((value) => OptionButton(
+                isSelected: true, name: findName(entry.key, value)))
+            .toList())
+        .expand((element) => element)
+        .toList();
+
+    for (int i = 0; i < children.length; i++) {
+      childrenWithSpacing.add(children[i]);
+      if (i < children.length - 1) {
+        childrenWithSpacing.add(const SizedBox(width: 10));
+      }
+    }
+
     return Container(
       color: const Color(0xFF001A40),
       padding: const EdgeInsets.all(8),
       width: double.infinity,
-      height: 40,
-      child: GetBuilder<FilterScreenController>(
-        builder: (controller) {
-          // 生成子元素列錶並添加間距
-          List<Widget> childrenWithSpacing = [];
-          List<Widget> children = controller.selectedOptions.entries
-              .map((entry) => entry.value
-                  .where((element) => element != null)
-                  .map((value) => OptionButton(
-                      isSelected: true,
-                      name: controller.findName(entry.key, value)))
-                  .toList())
-              .expand((element) => element)
-              .toList();
-
-          for (int i = 0; i < children.length; i++) {
-            childrenWithSpacing.add(children[i]);
-            if (i < children.length - 1) {
-              childrenWithSpacing.add(const SizedBox(width: 10));
-            }
-          }
-
-          return SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: childrenWithSpacing,
-            ),
-          );
-        },
+      height: 46,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: childrenWithSpacing,
+        ),
       ),
     );
   }

@@ -2,13 +2,11 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:shared/controllers/auth_controller.dart';
-import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
 import '../models/vod.dart';
 
 final UserApi userApi = UserApi();
-final logger = Logger();
 // const String prefsKey = 'playrecord';
 
 class PlayRecordController extends GetxController {
@@ -48,7 +46,6 @@ class PlayRecordController extends GetxController {
   }
 
   void addPlayRecord(Vod video) async {
-    logger.i('PLAYRECORD TRACE: ADD ${video.toJson}');
     if (data.firstWhereOrNull((v) => v.id == video.id) != null) {
       data.removeWhere((v) => v.id == video.id);
     }
@@ -60,7 +57,6 @@ class PlayRecordController extends GetxController {
 
     // Add the new record at the beginning of the list.
     data.insert(0, video);
-    logger.i('PLAYRECORD TRACE: ${data.length}');
 
     await _updateHive();
   }
@@ -80,7 +76,6 @@ class PlayRecordController extends GetxController {
   Future<void> _updateHive() async {
     var box = await boxFuture;
     await box.clear();
-    logger.i('PLAYRECORD TRACE: ${data.length}');
     for (var video in data) {
       final videoStr = jsonEncode(video.toJson());
       await box.put(video.id.toString(), videoStr);

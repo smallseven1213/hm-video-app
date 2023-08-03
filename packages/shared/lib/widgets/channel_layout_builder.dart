@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/bottom_navigator_controller.dart';
 import '../controllers/channel_screen_tab_controller.dart';
 import '../controllers/layout_controller.dart';
 

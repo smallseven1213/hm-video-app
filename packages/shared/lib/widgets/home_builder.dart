@@ -59,14 +59,16 @@ class HomeBuilderState extends State<HomeBuilder> {
 
       return Scaffold(
         body: currentScreen,
-        bottomNavigationBar: bottomNavigatorController.navigatorItems.isEmpty
-            ? null
-            : widget.bottomNavigationBarWidget(
-                activeKey: activeKey,
-                navigatorItems: bottomNavigatorController.navigatorItems,
-                changeTabKey: (String tabKey) {
-                  bottomNavigatorController.changeKey(tabKey);
-                }),
+        bottomNavigationBar:
+            bottomNavigatorController.displayItems.value == false ||
+                    bottomNavigatorController.navigatorItems.isEmpty
+                ? null
+                : widget.bottomNavigationBarWidget(
+                    activeKey: activeKey,
+                    navigatorItems: bottomNavigatorController.navigatorItems,
+                    changeTabKey: (String tabKey) {
+                      bottomNavigatorController.changeKey(tabKey);
+                    }),
       );
     });
   }

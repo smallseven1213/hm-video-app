@@ -12,13 +12,13 @@ import '../../widgets/video_preview.dart';
 class RecommandScreen extends StatefulWidget {
   final Function onClickTag;
 
-  RecommandScreen({Key? key, required this.onClickTag}) : super(key: key);
+  const RecommandScreen({Key? key, required this.onClickTag}) : super(key: key);
 
   @override
-  _RecommandScreenState createState() => _RecommandScreenState();
+  RecommandScreenState createState() => RecommandScreenState();
 }
 
-class _RecommandScreenState extends State<RecommandScreen> {
+class RecommandScreenState extends State<RecommandScreen> {
   late final TagPopularController tagPopularController;
   late final VideoPopularController videoPopularController;
   final UserSearchHistoryController userSearchHistoryController =

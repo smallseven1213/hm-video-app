@@ -52,9 +52,13 @@ class LayoutHomeScreen extends StatelessWidget {
                     ),
                   ),
                   DisplayLayoutTabSearch(
-                    layoutId: layoutId,
-                    child: ChannelSearchBar(),
-                  )
+                      layoutId: layoutId,
+                      child: (({required bool displaySearchBar}) =>
+                          displaySearchBar
+                              ? ChannelSearchBar(
+                                  key: Key('channel-search-bar-$layoutId'),
+                                )
+                              : Container()))
                 ],
               )),
             ],

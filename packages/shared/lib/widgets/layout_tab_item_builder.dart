@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_screen_tab_controller.dart';
-
-final logger = Logger();
 
 class LayoutTabBarItemBuilder extends StatefulWidget {
   final int layoutId;
