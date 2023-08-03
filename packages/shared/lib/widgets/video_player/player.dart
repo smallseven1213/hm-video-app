@@ -21,7 +21,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
     required this.controller,
     required this.video,
     required this.toggleFullscreen,
-    this.allowFullsreen,
+    this.allowFullsreen = true,
   });
 
   @override
