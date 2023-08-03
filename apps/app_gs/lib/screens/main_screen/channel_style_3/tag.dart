@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -84,19 +85,25 @@ class _GradientBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Rect rect = Offset.zero & size;
-    const Gradient gradient = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0xFF00b2ff),
-        Color(0xFFcceaff),
-        Color(0xFF0075ff),
-      ],
-    );
     final Paint paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0
-      ..shader = gradient.createShader(rect);
+      ..strokeWidth = 1.0;
+
+    if (kIsWeb) {
+      paint.color = const Color(0xFF00b2ff);
+    } else {
+      const Gradient gradient = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFF00b2ff),
+          Color(0xFFcceaff),
+          Color(0xFF0075ff),
+        ],
+      );
+      paint.shader = gradient.createShader(rect);
+    }
+
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, const Radius.circular(10.0)),
       paint,
