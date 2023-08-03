@@ -47,7 +47,9 @@ class TagWidget extends StatelessWidget {
             painter: outerFrame == true ? _GradientBorderPainter() : null,
             child: Stack(
               children: [
-                photoSid != null ? SidImage(sid: photoSid!) : Container(),
+                photoSid != null && outerFrame == false
+                    ? SidImage(sid: photoSid!)
+                    : Container(),
                 outerFrame == false
                     ? Container(
                         width: 100, // 你可以根据需要设置宽度

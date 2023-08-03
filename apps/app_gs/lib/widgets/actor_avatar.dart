@@ -20,6 +20,7 @@ class ActorAvatar extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       decoration: const BoxDecoration(
         shape: BoxShape.circle,
+        color: kIsWeb ? Color(0xff00b2ff) : Colors.transparent,
         gradient: kIsWeb
             ? null
             : LinearGradient(
