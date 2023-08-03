@@ -1,4 +1,3 @@
-import 'package:app_gs/widgets/shortcard_style2/Side_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 import '../wave_loading.dart';
+import 'side_info.dart';
 import 'short_card_info.dart';
 
 final logger = Logger();
