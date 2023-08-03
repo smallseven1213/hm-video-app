@@ -88,7 +88,7 @@ class HomeMainScreen extends StatelessWidget {
                                                         args: {
                                                       'inputDefaultValue':
                                                           searchKeyword,
-                                                      'autoSearch': true
+                                                      'autoSearch': false
                                                     });
                                               },
                                             ),
