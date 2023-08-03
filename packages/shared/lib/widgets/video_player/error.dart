@@ -56,7 +56,15 @@ class VideoError extends StatelessWidget {
             elevation: 0,
             backgroundColor: Colors.transparent,
             leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+              icon: const Center(
+                child: SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Image(
+                    image: AssetImage('assets/images/short_play_button.png'),
+                  ),
+                ),
+              ),
               onPressed: () {
                 Navigator.pop(context);
               },
