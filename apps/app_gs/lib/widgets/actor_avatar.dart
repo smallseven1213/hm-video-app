@@ -20,20 +20,23 @@ class ActorAvatar extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       width: width,
       height: height,
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: kIsWeb
-              ? [Color(0xFF00B2FF)]
-              : [
+      decoration: kIsWeb
+          ? const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xFF00b2ff),
+            )
+          : const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
                   Color(0xFF00B2FF),
                   Color(0xFFCCEAFF),
                   Color(0xFF00B2FF),
                 ],
-        ),
-      ),
+              ),
+            ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(height / 2),
         child: photoSid != null && photoSid != ''
