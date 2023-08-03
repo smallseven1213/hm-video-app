@@ -99,13 +99,13 @@ class ShortCardState extends State<ShortCard> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
-    if (widget.isActive == false) {
-      obsVideoPlayerController.pause();
-    } else {
-      if (!kIsWeb) {
-        obsVideoPlayerController.play();
-      }
-    }
+    // if (widget.isActive == false) {
+    //   obsVideoPlayerController.pause();
+    // } else {
+    //   if (!kIsWeb) {
+    //     obsVideoPlayerController.play();
+    //   }
+    // }
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
