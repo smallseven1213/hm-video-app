@@ -67,8 +67,8 @@ class HomeMainScreen extends StatelessWidget {
                                         child:
                                             ({required String searchKeyword}) =>
                                                 SizedBox(
-                                          width: 36,
-                                          height: 65,
+                                          width: 46,
+                                          height: 55,
                                           child: Center(
                                               child: Padding(
                                             // padding top 5
