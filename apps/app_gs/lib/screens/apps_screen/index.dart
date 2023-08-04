@@ -19,7 +19,7 @@ class AppsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => false, // HC: 煩死，勿動!!
       child: Scaffold(
         appBar: const CustomAppBar(
           title: '應用中心',

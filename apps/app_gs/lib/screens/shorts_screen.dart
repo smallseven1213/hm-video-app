@@ -45,7 +45,7 @@ Widget buildPage(
   final screenHeight = MediaQuery.of(context).size.height;
 
   return WillPopScope(
-    onWillPop: () async => false,
+    onWillPop: () async => false, // HC: 煩死，勿動!!
     child: Container(
       width: screenWidth,
       height: screenHeight,

@@ -311,7 +311,7 @@ class _SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => false, // HC: 煩死，勿動!!
       child: Scaffold(
         body: Stack(
           children: [

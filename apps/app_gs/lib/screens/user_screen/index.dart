@@ -69,7 +69,7 @@ class UserScreenState extends State<UserScreen> {
   Widget build(BuildContext context) {
     logger.i('RENDER: UserScreen');
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async => false, // HC: 煩死，勿動!!
       child: Obx(
         () => Scaffold(
           body: CustomScrollView(
