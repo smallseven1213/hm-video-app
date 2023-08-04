@@ -7,7 +7,7 @@ class ChannelStyle2 extends BaseShortPage {
   ChannelStyle2({
     super.key,
   }) : super(
-          hiddenBottomArea: true,
+          style: 2,
           createController: () =>
               Get.put(VideoShortByChannelStyle2Controller()),
         );

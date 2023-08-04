@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
 import 'package:game/models/game_payment_channel_detail.dart';
 import 'package:get/get.dart';
@@ -22,23 +23,19 @@ String apiPrefix =
 
 final responseController = Get.find<GameApiResponseErrorCatchController>();
 
+_checkMaintenance(String code) {
+  final GamesListController gamesListController =
+      Get.put(GamesListController());
+
+  if (code == '9999') {
+    gamesListController.setMaintenanceStatus(true);
+    throw Exception('目前系統維護中');
+  }
+}
+
 class GameLobbyApi {
   Future<void> register() =>
       fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
-
-  //取得遊戲清單
-  Future<List<GameItem>> getGameList() => fetcher(url: '$apiPrefix/game').then(
-        (value) {
-          var res = (value.data as Map<String, dynamic>);
-          if (res['code'] != '00') {
-            return [];
-          }
-
-          return List.from(res['data'] as List<dynamic>)
-              .map((e) => GameItem.fromJson(e))
-              .toList();
-        },
-      );
 
   Future enterGame(String tpCode, int gameId, int gameType) async {
     var value =
@@ -54,6 +51,8 @@ class GameLobbyApi {
     });
 
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] != '00') {
       return [];
     }
@@ -67,6 +66,8 @@ class GameLobbyApi {
     var value =
         await fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] == '00') {
       box.write('register-game', true);
     }
@@ -79,6 +80,8 @@ class GameLobbyApi {
   Future getMarqueeAndBanner() =>
       fetcher(url: '$apiPrefix/marquee-and-banner').then((value) {
         var res = (value.data as Map<String, dynamic>);
+        _checkMaintenance(res['code']);
+
         if (res['code'] != '00') {
           return [];
         }
@@ -90,6 +93,8 @@ class GameLobbyApi {
   Future<List<GameItem>> getGames() => fetcher(url: '$apiPrefix/game').then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
           if (res['code'] != '00') {
             return [];
           }
@@ -104,6 +109,8 @@ class GameLobbyApi {
   Future getPoints() => fetcher(url: '$apiPrefix/points').then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
           if (res['code'] != '00') {
             return [];
           }
@@ -113,11 +120,12 @@ class GameLobbyApi {
       );
 
   // 金幣轉帳, post to /tp-game-platform/transfer, data會有tpCode, type, applyAmount 三個值
-
   Future transfer() =>
       fetcher(url: '$apiPrefix/collect', method: 'POST', body: {}).then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
           if (res['code'] != '00') {
             return res;
           }
@@ -130,6 +138,8 @@ class GameLobbyApi {
   Future<List<BankItem>> getBanks() => fetcher(url: '$apiPrefix/bank').then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
           if (res['code'] != '00') {
             return [];
           }
@@ -148,6 +158,8 @@ class GameLobbyApi {
   Future<Map> getUserGameWithdrawalData() async {
     var value = await fetcher(url: '$apiPrefix/gameWithdrawal');
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] != '00') {
       return res;
     }
@@ -163,6 +175,7 @@ class GameLobbyApi {
     var value =
         await fetcher(url: '$apiPrefix/paymentPin?paymentPin=$paymentPin');
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
 
     return HMApiResponseBaseWithDataWithData<bool>.fromJson(res);
   }
@@ -174,6 +187,8 @@ class GameLobbyApi {
         method: 'PUT',
         body: {'paymentPin': paymentPin});
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] != '00') {
       throw Exception(res['message']);
     }
@@ -184,6 +199,7 @@ class GameLobbyApi {
       getStackLimit() async {
     var value = await fetcher(url: '$apiPrefix/stack-limit');
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
 
     var stackLimitData = res['data'] == null
         ? null
@@ -202,6 +218,8 @@ class GameLobbyApi {
           .then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
           if (res['code'] != '00') {
             return GameConfig(false, false, 1, 1);
           }
@@ -215,6 +233,7 @@ class GameLobbyApi {
       getGameParamConfig() async {
     var value = await fetcher(url: '$apiPrefix/parameter-config');
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
 
     var paramConfigData =
         res['data'] == null ? null : GameParamConfig.fromJson(res['data']);
@@ -241,6 +260,7 @@ class GameLobbyApi {
       'validAmount': validStake,
     });
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
 
     return HMApiResponse.fromJson(res);
   }
@@ -251,6 +271,8 @@ class GameLobbyApi {
                   '$apiPrefix/payment-channel?productId=$productId&deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}&amount=$amount')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
+        _checkMaintenance(res['code']);
+
         if (res['code'] != '00') {
           return [];
         }
@@ -264,6 +286,8 @@ class GameLobbyApi {
         url:
             '$apiPrefix/deposit-channel-v2?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] != '00') {
       return res;
     }
@@ -280,6 +304,8 @@ class GameLobbyApi {
         url:
             '$apiPrefix/payment-channel-detail?paymentChannelId=$paymentChannelId');
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     return HMApiResponseBaseWithDataWithData<GamePaymentChannelDetail>(
       code: res['code'],
       data: res['data'] == null
@@ -295,6 +321,8 @@ class GameLobbyApi {
             '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform?from=CNY&to=USDT');
 
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] != '00') {
       return [];
     }
@@ -317,6 +345,8 @@ class GameLobbyApi {
             'remark': remark,
           });
       var res = (value.data as Map<String, dynamic>);
+      _checkMaintenance(res['code']);
+
       if (res['code'] != '00') {
         return res['message'];
       }
@@ -339,6 +369,8 @@ class GameLobbyApi {
                   '${systemConfig.apiHost}/public/products/product/list?page=$page&limit=$limit&type=$type')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
+        _checkMaintenance(res['code']);
+
         if (res['code'] != '00') {
           return [];
         }
@@ -362,6 +394,7 @@ class GameLobbyApi {
             '$apiPrefix/deposit?page=$page&limit=$limit${paymentStatus != null ? '&paymentStatus=$paymentStatus' : ''}${startedAt != null ? '&startedAt=$startedAt' : ''}${endedAt != null ? '&endedAt=$endedAt' : ''}');
 
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
 
     if (res['code'] != '00') {
       return [];
@@ -405,6 +438,8 @@ class GameLobbyApi {
     }
     return fetcher(url: path).then((value) {
       var res = (value.data as Map<String, dynamic>);
+      _checkMaintenance(res['code']);
+
       List<WithdrawalRecord> record = List.from(
           (res['data']['data'] as List<dynamic>)
               .map((e) => WithdrawalRecord.fromJson(e)));
@@ -429,6 +464,8 @@ class GameLobbyApi {
       },
     );
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] != '00') {
       return res['code'];
     }
@@ -452,6 +489,8 @@ class GameLobbyApi {
       },
     );
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
     if (res['code'] != '00') {
       return res['code'];
     }
@@ -474,6 +513,7 @@ class GameLobbyApi {
       'branchName': branchName
     });
     var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
 
     return HMApiResponse.fromJson(res);
   }

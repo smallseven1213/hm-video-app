@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
@@ -13,10 +14,12 @@ import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 import '../wave_loading.dart';
-import 'short_bottom_area.dart';
+import 'side_info.dart';
 import 'short_card_info.dart';
 
-class ShortCard extends StatefulWidget {
+final logger = Logger();
+
+class ShortCardStyle2 extends StatefulWidget {
   final int index;
   final int id;
   final String title;
@@ -27,7 +30,7 @@ class ShortCard extends StatefulWidget {
   final bool? isActive;
   final Function toggleFullScreen;
 
-  const ShortCard({
+  const ShortCardStyle2({
     Key? key,
     required this.obsKey,
     required this.index,
@@ -35,17 +38,16 @@ class ShortCard extends StatefulWidget {
     required this.title,
     required this.shortData,
     required this.toggleFullScreen,
-    // required this.isFullscreen,
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
   @override
-  ShortCardState createState() => ShortCardState();
+  ShortCardStyle2State createState() => ShortCardStyle2State();
 }
 
-class ShortCardState extends State<ShortCard> {
+class ShortCardStyle2State extends State<ShortCardStyle2> {
   late ShortVideoDetailController videoDetailController;
   late ObservableVideoPlayerController obsVideoPlayerController;
   double trackHeight = 2.0;
@@ -63,6 +65,7 @@ class ShortCardState extends State<ShortCard> {
         tag: genaratorShortVideoDetailTag(widget.id.toString()));
 
     if (widget.supportedPlayRecord == true) {
+      logger.i('PLAYRECORD TESTING: initial');
       var videoVal = videoDetailController.video.value;
       var playRecord = Vod(
         videoVal!.id,
@@ -97,13 +100,13 @@ class ShortCardState extends State<ShortCard> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
-    // if (widget.isActive == false) {
-    //   obsVideoPlayerController.pause();
-    // } else {
-    //   if (!kIsWeb) {
-    //     obsVideoPlayerController.play();
-    //   }
-    // }
+    if (widget.isActive == false) {
+      obsVideoPlayerController.pause();
+    } else {
+      if (!kIsWeb) {
+        obsVideoPlayerController.play();
+      }
+    }
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
@@ -163,7 +166,7 @@ class ShortCardState extends State<ShortCard> {
                     VideoPlayerDisplayWidget(
                       controller: obsVideoPlayerController,
                       video: video,
-                      allowFullsreen: true,
+                      allowFullsreen: false,
                       toggleFullscreen: () {
                         widget.toggleFullScreen();
                       },
@@ -175,21 +178,19 @@ class ShortCardState extends State<ShortCard> {
                       title: widget.title,
                       videoUrl: videoUrl,
                     ),
+                  if (videoDetail != null)
+                    SideInfo(
+                      obsKey: widget.obsKey,
+                      data: videoDetail,
+                      title: widget.title,
+                      videoUrl: videoUrl,
+                      shortData: widget.shortData,
+                    ),
                 ],
               ),
             ),
             Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: ShortBottomArea(
-                shortData: widget.shortData,
-                displayFavoriteAndCollectCount:
-                    widget.displayFavoriteAndCollectCount,
-              ),
-            ),
-            Positioned(
-              bottom: 57 + screen.padding.bottom,
+              bottom: -17,
               left: -24,
               right: -24,
               child: Listener(

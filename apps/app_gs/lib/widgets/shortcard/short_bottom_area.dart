@@ -7,7 +7,7 @@ import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 
-import '../screens/short/button.dart';
+import '../../screens/short/button.dart';
 
 final logger = Logger();
 

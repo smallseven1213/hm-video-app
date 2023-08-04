@@ -18,11 +18,16 @@ class ActorAvatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(1),
-      decoration: const BoxDecoration(
-        shape: BoxShape.circle,
-        gradient: kIsWeb
-            ? null
-            : LinearGradient(
+      width: width,
+      height: height,
+      decoration: kIsWeb
+          ? const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color(0xFF00b2ff),
+            )
+          : const BoxDecoration(
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
@@ -31,30 +36,23 @@ class ActorAvatar extends StatelessWidget {
                   Color(0xFF00B2FF),
                 ],
               ),
-      ),
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(height / 2),
-          child: Stack(
-            children: [
-              Image(
+            ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(height / 2),
+        child: photoSid != null && photoSid != ''
+            ? SidImage(
+                key: ValueKey(photoSid),
+                sid: photoSid!,
+                fit: BoxFit.cover,
+                width: width,
+                height: height,
+              )
+            : Image(
                 image: const AssetImage('assets/images/empty_avatar.png'),
                 fit: BoxFit.cover,
                 width: width,
                 height: height,
               ),
-              if (photoSid != null && photoSid != '')
-                SidImage(
-                    key: ValueKey(photoSid),
-                    sid: photoSid!,
-                    width: width,
-                    height: height,
-                    fit: BoxFit.cover)
-            ],
-          ),
-        ),
       ),
     );
   }
