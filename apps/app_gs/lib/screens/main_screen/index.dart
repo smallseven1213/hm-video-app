@@ -76,8 +76,8 @@ class HomeMainScreen extends StatelessWidget {
                                                 const EdgeInsets.only(top: 6),
                                             child: IconButton(
                                               icon: const Image(
-                                                width: 32,
-                                                height: 32,
+                                                width: 28,
+                                                height: 28,
                                                 fit: BoxFit.cover,
                                                 image: AssetImage(
                                                     'assets/images/layout_tabbar_search.png'),
