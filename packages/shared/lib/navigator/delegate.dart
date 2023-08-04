@@ -165,7 +165,7 @@ class MyRouteDelegate extends RouterDelegate<String>
     return Stack(
       children: [
         Navigator(
-          // key: navigatorKey,
+          key: navigatorKey,
           observers: [
             SentryNavigatorObserver(),
           ],

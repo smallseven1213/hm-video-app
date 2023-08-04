@@ -18,7 +18,9 @@ class AppsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
         appBar: const CustomAppBar(
           title: '應用中心',
         ),
@@ -70,6 +72,8 @@ class AppsScreen extends StatelessWidget {
                   ],
                 ],
               )),
-        ));
+        ),
+      ),
+    );
   }
 }
