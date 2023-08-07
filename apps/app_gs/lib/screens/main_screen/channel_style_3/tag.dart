@@ -109,6 +109,7 @@ class _GradientBorderPainter extends CustomPainter {
       paint,
     );
   }
+  //
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
