@@ -13,7 +13,6 @@ import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 import '../wave_loading.dart';
-import 'short_bottom_area.dart';
 import 'short_card_info.dart';
 
 class ShortCard extends StatefulWidget {
@@ -168,16 +167,6 @@ class ShortCardState extends State<ShortCard> {
                       videoUrl: videoUrl,
                     ),
                 ],
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: ShortBottomArea(
-                shortData: widget.shortData,
-                displayFavoriteAndCollectCount:
-                    widget.displayFavoriteAndCollectCount,
               ),
             ),
             Positioned(

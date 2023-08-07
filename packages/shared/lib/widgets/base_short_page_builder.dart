@@ -9,7 +9,7 @@ class BaseShortPageBuilder extends StatefulWidget {
   final Function() createController;
   final String uuid;
   final int? videoId;
-  final int? itemId; // areaId, tagId, supplierId
+  final int? itemId;
   final bool? supportedPlayRecord;
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;

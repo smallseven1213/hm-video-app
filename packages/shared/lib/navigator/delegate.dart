@@ -10,6 +10,7 @@ import 'package:uuid/uuid.dart';
 
 import '../controllers/response_controller.dart';
 import '../widgets/error_overlay.dart';
+import 'my_navigator_observer.dart';
 import 'no_transition_page.dart';
 
 typedef RouteWidgetBuilder = Widget Function(
@@ -167,6 +168,7 @@ class MyRouteDelegate extends RouterDelegate<String>
         Navigator(
           key: navigatorKey,
           observers: [
+            MyNavigatorObserver(),
             SentryNavigatorObserver(),
           ],
           onPopPage: _onPopPage,
@@ -176,7 +178,7 @@ class MyRouteDelegate extends RouterDelegate<String>
             if (stack.hasTransition == true) {
               return CupertinoPage(
                 // key: ValueKey(stack.args['uuid']),
-                maintainState: true,
+                maintainState: false,
                 name: stack.path,
                 child: Stack(
                   children: [

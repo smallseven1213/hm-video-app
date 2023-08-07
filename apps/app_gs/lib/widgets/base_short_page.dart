@@ -1,4 +1,3 @@
-import 'package:app_gs/widgets/shortcard/index.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/base_short_page_builder.dart';
@@ -16,6 +15,7 @@ class BaseShortPage extends StatelessWidget {
   final bool? displayFavoriteAndCollectCount;
   final Widget? loadingWidget;
   final int? style; // 1, 2
+  final String? uuid;
 
   const BaseShortPage({
     Key? key,
@@ -27,12 +27,13 @@ class BaseShortPage extends StatelessWidget {
     this.useCachedList = false,
     this.loadingWidget,
     this.style = 1,
+    this.uuid,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BaseShortPageBuilder(
-        uuid: const Uuid().v4(),
+        uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
         loadingWidget: const Center(
