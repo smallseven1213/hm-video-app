@@ -18,7 +18,7 @@ enum ColorKeys {
   noImageBgBottom,
 }
 
-const env = String.fromEnvironment('ENV', defaultValue: 'dev');
+const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
 class GameSystemConfig {
   static final GameSystemConfig _instance = GameSystemConfig._internal();
