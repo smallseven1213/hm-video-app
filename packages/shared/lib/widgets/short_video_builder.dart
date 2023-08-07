@@ -10,13 +10,13 @@ import '../utils/controller_tag_genarator.dart';
 
 final logger = Logger();
 
-class VideoProvider extends StatefulWidget {
+class ShortVideoBuilder extends StatefulWidget {
   final int vodId;
   final Widget child;
   final String obsKey;
   final Widget? loading;
 
-  const VideoProvider({
+  const ShortVideoBuilder({
     Key? key,
     required this.obsKey,
     required this.child,
@@ -25,10 +25,10 @@ class VideoProvider extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  VideoProviderState createState() => VideoProviderState();
+  ShortVideoBuilderState createState() => ShortVideoBuilderState();
 }
 
-class VideoProviderState extends State<VideoProvider> {
+class ShortVideoBuilderState extends State<ShortVideoBuilder> {
   late final String controllerTag;
   late final ShortVideoDetailController controller;
 

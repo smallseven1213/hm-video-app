@@ -3,7 +3,7 @@ import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 
-import 'video_provider.dart';
+import 'short_video_builder.dart';
 
 class BaseShortPageBuilder extends StatefulWidget {
   final Function() createController;
@@ -123,7 +123,7 @@ class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
               var shortData = cachedVods[currentIndex];
               bool isItemActive = index == currentPage;
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
-              return VideoProvider(
+              return ShortVideoBuilder(
                   // key: ValueKey('video-provider-$obsKey'),
                   obsKey: obsKey,
                   vodId: shortData.id,

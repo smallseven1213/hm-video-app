@@ -3,7 +3,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/base_short_page_builder.dart';
 import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
-import 'shortcard_style2/index.dart';
+import 'home_use_shortcard/index.dart';
 import 'wave_loading.dart';
 
 class BaseShortPage extends StatelessWidget {
@@ -52,7 +52,7 @@ class BaseShortPage extends StatelessWidget {
           required Function toggleFullScreen,
         }) {
           if (style == 2) {
-            return ShortCardStyle2(
+            return HomeUseShortCard(
               obsKey: obsKey,
               index: index,
               isActive: isActive,
