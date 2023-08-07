@@ -163,7 +163,7 @@ class ShortCardState extends State<ShortCard> {
                     VideoPlayerDisplayWidget(
                       controller: obsVideoPlayerController,
                       video: video,
-                      allowFullsreen: true,
+                      allowFullsreen: false,
                       toggleFullscreen: () {
                         widget.toggleFullScreen();
                       },
