@@ -1,24 +1,77 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/pageview_index_controller.dart';
-import 'package:shared/controllers/play_record_controller.dart';
-import 'package:shared/controllers/short_video_detail_controller.dart';
-import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import 'package:shared/widgets/video_player/player.dart';
-import 'package:video_player/video_player.dart';
-import '../../screens/short/fullscreen_controls.dart';
+import '../shortcard/index.dart';
 import '../wave_loading.dart';
 import 'side_info.dart';
-import 'short_card_info.dart';
 
 final logger = Logger();
 
+class HomeUseShortCard extends StatefulWidget {
+  final int index;
+  final int id;
+  final String title;
+  final bool? supportedPlayRecord;
+  final String obsKey;
+  final Vod shortData;
+  final bool? displayFavoriteAndCollectCount;
+  final bool? isActive;
+  final Function toggleFullScreen;
+
+  const HomeUseShortCard({
+    Key? key,
+    required this.obsKey,
+    required this.index,
+    required this.id,
+    required this.title,
+    required this.shortData,
+    required this.toggleFullScreen,
+    // required this.isFullscreen,
+    this.isActive = true,
+    this.supportedPlayRecord = true,
+    this.displayFavoriteAndCollectCount = true,
+  }) : super(key: key);
+
+  @override
+  HomeUseShortCardState createState() => HomeUseShortCardState();
+}
+
+class HomeUseShortCardState extends State<HomeUseShortCard> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black,
+      child: Stack(
+        children: [
+          const WaveLoading(
+            color: Color.fromRGBO(255, 255, 255, 0.3),
+            duration: Duration(milliseconds: 1000),
+            size: 17,
+            itemCount: 3,
+          ),
+          ShortCard(
+            obsKey: widget.obsKey,
+            index: widget.index,
+            isActive: widget.isActive,
+            id: widget.shortData.id,
+            title: widget.shortData.title,
+            shortData: widget.shortData,
+            toggleFullScreen: widget.toggleFullScreen,
+          ),
+          SideInfo(
+            obsKey: widget.obsKey,
+            shortData: widget.shortData,
+          ),
+          const FloatPageBackButton()
+        ],
+      ),
+    );
+  }
+}
+
+
+/*
 class ShortCardStyle2 extends StatefulWidget {
   final int index;
   final int id;
@@ -248,3 +301,4 @@ class ShortCardStyle2State extends State<ShortCardStyle2> {
     });
   }
 }
+*/

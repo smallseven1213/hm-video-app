@@ -18,6 +18,7 @@ class ShortsByLocalPage extends BaseShortPage {
   ShortsByLocalPage(
       {super.key, required uuid, required int videoId, required int itemId})
       : super(
+          uuid: uuid,
           supportedPlayRecord: itemId != 1,
           videoId: videoId,
           itemId: itemId,
