@@ -18,6 +18,7 @@ class HomeUseShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
   final Function toggleFullScreen;
+  final bool? hiddenBottomArea;
 
   const HomeUseShortCard({
     Key? key,
@@ -31,6 +32,7 @@ class HomeUseShortCard extends StatefulWidget {
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
+    this.hiddenBottomArea = false,
   }) : super(key: key);
 
   @override
@@ -58,6 +60,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
             title: widget.shortData.title,
             shortData: widget.shortData,
             toggleFullScreen: widget.toggleFullScreen,
+            hiddenBottomArea: widget.hiddenBottomArea,
           ),
           SideInfo(
             obsKey: widget.obsKey,

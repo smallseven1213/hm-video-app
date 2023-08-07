@@ -60,6 +60,7 @@ class BaseShortPage extends StatelessWidget {
               title: shortData.title,
               shortData: shortData,
               toggleFullScreen: toggleFullScreen,
+              hiddenBottomArea: true,
             );
           }
           return GeneralShortCard(
@@ -70,6 +71,7 @@ class BaseShortPage extends StatelessWidget {
             title: shortData.title,
             shortData: shortData,
             toggleFullScreen: toggleFullScreen,
+            hiddenBottomArea: false,
           );
         },
         createController: createController);
