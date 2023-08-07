@@ -98,6 +98,6 @@ sentry:
   project: hm-video-app
   org: sentry
   auth_token: 2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
-  url: https://sentry.hmtech.site/
+  url: https://sentry.hmtech.club/
   log_level: error # possible values: trace, debug, info, warn, error
   release: RELEASE_CHANGE_ME

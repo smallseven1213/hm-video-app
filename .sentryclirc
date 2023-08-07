@@ -8,7 +8,7 @@ keepalive=false
 ; max_item_size=100000000
 
 [defaults]
-url=https://sentry.hmtech.site/
+url=https://sentry.hmtech.club/
 org = sentry
 project = hm-video-app
 

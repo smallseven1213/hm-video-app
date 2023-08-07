@@ -12,6 +12,7 @@ class ShortsByChannelPage extends BaseShortPage {
       required int videoId,
       required int supplierId})
       : super(
+          uuid: uuid,
           videoId: videoId,
           itemId: videoId,
           createController: () => Get.put(

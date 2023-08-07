@@ -8,7 +8,6 @@ import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
-import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
@@ -20,17 +19,11 @@ final logger = Logger();
 
 class SideInfo extends StatelessWidget {
   final String obsKey;
-  final ShortVideoDetail data;
-  final String title;
-  final String videoUrl;
   final Vod shortData;
 
   const SideInfo({
     Key? key,
     required this.obsKey,
-    required this.data,
-    required this.title,
-    required this.videoUrl,
     required this.shortData,
   }) : super(key: key);
 
@@ -54,25 +47,29 @@ class SideInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // 供應商
-          if (data.supplier != null) ...[
-            GestureDetector(
-              onTap: () async {
-                obsVideoPlayerController.pause();
-                // logger.i('RENDER OBX toGo!!');
-                await MyRouteDelegate.of(context)
-                    .push(AppRoutes.supplier, args: {
-                  'id': data.supplier!.id,
-                });
-                logger.i('RENDER OBX isBack!!');
-                obsVideoPlayerController.play();
-              },
-              child: ActorAvatar(
-                photoSid: data.supplier!.photoSid,
-                width: 45,
-                height: 45,
-              ),
-            )
-          ],
+          Obx(() {
+            var data = videoDetailController.videoDetail.value;
+
+            if (data?.supplier != null) {
+              return GestureDetector(
+                onTap: () async {
+                  obsVideoPlayerController.pause();
+                  await MyRouteDelegate.of(context)
+                      .push(AppRoutes.supplier, args: {
+                    'id': data?.supplier!.id,
+                  });
+                  obsVideoPlayerController.play();
+                },
+                child: ActorAvatar(
+                  photoSid: data?.supplier!.photoSid,
+                  width: 45,
+                  height: 45,
+                ),
+              );
+            } else {
+              return Container();
+            }
+          }),
           const SizedBox(height: 20),
           // 按讚
 

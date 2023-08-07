@@ -39,7 +39,12 @@ class Channels extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChannelsBuilder(
         layoutId: layoutId,
-        styleWidgetMap: styleWidgetMap,
-        notFoundWidget: const ChannelStyleNotFound());
+        childWidget: (channelData) {
+          var getWidget = styleWidgetMap[channelData.style];
+          if (getWidget == null) {
+            return const ChannelStyleNotFound();
+          }
+          return getWidget(channelData, layoutId);
+        });
   }
 }

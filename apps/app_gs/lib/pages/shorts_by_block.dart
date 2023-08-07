@@ -12,6 +12,7 @@ class ShortsByBlockPage extends BaseShortPage {
       required int videoId,
       required int areaId})
       : super(
+          uuid: uuid,
           videoId: videoId,
           itemId: areaId,
           createController: () => Get.put(

@@ -18,7 +18,7 @@ void main() async {
   };
 
   runningMain(
-      'https://1b4441d1f4464b93a69208281ab77d4b@sentry.hmtech.site/2',
+      'https://1b4441d1f4464b93a69208281ab77d4b@sentry.hmtech.club/2',
       allRoutes.keys.first,
       [
         'https://dl.dlgs.app/$env/dl.json',

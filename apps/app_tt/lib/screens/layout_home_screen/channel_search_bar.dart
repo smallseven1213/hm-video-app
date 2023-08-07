@@ -14,7 +14,6 @@ class ChannelSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('RENDER SearchBar');
     return SizedBox(
       height: 50,
       width: double.infinity,

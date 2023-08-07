@@ -13,6 +13,7 @@ import '../controllers/list_editor_controller.dart';
 import '../controllers/pageview_index_controller.dart';
 import '../controllers/play_record_controller.dart';
 import '../controllers/response_controller.dart';
+import '../controllers/route_controller.dart';
 import '../controllers/search_page_data_controller.dart';
 import '../controllers/search_temp_controller.dart';
 import '../controllers/user_controller.dart';
@@ -26,6 +27,7 @@ import '../controllers/user_video_collection_controller.dart';
 import '../controllers/video_ads_controller.dart';
 
 void setupDependencies() {
+  Get.put(RouteController());
   Get.lazyPut<AuthController>(() => AuthController());
   Get.lazyPut<ApiResponseErrorCatchController>(
       () => ApiResponseErrorCatchController());

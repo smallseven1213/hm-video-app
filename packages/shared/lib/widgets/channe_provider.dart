@@ -15,8 +15,13 @@ class ChannelProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ChannelSharedDataController(channelId: channelId),
-        tag: '$channelId');
+    // 檢查是否已存在具有特定標籤的控制器
+    if (!Get.isRegistered<ChannelSharedDataController>(tag: '$channelId')) {
+      // 如果不存在，則放置控制器
+      Get.put(ChannelSharedDataController(channelId: channelId),
+          tag: '$channelId');
+    }
+
     return widget;
   }
 }

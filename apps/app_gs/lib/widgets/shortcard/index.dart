@@ -13,7 +13,6 @@ import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 import '../wave_loading.dart';
-import 'short_bottom_area.dart';
 import 'short_card_info.dart';
 
 class ShortCard extends StatefulWidget {
@@ -26,6 +25,7 @@ class ShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
   final Function toggleFullScreen;
+  final bool? hiddenBottomArea;
 
   const ShortCard({
     Key? key,
@@ -39,6 +39,7 @@ class ShortCard extends StatefulWidget {
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
+    this.hiddenBottomArea = false,
   }) : super(key: key);
 
   @override
@@ -97,13 +98,6 @@ class ShortCardState extends State<ShortCard> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
-    // if (widget.isActive == false) {
-    //   obsVideoPlayerController.pause();
-    // } else {
-    //   if (!kIsWeb) {
-    //     obsVideoPlayerController.play();
-    //   }
-    // }
 
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
@@ -163,7 +157,7 @@ class ShortCardState extends State<ShortCard> {
                     VideoPlayerDisplayWidget(
                       controller: obsVideoPlayerController,
                       video: video,
-                      allowFullsreen: true,
+                      allowFullsreen: false,
                       toggleFullscreen: () {
                         widget.toggleFullScreen();
                       },
@@ -179,19 +173,11 @@ class ShortCardState extends State<ShortCard> {
               ),
             ),
             Positioned(
-              bottom: 0,
+              bottom: widget.hiddenBottomArea == true
+                  ? -16
+                  : 60 + screen.padding.bottom,
               left: 0,
               right: 0,
-              child: ShortBottomArea(
-                shortData: widget.shortData,
-                displayFavoriteAndCollectCount:
-                    widget.displayFavoriteAndCollectCount,
-              ),
-            ),
-            Positioned(
-              bottom: 57 + screen.padding.bottom,
-              left: -24,
-              right: -24,
               child: Listener(
                 onPointerDown: (details) {
                   setState(() {

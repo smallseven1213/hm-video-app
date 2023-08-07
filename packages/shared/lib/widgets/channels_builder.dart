@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/models/slim_channel.dart';
 
 import '../controllers/channel_screen_tab_controller.dart';
 import '../controllers/layout_controller.dart';
@@ -8,20 +9,15 @@ import '../physics/channel_page_scroll_physics.dart';
 
 class ChannelsBuilder extends StatefulWidget {
   final int layoutId;
-  final Map<int, Function> styleWidgetMap;
   final Widget? notFoundWidget;
+  final Widget Function(SlimChannel channelData) childWidget;
 
-  ChannelsBuilder({
+  const ChannelsBuilder({
     Key? key,
     required this.layoutId,
-    required this.styleWidgetMap,
+    required this.childWidget,
     this.notFoundWidget,
-  }) : super(key: key) {
-    assert(styleWidgetMap.length == 5,
-        'styleWidgetMap must contain exactly 5 items.');
-    assert(styleWidgetMap.keys.toSet().containsAll([1, 2, 3, 4, 5]),
-        'styleWidgetMap keys must include 1, 2, 3, 4, 5');
-  }
+  }) : super(key: key);
 
   @override
   ChannelsBuilderState createState() => ChannelsBuilderState();
@@ -41,14 +37,6 @@ class ChannelsBuilderState extends State<ChannelsBuilder> {
         tag: 'channel-screen-${widget.layoutId}');
     layoutController =
         Get.find<LayoutController>(tag: 'layout${widget.layoutId}');
-
-    // everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     if (controller.hasClients) {
-    //       controller.jumpToPage(page);
-    //     }
-    //   });
-    // });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       everWorker = ever(channelScreenTabController.pageViewIndex, (int page) {
@@ -89,16 +77,8 @@ class ChannelsBuilderState extends State<ChannelsBuilder> {
             physics: kIsWeb ? null : const ChannelPageScrollPhysics(),
             children: layoutController.layout
                 .asMap()
-                .map(
-                  (index, item) => MapEntry(
-                      index,
-                      widget.styleWidgetMap.containsKey(item.style)
-                          ? widget.styleWidgetMap[item.style]!(item)
-                          : widget.notFoundWidget ??
-                              const Center(
-                                child: Text('Not found'),
-                              )),
-                )
+                .map((index, channelData) =>
+                    MapEntry(index, widget.childWidget(channelData)))
                 .values
                 .toList()
                 .cast<Widget>());
