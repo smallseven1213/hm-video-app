@@ -4,7 +4,10 @@ import 'main.dart';
 
 class ChannelStyle3 extends StatelessWidget {
   final int channelId;
-  const ChannelStyle3({Key? key, required this.channelId}) : super(key: key);
+  final int layoutId;
+  const ChannelStyle3(
+      {Key? key, required this.channelId, required this.layoutId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

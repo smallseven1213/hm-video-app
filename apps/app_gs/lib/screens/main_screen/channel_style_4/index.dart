@@ -24,7 +24,9 @@ const gradiens = {
 
 class ChannelStyle4 extends StatelessWidget {
   final int channelId;
-  ChannelStyle4({Key? key, required this.channelId}) : super(key: key);
+  final int layoutId;
+  ChannelStyle4({Key? key, required this.channelId, required this.layoutId})
+      : super(key: key);
 
   final actorPopularController = Get.put(ActorPopularController());
 
