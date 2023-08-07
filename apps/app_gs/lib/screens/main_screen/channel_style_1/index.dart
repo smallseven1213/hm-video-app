@@ -1,4 +1,5 @@
 import 'package:app_gs/widgets/button.dart';
+import 'package:shared/widgets/channe_provider.dart';
 import 'package:shared/widgets/display_layout_tab_search.dart';
 import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_gs/widgets/reload_button.dart';
@@ -12,11 +13,11 @@ import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:app_gs/widgets/video_list_loading_text.dart';
 
+import '../../../widgets/channel_banners.dart';
+import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/header.dart';
 import '../videoblock.dart';
-import 'banners.dart';
-import 'jingang.dart';
 
 final logger = Logger();
 
@@ -146,62 +147,64 @@ class ChannelStyle1State extends State<ChannelStyle1>
                     ));
                   }
                 }
-                return RefreshList(
-                  onRefresh: _onRefresh,
-                  onLoading: _onLoading,
-                  loadingWidget: const VideoListLoadingText(),
-                  child: CustomScrollView(
-                    physics: kIsWeb ? null : const BouncingScrollPhysics(),
-                    slivers: [
-                      SliverToBoxAdapter(
-                          child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Banners(channelId: widget.channelId),
-                      )),
-                      if (channelData.jingang!.title != '')
-                        SliverToBoxAdapter(
-                          child: Padding(
-                            padding: const EdgeInsets.only(top: 8.0),
-                            child:
-                                Header(text: channelData.jingang!.title ?? ''),
+                return ChannelProvider(
+                    channelId: widget.channelId,
+                    widget: RefreshList(
+                      onRefresh: _onRefresh,
+                      onLoading: _onLoading,
+                      loadingWidget: const VideoListLoadingText(),
+                      child: CustomScrollView(
+                        physics: kIsWeb ? null : const BouncingScrollPhysics(),
+                        slivers: [
+                          ChannelBanners(
+                            channelId: widget.channelId,
                           ),
-                        ),
-                      JingangList(channelId: widget.channelId),
-                      ...sliverBlocks,
-                      SliverToBoxAdapter(
-                        child: AspectRatio(
-                          aspectRatio: 390 / 190,
-                          child: Stack(
-                            children: [
-                              const Positioned.fill(
-                                child: Image(
-                                  image: AssetImage(
-                                      'assets/images/channel_more_button.webp'),
-                                  fit: BoxFit.cover,
-                                ),
+                          if (channelData.jingang!.title != '')
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 8.0),
+                                child: Header(
+                                    text: channelData.jingang!.title ?? ''),
                               ),
-                              Center(
-                                child: SizedBox(
-                                  height: 38,
-                                  width: 183,
-                                  child: Button(
-                                    text: '探索更多內容',
-                                    onPressed: () {
-                                      MyRouteDelegate.of(context)
-                                          .push(AppRoutes.filter);
-                                    },
-                                    type: 'primary',
-                                    size: 'small',
-                                  ),
-                                ),
-                              )
-                            ],
+                            ),
+                          ChannelJingangArea(
+                            channelId: widget.channelId,
                           ),
-                        ),
+                          ...sliverBlocks,
+                          SliverToBoxAdapter(
+                            child: AspectRatio(
+                              aspectRatio: 390 / 190,
+                              child: Stack(
+                                children: [
+                                  const Positioned.fill(
+                                    child: Image(
+                                      image: AssetImage(
+                                          'assets/images/channel_more_button.webp'),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Center(
+                                    child: SizedBox(
+                                      height: 38,
+                                      width: 183,
+                                      child: Button(
+                                        text: '探索更多內容',
+                                        onPressed: () {
+                                          MyRouteDelegate.of(context)
+                                              .push(AppRoutes.filter);
+                                        },
+                                        type: 'primary',
+                                        size: 'small',
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
+                    ));
               }
             }),
           );
