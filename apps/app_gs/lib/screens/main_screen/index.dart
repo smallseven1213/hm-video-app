@@ -58,44 +58,44 @@ class HomeMainScreen extends StatelessWidget {
                                   child: LayoutTabBar(
                                     layoutId: layoutId,
                                   ))),
-                          DisplayLayoutTabSearch(
-                            layoutId: layoutId,
-                            child: ({required bool displaySearchBar}) =>
-                                displaySearchBar
-                                    ? Container()
-                                    : PopularSearchTitleBuilder(
-                                        child:
-                                            ({required String searchKeyword}) =>
-                                                SizedBox(
-                                          width: 46,
-                                          height: 55,
-                                          child: Center(
-                                              child: Padding(
-                                            // padding top 5
-                                            padding:
-                                                const EdgeInsets.only(top: 6),
-                                            child: IconButton(
-                                              icon: const Image(
-                                                width: 28,
-                                                height: 28,
-                                                fit: BoxFit.cover,
-                                                image: AssetImage(
-                                                    'assets/images/layout_tabbar_search.png'),
-                                              ),
-                                              onPressed: () {
-                                                MyRouteDelegate.of(context)
-                                                    .push(AppRoutes.search,
-                                                        args: {
-                                                      'inputDefaultValue':
-                                                          searchKeyword,
-                                                      'autoSearch': false
-                                                    });
-                                              },
-                                            ),
-                                          )),
-                                        ),
-                                      ),
-                          )
+                          // DisplayLayoutTabSearch(
+                          //   layoutId: layoutId,
+                          //   child: ({required bool displaySearchBar}) =>
+                          //       displaySearchBar
+                          //           ? Container()
+                          //           : PopularSearchTitleBuilder(
+                          //               child:
+                          //                   ({required String searchKeyword}) =>
+                          //                       SizedBox(
+                          //                 width: 46,
+                          //                 height: 55,
+                          //                 child: Center(
+                          //                     child: Padding(
+                          //                   // padding top 5
+                          //                   padding:
+                          //                       const EdgeInsets.only(top: 6),
+                          //                   child: IconButton(
+                          //                     icon: const Image(
+                          //                       width: 28,
+                          //                       height: 28,
+                          //                       fit: BoxFit.cover,
+                          //                       image: AssetImage(
+                          //                           'assets/images/layout_tabbar_search.png'),
+                          //                     ),
+                          //                     onPressed: () {
+                          //                       MyRouteDelegate.of(context)
+                          //                           .push(AppRoutes.search,
+                          //                               args: {
+                          //                             'inputDefaultValue':
+                          //                                 searchKeyword,
+                          //                             'autoSearch': false
+                          //                           });
+                          //                     },
+                          //                   ),
+                          //                 )),
+                          //               ),
+                          //             ),
+                          // )
                         ],
                       ),
                     ),

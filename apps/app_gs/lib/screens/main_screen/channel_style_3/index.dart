@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/widgets/channe_provider.dart';
+import 'package:shared/widgets/display_layout_tab_search.dart';
 import 'main.dart';
 
 class ChannelStyle3 extends StatelessWidget {
@@ -11,14 +12,19 @@ class ChannelStyle3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 90),
-      child: ChannelProvider(
-          channelId: channelId,
-          widget: ChannelStyle3Main(
-            key: Key('$channelId'),
+    return DisplayLayoutTabSearch(
+      layoutId: layoutId,
+      child: ({required bool displaySearchBar}) => Padding(
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top +
+                (displaySearchBar ? 90 : 50)),
+        child: ChannelProvider(
             channelId: channelId,
-          )),
+            widget: ChannelStyle3Main(
+              key: Key('$channelId'),
+              channelId: channelId,
+            )),
+      ),
     );
   }
 }

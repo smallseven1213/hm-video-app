@@ -59,153 +59,153 @@ class ChannelStyle1State extends State<ChannelStyle1>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Column(
-      children: [
-        DisplayLayoutTabSearch(
-            layoutId: widget.layoutId,
-            child: (({required bool displaySearchBar}) => displaySearchBar
-                ? Container(
-                    height: MediaQuery.of(context).padding.top + 90,
-                  )
-                : Container())),
-        Obx(() {
-          ChannelInfo? channelData = channelDataController.channelData.value;
+    return DisplayLayoutTabSearch(
+        layoutId: widget.layoutId,
+        child: (({required bool displaySearchBar}) {
+          return Padding(
+            padding: EdgeInsets.only(
+                top: MediaQuery.of(context).padding.top +
+                    (displaySearchBar ? 90 : 50)),
+            child: Obx(() {
+              ChannelInfo? channelData =
+                  channelDataController.channelData.value;
 
-          if (channelDataController.isError.value) {
-            return Center(
-              child: ReloadButton(
-                onPressed: () =>
-                    channelDataController.mutateByChannelId(widget.channelId),
-              ),
-            );
-          } else if (channelData == null) {
-            return const ChannelSkeleton();
-          } else {
-            List<Widget> sliverBlocks = [];
-            for (var block in channelData.blocks!) {
-              if (block.quantity != 0 && block.videos!.data!.isNotEmpty) {
-                sliverBlocks.add(SliverToBoxAdapter(
-                  key: Key(
-                      'block${block.id}_${widget.channelId}_${channelDataController.offset}'),
-                  child: Header(
-                    text: block.name ?? '',
-                    moreButton: block.isMore!
-                        ? InkWell(
-                            onTap: () => {
-                                  if (block.film == 1)
-                                    {
-                                      MyRouteDelegate.of(context).push(
-                                        AppRoutes.videoByBlock,
-                                        args: {
-                                          'blockId': block.id,
-                                          'title': block.name,
-                                          'channelId': widget.channelId,
-                                        },
-                                      )
-                                    }
-                                  else if (block.film == 2)
-                                    {
-                                      MyRouteDelegate.of(context).push(
-                                        AppRoutes.videoByBlock,
-                                        args: {
-                                          'blockId': block.id,
-                                          'title': block.name,
-                                          'channelId': widget.channelId,
-                                          'film': 2,
-                                        },
-                                      )
-                                    }
-                                  else if (block.film == 3)
-                                    {
-                                      MyRouteDelegate.of(context).push(
-                                        AppRoutes.videoByBlock,
-                                        args: {
-                                          'id': block.id,
-                                          'title': block.name,
-                                          'channelId': widget.channelId,
-                                        },
-                                      )
-                                    }
-                                },
-                            child: const Text(
-                              '更多 >',
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 14,
-                              ),
-                            ))
-                        : null,
+              if (channelDataController.isError.value) {
+                return Center(
+                  child: ReloadButton(
+                    onPressed: () => channelDataController
+                        .mutateByChannelId(widget.channelId),
                   ),
-                ));
-                sliverBlocks.add(const SliverToBoxAdapter(
-                  child: SizedBox(height: 5),
-                ));
-                sliverBlocks
-                    .add(VideoBlock(block: block, channelId: widget.channelId));
-                sliverBlocks.add(const SliverToBoxAdapter(
-                  child: SizedBox(height: 10),
-                ));
-              }
-            }
-            return RefreshList(
-              onRefresh: _onRefresh,
-              onLoading: _onLoading,
-              loadingWidget: const VideoListLoadingText(),
-              child: CustomScrollView(
-                physics: kIsWeb ? null : const BouncingScrollPhysics(),
-                slivers: [
-                  SliverToBoxAdapter(
-                      child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Banners(channelId: widget.channelId),
-                  )),
-                  if (channelData.jingang!.title != '')
-                    SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Header(text: channelData.jingang!.title ?? ''),
+                );
+              } else if (channelData == null) {
+                return const ChannelSkeleton();
+              } else {
+                List<Widget> sliverBlocks = [];
+                for (var block in channelData.blocks!) {
+                  if (block.quantity != 0 && block.videos!.data!.isNotEmpty) {
+                    sliverBlocks.add(SliverToBoxAdapter(
+                      key: Key(
+                          'block${block.id}_${widget.channelId}_${channelDataController.offset}'),
+                      child: Header(
+                        text: block.name ?? '',
+                        moreButton: block.isMore!
+                            ? InkWell(
+                                onTap: () => {
+                                      if (block.film == 1)
+                                        {
+                                          MyRouteDelegate.of(context).push(
+                                            AppRoutes.videoByBlock,
+                                            args: {
+                                              'blockId': block.id,
+                                              'title': block.name,
+                                              'channelId': widget.channelId,
+                                            },
+                                          )
+                                        }
+                                      else if (block.film == 2)
+                                        {
+                                          MyRouteDelegate.of(context).push(
+                                            AppRoutes.videoByBlock,
+                                            args: {
+                                              'blockId': block.id,
+                                              'title': block.name,
+                                              'channelId': widget.channelId,
+                                              'film': 2,
+                                            },
+                                          )
+                                        }
+                                      else if (block.film == 3)
+                                        {
+                                          MyRouteDelegate.of(context).push(
+                                            AppRoutes.videoByBlock,
+                                            args: {
+                                              'id': block.id,
+                                              'title': block.name,
+                                              'channelId': widget.channelId,
+                                            },
+                                          )
+                                        }
+                                    },
+                                child: const Text(
+                                  '更多 >',
+                                  style: TextStyle(
+                                    color: Colors.grey,
+                                    fontSize: 14,
+                                  ),
+                                ))
+                            : null,
                       ),
-                    ),
-                  JingangList(channelId: widget.channelId),
-                  ...sliverBlocks,
-                  SliverToBoxAdapter(
-                    child: AspectRatio(
-                      aspectRatio: 390 / 190,
-                      child: Stack(
-                        children: [
-                          const Positioned.fill(
-                            child: Image(
-                              image: AssetImage(
-                                  'assets/images/channel_more_button.webp'),
-                              fit: BoxFit.cover,
-                            ),
+                    ));
+                    sliverBlocks.add(const SliverToBoxAdapter(
+                      child: SizedBox(height: 5),
+                    ));
+                    sliverBlocks.add(
+                        VideoBlock(block: block, channelId: widget.channelId));
+                    sliverBlocks.add(const SliverToBoxAdapter(
+                      child: SizedBox(height: 10),
+                    ));
+                  }
+                }
+                return RefreshList(
+                  onRefresh: _onRefresh,
+                  onLoading: _onLoading,
+                  loadingWidget: const VideoListLoadingText(),
+                  child: CustomScrollView(
+                    physics: kIsWeb ? null : const BouncingScrollPhysics(),
+                    slivers: [
+                      SliverToBoxAdapter(
+                          child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Banners(channelId: widget.channelId),
+                      )),
+                      if (channelData.jingang!.title != '')
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child:
+                                Header(text: channelData.jingang!.title ?? ''),
                           ),
-                          Center(
-                            child: SizedBox(
-                              height: 38,
-                              width: 183,
-                              child: Button(
-                                text: '探索更多內容',
-                                onPressed: () {
-                                  MyRouteDelegate.of(context)
-                                      .push(AppRoutes.filter);
-                                },
-                                type: 'primary',
-                                size: 'small',
+                        ),
+                      JingangList(channelId: widget.channelId),
+                      ...sliverBlocks,
+                      SliverToBoxAdapter(
+                        child: AspectRatio(
+                          aspectRatio: 390 / 190,
+                          child: Stack(
+                            children: [
+                              const Positioned.fill(
+                                child: Image(
+                                  image: AssetImage(
+                                      'assets/images/channel_more_button.webp'),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
-                            ),
-                          )
-                        ],
+                              Center(
+                                child: SizedBox(
+                                  height: 38,
+                                  width: 183,
+                                  child: Button(
+                                    text: '探索更多內容',
+                                    onPressed: () {
+                                      MyRouteDelegate.of(context)
+                                          .push(AppRoutes.filter);
+                                    },
+                                    type: 'primary',
+                                    size: 'small',
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            );
-          }
-        })
-      ],
-    );
+                );
+              }
+            }),
+          );
+        }));
   }
 
   @override
