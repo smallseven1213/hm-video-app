@@ -20,9 +20,11 @@ class ChannelBanners extends StatelessWidget {
     return Obx(() {
       ChannelSharedData? channelSharedData =
           channelSharedDataController.channelSharedData.value;
+      bool bannerIsEmpty = channelSharedData?.banner == null ||
+          channelSharedData!.banner!.isEmpty;
 
-      if (channelSharedData == null || channelSharedData.banner == null) {
-        return const SliverToBoxAdapter(child: SizedBox());
+      if (channelSharedData == null || bannerIsEmpty) {
+        return const SliverToBoxAdapter(child: SizedBox.shrink());
       } else {
         return SliverToBoxAdapter(
           child: Padding(
