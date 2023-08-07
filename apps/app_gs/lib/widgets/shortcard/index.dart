@@ -97,14 +97,6 @@ class ShortCardState extends State<ShortCard> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
-    // if (widget.isActive == false) {
-    //   obsVideoPlayerController.pause();
-    // } else {
-    //   if (!kIsWeb) {
-    //     obsVideoPlayerController.play();
-    //   }
-    // }
-
     return Obx(() {
       var isLoading = videoDetailController.isLoading.value;
       var video = videoDetailController.video.value;
@@ -163,7 +155,7 @@ class ShortCardState extends State<ShortCard> {
                     VideoPlayerDisplayWidget(
                       controller: obsVideoPlayerController,
                       video: video,
-                      allowFullsreen: true,
+                      allowFullsreen: false,
                       toggleFullscreen: () {
                         widget.toggleFullScreen();
                       },

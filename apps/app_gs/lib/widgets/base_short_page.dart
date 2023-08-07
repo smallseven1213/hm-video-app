@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/base_short_page_builder.dart';
 import 'package:uuid/uuid.dart';
+import 'general_shortcard/index.dart';
 import 'shortcard_style2/index.dart';
 import 'wave_loading.dart';
 
@@ -60,7 +61,7 @@ class BaseShortPage extends StatelessWidget {
               toggleFullScreen: toggleFullScreen,
             );
           }
-          return ShortCard(
+          return GeneralShortCard(
             obsKey: obsKey,
             index: index,
             isActive: isActive,
