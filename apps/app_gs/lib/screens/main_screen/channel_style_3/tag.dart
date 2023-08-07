@@ -87,7 +87,7 @@ class _GradientBorderPainter extends CustomPainter {
     final Rect rect = Offset.zero & size;
     final Paint paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
+      ..strokeWidth = kIsWeb ? 2.0 : 1.0;
 
     if (kIsWeb) {
       paint.color = const Color(0xFF00b2ff);
