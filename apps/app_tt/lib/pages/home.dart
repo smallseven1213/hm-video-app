@@ -5,8 +5,8 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
+import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
-import 'package:shared/widgets/channel_layout_builder.dart';
 
 import '../config/layouts.dart';
 import '../screens/layout_game_screen.dart';
@@ -17,14 +17,14 @@ import '../widgets/layout_tab_item.dart';
 
 UserApi userApi = UserApi();
 final screens = {
-  HomeNavigatorPathes.layout1: () => ChannelLayoutBuilder(
+  HomeNavigatorPathes.layout1: () => MainLayoutBuilder(
         key: Key('layout${layouts[0]}'),
         layoutId: layouts[0],
         child: LayoutHomeScreen(
           layoutId: layouts[0],
         ),
       ),
-  HomeNavigatorPathes.layout2: () => ChannelLayoutBuilder(
+  HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
         key: Key('layout${layouts[1]}'),
         layoutId: layouts[1],
         child: LayoutHomeScreen(

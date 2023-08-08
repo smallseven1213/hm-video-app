@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
-import 'package:shared/widgets/display_layout_tab_search.dart';
+import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 
 import '../../widgets/wave_loading.dart';
 import 'channel_search_bar.dart';
@@ -51,7 +51,7 @@ class LayoutHomeScreen extends StatelessWidget {
                       layoutId: layoutId,
                     ),
                   ),
-                  DisplayLayoutTabSearch(
+                  DisplayLayoutTabSearchConsumer(
                       layoutId: layoutId,
                       child: (({required bool displaySearchBar}) =>
                           displaySearchBar

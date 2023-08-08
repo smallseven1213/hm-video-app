@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/channel_shared_data_controller.dart';
+import 'package:shared/modules/channel/channel_jingang_area_title_consumer.dart';
 
 import 'header.dart';
 
@@ -14,27 +13,16 @@ class ChannelJingangAreaTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final channelSharedDataController = Get.find<ChannelSharedDataController>(
-      tag: '$channelId',
-    );
-
-    return Obx(
-      () {
-        if (channelSharedDataController
-                .channelSharedData.value?.jingang?.title !=
-            null) {
-          return SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Header(
-                  text: channelSharedDataController
-                          .channelSharedData.value?.jingang?.title ??
-                      ''),
+    return ChannelJingangAreaTitleConsumer(
+      channelId: channelId,
+      child: (title) => title == null
+          ? const SliverToBoxAdapter(child: SizedBox.shrink())
+          : SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Header(text: title),
+              ),
             ),
-          );
-        }
-        return const SliverToBoxAdapter(child: SizedBox());
-      },
     );
   }
 }

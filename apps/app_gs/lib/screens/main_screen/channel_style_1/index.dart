@@ -1,6 +1,6 @@
 import 'package:app_gs/widgets/button.dart';
-import 'package:shared/widgets/channe_provider.dart';
-import 'package:shared/widgets/display_layout_tab_search.dart';
+import 'package:shared/modules/channel/channe_provider.dart';
+import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_gs/widgets/reload_button.dart';
 import 'package:flutter/foundation.dart';
@@ -59,7 +59,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return DisplayLayoutTabSearch(
+    return DisplayLayoutTabSearchConsumer(
         layoutId: widget.layoutId,
         child: (({required bool displaySearchBar}) {
           return Padding(

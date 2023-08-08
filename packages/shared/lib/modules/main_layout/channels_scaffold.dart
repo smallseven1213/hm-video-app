@@ -3,27 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/slim_channel.dart';
 
-import '../controllers/channel_screen_tab_controller.dart';
-import '../controllers/layout_controller.dart';
-import '../physics/channel_page_scroll_physics.dart';
+import '../../controllers/channel_screen_tab_controller.dart';
+import '../../controllers/layout_controller.dart';
+import '../../physics/channel_page_scroll_physics.dart';
 
-class ChannelsBuilder extends StatefulWidget {
+class ChannelsScaffold extends StatefulWidget {
   final int layoutId;
   final Widget? notFoundWidget;
-  final Widget Function(SlimChannel channelData) childWidget;
+  final Widget Function(SlimChannel channelData) child;
 
-  const ChannelsBuilder({
+  const ChannelsScaffold({
     Key? key,
     required this.layoutId,
-    required this.childWidget,
+    required this.child,
     this.notFoundWidget,
   }) : super(key: key);
 
   @override
-  ChannelsBuilderState createState() => ChannelsBuilderState();
+  ChannelsScaffoldState createState() => ChannelsScaffoldState();
 }
 
-class ChannelsBuilderState extends State<ChannelsBuilder> {
+class ChannelsScaffoldState extends State<ChannelsScaffold> {
   int activePageIndex = 0;
   final PageController controller = PageController();
 
@@ -78,7 +78,7 @@ class ChannelsBuilderState extends State<ChannelsBuilder> {
             children: layoutController.layout
                 .asMap()
                 .map((index, channelData) =>
-                    MapEntry(index, widget.childWidget(channelData)))
+                    MapEntry(index, widget.child(channelData)))
                 .values
                 .toList()
                 .cast<Widget>());

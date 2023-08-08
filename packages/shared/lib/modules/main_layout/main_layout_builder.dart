@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/channel_screen_tab_controller.dart';
-import '../controllers/layout_controller.dart';
+import '../../controllers/channel_screen_tab_controller.dart';
+import '../../controllers/layout_controller.dart';
 
-class ChannelLayoutBuilder extends StatefulWidget {
+class MainLayoutBuilder extends StatefulWidget {
   final int layoutId;
   final Widget child;
 
-  const ChannelLayoutBuilder(
+  const MainLayoutBuilder(
       {Key? key, required this.layoutId, required this.child})
       : super(key: key);
 
   @override
-  ChannelLayoutBuilderState createState() => ChannelLayoutBuilderState();
+  MainLayoutBuilderState createState() => MainLayoutBuilderState();
 }
 
-class ChannelLayoutBuilderState extends State<ChannelLayoutBuilder> {
+class MainLayoutBuilderState extends State<MainLayoutBuilder> {
   // init
   @override
   void initState() {

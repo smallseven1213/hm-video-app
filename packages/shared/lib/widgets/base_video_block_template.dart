@@ -20,12 +20,6 @@ final Map<
   3: baseVideoBlockTemplate3,
   4: baseVideoBlockTemplate4,
   10: baseVideoBlockTemplate10,
-  // 3: (List<Vod> vods, int areaId, {int? film = 1}) =>
-  //     baseVideoBlockTemplate3(vods: vods, film: film, areaId: areaId),
-  // 4: (List<Vod> vods, int areaId, {int? film = 1}) =>
-  //     baseVideoBlockTemplate4(vods: vods, film: film, areaId: areaId),
-  // 10: (List<Vod> vods, int areaId, {int? film = 1}) =>
-  //     baseVideoBlockTemplate10(vods: vods, film: film, areaId: areaId),
 };
 
 class BaseVideoBlockTemplate extends StatelessWidget {
