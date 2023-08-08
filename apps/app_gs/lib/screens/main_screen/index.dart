@@ -1,12 +1,8 @@
 import 'package:app_gs/screens/main_screen/channels.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/controllers/layout_controller.dart';
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/display_layout_tab_search.dart';
-import 'package:shared/widgets/popular_search_title_builder.dart';
+import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
+import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
 
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
@@ -18,12 +14,11 @@ class HomeMainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false, // HC: 煩死，勿動!!
-      child: GetBuilder<LayoutController>(
-        tag: 'layout$layoutId',
-        builder: (controller) {
-          return Obx(() {
-            if (controller.isLoading.value) {
+        onWillPop: () async => false,
+        child: MainLayoutLoadingStatusConsumer(
+          layoutId: layoutId,
+          child: (isLoading) {
+            if (isLoading) {
               return const Scaffold(
                 body: Center(
                   child: WaveLoading(
@@ -99,7 +94,7 @@ class HomeMainScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    DisplayLayoutTabSearch(
+                    DisplayLayoutTabSearchConsumer(
                         layoutId: layoutId,
                         child: (({required bool displaySearchBar}) =>
                             displaySearchBar
@@ -111,9 +106,7 @@ class HomeMainScreen extends StatelessWidget {
                 )),
               ],
             ));
-          });
-        },
-      ),
-    );
+          },
+        ));
   }
 }

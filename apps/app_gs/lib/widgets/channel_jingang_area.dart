@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/channel_shared_data_controller.dart';
 import 'package:shared/enums/jingang.dart';
-import 'package:shared/models/jingang.dart';
+import 'package:shared/modules/channel/channel_jingang_area_consumer.dart';
 
 import 'jingang_button.dart';
 
@@ -17,14 +15,9 @@ class ChannelJingangArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final channelSharedDataController = Get.find<ChannelSharedDataController>(
-      tag: '$channelId',
-    );
-
-    return Obx(
-      () {
-        Jingang? jingang =
-            channelSharedDataController.channelSharedData.value?.jingang;
+    return ChannelJingangAreaConsumer(
+      channelId: channelId,
+      child: (jingang) {
         if (jingang == null ||
             jingang.jingangDetail == null ||
             jingang.jingangDetail!.isEmpty) {

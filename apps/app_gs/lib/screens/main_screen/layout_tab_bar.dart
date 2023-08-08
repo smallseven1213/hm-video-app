@@ -166,7 +166,7 @@ class LayoutTabBar extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.only(top: 8),
               child: TabBar(
-                  tabAlignment: TabAlignment.center,
+                  // tabAlignment: TabAlignment.center,
                   physics: kIsWeb ? null : const BouncingScrollPhysics(),
                   isScrollable: true,
                   controller: tabController,

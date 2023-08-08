@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared/widgets/channe_provider.dart';
+import 'package:shared/modules/channel/channe_provider.dart';
 import 'main.dart';
 
 class ChannelStyle3 extends StatelessWidget {
