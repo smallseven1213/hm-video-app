@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared/widgets/channels_builder.dart';
-
+import 'package:shared/modules/main_layout/channels_scaffold.dart';
 import 'channel_style_1/index.dart';
 
 import 'channel_style_2/index.dart';
@@ -37,9 +36,9 @@ class Channels extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChannelsBuilder(
+    return ChannelsScaffold(
         layoutId: layoutId,
-        childWidget: (channelData) {
+        child: (channelData) {
           var getWidget = styleWidgetMap[channelData.style];
           if (getWidget == null) {
             return const ChannelStyleNotFound();

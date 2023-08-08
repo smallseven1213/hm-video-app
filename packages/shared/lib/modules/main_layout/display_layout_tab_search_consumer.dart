@@ -1,20 +1,14 @@
-// DisplayLayoutTabSearch, 會帶入一個child widget, 會參考2個GetX Controller
-// 第1個是LayoutController，取layout.obs的值
-// 第2個是channelScreenTabController.tabIndex.value
-// 當layout[channelScreenTabController.tabIndex.value]的isSearch為true時, display child widget
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/widgets/fade_in_effect.dart';
 
-import '../controllers/channel_screen_tab_controller.dart';
-import '../controllers/layout_controller.dart';
+import '../../controllers/channel_screen_tab_controller.dart';
+import '../../controllers/layout_controller.dart';
 
-class DisplayLayoutTabSearch extends StatelessWidget {
+class DisplayLayoutTabSearchConsumer extends StatelessWidget {
   final Widget Function({required bool displaySearchBar}) child;
   final int layoutId;
 
-  const DisplayLayoutTabSearch(
+  const DisplayLayoutTabSearchConsumer(
       {Key? key, required this.child, required this.layoutId})
       : super(key: key);
 

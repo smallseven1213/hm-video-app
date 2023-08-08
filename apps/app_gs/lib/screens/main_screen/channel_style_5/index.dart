@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/modules/channel/channe_provider.dart';
+import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/channe_provider.dart';
-import 'package:shared/widgets/display_layout_tab_search.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../../widgets/actor_avatar.dart';
@@ -33,7 +33,7 @@ class ChannelStyle5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DisplayLayoutTabSearch(
+    return DisplayLayoutTabSearchConsumer(
       layoutId: layoutId,
       child: (({required bool displaySearchBar}) {
         return Padding(
