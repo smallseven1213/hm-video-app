@@ -40,8 +40,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
   @override
   void initState() {
     super.initState();
-    channelDataController = Get.put(
-      ChannelDataController(channelId: widget.channelId),
+    channelDataController = Get.find<ChannelDataController>(
       tag: 'channelId-${widget.channelId}',
     );
   }
