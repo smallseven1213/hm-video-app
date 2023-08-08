@@ -103,8 +103,7 @@ class _GameWebviewToggleButtonWidget
               ),
               InkWell(
                 onTap: () {
-                  launchUrl(
-                      Uri.parse(gameBannerController.customerServiceUrl.value));
+                  launch(gameBannerController.customerServiceUrl.value);
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
