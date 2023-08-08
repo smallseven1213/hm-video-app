@@ -32,6 +32,16 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
     vodController =
         FilterVideoScreenResultController(scrollController: scrollController);
 
+    scrollController.addListener(() {
+      if (scrollController.offset > 150 &&
+          filterScreenController.showTabBar.value) {
+        filterScreenController.handleOption(showTab: false, openOption: false);
+      } else if (scrollController.offset < 150 &&
+          !filterScreenController.showTabBar.value) {
+        filterScreenController.handleOption(showTab: true, openOption: true);
+      }
+    });
+
     everWorker = ever(filterVideoScreenController.selectedOptions, (_) {
       vodController.reset();
       vodController.loadMoreData();
@@ -42,45 +52,39 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
   void dispose() {
     everWorker.dispose();
     scrollController.dispose();
-    print('。。。。filter  video dispose');
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Stack(
-        children: [
-          SliverVodGrid(
-            headerExtends: [
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: CustomHeaderDelegate(
-                  minHeight: 64.0, // 這是FilterBar的高度
-                  maxHeight: 120.0, // 這是FilterOptions的高度
-                  menuData: filterVideoScreenController.menuData,
-                  selectedOptions: filterVideoScreenController.selectedOptions,
-                  handleOptionChange:
-                      filterVideoScreenController.handleOptionChange,
-                  film: 1, // 你可以根據你的需求修改這裡
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
-                ),
-              )
-            ],
-            videos: vodController.vodList,
-            isListEmpty: vodController.isListEmpty.value,
-            displayNoMoreData: vodController.displayNoMoreData.value,
-            displayLoading: vodController.displayLoading.value,
-            displayVideoCollectTimes: false,
-            noMoreWidget: ListNoMore(),
-            customScrollController: vodController.scrollController,
+      () => SliverVodGrid(
+        headerExtends: [
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: CustomHeaderDelegate(
+              minHeight: 64.0, // 這是FilterBar的高度
+              maxHeight: 120.0, // 這是FilterOptions的高度
+              menuData: filterVideoScreenController.menuData,
+              selectedOptions: filterVideoScreenController.selectedOptions,
+              handleOptionChange:
+                  filterVideoScreenController.handleOptionChange,
+              film: 1,
+            ),
           ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
+          )
         ],
+        videos: vodController.vodList,
+        isListEmpty: vodController.isListEmpty.value,
+        displayNoMoreData: vodController.displayNoMoreData.value,
+        displayLoading: vodController.displayLoading.value,
+        displayVideoCollectTimes: false,
+        noMoreWidget: ListNoMore(),
+        customScrollController: vodController.scrollController,
       ),
     );
   }
@@ -111,7 +115,6 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    print('@@@@ filter bar build:$shrinkOffset');
     if (shrinkOffset >= 100) {
       return FilterBar(
         menuData: menuData,

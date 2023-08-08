@@ -28,7 +28,6 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
       Get.find<FilterShortScreenController>();
   final ScrollController scrollController = ScrollController();
   final searchTempShortController = Get.find<FilterTempShortController>();
-
   late Worker everWorker;
 
   @override
@@ -36,7 +35,7 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
     super.initState();
     vodController =
         FilterScreenShortResultController(scrollController: scrollController);
-    print('@@@@ filter short video init');
+
     scrollController.addListener(() {
       if (scrollController.offset > 150 &&
           filterScreenController.showTabBar.value) {
@@ -61,51 +60,44 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
   void dispose() {
     everWorker.dispose();
     scrollController.dispose();
-
-    print('。。。。filter short video dispose');
-
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Stack(
-        children: [
-          SliverVodGrid(
-            headerExtends: [
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: CustomHeaderDelegate(
-                  minHeight: 64.0, // 這是FilterBar的高度
-                  maxHeight: 120.0, // 這是FilterOptions的高度
-                  menuData: filterShortScreenController.menuData,
-                  selectedOptions: filterShortScreenController.selectedOptions,
-                  handleOptionChange:
-                      filterShortScreenController.handleOptionChange,
-                  film: 2, // 你可以根據你的需求修改這裡
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
-                ),
-              )
-            ],
-            videos: vodController.vodList,
-            isListEmpty: vodController.isListEmpty.value,
-            displayNoMoreData: vodController.displayNoMoreData.value,
-            displayLoading: vodController.displayLoading.value,
-            displayVideoCollectTimes: false,
-            noMoreWidget: ListNoMore(),
-            customScrollController: vodController.scrollController,
-            displayCoverVertical: true,
-            onOverrideRedirectTap: (id) {
-              MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
-                  args: {'itemId': 4, 'videoId': id});
-            },
+      () => SliverVodGrid(
+        headerExtends: [
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: CustomHeaderDelegate(
+              minHeight: 64.0, // 這是FilterBar的高度
+              maxHeight: 120.0, // 這是FilterOptions的高度
+              menuData: filterShortScreenController.menuData,
+              selectedOptions: filterShortScreenController.selectedOptions,
+              handleOptionChange:
+                  filterShortScreenController.handleOptionChange,
+              film: 2,
+            ),
           ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
+          )
         ],
+        videos: vodController.vodList,
+        isListEmpty: vodController.isListEmpty.value,
+        displayNoMoreData: vodController.displayNoMoreData.value,
+        displayLoading: vodController.displayLoading.value,
+        displayVideoCollectTimes: false,
+        noMoreWidget: ListNoMore(),
+        customScrollController: vodController.scrollController,
+        displayCoverVertical: true,
+        onOverrideRedirectTap: (id) {
+          MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
+              args: {'itemId': 4, 'videoId': id});
+        },
       ),
     );
   }
@@ -136,7 +128,6 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    print('@@@@ filter bar build:$shrinkOffset');
     if (shrinkOffset >= 100) {
       return FilterBar(
         menuData: menuData,
