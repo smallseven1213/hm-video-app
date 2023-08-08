@@ -36,7 +36,7 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
     super.initState();
     vodController =
         FilterScreenShortResultController(scrollController: scrollController);
-
+    print('@@@@ filter short video init');
     scrollController.addListener(() {
       if (scrollController.offset > 150 &&
           filterScreenController.showTabBar.value) {
@@ -61,6 +61,9 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
   void dispose() {
     everWorker.dispose();
     scrollController.dispose();
+
+    print('。。。。filter short video dispose');
+
     super.dispose();
   }
 
@@ -71,12 +74,16 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
         children: [
           SliverVodGrid(
             headerExtends: [
-              SliverToBoxAdapter(
-                child: FilterOptions(
+              SliverPersistentHeader(
+                pinned: true,
+                delegate: CustomHeaderDelegate(
+                  minHeight: 64.0, // 這是FilterBar的高度
+                  maxHeight: 120.0, // 這是FilterOptions的高度
                   menuData: filterShortScreenController.menuData,
+                  selectedOptions: filterShortScreenController.selectedOptions,
                   handleOptionChange:
                       filterShortScreenController.handleOptionChange,
-                  selectedOptions: filterShortScreenController.selectedOptions,
+                  film: 2, // 你可以根據你的需求修改這裡
                 ),
               ),
               const SliverToBoxAdapter(
@@ -98,14 +105,56 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
                   args: {'itemId': 4, 'videoId': id});
             },
           ),
-          FilterBar(
-            menuData: filterShortScreenController.menuData,
-            selectedOptions: filterShortScreenController.selectedOptions,
-            handleOptionChange: filterShortScreenController.handleOptionChange,
-            film: 2,
-          ),
         ],
       ),
     );
+  }
+}
+
+class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final RxList<Map<String, dynamic>> menuData;
+  final RxMap<String, Set> selectedOptions;
+  final void Function(String key, dynamic value) handleOptionChange;
+  final int film;
+
+  CustomHeaderDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.menuData,
+    required this.selectedOptions,
+    required this.handleOptionChange,
+    required this.film,
+  });
+
+  @override
+  double get minExtent => minHeight;
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    print('@@@@ filter bar build:$shrinkOffset');
+    if (shrinkOffset >= 100) {
+      return FilterBar(
+        menuData: menuData,
+        selectedOptions: selectedOptions,
+        handleOptionChange: handleOptionChange,
+        film: film,
+      );
+    } else {
+      return FilterOptions(
+        menuData: menuData,
+        selectedOptions: selectedOptions,
+        handleOptionChange: handleOptionChange,
+      );
+    }
+  }
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }
