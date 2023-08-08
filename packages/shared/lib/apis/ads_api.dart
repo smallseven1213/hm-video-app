@@ -53,6 +53,7 @@ class AdsApi {
     if (adsAppId == 0) return;
     fetcher(
         url: '$apiPrefix/ads-app/adsAppClickRecord',
+        method: 'POST',
         body: {'adsAppId': adsAppId});
   }
 }
