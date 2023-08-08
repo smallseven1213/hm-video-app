@@ -75,7 +75,7 @@ class _SplashState extends State<Splash> {
   ApkApi apkApi = ApkApi();
   UserApi userApi = UserApi();
   AuthApi authApi = AuthApi();
-  BannerController bannerController = Get.put(BannerController());
+  BannerController bannerController = Get.find<BannerController>();
   Timer? timer;
   AuthController authController = Get.find<AuthController>();
   ApiResponseErrorCatchController responseController =

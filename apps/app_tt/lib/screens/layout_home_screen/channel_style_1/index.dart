@@ -10,10 +10,10 @@ import 'package:shared/widgets/refresh_list.dart';
 
 import '../../../widgets/button.dart';
 import '../../../widgets/channel_skelton.dart';
+import '../channel_banners.dart';
+import '../channel_jingang_area.dart';
 import '../reload_button.dart';
 import '../videoblock.dart';
-import 'banners.dart';
-import 'jingang.dart';
 
 class ChannelStyle1 extends StatefulWidget {
   final int channelId;
@@ -138,11 +138,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
             child: CustomScrollView(
               physics: kIsWeb ? null : const BouncingScrollPhysics(),
               slivers: [
-                SliverToBoxAdapter(
-                    child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Banners(channelId: widget.channelId),
-                )),
+                ChannelBanners(
+                  channelId: widget.channelId,
+                ),
                 if (channelData.jingang!.title != '')
                   SliverToBoxAdapter(
                     child: Padding(
@@ -151,7 +149,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
                           BlockHeader(text: channelData.jingang!.title ?? ''),
                     ),
                   ),
-                JingangList(channelId: widget.channelId),
+                ChannelJingangArea(
+                  channelId: widget.channelId,
+                ),
                 ...sliverBlocks,
                 SliverToBoxAdapter(
                   child: AspectRatio(

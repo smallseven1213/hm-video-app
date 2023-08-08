@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../controllers/apps_controller.dart';
-import '../models/ad.dart';
+import '../../controllers/apps_controller.dart';
+import '../../models/ad.dart';
 
-class AppsBuilder extends StatefulWidget {
+class AppsProvider extends StatefulWidget {
   final Function(
       {required List<Ads> popularAds,
       required List<Ads> hotAds,
       required bool isLoading}) child;
-  const AppsBuilder({Key? key, required this.child}) : super(key: key);
+  const AppsProvider({Key? key, required this.child}) : super(key: key);
 
   @override
-  AppsBuilderState createState() => AppsBuilderState();
+  AppsProviderState createState() => AppsProviderState();
 }
 
-class AppsBuilderState extends State<AppsBuilder> {
+class AppsProviderState extends State<AppsProvider> {
   final appsController = Get.find<AppsController>();
 
   @override
