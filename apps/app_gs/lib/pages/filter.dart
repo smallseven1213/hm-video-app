@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -28,9 +27,12 @@ class FilterScrollViewState extends State<FilterPage>
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
 
-    _tabController.addListener(() {
-      print('tabController index: ${_tabController.indexIsChanging}');
-      filterScreenController.handleOption(showTab: true, openOption: false);
+    // 監聽tab滑動
+    _tabController.animation!.addListener(() {
+      if (_tabController.animation!.value % 1 != 0) {
+        // 如果動畫值不是整數，表示滑動正在進行中
+        filterScreenController.handleOption(showTab: true, openOption: false);
+      }
     });
   }
 
@@ -38,6 +40,7 @@ class FilterScrollViewState extends State<FilterPage>
   void dispose() {
     super.dispose();
     _tabController.dispose();
+    _tabController.animation!.removeListener(() {}); // 別忘了在 dispose 中移除監聽器
   }
 
   @override
@@ -52,7 +55,7 @@ class FilterScrollViewState extends State<FilterPage>
         ),
         body: TabBarView(
           controller: _tabController,
-          physics: const NeverScrollableScrollPhysics(),
+          // physics: const NeverScrollableScrollPhysics(),
           children: const [VideoFilterPage(), ShortVideoFilterPage()],
         ),
       );
