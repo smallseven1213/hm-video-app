@@ -1,9 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/user_navigator_controller.dart';
+import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
@@ -25,53 +23,31 @@ class UserScreen extends StatefulWidget {
 }
 
 class UserScreenState extends State<UserScreen> {
-  final storage = GetStorage();
-  final userNavigatorController = Get.find<UserNavigatorController>();
-
-  checkFirstSeen() {
-    final accountProtectionShown = storage.read('account-protection-shown');
-    if (accountProtectionShown == null) {
-      if (kIsWeb) {
-        showConfirmDialog(
-          context: context,
-          title: '提示',
-          message: '為保持您的帳號，請先註冊防止丟失',
-          showCancelButton: false,
-          onConfirm: () {
-            storage.write('account-protection-shown', true);
-          },
-        );
-      } else {
-        storage.write('account-protection-shown', true);
-        showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return const Dialog(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              child: IDCard(),
-            );
-          },
-        );
-      }
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      checkFirstSeen();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    logger.i('RENDER: UserScreen');
-    return WillPopScope(
-      onWillPop: () async => false, // HC: 煩死，勿動!!
-      child: Obx(
-        () => Scaffold(
+    return UserSettingScaffold(
+        onAccountProtectionShownH5: (setAccountProtectionShownToTrue) {
+          showConfirmDialog(
+            context: context,
+            title: '提示',
+            message: '為保持您的帳號，請先註冊防止丟失',
+            showCancelButton: false,
+            onConfirm: () => setAccountProtectionShownToTrue,
+          );
+        },
+        onAccountProtectionShown: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const Dialog(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                child: IDCard(),
+              );
+            },
+          );
+        },
+        child: Scaffold(
           body: CustomScrollView(
             physics: kIsWeb ? null : const BouncingScrollPhysics(),
             slivers: [
@@ -89,7 +65,7 @@ class UserScreenState extends State<UserScreen> {
                   height: 10,
                 ),
               ),
-              GridMenu(items: userNavigatorController.quickLink.value),
+              const GridMenu(),
               const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 10,
@@ -114,7 +90,7 @@ class UserScreenState extends State<UserScreen> {
                   height: 10,
                 ),
               ),
-              ListMenu(items: userNavigatorController.moreLink.value),
+              const ListMenu(),
               SliverFillRemaining(
                 hasScrollBody: false,
                 child: Container(
@@ -131,10 +107,6 @@ class UserScreenState extends State<UserScreen> {
               ),
             ],
           ),
-        ),
-      ),
-    );
+        ));
   }
 }
-
-// MediaQuery.of(context).padding.bottom)

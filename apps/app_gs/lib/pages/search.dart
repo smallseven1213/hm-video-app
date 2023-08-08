@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
-import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/controllers/search_page_data_controller.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/models/color_keys.dart';
@@ -27,7 +26,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  BannerController bannerController = Get.find<BannerController>();
   Timer? _debounceTimer;
   final TextEditingController _searchController = TextEditingController();
   List<String> _searchResults = [];

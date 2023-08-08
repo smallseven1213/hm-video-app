@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/ad.dart';
-import 'package:shared/widgets/apps_builder.dart';
+import 'package:shared/modules/apps/apps_provider.dart';
 
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/header.dart';
@@ -24,7 +24,7 @@ class AppsScreen extends StatelessWidget {
         appBar: const CustomAppBar(
           title: '應用中心',
         ),
-        body: AppsBuilder(
+        body: AppsProvider(
           child: ((
                   {required List<Ads> popularAds,
                   required List<Ads> hotAds,

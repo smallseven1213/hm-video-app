@@ -48,20 +48,6 @@ class ActorPageState extends State<ActorPage>
 
     actorLatestVodController = ActorLatestVodController(actorId: widget.id);
     actorNewestVodController = ActorHottestVodController(actorId: widget.id);
-    // _tabController.addListener(() {
-    //   if (_tabController.indexIsChanging) {
-    //     _parentScrollController.jumpTo(0.0);
-    //     if (_tabController.index == 0) {
-    //       if (actorLatestVodScrollController.hasClients) {
-    //         actorLatestVodScrollController.jumpTo(0.0);
-    //       }
-    //     } else {
-    //       if (actorNewestVodScrollController.hasClients) {
-    //         actorNewestVodScrollController.jumpTo(0.0);
-    //       }
-    //     }
-    //   }
-    // });
   }
 
   @override

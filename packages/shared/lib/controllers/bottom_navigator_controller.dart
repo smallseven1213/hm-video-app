@@ -11,7 +11,7 @@ import '../utils/sid_image_result_decode.dart';
 
 final logger = Logger();
 
-class BottonNavigatorController extends GetxController {
+class BottomNavigatorController extends GetxController {
   final activeKey = ''.obs;
   final navigatorItems = <Navigation>[].obs;
   final displayItems = true.obs;

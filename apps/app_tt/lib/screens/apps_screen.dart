@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/ad.dart';
-import 'package:shared/widgets/apps_builder.dart';
+import 'package:shared/modules/apps/apps_provider.dart';
 
 import '../widgets/my_app_bar.dart';
 import '../widgets/wave_loading.dart';
@@ -14,7 +14,7 @@ class AppsScreen extends StatelessWidget {
         appBar: const MyAppBar(
           title: '應用中心',
         ),
-        body: AppsBuilder(
+        body: AppsProvider(
           child: ((
                   {required List<Ads> popularAds,
                   required List<Ads> hotAds,
