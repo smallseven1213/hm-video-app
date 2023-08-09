@@ -67,7 +67,7 @@ class VideoScreenState extends State<VideoScreen> {
                 tag: videoUrl,
                 autoPlay: kIsWeb ? false : true,
                 videoUrl: videoUrl,
-                video: video,
+                video: video!,
                 videoDetail: videoDetail!,
                 loadingWidget: AspectRatio(
                   aspectRatio: 16 / 9,
