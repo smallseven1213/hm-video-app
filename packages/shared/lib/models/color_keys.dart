@@ -8,6 +8,11 @@ enum ColorKeys {
   buttonBgSecondary,
   buttonBgGradientPrimary,
   buttonBgGradientSecondary,
+  buttonBgCancel,
+  buttonBgDisable,
   noImageBgTop,
   noImageBgBottom,
+  menuColor,
+  menuActiveColor,
+  dividerColor,
 }
