@@ -79,7 +79,7 @@ class BaseShortPage extends StatelessWidget {
                     tag: obsKey,
                     autoPlay: kIsWeb ? false : true,
                     videoUrl: videoUrl,
-                    video: video,
+                    video: video!,
                     videoDetail: Vod(
                       video.id,
                       video.title,
