@@ -9,7 +9,7 @@ import 'config/colors.dart';
 import './routes/app_routes.dart' as app_routes;
 import './routes/game_routes.dart' as game_routes;
 
-const env = String.fromEnvironment('ENV', defaultValue: 'dev');
+const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
 void main() async {
   final allRoutes = {
