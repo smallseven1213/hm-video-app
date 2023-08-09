@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/widgets/base_short_page_builder.dart';
+import 'package:shared/modules/shorts/shorts_scaffold.dart';
 import 'package:uuid/uuid.dart';
 import 'wave_loading.dart';
 
@@ -30,7 +30,7 @@ class BaseShortPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseShortPageBuilder(
+    return ShortsScaffold(
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
@@ -49,16 +49,6 @@ class BaseShortPage extends StatelessWidget {
           required Vod shortData,
           required Function toggleFullScreen,
         }) {
-          // return ShortCard(
-          //   obsKey: obsKey,
-          //   index: index,
-          //   isActive: isActive,
-          //   id: shortData.id,
-          //   title: shortData.title,
-          //   shortData: shortData,
-          //   toggleFullScreen: toggleFullScreen,
-          //   hiddenBottomArea: false,
-          // );
           return Container();
         },
         createController: createController);

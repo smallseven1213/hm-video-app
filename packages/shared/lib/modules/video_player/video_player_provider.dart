@@ -9,6 +9,7 @@ class VideoPlayerProvider extends StatefulWidget {
   final String videoUrl;
   final Vod video;
   final Vod videoDetail;
+  final bool? autoPlay;
   final Widget Function(bool isReady) child;
 
   const VideoPlayerProvider({
@@ -18,6 +19,7 @@ class VideoPlayerProvider extends StatefulWidget {
     required this.video,
     required this.videoDetail,
     required this.child,
+    this.autoPlay,
   }) : super(key: key);
 
   @override
@@ -31,10 +33,11 @@ class VideoPlayerProviderState extends State<VideoPlayerProvider> {
   void initState() {
     super.initState();
 
-    observableVideoPlayerController = Get.put<ObservableVideoPlayerController>(
+    observableVideoPlayerController = Get.put(
       ObservableVideoPlayerController(
         widget.tag,
         widget.videoUrl,
+        widget.autoPlay ?? false,
       ),
       tag: widget.tag,
     );

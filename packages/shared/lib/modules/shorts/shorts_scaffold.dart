@@ -3,8 +3,6 @@ import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 
-import '../../widgets/short_video_builder.dart';
-
 class ShortsScaffold extends StatefulWidget {
   final Function() createController;
   final String uuid;
@@ -123,21 +121,14 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
               var shortData = cachedVods[currentIndex];
               bool isItemActive = index == currentPage;
               String obsKey = '${widget.uuid}-${shortData.id.toString()}';
-              return ShortVideoBuilder(
-                  // key: ValueKey('video-provider-$obsKey'),
-                  obsKey: obsKey,
-                  vodId: shortData.id,
-                  loading: Center(
-                    child: widget.loadingWidget,
-                  ),
-                  child: widget.shortCardBuilder(
-                    index: index,
-                    obsKey: obsKey,
-                    shortData: shortData,
-                    isActive: isItemActive,
-                    toggleFullScreen: () =>
-                        pageviewIndexController.toggleFullscreen(),
-                  ));
+              return widget.shortCardBuilder(
+                index: index,
+                obsKey: obsKey,
+                shortData: shortData,
+                isActive: isItemActive,
+                toggleFullScreen: () =>
+                    pageviewIndexController.toggleFullscreen(),
+              );
             },
             scrollDirection: Axis.vertical,
           ),

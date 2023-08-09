@@ -8,7 +8,6 @@ import 'package:rxdart/rxdart.dart' as rx;
 import 'package:uuid/uuid.dart' as uuid;
 import '../../controllers/play_record_controller.dart';
 import '../../controllers/video_detail_controller.dart';
-import '../../controllers/video_player_controller.dart';
 import '../../models/vod.dart';
 import '../../utils/controller_tag_genarator.dart';
 

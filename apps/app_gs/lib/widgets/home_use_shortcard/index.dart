@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/short_video/short_video_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../shortcard/index.dart';
 import '../wave_loading.dart';

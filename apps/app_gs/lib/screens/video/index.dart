@@ -63,6 +63,7 @@ class VideoScreenState extends State<VideoScreen> {
             children: [
               VideoPlayerProvider(
                 tag: videoUrl,
+                autoPlay: true,
                 videoUrl: videoUrl,
                 video: video!,
                 videoDetail: videoDetail!,

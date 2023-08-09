@@ -9,7 +9,6 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 final logger = Logger();
 
 class FullScreenControls extends StatefulWidget {
-  final String videoUrl;
   final String? name;
   final Function toggleFullscreen;
   final bool isFullscreen;
@@ -21,7 +20,6 @@ class FullScreenControls extends StatefulWidget {
     this.name,
     required this.toggleFullscreen,
     required this.isFullscreen,
-    required this.videoUrl,
     required this.ovpController,
     required this.videoPlayerInfo,
   }) : super(key: key);

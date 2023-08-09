@@ -12,6 +12,7 @@ bool isFirstTimeForIOSSafari = true;
 
 class ObservableVideoPlayerController extends GetxController {
   final isReady = false.obs;
+  bool autoPlay;
   // final RxString videoAction = kIsWeb ? 'pause'.obs : 'play'.obs;
   final RxString videoAction = 'pause'.obs;
   late VideoPlayerController? videoPlayerController;
@@ -22,7 +23,7 @@ class ObservableVideoPlayerController extends GetxController {
 
   var errorMessage = ''.obs;
 
-  ObservableVideoPlayerController(this.obsKey, this.videoUrl);
+  ObservableVideoPlayerController(this.obsKey, this.videoUrl, this.autoPlay);
 
   @override
   void onInit() {
@@ -42,6 +43,9 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) {
       isReady.value = true;
+      if (autoPlay) {
+        play();
+      }
     }).catchError((error) {
       if (videoPlayerController?.value.hasError == true) {
         videoAction.value = 'error';
