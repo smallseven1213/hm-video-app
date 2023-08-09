@@ -28,7 +28,6 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
       Get.find<FilterShortScreenController>();
   final ScrollController scrollController = ScrollController();
   final searchTempShortController = Get.find<FilterTempShortController>();
-
   late Worker everWorker;
 
   @override
@@ -67,45 +66,86 @@ class VideoFilterScrollViewState extends State<ShortVideoFilterPage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Stack(
-        children: [
-          SliverVodGrid(
-            headerExtends: [
-              SliverToBoxAdapter(
-                child: FilterOptions(
-                  menuData: filterShortScreenController.menuData,
-                  handleOptionChange:
-                      filterShortScreenController.handleOptionChange,
-                  selectedOptions: filterShortScreenController.selectedOptions,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
-                ),
-              )
-            ],
-            videos: vodController.vodList,
-            isListEmpty: vodController.isListEmpty.value,
-            displayNoMoreData: vodController.displayNoMoreData.value,
-            displayLoading: vodController.displayLoading.value,
-            displayVideoCollectTimes: false,
-            noMoreWidget: ListNoMore(),
-            customScrollController: vodController.scrollController,
-            displayCoverVertical: true,
-            onOverrideRedirectTap: (id) {
-              MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
-                  args: {'itemId': 4, 'videoId': id});
-            },
+      () => SliverVodGrid(
+        headerExtends: [
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: CustomHeaderDelegate(
+              minHeight: 64.0, // 這是FilterBar的高度
+              maxHeight: 120.0, // 這是FilterOptions的高度
+              menuData: filterShortScreenController.menuData,
+              selectedOptions: filterShortScreenController.selectedOptions,
+              handleOptionChange:
+                  filterShortScreenController.handleOptionChange,
+              film: 2,
+            ),
           ),
-          FilterBar(
-            menuData: filterShortScreenController.menuData,
-            selectedOptions: filterShortScreenController.selectedOptions,
-            handleOptionChange: filterShortScreenController.handleOptionChange,
-            film: 2,
-          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
+          )
         ],
+        videos: vodController.vodList,
+        isListEmpty: vodController.isListEmpty.value,
+        displayNoMoreData: vodController.displayNoMoreData.value,
+        displayLoading: vodController.displayLoading.value,
+        displayVideoCollectTimes: false,
+        noMoreWidget: ListNoMore(),
+        customScrollController: vodController.scrollController,
+        displayCoverVertical: true,
+        onOverrideRedirectTap: (id) {
+          MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
+              args: {'itemId': 4, 'videoId': id});
+        },
       ),
     );
+  }
+}
+
+class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final RxList<Map<String, dynamic>> menuData;
+  final RxMap<String, Set> selectedOptions;
+  final void Function(String key, dynamic value) handleOptionChange;
+  final int film;
+
+  CustomHeaderDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.menuData,
+    required this.selectedOptions,
+    required this.handleOptionChange,
+    required this.film,
+  });
+
+  @override
+  double get minExtent => minHeight;
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    if (shrinkOffset >= 100) {
+      return FilterBar(
+        menuData: menuData,
+        selectedOptions: selectedOptions,
+        handleOptionChange: handleOptionChange,
+        film: film,
+      );
+    } else {
+      return FilterOptions(
+        menuData: menuData,
+        selectedOptions: selectedOptions,
+        handleOptionChange: handleOptionChange,
+      );
+    }
+  }
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }
