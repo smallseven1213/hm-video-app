@@ -7,6 +7,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 
+import '../../widgets/custom_app_bar.dart';
 import '../../widgets/wave_loading.dart';
 import 'nested_tab_bar_view/index.dart';
 
@@ -66,19 +67,33 @@ class VideoScreenState extends State<VideoScreen> {
                 tag: videoUrl,
                 autoPlay: kIsWeb ? false : true,
                 videoUrl: videoUrl,
-                video: video!,
+                video: video,
                 videoDetail: videoDetail!,
-                child: (isReady) => VideoPlayerArea(
-                  name: widget.name,
-                  videoUrl: videoUrl,
-                  video: video,
+                loadingWidget: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    color: Colors.black,
+                    child: const WaveLoading(
+                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                      duration: Duration(milliseconds: 1000),
+                      size: 17,
+                      itemCount: 3,
+                    ),
+                  ),
                 ),
+                child: (isReady) {
+                  return VideoPlayerArea(
+                    name: widget.name,
+                    videoUrl: videoUrl,
+                    video: video,
+                  );
+                },
               ),
               Expanded(
                 child: NestedTabBarView(
                   videoUrl: videoUrl,
-                  videoBase: video,
-                  videoDetail: videoDetail,
+                  videoBase: video!,
+                  videoDetail: videoDetail!,
                 ),
               )
             ],

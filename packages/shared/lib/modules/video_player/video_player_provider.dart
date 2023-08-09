@@ -11,6 +11,7 @@ class VideoPlayerProvider extends StatefulWidget {
   final Vod videoDetail;
   final bool? autoPlay;
   final Widget Function(bool isReady) child;
+  final Widget? loadingWidget;
 
   const VideoPlayerProvider({
     Key? key,
@@ -19,6 +20,7 @@ class VideoPlayerProvider extends StatefulWidget {
     required this.video,
     required this.videoDetail,
     required this.child,
+    this.loadingWidget,
     this.autoPlay,
   }) : super(key: key);
 
@@ -58,7 +60,7 @@ class VideoPlayerProviderState extends State<VideoPlayerProvider> {
     return Obx(
       () => observableVideoPlayerController.isReady.value
           ? widget.child(observableVideoPlayerController.isReady.value)
-          : Container(),
+          : widget.loadingWidget ?? Container(),
     );
   }
 }

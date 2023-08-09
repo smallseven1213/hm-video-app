@@ -68,13 +68,18 @@ class BaseShortPage extends StatelessWidget {
                   if (videoUrl == null ||
                       video == null ||
                       videoDetail == null) {
-                    return Container();
+                    return const WaveLoading(
+                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                      duration: Duration(milliseconds: 1000),
+                      size: 17,
+                      itemCount: 3,
+                    );
                   }
                   return VideoPlayerProvider(
                     tag: obsKey,
                     autoPlay: kIsWeb ? false : true,
                     videoUrl: videoUrl,
-                    video: video!,
+                    video: video,
                     videoDetail: Vod(
                       video.id,
                       video.title,
@@ -83,6 +88,12 @@ class BaseShortPage extends StatelessWidget {
                       timeLength: video.timeLength!,
                       tags: video.tags!,
                       videoViewTimes: video.videoViewTimes!,
+                    ),
+                    loadingWidget: const WaveLoading(
+                      color: Color.fromRGBO(255, 255, 255, 0.3),
+                      duration: Duration(milliseconds: 1000),
+                      size: 17,
+                      itemCount: 3,
                     ),
                     child: ((isReady) => style == 2
                         ? HomeUseShortCard(
