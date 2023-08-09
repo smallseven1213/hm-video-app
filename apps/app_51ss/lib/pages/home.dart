@@ -7,16 +7,33 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
+import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../screens/main_screen/index.dart';
+import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
 UserApi userApi = UserApi();
 final screens = {
-  HomeNavigatorPathes.layout1: () => const HomeMainScreen(
-        layoutId: 0,
+  HomeNavigatorPathes.layout1: () => const MainLayoutBuilder(
+        key: Key('layout1'),
+        layoutId: 1,
+        child: HomeMainScreen(
+          layoutId: 1,
+        ),
       ),
+  // HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
+  //       key: Key('layout${layouts[1]}'),
+  //       layoutId: layouts[1],
+  //       child: HomeMainScreen(
+  //         layoutId: layouts[1],
+  //       ),
+  //     ),
+  // HomeNavigatorPathes.game: () => const GameScreen(),
+  // HomeNavigatorPathes.apps: () => const AppsScreen(),
+  HomeNavigatorPathes.user: () =>
+      const Text('user', style: TextStyle(color: Colors.white)),
 };
 
 class HomePage extends StatefulWidget {
@@ -25,6 +42,7 @@ class HomePage extends StatefulWidget {
       : super(key: key);
 
   final bottomNavigatorController = Get.find<BottomNavigatorController>();
+
   @override
   HomeState createState() => HomeState();
 }
@@ -43,7 +61,8 @@ class HomeState extends State<HomePage> {
     return MainNavigationScaffold(
         screens: screens,
         screenNotFoundWidget: const Center(
-          child: Text('screenNotFoundWidget'),
+          child: Text('screenNotFoundWidget',
+              style: TextStyle(color: Colors.white)),
         ),
         bottomNavigationBarWidget: (
             {required String activeKey,
@@ -73,12 +92,27 @@ class HomeState extends State<HomePage> {
                           ],
                         ),
                 ),
-                child: const ClipRRect(
-                  borderRadius: BorderRadius.only(
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),
                     topRight: Radius.circular(10),
                   ),
-                  child: Text('CustomBottomBarItem'),
+                  child: Row(
+                    children: navigatorItems
+                        .asMap()
+                        .entries
+                        .map(
+                          (entry) => Expanded(
+                            child: CustomBottomBarItem(
+                                isActive: entry.value.path! == activeKey,
+                                iconSid: entry.value.photoSid!,
+                                activeIconSid: entry.value.clickEffect!,
+                                label: entry.value.name!,
+                                onTap: () => changeTabKey(entry.value.path!)),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
               ),
             ],

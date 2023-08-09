@@ -30,6 +30,8 @@ class HomeMainScreen extends StatelessWidget {
                     SizedBox(
                       height: MediaQuery.of(context).padding.top,
                     ),
+                    Text('this is layout$layoutId',
+                        style: const TextStyle(color: Colors.white)),
                   ],
                 )),
               ],
