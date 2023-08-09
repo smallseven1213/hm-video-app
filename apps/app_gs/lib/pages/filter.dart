@@ -38,9 +38,9 @@ class FilterScrollViewState extends State<FilterPage>
 
   @override
   void dispose() {
-    super.dispose();
-    _tabController.dispose();
     _tabController.animation!.removeListener(() {}); // 別忘了在 dispose 中移除監聽器
+    _tabController.dispose();
+    super.dispose();
   }
 
   @override

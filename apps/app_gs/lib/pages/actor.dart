@@ -44,10 +44,10 @@ class ActorPageState extends State<ActorPage>
   }
 
   Widget buildVideosWidget(String key, vodList, displayLoading,
-      displayNoMoreData, isListEmpty, onLoadMore) {
+      displayNoMoreData, isListEmpty, onLoadMore, index) {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
-        if (_tabController.index == 0 &&
+        if (_tabController.index == index &&
             scrollInfo is ScrollEndNotification &&
             scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
           onLoadMore();
@@ -109,7 +109,8 @@ class ActorPageState extends State<ActorPage>
                             displayLoading,
                             displayNoMoreData,
                             isListEmpty,
-                            onLoadMore),
+                            onLoadMore,
+                            0),
                   ),
                   ActorHottestVideosConsumer(
                     id: widget.id,
@@ -121,7 +122,8 @@ class ActorPageState extends State<ActorPage>
                             displayLoading,
                             displayNoMoreData,
                             isListEmpty,
-                            onLoadMore),
+                            onLoadMore,
+                            1),
                   ),
                 ],
               )),

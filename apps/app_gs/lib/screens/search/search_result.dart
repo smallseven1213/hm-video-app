@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
@@ -32,10 +33,9 @@ class SearchResultPageState extends State<SearchResultPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    searchVodController = SearchVodController(
-        keyword: widget.keyword, scrollController: scrollController, film: 1);
-    searchShortController = SearchVodController(
-        keyword: widget.keyword, scrollController: scrollController, film: 2);
+    searchVodController = SearchVodController(keyword: widget.keyword, film: 1);
+    searchShortController =
+        SearchVodController(keyword: widget.keyword, film: 2);
 
     searchShortController.vodList.listen((p0) {
       searchTempShortController.replaceVideos(p0);
@@ -66,29 +66,74 @@ class SearchResultPageState extends State<SearchResultPage>
         Expanded(
           child: TabBarView(
             controller: _tabController,
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
             children: [
-              Obx(() => SliverVodGrid(
-                    isListEmpty: searchVodController.isListEmpty.value,
+              NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (_tabController.index == 0 &&
+                      scrollInfo is ScrollEndNotification &&
+                      scrollInfo.metrics.pixels ==
+                          scrollInfo.metrics.maxScrollExtent) {
+                    searchVodController.loadMoreData();
+                  }
+                  return false;
+                },
+                child: Obx(() => SliverVodGrid(
+                      videos: searchVodController.vodList.value,
+                      displayLoading: searchVodController.isLoading.value,
+                      displayNoMoreData:
+                          searchVodController.displayNoMoreData.value,
+                      isListEmpty: searchVodController.isListEmpty.value,
+                      noMoreWidget: ListNoMore(),
+                      displayVideoCollectTimes: false,
+                    )),
+              ),
+              NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (_tabController.index == 1 &&
+                      scrollInfo is ScrollEndNotification &&
+                      scrollInfo.metrics.pixels ==
+                          scrollInfo.metrics.maxScrollExtent) {
+                    searchShortController.loadMoreData();
+                  }
+                  return false;
+                },
+                child: Obx(() => SliverVodGrid(
+                    isListEmpty: searchShortController.isListEmpty.value,
                     displayVideoCollectTimes: false,
-                    videos: searchVodController.vodList,
+                    videos: searchShortController.vodList.value,
                     displayNoMoreData:
-                        searchVodController.displayNoMoreData.value,
-                    displayLoading: searchVodController.displayLoading.value,
+                        searchShortController.displayNoMoreData.value,
+                    displayLoading: searchShortController.displayLoading.value,
                     noMoreWidget: ListNoMore(),
-                  )),
-              Obx(() => SliverVodGrid(
-                  isListEmpty: searchShortController.isListEmpty.value,
-                  displayVideoCollectTimes: false,
-                  videos: searchShortController.vodList,
-                  displayNoMoreData:
-                      searchShortController.displayNoMoreData.value,
-                  displayLoading: searchShortController.displayLoading.value,
-                  noMoreWidget: ListNoMore(),
-                  displayCoverVertical: true,
-                  onOverrideRedirectTap: (id) {
-                    MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
-                        args: {'itemId': 3, 'videoId': id});
-                  })),
+                    displayCoverVertical: true,
+                    onOverrideRedirectTap: (id) {
+                      MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
+                          args: {'itemId': 3, 'videoId': id});
+                    })),
+              ),
+              // Obx(() => SliverVodGrid(
+              //       isListEmpty: searchVodController.isListEmpty.value,
+              //       displayVideoCollectTimes: false,
+              //       videos: searchVodController.vodList,
+              //       displayNoMoreData:
+              //           searchVodController.displayNoMoreData.value,
+              //       displayLoading: searchVodController.displayLoading.value,
+              //       noMoreWidget: ListNoMore(),
+              //     )),
+              // Obx(() => SliverVodGrid(
+              //     isListEmpty: searchShortController.isListEmpty.value,
+              //     displayVideoCollectTimes: false,
+              //     videos: searchShortController.vodList,
+              //     displayNoMoreData:
+              //         searchShortController.displayNoMoreData.value,
+              //     displayLoading: searchShortController.displayLoading.value,
+              //     noMoreWidget: ListNoMore(),
+              //     displayCoverVertical: true,
+              //     onOverrideRedirectTap: (id) {
+              //       MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
+              //           args: {'itemId': 3, 'videoId': id});
+              //     })),
             ],
           ),
         ),
