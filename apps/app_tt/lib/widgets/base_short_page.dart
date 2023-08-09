@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/base_short_page_builder.dart';
 import 'package:uuid/uuid.dart';
-
 import 'wave_loading.dart';
 
 class BaseShortPage extends StatelessWidget {
@@ -12,8 +11,9 @@ class BaseShortPage extends StatelessWidget {
   final bool? supportedPlayRecord;
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
-  final bool? hiddenBottomArea;
   final Widget? loadingWidget;
+  final int? style; // 1, 2
+  final String? uuid;
 
   const BaseShortPage({
     Key? key,
@@ -23,14 +23,15 @@ class BaseShortPage extends StatelessWidget {
     this.displayFavoriteAndCollectCount = true,
     this.supportedPlayRecord = true,
     this.useCachedList = false,
-    this.hiddenBottomArea = false,
     this.loadingWidget,
+    this.style = 1,
+    this.uuid,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return BaseShortPageBuilder(
-        uuid: const Uuid().v4(),
+        uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
         loadingWidget: const Center(
@@ -41,13 +42,25 @@ class BaseShortPage extends StatelessWidget {
             itemCount: 3,
           ),
         ),
-        shortCardBuilder: (
-                {required int index,
-                required bool isActive,
-                required String obsKey,
-                required Vod shortData,
-                required Function toggleFullScreen}) =>
-            Container(),
+        shortCardBuilder: ({
+          required int index,
+          required bool isActive,
+          required String obsKey,
+          required Vod shortData,
+          required Function toggleFullScreen,
+        }) {
+          // return ShortCard(
+          //   obsKey: obsKey,
+          //   index: index,
+          //   isActive: isActive,
+          //   id: shortData.id,
+          //   title: shortData.title,
+          //   shortData: shortData,
+          //   toggleFullScreen: toggleFullScreen,
+          //   hiddenBottomArea: false,
+          // );
+          return Container();
+        },
         createController: createController);
   }
 }

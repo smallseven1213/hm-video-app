@@ -3,9 +3,9 @@ import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 
-import 'short_video_builder.dart';
+import '../../widgets/short_video_builder.dart';
 
-class BaseShortPageBuilder extends StatefulWidget {
+class ShortsScaffold extends StatefulWidget {
   final Function() createController;
   final String uuid;
   final int? videoId;
@@ -21,7 +21,7 @@ class BaseShortPageBuilder extends StatefulWidget {
       required Vod shortData,
       required Function toggleFullScreen}) shortCardBuilder;
 
-  const BaseShortPageBuilder({
+  const ShortsScaffold({
     required this.createController,
     this.videoId,
     this.itemId,
@@ -35,10 +35,10 @@ class BaseShortPageBuilder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  BaseShortPageBuilderState createState() => BaseShortPageBuilderState();
+  ShortsScaffoldState createState() => ShortsScaffoldState();
 }
 
-class BaseShortPageBuilderState extends State<BaseShortPageBuilder> {
+class ShortsScaffoldState extends State<ShortsScaffold> {
   bool isInitial = false;
   // PreloadPageController? _pageController;
   PageController? _pageController;

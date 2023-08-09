@@ -1,3 +1,7 @@
+/**
+ * 影片資料的Provider, 必須在影片最上面
+ * 可以提供videoUrl, video, videoDetail三個值
+ */
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart' as rx;
@@ -8,7 +12,7 @@ import '../../controllers/video_player_controller.dart';
 import '../../models/vod.dart';
 import '../../utils/controller_tag_genarator.dart';
 
-class VideoScreenBuilder extends StatefulWidget {
+class VideoScreenProvider extends StatefulWidget {
   final int id;
   final String? name;
   final Widget Function({
@@ -17,7 +21,7 @@ class VideoScreenBuilder extends StatefulWidget {
     required Vod? videoDetail,
   }) child;
 
-  const VideoScreenBuilder({
+  const VideoScreenProvider({
     Key? key,
     required this.id,
     required this.child,
@@ -25,13 +29,12 @@ class VideoScreenBuilder extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  VideoScreenBuilderState createState() => VideoScreenBuilderState();
+  VideoScreenProviderState createState() => VideoScreenProviderState();
 }
 
-class VideoScreenBuilderState extends State<VideoScreenBuilder> {
+class VideoScreenProviderState extends State<VideoScreenProvider> {
   late final String controllerTag;
   late final VideoDetailController controller;
-  late final ObservableVideoPlayerController observableVideoPlayerController;
   late rx.BehaviorSubject<bool> isReadySubject;
 
   // state
@@ -79,22 +82,6 @@ class VideoScreenBuilderState extends State<VideoScreenBuilder> {
           });
         }
 
-        // 下一步Get訂閱和操作
-        if (!Get.isRegistered<ObservableVideoPlayerController>(
-          tag: videoUrl,
-        )) {
-          Get.lazyPut<ObservableVideoPlayerController>(
-            () => ObservableVideoPlayerController(
-              const uuid.Uuid().v4(),
-              videoUrl,
-            ),
-            tag: videoUrl,
-          );
-        }
-
-        observableVideoPlayerController =
-            Get.find<ObservableVideoPlayerController>(tag: videoUrl);
-
         if (videoDetail != null && video != null) {
           var playRecord = Vod(
             video.id,
@@ -115,8 +102,6 @@ class VideoScreenBuilderState extends State<VideoScreenBuilder> {
   void dispose() {
     controller.dispose();
     Get.delete<VideoDetailController>(tag: controllerTag);
-    observableVideoPlayerController.dispose();
-    Get.delete<ObservableVideoPlayerController>(tag: stateVideoUrl);
     isReadySubject.close();
     super.dispose();
   }

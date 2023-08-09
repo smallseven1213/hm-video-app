@@ -48,8 +48,8 @@ class ShortVideoBuilderState extends State<ShortVideoBuilder> {
 
   @override
   void dispose() {
-    controller.dispose();
-    Get.delete(tag: controllerTag);
+    // controller.dispose();
+    // Get.delete(tag: controllerTag);
     super.dispose();
   }
 

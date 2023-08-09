@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/widgets/base_short_page_builder.dart';
+import 'package:shared/modules/shorts/shorts_scaffold.dart';
 import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
@@ -32,7 +32,7 @@ class BaseShortPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseShortPageBuilder(
+    return ShortsScaffold(
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
