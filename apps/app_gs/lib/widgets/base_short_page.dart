@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/widgets/base_short_page_builder.dart';
+import 'package:shared/modules/short_video/short_video_consumer.dart';
+import 'package:shared/modules/short_video/short_video_provider.dart';
+import 'package:shared/modules/shorts/shorts_scaffold.dart';
+import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
@@ -32,7 +35,7 @@ class BaseShortPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseShortPageBuilder(
+    return ShortsScaffold(
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
@@ -51,27 +54,58 @@ class BaseShortPage extends StatelessWidget {
           required Vod shortData,
           required Function toggleFullScreen,
         }) {
-          if (style == 2) {
-            return HomeUseShortCard(
-              obsKey: obsKey,
-              index: index,
-              isActive: isActive,
-              id: shortData.id,
-              title: shortData.title,
-              shortData: shortData,
-              toggleFullScreen: toggleFullScreen,
-              hiddenBottomArea: true,
-            );
-          }
-          return GeneralShortCard(
-            obsKey: obsKey,
-            index: index,
-            isActive: isActive,
-            id: shortData.id,
-            title: shortData.title,
-            shortData: shortData,
-            toggleFullScreen: toggleFullScreen,
-            hiddenBottomArea: false,
+          return ShortVideoProvider(
+            vodId: shortData.id,
+            child: ShortVideoConsumer(
+                vodId: shortData.id,
+                child: ({
+                  required isLoading,
+                  required video,
+                  required videoDetail,
+                  required videoUrl,
+                }) {
+                  if (videoUrl == null ||
+                      video == null ||
+                      videoDetail == null) {
+                    return Container();
+                  }
+                  return VideoPlayerProvider(
+                    tag: obsKey,
+                    autoPlay: true,
+                    videoUrl: videoUrl!,
+                    video: video!,
+                    videoDetail: Vod(
+                      video.id,
+                      video.title,
+                      coverHorizontal: video.coverHorizontal!,
+                      coverVertical: video.coverVertical!,
+                      timeLength: video.timeLength!,
+                      tags: video.tags!,
+                      videoViewTimes: video.videoViewTimes!,
+                    ),
+                    child: ((isReady) => style == 2
+                        ? HomeUseShortCard(
+                            obsKey: obsKey,
+                            index: index,
+                            isActive: isActive,
+                            id: shortData.id,
+                            title: shortData.title,
+                            shortData: shortData,
+                            toggleFullScreen: toggleFullScreen,
+                            hiddenBottomArea: true,
+                          )
+                        : GeneralShortCard(
+                            obsKey: obsKey,
+                            index: index,
+                            isActive: isActive,
+                            id: shortData.id,
+                            title: shortData.title,
+                            shortData: shortData,
+                            toggleFullScreen: toggleFullScreen,
+                            hiddenBottomArea: false,
+                          )),
+                  );
+                }),
           );
         },
         createController: createController);

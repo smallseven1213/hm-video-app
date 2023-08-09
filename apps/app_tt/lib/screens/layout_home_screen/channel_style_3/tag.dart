@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -8,20 +9,32 @@ class TagWidget extends StatelessWidget {
   final String name;
   final bool outerFrame;
   final String? photoSid;
+  final int film;
+  final int channelId;
 
-  const TagWidget(
-      {super.key,
-      required this.id,
-      required this.name,
-      required this.outerFrame,
-      this.photoSid});
+  const TagWidget({
+    super.key,
+    required this.id,
+    required this.name,
+    required this.outerFrame,
+    required this.film,
+    required this.channelId,
+    this.photoSid,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        MyRouteDelegate.of(context)
-            .push(AppRoutes.tag, args: {'id': id, 'title': name});
+        MyRouteDelegate.of(context).push(
+          AppRoutes.videoByBlock,
+          args: {
+            'blockId': id,
+            'title': '#$name',
+            'channelId': channelId,
+            'film': film,
+          },
+        );
       },
       child: Container(
         height: 35,
@@ -35,7 +48,9 @@ class TagWidget extends StatelessWidget {
             painter: outerFrame == true ? _GradientBorderPainter() : null,
             child: Stack(
               children: [
-                photoSid != null ? SidImage(sid: photoSid!) : Container(),
+                photoSid != null && outerFrame == false
+                    ? SidImage(sid: photoSid!)
+                    : Container(),
                 outerFrame == false
                     ? Container(
                         width: 100, // 你可以根据需要设置宽度
@@ -70,24 +85,31 @@ class _GradientBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Rect rect = Offset.zero & size;
-    const Gradient gradient = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0xFF00b2ff),
-        Color(0xFFcceaff),
-        Color(0xFF0075ff),
-      ],
-    );
     final Paint paint = Paint()
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0
-      ..shader = gradient.createShader(rect);
+      ..strokeWidth = kIsWeb ? 2.0 : 1.0;
+
+    if (kIsWeb) {
+      paint.color = const Color(0xFF00b2ff);
+    } else {
+      const Gradient gradient = LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+          Color(0xFF00b2ff),
+          Color(0xFFcceaff),
+          Color(0xFF0075ff),
+        ],
+      );
+      paint.shader = gradient.createShader(rect);
+    }
+
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, const Radius.circular(10.0)),
       paint,
     );
   }
+  //
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;

@@ -26,7 +26,10 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size videoSize = controller.videoPlayerController.value.size;
+    if (controller.videoPlayerController == null) {
+      return Container();
+    }
+    Size videoSize = controller.videoPlayerController!.value.size;
     var aspectRatio =
         videoSize.width / (videoSize.height != 0 ? videoSize.height : 1);
 
@@ -47,13 +50,13 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
               VideoError(
                 videoCover: video.coverVertical!,
                 onTap: () {
-                  controller.videoPlayerController.play();
+                  controller.videoPlayerController?.play();
                 },
               ),
-            ] else if (controller
-                .videoPlayerController.value.isInitialized) ...[
+            ] else if (controller.videoPlayerController?.value.isInitialized ==
+                true) ...[
               if (kIsWeb) ...[
-                VideoPlayer(controller.videoPlayerController)
+                VideoPlayer(controller.videoPlayerController!)
               ] else ...[
                 videoSize.height / videoSize.width >= 1.4
                     ? SizedBox(
@@ -66,16 +69,16 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                               height: videoSize.height,
                               child: AspectRatio(
                                 aspectRatio: controller
-                                    .videoPlayerController.value.aspectRatio,
+                                    .videoPlayerController!.value.aspectRatio,
                                 child: VideoPlayer(
-                                    controller.videoPlayerController),
+                                    controller.videoPlayerController!),
                               )),
                         ),
                       )
                     : AspectRatio(
                         aspectRatio: aspectRatio,
                         child: VideoPlayer(
-                          controller.videoPlayerController,
+                          controller.videoPlayerController!,
                         ),
                       ),
               ],

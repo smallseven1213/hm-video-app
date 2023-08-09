@@ -32,7 +32,6 @@ class VideoState extends State<Video> {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('RENDER VIDEO ${widget.args['id']}');
     return VideoScreen(
       key: ValueKey(widget.args['id']),
       id: int.parse(widget.args['id'].toString()),
