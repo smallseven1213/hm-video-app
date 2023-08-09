@@ -11,13 +11,10 @@ class SearchVodController extends BaseVodInfinityScrollController {
   final int film;
 
   SearchVodController(
-      {required this.keyword,
-      required ScrollController scrollController,
-      required this.film,
-      bool loadDataOnInit = true})
+      {required this.keyword, required this.film, bool loadDataOnInit = true})
       : super(
-            loadDataOnInit: loadDataOnInit,
-            customScrollController: scrollController);
+          loadDataOnInit: loadDataOnInit,
+        );
 
   @override
   Future<InfinityVod> fetchData(int page) async {

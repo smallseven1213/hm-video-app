@@ -44,110 +44,104 @@ class SliverVodGrid extends StatefulWidget {
 class SliverVodGridState extends State<SliverVodGrid> {
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      int totalRows = (widget.videos.length / 2).ceil();
+    int totalRows = (widget.videos.length / 2).ceil();
 
-      return CustomScrollView(
-        physics: kIsWeb ? null : const BouncingScrollPhysics(),
-        controller: widget.customScrollController,
-        scrollBehavior:
-            ScrollConfiguration.of(context).copyWith(scrollbars: false),
-        slivers: [
-          ...?widget.headerExtends,
-          if (widget.isListEmpty)
-            const SliverToBoxAdapter(
-              child: NoDataWidget(),
-            ),
-          if (totalRows > 0)
-            SliverPadding(
-              padding: const EdgeInsets.all(8.0),
-              sliver: SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    int firstVideoIndex = index * 2;
-                    int secondVideoIndex = firstVideoIndex + 1;
+    return CustomScrollView(
+      physics: kIsWeb ? null : const BouncingScrollPhysics(),
+      controller: widget.customScrollController,
+      scrollBehavior:
+          ScrollConfiguration.of(context).copyWith(scrollbars: false),
+      slivers: [
+        ...?widget.headerExtends,
+        if (widget.isListEmpty)
+          const SliverToBoxAdapter(
+            child: NoDataWidget(),
+          ),
+        if (totalRows > 0)
+          SliverPadding(
+            padding: const EdgeInsets.all(8.0),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  int firstVideoIndex = index * 2;
+                  int secondVideoIndex = firstVideoIndex + 1;
 
-                    var firstVideo = widget.videos[firstVideoIndex];
-                    var secondVideo = secondVideoIndex < widget.videos.length
-                        ? widget.videos[secondVideoIndex]
-                        : null;
+                  var firstVideo = widget.videos[firstVideoIndex];
+                  var secondVideo = secondVideoIndex < widget.videos.length
+                      ? widget.videos[secondVideoIndex]
+                      : null;
 
-                    // logger.i('RENDER SLIVER VOD GRID');
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              child: VideoPreviewWidget(
-                                id: firstVideo.id,
-                                displayCoverVertical:
-                                    widget.displayCoverVertical ?? false,
-                                coverVertical: firstVideo.coverVertical!,
-                                coverHorizontal: firstVideo.coverHorizontal!,
-                                timeLength: firstVideo.timeLength!,
-                                tags: firstVideo.tags!,
-                                title: firstVideo.title,
-                                videoViewTimes: firstVideo.videoViewTimes!,
-                                videoCollectTimes:
-                                    firstVideo.videoCollectTimes!,
-                                displayVideoCollectTimes:
-                                    widget.displayVideoCollectTimes,
-                                displayVideoTimes: widget.displayVideoTimes,
-                                displayViewTimes: widget.displayViewTimes,
-                                onOverrideRedirectTap:
-                                    widget.onOverrideRedirectTap,
-                              ),
+                  // logger.i('RENDER SLIVER VOD GRID');
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: VideoPreviewWidget(
+                              id: firstVideo.id,
+                              displayCoverVertical:
+                                  widget.displayCoverVertical ?? false,
+                              coverVertical: firstVideo.coverVertical!,
+                              coverHorizontal: firstVideo.coverHorizontal!,
+                              timeLength: firstVideo.timeLength!,
+                              tags: firstVideo.tags!,
+                              title: firstVideo.title,
+                              videoViewTimes: firstVideo.videoViewTimes!,
+                              videoCollectTimes: firstVideo.videoCollectTimes!,
+                              displayVideoCollectTimes:
+                                  widget.displayVideoCollectTimes,
+                              displayVideoTimes: widget.displayVideoTimes,
+                              displayViewTimes: widget.displayViewTimes,
+                              onOverrideRedirectTap:
+                                  widget.onOverrideRedirectTap,
                             ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                                child: secondVideo != null
-                                    ? VideoPreviewWidget(
-                                        id: secondVideo.id,
-                                        displayCoverVertical:
-                                            widget.displayCoverVertical ??
-                                                false,
-                                        coverVertical:
-                                            secondVideo.coverVertical!,
-                                        coverHorizontal:
-                                            secondVideo.coverHorizontal!,
-                                        timeLength: secondVideo.timeLength!,
-                                        tags: secondVideo.tags!,
-                                        title: secondVideo.title,
-                                        videoViewTimes:
-                                            secondVideo.videoViewTimes!,
-                                        videoCollectTimes:
-                                            secondVideo.videoCollectTimes!,
-                                        displayVideoCollectTimes:
-                                            widget.displayVideoCollectTimes,
-                                        displayVideoTimes:
-                                            widget.displayVideoTimes,
-                                        displayViewTimes:
-                                            widget.displayViewTimes,
-                                        onOverrideRedirectTap:
-                                            widget.onOverrideRedirectTap,
-                                      )
-                                    : const SizedBox.shrink()),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                      ],
-                    );
-                  },
-                  childCount: totalRows,
-                ),
+                          ),
+                          const SizedBox(width: 8),
+                          Expanded(
+                              child: secondVideo != null
+                                  ? VideoPreviewWidget(
+                                      id: secondVideo.id,
+                                      displayCoverVertical:
+                                          widget.displayCoverVertical ?? false,
+                                      coverVertical: secondVideo.coverVertical!,
+                                      coverHorizontal:
+                                          secondVideo.coverHorizontal!,
+                                      timeLength: secondVideo.timeLength!,
+                                      tags: secondVideo.tags!,
+                                      title: secondVideo.title,
+                                      videoViewTimes:
+                                          secondVideo.videoViewTimes!,
+                                      videoCollectTimes:
+                                          secondVideo.videoCollectTimes!,
+                                      displayVideoCollectTimes:
+                                          widget.displayVideoCollectTimes,
+                                      displayVideoTimes:
+                                          widget.displayVideoTimes,
+                                      displayViewTimes: widget.displayViewTimes,
+                                      onOverrideRedirectTap:
+                                          widget.onOverrideRedirectTap,
+                                    )
+                                  : const SizedBox.shrink()),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                    ],
+                  );
+                },
+                childCount: totalRows,
               ),
             ),
-          // ignore: prefer_const_constructors
-          if (widget.displayLoading) SliverVideoPreviewSkeletonList(),
-          if (widget.displayNoMoreData)
-            SliverToBoxAdapter(
-              child: widget.noMoreWidget,
-            ),
-        ],
-      );
-    });
+          ),
+        // ignore: prefer_const_constructors
+        if (widget.displayLoading) SliverVideoPreviewSkeletonList(),
+        if (widget.displayNoMoreData)
+          SliverToBoxAdapter(
+            child: widget.noMoreWidget,
+          ),
+      ],
+    );
   }
 }
