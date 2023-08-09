@@ -1,4 +1,6 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class CustomBottomBarItem extends StatelessWidget {
@@ -44,7 +46,11 @@ class CustomBottomBarItem extends StatelessWidget {
               const SizedBox(height: 4),
               Text(
                 label,
-                style: const TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: isActive
+                      ? AppColors.colors[ColorKeys.menuActiveColor]
+                      : AppColors.colors[ColorKeys.menuColor],
+                ),
               ),
             ],
           ),

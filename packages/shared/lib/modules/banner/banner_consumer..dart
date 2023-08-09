@@ -27,7 +27,7 @@ class BannerConsumerState extends State<BannerConsumer> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var banners = bannerController.banners[BannerPosition.userCenter];
+      var banners = bannerController.banners[widget.position];
       if (banners == null || banners.isEmpty) {
         return const SizedBox.shrink();
       }

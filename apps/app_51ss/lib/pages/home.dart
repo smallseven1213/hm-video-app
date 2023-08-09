@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+
+import 'package:app_51ss/widgets/wave_loading.dart';
+
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
@@ -11,6 +14,7 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../screens/main_screen/index.dart';
+import '../screens/apps_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
@@ -31,9 +35,8 @@ final screens = {
   //       ),
   //     ),
   // HomeNavigatorPathes.game: () => const GameScreen(),
-  // HomeNavigatorPathes.apps: () => const AppsScreen(),
-  HomeNavigatorPathes.user: () =>
-      const Text('user', style: TextStyle(color: Colors.white)),
+  HomeNavigatorPathes.apps: () => const AppsScreen(),
+  // HomeNavigatorPathes.user: () => const UserScreen(),
 };
 
 class HomePage extends StatefulWidget {
@@ -61,8 +64,12 @@ class HomeState extends State<HomePage> {
     return MainNavigationScaffold(
         screens: screens,
         screenNotFoundWidget: const Center(
-          child: Text('screenNotFoundWidget',
-              style: TextStyle(color: Colors.white)),
+          child: WaveLoading(
+            color: Color.fromRGBO(255, 255, 255, 0.3),
+            duration: Duration(milliseconds: 1000),
+            size: 17,
+            itemCount: 3,
+          ),
         ),
         bottomNavigationBarWidget: (
             {required String activeKey,

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/layout_controller.dart';
 
+import 'package:app_51ss/widgets/wave_loading.dart';
+
 class HomeMainScreen extends StatelessWidget {
   final int layoutId;
   const HomeMainScreen({Key? key, required this.layoutId}) : super(key: key);
@@ -17,7 +19,12 @@ class HomeMainScreen extends StatelessWidget {
             if (controller.isLoading.value) {
               return const Scaffold(
                 body: Center(
-                  child: Text('WaveLoading'),
+                  child: WaveLoading(
+                    color: Color.fromRGBO(255, 255, 255, 0.3),
+                    duration: Duration(milliseconds: 1000),
+                    size: 17,
+                    itemCount: 3,
+                  ),
                 ),
               );
             }
