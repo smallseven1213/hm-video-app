@@ -5,7 +5,7 @@ import './routes/app_routes.dart'
     if (dart.library.html) './routes/app_routes_web.dart' as app_routes;
 import './routes/game_routes.dart' as game_routes;
 
-const env = String.fromEnvironment('ENV', defaultValue: 'dev');
+const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
 void main() async {
   final allRoutes = {

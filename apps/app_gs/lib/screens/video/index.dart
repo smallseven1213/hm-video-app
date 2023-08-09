@@ -1,4 +1,5 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
@@ -63,7 +64,7 @@ class VideoScreenState extends State<VideoScreen> {
             children: [
               VideoPlayerProvider(
                 tag: videoUrl,
-                autoPlay: true,
+                autoPlay: kIsWeb ? false : true,
                 videoUrl: videoUrl,
                 video: video!,
                 videoDetail: videoDetail!,

@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -71,8 +72,8 @@ class BaseShortPage extends StatelessWidget {
                   }
                   return VideoPlayerProvider(
                     tag: obsKey,
-                    autoPlay: true,
-                    videoUrl: videoUrl!,
+                    autoPlay: kIsWeb ? false : true,
+                    videoUrl: videoUrl,
                     video: video!,
                     videoDetail: Vod(
                       video.id,
