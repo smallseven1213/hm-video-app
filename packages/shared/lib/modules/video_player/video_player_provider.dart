@@ -45,7 +45,7 @@ class VideoPlayerProviderState extends State<VideoPlayerProvider> {
 
   @override
   void dispose() {
-    // observableVideoPlayerController.videoPlayerController.dispose();
+    observableVideoPlayerController.videoPlayerController?.dispose();
     // observableVideoPlayerController.dispose();
     // Get.delete<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
