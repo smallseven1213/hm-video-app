@@ -99,6 +99,7 @@ class SearchResultPageState extends State<SearchResultPage>
                   return false;
                 },
                 child: Obx(() => SliverVodGrid(
+                    film: 2,
                     isListEmpty: searchShortController.isListEmpty.value,
                     displayVideoCollectTimes: false,
                     videos: searchShortController.vodList.value,
@@ -112,28 +113,6 @@ class SearchResultPageState extends State<SearchResultPage>
                           args: {'itemId': 3, 'videoId': id});
                     })),
               ),
-              // Obx(() => SliverVodGrid(
-              //       isListEmpty: searchVodController.isListEmpty.value,
-              //       displayVideoCollectTimes: false,
-              //       videos: searchVodController.vodList,
-              //       displayNoMoreData:
-              //           searchVodController.displayNoMoreData.value,
-              //       displayLoading: searchVodController.displayLoading.value,
-              //       noMoreWidget: ListNoMore(),
-              //     )),
-              // Obx(() => SliverVodGrid(
-              //     isListEmpty: searchShortController.isListEmpty.value,
-              //     displayVideoCollectTimes: false,
-              //     videos: searchShortController.vodList,
-              //     displayNoMoreData:
-              //         searchShortController.displayNoMoreData.value,
-              //     displayLoading: searchShortController.displayLoading.value,
-              //     noMoreWidget: ListNoMore(),
-              //     displayCoverVertical: true,
-              //     onOverrideRedirectTap: (id) {
-              //       MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
-              //           args: {'itemId': 3, 'videoId': id});
-              //     })),
             ],
           ),
         ),
