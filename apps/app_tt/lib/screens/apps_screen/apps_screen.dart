@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/ad.dart';
 import 'package:shared/modules/apps/apps_provider.dart';
 
-import '../widgets/my_app_bar.dart';
-import '../widgets/wave_loading.dart';
+import '../../widgets/my_app_bar.dart';
+import '../../widgets/title_header.dart';
+import '../../widgets/wave_loading.dart';
+import 'banner.dart';
+import 'hot.dart';
+import 'popular.dart';
 
 class AppsScreen extends StatelessWidget {
   const AppsScreen({Key? key}) : super(key: key);
@@ -21,12 +25,12 @@ class AppsScreen extends StatelessWidget {
                   required bool isLoading}) =>
               CustomScrollView(
                 slivers: <Widget>[
-                  // const SliverToBoxAdapter(
-                  //   child: Padding(
-                  //     padding: EdgeInsets.symmetric(horizontal: 8),
-                  //     child: BannerWidget(),
-                  //   ),
-                  // ),
+                  const SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    sliver: SliverToBoxAdapter(
+                      child: BannerWidget(),
+                    ),
+                  ),
                   if (isLoading)
                     const SliverToBoxAdapter(
                       child: Padding(
@@ -38,23 +42,29 @@ class AppsScreen extends StatelessWidget {
                     const SliverToBoxAdapter(
                       child: SizedBox(height: 20),
                     ),
-                    // const SliverToBoxAdapter(
-                    //   child: Header(text: '熱門推薦'),
-                    // ),
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: TitleHeader(text: '熱門推薦'),
+                      ),
+                    ),
                     const SliverToBoxAdapter(
                       child: SizedBox(height: 20),
                     ),
-                    // HotWidget(items: hotAds),
+                    HotWidget(items: hotAds),
                     const SliverToBoxAdapter(
                       child: SizedBox(height: 20),
                     ),
-                    // const SliverToBoxAdapter(
-                    //   child: Header(text: '大家都在玩'),
-                    // ),
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: TitleHeader(text: '大家都在玩'),
+                      ),
+                    ),
                     const SliverToBoxAdapter(
                       child: SizedBox(height: 20),
                     ),
-                    // PopularWidget(items: popularAds),
+                    PopularWidget(items: popularAds),
                     const SliverToBoxAdapter(
                       child: SizedBox(height: 90),
                     )

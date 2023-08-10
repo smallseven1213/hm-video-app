@@ -12,7 +12,7 @@ import '../config/layouts.dart';
 import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
 import '../screens/layout_user_screen.dart';
-import '../screens/apps_screen.dart';
+import '../screens/apps_screen/apps_screen.dart';
 import '../widgets/layout_tab_item.dart';
 
 UserApi userApi = UserApi();
