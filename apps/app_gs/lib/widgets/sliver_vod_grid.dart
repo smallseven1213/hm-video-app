@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SliverVodGrid extends StatefulWidget {
+  final int? film;
   final List videos;
   final bool displayNoMoreData;
   final bool isListEmpty;
@@ -22,6 +23,7 @@ class SliverVodGrid extends StatefulWidget {
 
   const SliverVodGrid({
     Key? key,
+    this.film = 1,
     required this.videos,
     required this.displayNoMoreData,
     required this.isListEmpty,
@@ -82,6 +84,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
                           Expanded(
                             child: VideoPreviewWidget(
                               id: firstVideo.id,
+                              film: widget.film,
                               displayCoverVertical:
                                   widget.displayCoverVertical ?? false,
                               coverVertical: firstVideo.coverVertical!,
