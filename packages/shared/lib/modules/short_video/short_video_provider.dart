@@ -1,11 +1,10 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
+import 'package:rxdart/rxdart.dart' as rx;
+import 'package:shared/models/index.dart';
+import '../../controllers/play_record_controller.dart';
 import '../../controllers/short_video_detail_controller.dart';
-import '../../models/short_video_detail.dart';
-import '../../models/vod.dart';
 import '../../utils/controller_tag_genarator.dart';
 
 final logger = Logger();
@@ -36,27 +35,28 @@ class ShortVideoProviderState extends State<ShortVideoProvider> {
 
     controllerTag = genaratorShortVideoDetailTag(widget.vodId.toString());
 
-    Get.put(ShortVideoDetailController(widget.vodId), tag: controllerTag);
+    controller =
+        Get.put(ShortVideoDetailController(widget.vodId), tag: controllerTag);
 
-    // if (widget.supportedPlayRecord == true) {
-    //   var videoVal = videoDetailController.video.value;
-    //   var playRecord = Vod(
-    //     videoVal!.id,
-    //     videoVal.title,
-    //     coverHorizontal: videoVal.coverHorizontal!,
-    //     coverVertical: videoVal.coverVertical!,
-    //     timeLength: videoVal.timeLength!,
-    //     tags: videoVal.tags!,
-    //     videoViewTimes: videoVal.videoViewTimes!,
-    //   );
-    //   Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
-    // }
+    controller.video.stream.listen((value) {
+      if (value != null) {
+        var playRecord = Vod(
+          value!.id,
+          value.title,
+          coverHorizontal: value.coverHorizontal!,
+          coverVertical: value.coverVertical!,
+          timeLength: value.timeLength!,
+          tags: value.tags!,
+        );
+        Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
+      }
+    });
   }
 
   @override
   void dispose() {
-    // controller.dispose();
-    // Get.delete(tag: controllerTag);
+    controller.dispose();
+    Get.delete(tag: controllerTag);
     super.dispose();
   }
 
