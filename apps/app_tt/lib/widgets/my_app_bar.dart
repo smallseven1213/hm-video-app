@@ -25,6 +25,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      elevation: 0,
       centerTitle: true,
       leading: Navigator.canPop(context)
           ? GestureDetector(
@@ -45,9 +46,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: titleWidget ??
           Text(
             title!,
-            style: const TextStyle(
-              fontSize: 15,
-            ),
+            style: const TextStyle(fontSize: 15, color: Colors.black),
           ),
       bottom: bottom,
       actions: actions, // 將actions添加到AppBar

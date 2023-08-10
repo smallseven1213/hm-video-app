@@ -6,7 +6,7 @@ class AppColors {
     ColorKeys.primary: Color(0xffFFC700),
     ColorKeys.accent: Color(0x00ffffff),
     ColorKeys.background: Color(0xff001A40),
-    ColorKeys.textPrimary: Color(0xffFFC700),
+    ColorKeys.textPrimary: Color(0xff161823),
     ColorKeys.textSecondary: Color(0xffffffff),
     ColorKeys.buttonBgPrimary: Colors.white,
     ColorKeys.buttonBgSecondary: Colors.white,
