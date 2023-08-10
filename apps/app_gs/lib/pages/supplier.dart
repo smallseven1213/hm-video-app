@@ -126,7 +126,7 @@ class _SupplierPageState extends State<SupplierPage>
                   },
                   child: Obx(() => SliverVodGrid(
                       key: const Key('supplier_short'),
-                      videos: supplierVideoController.vodList,
+                      videos: supplierVideoController.vodList.value,
                       displayLoading:
                           supplierVideoController.displayLoading.value,
                       displayNoMoreData:
