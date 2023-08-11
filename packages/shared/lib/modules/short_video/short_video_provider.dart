@@ -41,7 +41,7 @@ class ShortVideoProviderState extends State<ShortVideoProvider> {
     controller.video.stream.listen((value) {
       if (value != null) {
         var playRecord = Vod(
-          value!.id,
+          value.id,
           value.title,
           coverHorizontal: value.coverHorizontal!,
           coverVertical: value.coverVertical!,

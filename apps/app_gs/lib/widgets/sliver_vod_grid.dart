@@ -107,6 +107,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
                               child: secondVideo != null
                                   ? VideoPreviewWidget(
                                       id: secondVideo.id,
+                                      film: widget.film,
                                       displayCoverVertical:
                                           widget.displayCoverVertical ?? false,
                                       coverVertical: secondVideo.coverVertical!,
