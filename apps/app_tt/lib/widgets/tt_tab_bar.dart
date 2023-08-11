@@ -29,7 +29,7 @@ class TTTabBar extends StatelessWidget implements PreferredSizeWidget {
             labelStyle: const TextStyle(fontSize: 14),
             labelPadding:
                 const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            unselectedLabelColor: const Color(0xffb2bac5),
+            unselectedLabelColor: const Color(0xff73747b),
             indicatorSize: TabBarIndicatorSize.label,
             indicator: const UnderlineTabIndicator(
               borderSide: BorderSide(

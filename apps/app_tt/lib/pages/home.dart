@@ -11,7 +11,7 @@ import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 import '../config/layouts.dart';
 import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
-import '../screens/layout_user_screen.dart';
+import '../screens/layout_user_screen/layout_user_screen.dart';
 import '../screens/apps_screen/apps_screen.dart';
 import '../widgets/layout_tab_item.dart';
 
@@ -33,7 +33,7 @@ final screens = {
       ),
   HomeNavigatorPathes.game: () => const LayoutGameScreen(),
   HomeNavigatorPathes.apps: () => const AppsScreen(),
-  HomeNavigatorPathes.user: () => const LayoutUserScreen()
+  HomeNavigatorPathes.user: () => LayoutUserScreen()
 };
 
 class HomePage extends StatefulWidget {

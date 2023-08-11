@@ -25,21 +25,16 @@ class ActorPage extends StatefulWidget {
 class ActorPageState extends State<ActorPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late ScrollController _parentScrollController;
-
-  int tabIndex = 0;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
-    _parentScrollController = ScrollController();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _parentScrollController.dispose();
     super.dispose();
   }
 
