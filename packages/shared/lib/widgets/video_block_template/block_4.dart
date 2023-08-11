@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
 
 import '../video_block_grid_view.dart';
+import '../video_block_grid_view_row.dart';
 
 final logger = Logger();
 
@@ -61,30 +62,30 @@ class Block4Widget extends StatelessWidget {
       sliver: SliverList(
         delegate: SliverChildBuilderDelegate(
           (BuildContext context, int index) {
-            if (index < result.length) {
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Container(
-                  child: result[index][0].dataType == VideoType.areaAd.index
-                      ? buildBanner(result[index][0])
-                      : VideoBlockGridView(
-                          blockId: block.id ?? 0,
-                          videos: result[index],
-                          gridLength: 3,
-                          imageRatio: BlockImageRatio.block4.ratio,
-                          isEmbeddedAds: block.isEmbeddedAds ?? false,
-                          displayCoverVertical: true,
-                          hasInfoView: false,
-                          film: film,
-                          displayVideoCollectTimes: false,
-                          displayVideoTimes: false,
-                          displayViewTimes: false,
-                          buildVideoPreview: buildVideoPreview),
-                ),
-              );
-            } else {
+            if (index == result.length) {
               return buildFooter ?? const SizedBox.shrink();
             }
+            return SizedBox(
+              child: result[index][0].dataType == VideoType.areaAd.index
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 8.0),
+                      child: buildBanner(result[index][0]),
+                    )
+                  : VideoBlockGridViewRow(
+                      videoData: result[index],
+                      imageRatio: BlockImageRatio.block4.ratio,
+                      isEmbeddedAds: block.isEmbeddedAds ?? false,
+                      gridLength: 3,
+                      displayCoverVertical: true,
+                      blockId: block.id ?? 0,
+                      film: film,
+                      displayVideoCollectTimes: false,
+                      displayVideoTimes: false,
+                      displayViewTimes: false,
+                      hasInfoView: false,
+                      buildVideoPreview: buildVideoPreview,
+                    ),
+            );
           },
           childCount: result.length + 1,
         ),
