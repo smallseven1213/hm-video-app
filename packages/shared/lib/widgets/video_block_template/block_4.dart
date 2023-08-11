@@ -3,49 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
 
+import '../video_block_grid_view.dart';
+
 final logger = Logger();
 
-List<List<Vod>> organizeRowData(List videos, Blocks block) {
-  List<List<Vod>> result = [];
-  int blockQuantity = block.quantity ?? 0;
-  int videoLength =
-      videos.length > blockQuantity ? blockQuantity : videos.length;
+List<List<Vod>> organizeRowData(List videos) {
+  List<List<Vod>> resultArray = [];
+  List<Vod> tempArray = [];
 
-  for (int i = 0; i < videoLength;) {
-    if (i != 0 && i == videos.length - 1) break;
+  for (int i = 0; i < videos.length; i++) {
+    tempArray.add(videos[i]);
     bool hasAreaAd = videos[i].dataType == VideoType.areaAd.index;
-    try {
-      if (hasAreaAd) {
-        result.add([videos[i]]);
-        i++;
-      } else if (i + 2 < videos.length) {
-        // 影片列表
-        result.add([videos[i], videos[i + 1], videos[i + 2]]);
-        i += 3;
-        // logger.i('Block1Widget 有3筆: $i');
-      } else if (i + 1 < videos.length) {
-        // 影片列表
-        result.add([videos[i], videos[i + 1], Vod(0, '')]);
-        i += 2;
-        // logger.i('Block1Widget 有2筆: $i');
-      } else {
-        // 落單的一筆
-        if (i < videos.length) {
-          result.add([videos[i], Vod(0, ''), Vod(0, '')]);
-          i++;
-          // logger.i('Block1Widget 落單的一筆: $i');
-        } else {
-          break;
-        }
-      }
-    } catch (e) {
-      logger.i('err: $e');
+
+    if (hasAreaAd) {
+      resultArray.add(tempArray);
+      tempArray = [];
+    } else if (tempArray.length == 3) {
+      resultArray.add(tempArray);
+      tempArray = [];
     }
   }
-  return result;
+
+  if (tempArray.isNotEmpty) {
+    resultArray.add(tempArray);
+  }
+
+  return resultArray;
 }
 
-// 六小
+// 六直小
 class Block4Widget extends StatelessWidget {
   final Blocks block;
   final Function updateBlock;
@@ -69,8 +55,7 @@ class Block4Widget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Vod> videos = block.videos?.data ?? [];
-    List<List<Vod>> result = organizeRowData(videos, block);
-
+    List<List<Vod>> result = organizeRowData(videos);
     return SliverPadding(
       padding: const EdgeInsets.all(8.0),
       sliver: SliverList(
@@ -82,7 +67,19 @@ class Block4Widget extends StatelessWidget {
                 child: Container(
                   child: result[index][0].dataType == VideoType.areaAd.index
                       ? buildBanner(result[index][0])
-                      : buildVideoPreview(result[index][0]),
+                      : VideoBlockGridView(
+                          blockId: block.id ?? 0,
+                          videos: result[index],
+                          gridLength: 3,
+                          imageRatio: BlockImageRatio.block4.ratio,
+                          isEmbeddedAds: block.isEmbeddedAds ?? false,
+                          displayCoverVertical: true,
+                          hasInfoView: false,
+                          film: film,
+                          displayVideoCollectTimes: false,
+                          displayVideoTimes: false,
+                          displayViewTimes: false,
+                          buildVideoPreview: buildVideoPreview),
                 ),
               );
             } else {

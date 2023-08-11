@@ -42,6 +42,8 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
       displayViewTimes: film == 1,
       displayVideoCollectTimes: film == 2,
       displayCoverVertical: film == 2,
+      film: film,
+      blockId: block.id,
     );
   }
 
