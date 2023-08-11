@@ -5,8 +5,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/apis/ads_api.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/modules/apps/apps_item_button.dart';
 import 'package:shared/widgets/sid_image.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:app_51ss/config/colors.dart';
 
@@ -43,22 +43,9 @@ class HotWidget extends StatelessWidget {
                       if (itemIndex < end) {
                         // 如果當前索引在資料範圍內，則顯示相應的物件
                         return Expanded(
-                          child: GestureDetector(
-                            onTap: () {
-                              dynamic idDynamic = items[itemIndex].id;
-                              int id;
-                              if (idDynamic is String) {
-                                id = int.parse(idDynamic);
-                              } else if (idDynamic is int) {
-                                id = idDynamic;
-                              } else {
-                                throw 'Invalid data type for id';
-                              }
-                              AdsApi().addBannerClickRecord(id);
-                              String urlString = items[itemIndex].url;
-                              Uri url = Uri.parse(urlString);
-                              launchUrl(url);
-                            },
+                          child: AppsItemButton(
+                            id: items[itemIndex].id,
+                            url: items[itemIndex].url,
                             child: Column(
                               mainAxisAlignment:
                                   MainAxisAlignment.center, // 物件置中

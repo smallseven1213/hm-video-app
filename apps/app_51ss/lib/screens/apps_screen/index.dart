@@ -34,7 +34,7 @@ class AppsScreen extends StatelessWidget {
                 slivers: <Widget>[
                   const SliverToBoxAdapter(
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      padding: EdgeInsets.all(8),
                       child: BannerWidget(),
                     ),
                   ),
