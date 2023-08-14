@@ -10,6 +10,7 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/wave_loading.dart';
 import 'nested_tab_bar_view/index.dart';
+import 'video_player_area/loading.dart';
 
 final logger = Logger();
 
@@ -73,12 +74,8 @@ class VideoScreenState extends State<VideoScreen> {
                   aspectRatio: 16 / 9,
                   child: Container(
                     color: Colors.black,
-                    child: const WaveLoading(
-                      color: Color.fromRGBO(255, 255, 255, 0.3),
-                      duration: Duration(milliseconds: 1000),
-                      size: 17,
-                      itemCount: 3,
-                    ),
+                    child: VideoLoading(
+                        coverHorizontal: video.coverHorizontal ?? ''),
                   ),
                 ),
                 child: (isReady) {
