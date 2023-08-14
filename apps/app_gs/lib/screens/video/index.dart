@@ -53,12 +53,7 @@ class VideoScreenState extends State<VideoScreen> {
           required Vod? video,
           required Vod? videoDetail}) {
         if (videoUrl == null) {
-          return const WaveLoading(
-            color: Color.fromRGBO(255, 255, 255, 0.3),
-            duration: Duration(milliseconds: 1000),
-            size: 17,
-            itemCount: 3,
-          );
+          return const WaveLoading();
         }
 
         return SafeArea(
@@ -89,8 +84,8 @@ class VideoScreenState extends State<VideoScreen> {
               Expanded(
                 child: NestedTabBarView(
                   videoUrl: videoUrl,
-                  videoBase: video!,
-                  videoDetail: videoDetail!,
+                  videoBase: video,
+                  videoDetail: videoDetail,
                 ),
               )
             ],
