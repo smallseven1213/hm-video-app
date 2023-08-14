@@ -47,7 +47,7 @@ class Block7WidgetState extends State<Block7Widget> {
     List<Vod> videos = widget.block.videos?.data ?? [];
     return SliverToBoxAdapter(
       child: Container(
-        height: 310,
+        height: 290,
         margin: const EdgeInsets.symmetric(horizontal: 8),
         child: Stack(
           children: [
@@ -57,7 +57,7 @@ class Block7WidgetState extends State<Block7Widget> {
                     borderRadius: BorderRadius.circular(10),
                     child: SizedBox(
                       width: double.infinity,
-                      height: 310,
+                      height: 290,
                       child: FractionallySizedBox(
                         alignment: Alignment.centerLeft,
                         widthFactor: 2.0,
@@ -96,7 +96,7 @@ class Block7WidgetState extends State<Block7Widget> {
                   autoPlay: false,
                   enlargeCenterPage: true,
                   viewportFraction: 0.45,
-                  height: 310,
+                  height: 290,
                   initialPage: 2,
                   onPageChanged: (index, reason) {
                     setState(() {

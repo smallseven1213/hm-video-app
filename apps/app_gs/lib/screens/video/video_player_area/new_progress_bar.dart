@@ -6,7 +6,8 @@ class NewProgressBar extends StatefulWidget {
   final double videoDuration; // Total video duration in seconds
   final Function(double) onDragUpdate; // Callback when slider is dragged
 
-  NewProgressBar({
+  const NewProgressBar({
+    super.key,
     required this.test1,
     required this.currentProgress,
     required this.videoDuration,
@@ -14,10 +15,10 @@ class NewProgressBar extends StatefulWidget {
   });
 
   @override
-  _ProgressBarState createState() => _ProgressBarState();
+  ProgressBarState createState() => ProgressBarState();
 }
 
-class _ProgressBarState extends State<NewProgressBar> {
+class ProgressBarState extends State<NewProgressBar> {
   double _sliderValue = 0.0;
 
   @override

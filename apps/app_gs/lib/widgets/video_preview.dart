@@ -137,7 +137,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
   Widget build(BuildContext context) {
     if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
       return VideoEmbeddedAdWidget(
-        imageRatio: imageRatio ?? 374 / 198,
+        imageRatio: imageRatio ??
+            (displayCoverVertical == true ? 119 / 179 : 374 / 198),
         detail: detail!,
         displayCoverVertical: displayCoverVertical,
       );

@@ -1,7 +1,6 @@
 // FilterBar is a statefull widget that is used to display the filter bar
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 
@@ -32,10 +31,6 @@ class FilterBarState extends State<FilterBar> {
   Widget build(BuildContext context) {
     return Obx(
       () {
-        if (filterScreenController.showTabBar.value &&
-            !filterScreenController.selectedBarOpen.value) {
-          return const SizedBox();
-        }
         return GestureDetector(
           onTap: () {
             filterScreenController.handleOption(

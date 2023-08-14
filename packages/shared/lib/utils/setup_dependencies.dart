@@ -34,7 +34,7 @@ void setupDependencies() {
   Get.lazyPut<AppsController>(() => AppsController());
   Get.lazyPut<UserController>(() => UserController());
   Get.lazyPut<UserNavigatorController>(() => UserNavigatorController());
-  Get.lazyPut<BottonNavigatorController>(() => BottonNavigatorController());
+  Get.lazyPut<BottomNavigatorController>(() => BottomNavigatorController());
   Get.lazyPut<BannerController>(() => BannerController());
   Get.lazyPut<PlayRecordController>(() => PlayRecordController(tag: 'vod'),
       tag: 'vod');

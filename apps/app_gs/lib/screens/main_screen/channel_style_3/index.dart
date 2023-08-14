@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shared/widgets/channe_provider.dart';
-import 'package:shared/widgets/display_layout_tab_search.dart';
+import 'package:shared/modules/channel/channe_provider.dart';
+import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
+
 import 'main.dart';
 
 class ChannelStyle3 extends StatelessWidget {
@@ -12,7 +13,7 @@ class ChannelStyle3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DisplayLayoutTabSearch(
+    return DisplayLayoutTabSearchConsumer(
       layoutId: layoutId,
       child: ({required bool displaySearchBar}) => Padding(
         padding: EdgeInsets.only(

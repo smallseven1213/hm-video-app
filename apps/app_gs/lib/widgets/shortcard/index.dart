@@ -1,18 +1,14 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
-import 'package:shared/controllers/play_record_controller.dart';
-import 'package:shared/controllers/short_video_detail_controller.dart';
-import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/modules/short_video/short_video_consumer.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
-import '../wave_loading.dart';
 import 'short_card_info.dart';
 
 class ShortCard extends StatefulWidget {
@@ -25,7 +21,6 @@ class ShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
   final Function toggleFullScreen;
-  final bool? hiddenBottomArea;
 
   const ShortCard({
     Key? key,
@@ -39,7 +34,6 @@ class ShortCard extends StatefulWidget {
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
-    this.hiddenBottomArea = false,
   }) : super(key: key);
 
   @override
@@ -47,8 +41,6 @@ class ShortCard extends StatefulWidget {
 }
 
 class ShortCardState extends State<ShortCard> {
-  late ShortVideoDetailController videoDetailController;
-  late ObservableVideoPlayerController obsVideoPlayerController;
   double trackHeight = 2.0;
   double startHorizontalDragX = 0.0;
   final PageViewIndexController pageviewIndexController =
@@ -57,179 +49,123 @@ class ShortCardState extends State<ShortCard> {
   bool isDragging = false;
 
   @override
-  void initState() {
-    super.initState();
-
-    videoDetailController = Get.find<ShortVideoDetailController>(
-        tag: genaratorShortVideoDetailTag(widget.id.toString()));
-
-    if (widget.supportedPlayRecord == true) {
-      var videoVal = videoDetailController.video.value;
-      var playRecord = Vod(
-        videoVal!.id,
-        videoVal.title,
-        coverHorizontal: videoVal.coverHorizontal!,
-        coverVertical: videoVal.coverVertical!,
-        timeLength: videoVal.timeLength!,
-        tags: videoVal.tags!,
-        videoViewTimes: videoVal.videoViewTimes!,
-      );
-      Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
-    }
-
-    obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.obsKey);
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (kIsWeb) {
-      } else {
-        obsVideoPlayerController.play();
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    obsVideoPlayerController.pause();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
+    return VideoPlayerConsumer(
+      tag: widget.obsKey,
+      child: (videoPlayerInfo) {
+        if (videoPlayerInfo.videoPlayerController == null) {
+          return Container();
+        }
+        if (pageviewIndexController.isFullscreen.value == true) {
+          Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
+          var aspectRatio = videoSize.width /
+              (videoSize.height != 0.0 ? videoSize.height : 1);
 
-    return Obx(() {
-      var isLoading = videoDetailController.isLoading.value;
-      var video = videoDetailController.video.value;
-      var videoDetail = videoDetailController.videoDetail.value;
-      var videoUrl = videoDetailController.videoUrl.value;
-
-      if (pageviewIndexController.isFullscreen.value == true && video != null) {
-        Size videoSize =
-            obsVideoPlayerController.videoPlayerController.value.size;
-        var aspectRatio =
-            videoSize.width / (videoSize.height != 0.0 ? videoSize.height : 1);
-
-        return Stack(
-          children: [
-            if (obsVideoPlayerController.isReady.value &&
-                !isLoading &&
-                videoUrl.isNotEmpty)
+          return Stack(
+            children: [
               Center(
                 child: AspectRatio(
                   aspectRatio: aspectRatio,
                   child: VideoPlayer(
-                    obsVideoPlayerController.videoPlayerController,
+                    videoPlayerInfo.videoPlayerController!,
                   ),
                 ),
               ),
-            FullScreenControls(
-              videoUrl: videoUrl,
-              isFullscreen: pageviewIndexController.isFullscreen.value,
-              toggleFullscreen: () {
-                widget.toggleFullScreen();
-              },
-              ovpController: obsVideoPlayerController,
-            ),
-          ],
-        );
-      }
-      return Container(
-        color: Colors.black,
-        child: Stack(
-          children: [
-            const WaveLoading(
-              color: Color.fromRGBO(255, 255, 255, 0.3),
-              duration: Duration(milliseconds: 1000),
-              size: 17,
-              itemCount: 3,
-            ),
-            SizedBox(
-              height: screen.size.height - 76 - screen.padding.bottom,
-              width: double.infinity,
-              child: Stack(
-                children: [
-                  if (obsVideoPlayerController.isReady.value &&
-                      !isLoading &&
-                      videoUrl.isNotEmpty &&
-                      video != null)
-                    VideoPlayerDisplayWidget(
-                      controller: obsVideoPlayerController,
-                      video: video,
-                      allowFullsreen: false,
-                      toggleFullscreen: () {
-                        widget.toggleFullScreen();
-                      },
-                    ),
-                  if (videoDetail != null)
-                    ShortCardInfo(
-                      obsKey: widget.obsKey,
-                      data: videoDetail,
-                      title: widget.title,
-                      videoUrl: videoUrl,
-                    ),
-                ],
+              FullScreenControls(
+                isFullscreen: pageviewIndexController.isFullscreen.value,
+                toggleFullscreen: () {
+                  widget.toggleFullScreen();
+                },
+                videoPlayerInfo: videoPlayerInfo,
+                ovpController: videoPlayerInfo.observableVideoPlayerController,
               ),
-            ),
-            Positioned(
-              bottom: widget.hiddenBottomArea == true
-                  ? -16
-                  : 60 + screen.padding.bottom,
-              left: 0,
-              right: 0,
-              child: Listener(
-                onPointerDown: (details) {
-                  setState(() {
-                    isDragging = true;
-                  });
-                },
-                onPointerUp: (details) {
-                  setState(() {
-                    isDragging = false;
-                  });
-                },
-                child: RawGestureDetector(
-                  gestures: <Type, GestureRecognizerFactory>{
-                    HorizontalDragGestureRecognizer:
-                        GestureRecognizerFactoryWithHandlers<
-                            HorizontalDragGestureRecognizer>(
-                      () => HorizontalDragGestureRecognizer(),
-                      (HorizontalDragGestureRecognizer instance) {
-                        instance
-                          ..onStart = (DragStartDetails details) {
-                            // 可以处理拖动开始的事件
-                          }
-                          ..onUpdate = (DragUpdateDetails details) {
-                            // 可以处理拖动更新的事件
-                          }
-                          ..onEnd = (DragEndDetails details) {
-                            // 可以处理拖动结束的事件
-                          };
-                      },
-                    ),
+            ],
+          );
+        }
+        return Container(
+          color: Colors.black,
+          child: Stack(
+            children: [
+              SizedBox(
+                height: screen.size.height - 76 - screen.padding.bottom,
+                width: double.infinity,
+                child: ShortVideoConsumer(
+                  vodId: widget.id,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      VideoPlayerDisplayWidget(
+                    controller: videoPlayerInfo.observableVideoPlayerController,
+                    video: video!,
+                    allowFullsreen: false,
+                    toggleFullscreen: () {
+                      widget.toggleFullScreen();
+                    },
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: -16,
+                left: 0,
+                right: 0,
+                child: Listener(
+                  onPointerDown: (details) {
+                    setState(() {
+                      isDragging = true;
+                    });
                   },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 300),
-                    height: isDragging ? 40 : 35,
-                    child: VideoProgressIndicator(
-                      obsVideoPlayerController.videoPlayerController,
-                      allowScrubbing: true,
-                      padding: const EdgeInsets.symmetric(vertical: 16.0),
-                      colors: VideoProgressColors(
-                        playedColor: const Color(0xffFFC700),
-                        bufferedColor: Colors.grey,
-                        backgroundColor: Colors.white.withOpacity(0.3),
+                  onPointerUp: (details) {
+                    setState(() {
+                      isDragging = false;
+                    });
+                  },
+                  child: RawGestureDetector(
+                    gestures: <Type, GestureRecognizerFactory>{
+                      HorizontalDragGestureRecognizer:
+                          GestureRecognizerFactoryWithHandlers<
+                              HorizontalDragGestureRecognizer>(
+                        () => HorizontalDragGestureRecognizer(),
+                        (HorizontalDragGestureRecognizer instance) {
+                          instance
+                            ..onStart = (DragStartDetails details) {
+                              // 可以处理拖动开始的事件
+                            }
+                            ..onUpdate = (DragUpdateDetails details) {
+                              // 可以处理拖动更新的事件
+                            }
+                            ..onEnd = (DragEndDetails details) {
+                              // 可以处理拖动结束的事件
+                            };
+                        },
+                      ),
+                    },
+                    child: AnimatedContainer(
+                      duration: const Duration(milliseconds: 300),
+                      height: isDragging ? 40 : 35,
+                      child: VideoProgressIndicator(
+                        videoPlayerInfo.videoPlayerController!,
+                        allowScrubbing: true,
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        colors: VideoProgressColors(
+                          playedColor: const Color(0xffFFC700),
+                          bufferedColor: Colors.grey,
+                          backgroundColor: Colors.white.withOpacity(0.3),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            const FloatPageBackButton()
-          ],
-        ),
-      );
-    });
+              const FloatPageBackButton()
+            ],
+          ),
+        );
+      },
+    );
   }
 }

@@ -9,8 +9,8 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
-import 'package:shared/widgets/channel_layout_builder.dart';
-import 'package:shared/widgets/home_builder.dart';
+import 'package:shared/modules/main_layout/main_layout_builder.dart';
+import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../config/layouts.dart';
 import '../screens/apps_screen/index.dart';
@@ -22,14 +22,14 @@ import '../widgets/custom_bottom_bar_item.dart';
 final logger = Logger();
 UserApi userApi = UserApi();
 final screens = {
-  HomeNavigatorPathes.layout1: () => ChannelLayoutBuilder(
+  HomeNavigatorPathes.layout1: () => MainLayoutBuilder(
         key: Key('layout${layouts[0]}'),
         layoutId: layouts[0],
         child: HomeMainScreen(
           layoutId: layouts[0],
         ),
       ),
-  HomeNavigatorPathes.layout2: () => ChannelLayoutBuilder(
+  HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
         key: Key('layout${layouts[1]}'),
         layoutId: layouts[1],
         child: HomeMainScreen(
@@ -46,21 +46,24 @@ class HomePage extends StatefulWidget {
   HomePage({Key? key, this.defaultScreenKey = HomeNavigatorPathes.layout1})
       : super(key: key);
 
-  final bottomNavigatorController = Get.find<BottonNavigatorController>();
+  final bottomNavigatorController = Get.find<BottomNavigatorController>();
   @override
   HomeState createState() => HomeState();
 }
 
 class HomeState extends State<HomePage> {
   @override
-  Widget build(BuildContext context) {
-    return HomeBuilder(
-        screens: screens,
-        doOnInitState: () {
-          Get.put(GameStartupController());
+  void initState() {
+    super.initState();
+    Get.put(GameStartupController());
 
-          userApi.writeUserEnterHallRecord();
-        },
+    userApi.writeUserEnterHallRecord();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MainNavigationScaffold(
+        screens: screens,
         screenNotFoundWidget: const Center(
           child: WaveLoading(
             color: Color.fromRGBO(255, 255, 255, 0.3),

@@ -187,17 +187,16 @@ class SliverBlockWidget extends StatelessWidget {
                     var data = adWindowController
                         .data.value.channelBanners[bannerIndex];
 
-                    return ChannelAreaBanner(
-                        image: BannerPhoto.fromJson({
-                      'id': data.id,
-                      'url': data.url,
-                      'photoSid': data.photoSid,
-                      'isAutoClose': false,
-                    }));
+                    return Padding(
+                        padding: const EdgeInsets.only(bottom: 8.0),
+                        child: ChannelAreaBanner(
+                            image: BannerPhoto.fromJson({
+                          'id': data.id,
+                          'url': data.url,
+                          'photoSid': data.photoSid,
+                          'isAutoClose': false,
+                        })));
                   }),
-                const SizedBox(
-                  height: 10,
-                ),
               ],
             );
           },

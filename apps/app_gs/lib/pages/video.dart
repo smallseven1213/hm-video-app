@@ -20,7 +20,7 @@ class VideoState extends State<Video> {
   @override
   void initState() {
     super.initState();
-    userApi.addPlayHistory(widget.args['id']);
+    // userApi.addPlayHistory(widget.args['id']);
     // setScreenRotation();
   }
 
@@ -32,7 +32,6 @@ class VideoState extends State<Video> {
 
   @override
   Widget build(BuildContext context) {
-    logger.i('RENDER VIDEO ${widget.args['id']}');
     return VideoScreen(
       key: ValueKey(widget.args['id']),
       id: int.parse(widget.args['id'].toString()),

@@ -31,6 +31,7 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
     super.initState();
     vodController =
         FilterVideoScreenResultController(scrollController: scrollController);
+
     scrollController.addListener(() {
       if (scrollController.offset > 150 &&
           filterScreenController.showTabBar.value) {
@@ -57,40 +58,81 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Stack(
-        children: [
-          SliverVodGrid(
-            headerExtends: [
-              SliverToBoxAdapter(
-                child: FilterOptions(
-                  menuData: filterVideoScreenController.menuData,
-                  selectedOptions: filterVideoScreenController.selectedOptions,
-                  handleOptionChange:
-                      filterVideoScreenController.handleOptionChange,
-                ),
-              ),
-              const SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 10,
-                ),
-              )
-            ],
-            videos: vodController.vodList,
-            isListEmpty: vodController.isListEmpty.value,
-            displayNoMoreData: vodController.displayNoMoreData.value,
-            displayLoading: vodController.displayLoading.value,
-            displayVideoCollectTimes: false,
-            noMoreWidget: ListNoMore(),
-            customScrollController: vodController.scrollController,
+      () => SliverVodGrid(
+        headerExtends: [
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: CustomHeaderDelegate(
+              minHeight: 64.0, // 這是FilterBar的高度
+              maxHeight: 120.0, // 這是FilterOptions的高度
+              menuData: filterVideoScreenController.menuData,
+              selectedOptions: filterVideoScreenController.selectedOptions,
+              handleOptionChange:
+                  filterVideoScreenController.handleOptionChange,
+              film: 1,
+            ),
           ),
-          FilterBar(
-            menuData: filterVideoScreenController.menuData,
-            selectedOptions: filterVideoScreenController.selectedOptions,
-            handleOptionChange: filterVideoScreenController.handleOptionChange,
-            film: 1,
-          ),
+          const SliverToBoxAdapter(
+            child: SizedBox(
+              height: 10,
+            ),
+          )
         ],
+        videos: vodController.vodList.value,
+        isListEmpty: vodController.isListEmpty.value,
+        displayNoMoreData: vodController.displayNoMoreData.value,
+        displayLoading: vodController.displayLoading.value,
+        displayVideoCollectTimes: false,
+        noMoreWidget: ListNoMore(),
+        customScrollController: vodController.scrollController,
       ),
     );
+  }
+}
+
+class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double minHeight;
+  final double maxHeight;
+  final RxList<Map<String, dynamic>> menuData;
+  final RxMap<String, Set> selectedOptions;
+  final void Function(String key, dynamic value) handleOptionChange;
+  final int film;
+
+  CustomHeaderDelegate({
+    required this.minHeight,
+    required this.maxHeight,
+    required this.menuData,
+    required this.selectedOptions,
+    required this.handleOptionChange,
+    required this.film,
+  });
+
+  @override
+  double get minExtent => minHeight;
+  @override
+  double get maxExtent => maxHeight;
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    if (shrinkOffset >= 100) {
+      return FilterBar(
+        menuData: menuData,
+        selectedOptions: selectedOptions,
+        handleOptionChange: handleOptionChange,
+        film: film,
+      );
+    } else {
+      return FilterOptions(
+        menuData: menuData,
+        selectedOptions: selectedOptions,
+        handleOptionChange: handleOptionChange,
+      );
+    }
+  }
+
+  @override
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
+    return true;
   }
 }

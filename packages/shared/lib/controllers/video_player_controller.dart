@@ -12,9 +12,10 @@ bool isFirstTimeForIOSSafari = true;
 
 class ObservableVideoPlayerController extends GetxController {
   final isReady = false.obs;
+  bool autoPlay;
   // final RxString videoAction = kIsWeb ? 'pause'.obs : 'play'.obs;
   final RxString videoAction = 'pause'.obs;
-  late VideoPlayerController videoPlayerController;
+  late VideoPlayerController? videoPlayerController;
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
   final String obsKey;
@@ -22,7 +23,7 @@ class ObservableVideoPlayerController extends GetxController {
 
   var errorMessage = ''.obs;
 
-  ObservableVideoPlayerController(this.obsKey, this.videoUrl);
+  ObservableVideoPlayerController(this.obsKey, this.videoUrl, this.autoPlay);
 
   @override
   void onInit() {
@@ -39,41 +40,46 @@ class ObservableVideoPlayerController extends GetxController {
 
   Future<void> _initializePlayer() async {
     videoPlayerController = VideoPlayerController.network(videoUrl);
-    videoPlayerController.addListener(_onControllerValueChanged);
-    videoPlayerController.initialize().then((value) {
+    videoPlayerController?.addListener(_onControllerValueChanged);
+    videoPlayerController?.initialize().then((value) {
       isReady.value = true;
+      if (autoPlay) {
+        play();
+      }
     }).catchError((error) {
-      if (videoPlayerController.value.hasError) {
+      if (videoPlayerController?.value.hasError == true) {
         videoAction.value = 'error';
-        errorMessage.value = videoPlayerController.value.errorDescription!;
+        errorMessage.value = videoPlayerController!.value.errorDescription!;
       }
     });
   }
 
   void changeVolumeToFull() {
     if (!kIsWeb) {
-      videoPlayerController.setVolume(1);
+      videoPlayerController?.setVolume(1);
     }
   }
 
   void _disposePlayer() {
-    videoPlayerController.pause();
-    videoPlayerController.removeListener(_onControllerValueChanged);
-    videoPlayerController.dispose();
+    videoPlayerController?.pause();
+    videoPlayerController?.removeListener(_onControllerValueChanged);
+    videoPlayerController?.dispose();
+    videoPlayerController = null;
   }
 
   void _onControllerValueChanged() {
-    if (videoPlayerController.value.hasError) {
+    if (videoPlayerController?.value.hasError == true) {
       videoAction.value = 'error';
-      errorMessage.value = videoPlayerController.value.errorDescription!;
+      errorMessage.value = videoPlayerController!.value.errorDescription!;
     }
 
-    if (videoPlayerController.value.isPlaying && videoAction.value == 'pause') {
+    if (videoPlayerController?.value.isPlaying == true &&
+        videoAction.value == 'pause') {
       videoAction.value = 'play';
     }
 
     // TODO: 有待分析
-    if (!kIsWeb && videoPlayerController.value.isPlaying) {
+    if (!kIsWeb && videoPlayerController?.value.isPlaying == true) {
       Wakelock.enable();
     } else {
       Wakelock.disable();
@@ -82,18 +88,18 @@ class ObservableVideoPlayerController extends GetxController {
 
   void play() {
     videoAction.value = 'play';
-    videoPlayerController.play();
+    videoPlayerController?.play();
   }
 
   void replay() {
     videoAction.value = 'play';
-    videoPlayerController.seekTo(Duration.zero);
-    videoPlayerController.play();
+    videoPlayerController?.seekTo(Duration.zero);
+    videoPlayerController?.play();
   }
 
   void pause() {
     videoAction.value = 'pause';
-    videoPlayerController.pause();
+    videoPlayerController?.pause();
   }
 
   void toggle() {

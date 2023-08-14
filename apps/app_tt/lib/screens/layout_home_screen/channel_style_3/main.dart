@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
 import '../../../widgets/tt_tab_bar.dart';
@@ -10,6 +11,8 @@ import '../channel_jingang_area_title.dart';
 import '../reload_button.dart';
 import 'tags.dart';
 import 'vods.dart';
+
+final logger = Logger();
 
 class ChannelStyle3Main extends StatefulWidget {
   final int channelId;
@@ -29,24 +32,30 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   final ScrollController _scrollController = ScrollController();
 
   void _setupTabController() {
-    _tabController?.dispose();
-    var tags = (channelSharedDataController?.channelSharedData.value?.blocks
-            ?.map((e) => e.id.toString())
-            .toList()) ??
-        [];
-    _tabController = TabController(length: tags.length, vsync: this);
-
-    _tabController?.addListener(() {
-      if (_tabController!.indexIsChanging) {
-        if (targetKey.currentContext != null) {
-          Scrollable.ensureVisible(
-            targetKey.currentContext!,
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.ease,
-          );
-        }
+    if (mounted) {
+      if (_tabController != null) {
+        _tabController?.dispose();
+        _tabController = null;
       }
-    });
+
+      var tags = (channelSharedDataController?.channelSharedData.value?.blocks
+              ?.map((e) => e.id.toString())
+              .toList()) ??
+          [];
+      _tabController = TabController(length: tags.length, vsync: this);
+
+      _tabController?.addListener(() {
+        if (_tabController!.indexIsChanging) {
+          if (targetKey.currentContext != null) {
+            Scrollable.ensureVisible(
+              targetKey.currentContext!,
+              duration: const Duration(milliseconds: 200),
+              curve: Curves.ease,
+            );
+          }
+        }
+      });
+    }
   }
 
   @override
@@ -61,7 +70,9 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
     if (channelSharedDataController?.channelSharedData != null) {
       ever(channelSharedDataController!.channelSharedData, (channelSharedData) {
         _setupTabController();
-        setState(() {});
+        if (mounted) {
+          setState(() {});
+        }
       });
     }
 
@@ -112,7 +123,10 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
               ChannelTags(
                 channelId: widget.channelId,
               ),
-              if (_tabController!.length > 1)
+              if (_tabController!.length > 1) ...[
+                const SliverToBoxAdapter(
+                  child: SizedBox(height: 8),
+                ),
                 SliverPersistentHeader(
                   pinned: true,
                   delegate: _SliverAppBarDelegate(
@@ -129,6 +143,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                     ),
                   ),
                 ),
+              ]
             ];
           },
           body: TabBarView(

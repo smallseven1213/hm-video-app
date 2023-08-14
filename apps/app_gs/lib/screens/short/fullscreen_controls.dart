@@ -4,14 +4,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 
 final logger = Logger();
 
 class FullScreenControls extends StatefulWidget {
-  final String videoUrl;
   final String? name;
   final Function toggleFullscreen;
   final bool isFullscreen;
+  final VideoPlayerInfo videoPlayerInfo;
   final ObservableVideoPlayerController ovpController;
 
   const FullScreenControls({
@@ -19,8 +20,8 @@ class FullScreenControls extends StatefulWidget {
     this.name,
     required this.toggleFullscreen,
     required this.isFullscreen,
-    required this.videoUrl,
     required this.ovpController,
+    required this.videoPlayerInfo,
   }) : super(key: key);
 
   @override
@@ -48,101 +49,19 @@ class ControlsOverlayState extends State<FullScreenControls> {
   double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
   double verticalDragPosition = 0.0; // 初始值
 
-  void startToggleControlsTimer() {
-    if (toggleControlsTimer != null) {
-      toggleControlsTimer!.cancel();
-    }
-    toggleControlsTimer = Timer(const Duration(seconds: 2), () {
-      if (displayControls) {
-        toggleDisplayControls();
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    startToggleControlsTimer();
-    widget.ovpController.videoPlayerController.addListener(() {
-      if (mounted &&
-          widget.ovpController.videoPlayerController.value.isInitialized) {
-        setState(() {
-          inBuffering =
-              widget.ovpController.videoPlayerController.value.isBuffering;
-          isPlaying =
-              widget.ovpController.videoPlayerController.value.isPlaying;
-          videoDurationString = widget
-              .ovpController.videoPlayerController.value.duration
-              .toString()
-              .split('.')
-              .first;
-          videoDuration = widget
-              .ovpController.videoPlayerController.value.duration.inSeconds
-              .toInt();
-          videoPositionString = widget
-              .ovpController.videoPlayerController.value.position
-              .toString()
-              .split('.')
-              .first;
-          videoPosition = widget
-              .ovpController.videoPlayerController.value.position.inSeconds
-              .toInt();
-        });
-      }
-    });
-    super.initState();
-  }
-
-  void showControls() {
-    if (mounted) {
-      setState(() {
-        displayControls = true;
-      });
-    }
-  }
-
-  // 主動更新影片進度
-  void updateVideoPosition(Duration newPosition) {
-    widget.ovpController.videoPlayerController.seekTo(newPosition);
-  }
-
-  void toggleDisplayControls() {
-    if (mounted) {
-      setState(() {
-        displayControls = !displayControls;
-      });
-    }
-  }
-
-  void startScrolling() {
-    if (mounted) {
-      setState(() {
-        isScrolling = true;
-      });
-    }
-  }
-
-  // Add a function to set isScrolling to false
-  void stopScrolling() {
-    if (mounted) {
-      setState(() {
-        isScrolling = false;
-      });
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, constraints) {
       return GestureDetector(
         onTap: () {
-          showControls();
-          startToggleControlsTimer();
+          widget.videoPlayerInfo.showControls();
+          widget.videoPlayerInfo.startToggleControlsTimer();
         },
         onDoubleTap: () {
           if (isPlaying) {
-            widget.ovpController.videoPlayerController.pause();
+            widget.ovpController.videoPlayerController?.pause();
           } else {
-            widget.ovpController.videoPlayerController.play();
+            widget.ovpController.videoPlayerController?.play();
           }
         },
         onHorizontalDragStart: (details) {
@@ -150,8 +69,8 @@ class ControlsOverlayState extends State<FullScreenControls> {
             return;
           }
           if (mounted) {
-            startScrolling();
-            showControls();
+            widget.videoPlayerInfo.startScrolling();
+            widget.videoPlayerInfo.showControls();
           }
         },
         onHorizontalDragUpdate: (details) {
@@ -170,11 +89,12 @@ class ControlsOverlayState extends State<FullScreenControls> {
             newPositionSeconds = videoDuration;
           }
 
-          updateVideoPosition(Duration(seconds: newPositionSeconds));
+          widget.videoPlayerInfo.videoPlayerController
+              ?.seekTo(Duration(seconds: newPositionSeconds));
         },
         onHorizontalDragEnd: (details) {
-          stopScrolling();
-          startToggleControlsTimer();
+          widget.videoPlayerInfo.stopScrolling();
+          widget.videoPlayerInfo.startToggleControlsTimer();
         },
         child: Stack(
           children: <Widget>[
@@ -250,7 +170,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
               // 中間播放按鈕
               GestureDetector(
                 onTap: () {
-                  widget.ovpController.videoPlayerController.play();
+                  widget.ovpController.videoPlayerController?.play();
                   if (kIsWeb && !hasH5FirstPlay) {
                     setState(() {
                       hasH5FirstPlay = true;
@@ -279,9 +199,9 @@ class ControlsOverlayState extends State<FullScreenControls> {
                         onPressed: () {
                           isPlaying
                               ? widget.ovpController.videoPlayerController
-                                  .pause()
+                                  ?.pause()
                               : widget.ovpController.videoPlayerController
-                                  .play();
+                                  ?.play();
                         },
                         icon: Icon(
                           isPlaying ? Icons.pause : Icons.play_arrow,
@@ -312,15 +232,15 @@ class ControlsOverlayState extends State<FullScreenControls> {
                             max: videoDuration.toDouble(),
                             onChanged: (double value) {
                               if (mounted) {
-                                startScrolling();
-                                showControls();
-                                updateVideoPosition(
-                                    Duration(seconds: value.toInt()));
+                                widget.videoPlayerInfo.startScrolling();
+                                widget.videoPlayerInfo.showControls();
+                                widget.videoPlayerInfo.videoPlayerController
+                                    ?.seekTo(Duration(seconds: value.toInt()));
                               }
                             },
                             onChangeEnd: (double value) {
-                              stopScrolling();
-                              startToggleControlsTimer();
+                              widget.videoPlayerInfo.stopScrolling();
+                              widget.videoPlayerInfo.startToggleControlsTimer();
                             },
                           ),
                         ),

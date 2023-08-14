@@ -1,12 +1,9 @@
-// VideoPlayerArea stateful widget
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
-import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:video_player/video_player.dart';
 
@@ -20,14 +17,12 @@ class VideoPlayerArea extends StatefulWidget {
   final String? name;
   final String videoUrl;
   final Vod video;
-  final VideoPlayerController? controller;
 
   const VideoPlayerArea({
     Key? key,
     required this.videoUrl,
     required this.video,
     this.name,
-    this.controller,
   }) : super(key: key);
 
   @override
@@ -41,7 +36,6 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
   bool hasError = false;
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
-  late ObservableVideoPlayerController videoPlayerController;
   bool isFirstLookForWeb = true; // 給web feature專用，如果是web都要檢查此值做些事情
 
   @override
@@ -50,20 +44,16 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
     WidgetsBinding.instance.addObserver(this);
 
     setScreenRotation();
-    var videoUrl = widget.videoUrl;
+    // var videoUrl = widget.videoUrl;
 
-    videoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: videoUrl);
-
-    videoPlayerController.isReady.listen((isReady) {
-      if (isReady) {
-        logger.i('VPC safari trace : isReady');
-        setState(() {});
-        if (!kIsWeb) {
-          videoPlayerController.play();
-        }
-      }
-    });
+    // videoPlayerController.isReady.listen((isReady) {
+    //   if (isReady) {
+    //     setState(() {});
+    //     if (!kIsWeb) {
+    //       videoPlayerController.play();
+    //     }
+    //   }
+    // });
   }
 
   void toggleFullscreen({bool fullScreen = false}) {
@@ -121,86 +111,65 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
         ? MediaQuery.of(context).size.height
         : MediaQuery.of(context).size.width / 16 * 9;
 
-    logger.i('VPC safari trace : obs testing ');
-
     return Container(
       color: Colors.black,
       width: MediaQuery.of(context).size.width,
       height: playerHeight,
-      child: Obx(() {
-        Size videoSize = videoPlayerController.videoPlayerController.value.size;
-        var aspectRatio = videoSize.width == 0 || videoSize.height == 0
-            ? 16 / 9
-            : videoSize.width / videoSize.height;
+      child: VideoPlayerConsumer(
+        tag: widget.videoUrl,
+        child: (videoPlayerInfo) {
+          Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
+          var aspectRatio = videoSize.width == 0 || videoSize.height == 0
+              ? 16 / 9
+              : videoSize.width / videoSize.height;
 
-        return Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            if (videoPlayerController.videoAction.value == 'error') ...[
-              VideoError(
-                coverHorizontal: widget.video.coverHorizontal ?? '',
-                onTap: () {
-                  // setState(() {
-                  //   hasError = false;
-                  // });
-                  videoPlayerController.play();
-                },
-              ),
-            ] else if (videoPlayerController
-                .videoPlayerController.value.isInitialized) ...[
-              AspectRatio(
-                aspectRatio: aspectRatio,
-                child: VideoPlayer(videoPlayerController.videoPlayerController),
-              ),
-              ControlsOverlay(
-                videoUrl: widget.videoUrl,
-                name: widget.video.title,
-                isFullscreen: isFullscreen,
-                onScreenLock: (bool isLocked) {
-                  setState(() {
-                    isScreenLocked = isLocked;
-                  });
-                  if (isLocked) {
-                    toggleFullscreen(fullScreen: true);
-                  } else {
-                    setScreenRotation();
-                  }
-                },
-                isScreenLocked: isScreenLocked,
-                toggleFullscreen: (status) {
-                  toggleFullscreen(fullScreen: status);
-                },
-              )
-              // ControlsOverlay(
-              //   controller: videoPlayerController.videoPlayerController,
-              // name: widget.video.title,
-              // isFullscreen: isFullscreen,
-              // toggleFullscreen: (status) {
-              //   toggleFullscreen(fullScreen: status);
-              // },
-              //   isScreenLocked: isScreenLocked,
-              //   isPlaying: videoPlayerController.videoAction.value == 'play',
-              //   onScreenLock: (bool isLocked) {
-              //     setState(() {
-              //       isScreenLocked = isLocked;
-              //     });
-              //     if (isLocked) {
-              //       toggleFullscreen(fullScreen: true);
-              //     } else {
-              //       setScreenRotation();
-              //     }
-              //   },
-              // ),
-            ] else if (videoPlayerController
-                    .videoPlayerController.value.isInitialized ==
-                false) ...[
-              VideoLoading(
-                coverHorizontal: widget.video.coverHorizontal ?? '',
-              )
+          return Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              if (videoPlayerInfo.videoAction == 'error') ...[
+                VideoError(
+                  coverHorizontal: widget.video.coverHorizontal ?? '',
+                  onTap: () {
+                    videoPlayerInfo.videoPlayerController?.play();
+                  },
+                ),
+              ] else if (videoPlayerInfo
+                      .videoPlayerController?.value.isInitialized ==
+                  true) ...[
+                AspectRatio(
+                  aspectRatio: aspectRatio,
+                  child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
+                ),
+                ControlsOverlay(
+                  videoUrl: widget.videoUrl,
+                  name: widget.video.title,
+                  isFullscreen: isFullscreen,
+                  onScreenLock: (bool isLocked) {
+                    setState(() {
+                      isScreenLocked = isLocked;
+                    });
+                    if (isLocked) {
+                      toggleFullscreen(fullScreen: true);
+                    } else {
+                      setScreenRotation();
+                    }
+                  },
+                  isScreenLocked: isScreenLocked,
+                  toggleFullscreen: (status) {
+                    toggleFullscreen(fullScreen: status);
+                  },
+                )
+              ] else if (videoPlayerInfo
+                      .videoPlayerController?.value.isInitialized ==
+                  false) ...[
+                VideoLoading(
+                  coverHorizontal: widget.video.coverHorizontal ?? '',
+                )
+              ],
             ],
-          ],
-        );
-      }),
+          );
+        },
+      ),
     );
   }
 }

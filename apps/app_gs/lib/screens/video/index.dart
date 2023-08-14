@@ -1,13 +1,16 @@
 import 'package:app_gs/screens/video/video_player_area/index.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared/widgets/video_screen_builder/video_screen_builder.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/video/video_provider.dart';
+import 'package:shared/modules/video_player/video_player_provider.dart';
 
+import '../../widgets/custom_app_bar.dart';
 import '../../widgets/wave_loading.dart';
 import 'nested_tab_bar_view/index.dart';
-import '../../widgets/custom_app_bar.dart';
+import 'video_player_area/loading.dart';
 
 final logger = Logger();
 
@@ -42,7 +45,7 @@ class VideoScreenState extends State<VideoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return VideoScreenBuilder(
+    return VideoScreenProvider(
       id: widget.id,
       name: widget.name,
       child: (
@@ -50,42 +53,40 @@ class VideoScreenState extends State<VideoScreen> {
           required Vod? video,
           required Vod? videoDetail}) {
         if (videoUrl == null) {
-          return const WaveLoading(
-            color: Color.fromRGBO(255, 255, 255, 0.3),
-            duration: Duration(milliseconds: 1000),
-            size: 17,
-            itemCount: 3,
-          );
+          return const WaveLoading();
         }
+
         return SafeArea(
           child: Column(
             children: [
-              video != null
-                  ? VideoPlayerArea(
-                      name: widget.name,
-                      videoUrl: videoUrl,
-                      video: video,
-                    )
-                  : AspectRatio(
-                      aspectRatio: 16 / 9,
-                      child: Container(
-                        color: Colors.black,
-                        child: CustomAppBar(
-                          title: widget.name,
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
-                    ),
+              VideoPlayerProvider(
+                tag: videoUrl,
+                autoPlay: kIsWeb ? false : true,
+                videoUrl: videoUrl,
+                video: video!,
+                videoDetail: videoDetail!,
+                loadingWidget: AspectRatio(
+                  aspectRatio: 16 / 9,
+                  child: Container(
+                    color: Colors.black,
+                    child: VideoLoading(
+                        coverHorizontal: video.coverHorizontal ?? ''),
+                  ),
+                ),
+                child: (isReady) {
+                  return VideoPlayerArea(
+                    name: widget.name,
+                    videoUrl: videoUrl,
+                    video: video,
+                  );
+                },
+              ),
               Expanded(
-                child: video != null && videoDetail != null
-                    ? NestedTabBarView(
-                        videoUrl: videoUrl,
-                        videoBase: video,
-                        videoDetail: videoDetail,
-                      )
-                    : const Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                child: NestedTabBarView(
+                  videoUrl: videoUrl,
+                  videoBase: video,
+                  videoDetail: videoDetail,
+                ),
               )
             ],
           ),

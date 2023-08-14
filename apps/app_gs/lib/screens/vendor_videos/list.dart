@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared/controllers/publisher_hottest_vod_controller.dart';
 import 'package:shared/controllers/publisher_latest_vod_controller.dart';
 
@@ -30,14 +31,14 @@ class VendorVideoListState extends State<VendorVideoList> {
             publisherId: widget.publisherId,
             scrollController: scrollController);
 
-    return SliverVodGrid(
-      isListEmpty: publisherVodController.isListEmpty.value,
-      videos: publisherVodController.vodList,
-      displayNoMoreData: publisherVodController.displayNoMoreData.value,
-      displayLoading: publisherVodController.displayLoading.value,
-      noMoreWidget: ListNoMore(),
-      customScrollController: publisherVodController.scrollController,
-    );
+    return Obx(() => SliverVodGrid(
+          isListEmpty: publisherVodController.isListEmpty.value,
+          videos: publisherVodController.vodList.value,
+          displayNoMoreData: publisherVodController.displayNoMoreData.value,
+          displayLoading: publisherVodController.displayLoading.value,
+          noMoreWidget: ListNoMore(),
+          customScrollController: publisherVodController.scrollController,
+        ));
   }
 
   @override

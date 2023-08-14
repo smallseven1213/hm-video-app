@@ -26,7 +26,11 @@ class VideoBlock extends BaseVideoBlock {
 }
 
 class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
-  BaseVideoPreviewWidget _buildVideoPreview(int film, Vod video) {
+  BaseVideoPreviewWidget _buildVideoPreview(
+    int film,
+    Vod video, {
+    hasTags = true,
+  }) {
     return VideoPreviewWidget(
       id: video.id,
       title: video.title,
@@ -41,6 +45,10 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
       displayVideoTimes: film == 1,
       displayViewTimes: film == 1,
       displayVideoCollectTimes: film == 2,
+      displayCoverVertical: film == 2,
+      film: film,
+      blockId: block.id,
+      hasTags: hasTags,
     );
   }
 
@@ -157,7 +165,11 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
           block: block,
           updateBlock: updateBlock,
           channelId: channelId,
-          buildVideoPreview: (video) => _buildVideoPreview(film, video),
+          buildVideoPreview: (video) => _buildVideoPreview(
+            film,
+            video,
+            hasTags: false,
+          ),
         );
       case 10:
         return Block10Widget(
@@ -179,77 +191,3 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
     }
   }
 }
-
-// final Map<
-//         int,
-//         Widget Function(
-//             Blocks block, Function updateBlock, int channelId, int film)>
-//     blockMap = {
-  // 0: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     const SliverToBoxAdapter(child: SizedBox()),
-  // 1: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block1Widget(
-  //         film: film,
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId),
-  // 2: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block2Widget(
-  //         film: film,
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId),
-  // 3: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block3Widget(
-  //         film: film,
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId),
-  // 4: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block4Widget(
-  //         film: film,
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId),
-  // 5: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block5Widget(
-  //         film: film,
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId),
-  // 6: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block6Widget(
-  //         film: film,
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId),
-  // 7: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block7Widget(
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId,
-  //         film: film),
-  // 10: (Blocks block, Function updateBlock, int channelId, int film) =>
-  //     Block10Widget(
-  //         block: block,
-  //         updateBlock: updateBlock,
-  //         channelId: channelId,
-  //         film: film),
-// };
-
-// class VideoBlock extends BaseVideoBlock {
-//   VideoBlock({Key? key, required Blocks block, required int channelId})
-//       : super(key: key, block: block, channelId: channelId);
-
-//   @override
-//   _VideoBlockState createState() => _VideoBlockState();
-// }
-
-// class _VideoBlockState extends BaseVideoBlockState<VideoBlock> {
-//   @override
-//   Widget buildBlockWidget(
-//       Blocks block, Function updateBlock, int channelId, int film) {
-//     // Implement the logic for building the block widget.
-//     // You can use different widgets based on the template of the block.
-//   }
-// }
