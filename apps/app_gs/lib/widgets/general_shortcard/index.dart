@@ -1,8 +1,10 @@
+import 'package:app_gs/widgets/wave_loading.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../shortcard/index.dart';
-import '../wave_loading.dart';
 import 'short_bottom_area.dart';
 
 class GeneralShortCard extends StatefulWidget {
@@ -16,6 +18,7 @@ class GeneralShortCard extends StatefulWidget {
   final bool? isActive;
   final Function toggleFullScreen;
   final bool? hiddenBottomArea;
+  final String videoUrl;
 
   const GeneralShortCard({
     Key? key,
@@ -25,6 +28,7 @@ class GeneralShortCard extends StatefulWidget {
     required this.title,
     required this.shortData,
     required this.toggleFullScreen,
+    required this.videoUrl,
     // required this.isFullscreen,
     this.isActive = true,
     this.supportedPlayRecord = true,
@@ -39,25 +43,38 @@ class GeneralShortCard extends StatefulWidget {
 class GeneralShortCardState extends State<GeneralShortCard> {
   @override
   Widget build(BuildContext context) {
+    if (widget.videoUrl.isEmpty) {
+      return const WaveLoading();
+    }
     return Container(
       color: Colors.black,
       child: Stack(
         children: [
-          const WaveLoading(
-            color: Color.fromRGBO(255, 255, 255, 0.3),
-            duration: Duration(milliseconds: 1000),
-            size: 17,
-            itemCount: 3,
-          ),
-          ShortCard(
-            obsKey: widget.obsKey,
-            index: widget.index,
-            isActive: widget.isActive,
-            id: widget.shortData.id,
-            title: widget.shortData.title,
-            shortData: widget.shortData,
-            toggleFullScreen: widget.toggleFullScreen,
-            hiddenBottomArea: widget.hiddenBottomArea,
+          VideoPlayerProvider(
+            tag: widget.obsKey,
+            autoPlay: kIsWeb ? false : true,
+            videoUrl: widget.videoUrl,
+            video: widget.shortData,
+            videoDetail: Vod(
+              widget.shortData.id,
+              widget.shortData.title,
+              coverHorizontal: widget.shortData.coverHorizontal!,
+              coverVertical: widget.shortData.coverVertical!,
+              timeLength: widget.shortData.timeLength!,
+              tags: widget.shortData.tags!,
+              videoViewTimes: widget.shortData.videoViewTimes!,
+            ),
+            loadingWidget: const WaveLoading(),
+            child: (isReady) => ShortCard(
+              obsKey: widget.obsKey,
+              index: widget.index,
+              isActive: widget.isActive,
+              id: widget.shortData.id,
+              title: widget.shortData.title,
+              shortData: widget.shortData,
+              toggleFullScreen: widget.toggleFullScreen,
+              hiddenBottomArea: widget.hiddenBottomArea,
+            ),
           ),
           Positioned(
             bottom: 0,

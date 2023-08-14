@@ -65,57 +65,29 @@ class BaseShortPage extends StatelessWidget {
                   required videoDetail,
                   required videoUrl,
                 }) {
-                  if (videoUrl == null ||
-                      video == null ||
-                      videoDetail == null) {
-                    return const WaveLoading(
-                      color: Color.fromRGBO(255, 255, 255, 0.3),
-                      duration: Duration(milliseconds: 1000),
-                      size: 17,
-                      itemCount: 3,
+                  if (style == 2) {
+                    return HomeUseShortCard(
+                      obsKey: obsKey,
+                      index: index,
+                      isActive: isActive,
+                      id: shortData.id,
+                      title: shortData.title,
+                      shortData: shortData,
+                      toggleFullScreen: toggleFullScreen,
+                      hiddenBottomArea: true,
+                      videoUrl: videoUrl!,
                     );
                   }
-                  return VideoPlayerProvider(
-                    tag: obsKey,
-                    autoPlay: kIsWeb ? false : true,
-                    videoUrl: videoUrl,
-                    video: video!,
-                    videoDetail: Vod(
-                      video.id,
-                      video.title,
-                      coverHorizontal: video.coverHorizontal!,
-                      coverVertical: video.coverVertical!,
-                      timeLength: video.timeLength!,
-                      tags: video.tags!,
-                      videoViewTimes: video.videoViewTimes!,
-                    ),
-                    loadingWidget: const WaveLoading(
-                      color: Color.fromRGBO(255, 255, 255, 0.3),
-                      duration: Duration(milliseconds: 1000),
-                      size: 17,
-                      itemCount: 3,
-                    ),
-                    child: ((isReady) => style == 2
-                        ? HomeUseShortCard(
-                            obsKey: obsKey,
-                            index: index,
-                            isActive: isActive,
-                            id: shortData.id,
-                            title: shortData.title,
-                            shortData: shortData,
-                            toggleFullScreen: toggleFullScreen,
-                            hiddenBottomArea: true,
-                          )
-                        : GeneralShortCard(
-                            obsKey: obsKey,
-                            index: index,
-                            isActive: isActive,
-                            id: shortData.id,
-                            title: shortData.title,
-                            shortData: shortData,
-                            toggleFullScreen: toggleFullScreen,
-                            hiddenBottomArea: false,
-                          )),
+                  return GeneralShortCard(
+                    obsKey: obsKey,
+                    index: index,
+                    isActive: isActive,
+                    id: shortData.id,
+                    title: shortData.title,
+                    shortData: shortData,
+                    toggleFullScreen: toggleFullScreen,
+                    hiddenBottomArea: false,
+                    videoUrl: videoUrl!,
                   );
                 }),
           );
