@@ -2,9 +2,11 @@ import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../shortcard/index.dart';
+import '../shortcard/short_card_info.dart';
 import 'short_bottom_area.dart';
 
 class GeneralShortCard extends StatefulWidget {
@@ -77,10 +79,31 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: ShortBottomArea(
-              shortData: widget.shortData,
-              displayFavoriteAndCollectCount:
-                  widget.displayFavoriteAndCollectCount,
+            child: Column(
+              children: [
+                ShortVideoConsumer(
+                  vodId: widget.id,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      videoDetail != null
+                          ? ShortCardInfo(
+                              obsKey: widget.obsKey,
+                              data: videoDetail,
+                              title: widget.title,
+                            )
+                          : const SizedBox.shrink(),
+                ),
+                const SizedBox(height: 16),
+                ShortBottomArea(
+                  shortData: widget.shortData,
+                  displayFavoriteAndCollectCount:
+                      widget.displayFavoriteAndCollectCount,
+                ),
+              ],
             ),
           ),
           const FloatPageBackButton()

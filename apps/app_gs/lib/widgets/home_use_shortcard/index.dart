@@ -1,7 +1,9 @@
+import 'package:app_gs/widgets/shortcard/short_card_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../shortcard/index.dart';
@@ -80,6 +82,30 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
           SideInfo(
             obsKey: widget.obsKey,
             shortData: widget.shortData,
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Column(children: [
+              ShortVideoConsumer(
+                vodId: widget.id,
+                child: ({
+                  required isLoading,
+                  required video,
+                  required videoDetail,
+                  required videoUrl,
+                }) =>
+                    videoDetail != null
+                        ? ShortCardInfo(
+                            obsKey: widget.obsKey,
+                            data: videoDetail,
+                            title: widget.title,
+                          )
+                        : const SizedBox.shrink(),
+              ),
+              const SizedBox(height: 16),
+            ]),
           ),
           const FloatPageBackButton()
         ],

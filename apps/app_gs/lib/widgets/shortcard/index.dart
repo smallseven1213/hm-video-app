@@ -93,31 +93,20 @@ class ShortCardState extends State<ShortCard> {
                 width: double.infinity,
                 child: ShortVideoConsumer(
                   vodId: widget.id,
-                  child: ((
-                          {required isLoading,
-                          required video,
-                          required videoDetail,
-                          required videoUrl}) =>
-                      Stack(
-                        children: [
-                          VideoPlayerDisplayWidget(
-                            controller:
-                                videoPlayerInfo.observableVideoPlayerController,
-                            video: video!,
-                            allowFullsreen: false,
-                            toggleFullscreen: () {
-                              widget.toggleFullScreen();
-                            },
-                          ),
-                          if (videoDetail != null)
-                            ShortCardInfo(
-                              obsKey: widget.obsKey,
-                              data: videoDetail,
-                              title: widget.title,
-                              videoUrl: videoUrl!,
-                            ),
-                        ],
-                      )),
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      VideoPlayerDisplayWidget(
+                    controller: videoPlayerInfo.observableVideoPlayerController,
+                    video: video!,
+                    allowFullsreen: false,
+                    toggleFullscreen: () {
+                      widget.toggleFullScreen();
+                    },
+                  ),
                 ),
               ),
               Positioned(

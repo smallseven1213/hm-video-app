@@ -15,14 +15,12 @@ class ShortCardInfo extends StatefulWidget {
   final String obsKey;
   final ShortVideoDetail data;
   final String title;
-  final String videoUrl;
 
   const ShortCardInfo({
     Key? key,
     required this.obsKey,
     required this.data,
     required this.title,
-    required this.videoUrl,
   }) : super(key: key);
 
   @override
