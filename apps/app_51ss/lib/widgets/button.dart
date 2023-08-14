@@ -15,6 +15,12 @@ Map buttonBg = {
   'cancel': AppColors.colors[ColorKeys.buttonBgCancel],
 };
 
+Map buttonText = {
+  'primary': AppColors.colors[ColorKeys.buttonTextPrimary],
+  'secondary': AppColors.colors[ColorKeys.buttonTextSecondary],
+  'cancel': AppColors.colors[ColorKeys.buttonTextCancel],
+};
+
 class _GradientBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
@@ -84,9 +90,10 @@ class Button extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      color: type == 'cancel'
-                          ? AppColors.colors[ColorKeys.textSecondary]
-                          : AppColors.colors[ColorKeys.textPrimary],
+                      color: buttonText[type],
+                      //  type == 'cancel'
+                      //     ? AppColors.colors[ColorKeys.textSecondary]
+                      //     : AppColors.colors[ColorKeys.textPrimary],
                       fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
                     ),

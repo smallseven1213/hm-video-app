@@ -9,6 +9,9 @@ class AppColors {
     ColorKeys.textPrimary: Colors.black,
     ColorKeys.textSecondary: Color(0xff979797),
     // BUTTON
+    ColorKeys.buttonTextPrimary: Colors.white,
+    ColorKeys.buttonTextSecondary: Colors.black,
+    ColorKeys.buttonTextCancel: Colors.black,
     ColorKeys.buttonBgPrimary: Color(0xffB5925C),
     ColorKeys.buttonBgSecondary: Colors.white,
     ColorKeys.buttonBgCancel: Color(0xffCACACA),

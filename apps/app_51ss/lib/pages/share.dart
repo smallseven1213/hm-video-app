@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:app_gs/widgets/button.dart';
-import 'package:app_gs/widgets/custom_app_bar.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,6 +12,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared/controllers/user_controller.dart';
+
+import 'package:app_51ss/config/colors.dart';
+import 'package:app_51ss/widgets/button.dart';
+import 'package:app_51ss/widgets/custom_app_bar.dart';
+import 'package:shared/models/color_keys.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 final logger = Logger();
@@ -64,52 +67,44 @@ class SharePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          const Positioned(
-            child: Image(
-              width: double.infinity,
-              image: AssetImage('assets/images/share_bg.webp'),
-            ),
-          ),
-          CustomAppBar(
-            title: '推廣分享',
-            backgroundColor: Colors.transparent,
-            actions: [
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    // MyRouteDelegate.of(context)
-                    //     .push(AppRoutes.login.value, deletePreviousCount: 1);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(10),
-                    child: const Text(
-                      '推廣紀錄',
-                      style: TextStyle(
-                        color: Color(0xff00B0D4),
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
+    return WillPopScope(
+      onWillPop: () async => false, // HC: 煩死，勿動!!
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: '推廣分享',
+          actions: [
+            TextButton(
+              onPressed: () {
+                // share record
+              },
+              child: Text(
+                '推廣紀錄',
+                style: TextStyle(
+                  color: AppColors.colors[ColorKeys.buttonTextPrimary],
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
-            ],
-          ),
-          Center(
+            ),
+          ],
+        ),
+        body: Container(
+          color: AppColors.colors[ColorKeys.primary],
+          child: Center(
             child: Container(
-              width: 270,
-              height: 400,
-              padding: const EdgeInsets.all(15),
+              width: 300,
+              height: 460,
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
+                border: Border.all(
+                  color: const Color(0xff5e5a5b), // 邊框顏色
+                  width: 15.0, // 邊框寬度
+                ),
               ),
               child: const ContentAndButton(),
             ),
-          )
-        ],
+          ),
+        ),
       ),
     );
   }
@@ -142,26 +137,18 @@ class ContentAndButtonState extends State<ContentAndButton> {
             flex: 1,
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(
-                border:
-                    Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-                borderRadius: BorderRadius.circular(10),
-              ),
+              color: Colors.white,
+              padding: const EdgeInsets.all(20),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Add the content widget here
-
                   // 2. Platform title
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: Text(
-                      '${userController.promoteData.value.promotedMembers}人推廣',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
+                  Text(
+                    '${userController.promoteData.value.promotedMembers}人推廣',
+                    style: TextStyle(
+                      color: AppColors.colors[ColorKeys.textPrimary],
+                      fontWeight: FontWeight.w400,
+                      fontSize: 14,
                     ),
                   ),
 
@@ -169,30 +156,35 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   Text(
                     '已推廣',
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.5),
+                      color: AppColors.colors[ColorKeys.textSecondary],
                       fontWeight: FontWeight.w400,
                       fontSize: 12,
                       // height: 20 / 12,
                     ),
                   ),
-
+                  const SizedBox(height: 20),
+                  Divider(
+                    height: 1,
+                    color: AppColors.colors[ColorKeys.dividerColor],
+                  ),
                   // 6. Rounded background text
                   Container(
                       alignment: Alignment.center,
-                      margin: const EdgeInsets.only(top: 25, bottom: 25),
+                      margin: const EdgeInsets.only(
+                          top: 25, bottom: 25, left: 14, right: 14),
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(66, 119, 220, 0.5),
+                        color: const Color(0xffb5925c).withOpacity(0.1),
                       ),
-                      width: 115,
+                      width: double.infinity,
                       child: Text(
                         '邀請碼 ${userController.promoteData.value.invitationCode}',
-                        style: const TextStyle(
-                          color: Color(0xFF21AFFF),
+                        style: TextStyle(
+                          color: AppColors.colors[ColorKeys.buttonBgPrimary],
                           fontWeight: FontWeight.w400,
-                          fontSize: 10,
+                          fontSize: 12,
                         ),
                       )),
                   // 5. QR Code image
@@ -201,7 +193,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     child: QrImageView(
                       data: userController.promoteData.value.promoteLink,
                       version: QrVersions.auto,
-                      size: 90.0,
+                      size: 150.0,
                       backgroundColor: Colors.white,
                       eyeStyle: const QrEyeStyle(
                         eyeShape: QrEyeShape.square,
@@ -213,36 +205,29 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 30),
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Button(
-                      text: '複製分享',
-                      type: 'secondary',
-                      onPressed: () {
-                        Clipboard.setData(ClipboardData(
-                            text:
-                                "https://${userController.promoteData.value.promoteLink}"));
-                        ScaffoldMessenger.of(_globalKey.currentContext!)
-                            .showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              '複製成功',
-                              style: TextStyle(color: Colors.white),
-                            ),
+                  const SizedBox(height: 25),
+                  Button(
+                    text: '複製分享',
+                    type: 'primary',
+                    onPressed: () {
+                      Clipboard.setData(ClipboardData(
+                          text:
+                              "https://${userController.promoteData.value.promoteLink}"));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            '複製成功',
+                            style: TextStyle(color: Colors.white),
                           ),
-                        );
-                      },
-                    ),
+                        ),
+                      );
+                    },
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                    child: Button(
-                      text: '截圖分享',
-                      type: 'primary',
-                      onPressed: _captureAndSaveScreenshot,
-                    ),
+                  const SizedBox(height: 10),
+                  const Button(
+                    text: '截圖分享',
+                    type: 'cancel',
+                    onPressed: _captureAndSaveScreenshot,
                   ),
                 ],
               ),
