@@ -5,18 +5,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:shared/controllers/user_controller.dart';
 
 import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/widgets/button.dart';
 import 'package:app_51ss/widgets/custom_app_bar.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/modules/user/user_promo_consumer.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 final logger = Logger();
@@ -118,33 +117,25 @@ class ContentAndButton extends StatefulWidget {
 }
 
 class ContentAndButtonState extends State<ContentAndButton> {
-  UserController get userController => Get.find<UserController>();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      userController.getUserPromoteData();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Column(
-        children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              width: double.infinity,
-              color: Colors.white,
-              padding: const EdgeInsets.all(20),
-              child: Column(
+    return Column(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Container(
+            width: double.infinity,
+            color: Colors.white,
+            padding: const EdgeInsets.all(20),
+            child: UserPromoConsumer(child: (promoteData) {
+              print('promoteData22222: $promoteData');
+              return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // 2. Platform title
+
                   Text(
-                    '${userController.promoteData.value.promotedMembers}人推廣',
+                    '${promoteData.promotedMembers}人推廣',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.textPrimary],
                       fontWeight: FontWeight.w400,
@@ -180,7 +171,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ),
                       width: double.infinity,
                       child: Text(
-                        '邀請碼 ${userController.promoteData.value.invitationCode}',
+                        '邀請碼 ${promoteData.invitationCode}',
                         style: TextStyle(
                           color: AppColors.colors[ColorKeys.buttonBgPrimary],
                           fontWeight: FontWeight.w400,
@@ -191,7 +182,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: QrImageView(
-                      data: userController.promoteData.value.promoteLink,
+                      data: promoteData.promoteLink,
                       version: QrVersions.auto,
                       size: 150.0,
                       backgroundColor: Colors.white,
@@ -211,8 +202,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     type: 'primary',
                     onPressed: () {
                       Clipboard.setData(ClipboardData(
-                          text:
-                              "https://${userController.promoteData.value.promoteLink}"));
+                          text: "https://${promoteData.promoteLink}"));
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
@@ -230,11 +220,11 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     onPressed: _captureAndSaveScreenshot,
                   ),
                 ],
-              ),
-            ),
+              );
+            }),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
