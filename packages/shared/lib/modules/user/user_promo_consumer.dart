@@ -10,8 +10,7 @@ class UserPromoConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userPromoController = Get.find<UserPromoController>();
-    var promoteData = userPromoController.promoteData.value;
-    print('promoteData, $promoteData');
-    return Obx(() => child(promoteData));
+    var promoteData = userPromoController.promoteData;
+    return Obx(() => child(promoteData.value));
   }
 }

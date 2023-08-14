@@ -127,9 +127,8 @@ class ContentAndButtonState extends State<ContentAndButton> {
             width: double.infinity,
             color: Colors.white,
             padding: const EdgeInsets.all(20),
-            child: UserPromoConsumer(child: (promoteData) {
-              print('promoteData22222: $promoteData');
-              return Column(
+            child: UserPromoConsumer(
+              child: (promoteData) => Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // 2. Platform title
@@ -220,8 +219,8 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     onPressed: _captureAndSaveScreenshot,
                   ),
                 ],
-              );
-            }),
+              ),
+            ),
           ),
         ),
       ],
