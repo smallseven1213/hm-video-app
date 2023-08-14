@@ -1,6 +1,8 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/models/color_keys.dart';
 
 import '../widgets/button.dart';
 
@@ -29,20 +31,8 @@ Future<bool?> showConfirmDialog({
             constraints: const BoxConstraints(minHeight: 180),
             width: 280,
             decoration: BoxDecoration(
-              borderRadius: kIsWeb ? null : BorderRadius.circular(10),
-              gradient: const LinearGradient(
-                colors: [
-                  Color(0xFF000916),
-                  Color(0xFF003F6C),
-                  Color(0xFF005B9C),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-              border: Border.all(
-                color: const Color(0x80FFFFFF),
-                width: 0.5,
-              ),
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.white,
             ),
             child: Column(
               children: [
@@ -52,8 +42,8 @@ Future<bool?> showConfirmDialog({
                   child: title != null
                       ? Text(
                           title,
-                          style: const TextStyle(
-                            color: Colors.white,
+                          style: TextStyle(
+                            color: AppColors.colors[ColorKeys.textPrimary],
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                           ),
@@ -68,8 +58,8 @@ Future<bool?> showConfirmDialog({
                     child: message != null
                         ? Text(
                             message,
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: AppColors.colors[ColorKeys.textPrimary],
                               fontSize: 12,
                               fontWeight: FontWeight.w400,
                             ),

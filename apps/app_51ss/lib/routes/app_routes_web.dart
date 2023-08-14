@@ -6,6 +6,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/page_loader.dart';
 
 import '../pages/home.dart' deferred as home_page;
+import '../pages/share.dart' deferred as share_page;
 // import '../pages/actors.dart' deferred as actors_page;
 // import '../pages/collection.dart' deferred as collection_page;
 // import '../pages/id.dart' deferred as id_page;
@@ -13,7 +14,6 @@ import '../pages/home.dart' deferred as home_page;
 // import '../pages/playrecord.dart' deferred as playrecord_page;
 // import '../pages/register.dart' deferred as register_page;
 // import '../pages/nickname.dart' deferred as nickname_page;
-// import '../pages/share.dart' deferred as share_page;
 // import '../pages/sharerecord.dart' deferred as sharerecord_page;
 // import '../pages/shorts_by_block.dart' deferred as shorts_by_block_page;
 // import '../pages/shorts_by_local.dart' deferred as shorts_by_local_page;
@@ -44,5 +44,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         createPage: () => home_page.HomePage(
           defaultScreenKey: args['defaultScreenKey'] as String?,
         ),
+      ),
+  AppRoutes.share: (context, args) => PageLoader(
+        loadLibrary: share_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
+        createPage: () => share_page.SharePage(),
       ),
 };
