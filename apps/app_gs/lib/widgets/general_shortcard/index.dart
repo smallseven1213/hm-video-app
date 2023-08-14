@@ -17,7 +17,6 @@ class GeneralShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
   final Function toggleFullScreen;
-  final bool? hiddenBottomArea;
   final String videoUrl;
 
   const GeneralShortCard({
@@ -33,7 +32,6 @@ class GeneralShortCard extends StatefulWidget {
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
-    this.hiddenBottomArea = false,
   }) : super(key: key);
 
   @override
@@ -73,7 +71,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               title: widget.shortData.title,
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
-              hiddenBottomArea: widget.hiddenBottomArea,
             ),
           ),
           Positioned(

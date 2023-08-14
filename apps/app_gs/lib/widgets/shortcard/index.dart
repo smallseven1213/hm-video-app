@@ -21,7 +21,6 @@ class ShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
   final Function toggleFullScreen;
-  final bool? hiddenBottomArea;
 
   const ShortCard({
     Key? key,
@@ -35,7 +34,6 @@ class ShortCard extends StatefulWidget {
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
-    this.hiddenBottomArea = false,
   }) : super(key: key);
 
   @override
@@ -123,9 +121,7 @@ class ShortCardState extends State<ShortCard> {
                 ),
               ),
               Positioned(
-                bottom: widget.hiddenBottomArea == true
-                    ? -16
-                    : 60 + screen.padding.bottom,
+                bottom: -16,
                 left: 0,
                 right: 0,
                 child: Listener(
