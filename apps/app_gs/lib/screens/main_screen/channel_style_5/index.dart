@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -275,13 +276,15 @@ class ChannelStyle5 extends StatelessWidget {
                                                                       context)
                                                                   .push(
                                                                 AppRoutes
-                                                                    .shortsByChannel,
+                                                                    .shorts,
                                                                 args: {
+                                                                  'type': ShortsType
+                                                                      .supplier,
                                                                   'videoId':
                                                                       vod.id,
-                                                                  'supplierId':
-                                                                      data.supplier
-                                                                          .id,
+                                                                  'id': data
+                                                                      .supplier
+                                                                      .id,
                                                                 },
                                                               );
                                                             },

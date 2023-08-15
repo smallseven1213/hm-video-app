@@ -3,7 +3,9 @@ library app_routes;
 import 'package:flutter/material.dart';
 import 'package:app_gs/pages/actor.dart' as actor_page;
 import 'package:app_gs/pages/configs.dart' as configs_page;
+import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../pages/actors.dart' as actors_page;
@@ -18,9 +20,7 @@ import '../pages/share.dart' as share_page;
 import '../pages/sharerecord.dart' as sharerecord_page;
 import '../pages/shorts_by_block.dart' as shorts_by_block_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
-import '../pages/shorts_by_channel.dart' as shorts_by_channel_page;
-import '../pages/shorts_by_supplier.dart' as shorts_by_supplier_page;
-import '../pages/shorts_by_tag.dart' as shorts_by_tag_page;
+import '../pages/shorts_by_common.dart' as shorts_by_common_page;
 import '../pages/supplier.dart' as supplier_page;
 import '../pages/supplier_tag_video.dart' as supplier_tag_video_page;
 import '../pages/tag_video.dart' as tag_video_page;
@@ -89,34 +89,23 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         tagId: args['tagId'] as int,
         tagName: args['tagName'],
       ),
-  AppRoutes.shortsByTag: (context, args) => shorts_by_tag_page.ShortsByTagPage(
+  AppRoutes.shorts: (context, args) => shorts_by_common_page.ShortsByCommonPage(
         uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,
-        tagId: args['tagId'] as int,
+        id: args['id'] as int,
+        type: args['type'] as ShortsType,
       ),
-  AppRoutes.shortsBySupplier: (context, args) =>
-      shorts_by_supplier_page.ShortsBySupplierPage(
-        uuid: args['uuid'] as String,
-        videoId: args['videoId'] as int,
-        supplierId: args['supplierId'] as int,
-      ),
-  AppRoutes.shortsByBlock: (context, args) =>
-      shorts_by_block_page.ShortsByBlockPage(
-        uuid: args['uuid'] as String,
-        videoId: args['videoId'] as int,
-        areaId: args['areaId'] as int,
-      ),
+  // AppRoutes.shortsByBlock: (context, args) =>
+  //     shorts_by_block_page.ShortsByBlockPage(
+  //       uuid: args['uuid'] as String,
+  //       videoId: args['videoId'] as int,
+  //       areaId: args['areaId'] as int,
+  //     ),
   AppRoutes.shortsByLocal: (context, args) =>
       shorts_by_local_page.ShortsByLocalPage(
         uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,
         itemId: args['itemId'] as int,
-      ),
-  AppRoutes.shortsByChannel: (context, args) =>
-      shorts_by_channel_page.ShortsByChannelPage(
-        uuid: args['uuid'] as String,
-        videoId: args['videoId'] as int,
-        supplierId: args['supplierId'] as int,
       ),
   AppRoutes.configs: (context, args) => const configs_page.ConfigsPage(),
   AppRoutes.updatePassword: (context, args) =>

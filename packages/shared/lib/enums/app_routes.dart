@@ -23,11 +23,12 @@ class AppRoutes {
   static const String nickname = '/user/nickname';
   static const String supplier = '/supplier';
   static const String supplierTag = '/supplier_tag';
-  static const String shortsByTag = '/shorts_by_tag';
-  static const String shortsByBlock = '/shorts_by_block';
-  static const String shortsBySupplier = '/shorts_by_supplier';
+  static const String shorts = '/shorts';
+  // static const String shortsByTag = '/shorts_by_tag';
+  // static const String shortsByBlock = '/shorts_by_block';
+  // static const String shortsBySupplier = '/shorts_by_supplier';
   static const String shortsByLocal = '/shorts_by_local';
-  static const String shortsByChannel = '/shorts_by_channel';
+  // static const String shortsByChannel = '/shorts_by_channel';
   static const String configs = '/configs';
   static const String updatePassword = '/update_password';
   static const String idCard = '/id_card';

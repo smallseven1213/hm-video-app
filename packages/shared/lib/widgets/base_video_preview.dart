@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared/enums/shorts_type.dart';
 
 import '../enums/app_routes.dart';
 import '../models/tag.dart';
@@ -76,8 +77,8 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
           );
         } else if (film == 2) {
           MyRouteDelegate.of(context).push(
-            AppRoutes.shortsByBlock,
-            args: {'videoId': id, 'areaId': blockId},
+            AppRoutes.shorts,
+            args: {'type': ShortsType.area, 'videoId': id, 'id': blockId},
           );
         } else if (film == 3) {
           // MyRouteDelegate.of(context).push(

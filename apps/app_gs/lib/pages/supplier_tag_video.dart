@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/short_tag_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/list_no_more.dart';
@@ -51,8 +52,12 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                         film: 2,
                         onOverrideRedirectTap: (id) {
                           MyRouteDelegate.of(context).push(
-                            AppRoutes.shortsByTag,
-                            args: {'videoId': vod.id, 'tagId': widget.tagId},
+                            AppRoutes.shorts,
+                            args: {
+                              'type': ShortsType.tag,
+                              'videoId': vod.id,
+                              'id': widget.tagId
+                            },
                           );
                         },
                         hasRadius: false,
