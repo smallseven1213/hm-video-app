@@ -1,6 +1,7 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:logger/logger.dart';
+import '../enums/shorts_type.dart';
 import '../models/area_info_with_block_vod.dart';
 import '../models/block_vod.dart';
 import '../models/channel_info.dart';
@@ -446,12 +447,26 @@ class VodApi {
   }
 
   Future<List<Vod>> getPlayList({
-    required int supplierId,
+    required ShortsType type,
+    required int id,
     required int videoId,
   }) async {
+    String queryString;
+    switch (type) {
+      case ShortsType.supplier:
+        queryString = 'supplierId=$id';
+        break;
+      case ShortsType.tag:
+        queryString = 'tagId=$id';
+        break;
+      case ShortsType.area:
+        queryString = 'areaId=$id';
+        break;
+    }
+
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/shortVideo/playlist?supplierId=$supplierId&videoId=$videoId');
+            '${systemConfig.apiHost}/public/videos/video/shortVideo/playlist?$queryString&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }

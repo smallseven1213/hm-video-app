@@ -2,6 +2,7 @@ import 'package:app_gs/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -58,8 +59,12 @@ class SupplierVods extends StatelessWidget {
                         id: id,
                         onOverrideRedirectTap: (id) {
                           MyRouteDelegate.of(context).push(
-                            AppRoutes.shortsBySupplier,
-                            args: {'videoId': vod.id, 'supplierId': id},
+                            AppRoutes.shorts,
+                            args: {
+                              'type': ShortsType.supplier,
+                              'videoId': vod.id,
+                              'id': id
+                            },
                           );
                         },
                         film: 2,
@@ -90,41 +95,5 @@ class SupplierVods extends StatelessWidget {
         ],
       );
     });
-    // return SliverGrid(
-    //   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-    //     crossAxisCount: 3,
-    //     childAspectRatio: gridRatio,
-    //     crossAxisSpacing: 1,
-    //     mainAxisSpacing: 1,
-    //   ),
-    //   delegate: SliverChildBuilderDelegate(
-    //     (BuildContext context, int index) {
-    //       var vod = vodList[index];
-    //       return VideoPreviewWidget(
-    //           id: id,
-    //           onOverrideRedirectTap: () {
-    //             MyRouteDelegate.of(context).push(
-    //               AppRoutes.shortsBySupplier.value,
-    //               args: {'videoId': vod.id, 'supplierId': id},
-    //             );
-    //           },
-    //           film: 2,
-    //           hasRadius: false,
-    //           hasTitle: false,
-    //           imageRatio: gridRatio,
-    //           displayVideoTimes: false,
-    //           displayViewTimes: false,
-    //           displayCoverVertical: true,
-    //           coverVertical: vod.coverVertical!,
-    //           coverHorizontal: vod.coverHorizontal!,
-    //           timeLength: vod.timeLength!,
-    //           tags: vod.tags!,
-    //           title: vod.title,
-    //           videoViewTimes: vod.videoViewTimes!,
-    //           videoCollectTimes: vod.videoCollectTimes!);
-    //     },
-    //     childCount: vodList.length,
-    //   ),
-    // );
   }
 }
