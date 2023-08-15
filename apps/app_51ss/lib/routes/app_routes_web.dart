@@ -7,8 +7,8 @@ import 'package:shared/widgets/page_loader.dart';
 
 import '../pages/home.dart' deferred as home_page;
 import '../pages/share.dart' deferred as share_page;
+import '../pages/collection.dart' deferred as collection_page;
 // import '../pages/actors.dart' deferred as actors_page;
-// import '../pages/collection.dart' deferred as collection_page;
 // import '../pages/id.dart' deferred as id_page;
 // import '../pages/login.dart' deferred as login_page;
 // import '../pages/playrecord.dart' deferred as playrecord_page;
@@ -49,5 +49,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         loadLibrary: share_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => share_page.SharePage(),
+      ),
+  AppRoutes.collection: (context, args) => PageLoader(
+        loadLibrary: collection_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
+        createPage: () => collection_page.CollectionPage(),
       ),
 };
