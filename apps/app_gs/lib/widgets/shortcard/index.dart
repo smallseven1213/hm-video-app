@@ -21,6 +21,7 @@ class ShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
   final Function toggleFullScreen;
+  final bool allowFullsreen;
 
   const ShortCard({
     Key? key,
@@ -30,6 +31,7 @@ class ShortCard extends StatefulWidget {
     required this.title,
     required this.shortData,
     required this.toggleFullScreen,
+    required this.allowFullsreen,
     // required this.isFullscreen,
     this.isActive = true,
     this.supportedPlayRecord = true,
@@ -54,7 +56,7 @@ class ShortCardState extends State<ShortCard> {
 
     return VideoPlayerConsumer(
       tag: widget.obsKey,
-      child: (videoPlayerInfo) {
+      child: (VideoPlayerInfo videoPlayerInfo) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
         }
@@ -102,7 +104,7 @@ class ShortCardState extends State<ShortCard> {
                       VideoPlayerDisplayWidget(
                     controller: videoPlayerInfo.observableVideoPlayerController,
                     video: video!,
-                    allowFullsreen: true,
+                    allowFullsreen: widget.allowFullsreen,
                     toggleFullscreen: () {
                       pageviewIndexController.toggleFullscreen();
                     },

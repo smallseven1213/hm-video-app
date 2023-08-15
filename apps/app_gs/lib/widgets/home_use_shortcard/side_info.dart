@@ -17,7 +17,7 @@ import '../../config/colors.dart';
 
 final logger = Logger();
 
-class SideInfo extends StatelessWidget {
+class SideInfo extends StatefulWidget {
   final String obsKey;
   final Vod shortData;
 
@@ -28,12 +28,24 @@ class SideInfo extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _SideInfoState createState() => _SideInfoState();
+}
+
+class _SideInfoState extends State<SideInfo> {
+  late ObservableVideoPlayerController obsVideoPlayerController;
+
+  @override
+  void initState() {
+    super.initState();
+    obsVideoPlayerController =
+        Get.find<ObservableVideoPlayerController>(tag: widget.obsKey);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: obsKey);
     final ShortVideoDetailController videoDetailController =
         Get.find<ShortVideoDetailController>(
-            tag: genaratorShortVideoDetailTag(shortData.id.toString()));
+            tag: genaratorShortVideoDetailTag(widget.shortData.id.toString()));
 
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
@@ -75,7 +87,7 @@ class SideInfo extends StatelessWidget {
 
           Obx(() {
             bool isLike = userFavoritesShortController.data
-                .any((e) => e.id == shortData.id);
+                .any((e) => e.id == widget.shortData.id);
             var favorites = videoDetailController.videoFavorites.value;
 
             return Column(
@@ -87,15 +99,14 @@ class SideInfo extends StatelessWidget {
                   alignment: Alignment.center,
                   padding: const EdgeInsets.only(right: 1),
                   onPressed: () {
-                    logger.i(
-                        '===== LIKE ===== $isLike ${shortData.id}} $favorites');
                     if (isLike) {
-                      userFavoritesShortController.removeVideo([shortData.id]);
+                      userFavoritesShortController
+                          .removeVideo([widget.shortData.id]);
                       if (favorites > 0) {
                         videoDetailController.updateFavorites(-1);
                       }
                     } else {
-                      var vod = Vod.fromJson(shortData.toJson());
+                      var vod = Vod.fromJson(widget.shortData.toJson());
                       userFavoritesShortController.addVideo(vod);
                       videoDetailController.updateFavorites(1);
                     }
@@ -125,7 +136,7 @@ class SideInfo extends StatelessWidget {
 
           Obx(() {
             bool isLike = userShortCollectionController.data
-                .any((e) => e.id == shortData.id);
+                .any((e) => e.id == widget.shortData.id);
             var collects = videoDetailController.videoCollects.value;
 
             return Column(
@@ -135,12 +146,13 @@ class SideInfo extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 1),
                   onPressed: () {
                     if (isLike) {
-                      userShortCollectionController.removeVideo([shortData.id]);
+                      userShortCollectionController
+                          .removeVideo([widget.shortData.id]);
                       if (collects > 0) {
                         videoDetailController.updateCollects(-1);
                       }
                     } else {
-                      var vod = Vod.fromJson(shortData.toJson());
+                      var vod = Vod.fromJson(widget.shortData.toJson());
                       userShortCollectionController.addVideo(vod);
                       videoDetailController.updateCollects(1);
                     }

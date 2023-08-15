@@ -112,9 +112,9 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              if (videoSize.width > videoSize.height)
+              if (videoSize.width > videoSize.height && allowFullsreen == true)
                 Positioned(
-                  bottom: 200,
+                  bottom: 150,
                   child: Center(
                       child: ElevatedButton.icon(
                     onPressed: () => toggleFullscreen(),
