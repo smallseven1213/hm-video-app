@@ -19,7 +19,6 @@ class UserController extends GetxController {
   var isLoading = false.obs;
   var totalAmount = 0.0.obs;
   var loginCode = ''.obs;
-  var promoteData = UserPromote('', '', -1, -1).obs;
 
   bool get isGuest => info.value.roles.contains('guest');
   GetStorage box = GetStorage();
@@ -66,19 +65,6 @@ class UserController extends GetxController {
       var authApi = AuthApi();
       var res = await authApi.getLoginCode();
       loginCode.value = res.data['code'];
-    } catch (error) {
-      logger.i(error);
-    } finally {
-      isLoading.value = false;
-    }
-  }
-
-  Future<void> getUserPromoteData() async {
-    isLoading.value = true;
-    try {
-      var userApi = UserApi();
-      UserPromote res = await userApi.getUserPromote();
-      promoteData.value = res;
     } catch (error) {
       logger.i(error);
     } finally {

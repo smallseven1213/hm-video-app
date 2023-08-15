@@ -26,7 +26,11 @@ class VideoBlock extends BaseVideoBlock {
 }
 
 class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
-  BaseVideoPreviewWidget _buildVideoPreview(int film, Vod video) {
+  BaseVideoPreviewWidget _buildVideoPreview(
+    int film,
+    Vod video, {
+    hasTags = true,
+  }) {
     return VideoPreviewWidget(
       id: video.id,
       title: video.title,
@@ -42,6 +46,9 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
       displayViewTimes: film == 1,
       displayVideoCollectTimes: film == 2,
       displayCoverVertical: film == 2,
+      film: film,
+      blockId: block.id,
+      hasTags: hasTags,
     );
   }
 
@@ -158,7 +165,11 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
           block: block,
           updateBlock: updateBlock,
           channelId: channelId,
-          buildVideoPreview: (video) => _buildVideoPreview(film, video),
+          buildVideoPreview: (video) => _buildVideoPreview(
+            film,
+            video,
+            hasTags: false,
+          ),
         );
       case 10:
         return Block10Widget(

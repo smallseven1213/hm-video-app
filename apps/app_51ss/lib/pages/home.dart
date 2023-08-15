@@ -15,6 +15,8 @@ import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../screens/main_screen/index.dart';
 import '../screens/apps_screen/index.dart';
+import '../screens/user_screen/index.dart';
+
 import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
@@ -36,7 +38,7 @@ final screens = {
   //     ),
   // HomeNavigatorPathes.game: () => const GameScreen(),
   HomeNavigatorPathes.apps: () => const AppsScreen(),
-  // HomeNavigatorPathes.user: () => const UserScreen(),
+  HomeNavigatorPathes.user: () => const UserScreen(),
 };
 
 class HomePage extends StatefulWidget {
@@ -81,24 +83,6 @@ class HomeState extends State<HomePage> {
               Container(
                 padding: EdgeInsets.only(bottom: paddingBottom),
                 height: 76 + paddingBottom,
-                decoration: const BoxDecoration(
-                  borderRadius: kIsWeb
-                      ? null
-                      : BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                        ),
-                  gradient: kIsWeb
-                      ? null
-                      : LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xFF000000),
-                            Color(0xFF002869),
-                          ],
-                        ),
-                ),
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(10),

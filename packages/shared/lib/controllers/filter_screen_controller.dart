@@ -27,7 +27,6 @@ class FilterScreenController extends GetxController {
     bool showTab = true,
     bool openOption = false,
   }) {
-    print('@@filterScreenController.selectedBarOpen.value: $openOption');
     showTabBar.value = showTab;
     selectedBarOpen.value = openOption;
   }

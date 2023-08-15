@@ -5,12 +5,10 @@ import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
-import '../wave_loading.dart';
 import 'short_card_info.dart';
 
 class ShortCard extends StatefulWidget {
@@ -23,7 +21,6 @@ class ShortCard extends StatefulWidget {
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
   final Function toggleFullScreen;
-  final bool? hiddenBottomArea;
 
   const ShortCard({
     Key? key,
@@ -37,7 +34,6 @@ class ShortCard extends StatefulWidget {
     this.isActive = true,
     this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
-    this.hiddenBottomArea = false,
   }) : super(key: key);
 
   @override
@@ -92,48 +88,29 @@ class ShortCardState extends State<ShortCard> {
           color: Colors.black,
           child: Stack(
             children: [
-              const WaveLoading(
-                color: Color.fromRGBO(255, 255, 255, 0.3),
-                duration: Duration(milliseconds: 1000),
-                size: 17,
-                itemCount: 3,
-              ),
               SizedBox(
                 height: screen.size.height - 76 - screen.padding.bottom,
                 width: double.infinity,
                 child: ShortVideoConsumer(
                   vodId: widget.id,
-                  child: ((
-                          {required isLoading,
-                          required video,
-                          required videoDetail,
-                          required videoUrl}) =>
-                      Stack(
-                        children: [
-                          VideoPlayerDisplayWidget(
-                            controller:
-                                videoPlayerInfo.observableVideoPlayerController,
-                            video: video!,
-                            allowFullsreen: false,
-                            toggleFullscreen: () {
-                              widget.toggleFullScreen();
-                            },
-                          ),
-                          if (videoDetail != null)
-                            ShortCardInfo(
-                              obsKey: widget.obsKey,
-                              data: videoDetail,
-                              title: widget.title,
-                              videoUrl: videoUrl!,
-                            ),
-                        ],
-                      )),
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      VideoPlayerDisplayWidget(
+                    controller: videoPlayerInfo.observableVideoPlayerController,
+                    video: video!,
+                    allowFullsreen: false,
+                    toggleFullscreen: () {
+                      widget.toggleFullScreen();
+                    },
+                  ),
                 ),
               ),
               Positioned(
-                bottom: widget.hiddenBottomArea == true
-                    ? -16
-                    : 60 + screen.padding.bottom,
+                bottom: -16,
                 left: 0,
                 right: 0,
                 child: Listener(
