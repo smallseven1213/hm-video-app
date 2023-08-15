@@ -1,6 +1,9 @@
 import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
@@ -41,6 +44,19 @@ class GeneralShortCard extends StatefulWidget {
 }
 
 class GeneralShortCardState extends State<GeneralShortCard> {
+  final PageViewIndexController pageviewIndexController =
+      Get.find<PageViewIndexController>();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('@@@ GeneralShortCardState dispose');
+    if (pageviewIndexController.isFullscreen.value == true) {
+      pageviewIndexController.toggleFullscreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
@@ -106,7 +122,15 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               ],
             ),
           ),
-          const FloatPageBackButton()
+          FloatPageBackButton(
+            onPressed: () {
+              if (pageviewIndexController.isFullscreen.value == true) {
+                pageviewIndexController.toggleFullscreen();
+              } else {
+                Navigator.pop(context);
+              }
+            },
+          ),
         ],
       ),
     );

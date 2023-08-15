@@ -76,7 +76,7 @@ class ShortCardState extends State<ShortCard> {
               FullScreenControls(
                 isFullscreen: pageviewIndexController.isFullscreen.value,
                 toggleFullscreen: () {
-                  widget.toggleFullScreen();
+                  pageviewIndexController.toggleFullscreen();
                 },
                 videoPlayerInfo: videoPlayerInfo,
                 ovpController: videoPlayerInfo.observableVideoPlayerController,
@@ -102,9 +102,9 @@ class ShortCardState extends State<ShortCard> {
                       VideoPlayerDisplayWidget(
                     controller: videoPlayerInfo.observableVideoPlayerController,
                     video: video!,
-                    allowFullsreen: false,
+                    allowFullsreen: true,
                     toggleFullscreen: () {
-                      widget.toggleFullScreen();
+                      pageviewIndexController.toggleFullscreen();
                     },
                   ),
                 ),
@@ -161,7 +161,7 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              const FloatPageBackButton()
+              // const FloatPageBackButton()
             ],
           ),
         );
