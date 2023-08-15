@@ -127,7 +127,6 @@ class _GameWebviewToggleButtonWidget
               InkWell(
                 onTap: () {
                   logger.i('充值');
-                  Navigator.of(context).pop();
                   MyRouteDelegate.of(context).push(
                     gameConfigController.switchPaymentPage.value ==
                             switchPaymentPageType['list']
