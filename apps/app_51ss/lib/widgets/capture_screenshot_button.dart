@@ -20,11 +20,8 @@ Future<void> captureAndSaveScreenshot(
 
   // Get the RenderObject before the async operation
   RenderObject? renderObject = key.currentContext?.findRenderObject();
-  logger.i('key: ${key.currentContext}');
-  logger.i('renderObject: $renderObject');
 
   if (renderObject is RenderRepaintBoundary) {
-    logger.i('renderObject is RenderRepaintBoundary');
     final image = await renderObject.toImage(pixelRatio: 3.0);
     ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
     Uint8List pngBytes = byteData!.buffer.asUint8List();

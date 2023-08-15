@@ -179,11 +179,6 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     buttonType: 'cancel',
                     successMessage: '已成功保存推廣卡',
                   ),
-                  // const Button(
-                  //   text: '截圖分享',
-                  //   type: 'cancel',
-                  //   onPressed: _captureAndSaveScreenshot,
-                  // ),
                 ],
               ),
             ),
