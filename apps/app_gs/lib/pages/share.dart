@@ -14,6 +14,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/modules/user/user_promo_consumer.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 final logger = Logger();
@@ -123,20 +124,10 @@ class ContentAndButton extends StatefulWidget {
 }
 
 class ContentAndButtonState extends State<ContentAndButton> {
-  UserController get userController => Get.find<UserController>();
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      userController.getUserPromoteData();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Column(
+    return UserPromoConsumer(
+      child: (promoteData) => Column(
         children: [
           Expanded(
             flex: 1,
@@ -156,7 +147,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      '${userController.promoteData.value.promotedMembers}人推廣',
+                      '${promoteData.promotedMembers}人推廣',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
@@ -188,7 +179,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ),
                       width: 115,
                       child: Text(
-                        '邀請碼 ${userController.promoteData.value.invitationCode}',
+                        '邀請碼 ${promoteData.invitationCode}',
                         style: const TextStyle(
                           color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,
@@ -199,7 +190,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: QrImageView(
-                      data: userController.promoteData.value.promoteLink,
+                      data: promoteData.promoteLink,
                       version: QrVersions.auto,
                       size: 90.0,
                       backgroundColor: Colors.white,
@@ -222,8 +213,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       type: 'secondary',
                       onPressed: () {
                         Clipboard.setData(ClipboardData(
-                            text:
-                                "https://${userController.promoteData.value.promoteLink}"));
+                            text: "https://${promoteData.promoteLink}"));
                         ScaffoldMessenger.of(_globalKey.currentContext!)
                             .showSnackBar(
                           const SnackBar(

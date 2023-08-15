@@ -17,6 +17,7 @@ import '../controllers/route_controller.dart';
 import '../controllers/search_page_data_controller.dart';
 import '../controllers/search_temp_controller.dart';
 import '../controllers/user_controller.dart';
+import '../controllers/user_promo_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
 import '../controllers/user_favorites_short_controlle.dart';
 import '../controllers/user_favorites_supplier_controller.dart';
@@ -33,6 +34,7 @@ void setupDependencies() {
       () => ApiResponseErrorCatchController());
   Get.lazyPut<AppsController>(() => AppsController());
   Get.lazyPut<UserController>(() => UserController());
+  Get.lazyPut<UserPromoController>(() => UserPromoController());
   Get.lazyPut<UserNavigatorController>(() => UserNavigatorController());
   Get.lazyPut<BottomNavigatorController>(() => BottomNavigatorController());
   Get.lazyPut<BannerController>(() => BannerController());
