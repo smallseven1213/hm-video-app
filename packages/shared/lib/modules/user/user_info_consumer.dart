@@ -11,9 +11,13 @@ class UserInfoConsumer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final userController = Get.find<UserController>();
-    var isVIP = userController.info.value.roles.contains('vip');
-    var isGuest = userController.info.value.roles.contains('guest');
+
     // ignore: invalid_use_of_protected_member
-    return Obx(() => child(userController.info.value, isVIP, isGuest));
+    return Obx(() {
+      var isVIP = userController.info.value.roles.contains('vip');
+      var isGuest = userController.info.value.roles.contains('guest');
+
+      return child(userController.info.value, isVIP, isGuest);
+    });
   }
 }
