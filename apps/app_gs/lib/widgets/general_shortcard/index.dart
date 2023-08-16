@@ -125,15 +125,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                     ],
                   ),
                 ),
-          FloatPageBackButton(
-            onPressed: () {
-              if (pageviewIndexController.isFullscreen.value == true) {
-                pageviewIndexController.toggleFullscreen();
-              } else {
-                Navigator.pop(context);
-              }
-            },
-          ),
+          if (pageviewIndexController.isFullscreen.value != true)
+            const FloatPageBackButton(),
         ],
       ),
     );

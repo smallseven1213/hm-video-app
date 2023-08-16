@@ -5,6 +5,7 @@ import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
@@ -70,8 +71,12 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              FullScreenControls(videoPlayerInfo: videoPlayerInfo),
+              FullScreenControls(
+                videoPlayerInfo: videoPlayerInfo,
+                pageviewIndexController: pageviewIndexController,
+              ),
               // error
+
               if (videoPlayerInfo
                       .observableVideoPlayerController.videoAction.value ==
                   'error')

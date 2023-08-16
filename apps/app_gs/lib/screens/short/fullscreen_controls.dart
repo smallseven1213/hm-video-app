@@ -1,18 +1,22 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/widgets/float_page_back_button.dart';
 
 final logger = Logger();
 
 class FullScreenControls extends StatefulWidget {
   final String? name;
   final VideoPlayerInfo videoPlayerInfo;
+  final PageViewIndexController pageviewIndexController;
 
   const FullScreenControls({
     Key? key,
     this.name,
     required this.videoPlayerInfo,
+    required this.pageviewIndexController,
   }) : super(key: key);
 
   @override
@@ -161,66 +165,82 @@ class ControlsOverlayState extends State<FullScreenControls> {
                 ),
               ),
             ),
-          // progress bar
-          Positioned(
-            bottom: 0,
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      widget.videoPlayerInfo.isPlaying
-                          ? widget.videoPlayerInfo.videoPlayerController
-                              ?.pause()
-                          : widget.videoPlayerInfo.videoPlayerController
-                              ?.play();
-                    },
-                    icon: Icon(
-                      widget.videoPlayerInfo.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                      color: Colors.white,
-                      size: 18,
-                    ),
-                  ),
-                  Expanded(
-                    // 使用Expanded讓SliderTheme填充剩餘的空間
-                    child: SliderTheme(
-                      data: SliderThemeData(
-                        // trackShape: CustomTrackShape(),
-                        trackHeight: 4.0, // 這可以設定滑塊軌道的高度
-                        thumbShape: TransparentSliderThumbShape(),
-                        activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
-                        inactiveTrackColor:
-                            Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
-                        overlayShape:
-                            const RoundSliderOverlayShape(overlayRadius: 0.0),
-                      ),
-                      child: Slider(
-                        value: widget.videoPlayerInfo.videoPosition.toDouble(),
-                        min: 0,
-                        max: widget.videoPlayerInfo.videoDuration.toDouble(),
-                        onChanged: (double value) {
-                          if (mounted) {
-                            widget.videoPlayerInfo.startScrolling();
-                            widget.videoPlayerInfo.showControls();
-                            widget.videoPlayerInfo.videoPlayerController
-                                ?.seekTo(Duration(seconds: value.toInt()));
-                          }
-                        },
-                        onChangeEnd: (double value) {
-                          widget.videoPlayerInfo.stopScrolling();
-                          widget.videoPlayerInfo.startToggleControlsTimer();
-                        },
+          if (widget.videoPlayerInfo.displayControls ||
+              !widget.videoPlayerInfo.isPlaying) ...[
+            Positioned(
+              bottom: 0,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        widget.videoPlayerInfo.isPlaying
+                            ? widget.videoPlayerInfo.videoPlayerController
+                                ?.pause()
+                            : widget.videoPlayerInfo.videoPlayerController
+                                ?.play();
+                      },
+                      icon: Icon(
+                        widget.videoPlayerInfo.isPlaying
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        color: Colors.white,
+                        size: 18,
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 5.0),
-                ],
+                    Text(
+                      widget.videoPlayerInfo.videoPositionString,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    Expanded(
+                      // 使用Expanded讓SliderTheme填充剩餘的空間
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          // trackShape: CustomTrackShape(),
+                          trackHeight: 4.0, // 這可以設定滑塊軌道的高度
+                          thumbShape: TransparentSliderThumbShape(),
+                          activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
+                          inactiveTrackColor:
+                              Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
+                          overlayShape:
+                              const RoundSliderOverlayShape(overlayRadius: 0.0),
+                        ),
+                        child: Slider(
+                          value:
+                              widget.videoPlayerInfo.videoPosition.toDouble(),
+                          min: 0,
+                          max: widget.videoPlayerInfo.videoDuration.toDouble(),
+                          onChanged: (double value) {
+                            if (mounted) {
+                              widget.videoPlayerInfo.startScrolling();
+                              widget.videoPlayerInfo.showControls();
+                              widget.videoPlayerInfo.videoPlayerController
+                                  ?.seekTo(Duration(seconds: value.toInt()));
+                            }
+                          },
+                          onChangeEnd: (double value) {
+                            widget.videoPlayerInfo.stopScrolling();
+                            widget.videoPlayerInfo.startToggleControlsTimer();
+                          },
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 5.0),
+                    Text(
+                      widget.videoPlayerInfo.videoDurationString,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(width: 15.0),
+                  ],
+                ),
               ),
             ),
-          ),
+            FloatPageBackButton(
+              onPressed: () =>
+                  widget.pageviewIndexController.toggleFullscreen(),
+            ),
+          ]
         ]),
       );
     });
