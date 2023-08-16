@@ -1,18 +1,15 @@
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
-import 'package:shared/models/color_keys.dart';
-import 'package:shared/modules/user/user_tab_scaffold.dart';
 
-import '../config/user_tab.dart';
 import '../screens/collection/short.dart';
 import '../screens/collection/video.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/list_page_panel.dart';
+import '../widgets/tab_bar.dart';
 
-// TODO: 確認編輯功能
 class CollectionPage extends StatefulWidget {
   const CollectionPage({Key? key}) : super(key: key);
 
@@ -22,13 +19,12 @@ class CollectionPage extends StatefulWidget {
 
 class CollectionPageState extends State<CollectionPage>
     with SingleTickerProviderStateMixin {
-  UserVodCollectionController vodController =
-      userTabControllers['collection']!.controller;
-  UserShortCollectionController shortController =
-      userTabControllers['short_collection']!.controller;
-
+  final UserVodCollectionController userVodCollectionController =
+      Get.find<UserVodCollectionController>();
+  final UserShortCollectionController userShortCollectionController =
+      Get.find<UserShortCollectionController>();
   final ListEditorController listEditorController =
-      userTabControllers['list_editor_collection']!.controller;
+      Get.find<ListEditorController>(tag: 'collection');
   late TabController _tabController;
 
   @override
@@ -53,10 +49,10 @@ class CollectionPageState extends State<CollectionPage>
 
   void _handleSelectAll() {
     if (_tabController.index == 0) {
-      var allData = vodController.videos;
+      var allData = userVodCollectionController.videos;
       listEditorController.saveBoundData(allData.map((e) => e.id).toList());
     } else if (_tabController.index == 1) {
-      var allData = shortController.data;
+      var allData = userShortCollectionController.data;
       listEditorController.saveBoundData(allData.map((e) => e.id).toList());
     }
   }
@@ -64,50 +60,49 @@ class CollectionPageState extends State<CollectionPage>
   void _handleDeleteAll() {
     if (_tabController.index == 0) {
       var selectedIds = listEditorController.selectedIds.toList();
-      vodController.removeVideo(selectedIds);
+      userVodCollectionController.removeVideo(selectedIds);
       listEditorController.removeBoundData(selectedIds);
     } else if (_tabController.index == 1) {
       var selectedIds = listEditorController.selectedIds.toList();
-      shortController.removeVideo(selectedIds);
+      userShortCollectionController.removeVideo(selectedIds);
       listEditorController.removeBoundData(selectedIds);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
-      child: Scaffold(
-          appBar: CustomAppBar(
-            title: '我的收藏',
-            actions: [
-              Obx(() => TextButton(
-                  onPressed: () {
-                    listEditorController.toggleEditing();
-                  },
-                  child: Text(
-                    listEditorController.isEditing.value ? '取消' : '編輯',
-                    style: const TextStyle(color: Colors.white),
-                  )))
+    return Scaffold(
+      appBar: CustomAppBar(
+        title: '我的收藏',
+        actions: [
+          Obx(() => TextButton(
+              onPressed: () {
+                listEditorController.toggleEditing();
+              },
+              child: Text(
+                listEditorController.isEditing.value ? '取消' : '編輯',
+                style: const TextStyle(color: Color(0xff00B0D4)),
+              )))
+        ],
+        bottom:
+            GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
+      ),
+      body: Stack(
+        children: [
+          TabBarView(
+            controller: _tabController,
+            children: [
+              CollectionVideo(),
+              CollectionShortScreen(),
             ],
           ),
-          body: UserTabScaffold(
-            tabs: const ['長視頻', '短視頻'],
-            tabViews: [CollectionVideo(), CollectionShortScreen()],
-            onTabChanged: () {
-              listEditorController.clearSelected();
-              listEditorController.isEditing.value = false;
-            },
+          ListPagePanelWidget(
             listEditorController: listEditorController,
             onSelectButtonClick: _handleSelectAll,
             onDeleteButtonClick: _handleDeleteAll,
-            overlayColor: AppColors.colors[ColorKeys.buttonOverlayColor],
-            primaryButtonBgColor: AppColors.colors[ColorKeys.buttonBgPrimary],
-            secondaryButtonBgColor:
-                AppColors.colors[ColorKeys.buttonBgSecondary],
-            primaryTextColor: AppColors.colors[ColorKeys.buttonTextPrimary],
-            secondaryTextColor: AppColors.colors[ColorKeys.buttonTextSecondary],
-          )),
+          ),
+        ],
+      ),
     );
   }
 }
