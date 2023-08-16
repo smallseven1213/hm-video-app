@@ -1,65 +1,22 @@
-import 'dart:io';
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:logger/logger.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/button.dart';
-import 'package:app_51ss/widgets/custom_app_bar.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_promo_consumer.dart';
 
+import 'package:app_51ss/config/colors.dart';
+import 'package:app_51ss/widgets/button.dart';
+import 'package:shared/widgets/capture_screenshot_button.dart';
+import 'package:app_51ss/widgets/custom_app_bar.dart';
+
 final GlobalKey _globalKey = GlobalKey();
 final logger = Logger();
-
-Future<void> _captureAndSaveScreenshot() async {
-  // 請求權限
-  if (Platform.isAndroid) {
-    await Permission.storage.request();
-  }
-
-  RenderRepaintBoundary boundary =
-      // ignore: use_build_context_synchronously
-      _globalKey.currentContext!.findRenderObject()! as RenderRepaintBoundary;
-  final image = await boundary.toImage(pixelRatio: 3.0);
-  ByteData? byteData = await image.toByteData(format: ImageByteFormat.png);
-  Uint8List pngBytes = byteData!.buffer.asUint8List();
-
-  // 獲取應用文檔目錄
-  Directory directory = await getTemporaryDirectory();
-  String tempPath = directory.path;
-
-  // 生成文件名
-  String fileName = '${DateTime.now().millisecondsSinceEpoch}.png';
-
-  // 保存到臨時文件
-  File file = File('$tempPath/$fileName');
-  await file.writeAsBytes(pngBytes);
-
-  // 保存到相冊
-  final result = await ImageGallerySaver.saveFile(file.path);
-  logger.i('File saved: $result');
-
-  // 顯示保存成功提示
-  ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(
-    const SnackBar(
-      content: Text(
-        '已成功保存推廣卡',
-        style: TextStyle(
-          color: Colors.white,
-        ),
-      ),
-    ),
-  );
-}
 
 class SharePage extends StatelessWidget {
   const SharePage({Key? key}) : super(key: key);
@@ -89,18 +46,21 @@ class SharePage extends StatelessWidget {
         ),
         body: Container(
           color: AppColors.colors[ColorKeys.primary],
-          child: Center(
-            child: Container(
-              width: 300,
-              height: 460,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                border: Border.all(
-                  color: const Color(0xff5e5a5b), // 邊框顏色
-                  width: 15.0, // 邊框寬度
+          child: RepaintBoundary(
+            key: _globalKey,
+            child: Center(
+              child: Container(
+                width: 300,
+                height: 460,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(
+                    color: const Color(0xff5e5a5b), // 邊框顏色
+                    width: 15.0, // 邊框寬度
+                  ),
                 ),
+                child: const ContentAndButton(),
               ),
-              child: const ContentAndButton(),
             ),
           ),
         ),
@@ -213,11 +173,21 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     },
                   ),
                   const SizedBox(height: 10),
-                  const Button(
-                    text: '截圖分享',
-                    type: 'cancel',
-                    onPressed: _captureAndSaveScreenshot,
-                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: AppColors.colors[ColorKeys.buttonBgSecondary],
+                    ),
+                    child: CaptureScreenshotButton(
+                      buttonKey: _globalKey,
+                      text: '截圖分享',
+                      color: AppColors.colors[ColorKeys.buttonTextSecondary]
+                          as Color,
+                      successMessage: '已成功保存推廣卡',
+                    ),
+                  )
                 ],
               ),
             ),

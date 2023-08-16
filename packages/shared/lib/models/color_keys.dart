@@ -13,6 +13,7 @@ enum ColorKeys {
   buttonBgGradientSecondary,
   buttonBgCancel,
   buttonBgDisable,
+  buttonOverlayColor,
   noImageBgTop,
   noImageBgBottom,
   menuColor,

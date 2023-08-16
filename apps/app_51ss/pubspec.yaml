@@ -40,9 +40,7 @@ dependencies:
     path: ../../packages/game
 
   carousel_slider: ^4.2.1
-  image_gallery_saver: ^2.0.3
   qr_flutter: ^4.1.0
-  permission_handler: ^10.2.0
   shimmer: ^2.0.0
   image_picker: ^0.8.7+5
   scan: ^1.6.0
