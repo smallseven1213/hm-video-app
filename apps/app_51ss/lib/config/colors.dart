@@ -13,7 +13,7 @@ class AppColors {
     ColorKeys.buttonTextSecondary: Colors.black,
     ColorKeys.buttonTextCancel: Colors.black,
     ColorKeys.buttonBgPrimary: Color(0xffB5925C),
-    ColorKeys.buttonBgSecondary: Colors.white,
+    ColorKeys.buttonBgSecondary: Color(0xfff2f2f2),
     ColorKeys.buttonBgCancel: Color(0xffCACACA),
     ColorKeys.buttonBgDisable: Color(0xffF2F2F2),
     ColorKeys.noImageBgTop: Color(0xff00234D),

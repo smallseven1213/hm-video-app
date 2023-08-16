@@ -7,12 +7,12 @@ import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'package:shared/controllers/user_controller.dart';
-import 'package:app_51ss/widgets/button.dart';
 
 Future<void> captureAndSaveScreenshot(
     context, String successMessage, GlobalKey key) async {
+  logger.i('captureAndSaveScreenshot');
+
   // 請求權限
   if (Platform.isAndroid) {
     await Permission.storage.request();
@@ -59,14 +59,14 @@ Future<void> captureAndSaveScreenshot(
 class CaptureScreenshotButton extends StatefulWidget {
   final GlobalKey buttonKey;
   final String text;
-  final String buttonType;
+  final Color color;
   final String successMessage;
 
   const CaptureScreenshotButton({
     Key? key,
     required this.buttonKey,
     required this.text,
-    required this.buttonType,
+    required this.color,
     required this.successMessage,
   }) : super(key: key);
 
@@ -78,12 +78,17 @@ class CaptureScreenshotButton extends StatefulWidget {
 class CaptureScreenshotButtonState extends State<CaptureScreenshotButton> {
   @override
   Widget build(BuildContext context) {
-    return Button(
-        text: widget.text,
-        type: widget.buttonType,
-        onPressed: () async {
-          await captureAndSaveScreenshot(
-              context, widget.successMessage, widget.buttonKey);
-        });
+    return InkWell(
+      onTap: () async {
+        await captureAndSaveScreenshot(
+            context, widget.successMessage, widget.buttonKey);
+      },
+      child: Center(
+        child: Text(
+          widget.text,
+          style: TextStyle(color: widget.color),
+        ),
+      ),
+    );
   }
 }

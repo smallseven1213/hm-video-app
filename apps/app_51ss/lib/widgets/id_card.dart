@@ -8,9 +8,9 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/widgets/capture_screenshot_button.dart';
 
 import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/capture_screenshot_button.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 
@@ -151,16 +151,24 @@ class IDCardContentState extends State<IDCardContent> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 const SizedBox(
-                  height: 25,
+                  height: 28,
                 ),
-                Container(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.all(10),
-                  child: CaptureScreenshotButton(
-                    buttonKey: _globalKey,
-                    text: '請截圖保存',
-                    buttonType: 'secondary',
-                    successMessage: '已成功保存身份卡',
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: Container(
+                    width: double.infinity,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: Colors.white,
+                    ),
+                    child: CaptureScreenshotButton(
+                      buttonKey: _globalKey,
+                      text: '請截圖保存',
+                      color: AppColors.colors[ColorKeys.buttonTextSecondary]
+                          as Color,
+                      successMessage: '已成功保存身份卡',
+                    ),
                   ),
                 ),
                 const SizedBox(

@@ -12,7 +12,7 @@ import 'package:shared/modules/user/user_promo_consumer.dart';
 
 import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/widgets/button.dart';
-import 'package:app_51ss/widgets/capture_screenshot_button.dart';
+import 'package:shared/widgets/capture_screenshot_button.dart';
 import 'package:app_51ss/widgets/custom_app_bar.dart';
 
 final GlobalKey _globalKey = GlobalKey();
@@ -173,12 +173,21 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     },
                   ),
                   const SizedBox(height: 10),
-                  CaptureScreenshotButton(
-                    buttonKey: _globalKey,
-                    text: '截圖分享',
-                    buttonType: 'cancel',
-                    successMessage: '已成功保存推廣卡',
-                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 36,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: AppColors.colors[ColorKeys.buttonBgSecondary],
+                    ),
+                    child: CaptureScreenshotButton(
+                      buttonKey: _globalKey,
+                      text: '截圖分享',
+                      color: AppColors.colors[ColorKeys.buttonTextSecondary]
+                          as Color,
+                      successMessage: '已成功保存推廣卡',
+                    ),
+                  )
                 ],
               ),
             ),
