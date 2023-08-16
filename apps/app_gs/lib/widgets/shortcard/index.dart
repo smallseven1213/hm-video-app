@@ -85,6 +85,10 @@ class ShortCardState extends State<ShortCard> {
                   }) =>
                       VideoError(
                           videoCover: video!.coverVertical ?? '',
+                          errorMessage: videoPlayerInfo
+                              .observableVideoPlayerController
+                              .errorMessage
+                              .value,
                           onTap: () => videoPlayerInfo
                               .observableVideoPlayerController
                               .videoPlayerController

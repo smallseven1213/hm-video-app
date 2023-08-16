@@ -2,6 +2,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 final logger = Logger();
@@ -70,21 +71,7 @@ class VideoError extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        )
+        const FloatPageBackButton(),
       ],
     );
   }
