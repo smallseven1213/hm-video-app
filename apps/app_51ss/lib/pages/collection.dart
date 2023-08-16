@@ -1,5 +1,4 @@
 import 'package:app_51ss/widgets/custom_app_bar.dart';
-import 'package:app_51ss/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -8,7 +7,10 @@ import 'package:shared/controllers/user_video_collection_controller.dart';
 import 'package:shared/modules/user/user_tab_scaffold.dart';
 
 import '../config/user_tab.dart';
+import '../screens/collection/short.dart';
+import '../screens/collection/video.dart';
 
+// TODO: 確認編輯功能
 class CollectionPage extends StatefulWidget {
   const CollectionPage({Key? key}) : super(key: key);
 
@@ -24,7 +26,7 @@ class CollectionPageState extends State<CollectionPage>
       userTabControllers['short_collection']!.controller;
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'collection');
+      userTabControllers['list_editor_collection']!.controller;
   late TabController _tabController;
 
   @override
@@ -89,10 +91,7 @@ class CollectionPageState extends State<CollectionPage>
           ),
           body: UserTabScaffold(
             tabs: const ['長視頻', '短視頻'],
-            tabViews: const [
-              Loading(),
-              Loading()
-            ], // TODO: CollectionVideo(),CollectionShortScreen(),
+            tabViews: [CollectionVideo(), CollectionShortScreen()],
             onTabChanged: () {
               listEditorController.clearSelected();
               listEditorController.isEditing.value = false;
