@@ -98,32 +98,33 @@ class SharePage extends StatelessWidget {
               ),
             ],
           ),
-          Center(
-            child: Container(
-              width: 270,
-              height: 400,
-              padding: const EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                border:
-                    Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-                borderRadius: BorderRadius.circular(10),
-                gradient: const LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFF00386A),
-                    Color.fromRGBO(0, 9, 22, 0.9),
-                    Color(0xFF003F6C),
-                    Color(0xFF005B9C),
-                  ],
-                  stops: [0.03, 0.22, 0.85, 0.91],
-                  // transform: GradientRotation(
-                  //     156.33 * (3.141592 / 180)), // Convert degrees to radians
+          RepaintBoundary(
+            key: _globalKey,
+            child: Center(
+              child: Container(
+                width: 270,
+                height: 400,
+                padding: const EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                      color: Colors.white.withOpacity(0.5), width: 1),
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF00386A),
+                      Color.fromRGBO(0, 9, 22, 0.9),
+                      Color(0xFF003F6C),
+                      Color(0xFF005B9C),
+                    ],
+                    stops: [0.03, 0.22, 0.85, 0.91],
+                  ),
                 ),
+                child: const ContentAndButton(),
               ),
-              child: const ContentAndButton(),
             ),
-          )
+          ),
         ],
       ),
     );
