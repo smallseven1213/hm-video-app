@@ -16,6 +16,7 @@ class AppColors {
     ColorKeys.buttonBgSecondary: Color(0xfff2f2f2),
     ColorKeys.buttonBgCancel: Color(0xffCACACA),
     ColorKeys.buttonBgDisable: Color(0xffF2F2F2),
+    ColorKeys.buttonOverlayColor: Color(0xff585858),
     ColorKeys.noImageBgTop: Color(0xff00234D),
     ColorKeys.noImageBgBottom: Color(0xff002D62),
     ColorKeys.menuColor: Color(0xffb3b3b3),

@@ -1,9 +1,11 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_tab_scaffold.dart';
 
 import '../config/user_tab.dart';
@@ -99,6 +101,12 @@ class CollectionPageState extends State<CollectionPage>
             listEditorController: listEditorController,
             onSelectButtonClick: _handleSelectAll,
             onDeleteButtonClick: _handleDeleteAll,
+            overlayColor: AppColors.colors[ColorKeys.buttonOverlayColor],
+            primaryButtonBgColor: AppColors.colors[ColorKeys.buttonBgPrimary],
+            secondaryButtonBgColor:
+                AppColors.colors[ColorKeys.buttonBgSecondary],
+            primaryTextColor: AppColors.colors[ColorKeys.buttonTextPrimary],
+            secondaryTextColor: AppColors.colors[ColorKeys.buttonTextSecondary],
           )),
     );
   }
