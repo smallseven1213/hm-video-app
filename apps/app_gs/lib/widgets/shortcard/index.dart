@@ -6,6 +6,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
+import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
@@ -50,6 +51,38 @@ class ShortCardState extends State<ShortCard> {
 
   bool isDragging = false;
 
+  Widget playPauseButton(videoPlayerInfo) {
+    return GestureDetector(
+      onTap: () {
+        videoPlayerInfo.observableVideoPlayerController.toggle();
+      },
+      child: Container(
+        color: Colors.transparent,
+        width: double.infinity,
+        height: double.infinity,
+        child: Center(
+          child: videoPlayerInfo
+                      .observableVideoPlayerController.videoAction.value ==
+                  'pause'
+              ? const Center(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Image(
+                      image: AssetImage('assets/images/short_play_button.png'),
+                    ),
+                  ),
+                )
+              : const SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: SizedBox.shrink(),
+                ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
@@ -75,14 +108,53 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              FullScreenControls(
-                isFullscreen: pageviewIndexController.isFullscreen.value,
-                toggleFullscreen: () {
-                  pageviewIndexController.toggleFullscreen();
-                },
-                videoPlayerInfo: videoPlayerInfo,
-                ovpController: videoPlayerInfo.observableVideoPlayerController,
+
+              playPauseButton(videoPlayerInfo),
+              // progress bar
+              Positioned(
+                bottom: 0,
+                left: 10,
+                right: 10,
+                child: VideoProgressIndicator(
+                  videoPlayerInfo.videoPlayerController!,
+                  allowScrubbing: true,
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  colors: VideoProgressColors(
+                    playedColor: const Color(0xffFFC700),
+                    bufferedColor: Colors.grey,
+                    backgroundColor: Colors.white.withOpacity(0.3),
+                  ),
+                ),
               ),
+              // error
+              if (videoPlayerInfo
+                      .observableVideoPlayerController.videoAction.value ==
+                  'error')
+                ShortVideoConsumer(
+                  vodId: widget.id,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      VideoError(
+                    videoCover: video!.coverVertical ?? '',
+                    onTap: () {
+                      videoPlayerInfo
+                          .observableVideoPlayerController.videoPlayerController
+                          ?.play();
+                    },
+                  ),
+                ),
+              // FullScreenControls(
+              //   isFullscreen: pageviewIndexController.isFullscreen.value,
+              //   toggleFullscreen: () {
+              //     pageviewIndexController.toggleFullscreen();
+              //   },
+              //   videoPlayerInfo: videoPlayerInfo,
+              //   ovpController: videoPlayerInfo.observableVideoPlayerController,
+              // ),
             ],
           );
         }
