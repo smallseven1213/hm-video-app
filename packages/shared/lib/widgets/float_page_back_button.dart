@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 class FloatPageBackButton extends StatelessWidget {
-  const FloatPageBackButton({Key? key}) : super(key: key);
+  final Function()? onPressed;
+  const FloatPageBackButton({
+    Key? key,
+    this.onPressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,11 @@ class FloatPageBackButton extends StatelessWidget {
             color: Colors.white,
             icon: const Icon(Icons.arrow_back_ios_new, size: 16),
             onPressed: () {
-              Navigator.pop(context);
+              if (onPressed != null) {
+                onPressed!();
+              } else {
+                Navigator.pop(context);
+              }
             },
           ),
         ),

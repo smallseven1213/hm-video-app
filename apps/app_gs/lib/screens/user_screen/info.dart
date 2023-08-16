@@ -100,7 +100,7 @@ class UserInfo extends StatelessWidget {
                         ),
                         UserInfoConsumer(
                           child: (info, isVIP, isGuest) {
-                            if (!isGuest) {
+                            if (info.id.isNotEmpty && !isGuest) {
                               return GestureDetector(
                                 onTap: () {
                                   MyRouteDelegate.of(context)
@@ -128,6 +128,9 @@ class UserInfo extends StatelessWidget {
                       } else {
                         return UserInfoConsumer(
                           child: (info, isVIP, isGuest) {
+                            if (info.id.isEmpty) {
+                              return const SizedBox();
+                            }
                             return Text(
                               'ID: ${info.uid}',
                               style: const TextStyle(

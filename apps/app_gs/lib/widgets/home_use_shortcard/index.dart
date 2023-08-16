@@ -77,6 +77,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               title: widget.shortData.title,
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
+              allowFullsreen: false,
             ),
           ),
           SideInfo(

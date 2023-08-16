@@ -1,6 +1,9 @@
 import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
@@ -41,6 +44,19 @@ class GeneralShortCard extends StatefulWidget {
 }
 
 class GeneralShortCardState extends State<GeneralShortCard> {
+  final PageViewIndexController pageviewIndexController =
+      Get.find<PageViewIndexController>();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('@@@ GeneralShortCardState dispose');
+    if (pageviewIndexController.isFullscreen.value == true) {
+      pageviewIndexController.toggleFullscreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
@@ -73,40 +89,51 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               title: widget.shortData.title,
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
+              allowFullsreen: true,
             ),
           ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                ShortVideoConsumer(
-                  vodId: widget.id,
-                  child: ({
-                    required isLoading,
-                    required video,
-                    required videoDetail,
-                    required videoUrl,
-                  }) =>
-                      videoDetail != null
-                          ? ShortCardInfo(
-                              obsKey: widget.obsKey,
-                              data: videoDetail,
-                              title: widget.title,
-                            )
-                          : const SizedBox.shrink(),
+          pageviewIndexController.isFullscreen.value == true
+              ? const SizedBox.shrink()
+              : Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Column(
+                    children: [
+                      ShortVideoConsumer(
+                        vodId: widget.id,
+                        child: ({
+                          required isLoading,
+                          required video,
+                          required videoDetail,
+                          required videoUrl,
+                        }) =>
+                            videoDetail != null
+                                ? ShortCardInfo(
+                                    obsKey: widget.obsKey,
+                                    data: videoDetail,
+                                    title: widget.title,
+                                  )
+                                : const SizedBox.shrink(),
+                      ),
+                      const SizedBox(height: 16),
+                      ShortBottomArea(
+                        shortData: widget.shortData,
+                        displayFavoriteAndCollectCount:
+                            widget.displayFavoriteAndCollectCount,
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(height: 16),
-                ShortBottomArea(
-                  shortData: widget.shortData,
-                  displayFavoriteAndCollectCount:
-                      widget.displayFavoriteAndCollectCount,
-                ),
-              ],
-            ),
+          FloatPageBackButton(
+            onPressed: () {
+              if (pageviewIndexController.isFullscreen.value == true) {
+                pageviewIndexController.toggleFullscreen();
+              } else {
+                Navigator.pop(context);
+              }
+            },
           ),
-          const FloatPageBackButton()
         ],
       ),
     );
