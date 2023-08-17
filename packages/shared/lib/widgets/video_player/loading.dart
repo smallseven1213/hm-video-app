@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../float_page_back_button.dart';
+
 final logger = Logger();
 
 class VideoLoading extends StatelessWidget {
@@ -36,21 +38,7 @@ class VideoLoading extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        )
+        const FloatPageBackButton(),
       ],
     );
   }
