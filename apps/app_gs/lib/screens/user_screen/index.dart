@@ -32,7 +32,7 @@ class UserScreenState extends State<UserScreen> {
             title: '提示',
             message: '為保持您的帳號，請先註冊防止丟失',
             showCancelButton: false,
-            onConfirm: () => setAccountProtectionShownToTrue,
+            onConfirm: () => setAccountProtectionShownToTrue(),
           );
         },
         onAccountProtectionShown: () {
