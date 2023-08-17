@@ -43,10 +43,10 @@ class ShortVideoProviderState extends State<ShortVideoProvider> {
         var playRecord = Vod(
           value.id,
           value.title,
-          coverHorizontal: value.coverHorizontal!,
-          coverVertical: value.coverVertical!,
-          timeLength: value.timeLength!,
-          tags: value.tags!,
+          coverHorizontal: value.coverHorizontal,
+          coverVertical: value.coverVertical,
+          timeLength: value.timeLength,
+          tags: value.tags,
         );
         Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
       }

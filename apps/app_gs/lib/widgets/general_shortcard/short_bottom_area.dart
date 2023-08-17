@@ -24,9 +24,9 @@ class ShortBottomArea extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paddingBottom = MediaQuery.of(context).padding.bottom;
+    String tag = genaratorShortVideoDetailTag(shortData.id.toString());
     final ShortVideoDetailController videoDetailController =
-        Get.find<ShortVideoDetailController>(
-            tag: genaratorShortVideoDetailTag(shortData.id.toString()));
+        Get.find<ShortVideoDetailController>(tag: tag);
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
