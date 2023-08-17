@@ -78,7 +78,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               coverVertical: widget.shortData.coverVertical!,
               timeLength: widget.shortData.timeLength!,
               tags: widget.shortData.tags!,
-              videoViewTimes: widget.shortData.videoViewTimes ?? 0,
+              videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const WaveLoading(),
             child: (isReady) => ShortCard(
