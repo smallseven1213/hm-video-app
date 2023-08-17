@@ -182,10 +182,16 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     ),
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
-                      text: '截圖分享',
-                      color: AppColors.colors[ColorKeys.buttonTextSecondary]
-                          as Color,
                       successMessage: '已成功保存推廣卡',
+                      child: Center(
+                        child: Text(
+                          '截圖分享',
+                          style: TextStyle(
+                              color: AppColors
+                                      .colors[ColorKeys.buttonTextSecondary]
+                                  as Color),
+                        ),
+                      ),
                     ),
                   )
                 ],

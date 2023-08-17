@@ -58,16 +58,14 @@ Future<void> captureAndSaveScreenshot(
 
 class CaptureScreenshotButton extends StatefulWidget {
   final GlobalKey buttonKey;
-  final String text;
-  final Color color;
+  final Widget child;
   final String successMessage;
 
   const CaptureScreenshotButton({
     Key? key,
     required this.buttonKey,
-    required this.text,
-    required this.color,
     required this.successMessage,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -79,16 +77,10 @@ class CaptureScreenshotButtonState extends State<CaptureScreenshotButton> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        await captureAndSaveScreenshot(
-            context, widget.successMessage, widget.buttonKey);
-      },
-      child: Center(
-        child: Text(
-          widget.text,
-          style: TextStyle(color: widget.color),
-        ),
-      ),
-    );
+        onTap: () async {
+          await captureAndSaveScreenshot(
+              context, widget.successMessage, widget.buttonKey);
+        },
+        child: widget.child);
   }
 }
