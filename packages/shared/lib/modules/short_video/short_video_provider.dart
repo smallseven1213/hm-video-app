@@ -47,6 +47,7 @@ class ShortVideoProviderState extends State<ShortVideoProvider> {
           coverVertical: value.coverVertical!,
           timeLength: value.timeLength!,
           tags: value.tags!,
+          videoViewTimes: value.videoViewTimes!,
         );
         Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
       }
