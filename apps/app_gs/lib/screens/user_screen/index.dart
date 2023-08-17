@@ -26,13 +26,13 @@ class UserScreenState extends State<UserScreen> {
   @override
   Widget build(BuildContext context) {
     return UserSettingScaffold(
-        onAccountProtectionShownH5: (setAccountProtectionShownToTrue) {
+        onAccountProtectionShownH5: () {
           showConfirmDialog(
             context: context,
             title: '提示',
             message: '為保持您的帳號，請先註冊防止丟失',
             showCancelButton: false,
-            onConfirm: () => setAccountProtectionShownToTrue(),
+            onConfirm: () => {},
           );
         },
         onAccountProtectionShown: () {
