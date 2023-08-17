@@ -14,19 +14,18 @@ final logger = Logger();
 class ShortBottomArea extends StatelessWidget {
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
+  final ShortVideoDetailController? controller;
 
-  const ShortBottomArea(
-      {Key? key,
-      required this.shortData,
-      this.displayFavoriteAndCollectCount = true})
-      : super(key: key);
+  const ShortBottomArea({
+    Key? key,
+    required this.shortData,
+    required this.controller,
+    this.displayFavoriteAndCollectCount = true,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final paddingBottom = MediaQuery.of(context).padding.bottom;
-    final ShortVideoDetailController videoDetailController =
-        Get.find<ShortVideoDetailController>(
-            tag: genaratorShortVideoDetailTag(shortData.id.toString()));
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
@@ -51,7 +50,7 @@ class ShortBottomArea extends StatelessWidget {
           Obx(() {
             bool isLike = userFavoritesShortController.data
                 .any((e) => e.id == shortData.id);
-            var favorites = videoDetailController.videoFavorites.value;
+            var favorites = controller!.videoFavorites.value;
             return ShortMenuButton(
               key: Key('short_bottom_area_like_button ${shortData.id}'),
               displayFavoriteAndCollectCount: displayFavoriteAndCollectCount,
@@ -65,12 +64,12 @@ class ShortBottomArea extends StatelessWidget {
                 if (isLike) {
                   userFavoritesShortController.removeVideo([shortData.id]);
                   if (favorites > 0) {
-                    videoDetailController.updateFavorites(-1);
+                    controller!.updateFavorites(-1);
                   }
                 } else {
                   var vod = Vod.fromJson(shortData.toJson());
                   userFavoritesShortController.addVideo(vod);
-                  videoDetailController.updateFavorites(1);
+                  controller!.updateFavorites(1);
                 }
               },
             );
@@ -78,7 +77,7 @@ class ShortBottomArea extends StatelessWidget {
           Obx(() {
             bool isLike = userShortCollectionController.data
                 .any((e) => e.id == shortData.id);
-            var collects = videoDetailController.videoCollects.value;
+            var collects = controller!.videoCollects.value;
             return ShortMenuButton(
               key: Key('short_bottom_area_collection_button ${shortData.id}'),
               displayFavoriteAndCollectCount: displayFavoriteAndCollectCount,
@@ -91,12 +90,12 @@ class ShortBottomArea extends StatelessWidget {
                 if (isLike) {
                   userShortCollectionController.removeVideo([shortData.id]);
                   if (collects > 0) {
-                    videoDetailController.updateCollects(-1);
+                    controller!.updateCollects(-1);
                   }
                 } else {
                   var vod = Vod.fromJson(shortData.toJson());
                   userShortCollectionController.addVideo(vod);
-                  videoDetailController.updateCollects(1);
+                  controller!.updateCollects(1);
                 }
               },
             );

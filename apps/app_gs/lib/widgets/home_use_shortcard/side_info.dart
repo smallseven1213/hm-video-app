@@ -20,11 +20,13 @@ final logger = Logger();
 class SideInfo extends StatefulWidget {
   final String obsKey;
   final Vod shortData;
+  final ShortVideoDetailController? controller;
 
   const SideInfo({
     Key? key,
     required this.obsKey,
     required this.shortData,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -43,10 +45,6 @@ class _SideInfoState extends State<SideInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final ShortVideoDetailController videoDetailController =
-        Get.find<ShortVideoDetailController>(
-            tag: genaratorShortVideoDetailTag(widget.shortData.id.toString()));
-
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
@@ -60,7 +58,7 @@ class _SideInfoState extends State<SideInfo> {
         children: [
           // 供應商
           Obx(() {
-            var data = videoDetailController.videoDetail.value;
+            var data = widget.controller!.videoDetail.value;
 
             if (data?.supplier != null) {
               return GestureDetector(
@@ -88,7 +86,7 @@ class _SideInfoState extends State<SideInfo> {
           Obx(() {
             bool isLike = userFavoritesShortController.data
                 .any((e) => e.id == widget.shortData.id);
-            var favorites = videoDetailController.videoFavorites.value;
+            var favorites = widget.controller!.videoFavorites.value;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -103,12 +101,12 @@ class _SideInfoState extends State<SideInfo> {
                       userFavoritesShortController
                           .removeVideo([widget.shortData.id]);
                       if (favorites > 0) {
-                        videoDetailController.updateFavorites(-1);
+                        widget.controller!.updateFavorites(-1);
                       }
                     } else {
                       var vod = Vod.fromJson(widget.shortData.toJson());
                       userFavoritesShortController.addVideo(vod);
-                      videoDetailController.updateFavorites(1);
+                      widget.controller!.updateFavorites(1);
                     }
                   },
                   icon: Icon(
@@ -137,7 +135,7 @@ class _SideInfoState extends State<SideInfo> {
           Obx(() {
             bool isLike = userShortCollectionController.data
                 .any((e) => e.id == widget.shortData.id);
-            var collects = videoDetailController.videoCollects.value;
+            var collects = widget.controller!.videoCollects.value;
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,12 +147,12 @@ class _SideInfoState extends State<SideInfo> {
                       userShortCollectionController
                           .removeVideo([widget.shortData.id]);
                       if (collects > 0) {
-                        videoDetailController.updateCollects(-1);
+                        widget.controller!.updateCollects(-1);
                       }
                     } else {
                       var vod = Vod.fromJson(widget.shortData.toJson());
                       userShortCollectionController.addVideo(vod);
-                      videoDetailController.updateCollects(1);
+                      widget.controller!.updateCollects(1);
                     }
                   },
                   icon: Icon(

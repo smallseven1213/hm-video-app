@@ -98,31 +98,33 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  child: Column(
-                    children: [
-                      ShortVideoConsumer(
-                        vodId: widget.id,
-                        child: ({
-                          required isLoading,
-                          required video,
-                          required videoDetail,
-                          required videoUrl,
-                        }) =>
-                            videoDetail != null
-                                ? ShortCardInfo(
-                                    obsKey: widget.obsKey,
-                                    data: videoDetail,
-                                    title: widget.title,
-                                  )
-                                : const SizedBox.shrink(),
-                      ),
-                      const SizedBox(height: 16),
-                      ShortBottomArea(
-                        shortData: widget.shortData,
-                        displayFavoriteAndCollectCount:
-                            widget.displayFavoriteAndCollectCount,
-                      ),
-                    ],
+                  child: ShortVideoConsumer(
+                    vodId: widget.id,
+                    child: ({
+                      required isLoading,
+                      required video,
+                      required videoDetail,
+                      required videoUrl,
+                      required controller,
+                    }) =>
+                        Column(
+                      children: [
+                        videoDetail != null
+                            ? ShortCardInfo(
+                                obsKey: widget.obsKey,
+                                data: videoDetail,
+                                title: widget.title,
+                              )
+                            : const SizedBox.shrink(),
+                        const SizedBox(height: 16),
+                        ShortBottomArea(
+                          controller: controller,
+                          shortData: widget.shortData,
+                          displayFavoriteAndCollectCount:
+                              widget.displayFavoriteAndCollectCount,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
           if (pageviewIndexController.isFullscreen.value != true)

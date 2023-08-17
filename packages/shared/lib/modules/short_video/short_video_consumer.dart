@@ -17,6 +17,7 @@ class ShortVideoConsumer extends StatefulWidget {
     required String? videoUrl,
     required Vod? video,
     required ShortVideoDetail? videoDetail,
+    required ShortVideoDetailController? controller,
   }) child;
   final Widget? loading;
 
@@ -47,6 +48,7 @@ class ShortVideoConsumerState extends State<ShortVideoConsumer> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => widget.child(
+          controller: controller,
           isLoading: controller.isLoading.value,
           videoUrl: controller.videoUrl.value,
           video: controller.video.value,

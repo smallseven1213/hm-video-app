@@ -80,9 +80,20 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               allowFullsreen: false,
             ),
           ),
-          SideInfo(
-            obsKey: widget.obsKey,
-            shortData: widget.shortData,
+          ShortVideoConsumer(
+            vodId: widget.id,
+            child: ({
+              required isLoading,
+              required video,
+              required videoDetail,
+              required videoUrl,
+              required controller,
+            }) =>
+                SideInfo(
+              obsKey: widget.obsKey,
+              shortData: widget.shortData,
+              controller: controller,
+            ),
           ),
           Positioned(
             bottom: 0,
@@ -96,6 +107,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   required video,
                   required videoDetail,
                   required videoUrl,
+                  required controller,
                 }) =>
                     videoDetail != null
                         ? ShortCardInfo(

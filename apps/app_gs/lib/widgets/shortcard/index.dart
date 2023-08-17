@@ -87,6 +87,7 @@ class ShortCardState extends State<ShortCard> {
                     required video,
                     required videoDetail,
                     required videoUrl,
+                    required controller,
                   }) =>
                       VideoError(
                           videoCover: video!.coverVertical ?? '',
@@ -116,6 +117,7 @@ class ShortCardState extends State<ShortCard> {
                     required video,
                     required videoDetail,
                     required videoUrl,
+                    required controller,
                   }) =>
                       VideoPlayerDisplayWidget(
                     controller: videoPlayerInfo.observableVideoPlayerController,

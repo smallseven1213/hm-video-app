@@ -62,6 +62,7 @@ class BaseShortPage extends StatelessWidget {
                   required video,
                   required videoDetail,
                   required videoUrl,
+                  required controller,
                 }) {
                   if (style == 2) {
                     return HomeUseShortCard(
