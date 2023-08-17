@@ -1,10 +1,6 @@
-import 'dart:ui';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:get/get.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:get/get.dart';
 
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/models/color_keys.dart';
@@ -164,10 +160,16 @@ class IDCardContentState extends State<IDCardContent> {
                     ),
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
-                      text: '請截圖保存',
-                      color: AppColors.colors[ColorKeys.buttonTextSecondary]
-                          as Color,
                       successMessage: '已成功保存身份卡',
+                      child: Center(
+                        child: Text(
+                          '請截圖保存',
+                          style: TextStyle(
+                              color: AppColors
+                                      .colors[ColorKeys.buttonTextSecondary]
+                                  as Color),
+                        ),
+                      ),
                     ),
                   ),
                 ),
