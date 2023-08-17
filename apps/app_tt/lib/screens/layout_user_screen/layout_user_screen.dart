@@ -11,7 +11,7 @@ import 'menu.dart';
 import 'user_card.dart';
 
 class LayoutUserScreen extends StatefulWidget {
-  LayoutUserScreen({Key? key}) : super(key: key);
+  const LayoutUserScreen({Key? key}) : super(key: key);
 
   @override
   _LayoutUserScreenState createState() => _LayoutUserScreenState();
@@ -31,7 +31,7 @@ class _LayoutUserScreenState extends State<LayoutUserScreen>
   @override
   Widget build(BuildContext context) {
     return UserSettingScaffold(
-        onAccountProtectionShownH5: (setAccountProtectionShownToTrue) {},
+        onAccountProtectionShownH5: () {},
         onAccountProtectionShown: () {},
         child: Scaffold(
           key: _scaffoldKey,
