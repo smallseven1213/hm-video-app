@@ -13,16 +13,8 @@ import '../widgets/auth_text_field.dart';
 final logger = Logger();
 final authApi = AuthApi();
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
-
-  @override
-  LoginPageState createState() => LoginPageState();
-}
-
-class LoginPageState extends State<LoginPage> {
-  final TextEditingController _accountController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
 
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) {
@@ -47,8 +39,6 @@ class LoginPageState extends State<LoginPage> {
           title: '登入',
         ),
         body: LoginPageScaffold(
-          accountController: _accountController,
-          passwordController: _passwordController,
           showErrorDialog: () {
             showConfirmDialog(
               context: context,
@@ -58,19 +48,26 @@ class LoginPageState extends State<LoginPage> {
               onConfirm: () => {},
             );
           },
-          accountTextField: AuthTextField(
-            label: '帳號',
-            controller: _accountController,
-            placeholderText: '請輸入帳號',
-            validator: _validateUsername,
-          ),
-          passwordTextField: AuthTextField(
-            label: '密碼',
-            controller: _passwordController,
-            placeholderText: '請輸入密碼',
-            obscureText: true,
-            validator: _validatePassword,
-          ),
+          child: (accountController, passwordController) {
+            return Column(
+              children: [
+                AuthTextField(
+                  label: '帳號',
+                  controller: accountController,
+                  placeholderText: '請輸入帳號',
+                  validator: _validateUsername,
+                ),
+                const SizedBox(height: 10),
+                AuthTextField(
+                  label: '密碼',
+                  controller: passwordController,
+                  placeholderText: '請輸入密碼',
+                  obscureText: true,
+                  validator: _validatePassword,
+                ),
+              ],
+            );
+          },
           forgetPasswordButton: const ForgotPasswordButton(),
         ));
   }

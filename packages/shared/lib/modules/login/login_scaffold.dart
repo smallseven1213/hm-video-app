@@ -6,20 +6,15 @@ import 'package:shared/apis/auth_api.dart';
 final authApi = AuthApi();
 
 class LoginPageScaffold extends StatefulWidget {
-  final TextEditingController accountController;
-  final TextEditingController passwordController;
   final Widget forgetPasswordButton;
   final Function() showErrorDialog;
-  final Widget accountTextField;
-  final Widget passwordTextField;
+  final Widget Function(TextEditingController accountController,
+      TextEditingController passwordController) child;
   const LoginPageScaffold({
     Key? key,
-    required this.accountController,
-    required this.passwordController,
     required this.forgetPasswordButton,
     required this.showErrorDialog,
-    required this.accountTextField,
-    required this.passwordTextField,
+    required this.child,
   }) : super(key: key);
 
   @override
@@ -28,24 +23,8 @@ class LoginPageScaffold extends StatefulWidget {
 
 class LoginPageScaffoldState extends State<LoginPageScaffold> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  void _handleLogin(context) async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        var token = await authApi.login(
-            username: widget.accountController.text,
-            password: widget.passwordController.text);
-        if (token == null) {
-          widget.showErrorDialog();
-        } else {
-          // Get.find<AuthController>().setToken(token);
-          MyRouteDelegate.of(context).popRoute();
-        }
-      } catch (error) {
-        widget.showErrorDialog();
-      }
-    }
-  }
+  final TextEditingController _accountController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -55,19 +34,7 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
           const SizedBox(height: 80),
           Form(
             key: _formKey,
-            child: Column(
-              children: [
-                widget.accountTextField,
-                widget.passwordTextField,
-                const SizedBox(height: 20),
-                InkWell(
-                  onTap: () {
-                    _handleLogin(context);
-                  },
-                  child: const Text('登入'),
-                ),
-              ],
-            ),
+            child: widget.child(_accountController, _passwordController),
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
