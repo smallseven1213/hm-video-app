@@ -11,8 +11,6 @@ class UserTabController<T> {
 }
 
 final Map<String, UserTabController<dynamic>> userTabControllers = {
-  'list_editor_collection':
-      UserTabController(Get.find<ListEditorController>(tag: 'collection')),
   'collection': UserTabController(Get.find<UserVodCollectionController>()),
   'short_collection':
       UserTabController(Get.find<UserShortCollectionController>()),
