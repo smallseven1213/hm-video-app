@@ -8,7 +8,6 @@ class ShortsScaffold extends StatefulWidget {
   final String uuid;
   final int? videoId;
   final int? itemId;
-  final bool? supportedPlayRecord;
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
   final Widget? loadingWidget;
@@ -25,7 +24,6 @@ class ShortsScaffold extends StatefulWidget {
     this.itemId,
     required this.uuid,
     this.displayFavoriteAndCollectCount = true,
-    this.supportedPlayRecord = true,
     this.useCachedList = false,
     this.loadingWidget,
     required this.shortCardBuilder,

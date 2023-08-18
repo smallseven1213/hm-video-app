@@ -8,9 +8,10 @@ import 'package:shared/widgets/page_loader.dart';
 import '../pages/home.dart' deferred as home_page;
 import '../pages/share.dart' deferred as share_page;
 import '../pages/collection.dart' deferred as collection_page;
+import '../pages/login.dart' deferred as login_page;
+
 // import '../pages/actors.dart' deferred as actors_page;
 // import '../pages/id.dart' deferred as id_page;
-// import '../pages/login.dart' deferred as login_page;
 // import '../pages/playrecord.dart' deferred as playrecord_page;
 // import '../pages/register.dart' deferred as register_page;
 // import '../pages/nickname.dart' deferred as nickname_page;
@@ -54,5 +55,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         loadLibrary: collection_page.loadLibrary,
         loadingWidget: const PageLoadingEffect(),
         createPage: () => collection_page.CollectionPage(),
+      ),
+  AppRoutes.login: (context, args) => PageLoader(
+        loadLibrary: login_page.loadLibrary,
+        loadingWidget: const PageLoadingEffect(),
+        createPage: () => login_page.LoginPage(),
       ),
 };

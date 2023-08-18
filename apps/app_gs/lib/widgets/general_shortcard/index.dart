@@ -2,7 +2,6 @@ import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -16,7 +15,6 @@ class GeneralShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final bool? supportedPlayRecord;
   final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
@@ -35,7 +33,6 @@ class GeneralShortCard extends StatefulWidget {
     required this.videoUrl,
     // required this.isFullscreen,
     this.isActive = true,
-    this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
@@ -98,31 +95,31 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                   bottom: 0,
                   left: 0,
                   right: 0,
-                  child: Column(
-                    children: [
-                      ShortVideoConsumer(
-                        vodId: widget.id,
-                        child: ({
-                          required isLoading,
-                          required video,
-                          required videoDetail,
-                          required videoUrl,
-                        }) =>
-                            videoDetail != null
-                                ? ShortCardInfo(
-                                    obsKey: widget.obsKey,
-                                    data: videoDetail,
-                                    title: widget.title,
-                                  )
-                                : const SizedBox.shrink(),
-                      ),
-                      const SizedBox(height: 16),
-                      ShortBottomArea(
-                        shortData: widget.shortData,
-                        displayFavoriteAndCollectCount:
-                            widget.displayFavoriteAndCollectCount,
-                      ),
-                    ],
+                  child: ShortVideoConsumer(
+                    vodId: widget.id,
+                    child: ({
+                      required isLoading,
+                      required video,
+                      required videoDetail,
+                      required videoUrl,
+                    }) =>
+                        Column(
+                      children: [
+                        videoDetail != null
+                            ? ShortCardInfo(
+                                obsKey: widget.obsKey,
+                                data: videoDetail,
+                                title: widget.title,
+                              )
+                            : const SizedBox.shrink(),
+                        const SizedBox(height: 16),
+                        ShortBottomArea(
+                          shortData: widget.shortData,
+                          displayFavoriteAndCollectCount:
+                              widget.displayFavoriteAndCollectCount,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
           if (pageviewIndexController.isFullscreen.value != true)

@@ -16,7 +16,6 @@ class HomeUseShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final bool? supportedPlayRecord;
   final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
@@ -35,7 +34,6 @@ class HomeUseShortCard extends StatefulWidget {
     required this.videoUrl,
     // required this.isFullscreen,
     this.isActive = true,
-    this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
@@ -80,9 +78,19 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               allowFullsreen: false,
             ),
           ),
-          SideInfo(
-            obsKey: widget.obsKey,
-            shortData: widget.shortData,
+          ShortVideoConsumer(
+            vodId: widget.id,
+            child: ({
+              required isLoading,
+              required video,
+              required videoDetail,
+              required videoUrl,
+            }) =>
+                SideInfo(
+              videoId: widget.shortData.id,
+              obsKey: widget.obsKey,
+              shortData: widget.shortData,
+            ),
           ),
           Positioned(
             bottom: 0,

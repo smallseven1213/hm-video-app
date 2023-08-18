@@ -15,7 +15,6 @@ class ShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final bool? supportedPlayRecord;
   final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
@@ -34,7 +33,6 @@ class ShortCard extends StatefulWidget {
     required this.allowFullsreen,
     // required this.isFullscreen,
     this.isActive = true,
-    this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
