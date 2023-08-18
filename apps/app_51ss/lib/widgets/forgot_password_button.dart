@@ -1,4 +1,6 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 
@@ -16,8 +18,9 @@ class ForgotPasswordButton extends StatelessWidget {
             showCancelButton: false,
             onConfirm: () {});
       },
-      child: const Column(children: [
-        Text('忘記密碼', style: TextStyle(color: Colors.white)),
+      child: Column(children: [
+        Text('忘記密碼',
+            style: TextStyle(color: AppColors.colors[ColorKeys.textPrimary])),
       ]),
     );
   }

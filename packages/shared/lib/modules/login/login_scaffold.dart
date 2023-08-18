@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -15,7 +17,7 @@ class LoginPageScaffold extends StatefulWidget {
     TextEditingController passwordController,
     String? Function(String? value) validateUsername,
     String? Function(String? value) validatePassword,
-    Function onLogin,
+    Function() handleLogin,
   ) child;
   const LoginPageScaffold({
     Key? key,
@@ -46,26 +48,26 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
     return null;
   }
 
-  void handleLogin(context) async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        var token = await authApi.login(
-            username: accountController.text,
-            password: passwordController.text);
-        if (token == null) {
-          if (widget.onError != null) {
-            widget.onError!('登入錯誤', '帳號或密碼不正確');
-          }
-        } else {
-          Get.find<AuthController>().setToken(token);
-          MyRouteDelegate.of(context).popRoute();
-        }
-      } catch (error) {
+  handleLogin() async {
+    print('_formKey, ${_formKey.currentState!.validate()}');
+    // if (_formKey.currentState!.validate()) {
+    try {
+      var token = await authApi.login(
+          username: accountController.text, password: passwordController.text);
+      if (token == null) {
         if (widget.onError != null) {
           widget.onError!('登入錯誤', '帳號或密碼不正確');
         }
+      } else {
+        Get.find<AuthController>().setToken(token);
+        // MyRouteDelegate.of(context).popRoute();
+      }
+    } catch (error) {
+      if (widget.onError != null) {
+        widget.onError!('登入錯誤', '帳號或密碼不正確');
       }
     }
+    // }
   }
 
   @override

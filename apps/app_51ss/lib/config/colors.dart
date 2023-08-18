@@ -8,6 +8,8 @@ class AppColors {
     ColorKeys.background: Colors.white,
     ColorKeys.textPrimary: Colors.black,
     ColorKeys.textSecondary: Color(0xff979797),
+    ColorKeys.textPlaceholder: Color(0xffCACACA),
+
     // BUTTON
     ColorKeys.buttonTextPrimary: Colors.white,
     ColorKeys.buttonTextSecondary: Colors.black,

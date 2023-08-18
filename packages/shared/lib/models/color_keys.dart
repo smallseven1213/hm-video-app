@@ -4,6 +4,7 @@ enum ColorKeys {
   background,
   textPrimary,
   textSecondary,
+  textPlaceholder,
   buttonTextPrimary,
   buttonTextSecondary,
   buttonTextCancel,
