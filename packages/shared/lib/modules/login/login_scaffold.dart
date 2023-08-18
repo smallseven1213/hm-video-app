@@ -49,7 +49,6 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
   }
 
   handleLogin() async {
-    print('_formKey, ${_formKey.currentState!.validate()}');
     // if (_formKey.currentState!.validate()) {
     try {
       var token = await authApi.login(
@@ -60,7 +59,6 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
         }
       } else {
         Get.find<AuthController>().setToken(token);
-        // MyRouteDelegate.of(context).popRoute();
       }
     } catch (error) {
       if (widget.onError != null) {
