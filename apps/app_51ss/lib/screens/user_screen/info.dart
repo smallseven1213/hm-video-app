@@ -133,7 +133,7 @@ class UserInfo extends StatelessWidget {
             right: 0,
             child: GestureDetector(
               onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.configs);
+                MyRouteDelegate.of(context).push(AppRoutes.login);
               },
               child: Container(
                 padding: const EdgeInsets.all(5),
