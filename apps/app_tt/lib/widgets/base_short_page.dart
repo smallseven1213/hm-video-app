@@ -8,7 +8,6 @@ class BaseShortPage extends StatelessWidget {
   final Function() createController;
   final int? videoId;
   final int? itemId; // areaId, tagId, supplierId
-  final bool? supportedPlayRecord;
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
   final Widget? loadingWidget;
@@ -21,7 +20,6 @@ class BaseShortPage extends StatelessWidget {
     this.videoId,
     this.itemId,
     this.displayFavoriteAndCollectCount = true,
-    this.supportedPlayRecord = true,
     this.useCachedList = false,
     this.loadingWidget,
     this.style = 1,
