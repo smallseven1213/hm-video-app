@@ -1,27 +1,22 @@
-import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/video_player_controller.dart';
+import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/widgets/float_page_back_button.dart';
 
 final logger = Logger();
 
 class FullScreenControls extends StatefulWidget {
   final String? name;
-  final Function toggleFullscreen;
-  final bool isFullscreen;
   final VideoPlayerInfo videoPlayerInfo;
-  final ObservableVideoPlayerController ovpController;
+  final PageViewIndexController pageviewIndexController;
 
   const FullScreenControls({
     Key? key,
     this.name,
-    required this.toggleFullscreen,
-    required this.isFullscreen,
-    required this.ovpController,
     required this.videoPlayerInfo,
+    required this.pageviewIndexController,
   }) : super(key: key);
 
   @override
@@ -29,25 +24,41 @@ class FullScreenControls extends StatefulWidget {
 }
 
 class ControlsOverlayState extends State<FullScreenControls> {
-  String videoDurationString = '';
-  String videoPositionString = '';
   bool hasH5FirstPlay = kIsWeb ? false : true;
-  bool isPlaying = false;
   bool isForward = false;
-  bool inBuffering = false;
-  int videoDuration = 0; // 影片總長度
-  int videoPosition = 0; // 影片目前進度
   bool isScrolling = false; // 正在拖動影片
-  bool displayControls = false; // 是否要呈現影片控制區塊
-  Timer? toggleControlsTimer;
 
-  // vertical drag的東西
-  double? initialVolume;
-  double? initialBrightness;
-  double? lastDragPosition; // 添加这一行
-  double brightness = 0.5; // 初始值，表示亮度，範圍在 0.0 到 1.0 之間
-  double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
-  double verticalDragPosition = 0.0; // 初始值
+  Widget playPauseButton(videoPlayerInfo) {
+    return GestureDetector(
+      onTap: () {
+        videoPlayerInfo.observableVideoPlayerController.toggle();
+      },
+      child: Container(
+        color: Colors.transparent,
+        width: double.infinity,
+        height: double.infinity,
+        child: Center(
+          child: videoPlayerInfo
+                      .observableVideoPlayerController.videoAction.value ==
+                  'pause'
+              ? const Center(
+                  child: SizedBox(
+                    width: 40,
+                    height: 40,
+                    child: Image(
+                      image: AssetImage('assets/images/short_play_button.png'),
+                    ),
+                  ),
+                )
+              : const SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: SizedBox.shrink(),
+                ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,10 +69,10 @@ class ControlsOverlayState extends State<FullScreenControls> {
           widget.videoPlayerInfo.startToggleControlsTimer();
         },
         onDoubleTap: () {
-          if (isPlaying) {
-            widget.ovpController.videoPlayerController?.pause();
+          if (widget.videoPlayerInfo.isPlaying) {
+            widget.videoPlayerInfo.videoPlayerController?.pause();
           } else {
-            widget.ovpController.videoPlayerController?.play();
+            widget.videoPlayerInfo.videoPlayerController?.play();
           }
         },
         onHorizontalDragStart: (details) {
@@ -72,6 +83,10 @@ class ControlsOverlayState extends State<FullScreenControls> {
             widget.videoPlayerInfo.startScrolling();
             widget.videoPlayerInfo.showControls();
           }
+
+          setState(() {
+            isScrolling = true;
+          });
         },
         onHorizontalDragUpdate: (details) {
           if (!mounted ||
@@ -80,183 +95,153 @@ class ControlsOverlayState extends State<FullScreenControls> {
           }
           double dragPercentage = details.delta.dx /
               (MediaQuery.of(context).size.width * 0.3); // 计算滑动距离占屏幕宽度的比例
-          int newPositionSeconds = videoPosition +
-              (dragPercentage * videoDuration).toInt(); // 使用滑动比例来更新视频位置
+          int newPositionSeconds = widget.videoPlayerInfo.videoPosition +
+              (dragPercentage * widget.videoPlayerInfo.videoDuration)
+                  .toInt(); // 使用滑动比例来更新视频位置
 
           // Make sure we are within the video duration
           if (newPositionSeconds < 0) newPositionSeconds = 0;
-          if (newPositionSeconds > videoDuration) {
-            newPositionSeconds = videoDuration;
+          if (newPositionSeconds > widget.videoPlayerInfo.videoDuration) {
+            newPositionSeconds = widget.videoPlayerInfo.videoDuration;
           }
-
+          // check if we are fast forwarding or rewinding
+          setState(() {
+            isForward = details.delta.dx > 0;
+          });
           widget.videoPlayerInfo.videoPlayerController
               ?.seekTo(Duration(seconds: newPositionSeconds));
         },
         onHorizontalDragEnd: (details) {
           widget.videoPlayerInfo.stopScrolling();
           widget.videoPlayerInfo.startToggleControlsTimer();
+          setState(() {
+            isScrolling = false;
+          });
         },
-        child: Stack(
-          children: <Widget>[
+        child: Stack(children: <Widget>[
+          playPauseButton(widget.videoPlayerInfo),
+          if (widget.videoPlayerInfo.inBuffering && !isScrolling)
+            const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
+          if (isScrolling)
+            Center(
+              child: RichText(
+                text: TextSpan(
+                  children: <InlineSpan>[
+                    WidgetSpan(
+                      child: Icon(
+                        isForward
+                            ? Icons.keyboard_double_arrow_right
+                            : Icons.keyboard_double_arrow_left,
+                        color: Colors.white,
+                        size: 16,
+                      ),
+                    ),
+                    TextSpan(
+                      text: widget.videoPlayerInfo.videoPositionString,
+                      style: const TextStyle(
+                        fontSize: 13.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextSpan(
+                      text: ' / ${widget.videoPlayerInfo.videoDurationString}',
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        color: Colors.white.withOpacity(.75),
+                        fontWeight: FontWeight.normal,
+                      ),
+                    )
+                  ],
+                  style: const TextStyle(
+                    fontSize: 14.0,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          if (widget.videoPlayerInfo.displayControls ||
+              !widget.videoPlayerInfo.isPlaying) ...[
             Positioned(
-                top: 0,
-                child: Container(
-                  height: constraints.maxHeight,
-                  width: constraints.maxWidth,
-                  color: Colors.transparent,
-                )),
-            if (displayControls || !isPlaying)
-              Positioned(
-                top: 0,
-                left: 0,
-                right: 0,
-                child: AppBar(
-                  title: const Text(''),
-                  elevation: 0,
-                  centerTitle: false,
-                  backgroundColor: Colors.transparent,
-                  leading: IconButton(
-                    icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-                    onPressed: () => widget.toggleFullscreen(),
-                  ),
-                ),
-              ),
-            if (inBuffering && !isScrolling)
-              const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              ),
-            if (isScrolling)
-              Center(
-                child: RichText(
-                  text: TextSpan(
-                    children: <InlineSpan>[
-                      WidgetSpan(
-                        child: Icon(
-                          isForward
-                              ? Icons.keyboard_double_arrow_right
-                              : Icons.keyboard_double_arrow_left,
-                          color: Colors.white,
-                          size: 16,
-                        ),
+              bottom: 0,
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        widget.videoPlayerInfo.isPlaying
+                            ? widget.videoPlayerInfo.videoPlayerController
+                                ?.pause()
+                            : widget.videoPlayerInfo.videoPlayerController
+                                ?.play();
+                      },
+                      icon: Icon(
+                        widget.videoPlayerInfo.isPlaying
+                            ? Icons.pause
+                            : Icons.play_arrow,
+                        color: Colors.white,
+                        size: 18,
                       ),
-                      TextSpan(
-                        text: videoPositionString,
-                        style: const TextStyle(
-                          fontSize: 13.0,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      TextSpan(
-                        text: ' / $videoDurationString',
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          color: Colors.white.withOpacity(.75),
-                          fontWeight: FontWeight.normal,
-                        ),
-                      )
-                    ],
-                    style: const TextStyle(
-                      fontSize: 14.0,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
                     ),
-                  ),
-                ),
-              ),
-            if (kIsWeb && !hasH5FirstPlay && !isPlaying)
-              // 中間播放按鈕
-              GestureDetector(
-                onTap: () {
-                  widget.ovpController.videoPlayerController?.play();
-                  if (kIsWeb && !hasH5FirstPlay) {
-                    setState(() {
-                      hasH5FirstPlay = true;
-                    });
-                  }
-                },
-                child: const Center(
-                  child: SizedBox(
-                    width: 100,
-                    height: 100,
-                    child: Image(
-                      image: AssetImage('assets/images/short_play_button.png'),
+                    Text(
+                      widget.videoPlayerInfo.videoPositionString,
+                      style: const TextStyle(color: Colors.white),
                     ),
-                  ),
-                ),
-              ),
-            if (displayControls || !isPlaying)
-              // 下方控制區塊
-              Positioned(
-                bottom: 0,
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          isPlaying
-                              ? widget.ovpController.videoPlayerController
-                                  ?.pause()
-                              : widget.ovpController.videoPlayerController
-                                  ?.play();
-                        },
-                        icon: Icon(
-                          isPlaying ? Icons.pause : Icons.play_arrow,
-                          color: Colors.white,
-                          size: 18,
+                    Expanded(
+                      // 使用Expanded讓SliderTheme填充剩餘的空間
+                      child: SliderTheme(
+                        data: SliderThemeData(
+                          // trackShape: CustomTrackShape(),
+                          trackHeight: 4.0, // 這可以設定滑塊軌道的高度
+                          thumbShape: TransparentSliderThumbShape(),
+                          activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
+                          inactiveTrackColor:
+                              Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
+                          overlayShape:
+                              const RoundSliderOverlayShape(overlayRadius: 0.0),
+                        ),
+                        child: Slider(
+                          value:
+                              widget.videoPlayerInfo.videoPosition.toDouble(),
+                          min: 0,
+                          max: widget.videoPlayerInfo.videoDuration.toDouble(),
+                          onChanged: (double value) {
+                            if (mounted) {
+                              widget.videoPlayerInfo.startScrolling();
+                              widget.videoPlayerInfo.showControls();
+                              widget.videoPlayerInfo.videoPlayerController
+                                  ?.seekTo(Duration(seconds: value.toInt()));
+                            }
+                          },
+                          onChangeEnd: (double value) {
+                            widget.videoPlayerInfo.stopScrolling();
+                            widget.videoPlayerInfo.startToggleControlsTimer();
+                          },
                         ),
                       ),
-                      Text(
-                        videoPositionString,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      Expanded(
-                        // 使用Expanded讓SliderTheme填充剩餘的空間
-                        child: SliderTheme(
-                          data: SliderThemeData(
-                            // trackShape: CustomTrackShape(),
-                            trackHeight: 4.0, // 這可以設定滑塊軌道的高度
-                            thumbShape: TransparentSliderThumbShape(),
-                            activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
-                            inactiveTrackColor:
-                                Colors.blue.withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
-                            overlayShape: const RoundSliderOverlayShape(
-                                overlayRadius: 0.0),
-                          ),
-                          child: Slider(
-                            value: videoPosition.toDouble(),
-                            min: 0,
-                            max: videoDuration.toDouble(),
-                            onChanged: (double value) {
-                              if (mounted) {
-                                widget.videoPlayerInfo.startScrolling();
-                                widget.videoPlayerInfo.showControls();
-                                widget.videoPlayerInfo.videoPlayerController
-                                    ?.seekTo(Duration(seconds: value.toInt()));
-                              }
-                            },
-                            onChangeEnd: (double value) {
-                              widget.videoPlayerInfo.stopScrolling();
-                              widget.videoPlayerInfo.startToggleControlsTimer();
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 5.0),
-                      Text(
-                        videoDurationString,
-                        style: const TextStyle(color: Colors.white),
-                      ),
-                      const SizedBox(width: 15.0),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: 5.0),
+                    Text(
+                      widget.videoPlayerInfo.videoDurationString,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(width: 15.0),
+                  ],
                 ),
               ),
-          ],
-        ),
+            ),
+            FloatPageBackButton(
+              onPressed: () =>
+                  widget.pageviewIndexController.toggleFullscreen(),
+            ),
+          ]
+        ]),
       );
     });
   }

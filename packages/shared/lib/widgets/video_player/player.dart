@@ -40,15 +40,9 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
           alignment: Alignment.center,
           children: <Widget>[
             if (controller.videoAction.value == 'error') ...[
-              if (kIsWeb)
-                Center(
-                  child: Text(
-                    controller.errorMessage.value,
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
               VideoError(
                 videoCover: video.coverVertical!,
+                errorMessage: controller.errorMessage.value,
                 onTap: () {
                   controller.videoPlayerController?.play();
                 },

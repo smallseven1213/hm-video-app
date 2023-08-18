@@ -6,8 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import '../../controllers/user_navigator_controller.dart';
 
 class UserSettingScaffold extends StatefulWidget {
-  final Function(Function setAccountProtectionShownToTrue)
-      onAccountProtectionShownH5;
+  final Function() onAccountProtectionShownH5;
   final Function() onAccountProtectionShown;
   final Widget child;
   const UserSettingScaffold(
@@ -28,10 +27,10 @@ class UserSettingScaffoldState extends State<UserSettingScaffold> {
   checkFirstSeen() {
     final accountProtectionShown = storage.read('account-protection-shown');
     if (accountProtectionShown == null) {
+      storage.write('account-protection-shown', true);
       if (kIsWeb) {
-        widget.onAccountProtectionShownH5(setAccountProtectionShownToTrue);
+        widget.onAccountProtectionShownH5();
       } else {
-        storage.write('account-protection-shown', true);
         widget.onAccountProtectionShown();
       }
     }

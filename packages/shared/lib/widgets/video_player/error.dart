@@ -1,16 +1,21 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/video_player/video_cover.dart';
+
+import '../float_page_back_button.dart';
 
 final logger = Logger();
 
 class VideoError extends StatelessWidget {
   final String videoCover;
+  final String errorMessage;
   final Function() onTap;
 
   const VideoError({
     Key? key,
     required this.videoCover,
+    required this.errorMessage,
     required this.onTap,
   }) : super(key: key);
 
@@ -48,21 +53,14 @@ class VideoError extends StatelessWidget {
             ],
           ),
         ),
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: AppBar(
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new, size: 16),
-              onPressed: () {
-                Navigator.pop(context);
-              },
+        if (kIsWeb)
+          Center(
+            child: Text(
+              errorMessage,
+              style: const TextStyle(color: Colors.white),
             ),
           ),
-        )
+        const FloatPageBackButton(),
       ],
     );
   }

@@ -101,7 +101,7 @@ class _SplashState extends State<Splash> {
       invitationCode = cb?.text ?? '';
     }
 
-    if (!RegExp('[0-9A-Za-z]{6}').hasMatch(invitationCode)) {
+    if (!RegExp(r'^[0-9A-Za-z]{6}$').hasMatch(invitationCode)) {
       invitationCode = '';
     }
     return invitationCode;
