@@ -1,4 +1,6 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 class AuthTextFieldSuffixIcon extends StatefulWidget {
   final TextEditingController controller;
@@ -45,18 +47,14 @@ class AuthTextFieldSuffixIconState extends State<AuthTextFieldSuffixIcon> {
               height: newSize,
               child: Container(
                 decoration: BoxDecoration(
-                  color: Colors.transparent,
+                  color: AppColors.colors[ColorKeys.textSecondary],
                   shape: BoxShape.circle,
-                  border: Border.all(
-                      color: const Color.fromRGBO(255, 255, 255, 0.3),
-                      width: 1),
                 ),
                 alignment: Alignment.center,
                 child: Icon(
                   Icons.close,
-                  // Adjust the icon size accordingly
                   size: newSize - 10,
-                  color: const Color.fromRGBO(255, 255, 255, 0.6),
+                  color: Colors.white,
                 ),
               ),
             ),

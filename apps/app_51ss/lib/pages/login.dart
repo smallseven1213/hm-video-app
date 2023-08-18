@@ -1,22 +1,19 @@
 // LoginPage , has button , click push to '/register'
 
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/custom_app_bar.dart';
-import 'package:app_51ss/widgets/forgot_password_button.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
-import 'package:shared/apis/auth_api.dart';
+
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/login/login_scaffold.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import 'package:app_51ss/config/colors.dart';
+import 'package:app_51ss/widgets/custom_app_bar.dart';
+import 'package:app_51ss/widgets/forgot_password_button.dart';
+
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
-
-final logger = Logger();
-final authApi = AuthApi();
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -36,9 +33,7 @@ class LoginPage extends StatelessWidget {
                 title: title,
                 message: message,
                 showCancelButton: false,
-                onConfirm: () {
-                  // Navigator.of(context).pop();
-                },
+                onConfirm: () {},
               );
             },
             child: (accountController, passwordController, validateUsername,
