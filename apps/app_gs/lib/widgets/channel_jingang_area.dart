@@ -48,7 +48,7 @@ class ChannelJingangArea extends StatelessWidget {
           );
         }
         return SliverPadding(
-          padding: const EdgeInsets.only(top: 8.0),
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
           sliver: SliverAlignedGrid.count(
             crossAxisCount: jingang.quantity ?? 4,
             itemCount: jingang.jingangDetail?.length ?? 0,
