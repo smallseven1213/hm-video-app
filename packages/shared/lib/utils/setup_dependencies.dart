@@ -26,6 +26,7 @@ import '../controllers/user_search_history_controller.dart';
 import '../controllers/user_short_collection_controller.dart';
 import '../controllers/user_video_collection_controller.dart';
 import '../controllers/video_ads_controller.dart';
+import '../enums/list_editor_category.dart';
 
 void setupDependencies() {
   Get.put(RouteController());
@@ -45,7 +46,7 @@ void setupDependencies() {
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
       tag: 'playrecord');
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
-      tag: 'collection');
+      tag: ListEditorCategory.collection.toString());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
       tag: 'favorites');
   Get.lazyPut<ListEditorController>(() => ListEditorController(),

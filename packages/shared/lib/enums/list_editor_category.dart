@@ -1,0 +1,1 @@
+enum ListEditorCategory { collection }
