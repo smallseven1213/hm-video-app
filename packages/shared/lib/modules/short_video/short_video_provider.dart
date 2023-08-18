@@ -32,26 +32,10 @@ class ShortVideoProviderState extends State<ShortVideoProvider> {
   @override
   void initState() {
     super.initState();
-
     controllerTag = genaratorShortVideoDetailTag(widget.vodId.toString());
 
     controller =
         Get.put(ShortVideoDetailController(widget.vodId), tag: controllerTag);
-
-    controller.video.stream.listen((value) {
-      if (value != null) {
-        var playRecord = Vod(
-          value.id,
-          value.title,
-          coverHorizontal: value.coverHorizontal!,
-          coverVertical: value.coverVertical!,
-          timeLength: value.timeLength!,
-          tags: value.tags!,
-          videoViewTimes: value.videoViewTimes!,
-        );
-        Get.find<PlayRecordController>(tag: 'short').addPlayRecord(playRecord);
-      }
-    });
   }
 
   @override

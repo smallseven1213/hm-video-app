@@ -4,34 +4,28 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../../controllers/short_video_detail_controller.dart';
-import '../../models/short_video_detail.dart';
 import '../../models/vod.dart';
 import '../../utils/controller_tag_genarator.dart';
 
 final logger = Logger();
 
-class ShortVideoConsumer extends StatefulWidget {
-  final int vodId;
-  final Widget Function({
-    required bool isLoading,
-    required String? videoUrl,
-    required Vod? video,
-    required ShortVideoDetail? videoDetail,
-  }) child;
+class ShortVideoDataConsumer extends StatefulWidget {
+  final int videoId;
+  final Widget Function(Vod? video) child;
   final Widget? loading;
 
-  const ShortVideoConsumer({
+  const ShortVideoDataConsumer({
     Key? key,
     required this.child,
-    required this.vodId,
+    required this.videoId,
     this.loading,
   }) : super(key: key);
 
   @override
-  ShortVideoConsumerState createState() => ShortVideoConsumerState();
+  ShortVideoDataConsumerState createState() => ShortVideoDataConsumerState();
 }
 
-class ShortVideoConsumerState extends State<ShortVideoConsumer> {
+class ShortVideoDataConsumerState extends State<ShortVideoDataConsumer> {
   late final String controllerTag;
   late final ShortVideoDetailController controller;
 
@@ -39,7 +33,7 @@ class ShortVideoConsumerState extends State<ShortVideoConsumer> {
   void initState() {
     super.initState();
 
-    controllerTag = genaratorShortVideoDetailTag(widget.vodId.toString());
+    controllerTag = genaratorShortVideoDetailTag(widget.videoId.toString());
 
     controller = Get.find<ShortVideoDetailController>(tag: controllerTag);
   }
@@ -47,10 +41,7 @@ class ShortVideoConsumerState extends State<ShortVideoConsumer> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => widget.child(
-          isLoading: controller.isLoading.value,
-          videoUrl: controller.videoUrl.value,
-          video: controller.video.value,
-          videoDetail: controller.videoDetail.value,
+          controller.video.value,
         ));
   }
 }

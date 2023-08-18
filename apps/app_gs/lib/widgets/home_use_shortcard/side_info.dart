@@ -9,6 +9,9 @@ import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/short_video/short_video_collect_count_consumer.dart';
+import 'package:shared/modules/short_video/short_video_detail.dart';
+import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/video_info_formatter.dart';
@@ -18,15 +21,15 @@ import '../../config/colors.dart';
 final logger = Logger();
 
 class SideInfo extends StatefulWidget {
+  final int videoId;
   final String obsKey;
   final Vod shortData;
-  final ShortVideoDetailController? controller;
 
   const SideInfo({
     Key? key,
+    required this.videoId,
     required this.obsKey,
     required this.shortData,
-    required this.controller,
   }) : super(key: key);
 
   @override
@@ -56,124 +59,122 @@ class _SideInfoState extends State<SideInfo> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // 供應商
-          Obx(() {
-            var data = widget.controller!.videoDetail.value;
-
-            if (data?.supplier != null) {
-              return GestureDetector(
-                onTap: () async {
-                  obsVideoPlayerController.pause();
-                  await MyRouteDelegate.of(context)
-                      .push(AppRoutes.supplier, args: {
-                    'id': data?.supplier!.id,
-                  });
-                  obsVideoPlayerController.play();
-                },
-                child: ActorAvatar(
-                  photoSid: data?.supplier!.photoSid,
-                  width: 45,
-                  height: 45,
-                ),
-              );
-            } else {
-              return Container();
-            }
-          }),
+          ShortVideoDetailConsumer(
+              videoId: widget.videoId,
+              child: (videoDetail) {
+                if (videoDetail?.supplier != null) {
+                  return GestureDetector(
+                    onTap: () async {
+                      obsVideoPlayerController.pause();
+                      await MyRouteDelegate.of(context)
+                          .push(AppRoutes.supplier, args: {
+                        'id': videoDetail?.supplier!.id,
+                      });
+                      obsVideoPlayerController.play();
+                    },
+                    child: ActorAvatar(
+                      photoSid: videoDetail?.supplier!.photoSid,
+                      width: 45,
+                      height: 45,
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
           const SizedBox(height: 20),
           // 按讚
+          ShortVideoFavoriteCountConsumer(
+              videoId: widget.videoId,
+              child: (favoriteCount, update) => Obx(() {
+                    bool isLike = userFavoritesShortController.data
+                        .any((e) => e.id == widget.shortData.id);
 
-          Obx(() {
-            bool isLike = userFavoritesShortController.data
-                .any((e) => e.id == widget.shortData.id);
-            var favorites = widget.controller!.videoFavorites.value;
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  alignment: Alignment.center,
-                  padding: const EdgeInsets.only(right: 1),
-                  onPressed: () {
-                    if (isLike) {
-                      userFavoritesShortController
-                          .removeVideo([widget.shortData.id]);
-                      if (favorites > 0) {
-                        widget.controller!.updateFavorites(-1);
-                      }
-                    } else {
-                      var vod = Vod.fromJson(widget.shortData.toJson());
-                      userFavoritesShortController.addVideo(vod);
-                      widget.controller!.updateFavorites(1);
-                    }
-                  },
-                  icon: Icon(
-                    Icons.favorite_rounded,
-                    size: 30,
-                    color: isLike ? Colors.red : Colors.white,
-                  ),
-                ),
-                Text(
-                  formatNumberToUnit(favorites,
-                      shouldCalculateThousands: false),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            );
-          }),
-
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.only(right: 1),
+                          onPressed: () {
+                            if (isLike) {
+                              userFavoritesShortController
+                                  .removeVideo([widget.shortData.id]);
+                              if (favoriteCount > 0) {
+                                update(-1);
+                              }
+                            } else {
+                              var vod = Vod.fromJson(widget.shortData.toJson());
+                              userFavoritesShortController.addVideo(vod);
+                              update(1);
+                            }
+                          },
+                          icon: Icon(
+                            Icons.favorite_rounded,
+                            size: 30,
+                            color: isLike ? Colors.red : Colors.white,
+                          ),
+                        ),
+                        Text(
+                          formatNumberToUnit(favoriteCount,
+                              shouldCalculateThousands: false),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    );
+                  })),
           // 收藏
-
           const SizedBox(height: 10),
+          ShortVideoCollectCountConsumer(
+              videoId: widget.videoId,
+              child: ((collectCount, update) => Obx(() {
+                    bool isLike = userShortCollectionController.data
+                        .any((e) => e.id == widget.shortData.id);
 
-          Obx(() {
-            bool isLike = userShortCollectionController.data
-                .any((e) => e.id == widget.shortData.id);
-            var collects = widget.controller!.videoCollects.value;
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  padding: const EdgeInsets.only(right: 1),
-                  onPressed: () {
-                    if (isLike) {
-                      userShortCollectionController
-                          .removeVideo([widget.shortData.id]);
-                      if (collects > 0) {
-                        widget.controller!.updateCollects(-1);
-                      }
-                    } else {
-                      var vod = Vod.fromJson(widget.shortData.toJson());
-                      userShortCollectionController.addVideo(vod);
-                      widget.controller!.updateCollects(1);
-                    }
-                  },
-                  icon: Icon(
-                    Icons.star_rounded,
-                    size: 36,
-                    color: isLike
-                        ? AppColors.colors[ColorKeys.primary]
-                        : Colors.white,
-                  ),
-                ),
-                Text(
-                  formatNumberToUnit(collects, shouldCalculateThousands: false),
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            );
-          }),
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          padding: const EdgeInsets.only(right: 1),
+                          onPressed: () {
+                            if (isLike) {
+                              userShortCollectionController
+                                  .removeVideo([widget.shortData.id]);
+                              if (collectCount > 0) {
+                                update(-1);
+                              }
+                            } else {
+                              var vod = Vod.fromJson(widget.shortData.toJson());
+                              userShortCollectionController.addVideo(vod);
+                              update(1);
+                            }
+                          },
+                          icon: Icon(
+                            Icons.star_rounded,
+                            size: 36,
+                            color: isLike
+                                ? AppColors.colors[ColorKeys.primary]
+                                : Colors.white,
+                          ),
+                        ),
+                        Text(
+                          formatNumberToUnit(collectCount,
+                              shouldCalculateThousands: false),
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    );
+                  }))),
         ],
       ),
     );

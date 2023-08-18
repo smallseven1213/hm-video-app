@@ -3,8 +3,8 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/short_video/short_video_provider.dart';
 import 'package:shared/modules/shorts/shorts_scaffold.dart';
+import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
-import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 import 'wave_loading.dart';
 
@@ -62,31 +62,31 @@ class BaseShortPage extends StatelessWidget {
                   required video,
                   required videoDetail,
                   required videoUrl,
-                  required controller,
-                }) {
-                  if (style == 2) {
-                    return HomeUseShortCard(
-                      obsKey: obsKey,
-                      index: index,
-                      isActive: isActive,
-                      id: shortData.id,
-                      title: shortData.title,
-                      shortData: shortData,
-                      toggleFullScreen: toggleFullScreen,
-                      videoUrl: videoUrl!,
-                    );
-                  }
-                  return GeneralShortCard(
-                    obsKey: obsKey,
-                    index: index,
-                    isActive: isActive,
-                    id: shortData.id,
-                    title: shortData.title,
-                    shortData: shortData,
-                    toggleFullScreen: toggleFullScreen,
-                    videoUrl: videoUrl!,
-                  );
-                }),
+                }) =>
+                    CreatePlayRecord(
+                        video: video,
+                        supportedPlayRecord: supportedPlayRecord,
+                        child: style == 2
+                            ? HomeUseShortCard(
+                                obsKey: obsKey,
+                                index: index,
+                                isActive: isActive,
+                                id: shortData.id,
+                                title: shortData.title,
+                                shortData: shortData,
+                                toggleFullScreen: toggleFullScreen,
+                                videoUrl: videoUrl!,
+                              )
+                            : HomeUseShortCard(
+                                obsKey: obsKey,
+                                index: index,
+                                isActive: isActive,
+                                id: shortData.id,
+                                title: shortData.title,
+                                shortData: shortData,
+                                toggleFullScreen: toggleFullScreen,
+                                videoUrl: videoUrl!,
+                              ))),
           );
         },
         createController: createController);

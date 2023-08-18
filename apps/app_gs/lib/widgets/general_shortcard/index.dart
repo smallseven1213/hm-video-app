@@ -2,7 +2,6 @@ import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -16,7 +15,6 @@ class GeneralShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final bool? supportedPlayRecord;
   final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
@@ -35,7 +33,6 @@ class GeneralShortCard extends StatefulWidget {
     required this.videoUrl,
     // required this.isFullscreen,
     this.isActive = true,
-    this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
@@ -105,7 +102,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                       required video,
                       required videoDetail,
                       required videoUrl,
-                      required controller,
                     }) =>
                         Column(
                       children: [
@@ -118,7 +114,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                             : const SizedBox.shrink(),
                         const SizedBox(height: 16),
                         ShortBottomArea(
-                          controller: controller,
                           shortData: widget.shortData,
                           displayFavoriteAndCollectCount:
                               widget.displayFavoriteAndCollectCount,
