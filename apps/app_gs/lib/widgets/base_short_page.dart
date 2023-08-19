@@ -5,6 +5,7 @@ import 'package:shared/modules/short_video/short_video_provider.dart';
 import 'package:shared/modules/shorts/shorts_scaffold.dart';
 import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
+import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 import 'wave_loading.dart';
 
@@ -77,7 +78,7 @@ class BaseShortPage extends StatelessWidget {
                                 toggleFullScreen: toggleFullScreen,
                                 videoUrl: videoUrl!,
                               )
-                            : HomeUseShortCard(
+                            : GeneralShortCard(
                                 obsKey: obsKey,
                                 index: index,
                                 isActive: isActive,
