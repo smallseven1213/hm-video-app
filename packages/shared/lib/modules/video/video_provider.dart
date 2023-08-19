@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart' as rx;
 import 'package:uuid/uuid.dart' as uuid;
 import '../../controllers/play_record_controller.dart';
 import '../../controllers/video_detail_controller.dart';
+import '../../enums/play_record_type.dart';
 import '../../models/vod.dart';
 import '../../utils/controller_tag_genarator.dart';
 
@@ -91,7 +92,8 @@ class VideoScreenProviderState extends State<VideoScreenProvider> {
             tags: video.tags!,
             videoViewTimes: videoDetail.videoViewTimes!,
           );
-          Get.find<PlayRecordController>(tag: 'vod').addPlayRecord(playRecord);
+          Get.find<PlayRecordController>(tag: PlayRecordType.video.toString())
+              .addPlayRecord(playRecord);
         }
       }
     });

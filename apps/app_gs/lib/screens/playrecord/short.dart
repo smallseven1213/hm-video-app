@@ -4,6 +4,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/list_editor_category.dart';
+import 'package:shared/enums/play_record_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/no_data.dart';
@@ -17,9 +19,10 @@ class PlayRecordShortScreen extends StatelessWidget {
   PlayRecordShortScreen({Key? key}) : super(key: key);
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'playrecord');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.playrecord.toString());
   final shortPlayRecordController =
-      Get.find<PlayRecordController>(tag: 'short');
+      Get.find<PlayRecordController>(tag: PlayRecordType.short.toString());
 
   @override
   Widget build(BuildContext context) {

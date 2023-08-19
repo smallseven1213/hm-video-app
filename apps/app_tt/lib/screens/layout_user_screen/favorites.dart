@@ -4,6 +4,7 @@ import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
+import 'package:shared/enums/list_editor_category.dart';
 
 const tabs = ['長視頻', '短視頻', '演員'];
 
@@ -40,7 +41,8 @@ class FavoritesPageState extends State<FavoritesPage>
   }
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'favorites');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.favorites.toString());
   final userFavoritesActorController = Get.find<UserFavoritesActorController>();
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
   final userFavoritesShortController = Get.find<UserFavoritesShortController>();

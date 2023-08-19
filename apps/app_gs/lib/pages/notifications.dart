@@ -5,6 +5,7 @@ import 'package:app_gs/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
@@ -18,7 +19,8 @@ class NotificationsPageState extends State<NotificationsPage>
   late TabController _tabController;
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'notifications');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.notifications.toString());
 
   @override
   void initState() {

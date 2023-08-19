@@ -1,1 +1,1 @@
-enum ListEditorCategory { collection }
+enum ListEditorCategory { collection, favorites, notifications, playrecord }

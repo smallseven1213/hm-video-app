@@ -27,6 +27,7 @@ import '../controllers/user_short_collection_controller.dart';
 import '../controllers/user_video_collection_controller.dart';
 import '../controllers/video_ads_controller.dart';
 import '../enums/list_editor_category.dart';
+import '../enums/play_record_type.dart';
 
 void setupDependencies() {
   Get.put(RouteController());
@@ -39,18 +40,20 @@ void setupDependencies() {
   Get.lazyPut<UserNavigatorController>(() => UserNavigatorController());
   Get.lazyPut<BottomNavigatorController>(() => BottomNavigatorController());
   Get.lazyPut<BannerController>(() => BannerController());
-  Get.lazyPut<PlayRecordController>(() => PlayRecordController(tag: 'vod'),
-      tag: 'vod');
-  Get.lazyPut<PlayRecordController>(() => PlayRecordController(tag: 'short'),
-      tag: 'short');
+  Get.lazyPut<PlayRecordController>(
+      () => PlayRecordController(tag: PlayRecordType.video.toString()),
+      tag: PlayRecordType.video.toString());
+  Get.lazyPut<PlayRecordController>(
+      () => PlayRecordController(tag: PlayRecordType.short.toString()),
+      tag: PlayRecordType.short.toString());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
-      tag: 'playrecord');
+      tag: ListEditorCategory.playrecord.toString());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
       tag: ListEditorCategory.collection.toString());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
-      tag: 'favorites');
+      tag: ListEditorCategory.favorites.toString());
   Get.lazyPut<ListEditorController>(() => ListEditorController(),
-      tag: 'notifications');
+      tag: ListEditorCategory.notifications.toString());
   Get.lazyPut<UserFavoritesSupplierController>(
       () => UserFavoritesSupplierController());
   Get.lazyPut<UserFavoritesActorController>(

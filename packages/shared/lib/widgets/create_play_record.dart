@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../controllers/play_record_controller.dart';
+import '../enums/play_record_type.dart';
 import '../models/vod.dart';
 
 class CreatePlayRecord extends StatelessWidget {
@@ -24,7 +25,7 @@ class CreatePlayRecord extends StatelessWidget {
       return child;
     }
     final PlayRecordController playRecordController =
-        Get.find<PlayRecordController>(tag: 'short');
+        Get.find<PlayRecordController>(tag: PlayRecordType.short.toString());
 
     if (video != null) {
       try {
