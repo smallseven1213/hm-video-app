@@ -95,12 +95,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         id: args['id'] as int,
         type: args['type'] as ShortsType,
       ),
-  // AppRoutes.shortsByBlock: (context, args) =>
-  //     shorts_by_block_page.ShortsByBlockPage(
-  //       uuid: args['uuid'] as String,
-  //       videoId: args['videoId'] as int,
-  //       areaId: args['areaId'] as int,
-  //     ),
   AppRoutes.shortsByLocal: (context, args) =>
       shorts_by_local_page.ShortsByLocalPage(
         uuid: args['uuid'] as String,

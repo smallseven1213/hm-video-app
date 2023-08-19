@@ -11,6 +11,9 @@ import '../../controllers/video_detail_controller.dart';
 import '../../enums/play_record_type.dart';
 import '../../models/vod.dart';
 import '../../utils/controller_tag_genarator.dart';
+import '../../apis/user_api.dart';
+
+final userApi = UserApi();
 
 class VideoScreenProvider extends StatefulWidget {
   final int id;
@@ -45,6 +48,9 @@ class VideoScreenProviderState extends State<VideoScreenProvider> {
   @override
   void initState() {
     super.initState();
+
+    // record user play recrod
+    userApi.addPlayHistory(widget.id);
 
     controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
 
