@@ -7,7 +7,6 @@ import '../apis/user_api.dart';
 import '../models/vod.dart';
 
 final UserApi userApi = UserApi();
-// const String prefsKey = 'playrecord';
 
 class PlayRecordController extends GetxController {
   Future<Box<String>> boxFuture;

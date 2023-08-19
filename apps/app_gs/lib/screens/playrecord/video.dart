@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
+import 'package:shared/enums/play_record_type.dart';
 import 'package:shared/models/vod.dart';
 
 import '../../widgets/no_data.dart';
@@ -11,9 +13,10 @@ class PlayRecordVideoScreen extends StatelessWidget {
   PlayRecordVideoScreen({Key? key}) : super(key: key);
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'playrecord');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.playrecord.toString());
   final userFavoritesVideoController =
-      Get.find<PlayRecordController>(tag: 'vod');
+      Get.find<PlayRecordController>(tag: PlayRecordType.video.toString());
 
   @override
   Widget build(BuildContext context) {

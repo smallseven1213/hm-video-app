@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/play_record_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
+import 'package:shared/enums/play_record_type.dart';
 
 final logger = Logger();
 
@@ -46,10 +48,12 @@ class PlayRecordPageState extends State<PlayRecordPage>
   }
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'playrecord');
-  final vodPlayRecordController = Get.find<PlayRecordController>(tag: 'vod');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.playrecord.toString());
+  final vodPlayRecordController =
+      Get.find<PlayRecordController>(tag: PlayRecordType.video.toString());
   final shortPlayRecordController =
-      Get.find<PlayRecordController>(tag: 'short');
+      Get.find<PlayRecordController>(tag: PlayRecordType.short.toString());
 
   void _handleSelectAll() {
     if (_tabController.index == 0) {

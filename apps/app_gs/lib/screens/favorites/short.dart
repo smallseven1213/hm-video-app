@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/no_data.dart';
@@ -14,7 +15,8 @@ class FavoritesShortScreen extends StatelessWidget {
   FavoritesShortScreen({Key? key}) : super(key: key);
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'favorites');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.favorites.toString());
   final userFavoritesShortController = Get.find<UserFavoritesShortController>();
 
   @override

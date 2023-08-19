@@ -1,0 +1,1 @@
+enum PlayRecordType { video, short }
