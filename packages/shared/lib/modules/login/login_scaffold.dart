@@ -49,23 +49,25 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
   }
 
   handleLogin() async {
-    // if (_formKey.currentState!.validate()) {
-    try {
-      var token = await authApi.login(
-          username: accountController.text, password: passwordController.text);
-      if (token == null) {
+    if (_formKey.currentState!.validate()) {
+      try {
+        var token = await authApi.login(
+            username: accountController.text,
+            password: passwordController.text);
+        if (token == null) {
+          if (widget.onError != null) {
+            widget.onError!('登入錯誤', '帳號或密碼不正確');
+          }
+        } else {
+          Get.find<AuthController>().setToken(token);
+          MyRouteDelegate.of(context).popRoute();
+        }
+      } catch (error) {
         if (widget.onError != null) {
           widget.onError!('登入錯誤', '帳號或密碼不正確');
         }
-      } else {
-        Get.find<AuthController>().setToken(token);
-      }
-    } catch (error) {
-      if (widget.onError != null) {
-        widget.onError!('登入錯誤', '帳號或密碼不正確');
       }
     }
-    // }
   }
 
   @override

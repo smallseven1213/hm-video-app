@@ -95,12 +95,17 @@ class AuthTextFieldState extends State<AuthTextField> {
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: AppColors.colors[ColorKeys.dividerColor]
-                                  as Color), // 修改為所需的顏色
+                                  as Color),
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                               color: AppColors.colors[ColorKeys.dividerColor]
-                                  as Color), // 修改為所需的顏色
+                                  as Color),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: AppColors.colors[ColorKeys.dividerColor]
+                                  as Color),
                         ),
                         suffixIcon: Padding(
                           padding: const EdgeInsets.only(right: 4),
