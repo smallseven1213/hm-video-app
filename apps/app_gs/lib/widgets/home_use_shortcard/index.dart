@@ -1,7 +1,9 @@
 import 'package:app_gs/widgets/shortcard/short_card_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
@@ -42,6 +44,19 @@ class HomeUseShortCard extends StatefulWidget {
 }
 
 class HomeUseShortCardState extends State<HomeUseShortCard> {
+  final PageViewIndexController pageviewIndexController =
+      Get.find<PageViewIndexController>();
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    print('@@@ GeneralShortCardState dispose');
+    if (pageviewIndexController.isFullscreen.value == true) {
+      pageviewIndexController.toggleFullscreen();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
@@ -78,45 +93,48 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               allowFullsreen: false,
             ),
           ),
-          ShortVideoConsumer(
-            vodId: widget.id,
-            child: ({
-              required isLoading,
-              required video,
-              required videoDetail,
-              required videoUrl,
-            }) =>
-                SideInfo(
-              videoId: widget.shortData.id,
-              obsKey: widget.obsKey,
-              shortData: widget.shortData,
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Column(children: [
-              ShortVideoConsumer(
-                vodId: widget.id,
-                child: ({
-                  required isLoading,
-                  required video,
-                  required videoDetail,
-                  required videoUrl,
-                }) =>
-                    videoDetail != null
-                        ? ShortCardInfo(
-                            obsKey: widget.obsKey,
-                            data: videoDetail,
-                            title: widget.title,
-                          )
-                        : const SizedBox.shrink(),
-              ),
-              const SizedBox(height: 16),
-            ]),
-          ),
-          const FloatPageBackButton()
+          pageviewIndexController.isFullscreen.value == true //error
+              ? const SizedBox.shrink()
+              : ShortVideoConsumer(
+                  vodId: widget.id,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      SideInfo(
+                    videoId: widget.shortData.id,
+                    obsKey: widget.obsKey,
+                    shortData: widget.shortData,
+                  ),
+                ),
+          pageviewIndexController.isFullscreen.value == true //error
+              ? const SizedBox.shrink()
+              : Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Column(children: [
+                    ShortVideoConsumer(
+                      vodId: widget.id,
+                      child: ({
+                        required isLoading,
+                        required video,
+                        required videoDetail,
+                        required videoUrl,
+                      }) =>
+                          videoDetail != null
+                              ? ShortCardInfo(
+                                  obsKey: widget.obsKey,
+                                  data: videoDetail,
+                                  title: widget.title,
+                                )
+                              : const SizedBox.shrink(),
+                    ),
+                    const SizedBox(height: 16),
+                  ]),
+                ),
         ],
       ),
     );
