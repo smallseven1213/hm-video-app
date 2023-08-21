@@ -9,11 +9,15 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../config/layouts.dart';
+import '../screens/home/controllers/home_page_controller.dart';
+import '../screens/home/menu.dart';
 import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
 import '../screens/layout_user_screen/layout_user_screen.dart';
 import '../screens/apps_screen/apps_screen.dart';
 import '../widgets/layout_tab_item.dart';
+
+final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
 UserApi userApi = UserApi();
 final screens = {
@@ -33,7 +37,7 @@ final screens = {
       ),
   HomeNavigatorPathes.game: () => const LayoutGameScreen(),
   HomeNavigatorPathes.apps: () => const AppsScreen(),
-  HomeNavigatorPathes.user: () => LayoutUserScreen()
+  HomeNavigatorPathes.user: () => const LayoutUserScreen()
 };
 
 class HomePage extends StatefulWidget {
@@ -47,58 +51,73 @@ class HomePage extends StatefulWidget {
 }
 
 class HomeState extends State<HomePage> {
+  late final HomePageController homePageController;
+
   @override
   void initState() {
     super.initState();
     Get.put(GameStartupController());
+    homePageController = Get.put(HomePageController());
+
+    ever(homePageController.displayDrawer, (bool displayDrawer) {
+      if (displayDrawer) {
+        _scaffoldKey.currentState?.openEndDrawer();
+      } else {
+        _scaffoldKey.currentState?.openEndDrawer();
+      }
+    });
 
     userApi.writeUserEnterHallRecord();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MainNavigationScaffold(
-        screens: screens,
-        screenNotFoundWidget: const Center(
-          child: Center(
-            child: Text('loading...'),
+    return Scaffold(
+      key: _scaffoldKey,
+      body: MainNavigationScaffold(
+          screens: screens,
+          screenNotFoundWidget: const Center(
+            child: Center(
+              child: Text('loading...'),
+            ),
           ),
-        ),
-        bottomNavigationBarWidget: (
-            {required String activeKey,
-            required List<Navigation> navigatorItems,
-            required Function(String tabKey) changeTabKey}) {
-          final paddingBottom = MediaQuery.of(context).padding.bottom;
-          return Stack(
-            children: [
-              Container(
-                padding: EdgeInsets.only(bottom: paddingBottom),
-                height: 76 + paddingBottom,
-                decoration: const BoxDecoration(
-                  border: Border(
-                    top: BorderSide(
-                      color: Color(0xFFe4e4e5),
-                      width: 1,
+          bottomNavigationBarWidget: (
+              {required String activeKey,
+              required List<Navigation> navigatorItems,
+              required Function(String tabKey) changeTabKey}) {
+            final paddingBottom = MediaQuery.of(context).padding.bottom;
+            return Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(bottom: paddingBottom),
+                  height: 76 + paddingBottom,
+                  decoration: const BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        color: Color(0xFFe4e4e5),
+                        width: 1,
+                      ),
                     ),
                   ),
+                  child: Row(
+                    children: navigatorItems
+                        .asMap()
+                        .entries
+                        .map(
+                          (entry) => Expanded(
+                            child: LayoutTabItem(
+                                isActive: entry.value.path! == activeKey,
+                                label: entry.value.name!,
+                                onTap: () => changeTabKey(entry.value.path!)),
+                          ),
+                        )
+                        .toList(),
+                  ),
                 ),
-                child: Row(
-                  children: navigatorItems
-                      .asMap()
-                      .entries
-                      .map(
-                        (entry) => Expanded(
-                          child: LayoutTabItem(
-                              isActive: entry.value.path! == activeKey,
-                              label: entry.value.name!,
-                              onTap: () => changeTabKey(entry.value.path!)),
-                        ),
-                      )
-                      .toList(),
-                ),
-              ),
-            ],
-          );
-        });
+              ],
+            );
+          }),
+      endDrawer: UserMenuWidget(),
+    );
   }
 }
