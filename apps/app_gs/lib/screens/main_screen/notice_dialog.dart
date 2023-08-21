@@ -44,12 +44,14 @@ class NoticeDialogState extends State<NoticeDialog> {
 
         // 從列表中獲取所需的字串和數字
         String path = '/${parts[1]}';
-        int id = int.parse(parts[2]);
 
-        // 創建一個 Object，包含 id
-        var args = {'id': id};
-
-        MyRouteDelegate.of(context).push(path, args: args);
+        if (parts.length == 3) {
+          int id = int.parse(parts[2]);
+          var args = {'id': id};
+          MyRouteDelegate.of(context).push(path, args: args);
+        } else {
+          MyRouteDelegate.of(context).push(path);
+        }
       }
     }
   }
