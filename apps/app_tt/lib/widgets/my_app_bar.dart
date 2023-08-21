@@ -37,7 +37,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
                 width: 56.0,
                 color: Colors.transparent,
                 child: const Center(
-                  child: Icon(Icons.arrow_back_ios_new, size: 16),
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 16,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             )

@@ -7,17 +7,17 @@ import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import 'layout_user_screen_tabbar_header_delegate.dart';
-import 'menu.dart';
 import 'user_card.dart';
+import 'user_header.dart';
 
 class LayoutUserScreen extends StatefulWidget {
   const LayoutUserScreen({Key? key}) : super(key: key);
 
   @override
-  _LayoutUserScreenState createState() => _LayoutUserScreenState();
+  LayoutUserScreenState createState() => LayoutUserScreenState();
 }
 
-class _LayoutUserScreenState extends State<LayoutUserScreen>
+class LayoutUserScreenState extends State<LayoutUserScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late TabController _tabController;
@@ -47,10 +47,15 @@ class _LayoutUserScreenState extends State<LayoutUserScreen>
                         height: MediaQuery.of(context).padding.top,
                       ),
                     ),
-                    UserInfoConsumer(
-                      child: (info, isVIP, isGuest) => SliverPersistentHeader(
-                        delegate: UserCard(info: info, context: context),
-                        pinned: true,
+                    // UserInfoConsumer(
+                    //   child: (info, isVIP, isGuest) => SliverPersistentHeader(
+                    //     delegate: UserHeader(info: info, context: context),
+                    //     pinned: true,
+                    //   ),
+                    // ),
+                    SliverToBoxAdapter(
+                      child: UserInfoConsumer(
+                        child: (info, isVIP, isGuest) => UserCard(info: info),
                       ),
                     ),
                     SliverToBoxAdapter(
@@ -100,7 +105,6 @@ class _LayoutUserScreenState extends State<LayoutUserScreen>
               const FloatPageBackButton()
             ],
           ),
-          endDrawer: UserMenuWidget(),
         ));
   }
 
