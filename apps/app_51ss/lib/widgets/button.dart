@@ -91,9 +91,6 @@ class Button extends StatelessWidget {
                     text,
                     style: TextStyle(
                       color: buttonText[type],
-                      //  type == 'cancel'
-                      //     ? AppColors.colors[ColorKeys.textSecondary]
-                      //     : AppColors.colors[ColorKeys.textPrimary],
                       fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
                     ),
