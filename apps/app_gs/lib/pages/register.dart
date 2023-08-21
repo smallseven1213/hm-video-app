@@ -86,7 +86,7 @@ class RegisterPageState extends State<RegisterPage> {
             message: '帳號或密碼不正確',
             showCancelButton: false,
             onConfirm: () {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
             },
           );
         }
@@ -98,7 +98,7 @@ class RegisterPageState extends State<RegisterPage> {
             message: '帳號已存在',
             showCancelButton: false,
             onConfirm: () {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
             },
           );
         } else {
@@ -108,7 +108,7 @@ class RegisterPageState extends State<RegisterPage> {
             message: '帳號或密碼不正確',
             showCancelButton: false,
             onConfirm: () {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
             },
           );
         }
