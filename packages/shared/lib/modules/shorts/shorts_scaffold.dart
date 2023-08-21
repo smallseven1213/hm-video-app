@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
@@ -11,6 +12,7 @@ class ShortsScaffold extends StatefulWidget {
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
   final Widget? loadingWidget;
+  final Function()? onScrollBeyondFirst;
   final Function(
       {required int index,
       required String obsKey,
@@ -26,6 +28,7 @@ class ShortsScaffold extends StatefulWidget {
     this.displayFavoriteAndCollectCount = true,
     this.useCachedList = false,
     this.loadingWidget,
+    this.onScrollBeyondFirst,
     required this.shortCardBuilder,
     Key? key,
   }) : super(key: key);
@@ -75,6 +78,8 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     if (widget.useCachedList == false) {
       ever(controller.data, (d) {
         if (isInitial == false && mounted) {
+          // set _pageController index to 0
+          // _pageController?.jumpToPage(0);
           setState(() {
             isInitial = true;
             cachedVods = d as List<Vod>;
@@ -92,6 +97,9 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     super.dispose();
   }
 
+  double accumulatedScroll = 0.0;
+  bool hasTriggered = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -102,33 +110,52 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
             Center(
               child: widget.loadingWidget,
             ),
-          // PreloadPageView.builder(
-          PageView.builder(
-            controller: _pageController,
-            onPageChanged: (int index) {
-              if (mounted) {
-                setState(() {
-                  currentPage = index;
-                });
+          NotificationListener<ScrollNotification>(
+            onNotification: (ScrollNotification notification) {
+              if (notification is ScrollStartNotification) {
+                accumulatedScroll = 0.0;
+                hasTriggered = false;
+              } else if (notification is ScrollUpdateNotification &&
+                  currentPage == 0 &&
+                  !hasTriggered) {
+                print(notification.scrollDelta);
+                accumulatedScroll += notification.scrollDelta!;
+                // 检查滚动的实际方向是否为向上
+                if (accumulatedScroll > 0 && accumulatedScroll >= 30.0) {
+                  widget.onScrollBeyondFirst?.call();
+                  hasTriggered = true;
+                  // 重置累积距离，以避免多次触发
+                  accumulatedScroll = 0.0;
+                }
               }
+              return true;
             },
-            // preloadPagesCount: 2,
-            itemCount: cachedVods.length * 50,
-            itemBuilder: (BuildContext context, int index) {
-              var currentIndex = index % cachedVods.length;
-              var shortData = cachedVods[currentIndex];
-              bool isItemActive = index == currentPage;
-              String obsKey = '${widget.uuid}-${shortData.id.toString()}';
-              return widget.shortCardBuilder(
-                index: index,
-                obsKey: obsKey,
-                shortData: shortData,
-                isActive: isItemActive,
-                toggleFullScreen: () =>
-                    pageviewIndexController.toggleFullscreen(),
-              );
-            },
-            scrollDirection: Axis.vertical,
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (int index) {
+                if (mounted) {
+                  setState(() {
+                    currentPage = index;
+                  });
+                }
+              },
+              itemCount: cachedVods.length * 50,
+              itemBuilder: (BuildContext context, int index) {
+                var currentIndex = index % cachedVods.length;
+                var shortData = cachedVods[currentIndex];
+                bool isItemActive = index == currentPage;
+                String obsKey = '${widget.uuid}-${shortData.id.toString()}';
+                return widget.shortCardBuilder(
+                  index: index,
+                  obsKey: obsKey,
+                  shortData: shortData,
+                  isActive: isItemActive,
+                  toggleFullScreen: () =>
+                      pageviewIndexController.toggleFullscreen(),
+                );
+              },
+              scrollDirection: Axis.vertical,
+            ),
           ),
         ],
       ),
