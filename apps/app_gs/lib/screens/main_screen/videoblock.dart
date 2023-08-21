@@ -84,7 +84,12 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
               'isAutoClose': false,
             }),
           ),
-          buildFooter: Container(),
+          buildFooter: VideoBlockFooter(
+            film: film,
+            block: block,
+            updateBlock: updateBlock,
+            channelId: channelId,
+          ),
         );
       case 2:
         return Block2Widget(
