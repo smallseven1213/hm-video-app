@@ -2,7 +2,6 @@
 
 import 'package:app_tt/config/colors.dart';
 import 'package:app_tt/widgets/my_app_bar.dart';
-import 'package:app_tt/widgets/forgot_password_button.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
@@ -21,7 +20,7 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const MyAppBar(
-        title: '註冊',
+        title: '會員註冊',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -47,7 +46,19 @@ class RegisterPage extends StatelessWidget {
               SingleChildScrollView(
             child: Column(
               children: [
-                const SizedBox(height: 80),
+                const SizedBox(height: 30),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    '帳號密碼註冊',
+                    style: TextStyle(
+                      color: AppColors.colors[ColorKeys.textPrimary],
+                      fontSize: 20,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
                 Column(
                   children: [
                     AuthTextField(
@@ -74,40 +85,23 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 60),
+                const SizedBox(height: 20),
                 SizedBox(
-                  width: 240,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Button(
-                          text: '註冊',
-                          type: 'primary',
-                          onPressed: () {
-                            handleRegister();
-                          },
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Button(
-                          text: '取消',
-                          type: 'cancel',
-                          onPressed: () {
-                            MyRouteDelegate.of(context).popRoute();
-                          },
-                        ),
-                      ),
-                    ],
+                  width: double.infinity,
+                  child: Button(
+                    text: '註冊',
+                    type: 'primary',
+                    onPressed: () {
+                      handleRegister();
+                    },
                   ),
                 ),
-                const SizedBox(height: 80),
+                const SizedBox(height: 20),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Column(children: [
                           GestureDetector(
@@ -116,23 +110,27 @@ class RegisterPage extends StatelessWidget {
                                   deletePreviousCount: 1);
                             },
                             child: Column(children: [
-                              Text('前往登入',
-                                  style: TextStyle(
-                                      color: AppColors
-                                              .colors[ColorKeys.textPrimary]
-                                          as Color)),
+                              Text(
+                                '帳號密碼登入',
+                                style: TextStyle(
+                                  color: AppColors.colors[ColorKeys.textLink]
+                                      as Color,
+                                  fontSize: 12,
+                                ),
+                              ),
                             ]),
                           )
                         ]),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Container(
-                            width: 1,
-                            height: 12,
-                            color: AppColors.colors[ColorKeys.menuColor],
+                        InkWell(
+                          onTap: () {},
+                          child: Text(
+                            '手機號登入',
+                            style: TextStyle(
+                              color: AppColors.colors[ColorKeys.textLink],
+                              fontSize: 12,
+                            ),
                           ),
                         ),
-                        const ForgotPasswordButton()
                       ],
                     ),
                   ],
