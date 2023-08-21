@@ -47,7 +47,9 @@ class UserFavoritesSupplierController extends GetxController {
     if (suppliers.firstWhereOrNull((v) => v.id == supplier.id) != null) {
       suppliers.removeWhere((v) => v.id == supplier.id);
     }
-    suppliers.add(supplier);
+
+    // Insert the new Supplier at the beginning of the list.
+    suppliers.insert(0, supplier);
     await _updateHive();
     userApi.addFavoritSupplier(supplier.id!);
   }

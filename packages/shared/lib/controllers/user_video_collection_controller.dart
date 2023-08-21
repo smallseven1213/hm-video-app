@@ -58,6 +58,7 @@ class UserVodCollectionController extends GetxController {
     if (videos.firstWhereOrNull((v) => v.id == video.id) != null) {
       videos.removeWhere((v) => v.id == video.id);
     }
+
     var formattedVideo = Vod(
       video.id,
       video.title,
@@ -68,7 +69,9 @@ class UserVodCollectionController extends GetxController {
       videoViewTimes: video.videoViewTimes!,
       // detail: video.detail,
     );
-    videos.add(formattedVideo);
+
+    // Insert the new Vod at the beginning of the list.
+    videos.insert(0, formattedVideo);
     await _updateHive();
     userApi.addVideoCollection(video.id);
   }
