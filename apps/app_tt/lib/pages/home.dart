@@ -1,3 +1,4 @@
+import 'package:app_tt/pages/apps.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
@@ -14,7 +15,6 @@ import '../screens/home/menu.dart';
 import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
 import '../screens/layout_user_screen/layout_user_screen.dart';
-import '../screens/apps_screen/apps_screen.dart';
 import '../widgets/layout_tab_item.dart';
 
 final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -36,7 +36,7 @@ final screens = {
         ),
       ),
   HomeNavigatorPathes.game: () => const LayoutGameScreen(),
-  HomeNavigatorPathes.apps: () => const AppsScreen(),
+  HomeNavigatorPathes.apps: () => const AppsPage(),
   HomeNavigatorPathes.user: () => const LayoutUserScreen()
 };
 
