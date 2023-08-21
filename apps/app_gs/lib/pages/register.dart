@@ -1,5 +1,6 @@
 // RegisterPage , has button , click push to '/register'
 
+import 'package:dio/dio.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:app_gs/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
@@ -89,16 +90,28 @@ class RegisterPageState extends State<RegisterPage> {
             },
           );
         }
-      } catch (error) {
-        showConfirmDialog(
-          context: context,
-          title: '註冊錯誤',
-          message: '帳號或密碼不正確',
-          showCancelButton: false,
-          onConfirm: () {
-            Navigator.of(context).pop();
-          },
-        );
+      } on DioException catch (error) {
+        if (error.response?.data['code'] == '40000') {
+          showConfirmDialog(
+            context: context,
+            title: '註冊錯誤',
+            message: '帳號已存在',
+            showCancelButton: false,
+            onConfirm: () {
+              Navigator.of(context).pop();
+            },
+          );
+        } else {
+          showConfirmDialog(
+            context: context,
+            title: '註冊錯誤',
+            message: '帳號或密碼不正確',
+            showCancelButton: false,
+            onConfirm: () {
+              Navigator.of(context).pop();
+            },
+          );
+        }
       }
     }
   }

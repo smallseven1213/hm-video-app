@@ -238,7 +238,7 @@ class VodApi {
   Future<List<Vod>> getRecommends({int? page = 1}) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/recommend?page=$page&limit=20');
+            '${systemConfig.apiHost}/public/videos/video/recommend?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return [];
     }

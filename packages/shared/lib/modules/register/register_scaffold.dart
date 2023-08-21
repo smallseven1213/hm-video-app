@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
@@ -79,12 +80,16 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
 
         if (res.code == '00') {
           userController.fetchUserInfo();
-          MyRouteDelegate.of(context).popRoute();
+          // MyRouteDelegate.of(context).popRoute();
         } else {
           widget.onError!('註冊錯誤', '帳號或密碼不正確');
         }
-      } catch (error) {
-        widget.onError!('註冊錯誤', '帳號或密碼不正確');
+      } on DioException catch (error) {
+        if (error.response?.data['code'] == '40000') {
+          widget.onError!('註冊錯誤', '帳號已存在');
+        } else {
+          widget.onError!('註冊錯誤', '帳號或密碼不正確');
+        }
       }
     }
   }
