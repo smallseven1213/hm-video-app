@@ -82,59 +82,67 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const WaveLoading(),
-            child: (isReady) => ShortCard(
-              obsKey: widget.obsKey,
-              index: widget.index,
-              isActive: widget.isActive,
-              id: widget.shortData.id,
-              title: widget.shortData.title,
-              shortData: widget.shortData,
-              toggleFullScreen: widget.toggleFullScreen,
-              allowFullsreen: false,
+            child: (isReady) => Stack(
+              children: [
+                ShortCard(
+                  obsKey: widget.obsKey,
+                  index: widget.index,
+                  isActive: widget.isActive,
+                  id: widget.shortData.id,
+                  title: widget.shortData.title,
+                  shortData: widget.shortData,
+                  toggleFullScreen: widget.toggleFullScreen,
+                  allowFullsreen: false,
+                ),
+                // Obx(
+                //   () => pageviewIndexController.isFullscreen.value == true
+                //       ? const SizedBox.shrink()
+                //       : ShortVideoConsumer(
+                //           vodId: widget.id,
+                //           child: ({
+                //             required isLoading,
+                //             required video,
+                //             required videoDetail,
+                //             required videoUrl,
+                //           }) =>
+                //               SideInfo(
+                //             videoId: widget.shortData.id,
+                //             obsKey: widget.obsKey,
+                //             shortData: widget.shortData,
+                //           ),
+                //         ),
+                // ),
+                Obx(
+                  () => pageviewIndexController.isFullscreen.value == true
+                      ? const SizedBox.shrink()
+                      : Positioned(
+                          bottom: 0,
+                          left: 0,
+                          right: 0,
+                          child: Column(children: [
+                            ShortVideoConsumer(
+                              vodId: widget.id,
+                              child: ({
+                                required isLoading,
+                                required video,
+                                required videoDetail,
+                                required videoUrl,
+                              }) =>
+                                  videoDetail != null
+                                      ? ShortCardInfo(
+                                          obsKey: widget.obsKey,
+                                          data: videoDetail,
+                                          title: widget.title,
+                                        )
+                                      : const SizedBox.shrink(),
+                            ),
+                            const SizedBox(height: 16),
+                          ]),
+                        ),
+                ),
+              ],
             ),
           ),
-          pageviewIndexController.isFullscreen.value == true //error
-              ? const SizedBox.shrink()
-              : ShortVideoConsumer(
-                  vodId: widget.id,
-                  child: ({
-                    required isLoading,
-                    required video,
-                    required videoDetail,
-                    required videoUrl,
-                  }) =>
-                      SideInfo(
-                    videoId: widget.shortData.id,
-                    obsKey: widget.obsKey,
-                    shortData: widget.shortData,
-                  ),
-                ),
-          pageviewIndexController.isFullscreen.value == true //error
-              ? const SizedBox.shrink()
-              : Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: Column(children: [
-                    ShortVideoConsumer(
-                      vodId: widget.id,
-                      child: ({
-                        required isLoading,
-                        required video,
-                        required videoDetail,
-                        required videoUrl,
-                      }) =>
-                          videoDetail != null
-                              ? ShortCardInfo(
-                                  obsKey: widget.obsKey,
-                                  data: videoDetail,
-                                  title: widget.title,
-                                )
-                              : const SizedBox.shrink(),
-                    ),
-                    const SizedBox(height: 16),
-                  ]),
-                ),
         ],
       ),
     );

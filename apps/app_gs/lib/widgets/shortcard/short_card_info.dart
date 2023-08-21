@@ -5,13 +5,14 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../screens/short/short_card_info_tag.dart';
 
 final logger = Logger();
 
-class ShortCardInfo extends StatefulWidget {
+class ShortCardInfo extends StatelessWidget {
   final String obsKey;
   final ShortVideoDetail data;
   final String title;
@@ -24,20 +25,6 @@ class ShortCardInfo extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ShortCardInfoState createState() => _ShortCardInfoState();
-}
-
-class _ShortCardInfoState extends State<ShortCardInfo> {
-  late ObservableVideoPlayerController obsVideoPlayerController;
-
-  @override
-  void initState() {
-    super.initState();
-    obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.obsKey);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
@@ -45,27 +32,24 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (widget.data.supplier != null) ...[
+          if (data.supplier != null) ...[
             GestureDetector(
-              onTap: () async {
-                obsVideoPlayerController.pause();
-                await MyRouteDelegate.of(context)
-                    .push(AppRoutes.supplier, args: {
-                  'id': widget.data.supplier!.id,
+              onTap: () {
+                MyRouteDelegate.of(context).push(AppRoutes.supplier, args: {
+                  'id': data.supplier!.id,
                 });
-                obsVideoPlayerController.play();
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ActorAvatar(
-                    photoSid: widget.data.supplier!.photoSid,
+                    photoSid: data.supplier!.photoSid,
                     width: 40,
                     height: 40,
                   ),
                   const SizedBox(width: 8),
                   const SizedBox(height: 8),
-                  Text(widget.data.supplier!.aliasName ?? '',
+                  Text(data.supplier!.aliasName ?? '',
                       style: const TextStyle(
                         fontSize: 13,
                         color: Colors.white,
@@ -78,26 +62,23 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8),
             child: Text(
-              widget.title,
+              title,
               style: const TextStyle(
                 fontSize: 15,
                 color: Colors.white,
               ),
             ),
           ),
-          if (widget.data.tag.isNotEmpty)
+          if (data.tag.isNotEmpty)
             Wrap(
               direction: Axis.horizontal,
               spacing: 4,
               runSpacing: 4,
-              children: widget.data.tag
+              children: data.tag
                   .map((e) => GestureDetector(
-                      onTap: () async {
-                        obsVideoPlayerController.pause();
-                        await MyRouteDelegate.of(context).push(
-                            AppRoutes.supplierTag,
+                      onTap: () {
+                        MyRouteDelegate.of(context).push(AppRoutes.supplierTag,
                             args: {'tagId': e.id, 'tagName': e.name});
-                        obsVideoPlayerController.play();
                       },
                       child: ShortCardInfoTag(name: '#${e.name}')))
                   .toList(),

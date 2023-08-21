@@ -40,7 +40,6 @@ class ShortVideoConsumerState extends State<ShortVideoConsumer> {
     super.initState();
 
     controllerTag = genaratorShortVideoDetailTag(widget.vodId.toString());
-
     controller = Get.find<ShortVideoDetailController>(tag: controllerTag);
   }
 
