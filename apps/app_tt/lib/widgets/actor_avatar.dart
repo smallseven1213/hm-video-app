@@ -1,5 +1,7 @@
+import 'package:app_tt/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class ActorAvatar extends StatelessWidget {
@@ -39,11 +41,17 @@ class ActorAvatar extends StatelessWidget {
           borderRadius: BorderRadius.circular(height / 2),
           child: Stack(
             children: [
-              Image(
-                image: const AssetImage('assets/images/empty_avatar.png'),
-                fit: BoxFit.cover,
+              Container(
                 width: width,
                 height: height,
+                color: const Color(0xfff0f0f0),
+                child: const Center(
+                  child: Icon(
+                    Icons.face_3,
+                    size: 54,
+                    color: Color(0xfff3a0a9),
+                  ),
+                ),
               ),
               if (photoSid != null && photoSid != '')
                 SidImage(
