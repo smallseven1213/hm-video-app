@@ -4,6 +4,7 @@ enum ColorKeys {
   background,
   textPrimary,
   textSecondary,
+  textLink,
   textPlaceholder,
   buttonTextPrimary,
   buttonTextSecondary,
@@ -20,4 +21,5 @@ enum ColorKeys {
   menuColor,
   menuActiveColor,
   dividerColor,
+  formBg,
 }
