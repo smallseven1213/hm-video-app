@@ -9,6 +9,8 @@ import '../pages/video.dart' as video_page;
 import '../pages/publisher.dart' as publisher_page;
 import '../pages/tag.dart' as tag_page;
 import '../pages/apps.dart' as apps_page;
+import '../pages/login.dart' as login_page;
+import '../pages/register.dart' as register_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -36,9 +38,9 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   // AppRoutes.actor: (context, args) => actor_page.ActorPage(
   //       id: args['id'] as int,
   //     ),
-  // AppRoutes.login: (context, args) => const login_page.LoginPage(),
+  AppRoutes.login: (context, args) => const login_page.LoginPage(),
   // AppRoutes.nickname: (context, args) => const nickname_page.NicknamePage(),
-  // AppRoutes.register: (context, args) => const register_page.RegisterPage(),
+  AppRoutes.register: (context, args) => const register_page.RegisterPage(),
   // AppRoutes.share: (context, args) => const share_page.SharePage(),
   // AppRoutes.playRecord: (context, args) =>
   //     const playrecord_page.PlayRecordPage(),

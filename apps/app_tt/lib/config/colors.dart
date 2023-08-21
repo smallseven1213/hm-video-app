@@ -7,10 +7,21 @@ class AppColors {
     ColorKeys.accent: Color(0x00ffffff),
     ColorKeys.background: Color(0xff001A40),
     ColorKeys.textPrimary: Color(0xff161823),
-    ColorKeys.textSecondary: Color(0xffffffff),
+    ColorKeys.textSecondary: Color(0xff73747b),
+    ColorKeys.textLink: Color(0xff04498d),
+    ColorKeys.textPlaceholder: Color(0xffCACACA),
+
+    // BUTTON
     ColorKeys.buttonBgPrimary: Colors.white,
     ColorKeys.buttonBgSecondary: Colors.white,
+    ColorKeys.buttonBgCancel: Color(0xffdedede),
     ColorKeys.noImageBgTop: Color(0xff00234D),
     ColorKeys.noImageBgBottom: Color(0xff002D62),
+    ColorKeys.menuColor: Color(0xffb3b3b3),
+    ColorKeys.menuActiveColor: Color(0xffb5925c),
+    ColorKeys.dividerColor: Color(0xffeeeeee),
+
+    // Form
+    ColorKeys.formBg: Color(0xfff6f6f6),
   };
 }
