@@ -36,8 +36,13 @@ class LoginPage extends StatelessWidget {
                 onConfirm: () {},
               );
             },
-            child: (accountController, passwordController, validateUsername,
-                    validatePassword, handleLogin) =>
+            child: (
+              accountController,
+              passwordController,
+              validateUsername,
+              validatePassword,
+              handleLogin,
+            ) =>
                 SingleChildScrollView(
                     child: Column(
               children: [
@@ -74,11 +79,12 @@ class LoginPage extends StatelessWidget {
                             .push(AppRoutes.register, deletePreviousCount: 1);
                       },
                       child: Column(children: [
-                        Text('還沒有帳號',
-                            style: TextStyle(
-                              color: AppColors.colors[ColorKeys.textPrimary],
-                              decoration: TextDecoration.underline,
-                            )),
+                        Text(
+                          '還沒有帳號',
+                          style: TextStyle(
+                            color: AppColors.colors[ColorKeys.textPrimary],
+                          ),
+                        ),
                       ]),
                     ),
                     Padding(

@@ -138,7 +138,7 @@ class UserInfo extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.all(5),
                 child: const Icon(
-                  Icons.settings_rounded,
+                  Icons.login,
                   size: 18,
                   color: Colors.white,
                 ),

@@ -7,6 +7,7 @@ import '../pages/home.dart' as home_page;
 import '../pages/share.dart' as share_page;
 import '../pages/collection.dart' as collection_page;
 import '../pages/login.dart' as login_page;
+import '../pages/register.dart' as register_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -16,4 +17,5 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.collection: (context, args) =>
       const collection_page.CollectionPage(),
   AppRoutes.login: (context, args) => const login_page.LoginPage(),
+  AppRoutes.register: (context, args) => const register_page.RegisterPage(),
 };
