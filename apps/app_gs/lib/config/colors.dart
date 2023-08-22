@@ -12,5 +12,12 @@ class AppColors {
     ColorKeys.buttonBgSecondary: Colors.white,
     ColorKeys.noImageBgTop: Color(0xff00234D),
     ColorKeys.noImageBgBottom: Color(0xff002D62),
+
+    // Form
+    ColorKeys.formBg: Color(0xfff6f6f6),
+
+    // CHANNEL
+    ColorKeys.gradientBgTopColor: Color(0xFF040405),
+    ColorKeys.gradientBgBottomColor: Color.fromRGBO(20, 49, 104, 0.7),
   };
 }

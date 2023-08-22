@@ -23,5 +23,9 @@ class AppColors {
 
     // Form
     ColorKeys.formBg: Color(0xfff6f6f6),
+
+    // CHANNEL
+    ColorKeys.gradientBgTopColor: Colors.transparent,
+    ColorKeys.gradientBgBottomColor: Colors.transparent,
   };
 }

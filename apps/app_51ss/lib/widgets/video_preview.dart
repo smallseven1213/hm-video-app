@@ -149,28 +149,6 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
         GestureDetector(
           onTap: () => super.onVideoTap(context),
           child: Stack(children: [
-            // 背景
-            AspectRatio(
-              aspectRatio: imageRatio ??
-                  (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-              child: Container(
-                  decoration: BoxDecoration(
-                      borderRadius: hasRadius == true
-                          ? const BorderRadius.all(Radius.circular(10))
-                          : null,
-                      color: const Color(0xFF00234D)
-                      // color: Colors.white,
-                      ),
-                  clipBehavior: Clip.antiAlias,
-                  child: const Center(
-                    child: Image(
-                      image:
-                          AssetImage('assets/images/video_preview_loading.png'),
-                      width: 102,
-                      height: 70,
-                    ),
-                  )),
-            ),
             // 主體
             AspectRatio(
               aspectRatio: imageRatio ??
@@ -180,7 +158,6 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     borderRadius: hasRadius == true
                         ? const BorderRadius.all(Radius.circular(10))
                         : null,
-                    // color: Colors.white,
                   ),
                   foregroundDecoration: BoxDecoration(
                     gradient: kIsWeb
@@ -274,7 +251,6 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
-                                color: const Color(0xff21488E),
                                 borderRadius: kIsWeb
                                     ? BorderRadius.zero
                                     : BorderRadius.circular(10)),

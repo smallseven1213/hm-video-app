@@ -33,10 +33,8 @@ class LayoutTabBar extends StatelessWidget {
                       child: Text(
                         name,
                         style: TextStyle(
-                          color: isActive
-                              ? AppColors.colors[ColorKeys.primary]
-                              : const Color(0xffCFCECE),
-                        ),
+                            color:
+                                AppColors.colors[ColorKeys.buttonTextPrimary]),
                       ),
                     )),
         tabbarWidget: ({
@@ -45,18 +43,15 @@ class LayoutTabBar extends StatelessWidget {
           required Function(int) onTapTabItem,
         }) =>
             Container(
-              height: 65,
               width: double.infinity,
-              padding: const EdgeInsets.only(top: 8),
+              color: AppColors.colors[ColorKeys.primary],
               child: TabBar(
-                  // tabAlignment: TabAlignment.center,
                   physics: kIsWeb ? null : const BouncingScrollPhysics(),
                   isScrollable: true,
                   controller: tabController,
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 14,
                     letterSpacing: 0.05,
-                    color: AppColors.colors[ColorKeys.primary],
                   ),
                   unselectedLabelColor: const Color(0xffb2bac5),
                   indicator: UnderlineTabIndicator(
@@ -64,7 +59,8 @@ class LayoutTabBar extends StatelessWidget {
                         left: Radius.circular(3), right: Radius.circular(3)),
                     borderSide: BorderSide(
                       width: 3.0,
-                      color: AppColors.colors[ColorKeys.primary]!,
+                      color: AppColors.colors[ColorKeys.buttonTextPrimary]
+                          as Color,
                     ),
                     insets: const EdgeInsets.only(
                       left: 18,
