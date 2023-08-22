@@ -1,12 +1,8 @@
-import 'package:app_51ss/config/colors.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/models/color_keys.dart';
 
+import '../config/colors.dart';
 import '../widgets/button.dart';
-
-final logger = Logger();
 
 Future<bool?> showConfirmDialog({
   required BuildContext context,
@@ -19,7 +15,6 @@ Future<bool?> showConfirmDialog({
   bool showConfirmButton = true,
   bool showCancelButton = true,
 }) {
-  logger.i(title);
   return showDialog<bool>(
     context: context,
     builder: (BuildContext context) {

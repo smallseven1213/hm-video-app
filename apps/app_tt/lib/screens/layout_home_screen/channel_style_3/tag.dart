@@ -44,73 +44,38 @@ class TagWidget extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
-          child: CustomPaint(
-            painter: outerFrame == true ? _GradientBorderPainter() : null,
-            child: Stack(
-              children: [
-                photoSid != null && outerFrame == false
-                    ? SidImage(sid: photoSid!)
-                    : Container(),
-                outerFrame == false
-                    ? Container(
-                        width: 100, // 你可以根据需要设置宽度
-                        height: 100, // 你可以根据需要设置高度
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(
-                              0, 0, 0, 0.7), // 设置背景颜色为半透明的黑色
-                          borderRadius:
-                              BorderRadius.circular(10), // 如果需要圆角，你可以设置这个属性
-                        ),
-                      )
-                    : Container(),
-                Center(
-                  child: Text(
-                    name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
+          child: Stack(
+            children: [
+              photoSid != null && outerFrame == false
+                  ? SidImage(sid: photoSid!)
+                  : Container(
+                      color: const Color(0xFFf9f9f9),
                     ),
+              // outerFrame == false
+              //     ? Container(
+              //         width: 100, // 你可以根据需要设置宽度
+              //         height: 100, // 你可以根据需要设置高度
+              //         decoration: BoxDecoration(
+              //           color:
+              //               const Color.fromRGBO(0, 0, 0, 0.7), // 设置背景颜色为半透明的黑色
+              //           borderRadius:
+              //               BorderRadius.circular(10), // 如果需要圆角，你可以设置这个属性
+              //         ),
+              //       )
+              //     : Container(),
+              Center(
+                child: Text(
+                  name,
+                  style: const TextStyle(
+                    color: Color(0xFF50525a),
+                    fontSize: 12,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-}
-
-class _GradientBorderPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Rect rect = Offset.zero & size;
-    final Paint paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = kIsWeb ? 2.0 : 1.0;
-
-    if (kIsWeb) {
-      paint.color = const Color(0xFF00b2ff);
-    } else {
-      const Gradient gradient = LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFF00b2ff),
-          Color(0xFFcceaff),
-          Color(0xFF0075ff),
-        ],
-      );
-      paint.shader = gradient.createShader(rect);
-    }
-
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rect, const Radius.circular(10.0)),
-      paint,
-    );
-  }
-  //
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }

@@ -11,21 +11,20 @@ import '../pages/tag.dart' as tag_page;
 import '../pages/apps.dart' as apps_page;
 import '../pages/login.dart' as login_page;
 import '../pages/register.dart' as register_page;
+import '../pages/video_by_block.dart' as video_by_block_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),
   AppRoutes.video: (context, args) => video_page.Video(args: args),
-  // AppRoutes.videoByBlock: (context, args) =>
-  //     video_by_block_page.VideoByBlockPage(
-  //       blockId: args['blockId'] as int,
-  //       title: args['title'] as String,
-  //       channelId: args['channelId'] as int,
-  //       film: args['film'] == null ? 1 : args['film'] as int,
-  //     ),
-  // 上面程式有將列表分割，但實際不用，要重構
-
+  AppRoutes.videoByBlock: (context, args) =>
+      video_by_block_page.VideoByBlockPage(
+        blockId: args['blockId'] as int,
+        title: args['title'] as String,
+        channelId: args['channelId'] as int,
+        film: args['film'] == null ? 1 : args['film'] as int,
+      ),
   AppRoutes.publisher: (context, args) => publisher_page.PublisherPage(
         id: args['id'] as int,
       ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
 import '../../../widgets/tt_tab_bar.dart';
@@ -11,8 +10,6 @@ import '../channel_jingang_area_title.dart';
 import '../reload_button.dart';
 import 'tags.dart';
 import 'vods.dart';
-
-final logger = Logger();
 
 class ChannelStyle3Main extends StatefulWidget {
   final int channelId;
@@ -89,6 +86,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Obx(() {
         final channelSharedData =
             channelSharedDataController!.channelSharedData.value;
