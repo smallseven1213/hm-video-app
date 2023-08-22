@@ -36,11 +36,17 @@ class ShortCardInfo extends StatelessWidget {
               children: [
                 if (data.supplier != null) ...[
                   GestureDetector(
-                    onTap: () {
-                      MyRouteDelegate.of(context)
+                    onTap: () async {
+                      videoPlayerInfo
+                          .observableVideoPlayerController.videoPlayerController
+                          ?.pause();
+                      await MyRouteDelegate.of(context)
                           .push(AppRoutes.supplier, args: {
                         'id': data.supplier!.id,
                       });
+                      videoPlayerInfo
+                          .observableVideoPlayerController.videoPlayerController
+                          ?.play();
                     },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -79,10 +85,16 @@ class ShortCardInfo extends StatelessWidget {
                     runSpacing: 4,
                     children: data.tag
                         .map((e) => GestureDetector(
-                            onTap: () {
-                              MyRouteDelegate.of(context).push(
+                            onTap: () async {
+                              videoPlayerInfo.observableVideoPlayerController
+                                  .videoPlayerController
+                                  ?.pause();
+                              await MyRouteDelegate.of(context).push(
                                   AppRoutes.supplierTag,
                                   args: {'tagId': e.id, 'tagName': e.name});
+                              videoPlayerInfo.observableVideoPlayerController
+                                  .videoPlayerController
+                                  ?.play();
                             },
                             child: ShortCardInfoTag(name: '#${e.name}')))
                         .toList(),
