@@ -236,10 +236,25 @@ class ControlsOverlayState extends State<FullScreenControls> {
                 ),
               ),
             ),
-            FloatPageBackButton(
-              onPressed: () =>
-                  widget.pageviewIndexController.toggleFullscreen(),
-            ),
+            // FloatPageBackButton(
+            //   onPressed: () =>
+            //       widget.pageviewIndexController.toggleFullscreen(),
+            // ),
+            Positioned(
+              top: 0 + MediaQuery.of(context).padding.top,
+              left: 0,
+              child: SizedBox(
+                width: kToolbarHeight, // width of the AppBar's leading area
+                height: kToolbarHeight, // height of the AppBar's leading area
+                child: IconButton(
+                  color: Colors.white,
+                  icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                  onPressed: () {
+                    widget.pageviewIndexController.toggleFullscreen();
+                  },
+                ),
+              ),
+            )
           ]
         ]),
       );

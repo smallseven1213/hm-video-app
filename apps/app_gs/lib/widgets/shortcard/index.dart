@@ -15,7 +15,6 @@ class ShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
@@ -24,7 +23,6 @@ class ShortCard extends StatefulWidget {
 
   const ShortCard({
     Key? key,
-    required this.obsKey,
     required this.index,
     required this.id,
     required this.title,
@@ -50,7 +48,7 @@ class ShortCardState extends State<ShortCard> {
     final screen = MediaQuery.of(context);
 
     return VideoPlayerConsumer(
-      tag: widget.obsKey,
+      tag: widget.id.toString(),
       child: (VideoPlayerInfo videoPlayerInfo) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();

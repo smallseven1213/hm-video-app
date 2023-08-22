@@ -15,7 +15,6 @@ class ShortsScaffold extends StatefulWidget {
   final Function()? onScrollBeyondFirst;
   final Function(
       {required int index,
-      required String obsKey,
       required bool isActive,
       required Vod shortData,
       required Function toggleFullScreen}) shortCardBuilder;
@@ -139,15 +138,14 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
                   });
                 }
               },
+              // preloadPagesCount: 2,
               itemCount: cachedVods.length * 50,
               itemBuilder: (BuildContext context, int index) {
                 var currentIndex = index % cachedVods.length;
                 var shortData = cachedVods[currentIndex];
                 bool isItemActive = index == currentPage;
-                String obsKey = '${widget.uuid}-${shortData.id.toString()}';
                 return widget.shortCardBuilder(
                   index: index,
-                  obsKey: obsKey,
                   shortData: shortData,
                   isActive: isItemActive,
                   toggleFullScreen: () =>
