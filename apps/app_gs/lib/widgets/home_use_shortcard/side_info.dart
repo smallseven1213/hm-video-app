@@ -23,13 +23,11 @@ final logger = Logger();
 
 class SideInfo extends StatefulWidget {
   final int videoId;
-  final String obsKey;
   final Vod shortData;
 
   const SideInfo({
     Key? key,
     required this.videoId,
-    required this.obsKey,
     required this.shortData,
   }) : super(key: key);
 
@@ -38,8 +36,6 @@ class SideInfo extends StatefulWidget {
 }
 
 class _SideInfoState extends State<SideInfo> {
-
-  
   @override
   Widget build(BuildContext context) {
     final userShortCollectionController =
@@ -48,7 +44,7 @@ class _SideInfoState extends State<SideInfo> {
         Get.find<UserFavoritesShortController>();
 
     return VideoPlayerConsumer(
-        tag: widget.obsKey,
+        tag: widget.videoId,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Positioned(
             right: 8,

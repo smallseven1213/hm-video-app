@@ -13,13 +13,11 @@ import '../../screens/short/short_card_info_tag.dart';
 final logger = Logger();
 
 class ShortCardInfo extends StatelessWidget {
-  final String obsKey;
   final ShortVideoDetail data;
   final String title;
 
   const ShortCardInfo({
     Key? key,
-    required this.obsKey,
     required this.data,
     required this.title,
   }) : super(key: key);
@@ -27,7 +25,7 @@ class ShortCardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: obsKey,
+        tag: data.id.toString(),
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
             width: MediaQuery.of(context).size.width,

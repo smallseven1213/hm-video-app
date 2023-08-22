@@ -69,7 +69,6 @@ class BaseShortPage extends StatelessWidget {
                         supportedPlayRecord: supportedPlayRecord,
                         child: style == 2
                             ? HomeUseShortCard(
-                                obsKey: obsKey,
                                 index: index,
                                 isActive: isActive,
                                 id: shortData.id,
@@ -79,7 +78,6 @@ class BaseShortPage extends StatelessWidget {
                                 videoUrl: videoUrl!,
                               )
                             : GeneralShortCard(
-                                obsKey: obsKey,
                                 index: index,
                                 isActive: isActive,
                                 id: shortData.id,

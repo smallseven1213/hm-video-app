@@ -18,7 +18,6 @@ class HomeUseShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
@@ -27,7 +26,6 @@ class HomeUseShortCard extends StatefulWidget {
 
   const HomeUseShortCard({
     Key? key,
-    required this.obsKey,
     required this.index,
     required this.id,
     required this.title,
@@ -68,7 +66,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.obsKey,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -85,7 +82,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
             child: (isReady) => Stack(
               children: [
                 ShortCard(
-                  obsKey: widget.obsKey,
                   index: widget.index,
                   isActive: widget.isActive,
                   id: widget.shortData.id,
@@ -107,7 +103,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                           }) =>
                               SideInfo(
                             videoId: widget.shortData.id,
-                            obsKey: widget.obsKey,
                             shortData: widget.shortData,
                           ),
                         ),
@@ -130,7 +125,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                               }) =>
                                   videoDetail != null
                                       ? ShortCardInfo(
-                                          obsKey: widget.obsKey,
                                           data: videoDetail,
                                           title: widget.title,
                                         )
