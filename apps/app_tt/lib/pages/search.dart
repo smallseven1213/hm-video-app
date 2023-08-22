@@ -7,6 +7,8 @@ import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/models/color_keys.dart';
 
 import '../config/colors.dart';
+import '../screens/search/recommand.dart';
+import '../screens/search/search_result.dart';
 
 final vodApi = VodApi();
 
@@ -87,9 +89,10 @@ class SearchPageState extends State<SearchPage> {
       var searchKeyword = searchPageDataController.keyword.value;
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.colors[ColorKeys.background],
+          backgroundColor: Colors.white,
+          elevation: 0,
           leading: IconButton(
-            color: Colors.white,
+            color: const Color(0xFF2e3039),
             icon: const Icon(Icons.arrow_back_ios_new, size: 16),
             onPressed: () {
               if (searchKeyword != '') {
@@ -107,40 +110,92 @@ class SearchPageState extends State<SearchPage> {
           titleSpacing: 0,
           title: Padding(
             padding: const EdgeInsets.only(right: 8),
-            child: Container(),
-            // child: SearchInput(
-            //   controller: _searchController,
-            //   onChanged: (value) {
-            //     _onSearchChanged(value);
-            //   },
-            //   onSubmitted: (value) {
-            //     setState(() {
-            //       displaySearchResult = false;
-            //     });
-            //     searchPageDataController.setKeyword(_searchController.text);
-            //     Get.find<UserSearchHistoryController>()
-            //         .add(_searchController.text);
-            //   },
-            //   onTap: () {
-            //     // 處理點擊事件的邏輯，如果需要
-            //   },
-            //   onSearchButtonClick: (value) {
-            //     var getSearchKeyword = _searchController.text.isEmpty
-            //         ? widget.inputDefaultValue
-            //         : _searchController.text;
-            //     searchPageDataController.setKeyword(getSearchKeyword!);
+            child: Container(
+              height: 35,
+              decoration: BoxDecoration(
+                color: Color(0xFFF3F3F4),
+                borderRadius: BorderRadius.circular(2),
+              ),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.search),
+                    onPressed: () {
+                      // 你的放大鏡按鈕邏輯
+                    },
+                  ),
+                  Expanded(
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (value) {
+                        _onSearchChanged(value);
+                      },
+                      onSubmitted: (value) {
+                        setState(() {
+                          displaySearchResult = false;
+                        });
+                        searchPageDataController
+                            .setKeyword(_searchController.text);
+                        Get.find<UserSearchHistoryController>()
+                            .add(_searchController.text);
+                      },
+                      onTap: () {
+                        // 處理點擊事件的邏輯，如果需要
+                      },
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 12,
+                      ),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  // IconButton(
+                  //   icon: Icon(Icons.search),
+                  //   onPressed: () {
+                  //     var getSearchKeyword = _searchController.text.isEmpty
+                  //         ? widget.inputDefaultValue
+                  //         : _searchController.text;
+                  //     searchPageDataController.setKeyword(getSearchKeyword!);
 
-            //     if (searchKeyword != '') {
-            //       displaySearchResult = false;
-            //       _searchController.text = getSearchKeyword;
-            //       Get.find<UserSearchHistoryController>().add(getSearchKeyword);
-            //     }
-            //     setState(() {});
-            //   },
-            //   defaultValue: searchKeyword,
-            //   placeHolder: widget.inputDefaultValue,
-            // ),
+                  //     if (searchKeyword != '') {
+                  //       displaySearchResult = false;
+                  //       _searchController.text = getSearchKeyword;
+                  //       Get.find<UserSearchHistoryController>()
+                  //           .add(getSearchKeyword);
+                  //     }
+                  //     setState(() {});
+                  //   },
+                  // ),
+                ],
+              ),
+            ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                var getSearchKeyword = _searchController.text.isEmpty
+                    ? widget.inputDefaultValue
+                    : _searchController.text;
+                searchPageDataController.setKeyword(getSearchKeyword!);
+
+                if (searchKeyword != '') {
+                  displaySearchResult = false;
+                  _searchController.text = getSearchKeyword;
+                  Get.find<UserSearchHistoryController>().add(getSearchKeyword);
+                }
+                setState(() {});
+              },
+              child: const Text(
+                '搜索',
+                style: TextStyle(
+                  color: Color(0xFFfe2c55),
+                  fontSize: 15,
+                ),
+              ),
+            ),
+          ],
         ),
         body: Stack(
           children: [

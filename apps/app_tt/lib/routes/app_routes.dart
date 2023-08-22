@@ -14,6 +14,7 @@ import '../pages/register.dart' as register_page;
 import '../pages/video_by_block.dart' as video_by_block_page;
 import '../pages/actors.dart' as actors_page;
 import '../pages/filter.dart' as filter_page;
+import '../pages/search.dart' as search_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -53,10 +54,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   //     const collection_page.CollectionPage(),
   // AppRoutes.notifications: (context, args) =>
   //     const notifications_page.NotificationsPage(),
-  // AppRoutes.search: (context, args) => search_page.SearchPage(
-  //       inputDefaultValue: args['inputDefaultValue'] as String,
-  //       autoSearch: args['autoSearch'] as bool,
-  //     ),
+  AppRoutes.search: (context, args) => search_page.SearchPage(
+        inputDefaultValue: args['inputDefaultValue'] as String,
+        autoSearch: args['autoSearch'] as bool,
+      ),
   AppRoutes.filter: (context, args) => const filter_page.FilterPage(),
   AppRoutes.actors: (context, args) => const actors_page.ActorsPage(),
   // AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
