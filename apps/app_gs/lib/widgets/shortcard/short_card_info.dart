@@ -15,11 +15,13 @@ final logger = Logger();
 class ShortCardInfo extends StatelessWidget {
   final ShortVideoDetail data;
   final String title;
+  final bool displayActorAvatar;
 
   const ShortCardInfo({
     Key? key,
     required this.data,
     required this.title,
+    this.displayActorAvatar = true,
   }) : super(key: key);
 
   @override
@@ -51,16 +53,20 @@ class ShortCardInfo extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        ActorAvatar(
-                          photoSid: data.supplier!.photoSid,
-                          width: 40,
-                          height: 40,
-                        ),
-                        const SizedBox(width: 8),
-                        const SizedBox(height: 8),
-                        Text(data.supplier!.aliasName ?? '',
-                            style: const TextStyle(
-                              fontSize: 13,
+                        displayActorAvatar == true
+                            ? Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 8, bottom: 8),
+                                child: ActorAvatar(
+                                  photoSid: data.supplier!.photoSid,
+                                  width: 40,
+                                  height: 40,
+                                ))
+                            : const SizedBox(),
+                        Text(
+                            '${displayActorAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
+                            style: TextStyle(
+                              fontSize: displayActorAvatar == true ? 13 : 15,
                               color: Colors.white,
                             )),
                         const SizedBox(height: 8),

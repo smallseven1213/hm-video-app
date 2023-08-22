@@ -47,9 +47,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
-    print('@@@ GeneralShortCardState dispose');
     if (pageviewIndexController.isFullscreen.value == true) {
       pageviewIndexController.toggleFullscreen();
     }
@@ -128,6 +126,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                                       ? ShortCardInfo(
                                           data: videoDetail,
                                           title: widget.title,
+                                          displayActorAvatar: false,
                                         )
                                       : const SizedBox.shrink(),
                             ),

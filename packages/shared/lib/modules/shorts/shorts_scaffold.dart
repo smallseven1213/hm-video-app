@@ -129,21 +129,31 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
               }
               return true;
             },
-            // preloadPagesCount: 2,
-            itemCount: cachedVods.length * 50,
-            itemBuilder: (BuildContext context, int index) {
-              var currentIndex = index % cachedVods.length;
-              var shortData = cachedVods[currentIndex];
-              bool isItemActive = index == currentPage;
-              return widget.shortCardBuilder(
-                index: index,
-                shortData: shortData,
-                isActive: isItemActive,
-                toggleFullScreen: () =>
-                    pageviewIndexController.toggleFullscreen(),
-              );
-            },
-            scrollDirection: Axis.vertical,
+            child: PageView.builder(
+              controller: _pageController,
+              onPageChanged: (int index) {
+                if (mounted) {
+                  setState(() {
+                    currentPage = index;
+                  });
+                }
+              },
+              // preloadPagesCount: 2,
+              itemCount: cachedVods.length * 50,
+              itemBuilder: (BuildContext context, int index) {
+                var currentIndex = index % cachedVods.length;
+                var shortData = cachedVods[currentIndex];
+                bool isItemActive = index == currentPage;
+                return widget.shortCardBuilder(
+                  index: index,
+                  shortData: shortData,
+                  isActive: isItemActive,
+                  toggleFullScreen: () =>
+                      pageviewIndexController.toggleFullscreen(),
+                );
+              },
+              scrollDirection: Axis.vertical,
+            ),
           ),
         ],
       ),
