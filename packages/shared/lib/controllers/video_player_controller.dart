@@ -18,12 +18,12 @@ class ObservableVideoPlayerController extends GetxController {
   late VideoPlayerController? videoPlayerController;
   final RxBool isVisibleControls = false.obs;
   final String videoUrl;
-  final String obsKey;
+  final String tag;
   final RxBool isFullscreen = false.obs;
 
   var errorMessage = ''.obs;
 
-  ObservableVideoPlayerController(this.obsKey, this.videoUrl, this.autoPlay);
+  ObservableVideoPlayerController(this.tag, this.videoUrl, this.autoPlay);
 
   @override
   void onInit() {

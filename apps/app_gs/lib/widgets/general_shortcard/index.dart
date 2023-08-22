@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
@@ -15,7 +16,6 @@ class GeneralShortCard extends StatefulWidget {
   final int index;
   final int id;
   final String title;
-  final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
@@ -24,7 +24,6 @@ class GeneralShortCard extends StatefulWidget {
 
   const GeneralShortCard({
     Key? key,
-    required this.obsKey,
     required this.index,
     required this.id,
     required this.title,
@@ -64,7 +63,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.obsKey,
+            tag: widget.id.toString(),
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -79,7 +78,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             ),
             loadingWidget: const WaveLoading(),
             child: (isReady) => ShortCard(
-              obsKey: widget.obsKey,
               index: widget.index,
               isActive: widget.isActive,
               id: widget.shortData.id,
@@ -89,41 +87,45 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               allowFullsreen: true,
             ),
           ),
-          pageviewIndexController.isFullscreen.value == true
-              ? const SizedBox.shrink()
-              : Positioned(
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  child: ShortVideoConsumer(
-                    vodId: widget.id,
-                    child: ({
-                      required isLoading,
-                      required video,
-                      required videoDetail,
-                      required videoUrl,
-                    }) =>
-                        Column(
-                      children: [
-                        videoDetail != null
-                            ? ShortCardInfo(
-                                obsKey: widget.obsKey,
-                                data: videoDetail,
-                                title: widget.title,
-                              )
-                            : const SizedBox.shrink(),
-                        const SizedBox(height: 16),
-                        ShortBottomArea(
-                          shortData: widget.shortData,
-                          displayFavoriteAndCollectCount:
-                              widget.displayFavoriteAndCollectCount,
-                        ),
-                      ],
+          Obx(
+            () => pageviewIndexController.isFullscreen.value == true
+                ? const SizedBox.shrink()
+                : Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: ShortVideoConsumer(
+                      vodId: widget.id,
+                      child: ({
+                        required isLoading,
+                        required video,
+                        required videoDetail,
+                        required videoUrl,
+                      }) =>
+                          Column(
+                        children: [
+                          videoDetail != null
+                              ? ShortCardInfo(
+                                  data: videoDetail,
+                                  title: widget.title,
+                                )
+                              : const SizedBox.shrink(),
+                          const SizedBox(height: 16),
+                          ShortBottomArea(
+                            shortData: widget.shortData,
+                            displayFavoriteAndCollectCount:
+                                widget.displayFavoriteAndCollectCount,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-          if (pageviewIndexController.isFullscreen.value != true)
-            const FloatPageBackButton(),
+          ),
+          Obx(
+            () => pageviewIndexController.isFullscreen.value != true
+                ? const FloatPageBackButton()
+                : const SizedBox.shrink(),
+          )
         ],
       ),
     );
