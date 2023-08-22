@@ -63,6 +63,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
+            tag: widget.id.toString(),
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
