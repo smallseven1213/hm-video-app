@@ -26,65 +26,72 @@ class ShortCardInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      padding: const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (data.supplier != null) ...[
-            GestureDetector(
-              onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.supplier, args: {
-                  'id': data.supplier!.id,
-                });
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  ActorAvatar(
-                    photoSid: data.supplier!.photoSid,
-                    width: 40,
-                    height: 40,
-                  ),
-                  const SizedBox(width: 8),
-                  const SizedBox(height: 8),
-                  Text(data.supplier!.aliasName ?? '',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Colors.white,
-                      )),
-                  const SizedBox(height: 8),
+    return VideoPlayerConsumer(
+        tag: obsKey,
+        child: (VideoPlayerInfo videoPlayerInfo) {
+          return Container(
+            width: MediaQuery.of(context).size.width,
+            padding:
+                const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (data.supplier != null) ...[
+                  GestureDetector(
+                    onTap: () {
+                      MyRouteDelegate.of(context)
+                          .push(AppRoutes.supplier, args: {
+                        'id': data.supplier!.id,
+                      });
+                    },
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        ActorAvatar(
+                          photoSid: data.supplier!.photoSid,
+                          width: 40,
+                          height: 40,
+                        ),
+                        const SizedBox(width: 8),
+                        const SizedBox(height: 8),
+                        Text(data.supplier!.aliasName ?? '',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              color: Colors.white,
+                            )),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  )
                 ],
-              ),
-            )
-          ],
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8),
-            child: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.white,
-              ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 15,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                if (data.tag.isNotEmpty)
+                  Wrap(
+                    direction: Axis.horizontal,
+                    spacing: 4,
+                    runSpacing: 4,
+                    children: data.tag
+                        .map((e) => GestureDetector(
+                            onTap: () {
+                              MyRouteDelegate.of(context).push(
+                                  AppRoutes.supplierTag,
+                                  args: {'tagId': e.id, 'tagName': e.name});
+                            },
+                            child: ShortCardInfoTag(name: '#${e.name}')))
+                        .toList(),
+                  ),
+              ],
             ),
-          ),
-          if (data.tag.isNotEmpty)
-            Wrap(
-              direction: Axis.horizontal,
-              spacing: 4,
-              runSpacing: 4,
-              children: data.tag
-                  .map((e) => GestureDetector(
-                      onTap: () {
-                        MyRouteDelegate.of(context).push(AppRoutes.supplierTag,
-                            args: {'tagId': e.id, 'tagName': e.name});
-                      },
-                      child: ShortCardInfoTag(name: '#${e.name}')))
-                  .toList(),
-            ),
-        ],
-      ),
-    );
+          );
+        });
   }
 }

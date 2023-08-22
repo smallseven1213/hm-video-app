@@ -94,24 +94,24 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   toggleFullScreen: widget.toggleFullScreen,
                   allowFullsreen: false,
                 ),
-                // Obx(
-                //   () => pageviewIndexController.isFullscreen.value == true
-                //       ? const SizedBox.shrink()
-                //       : ShortVideoConsumer(
-                //           vodId: widget.id,
-                //           child: ({
-                //             required isLoading,
-                //             required video,
-                //             required videoDetail,
-                //             required videoUrl,
-                //           }) =>
-                //               SideInfo(
-                //             videoId: widget.shortData.id,
-                //             obsKey: widget.obsKey,
-                //             shortData: widget.shortData,
-                //           ),
-                //         ),
-                // ),
+                Obx(
+                  () => pageviewIndexController.isFullscreen.value == true
+                      ? const SizedBox.shrink()
+                      : ShortVideoConsumer(
+                          vodId: widget.id,
+                          child: ({
+                            required isLoading,
+                            required video,
+                            required videoDetail,
+                            required videoUrl,
+                          }) =>
+                              SideInfo(
+                            videoId: widget.shortData.id,
+                            obsKey: widget.obsKey,
+                            shortData: widget.shortData,
+                          ),
+                        ),
+                ),
                 Obx(
                   () => pageviewIndexController.isFullscreen.value == true
                       ? const SizedBox.shrink()
