@@ -40,30 +40,21 @@ class HomeMainScreen extends StatelessWidget {
                 Positioned(
                     child: Column(
                   children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top,
+                    DisplayLayoutTabSearchConsumer(
+                      layoutId: layoutId,
+                      child: (({required bool displaySearchBar}) =>
+                          displaySearchBar
+                              ? ChannelSearchBar(
+                                  key: Key('channel-search-bar-$layoutId'),
+                                )
+                              : Container()),
                     ),
                     SizedBox(
-                      height: 55,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: SizedBox(
-                                  height: 45,
-                                  child: LayoutTabBar(
-                                    layoutId: layoutId,
-                                  ))),
-                        ],
+                      height: 45,
+                      child: LayoutTabBar(
+                        layoutId: layoutId,
                       ),
                     ),
-                    DisplayLayoutTabSearchConsumer(
-                        layoutId: layoutId,
-                        child: (({required bool displaySearchBar}) =>
-                            displaySearchBar
-                                ? ChannelSearchBar(
-                                    key: Key('channel-search-bar-$layoutId'),
-                                  )
-                                : Container()))
                   ],
                 )),
               ],

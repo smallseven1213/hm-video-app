@@ -1,7 +1,9 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/popular_search_title_builder.dart';
 import '../../widgets/static_search_input.dart';
@@ -12,21 +14,13 @@ class ChannelSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
-      height: 30,
+      color: AppColors.colors[ColorKeys.primary],
+      height: 40,
       width: double.infinity,
+      padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 13),
-            child: Image(
-              image: AssetImage('assets/images/home_search_bar_logo.png'),
-              width: 24.0,
-              height: 27.0,
-            ),
-          ),
-          // input
           Expanded(
             child: PopularSearchTitleBuilder(
               child: (({required String searchKeyword}) => StaticSearchInput(
@@ -48,24 +42,18 @@ class ChannelSearchBar extends StatelessWidget {
                   )),
             ),
           ),
+          const SizedBox(width: 15),
           GestureDetector(
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
-            child: Container(
-                width: 40,
-                height: 60,
-                // color: AppColors.colors[ColorKeys.background],
-                child: const Center(
-                  child: SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: Image(
-                      image: AssetImage(
-                          'assets/images/home_search_bar_filter.png'),
-                    ),
-                  ),
-                )),
+            child: const Center(
+              child: Icon(
+                Icons.filter_alt_outlined,
+                size: 24,
+                color: Colors.white,
+              ),
+            ),
           ),
         ],
       ),

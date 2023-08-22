@@ -1,7 +1,9 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/widgets/channel_area_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/base_video_block.dart';
 import 'package:shared/widgets/base_video_preview.dart';
@@ -170,6 +172,10 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
           block: block,
           updateBlock: updateBlock,
           channelId: channelId,
+          gradientBgTopColor:
+              AppColors.colors[ColorKeys.gradientBgTopColor] as Color,
+          gradientBgBottomColor:
+              AppColors.colors[ColorKeys.gradientBgBottomColor] as Color,
           buildVideoPreview: (video) => _buildVideoPreview(
             film,
             video,

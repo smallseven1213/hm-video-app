@@ -22,4 +22,6 @@ enum ColorKeys {
   menuActiveColor,
   dividerColor,
   formBg,
+  gradientBgTopColor,
+  gradientBgBottomColor,
 }

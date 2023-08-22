@@ -1,5 +1,7 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class CircleTextItem extends StatelessWidget {
@@ -34,28 +36,18 @@ class CircleTextItem extends StatelessWidget {
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(5),
-                color: const Color(0xFF00b2ff))
+                color: AppColors.colors[ColorKeys.buttonBgPrimary],
+              )
             : BoxDecoration(
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(5),
-                gradient: !kIsWeb && hasBorder
-                    ? LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: isRounded
-                            ? const [
-                                Color(0xff00B2FF),
-                                Color(0xffCCEAFF),
-                                Color(0xff0075FF),
-                              ]
-                            : const [
-                                Color(0xff000000),
-                                Color(0xff00145B),
-                                Color(0xff000000),
-                              ],
-                        stops: isRounded ? null : [0, 0.99, 1.0])
-                    : null),
+                color: hasBorder
+                    ? isRounded
+                        ? AppColors.colors[ColorKeys.buttonBgPrimary]
+                        : AppColors.colors[ColorKeys.primary]
+                    : null,
+              ),
         child: Container(
             margin: isRounded ? const EdgeInsets.all(1) : null,
             decoration: BoxDecoration(
