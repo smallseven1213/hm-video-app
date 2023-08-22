@@ -19,6 +19,7 @@ class BaseShortPage extends StatelessWidget {
   final Widget? loadingWidget;
   final int? style; // 1, 2
   final String? uuid;
+  final Function? onScrollBeyondFirst;
 
   const BaseShortPage({
     Key? key,
@@ -31,6 +32,7 @@ class BaseShortPage extends StatelessWidget {
     this.loadingWidget,
     this.style = 1,
     this.uuid,
+    this.onScrollBeyondFirst,
   }) : super(key: key);
 
   @override
@@ -39,6 +41,9 @@ class BaseShortPage extends StatelessWidget {
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
+        onScrollBeyondFirst: () {
+          onScrollBeyondFirst?.call();
+        },
         loadingWidget: const Center(
           child: WaveLoading(
             color: Color.fromRGBO(255, 255, 255, 0.3),

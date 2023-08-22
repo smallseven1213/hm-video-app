@@ -7,6 +7,7 @@ import '../models/vod.dart';
 
 class VideoShortByChannelStyle2Controller extends GetxController {
   var data = <Vod>[].obs;
+  int _page = 1;
 
   VideoShortByChannelStyle2Controller();
 
@@ -21,7 +22,8 @@ class VideoShortByChannelStyle2Controller extends GetxController {
 
   Future<void> fetchData() async {
     VodApi vodApi = VodApi();
-    var result = await vodApi.getRecommends();
+    var result = await vodApi.getRecommends(page: _page);
+    _page++;
     data.value = result;
   }
 }

@@ -74,6 +74,7 @@ class HomeState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
+      backgroundColor: const Color(0xFFf0f0f0),
       body: MainNavigationScaffold(
           screens: screens,
           screenNotFoundWidget: const Center(

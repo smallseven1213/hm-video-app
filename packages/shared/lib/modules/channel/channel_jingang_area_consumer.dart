@@ -20,7 +20,7 @@ class ChannelJingangAreaConsumer extends StatelessWidget {
       () {
         Jingang? jingang =
             channelSharedDataController.channelSharedData.value?.jingang;
-        return child(jingang ?? null);
+        return child(jingang);
       },
     );
   }

@@ -45,7 +45,7 @@ class ChannelApi {
               .map((e) => Blocks.fromJson(e))));
       return channelSharedData;
     } catch (e) {
-      print('Error: ChannelSharedData: $e');
+      // print('Error: ChannelSharedData: $e');
       return ChannelSharedData();
     }
     // ChannelSharedData channelSharedData = ChannelSharedData(
