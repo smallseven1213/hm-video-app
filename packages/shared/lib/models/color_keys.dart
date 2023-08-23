@@ -1,5 +1,6 @@
 enum ColorKeys {
   primary,
+  secondary,
   accent,
   background,
   textPrimary,

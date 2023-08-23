@@ -1,5 +1,7 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ChannelSkeleton extends StatelessWidget {
@@ -7,7 +9,8 @@ class ChannelSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const Color baseColor = Color(0xFF003068);
+    Color baseColor =
+        AppColors.colors[ColorKeys.secondary] ?? Colors.transparent;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -57,7 +60,7 @@ class ChannelSkeleton extends StatelessWidget {
                           Container(
                             width: 60,
                             height: 60,
-                            decoration: const BoxDecoration(
+                            decoration: BoxDecoration(
                               color: baseColor,
                               shape: BoxShape.circle,
                             ),

@@ -1,6 +1,8 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/base_video_preview.dart';
@@ -79,7 +81,7 @@ class ViewInfo extends StatelessWidget {
 }
 
 class VideoPreviewWidget extends BaseVideoPreviewWidget {
-  VideoPreviewWidget({
+  const VideoPreviewWidget({
     Key? key,
     required int id,
     required String coverVertical,
@@ -149,6 +151,18 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
         GestureDetector(
           onTap: () => super.onVideoTap(context),
           child: Stack(children: [
+            AspectRatio(
+              aspectRatio: imageRatio ??
+                  (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: hasRadius == true
+                        ? const BorderRadius.all(Radius.circular(10))
+                        : null,
+                    color: AppColors.colors[ColorKeys.secondary]),
+                clipBehavior: Clip.antiAlias,
+              ),
+            ),
             // 主體
             AspectRatio(
               aspectRatio: imageRatio ??
@@ -207,8 +221,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
               textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.colors[ColorKeys.textPrimary],
                 fontSize: 12,
               ),
             ),
@@ -251,13 +265,16 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
+                                color: AppColors
+                                    .colors[ColorKeys.buttonBgSecondary],
                                 borderRadius: kIsWeb
                                     ? BorderRadius.zero
                                     : BorderRadius.circular(10)),
                             child: Text(
                               '${kIsWeb ? '#' : ''}${tag.name}',
-                              style: const TextStyle(
-                                color: Color(0xff21AFFF),
+                              style: TextStyle(
+                                color:
+                                    AppColors.colors[ColorKeys.textSecondary],
                                 fontSize: 10,
                                 height: 1.4,
                               ),
