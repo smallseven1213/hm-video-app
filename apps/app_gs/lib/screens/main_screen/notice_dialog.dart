@@ -60,7 +60,7 @@ class NoticeDialogState extends State<NoticeDialog> {
   showNoticeDialog() async {
     logger.i('===DISPLAY NOTICE DIALOG===');
     Map? result = await noticeApi.getBounce();
-    Notice? notice = bounceData!['notice'];
+    Notice? notice = result!['notice'];
     setState(() {
       bounceData = result;
     });

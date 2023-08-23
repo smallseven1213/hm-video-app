@@ -45,11 +45,13 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       Get.find<PageViewIndexController>();
 
   @override
-  void dispose() {
-    super.dispose();
-    if (pageviewIndexController.isFullscreen.value == true) {
-      pageviewIndexController.toggleFullscreen();
-    }
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (pageviewIndexController.isFullscreen.value == true) {
+        widget.toggleFullScreen();
+      }
+    });
   }
 
   @override
