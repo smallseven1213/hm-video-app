@@ -1,7 +1,6 @@
 import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/widgets/channel_area_banner.dart';
 import 'package:app_51ss/widgets/glowing_icon.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
@@ -13,6 +12,8 @@ class CustomButton extends StatefulWidget {
   final Widget? icon;
   final bool? animate;
   final Function onTap;
+  final Color? buttonBgColor;
+  final Color? buttonTextColor;
 
   const CustomButton({
     Key? key,
@@ -20,6 +21,8 @@ class CustomButton extends StatefulWidget {
     this.icon,
     this.animate = false,
     required this.onTap,
+    this.buttonBgColor = const Color(0xffB5925C),
+    this.buttonTextColor = Colors.white,
   }) : super(key: key);
   @override
   CustomButtonState createState() => CustomButtonState();
@@ -61,15 +64,7 @@ class CustomButtonState extends State<CustomButton>
         height: 38,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
         decoration: BoxDecoration(
-          gradient: kIsWeb
-              ? null
-              : const LinearGradient(
-                  colors: [Color(0xFF000916), Color(0xFF003F6C)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-          // opacity: 0.5,
-          border: Border.all(color: const Color(0xFF8594E2), width: 1),
+          color: widget.buttonBgColor,
           borderRadius: BorderRadius.circular(40),
         ),
         child: Row(
@@ -81,7 +76,8 @@ class CustomButtonState extends State<CustomButton>
                 return Transform.rotate(
                   angle: widget.animate == true ? _animation.value * 6.28 : 0,
                   child: widget.icon ??
-                      const Icon(Icons.refresh, color: Colors.white),
+                      Icon(Icons.refresh,
+                          color: AppColors.colors[ColorKeys.buttonTextPrimary]),
                 );
               },
             ),
@@ -89,7 +85,7 @@ class CustomButtonState extends State<CustomButton>
             Text(
               widget.text,
               style: TextStyle(
-                color: Colors.white.withOpacity(0.7),
+                color: widget.buttonTextColor,
                 fontSize: 14,
               ),
             ),
@@ -128,8 +124,12 @@ class VideoBlockFooter extends StatelessWidget {
               Expanded(
                 child: CustomButton(
                   text: '進入櫥窗',
+                  buttonBgColor: AppColors.colors[ColorKeys.buttonBgPrimary],
+                  buttonTextColor:
+                      AppColors.colors[ColorKeys.buttonTextPrimary],
                   icon: GlowingIcon(
-                    color: AppColors.colors[ColorKeys.textPrimary]!,
+                    color:
+                        AppColors.colors[ColorKeys.buttonTextPrimary] as Color,
                     size: 20,
                     iconData: Icons.remove_red_eye_outlined,
                   ),
@@ -164,8 +164,10 @@ class VideoBlockFooter extends StatelessWidget {
                 child: CustomButton(
                   text: '換一批',
                   animate: true,
+                  buttonBgColor: AppColors.colors[ColorKeys.buttonBgCancel],
+                  buttonTextColor: AppColors.colors[ColorKeys.buttonTextCancel],
                   icon: GlowingIcon(
-                    color: AppColors.colors[ColorKeys.textPrimary]!,
+                    color: AppColors.colors[ColorKeys.buttonTextCancel]!,
                     size: 20,
                     iconData: Icons.refresh,
                   ),

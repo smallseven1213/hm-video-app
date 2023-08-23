@@ -173,33 +173,22 @@ class ChannelStyle1State extends State<ChannelStyle1>
                           ),
                           ...sliverBlocks,
                           SliverToBoxAdapter(
-                            child: AspectRatio(
-                              aspectRatio: 390 / 190,
-                              child: Stack(
-                                children: [
-                                  const Positioned.fill(
-                                    child: Image(
-                                      image: AssetImage(
-                                          'assets/images/channel_more_button.webp'),
-                                      fit: BoxFit.cover,
-                                    ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 32),
+                              child: Center(
+                                child: SizedBox(
+                                  height: 38,
+                                  width: 183,
+                                  child: Button(
+                                    text: '探索更多內容',
+                                    onPressed: () {
+                                      MyRouteDelegate.of(context)
+                                          .push(AppRoutes.filter);
+                                    },
+                                    type: 'primary',
+                                    size: 'small',
                                   ),
-                                  Center(
-                                    child: SizedBox(
-                                      height: 38,
-                                      width: 183,
-                                      child: Button(
-                                        text: '探索更多內容',
-                                        onPressed: () {
-                                          MyRouteDelegate.of(context)
-                                              .push(AppRoutes.filter);
-                                        },
-                                        type: 'primary',
-                                        size: 'small',
-                                      ),
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
                             ),
                           ),
