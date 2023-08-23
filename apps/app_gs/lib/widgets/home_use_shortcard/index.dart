@@ -16,6 +16,7 @@ final logger = Logger();
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;
+  final String tag;
   final int id;
   final String title;
   final Vod shortData;
@@ -27,6 +28,7 @@ class HomeUseShortCard extends StatefulWidget {
   const HomeUseShortCard({
     Key? key,
     required this.index,
+    required this.tag,
     required this.id,
     required this.title,
     required this.shortData,
@@ -64,7 +66,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.id.toString(),
+            tag: widget.tag,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -82,6 +84,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               children: [
                 ShortCard(
                   index: widget.index,
+                  tag: widget.tag,
                   isActive: widget.isActive,
                   id: widget.shortData.id,
                   title: widget.shortData.title,
@@ -94,6 +97,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                       ? const SizedBox.shrink()
                       : ShortVideoConsumer(
                           vodId: widget.id,
+                          tag: widget.tag,
                           child: ({
                             required isLoading,
                             required video,
@@ -101,6 +105,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                             required videoUrl,
                           }) =>
                               SideInfo(
+                            tag: widget.tag,
                             videoId: widget.shortData.id,
                             shortData: widget.shortData,
                           ),
@@ -116,6 +121,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                           child: Column(children: [
                             ShortVideoConsumer(
                               vodId: widget.id,
+                              tag: widget.tag,
                               child: ({
                                 required isLoading,
                                 required video,
@@ -124,6 +130,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                               }) =>
                                   videoDetail != null
                                       ? ShortCardInfo(
+                                          tag: widget.tag,
                                           data: videoDetail,
                                           title: widget.title,
                                           displayActorAvatar: false,

@@ -9,12 +9,14 @@ final logger = Logger();
 
 class ShortVideoCollectCountConsumer extends StatefulWidget {
   final int videoId;
+  final String tag;
   final Widget Function(int collectCount, Function(int) update) child;
 
   const ShortVideoCollectCountConsumer({
     Key? key,
     required this.child,
     required this.videoId,
+    required this.tag,
   }) : super(key: key);
 
   @override
@@ -31,9 +33,11 @@ class ShortVideoCollectCountConsumerState
   void initState() {
     super.initState();
 
-    controllerTag = genaratorShortVideoDetailTag(widget.videoId.toString());
-
-    controller = Get.find<ShortVideoDetailController>(tag: controllerTag);
+    try {
+      controller = Get.find<ShortVideoDetailController>(tag: widget.tag);
+    } catch (e) {
+      logger.e(e);
+    }
   }
 
   @override

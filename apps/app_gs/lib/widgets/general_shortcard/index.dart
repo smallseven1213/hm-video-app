@@ -13,6 +13,7 @@ import 'short_bottom_area.dart';
 
 class GeneralShortCard extends StatefulWidget {
   final int index;
+  final String tag;
   final int id;
   final String title;
   final Vod shortData;
@@ -29,6 +30,7 @@ class GeneralShortCard extends StatefulWidget {
     required this.shortData,
     required this.toggleFullScreen,
     required this.videoUrl,
+    required this.tag,
     // required this.isFullscreen,
     this.isActive = true,
     this.displayFavoriteAndCollectCount = true,
@@ -60,7 +62,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.id.toString(),
+            tag: widget.tag,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -76,6 +78,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             loadingWidget: const WaveLoading(),
             child: (isReady) => ShortCard(
               index: widget.index,
+              tag: widget.tag,
               isActive: widget.isActive,
               id: widget.shortData.id,
               title: widget.shortData.title,
@@ -93,6 +96,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                     right: 0,
                     child: ShortVideoConsumer(
                       vodId: widget.id,
+                      tag: widget.tag,
                       child: ({
                         required isLoading,
                         required video,
@@ -103,12 +107,14 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
+                                  tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
                                 )
                               : const SizedBox.shrink(),
                           const SizedBox(height: 16),
                           ShortBottomArea(
+                            tag: widget.tag,
                             shortData: widget.shortData,
                             displayFavoriteAndCollectCount:
                                 widget.displayFavoriteAndCollectCount,

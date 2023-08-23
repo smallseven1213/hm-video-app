@@ -13,11 +13,13 @@ final logger = Logger();
 
 class ShortBottomArea extends StatelessWidget {
   final Vod shortData;
+  final String tag;
   final bool? displayFavoriteAndCollectCount;
 
   const ShortBottomArea({
     Key? key,
     required this.shortData,
+    required this.tag,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
@@ -47,6 +49,7 @@ class ShortBottomArea extends StatelessWidget {
         children: [
           ShortVideoFavoriteCountConsumer(
               videoId: shortData.id,
+              tag: tag,
               child: (favoriteCount, update) => Obx(() {
                     bool isLike = userFavoritesShortController.data
                         .any((e) => e.id == shortData.id);
@@ -75,6 +78,7 @@ class ShortBottomArea extends StatelessWidget {
                   })),
           ShortVideoCollectCountConsumer(
               videoId: shortData.id,
+              tag: tag,
               child: ((collectCount, update) => Obx(() {
                     bool isLike = userShortCollectionController.data
                         .any((e) => e.id == shortData.id);

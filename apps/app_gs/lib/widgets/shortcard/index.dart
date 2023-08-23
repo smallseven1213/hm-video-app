@@ -5,13 +5,13 @@ import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 
 class ShortCard extends StatefulWidget {
+  final String tag;
   final int index;
   final int id;
   final String title;
@@ -23,6 +23,7 @@ class ShortCard extends StatefulWidget {
 
   const ShortCard({
     Key? key,
+    required this.tag,
     required this.index,
     required this.id,
     required this.title,
@@ -48,7 +49,7 @@ class ShortCardState extends State<ShortCard> {
     final screen = MediaQuery.of(context);
 
     return VideoPlayerConsumer(
-      tag: widget.id.toString(),
+      tag: widget.tag,
       child: (VideoPlayerInfo videoPlayerInfo) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
@@ -78,6 +79,7 @@ class ShortCardState extends State<ShortCard> {
                   'error')
                 ShortVideoConsumer(
                   vodId: widget.id,
+                  tag: widget.tag,
                   child: ({
                     required isLoading,
                     required video,
@@ -107,6 +109,7 @@ class ShortCardState extends State<ShortCard> {
                 width: double.infinity,
                 child: ShortVideoConsumer(
                   vodId: widget.id,
+                  tag: widget.tag,
                   child: ({
                     required isLoading,
                     required video,

@@ -1,8 +1,6 @@
 import 'package:app_gs/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
@@ -15,19 +13,21 @@ final logger = Logger();
 class ShortCardInfo extends StatelessWidget {
   final ShortVideoDetail data;
   final String title;
+  final String tag;
   final bool displayActorAvatar;
 
   const ShortCardInfo({
     Key? key,
     required this.data,
     required this.title,
+    required this.tag,
     this.displayActorAvatar = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: data.id.toString(),
+        tag: tag,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
             width: MediaQuery.of(context).size.width,
