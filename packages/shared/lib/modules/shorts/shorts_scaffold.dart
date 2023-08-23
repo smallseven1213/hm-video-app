@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
+
+import '../../controllers/ui_controller.dart';
+import '../../utils/screen_control.dart';
 
 class ShortsScaffold extends StatefulWidget {
   final Function() createController;
@@ -44,6 +48,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
   List<Vod> cachedVods = [];
   final PageViewIndexController pageviewIndexController =
       Get.find<PageViewIndexController>();
+  final UIController uiController = Get.find<UIController>();
 
   @override
   void initState() {
@@ -148,8 +153,9 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
                   index: index,
                   shortData: shortData,
                   isActive: isItemActive,
-                  toggleFullScreen: () =>
-                      pageviewIndexController.toggleFullscreen(),
+                  toggleFullScreen: () {
+                    uiController.toggleFullScreen();
+                  },
                 );
               },
               scrollDirection: Axis.vertical,

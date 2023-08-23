@@ -1,22 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/pageview_index_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 
 final logger = Logger();
 
 class FullScreenControls extends StatefulWidget {
   final String? name;
   final VideoPlayerInfo videoPlayerInfo;
-  final PageViewIndexController pageviewIndexController;
+  final UIController uiController;
 
   const FullScreenControls({
     Key? key,
     this.name,
     required this.videoPlayerInfo,
-    required this.pageviewIndexController,
+    required this.uiController,
   }) : super(key: key);
 
   @override
@@ -250,7 +249,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
                   color: Colors.white,
                   icon: const Icon(Icons.arrow_back_ios_new, size: 16),
                   onPressed: () {
-                    widget.pageviewIndexController.toggleFullscreen();
+                    widget.uiController.toggleFullScreen();
                   },
                 ),
               ),

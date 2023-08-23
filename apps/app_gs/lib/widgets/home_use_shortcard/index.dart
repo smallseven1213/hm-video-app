@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
@@ -44,14 +45,13 @@ class HomeUseShortCard extends StatefulWidget {
 }
 
 class HomeUseShortCardState extends State<HomeUseShortCard> {
-  final PageViewIndexController pageviewIndexController =
-      Get.find<PageViewIndexController>();
+  final UIController uiController = Get.find<UIController>();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (pageviewIndexController.isFullscreen.value == true) {
+      if (uiController.isFullscreen.value == true) {
         widget.toggleFullScreen();
       }
     });
@@ -95,7 +95,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   allowFullsreen: false,
                 ),
                 Obx(
-                  () => pageviewIndexController.isFullscreen.value == true
+                  () => uiController.isFullscreen.value == true
                       ? const SizedBox.shrink()
                       : ShortVideoConsumer(
                           vodId: widget.id,
@@ -114,7 +114,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                         ),
                 ),
                 Obx(
-                  () => pageviewIndexController.isFullscreen.value == true
+                  () => uiController.isFullscreen.value == true
                       ? const SizedBox.shrink()
                       : Positioned(
                           bottom: 0,

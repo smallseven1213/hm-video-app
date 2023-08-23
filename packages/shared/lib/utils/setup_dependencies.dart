@@ -16,6 +16,7 @@ import '../controllers/response_controller.dart';
 import '../controllers/route_controller.dart';
 import '../controllers/search_page_data_controller.dart';
 import '../controllers/search_temp_controller.dart';
+import '../controllers/ui_controller.dart';
 import '../controllers/user_controller.dart';
 import '../controllers/user_promo_controller.dart';
 import '../controllers/user_favorites_actor_controller.dart';
@@ -72,6 +73,7 @@ void setupDependencies() {
   Get.lazyPut<ActorRegionController>(() => ActorRegionController());
   Get.lazyPut<VideoAdsController>(() => VideoAdsController());
   // lazyPut UserSearchHistoryController
+  Get.lazyPut<UIController>(() => UIController());
   Get.lazyPut<UserSearchHistoryController>(() => UserSearchHistoryController());
   Get.lazyPut<PageViewIndexController>(() => PageViewIndexController());
   Get.lazyPut<SearchPageDataController>(() => SearchPageDataController());
