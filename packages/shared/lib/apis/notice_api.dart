@@ -1,4 +1,5 @@
 import 'package:shared/services/system_config.dart';
+import '../models/banner_photo.dart';
 import '../utils/fetcher.dart';
 import '../models/index.dart';
 
@@ -37,6 +38,25 @@ class NoticeApi {
         }
         if (res.data['data'] != null) {
           return Notice.fromJson(res.data['data']);
+        }
+        return null;
+      });
+
+  // 彈窗公告
+  Future<Map?> getBounce() async => await fetcher(
+              url:
+                  '${systemConfig.apiHost}/public/banners/banner/v2/bounceData')
+          .then((res) {
+        if (res.data['code'] != '00') {
+          return null;
+        }
+        if (res.data['data'] != null) {
+          return {
+            'notice': Notice.fromJson(res.data['data']['notice']),
+            'banners': res.data['data']['banners'].map<BannerPhoto>((v) {
+              return BannerPhoto.fromJson(v);
+            }).toList()
+          };
         }
         return null;
       });

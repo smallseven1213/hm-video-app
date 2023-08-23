@@ -24,11 +24,11 @@ class NoticeDialog extends StatefulWidget {
 class NoticeDialogState extends State<NoticeDialog> {
   NoticeApi noticeApi = NoticeApi();
   BannerController bannerController = Get.find<BannerController>();
+  Map? bounceData = {'notice': null, 'banner': null};
 
   @override
   void initState() {
     super.initState();
-    bannerController.fetchBanner(BannerPosition.lobbyPopup);
     showNoticeDialog();
   }
 
@@ -59,7 +59,11 @@ class NoticeDialogState extends State<NoticeDialog> {
   // call notice api and show notice dialog
   showNoticeDialog() async {
     logger.i('===DISPLAY NOTICE DIALOG===');
-    Notice? notice = await noticeApi.getBounceOne();
+    Map? result = await noticeApi.getBounce();
+    Notice? notice = bounceData!['notice'];
+    setState(() {
+      bounceData = result;
+    });
     if (notice != null && mounted) {
       showDialog(
         context: context,
@@ -191,8 +195,7 @@ class NoticeDialogState extends State<NoticeDialog> {
 
   showAdDialog(int index) {
     MediaQuery.of(context).size.width * 0.8;
-    List<BannerPhoto>? banners =
-        bannerController.banners[BannerPosition.lobbyPopup];
+    List<BannerPhoto>? banners = bounceData!['banners'];
     if (banners!.isEmpty || banners.length < index) {
       return;
     }
