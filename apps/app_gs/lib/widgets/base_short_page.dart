@@ -58,10 +58,16 @@ class BaseShortPage extends StatelessWidget {
           required Vod shortData,
           required Function toggleFullScreen,
         }) {
+          // var tag = const Uuid().v4();
+          // print('BaseShortPage - ${shortData.id} - $tag');
+          String tag =
+              '${style == 2 ? 'home-use-' : 'general-'}${shortData.id.toString()}';
           return ShortVideoProvider(
             vodId: shortData.id,
+            tag: tag,
             child: ShortVideoConsumer(
                 vodId: shortData.id,
+                tag: tag,
                 child: ({
                   required isLoading,
                   required video,
@@ -73,6 +79,7 @@ class BaseShortPage extends StatelessWidget {
                         supportedPlayRecord: supportedPlayRecord,
                         child: style == 2
                             ? HomeUseShortCard(
+                                tag: tag,
                                 index: index,
                                 isActive: isActive,
                                 id: shortData.id,
@@ -82,6 +89,7 @@ class BaseShortPage extends StatelessWidget {
                                 videoUrl: videoUrl!,
                               )
                             : GeneralShortCard(
+                                tag: tag,
                                 index: index,
                                 isActive: isActive,
                                 id: shortData.id,

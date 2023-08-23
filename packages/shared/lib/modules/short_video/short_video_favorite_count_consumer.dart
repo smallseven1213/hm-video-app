@@ -10,12 +10,14 @@ final logger = Logger();
 
 class ShortVideoFavoriteCountConsumer extends StatefulWidget {
   final int videoId;
+  final String tag;
   final Widget Function(int favoriteCount, Function(int) update) child;
 
   const ShortVideoFavoriteCountConsumer({
     Key? key,
     required this.child,
     required this.videoId,
+    required this.tag,
   }) : super(key: key);
 
   @override
@@ -25,16 +27,13 @@ class ShortVideoFavoriteCountConsumer extends StatefulWidget {
 
 class ShortVideoFavoriteCountConsumerState
     extends State<ShortVideoFavoriteCountConsumer> {
-  late final String controllerTag;
   late final ShortVideoDetailController controller;
 
   @override
   void initState() {
     super.initState();
 
-    controllerTag = genaratorShortVideoDetailTag(widget.videoId.toString());
-
-    controller = Get.find<ShortVideoDetailController>(tag: controllerTag);
+    controller = Get.find<ShortVideoDetailController>(tag: widget.tag);
   }
 
   @override

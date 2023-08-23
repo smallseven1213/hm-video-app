@@ -9,6 +9,7 @@ final logger = Logger();
 
 class ShortVideoPlayUrlConsumer extends StatefulWidget {
   final int videoId;
+  final String tag;
   final Widget Function(String? playUrl) child;
   final Widget? loading;
 
@@ -16,6 +17,7 @@ class ShortVideoPlayUrlConsumer extends StatefulWidget {
     Key? key,
     required this.child,
     required this.videoId,
+    required this.tag,
     this.loading,
   }) : super(key: key);
 
@@ -25,16 +27,13 @@ class ShortVideoPlayUrlConsumer extends StatefulWidget {
 }
 
 class ShortVideoPlayUrlConsumerState extends State<ShortVideoPlayUrlConsumer> {
-  late final String controllerTag;
   late final ShortVideoDetailController controller;
 
   @override
   void initState() {
     super.initState();
 
-    controllerTag = genaratorShortVideoDetailTag(widget.videoId.toString());
-
-    controller = Get.find<ShortVideoDetailController>(tag: controllerTag);
+    controller = Get.find<ShortVideoDetailController>(tag: widget.tag);
   }
 
   @override

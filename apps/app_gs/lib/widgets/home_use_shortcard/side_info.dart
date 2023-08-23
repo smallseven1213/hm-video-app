@@ -24,11 +24,13 @@ final logger = Logger();
 class SideInfo extends StatefulWidget {
   final int videoId;
   final Vod shortData;
+  final String tag;
 
   const SideInfo({
     Key? key,
     required this.videoId,
     required this.shortData,
+    required this.tag,
   }) : super(key: key);
 
   @override
@@ -44,7 +46,7 @@ class _SideInfoState extends State<SideInfo> {
         Get.find<UserFavoritesShortController>();
 
     return VideoPlayerConsumer(
-        tag: widget.videoId.toString(),
+        tag: widget.tag,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Positioned(
             right: 8,
@@ -54,6 +56,7 @@ class _SideInfoState extends State<SideInfo> {
               children: [
                 ShortVideoDetailConsumer(
                     videoId: widget.videoId,
+                    tag: widget.tag,
                     child: (videoDetail) {
                       if (videoDetail?.supplier != null) {
                         return GestureDetector(
@@ -83,6 +86,7 @@ class _SideInfoState extends State<SideInfo> {
                 // 按讚
                 ShortVideoFavoriteCountConsumer(
                     videoId: widget.videoId,
+                    tag: widget.tag,
                     child: (favoriteCount, update) => Obx(() {
                           bool isLike = userFavoritesShortController.data
                               .any((e) => e.id == widget.shortData.id);
@@ -131,6 +135,7 @@ class _SideInfoState extends State<SideInfo> {
                 const SizedBox(height: 10),
                 ShortVideoCollectCountConsumer(
                     videoId: widget.videoId,
+                    tag: widget.tag,
                     child: ((collectCount, update) => Obx(() {
                           bool isLike = userShortCollectionController.data
                               .any((e) => e.id == widget.shortData.id);
