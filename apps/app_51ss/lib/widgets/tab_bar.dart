@@ -2,13 +2,13 @@ import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
-class GSTabBar extends StatefulWidget implements PreferredSizeWidget {
+class TabBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final List<String> tabs;
   final TabController? controller;
   final EdgeInsetsGeometry? padding;
   final Function(int)? onTabChange;
 
-  const GSTabBar({
+  const TabBarWidget({
     Key? key,
     required this.tabs,
     this.onTabChange,
@@ -17,13 +17,13 @@ class GSTabBar extends StatefulWidget implements PreferredSizeWidget {
   }) : super(key: key);
 
   @override
-  _GSTabBarState createState() => _GSTabBarState();
+  TabBarWidgetState createState() => TabBarWidgetState();
 
   @override
   Size get preferredSize => const Size.fromHeight(50);
 }
 
-class _GSTabBarState extends State<GSTabBar> {
+class TabBarWidgetState extends State<TabBarWidget> {
   @override
   void initState() {
     super.initState();

@@ -1,5 +1,7 @@
 import 'dart:math';
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 final List<String> loadingTextList = [
   '檔案很大，你忍一下',
@@ -45,13 +47,13 @@ class VideoListLoadingTextState extends State<VideoListLoadingText> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const SizedBox(
+        SizedBox(
           height: 15.0,
           width: 15.0,
           child: Center(
             child: CircularProgressIndicator(
               strokeWidth: 2,
-              color: Color(0xFF486a89),
+              color: AppColors.colors[ColorKeys.textSecondary],
             ),
           ),
         ),
@@ -59,9 +61,9 @@ class VideoListLoadingTextState extends State<VideoListLoadingText> {
             width: 8), // Add some space between the icon and the text
         Text(
           text,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13,
-            color: Color(0xFF486a89),
+            color: AppColors.colors[ColorKeys.textSecondary],
           ),
         )
       ],
