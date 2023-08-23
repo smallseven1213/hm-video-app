@@ -79,8 +79,8 @@ class CollectionPageState extends State<CollectionPage>
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],
-        bottom:
-            GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
+        bottom: TabBarWidget(
+            tabs: const ['長視頻', '短視頻'], controller: _tabController),
       ),
       body: Stack(
         children: [
