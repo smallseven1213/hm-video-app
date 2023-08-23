@@ -65,9 +65,9 @@ class CircleTextItem extends StatelessWidget {
             )),
       ),
       Text(text,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 12,
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: AppColors.colors[ColorKeys.textPrimary],
           )),
     ]);
   }

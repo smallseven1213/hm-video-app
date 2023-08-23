@@ -156,10 +156,11 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                   (displayCoverVertical == true ? 119 / 179 : 374 / 198),
               child: Container(
                 decoration: BoxDecoration(
-                    borderRadius: hasRadius == true
-                        ? const BorderRadius.all(Radius.circular(10))
-                        : null,
-                    color: AppColors.colors[ColorKeys.secondary]),
+                  borderRadius: hasRadius == true
+                      ? const BorderRadius.all(Radius.circular(10))
+                      : null,
+                  color: const Color(0xffb5925c),
+                ),
                 clipBehavior: Clip.antiAlias,
               ),
             ),
