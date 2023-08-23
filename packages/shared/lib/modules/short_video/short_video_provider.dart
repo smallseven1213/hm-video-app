@@ -37,8 +37,11 @@ class ShortVideoProviderState extends State<ShortVideoProvider> {
   @override
   void dispose() {
     if (Get.isRegistered<ShortVideoDetailController>(tag: widget.tag)) {
-      controller.dispose();
-      Get.delete(tag: widget.tag);
+      try {
+        Get.delete(tag: widget.tag);
+      } catch (e) {
+        logger.e(e);
+      }
     }
     super.dispose();
   }

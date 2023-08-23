@@ -177,6 +177,8 @@ class MyRouteDelegate extends RouterDelegate<String>
 
             if (stack.hasTransition == true) {
               return CupertinoPage(
+                // key is a new Global key
+                key: ValueKey(stack.path + stack.args.toString()),
                 // key: ValueKey(stack.args['uuid']),
                 maintainState: false,
                 name: stack.path,

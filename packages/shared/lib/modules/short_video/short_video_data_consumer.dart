@@ -33,7 +33,11 @@ class ShortVideoDataConsumerState extends State<ShortVideoDataConsumer> {
   void initState() {
     super.initState();
 
-    controller = Get.find<ShortVideoDetailController>(tag: widget.tag);
+    try {
+      controller = Get.find<ShortVideoDetailController>(tag: widget.tag);
+    } catch (e) {
+      logger.e(e);
+    }
   }
 
   @override
