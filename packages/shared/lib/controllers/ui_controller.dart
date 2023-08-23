@@ -19,23 +19,4 @@ class UIController extends GetxController {
     displayChannelTab.value = value;
     displayHomeNavigationBar.value = value;
   }
-
-  toggleFullScreen() {
-    isFullscreen.value = !isFullscreen.value;
-    if (isFullscreen.value) {
-      setScreenLandScape();
-      setDisplay(false);
-    } else {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
-        SystemUiOverlay.bottom,
-      ]);
-
-      setDisplay(true);
-    }
-    update();
-  }
 }

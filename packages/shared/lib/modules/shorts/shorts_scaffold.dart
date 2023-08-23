@@ -101,6 +101,24 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     super.dispose();
   }
 
+  void toggleFullScreen() {
+    uiController.isFullscreen.value = !uiController.isFullscreen.value;
+    if (uiController.isFullscreen.value) {
+      setScreenLandScape();
+      uiController.setDisplay(false);
+    } else {
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+        DeviceOrientation.portraitDown,
+      ]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
+        SystemUiOverlay.bottom,
+      ]);
+
+      uiController.setDisplay(true);
+    }
+  }
+
   double accumulatedScroll = 0.0;
   bool hasTriggered = false;
 
@@ -154,7 +172,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
                   shortData: shortData,
                   isActive: isItemActive,
                   toggleFullScreen: () {
-                    uiController.toggleFullScreen();
+                    toggleFullScreen();
                   },
                 );
               },

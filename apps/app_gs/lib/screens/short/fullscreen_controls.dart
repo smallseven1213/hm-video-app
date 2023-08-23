@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 
 final logger = Logger();
@@ -9,13 +8,13 @@ final logger = Logger();
 class FullScreenControls extends StatefulWidget {
   final String? name;
   final VideoPlayerInfo videoPlayerInfo;
-  final UIController uiController;
+  final Function toggleFullScreen;
 
   const FullScreenControls({
     Key? key,
     this.name,
     required this.videoPlayerInfo,
-    required this.uiController,
+    required this.toggleFullScreen,
   }) : super(key: key);
 
   @override
@@ -249,7 +248,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
                   color: Colors.white,
                   icon: const Icon(Icons.arrow_back_ios_new, size: 16),
                   onPressed: () {
-                    widget.uiController.toggleFullScreen();
+                    widget.toggleFullScreen();
                   },
                 ),
               ),

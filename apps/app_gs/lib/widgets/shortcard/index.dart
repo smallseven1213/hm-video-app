@@ -70,7 +70,7 @@ class ShortCardState extends State<ShortCard> {
               ),
               FullScreenControls(
                 videoPlayerInfo: videoPlayerInfo,
-                uiController: uiController,
+                toggleFullScreen: widget.toggleFullScreen,
               ),
               // error
 
@@ -121,7 +121,7 @@ class ShortCardState extends State<ShortCard> {
                     video: video!,
                     allowFullsreen: widget.allowFullsreen,
                     toggleFullscreen: () {
-                      uiController.toggleFullScreen();
+                      widget.toggleFullScreen();
                     },
                   ),
                 ),
