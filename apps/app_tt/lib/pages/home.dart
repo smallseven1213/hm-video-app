@@ -4,6 +4,7 @@ import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
@@ -52,10 +53,12 @@ class HomePage extends StatefulWidget {
 
 class HomeState extends State<HomePage> {
   late final HomePageController homePageController;
+  late final UIController uiController;
 
   @override
   void initState() {
     super.initState();
+    uiController = Get.put(UIController());
     Get.put(GameStartupController());
     homePageController = Get.put(HomePageController());
 

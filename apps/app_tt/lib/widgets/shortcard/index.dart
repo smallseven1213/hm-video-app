@@ -8,7 +8,8 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
-import '../../screens/short/fullscreen_controls.dart';
+
+import '../short/fullscreen_controls.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
