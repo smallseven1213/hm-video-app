@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:app_51ss/config/colors.dart';
+import 'package:shared/models/color_keys.dart';
 
 class OptionButton extends StatelessWidget {
   final bool isSelected;
@@ -17,31 +18,26 @@ class OptionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: CustomPaint(
-        painter: isSelected ? _GradientBorderPainter() : null,
-        child: Text(
-          name,
-          style: TextStyle(color: isSelected ? Colors.white : Colors.black),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color:
+              isSelected ? AppColors.colors[ColorKeys.buttonBgPrimary] : null,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Center(
+          child: Text(
+            name,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              color: isSelected
+                  ? AppColors.colors[ColorKeys.buttonTextPrimary]
+                  : AppColors.colors[ColorKeys.buttonTextSecondary],
+            ),
+          ),
         ),
       ),
     );
   }
-}
-
-class _GradientBorderPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = Colors.grey // 使用純色背景
-      ..style = PaintingStyle.fill; // 填充而不是描邊
-
-    final path = Path()
-      ..addRRect(RRect.fromRectAndRadius(
-          Rect.fromLTWH(0, 0, size.width, 20), const Radius.circular(4)));
-
-    canvas.drawPath(path, paint);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }
