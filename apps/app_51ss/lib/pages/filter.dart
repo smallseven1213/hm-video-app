@@ -54,7 +54,6 @@ class FilterScrollViewState extends State<FilterPage>
         ),
         body: TabBarView(
           controller: _tabController,
-          // physics: const NeverScrollableScrollPhysics(),
           children: const [VideoFilterPage(), ShortVideoFilterPage()],
         ),
       );

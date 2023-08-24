@@ -37,10 +37,8 @@ class FilterOptions extends StatelessWidget {
 
                     final isSelected = selectedOptions[menuData[index]['key']]!
                         .contains(option['value']);
-
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: OptionButton(
                           isSelected: isSelected,
                           name: option['name'],

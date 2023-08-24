@@ -17,22 +17,31 @@ class OptionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        height: 20,
-        color: isSelected ? const Color(0xFFf3f3f4) : Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          child: Center(
-            child: Text(
-              name,
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? Colors.black : const Color(0xFF73747b)),
-            ),
-          ),
+      child: CustomPaint(
+        painter: isSelected ? _GradientBorderPainter() : null,
+        child: Text(
+          name,
+          style: TextStyle(color: isSelected ? Colors.white : Colors.black),
         ),
       ),
     );
   }
+}
+
+class _GradientBorderPainter extends CustomPainter {
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.grey // 使用純色背景
+      ..style = PaintingStyle.fill; // 填充而不是描邊
+
+    final path = Path()
+      ..addRRect(RRect.fromRectAndRadius(
+          Rect.fromLTWH(0, 0, size.width, 20), const Radius.circular(4)));
+
+    canvas.drawPath(path, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
 }

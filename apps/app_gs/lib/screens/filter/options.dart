@@ -21,15 +21,15 @@ class FilterOptions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 2),
       child: Obx(() {
-        logger.i('menuData => ${menuData}');
+        logger.i('menuData => $menuData');
         return Column(
           children: List.generate(
             menuData.length,
             (index) {
               return Container(
-                height: 30,
+                height: 20,
                 color: const Color(0xFF001A40),
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
@@ -43,8 +43,7 @@ class FilterOptions extends StatelessWidget {
                               .contains(option['value']);
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 5, horizontal: 10),
+                        padding: const EdgeInsets.all(2),
                         child: OptionButton(
                             isSelected: isSelected,
                             name: option['name'],
