@@ -47,10 +47,7 @@ class FilterBarState extends State<FilterBar> {
   Widget _buildOpen() {
     return Container(
       color: const Color(0xFF001A40),
-      // padding: const EdgeInsets.all(8),
-      // color: Colors.red,
       width: double.infinity,
-      height: 130,
       child: FilterOptions(
         menuData: widget.menuData,
         selectedOptions: widget.selectedOptions,
@@ -92,7 +89,6 @@ class FilterBarState extends State<FilterBar> {
       color: Colors.white,
       padding: const EdgeInsets.all(8),
       width: double.infinity,
-      height: 46,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(

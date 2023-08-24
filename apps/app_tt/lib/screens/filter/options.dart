@@ -26,7 +26,7 @@ class FilterOptions extends StatelessWidget {
           menuData.length,
           (index) {
             return Container(
-              height: 50,
+              height: 40,
               color: Colors.white,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,

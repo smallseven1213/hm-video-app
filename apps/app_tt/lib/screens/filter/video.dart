@@ -63,8 +63,8 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
           SliverPersistentHeader(
             pinned: true,
             delegate: CustomHeaderDelegate(
-              minHeight: 64.0, // 這是FilterBar的高度
-              maxHeight: 120.0, // 這是FilterOptions的高度
+              minHeight: 55.0, // 這是FilterBar的高度
+              maxHeight: 160.0, // 這是FilterOptions的高度
               menuData: filterVideoScreenController.menuData,
               selectedOptions: filterVideoScreenController.selectedOptions,
               handleOptionChange:
