@@ -156,20 +156,8 @@ class NoticeDialogState extends State<NoticeDialog> {
                                     )
                                   : const SizedBox(),
                               notice.rightButton != null
-                                  ? Container(
+                                  ? SizedBox(
                                       width: 105,
-                                      decoration: kIsWeb
-                                          ? null
-                                          : BoxDecoration(
-                                              border: Border.all(
-                                                  color:
-                                                      const Color(0xFF00b2ff),
-                                                  width: 1),
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                Radius.circular(4.0),
-                                              ),
-                                            ),
                                       child: Button(
                                         text: notice.rightButton ?? '確認',
                                         type: 'primary',

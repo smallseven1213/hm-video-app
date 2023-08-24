@@ -18,7 +18,7 @@ class OptionButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 20,
+        height: 28,
         color: isSelected ? const Color(0xFFf3f3f4) : Colors.white,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),

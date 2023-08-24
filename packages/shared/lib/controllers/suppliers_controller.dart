@@ -31,11 +31,11 @@ class SuppliersController extends GetxController {
 
   _fetchData() async {
     var res = await supplierApi.getManyBy(
-      page: 1,
-      limit: 1000,
-      name: name.value ?? '',
-      sortBy: sortBy.value,
-    );
+        page: 1,
+        limit: 1000,
+        name: name.value ?? '',
+        sortBy: sortBy.value,
+        isRecommend: false);
     actors.value = res;
   }
 }
