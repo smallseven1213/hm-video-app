@@ -29,8 +29,7 @@ class _GradientBorderPainter extends CustomPainter {
     final Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
-      ..color = kIsWeb ? const Color(0xFF00b2ff) : Colors.transparent
-      ..shader = kIsWeb ? null : gradient.createShader(rect);
+      ..shader = gradient.createShader(rect);
     canvas.drawRRect(
       RRect.fromRectAndRadius(rect, const Radius.circular(4.0)),
       paint,
@@ -70,7 +69,7 @@ class Button extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: CustomPaint(
-          painter: type == 'cancel' ? null : _GradientBorderPainter(),
+          painter: type == 'cancel' || kIsWeb ? null : _GradientBorderPainter(),
           child: Container(
             padding: buttonPadding[size],
             child: Center(
