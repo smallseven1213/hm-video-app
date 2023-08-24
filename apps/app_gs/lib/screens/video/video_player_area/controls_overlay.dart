@@ -318,7 +318,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                           videoPlayerInfo.videoDurationString,
                           style: const TextStyle(color: Colors.white),
                         ),
-                        kIsWeb
+                        kIsWeb && widget.isFullscreen
                             ? const SizedBox(width: 8.0)
                             : IconButton(
                                 onPressed: () => widget
