@@ -159,7 +159,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                   borderRadius: hasRadius == true
                       ? const BorderRadius.all(Radius.circular(10))
                       : null,
-                  color: const Color(0xffb5925c),
+                  color: AppColors.colors[ColorKeys.videoPreviewBg],
                 ),
                 clipBehavior: Clip.antiAlias,
               ),
