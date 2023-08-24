@@ -61,7 +61,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
           return Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top +
-                    (displaySearchBar ? 90 : 50)),
+                    (displaySearchBar ? 110 : 50)),
             child: Obx(() {
               ChannelInfo? channelData =
                   channelDataController.channelData.value;
