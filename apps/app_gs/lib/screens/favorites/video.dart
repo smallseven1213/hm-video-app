@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
+import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/models/vod.dart';
 
 import '../../widgets/no_data.dart';
@@ -11,7 +12,8 @@ class FavoritesVideoScreen extends StatelessWidget {
   FavoritesVideoScreen({Key? key}) : super(key: key);
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'favorites');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.favorites.toString());
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
 
   @override

@@ -32,7 +32,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
   final Function()? onTap;
   final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
-  BaseVideoPreviewWidget({
+  const BaseVideoPreviewWidget({
     Key? key,
     required this.id,
     required this.coverVertical,

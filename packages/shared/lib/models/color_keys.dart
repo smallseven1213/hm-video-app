@@ -1,9 +1,14 @@
 enum ColorKeys {
   primary,
+  secondary,
   accent,
   background,
+  formBg,
+  videoPreviewBg,
   textPrimary,
   textSecondary,
+  textLink,
+  textPlaceholder,
   buttonTextPrimary,
   buttonTextSecondary,
   buttonTextCancel,
@@ -19,4 +24,6 @@ enum ColorKeys {
   menuColor,
   menuActiveColor,
   dividerColor,
+  gradientBgTopColor,
+  gradientBgBottomColor,
 }

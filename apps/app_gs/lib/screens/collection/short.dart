@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/no_data.dart';
@@ -17,7 +18,8 @@ class CollectionShortScreen extends StatelessWidget {
   CollectionShortScreen({Key? key}) : super(key: key);
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'collection');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.collection.toString());
   final shortPlayRecordController = Get.find<UserShortCollectionController>();
 
   @override

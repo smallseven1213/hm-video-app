@@ -91,11 +91,13 @@ class ShortVideoDetailController extends GetxController {
   }
 
   void updateCollects(int change) {
+    if (isClosed) return;
     int newCollects = videoCollects.value + change;
     videoCollects.value = newCollects;
   }
 
   void updateFavorites(int change) {
+    if (isClosed) return;
     int newFavorites = videoFavorites.value + change;
     logger.i('newFavorites: $newFavorites');
     videoFavorites.value = newFavorites;

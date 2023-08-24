@@ -1,22 +1,20 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 
 final logger = Logger();
 
 class FullScreenControls extends StatefulWidget {
   final String? name;
   final VideoPlayerInfo videoPlayerInfo;
-  final PageViewIndexController pageviewIndexController;
+  final Function toggleFullScreen;
 
   const FullScreenControls({
     Key? key,
     this.name,
     required this.videoPlayerInfo,
-    required this.pageviewIndexController,
+    required this.toggleFullScreen,
   }) : super(key: key);
 
   @override
@@ -236,10 +234,25 @@ class ControlsOverlayState extends State<FullScreenControls> {
                 ),
               ),
             ),
-            FloatPageBackButton(
-              onPressed: () =>
-                  widget.pageviewIndexController.toggleFullscreen(),
-            ),
+            // FloatPageBackButton(
+            //   onPressed: () =>
+            //       widget.pageviewIndexController.toggleFullscreen(),
+            // ),
+            Positioned(
+              top: 0 + MediaQuery.of(context).padding.top,
+              left: 0,
+              child: SizedBox(
+                width: kToolbarHeight, // width of the AppBar's leading area
+                height: kToolbarHeight, // height of the AppBar's leading area
+                child: IconButton(
+                  color: Colors.white,
+                  icon: const Icon(Icons.arrow_back_ios_new, size: 16),
+                  onPressed: () {
+                    widget.toggleFullScreen();
+                  },
+                ),
+              ),
+            )
           ]
         ]),
       );

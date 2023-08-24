@@ -318,16 +318,18 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                           videoPlayerInfo.videoDurationString,
                           style: const TextStyle(color: Colors.white),
                         ),
-                        IconButton(
-                          onPressed: () =>
-                              widget.toggleFullscreen(!widget.isFullscreen),
-                          icon: Icon(
-                            widget.isFullscreen
-                                ? Icons.close_fullscreen_rounded
-                                : Icons.fullscreen,
-                            color: Colors.white,
-                          ),
-                        ),
+                        kIsWeb && widget.isFullscreen
+                            ? const SizedBox(width: 8.0)
+                            : IconButton(
+                                onPressed: () => widget
+                                    .toggleFullscreen(!widget.isFullscreen),
+                                icon: Icon(
+                                  widget.isFullscreen
+                                      ? Icons.close_fullscreen_rounded
+                                      : Icons.fullscreen,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ],
                     ),
                   ),

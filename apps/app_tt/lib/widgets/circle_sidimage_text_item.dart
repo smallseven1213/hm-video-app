@@ -34,7 +34,7 @@ class CircleTextItem extends StatelessWidget {
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(5),
-                color: const Color(0xFF00b2ff))
+                color: const Color(0xFF6b6b6b))
             : BoxDecoration(
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)
@@ -45,9 +45,9 @@ class CircleTextItem extends StatelessWidget {
                         end: Alignment.bottomCenter,
                         colors: isRounded
                             ? const [
-                                Color(0xff00B2FF),
+                                Color(0xFF6b6b6b),
                                 Color(0xffCCEAFF),
-                                Color(0xff0075FF),
+                                Color(0xFF6b6b6b),
                               ]
                             : const [
                                 Color(0xff000000),
@@ -72,11 +72,10 @@ class CircleTextItem extends StatelessWidget {
               ),
             )),
       ),
-      Text(text,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Color.fromARGB(255, 255, 255, 255),
-          )),
+      Text(
+        text,
+        style: const TextStyle(fontSize: 12, color: Color(0xFF333333)),
+      ),
     ]);
   }
 }

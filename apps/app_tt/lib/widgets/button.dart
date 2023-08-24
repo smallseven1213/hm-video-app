@@ -8,38 +8,10 @@ const buttonPadding = {
 };
 
 const buttonBg = {
-  'primary': Color.fromRGBO(19, 69, 165, 0.4),
+  'primary': Color(0xFFfe2c55),
   'secondary': Color(0xFF1345a5),
-  'cancel': Color(0xff06275e),
+  'cancel': Color(0xffdedede),
 };
-
-class _GradientBorderPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Rect rect = Offset.zero & size;
-    const Gradient gradient = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0xFF00b2ff),
-        Color(0xFFcceaff),
-        Color(0xFF0075ff),
-      ],
-    );
-    final Paint paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0
-      ..color = kIsWeb ? const Color(0xFF00b2ff) : Colors.transparent
-      ..shader = kIsWeb ? null : gradient.createShader(rect);
-    canvas.drawRRect(
-      RRect.fromRectAndRadius(rect, const Radius.circular(4.0)),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
 
 class Button extends StatelessWidget {
   final String text;
@@ -70,7 +42,6 @@ class Button extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: CustomPaint(
-          painter: type == 'cancel' ? null : _GradientBorderPainter(),
           child: Container(
             padding: buttonPadding[size],
             child: Center(

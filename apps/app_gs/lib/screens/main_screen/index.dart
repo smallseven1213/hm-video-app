@@ -1,6 +1,8 @@
 import 'package:app_gs/screens/main_screen/channels.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
 
@@ -9,7 +11,9 @@ import 'layout_tab_bar.dart';
 
 class HomeMainScreen extends StatelessWidget {
   final int layoutId;
-  const HomeMainScreen({Key? key, required this.layoutId}) : super(key: key);
+  final UIController uiController = Get.find<UIController>();
+
+  HomeMainScreen({Key? key, required this.layoutId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +53,17 @@ class HomeMainScreen extends StatelessWidget {
                         children: [
                           Expanded(
                               child: SizedBox(
-                                  height: 45,
-                                  child: LayoutTabBar(
-                                    layoutId: layoutId,
-                                  ))),
+                            height: 45,
+                            child: Obx(() {
+                              print(
+                                  '@@@ displayHomeNavigationBar.value: ${uiController.displayHomeNavigationBar.value}');
+                              return uiController.displayHomeNavigationBar.value
+                                  ? LayoutTabBar(
+                                      layoutId: layoutId,
+                                    )
+                                  : const SizedBox.shrink();
+                            }),
+                          )),
                           // DisplayLayoutTabSearch(
                           //   layoutId: layoutId,
                           //   child: ({required bool displaySearchBar}) =>

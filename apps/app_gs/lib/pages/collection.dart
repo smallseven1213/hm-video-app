@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
 
 import '../screens/collection/short.dart';
 import '../screens/collection/video.dart';
@@ -24,7 +25,8 @@ class CollectionPageState extends State<CollectionPage>
   final UserShortCollectionController userShortCollectionController =
       Get.find<UserShortCollectionController>();
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'collection');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.collection.toString());
   late TabController _tabController;
 
   @override

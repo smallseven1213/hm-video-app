@@ -235,10 +235,10 @@ class VodApi {
         (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
   }
 
-  Future<List<Vod>> getRecommends() async {
+  Future<List<Vod>> getRecommends({int? page = 1}) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/recommend?page=1&limit=20');
+            '${systemConfig.apiHost}/public/videos/video/recommend?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return [];
     }

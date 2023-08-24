@@ -8,6 +8,7 @@ import 'package:shared/apis/notice_api.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/ad_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,18 +24,46 @@ class NoticeDialog extends StatefulWidget {
 class NoticeDialogState extends State<NoticeDialog> {
   NoticeApi noticeApi = NoticeApi();
   BannerController bannerController = Get.find<BannerController>();
+  Map? bounceData = {'notice': null, 'banner': null};
 
   @override
   void initState() {
     super.initState();
-    bannerController.fetchBanner(BannerPosition.lobbyPopup);
     showNoticeDialog();
+  }
+
+  void handleUrl(String? url, BuildContext context) {
+    Navigator.pop(context);
+    if (url != null && url != '-1') {
+      if (url.startsWith('http://') || url.startsWith('https://')) {
+        // Launch external URL
+        launch(url, webOnlyWindowName: '_blank');
+      } else {
+        // Navigate to internal route
+        List<String> parts = url.split('/');
+
+        // 從列表中獲取所需的字串和數字
+        String path = '/${parts[1]}';
+
+        if (parts.length == 3) {
+          int id = int.parse(parts[2]);
+          var args = {'id': id};
+          MyRouteDelegate.of(context).push(path, args: args);
+        } else {
+          MyRouteDelegate.of(context).push(path);
+        }
+      }
+    }
   }
 
   // call notice api and show notice dialog
   showNoticeDialog() async {
     logger.i('===DISPLAY NOTICE DIALOG===');
-    Notice? notice = await noticeApi.getBounceOne();
+    Map? result = await noticeApi.getBounce();
+    Notice? notice = result!['notice'];
+    setState(() {
+      bounceData = result;
+    });
     if (notice != null && mounted) {
       showDialog(
         context: context,
@@ -121,41 +150,31 @@ class NoticeDialogState extends State<NoticeDialog> {
                                       child: Button(
                                         text: notice.leftButton ?? '取消',
                                         type: 'cancel',
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          if (notice.leftButtonUrl != '-1' &&
-                                              (notice.leftButtonUrl!
-                                                      .startsWith('http://') ||
-                                                  notice.leftButtonUrl!
-                                                      .startsWith(
-                                                          'https://'))) {
-                                            // ignore: deprecated_member_use
-                                            launch(notice.leftButtonUrl!,
-                                                webOnlyWindowName: '_blank');
-                                          }
-                                        },
+                                        onPressed: () => handleUrl(
+                                            notice.leftButtonUrl, context),
                                       ),
                                     )
                                   : const SizedBox(),
                               notice.rightButton != null
-                                  ? SizedBox(
+                                  ? Container(
                                       width: 105,
+                                      decoration: kIsWeb
+                                          ? null
+                                          : BoxDecoration(
+                                              border: Border.all(
+                                                  color:
+                                                      const Color(0xFF00b2ff),
+                                                  width: 1),
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                Radius.circular(4.0),
+                                              ),
+                                            ),
                                       child: Button(
                                         text: notice.rightButton ?? '確認',
                                         type: 'primary',
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          if (notice.rightButtonUrl != '-1' &&
-                                              (notice.rightButtonUrl!
-                                                      .startsWith('http://') ||
-                                                  notice.rightButtonUrl!
-                                                      .startsWith(
-                                                          'https://'))) {
-                                            // ignore: deprecated_member_use
-                                            launch(notice.rightButtonUrl!,
-                                                webOnlyWindowName: '_blank');
-                                          }
-                                        },
+                                        onPressed: () => handleUrl(
+                                            notice.rightButtonUrl, context),
                                       ),
                                     )
                                   : const SizedBox(),
@@ -176,8 +195,7 @@ class NoticeDialogState extends State<NoticeDialog> {
 
   showAdDialog(int index) {
     MediaQuery.of(context).size.width * 0.8;
-    List<BannerPhoto>? banners =
-        bannerController.banners[BannerPosition.lobbyPopup];
+    List<BannerPhoto>? banners = bounceData!['banners'];
     if (banners!.isEmpty || banners.length < index) {
       return;
     }

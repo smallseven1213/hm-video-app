@@ -6,6 +6,7 @@ import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
+import 'package:shared/enums/list_editor_category.dart';
 import '../screens/favorites/short.dart';
 import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
@@ -46,7 +47,8 @@ class FavoritesPageState extends State<FavoritesPage>
   }
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'favorites');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.favorites.toString());
   final userFavoritesActorController = Get.find<UserFavoritesActorController>();
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
   final userFavoritesShortController = Get.find<UserFavoritesShortController>();

@@ -25,7 +25,7 @@ class ChannelSharedDataController extends GetxController {
       logger.i(res);
       channelSharedData.value = res;
     } catch (e) {
-      print('Error:mutateByChannelId $e');
+      // print('Error:mutateByChannelId $e');
       isError.value = true;
     } finally {
       isLoading.value = false;

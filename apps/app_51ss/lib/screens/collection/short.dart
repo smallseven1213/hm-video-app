@@ -1,9 +1,9 @@
-import 'package:app_51ss/config/user_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
+import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/no_data.dart';
@@ -11,21 +11,17 @@ import '../../widgets/video_preview_with_edit.dart';
 
 const gridRatio = 128 / 227;
 
-final logger = Logger();
-
 class CollectionShortScreen extends StatelessWidget {
   CollectionShortScreen({Key? key}) : super(key: key);
-
   final ListEditorController listEditorController =
-      userTabControllers['list_editor_collection']!.controller;
-  final shortPlayRecordController =
-      userTabControllers['short_collection']!.controller;
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.collection.toString());
+  final shortPlayRecordController = Get.find<UserShortCollectionController>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
       var videos = shortPlayRecordController.data;
-      logger.i('TESTING PLAY RECORD SHORT SCREEN - $videos');
       if (videos.isEmpty) {
         return const NoDataWidget();
       }

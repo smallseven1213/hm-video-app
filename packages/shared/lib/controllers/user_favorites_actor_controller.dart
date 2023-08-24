@@ -47,7 +47,9 @@ class UserFavoritesActorController extends GetxController {
     if (actors.firstWhereOrNull((v) => v.id == actor.id) != null) {
       actors.removeWhere((v) => v.id == actor.id);
     }
-    actors.add(actor);
+
+    // Insert the new Actor at the beginning of the list.
+    actors.insert(0, actor);
     await _updateHive();
     userApi.addFavoriteActor(actor.id);
   }

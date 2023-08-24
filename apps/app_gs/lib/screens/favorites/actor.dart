@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/circle_sidimage_text_item.dart';
@@ -12,7 +13,8 @@ class FavoritesActorScreen extends StatelessWidget {
   FavoritesActorScreen({Key? key}) : super(key: key);
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'favorites');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.favorites.toString());
   final userFavoritesActorController = Get.find<UserFavoritesActorController>();
 
   @override

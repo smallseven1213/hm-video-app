@@ -20,7 +20,6 @@ class VideoState extends State<Video> {
   @override
   void initState() {
     super.initState();
-    // userApi.addPlayHistory(widget.args['id']);
     // setScreenRotation();
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../controllers/video_player_controller.dart';
@@ -15,8 +16,9 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
   final Vod video;
   final Function toggleFullscreen;
   final bool? allowFullsreen;
+  final uiController = Get.put(UIController());
 
-  const VideoPlayerDisplayWidget({
+  VideoPlayerDisplayWidget({
     super.key,
     required this.controller,
     required this.video,
@@ -106,12 +108,16 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              if (videoSize.width > videoSize.height && allowFullsreen == true)
+              if (videoSize.width > videoSize.height)
                 Positioned(
                   bottom: 150,
                   child: Center(
                       child: ElevatedButton.icon(
-                    onPressed: () => toggleFullscreen(),
+                    onPressed: () {
+                      toggleFullscreen();
+                      // uiController.displayHomeNavigationBar.value = false;
+                      // uiController.displayChannelTab.value = false;
+                    },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor:

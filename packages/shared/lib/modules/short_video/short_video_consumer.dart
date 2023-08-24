@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -6,12 +5,12 @@ import 'package:logger/logger.dart';
 import '../../controllers/short_video_detail_controller.dart';
 import '../../models/short_video_detail.dart';
 import '../../models/vod.dart';
-import '../../utils/controller_tag_genarator.dart';
 
 final logger = Logger();
 
 class ShortVideoConsumer extends StatefulWidget {
   final int vodId;
+  final String tag;
   final Widget Function({
     required bool isLoading,
     required String? videoUrl,
@@ -24,6 +23,7 @@ class ShortVideoConsumer extends StatefulWidget {
     Key? key,
     required this.child,
     required this.vodId,
+    required this.tag,
     this.loading,
   }) : super(key: key);
 
@@ -32,16 +32,17 @@ class ShortVideoConsumer extends StatefulWidget {
 }
 
 class ShortVideoConsumerState extends State<ShortVideoConsumer> {
-  late final String controllerTag;
   late final ShortVideoDetailController controller;
 
   @override
   void initState() {
     super.initState();
 
-    controllerTag = genaratorShortVideoDetailTag(widget.vodId.toString());
-
-    controller = Get.find<ShortVideoDetailController>(tag: controllerTag);
+    try {
+      controller = Get.find<ShortVideoDetailController>(tag: widget.tag);
+    } catch (e) {
+      logger.e(e);
+    }
   }
 
   @override

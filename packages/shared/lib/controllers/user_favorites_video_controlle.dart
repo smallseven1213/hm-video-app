@@ -71,7 +71,9 @@ class UserFavoritesVideoController extends GetxController {
       videoViewTimes: video.videoViewTimes!,
       // detail: video.detail,
     );
-    videos.add(formattedVideo);
+
+    // Insert the new Vod at the beginning of the list.
+    videos.insert(0, formattedVideo);
     await _updateHive();
     userApi.addFavoriteVideo(video.id);
   }

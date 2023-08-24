@@ -51,8 +51,11 @@ class VideoPlayerInfo {
 class VideoPlayerConsumer extends StatefulWidget {
   final String tag;
   final Widget Function(VideoPlayerInfo) child;
-  const VideoPlayerConsumer({Key? key, required this.tag, required this.child})
-      : super(key: key);
+  const VideoPlayerConsumer({
+    Key? key,
+    required this.tag,
+    required this.child,
+  }) : super(key: key);
 
   @override
   VideoPlayerConsumerState createState() => VideoPlayerConsumerState();

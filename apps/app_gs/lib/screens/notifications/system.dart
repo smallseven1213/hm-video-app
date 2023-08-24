@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/event_controller.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
 
 import '../../widgets/list_page_panel.dart';
 import 'system_event_card.dart';
@@ -11,7 +12,8 @@ class SystemScreen extends StatelessWidget {
 
   final eventsController = Get.put(EventController());
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'notifications');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.notifications.toString());
 
   void _handleSelectAll() {
     var allData = eventsController.data;

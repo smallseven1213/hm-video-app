@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/models/vod.dart';
 
 import '../../widgets/no_data.dart';
@@ -12,7 +13,8 @@ class CollectionVideo extends StatelessWidget {
   CollectionVideo({super.key});
 
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'collection');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.collection.toString());
   final userCollectionVideoController = Get.find<UserVodCollectionController>();
 
   @override

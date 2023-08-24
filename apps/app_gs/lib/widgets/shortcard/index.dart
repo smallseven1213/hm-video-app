@@ -2,21 +2,20 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 
 class ShortCard extends StatefulWidget {
+  final String tag;
   final int index;
   final int id;
   final String title;
-  final bool? supportedPlayRecord;
-  final String obsKey;
   final Vod shortData;
   final bool? displayFavoriteAndCollectCount;
   final bool? isActive;
@@ -25,7 +24,7 @@ class ShortCard extends StatefulWidget {
 
   const ShortCard({
     Key? key,
-    required this.obsKey,
+    required this.tag,
     required this.index,
     required this.id,
     required this.title,
@@ -34,7 +33,6 @@ class ShortCard extends StatefulWidget {
     required this.allowFullsreen,
     // required this.isFullscreen,
     this.isActive = true,
-    this.supportedPlayRecord = true,
     this.displayFavoriteAndCollectCount = true,
   }) : super(key: key);
 
@@ -43,8 +41,7 @@ class ShortCard extends StatefulWidget {
 }
 
 class ShortCardState extends State<ShortCard> {
-  final PageViewIndexController pageviewIndexController =
-      Get.find<PageViewIndexController>();
+  final UIController uiController = Get.find<UIController>();
   bool isDragging = false;
 
   @override
@@ -52,12 +49,12 @@ class ShortCardState extends State<ShortCard> {
     final screen = MediaQuery.of(context);
 
     return VideoPlayerConsumer(
-      tag: widget.obsKey,
+      tag: widget.tag,
       child: (VideoPlayerInfo videoPlayerInfo) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
         }
-        if (pageviewIndexController.isFullscreen.value == true) {
+        if (uiController.isFullscreen.value == true) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
           var aspectRatio = videoSize.width /
               (videoSize.height != 0.0 ? videoSize.height : 1);
@@ -73,7 +70,7 @@ class ShortCardState extends State<ShortCard> {
               ),
               FullScreenControls(
                 videoPlayerInfo: videoPlayerInfo,
-                pageviewIndexController: pageviewIndexController,
+                toggleFullScreen: widget.toggleFullScreen,
               ),
               // error
 
@@ -82,6 +79,7 @@ class ShortCardState extends State<ShortCard> {
                   'error')
                 ShortVideoConsumer(
                   vodId: widget.id,
+                  tag: widget.tag,
                   child: ({
                     required isLoading,
                     required video,
@@ -111,6 +109,7 @@ class ShortCardState extends State<ShortCard> {
                 width: double.infinity,
                 child: ShortVideoConsumer(
                   vodId: widget.id,
+                  tag: widget.tag,
                   child: ({
                     required isLoading,
                     required video,
@@ -122,7 +121,7 @@ class ShortCardState extends State<ShortCard> {
                     video: video!,
                     allowFullsreen: widget.allowFullsreen,
                     toggleFullscreen: () {
-                      pageviewIndexController.toggleFullscreen();
+                      widget.toggleFullScreen();
                     },
                   ),
                 ),

@@ -38,7 +38,7 @@ class LayoutController extends GetxController {
       layout.value = res;
       isLoading.value = false;
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 }

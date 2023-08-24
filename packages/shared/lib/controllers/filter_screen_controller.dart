@@ -5,11 +5,6 @@ class FilterScreenController extends GetxController {
   final showTabBar = true.obs;
   final selectedBarOpen = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void handleOptionChange(String key, dynamic value) {
     if (selectedOptions.containsKey(key)) {
       if (selectedOptions[key]!.contains(value)) {

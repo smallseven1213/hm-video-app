@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
 
 import '../screens/collection/short.dart';
 import '../screens/collection/video.dart';
@@ -24,26 +25,20 @@ class CollectionPageState extends State<CollectionPage>
   final UserShortCollectionController userShortCollectionController =
       Get.find<UserShortCollectionController>();
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'collection');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.collection.toString());
   late TabController _tabController;
 
   @override
   void initState() {
     _tabController = TabController(vsync: this, length: 2);
 
-    _tabController.addListener(() {
-      if (_tabController.indexIsChanging) {
-        listEditorController.clearSelected();
-        listEditorController.isEditing.value = false;
-      }
-    });
-
     super.initState();
   }
 
   @override
   void dispose() {
-    listEditorController.closeEditing();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -84,8 +79,8 @@ class CollectionPageState extends State<CollectionPage>
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],
-        bottom:
-            GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
+        bottom: TabBarWidget(
+            tabs: const ['長視頻', '短視頻'], controller: _tabController),
       ),
       body: Stack(
         children: [

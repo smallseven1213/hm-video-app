@@ -27,7 +27,7 @@ class ChannelBanners extends StatelessWidget {
       } else {
         return SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 5.0),
             child: Carousel(
               images: channelSharedData.banner,
               ratio: 359 / 170,
