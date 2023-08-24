@@ -3,14 +3,17 @@ import 'package:shared/models/color_keys.dart';
 
 class AppColors {
   static const Map<ColorKeys, Color> colors = {
+    // bg
     ColorKeys.primary: Color(0xff1c1c1c),
+    ColorKeys.secondary: Color(0xffb5925c),
     ColorKeys.accent: Color(0x00ffffff),
     ColorKeys.background: Colors.white,
+    ColorKeys.formBg: Color(0xfff6f6f6),
+    // text
     ColorKeys.textPrimary: Colors.black,
     ColorKeys.textSecondary: Color(0xff979797),
     ColorKeys.textPlaceholder: Color(0xffCACACA),
-
-    // BUTTON
+    // button
     ColorKeys.buttonTextPrimary: Colors.white,
     ColorKeys.buttonTextSecondary: Colors.black,
     ColorKeys.buttonTextCancel: Colors.black,
@@ -24,11 +27,6 @@ class AppColors {
     ColorKeys.menuColor: Color(0xffb3b3b3),
     ColorKeys.menuActiveColor: Color(0xffb5925c),
     ColorKeys.dividerColor: Color(0xffeeeeee),
-
-    // Form
-    ColorKeys.formBg: Color(0xfff6f6f6),
-
-    // CHANNEL
     ColorKeys.gradientBgTopColor: Colors.transparent,
     ColorKeys.gradientBgBottomColor: Colors.transparent,
   };
