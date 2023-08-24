@@ -1,6 +1,6 @@
-// BlockHeader is a stateless widget, return empty container
-
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 class BlockHeader extends StatelessWidget {
   final String text;
@@ -22,15 +22,15 @@ class BlockHeader extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  height: 15,
+                  height: 8,
                   width: 2,
-                  color: const Color(0xFFFF3B52),
+                  color: AppColors.colors[ColorKeys.secondary],
                 ),
                 const SizedBox(width: 8),
                 Text(
                   text,
-                  style: const TextStyle(
-                    color: Color(0xFF161823),
+                  style: TextStyle(
+                    color: AppColors.colors[ColorKeys.textPrimary],
                     fontSize: 15,
                   ),
                 ),
