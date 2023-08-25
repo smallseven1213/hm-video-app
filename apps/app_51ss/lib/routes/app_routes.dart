@@ -1,5 +1,6 @@
 library app_routes;
 
+import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -12,6 +13,8 @@ import '../pages/filter.dart' as filter_page;
 import '../pages/search.dart' as search_page;
 import '../pages/actors.dart' as actors_page;
 import '../pages/actor.dart' as actor_page;
+import '../pages/tag.dart' as tag_page;
+import '../pages/video_by_block.dart' as video_by_block_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -30,5 +33,18 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.actors: (context, args) => const actors_page.ActorsPage(),
   AppRoutes.actor: (context, args) => actor_page.ActorPage(
         id: args['id'] as int,
+      ),
+  AppRoutes.tag: (context, args) => tag_page.TagPage(
+        key: ValueKey('tag-video-${args['id']}'),
+        id: args['id'] as int,
+        title: args['title'] as String,
+        film: args['film'] == null ? 1 : args['film'] as int,
+      ),
+  AppRoutes.videoByBlock: (context, args) =>
+      video_by_block_page.VideoByBlockPage(
+        blockId: args['blockId'] as int,
+        title: args['title'] as String,
+        channelId: args['channelId'] as int,
+        film: args['film'] == null ? 1 : args['film'] as int,
       ),
 };
