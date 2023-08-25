@@ -1,6 +1,8 @@
 import 'dart:math';
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:shared/models/color_keys.dart';
 
 class NotificationItem extends StatefulWidget {
   final String title;
@@ -54,9 +56,9 @@ class NotificationItemState extends State<NotificationItem>
                 child: child,
               );
             },
-            child: const Icon(
+            child: Icon(
               Icons.expand_more,
-              color: Colors.white,
+              color: AppColors.colors[ColorKeys.textPrimary],
             ),
           ),
           title: Column(
@@ -64,7 +66,9 @@ class NotificationItemState extends State<NotificationItem>
             children: [
               Text(
                 widget.title,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: TextStyle(
+                    color: AppColors.colors[ColorKeys.textPrimary],
+                    fontSize: 12),
               ),
               const Text(
                 '2022-2-2',
@@ -90,14 +94,14 @@ class NotificationItemState extends State<NotificationItem>
             children: [
               Container(
                 height: 1,
-                color: const Color(0xFF7AA2C8).withOpacity(0.3),
+                color: AppColors.colors[ColorKeys.formBg],
               ),
               ListTile(
                 contentPadding: const EdgeInsets.all(0),
                 title: HtmlWidget(
                   widget.content,
-                  textStyle: const TextStyle(
-                    color: Colors.white,
+                  textStyle: TextStyle(
+                    color: AppColors.colors[ColorKeys.textPrimary],
                   ),
                 ),
               ),

@@ -1,7 +1,9 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
+import 'package:shared/models/color_keys.dart';
 
 class SystemEventCard extends StatelessWidget {
   final int id;
@@ -47,12 +49,16 @@ class SystemEventCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 14, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14,
+                    color: AppColors.colors[ColorKeys.textPrimary]),
               ),
               const SizedBox(height: 8),
               Text(
                 content,
-                style: const TextStyle(fontSize: 12, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.colors[ColorKeys.textPrimary]),
               ),
               const SizedBox(height: 20),
               Align(
