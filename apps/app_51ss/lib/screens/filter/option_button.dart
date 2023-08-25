@@ -1,5 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:app_51ss/config/colors.dart';
+import 'package:shared/models/color_keys.dart';
 
 class OptionButton extends StatelessWidget {
   final bool isSelected;
@@ -18,17 +19,21 @@ class OptionButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 20,
-        color: isSelected ? const Color(0xFFf3f3f4) : Colors.white,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-          child: Center(
-            child: Text(
-              name,
-              style: TextStyle(
-                  fontSize: 13,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected ? Colors.black : const Color(0xFF73747b)),
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        decoration: BoxDecoration(
+          color:
+              isSelected ? AppColors.colors[ColorKeys.buttonBgPrimary] : null,
+          borderRadius: BorderRadius.circular(4),
+        ),
+        child: Center(
+          child: Text(
+            name,
+            style: TextStyle(
+              fontSize: 13,
+              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              color: isSelected
+                  ? AppColors.colors[ColorKeys.buttonTextPrimary]
+                  : AppColors.colors[ColorKeys.buttonTextSecondary],
             ),
           ),
         ),

@@ -1,6 +1,8 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_video_screen_controller.dart';
+import 'package:shared/models/color_keys.dart';
 
 import 'option_button.dart';
 
@@ -26,8 +28,8 @@ class FilterOptions extends StatelessWidget {
           menuData.length,
           (index) {
             return Container(
-              height: 50,
-              color: Colors.white,
+              height: 35,
+              color: AppColors.colors[ColorKeys.background],
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: menuData[index]['options'].length,
@@ -39,8 +41,7 @@ class FilterOptions extends StatelessWidget {
                         .contains(option['value']);
 
                     return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 10),
+                      padding: const EdgeInsets.all(5),
                       child: OptionButton(
                           isSelected: isSelected,
                           name: option['name'],
