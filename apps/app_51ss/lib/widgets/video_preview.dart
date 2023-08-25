@@ -151,6 +151,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
         GestureDetector(
           onTap: () => super.onVideoTap(context),
           child: Stack(children: [
+            // 背景
             AspectRatio(
               aspectRatio: imageRatio ??
                   (displayCoverVertical == true ? 119 / 179 : 374 / 198),
@@ -162,6 +163,14 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                   color: AppColors.colors[ColorKeys.videoPreviewBg],
                 ),
                 clipBehavior: Clip.antiAlias,
+                child: const Center(
+                  child: Image(
+                    image:
+                        AssetImage('assets/images/video_preview_loading.png'),
+                    width: 102,
+                    height: 70,
+                  ),
+                ),
               ),
             ),
             // 主體
