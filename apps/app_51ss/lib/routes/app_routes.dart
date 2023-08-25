@@ -15,6 +15,7 @@ import '../pages/actors.dart' as actors_page;
 import '../pages/actor.dart' as actor_page;
 import '../pages/tag.dart' as tag_page;
 import '../pages/video_by_block.dart' as video_by_block_page;
+import '../pages/notifications.dart' as notifications_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -47,4 +48,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         channelId: args['channelId'] as int,
         film: args['film'] == null ? 1 : args['film'] as int,
       ),
+  AppRoutes.notifications: (context, args) =>
+      const notifications_page.NotificationsPage(),
 };
