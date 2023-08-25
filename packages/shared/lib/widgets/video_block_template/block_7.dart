@@ -79,16 +79,15 @@ class Block7WidgetState extends State<Block7Widget> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                // TODO: kIsWeb testing
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [
-                      widget.gradientBgTopColor,
-                      widget.gradientBgBottomColor,
+                      Color(0xFFf2f2f2),
+                      Color(0xFFf2f2f2),
                     ],
-                    stops: const [0.0, 1],
+                    stops: [0.0, 1],
                   ),
                 ),
               ),

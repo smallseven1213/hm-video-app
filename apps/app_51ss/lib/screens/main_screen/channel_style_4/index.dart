@@ -1,7 +1,9 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/actor_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -17,9 +19,9 @@ import '../channel_style_3/tags.dart';
 import '../reload_button.dart';
 
 const gradient = {
-  1: [Color(0xFF00091A), Color(0xFF45abb1)],
-  2: [Color(0xFF00091a), Color(0xFFc08e53)],
-  3: [Color(0xFF00091A), Color(0xFFff4545)],
+  1: [Color(0xFFf2f2f2), Color(0xFF45abb1)],
+  2: [Color(0xFFf2f2f2), Color(0xFFc08e53)],
+  3: [Color(0xFFf2f2f2), Color(0xFFff4545)],
 };
 
 class ChannelStyle4 extends StatelessWidget {
@@ -148,7 +150,8 @@ class ChannelStyle4 extends StatelessWidget {
                                               end: Alignment.bottomCenter,
                                               colors: [
                                                 Colors.transparent,
-                                                Colors.black.withOpacity(0.8),
+                                                const Color(0xfff2f2f2)
+                                                    .withOpacity(0.8),
                                               ],
                                             ),
                                           ),
@@ -175,18 +178,20 @@ class ChannelStyle4 extends StatelessWidget {
                                                                 .start,
                                                         children: [
                                                           Text(data.actor.name,
-                                                              style: const TextStyle(
-                                                                  color: Colors
-                                                                      .white,
+                                                              style: TextStyle(
+                                                                  color: AppColors
+                                                                          .colors[
+                                                                      ColorKeys
+                                                                          .textPrimary],
                                                                   fontSize:
                                                                       14)),
                                                           Text(
                                                               '人氣:${data.actor.collectTimes}',
                                                               style: TextStyle(
-                                                                  color: Colors
-                                                                      .white
-                                                                      .withOpacity(
-                                                                          0.5))),
+                                                                  color: AppColors
+                                                                          .colors[
+                                                                      ColorKeys
+                                                                          .textPrimary])),
                                                         ],
                                                       )),
                                                   SizedBox(
@@ -206,15 +211,18 @@ class ChannelStyle4 extends StatelessWidget {
                                                             },
                                                           );
                                                         },
-                                                        child: const Padding(
+                                                        child: Padding(
                                                           padding:
-                                                              EdgeInsets.only(
+                                                              const EdgeInsets
+                                                                  .only(
                                                                   top: 18),
                                                           child: Text(
                                                             '查看全部',
                                                             style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
+                                                                color: AppColors
+                                                                        .colors[
+                                                                    ColorKeys
+                                                                        .textPrimary]),
                                                           ),
                                                         ),
                                                       ),
