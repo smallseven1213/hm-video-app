@@ -172,10 +172,8 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
           block: block,
           updateBlock: updateBlock,
           channelId: channelId,
-          gradientBgTopColor:
-              AppColors.colors[ColorKeys.gradientBgTopColor] as Color,
-          gradientBgBottomColor:
-              AppColors.colors[ColorKeys.gradientBgBottomColor] as Color,
+          gradientBgTopColor: const Color(0xFFf2f2f2),
+          gradientBgBottomColor: const Color(0xFFf2f2f2),
           buildVideoPreview: (video) => _buildVideoPreview(
             film,
             video,
