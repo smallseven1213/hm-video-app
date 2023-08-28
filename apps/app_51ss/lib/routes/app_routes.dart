@@ -8,6 +8,7 @@ import 'package:shared/navigator/delegate.dart';
 import '../../pages/configs.dart' as configs_page;
 
 import '../pages/home.dart' as home_page;
+import '../pages/apps.dart' as apps_page;
 import '../pages/share.dart' as share_page;
 import '../pages/collection.dart' as collection_page;
 import '../pages/login.dart' as login_page;
@@ -30,6 +31,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),
+  AppRoutes.apps: (context, args) => const apps_page.AppsPage(),
   AppRoutes.share: (context, args) => const share_page.SharePage(),
   AppRoutes.collection: (context, args) =>
       const collection_page.CollectionPage(),
