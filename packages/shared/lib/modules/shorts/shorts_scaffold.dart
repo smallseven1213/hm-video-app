@@ -41,7 +41,6 @@ class ShortsScaffold extends StatefulWidget {
 }
 
 class ShortsScaffoldState extends State<ShortsScaffold> {
-  bool isInitial = false;
   // PreloadPageController? _pageController;
   PageController? _pageController;
   int currentPage = 0;
@@ -81,14 +80,9 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
 
     if (widget.useCachedList == false) {
       ever(controller.data, (d) {
-        if (isInitial == false && mounted) {
-          // set _pageController index to 0
-          // _pageController?.jumpToPage(0);
-          setState(() {
-            isInitial = true;
-            cachedVods = d as List<Vod>;
-          });
-        }
+        setState(() {
+          cachedVods = d as List<Vod>;
+        });
       });
     }
 
@@ -132,25 +126,10 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
             Center(
               child: widget.loadingWidget,
             ),
-          NotificationListener<ScrollNotification>(
-            onNotification: (ScrollNotification notification) {
-              if (notification is ScrollStartNotification) {
-                accumulatedScroll = 0.0;
-                hasTriggered = false;
-              } else if (notification is ScrollUpdateNotification &&
-                  currentPage == 0 &&
-                  !hasTriggered) {
-                print(notification.scrollDelta);
-                accumulatedScroll += notification.scrollDelta!;
-                // 检查滚动的实际方向是否为向上
-                if (accumulatedScroll > 0 && accumulatedScroll >= 30.0) {
-                  widget.onScrollBeyondFirst?.call();
-                  hasTriggered = true;
-                  // 重置累积距离，以避免多次触发
-                  accumulatedScroll = 0.0;
-                }
-              }
-              return true;
+          RefreshIndicator(
+            onRefresh: () async {
+              widget.onScrollBeyondFirst?.call();
+              // await Future.delayed(Duration(seconds: 1));
             },
             child: PageView.builder(
               controller: _pageController,
