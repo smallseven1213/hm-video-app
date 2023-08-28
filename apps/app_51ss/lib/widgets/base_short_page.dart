@@ -63,6 +63,7 @@ class BaseShortPage extends StatelessWidget {
           String tag =
               '${style == 2 ? 'home-use-' : 'general-'}${shortData.id.toString()}';
           return ShortVideoProvider(
+            key: Key(tag),
             vodId: shortData.id,
             tag: tag,
             child: ShortVideoConsumer(
