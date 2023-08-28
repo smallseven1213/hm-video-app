@@ -1,10 +1,11 @@
+import 'package:app_51ss/screens/home/home_apps.dart';
+import 'package:app_51ss/widgets/wave_loading.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
-import 'package:app_51ss/widgets/wave_loading.dart';
 
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
@@ -14,9 +15,7 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../screens/main_screen/index.dart';
-import '../screens/apps_screen/index.dart';
 import '../screens/user_screen/index.dart';
-
 import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
@@ -37,7 +36,7 @@ final screens = {
   //       ),
   //     ),
   // HomeNavigatorPathes.game: () => const GameScreen(),
-  HomeNavigatorPathes.apps: () => const AppsScreen(),
+  HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
 };
 

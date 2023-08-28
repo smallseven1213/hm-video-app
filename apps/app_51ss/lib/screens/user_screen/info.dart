@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -127,6 +129,30 @@ class UserInfo extends StatelessWidget {
                 ),
               ),
             ],
+          ),
+          UserInfoConsumer(
+            child: (info, isVIP, isGuest) {
+              if (!isGuest) {
+                return Positioned(
+                  top: 0,
+                  right: 60,
+                  child: GestureDetector(
+                    onTap: () {
+                      MyRouteDelegate.of(context).push(AppRoutes.configs);
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.all(5),
+                      child: const Icon(
+                        Icons.settings_outlined,
+                        size: 18,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                );
+              }
+              return const SizedBox();
+            },
           ),
           Positioned(
             top: 0,

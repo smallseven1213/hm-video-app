@@ -2,9 +2,13 @@ library app_routes;
 
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../pages/configs.dart' as configs_page;
+
 import '../pages/home.dart' as home_page;
+import '../pages/apps.dart' as apps_page;
 import '../pages/share.dart' as share_page;
 import '../pages/collection.dart' as collection_page;
 import '../pages/login.dart' as login_page;
@@ -19,11 +23,15 @@ import '../pages/notifications.dart' as notifications_page;
 import '../pages/supplier.dart' as supplier_page;
 import '../pages/suppliers.dart' as suppliers_screen;
 import '../pages/supplier_tag_video.dart' as supplier_tag_video_page;
+import '../pages/shorts_by_local.dart' as shorts_by_local_page;
+import '../pages/shorts_by_common.dart' as shorts_by_common_page;
+import '../pages/update_password.dart' as update_password_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),
+  AppRoutes.apps: (context, args) => const apps_page.AppsPage(),
   AppRoutes.share: (context, args) => const share_page.SharePage(),
   AppRoutes.collection: (context, args) =>
       const collection_page.CollectionPage(),
@@ -63,4 +71,19 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.suppliers: (context, args) =>
       const suppliers_screen.SuppliersPage(),
+  AppRoutes.shorts: (context, args) => shorts_by_common_page.ShortsByCommonPage(
+        uuid: args['uuid'] as String,
+        videoId: args['videoId'] as int,
+        id: args['id'] as int,
+        type: args['type'] as ShortsType,
+      ),
+  AppRoutes.shortsByLocal: (context, args) =>
+      shorts_by_local_page.ShortsByLocalPage(
+        uuid: args['uuid'] as String,
+        videoId: args['videoId'] as int,
+        itemId: args['itemId'] as int,
+      ),
+  AppRoutes.configs: (context, args) => const configs_page.ConfigsPage(),
+  AppRoutes.updatePassword: (context, args) =>
+      const update_password_page.UpdatePasswordPage(),
 };
