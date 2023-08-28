@@ -237,7 +237,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
             ),
           ),
         if (tags.isNotEmpty && hasTags == true) ...[
-          // const SizedBox(height: 5),
+          const SizedBox(height: 5),
           Align(
             alignment: Alignment.centerLeft,
             child: Container(
