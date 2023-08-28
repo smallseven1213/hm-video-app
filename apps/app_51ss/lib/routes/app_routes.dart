@@ -15,6 +15,10 @@ import '../pages/actors.dart' as actors_page;
 import '../pages/actor.dart' as actor_page;
 import '../pages/tag.dart' as tag_page;
 import '../pages/video_by_block.dart' as video_by_block_page;
+import '../pages/notifications.dart' as notifications_page;
+import '../pages/supplier.dart' as supplier_page;
+import '../pages/suppliers.dart' as suppliers_screen;
+import '../pages/supplier_tag_video.dart' as supplier_tag_video_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -47,4 +51,16 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         channelId: args['channelId'] as int,
         film: args['film'] == null ? 1 : args['film'] as int,
       ),
+  AppRoutes.notifications: (context, args) =>
+      const notifications_page.NotificationsPage(),
+  AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
+        id: args['id'] as int,
+      ),
+  AppRoutes.supplierTag: (context, args) =>
+      supplier_tag_video_page.SupplierTagVideoPage(
+        tagId: args['tagId'] as int,
+        tagName: args['tagName'],
+      ),
+  AppRoutes.suppliers: (context, args) =>
+      const suppliers_screen.SuppliersPage(),
 };

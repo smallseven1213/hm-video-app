@@ -222,7 +222,6 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                       displayVideoCollectTimes: displayVideoCollectTimes)),
           ]),
         ),
-        const SizedBox(height: 5),
         if (hasTitle == true)
           Container(
             alignment: Alignment.centerLeft,
