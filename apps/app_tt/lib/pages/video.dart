@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
-
+import '../screens/video_info.dart';
 import '../screens/video/video_player_area/index.dart';
 import '../screens/video/video_player_area/loading.dart';
+import '../widgets/title_header.dart';
 import '../widgets/wave_loading.dart';
 
 final userApi = UserApi();
@@ -83,13 +85,20 @@ class VideoState extends State<Video> {
                   );
                 },
               ),
-              // Expanded(
-              //   child: NestedTabBarView(
-              //     videoUrl: videoUrl,
-              //     videoBase: video,
-              //     videoDetail: videoDetail,
-              //   ),
-              // )
+              VideoPlayerConsumer(
+                tag: videoUrl,
+                child: (videoPlayerInfo) => VideoInfo(
+                  videoPlayerController: videoPlayerInfo
+                      .observableVideoPlayerController.videoPlayerController,
+                  externalId: videoDetail.externalId ?? '',
+                  title: videoDetail.title,
+                  tags: videoDetail.tags ?? [],
+                  timeLength: videoDetail.timeLength ?? 0,
+                  viewTimes: videoDetail.videoViewTimes ?? 0,
+                  actor: videoDetail.actors,
+                  publisher: videoDetail.publisher,
+                ),
+              ),
             ],
           ),
         );

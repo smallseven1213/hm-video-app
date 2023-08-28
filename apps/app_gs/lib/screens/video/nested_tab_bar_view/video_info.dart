@@ -1,11 +1,12 @@
-// VideoScreen stateless
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/video_time.dart';
-import 'package:shared/widgets/view_times.dart';
+import 'package:shared/widgets/video/video_time.dart';
+import 'package:shared/widgets/video/view_times.dart';
+import 'package:shared/widgets/video/title.dart';
 
 final logger = Logger();
 
@@ -17,8 +18,7 @@ class VideoInfo extends StatelessWidget {
   final int viewTimes;
   final List<Actor>? actor;
   final Publisher? publisher;
-  final Function() playVideo;
-  final Function() pauseVideo;
+  final ObservableVideoPlayerController? videoPlayerController;
 
   const VideoInfo({
     super.key,
@@ -26,8 +26,7 @@ class VideoInfo extends StatelessWidget {
     required this.tags,
     required this.timeLength,
     required this.viewTimes,
-    required this.playVideo,
-    required this.pauseVideo,
+    required this.videoPlayerController,
     this.actor,
     this.externalId,
     this.publisher,
@@ -38,13 +37,10 @@ class VideoInfo extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          externalId != '' ? '$externalId $title' : title,
-          style: const TextStyle(
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
-            color: Colors.white,
-          ),
+        VideoTitle(
+          externalId: externalId.toString(),
+          title: title,
+          color: Colors.white,
         ),
         // 供應商、演員、觀看次數、時長
         Padding(
@@ -60,7 +56,7 @@ class VideoInfo extends StatelessWidget {
                       if (publisher != null) ...[
                         GestureDetector(
                           onTap: () async {
-                            pauseVideo();
+                            videoPlayerController!.pause();
                             await MyRouteDelegate.of(context).push(
                               AppRoutes.publisher,
                               args: {
@@ -69,7 +65,7 @@ class VideoInfo extends StatelessWidget {
                               },
                               removeSamePath: true,
                             );
-                            playVideo();
+                            videoPlayerController!.play();
                           },
                           child: Text(
                             publisher!.name,
@@ -86,7 +82,7 @@ class VideoInfo extends StatelessWidget {
                       if (actor != null && actor!.isNotEmpty)
                         GestureDetector(
                           onTap: () async {
-                            pauseVideo();
+                            videoPlayerController!.pause();
                             await MyRouteDelegate.of(context).push(
                               AppRoutes.actor,
                               args: {
@@ -95,7 +91,7 @@ class VideoInfo extends StatelessWidget {
                               },
                               removeSamePath: true,
                             );
-                            playVideo();
+                            videoPlayerController!.play();
                           },
                           child: Text(
                             actor![0].name,
@@ -136,10 +132,10 @@ class VideoInfo extends StatelessWidget {
             children: tags.map((tag) {
               return GestureDetector(
                 onTap: () async {
-                  pauseVideo();
+                  videoPlayerController!.pause();
                   await MyRouteDelegate.of(context).push(AppRoutes.tag,
                       args: {'id': tag.id, 'title': tag.name});
-                  playVideo();
+                  videoPlayerController!.play();
                 },
                 child: Text(
                   '#${tag.name}',
