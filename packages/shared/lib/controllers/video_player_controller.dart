@@ -1,5 +1,5 @@
 import 'dart:async';
-
+// import 'dart:html' if (dart.library.html) 'dart:html' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -27,6 +27,7 @@ class ObservableVideoPlayerController extends GetxController {
 
   @override
   void onInit() {
+    // _checkHlsJs();
     _initializePlayer();
 
     super.onInit();
@@ -38,6 +39,23 @@ class ObservableVideoPlayerController extends GetxController {
     super.dispose();
   }
 
+  // void _checkHlsJs() {
+  //   if (kIsWeb) {
+  //     bool hlsJsExists =
+  //         ui.document.getElementsByTagName('script').any((element) {
+  //       if (element is ui.Element &&
+  //           element.tagName.toLowerCase() == 'script') {
+  //         return element.attributes['src']?.contains('hls.js') ?? false;
+  //       }
+  //       return false;
+  //     });
+
+  //     if (!hlsJsExists) {
+  //       print('Error: hls.js is not included in index.html');
+  //     }
+  //   }
+  // }
+
   Future<void> _initializePlayer() async {
     videoPlayerController = VideoPlayerController.network(videoUrl);
     videoPlayerController?.addListener(_onControllerValueChanged);
@@ -47,6 +65,7 @@ class ObservableVideoPlayerController extends GetxController {
         play();
       }
     }).catchError((error) {
+      print(error);
       if (videoPlayerController?.value.hasError == true) {
         videoAction.value = 'error';
         errorMessage.value = videoPlayerController!.value.errorDescription!;

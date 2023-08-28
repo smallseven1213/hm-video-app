@@ -77,69 +77,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const WaveLoading(),
-            child: (isReady) => Stack(
-              children: [
-                ShortCard(
-                  index: widget.index,
-                  tag: widget.tag,
-                  isActive: widget.isActive,
-                  id: widget.shortData.id,
-                  title: widget.shortData.title,
-                  shortData: widget.shortData,
-                  toggleFullScreen: widget.toggleFullScreen,
-                  allowFullsreen: false,
-                ),
-                Obx(
-                  () => uiController.isFullscreen.value == true
-                      ? const SizedBox.shrink()
-                      : ShortVideoConsumer(
-                          vodId: widget.id,
-                          tag: widget.tag,
-                          child: ({
-                            required isLoading,
-                            required video,
-                            required videoDetail,
-                            required videoUrl,
-                          }) =>
-                              SideInfo(
-                            tag: widget.tag,
-                            videoId: widget.shortData.id,
-                            shortData: widget.shortData,
-                          ),
-                        ),
-                ),
-                Obx(
-                  () => uiController.isFullscreen.value == true
-                      ? const SizedBox.shrink()
-                      : Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          child: Column(children: [
-                            ShortVideoConsumer(
-                              vodId: widget.id,
-                              tag: widget.tag,
-                              child: ({
-                                required isLoading,
-                                required video,
-                                required videoDetail,
-                                required videoUrl,
-                              }) =>
-                                  videoDetail != null
-                                      ? ShortCardInfo(
-                                          tag: widget.tag,
-                                          data: videoDetail,
-                                          title: widget.title,
-                                          displayActorAvatar: false,
-                                        )
-                                      : const SizedBox.shrink(),
-                            ),
-                            const SizedBox(height: 16),
-                          ]),
-                        ),
-                ),
-              ],
-            ),
+            child: (isReady) => Container(),
           ),
         ],
       ),
