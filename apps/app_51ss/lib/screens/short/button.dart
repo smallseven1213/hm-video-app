@@ -1,7 +1,5 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 final logger = Logger();
@@ -44,8 +42,7 @@ class ShortMenuButton extends StatelessWidget {
             Icon(
               icon,
               size: iconSize ?? 24,
-              color:
-                  isLike ? AppColors.colors[ColorKeys.primary] : Colors.white,
+              color: isLike ? const Color(0xffFFC700) : Colors.white,
             ),
             const SizedBox(width: 10),
             Column(
