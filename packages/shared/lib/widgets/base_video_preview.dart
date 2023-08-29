@@ -29,6 +29,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
+  final bool? displaySupplier; 
   final Function()? onTap;
   final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
@@ -58,6 +59,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
     this.displayVideoCollectTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
+    this.displaySupplier = true,
   }) : super(key: key);
 
   void onVideoTap(BuildContext context) {

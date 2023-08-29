@@ -105,6 +105,7 @@ class ChannelVideoPreviewWidget extends BaseVideoPreviewWidget {
     bool? displayVideoCollectTimes = true,
     bool? displayVideoTimes = true,
     bool? displayViewTimes = true,
+    bool? displaySupplier = true,
   }) : super(
           key: key,
           id: id,
@@ -131,6 +132,7 @@ class ChannelVideoPreviewWidget extends BaseVideoPreviewWidget {
           displayVideoCollectTimes: displayVideoCollectTimes,
           displayVideoTimes: displayVideoTimes,
           displayViewTimes: displayViewTimes,
+          displaySupplier: displaySupplier,
         );
 
   @override

@@ -45,7 +45,7 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
-                  color: Colors.white,
+                  color: Color(0xff939393),
                 ),
               ),
             ),
@@ -73,25 +73,12 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                     flex: 1,
                     child: Stack(
                       children: [
-                        Opacity(
-                          opacity: 0.5,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                colors: [
-                                  const Color(0xff4277dc).withOpacity(0.5),
-                                  const Color(0xff4277dc).withOpacity(0.7),
-                                ],
-                                center: const AlignmentDirectional(0.0, 0.0),
-                                focal: const AlignmentDirectional(0.0, 0.0),
-                                radius: 0.90,
-                                focalRadius: 0.001,
-                                stops: const [0.75, 1.0],
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(8.0),
-                                bottomRight: Radius.circular(8.0),
-                              ),
+                        Container(
+                          decoration: const BoxDecoration(
+                            color: Color(0xfff9f9f9),
+                            borderRadius: BorderRadius.only(
+                              topRight: Radius.circular(8.0),
+                              bottomRight: Radius.circular(8.0),
                             ),
                           ),
                         ),
@@ -107,7 +94,7 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                                   style: const TextStyle(
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
-                                    color: Colors.white,
+                                    color: Color(0xFF161823),
                                   ),
                                 ),
                               ),
@@ -116,7 +103,7 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                               width: 90,
                               height: 25,
                               decoration: const BoxDecoration(
-                                color: Color(0xff21478d),
+                                color: Color(0xfffe2c55),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
