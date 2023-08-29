@@ -28,13 +28,13 @@ final screens = {
           layoutId: 1,
         ),
       ),
-  // HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
-  //       key: Key('layout${layouts[1]}'),
-  //       layoutId: layouts[1],
-  //       child: HomeMainScreen(
-  //         layoutId: layouts[1],
-  //       ),
-  //     ),
+  HomeNavigatorPathes.layout2: () => const MainLayoutBuilder(
+        key: Key('layout2'),
+        layoutId: 2,
+        child: HomeMainScreen(
+          layoutId: 2,
+        ),
+      ),
   // HomeNavigatorPathes.game: () => const GameScreen(),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
