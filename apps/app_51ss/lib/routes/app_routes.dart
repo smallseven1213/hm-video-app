@@ -26,6 +26,8 @@ import '../pages/supplier_tag_video.dart' as supplier_tag_video_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
 import '../pages/shorts_by_common.dart' as shorts_by_common_page;
 import '../pages/update_password.dart' as update_password_page;
+import '../pages/playrecord.dart' as playrecord_page;
+import '../pages/favorites.dart' as favorites_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -86,4 +88,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.configs: (context, args) => const configs_page.ConfigsPage(),
   AppRoutes.updatePassword: (context, args) =>
       const update_password_page.UpdatePasswordPage(),
+  AppRoutes.playRecord: (context, args) =>
+      const playrecord_page.PlayRecordPage(),
+  AppRoutes.favorites: (context, args) => const favorites_page.FavoritesPage(),
 };
