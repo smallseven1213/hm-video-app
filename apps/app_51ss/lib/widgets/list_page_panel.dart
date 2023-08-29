@@ -53,11 +53,12 @@ class ListPagePanelWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: Button(
-                        text: '刪除',
-                        type: listEditorController.selectedIds.isNotEmpty
-                            ? 'secondary'
-                            : 'primary',
-                        onPressed: onDeleteButtonClick!),
+                      text: '刪除',
+                      type: listEditorController.selectedIds.isNotEmpty
+                          ? 'primary'
+                          : 'cancel',
+                      onPressed: onDeleteButtonClick!,
+                    ),
                   )),
             ],
           ),
