@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/widgets/view_times.dart';
-import 'package:shared/widgets/video_time.dart';
+import 'package:shared/widgets/video/view_times.dart';
+import 'package:shared/widgets/video/video_time.dart';
 
 final logger = Logger();
 
