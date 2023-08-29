@@ -3,12 +3,115 @@ import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/title.dart';
 import 'package:video_player/video_player.dart';
 
 final logger = Logger();
+
+class Collect extends StatelessWidget {
+  final int times;
+  final Color? color;
+  const Collect({super.key, required this.times, this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text.rich(
+      style: const TextStyle(
+        height: 1,
+      ),
+      TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(
+              Icons.bookmark_border,
+              color: color ?? Colors.white,
+              size: 16,
+            ),
+          ),
+          TextSpan(
+            text: ' ${formatNumberToUnit(times)}',
+            style: TextStyle(
+              color: color ?? Colors.white,
+              letterSpacing: 0.1,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Favorite extends StatelessWidget {
+  final int times;
+  final Color? color;
+  const Favorite({super.key, required this.times, this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text.rich(
+      style: const TextStyle(
+        height: 1,
+      ),
+      TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(
+              Icons.favorite_border_rounded,
+              color: color ?? Colors.white,
+              size: 16,
+            ),
+          ),
+          TextSpan(
+            text: ' ${formatNumberToUnit(times)}',
+            style: TextStyle(
+              color: color ?? Colors.white,
+              letterSpacing: 0.1,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ViewTimes extends StatelessWidget {
+  final int times;
+  final Color? color;
+  const ViewTimes({super.key, required this.times, this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text.rich(
+      style: const TextStyle(
+        height: 1,
+      ),
+      TextSpan(
+        children: [
+          WidgetSpan(
+            child: Icon(
+              Icons.remove_red_eye_outlined,
+              color: color ?? Colors.white,
+              size: 16,
+            ),
+          ),
+          TextSpan(
+            text: ' ${formatNumberToUnit(times)}',
+            style: TextStyle(
+              color: color ?? Colors.white,
+              letterSpacing: 0.1,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
 
 class VideoInfo extends StatelessWidget {
   final VideoPlayerController? videoPlayerController;
@@ -19,6 +122,7 @@ class VideoInfo extends StatelessWidget {
   final int viewTimes;
   final List<Actor>? actor;
   final Publisher? publisher;
+  final int videoCollectTimes;
 
   const VideoInfo({
     super.key,
@@ -27,6 +131,7 @@ class VideoInfo extends StatelessWidget {
     required this.tags,
     required this.timeLength,
     required this.viewTimes,
+    required this.videoCollectTimes,
     this.actor,
     this.externalId,
     this.publisher,
@@ -80,48 +185,30 @@ class VideoInfo extends StatelessWidget {
                             width: 16,
                           )
                         ],
-                        if (actor != null && actor!.isNotEmpty)
-                          GestureDetector(
-                            onTap: () async {
-                              videoPlayerController!.pause();
-                              await MyRouteDelegate.of(context).push(
-                                AppRoutes.actor,
-                                args: {
-                                  'id': actor![0].id,
-                                  'title': actor![0].name
-                                },
-                                removeSamePath: true,
-                              );
-                              videoPlayerController!.play();
-                            },
-                            child: Text(
-                              actor![0].name,
-                              style: const TextStyle(
-                                fontSize: 12,
-                                color: Color(0xffC7C3C3),
-                              ),
-                            ),
-                          ),
                       ],
                     ),
                   ),
                 // const Spacer(),
                 Expanded(
-                    flex: 2,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        ViewTimes(
-                          times: viewTimes,
-                          color: const Color(0xffC7C3C3),
-                        ),
-                        VideoTime(
-                          time: timeLength,
-                          color: const Color(0xffC7C3C3),
-                          hasIcon: true,
-                        ),
-                      ],
-                    ))
+                  flex: 3,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ViewTimes(
+                        times: viewTimes,
+                        color: const Color(0xff939393),
+                      ),
+                      Favorite(
+                        times: 12345, //videoCollectTimes
+                        color: const Color(0xff939393),
+                      ),
+                      Collect(
+                        times: videoCollectTimes, //videoCollectTimes
+                        color: const Color(0xff939393),
+                      )
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -138,12 +225,19 @@ class VideoInfo extends StatelessWidget {
                         args: {'id': tag.id, 'title': tag.name});
                     videoPlayerController!.play();
                   },
-                  child: Text(
-                    '#${tag.name}',
-                    style: const TextStyle(
-                      fontSize: 12,
-                      color: Color(0xFF00B2FF),
-                      letterSpacing: 0.1,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      color: const Color(0xfff6f6f9),
+                    ),
+                    padding: const EdgeInsets.all(3),
+                    child: Text(
+                      '#${tag.name}',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color: Color(0xFF161823),
+                        letterSpacing: 0.1,
+                      ),
                     ),
                   ),
                 );
