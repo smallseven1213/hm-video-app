@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -8,6 +10,57 @@ import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 import 'wave_loading.dart';
+
+class RefreshIndicatorWidget extends StatefulWidget {
+  const RefreshIndicatorWidget({Key? key}) : super(key: key);
+
+  @override
+  _RefreshIndicatorWidgetState createState() => _RefreshIndicatorWidgetState();
+}
+
+class _RefreshIndicatorWidgetState extends State<RefreshIndicatorWidget> {
+  late String loadingText;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateLoadingText();
+  }
+
+  void _updateLoadingText() {
+    setState(() {
+      loadingText = loadingTextList[Random().nextInt(loadingTextList.length)];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      child: Center(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.black.withOpacity(0.5),
+                Colors.transparent,
+              ],
+            ),
+          ),
+          child: Text(
+            loadingText,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
 
 class BaseShortPage extends StatelessWidget {
   final Function() createController;
@@ -52,6 +105,9 @@ class BaseShortPage extends StatelessWidget {
             itemCount: 3,
           ),
         ),
+        refreshIndicatorWidget: (refreshKey) => RefreshIndicatorWidget(
+              key: Key(refreshKey),
+            ),
         shortCardBuilder: ({
           required int index,
           required bool isActive,
