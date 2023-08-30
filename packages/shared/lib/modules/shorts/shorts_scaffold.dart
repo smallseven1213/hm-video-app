@@ -145,7 +145,6 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
               )
             : SmartRefresher(
                 controller: _refreshController,
-                physics: TiktokScrollPhysics(),
                 enablePullDown:
                     widget.onScrollBeyondFirst == null ? false : true,
                 enablePullUp: false,
@@ -161,7 +160,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
                 header: CustomHeader(
                   height: 140,
                   completeDuration: const Duration(milliseconds: 300),
-                  refreshStyle: RefreshStyle.Behind,
+                  refreshStyle: RefreshStyle.Follow,
                   builder: (ctx, RefreshStatus? mode) {
                     return widget.refreshIndicatorWidget == null
                         ? Container()
@@ -170,7 +169,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
                   },
                 ),
                 child: CustomScrollView(
-                  physics: ClampingScrollPhysics(),
+                  physics: TiktokScrollPhysics(),
                   controller: _pageController,
                   slivers: <Widget>[
                     SliverFillViewport(
