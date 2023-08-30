@@ -11,16 +11,6 @@ import '../../controllers/ui_controller.dart';
 import '../../physics/tiktok_scroll_physics.dart';
 import '../../utils/screen_control.dart';
 
-final List<String> loadingTextList = [
-  '檔案很大，你忍一下',
-  '還沒準備好，你先悠著來',
-  '精彩即將呈現',
-  '努力加載中',
-  '讓檔案載一會兒',
-  '美好事物，值得等待',
-  '拼命搬磚中',
-];
-
 class ShortsScaffold extends StatefulWidget {
   final Function() createController;
   final String uuid;
@@ -139,54 +129,45 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: cachedVods.isEmpty
-            ? Center(
-                child: widget.loadingWidget,
-              )
-            : SmartRefresher(
-                controller: _refreshController,
-                enablePullDown:
-                    widget.onScrollBeyondFirst == null ? false : true,
-                enablePullUp: false,
-                onRefresh: () async {
-                  widget.onScrollBeyondFirst?.call();
-                  _refreshController.refreshCompleted();
-                  Future.delayed(const Duration(milliseconds: 600), () {
-                    setState(() {
-                      refreshIndicatorWidgetKey = const Uuid().v4();
-                    });
-                  });
-                },
-                header: CustomHeader(
-                  height: 140,
-                  completeDuration: const Duration(milliseconds: 300),
-                  refreshStyle: RefreshStyle.Follow,
-                  builder: (ctx, RefreshStatus? mode) {
-                    return widget.refreshIndicatorWidget == null
-                        ? Container()
-                        : widget
-                            .refreshIndicatorWidget!(refreshIndicatorWidgetKey);
-                  },
+        body: SmartRefresher(
+          controller: _refreshController,
+          enablePullDown: widget.onScrollBeyondFirst == null ? false : true,
+          enablePullUp: false,
+          onRefresh: () async {
+            widget.onScrollBeyondFirst?.call();
+            _refreshController.refreshCompleted();
+            Future.delayed(const Duration(milliseconds: 600), () {
+              setState(() {
+                refreshIndicatorWidgetKey = const Uuid().v4();
+              });
+            });
+          },
+          header: widget.refreshIndicatorWidget == null
+              ? null
+              : CustomHeader(
+                  height: 80,
+                  builder: (context, mode) =>
+                      widget.refreshIndicatorWidget!(refreshIndicatorWidgetKey),
                 ),
-                child: CustomScrollView(
-                  physics: TiktokScrollPhysics(),
-                  controller: _pageController,
-                  slivers: <Widget>[
-                    SliverFillViewport(
-                        delegate: SliverChildListDelegate([
-                      ...cachedVods.map((vod) {
-                        return widget.shortCardBuilder(
-                          index: cachedVods.indexOf(vod),
-                          shortData: vod,
-                          isActive: cachedVods.indexOf(vod) == currentPage,
-                          toggleFullScreen: () {
-                            toggleFullScreen();
-                          },
-                        );
-                      }).toList(),
-                    ]))
-                  ],
-                ),
-              ));
+          child: CustomScrollView(
+            physics: TiktokScrollPhysics(),
+            controller: _pageController,
+            slivers: <Widget>[
+              SliverFillViewport(
+                  delegate: SliverChildListDelegate([
+                ...cachedVods.map((vod) {
+                  return widget.shortCardBuilder(
+                    index: cachedVods.indexOf(vod),
+                    shortData: vod,
+                    isActive: cachedVods.indexOf(vod) == currentPage,
+                    toggleFullScreen: () {
+                      toggleFullScreen();
+                    },
+                  );
+                }).toList(),
+              ]))
+            ],
+          ),
+        ));
   }
 }

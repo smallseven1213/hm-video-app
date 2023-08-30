@@ -11,6 +11,16 @@ import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 import 'wave_loading.dart';
 
+final List<String> loadingTextList = [
+  '檔案很大，你忍一下',
+  '還沒準備好，你先悠著來',
+  '精彩即將呈現',
+  '努力加載中',
+  '讓檔案載一會兒',
+  '美好事物，值得等待',
+  '拼命搬磚中',
+];
+
 class RefreshIndicatorWidget extends StatefulWidget {
   const RefreshIndicatorWidget({Key? key}) : super(key: key);
 
@@ -36,18 +46,19 @@ class _RefreshIndicatorWidgetState extends State<RefreshIndicatorWidget> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: 80,
       child: Center(
         child: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.black.withOpacity(0.5),
-                Colors.transparent,
-              ],
-            ),
-          ),
+          // decoration: BoxDecoration(
+          //   gradient: LinearGradient(
+          //     begin: Alignment.topCenter,
+          //     end: Alignment.bottomCenter,
+          //     colors: [
+          //       Colors.black.withOpacity(0.5),
+          //       Colors.transparent,
+          //     ],
+          //   ),
+          // ),
           child: Text(
             loadingText,
             style: const TextStyle(
