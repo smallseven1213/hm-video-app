@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:uuid/uuid.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/services.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
@@ -7,6 +9,16 @@ import 'package:shared/models/vod.dart';
 
 import '../../controllers/ui_controller.dart';
 import '../../utils/screen_control.dart';
+
+final List<String> loadingTextList = [
+  '檔案很大，你忍一下',
+  '還沒準備好，你先悠著來',
+  '精彩即將呈現',
+  '努力加載中',
+  '讓檔案載一會兒',
+  '美好事物，值得等待',
+  '拼命搬磚中',
+];
 
 class ShortsScaffold extends StatefulWidget {
   final Function() createController;
@@ -16,6 +28,7 @@ class ShortsScaffold extends StatefulWidget {
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
   final Widget? loadingWidget;
+  final Widget Function(String refreshkey)? refreshIndicatorWidget;
   final Function()? onScrollBeyondFirst;
   final Function(
       {required int index,
@@ -32,6 +45,7 @@ class ShortsScaffold extends StatefulWidget {
     this.useCachedList = false,
     this.loadingWidget,
     this.onScrollBeyondFirst,
+    this.refreshIndicatorWidget,
     required this.shortCardBuilder,
     Key? key,
   }) : super(key: key);
@@ -41,13 +55,17 @@ class ShortsScaffold extends StatefulWidget {
 }
 
 class ShortsScaffoldState extends State<ShortsScaffold> {
-  // PreloadPageController? _pageController;
+  final RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
+
+  bool isLoading = false;
   PageController? _pageController;
   int currentPage = 0;
   List<Vod> cachedVods = [];
   final PageViewIndexController pageviewIndexController =
       Get.find<PageViewIndexController>();
   final UIController uiController = Get.find<UIController>();
+  String refreshIndicatorWidgetKey = '';
 
   @override
   void initState() {
@@ -119,47 +137,56 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          if (cachedVods.isEmpty)
-            Center(
-              child: widget.loadingWidget,
-            ),
-          RefreshIndicator(
-            onRefresh: () async {
-              widget.onScrollBeyondFirst?.call();
-              // await Future.delayed(Duration(seconds: 1));
-            },
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (int index) {
-                if (mounted) {
-                  setState(() {
-                    currentPage = index;
+        backgroundColor: Colors.black,
+        body: cachedVods.isEmpty
+            ? Center(
+                child: widget.loadingWidget,
+              )
+            : SmartRefresher(
+                controller: _refreshController,
+                physics: const BouncingScrollPhysics(),
+                enablePullDown:
+                    widget.onScrollBeyondFirst == null ? false : true,
+                enablePullUp: false,
+                onRefresh: () async {
+                  widget.onScrollBeyondFirst?.call();
+                  _refreshController.refreshCompleted();
+                  Future.delayed(const Duration(milliseconds: 600), () {
+                    setState(() {
+                      refreshIndicatorWidgetKey = const Uuid().v4();
+                    });
                   });
-                }
-              },
-              // preloadPagesCount: 2,
-              itemCount: cachedVods.length * 50,
-              itemBuilder: (BuildContext context, int index) {
-                var currentIndex = index % cachedVods.length;
-                var shortData = cachedVods[currentIndex];
-                bool isItemActive = index == currentPage;
-                return widget.shortCardBuilder(
-                  index: index,
-                  shortData: shortData,
-                  isActive: isItemActive,
-                  toggleFullScreen: () {
-                    toggleFullScreen();
+                },
+                header: CustomHeader(
+                  height: 140,
+                  completeDuration: const Duration(milliseconds: 300),
+                  refreshStyle: RefreshStyle.Behind,
+                  builder: (ctx, RefreshStatus? mode) {
+                    return widget.refreshIndicatorWidget == null
+                        ? Container()
+                        : widget
+                            .refreshIndicatorWidget!(refreshIndicatorWidgetKey);
                   },
-                );
-              },
-              scrollDirection: Axis.vertical,
-            ),
-          ),
-        ],
-      ),
-    );
+                ),
+                child: CustomScrollView(
+                  physics: PageScrollPhysics(),
+                  controller: _pageController,
+                  slivers: <Widget>[
+                    SliverFillViewport(
+                        delegate: SliverChildListDelegate([
+                      ...cachedVods.map((vod) {
+                        return widget.shortCardBuilder(
+                          index: cachedVods.indexOf(vod),
+                          shortData: vod,
+                          isActive: cachedVods.indexOf(vod) == currentPage,
+                          toggleFullScreen: () {
+                            toggleFullScreen();
+                          },
+                        );
+                      }).toList(),
+                    ]))
+                  ],
+                ),
+              ));
   }
 }
