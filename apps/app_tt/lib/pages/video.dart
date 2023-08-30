@@ -4,10 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
-
+import '../screens/video/actors.dart';
+import '../screens/video/app_download_ad.dart';
+import '../screens/video/banner.dart';
+import '../screens/video/belong_video.dart';
+import '../screens/video/video_info.dart';
 import '../screens/video/video_player_area/index.dart';
 import '../screens/video/video_player_area/loading.dart';
+import '../widgets/title_header.dart';
 import '../widgets/wave_loading.dart';
 
 final userApi = UserApi();
@@ -58,6 +64,8 @@ class VideoState extends State<Video> {
           return const WaveLoading();
         }
 
+        // print('videoDetail.belongVods!.length: ${videoDetail!.belongVods}');
+
         return SafeArea(
           child: Column(
             children: [
@@ -83,13 +91,64 @@ class VideoState extends State<Video> {
                   );
                 },
               ),
-              // Expanded(
-              //   child: NestedTabBarView(
-              //     videoUrl: videoUrl,
-              //     videoBase: video,
-              //     videoDetail: videoDetail,
-              //   ),
-              // )
+              Expanded(
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: VideoPlayerConsumer(
+                        tag: videoUrl,
+                        child: (videoPlayerInfo) => VideoInfo(
+                          videoPlayerController: videoPlayerInfo
+                              .observableVideoPlayerController
+                              .videoPlayerController,
+                          externalId: videoDetail.externalId ?? '',
+                          title: videoDetail.title,
+                          tags: videoDetail.tags ?? [],
+                          timeLength: videoDetail.timeLength ?? 0,
+                          viewTimes: videoDetail.videoViewTimes ?? 0,
+                          actor: videoDetail.actors,
+                          publisher: videoDetail.publisher,
+                          videoCollectTimes: videoDetail.videoCollectTimes ?? 0,
+                        ),
+                      ),
+                    ),
+                    // 演員列表
+                    if (videoDetail.actors != null &&
+                        videoDetail.actors!.isNotEmpty)
+                      SliverToBoxAdapter(
+                          child: Actors(
+                        actors: videoDetail.actors!,
+                      )),
+                    // 輪播
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8, right: 8, left: 8),
+                        child: VideoScreenBanner(),
+                      ),
+                    ),
+                    // 選集
+                    if (videoDetail.belongVods != null &&
+                        videoDetail.belongVods!.isNotEmpty)
+                      SliverToBoxAdapter(
+                          child: BelongVideo(
+                        videos: videoDetail.belongVods!,
+                      )),
+                    // APP 下載
+                    const SliverToBoxAdapter(
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8, right: 8, left: 8),
+                        child: AppDownloadAd(),
+                      ),
+                    ),
+                    // 同標籤
+                    const SliverPadding(
+                      padding: EdgeInsets.all(8),
+                      sliver:
+                          SliverToBoxAdapter(child: TitleHeader(text: '同標籤')),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         );

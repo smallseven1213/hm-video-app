@@ -6,8 +6,8 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/base_video_preview.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video_collection_times.dart';
-import 'package:shared/widgets/view_times.dart';
-import 'package:shared/widgets/video_time.dart';
+import 'package:shared/widgets/video/view_times.dart';
+import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 
 import 'video_embedded_ad.dart';
@@ -105,6 +105,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     bool? displayVideoCollectTimes = true,
     bool? displayVideoTimes = true,
     bool? displayViewTimes = true,
+    bool? displaySupplier = true,
   }) : super(
           key: key,
           id: id,
@@ -131,6 +132,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
           displayVideoCollectTimes: displayVideoCollectTimes,
           displayVideoTimes: displayVideoTimes,
           displayViewTimes: displayViewTimes,
+          displaySupplier: displaySupplier,
         );
 
   @override
@@ -185,12 +187,28 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                   ),
                   Row(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: Container(
+                      if (displaySupplier == true)
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              '用戶名稱',
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              style: const TextStyle(
+                                color: Color(0xFF6B6B6B),
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ),
+                      if (displayViewTimes == true)
+                        Container(
                           alignment: Alignment.centerLeft,
                           child: Text(
-                            '用戶名稱',
+                            videoViewTimes.toString(),
                             textAlign: TextAlign.left,
                             overflow: TextOverflow.ellipsis,
                             softWrap: false,
@@ -199,21 +217,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                               fontSize: 12,
                             ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          videoViewTimes.toString(),
-                          textAlign: TextAlign.left,
-                          overflow: TextOverflow.ellipsis,
-                          softWrap: false,
-                          style: const TextStyle(
-                            color: Color(0xFF6B6B6B),
-                            fontSize: 12,
-                          ),
-                        ),
-                      )
+                        )
                     ],
                   )
                 ],

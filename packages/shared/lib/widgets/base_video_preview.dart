@@ -4,6 +4,7 @@ import 'package:shared/enums/shorts_type.dart';
 import '../enums/app_routes.dart';
 import '../models/tag.dart';
 import '../models/vod.dart';
+import '../models/publisher.dart';
 import '../navigator/delegate.dart';
 
 abstract class BaseVideoPreviewWidget extends StatelessWidget {
@@ -29,6 +30,9 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
+  final bool? displaySupplier;
+  final bool? displayPublisher;
+  final String? publisherName;
   final Function()? onTap;
   final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
 
@@ -58,6 +62,9 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
     this.displayVideoCollectTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
+    this.displaySupplier = true,
+    this.displayPublisher = false,
+    this.publisherName,
   }) : super(key: key);
 
   void onVideoTap(BuildContext context) {

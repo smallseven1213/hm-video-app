@@ -1,7 +1,9 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/video_time.dart';
@@ -40,7 +42,7 @@ class VideoInfo extends StatelessWidget {
         VideoTitle(
           externalId: externalId.toString(),
           title: title,
-          color: Colors.white,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
         ),
         // 供應商、演員、觀看次數、時長
         Padding(
@@ -139,9 +141,9 @@ class VideoInfo extends StatelessWidget {
                 },
                 child: Text(
                   '#${tag.name}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: Color(0xFF00B2FF),
+                    color: AppColors.colors[ColorKeys.textPrimary],
                     letterSpacing: 0.1,
                   ),
                 ),

@@ -36,7 +36,7 @@ class CarouselState extends State<Carousel> {
       aspectRatio: widget.ratio ?? 16 / 9,
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: Stack(

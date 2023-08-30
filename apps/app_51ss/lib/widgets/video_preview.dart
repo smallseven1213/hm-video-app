@@ -8,8 +8,8 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/base_video_preview.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video_collection_times.dart';
-import 'package:shared/widgets/view_times.dart';
-import 'package:shared/widgets/video_time.dart';
+import 'package:shared/widgets/video/view_times.dart';
+import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 
 import 'video_embedded_ad.dart';

@@ -1,20 +1,18 @@
+// VideoPlayerArea stateful widget
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import 'dot_line_animation.dart';
+
 final logger = Logger();
 
-class VideoError extends StatelessWidget {
+class VideoLoading extends StatelessWidget {
   final String coverHorizontal;
-  final Function() onTap;
-
-  const VideoError({
-    Key? key,
-    required this.coverHorizontal,
-    required this.onTap,
-  }) : super(key: key);
+  const VideoLoading({Key? key, required this.coverHorizontal})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,33 +41,18 @@ class VideoError extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: onTap,
-                child: Center(
-                  child: Container(
-                    width: 100,
-                    height: 100,
-                    decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.5),
-                        shape: BoxShape.circle),
-                    child: const Center(
-                      child: Icon(
-                        Icons.play_arrow,
-                        color: Colors.white,
-                        size: 45.0,
-                        semanticLabel: 'Play',
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          // Image(
+          //   image: AssetImage('assets/images/logo.png'),
+          //   width: 60.0,
+          // ),
+          DotLineAnimation(),
+          SizedBox(height: 15),
+          Text(
+            '精彩即將呈現',
+            style: TextStyle(fontSize: 12, color: Colors.white),
+          )
+        ]),
         const FloatPageBackButton(),
       ],
     );
