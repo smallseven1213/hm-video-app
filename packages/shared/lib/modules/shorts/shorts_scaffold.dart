@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 
 import '../../controllers/ui_controller.dart';
+import '../../physics/tiktok_scroll_physics.dart';
 import '../../utils/screen_control.dart';
 
 final List<String> loadingTextList = [
@@ -144,7 +145,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
               )
             : SmartRefresher(
                 controller: _refreshController,
-                physics: const BouncingScrollPhysics(),
+                physics: TiktokScrollPhysics(),
                 enablePullDown:
                     widget.onScrollBeyondFirst == null ? false : true,
                 enablePullUp: false,
@@ -169,7 +170,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
                   },
                 ),
                 child: CustomScrollView(
-                  physics: PageScrollPhysics(),
+                  physics: ClampingScrollPhysics(),
                   controller: _pageController,
                   slivers: <Widget>[
                     SliverFillViewport(
