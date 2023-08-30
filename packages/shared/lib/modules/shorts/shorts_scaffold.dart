@@ -136,7 +136,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
           onRefresh: () async {
             widget.onScrollBeyondFirst?.call();
             _refreshController.refreshCompleted();
-            Future.delayed(const Duration(milliseconds: 600), () {
+            Future.delayed(const Duration(milliseconds: 800), () {
               setState(() {
                 refreshIndicatorWidgetKey = const Uuid().v4();
               });
