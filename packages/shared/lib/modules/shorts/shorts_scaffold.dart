@@ -81,6 +81,9 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     _pageController?.addListener(() {
       pageviewIndexController.setPageIndex(
           keyuuid, _pageController?.page!.round() ?? 0);
+      setState(() {
+        currentPage = _pageController?.page!.round() ?? 0;
+      });
     });
 
     cachedVods = controller.data;
@@ -131,29 +134,30 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
           onRefresh: () async {
             widget.onScrollBeyondFirst?.call();
             // 您可以添加一个延时或其他异步操作来模拟数据刷新
-            await Future.delayed(Duration(milliseconds: 800));
-            setState(() {
-              refreshIndicatorWidgetKey = Uuid().v4();
-            });
+            // await Future.delayed(Duration(milliseconds: 800));
+            // setState(() {
+            //   refreshIndicatorWidgetKey = Uuid().v4();
+            // });
           },
-          child: CustomScrollView(
-            physics: TiktokScrollPhysics(),
+          child: PageView.builder(
             controller: _pageController,
-            slivers: <Widget>[
-              SliverFillViewport(
-                  delegate: SliverChildListDelegate([
-                ...cachedVods.map((vod) {
-                  return widget.shortCardBuilder(
-                    index: cachedVods.indexOf(vod),
-                    shortData: vod,
-                    isActive: cachedVods.indexOf(vod) == currentPage,
-                    toggleFullScreen: () {
-                      toggleFullScreen();
-                    },
-                  );
-                }).toList(),
-              ]))
-            ],
+            itemCount: cachedVods.length, // 确保提供正确的数量
+            onPageChanged: (int index) {
+              setState(() {
+                currentPage = index; // 更新当前页面
+              });
+            },
+            itemBuilder: (BuildContext context, int index) {
+              return widget.shortCardBuilder(
+                index: index,
+                shortData: cachedVods[index],
+                isActive: index == currentPage,
+                toggleFullScreen: () {
+                  toggleFullScreen();
+                },
+              );
+            },
+            scrollDirection: Axis.vertical,
           ),
         ));
   }
