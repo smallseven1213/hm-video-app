@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:uuid/uuid.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/services.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
@@ -46,8 +44,8 @@ class ShortsScaffold extends StatefulWidget {
 }
 
 class ShortsScaffoldState extends State<ShortsScaffold> {
-  final RefreshController _refreshController =
-      RefreshController(initialRefresh: false);
+  // final RefreshController _refreshController =
+  //     RefreshController(initialRefresh: false);
 
   bool isLoading = false;
   PageController? _pageController;
@@ -129,26 +127,15 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.black,
-        body: SmartRefresher(
-          controller: _refreshController,
-          enablePullDown: widget.onScrollBeyondFirst == null ? false : true,
-          enablePullUp: false,
+        body: RefreshIndicator(
           onRefresh: () async {
             widget.onScrollBeyondFirst?.call();
-            _refreshController.refreshCompleted();
-            Future.delayed(const Duration(milliseconds: 800), () {
-              setState(() {
-                refreshIndicatorWidgetKey = const Uuid().v4();
-              });
+            // 您可以添加一个延时或其他异步操作来模拟数据刷新
+            await Future.delayed(Duration(milliseconds: 800));
+            setState(() {
+              refreshIndicatorWidgetKey = Uuid().v4();
             });
           },
-          // header: widget.refreshIndicatorWidget == null
-          //     ? null
-          //     : CustomHeader(
-          //         height: 80,
-          //         builder: (context, mode) =>
-          //             widget.refreshIndicatorWidget!(refreshIndicatorWidgetKey),
-          //       ),
           child: CustomScrollView(
             physics: TiktokScrollPhysics(),
             controller: _pageController,
@@ -170,4 +157,50 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
           ),
         ));
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //       backgroundColor: Colors.black,
+  //       body: SmartRefresher(
+  //         controller: _refreshController,
+  //         enablePullDown: widget.onScrollBeyondFirst == null ? false : true,
+  //         enablePullUp: false,
+  //         onRefresh: () async {
+  //           widget.onScrollBeyondFirst?.call();
+  //           _refreshController.refreshCompleted();
+  //           Future.delayed(const Duration(milliseconds: 800), () {
+  //             setState(() {
+  //               refreshIndicatorWidgetKey = const Uuid().v4();
+  //             });
+  //           });
+  //         },
+  //         // header: widget.refreshIndicatorWidget == null
+  //         //     ? null
+  //         //     : CustomHeader(
+  //         //         height: 80,
+  //         //         builder: (context, mode) =>
+  //         //             widget.refreshIndicatorWidget!(refreshIndicatorWidgetKey),
+  //         //       ),
+  //         child: CustomScrollView(
+  //           physics: TiktokScrollPhysics(),
+  //           controller: _pageController,
+  //           slivers: <Widget>[
+  //             SliverFillViewport(
+  //                 delegate: SliverChildListDelegate([
+  //               ...cachedVods.map((vod) {
+  //                 return widget.shortCardBuilder(
+  //                   index: cachedVods.indexOf(vod),
+  //                   shortData: vod,
+  //                   isActive: cachedVods.indexOf(vod) == currentPage,
+  //                   toggleFullScreen: () {
+  //                     toggleFullScreen();
+  //                   },
+  //                 );
+  //               }).toList(),
+  //             ]))
+  //           ],
+  //         ),
+  //       ));
+  // }
 }
