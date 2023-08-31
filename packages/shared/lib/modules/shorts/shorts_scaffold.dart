@@ -142,13 +142,13 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
               });
             });
           },
-          header: widget.refreshIndicatorWidget == null
-              ? null
-              : CustomHeader(
-                  height: 80,
-                  builder: (context, mode) =>
-                      widget.refreshIndicatorWidget!(refreshIndicatorWidgetKey),
-                ),
+          // header: widget.refreshIndicatorWidget == null
+          //     ? null
+          //     : CustomHeader(
+          //         height: 80,
+          //         builder: (context, mode) =>
+          //             widget.refreshIndicatorWidget!(refreshIndicatorWidgetKey),
+          //       ),
           child: CustomScrollView(
             physics: TiktokScrollPhysics(),
             controller: _pageController,
