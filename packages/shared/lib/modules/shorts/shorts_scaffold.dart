@@ -128,38 +128,44 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        body: RefreshIndicator(
-          onRefresh: () async {
-            widget.onScrollBeyondFirst?.call();
-            // 您可以添加一个延时或其他异步操作来模拟数据刷新
-            // await Future.delayed(Duration(milliseconds: 800));
-            // setState(() {
-            //   refreshIndicatorWidgetKey = Uuid().v4();
-            // });
+    // 创建一个通用的 PageView.builder
+    Widget pageView = PageView.builder(
+      controller: _pageController,
+      itemCount: cachedVods.length,
+      onPageChanged: (int index) {
+        setState(() {
+          currentPage = index;
+        });
+      },
+      itemBuilder: (BuildContext context, int index) {
+        return widget.shortCardBuilder(
+          index: index,
+          shortData: cachedVods[index],
+          isActive: index == currentPage,
+          toggleFullScreen: () {
+            toggleFullScreen();
           },
-          child: PageView.builder(
-            controller: _pageController,
-            itemCount: cachedVods.length, // 确保提供正确的数量
-            onPageChanged: (int index) {
-              setState(() {
-                currentPage = index; // 更新当前页面
-              });
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return widget.shortCardBuilder(
-                index: index,
-                shortData: cachedVods[index],
-                isActive: index == currentPage,
-                toggleFullScreen: () {
-                  toggleFullScreen();
-                },
-              );
-            },
-            scrollDirection: Axis.vertical,
-          ),
-        ));
+        );
+      },
+      scrollDirection: Axis.vertical,
+    );
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: widget.onScrollBeyondFirst != null
+          ? RefreshIndicator(
+              onRefresh: () async {
+                widget.onScrollBeyondFirst?.call();
+                // 您可以添加一个延时或其他异步操作来模拟数据刷新
+                // await Future.delayed(Duration(milliseconds: 800));
+                // setState(() {
+                //   refreshIndicatorWidgetKey = Uuid().v4();
+                // });
+              },
+              child: pageView,
+            )
+          : pageView,
+    );
   }
 
   // @override
