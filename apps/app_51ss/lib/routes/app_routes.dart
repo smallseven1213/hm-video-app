@@ -6,6 +6,7 @@ import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../pages/configs.dart' as configs_page;
+import '../../pages/publisher.dart' as publisher_page;
 
 import '../pages/home.dart' as home_page;
 import '../pages/apps.dart' as apps_page;
@@ -92,5 +93,8 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.playRecord: (context, args) =>
       const playrecord_page.PlayRecordPage(),
   AppRoutes.favorites: (context, args) => const favorites_page.FavoritesPage(),
+  AppRoutes.publisher: (context, args) => publisher_page.PublisherPage(
+        id: args['id'] as int,
+      ),
   AppRoutes.video: (context, args) => video_page.Video(args: args),
 };
