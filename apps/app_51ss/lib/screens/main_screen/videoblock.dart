@@ -50,7 +50,7 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
       displayCoverVertical: film == 2,
       film: film,
       blockId: block.id,
-      hasTags: hasTags,
+      hasTags: false,
     );
   }
 

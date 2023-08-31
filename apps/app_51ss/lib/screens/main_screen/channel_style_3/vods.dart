@@ -133,6 +133,7 @@ class VodsState extends State<Vods> {
                     }),
                   ),
                   buildVideoPreview: (video) => VideoPreviewWidget(
+                    hasTags: false,
                     id: video.id,
                     title: video.title,
                     tags: video.tags ?? [],
