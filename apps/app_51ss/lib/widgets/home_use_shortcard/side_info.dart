@@ -163,7 +163,7 @@ class _SideInfoState extends State<SideInfo> {
                                   Icons.star_rounded,
                                   size: 36,
                                   color: isLike
-                                      ? AppColors.colors[ColorKeys.primary]
+                                      ? Colors.yellow.shade700
                                       : Colors.white,
                                 ),
                               ),
