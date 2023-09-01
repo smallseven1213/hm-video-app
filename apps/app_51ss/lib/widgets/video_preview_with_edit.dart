@@ -41,6 +41,7 @@ class ViewInfo extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ViewTimes(times: viewCount),
           VideoTime(time: duration),

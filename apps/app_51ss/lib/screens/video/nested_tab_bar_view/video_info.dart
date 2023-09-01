@@ -111,6 +111,7 @@ class VideoInfo extends StatelessWidget {
                   flex: 2,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ViewTimes(
                         times: viewTimes,

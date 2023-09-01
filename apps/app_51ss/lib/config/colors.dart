@@ -13,6 +13,7 @@ class AppColors {
     // text
     ColorKeys.textPrimary: Colors.black,
     ColorKeys.textSecondary: Color(0xff979797),
+    ColorKeys.textTertiary: Color(0xff73747b),
     ColorKeys.textPlaceholder: Color(0xffCACACA),
     // button
     ColorKeys.buttonTextPrimary: Colors.white,

@@ -90,15 +90,15 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                       ),
                     ),
                     // 副標
-                    Text(
-                      detail.titleSub ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Colors.grey,
-                      ),
-                    ),
+                    // Text(
+                    //   detail.titleSub ?? '',
+                    //   maxLines: 1,
+                    //   overflow: TextOverflow.ellipsis,
+                    //   style: const TextStyle(
+                    //     fontSize: 10,
+                    //     color: Colors.grey,
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

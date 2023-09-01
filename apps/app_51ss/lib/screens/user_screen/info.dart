@@ -132,44 +132,38 @@ class UserInfo extends StatelessWidget {
           ),
           UserInfoConsumer(
             child: (info, isVIP, isGuest) {
-              if (!isGuest) {
-                return Positioned(
-                  top: 0,
-                  right: 60,
-                  child: GestureDetector(
-                    onTap: () {
-                      MyRouteDelegate.of(context).push(AppRoutes.configs);
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(5),
-                      child: const Icon(
-                        Icons.settings_outlined,
-                        size: 18,
-                        color: Colors.white,
+              return Positioned(
+                top: 0,
+                right: 0,
+                child: !isGuest
+                    ? GestureDetector(
+                        onTap: () {
+                          MyRouteDelegate.of(context).push(AppRoutes.configs);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          child: const Icon(
+                            Icons.settings_outlined,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          MyRouteDelegate.of(context).push(AppRoutes.login);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          child: const Icon(
+                            Icons.login,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              }
-              return const SizedBox();
+              );
             },
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.login);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: const Icon(
-                  Icons.login,
-                  size: 18,
-                  color: Colors.white,
-                ),
-              ),
-            ),
           ),
           Positioned(
             top: 0,
