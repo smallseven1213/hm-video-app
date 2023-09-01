@@ -1,5 +1,7 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -84,9 +86,9 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                       detail.title,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12.0,
-                        color: Colors.white,
+                        color: AppColors.colors[ColorKeys.textPrimary],
                       ),
                     ),
                     // 副標
