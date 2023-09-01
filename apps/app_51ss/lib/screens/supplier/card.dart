@@ -122,15 +122,15 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
             Container(
               height: 200,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xff46454a),
-                    Color(0xff1c1c1c),
+                    const Color(0xff46454a).withOpacity(0.65),
+                    const Color(0xff1c1c1c),
                   ],
-                  stops: [
+                  stops: const [
                     -0.06,
                     1.0,
                   ],
