@@ -15,18 +15,26 @@ class ViewTimes extends StatelessWidget {
       TextSpan(
         children: [
           WidgetSpan(
-            child: Icon(
-              Icons.remove_red_eye_outlined,
-              color: color ?? Colors.white,
-              size: 16,
+            child: Align(
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.remove_red_eye_outlined,
+                color: color ?? Colors.white,
+                size: 16,
+              ),
             ),
           ),
-          TextSpan(
-            text: ' ${formatNumberToUnit(times)}',
-            style: TextStyle(
-              color: color ?? Colors.white,
-              letterSpacing: 0.1,
-              fontSize: 12,
+          WidgetSpan(
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                ' ${formatNumberToUnit(times)}',
+                style: TextStyle(
+                  color: color ?? Colors.white,
+                  letterSpacing: 0.1,
+                  fontSize: 12,
+                ),
+              ),
             ),
           ),
         ],
