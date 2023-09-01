@@ -5,6 +5,8 @@ import 'package:shared/controllers/supplier_short_controller.dart';
 import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
+import 'package:app_51ss/widgets/custom_app_bar.dart';
+
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';

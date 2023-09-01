@@ -21,30 +21,22 @@ class VideoTime extends StatelessWidget {
         children: [
           hasIcon == true
               ? WidgetSpan(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Icon(
-                      Icons.access_alarm,
-                      color: color ?? Colors.white,
-                      size: 16,
-                    ),
+                  child: Icon(
+                    Icons.access_alarm,
+                    color: color ?? Colors.white,
+                    size: 16,
                   ),
                 )
               : const WidgetSpan(child: SizedBox()),
           const WidgetSpan(
             child: SizedBox(width: 2),
           ),
-          WidgetSpan(
-            child: Align(
-              alignment: Alignment.center,
-              child: Text(
-                ' ${getTimeString(time)}',
-                style: TextStyle(
-                  color: color ?? Colors.white,
-                  letterSpacing: 0.1,
-                  fontSize: 12,
-                ),
-              ),
+          TextSpan(
+            text: getTimeString(time),
+            style: TextStyle(
+              color: color ?? Colors.white,
+              letterSpacing: 0.1,
+              fontSize: 12,
             ),
           ),
         ],
