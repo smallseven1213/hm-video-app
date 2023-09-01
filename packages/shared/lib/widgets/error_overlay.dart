@@ -44,12 +44,12 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
               actions: [
                 TextButton(
                   onPressed: () {
-                    // responseController.setAlertDialogShown(false);
                     setState(() {
                       showErrorMessage = false;
                     });
-                    MyRouteDelegate.of(context)
-                        .push(AppRoutes.splash, removeSamePath: true);
+                    MyRouteDelegate.of(context).pushAndRemoveUntil(
+                        AppRoutes.splash,
+                        hasTransition: false);
                   },
                   child: const Text('確認'),
                 ),
