@@ -228,8 +228,11 @@ class VideoPreviewStyle2Widget extends BaseVideoPreviewWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.4),
-                              borderRadius: const BorderRadius.vertical(
-                                  bottom: Radius.circular(10)),
+                              borderRadius: BorderRadius.vertical(
+                                bottom: hasTitle == true
+                                    ? const Radius.circular(10)
+                                    : Radius.zero,
+                              ),
                             ),
                             child: ViewInfo(
                               videoCollectTimes: videoCollectTimes,

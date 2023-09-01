@@ -55,7 +55,6 @@ class TabBarWidgetState extends State<TabBarWidget> {
           child: TabBar(
             isScrollable: true,
             controller: widget.controller,
-            padding: const EdgeInsets.all(0),
             labelColor: AppColors.colors[ColorKeys.primary],
             labelStyle: const TextStyle(fontSize: 14),
             labelPadding: const EdgeInsets.symmetric(horizontal: 10),

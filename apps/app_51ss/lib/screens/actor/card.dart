@@ -79,15 +79,15 @@ class ActorCard extends SliverPersistentHeaderDelegate {
             Container(
               height: 200,
               width: double.infinity,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xff46454a),
-                    Color(0xff1c1c1c),
+                    const Color(0xff46454a).withOpacity(0.65),
+                    const Color(0xff1c1c1c),
                   ],
-                  stops: [
+                  stops: const [
                     -0.06,
                     1.0,
                   ],
@@ -174,15 +174,15 @@ class ActorCard extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-            top: lerpDouble(
-                105, (kToolbarHeight - 12) / 2 + fontSize, percentage),
-            right: 8,
-            child: Opacity(
+              top: lerpDouble(
+                  105, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+              right: 8,
+              child: Opacity(
                 opacity: opacity,
                 child: UserLike(
                   actor: actor,
-                )),
-          ),
+                ),
+              )),
         ],
       ),
     );
@@ -231,7 +231,7 @@ class UserLike extends StatelessWidget {
             Icon(
               iconData,
               size: 20,
-              color: AppColors.colors[ColorKeys.gradientBgTopColor],
+              color: Colors.white,
             ),
             const SizedBox(width: 6),
             Text(
