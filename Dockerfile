@@ -1,6 +1,6 @@
 # Builder stage
 # FROM cirrusci/flutter:3.7.5 AS builder
-FROM ghcr.io/cirruslabs/flutter:3.13.0 AS builder
+FROM ghcr.io/cirruslabs/flutter:3.13.2 AS builder
 ARG env
 ENV ENV=${env}
 ARG scope
@@ -9,7 +9,7 @@ WORKDIR /app
 COPY . /app
 
 # Install Melos
-RUN flutter pub global activate melos 3.1.0
+RUN flutter pub global activate melos 3.1.1
 
 # Set PATH for melos executable
 ENV PATH="/root/.pub-cache/bin:$PATH"
