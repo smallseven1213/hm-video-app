@@ -216,12 +216,10 @@ class _SplashState extends State<Splash> {
           invitationCode: invitationCode,
         );
         authController.setToken(res.data['token']);
-        responseController.clear();
-
-        gameResponseController.clear();
-
         logger.i('res.status ${res.code}');
         if (res.code == '00') {
+          responseController.clear();
+          gameResponseController.clear();
           fetchInitialDataAndNavigate();
         } else {
           var message = '';
@@ -273,7 +271,10 @@ class _SplashState extends State<Splash> {
     logger.i('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
-
+    // check if 401
+    if (responseController.apiResponse.value.status == 401) {
+      return;
+    }
     if (landingBanners.isEmpty && mounted) {
       logger.i('沒有廣告，直接進入首頁');
       MyRouteDelegate.of(context)

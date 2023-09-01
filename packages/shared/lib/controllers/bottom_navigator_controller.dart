@@ -46,7 +46,9 @@ class BottomNavigatorController extends GetxController {
       }
     }
     setNavigatorItems(value);
-    changeKey(value.first.path!);
+    if (value.isNotEmpty) {
+      changeKey(value.first.path!);
+    }
   }
 
   void changeKey(String key) {
