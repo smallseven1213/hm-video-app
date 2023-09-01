@@ -7,6 +7,7 @@ enum ColorKeys {
   videoPreviewBg,
   textPrimary,
   textSecondary,
+  textTertiary,
   textLink,
   textPlaceholder,
   buttonTextPrimary,

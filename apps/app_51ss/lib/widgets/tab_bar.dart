@@ -59,7 +59,7 @@ class TabBarWidgetState extends State<TabBarWidget> {
             labelColor: AppColors.colors[ColorKeys.primary],
             labelStyle: const TextStyle(fontSize: 14),
             labelPadding: const EdgeInsets.symmetric(horizontal: 10),
-            unselectedLabelColor: const Color(0xffb2bac5),
+            unselectedLabelColor: AppColors.colors[ColorKeys.textTertiary],
             indicatorSize: TabBarIndicatorSize.label,
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(
