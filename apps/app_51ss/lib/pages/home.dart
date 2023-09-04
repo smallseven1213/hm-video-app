@@ -1,7 +1,6 @@
 import 'package:app_51ss/screens/home/home_apps.dart';
-import 'package:app_51ss/widgets/wave_loading.dart';
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
@@ -64,14 +63,7 @@ class HomeState extends State<HomePage> {
   Widget build(BuildContext context) {
     return MainNavigationScaffold(
         screens: screens,
-        screenNotFoundWidget: const Center(
-          child: WaveLoading(
-            color: Color.fromRGBO(255, 255, 255, 0.3),
-            duration: Duration(milliseconds: 1000),
-            size: 17,
-            itemCount: 3,
-          ),
-        ),
+        screenNotFoundWidget: const Center(child: FlashLoading()),
         bottomNavigationBarWidget: (
             {required String activeKey,
             required List<Navigation> navigatorItems,

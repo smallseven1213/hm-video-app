@@ -1,6 +1,5 @@
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/widgets.dart';
-
-import 'wave_loading.dart';
 
 class PageLoadingEffect extends StatelessWidget {
   const PageLoadingEffect({
@@ -10,12 +9,7 @@ class PageLoadingEffect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: WaveLoading(
-        color: Color.fromRGBO(255, 255, 255, 0.3),
-        duration: Duration(milliseconds: 1000),
-        size: 17,
-        itemCount: 3,
-      ),
+      child: FlashLoading(),
     );
   }
 }

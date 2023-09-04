@@ -1,5 +1,8 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+
+import 'package:shared/models/color_keys.dart';
 
 class ListNoMore extends StatelessWidget {
   ListNoMore({Key? key}) : super(key: key);
@@ -35,9 +38,9 @@ class ListNoMore extends StatelessWidget {
                   width: 8), // Add some space between the icon and the text
               Text(
                 message, // Use the random message
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
-                  color: Color(0xFF486a89),
+                  color: AppColors.colors[ColorKeys.textSecondary],
                 ),
               ),
             ],
