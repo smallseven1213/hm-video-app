@@ -1,6 +1,8 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/screens/main_screen/channels.dart';
 import 'package:app_51ss/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
 
@@ -40,6 +42,10 @@ class HomeMainScreen extends StatelessWidget {
                 Positioned(
                     child: Column(
                   children: [
+                    Container(
+                      color: AppColors.colors[ColorKeys.primary],
+                      height: MediaQuery.of(context).padding.top,
+                    ),
                     DisplayLayoutTabSearchConsumer(
                       layoutId: layoutId,
                       child: (({required bool displaySearchBar}) =>

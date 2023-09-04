@@ -21,13 +21,17 @@ class VideoCollectionTimes extends StatelessWidget {
               size: 16,
             ),
           ),
-          TextSpan(
-            text:
+          WidgetSpan(
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
                 ' ${formatNumberToUnit(times, shouldCalculateThousands: false)}',
-            style: TextStyle(
-              color: color ?? Colors.white,
-              letterSpacing: 0.1,
-              fontSize: 12,
+                style: TextStyle(
+                  color: color ?? Colors.white,
+                  letterSpacing: 0.1,
+                  fontSize: 12,
+                ),
+              ),
             ),
           ),
         ],

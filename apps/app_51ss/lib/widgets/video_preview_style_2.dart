@@ -195,19 +195,6 @@ class VideoPreviewStyle2Widget extends BaseVideoPreviewWidget {
                                 ? const BorderRadius.all(Radius.circular(10))
                                 : null,
                           ),
-                          foregroundDecoration: BoxDecoration(
-                            gradient: kIsWeb
-                                ? null
-                                : LinearGradient(
-                                    begin: Alignment.topCenter,
-                                    end: Alignment.bottomCenter,
-                                    colors: [
-                                      Colors.black.withOpacity(0.0),
-                                      Colors.black.withOpacity(0.3),
-                                    ],
-                                    stops: const [0.9, 1.0],
-                                  ),
-                          ),
                           clipBehavior: Clip.antiAlias,
                           child: SidImageVisibilityDetector(
                             child: SidImage(

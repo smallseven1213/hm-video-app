@@ -56,9 +56,7 @@ class ViewInfo extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: kIsWeb
-            ? null
-            : const BorderRadius.vertical(bottom: Radius.circular(10)),
+        borderRadius: const BorderRadius.vertical(bottom: Radius.circular(10)),
         gradient: kIsWeb
             ? null
             : LinearGradient(
@@ -74,6 +72,7 @@ class ViewInfo extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: infoItems,
       ),
     );
@@ -182,19 +181,6 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     borderRadius: hasRadius == true
                         ? const BorderRadius.all(Radius.circular(10))
                         : null,
-                  ),
-                  foregroundDecoration: BoxDecoration(
-                    gradient: kIsWeb
-                        ? null
-                        : LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.black.withOpacity(0.0),
-                              Colors.black.withOpacity(0.3),
-                            ],
-                            stops: const [0.9, 1.0],
-                          ),
                   ),
                   clipBehavior: Clip.antiAlias,
                   child: SidImageVisibilityDetector(
