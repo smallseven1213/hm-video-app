@@ -1,16 +1,14 @@
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:app_51ss/widgets/shortcard/short_card_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 import '../shortcard/index.dart';
-import '../wave_loading.dart';
 import 'side_info.dart';
 
 final logger = Logger();
@@ -60,7 +58,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
-      return const WaveLoading();
+      return const Center(child: FlashLoading());
     }
 
     return Container(
@@ -81,7 +79,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: const WaveLoading(),
+            loadingWidget: const Center(child: FlashLoading()),
             child: (isReady) => Stack(
               children: [
                 ShortCard(

@@ -1,8 +1,7 @@
-import 'package:app_51ss/widgets/wave_loading.dart';
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -57,7 +56,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
-      return const WaveLoading();
+      return const Center(child: FlashLoading());
     }
     return Container(
       color: Colors.black,
@@ -77,7 +76,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: const WaveLoading(),
+            loadingWidget: const Center(child: FlashLoading()),
             child: (isReady) => ShortCard(
               index: widget.index,
               tag: widget.tag,

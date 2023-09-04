@@ -1,3 +1,4 @@
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -94,9 +95,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
         final channelSharedData =
             channelSharedDataController!.channelSharedData.value;
         if (channelSharedDataController!.isLoading.value) {
-          return const Center(
-            child: WaveLoading(),
-          );
+          return const Center(child: FlashLoading());
         } else if (channelSharedDataController!.isError.value) {
           return Center(
             child: ReloadButton(

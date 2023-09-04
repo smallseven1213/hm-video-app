@@ -1,3 +1,4 @@
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:app_51ss/screens/video/video_player_area/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +53,7 @@ class VideoScreenState extends State<VideoScreen> {
           required Vod? video,
           required Vod? videoDetail}) {
         if (videoUrl == null) {
-          return const WaveLoading();
+          return const Center(child: FlashLoading());
         }
 
         return SafeArea(

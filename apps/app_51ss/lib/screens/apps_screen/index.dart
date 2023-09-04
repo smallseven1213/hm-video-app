@@ -1,4 +1,4 @@
-import 'package:app_51ss/widgets/wave_loading.dart';
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -35,7 +35,7 @@ class AppsScreen extends StatelessWidget {
                 const SliverToBoxAdapter(
                   child: Padding(
                     padding: EdgeInsets.only(top: 150),
-                    child: WaveLoading(),
+                    child: Center(child: FlashLoading()),
                   ),
                 )
               else ...[
