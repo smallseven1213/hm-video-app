@@ -16,9 +16,9 @@ testProd:
     - gitlab-shared-runner
   only: 
     refs: 
-      - tags
+      - develop
     variables: 
-      - $CI_COMMIT_REF_NAME ~= /ra/
+      - $CI_COMMIT_REF_NAME =~ /ra/
   script: 
     - echo $CI_COMMIT_REF_NAME
     - echo ' i am testProd'  
