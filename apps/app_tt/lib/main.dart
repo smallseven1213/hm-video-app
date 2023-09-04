@@ -11,8 +11,6 @@ void main() async {
     ...app_routes.appRoutes,
     ...game_routes.gameRoutes,
   };
-  var test = allRoutes;
-  print(allRoutes);
 
   runningMain(
       'https://5975596ddf0f4a6b95b09de1adda3d53@sentry.hmtech.club/3',
