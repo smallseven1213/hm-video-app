@@ -16,6 +16,7 @@ show_variables:
     - gitlab-shared-runner
   script: 
     - echo $CI_COMMIT_REF_NAME
+    - echo $test
 
 testProd: 
   stage: preBuild2
