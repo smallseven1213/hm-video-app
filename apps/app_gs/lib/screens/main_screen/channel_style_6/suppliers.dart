@@ -75,6 +75,8 @@ class ChannelStyle6Suppliers extends StatelessWidget {
                                 Positioned.fill(
                                   child: Container(
                                     decoration: const BoxDecoration(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(20)),
                                       gradient: LinearGradient(
                                         begin: Alignment.topCenter,
                                         end: Alignment.bottomCenter,
