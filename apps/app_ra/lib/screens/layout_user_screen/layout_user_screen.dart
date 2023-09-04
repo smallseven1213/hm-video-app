@@ -1,112 +1,111 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
+import 'package:shared/services/system_config.dart';
 
-import 'layout_user_screen_tabbar_header_delegate.dart';
-import 'user_card.dart';
+import '../../utils/show_confirm_dialog.dart';
+import '../../widgets/id_card.dart';
+import 'banner.dart';
+import 'grid_menu.dart';
+import 'info.dart';
+import 'list_menu.dart';
+
+final systemConfig = SystemConfig();
+final logger = Logger();
 
 class LayoutUserScreen extends StatefulWidget {
   const LayoutUserScreen({Key? key}) : super(key: key);
 
   @override
-  LayoutUserScreenState createState() => LayoutUserScreenState();
+  UserScreenState createState() => UserScreenState();
 }
 
-class LayoutUserScreenState extends State<LayoutUserScreen>
-    with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(vsync: this, length: 3);
-  }
-
+class UserScreenState extends State<LayoutUserScreen> {
   @override
   Widget build(BuildContext context) {
     return UserSettingScaffold(
-        onAccountProtectionShownH5: () {},
-        onAccountProtectionShown: () {},
+        onAccountProtectionShownH5: () {
+          showConfirmDialog(
+            context: context,
+            title: '提示',
+            message: '為保持您的帳號，請先註冊防止丟失',
+            showCancelButton: false,
+            onConfirm: () => {},
+          );
+        },
+        onAccountProtectionShown: () {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const Dialog(
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                child: IDCard(),
+              );
+            },
+          );
+        },
         child: Scaffold(
-          key: _scaffoldKey,
-          body: Stack(
-            children: [
-              NestedScrollView(
-                physics: const BouncingScrollPhysics(),
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return <Widget>[
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: MediaQuery.of(context).padding.top,
-                      ),
-                    ),
-                    // UserInfoConsumer(
-                    //   child: (info, isVIP, isGuest) => SliverPersistentHeader(
-                    //     delegate: UserHeader(info: info, context: context),
-                    //     pinned: true,
-                    //   ),
-                    // ),
-                    SliverToBoxAdapter(
-                      child: UserInfoConsumer(
-                        child: (info, isVIP, isGuest) => UserCard(info: info),
-                      ),
-                    ),
-                    SliverToBoxAdapter(
-                      child: Container(
-                        color: Colors.white,
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center, // 水平居中
-                          children: [
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.red), // 第一个物件
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.green), // 第二个物件
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.blue), // 第三个物件
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.yellow), // 第四个物件
-                          ],
-                        ),
-                      ),
-                    ),
-                    SliverPersistentHeader(
-                      pinned: true,
-                      delegate:
-                          LayoutUserScreenTabBarHeaderDelegate(_tabController),
-                    )
-                  ];
-                },
-                body: TabBarView(
-                  controller: _tabController,
-                  physics: const BouncingScrollPhysics(),
-                  children: const [
-                    // PlayRecordPage(),
-                    // FavoritesPage(),
-                    // CollectionPage()
-                  ],
+          body: CustomScrollView(
+            physics: kIsWeb ? null : const BouncingScrollPhysics(),
+            slivers: [
+              SliverToBoxAdapter(
+                child: SizedBox(
+                  height: MediaQuery.of(context).padding.top,
                 ),
               ),
-              const FloatPageBackButton()
+              const SliverToBoxAdapter(
+                child: UserInfo(),
+              ),
+              // height 10
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10,
+                ),
+              ),
+              const GridMenu(),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10,
+                ),
+              ),
+              const SliverToBoxAdapter(
+                  child: Padding(
+                // padding x 8
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: UserSreenBanner(),
+              )),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 20,
+                ),
+              ),
+              // const SliverToBoxAdapter(
+              //   child: Header(text: '更多服務'),
+              // ),
+              const SliverToBoxAdapter(
+                child: SizedBox(
+                  height: 10,
+                ),
+              ),
+              const ListMenu(),
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Container(
+                  padding: const EdgeInsets.only(bottom: 20, right: 20),
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      '版本號:${systemConfig.version}',
+                      style: const TextStyle(
+                          color: Color(0xFFFFFFFF), fontSize: 12),
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ));
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
   }
 }

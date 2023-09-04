@@ -15,7 +15,6 @@ import '../screens/home/custom_bottom_bar_item.dart';
 import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
 import '../screens/layout_user_screen/layout_user_screen.dart';
-import '../widgets/layout_tab_item.dart';
 import 'apps.dart';
 
 UserApi userApi = UserApi();
