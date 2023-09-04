@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
@@ -10,6 +11,7 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../config/layouts.dart';
+import '../screens/home/custom_bottom_bar_item.dart';
 import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
 import '../screens/layout_user_screen/layout_user_screen.dart';
@@ -75,34 +77,60 @@ class HomeState extends State<HomePage> {
               required List<Navigation> navigatorItems,
               required Function(String tabKey) changeTabKey}) {
             final paddingBottom = MediaQuery.of(context).padding.bottom;
+
             return Stack(
               children: [
-                Container(
-                  padding: EdgeInsets.only(bottom: paddingBottom),
-                  height: 76 + paddingBottom,
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Color(0xFFe4e4e5),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    children: navigatorItems
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => Expanded(
-                            child: LayoutTabItem(
-                                isActive: entry.value.path! == activeKey,
-                                label: entry.value.name!,
-                                onTap: () => changeTabKey(entry.value.path!)),
+                Obx(() {
+                  return uiController.displayHomeNavigationBar.value
+                      ? Container(
+                          padding: EdgeInsets.only(bottom: paddingBottom),
+                          height: 76 + paddingBottom,
+                          decoration: const BoxDecoration(
+                            borderRadius: kIsWeb
+                                ? null
+                                : BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    topRight: Radius.circular(10),
+                                  ),
+                            gradient: kIsWeb
+                                ? null
+                                : LinearGradient(
+                                    begin: Alignment.topCenter,
+                                    end: Alignment.bottomCenter,
+                                    colors: [
+                                      Color(0xFF000000),
+                                      Color(0xFF002869),
+                                    ],
+                                  ),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            child: Row(
+                              children: navigatorItems
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (entry) => Expanded(
+                                      child: CustomBottomBarItem(
+                                          isActive:
+                                              entry.value.path! == activeKey,
+                                          iconSid: entry.value.photoSid!,
+                                          activeIconSid:
+                                              entry.value.clickEffect!,
+                                          label: entry.value.name!,
+                                          onTap: () =>
+                                              changeTabKey(entry.value.path!)),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                           ),
                         )
-                        .toList(),
-                  ),
-                ),
+                      : const SizedBox.shrink();
+                }),
               ],
             );
           }),
