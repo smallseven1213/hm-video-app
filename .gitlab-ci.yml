@@ -20,7 +20,7 @@ testProd:
     variables: 
       - $CI_COMMIT_REF_NAME ~= /ra/
   script: 
-    echo $
+    echo $CI_COMMIT_REF_NAME
     echo ' i am testProd'  
 
 
