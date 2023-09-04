@@ -24,8 +24,8 @@ class Block7Widget extends StatefulWidget {
     required this.channelId,
     required this.film,
     required this.buildVideoPreview,
-    required this.gradientBgTopColor,
-    required this.gradientBgBottomColor,
+    this.gradientBgTopColor = const Color(0xFF040405),
+    this.gradientBgBottomColor = const Color.fromRGBO(20, 49, 104, 0.7),
   }) : super(key: key);
 
   @override
@@ -79,7 +79,6 @@ class Block7WidgetState extends State<Block7Widget> {
               child: Container(
                 width: double.infinity,
                 height: double.infinity,
-                // TODO: kIsWeb testing
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,

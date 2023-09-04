@@ -10,5 +10,9 @@ class ChannelStyle2 extends BaseShortPage {
           style: 2,
           createController: () =>
               Get.put(VideoShortByChannelStyle2Controller()),
+          onScrollBeyondFirst: () {
+            final controller = Get.find<VideoShortByChannelStyle2Controller>();
+            controller.fetchData();
+          },
         );
 }

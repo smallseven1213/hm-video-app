@@ -7,6 +7,7 @@ class RefreshList extends StatefulWidget {
   final Function? onLoading;
   final Function? onRefreshEnd;
   final Widget? loadingWidget;
+  final Text? loadingText;
   final Widget? child;
 
   const RefreshList({
@@ -14,6 +15,7 @@ class RefreshList extends StatefulWidget {
     this.onLoading,
     this.onRefresh,
     this.onRefreshEnd,
+    this.loadingText,
     this.child,
     this.loadingWidget,
   }) : super(key: key);
@@ -67,11 +69,12 @@ class RefreshListState extends State<RefreshList> {
                 child: Column(
                   children: [
                     if (mode == RefreshStatus.completed)
-                      const Text('內容已更新',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: Color(0xFF486a89),
-                          )),
+                      widget.loadingText ??
+                          const Text('內容已更新',
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Color(0xFF486a89),
+                              )),
                     if (mode == RefreshStatus.refreshing)
                       // ignore: prefer_const_constructors
                       widget.loadingWidget ?? Container(),

@@ -8,8 +8,8 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/base_video_preview.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video_collection_times.dart';
-import 'package:shared/widgets/view_times.dart';
-import 'package:shared/widgets/video_time.dart';
+import 'package:shared/widgets/video/view_times.dart';
+import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 
 import 'video_embedded_ad.dart';
@@ -151,6 +151,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
         GestureDetector(
           onTap: () => super.onVideoTap(context),
           child: Stack(children: [
+            // 背景
             AspectRatio(
               aspectRatio: imageRatio ??
                   (displayCoverVertical == true ? 119 / 179 : 374 / 198),
@@ -162,6 +163,14 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                   color: AppColors.colors[ColorKeys.videoPreviewBg],
                 ),
                 clipBehavior: Clip.antiAlias,
+                child: const Center(
+                  child: Image(
+                    image:
+                        AssetImage('assets/images/video_preview_loading.png'),
+                    width: 102,
+                    height: 70,
+                  ),
+                ),
               ),
             ),
             // 主體
@@ -204,16 +213,26 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                   left: 0,
                   right: 0,
                   bottom: 0,
-                  child: ViewInfo(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black.withOpacity(0.4),
+                      borderRadius: BorderRadius.vertical(
+                        bottom: hasTitle == true
+                            ? const Radius.circular(10)
+                            : Radius.zero,
+                      ),
+                    ),
+                    child: ViewInfo(
                       videoCollectTimes: videoCollectTimes,
                       viewCount: videoViewTimes ?? 0,
                       duration: timeLength,
                       displayVideoTimes: displayVideoTimes,
                       displayViewTimes: displayViewTimes,
-                      displayVideoCollectTimes: displayVideoCollectTimes)),
+                      displayVideoCollectTimes: displayVideoCollectTimes,
+                    ),
+                  )),
           ]),
         ),
-        const SizedBox(height: 5),
         if (hasTitle == true)
           Container(
             alignment: Alignment.centerLeft,

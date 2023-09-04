@@ -53,6 +53,7 @@ class ShortCardState extends State<ShortCard> {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
         }
+
         if (uiController.isFullscreen.value == true) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
           var aspectRatio = videoSize.width /

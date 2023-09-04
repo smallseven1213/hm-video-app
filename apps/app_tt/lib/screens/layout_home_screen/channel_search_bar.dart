@@ -26,11 +26,11 @@ class ChannelSearchBar extends StatelessWidget {
           Expanded(
             child: Obx(() {
               int listLength = videoPopularController.data.length;
-              int randomIndex = Random().nextInt(listLength);
-              String randomTitle = videoPopularController.data.isNotEmpty
-                  ? videoPopularController.data[randomIndex].title
-                  : '';
-
+              String randomTitle = '';
+              if (listLength > 0) {
+                int randomIndex = Random().nextInt(listLength);
+                randomTitle = videoPopularController.data[randomIndex].title;
+              }
               return StaticSearchInput(
                 defaultValue: randomTitle,
                 onSearchButtonClick: () {

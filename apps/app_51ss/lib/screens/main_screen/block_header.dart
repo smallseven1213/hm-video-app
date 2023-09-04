@@ -15,7 +15,7 @@ class BlockHeader extends StatelessWidget {
       return Container();
     } else {
       return Padding(
-        padding: const EdgeInsets.only(left: 5),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:uuid/uuid.dart';
 import 'package:flutter/services.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 
 import '../../controllers/ui_controller.dart';
+import '../../physics/tiktok_scroll_physics.dart';
 import '../../utils/screen_control.dart';
 
 class ShortsScaffold extends StatefulWidget {
@@ -16,6 +17,7 @@ class ShortsScaffold extends StatefulWidget {
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
   final Widget? loadingWidget;
+  final Widget Function(String refreshkey)? refreshIndicatorWidget;
   final Function()? onScrollBeyondFirst;
   final Function(
       {required int index,
@@ -32,6 +34,7 @@ class ShortsScaffold extends StatefulWidget {
     this.useCachedList = false,
     this.loadingWidget,
     this.onScrollBeyondFirst,
+    this.refreshIndicatorWidget,
     required this.shortCardBuilder,
     Key? key,
   }) : super(key: key);
@@ -41,14 +44,17 @@ class ShortsScaffold extends StatefulWidget {
 }
 
 class ShortsScaffoldState extends State<ShortsScaffold> {
-  bool isInitial = false;
-  // PreloadPageController? _pageController;
+  // final RefreshController _refreshController =
+  //     RefreshController(initialRefresh: false);
+
+  bool isLoading = false;
   PageController? _pageController;
   int currentPage = 0;
   List<Vod> cachedVods = [];
   final PageViewIndexController pageviewIndexController =
       Get.find<PageViewIndexController>();
   final UIController uiController = Get.find<UIController>();
+  String refreshIndicatorWidgetKey = '';
 
   @override
   void initState() {
@@ -75,20 +81,18 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     _pageController?.addListener(() {
       pageviewIndexController.setPageIndex(
           keyuuid, _pageController?.page!.round() ?? 0);
+      setState(() {
+        currentPage = _pageController?.page!.round() ?? 0;
+      });
     });
 
     cachedVods = controller.data;
 
     if (widget.useCachedList == false) {
       ever(controller.data, (d) {
-        if (isInitial == false && mounted) {
-          // set _pageController index to 0
-          // _pageController?.jumpToPage(0);
-          setState(() {
-            isInitial = true;
-            cachedVods = d as List<Vod>;
-          });
-        }
+        setState(() {
+          cachedVods = d as List<Vod>;
+        });
       });
     }
 
@@ -124,63 +128,89 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    // 创建一个通用的 PageView.builder
+    Widget pageView = PageView.builder(
+      controller: _pageController,
+      itemCount: cachedVods.length,
+      onPageChanged: (int index) {
+        setState(() {
+          currentPage = index;
+        });
+      },
+      itemBuilder: (BuildContext context, int index) {
+        return widget.shortCardBuilder(
+          index: index,
+          shortData: cachedVods[index],
+          isActive: index == currentPage,
+          toggleFullScreen: () {
+            toggleFullScreen();
+          },
+        );
+      },
+      scrollDirection: Axis.vertical,
+    );
+
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          if (cachedVods.isEmpty)
-            Center(
-              child: widget.loadingWidget,
-            ),
-          NotificationListener<ScrollNotification>(
-            onNotification: (ScrollNotification notification) {
-              if (notification is ScrollStartNotification) {
-                accumulatedScroll = 0.0;
-                hasTriggered = false;
-              } else if (notification is ScrollUpdateNotification &&
-                  currentPage == 0 &&
-                  !hasTriggered) {
-                print(notification.scrollDelta);
-                accumulatedScroll += notification.scrollDelta!;
-                // 检查滚动的实际方向是否为向上
-                if (accumulatedScroll > 0 && accumulatedScroll >= 30.0) {
-                  widget.onScrollBeyondFirst?.call();
-                  hasTriggered = true;
-                  // 重置累积距离，以避免多次触发
-                  accumulatedScroll = 0.0;
-                }
-              }
-              return true;
-            },
-            child: PageView.builder(
-              controller: _pageController,
-              onPageChanged: (int index) {
-                if (mounted) {
-                  setState(() {
-                    currentPage = index;
-                  });
-                }
+      body: widget.onScrollBeyondFirst != null
+          ? RefreshIndicator(
+              onRefresh: () async {
+                widget.onScrollBeyondFirst?.call();
+                // 您可以添加一个延时或其他异步操作来模拟数据刷新
+                // await Future.delayed(Duration(milliseconds: 800));
+                // setState(() {
+                //   refreshIndicatorWidgetKey = Uuid().v4();
+                // });
               },
-              // preloadPagesCount: 2,
-              itemCount: cachedVods.length * 50,
-              itemBuilder: (BuildContext context, int index) {
-                var currentIndex = index % cachedVods.length;
-                var shortData = cachedVods[currentIndex];
-                bool isItemActive = index == currentPage;
-                return widget.shortCardBuilder(
-                  index: index,
-                  shortData: shortData,
-                  isActive: isItemActive,
-                  toggleFullScreen: () {
-                    toggleFullScreen();
-                  },
-                );
-              },
-              scrollDirection: Axis.vertical,
-            ),
-          ),
-        ],
-      ),
+              child: pageView,
+            )
+          : pageView,
     );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Scaffold(
+  //       backgroundColor: Colors.black,
+  //       body: SmartRefresher(
+  //         controller: _refreshController,
+  //         enablePullDown: widget.onScrollBeyondFirst == null ? false : true,
+  //         enablePullUp: false,
+  //         onRefresh: () async {
+  //           widget.onScrollBeyondFirst?.call();
+  //           _refreshController.refreshCompleted();
+  //           Future.delayed(const Duration(milliseconds: 800), () {
+  //             setState(() {
+  //               refreshIndicatorWidgetKey = const Uuid().v4();
+  //             });
+  //           });
+  //         },
+  //         // header: widget.refreshIndicatorWidget == null
+  //         //     ? null
+  //         //     : CustomHeader(
+  //         //         height: 80,
+  //         //         builder: (context, mode) =>
+  //         //             widget.refreshIndicatorWidget!(refreshIndicatorWidgetKey),
+  //         //       ),
+  //         child: CustomScrollView(
+  //           physics: TiktokScrollPhysics(),
+  //           controller: _pageController,
+  //           slivers: <Widget>[
+  //             SliverFillViewport(
+  //                 delegate: SliverChildListDelegate([
+  //               ...cachedVods.map((vod) {
+  //                 return widget.shortCardBuilder(
+  //                   index: cachedVods.indexOf(vod),
+  //                   shortData: vod,
+  //                   isActive: cachedVods.indexOf(vod) == currentPage,
+  //                   toggleFullScreen: () {
+  //                     toggleFullScreen();
+  //                   },
+  //                 );
+  //               }).toList(),
+  //             ]))
+  //           ],
+  //         ),
+  //       ));
+  // }
 }

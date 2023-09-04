@@ -25,15 +25,7 @@ class _GradientBorderPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Rect rect = Offset.zero & size;
-    const Gradient gradient = LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
-      colors: [
-        Color(0xFF00b2ff),
-        Color(0xFFcceaff),
-        Color(0xFF0075ff),
-      ],
-    );
+
     final Paint paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0

@@ -23,7 +23,7 @@ class FilterOptions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(() {
-        logger.i('menuData => ${menuData}');
+        logger.i('menuData => $menuData');
         return Column(
           children: List.generate(
             menuData.length,

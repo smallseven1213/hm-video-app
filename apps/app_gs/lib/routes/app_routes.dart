@@ -18,7 +18,6 @@ import '../pages/register.dart' as register_page;
 import '../pages/nickname.dart' as nickname_page;
 import '../pages/share.dart' as share_page;
 import '../pages/sharerecord.dart' as sharerecord_page;
-import '../pages/shorts_by_block.dart' as shorts_by_block_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
 import '../pages/shorts_by_common.dart' as shorts_by_common_page;
 import '../pages/supplier.dart' as supplier_page;
@@ -32,7 +31,7 @@ import '../pages/filter.dart' as filter_page;
 import '../pages/notifications.dart' as notifications_page;
 import '../pages/search.dart' as search_page;
 import '../pages/video.dart' as video_page;
-import '../screens/apps_screen/index.dart' as apps_screen;
+import '../pages/apps.dart' as apps_page;
 import '../screens/demo.dart' as demo_screen;
 import '../pages/suppliers.dart' as suppliers_screen;
 
@@ -69,7 +68,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       const playrecord_page.PlayRecordPage(),
   AppRoutes.shareRecord: (context, args) =>
       const sharerecord_page.ShareRecord(),
-  AppRoutes.apps: (context, args) => const apps_screen.AppsScreen(),
+  AppRoutes.apps: (context, args) => const apps_page.AppsPage(),
   AppRoutes.favorites: (context, args) => const favorites_page.FavoritesPage(),
   AppRoutes.collection: (context, args) =>
       const collection_page.CollectionPage(),

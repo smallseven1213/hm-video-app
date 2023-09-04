@@ -33,7 +33,7 @@ class ListPagePanelWidget extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 25),
           decoration: const BoxDecoration(
-            color: Color(0xFF01122D),
+            color: Color(0xfff9f9f9),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,7 +44,7 @@ class ListPagePanelWidget extends StatelessWidget {
                     height: 50,
                     child: Button(
                         text: '全選',
-                        type: 'primary',
+                        type: 'secondary',
                         onPressed: onSelectButtonClick!),
                   )),
               const SizedBox(width: 10),
@@ -53,11 +53,12 @@ class ListPagePanelWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: Button(
-                        text: '刪除',
-                        type: listEditorController.selectedIds.isNotEmpty
-                            ? 'secondary'
-                            : 'primary',
-                        onPressed: onDeleteButtonClick!),
+                      text: '刪除',
+                      type: listEditorController.selectedIds.isNotEmpty
+                          ? 'primary'
+                          : 'cancel',
+                      onPressed: onDeleteButtonClick!,
+                    ),
                   )),
             ],
           ),

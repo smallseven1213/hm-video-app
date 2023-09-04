@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -9,6 +11,68 @@ import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 import 'wave_loading.dart';
 
+final List<String> loadingTextList = [
+  '檔案很大，你忍一下',
+  '還沒準備好，你先悠著來',
+  '精彩即將呈現',
+  '努力加載中',
+  '讓檔案載一會兒',
+  '美好事物，值得等待',
+  '拼命搬磚中',
+];
+
+class RefreshIndicatorWidget extends StatefulWidget {
+  const RefreshIndicatorWidget({Key? key}) : super(key: key);
+
+  @override
+  _RefreshIndicatorWidgetState createState() => _RefreshIndicatorWidgetState();
+}
+
+class _RefreshIndicatorWidgetState extends State<RefreshIndicatorWidget> {
+  late String loadingText;
+
+  @override
+  void initState() {
+    super.initState();
+    _updateLoadingText();
+  }
+
+  void _updateLoadingText() {
+    setState(() {
+      loadingText = loadingTextList[Random().nextInt(loadingTextList.length)];
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 80,
+      child: Center(
+        child: Container(
+          // decoration: BoxDecoration(
+          //   gradient: LinearGradient(
+          //     begin: Alignment.topCenter,
+          //     end: Alignment.bottomCenter,
+          //     colors: [
+          //       Colors.black.withOpacity(0.5),
+          //       Colors.transparent,
+          //     ],
+          //   ),
+          // ),
+          child: Text(
+            loadingText,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: Colors.white,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 class BaseShortPage extends StatelessWidget {
   final Function() createController;
   final int? videoId;
@@ -19,7 +83,7 @@ class BaseShortPage extends StatelessWidget {
   final Widget? loadingWidget;
   final int? style; // 1, 2
   final String? uuid;
-  final Function? onScrollBeyondFirst;
+  final Function()? onScrollBeyondFirst;
 
   const BaseShortPage({
     Key? key,
@@ -41,9 +105,7 @@ class BaseShortPage extends StatelessWidget {
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
-        onScrollBeyondFirst: () {
-          onScrollBeyondFirst?.call();
-        },
+        onScrollBeyondFirst: onScrollBeyondFirst,
         loadingWidget: const Center(
           child: WaveLoading(
             color: Color.fromRGBO(255, 255, 255, 0.3),
@@ -52,6 +114,9 @@ class BaseShortPage extends StatelessWidget {
             itemCount: 3,
           ),
         ),
+        refreshIndicatorWidget: (refreshKey) => RefreshIndicatorWidget(
+              key: Key(refreshKey),
+            ),
         shortCardBuilder: ({
           required int index,
           required bool isActive,
@@ -63,6 +128,7 @@ class BaseShortPage extends StatelessWidget {
           String tag =
               '${style == 2 ? 'home-use-' : 'general-'}${shortData.id.toString()}';
           return ShortVideoProvider(
+            key: Key(tag),
             vodId: shortData.id,
             tag: tag,
             child: ShortVideoConsumer(

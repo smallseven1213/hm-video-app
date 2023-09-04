@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:app_51ss/config/colors.dart';
 import 'package:shared/models/banner_photo.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/refresh_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -113,6 +115,13 @@ class VodsState extends State<Vods> {
             });
           },
           loadingWidget: const VideoListLoadingText(),
+          loadingText: Text(
+            '內容已更新',
+            style: TextStyle(
+              fontSize: 13,
+              color: AppColors.colors[ColorKeys.textSecondary],
+            ),
+          ),
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [
@@ -133,6 +142,7 @@ class VodsState extends State<Vods> {
                     }),
                   ),
                   buildVideoPreview: (video) => VideoPreviewWidget(
+                    hasTags: false,
                     id: video.id,
                     title: video.title,
                     tags: video.tags ?? [],

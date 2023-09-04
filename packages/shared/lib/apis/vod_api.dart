@@ -1,5 +1,6 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:game/models/hm_api_response_pagination.dart';
 import 'package:logger/logger.dart';
 import '../enums/shorts_type.dart';
 import '../models/area_info_with_block_vod.dart';
@@ -225,25 +226,48 @@ class VodApi {
     }
   }
 
-  Future<List<Vod>> getFollows() async {
+  Future<HMApiResponsePaginationData<List<Vod>>> getFollows(
+      {int? page = 1}) async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/videos/video/shortVideo/follow');
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideo/follow?page=$page&limit=50');
     if (res.data['code'] != '00') {
-      return [];
+      return HMApiResponsePaginationData(
+        data: [],
+      );
     }
-    return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    var data = res.data['data'];
+    var vods = (data['data'] as List<dynamic>)
+        .map((e) => Vod.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return HMApiResponsePaginationData<List<Vod>>(
+      limit: data['limit'],
+      total: data['total'],
+      current: data['current'],
+      data: vods,
+    );
   }
 
-  Future<List<Vod>> getRecommends({int? page = 1}) async {
+  Future<HMApiResponsePaginationData<List<Vod>>> getRecommends(
+      {int? page = 1}) async {
     var res = await fetcher(
         url:
             '${systemConfig.apiHost}/public/videos/video/recommend?page=$page&limit=50');
     if (res.data['code'] != '00') {
-      return [];
+      return HMApiResponsePaginationData(
+        data: [],
+      );
     }
-    return List.from((res.data['data']['data'] as List<dynamic>)
-        .map((e) => Vod.fromJson(e)));
+    var data = res.data['data'];
+    var vods = (data['data'] as List<dynamic>)
+        .map((e) => Vod.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return HMApiResponsePaginationData<List<Vod>>(
+      limit: data['limit'],
+      total: data['total'],
+      current: data['current'],
+      data: vods,
+    );
   }
 
   Future<List<Vod>> getPopular(int areaId, int videoId) async {

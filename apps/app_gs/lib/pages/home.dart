@@ -1,4 +1,5 @@
 import 'package:app_gs/screens/games/game_lobby_screen/lobby.dart';
+import 'package:app_gs/screens/home/home_apps.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,6 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../config/layouts.dart';
-import '../screens/apps_screen/index.dart';
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
@@ -38,7 +38,7 @@ final screens = {
         ),
       ),
   HomeNavigatorPathes.game: () => const GameScreen(),
-  HomeNavigatorPathes.apps: () => const AppsScreen(),
+  HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen()
 };
 

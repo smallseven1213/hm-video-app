@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/widgets/view_times.dart';
-import 'package:shared/widgets/video_time.dart';
+import 'package:shared/widgets/video/view_times.dart';
+import 'package:shared/widgets/video/video_time.dart';
 
 final logger = Logger();
 
@@ -37,11 +37,11 @@ class ViewInfo extends StatelessWidget {
                 ],
                 stops: const [0.05, 1.0],
               ),
-              // color: Colors.black.withOpacity(0.5),
             ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ViewTimes(times: viewCount),
           VideoTime(time: duration),
@@ -154,51 +154,15 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
           ),
         if (isEditing && isSelected)
           const Positioned(
-              top: 4,
-              right: 4,
-              child: Image(
-                image: AssetImage('assets/images/video_selected.png'),
-                width: 20,
-                height: 20,
-              )),
+            top: 4,
+            right: 4,
+            child: Icon(
+              Icons.check_circle,
+              size: 20,
+              color: Colors.white,
+            ),
+          ),
       ],
     );
-
-    // return GestureDetector(
-    //   onTap: isEditing ? onEditingTap : null,
-    //   child: Stack(
-    //     children: [
-    // VideoPreviewWidget(
-    //     id: id,
-    //     coverVertical: coverVertical,
-    //     coverHorizontal: coverHorizontal,
-    //     timeLength: timeLength,
-    //     tags: tags,
-    //     title: title,
-    //     videoViewTimes: videoViewTimes,
-    //     hasTapEvent: !isEditing),
-    // if (isEditing && isSelected)
-    //   Positioned(
-    //     left: 0,
-    //     right: 0,
-    //     bottom: 0,
-    //     child: Container(
-    //       width: double.infinity,
-    //       height: double.infinity,
-    //       color: Colors.black.withOpacity(0.5),
-    //     ),
-    //   ),
-    // if (isEditing && isSelected)
-    //   const Positioned(
-    //       top: 4,
-    //       right: 4,
-    //       child: Image(
-    //         image: AssetImage('assets/images/video_selected.png'),
-    //         width: 20,
-    //         height: 20,
-    //       ))
-    //     ],
-    //   ),
-    // );
   }
 }

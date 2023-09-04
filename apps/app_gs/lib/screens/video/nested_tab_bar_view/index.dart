@@ -86,12 +86,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               child: Padding(
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: VideoInfo(
-                  playVideo: () {
-                    obsVideoPlayerController.play();
-                  },
-                  pauseVideo: () {
-                    obsVideoPlayerController.pause();
-                  },
+                  videoPlayerController: obsVideoPlayerController,
                   externalId: widget.videoDetail.externalId ?? '',
                   title: widget.videoDetail.title,
                   tags: widget.videoDetail.tags ?? [],

@@ -1,3 +1,4 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,6 +7,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -154,6 +156,11 @@ class ChannelStyle1State extends State<ChannelStyle1>
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
                       loadingWidget: const VideoListLoadingText(),
+                      loadingText: Text('內容已更新',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: AppColors.colors[ColorKeys.textSecondary],
+                          )),
                       child: CustomScrollView(
                         physics: kIsWeb ? null : const BouncingScrollPhysics(),
                         slivers: [
@@ -173,22 +180,33 @@ class ChannelStyle1State extends State<ChannelStyle1>
                           ),
                           ...sliverBlocks,
                           SliverToBoxAdapter(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 32),
-                              child: Center(
-                                child: SizedBox(
-                                  height: 38,
-                                  width: 183,
-                                  child: Button(
-                                    text: '探索更多內容',
-                                    onPressed: () {
-                                      MyRouteDelegate.of(context)
-                                          .push(AppRoutes.filter);
-                                    },
-                                    type: 'primary',
-                                    size: 'small',
+                            child: AspectRatio(
+                              aspectRatio: 390 / 190,
+                              child: Stack(
+                                children: [
+                                  const Positioned.fill(
+                                    child: Image(
+                                      image: AssetImage(
+                                          'assets/images/channel_more_button.webp'),
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
-                                ),
+                                  Center(
+                                    child: SizedBox(
+                                      height: 38,
+                                      width: 183,
+                                      child: Button(
+                                        text: '探索更多內容',
+                                        onPressed: () {
+                                          MyRouteDelegate.of(context)
+                                              .push(AppRoutes.filter);
+                                        },
+                                        type: 'primary',
+                                        size: 'small',
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
                           ),

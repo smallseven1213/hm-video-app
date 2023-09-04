@@ -38,6 +38,7 @@
   </script>
   <!-- This script adds the flutter initialization JS code -->
   <script src="flutter.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1"></script>
 </head>
 <body>
   <script>
@@ -48,12 +49,31 @@
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function(engineInitializer) {
-          engineInitializer.initializeEngine().then(function(appRunner) {
+          engineInitializer.initializeEngine({
+            renderer: "canvaskit"
+          }).then(function(appRunner) {
             appRunner.runApp();
+            setTimeout(function() {
+              //  隐藏 SplashScreen 
+              document.querySelector('.splash-screen img').style.display = 'none';
+              document.querySelector('.splash-screen').style.zIndex = -1;
+            }, 500);
           });
         }
       });
     });
   </script>
+  <!-- Flutter WebGL 2.0 fix (https://github.com/flutter/flutter/issues/89655) -->
+  <script type="text/javascript">
+    HTMLCanvasElement.prototype.getContext = function (orig) {
+      return function(type) {
+        return type !== "webgl2" ? orig.apply(this, arguments) : null
+      }
+    }(HTMLCanvasElement.prototype.getContext)
+  </script>
+   <!-- SplashScreen -->
+   <div class="splash-screen"> 
+     <img src="/assets/assets/images/splash.png" alt="Splash Screen" />
+  </div>
 </body>
 </html>

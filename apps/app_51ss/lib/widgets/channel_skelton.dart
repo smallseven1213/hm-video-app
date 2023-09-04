@@ -10,7 +10,7 @@ class ChannelSkeleton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Color baseColor =
-        AppColors.colors[ColorKeys.secondary] ?? Colors.transparent;
+        AppColors.colors[ColorKeys.videoPreviewBg] ?? Colors.transparent;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),

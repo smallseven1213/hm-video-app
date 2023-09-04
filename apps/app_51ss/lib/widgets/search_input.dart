@@ -4,20 +4,22 @@ import 'package:shared/models/color_keys.dart';
 import '../config/colors.dart';
 
 class SearchInput extends StatefulWidget {
-  const SearchInput(
-      {Key? key,
-      this.controller,
-      this.focusNode,
-      this.onChanged,
-      this.onSubmitted,
-      this.onTap,
-      this.defaultValue,
-      this.placeHolder,
-      this.autoFocus = false,
-      this.readOnly = false,
-      this.enableInteractiveSelection = true,
-      this.onSearchButtonClick}) // 新的回調
-      : super(key: key);
+  const SearchInput({
+    Key? key,
+    this.controller,
+    this.focusNode,
+    this.onChanged,
+    this.onSubmitted,
+    this.onTap,
+    this.defaultValue,
+    this.placeHolder,
+    this.autoFocus = false,
+    this.readOnly = false,
+    this.enableInteractiveSelection = true,
+    this.onSearchButtonClick,
+    this.backgroundColor = Colors.white,
+  }) // 新的回調
+  : super(key: key);
 
   final TextEditingController? controller;
   final void Function(String)? onChanged;
@@ -29,7 +31,8 @@ class SearchInput extends StatefulWidget {
   final bool autoFocus;
   final bool? readOnly;
   final bool? enableInteractiveSelection;
-  final void Function(String)? onSearchButtonClick; // 新的回調
+  final void Function(String)? onSearchButtonClick;
+  final Color backgroundColor;
 
   @override
   SearchInputState createState() => SearchInputState();
@@ -83,7 +86,7 @@ class SearchInputState extends State<SearchInput> {
               hintText: widget.placeHolder,
               hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
-              fillColor: Colors.white,
+              fillColor: widget.backgroundColor,
               suffixIcon: GestureDetector(
                 onTap: () {
                   if (widget.onSearchButtonClick != null) {

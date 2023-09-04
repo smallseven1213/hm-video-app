@@ -11,7 +11,16 @@ String getSidImageDecode(
 }) {
   try {
     var dePos = word.substring(posStartAt, posLen);
-    var pos = int.parse(dePos.replaceAll(posChar, ''));
+    String input = dePos.replaceAll(posChar, '');
+    var pos = 0;
+
+    if (double.tryParse(input) != null) {
+      pos = int.parse(input);
+    } else {
+      logger.i('@@@The input is not a numeric string, word: $word');
+      return '00000000';
+    }
+
     return word.substring(posLen, posLen + pos) +
         word.substring(posLen + pos + passLen);
   } catch (e) {

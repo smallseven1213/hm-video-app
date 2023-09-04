@@ -49,16 +49,16 @@ class TabBarWidgetState extends State<TabBarWidget> {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
+        color: Colors.white,
         padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 15),
         child: Align(
           child: TabBar(
             isScrollable: true,
             controller: widget.controller,
-            padding: const EdgeInsets.all(0),
             labelColor: AppColors.colors[ColorKeys.primary],
             labelStyle: const TextStyle(fontSize: 14),
             labelPadding: const EdgeInsets.symmetric(horizontal: 10),
-            unselectedLabelColor: const Color(0xffb2bac5),
+            unselectedLabelColor: AppColors.colors[ColorKeys.textTertiary],
             indicatorSize: TabBarIndicatorSize.label,
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(

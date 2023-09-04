@@ -24,7 +24,7 @@ class TagItem extends StatelessWidget {
           tag,
           style: const TextStyle(
             fontSize: 12,
-            color: Colors.white,
+            color: Color(0xff73747b),
           ),
         ),
       ),

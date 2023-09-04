@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -128,22 +130,40 @@ class UserInfo extends StatelessWidget {
               ),
             ],
           ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.login);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: const Icon(
-                  Icons.login,
-                  size: 18,
-                  color: Colors.white,
-                ),
-              ),
-            ),
+          UserInfoConsumer(
+            child: (info, isVIP, isGuest) {
+              return Positioned(
+                top: 0,
+                right: 0,
+                child: !isGuest
+                    ? GestureDetector(
+                        onTap: () {
+                          MyRouteDelegate.of(context).push(AppRoutes.configs);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          child: const Icon(
+                            Icons.settings_outlined,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      )
+                    : GestureDetector(
+                        onTap: () {
+                          MyRouteDelegate.of(context).push(AppRoutes.login);
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(5),
+                          child: const Icon(
+                            Icons.login,
+                            size: 18,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+              );
+            },
           ),
           Positioned(
             top: 0,
