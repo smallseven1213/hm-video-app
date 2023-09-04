@@ -13,7 +13,7 @@ void main() async {
   };
 
   runningMain(
-      'https://5975596ddf0f4a6b95b09de1adda3d53@sentry.hmtech.club/4',
+      'https://45f8d2078d0f48a2ad32be194630b9f6@sentry.hmtech.club/5',
       allRoutes.keys.first,
       [
         'https://dl.dlsv.net/$env/dl.json',
@@ -21,5 +21,6 @@ void main() async {
       allRoutes,
       AppColors.colors,
       ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
+      null,
       null);
 }

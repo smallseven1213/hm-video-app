@@ -52,7 +52,7 @@ Future<void> runningMain(
   Map<ColorKeys, Color> appColors,
   GlobalLoadingWidget globalLoadingWidget,
   ThemeData? theme,
-  Widget Function({int countdownSeconds}) countdown,
+  Widget Function({int countdownSeconds})? countdown,
 ) async {
   url_strategy.usePathUrlStrategy();
 

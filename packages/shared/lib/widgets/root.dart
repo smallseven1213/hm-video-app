@@ -13,7 +13,7 @@ class RootWidget extends StatelessWidget {
   final String splashImage;
   final Map<ColorKeys, Color> appColors;
   final Function? loading;
-  final Widget Function({int countdownSeconds}) countdown;
+  final Widget Function({int countdownSeconds})? countdown;
   ThemeData? theme;
 
   RootWidget({
@@ -24,7 +24,7 @@ class RootWidget extends StatelessWidget {
     required this.appColors,
     this.theme,
     this.loading,
-    required this.countdown,
+    this.countdown,
   }) : super(key: key);
 
   @override
