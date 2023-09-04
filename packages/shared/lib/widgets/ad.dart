@@ -19,11 +19,13 @@ final logger = Logger();
 class Ad extends StatefulWidget {
   final String backgroundAssetPath;
   final Function? loading;
+  final Widget Function({int countdownSeconds}) countdown;
 
   const Ad({
     Key? key,
     required this.backgroundAssetPath,
     required this.loading,
+    required this.countdown,
   }) : super(key: key);
 
   @override
@@ -114,34 +116,14 @@ class AdState extends State<Ad> {
                 top: 20,
                 right: 20,
                 child: TextButton(
-                  onPressed: () => {
-                    if (countdownSeconds == 0)
-                      MyRouteDelegate.of(context).pushAndRemoveUntil(
-                          AppRoutes.home,
-                          hasTransition: false)
-                  },
-                  child: Container(
-                    width: 90,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                    decoration: BoxDecoration(
-                      color: const Color.fromRGBO(0, 0, 0, .5),
-                      borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.white, width: 1),
-                    ),
-                    child: Center(
-                      child: Text(
-                        countdownSeconds == 0
-                            ? '立即進入'
-                            : '倒數 ${countdownSeconds.toString()}S',
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+                    onPressed: () => {
+                          if (countdownSeconds == 0)
+                            MyRouteDelegate.of(context).pushAndRemoveUntil(
+                                AppRoutes.home,
+                                hasTransition: false)
+                        },
+                    child:
+                        widget.countdown(countdownSeconds: countdownSeconds)),
               ),
             if (!imageLoaded) ...[
               Positioned.fill(
