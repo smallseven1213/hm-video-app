@@ -20,8 +20,8 @@ testProd:
     variables: 
       - $CI_COMMIT_REF_NAME ~= /ra/
   script: 
-    echo $CI_COMMIT_REF_NAME
-    echo ' i am testProd'  
+    - echo $CI_COMMIT_REF_NAME
+    - echo ' i am testProd'  
 
 
 build-gs-job:       # This job runs in the build stage, which runs first.
