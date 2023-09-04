@@ -155,7 +155,22 @@ class ChannelStyle6Suppliers extends StatelessWidget {
                                             vertical: 5,
                                           ),
                                           decoration: BoxDecoration(
-                                            color: const Color(0xFFfe2c55),
+                                            gradient: const LinearGradient(
+                                              begin: Alignment
+                                                  .topLeft, // 这里可以根据需要进行调整
+                                              end: Alignment
+                                                  .bottomRight, // 这里可以根据需要进行调整
+                                              stops: [
+                                                0.0,
+                                                0.56
+                                              ], // 对应于 CSS 的 0% 和 56%
+                                              colors: [
+                                                Color(
+                                                    0xFFff6988), // 对应于 CSS 的 #ff6988
+                                                Color(
+                                                    0xFFf52c55), // 对应于 CSS 的 #f52c55
+                                              ],
+                                            ),
                                             borderRadius:
                                                 BorderRadius.circular(4),
                                           ),
