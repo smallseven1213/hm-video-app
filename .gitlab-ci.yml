@@ -38,7 +38,7 @@ build-gs-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
     variables:
-      - $test =~ /^./
+      - $test == null
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
