@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_recommends_controller.dart';
 import 'package:shared/controllers/user_favorites_supplier_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-class ChannelStyle2Suppliers extends StatelessWidget {
-  ChannelStyle2Suppliers({Key? key}) : super(key: key);
+class ChannelStyle6Suppliers extends StatelessWidget {
+  ChannelStyle6Suppliers({Key? key}) : super(key: key);
 
   final controller = Get.put(SupplierRecommendsController());
   var userFavoritesSupplierController =
@@ -36,13 +38,21 @@ class ChannelStyle2Suppliers extends StatelessWidget {
                     ),
                     child: Stack(
                       children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: SidImage(
-                            sid: supplier.coverVertical ?? "",
-                            width: 280,
-                            height: 370,
-                            fit: BoxFit.cover,
+                        InkWell(
+                          onTap: () {
+                            MyRouteDelegate.of(context)
+                                .push(AppRoutes.supplier, args: {
+                              'id': supplier.id,
+                            });
+                          },
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20),
+                            child: SidImage(
+                              sid: supplier.coverVertical ?? "",
+                              width: 280,
+                              height: 370,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                         // delete button to exec removeSupplierById
@@ -99,6 +109,8 @@ class ChannelStyle2Suppliers extends StatelessWidget {
                                 onTap: () {
                                   userFavoritesSupplierController
                                       .addSupplier(supplier);
+                                  controller
+                                      .removeSupplierById(supplier.id ?? 0);
                                 },
                                 child: Container(
                                   width: 175,
