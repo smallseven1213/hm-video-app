@@ -2,16 +2,25 @@
 #
 #
 variables: 
-  version: '2023.01.01.009.ra'
+  test_tag: '2023.01.01.009.ra'
 
 stages:          # List of stages for jobs, and their order of execution
   - preBuild1
+  - preBuild2
   - build
   - deploy
 
+show_variables: 
+  stage: preBuild1
+  tags: 
+    - giltab-shared-runner
+  script: 
+    - echo $CI_COMMIT_REF_NAME
+
+
 
 testProd: 
-  stage: preBuild1
+  stage: preBuild2
   tags: 
     - gitlab-shared-runner
   only: 
@@ -20,7 +29,6 @@ testProd:
     variables: 
       - $CI_COMMIT_REF_NAME =~ /ra/
   script: 
-    - echo $CI_COMMIT_REF_NAME
     - echo ' i am testProd'  
 
 
@@ -31,6 +39,9 @@ build-gs-job:       # This job runs in the build stage, which runs first.
   only:
     refs:
       - develop
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
@@ -44,6 +55,9 @@ build-tt-job:       # This job runs in the build stage, which runs first.
   only:
     refs:
       - develop
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   allow_failure: true
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_tt -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev .
@@ -58,6 +72,9 @@ build-51ss-job:       # This job runs in the build stage, which runs first.
   only:
     refs:
       - develop
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   allow_failure: true
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_51ss -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-51ss:dev .
@@ -72,6 +89,9 @@ deploy-gs-job:      # This job runs in the deploy stage.
   only:
     refs:
       - develop
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n video-dev
@@ -84,6 +104,9 @@ deploy-tt-job:      # This job runs in the deploy stage.
   only:
     refs:
       - develop
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-tt" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt -n video-dev
@@ -96,6 +119,9 @@ deploy-51ss-job:      # This job runs in the deploy stage.
   only:
     refs:
       - develop
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-51ss" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss -n video-dev
@@ -108,6 +134,9 @@ build-prod-job:
   only: 
     refs: 
       - tags
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   script: 
     - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
@@ -120,6 +149,9 @@ deploy-prod-job:
   only: 
     refs: 
       - tags
+  rules: 
+    - if: $version =~ /^./'
+      when: never
   script: 
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/gs --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh gs prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
