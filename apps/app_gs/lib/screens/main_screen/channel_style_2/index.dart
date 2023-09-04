@@ -1,3 +1,4 @@
+import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_short_by_channel_style2.dart';
@@ -29,13 +30,19 @@ class ChannelStyle2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (controller.data.isEmpty) {
-        return Center(
-          child: ChannelStyle2Suppliers(),
+      if (controller.isInit.value == false) {
+        return const Center(
+          child: WaveLoading(),
         );
-      }
+      } else {
+        if (controller.data.isEmpty) {
+          return Center(
+            child: ChannelStyle2Suppliers(),
+          );
+        }
 
-      return ChannelStyle2ShortsPart(controller: controller);
+        return ChannelStyle2ShortsPart(controller: controller);
+      }
     });
   }
 }
