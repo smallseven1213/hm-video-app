@@ -1,8 +1,10 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:volume_control/volume_control.dart';
 
@@ -259,7 +261,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 // 下方控制區塊
                 Positioned(
                   bottom: 0,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       children: [
@@ -288,9 +290,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                               // trackShape: CustomTrackShape(),
                               trackHeight: 4.0, // 這可以設定滑塊軌道的高度
                               thumbShape: TransparentSliderThumbShape(),
-                              activeTrackColor: Colors.blue, // 滑塊左邊（或上面）的部分的顏色
-                              inactiveTrackColor: Colors.blue
-                                  .withOpacity(0.3), // 滑塊右邊（或下面）的部分的顏色
+                              activeTrackColor: AppColors.colors[
+                                  ColorKeys.secondary], // 滑塊左邊（或上面）的部分的顏色
+                              inactiveTrackColor: const Color(0xffb5925c)
+                                  .withOpacity(0.5), // 滑塊右邊（或下面）的部分的顏色
                               overlayShape: const RoundSliderOverlayShape(
                                   overlayRadius: 0.0),
                             ),
