@@ -1,3 +1,6 @@
+import 'package:app_ra/widgets/countdown.dart';
+import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
 import 'widgets/loading.dart';
@@ -13,14 +16,19 @@ void main() async {
   };
 
   runningMain(
-      'https://45f8d2078d0f48a2ad32be194630b9f6@sentry.hmtech.club/5',
-      allRoutes.keys.first,
-      [
-        'https://dl.dlsv.net/$env/dl.json',
-      ],
-      allRoutes,
-      AppColors.colors,
-      ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
-      null,
-      null);
+    'https://5975596ddf0f4a6b95b09de1adda3d53@sentry.hmtech.club/4',
+    allRoutes.keys.first,
+    [
+      'https://dl.dlsv.net/$env/dl.json',
+    ],
+    allRoutes,
+    AppColors.colors,
+    ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
+    ThemeData(
+        scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent),
+    ({int countdownSeconds = 5}) =>
+        Countdown(countdownSeconds: countdownSeconds),
+  );
 }

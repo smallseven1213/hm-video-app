@@ -1,3 +1,4 @@
+import 'package:app_ra/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
@@ -6,6 +7,7 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
@@ -63,7 +65,7 @@ class HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFf0f0f0),
+      backgroundColor: AppColors.colors[ColorKeys.background],
       body: MainNavigationScaffold(
           screens: screens,
           screenNotFoundWidget: const Center(

@@ -1,3 +1,4 @@
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/widgets/refresh_list.dart';
@@ -8,12 +9,14 @@ import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
+import '../../../config/colors.dart';
 import '../../../widgets/button.dart';
 import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/video_list_loading_text.dart';
 import '../block_header.dart';
 import '../channel_banners.dart';
 import '../channel_jingang_area.dart';
+import '../more_button.dart';
 import '../reload_button.dart';
 import '../videoblock.dart';
 
@@ -85,50 +88,44 @@ class ChannelStyle1State extends State<ChannelStyle1>
                       child: BlockHeader(
                         text: block.name ?? '',
                         moreButton: block.isMore!
-                            ? InkWell(
+                            ? MoreButton(
                                 onTap: () => {
-                                      if (block.film == 1)
-                                        {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.videoByBlock,
-                                            args: {
-                                              'blockId': block.id,
-                                              'title': block.name,
-                                              'channelId': widget.channelId,
-                                            },
-                                          )
-                                        }
-                                      else if (block.film == 2)
-                                        {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.videoByBlock,
-                                            args: {
-                                              'blockId': block.id,
-                                              'title': block.name,
-                                              'channelId': widget.channelId,
-                                              'film': 2,
-                                            },
-                                          )
-                                        }
-                                      else if (block.film == 3)
-                                        {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.videoByBlock,
-                                            args: {
-                                              'id': block.id,
-                                              'title': block.name,
-                                              'channelId': widget.channelId,
-                                            },
-                                          )
-                                        }
-                                    },
-                                child: const Text(
-                                  '更多 >',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
-                                ))
+                                  if (block.film == 1)
+                                    {
+                                      MyRouteDelegate.of(context).push(
+                                        AppRoutes.videoByBlock,
+                                        args: {
+                                          'blockId': block.id,
+                                          'title': block.name,
+                                          'channelId': widget.channelId,
+                                        },
+                                      )
+                                    }
+                                  else if (block.film == 2)
+                                    {
+                                      MyRouteDelegate.of(context).push(
+                                        AppRoutes.videoByBlock,
+                                        args: {
+                                          'blockId': block.id,
+                                          'title': block.name,
+                                          'channelId': widget.channelId,
+                                          'film': 2,
+                                        },
+                                      )
+                                    }
+                                  else if (block.film == 3)
+                                    {
+                                      MyRouteDelegate.of(context).push(
+                                        AppRoutes.videoByBlock,
+                                        args: {
+                                          'id': block.id,
+                                          'title': block.name,
+                                          'channelId': widget.channelId,
+                                        },
+                                      )
+                                    }
+                                },
+                              )
                             : null,
                       ),
                     ));

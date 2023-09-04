@@ -1,5 +1,7 @@
+import 'package:app_ra/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class ActorAvatar extends StatelessWidget {
@@ -42,7 +44,7 @@ class ActorAvatar extends StatelessWidget {
               Container(
                 width: width,
                 height: height,
-                color: const Color(0xfff0f0f0),
+                color: const Color(0xffD9D9D9),
                 child: const Center(
                   child: Icon(
                     Icons.face_3,
