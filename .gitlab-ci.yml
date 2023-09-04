@@ -40,7 +40,7 @@ build-gs-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
@@ -55,7 +55,7 @@ build-tt-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   allow_failure: true
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_tt -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev .
@@ -71,7 +71,7 @@ build-51ss-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   allow_failure: true
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_51ss -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-51ss:dev .
@@ -87,7 +87,7 @@ build-ra-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   allow_failure: true
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ra -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ra:dev .
@@ -103,7 +103,7 @@ deploy-gs-job:      # This job runs in the deploy stage.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n video-dev
@@ -117,7 +117,7 @@ deploy-tt-job:      # This job runs in the deploy stage.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-tt" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-tt -n video-dev
@@ -131,7 +131,7 @@ deploy-51ss-job:      # This job runs in the deploy stage.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-51ss" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss -n video-dev
@@ -145,7 +145,7 @@ deploy-ra-job:      # This job runs in the deploy stage.
     refs:
       - develop
     variables:
-      - $test == null
+      - $youda =~ /^$/
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ra" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ra/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ra -n video-dev
@@ -158,8 +158,6 @@ build-prod-job:
   only: 
     refs: 
       - tags
-    variables:
-      - $test == null
   script: 
     - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
@@ -172,8 +170,6 @@ deploy-prod-job:
   only: 
     refs: 
       - tags
-    variables:
-      - $test == null
   script: 
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/gs --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh gs prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
