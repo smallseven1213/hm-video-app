@@ -1,6 +1,28 @@
+#
+#
+#
+variables: 
+  version: '2023.01.01.009.ra'
+
 stages:          # List of stages for jobs, and their order of execution
+  - preBuild1
   - build
   - deploy
+
+
+testProd: 
+  stage: preBuild1
+  tags: 
+    - gitlab-shared-runner
+  only: 
+    refs: 
+      - tags
+    variables: 
+      - $CI_COMMIT_REF_NAME ~= /ra/
+  script: 
+    echo $
+    echo ' i am testProd'  
+
 
 build-gs-job:       # This job runs in the build stage, which runs first.
   stage: build
@@ -10,7 +32,6 @@ build-gs-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
   script:
-    - curl -I 'https://pub.dev'
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev
