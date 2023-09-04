@@ -226,14 +226,26 @@ class VodApi {
     }
   }
 
-  Future<List<Vod>> getFollows() async {
+  Future<HMApiResponsePaginationData<List<Vod>>> getFollows(
+      {int? page = 1}) async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/videos/video/shortVideo/follow');
+        url:
+            '${systemConfig.apiHost}/public/videos/video/shortVideo/follow?page=$page&limit=50');
     if (res.data['code'] != '00') {
-      return [];
+      return HMApiResponsePaginationData(
+        data: [],
+      );
     }
-    return List.from(
-        (res.data['data'] as List<dynamic>).map((e) => Vod.fromJson(e)));
+    var data = res.data['data'];
+    var vods = (data['data'] as List<dynamic>)
+        .map((e) => Vod.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return HMApiResponsePaginationData<List<Vod>>(
+      limit: data['limit'],
+      total: data['total'],
+      current: data['current'],
+      data: vods,
+    );
   }
 
   Future<HMApiResponsePaginationData<List<Vod>>> getRecommends(
