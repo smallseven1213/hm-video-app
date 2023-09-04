@@ -1,4 +1,6 @@
+import 'package:app_ra/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 class RATabBar extends StatelessWidget implements PreferredSizeWidget {
   final List<String> tabs;
@@ -19,7 +21,7 @@ class RATabBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        color: const Color(0xFFf0f0f0),
+        color: AppColors.colors[ColorKeys.background],
         padding: padding ?? const EdgeInsets.symmetric(vertical: 15),
         child: Align(
           child: TabBar(

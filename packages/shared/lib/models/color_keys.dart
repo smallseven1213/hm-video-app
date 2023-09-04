@@ -27,4 +27,5 @@ enum ColorKeys {
   dividerColor,
   gradientBgTopColor,
   gradientBgBottomColor,
+  videoTitle,
 }

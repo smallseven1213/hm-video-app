@@ -1,5 +1,7 @@
+import 'package:app_ra/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -34,7 +36,7 @@ class LayoutHomeScreen extends StatelessWidget {
               );
             }
             return Scaffold(
-                backgroundColor: const Color(0xFFf0f0f0),
+                backgroundColor: AppColors.colors[ColorKeys.background],
                 body: Stack(
                   children: [
                     Channels(

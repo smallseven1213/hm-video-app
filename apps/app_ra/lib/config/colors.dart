@@ -6,9 +6,9 @@ class AppColors {
     // bg
     ColorKeys.primary: Color(0xffFFC700),
     ColorKeys.accent: Color(0x00ffffff),
-    ColorKeys.background: Color(0xff001A40),
+    ColorKeys.background: Color(0xff030923),
     // text
-    ColorKeys.textPrimary: Color(0xff161823),
+    ColorKeys.textPrimary: Color(0xffFDDCEF),
     ColorKeys.textSecondary: Color(0xff73747b),
     ColorKeys.textLink: Color(0xff04498d),
     ColorKeys.textPlaceholder: Color(0xffCACACA),
@@ -24,5 +24,7 @@ class AppColors {
     ColorKeys.formBg: Color(0xfff6f6f6),
     ColorKeys.gradientBgTopColor: Colors.transparent,
     ColorKeys.gradientBgBottomColor: Colors.transparent,
+    // video
+    ColorKeys.videoTitle: Color(0xffFDDCEF),
   };
 }
