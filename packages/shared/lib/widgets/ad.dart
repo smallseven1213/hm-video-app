@@ -19,13 +19,13 @@ final logger = Logger();
 class Ad extends StatefulWidget {
   final String backgroundAssetPath;
   final Function? loading;
-  final Widget Function({int countdownSeconds}) countdown;
+  final Widget Function({int countdownSeconds})? countdown;
 
   const Ad({
     Key? key,
     required this.backgroundAssetPath,
     required this.loading,
-    required this.countdown,
+    this.countdown,
   }) : super(key: key);
 
   @override
@@ -122,8 +122,10 @@ class AdState extends State<Ad> {
                                 AppRoutes.home,
                                 hasTransition: false)
                         },
-                    child:
-                        widget.countdown(countdownSeconds: countdownSeconds)),
+                    child: widget.countdown == null
+                        ? Container()
+                        : widget.countdown!(
+                            countdownSeconds: countdownSeconds)),
               ),
             if (!imageLoaded) ...[
               Positioned.fill(
