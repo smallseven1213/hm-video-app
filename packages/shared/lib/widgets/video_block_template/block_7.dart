@@ -14,18 +14,18 @@ class Block7Widget extends StatefulWidget {
   final Function updateBlock;
   final int channelId;
   final int film;
+  final Color? gradientBgTopColor;
+  final Color? gradientBgBottomColor;
   final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
-  final Color gradientBgTopColor;
-  final Color gradientBgBottomColor;
   const Block7Widget({
     Key? key,
     required this.block,
     required this.updateBlock,
     required this.channelId,
     required this.film,
-    required this.buildVideoPreview,
     this.gradientBgTopColor = const Color(0xFF040405),
     this.gradientBgBottomColor = const Color.fromRGBO(20, 49, 104, 0.7),
+    required this.buildVideoPreview,
   }) : super(key: key);
 
   @override
@@ -42,7 +42,7 @@ class Block7WidgetState extends State<Block7Widget> {
     super.initState();
     List<Vod> videos = widget.block.videos?.data ?? [];
     setState(() {
-      backgroundPhotoSid = videos[2].coverHorizontal;
+      backgroundPhotoSid = videos[2].coverVertical;
     });
   }
 
@@ -51,7 +51,7 @@ class Block7WidgetState extends State<Block7Widget> {
     List<Vod> videos = widget.block.videos?.data ?? [];
     return SliverToBoxAdapter(
       child: Container(
-        height: 290,
+        height: 310,
         margin: const EdgeInsets.symmetric(horizontal: 8),
         child: Stack(
           children: [
@@ -61,7 +61,7 @@ class Block7WidgetState extends State<Block7Widget> {
                     borderRadius: BorderRadius.circular(10),
                     child: SizedBox(
                       width: double.infinity,
-                      height: 290,
+                      height: 310,
                       child: FractionallySizedBox(
                         alignment: Alignment.centerLeft,
                         widthFactor: 2.0,
@@ -84,8 +84,8 @@ class Block7WidgetState extends State<Block7Widget> {
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,
                     colors: [
-                      widget.gradientBgTopColor,
-                      widget.gradientBgBottomColor,
+                      widget.gradientBgTopColor!,
+                      widget.gradientBgBottomColor!,
                     ],
                     stops: const [0.0, 1],
                   ),
@@ -99,7 +99,7 @@ class Block7WidgetState extends State<Block7Widget> {
                   autoPlay: false,
                   enlargeCenterPage: true,
                   viewportFraction: 0.45,
-                  height: 290,
+                  height: 310,
                   initialPage: 2,
                   onPageChanged: (index, reason) {
                     setState(() {
