@@ -1,11 +1,11 @@
-// VideoPlayerArea stateful widget
+import 'package:app_51ss/config/colors.dart';
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/sid_image.dart';
-
-import 'dot_line_animation.dart';
 
 final logger = Logger();
 
@@ -28,7 +28,7 @@ class VideoLoading extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.black.withOpacity(0.8),
-                      const Color.fromARGB(255, 0, 34, 79),
+                      AppColors.colors[ColorKeys.primary]!,
                     ],
                     stops: const [0.8, 1.0],
                   ),
@@ -41,18 +41,18 @@ class VideoLoading extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          // Image(
-          //   image: AssetImage('assets/images/logo.png'),
-          //   width: 60.0,
-          // ),
-          DotLineAnimation(),
-          SizedBox(height: 15),
-          Text(
-            '精彩即將呈現',
-            style: TextStyle(fontSize: 12, color: Colors.white),
-          )
-        ]),
+        const Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Center(child: FlashLoading()),
+            SizedBox(height: 15),
+            Text(
+              '精彩即將呈現',
+              style: TextStyle(fontSize: 12, color: Colors.white),
+            )
+          ],
+        ),
         const FloatPageBackButton(),
       ],
     );

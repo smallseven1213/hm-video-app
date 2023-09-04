@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/base_video_preview.dart';
@@ -10,6 +11,7 @@ import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 
+import '../config/colors.dart';
 import 'video_embedded_ad.dart';
 
 class ViewInfo extends StatelessWidget {
@@ -230,8 +232,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
               textAlign: TextAlign.left,
               overflow: TextOverflow.ellipsis,
               softWrap: false,
-              style: const TextStyle(
-                color: Colors.white,
+              style: TextStyle(
+                color: AppColors.colors[ColorKeys.videoTitle]!,
                 fontSize: 12,
               ),
             ),

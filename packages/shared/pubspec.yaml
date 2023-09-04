@@ -45,6 +45,7 @@ dependencies:
   rxdart: ^0.27.7
   image_gallery_saver: ^2.0.3
   permission_handler: ^10.2.0
+  restart_app: ^1.2.1
 
 dev_dependencies:
   flutter_test:

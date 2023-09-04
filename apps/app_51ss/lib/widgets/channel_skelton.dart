@@ -29,7 +29,7 @@ class ChannelSkeleton extends StatelessWidget {
                 )
               : Shimmer.fromColors(
                   baseColor: baseColor,
-                  highlightColor: const Color(0xFF00234d),
+                  highlightColor: Colors.white,
                   child: AspectRatio(
                     aspectRatio: 374 / 180,
                     child: Container(
@@ -77,7 +77,7 @@ class ChannelSkeleton extends StatelessWidget {
                   )
                 : Shimmer.fromColors(
                     baseColor: baseColor,
-                    highlightColor: const Color(0xFF00234d),
+                    highlightColor: Colors.white,
                     child: GridView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,

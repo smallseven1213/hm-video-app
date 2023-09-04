@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:restart_app/restart_app.dart';
 import '../controllers/response_controller.dart';
 import '../enums/app_routes.dart';
 
@@ -47,9 +48,11 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
                     setState(() {
                       showErrorMessage = false;
                     });
-                    MyRouteDelegate.of(context).pushAndRemoveUntil(
-                        AppRoutes.splash,
-                        hasTransition: false);
+                    // MyRouteDelegate.of(context).pushAndRemoveUntil(
+                    //     AppRoutes.splash,
+                    //     hasTransition: false);
+
+                    Restart.restartApp();
                   },
                   child: const Text('確認'),
                 ),

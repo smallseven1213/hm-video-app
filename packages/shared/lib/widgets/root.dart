@@ -13,6 +13,7 @@ class RootWidget extends StatelessWidget {
   final String splashImage;
   final Map<ColorKeys, Color> appColors;
   final Function? loading;
+  final Widget Function({int countdownSeconds})? countdown;
   ThemeData? theme;
 
   RootWidget({
@@ -23,6 +24,7 @@ class RootWidget extends StatelessWidget {
     required this.appColors,
     this.theme,
     this.loading,
+    this.countdown,
   }) : super(key: key);
 
   @override
@@ -30,8 +32,11 @@ class RootWidget extends StatelessWidget {
     final RouteObject baseRoutes = {
       '/': (context, args) =>
           Splash(backgroundAssetPath: splashImage, loading: loading),
-      '/ad': (context, args) =>
-          Ad(backgroundAssetPath: splashImage, loading: loading),
+      '/ad': (context, args) => Ad(
+            backgroundAssetPath: splashImage,
+            loading: loading,
+            countdown: countdown,
+          ),
     };
 
     final delegate = MyRouteDelegate(

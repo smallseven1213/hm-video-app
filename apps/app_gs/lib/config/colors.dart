@@ -18,5 +18,7 @@ class AppColors {
     ColorKeys.formBg: Color(0xfff6f6f6),
     ColorKeys.gradientBgTopColor: Color(0xFF040405),
     ColorKeys.gradientBgBottomColor: Color.fromRGBO(20, 49, 104, 0.7),
+    // video
+    ColorKeys.videoTitle: Color(0xffffffff),
   };
 }

@@ -1,5 +1,7 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/actor/actor_consumer.dart';
 import 'package:shared/modules/actor/actor_provider.dart';
 import 'package:shared/modules/videos/actor_hotest_videos_consumer.dart';
@@ -73,7 +75,8 @@ class ActorPageState extends State<ActorPage>
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverToBoxAdapter(
-                    child: SizedBox(
+                    child: Container(
+                      color: AppColors.colors[ColorKeys.primary],
                       height: MediaQuery.of(context).padding.top,
                     ),
                   ),

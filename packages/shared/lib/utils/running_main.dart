@@ -45,13 +45,15 @@ void realMain(Widget widget) async {
 }
 
 Future<void> runningMain(
-    String sentryDSN,
-    String homePath,
-    List<String> dlJsonHosts,
-    RouteObject routes,
-    Map<ColorKeys, Color> appColors,
-    GlobalLoadingWidget globalLoadingWidget,
-    ThemeData? theme) async {
+  String sentryDSN,
+  String homePath,
+  List<String> dlJsonHosts,
+  RouteObject routes,
+  Map<ColorKeys, Color> appColors,
+  GlobalLoadingWidget globalLoadingWidget,
+  ThemeData? theme,
+  Widget Function({int countdownSeconds})? countdown,
+) async {
   url_strategy.usePathUrlStrategy();
 
   SystemConfig().setDlJsonHosts(dlJsonHosts);
@@ -69,5 +71,6 @@ Future<void> runningMain(
             appColors: appColors,
             loading: globalLoadingWidget,
             theme: theme,
+            countdown: countdown,
           )));
 }

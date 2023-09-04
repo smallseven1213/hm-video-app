@@ -1,5 +1,7 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 class ShortCardInfoTag extends StatelessWidget {
   const ShortCardInfoTag({Key? key, required this.name}) : super(key: key);
@@ -12,7 +14,7 @@ class ShortCardInfoTag extends StatelessWidget {
       decoration: kIsWeb
           ? null
           : BoxDecoration(
-              color: const Color.fromRGBO(66, 119, 220, 0.5),
+              color: Colors.black.withOpacity(0.4),
               borderRadius: BorderRadius.circular(100),
             ),
       child: Text(
