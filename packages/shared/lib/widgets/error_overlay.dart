@@ -35,6 +35,12 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   }
 
   @override
+  void dispose() {
+    responseController.apiResponse.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: showErrorMessage
