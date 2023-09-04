@@ -17,6 +17,7 @@ show_variables:
   script: 
     - echo $CI_COMMIT_REF_NAME
     - echo $test
+    - echo $test_tag
 
 testProd: 
   stage: preBuild2
@@ -26,7 +27,7 @@ testProd:
     refs: 
       - develop
     variables: 
-      - $CI_COMMIT_REF_NAME =~ /ra/
+      - $CI_COMMIT_REF_NAME =~ /ra/ || $test_tag =~/ra/
   script: 
     - echo ' i am testProd'  
 
