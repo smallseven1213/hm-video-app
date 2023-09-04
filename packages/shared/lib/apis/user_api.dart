@@ -271,8 +271,7 @@ class UserApi {
   // UP主(供應商)喜愛紀錄清單
   Future<List<Supplier>> getFavoriteSupplier() async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/users/user/supplierFollowRecord?film=1',
+        url: '${systemConfig.apiHost}/public/users/user/supplierFollowRecord',
         method: 'GET',
         shouldValidate: true);
     if (res.data['code'] != '00') {
