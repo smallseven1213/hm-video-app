@@ -1,8 +1,9 @@
-// VideoPlayerArea stateful widget
+import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
@@ -27,7 +28,7 @@ class VideoLoading extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.black.withOpacity(0.8),
-                      const Color.fromARGB(255, 0, 34, 79),
+                      AppColors.colors[ColorKeys.primary]!,
                     ],
                     stops: const [0.8, 1.0],
                   ),
