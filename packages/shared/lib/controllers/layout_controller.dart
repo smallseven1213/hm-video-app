@@ -11,6 +11,7 @@ class LayoutController extends GetxController {
   final int layoutId;
   var layout = <SlimChannel>[].obs;
   var isLoading = false.obs;
+  var style = 0.obs;
 
   final chnnaleApi = ChannelApi();
 
@@ -37,6 +38,7 @@ class LayoutController extends GetxController {
       }
       layout.value = res;
       isLoading.value = false;
+      style.value = res[0].style;
     } catch (e) {
       // print(e);
     }
