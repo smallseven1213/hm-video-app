@@ -12,25 +12,39 @@ class CountdownState extends State<Countdown>
     with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 54,
-      height: 54,
+    return Stack(
       alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: Colors.black38,
-        borderRadius: BorderRadius.circular(60),
-        border: Border.all(
-          width: 1.8,
-          color: Colors.white,
+      children: [
+        SizedBox(
+          width: 56,
+          height: 56,
+          child: TweenAnimationBuilder<double>(
+            tween: Tween<double>(begin: 0.0, end: 1),
+            duration: const Duration(milliseconds: 5000),
+            builder: (context, value, _) => CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 4,
+              value: value,
+            ),
+          ),
         ),
-      ),
-      child: Text(
-        widget.countdownSeconds == 0 ? '進入' : '${widget.countdownSeconds}S',
-        style: const TextStyle(
-          color: Colors.white,
-          fontSize: 18,
+        Container(
+          width: 54,
+          height: 54,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            color: Colors.black38,
+            borderRadius: BorderRadius.circular(60),
+          ),
+          child: Text(
+            widget.countdownSeconds == 0 ? '進入' : '${widget.countdownSeconds}S',
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          ),
         ),
-      ),
+      ],
     );
   }
 }
