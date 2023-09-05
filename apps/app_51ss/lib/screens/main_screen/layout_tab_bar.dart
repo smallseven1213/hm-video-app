@@ -42,9 +42,8 @@ class LayoutTabBar extends StatelessWidget {
           required List<Widget> tabItems,
           required Function(int) onTapTabItem,
         }) =>
-            Container(
+            SizedBox(
               width: double.infinity,
-              color: AppColors.colors[ColorKeys.primary],
               child: TabBar(
                   physics: kIsWeb ? null : const BouncingScrollPhysics(),
                   isScrollable: true,
