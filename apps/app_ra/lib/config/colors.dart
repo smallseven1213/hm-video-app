@@ -4,7 +4,7 @@ import 'package:shared/models/color_keys.dart';
 class AppColors {
   static const Map<ColorKeys, Color> colors = {
     // bg
-    ColorKeys.primary: Color(0xffFFC700),
+    ColorKeys.primary: Color(0xffFDDCEF),
     ColorKeys.accent: Color(0x00ffffff),
     ColorKeys.background: Color(0xff030923),
     // text

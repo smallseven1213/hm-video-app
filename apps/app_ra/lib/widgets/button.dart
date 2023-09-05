@@ -8,8 +8,8 @@ const buttonPadding = {
 };
 
 const buttonBg = {
-  'primary': Color(0xFFfe2c55),
-  'secondary': Color(0xFF1345a5),
+  'primary': Colors.transparent,
+  'secondary': Color(0xFF273262),
   'cancel': Color(0xffdedede),
 };
 
@@ -44,6 +44,12 @@ class Button extends StatelessWidget {
         child: CustomPaint(
           child: Container(
             padding: buttonPadding[size],
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: const Color(0xffFDDCEF),
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(25)),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -53,8 +59,8 @@ class Button extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      color: type == 'cancel'
-                          ? const Color(0xffb2bac5)
+                      color: type == 'secondary'
+                          ? const Color(0xffFDDCEF)
                           : Colors.white,
                       fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
