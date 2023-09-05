@@ -1,8 +1,10 @@
+import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_short_controller.dart';
 import 'package:shared/controllers/supplier_video_controller.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/supplier/card.dart';
@@ -78,7 +80,8 @@ class _SupplierPageState extends State<SupplierPage>
               // 返回一个 Sliver 数组给外部可滚动组件。
               return <Widget>[
                 SliverToBoxAdapter(
-                  child: SizedBox(
+                  child: Container(
+                    color: AppColors.colors[ColorKeys.primary],
                     height: MediaQuery.of(context).padding.top,
                   ),
                 ),

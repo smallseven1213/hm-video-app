@@ -1,6 +1,6 @@
 import 'package:app_51ss/config/colors.dart';
 import 'package:app_51ss/screens/main_screen/channels.dart';
-import 'package:app_51ss/widgets/wave_loading.dart';
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
@@ -22,14 +22,7 @@ class HomeMainScreen extends StatelessWidget {
           child: (isLoading) {
             if (isLoading) {
               return const Scaffold(
-                body: Center(
-                  child: WaveLoading(
-                    color: Color.fromRGBO(255, 255, 255, 0.3),
-                    duration: Duration(milliseconds: 1000),
-                    size: 17,
-                    itemCount: 3,
-                  ),
-                ),
+                body: Center(child: FlashLoading()),
               );
             }
             return Scaffold(

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -9,7 +10,6 @@ import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
-import 'wave_loading.dart';
 
 final List<String> loadingTextList = [
   '檔案很大，你忍一下',
@@ -96,14 +96,7 @@ class BaseShortPage extends StatelessWidget {
         videoId: videoId,
         itemId: itemId,
         onScrollBeyondFirst: onScrollBeyondFirst,
-        loadingWidget: const Center(
-          child: WaveLoading(
-            color: Color.fromRGBO(255, 255, 255, 0.3),
-            duration: Duration(milliseconds: 1000),
-            size: 17,
-            itemCount: 3,
-          ),
-        ),
+        loadingWidget: const Center(child: FlashLoading()),
         refreshIndicatorWidget: (refreshKey) => RefreshIndicatorWidget(
               key: Key(refreshKey),
             ),

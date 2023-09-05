@@ -14,6 +14,7 @@ import '../channel_banners.dart';
 import '../channel_jingang_area.dart';
 import '../channel_jingang_area_title.dart';
 import '../channel_style_3/tags.dart';
+import '../more_button.dart';
 import '../reload_button.dart';
 
 const gradiens = {
@@ -60,22 +61,13 @@ class ChannelStyle4 extends StatelessWidget {
                         child: SizedBox(height: 4),
                       ),
                       SliverToBoxAdapter(
-                        child: BlockHeader(
-                            text: '人氣女優',
-                            moreButton: GestureDetector(
-                                onTap: () => {
-                                      MyRouteDelegate.of(context).push(
-                                        AppRoutes.actors,
-                                      )
-                                    },
-                                child: const Text(
-                                  '更多 >',
-                                  style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
-                                ))),
-                      ),
+                          child: BlockHeader(
+                        text: '人氣女優',
+                        moreButton: MoreButton(
+                            onTap: () => MyRouteDelegate.of(context).push(
+                                  AppRoutes.actors,
+                                )),
+                      )),
                       const SliverToBoxAdapter(
                         child: SizedBox(height: 12),
                       ),
