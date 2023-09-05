@@ -16,9 +16,9 @@ class CountdownState extends State<Countdown>
       width: 90,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
-        color: const Color.fromRGBO(0, 0, 0, .5),
+        color: const Color.fromRGBO(0, 0, 0, 1),
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white, width: 1),
+        border: Border.all(color: Colors.white, width: 2),
       ),
       child: Center(
         child: Text(

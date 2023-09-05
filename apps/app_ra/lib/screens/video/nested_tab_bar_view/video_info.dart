@@ -1,4 +1,4 @@
-import 'package:app_gs/config/colors.dart';
+import 'package:app_ra/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';

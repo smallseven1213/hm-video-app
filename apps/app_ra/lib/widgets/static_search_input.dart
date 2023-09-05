@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
+
+import '../config/colors.dart';
 
 class StaticSearchInput extends StatelessWidget {
   final String defaultValue;
@@ -19,9 +22,10 @@ class StaticSearchInput extends StatelessWidget {
         height: 37,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          border: Border.all(color: const Color(0xFFFF3B52)),
-          color: Colors.white,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          border: Border.all(
+              color: AppColors.colors[ColorKeys.textPrimary]!, width: 2),
+          // color: Colors.white,
         ),
         child: Padding(
           padding: const EdgeInsets.all(4),
@@ -41,25 +45,25 @@ class StaticSearchInput extends StatelessWidget {
                   onTap: onInputClick,
                   child: Text(
                     defaultValue,
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),
-              Container(
-                width: 50,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  color: Color(0xFFFF3B52),
-                ),
-                child: TextButton(
-                  onPressed: onSearchButtonClick,
-                  child: const Text(
-                    '搜索',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: 50,
+              //   alignment: Alignment.center,
+              //   decoration: const BoxDecoration(
+              //     borderRadius: BorderRadius.all(Radius.circular(10)),
+              //     color: Color(0xFFFF3B52),
+              //   ),
+              //   child: TextButton(
+              //     onPressed: onSearchButtonClick,
+              //     child: const Text(
+              //       '搜索',
+              //       style: TextStyle(color: Colors.white),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
