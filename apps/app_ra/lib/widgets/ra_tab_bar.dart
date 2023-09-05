@@ -30,23 +30,27 @@ class RATabBar extends StatelessWidget implements PreferredSizeWidget {
             padding: const EdgeInsets.all(0),
             labelStyle: const TextStyle(fontSize: 15, color: Colors.black),
             labelPadding:
-                const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
-            labelColor: Colors.black,
-            unselectedLabelColor: const Color(0xff676970),
-            indicatorSize: TabBarIndicatorSize.label,
-            indicator: const UnderlineTabIndicator(
-              borderSide: BorderSide(
-                width: 3.0,
-                color: Colors.black,
+                const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+            indicator: BoxDecoration(
+              border: Border.all(
+                color: AppColors.colors[ColorKeys.textPrimary]!,
+                width: 2.0,
               ),
+              borderRadius: BorderRadius.circular(15.0),
             ),
+            indicatorSize: TabBarIndicatorSize.tab,
             tabs: tabs
-                .map((text) => Tab(
+                .map(
+                  (text) => Tab(
                     height: 24,
                     child: Text(
                       text,
-                      style: const TextStyle(fontSize: 15),
-                    )))
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: AppColors.colors[ColorKeys.textPrimary]!),
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ));
