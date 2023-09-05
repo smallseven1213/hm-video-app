@@ -63,11 +63,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   // AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
   //       id: args['id'] as int,
   //     ),
-  // AppRoutes.supplierTag: (context, args) =>
-  //     supplier_tag_video_page.SupplierTagVideoPage(
-  //       tagId: args['tagId'] as int,
-  //       tagName: args['tagName'],
-  //     ),
   // AppRoutes.shorts: (context, args) => shorts_by_common_page.ShortsByCommonPage(
   //       uuid: args['uuid'] as String,
   //       videoId: args['videoId'] as int,

@@ -11,7 +11,7 @@ class ShortTagVodController extends BaseVodInfinityScrollController {
 
   ShortTagVodController(
       {required this.tagId,
-      required ScrollController scrollController,
+      ScrollController? scrollController,
       bool loadDataOnInit = true})
       : super(
             loadDataOnInit: loadDataOnInit,

@@ -4,7 +4,6 @@ import 'package:shared/enums/shorts_type.dart';
 import '../enums/app_routes.dart';
 import '../models/tag.dart';
 import '../models/vod.dart';
-import '../models/publisher.dart';
 import '../navigator/delegate.dart';
 
 abstract class BaseVideoPreviewWidget extends StatelessWidget {
