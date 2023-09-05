@@ -11,7 +11,7 @@ class TagVodController extends BaseVodInfinityScrollController {
 
   TagVodController(
       {required this.tagId,
-      required ScrollController scrollController,
+      ScrollController? scrollController,
       bool loadDataOnInit = true})
       : super(
             loadDataOnInit: loadDataOnInit,

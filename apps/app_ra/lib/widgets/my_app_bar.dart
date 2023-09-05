@@ -35,7 +35,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Container(
                 height: 56.0,
                 width: 56.0,
-                color: Colors.transparent,
+                color: Color(0xFF030923),
                 child: const Center(
                   child: Icon(
                     Icons.arrow_back_ios_new,
@@ -46,11 +46,11 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             )
           : Container(),
-      backgroundColor: backgroundColor ?? Colors.white,
+      backgroundColor: backgroundColor ?? Color(0xFF030923),
       title: titleWidget ??
           Text(
             title!,
-            style: const TextStyle(fontSize: 15, color: Colors.black),
+            style: const TextStyle(fontSize: 15, color: Color(0xFFFDDCEF)),
           ),
       bottom: bottom,
       actions: actions, // 將actions添加到AppBar
