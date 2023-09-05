@@ -33,4 +33,6 @@ class AppRoutes {
   static const String updatePassword = '/update_password';
   static const String idCard = '/id_card';
   static const String suppliers = '/suppliers';
+  static const String vip = '/vip';
+  static const String coin = '/coin';
 }
