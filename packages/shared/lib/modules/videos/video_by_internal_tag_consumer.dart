@@ -4,6 +4,7 @@ import 'package:shared/controllers/video_by_internal_tag_controller.dart';
 
 import '../../models/vod.dart';
 
+// 同類型
 class VideoByInternalTagConsumer extends StatefulWidget {
   final String excludeId;
   final List internalTagIds;
