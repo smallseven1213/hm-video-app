@@ -56,20 +56,15 @@ class ViewInfo extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: kIsWeb
-            ? null
-            : const BorderRadius.vertical(bottom: Radius.circular(10)),
-        gradient: kIsWeb
-            ? null
-            : LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withOpacity(0.1),
-                  Colors.black.withOpacity(0.7),
-                ],
-                stops: const [0.05, 1.0],
-              ),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.black.withOpacity(0.1),
+            Colors.black.withOpacity(0.7),
+          ],
+          stops: const [0.05, 1.0],
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -81,7 +76,7 @@ class ViewInfo extends StatelessWidget {
 }
 
 class VideoPreviewWidget extends BaseVideoPreviewWidget {
-  VideoPreviewWidget({
+  const VideoPreviewWidget({
     Key? key,
     required int id,
     required String coverVertical,

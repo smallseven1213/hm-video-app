@@ -158,6 +158,7 @@ class RecommandScreenState extends State<RecommandScreen> {
                               displayVideoTimes: true,
                               displayViewTimes: true,
                               videoViewTimes: firstVideo.videoViewTimes!,
+                              displayVideoCollectTimes: false,
                               videoCollectTimes: firstVideo.videoCollectTimes!,
                             ),
                           ),
@@ -173,6 +174,7 @@ class RecommandScreenState extends State<RecommandScreen> {
                                     tags: secondVideo.tags!,
                                     title: secondVideo.title,
                                     videoViewTimes: secondVideo.videoViewTimes!,
+                                    displayVideoCollectTimes: false,
                                     videoCollectTimes:
                                         secondVideo.videoCollectTimes!,
                                   )
