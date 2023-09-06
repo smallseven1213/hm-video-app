@@ -6,10 +6,8 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:volume_control/volume_control.dart';
 
 import 'enums.dart';
-import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
-
 
 class ControlsOverlay extends StatefulWidget {
   final String videoUrl;
@@ -105,12 +103,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
               VolumeControl.setVolume(volume);
               videoPlayerInfo.videoPlayerController?.setVolume(volume);
-            
             } else {
               brightness = verticalDragPosition;
               brightness = brightness.clamp(0.0, 1.0);
               ScreenBrightness().setScreenBrightness(brightness);
-         
             }
 
             // 更新lastDragPosition以便于下次計算
@@ -167,12 +163,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     width: constraints.maxWidth,
                     color: Colors.transparent,
                   )),
-              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
-                PlayerHeader(
-                  isFullscreen: widget.isFullscreen,
-                  title: widget.name,
-                  toggleFullscreen: widget.toggleFullscreen,
-                ),
+              // if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+              //   PlayerHeader(
+              //     isFullscreen: widget.isFullscreen,
+              //     title: widget.name,
+              //     toggleFullscreen: widget.toggleFullscreen,
+              //   ),
               if (videoPlayerInfo.inBuffering && !videoPlayerInfo.isScrolling)
                 const Center(
                   child: CircularProgressIndicator(
