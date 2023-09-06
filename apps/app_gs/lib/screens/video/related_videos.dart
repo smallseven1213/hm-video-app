@@ -22,19 +22,18 @@ class RelatedVideos extends StatelessWidget {
     return TabBarView(
       controller: tabController,
       children: [
-        videoDetail.actors!.isEmpty
-            ? const SizedBox()
-            : VideoByActorConsumer(
-                excludeId: videoDetail.id.toString(),
-                actorId: [videoDetail.actors![0]],
-                child: (videos) {
-                  return VideoList(
-                    videos: videos,
-                    tabController: tabController,
-                    category: VideoFilterType.actor,
-                  );
-                },
-              ),
+        if (videoDetail.actors!.isNotEmpty)
+          VideoByActorConsumer(
+            excludeId: videoDetail.id.toString(),
+            actorId: [videoDetail.actors![0]],
+            child: (videos) {
+              return VideoList(
+                videos: videos,
+                tabController: tabController,
+                category: VideoFilterType.actor,
+              );
+            },
+          ),
         VideoByInternalTagConsumer(
           excludeId: videoDetail.id.toString(),
           internalTagIds: videoDetail.internalTagIds ?? [],

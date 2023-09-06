@@ -112,23 +112,22 @@ class NestedTabBarViewState extends State<NestedTabBarView>
           controller: _tabController,
           physics: const BouncingScrollPhysics(),
           children: [
-            widget.videoDetail.actors!.isEmpty
-                ? const SizedBox()
-                : VideoByActorConsumer(
-                    excludeId: widget.videoDetail.id.toString(),
-                    actorId: [widget.videoDetail.actors![0]],
-                    child: (videos) {
-                      return SliverVodGrid(
-                        key: const Key('video_by_actor'),
-                        isListEmpty: videos.isEmpty,
-                        videos: videos,
-                        displayNoMoreData: false,
-                        displayLoading: false,
-                        noMoreWidget: ListNoMore(),
-                        displayVideoCollectTimes: false,
-                      );
-                    },
-                  ),
+            if (widget.videoDetail.actors!.isNotEmpty)
+              VideoByActorConsumer(
+                excludeId: widget.videoDetail.id.toString(),
+                actorId: [widget.videoDetail.actors![0]],
+                child: (videos) {
+                  return SliverVodGrid(
+                    key: const Key('video_by_actor'),
+                    isListEmpty: videos.isEmpty,
+                    videos: videos,
+                    displayNoMoreData: false,
+                    displayLoading: false,
+                    noMoreWidget: ListNoMore(),
+                    displayVideoCollectTimes: false,
+                  );
+                },
+              ),
             VideoByInternalTagConsumer(
               excludeId: widget.videoDetail.id.toString(),
               internalTagIds: widget.videoDetail.internalTagIds ?? [],
