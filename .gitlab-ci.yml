@@ -2,7 +2,7 @@
 #
 #
 variables: 
-  test_tag: '2023.01.01.009.ra'
+  test_tag: '2023.01.01.009.ra.gs.tt.n51'
 
 stages:          # List of stages for jobs, and their order of execution
   - preBuild1
@@ -87,7 +87,7 @@ build-ra-job:       # This job runs in the build stage, which runs first.
     refs:
       - develop
     variables:
-      - $youda =~ /^$/ || $youda =~ /ra/
+      - $youda =~ /^$/ || $youda =~ /ra/ || $test_tag =~/ra/
   allow_failure: true
   script:
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ra -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ra:dev .
@@ -145,7 +145,7 @@ deploy-ra-job:      # This job runs in the deploy stage.
     refs:
       - develop
     variables:
-      - $youda =~ /^$/ || $youda =~ /ra/
+      - $youda =~ /^$/ || $youda =~ /ra/ || $test_tag =~/ra/
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ra" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ra/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ra -n video-dev
