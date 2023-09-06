@@ -108,6 +108,13 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
               .toInt();
           videoSize = ovpController.videoPlayerController!.value.size;
         });
+
+        if (ovpController.videoPlayerController!.value.duration ==
+            ovpController.videoPlayerController!.value.position) {
+          setState(() {
+            videoAction = 'end';
+          });
+        }
       }
     });
     super.initState();
