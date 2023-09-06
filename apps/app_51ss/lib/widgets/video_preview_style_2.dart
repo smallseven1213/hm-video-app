@@ -17,6 +17,7 @@ import 'video_embedded_ad.dart';
 class ViewInfo extends StatelessWidget {
   final int viewCount;
   final int duration;
+  final bool hasRadius;
   final int? videoCollectTimes;
   final bool? displayVideoCollectTimes;
   final bool? displayVideoTimes;
@@ -26,6 +27,7 @@ class ViewInfo extends StatelessWidget {
     Key? key,
     required this.viewCount,
     required this.duration,
+    required this.hasRadius,
     this.displayVideoCollectTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
@@ -56,6 +58,11 @@ class ViewInfo extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
+        borderRadius: hasRadius
+            ? const BorderRadius.vertical(
+                bottom: Radius.circular(10),
+              )
+            : null,
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
@@ -224,6 +231,7 @@ class VideoPreviewStyle2Widget extends BaseVideoPreviewWidget {
                               displayViewTimes: displayViewTimes,
                               displayVideoCollectTimes:
                                   displayVideoCollectTimes,
+                              hasRadius: hasTitle == true,
                             ),
                           )),
                   ]),
