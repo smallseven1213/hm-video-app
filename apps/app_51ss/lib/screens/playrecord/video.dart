@@ -76,7 +76,7 @@ class PlayRecordVideoScreen extends StatelessWidget {
                             coverHorizontal: video2.coverHorizontal ?? '',
                             coverVertical: video2.coverVertical ?? '',
                             videoViewTimes: video2.videoViewTimes!,
-                            // detail: video2.detail,
+                            displayVideoCollectTimes: false,
                           ))
                       : const SizedBox(),
                 ),

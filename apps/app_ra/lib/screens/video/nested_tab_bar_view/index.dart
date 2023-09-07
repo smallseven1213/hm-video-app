@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/block_videos_by_category_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/videos/video_by_actor_consumer.dart';
+import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
+import 'package:shared/modules/videos/video_by_tag_consumer.dart';
 
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/ra_tab_bar.dart';
@@ -32,40 +34,20 @@ class NestedTabBarView extends StatefulWidget {
 
 class NestedTabBarViewState extends State<NestedTabBarView>
     with SingleTickerProviderStateMixin {
-  late BlockVideosByCategoryController blockVideosController;
   late TabController _tabController;
 
   int tabIndex = 0;
-
-  String getIdList(List inputList) {
-    if (inputList.isEmpty) return '';
-    return inputList.take(3).map((e) => e.id.toString()).join(',');
-  }
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
         vsync: this, length: widget.videoDetail.actors!.isEmpty ? 2 : 3);
-
-    blockVideosController = Get.put(
-      BlockVideosByCategoryController(
-        tagId: getIdList(widget.videoDetail.tags!),
-        actorId: widget.videoDetail.actors!.isEmpty
-            ? null
-            : widget.videoDetail.actors![0].id.toString(),
-        excludeId: widget.videoDetail.id.toString(),
-        internalTagId: widget.videoDetail.internalTagIds!.join(',').toString(),
-      ),
-      tag: DateTime.now().toString(),
-    );
   }
 
   @override
   void dispose() {
-    // _parentScrollController.dispose();
     _tabController.dispose();
-
     super.dispose();
   }
 
@@ -126,44 +108,58 @@ class NestedTabBarViewState extends State<NestedTabBarView>
             )
           ];
         },
-        body: Obx(
-          () => TabBarView(
-            controller: _tabController,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              if (widget.videoDetail.actors!.isNotEmpty)
-                SliverVodGrid(
-                  key: const Key('video_by_actor'),
-                  isListEmpty: blockVideosController.videoByActor.isEmpty,
-                  videos: blockVideosController.videoByActor,
+        body: TabBarView(
+          controller: _tabController,
+          physics: const BouncingScrollPhysics(),
+          children: [
+            if (widget.videoDetail.actors!.isNotEmpty)
+              VideoByActorConsumer(
+                excludeId: widget.videoDetail.id.toString(),
+                actorId: [widget.videoDetail.actors![0]],
+                child: (videos) {
+                  return SliverVodGrid(
+                    key: const Key('video_by_actor'),
+                    isListEmpty: videos.isEmpty,
+                    videos: videos,
+                    displayNoMoreData: false,
+                    displayLoading: false,
+                    noMoreWidget: ListNoMore(),
+                    displayVideoCollectTimes: false,
+                  );
+                },
+              ),
+            VideoByInternalTagConsumer(
+              excludeId: widget.videoDetail.id.toString(),
+              internalTagIds: widget.videoDetail.internalTagIds ?? [],
+              child: (videos) {
+                return SliverVodGrid(
+                  key: const Key('video_by_internal_tag'),
+                  isListEmpty: videos.isEmpty,
+                  videos: videos,
                   displayNoMoreData: false,
                   displayLoading: false,
                   noMoreWidget: ListNoMore(),
                   displayVideoCollectTimes: false,
-                ),
-              SliverVodGrid(
-                key: const Key('video_by_internal_tag'),
-                isListEmpty: blockVideosController.videoByInternalTag.isEmpty,
-                videos: blockVideosController.videoByInternalTag,
-                displayNoMoreData: false,
-                displayLoading: false,
-                noMoreWidget: ListNoMore(),
-                displayVideoCollectTimes: false,
-              ),
-              SliverVodGrid(
-                key: const Key('video_by_tag'),
-                isListEmpty: blockVideosController.videoByTag.isEmpty,
-                videos: blockVideosController.videoByTag,
-                displayNoMoreData: false,
-                displayLoading: false,
-                noMoreWidget: ListNoMore(),
-                displayVideoCollectTimes: false,
-              ),
-            ],
-          ),
+                );
+              },
+            ),
+            VideoByTagConsumer(
+              excludeId: widget.videoDetail.id.toString(),
+              tags: widget.videoDetail.tags ?? [],
+              child: (videos) {
+                return SliverVodGrid(
+                  key: const Key('video_by_tag'),
+                  isListEmpty: videos.isEmpty,
+                  videos: videos,
+                  displayNoMoreData: false,
+                  displayLoading: false,
+                  noMoreWidget: ListNoMore(),
+                  displayVideoCollectTimes: false,
+                );
+              },
+            ),
+          ],
         ),
-        //   )
-        // ],
       ),
     );
   }

@@ -1,4 +1,6 @@
+import 'package:app_ra/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppBar({
@@ -35,25 +37,23 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: const SizedBox(
                 height: 56.0,
                 width: 56.0,
-                // color: const Color(0xFFFDDCEF),
+                color: Colors.transparent,
                 child: Center(
                   child: Icon(
                     Icons.arrow_back_ios_new,
                     size: 16,
-                    color: Color(0xFFFDDCEF),
+                    color: AppColors.colors[ColorKeys.textPrimary],
                   ),
                 ),
               ),
             )
           : Container(),
-      backgroundColor: backgroundColor ?? const Color(0xFF030923),
+      backgroundColor: backgroundColor ?? Colors.transparent,
       title: titleWidget ??
           Text(
             title!,
-            style: const TextStyle(
-                fontSize: 15,
-                color: Color(0xFFFDDCEF),
-                fontWeight: FontWeight.w800),
+            style: TextStyle(
+                fontSize: 15, color: AppColors.colors[ColorKeys.textPrimary]),
           ),
       bottom: bottom,
       actions: actions, // 將actions添加到AppBar

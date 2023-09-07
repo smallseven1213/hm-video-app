@@ -1,3 +1,5 @@
+import 'package:app_ra/screens/video/video_player_area/purchase_promotion.dart';
+import 'package:app_ra/screens/video/video_player_area/video_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
@@ -112,50 +114,62 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
           var aspectRatio = videoSize.width == 0 || videoSize.height == 0
               ? 16 / 9
               : videoSize.width / videoSize.height;
+          final coverHorizontal = widget.video.coverHorizontal ?? '';
+
+          if (videoPlayerInfo.videoAction == 'error') {
+            return VideoError(
+              coverHorizontal: coverHorizontal,
+              onTap: () {
+                videoPlayerInfo.videoPlayerController?.play();
+              },
+            );
+          }
+
+          if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
+              false) {
+            return VideoLoading(coverHorizontal: coverHorizontal);
+          }
+
+          if (widget.video.isAvailable == false &&
+              videoPlayerInfo.videoAction == 'end') {
+            return PurchasePromotion(
+              coverHorizontal: coverHorizontal,
+              buyPoints: widget.video.buyPoint.toString(),
+              timeLength: widget.video.timeLength ?? 0,
+              chargeType: widget.video.chargeType ?? 0,
+              videoId: widget.video.id,
+            );
+          }
+
+          print(
+              '@@@ videoPlayerInfo.videoAction: ${videoPlayerInfo.videoAction}');
 
           return Stack(
             alignment: Alignment.center,
             children: <Widget>[
-              if (videoPlayerInfo.videoAction == 'error') ...[
-                VideoError(
-                  coverHorizontal: widget.video.coverHorizontal ?? '',
-                  onTap: () {
-                    videoPlayerInfo.videoPlayerController?.play();
-                  },
-                ),
-              ] else if (videoPlayerInfo
-                      .videoPlayerController?.value.isInitialized ==
-                  true) ...[
-                AspectRatio(
-                  aspectRatio: aspectRatio,
-                  child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
-                ),
-                ControlsOverlay(
-                  videoUrl: widget.videoUrl,
-                  name: widget.video.title,
-                  isFullscreen: isFullscreen,
-                  onScreenLock: (bool isLocked) {
-                    setState(() {
-                      isScreenLocked = isLocked;
-                    });
-                    if (isLocked) {
-                      toggleFullscreen(fullScreen: true);
-                    } else {
-                      setScreenRotation();
-                    }
-                  },
-                  isScreenLocked: isScreenLocked,
-                  toggleFullscreen: (status) {
-                    toggleFullscreen(fullScreen: status);
-                  },
-                )
-              ] else if (videoPlayerInfo
-                      .videoPlayerController?.value.isInitialized ==
-                  false) ...[
-                VideoLoading(
-                  coverHorizontal: widget.video.coverHorizontal ?? '',
-                )
-              ],
+              AspectRatio(
+                aspectRatio: aspectRatio,
+                child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
+              ),
+              ControlsOverlay(
+                videoUrl: widget.videoUrl,
+                name: widget.video.title,
+                isFullscreen: isFullscreen,
+                onScreenLock: (bool isLocked) {
+                  setState(() {
+                    isScreenLocked = isLocked;
+                  });
+                  if (isLocked) {
+                    toggleFullscreen(fullScreen: true);
+                  } else {
+                    setScreenRotation();
+                  }
+                },
+                isScreenLocked: isScreenLocked,
+                toggleFullscreen: (status) {
+                  toggleFullscreen(fullScreen: status);
+                },
+              )
             ],
           );
         },
