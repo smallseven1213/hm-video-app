@@ -1,4 +1,5 @@
 // RegisterPage , has button , click push to '/register'
+import 'package:app_ra/widgets/forgot_password_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/register/register_scaffold.dart';
@@ -45,29 +46,17 @@ class RegisterPage extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '帳號密碼註冊',
-                    style: TextStyle(
-                      color: AppColors.colors[ColorKeys.textPrimary],
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
                 Column(
                   children: [
                     AuthTextField(
-                      label: '帳　　號',
+                      label: '帳號',
                       controller: accountController,
                       placeholderText: '請輸入帳號',
                       validator: validateUsername,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '密　　碼',
+                      label: '密碼',
                       obscureText: true,
                       controller: passwordController,
                       placeholderText: '請輸入密碼',
@@ -75,10 +64,10 @@ class RegisterPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '驗證密碼',
+                      label: '確認密碼',
                       obscureText: true,
                       controller: confirmPasswordController,
-                      placeholderText: '請輸入驗證密碼',
+                      placeholderText: '請輸入確認密碼',
                       validator: validateConfirmPassword,
                     ),
                   ],
@@ -89,48 +78,35 @@ class RegisterPage extends StatelessWidget {
                   child: Button(
                     text: '註冊',
                     type: 'primary',
+                    borderColor: Colors.white,
                     onPressed: () {
                       handleRegister();
                     },
                   ),
                 ),
                 const SizedBox(height: 20),
-                Column(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(children: [
-                          GestureDetector(
-                            onTap: () {
-                              MyRouteDelegate.of(context).push(AppRoutes.login,
-                                  deletePreviousCount: 1);
-                            },
-                            child: Column(children: [
-                              Text(
-                                '帳號密碼登入',
-                                style: TextStyle(
-                                  color: AppColors.colors[ColorKeys.textLink]
-                                      as Color,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ]),
-                          )
-                        ]),
-                        InkWell(
-                          onTap: () {},
-                          child: Text(
-                            '手機號登入',
+                    Column(children: [
+                      GestureDetector(
+                        onTap: () {
+                          MyRouteDelegate.of(context)
+                              .push(AppRoutes.login, deletePreviousCount: 1);
+                        },
+                        child: const Column(children: [
+                          Text(
+                            '登入',
                             style: TextStyle(
-                              color: AppColors.colors[ColorKeys.textLink],
+                              color: Colors.white,
                               fontSize: 12,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ]),
+                      )
+                    ]),
+                    const SizedBox(width: 20),
+                    const ForgotPasswordButton(),
                   ],
                 )
               ],

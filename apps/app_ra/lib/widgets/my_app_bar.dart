@@ -34,7 +34,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Container(
+              child: const SizedBox(
                 height: 56.0,
                 width: 56.0,
                 color: Colors.transparent,
