@@ -1,10 +1,12 @@
+import 'package:logger/logger.dart';
+
+import 'package:app_51ss/screens/games/game_lobby.dart';
 import 'package:app_51ss/screens/home/home_apps.dart';
 import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
@@ -34,7 +36,7 @@ final screens = {
           layoutId: 2,
         ),
       ),
-  // HomeNavigatorPathes.game: () => const GameScreen(),
+  HomeNavigatorPathes.game: () => const GameScreen(),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
 };
