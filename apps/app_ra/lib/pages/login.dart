@@ -46,25 +46,12 @@ class LoginPage extends StatelessWidget {
                     child: Column(
               children: [
                 const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '帳號密碼登入',
-                    style: TextStyle(
-                      color: AppColors.colors[ColorKeys.textPrimary],
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
                 AuthTextField(
                   label: '帳號',
                   controller: accountController,
                   placeholderText: '請輸入帳號',
                   validator: validateUsername,
                 ),
-                const SizedBox(height: 10),
                 AuthTextField(
                   label: '密碼',
                   controller: passwordController,
@@ -72,41 +59,33 @@ class LoginPage extends StatelessWidget {
                   obscureText: true,
                   validator: validatePassword,
                 ),
-                const ForgotPasswordButton(),
                 SizedBox(
                   width: double.infinity,
                   child: Button(
                     text: '登入',
+                    borderColor: Colors.white,
                     onPressed: () => handleLogin(),
                   ),
                 ),
                 const SizedBox(height: 15),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     InkWell(
                       onTap: () {
                         MyRouteDelegate.of(context)
                             .push(AppRoutes.register, deletePreviousCount: 1);
                       },
-                      child: Text(
-                        '還沒有帳號',
+                      child: const Text(
+                        '註冊',
                         style: TextStyle(
-                          color: AppColors.colors[ColorKeys.textLink],
+                          color: Colors.white,
                           fontSize: 12,
                         ),
                       ),
                     ),
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        '手機號登入',
-                        style: TextStyle(
-                          color: AppColors.colors[ColorKeys.textLink],
-                          fontSize: 12,
-                        ),
-                      ),
-                    ),
+                    const SizedBox(width: 20),
+                    const ForgotPasswordButton(),
                   ],
                 ),
               ],

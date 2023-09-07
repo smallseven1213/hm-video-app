@@ -15,6 +15,7 @@ const buttonBg = {
 
 class Button extends StatelessWidget {
   final String text;
+  final Color? borderColor;
   final VoidCallback onPressed;
 
   final dynamic icon; // GlowingIcon or Icon
@@ -25,6 +26,7 @@ class Button extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
+    this.borderColor,
     this.icon,
     this.type = 'primary',
     this.size = 'medium',
@@ -46,7 +48,7 @@ class Button extends StatelessWidget {
             padding: buttonPadding[size],
             decoration: BoxDecoration(
                 border: Border.all(
-                  color: const Color(0xffFDDCEF),
+                  color: borderColor ?? const Color(0xffFDDCEF),
                   width: 2,
                 ),
                 borderRadius: BorderRadius.circular(25)),

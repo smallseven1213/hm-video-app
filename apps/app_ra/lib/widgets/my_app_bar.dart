@@ -32,25 +32,28 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: Container(
+              child: const SizedBox(
                 height: 56.0,
                 width: 56.0,
-                color: Color(0xFF030923),
-                child: const Center(
+                // color: const Color(0xFFFDDCEF),
+                child: Center(
                   child: Icon(
                     Icons.arrow_back_ios_new,
                     size: 16,
-                    color: Colors.black,
+                    color: Color(0xFFFDDCEF),
                   ),
                 ),
               ),
             )
           : Container(),
-      backgroundColor: backgroundColor ?? Color(0xFF030923),
+      backgroundColor: backgroundColor ?? const Color(0xFF030923),
       title: titleWidget ??
           Text(
             title!,
-            style: const TextStyle(fontSize: 15, color: Color(0xFFFDDCEF)),
+            style: const TextStyle(
+                fontSize: 15,
+                color: Color(0xFFFDDCEF),
+                fontWeight: FontWeight.w800),
           ),
       bottom: bottom,
       actions: actions, // 將actions添加到AppBar
