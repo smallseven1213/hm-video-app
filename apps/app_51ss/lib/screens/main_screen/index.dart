@@ -36,9 +36,14 @@ class HomeMainScreen extends StatelessWidget {
                 Positioned(
                     child: Column(
                   children: [
-                    Container(
-                      color: AppColors.colors[ColorKeys.primary],
-                      height: MediaQuery.of(context).padding.top,
+                    LayoutStyleTabBgColorConsumer(
+                      layoutId: layoutId,
+                      child: (({required bool needTabBgColor}) => Container(
+                            color: needTabBgColor
+                                ? AppColors.colors[ColorKeys.primary]
+                                : Colors.transparent,
+                            height: MediaQuery.of(context).padding.top,
+                          )),
                     ),
                     DisplayLayoutTabSearchConsumer(
                       layoutId: layoutId,
