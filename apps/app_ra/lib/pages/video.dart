@@ -73,7 +73,8 @@ class VideoState extends State<Video> {
 
         return Scaffold(
           appBar: MyAppBar(
-            titleWidget: video!.chargeType != ChargeType.free.index
+            titleWidget: video!.chargeType != ChargeType.free.index &&
+                    video.buyPoint != 0
                 ? video.chargeType == ChargeType.vip.index
                     ? Align(
                         alignment: Alignment.centerRight,
