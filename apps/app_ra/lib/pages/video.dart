@@ -1,16 +1,16 @@
+import 'package:app_ra/utils/purchase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:shared/apis/user_api.dart';
-import 'package:shared/controllers/video_detail_controller.dart';
+import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import '../config/colors.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
 import '../screens/video/video_player_area/enums.dart';
@@ -31,6 +31,7 @@ class Video extends StatefulWidget {
 }
 
 const gridRatio = 128 / 227;
+final vodApi = VodApi();
 
 class VideoState extends State<Video> {
   final ScrollController _controller = ScrollController();
@@ -88,26 +89,29 @@ class VideoState extends State<Video> {
                           ),
                         ),
                       )
-                    : Align(
-                        alignment: Alignment.centerRight,
-                        child: InkWell(
-                          onTap: () {
-                            // 這邊做付費
-                            // call pay api
-                            // 付費成功後，要更新 video.isAvailable = true
-                            final controllerTag =
-                                genaratorLongVideoDetailTag(id.toString());
-                            Get.find<VideoDetailController>(tag: controllerTag);
-                          },
-                          child: Text(
-                            '${video.buyPoint}金幣解鎖',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: AppColors.colors[ColorKeys.textPrimary],
-                            ),
-                          ),
-                        ),
-                      )
+                    : VideoPlayerConsumer(
+                        tag: videoUrl,
+                        child: (videoPlayerInfo) {
+                          return Align(
+                              alignment: Alignment.centerRight,
+                              child: InkWell(
+                                onTap: () => purchase(
+                                  context,
+                                  id: id,
+                                  onSuccess: () => videoPlayerInfo
+                                      .videoPlayerController
+                                      ?.play(),
+                                ),
+                                child: Text(
+                                  '${video.buyPoint}金幣解鎖',
+                                  style: TextStyle(
+                                    fontSize: 15,
+                                    color:
+                                        AppColors.colors[ColorKeys.textPrimary],
+                                  ),
+                                ),
+                              ));
+                        })
                 : const SizedBox(),
           ),
           body: SafeArea(

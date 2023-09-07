@@ -73,6 +73,7 @@ Future<dynamic> fetcher({
     } else {
       // 其他錯誤處理
       responseController.emitEvent(e.response?.statusCode ?? 0, 'Other error');
+      return e.response;
     }
     rethrow;
   }

@@ -138,6 +138,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
               timeLength: widget.video.timeLength ?? 0,
               chargeType: widget.video.chargeType ?? 0,
               videoId: widget.video.id,
+              videoPlayerInfo: videoPlayerInfo,
             );
           }
 
