@@ -17,12 +17,12 @@ final logger = Logger();
 
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
-  final Vod videoBase;
+  final Vod video;
   final String videoUrl;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
-    required this.videoBase,
+    required this.video,
     required this.videoUrl,
   }) : super(key: key);
 
@@ -49,23 +49,32 @@ class NestedTabBarViewState extends State<NestedTabBarView>
           return <Widget>[
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoInfo(
-                  videoPlayerController: obsVideoPlayerController,
-                  externalId: widget.videoDetail.externalId ?? '',
-                  title: widget.videoDetail.title,
-                  tags: widget.videoDetail.tags ?? [],
-                  timeLength: widget.videoDetail.timeLength ?? 0,
-                  viewTimes: widget.videoDetail.videoViewTimes ?? 0,
-                  actor: widget.videoDetail.actors,
-                  publisher: widget.videoDetail.publisher,
-                ),
-              ),
+                  padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
+                  child: VideoInfo(
+                    videoPlayerController: obsVideoPlayerController,
+                    externalId: widget.video.externalId ?? '',
+                    title: widget.video.title,
+                    tags: widget.video.tags ?? [],
+                    timeLength: widget.video.timeLength ?? 0,
+                    actor: widget.video.actors,
+                    publisher: widget.video.publisher,
+                    viewTimes: widget.videoDetail.videoViewTimes ?? 0,
+                  )),
             ),
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoActions(videoDetail: widget.videoDetail),
+                child: VideoActions(
+                  videoDetail: Vod(
+                    widget.video.id,
+                    widget.video.title,
+                    coverHorizontal: widget.video.coverHorizontal!,
+                    coverVertical: widget.video.coverVertical!,
+                    timeLength: widget.video.timeLength!,
+                    tags: widget.video.tags!,
+                    videoViewTimes: widget.videoDetail.videoViewTimes!,
+                  ),
+                ),
               ),
             ),
             const SliverToBoxAdapter(
