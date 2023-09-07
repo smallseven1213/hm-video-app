@@ -9,10 +9,14 @@ import '../../widgets/sliver_vod_grid.dart';
 class VendorVideoList extends StatefulWidget {
   final String type;
   final int publisherId;
+  final bool displayVideoTimes;
 
-  const VendorVideoList(
-      {Key? key, required this.type, required this.publisherId})
-      : super(key: key);
+  const VendorVideoList({
+    Key? key,
+    required this.type,
+    required this.publisherId,
+    required this.displayVideoTimes,
+  }) : super(key: key);
 
   @override
   VendorVideoListState createState() => VendorVideoListState();
@@ -38,6 +42,7 @@ class VendorVideoListState extends State<VendorVideoList> {
           displayLoading: publisherVodController.displayLoading.value,
           noMoreWidget: ListNoMore(),
           customScrollController: publisherVodController.scrollController,
+          displayVideoTimes: widget.displayVideoTimes,
         ));
   }
 
