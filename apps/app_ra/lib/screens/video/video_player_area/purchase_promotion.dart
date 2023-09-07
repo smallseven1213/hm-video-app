@@ -1,14 +1,13 @@
 import 'dart:ui';
 import 'package:app_ra/config/colors.dart';
 import 'package:app_ra/screens/video/video_player_area/enums.dart';
+import 'package:app_ra/utils/purchase.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/apis/vod_api.dart';
@@ -33,45 +32,46 @@ class Vip extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Column(
-            children: [
-              // todo : 標題：試看結束，升級觀看完整版
-              Text(
-                '試看結束，升級觀看完整版',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // todo : 標題：試看結束，升級觀看完整版
+            const Text(
+              '試看結束，升級觀看完整版',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
               ),
-              // todo : 內容：片長：{時間}
-              Text(
-                '片長：${getTimeString(timeLength)}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+            ),
+            Text(
+              '片長：${getTimeString(timeLength)}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
               ),
-              // todo : 內容：解鎖後可完整播放
-              Text(
-                '解鎖後可完整播放',
-                style: TextStyle(
-                  color: AppColors.colors[ColorKeys.primary],
-                  fontSize: 12,
-                ),
+            ),
+            // todo : 內容：解鎖後可完整播放
+            Text(
+              '解鎖後可完整播放',
+              style: TextStyle(
+                color: AppColors.colors[ColorKeys.primary],
+                fontSize: 12,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
+        const SizedBox(width: 15),
         // 開通VIP按鈕
         SizedBox(
           width: 87,
           height: 35,
           child: Button(
             text: '開通VIP',
+            size: 'small',
             onPressed: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
           ),
         ),
@@ -86,25 +86,14 @@ class Coin extends StatelessWidget {
   final String buyPoints;
   final String userPoints;
   final int videoId;
+  final VideoPlayerInfo videoPlayerInfo;
   const Coin({
     super.key,
     required this.buyPoints,
     required this.userPoints,
     required this.videoId,
+    required this.videoPlayerInfo,
   });
-
-  purchase(context) async {
-    try {
-      // 這邊做付費
-      var results = await vodApi.purchase(videoId);
-      MyRouteDelegate.of(context).pop();
-      // 付費成功後，mutate同一支影片
-      final controllerTag = genaratorLongVideoDetailTag(videoId.toString());
-      Get.find<VideoDetailController>(tag: controllerTag);
-    } catch (e) {
-      print('e: $e');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,12 +122,16 @@ class Coin extends StatelessWidget {
         const SizedBox(height: 10),
         SizedBox(
           width: 183,
-          child: int.parse(userPoints) < int.parse(buyPoints)
-              ? Button(
-                  text: '金幣不足，立即購買',
-                  onPressed: () =>
-                      MyRouteDelegate.of(context).push(AppRoutes.coin))
-              : Button(text: '立即付費觀看', onPressed: () => purchase(context)),
+          child: Button(
+            text: int.parse(userPoints) < int.parse(buyPoints)
+                ? '金幣不足，立即購買'
+                : '立即付費觀看',
+            onPressed: () => purchase(
+              context,
+              id: videoId,
+              onSuccess: () => videoPlayerInfo.videoPlayerController?.play(),
+            ),
+          ),
         )
       ],
     );
@@ -151,6 +144,7 @@ class PurchasePromotion extends StatelessWidget {
   final int timeLength;
   final int chargeType;
   final int videoId;
+  final VideoPlayerInfo videoPlayerInfo;
 
   const PurchasePromotion({
     Key? key,
@@ -159,6 +153,7 @@ class PurchasePromotion extends StatelessWidget {
     required this.timeLength,
     required this.chargeType,
     required this.videoId,
+    required this.videoPlayerInfo,
   }) : super(key: key);
 
   @override
@@ -192,6 +187,7 @@ class PurchasePromotion extends StatelessWidget {
                       userPoints: info.usedPoints ?? '0',
                       buyPoints: buyPoints,
                       videoId: videoId,
+                      videoPlayerInfo: videoPlayerInfo,
                     );
                   },
                 ),
