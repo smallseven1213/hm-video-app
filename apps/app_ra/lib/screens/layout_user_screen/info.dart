@@ -8,6 +8,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/avatar.dart';
+import '../../widgets/button.dart';
 
 final logger = Logger();
 const Color baseColor = Color(0xFF003068);
@@ -34,22 +35,7 @@ class UserInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 120,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(
-          color: const Color(0xFF00B2FF),
-          width: 1,
-        ),
-        gradient: const LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xFF000916),
-            Color(0xFF003F6C),
-          ],
-          stops: [0.0, 1.0],
-        ),
-      ),
+      color: Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Stack(
@@ -88,9 +74,9 @@ class UserInfo extends StatelessWidget {
                                   return Text(
                                     info.nickname ?? '',
                                     style: const TextStyle(
-                                      fontSize: 14,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w700,
+                                      fontSize: 16,
+                                      color: Color(0xFFFDDCEF),
+                                      fontWeight: FontWeight.w800,
                                     ),
                                   );
                                 },
@@ -136,7 +122,6 @@ class UserInfo extends StatelessWidget {
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.white,
-                                fontWeight: FontWeight.w700,
                               ),
                             );
                           },
@@ -146,71 +131,136 @@ class UserInfo extends StatelessWidget {
                   ],
                 ),
               ),
-              UserInfoConsumer(child: ((info, isVIP, isGuest) {
-                if (isGuest) {
-                  return Expanded(
-                    flex: 1,
-                    child: GestureDetector(
-                      onTap: () {
-                        MyRouteDelegate.of(context).push(AppRoutes.login);
-                      },
-                      child: const Text(
-                        '註冊/登入',
-                        style: TextStyle(
-                          color: Color(0xffFFC700),
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          shadows: [
-                            Shadow(
-                              color: Color(0xffFF7A00),
-                              offset: Offset(0, 0),
-                              blurRadius: 5,
-                            ),
+              SizedBox(
+                  width: 150,
+                  child: UserInfoConsumer(child: ((info, isVIP, isGuest) {
+                    if (isGuest) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          // 註冊 and 登入按鈕
+                          SizedBox(
+                            width: 60,
+                            height: 35,
+                            child: Button(
+                                size: 'small',
+                                onPressed: () {
+                                  MyRouteDelegate.of(context)
+                                      .push(AppRoutes.register);
+                                },
+                                text: '註冊'),
+                          ),
+                          const SizedBox(width: 10),
+                          SizedBox(
+                            width: 60,
+                            height: 35,
+                            child: Button(
+                                size: 'small',
+                                onPressed: () {
+                                  MyRouteDelegate.of(context)
+                                      .push(AppRoutes.login);
+                                },
+                                text: '登入'),
+                          ),
+                        ],
+                      );
+                    } else if (info.nickname != null) {
+                      if (isVIP) {
+                        return Column(
+                          children: [
+                            const Text('永久至尊特權會員',
+                                style: TextStyle(
+                                  color: const Color(0xFFFDDCEF),
+                                  fontSize: 16,
+                                )),
+                            Text('效期至 ${info.vipExpiredAt}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                )),
                           ],
-                        ),
-                      ),
-                    ),
-                  );
-                } else {
-                  return const SizedBox();
-                }
-              }))
+                        );
+                      } else {
+                        return SizedBox(
+                          width: 70,
+                          height: 35,
+                          child: Button(
+                              size: 'small',
+                              onPressed: () {
+                                MyRouteDelegate.of(context)
+                                    .push(AppRoutes.login);
+                              },
+                              text: '開通VIP'),
+                        );
+                      }
+                    }
+                    return Container();
+                  })))
+              // Expanded(
+              //   flex: 1,
+              // child: UserInfoConsumer(child: ((info, isVIP, isGuest) {
+              //   if (isGuest) {
+              //     return Row(
+              //       children: [
+              //         // 註冊 and 登入按鈕
+              //         Text('hihi',
+              //             style: const TextStyle(color: Colors.white)),
+              //         Button(
+              //             onPressed: () {
+              //               MyRouteDelegate.of(context)
+              //                   .push(AppRoutes.register);
+              //             },
+              //             text: '註冊'),
+              //         const SizedBox(width: 10),
+              //         Button(
+              //             onPressed: () {
+              //               MyRouteDelegate.of(context).push(AppRoutes.login);
+              //             },
+              //             text: '登入'),
+              //       ],
+              //     );
+              //   } else {
+              //     return const SizedBox();
+              //   }
+              // })),
+              // ),
             ],
           ),
-          Positioned(
-            top: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.configs);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: const Image(
-                  image:
-                      AssetImage('assets/images/user_screen_config_button.png'),
-                  width: 15,
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            top: 0,
-            right: 30,
-            child: GestureDetector(
-              onTap: () {
-                MyRouteDelegate.of(context).push(AppRoutes.notifications);
-              },
-              child: Container(
-                padding: const EdgeInsets.all(5),
-                child: const Image(
-                  image:
-                      AssetImage('assets/images/user_screen_notice_button.png'),
-                  width: 15,
-                ),
-              ),
-            ),
-          ),
+          // Positioned(
+          //   top: 0,
+          //   right: 0,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       MyRouteDelegate.of(context).push(AppRoutes.configs);
+          //     },
+          //     child: Container(
+          //       padding: const EdgeInsets.all(5),
+          //       child: const Image(
+          //         image:
+          //             AssetImage('assets/images/user_screen_config_button.png'),
+          //         width: 15,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          // Positioned(
+          //   top: 0,
+          //   right: 30,
+          //   child: GestureDetector(
+          //     onTap: () {
+          //       MyRouteDelegate.of(context).push(AppRoutes.notifications);
+          //     },
+          //     child: Container(
+          //       padding: const EdgeInsets.all(5),
+          //       child: const Image(
+          //         image:
+          //             AssetImage('assets/images/user_screen_notice_button.png'),
+          //         width: 15,
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
