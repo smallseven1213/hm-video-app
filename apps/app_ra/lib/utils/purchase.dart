@@ -17,6 +17,7 @@ void purchase(
 }) async {
   try {
     HMApiResponse results = await vodApi.purchase(id);
+    bool coinNotEnough = results.code == '50508';
     if (results.code == '00') {
       // 付費成功後，重新取得影片Url
       final controllerTag = genaratorLongVideoDetailTag(id.toString());
@@ -28,12 +29,11 @@ void purchase(
       if (context.mounted) {
         showConfirmDialog(
           context: context,
-          title: results.code == '50508' ? '金幣餘額不足' : '購買失敗',
-          message:
-              results.code == '50508' ? '請立即前往充值已獲得最完整的體驗' : results.message,
+          title: coinNotEnough ? '金幣餘額不足' : '購買失敗',
+          message: coinNotEnough ? '請立即前往充值已獲得最完整的體驗' : results.message,
           showCancelButton: false,
           onConfirm: () {
-            results.code == '50508'
+            coinNotEnough
                 ? MyRouteDelegate.of(context).push(AppRoutes.coin)
                 : Navigator.of(context).pop();
           },
