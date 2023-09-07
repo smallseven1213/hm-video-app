@@ -56,6 +56,12 @@ class UserScreenState extends State<UserScreen> {
           body: CustomScrollView(
             physics: kIsWeb ? null : const BouncingScrollPhysics(),
             slivers: [
+              SliverToBoxAdapter(
+                child: Container(
+                  color: AppColors.colors[ColorKeys.primary],
+                  height: MediaQuery.of(context).padding.top,
+                ),
+              ),
               const SliverToBoxAdapter(
                 child: UserInfo(),
               ),
