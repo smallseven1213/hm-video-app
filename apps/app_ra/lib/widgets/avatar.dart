@@ -78,27 +78,39 @@ class Avatar extends StatelessWidget {
                     ),
             ),
             child: hasNoAvatar
+                // ? Container(
+                //     width: 60,
+                //     height: 60,
+                //     decoration: const BoxDecoration(
+                //       shape: BoxShape.circle,
+                //       gradient: kIsWeb
+                //           ? null
+                //           : LinearGradient(
+                //               begin: Alignment.topCenter,
+                //               end: Alignment.bottomCenter,
+                //               colors: [
+                //                 Color(0xFF002D46),
+                //                 Color(0xFF0085D0),
+                //               ],
+                //             ),
+                //     ),
+                //     child: const Center(
+                //       child: Image(
+                //           width: 33,
+                //           image:
+                //               AssetImage('assets/images/user_not_login.png')),
+                //     ),
+                //   )
                 ? Container(
-                    width: 60,
-                    height: 60,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: kIsWeb
-                          ? null
-                          : LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Color(0xFF002D46),
-                                Color(0xFF0085D0),
-                              ],
-                            ),
-                    ),
-                    child: const Center(
-                      child: Image(
-                          width: 33,
-                          image:
-                              AssetImage('assets/images/user_not_login.png')),
+                    width: 20,
+                    height: 20,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFD9D9D9),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: const Color(0xFFFDDCEF),
+                        width: 2,
+                      ),
                     ),
                   )
                 : CircleAvatar(
