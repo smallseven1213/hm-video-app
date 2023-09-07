@@ -31,12 +31,13 @@ void purchase(
           context: context,
           title: coinNotEnough ? '金幣餘額不足' : '購買失敗',
           message: coinNotEnough ? '請立即前往充值已獲得最完整的體驗' : results.message,
-          showCancelButton: false,
-          onConfirm: () {
-            coinNotEnough
-                ? MyRouteDelegate.of(context).push(AppRoutes.coin)
-                : Navigator.of(context).pop();
-          },
+          showCancelButton: coinNotEnough,
+          confirmButtonText: '前往充值',
+          cancelButtonText: '取消',
+          onConfirm: () => coinNotEnough
+              ? MyRouteDelegate.of(context).push(AppRoutes.coin)
+              : Navigator.of(context).pop(),
+          onCancel: () => Navigator.of(context).pop(),
         );
       }
     }
