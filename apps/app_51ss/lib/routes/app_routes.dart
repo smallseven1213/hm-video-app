@@ -30,6 +30,7 @@ import '../pages/update_password.dart' as update_password_page;
 import '../pages/playrecord.dart' as playrecord_page;
 import '../pages/favorites.dart' as favorites_page;
 import '../pages/video.dart' as video_page;
+import '../pages/nickname.dart' as nickname_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -97,4 +98,5 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         id: args['id'] as int,
       ),
   AppRoutes.video: (context, args) => video_page.Video(args: args),
+  AppRoutes.nickname: (context, args) => const nickname_page.NicknamePage(),
 };
