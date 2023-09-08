@@ -5,6 +5,7 @@ import 'package:app_ra/utils/purchase.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/models/index.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -179,12 +180,12 @@ class PurchasePromotion extends StatelessWidget {
           child: chargeType == ChargeType.vip.index
               ? Vip(timeLength: timeLength)
               : UserInfoConsumer(
-                  child: (info, isVIP, isGuest) {
+                  child: (User info, isVIP, isGuest) {
                     if (info.id.isEmpty) {
                       return const SizedBox();
                     }
                     return Coin(
-                      userPoints: info.usedPoints ?? '0',
+                      userPoints: info.points ?? '0',
                       buyPoints: buyPoints,
                       videoId: videoId,
                       videoPlayerInfo: videoPlayerInfo,

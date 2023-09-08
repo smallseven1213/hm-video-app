@@ -9,6 +9,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/title.dart';
+import 'package:video_player/video_player.dart';
 
 final logger = Logger();
 
@@ -20,7 +21,7 @@ class VideoInfo extends StatelessWidget {
   final int viewTimes;
   final List<Actor>? actor;
   final Publisher? publisher;
-  final ObservableVideoPlayerController? videoPlayerController;
+  final VideoPlayerController? videoPlayerController;
 
   const VideoInfo({
     super.key,

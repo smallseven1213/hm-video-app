@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/videos/video_by_actor_consumer.dart';
 import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 import 'package:shared/modules/videos/video_by_tag_consumer.dart';
@@ -53,8 +52,6 @@ class NestedTabBarViewState extends State<NestedTabBarView>
 
   @override
   Widget build(BuildContext context) {
-    final obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
     final List<String> tabs = widget.videoDetail.actors!.isEmpty
         ? ['同類型', '同標籤']
         : ['同演員', '同類型', '同標籤'];
@@ -67,15 +64,21 @@ class NestedTabBarViewState extends State<NestedTabBarView>
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoInfo(
-                  videoPlayerController: obsVideoPlayerController,
-                  externalId: widget.videoDetail.externalId ?? '',
-                  title: widget.videoDetail.title,
-                  tags: widget.videoDetail.tags ?? [],
-                  timeLength: widget.videoDetail.timeLength ?? 0,
-                  viewTimes: widget.videoDetail.videoViewTimes ?? 0,
-                  actor: widget.videoDetail.actors,
-                  publisher: widget.videoDetail.publisher,
+                child: VideoPlayerConsumer(
+                  tag: widget.videoUrl,
+                  child: (videoPlayerInfo) {
+                    return VideoInfo(
+                      videoPlayerController:
+                          videoPlayerInfo.videoPlayerController,
+                      externalId: widget.videoDetail.externalId ?? '',
+                      title: widget.videoDetail.title,
+                      tags: widget.videoDetail.tags ?? [],
+                      timeLength: widget.videoDetail.timeLength ?? 0,
+                      viewTimes: widget.videoDetail.videoViewTimes ?? 0,
+                      actor: widget.videoDetail.actors,
+                      publisher: widget.videoDetail.publisher,
+                    );
+                  },
                 ),
               ),
             ),
