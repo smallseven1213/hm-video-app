@@ -25,12 +25,12 @@ void main() async {
     allRoutes.keys.first,
     // [必填]DlJSON來源
     [
-      // 'https://dl.122349323.store/$env/dl.json',
-      // 'https://dl.dl51ss.com/$env/dl.json',
-      // 'https://dl.dl51ss.net/$env/dl.json',
+      'https://dl.122349323.store/$env/dl.json',
+      'https://dl.dl51ss.com/$env/dl.json',
+      'https://dl.dl51ss.net/$env/dl.json',
       //先使用sv的配置
-      'https://dl.dlsv.net/$env/dl.json',
-      'https://dl.dlsv.app/$env/dl.json'
+      // 'https://dl.dlsv.net/$env/dl.json',
+      // 'https://dl.dlsv.app/$env/dl.json'
     ],
     allRoutes,
     AppColors.colors,
