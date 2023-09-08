@@ -188,7 +188,8 @@ class ListMenuState extends State<ListMenu> {
                             padding: const EdgeInsets.all(5),
                             child: SidImage(
                               sid: item.icon,
-                              width: 20,
+                              width: 18,
+                              height: 18,
                             ),
                           ),
                           const SizedBox(width: 16),
