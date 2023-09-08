@@ -31,7 +31,7 @@ Future<bool?> showConfirmDialog({
             width: 280,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(6),
-              color: Colors.white,
+              color: AppColors.colors[ColorKeys.background],
             ),
             child: Column(
               children: [

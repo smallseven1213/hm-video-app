@@ -1,7 +1,10 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:game/models/hm_api_response_pagination.dart';
+import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/models/hm_api_response.dart';
+import '../controllers/response_controller.dart';
 import '../enums/shorts_type.dart';
 import '../models/area_info_with_block_vod.dart';
 import '../models/block_vod.dart';
@@ -23,15 +26,15 @@ class VodApi {
     return _instance;
   }
 
-  Future<String> purchase(int videoId) async {
-    var res = await fetcher(
+  Future<HMApiResponse> purchase(int videoId) async {
+    var value = await fetcher(
         url: '${systemConfig.apiHost}/public/videos/video/purchase',
         method: 'POST',
         body: {'videoId': videoId});
-    if (res.data['code'] != '00') {
-      return '';
-    }
-    return res.data['data'];
+
+    var res = (value.data as Map<String, dynamic>);
+    return HMApiResponse.fromJson(res);
+
     // 00 購買成功
     // 01 點數不足
     // 02 重複購買

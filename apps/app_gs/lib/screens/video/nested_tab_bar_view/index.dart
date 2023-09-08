@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/block_videos_by_category_controller.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/videos/video_by_actor_consumer.dart';
+import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
+import 'package:shared/modules/videos/video_by_tag_consumer.dart';
 
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/sliver_vod_grid.dart';
@@ -17,12 +19,12 @@ final logger = Logger();
 
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
-  final Vod videoBase;
+  final Vod video;
   final String videoUrl;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
-    required this.videoBase,
+    required this.video,
     required this.videoUrl,
   }) : super(key: key);
 
@@ -32,40 +34,20 @@ class NestedTabBarView extends StatefulWidget {
 
 class NestedTabBarViewState extends State<NestedTabBarView>
     with SingleTickerProviderStateMixin {
-  late BlockVideosByCategoryController blockVideosController;
   late TabController _tabController;
 
   int tabIndex = 0;
-
-  String getIdList(List inputList) {
-    if (inputList.isEmpty) return '';
-    return inputList.take(3).map((e) => e.id.toString()).join(',');
-  }
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
-        vsync: this, length: widget.videoDetail.actors!.isEmpty ? 2 : 3);
-
-    blockVideosController = Get.put(
-      BlockVideosByCategoryController(
-        tagId: getIdList(widget.videoDetail.tags!),
-        actorId: widget.videoDetail.actors!.isEmpty
-            ? null
-            : widget.videoDetail.actors![0].id.toString(),
-        excludeId: widget.videoDetail.id.toString(),
-        internalTagId: widget.videoDetail.internalTagIds!.join(',').toString(),
-      ),
-      tag: DateTime.now().toString(),
-    );
+        vsync: this, length: widget.video.actors!.isEmpty ? 2 : 3);
   }
 
   @override
   void dispose() {
-    // _parentScrollController.dispose();
     _tabController.dispose();
-
     super.dispose();
   }
 
@@ -73,9 +55,8 @@ class NestedTabBarViewState extends State<NestedTabBarView>
   Widget build(BuildContext context) {
     final obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
-    final List<String> tabs = widget.videoDetail.actors!.isEmpty
-        ? ['同類型', '同標籤']
-        : ['同演員', '同類型', '同標籤'];
+    final List<String> tabs =
+        widget.video.actors!.isEmpty ? ['同類型', '同標籤'] : ['同演員', '同類型', '同標籤'];
 
     return Scaffold(
       body: NestedScrollView(
@@ -87,13 +68,13 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: VideoInfo(
                   videoPlayerController: obsVideoPlayerController,
-                  externalId: widget.videoDetail.externalId ?? '',
-                  title: widget.videoDetail.title,
-                  tags: widget.videoDetail.tags ?? [],
-                  timeLength: widget.videoDetail.timeLength ?? 0,
+                  externalId: widget.video.externalId ?? '',
+                  title: widget.video.title,
+                  tags: widget.video.tags ?? [],
+                  timeLength: widget.video.timeLength ?? 0,
+                  actor: widget.video.actors,
+                  publisher: widget.video.publisher,
                   viewTimes: widget.videoDetail.videoViewTimes ?? 0,
-                  actor: widget.videoDetail.actors,
-                  publisher: widget.videoDetail.publisher,
                 ),
               ),
             ),
@@ -101,10 +82,15 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               child: Padding(
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: VideoActions(
-                  videoDetail: Vod.fromJson({
-                    ...widget.videoDetail.toJson(),
-                    ...widget.videoBase.toJson(),
-                  }),
+                  videoDetail: Vod(
+                    widget.video.id,
+                    widget.video.title,
+                    coverHorizontal: widget.video.coverHorizontal!,
+                    coverVertical: widget.video.coverVertical!,
+                    timeLength: widget.video.timeLength!,
+                    tags: widget.video.tags!,
+                    videoViewTimes: widget.videoDetail.videoViewTimes!,
+                  ),
                 ),
               ),
             ),
@@ -126,44 +112,58 @@ class NestedTabBarViewState extends State<NestedTabBarView>
             )
           ];
         },
-        body: Obx(
-          () => TabBarView(
-            controller: _tabController,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              if (widget.videoDetail.actors!.isNotEmpty)
-                SliverVodGrid(
-                  key: const Key('video_by_actor'),
-                  isListEmpty: blockVideosController.videoByActor.isEmpty,
-                  videos: blockVideosController.videoByActor,
+        body: TabBarView(
+          controller: _tabController,
+          physics: const BouncingScrollPhysics(),
+          children: [
+            if (widget.video.actors!.isNotEmpty)
+              VideoByActorConsumer(
+                excludeId: widget.video.id.toString(),
+                actorId: [widget.video.actors![0]],
+                child: (videos) {
+                  return SliverVodGrid(
+                    key: const Key('video_by_actor'),
+                    isListEmpty: videos.isEmpty,
+                    videos: videos,
+                    displayNoMoreData: false,
+                    displayLoading: false,
+                    noMoreWidget: ListNoMore(),
+                    displayVideoCollectTimes: false,
+                  );
+                },
+              ),
+            VideoByInternalTagConsumer(
+              excludeId: widget.video.id.toString(),
+              internalTagIds: widget.video.internalTagIds ?? [],
+              child: (videos) {
+                return SliverVodGrid(
+                  key: const Key('video_by_internal_tag'),
+                  isListEmpty: videos.isEmpty,
+                  videos: videos,
                   displayNoMoreData: false,
                   displayLoading: false,
                   noMoreWidget: ListNoMore(),
                   displayVideoCollectTimes: false,
-                ),
-              SliverVodGrid(
-                key: const Key('video_by_internal_tag'),
-                isListEmpty: blockVideosController.videoByInternalTag.isEmpty,
-                videos: blockVideosController.videoByInternalTag,
-                displayNoMoreData: false,
-                displayLoading: false,
-                noMoreWidget: ListNoMore(),
-                displayVideoCollectTimes: false,
-              ),
-              SliverVodGrid(
-                key: const Key('video_by_tag'),
-                isListEmpty: blockVideosController.videoByTag.isEmpty,
-                videos: blockVideosController.videoByTag,
-                displayNoMoreData: false,
-                displayLoading: false,
-                noMoreWidget: ListNoMore(),
-                displayVideoCollectTimes: false,
-              ),
-            ],
-          ),
+                );
+              },
+            ),
+            VideoByTagConsumer(
+              excludeId: widget.video.id.toString(),
+              tags: widget.video.tags ?? [],
+              child: (videos) {
+                return SliverVodGrid(
+                  key: const Key('video_by_tag'),
+                  isListEmpty: videos.isEmpty,
+                  videos: videos,
+                  displayNoMoreData: false,
+                  displayLoading: false,
+                  noMoreWidget: ListNoMore(),
+                  displayVideoCollectTimes: false,
+                );
+              },
+            ),
+          ],
         ),
-        //   )
-        // ],
       ),
     );
   }

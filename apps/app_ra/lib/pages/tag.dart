@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shared/controllers/tag_vod_controller.dart';
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
 
-import '../widgets/list_no_more.dart';
+import '../screens/tag/tag_for_shorts.dart';
+import '../screens/tag/tag_for_videos.dart';
 import '../widgets/my_app_bar.dart';
-import '../widgets/sliver_vod_grid.dart';
+import '../widgets/ra_tab_bar.dart';
 
 class TagPage extends StatefulWidget {
   final int id;
@@ -24,26 +21,20 @@ class TagPage extends StatefulWidget {
   TagPageState createState() => TagPageState();
 }
 
-class TagPageState extends State<TagPage> {
+class TagPageState extends State<TagPage> with SingleTickerProviderStateMixin {
   // DISPOSED SCROLL CONTROLLER
-  final scrollController = ScrollController();
-  late final TagVodController vodController;
+
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    vodController = TagVodController(
-      tagId: widget.id,
-      scrollController: scrollController,
-    );
+    _tabController = TabController(vsync: this, length: 2);
   }
 
   @override
   void dispose() {
-    vodController.dispose();
-    if (scrollController.hasClients) {
-      scrollController.dispose();
-    }
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -51,33 +42,28 @@ class TagPageState extends State<TagPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppBar(
-        title: '#${widget.title}',
+        titleWidget: Text(
+          '#${widget.title}',
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFFFDDCEF),
+          ),
+        ),
+        bottom:
+            RATabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
       ),
-      body: Obx(() {
-        if (widget.film == 2) {
-          return SliverVodGrid(
-              isListEmpty: vodController.isListEmpty.value,
-              displayVideoCollectTimes: false,
-              videos: vodController.vodList.value,
-              displayNoMoreData: vodController.displayNoMoreData.value,
-              displayLoading: vodController.displayLoading.value,
-              noMoreWidget: ListNoMore(),
-              displayCoverVertical: true,
-              onOverrideRedirectTap: (id) {
-                MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
-                    args: {'itemId': 3, 'videoId': id});
-              });
-        }
-        return SliverVodGrid(
-          isListEmpty: vodController.isListEmpty.value,
-          displayVideoCollectTimes: false,
-          videos: vodController.vodList.value,
-          displayNoMoreData: vodController.displayNoMoreData.value,
-          displayLoading: vodController.displayLoading.value,
-          noMoreWidget: ListNoMore(),
-          customScrollController: vodController.scrollController,
-        );
-      }),
+      body: TabBarView(
+        controller: _tabController,
+        children: [
+          TagForVideos(
+            tagId: widget.id,
+          ),
+          TagForShorts(
+            tagId: widget.id,
+          ),
+        ],
+      ),
     );
   }
 }

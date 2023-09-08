@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_video_screen_controller.dart';
+import 'package:shared/models/color_keys.dart';
 
+import '../../config/colors.dart';
 import 'option_button.dart';
 
 class FilterOptions extends StatelessWidget {
@@ -27,17 +29,15 @@ class FilterOptions extends StatelessWidget {
           (index) {
             return Container(
               height: 40,
-              color: Colors.white,
+              color: AppColors.colors[ColorKeys.background],
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: menuData[index]['options'].length,
                 itemBuilder: (context, itemIndex) {
                   return Obx(() {
                     final option = menuData[index]['options'][itemIndex];
-
                     final isSelected = selectedOptions[menuData[index]['key']]!
                         .contains(option['value']);
-
                     return Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 5, horizontal: 10),

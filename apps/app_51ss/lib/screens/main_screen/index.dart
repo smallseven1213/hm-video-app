@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
+import 'package:shared/modules/main_layout/layout_style_tab_bg_consumer.dart';
 
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
@@ -35,9 +36,14 @@ class HomeMainScreen extends StatelessWidget {
                 Positioned(
                     child: Column(
                   children: [
-                    Container(
-                      color: AppColors.colors[ColorKeys.primary],
-                      height: MediaQuery.of(context).padding.top,
+                    LayoutStyleTabBgColorConsumer(
+                      layoutId: layoutId,
+                      child: (({required bool needTabBgColor}) => Container(
+                            color: needTabBgColor
+                                ? AppColors.colors[ColorKeys.primary]
+                                : Colors.transparent,
+                            height: MediaQuery.of(context).padding.top,
+                          )),
                     ),
                     DisplayLayoutTabSearchConsumer(
                       layoutId: layoutId,
@@ -48,11 +54,17 @@ class HomeMainScreen extends StatelessWidget {
                                 )
                               : Container()),
                     ),
-                    SizedBox(
-                      height: 45,
-                      child: LayoutTabBar(
-                        layoutId: layoutId,
-                      ),
+                    LayoutStyleTabBgColorConsumer(
+                      layoutId: layoutId,
+                      child: (({required bool needTabBgColor}) => Container(
+                            color: needTabBgColor
+                                ? AppColors.colors[ColorKeys.primary]
+                                : Colors.transparent,
+                            height: 45,
+                            child: LayoutTabBar(
+                              layoutId: layoutId,
+                            ),
+                          )),
                     ),
                   ],
                 )),

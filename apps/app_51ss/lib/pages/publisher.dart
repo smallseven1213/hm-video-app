@@ -52,10 +52,12 @@ class VendorVideosPageState extends State<PublisherPage>
           VendorVideoList(
             type: 'new',
             publisherId: widget.id,
+            displayVideoCollectTimes: false,
           ),
           VendorVideoList(
             type: 'hot',
             publisherId: widget.id,
+            displayVideoCollectTimes: false,
           ),
         ],
       ),
