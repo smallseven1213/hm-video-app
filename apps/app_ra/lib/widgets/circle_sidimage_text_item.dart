@@ -29,33 +29,11 @@ class CircleTextItem extends StatelessWidget {
         width: imageWidth,
         height: imageHeight,
         margin: const EdgeInsets.only(bottom: 5),
-        decoration: kIsWeb
-            ? BoxDecoration(
-                borderRadius: isRounded
-                    ? BorderRadius.circular(40)
-                    : BorderRadius.circular(5),
-                color: const Color(0xFF6b6b6b))
-            : BoxDecoration(
-                borderRadius: isRounded
-                    ? BorderRadius.circular(40)
-                    : BorderRadius.circular(5),
-                gradient: !kIsWeb && hasBorder
-                    ? LinearGradient(
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomCenter,
-                        colors: isRounded
-                            ? const [
-                                Color(0xFF6b6b6b),
-                                Color(0xffCCEAFF),
-                                Color(0xFF6b6b6b),
-                              ]
-                            : const [
-                                Color(0xff000000),
-                                Color(0xff00145B),
-                                Color(0xff000000),
-                              ],
-                        stops: isRounded ? null : [0, 0.99, 1.0])
-                    : null),
+        decoration: BoxDecoration(
+            borderRadius: isRounded
+                ? BorderRadius.circular(40)
+                : BorderRadius.circular(5),
+            color: const Color(0xFFFDDCEF)),
         child: Container(
             margin: isRounded ? const EdgeInsets.all(1) : null,
             decoration: BoxDecoration(
@@ -74,7 +52,7 @@ class CircleTextItem extends StatelessWidget {
       ),
       Text(
         text,
-        style: const TextStyle(fontSize: 12, color: Color(0xFF333333)),
+        style: const TextStyle(fontSize: 12, color: Color(0xFFFDDCEF)),
       ),
     ]);
   }
