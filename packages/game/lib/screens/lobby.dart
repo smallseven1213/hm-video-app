@@ -168,7 +168,9 @@ class _GameLobbyState extends State<GameLobby>
                             List marquee,
                             String customerServiceUrl,
                           ) =>
-                              Text(marquee.toString())),
+                              GameMarquee(
+                                data: marquee,
+                              )),
                         ),
 
                         GameUserInfo(
