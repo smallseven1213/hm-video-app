@@ -87,7 +87,7 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
-    final gameBannerController = Get.put(GameBannerController());
+    // final gameBannerController = Get.put(GameBannerController());
     final gameWalletController = GameWalletController();
     final gameConfigController = Get.put(GameConfigController());
     final gamesListController = Get.put(GamesListController());
@@ -159,7 +159,7 @@ class _GameLobbyState extends State<GameLobby>
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                     child: Column(
                       children: <Widget>[
-                        GameCarousel(data: gameBannerController.gameBanner),
+                        // GameCarousel(data: gameBannerController.gameBanner),
                         // GameMarquee(data: gameBannerController.gameMarquee),
                         GameUserInfo(
                           type: 'lobby',
