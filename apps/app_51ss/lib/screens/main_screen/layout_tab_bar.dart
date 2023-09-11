@@ -33,8 +33,10 @@ class LayoutTabBar extends StatelessWidget {
                       child: Text(
                         name,
                         style: TextStyle(
-                            color:
-                                AppColors.colors[ColorKeys.buttonTextPrimary]),
+                          color: isActive
+                              ? AppColors.colors[ColorKeys.tabTextActiveColor]
+                              : AppColors.colors[ColorKeys.tabTextColor],
+                        ),
                       ),
                     )),
         tabbarWidget: ({
@@ -58,7 +60,7 @@ class LayoutTabBar extends StatelessWidget {
                         left: Radius.circular(3), right: Radius.circular(3)),
                     borderSide: BorderSide(
                       width: 3.0,
-                      color: AppColors.colors[ColorKeys.buttonTextPrimary]
+                      color: AppColors.colors[ColorKeys.tabTextActiveColor]
                           as Color,
                     ),
                     insets: const EdgeInsets.only(
