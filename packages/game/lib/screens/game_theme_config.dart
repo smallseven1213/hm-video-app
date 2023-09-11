@@ -9,7 +9,7 @@ final themeMode = {
 final localStorage = GetStorage();
 int themeNumber =
     localStorage.hasData('pageColor') ? localStorage.read('pageColor') : 1;
-final theme = themeMode[themeNumber].toString();
+const theme = '1';
 
 // theme - game lobby page
 final gameLobbyBgColor =
