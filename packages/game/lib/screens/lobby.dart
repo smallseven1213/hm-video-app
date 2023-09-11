@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-import 'package:game/screens/lobby/game_carousel.dart';
+// import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_list_view.dart';
 import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:game/screens/lobby/login_tabs.dart';
@@ -72,11 +72,12 @@ class _GameLobbyState extends State<GameLobby>
   }
 
   _fetchDataInit() {
-    Future.wait([
-      GameLobbyApi().registerGame(),
-    ]).then((value) {
-      GameBannerController();
-    });
+    GameLobbyApi().registerGame();
+    // Future.wait([
+    //   GameLobbyApi().registerGame(),
+    // ]).then((value) {
+    //   GameBannerController();
+    // });
   }
 
   @override
@@ -87,7 +88,7 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
-    final gameBannerController = Get.put(GameBannerController());
+    // final gameBannerController = Get.put(GameBannerController());
     final gameWalletController = GameWalletController();
     final gameConfigController = Get.put(GameConfigController());
     final gamesListController = Get.put(GamesListController());
@@ -159,8 +160,8 @@ class _GameLobbyState extends State<GameLobby>
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                     child: Column(
                       children: <Widget>[
-                        GameCarousel(data: gameBannerController.gameBanner),
-                        GameMarquee(data: gameBannerController.gameMarquee),
+                        // GameCarousel(data: gameBannerController.gameBanner),
+                        // GameMarquee(data: gameBannerController.gameMarquee),
                         GameUserInfo(
                           type: 'lobby',
                           child: Row(
