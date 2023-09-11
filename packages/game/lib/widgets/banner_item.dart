@@ -16,16 +16,16 @@ class BannerItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (image.url!.isNotEmpty) {
-          // Get.find<BannerController>().recordBannerClick(int.parse(image.photoId));
-          if (image.url!.startsWith('http://') ||
-              image.url!.startsWith('https://')) {
-            // ignore: deprecated_member_use
-            launch(image.url.toString(), webOnlyWindowName: '_blank');
-          } else {
-            MyRouteDelegate.of(context).push(image.url.toString());
-          }
-        }
+        // if (image.url!.isNotEmpty) {
+        //   // Get.find<BannerController>().recordBannerClick(int.parse(image.photoId));
+        //   if (image.url!.startsWith('http://') ||
+        //       image.url!.startsWith('https://')) {
+        //     // ignore: deprecated_member_use
+        //     launch(image.url.toString(), webOnlyWindowName: '_blank');
+        //   } else {
+        //     MyRouteDelegate.of(context).push(image.url.toString());
+        //   }
+        // }
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6.0),
