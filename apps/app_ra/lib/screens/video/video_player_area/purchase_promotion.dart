@@ -81,59 +81,79 @@ class Vip extends StatelessWidget {
   }
 }
 
-final vodApi = VodApi();
-
 class Coin extends StatelessWidget {
   final String buyPoints;
   final String userPoints;
   final int videoId;
   final VideoPlayerInfo videoPlayerInfo;
+  final int timeLength;
   const Coin({
     super.key,
     required this.buyPoints,
     required this.userPoints,
     required this.videoId,
     required this.videoPlayerInfo,
+    required this.timeLength,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
+      mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text(
-          '試看結束，此視頻需付費購買',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-          ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // todo : 標題：試看結束，升級觀看完整版
+            const Text(
+              '試看結束，此視頻需付費購買',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              '片長：${getTimeString(timeLength)}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            Text(
+              '價格：$buyPoints金幣',
+              style: TextStyle(
+                  color: AppColors.colors[ColorKeys.textPrimary], fontSize: 12),
+            ),
+            Text(
+              '您目前擁有的金的：$userPoints金幣',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+              ),
+            ),
+          ],
         ),
-        const SizedBox(height: 5),
-        Text(
-          '價格：$buyPoints金幣',
-          // '價格：${videoBase.buyPoints}金幣',
-          style: const TextStyle(color: Color(0xffffd900), fontSize: 13),
-        ),
-        const SizedBox(height: 5),
-        Text(
-          '您目前擁有的金幣：$userPoints金幣',
-          style: const TextStyle(color: Color(0xff939393), fontSize: 13),
-        ),
-        const SizedBox(height: 10),
+        const SizedBox(width: 15),
+        //開通VIP按鈕
         SizedBox(
-          width: 183,
+          width: 87,
+          height: 35,
           child: Button(
-            text: int.parse(userPoints) < int.parse(buyPoints)
-                ? '金幣不足，立即購買'
-                : '立即付費觀看',
+            size: 'small',
+            text:
+                int.parse(userPoints) < int.parse(buyPoints) ? '金幣不足' : '付費觀看',
             onPressed: () => purchase(
               context,
               id: videoId,
               onSuccess: () => videoPlayerInfo.videoPlayerController?.play(),
             ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -189,6 +209,7 @@ class PurchasePromotion extends StatelessWidget {
                       buyPoints: buyPoints,
                       videoId: videoId,
                       videoPlayerInfo: videoPlayerInfo,
+                      timeLength: timeLength,
                     );
                   },
                 ),
