@@ -31,5 +31,8 @@ class AppColors {
     ColorKeys.dividerColor: Color(0xffeeeeee),
     ColorKeys.gradientBgTopColor: Color(0xff46454a),
     ColorKeys.gradientBgBottomColor: Color(0xff1c1c1c),
+    // tabbar
+    ColorKeys.tabTextColor: Colors.white,
+    ColorKeys.tabTextActiveColor: Colors.white,
   };
 }

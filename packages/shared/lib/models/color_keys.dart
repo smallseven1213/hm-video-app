@@ -22,10 +22,13 @@ enum ColorKeys {
   buttonOverlayColor,
   noImageBgTop,
   noImageBgBottom,
+  menuBgColor,
   menuColor,
   menuActiveColor,
   dividerColor,
   gradientBgTopColor,
   gradientBgBottomColor,
   videoTitle,
+  tabTextColor,
+  tabTextActiveColor,
 }
