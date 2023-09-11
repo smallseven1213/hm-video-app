@@ -6,9 +6,10 @@ import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
+import '../../widgets/user/balance.dart';
+import '../../widgets/user/info.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
-import 'info.dart';
 import 'list_menu.dart';
 
 final systemConfig = SystemConfig();
@@ -58,6 +59,7 @@ class UserScreenState extends State<LayoutUserScreen> {
               const SliverToBoxAdapter(
                 child: UserInfo(),
               ),
+              const UserBalance(),
               // height 10
               const SliverToBoxAdapter(
                 child: SizedBox(

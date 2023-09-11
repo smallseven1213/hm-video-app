@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_reload_button.dart';
 
 final logger = Logger();
 const Color baseColor = Color(0xFF003068);
@@ -10,28 +11,29 @@ class UserBalance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: baseColor,
+    return SliverToBoxAdapter(
+        child: Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: UserInfoConsumer(child: (info, isVIP, isGuest) {
         return Row(
           children: [
             Expanded(
               flex: 1,
-              child: Text('\$${info.points}'),
+              child: Text('\$${info.points}',
+                  style: const TextStyle(color: Colors.white, fontSize: 16)),
             ),
-            InkWell(
-                onTap: () {},
+            UserInfoReloadButton(
                 child: Container(
-                  width: 24,
-                  // refresh icon
-                  child: Image.asset(
-                    'assets/images/refresh.png',
-                    fit: BoxFit.cover,
-                  ),
-                ))
+              width: 24,
+              // refresh icon from flutter Icon
+              child: Icon(
+                Icons.refresh,
+                color: Colors.white,
+              ),
+            ))
           ],
         );
       }),
-    );
+    ));
   }
 }

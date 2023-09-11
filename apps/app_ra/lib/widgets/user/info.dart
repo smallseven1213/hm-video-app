@@ -34,10 +34,9 @@ class UserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120,
       color: Colors.transparent,
+      margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       child: Stack(
         children: [
           Row(
@@ -197,70 +196,8 @@ class UserInfo extends StatelessWidget {
                     }
                     return Container();
                   })))
-              // Expanded(
-              //   flex: 1,
-              // child: UserInfoConsumer(child: ((info, isVIP, isGuest) {
-              //   if (isGuest) {
-              //     return Row(
-              //       children: [
-              //         // 註冊 and 登入按鈕
-              //         Text('hihi',
-              //             style: const TextStyle(color: Colors.white)),
-              //         Button(
-              //             onPressed: () {
-              //               MyRouteDelegate.of(context)
-              //                   .push(AppRoutes.register);
-              //             },
-              //             text: '註冊'),
-              //         const SizedBox(width: 10),
-              //         Button(
-              //             onPressed: () {
-              //               MyRouteDelegate.of(context).push(AppRoutes.login);
-              //             },
-              //             text: '登入'),
-              //       ],
-              //     );
-              //   } else {
-              //     return const SizedBox();
-              //   }
-              // })),
-              // ),
             ],
           ),
-          // Positioned(
-          //   top: 0,
-          //   right: 0,
-          //   child: GestureDetector(
-          //     onTap: () {
-          //       MyRouteDelegate.of(context).push(AppRoutes.configs);
-          //     },
-          //     child: Container(
-          //       padding: const EdgeInsets.all(5),
-          //       child: const Image(
-          //         image:
-          //             AssetImage('assets/images/user_screen_config_button.png'),
-          //         width: 15,
-          //       ),
-          //     ),
-          //   ),
-          // ),
-          // Positioned(
-          //   top: 0,
-          //   right: 30,
-          //   child: GestureDetector(
-          //     onTap: () {
-          //       MyRouteDelegate.of(context).push(AppRoutes.notifications);
-          //     },
-          //     child: Container(
-          //       padding: const EdgeInsets.all(5),
-          //       child: const Image(
-          //         image:
-          //             AssetImage('assets/images/user_screen_notice_button.png'),
-          //         width: 15,
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );

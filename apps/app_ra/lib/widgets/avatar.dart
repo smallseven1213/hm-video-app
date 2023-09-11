@@ -45,20 +45,6 @@ class Avatar extends StatelessWidget {
                 1), // Add padding to create the border effect
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              // boxShadow: [
-              //   if (hasNoAvatar)
-              //     const BoxShadow(
-              //       color: Color(0xFF456EFF),
-              //       blurRadius: 9,
-              //       spreadRadius: 0,
-              //     )
-              //   else
-              //     const BoxShadow(
-              //       color: Color(0xFFFFC700),
-              //       blurRadius: 9,
-              //       spreadRadius: 0,
-              //     ),
-              // ],
               gradient: kIsWeb
                   ? null
                   : LinearGradient(
@@ -78,35 +64,12 @@ class Avatar extends StatelessWidget {
                     ),
             ),
             child: hasNoAvatar
-                // ? Container(
-                //     width: 60,
-                //     height: 60,
-                //     decoration: const BoxDecoration(
-                //       shape: BoxShape.circle,
-                //       gradient: kIsWeb
-                //           ? null
-                //           : LinearGradient(
-                //               begin: Alignment.topCenter,
-                //               end: Alignment.bottomCenter,
-                //               colors: [
-                //                 Color(0xFF002D46),
-                //                 Color(0xFF0085D0),
-                //               ],
-                //             ),
-                //     ),
-                //     child: const Center(
-                //       child: Image(
-                //           width: 33,
-                //           image:
-                //               AssetImage('assets/images/user_not_login.png')),
-                //     ),
-                //   )
                 ? Container(
-                    width: 20,
-                    height: 20,
+                    width: 60,
+                    height: 60,
                     decoration: BoxDecoration(
                       color: const Color(0xFFD9D9D9),
-                      borderRadius: BorderRadius.circular(10),
+                      shape: BoxShape.circle,
                       border: Border.all(
                         color: const Color(0xFFFDDCEF),
                         width: 2,
