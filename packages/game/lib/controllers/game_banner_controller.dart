@@ -23,7 +23,7 @@ class GameBannerController extends GetxController {
       var res = await Get.put(GameLobbyApi()).getMarqueeAndBanner();
       gameBanner.value = res['banner'];
       gameMarquee.value = res['marquee'];
-      customerServiceUrl.value = res['customerServiceUrl'].isNotEmpty
+      customerServiceUrl.value = res['customerServiceUrl'] != null
           ? res['customerServiceUrl'][0]['url']
           : '';
     } catch (error) {
