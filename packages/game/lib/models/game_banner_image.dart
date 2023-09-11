@@ -6,9 +6,9 @@ class GameBannerImage {
   GameBannerImage({photoId, photoUrl, url});
 
   GameBannerImage.fromJson(Map<String, dynamic> json) {
-    photoId = json['photoId'];
-    photoUrl = json['photoUrl'];
-    url = json['url'];
+    photoId = json['photoId'] ?? '';
+    photoUrl = json['photoUrl'] ?? '';
+    url = json['url'] ?? '';
   }
 
   Map<String, dynamic> toJson() {
