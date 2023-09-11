@@ -186,10 +186,8 @@ class UserInfo extends StatelessWidget {
                           height: 35,
                           child: Button(
                               size: 'small',
-                              onPressed: () {
-                                MyRouteDelegate.of(context)
-                                    .push(AppRoutes.login);
-                              },
+                              onPressed: () => MyRouteDelegate.of(context)
+                                  .push(AppRoutes.vip),
                               text: '開通VIP'),
                         );
                       }

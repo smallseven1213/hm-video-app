@@ -9,7 +9,7 @@ final ProductApi productApi = ProductApi();
 final logger = Logger();
 
 class ProductController extends GetxController {
-  var productList = <Product>[].obs;
+  var products = <Product>[].obs;
 
   ProductController({required type}) {
     _fetchData(type);
@@ -20,6 +20,6 @@ class ProductController extends GetxController {
 
   _fetchData(type) async {
     var res = await productApi.getManyBy(type: type);
-    productList.value = res;
+    products.value = res;
   }
 }
