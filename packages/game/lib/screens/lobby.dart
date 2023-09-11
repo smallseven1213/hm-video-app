@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game/screens/lobby/game_banner_marquee_consumer.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -87,7 +88,6 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
-    // final gameBannerController = Get.put(GameBannerController());
     final gameWalletController = GameWalletController();
     final gameConfigController = Get.put(GameConfigController());
     final gamesListController = Get.put(GamesListController());
@@ -161,6 +161,16 @@ class _GameLobbyState extends State<GameLobby>
                       children: <Widget>[
                         // GameCarousel(data: gameBannerController.gameBanner),
                         // GameMarquee(data: gameBannerController.gameMarquee),
+
+                        GameBannerAndMarqueeConsumer(
+                          child: ((
+                            List banner,
+                            List marquee,
+                            String customerServiceUrl,
+                          ) =>
+                              GameMarquee(data: marquee)),
+                        ),
+
                         GameUserInfo(
                           type: 'lobby',
                           child: Row(
