@@ -31,19 +31,23 @@ class GameCarouselState extends State<GameCarousel> {
       if (banners.isEmpty) {
         return const SizedBox();
       } else {
-        List<GameBannerImage> images = banners
-            .map(
-              (e) => GameBannerImage.fromJson({
-                'photoId': e['photoId'] ?? '',
-                'photoUrl': e['photoUrl'] ?? '',
-                'url': e['url'] ?? '',
-              }),
-            )
-            .toList();
-        return Carousel(
-          images: images,
-          ratio: 2.47,
-        );
+        try {
+          List<GameBannerImage> images = banners
+              .map(
+                (e) => GameBannerImage.fromJson({
+                  'photoId': e['photoId'] ?? '',
+                  'photoUrl': e['photoUrl'] ?? '',
+                  'url': e['url'] ?? '',
+                }),
+              )
+              .toList();
+          return Carousel(
+            images: images,
+            ratio: 2.47,
+          );
+        } catch (e) {
+          return Text('Error', style: const TextStyle(color: Colors.red));
+        }
       }
     });
   }
