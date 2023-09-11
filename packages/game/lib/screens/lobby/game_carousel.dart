@@ -28,27 +28,29 @@ class GameCarouselState extends State<GameCarousel> {
   Widget build(BuildContext context) {
     return Obx(() {
       var banners = widget.data;
-      if (banners.isEmpty) {
-        return const SizedBox();
-      } else {
-        try {
-          List<GameBannerImage> images = banners
-              .map(
-                (e) => GameBannerImage.fromJson({
-                  'photoId': e['photoId'] ?? '',
-                  'photoUrl': e['photoUrl'] ?? '',
-                  'url': e['url'] ?? '',
-                }),
-              )
-              .toList();
-          return Carousel(
-            images: images,
-            ratio: 2.47,
-          );
-        } catch (e) {
-          return Text('Error', style: const TextStyle(color: Colors.red));
-        }
-      }
+      return const SizedBox();
+
+      // if (banners.isEmpty) {
+      //   return const SizedBox();
+      // } else {
+      //   try {
+      //     List<GameBannerImage> images = banners
+      //         .map(
+      //           (e) => GameBannerImage.fromJson({
+      //             'photoId': e['photoId'] ?? '',
+      //             'photoUrl': e['photoUrl'] ?? '',
+      //             'url': e['url'] ?? '',
+      //           }),
+      //         )
+      //         .toList();
+      //     return Carousel(
+      //       images: images,
+      //       ratio: 2.47,
+      //     );
+      //   } catch (e) {
+      //     return Text('Error', style: const TextStyle(color: Colors.red));
+      //   }
+      // }
     });
   }
 }
