@@ -160,7 +160,7 @@ class _GameLobbyState extends State<GameLobby>
                     child: Column(
                       children: <Widget>[
                         GameCarousel(data: gameBannerController.gameBanner),
-                        GameMarquee(data: gameBannerController.gameMarquee),
+                        // GameMarquee(data: gameBannerController.gameMarquee),
                         GameUserInfo(
                           type: 'lobby',
                           child: Row(
