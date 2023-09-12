@@ -84,12 +84,10 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
             ),
           ),
         Positioned(
-          top: MediaQuery.of(context).size.height - 70,
+          top: Get.height - 70,
           left: widget.direction == gameWebviewDirection['vertical']
-              ? MediaQuery.of(context).size.width - 70
-              : (orientation == Orientation.portrait
-                  ? 20
-                  : MediaQuery.of(context).size.width - 70),
+              ? Get.width - 70
+              : (orientation == Orientation.portrait ? 20 : Get.width - 70),
           child: RotatedBox(
             quarterTurns: widget.direction == gameWebviewDirection['vertical']
                 ? (orientation == Orientation.portrait ? 0 : 1)

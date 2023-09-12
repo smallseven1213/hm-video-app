@@ -61,7 +61,7 @@ class GameDepositPollingState extends State<GameDepositPolling> {
           color: gameLobbyBgColor,
           child: SingleChildScrollView(
             child: SizedBox(
-              width: MediaQuery.of(context).size.width,
+              width: Get.width,
               child: const Stack(
                 children: [
                   Column(

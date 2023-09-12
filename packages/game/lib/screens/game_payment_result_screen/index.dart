@@ -140,7 +140,7 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                   height: 72,
                 ),
                 Container(
-                  width: MediaQuery.of(context).size.width - 32,
+                  width: Get.width - 32,
                   padding: const EdgeInsets.only(
                     top: 12,
                     bottom: 12,
