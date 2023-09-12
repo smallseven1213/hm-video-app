@@ -65,7 +65,8 @@ class GameListItem extends StatelessWidget {
                         : CacheImage(
                             url: imageUrl,
                             width: double.infinity,
-                            height: (Get.width - 110) / 3,
+                            height:
+                                (MediaQuery.of(context).size.width - 110) / 3,
                             fit: BoxFit.cover,
                             emptyImageUrl:
                                 'packages/game/assets/images/game_lobby/game_empty-$theme.webp',

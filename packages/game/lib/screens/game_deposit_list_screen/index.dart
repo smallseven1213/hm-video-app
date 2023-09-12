@@ -101,7 +101,7 @@ class GameDepositListState extends State<GameDepositList> {
           color: gameLobbyBgColor,
           child: SingleChildScrollView(
             child: SizedBox(
-              width: Get.width,
+              width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
                   Column(
