@@ -15,6 +15,7 @@ class BannerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: ValueKey(image.photoId),
       onTap: () {
         if (image.url!.isNotEmpty) {
           // Get.find<BannerController>().recordBannerClick(int.parse(image.photoId));
@@ -30,7 +31,7 @@ class BannerItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6.0),
         child: Image.network(
-          'https://images.unsplash.com/photo-1600716051809-e997e11a5d52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2050&q=80',
+          image.photoUrl ?? '',
           width: Get.width,
           fit: BoxFit.fill,
         ),

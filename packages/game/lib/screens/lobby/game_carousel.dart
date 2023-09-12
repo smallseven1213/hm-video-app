@@ -32,13 +32,14 @@ class GameCarouselState extends State<GameCarousel> {
         return const SizedBox();
       } else {
         try {
-          List<GameBannerImage> images = banners
+          List<GameBannerImage> images = widget.data
               .map(
-                (e) => GameBannerImage(
-                  photoId: e['photoId'] ?? '',
-                  photoUrl: e['photoUrl'] ?? '',
-                  url: e['url'] ?? '',
-                ),
+                (e) => GameBannerImage.fromJson({
+                  'photoId': e['photoId'] ?? '',
+                  'photoUrl':
+                      'https://images.unsplash.com/photo-1600716051809-e997e11a5d52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2050&q=80',
+                  'url': e['url'] ?? '',
+                }),
               )
               .toList();
           return Carousel(
