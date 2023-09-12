@@ -21,18 +21,15 @@ class GameMarquee extends StatefulWidget {
 class _GameMarqueeState extends State<GameMarquee> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.infinity,
-      child: GameMarqueeWidget(
-        icon: Icon(
-          Icons.volume_down,
-          size: 25,
-          color: gameLobbyIconColor,
-        ),
-        width: Get.width - 40,
-        style: TextStyle(color: gameLobbyPrimaryTextColor),
-        text: widget.data.map((e) => e['title']).join('    '),
+    return GameMarqueeWidget(
+      icon: Icon(
+        Icons.volume_down,
+        size: 25,
+        color: gameLobbyIconColor,
       ),
+      width: Get.width - 40,
+      style: TextStyle(color: gameLobbyPrimaryTextColor),
+      text: widget.data.map((e) => e['title']).join('    '),
     );
   }
 }
