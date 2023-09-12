@@ -186,8 +186,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
       ),
       body: SafeArea(
         child: Container(
-          width: Get.width,
-          height: Get.height - 40,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - 40,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           color: gameLobbyBgColor,
           child: SingleChildScrollView(

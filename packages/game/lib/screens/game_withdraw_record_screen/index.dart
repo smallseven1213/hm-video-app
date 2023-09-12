@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -203,8 +202,8 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
       ),
       body: SafeArea(
         child: Container(
-          width: Get.width,
-          height: Get.height - 40,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height - 40,
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
           color: gameLobbyBgColor,
           child: SingleChildScrollView(
