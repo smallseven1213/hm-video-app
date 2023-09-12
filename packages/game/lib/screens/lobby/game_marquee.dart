@@ -24,14 +24,15 @@ class _GameMarqueeState extends State<GameMarquee> {
     return SizedBox(
       width: double.infinity,
       child: GameMarqueeWidget(
-          icon: Icon(
-            Icons.volume_down,
-            size: 25,
-            color: Colors.white,
-          ),
-          style: TextStyle(color: Colors.white),
-          // text: widget.data.map((e) => e['title']).join('    '),
-          text: '給我一億元，我給你全世界'),
+        icon: Icon(
+          Icons.volume_down,
+          size: 25,
+          color: gameLobbyIconColor,
+        ),
+        width: MediaQuery.of(context).size.width - 40,
+        style: TextStyle(color: gameLobbyPrimaryTextColor),
+        text: widget.data.map((e) => e['title']).join('    '),
+      ),
     );
   }
 }

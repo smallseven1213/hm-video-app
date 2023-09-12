@@ -32,7 +32,7 @@ class BannerItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(6.0),
         child: Image.network(
           image.photoUrl ?? '',
-          width: Get.width,
+          width: MediaQuery.of(context).size.width,
           fit: BoxFit.fill,
         ),
       ),
