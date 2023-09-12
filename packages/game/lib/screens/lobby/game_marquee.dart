@@ -21,15 +21,15 @@ class GameMarquee extends StatefulWidget {
 class _GameMarqueeState extends State<GameMarquee> {
   @override
   Widget build(BuildContext context) {
-    return GameMarqueeWidget(
+    return const GameMarqueeWidget(
       icon: Icon(
         Icons.volume_down,
         size: 25,
-        color: gameLobbyIconColor,
+        color: Colors.white,
       ),
-      width: Get.width - 40,
-      style: TextStyle(color: gameLobbyPrimaryTextColor),
-      text: widget.data.map((e) => e['title']).join('    '),
+      width: 40,
+      style: TextStyle(color: Colors.white),
+      text: '123',
     );
   }
 }
