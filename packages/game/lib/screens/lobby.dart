@@ -159,45 +159,39 @@ class _GameLobbyState extends State<GameLobby>
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                     child: Column(
                       children: [
-                        Image.asset(
-                          'packages/game/assets/images/game_deposit/payment_empty-dark.webp',
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
+                        GameCarousel(data: gameBannerController.gameBanner),
+                        GameMarquee(data: gameBannerController.gameMarquee),
+                        GameUserInfo(
+                          type: 'lobby',
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              // 存款
+                              UserInfoDeposit(
+                                onTap: () {
+                                  MyRouteDelegate.of(context).push(
+                                    gameConfigController
+                                                .switchPaymentPage.value ==
+                                            switchPaymentPageType['list']
+                                        ? GameAppRoutes.depositList.value
+                                        : GameAppRoutes.depositPolling.value,
+                                  );
+                                },
+                              ),
+                              // 提現
+                              UserInfoWithdraw(
+                                onTap: () {
+                                  MyRouteDelegate.of(context).push(
+                                    GameAppRoutes.withdraw.value,
+                                  );
+                                },
+                              ),
+                              // 客服
+                              const UserInfoService(),
+                            ],
+                          ),
                         ),
-                        // GameCarousel(data: gameBannerController.gameBanner),
-                        // GameMarquee(data: gameBannerController.gameMarquee),
-                        // GameUserInfo(
-                        //   type: 'lobby',
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       // 存款
-                        //       UserInfoDeposit(
-                        //         onTap: () {
-                        //           MyRouteDelegate.of(context).push(
-                        //             gameConfigController
-                        //                         .switchPaymentPage.value ==
-                        //                     switchPaymentPageType['list']
-                        //                 ? GameAppRoutes.depositList.value
-                        //                 : GameAppRoutes.depositPolling.value,
-                        //           );
-                        //         },
-                        //       ),
-                        //       // 提現
-                        //       UserInfoWithdraw(
-                        //         onTap: () {
-                        //           MyRouteDelegate.of(context).push(
-                        //             GameAppRoutes.withdraw.value,
-                        //           );
-                        //         },
-                        //       ),
-                        //       // 客服
-                        //       const UserInfoService(),
-                        //     ],
-                        //   ),
-                        // ),
-                        // const GameListView(),
+                        const GameListView(),
                       ],
                     ),
                   ),
