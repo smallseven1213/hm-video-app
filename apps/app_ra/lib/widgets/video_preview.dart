@@ -60,17 +60,7 @@ class ViewInfo extends StatelessWidget {
         borderRadius: kIsWeb
             ? null
             : const BorderRadius.vertical(bottom: Radius.circular(10)),
-        gradient: kIsWeb
-            ? null
-            : LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  Colors.black.withOpacity(0.1),
-                  Colors.black.withOpacity(0.7),
-                ],
-                stops: const [0.05, 1.0],
-              ),
+        color: Colors.black.withOpacity(0.5),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,

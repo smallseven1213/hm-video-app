@@ -11,8 +11,7 @@ class UserBalance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-        child: Container(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: UserInfoConsumer(child: (info, isVIP, isGuest) {
         return Row(
@@ -34,6 +33,6 @@ class UserBalance extends StatelessWidget {
           ],
         );
       }),
-    ));
+    );
   }
 }

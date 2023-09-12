@@ -142,9 +142,6 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
             );
           }
 
-          print(
-              '@@@ videoPlayerInfo.videoAction: ${videoPlayerInfo.videoAction}');
-
           return Stack(
             alignment: Alignment.center,
             children: <Widget>[

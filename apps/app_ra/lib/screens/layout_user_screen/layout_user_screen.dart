@@ -59,7 +59,10 @@ class UserScreenState extends State<LayoutUserScreen> {
               const SliverToBoxAdapter(
                 child: UserInfo(),
               ),
-              const UserBalance(),
+
+              const SliverToBoxAdapter(
+                child: UserBalance(),
+              ),
               // height 10
               const SliverToBoxAdapter(
                 child: SizedBox(

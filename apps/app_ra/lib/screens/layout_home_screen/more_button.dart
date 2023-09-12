@@ -11,23 +11,17 @@ class MoreButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child:  Row(
-              children: [
-                Text(
-                  '更多',
-                  style: TextStyle(
-                    color: AppColors.colors[ColorKeys.textPrimary]!,
-                    fontSize: 12,
-                  ),
-                ),
-                const SizedBox(width: 5),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 14,
-                  color: AppColors.colors[ColorKeys.textPrimary]!,
-                ),
-              ],
-            ),
+      child: Row(
+        children: [
+          Text('更多', style: Theme.of(context).textTheme.bodySmall),
+          const SizedBox(width: 5),
+          Icon(
+            Icons.arrow_forward_ios,
+            size: 14,
+            color: AppColors.colors[ColorKeys.textPrimary]!,
+          ),
+        ],
+      ),
     );
   }
 }

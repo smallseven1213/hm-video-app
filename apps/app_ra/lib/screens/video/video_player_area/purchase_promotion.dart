@@ -126,8 +126,7 @@ class Coin extends StatelessWidget {
             ),
             Text(
               '價格：$buyPoints金幣',
-              style: TextStyle(
-                  color: AppColors.colors[ColorKeys.textPrimary], fontSize: 12),
+              style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
               '您目前擁有的金的：$userPoints金幣',

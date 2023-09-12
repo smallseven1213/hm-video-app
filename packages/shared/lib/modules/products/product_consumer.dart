@@ -4,6 +4,12 @@ import 'package:get/get.dart';
 import '../../controllers/product_controller.dart';
 import '../../models/product.dart';
 
+enum ProductType {
+  none,
+  coin,
+  vip,
+}
+
 class ProductConsumer extends StatefulWidget {
   final int type;
   final Widget Function(List<Product> product) child;

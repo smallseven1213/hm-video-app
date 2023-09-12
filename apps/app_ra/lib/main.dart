@@ -25,9 +25,17 @@ void main() async {
     AppColors.colors,
     ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
     ThemeData(
-        scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent),
+      scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      primaryColor: AppColors.colors[ColorKeys.primary],
+      textTheme: TextTheme(
+        bodySmall: TextStyle(
+          fontSize: 12,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+      ),
+    ),
     ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
   );

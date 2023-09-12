@@ -45,9 +45,7 @@ class RATabBar extends StatelessWidget implements PreferredSizeWidget {
                     height: 24,
                     child: Text(
                       text,
-                      style: TextStyle(
-                          fontSize: 12,
-                          color: AppColors.colors[ColorKeys.textPrimary]!),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 )
