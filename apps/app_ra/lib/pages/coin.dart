@@ -12,14 +12,14 @@ import '../widgets/user/info.dart';
 final systemConfig = SystemConfig();
 final logger = Logger();
 
-class LayoutUserScreen extends StatefulWidget {
-  const LayoutUserScreen({Key? key}) : super(key: key);
+class CoinPage extends StatefulWidget {
+  const CoinPage({Key? key}) : super(key: key);
 
   @override
   UserScreenState createState() => UserScreenState();
 }
 
-class UserScreenState extends State<LayoutUserScreen> {
+class UserScreenState extends State<CoinPage> {
   @override
   Widget build(BuildContext context) {
     return UserSettingScaffold(
