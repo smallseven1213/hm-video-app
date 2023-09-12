@@ -159,7 +159,15 @@ class _GameLobbyState extends State<GameLobby>
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                     child: Column(
                       children: <Widget>[
-                        GameCarousel(data: gameBannerController.gameBanner),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(6.0),
+                          child: Image.network(
+                            'https://images.unsplash.com/photo-1600716051809-e997e11a5d52?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2050&q=80',
+                            width: Get.width,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        // GameCarousel(data: gameBannerController.gameBanner),
                         // GameMarquee(data: gameBannerController.gameMarquee),
                         GameUserInfo(
                           type: 'lobby',
