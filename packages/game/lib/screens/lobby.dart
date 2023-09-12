@@ -52,7 +52,6 @@ class _GameLobbyState extends State<GameLobby>
   List<GameItem> gameList = [];
   List gameHistoryList = [];
   bool isShowFab = false;
-  // TabController? _tabController;
 
   UserController get userController => Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
@@ -61,7 +60,6 @@ class _GameLobbyState extends State<GameLobby>
   void initState() {
     super.initState();
     _fetchDataInit();
-    // _tabController = TabController(length: 3, vsync: this);
 
     // Put controllers into Get dependency container here
     Get.put(GameBannerController());
