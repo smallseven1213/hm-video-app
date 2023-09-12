@@ -63,6 +63,11 @@ class _GameLobbyState extends State<GameLobby>
     _fetchDataInit();
     _tabController = TabController(length: 3, vsync: this);
 
+    // Put controllers into Get dependency container here
+    Get.put(GameBannerController());
+    Get.put(GameConfigController());
+    Get.put(GamesListController());
+
     Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
       userController.fetchUserInfo();
@@ -87,10 +92,8 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
-    final gameBannerController = Get.put(GameBannerController());
-    final gameWalletController = GameWalletController();
-    final gameConfigController = Get.put(GameConfigController());
-    final gamesListController = Get.put(GamesListController());
+    final gameConfigController = Get.find<GameConfigController>();
+    final gamesListController = Get.find<GamesListController>();
 
     return Obx(() => gamesListController.isMaintenance.value == true
         ? const GameMaintenance()
