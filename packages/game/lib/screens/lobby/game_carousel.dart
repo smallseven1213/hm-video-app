@@ -34,11 +34,11 @@ class GameCarouselState extends State<GameCarousel> {
         try {
           List<GameBannerImage> images = banners
               .map(
-                (e) => GameBannerImage.fromJson({
-                  'photoId': e['photoId'] ?? '',
-                  'photoUrl': e['photoUrl'] ?? '',
-                  'url': e['url'] ?? '',
-                }),
+                (e) => GameBannerImage(
+                  photoId: e['photoId'] ?? '',
+                  photoUrl: e['photoUrl'] ?? '',
+                  url: e['url'] ?? '',
+                ),
               )
               .toList();
           return Carousel(
