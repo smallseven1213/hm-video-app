@@ -86,6 +86,7 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
+    final gameBannerController = Get.find<GameBannerController>();
     final gameConfigController = Get.find<GameConfigController>();
     final gamesListController = Get.find<GamesListController>();
 
