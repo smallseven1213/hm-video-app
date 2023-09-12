@@ -31,7 +31,7 @@ class BannerItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(6.0),
         child: Image.network(
-          image.photoId ?? '',
+          image.photoUrl ?? '',
           width: Get.width,
           fit: BoxFit.fill,
         ),
