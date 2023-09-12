@@ -153,48 +153,49 @@ class _GameLobbyState extends State<GameLobby>
               builder: (BuildContext context, Orientation orientation) {
                 return SafeArea(
                   child: Container(
-                    color: gameLobbyBgColor,
-                    height: double.infinity,
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
-                    child: Column(
-                      children: [
-                        GameCarousel(data: gameBannerController.gameBanner),
-                        GameMarquee(data: gameBannerController.gameMarquee),
-                        GameUserInfo(
-                          type: 'lobby',
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // 存款
-                              UserInfoDeposit(
-                                onTap: () {
-                                  MyRouteDelegate.of(context).push(
-                                    gameConfigController
-                                                .switchPaymentPage.value ==
-                                            switchPaymentPageType['list']
-                                        ? GameAppRoutes.depositList.value
-                                        : GameAppRoutes.depositPolling.value,
-                                  );
-                                },
-                              ),
-                              // 提現
-                              UserInfoWithdraw(
-                                onTap: () {
-                                  MyRouteDelegate.of(context).push(
-                                    GameAppRoutes.withdraw.value,
-                                  );
-                                },
-                              ),
-                              // 客服
-                              const UserInfoService(),
-                            ],
-                          ),
-                        ),
-                        const GameListView(),
-                      ],
-                    ),
-                  ),
+                      color: gameLobbyBgColor,
+                      height: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 16),
+                      child: GameCarousel(data: gameBannerController.gameBanner)
+                      // Column(
+                      //   children: [
+                      //     GameCarousel(data: gameBannerController.gameBanner),
+                      //     GameMarquee(data: gameBannerController.gameMarquee),
+                      //     GameUserInfo(
+                      //       type: 'lobby',
+                      //       child: Row(
+                      //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //         children: [
+                      //           // 存款
+                      //           UserInfoDeposit(
+                      //             onTap: () {
+                      //               MyRouteDelegate.of(context).push(
+                      //                 gameConfigController
+                      //                             .switchPaymentPage.value ==
+                      //                         switchPaymentPageType['list']
+                      //                     ? GameAppRoutes.depositList.value
+                      //                     : GameAppRoutes.depositPolling.value,
+                      //               );
+                      //             },
+                      //           ),
+                      //           // 提現
+                      //           UserInfoWithdraw(
+                      //             onTap: () {
+                      //               MyRouteDelegate.of(context).push(
+                      //                 GameAppRoutes.withdraw.value,
+                      //               );
+                      //             },
+                      //           ),
+                      //           // 客服
+                      //           const UserInfoService(),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //     const GameListView(),
+                      //   ],
+                      // ),
+                      ),
                 );
               },
             ),

@@ -15,6 +15,7 @@ class BannerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: ValueKey(image.photoId),
       onTap: () {
         if (image.url!.isNotEmpty) {
           // Get.find<BannerController>().recordBannerClick(int.parse(image.photoId));
