@@ -29,7 +29,6 @@ class _GameMarqueeState extends State<GameMarquee> {
             size: 25,
             color: Colors.white,
           ),
-          width: Get.width - 40,
           style: TextStyle(color: Colors.white),
           // text: widget.data.map((e) => e['title']).join('    '),
           text: '給我一億元，我給你全世界'),
