@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:game/models/game_banner_image.dart';
 import 'package:game/widgets/carousel.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-
-final logger = Logger();
 
 class GameCarousel extends StatefulWidget {
   final List data;
