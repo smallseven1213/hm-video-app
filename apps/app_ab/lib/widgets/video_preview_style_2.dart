@@ -245,7 +245,7 @@ class VideoPreviewStyle2Widget extends BaseVideoPreviewWidget {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'titleLarge',
+                          title,
                           textAlign: TextAlign.left,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 2,
