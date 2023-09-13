@@ -38,8 +38,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 56.0,
                 width: 56.0,
                 color: Colors.transparent,
-                child: const Center(
-                  child: Icon(Icons.arrow_back_ios_new, size: 16),
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 16,
+                    color: AppColors.colors[ColorKeys.buttonTextPrimary],
+                  ),
                 ),
               ),
             )

@@ -5,8 +5,7 @@ class AppColors {
   static const Map<ColorKeys, Color> colors = {
     // bg
     ColorKeys.primary: Color(0xff0F1320),
-    ColorKeys.secondary: Color(0xffb5925c),
-    ColorKeys.accent: Color(0x00ffffff),
+    ColorKeys.secondary: Color(0xffF4CDCA),
     ColorKeys.background: Color(0xff0F1320),
     ColorKeys.formBg: Color(0xfff2f2f2),
     ColorKeys.videoPreviewBg: Color(0xffefefef),
@@ -16,13 +15,13 @@ class AppColors {
     ColorKeys.textTertiary: Color(0xff73747b),
     ColorKeys.textPlaceholder: Color(0xffCACACA),
     // button
-    ColorKeys.buttonTextPrimary: Color(0xff464C61),
-    ColorKeys.buttonTextSecondary: Colors.black,
+    ColorKeys.buttonTextPrimary: Colors.white,
+    ColorKeys.buttonTextSecondary: Colors.white,
     ColorKeys.buttonTextCancel: Colors.white,
-    ColorKeys.buttonBgPrimary: Color(0xffB5925C),
-    ColorKeys.buttonBgSecondary: Color(0xfff2f2f2),
-    ColorKeys.buttonBgCancel: Color(0xffCACACA),
-    ColorKeys.buttonBgDisable: Color(0xffF2F2F2),
+    ColorKeys.buttonBgPrimary: Color(0xff6874b6),
+    ColorKeys.buttonBgSecondary: Color(0xff3F425A),
+    ColorKeys.buttonBgCancel: Color(0xff1F2235),
+    ColorKeys.buttonBgDisable: Color(0xff464C61),
     ColorKeys.buttonOverlayColor: Color(0xff585858),
     ColorKeys.noImageBgTop: Color(0xff00234D),
     ColorKeys.noImageBgBottom: Color(0xff002D62),
@@ -32,8 +31,15 @@ class AppColors {
     ColorKeys.dividerColor: Color(0xffeeeeee),
     ColorKeys.gradientBgTopColor: Color(0xff46454a),
     ColorKeys.gradientBgBottomColor: Color(0xff1c1c1c),
-    // tabbar
-    ColorKeys.tabTextColor: Color(0xff919BB3),
-    ColorKeys.tabTextActiveColor: Color(0xffF4CDCA),
+    // tabs
+    ColorKeys.tabBgColor: Color(0xff0F1320), // layout tab
+    ColorKeys.tabTextColor: Color(0xff919BB3), // layout tab
+    ColorKeys.tabTextActiveColor: Color(0xffF4CDCA), // layout tab
+    ColorKeys.tabBarTextColor: Color(0xff919BB3),
+    ColorKeys.tabBarTextActiveColor: Color(0xffF4CDCA),
+    // search input
+    ColorKeys.textSearch: Color(0xff919BB3),
+    // jingang
+    ColorKeys.jingangBorder: Color(0xffF4CDCA),
   };
 }
