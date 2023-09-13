@@ -19,7 +19,9 @@ void main() async {
     'https://5975596ddf0f4a6b95b09de1adda3d53@sentry.hmtech.club/4',
     allRoutes.keys.first,
     [
-      'https://dl.dlsv.net/$env/dl.json',
+      'https://dl.dlra.info/$env/dl.json',
+      'https://dl.dlra.me/$env/dl.json',
+      'https://dl.dlra.club/$env/dl.json',
     ],
     allRoutes,
     AppColors.colors,
