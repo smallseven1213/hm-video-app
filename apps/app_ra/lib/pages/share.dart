@@ -88,7 +88,7 @@ class SharePage extends StatelessWidget {
                     child: const Text(
                       '推廣紀錄',
                       style: TextStyle(
-                        color: Color(0xff00B0D4),
+                        color: Color(0xffFDDCEF),
                         fontSize: 12,
                       ),
                     ),

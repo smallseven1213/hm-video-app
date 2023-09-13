@@ -83,8 +83,8 @@ class GridMenuState extends State<GridMenu> {
                       const SizedBox(height: 5),
                       Text(
                         item.name,
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.white),
+                        style: const TextStyle(
+                            fontSize: 12, color: Color(0xFFFDDCEF)),
                       ),
                     ],
                   ),
