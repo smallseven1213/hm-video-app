@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
-import 'package:shared/modules/products/product_consumer.dart';
+import 'package:shared/modules/user/user_product_consumer.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../config/colors.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/modules/products/product_consumer.dart';
+import 'package:shared/modules/user/user_product_consumer.dart';
 
 final logger = Logger();
 
@@ -40,14 +40,14 @@ class CoinProducts extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      '${product.discount}',
+                      '\$${product.discount}',
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).primaryColor,
                       ),
                     ),
-                    Text('原價: ${product.fiatMoneyPrice}',
+                    Text('\$原價: ${product.fiatMoneyPrice}',
                         style: Theme.of(context).textTheme.bodySmall),
                   ],
                 )

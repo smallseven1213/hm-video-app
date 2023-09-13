@@ -7,7 +7,7 @@ import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
 import '../screens/coin/deposit_history.dart';
 import '../screens/coin/products.dart';
-import '../screens/coin/purchase_history.dart';
+import '../screens/coin/purchase_record.dart';
 import '../screens/coin/vip_history.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
@@ -82,8 +82,8 @@ class CoinPageState extends State<CoinPage>
                 child: TabBarView(
                   controller: _tabController,
                   children: [
-                    const CoinProducts(),
-                    const PurchaseHistory(),
+                    CoinProducts(),
+                    PurchaseRecord(),
                     const VipHistory(),
                     const DepositHistory(),
                   ],

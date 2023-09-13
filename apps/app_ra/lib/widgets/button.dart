@@ -10,7 +10,7 @@ const buttonPadding = {
 const buttonBg = {
   'primary': Colors.transparent,
   'secondary': Color(0xFF273262),
-  'cancel': Color(0xffdedede),
+  'cancel': Colors.transparent,
 };
 
 class Button extends StatelessWidget {
@@ -39,7 +39,7 @@ class Button extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(25),
           color: buttonBg[type],
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -47,11 +47,12 @@ class Button extends StatelessWidget {
           child: Container(
             padding: buttonPadding[size],
             decoration: BoxDecoration(
-                border: Border.all(
-                  color: borderColor ?? const Color(0xffFDDCEF),
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(25)),
+              border: Border.all(
+                color: borderColor ?? const Color(0xffFDDCEF),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
