@@ -1,3 +1,4 @@
+import 'package:app_ra/screens/layout_home_screen/block_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -83,9 +84,9 @@ class UserScreenState extends State<LayoutUserScreen> {
                   height: 20,
                 ),
               ),
-              // const SliverToBoxAdapter(
-              //   child: Header(text: '更多服務'),
-              // ),
+              const SliverToBoxAdapter(
+                child: BlockHeader(text: '更多服務'),
+              ),
               const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 10,

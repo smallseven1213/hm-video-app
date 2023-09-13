@@ -172,29 +172,12 @@ class ListMenuState extends State<ListMenu> {
               return Container(
                 height: 38,
                 margin: const EdgeInsets.fromLTRB(8, 0, 8, 10),
-                decoration: BoxDecoration(
-                  borderRadius: kIsWeb ? null : BorderRadius.circular(38),
-                  border: Border.all(
-                    color: const Color(0xFF8594E2),
-                    width: 1,
-                  ),
-                  gradient: const LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Color(0xFF000916),
-                      Color(0xFF003F6C),
-                    ],
-                    stops: [0.0, 1.0],
-                  ),
-                ),
                 child: GestureDetector(
                   onTap: item.onTap as void Function()?,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(width: 16),
                       Padding(
                         padding: const EdgeInsets.all(5),
                         child: SidImage(
@@ -202,7 +185,6 @@ class ListMenuState extends State<ListMenu> {
                           width: 20,
                         ),
                       ),
-                      const SizedBox(width: 16),
                       Text(
                         item.name,
                         style: const TextStyle(
