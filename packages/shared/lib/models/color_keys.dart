@@ -29,6 +29,11 @@ enum ColorKeys {
   gradientBgTopColor,
   gradientBgBottomColor,
   videoTitle,
+  tabBgColor,
   tabTextColor,
   tabTextActiveColor,
+  tabBarTextColor,
+  tabBarTextActiveColor,
+  textSearch,
+  jingangBorder,
 }

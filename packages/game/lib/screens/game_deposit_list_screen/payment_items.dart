@@ -264,8 +264,9 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                   (index) => GestureDetector(
                       onTap: () {
                         paymentIndexChanged(paymentItem[index]);
-                        final double scrollOffset =
-                            index * 45 - Get.width / 2 + Get.width / 4;
+                        final double scrollOffset = index * 45 -
+                            MediaQuery.of(context).size.width / 2 +
+                            MediaQuery.of(context).size.width / 4;
                         scrollController.animateTo(
                           index >= 4 ? scrollOffset : 0,
                           duration: const Duration(milliseconds: 200),
@@ -278,8 +279,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                             padding: const EdgeInsets.symmetric(horizontal: 1),
                             child: Container(
                               width: paymentLength <= 4
-                                  ? Get.width / 4 - 22
-                                  : Get.width / 4 - 32,
+                                  ? MediaQuery.of(context).size.width / 4 - 22
+                                  : MediaQuery.of(context).size.width / 4 - 32,
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
                                 color: _paymentActiveIndex == paymentItem[index]
