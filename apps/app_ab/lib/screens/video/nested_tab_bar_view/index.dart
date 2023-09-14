@@ -1,16 +1,17 @@
-import 'package:app_ab/screens/main_screen/block_header.dart';
-import 'package:app_ab/widgets/sliver_vod_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 
+import 'package:app_ab/screens/main_screen/block_header.dart';
+import 'package:app_ab/widgets/sliver_vod_list.dart';
+
 import '../../../widgets/list_no_more.dart';
 import 'app_download_ad.dart';
 import 'banner.dart';
-import 'video_actions.dart';
 import 'video_info.dart';
 
 final logger = Logger();
@@ -59,24 +60,25 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                     actor: widget.video.actors,
                     publisher: widget.video.publisher,
                     viewTimes: widget.videoDetail.videoViewTimes ?? 0,
+                    videoDetail: widget.videoDetail,
                   )),
             ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoActions(
-                  videoDetail: Vod(
-                    widget.video.id,
-                    widget.video.title,
-                    coverHorizontal: widget.video.coverHorizontal!,
-                    coverVertical: widget.video.coverVertical!,
-                    timeLength: widget.video.timeLength!,
-                    tags: widget.video.tags!,
-                    videoViewTimes: widget.videoDetail.videoViewTimes!,
-                  ),
-                ),
-              ),
-            ),
+            // SliverToBoxAdapter(
+            //   child: Padding(
+            //     padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
+            //     child: VideoActions(
+            //       videoDetail: Vod(
+            //         widget.video.id,
+            //         widget.video.title,
+            //         coverHorizontal: widget.video.coverHorizontal!,
+            //         coverVertical: widget.video.coverVertical!,
+            //         timeLength: widget.video.timeLength!,
+            //         tags: widget.video.tags!,
+            //         videoViewTimes: widget.videoDetail.videoViewTimes!,
+            //       ),
+            //     ),
+            //   ),
+            // ),
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 8, right: 8, left: 8),

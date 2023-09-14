@@ -100,8 +100,7 @@ class SearchInputState extends State<SearchInput> {
                 ),
               ),
             ),
-            style: TextStyle(
-                color: AppColors.colors[ColorKeys.textPrimary], fontSize: 14),
+            style: const TextStyle(color: Colors.black, fontSize: 14),
             autofocus: widget.autoFocus,
             focusNode: widget.focusNode,
           ),
