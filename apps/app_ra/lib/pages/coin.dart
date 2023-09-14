@@ -5,10 +5,10 @@ import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
-import '../screens/coin/deposit_history.dart';
+import '../screens/coin/order_record.dart';
 import '../screens/coin/products.dart';
 import '../screens/coin/purchase_record.dart';
-import '../screens/coin/vip_history.dart';
+import '../screens/coin/privilege_record.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 import '../widgets/user/balance.dart';
@@ -84,8 +84,8 @@ class CoinPageState extends State<CoinPage>
                   children: [
                     CoinProducts(),
                     PurchaseRecord(),
-                    const VipHistory(),
-                    const DepositHistory(),
+                    const PrivilegeRecord(),
+                    const OrderRecord(),
                   ],
                 ),
               ),

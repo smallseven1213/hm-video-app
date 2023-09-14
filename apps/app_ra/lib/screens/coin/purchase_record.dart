@@ -28,9 +28,7 @@ class PurchaseRecord extends StatelessWidget {
                 margin: const EdgeInsets.only(bottom: 8),
                 decoration: BoxDecoration(
                   border: Border(
-                    bottom: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
+                    bottom: BorderSide(color: Theme.of(context).primaryColor),
                   ),
                 ),
                 child: Row(

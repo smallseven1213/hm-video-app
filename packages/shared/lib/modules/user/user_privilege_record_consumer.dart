@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/user_privilege_controller.dart';
-import '../../models/product.dart';
 import '../../models/user_privilege_record.dart';
 
 enum ProductType {

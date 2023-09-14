@@ -3,13 +3,14 @@ import 'package:logger/logger.dart';
 
 final logger = Logger();
 
-class VipHistory extends StatelessWidget {
-  const VipHistory({super.key});
+class OrderRecord extends StatelessWidget {
+  const OrderRecord({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text('VipHistory', style: Theme.of(context).textTheme.bodySmall),
+      child:
+          Text('DepositHistory', style: Theme.of(context).textTheme.bodySmall),
     );
   }
 }
