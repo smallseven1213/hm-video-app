@@ -16,6 +16,7 @@ const buttonBg = {
 class Button extends StatelessWidget {
   final String text;
   final Color? borderColor;
+  final Color? textColor;
   final VoidCallback onPressed;
 
   final dynamic icon; // GlowingIcon or Icon
@@ -27,6 +28,7 @@ class Button extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.borderColor,
+    this.textColor,
     this.icon,
     this.type = 'primary',
     this.size = 'medium',
@@ -62,9 +64,10 @@ class Button extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      color: type == 'secondary'
-                          ? const Color(0xffFDDCEF)
-                          : Colors.white,
+                      color: textColor ??
+                          (type == 'secondary'
+                              ? const Color(0xffFDDCEF)
+                              : Colors.white),
                       fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
                     ),
