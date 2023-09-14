@@ -49,67 +49,18 @@ class LayoutHomeScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.of(context).padding.top,
                         ),
-                        SizedBox(
-                          height: 55,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: SizedBox(
-                                      height: 45,
-                                      child: LayoutTabBar(
-                                        layoutId: layoutId,
-                                      ))),
-                              DisplayLayoutTabSearchConsumer(
-                                layoutId: layoutId,
-                                child: ({required bool displaySearchBar}) =>
-                                    displaySearchBar
-                                        ? Container()
-                                        : PopularSearchTitleBuilder(
-                                            child: (
-                                                    {required String
-                                                        searchKeyword}) =>
-                                                SizedBox(
-                                              width: 46,
-                                              height: 55,
-                                              child: Center(
-                                                  child: Padding(
-                                                // padding top 5
-                                                padding: const EdgeInsets.only(
-                                                    top: 6),
-                                                child: IconButton(
-                                                  icon: const Image(
-                                                    width: 28,
-                                                    height: 28,
-                                                    fit: BoxFit.cover,
-                                                    image: AssetImage(
-                                                        'assets/images/layout_tabbar_search.png'),
-                                                  ),
-                                                  onPressed: () {
-                                                    MyRouteDelegate.of(context)
-                                                        .push(AppRoutes.search,
-                                                            args: {
-                                                          'inputDefaultValue':
-                                                              searchKeyword,
-                                                          'autoSearch': false
-                                                        });
-                                                  },
-                                                ),
-                                              )),
-                                            ),
-                                          ),
-                              )
-                            ],
-                          ),
-                        ),
-                        DisplayLayoutTabSearchConsumer(
-                            layoutId: layoutId,
-                            child: (({required bool displaySearchBar}) =>
-                                displaySearchBar
-                                    ? ChannelSearchBar(
-                                        key:
-                                            Key('channel-search-bar-$layoutId'),
-                                      )
-                                    : Container()))
+                        ChannelSearchBar(
+                          key: Key('channel-search-bar-$layoutId'),
+                        )
+                        // DisplayLayoutTabSearchConsumer(
+                        //     layoutId: layoutId,
+                        //     child: (({required bool displaySearchBar}) =>
+                        //         displaySearchBar
+                        // ? ChannelSearchBar(
+                        //     key:
+                        //         Key('channel-search-bar-$layoutId'),
+                        //   )
+                        //             : Container()))
                       ],
                     )),
                   ],
