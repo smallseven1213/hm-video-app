@@ -199,7 +199,7 @@ class ListMenuState extends State<ListMenu> {
                               item.name,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: AppColors.colors[ColorKeys.primary],
+                                color: AppColors.colors[ColorKeys.textPrimary],
                               ),
                             ),
                           ),

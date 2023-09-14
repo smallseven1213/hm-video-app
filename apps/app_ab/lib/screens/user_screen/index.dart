@@ -75,7 +75,7 @@ class UserScreenState extends State<UserScreen> {
                     ),
                     child: Container(
                       height: 10,
-                      color: Colors.white,
+                      color: AppColors.colors[ColorKeys.background],
                     ),
                   ),
                 ),
