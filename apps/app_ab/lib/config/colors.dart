@@ -14,6 +14,7 @@ class AppColors {
     ColorKeys.textSecondary: Color(0xff979797),
     ColorKeys.textTertiary: Color(0xff73747b),
     ColorKeys.textPlaceholder: Color(0xffCACACA),
+    ColorKeys.textVideoInfoDetail: Color(0xffC7C3C3),
     // button
     ColorKeys.buttonTextPrimary: Colors.white,
     ColorKeys.buttonTextSecondary: Colors.white,
