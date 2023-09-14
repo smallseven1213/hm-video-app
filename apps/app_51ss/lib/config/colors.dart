@@ -40,5 +40,7 @@ class AppColors {
     ColorKeys.textSearch: Colors.black,
     // jingang
     ColorKeys.jingangBorder: Color(0xffB5925C),
+    // notice
+    ColorKeys.noticeBg: Colors.white,
   };
 }

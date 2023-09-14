@@ -80,14 +80,14 @@ class NoticeDialogState extends State<NoticeDialog> {
             content: Container(
                 width: 270,
                 height: 320,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  image: DecorationImage(
+                decoration: BoxDecoration(
+                  color: AppColors.colors[ColorKeys.noticeBg],
+                  image: const DecorationImage(
                     image: AssetImage('assets/images/notice-header.png'),
                     alignment: Alignment.topCenter,
                     fit: BoxFit.fitWidth,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 child: Stack(
                   children: [
