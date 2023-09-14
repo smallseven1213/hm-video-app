@@ -4,7 +4,6 @@ enum ColorKeys {
   accent,
   background,
   formBg,
-  formTextColor,
   videoPreviewBg,
   textPrimary,
   textSecondary,
