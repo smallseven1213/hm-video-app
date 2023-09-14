@@ -16,9 +16,7 @@ class ChannelStyle3 extends StatelessWidget {
     return DisplayLayoutTabSearchConsumer(
       layoutId: layoutId,
       child: ({required bool displaySearchBar}) => Padding(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top +
-                (displaySearchBar ? 110 : 50)),
+        padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 50),
         child: ChannelProvider(
             channelId: channelId,
             widget: ChannelStyle3Main(
