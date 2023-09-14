@@ -39,6 +39,7 @@ class Vod {
   final int? chargeType;
   final int? orderIndex;
   int? videoCollectTimes;
+  int? videoFavoriteTimes;
   int? videoViewTimes;
   List<Actor>? actors;
   List<Tag>? tags;
@@ -93,6 +94,7 @@ class Vod {
     this.point,
     this.buyPoint,
     this.videoCollectTimes,
+    this.videoFavoriteTimes,
     this.videoViewTimes,
     this.isAd = false,
     this.videoAdUrl = '',
@@ -138,6 +140,7 @@ class Vod {
       'point': point,
       'buyPoint': buyPoint,
       'videoCollectTimes': videoCollectTimes,
+      'videoFavoriteTimes': videoFavoriteTimes,
       'videoViewTimes': videoViewTimes,
       'isAd': isAd,
       'videoAdUrl': videoAdUrl,
@@ -178,6 +181,9 @@ class Vod {
         videoCollectTimes: json['videoCollectTimes'] == null
             ? 0
             : int.parse(json['videoCollectTimes'].toString()),
+        videoFavoriteTimes: json['videoFavoriteTimes'] == null
+            ? 0
+            : int.parse(json['videoFavoriteTimes'].toString()),
         videoViewTimes: json['videoViewTimes'] == null
             ? 0
             : int.parse(json['videoViewTimes'].toString()),
@@ -234,6 +240,7 @@ class Vod {
     belong = json['belong'];
     timeLength = json['timeLength'];
     videoCollectTimes = int.parse(json['videoCollectTimes'].toString());
+    videoFavoriteTimes = int.parse(json['videoFavoriteTimes'].toString());
     videoViewTimes = int.parse(json['videoViewTimes'].toString());
     actors = (json['actor'] ?? json['actors']) == null
         ? []

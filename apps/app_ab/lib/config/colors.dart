@@ -7,13 +7,13 @@ class AppColors {
     ColorKeys.primary: Color(0xff0F1320),
     ColorKeys.secondary: Color(0xffF4CDCA),
     ColorKeys.background: Color(0xff0F1320),
-    ColorKeys.formBg: Color(0xfff2f2f2),
     ColorKeys.videoPreviewBg: Color(0xffefefef),
     // text
     ColorKeys.textPrimary: Colors.white,
     ColorKeys.textSecondary: Color(0xff979797),
     ColorKeys.textTertiary: Color(0xff73747b),
     ColorKeys.textPlaceholder: Color(0xffCACACA),
+    ColorKeys.textVideoInfoDetail: Color(0xffC7C3C3),
     // button
     ColorKeys.buttonTextPrimary: Colors.white,
     ColorKeys.buttonTextSecondary: Colors.white,
@@ -43,5 +43,8 @@ class AppColors {
     ColorKeys.jingangBorder: Color(0xffF4CDCA),
     // notice
     ColorKeys.noticeBg: Color(0xff3F4253),
+    // form
+    ColorKeys.formBg: Color(0xfff2f2f2),
+    ColorKeys.formTextColor: Colors.black,
   };
 }
