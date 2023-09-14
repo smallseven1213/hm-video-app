@@ -10,6 +10,7 @@ enum ColorKeys {
   textTertiary,
   textLink,
   textPlaceholder,
+  textVideoInfoDetail,
   buttonTextPrimary,
   buttonTextSecondary,
   buttonTextCancel,
