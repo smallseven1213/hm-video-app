@@ -1,4 +1,3 @@
-import 'package:app_51ss/widgets/actor_avatar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,6 +6,8 @@ import 'package:shared/controllers/user_favorites_supplier_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
+
+import '../../../widgets/actor_avatar.dart';
 
 class ChannelStyle6Suppliers extends StatelessWidget {
   ChannelStyle6Suppliers({Key? key}) : super(key: key);

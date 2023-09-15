@@ -1,9 +1,10 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/models/color_keys.dart';
+
+import '../../config/colors.dart';
 
 class SystemEventCard extends StatelessWidget {
   final int id;

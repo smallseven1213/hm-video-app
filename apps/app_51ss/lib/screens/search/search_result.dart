@@ -1,4 +1,3 @@
-import 'package:app_51ss/widgets/tab_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,6 +8,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
+import '../../widgets/tab_bar.dart';
 
 final vodApi = VodApi();
 

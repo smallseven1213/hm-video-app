@@ -1,5 +1,3 @@
-import 'package:app_51ss/screens/main_screen/block_header.dart';
-import 'package:app_51ss/widgets/sliver_vod_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -8,6 +6,8 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 
 import '../../../widgets/list_no_more.dart';
+import '../../../widgets/sliver_vod_list.dart';
+import '../../main_screen/block_header.dart';
 import 'app_download_ad.dart';
 import 'banner.dart';
 import 'video_actions.dart';

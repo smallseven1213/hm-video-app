@@ -1,6 +1,3 @@
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/custom_app_bar.dart';
-import 'package:app_51ss/widgets/search_input.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -12,9 +9,12 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../config/colors.dart';
 import '../screens/actors/tabbar.dart';
 import '../widgets/circle_sidimage_text_item.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/no_data.dart';
+import '../widgets/search_input.dart';
 
 final logger = Logger();
 

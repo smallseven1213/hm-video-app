@@ -1,4 +1,3 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,14 +12,14 @@ import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.da
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/refresh_list.dart';
 
-import 'package:app_51ss/widgets/button.dart';
-import 'package:app_51ss/widgets/reload_button.dart';
-import 'package:app_51ss/widgets/video_list_loading_text.dart';
-
+import '../../../config/colors.dart';
+import '../../../widgets/button.dart';
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/header.dart';
+import '../../../widgets/reload_button.dart';
+import '../../../widgets/video_list_loading_text.dart';
 import '../videoblock.dart';
 
 final logger = Logger();

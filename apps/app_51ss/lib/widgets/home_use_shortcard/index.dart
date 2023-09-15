@@ -1,5 +1,3 @@
-import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
-import 'package:app_51ss/widgets/shortcard/short_card_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +6,9 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import '../../screens/video/video_player_area/flash_loading.dart';
 import '../shortcard/index.dart';
+import '../shortcard/short_card_info.dart';
 import 'side_info.dart';
 
 final logger = Logger();

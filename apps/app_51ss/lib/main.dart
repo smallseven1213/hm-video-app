@@ -1,5 +1,3 @@
-import 'package:app_51ss/widgets/countdown.dart';
-import 'package:app_51ss/widgets/loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart'; // 如果需要管理色碼的話，使用這個
 import 'package:shared/utils/running_main.dart'; // 啟動專案必須要引用shared的runningMain
@@ -9,6 +7,8 @@ import 'config/colors.dart';
 // 如果此App沒有遊戲，那就不需要寫入game_routes
 import './routes/app_routes.dart' as app_routes;
 import './routes/game_routes.dart' as game_routes;
+import 'widgets/countdown.dart';
+import 'widgets/loading.dart';
 
 const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 

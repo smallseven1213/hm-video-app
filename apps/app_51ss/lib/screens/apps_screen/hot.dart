@@ -6,7 +6,7 @@ import 'package:shared/models/index.dart';
 import 'package:shared/modules/apps/apps_item_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-import 'package:app_51ss/config/colors.dart';
+import '../../config/colors.dart';
 
 class HotWidget extends StatelessWidget {
   final List<Ads> items;

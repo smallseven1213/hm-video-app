@@ -6,7 +6,7 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/capture_screenshot_button.dart';
 
-import 'package:app_51ss/config/colors.dart';
+import '../config/colors.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 

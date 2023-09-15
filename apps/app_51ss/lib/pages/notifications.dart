@@ -1,11 +1,12 @@
-import 'package:app_51ss/screens/notifications/notification.dart';
-import 'package:app_51ss/screens/notifications/system.dart';
-import 'package:app_51ss/widgets/custom_app_bar.dart';
-import 'package:app_51ss/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
+
+import '../screens/notifications/notification.dart';
+import '../screens/notifications/system.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/tab_bar.dart';
 
 class NotificationsPage extends StatefulWidget {
   const NotificationsPage({Key? key}) : super(key: key);
