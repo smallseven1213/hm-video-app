@@ -5,7 +5,7 @@ import '../../controllers/user_order_controller.dart';
 import '../../models/user_order.dart';
 
 class UserOrderRecordConsumer extends StatefulWidget {
-  final int type;
+  final String type;
   final Widget Function(List<Order> records) child;
   const UserOrderRecordConsumer({
     Key? key,

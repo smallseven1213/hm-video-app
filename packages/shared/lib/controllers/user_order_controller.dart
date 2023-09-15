@@ -11,7 +11,7 @@ final logger = Logger();
 class UserOrderController extends GetxController {
   var orderRecord = <Order>[].obs;
 
-  UserOrderController({required int type}) {
+  UserOrderController({required String type}) {
     _fetchData(type);
     Get.find<AuthController>().token.listen((event) {
       _fetchData(type);
