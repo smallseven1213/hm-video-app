@@ -1,11 +1,12 @@
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/channel_area_banner.dart';
-import 'package:app_51ss/widgets/glowing_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
+
+import '../config/colors.dart';
+import 'channel_area_banner.dart';
+import 'glowing_icon.dart';
 
 class CustomButton extends StatefulWidget {
   final String text;

@@ -1,6 +1,3 @@
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
-import 'package:app_51ss/screens/video/video_player_area/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,8 +7,11 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 
+import '../../config/colors.dart';
 import '../../widgets/wave_loading.dart';
 import 'nested_tab_bar_view/index.dart';
+import 'video_player_area/flash_loading.dart';
+import 'video_player_area/index.dart';
 import 'video_player_area/loading.dart';
 
 final logger = Logger();

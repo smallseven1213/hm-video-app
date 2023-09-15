@@ -1,4 +1,6 @@
 import 'package:app_ab/config/colors.dart';
+import 'package:app_ab/screens/video/nested_tab_bar_view/video_collect.dart';
+import 'package:app_ab/screens/video/nested_tab_bar_view/video_favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
@@ -21,6 +23,7 @@ class VideoInfo extends StatelessWidget {
   final List<Actor>? actor;
   final Publisher? publisher;
   final ObservableVideoPlayerController? videoPlayerController;
+  final Vod videoDetail;
 
   const VideoInfo({
     super.key,
@@ -32,6 +35,7 @@ class VideoInfo extends StatelessWidget {
     this.actor,
     this.externalId,
     this.publisher,
+    required this.videoDetail,
   });
 
   @override
@@ -71,9 +75,10 @@ class VideoInfo extends StatelessWidget {
                           },
                           child: Text(
                             publisher!.name,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
-                              color: Color(0xffC7C3C3),
+                              color: AppColors
+                                  .colors[ColorKeys.textVideoInfoDetail],
                             ),
                           ),
                         ),
@@ -97,9 +102,10 @@ class VideoInfo extends StatelessWidget {
                           },
                           child: Text(
                             actor![0].name,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
-                              color: Color(0xffC7C3C3),
+                              color: AppColors
+                                  .colors[ColorKeys.textVideoInfoDetail],
                             ),
                           ),
                         ),
@@ -114,11 +120,13 @@ class VideoInfo extends StatelessWidget {
                     children: [
                       ViewTimes(
                         times: viewTimes,
-                        color: const Color(0xffC7C3C3),
+                        color: AppColors.colors[ColorKeys.textVideoInfoDetail],
                       ),
+                      VideoFavorite(videoDetail: videoDetail),
+                      VideoCollect(videoDetail: videoDetail),
                       VideoTime(
                         time: timeLength,
-                        color: const Color(0xffC7C3C3),
+                        color: AppColors.colors[ColorKeys.textVideoInfoDetail],
                         hasIcon: true,
                       ),
                     ],

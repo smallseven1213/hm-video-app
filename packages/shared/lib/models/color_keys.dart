@@ -10,6 +10,7 @@ enum ColorKeys {
   textTertiary,
   textLink,
   textPlaceholder,
+  textVideoInfoDetail,
   buttonTextPrimary,
   buttonTextSecondary,
   buttonTextCancel,
@@ -36,4 +37,5 @@ enum ColorKeys {
   tabBarTextActiveColor,
   textSearch,
   jingangBorder,
+  noticeBg,
 }

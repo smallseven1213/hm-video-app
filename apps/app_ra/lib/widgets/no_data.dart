@@ -10,7 +10,7 @@ class NoDataWidget extends StatelessWidget {
         child: Column(
           children: [
             const Image(
-              image: AssetImage('assets/images/list_no_more.webp'),
+              image: AssetImage('assets/images/list_no_more.png'),
               width: 48,
               height: 48,
             ),

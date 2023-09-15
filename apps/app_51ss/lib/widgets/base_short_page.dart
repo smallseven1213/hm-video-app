@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -8,6 +6,7 @@ import 'package:shared/modules/short_video/short_video_provider.dart';
 import 'package:shared/modules/shorts/shorts_scaffold.dart';
 import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
+import '../screens/video/video_player_area/flash_loading.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 

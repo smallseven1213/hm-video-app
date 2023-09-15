@@ -68,26 +68,19 @@ class IDCard extends StatelessWidget {
       key: _globalKey,
       child: Container(
         width: 270,
-        height: 400,
+        height: 350,
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-          borderRadius: kIsWeb ? null : BorderRadius.circular(10),
-          gradient: const LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Color(0xFF00386A),
-              Color.fromRGBO(0, 9, 22, 1),
-              Color(0xFF003F6C),
-              Color(0xFF005B9C),
-            ],
-            stops: [0.03, 0.22, 0.85, 0.91],
-            // transform: GradientRotation(
-            //     156.33 * (3.141592 / 180)), // Convert degrees to radians
+          color: const Color(0xFF273262),
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: const Color(0xFFFDDCEF),
+            width: 2,
           ),
         ),
-        child: const IDCardContent(),
+        child: const Center(
+          child: IDCardContent(),
+        ),
       ),
     );
   }
@@ -116,117 +109,83 @@ class IDCardContentState extends State<IDCardContent> {
     return Obx(
       () => Column(
         children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                border:
-                    Border.all(color: Colors.white.withOpacity(0.5), width: 1),
-                borderRadius: BorderRadius.circular(10),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  color: const Color(0xFFD9D9D9),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: const Color(0xFFFDDCEF),
+                    width: 2,
+                  ),
+                ),
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // Add the content widget here
-                  // 1. App icon
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 20),
-                    child: Image.asset(
-                      'assets/images/app_title.png',
-                      width: 130,
-                      height: 30,
-                    ),
-                  ),
-
-                  // 2. Platform title
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: Text(
-                      'G 點視頻',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ),
-
-                  // 3. Info text
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: Text(
-                      '用於找回帳號，請妥善保存，請勿露餡',
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.5),
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                        // height: 20 / 12,
-                      ),
-                    ),
-                  ),
-
-                  // 4. ID text
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 8),
-                    child: Text(
-                      'ID: ${userController.info.value.uid}',
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                      ),
-                    ),
-                  ),
-
-                  // 5. QR Code image
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: QrImageView(
-                      data: userController.loginCode.value,
-                      version: QrVersions.auto,
-                      size: 95.0,
-                      backgroundColor: Colors.white,
-                      eyeStyle: const QrEyeStyle(
-                        eyeShape: QrEyeShape.square,
-                        color: Color.fromARGB(255, 2, 44, 108),
-                      ),
-                      dataModuleStyle: const QrDataModuleStyle(
-                        dataModuleShape: QrDataModuleShape.square,
-                        color: Color.fromARGB(255, 2, 44, 108),
-                      ),
-                    ),
-                  ),
-
-                  // 6. Rounded background text
-                  Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.only(top: 10),
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: const Color.fromRGBO(66, 119, 220, 0.5),
-                      ),
-                      width: 115,
-                      child: const Text(
-                        '官網地址 : gdtv.app',
-                        style: TextStyle(
-                          color: Color(0xFF21AFFF),
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10,
-                        ),
-                      )),
-                ],
+              const SizedBox(width: 10),
+              const Text(
+                'RA',
+                style: TextStyle(
+                  color: Color(0xFFFDDCEF),
+                  fontWeight: FontWeight.w800,
+                  fontSize: 16,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 15),
+            child: Text(
+              '用於找回帳號，請妥善保存，請勿露餡',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                // height: 20 / 12,
               ),
             ),
           ),
 
+          // 4. ID text
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8),
+            child: Text(
+              'ID: ${userController.info.value.uid}',
+              style: const TextStyle(
+                color: Color(0xFFFDDCEF),
+                fontSize: 12,
+              ),
+            ),
+          ),
+
+          // 5. QR Code image
+          ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: QrImageView(
+              data: userController.loginCode.value,
+              version: QrVersions.auto,
+              size: 95.0,
+              backgroundColor: Colors.white,
+              eyeStyle: const QrEyeStyle(
+                eyeShape: QrEyeShape.square,
+                color: Color.fromARGB(255, 2, 44, 108),
+              ),
+              dataModuleStyle: const QrDataModuleStyle(
+                dataModuleShape: QrDataModuleShape.square,
+                color: Color.fromARGB(255, 2, 44, 108),
+              ),
+            ),
+          ),
           // Add the button widget here
           const SizedBox(height: 33),
           const SizedBox(
-            width: 208,
+            width: 160,
             child: Button(
+              borderColor: Colors.white,
+              textColor: Colors.white,
               text: '請截圖保存',
               type: 'secondary',
               onPressed: _captureAndSaveScreenshot,

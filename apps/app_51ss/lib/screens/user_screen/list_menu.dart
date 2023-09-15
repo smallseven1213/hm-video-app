@@ -13,9 +13,9 @@ import 'package:shared/modules/user_setting/user_setting_more_link_consumer.dart
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/screens/user_screen/scan_qrcode.dart';
-import 'package:app_51ss/utils/show_confirm_dialog.dart';
+import '../../config/colors.dart';
+import '../../utils/show_confirm_dialog.dart';
+import 'scan_qrcode.dart';
 
 final logger = Logger();
 
@@ -199,7 +199,7 @@ class ListMenuState extends State<ListMenu> {
                               item.name,
                               style: TextStyle(
                                 fontSize: 14,
-                                color: AppColors.colors[ColorKeys.primary],
+                                color: AppColors.colors[ColorKeys.textPrimary],
                               ),
                             ),
                           ),

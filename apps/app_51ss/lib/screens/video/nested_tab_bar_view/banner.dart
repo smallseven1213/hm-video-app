@@ -1,7 +1,8 @@
-import 'package:app_51ss/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/modules/banner/banner_consumer..dart';
+
+import '../../../widgets/carousel.dart';
 
 class VideoScreenBanner extends StatefulWidget {
   const VideoScreenBanner({Key? key}) : super(key: key);
