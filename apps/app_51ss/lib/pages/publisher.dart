@@ -1,9 +1,9 @@
-import 'package:app_51ss/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/publisher_controller.dart';
 import '../screens/vendor_videos/list.dart';
 import '../widgets/tab_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 class PublisherPage extends StatefulWidget {
   final int id;

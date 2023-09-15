@@ -1,5 +1,3 @@
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -13,6 +11,9 @@ import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/ad_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../config/colors.dart';
+import '../../widgets/button.dart';
 
 final logger = Logger();
 

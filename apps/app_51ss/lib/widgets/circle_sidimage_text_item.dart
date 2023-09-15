@@ -1,8 +1,9 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
+
+import '../config/colors.dart';
 
 class CircleTextItem extends StatelessWidget {
   final String text;

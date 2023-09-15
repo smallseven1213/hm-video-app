@@ -1,4 +1,3 @@
-import 'package:app_51ss/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -18,6 +17,7 @@ import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 import '../../config/colors.dart';
+import '../actor_avatar.dart';
 
 final logger = Logger();
 

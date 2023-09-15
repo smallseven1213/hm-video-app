@@ -1,5 +1,6 @@
-import 'package:app_51ss/widgets/video_list_loading_text.dart';
 import 'package:flutter/material.dart';
+
+import 'video_list_loading_text.dart';
 
 class SliverVideoPreviewSkeletonList extends StatelessWidget {
   final double imageRatio;

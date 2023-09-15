@@ -1,7 +1,8 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
+
+import '../config/colors.dart';
 
 class CustomBottomBarItem extends StatelessWidget {
   final bool isActive;

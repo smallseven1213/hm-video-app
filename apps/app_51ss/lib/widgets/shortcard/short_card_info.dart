@@ -1,4 +1,3 @@
-import 'package:app_51ss/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -7,6 +6,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../screens/short/short_card_info_tag.dart';
+import '../actor_avatar.dart';
 
 final logger = Logger();
 

@@ -1,8 +1,9 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../config/colors.dart';
 
 class ChannelSkeleton extends StatelessWidget {
   const ChannelSkeleton({Key? key}) : super(key: key);

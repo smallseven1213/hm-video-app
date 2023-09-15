@@ -1,8 +1,9 @@
 import 'dart:math';
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:shared/models/color_keys.dart';
+
+import '../../config/colors.dart';
 
 class NotificationItem extends StatefulWidget {
   final String title;

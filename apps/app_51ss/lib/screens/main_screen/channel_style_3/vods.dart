@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:app_51ss/config/colors.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/refresh_list.dart';
@@ -9,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/channe_block_vod_controller.dart';
 import 'package:shared/widgets/base_video_block_template.dart';
 
+import '../../../config/colors.dart';
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/no_data.dart';
 import '../../../widgets/sliver_video_preview_skelton_list.dart';

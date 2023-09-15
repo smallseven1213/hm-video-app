@@ -1,6 +1,7 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
+
+import '../config/colors.dart';
 
 class AuthTextFieldSuffixIcon extends StatefulWidget {
   final TextEditingController controller;
