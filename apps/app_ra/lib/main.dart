@@ -32,9 +32,23 @@ void main() async {
       splashColor: Colors.transparent,
       primaryColor: AppColors.colors[ColorKeys.primary],
       textTheme: TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
         bodySmall: TextStyle(
           fontSize: 12,
           color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: AppColors.colors[ColorKeys.background],
+        shadowColor: AppColors.colors[ColorKeys.textPrimary]!,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(8),
+          ),
         ),
       ),
     ),

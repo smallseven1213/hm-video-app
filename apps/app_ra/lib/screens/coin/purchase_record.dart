@@ -1,3 +1,4 @@
+import 'package:app_ra/screens/coin/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/user.dart';
@@ -19,49 +20,48 @@ class PurchaseRecord extends StatelessWidget {
         }
         return UserPurchaseRecordConsumer(
           userId: info.id,
-          child: (List<UserPurchaseRecord> result) => ListView.builder(
-            itemCount: result.length,
-            itemBuilder: (context, index) {
-              final record = result[index];
-              return Container(
-                padding: const EdgeInsets.all(20),
-                margin: const EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(color: Theme.of(context).primaryColor),
-                  ),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      record.createdAt!.replaceAll(' ', '\n'),
-                      style: Theme.of(context).textTheme.bodySmall,
+          child: (List<UserPurchaseRecord> records) {
+            if (records.isEmpty) return const NoData();
+            return ListView.builder(
+              itemCount: records.length,
+              itemBuilder: (context, index) {
+                final record = records[index];
+                return Container(
+                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    border: Border(
+                      bottom: BorderSide(color: Theme.of(context).primaryColor),
                     ),
-                    const SizedBox(width: 22),
-                    Expanded(
-                      child: Text(
-                        record.name ?? '',
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        record.createdAt!.replaceAll(' ', '\n'),
                         style: Theme.of(context).textTheme.bodySmall,
                       ),
-                    ),
-                    const SizedBox(width: 22),
-                    Text(
-                      '\$${record.usedPoints ?? ''}',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).primaryColor,
+                      const SizedBox(width: 22),
+                      Expanded(
+                        child: Text(
+                          record.name ?? '',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 2,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                      const SizedBox(width: 22),
+                      Text(
+                        '\$${record.usedPoints ?? ''}',
+                        style: Theme.of(context).textTheme.headlineLarge,
+                      ),
+                    ],
+                  ),
+                );
+              },
+            );
+          },
         );
       },
     );

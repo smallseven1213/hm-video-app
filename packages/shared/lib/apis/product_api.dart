@@ -28,7 +28,7 @@ class ProductApi {
   Future<Product> getOne(int id) async {
     var res = await fetcher(url: '/product?id=$id');
     if (res.data['code'] != '00') {
-      return Product();
+      return Product(id: 0);
     }
     return Product.fromJson(res.data['data']);
   }

@@ -81,11 +81,11 @@ class CoinPageState extends State<CoinPage>
                 padding: const EdgeInsets.all(8),
                 child: TabBarView(
                   controller: _tabController,
-                  children: [
+                  children: const [
                     CoinProducts(),
                     PurchaseRecord(),
-                    const PrivilegeRecord(),
-                    const OrderRecord(),
+                    PrivilegeRecord(),
+                    OrderRecord(),
                   ],
                 ),
               ),

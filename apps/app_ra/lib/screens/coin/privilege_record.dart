@@ -1,3 +1,4 @@
+import 'package:app_ra/screens/coin/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/user.dart';
@@ -50,6 +51,7 @@ class _PrivilegeRecordState extends State<PrivilegeRecord> {
             return UserPrivilegeRecordConsumer(
                 userId: info.id,
                 child: (List<UserPrivilegeRecord> records) {
+                  if (records.isEmpty) return const NoData();
                   List<UserPrivilegeRecord> result = isSwitched
                       ? records
                           .where((record) => record.isAvailable == true)
@@ -75,11 +77,8 @@ class _PrivilegeRecordState extends State<PrivilegeRecord> {
                               children: [
                                 Text(
                                   record.name ?? '',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
+                                  style:
+                                      Theme.of(context).textTheme.headlineLarge,
                                 ),
                                 Text(
                                   '開始時間 ${record.createdAt}',
@@ -93,11 +92,7 @@ class _PrivilegeRecordState extends State<PrivilegeRecord> {
                             ),
                             Text(
                               record.isAvailable! ? '有效' : '已過期',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                                color: Theme.of(context).primaryColor,
-                              ),
+                              style: Theme.of(context).textTheme.headlineLarge,
                             ),
                           ],
                         ),

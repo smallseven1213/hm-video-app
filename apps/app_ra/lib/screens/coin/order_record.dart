@@ -1,3 +1,4 @@
+import 'package:app_ra/screens/coin/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/user_order.dart';
@@ -102,6 +103,7 @@ class _OrderRecordState extends State<OrderRecord> {
               key: Key('order-record-$chargeType'),
               type: chargeType,
               child: (List<Order> records) {
+                if (records.isEmpty) return const NoData();
                 return ListView.builder(
                   itemCount: records.length,
                   itemBuilder: (context, index) {
@@ -145,11 +147,7 @@ class _OrderRecordState extends State<OrderRecord> {
                           ),
                           Text(
                             record.paymentStatus == 0 ? '成功' : '失敗',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor,
-                            ),
+                            style: Theme.of(context).textTheme.headlineLarge,
                           ),
                         ],
                       ),
