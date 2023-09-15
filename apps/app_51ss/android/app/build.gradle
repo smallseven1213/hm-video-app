@@ -23,7 +23,8 @@ if (flutterVersionName == null) {
 }
 
 android {
-    // namespace "com.example.app_51ss"
+    namespace "com.stt.video.wgp_video_h5app"
+
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
