@@ -10,12 +10,13 @@ const buttonPadding = {
 const buttonBg = {
   'primary': Colors.transparent,
   'secondary': Color(0xFF273262),
-  'cancel': Color(0xffdedede),
+  'cancel': Colors.transparent,
 };
 
 class Button extends StatelessWidget {
   final String text;
   final Color? borderColor;
+  final Color? textColor;
   final VoidCallback onPressed;
 
   final dynamic icon; // GlowingIcon or Icon
@@ -27,6 +28,7 @@ class Button extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.borderColor,
+    this.textColor,
     this.icon,
     this.type = 'primary',
     this.size = 'medium',
@@ -39,7 +41,7 @@ class Button extends StatelessWidget {
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(4),
+          borderRadius: BorderRadius.circular(25),
           color: buttonBg[type],
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -47,11 +49,12 @@ class Button extends StatelessWidget {
           child: Container(
             padding: buttonPadding[size],
             decoration: BoxDecoration(
-                border: Border.all(
-                  color: borderColor ?? const Color(0xffFDDCEF),
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(25)),
+              border: Border.all(
+                color: borderColor ?? const Color(0xffFDDCEF),
+                width: 2,
+              ),
+              borderRadius: BorderRadius.circular(25),
+            ),
             child: Center(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -61,9 +64,10 @@ class Button extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      color: type == 'secondary'
-                          ? const Color(0xffFDDCEF)
-                          : Colors.white,
+                      color: textColor ??
+                          (type == 'secondary'
+                              ? const Color(0xffFDDCEF)
+                              : Colors.white),
                       fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
                     ),

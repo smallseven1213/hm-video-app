@@ -1,4 +1,3 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_ads_controller.dart';
@@ -7,6 +6,8 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/app_icon.dart';
+
+import '../../../config/colors.dart';
 
 class AppDownloadAd extends StatefulWidget {
   const AppDownloadAd({super.key});

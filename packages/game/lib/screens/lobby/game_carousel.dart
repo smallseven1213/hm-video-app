@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:game/models/game_banner_image.dart';
 import 'package:game/widgets/carousel.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-
-final logger = Logger();
 
 class GameCarousel extends StatefulWidget {
   final List data;
@@ -31,19 +28,23 @@ class GameCarouselState extends State<GameCarousel> {
       if (banners.isEmpty) {
         return const SizedBox();
       } else {
-        List<GameBannerImage> images = banners
-            .map(
-              (e) => GameBannerImage.fromJson({
-                'photoId': e['photoId'] ?? '',
-                'photoUrl': e['photoUrl'] ?? '',
-                'url': e['url'] ?? '',
-              }),
-            )
-            .toList();
-        return Carousel(
-          images: images,
-          ratio: 2.47,
-        );
+        try {
+          List<GameBannerImage> images = widget.data
+              .map(
+                (e) => GameBannerImage.fromJson({
+                  'photoId': e['photoId'] ?? '',
+                  'photoUrl': e['photoUrl'] ?? '',
+                  'url': e['url'] ?? '',
+                }),
+              )
+              .toList();
+          return Carousel(
+            images: images,
+            ratio: 2.47,
+          );
+        } catch (e) {
+          return const Text('Error', style: TextStyle(color: Colors.red));
+        }
       }
     });
   }

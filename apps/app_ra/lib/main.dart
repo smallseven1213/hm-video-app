@@ -19,15 +19,39 @@ void main() async {
     'https://5975596ddf0f4a6b95b09de1adda3d53@sentry.hmtech.club/4',
     allRoutes.keys.first,
     [
-      'https://dl.dlsv.net/$env/dl.json',
+      'https://dl.dlra.info/$env/dl.json',
+      'https://dl.dlra.me/$env/dl.json',
+      'https://dl.dlra.club/$env/dl.json',
     ],
     allRoutes,
     AppColors.colors,
     ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
     ThemeData(
-        scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent),
+      scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      primaryColor: AppColors.colors[ColorKeys.primary],
+      textTheme: TextTheme(
+        headlineLarge: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+        bodySmall: TextStyle(
+          fontSize: 12,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
+      ),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: AppColors.colors[ColorKeys.background],
+        shadowColor: AppColors.colors[ColorKeys.textPrimary]!,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(8),
+          ),
+        ),
+      ),
+    ),
     ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
   );

@@ -1,18 +1,19 @@
 library game_routes;
 
-import 'package:app_51ss/screens/games/game_lobby.dart';
-import 'package:app_51ss/screens/games/game_webview.dart';
-import 'package:app_51ss/screens/games/game_withdraw.dart';
-import 'package:app_51ss/screens/games/game_set_fundpassword.dart';
-import 'package:app_51ss/screens/games/game_set_bankcard.dart';
-import 'package:app_51ss/screens/games/game_deposit_list.dart';
-import 'package:app_51ss/screens/games/game_deposit_polling.dart';
-import 'package:app_51ss/screens/games/game_deposit_detail.dart';
-import 'package:app_51ss/screens/games/game_payment_result.dart';
-import 'package:app_51ss/screens/games/game_deposit_record.dart';
-import 'package:app_51ss/screens/games/game_withdraw_record.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
+
+import '../screens/games/game_lobby.dart';
+import '../screens/games/game_payment_result.dart';
+import '../screens/games/game_set_bankcard.dart';
+import '../screens/games/game_set_fundpassword.dart';
+import '../screens/games/game_webview.dart';
+import '../screens/games/game_withdraw.dart';
+import '../screens/games/game_withdraw_record.dart';
+import '../screens/games/game_deposit_detail.dart';
+import '../screens/games/game_deposit_list.dart';
+import '../screens/games/game_deposit_polling.dart';
+import '../screens/games/game_deposit_record.dart';
 
 final Map<String, RouteWidgetBuilder> gameRoutes = {
   GameAppRoutes.lobby.value: (context, args) => const GameScreen(),

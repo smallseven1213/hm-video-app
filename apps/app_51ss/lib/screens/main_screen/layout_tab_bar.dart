@@ -1,10 +1,11 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/layout_tab_builder.dart';
 import 'package:shared/widgets/layout_tab_item_builder.dart';
+
+import '../../config/colors.dart';
 
 var logger = Logger();
 
@@ -33,8 +34,10 @@ class LayoutTabBar extends StatelessWidget {
                       child: Text(
                         name,
                         style: TextStyle(
-                            color:
-                                AppColors.colors[ColorKeys.buttonTextPrimary]),
+                          color: isActive
+                              ? AppColors.colors[ColorKeys.tabTextActiveColor]
+                              : AppColors.colors[ColorKeys.tabTextColor],
+                        ),
                       ),
                     )),
         tabbarWidget: ({
@@ -58,7 +61,7 @@ class LayoutTabBar extends StatelessWidget {
                         left: Radius.circular(3), right: Radius.circular(3)),
                     borderSide: BorderSide(
                       width: 3.0,
-                      color: AppColors.colors[ColorKeys.buttonTextPrimary]
+                      color: AppColors.colors[ColorKeys.tabTextActiveColor]
                           as Color,
                     ),
                     insets: const EdgeInsets.only(

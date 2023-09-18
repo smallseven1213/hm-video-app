@@ -1,6 +1,7 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
+
+import '../config/colors.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
@@ -38,8 +39,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 height: 56.0,
                 width: 56.0,
                 color: Colors.transparent,
-                child: const Center(
-                  child: Icon(Icons.arrow_back_ios_new, size: 16),
+                child: Center(
+                  child: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 16,
+                    color: AppColors.colors[ColorKeys.buttonTextPrimary],
+                  ),
                 ),
               ),
             )

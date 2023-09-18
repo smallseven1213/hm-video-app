@@ -6,11 +6,10 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/services/system_config.dart';
 
-import 'package:app_51ss/config/colors.dart';
-import 'package:app_51ss/widgets/id_card.dart';
-
+import '../../config/colors.dart';
 import '../../widgets/header.dart';
 import '../../utils/show_confirm_dialog.dart';
+import '../../widgets/id_card.dart';
 
 import 'banner.dart';
 import 'grid_menu.dart';
@@ -75,7 +74,7 @@ class UserScreenState extends State<UserScreen> {
                     ),
                     child: Container(
                       height: 10,
-                      color: Colors.white,
+                      color: AppColors.colors[ColorKeys.background],
                     ),
                   ),
                 ),

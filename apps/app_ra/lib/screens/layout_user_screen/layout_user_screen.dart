@@ -1,3 +1,4 @@
+import 'package:app_ra/screens/layout_home_screen/block_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -6,9 +7,10 @@ import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
+import '../../widgets/user/balance.dart';
+import '../../widgets/user/info.dart';
 import 'banner.dart';
 import 'grid_menu.dart';
-import 'info.dart';
 import 'list_menu.dart';
 
 final systemConfig = SystemConfig();
@@ -58,6 +60,10 @@ class UserScreenState extends State<LayoutUserScreen> {
               const SliverToBoxAdapter(
                 child: UserInfo(),
               ),
+
+              const SliverToBoxAdapter(
+                child: UserBalance(),
+              ),
               // height 10
               const SliverToBoxAdapter(
                 child: SizedBox(
@@ -81,9 +87,9 @@ class UserScreenState extends State<LayoutUserScreen> {
                   height: 20,
                 ),
               ),
-              // const SliverToBoxAdapter(
-              //   child: Header(text: '更多服務'),
-              // ),
+              const SliverToBoxAdapter(
+                child: BlockHeader(text: '更多服務'),
+              ),
               const SliverToBoxAdapter(
                 child: SizedBox(
                   height: 10,

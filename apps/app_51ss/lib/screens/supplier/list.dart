@@ -1,4 +1,3 @@
-import 'package:app_51ss/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -9,6 +8,7 @@ import 'package:shared/navigator/delegate.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/no_data.dart';
 import '../../widgets/sliver_video_preview_skelton_list.dart';
+import '../../widgets/video_preview.dart';
 
 const gridRatio = 128 / 227;
 

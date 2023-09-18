@@ -36,8 +36,7 @@ void purchase(
           cancelButtonText: '取消',
           onConfirm: () => coinNotEnough
               ? MyRouteDelegate.of(context).push(AppRoutes.coin)
-              : Navigator.of(context).pop(),
-          onCancel: () => Navigator.of(context).pop(),
+              : null,
         );
       }
     }

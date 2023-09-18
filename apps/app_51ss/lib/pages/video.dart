@@ -1,7 +1,8 @@
-import 'package:app_51ss/screens/video/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/user_api.dart';
+
+import '../screens/video/index.dart';
 
 final logger = Logger();
 

@@ -1,4 +1,3 @@
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/widgets/refresh_list.dart';
@@ -9,7 +8,6 @@ import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
-import '../../../config/colors.dart';
 import '../../../widgets/button.dart';
 import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/video_list_loading_text.dart';
@@ -62,9 +60,8 @@ class ChannelStyle1State extends State<ChannelStyle1>
         layoutId: widget.layoutId,
         child: (({required bool displaySearchBar}) {
           return Padding(
-            padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top +
-                    (displaySearchBar ? 110 : 50)),
+            padding:
+                EdgeInsets.only(top: MediaQuery.of(context).padding.top + 50),
             child: Obx(() {
               ChannelInfo? channelData =
                   channelDataController.channelData.value;

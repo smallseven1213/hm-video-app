@@ -1,11 +1,11 @@
-import 'package:app_51ss/widgets/custom_app_bar.dart';
-import 'package:app_51ss/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 
 import '../screens/filter/short.dart';
 import '../screens/filter/video.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/tab_bar.dart';
 
 class FilterPage extends StatefulWidget {
   const FilterPage({super.key});

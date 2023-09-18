@@ -46,6 +46,7 @@ dependencies:
   image_gallery_saver: ^2.0.3
   permission_handler: ^10.2.0
   restart_app: ^1.2.1
+  marquee: ^2.2.3
 
 dev_dependencies:
   flutter_test:

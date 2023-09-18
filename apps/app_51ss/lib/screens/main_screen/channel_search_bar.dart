@@ -1,4 +1,3 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
@@ -6,6 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/popular_search_title_builder.dart';
+import '../../config/colors.dart';
 import '../../widgets/static_search_input.dart';
 
 class ChannelSearchBar extends StatelessWidget {

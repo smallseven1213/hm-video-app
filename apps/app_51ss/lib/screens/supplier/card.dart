@@ -1,6 +1,5 @@
 import 'dart:ui';
 
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
@@ -10,6 +9,7 @@ import 'package:shared/models/supplier.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../config/colors.dart';
 import '../../widgets/actor_avatar.dart';
 
 class SupplierCard extends StatefulWidget {

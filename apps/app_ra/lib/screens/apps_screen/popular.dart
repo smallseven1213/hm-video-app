@@ -58,11 +58,7 @@ class PopularWidget extends StatelessWidget {
                                 const SizedBox(height: 2),
                                 Text(
                                   items[index].description,
-                                  style: TextStyle(
-                                    color:
-                                        AppColors.colors[ColorKeys.textPrimary],
-                                    fontSize: 12,
-                                  ),
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
                             )),

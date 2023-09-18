@@ -57,11 +57,11 @@ class Product {
           : List.from(json['bundles'] as List<dynamic>)
               .map((e) => Bundle.fromJson(e))
               .toList(),
-      name: json['name'],
-      subTitle: json['subTitle'],
+      name: json['name'], // 品名
+      subTitle: json['subTitle'], // 說明
       type: json['type'],
       photoSid: json['photoSid'],
-      fiatMoneyPrice: json['fiatMoneyPrice'],
+      fiatMoneyPrice: json['fiatMoneyPrice'], // 原價
       discount: double.parse(json['balanceFiatMoneyPrice'] ?? '0.00'),
       points: json['points'] == null
           ? 0.00
@@ -73,7 +73,7 @@ class Product {
       orderIndex: json['orderIndex'],
       enabled: json['enabled'],
       updatedAt: json['updatedAt'],
-      balanceFiatMoneyPrice: json['balanceFiatMoneyPrice'],
+      balanceFiatMoneyPrice: json['balanceFiatMoneyPrice'], // 實際售價
     );
   }
 }

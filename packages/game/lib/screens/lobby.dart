@@ -52,7 +52,6 @@ class _GameLobbyState extends State<GameLobby>
   List<GameItem> gameList = [];
   List gameHistoryList = [];
   bool isShowFab = false;
-  TabController? _tabController;
 
   UserController get userController => Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
@@ -61,7 +60,11 @@ class _GameLobbyState extends State<GameLobby>
   void initState() {
     super.initState();
     _fetchDataInit();
-    _tabController = TabController(length: 3, vsync: this);
+
+    // Put controllers into Get dependency container here
+    Get.put(GameBannerController());
+    Get.put(GameConfigController());
+    Get.put(GamesListController());
 
     Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
@@ -80,17 +83,10 @@ class _GameLobbyState extends State<GameLobby>
   }
 
   @override
-  void dispose() {
-    _tabController!.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final gameBannerController = Get.put(GameBannerController());
-    final gameWalletController = GameWalletController();
-    final gameConfigController = Get.put(GameConfigController());
-    final gamesListController = Get.put(GamesListController());
+    final gameBannerController = Get.find<GameBannerController>();
+    final gameConfigController = Get.find<GameConfigController>();
+    final gamesListController = Get.find<GamesListController>();
 
     return Obx(() => gamesListController.isMaintenance.value == true
         ? const GameMaintenance()
@@ -158,7 +154,7 @@ class _GameLobbyState extends State<GameLobby>
                     padding:
                         const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
                     child: Column(
-                      children: <Widget>[
+                      children: [
                         GameCarousel(data: gameBannerController.gameBanner),
                         GameMarquee(data: gameBannerController.gameMarquee),
                         GameUserInfo(

@@ -1,6 +1,7 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
+
+import '../config/colors.dart';
 
 class TabBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final List<String> tabs;
@@ -49,13 +50,13 @@ class TabBarWidgetState extends State<TabBarWidget> {
   Widget build(BuildContext context) {
     return Container(
         width: double.infinity,
-        color: Colors.white,
+        color: AppColors.colors[ColorKeys.tabBgColor],
         padding: widget.padding ?? const EdgeInsets.symmetric(vertical: 15),
         child: Align(
           child: TabBar(
             isScrollable: true,
             controller: widget.controller,
-            labelColor: AppColors.colors[ColorKeys.primary],
+            labelColor: AppColors.colors[ColorKeys.tabBarTextActiveColor],
             labelStyle: const TextStyle(fontSize: 14),
             labelPadding: const EdgeInsets.symmetric(horizontal: 10),
             unselectedLabelColor: AppColors.colors[ColorKeys.textTertiary],
@@ -63,7 +64,7 @@ class TabBarWidgetState extends State<TabBarWidget> {
             indicator: UnderlineTabIndicator(
               borderSide: BorderSide(
                 width: 3.0,
-                color: AppColors.colors[ColorKeys.primary]!,
+                color: AppColors.colors[ColorKeys.tabBarTextActiveColor]!,
               ),
             ),
             tabs: widget.tabs

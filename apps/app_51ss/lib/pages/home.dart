@@ -1,22 +1,23 @@
 import 'package:logger/logger.dart';
 
-import 'package:app_51ss/screens/games/game_lobby.dart';
-import 'package:app_51ss/screens/home/home_apps.dart';
-import 'package:app_51ss/screens/video/video_player_area/flash_loading.dart';
-
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
+import '../screens/games/game_lobby.dart';
+import '../screens/home/home_apps.dart';
 import '../screens/main_screen/index.dart';
+import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
+import '../screens/video/video_player_area/flash_loading.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
@@ -57,12 +58,14 @@ class HomeState extends State<HomePage> {
   void initState() {
     super.initState();
     Get.put(GameStartupController());
-
+    Get.put(UIController());
     userApi.writeUserEnterHallRecord();
   }
 
   @override
   Widget build(BuildContext context) {
+    final UIController uiController = Get.find<UIController>();
+
     return MainNavigationScaffold(
         screens: screens,
         screenNotFoundWidget: const Center(child: FlashLoading()),
@@ -73,32 +76,39 @@ class HomeState extends State<HomePage> {
           final paddingBottom = MediaQuery.of(context).padding.bottom;
           return Stack(
             children: [
-              Container(
-                padding: EdgeInsets.only(bottom: paddingBottom),
-                height: 76 + paddingBottom,
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                  ),
-                  child: Row(
-                    children: navigatorItems
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => Expanded(
-                            child: CustomBottomBarItem(
-                                isActive: entry.value.path! == activeKey,
-                                iconSid: entry.value.photoSid!,
-                                activeIconSid: entry.value.clickEffect!,
-                                label: entry.value.name!,
-                                onTap: () => changeTabKey(entry.value.path!)),
+              Obx(() {
+                return uiController.displayHomeNavigationBar.value
+                    ? Container(
+                        padding: EdgeInsets.only(bottom: paddingBottom),
+                        height: 76 + paddingBottom,
+                        child: ClipRRect(
+                          borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10),
                           ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ),
+                          child: Row(
+                            children: navigatorItems
+                                .asMap()
+                                .entries
+                                .map(
+                                  (entry) => Expanded(
+                                    child: CustomBottomBarItem(
+                                        isActive:
+                                            entry.value.path! == activeKey,
+                                        iconSid: entry.value.photoSid!,
+                                        activeIconSid: entry.value.clickEffect!,
+                                        label: entry.value.name!,
+                                        onTap: () =>
+                                            changeTabKey(entry.value.path!)),
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink();
+              }),
+              if (widget.defaultScreenKey == null) const NoticeDialog()
             ],
           );
         });

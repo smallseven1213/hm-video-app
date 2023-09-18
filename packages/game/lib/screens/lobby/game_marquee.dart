@@ -29,7 +29,7 @@ class _GameMarqueeState extends State<GameMarquee> {
           size: 25,
           color: gameLobbyIconColor,
         ),
-        width: Get.width - 40,
+        width: MediaQuery.of(context).size.width - 40,
         style: TextStyle(color: gameLobbyPrimaryTextColor),
         text: widget.data.map((e) => e['title']).join('    '),
       ),

@@ -6,7 +6,6 @@ class AppColors {
     // bg
     ColorKeys.primary: Color(0xff1c1c1c),
     ColorKeys.secondary: Color(0xffb5925c),
-    ColorKeys.accent: Color(0x00ffffff),
     ColorKeys.background: Colors.white,
     ColorKeys.formBg: Color(0xfff2f2f2),
     ColorKeys.videoPreviewBg: Color(0xffefefef),
@@ -31,5 +30,17 @@ class AppColors {
     ColorKeys.dividerColor: Color(0xffeeeeee),
     ColorKeys.gradientBgTopColor: Color(0xff46454a),
     ColorKeys.gradientBgBottomColor: Color(0xff1c1c1c),
+    // tabs
+    ColorKeys.tabBgColor: Colors.white, // layout tab
+    ColorKeys.tabTextColor: Colors.white, // layout tab
+    ColorKeys.tabTextActiveColor: Colors.white, // layout tab
+    ColorKeys.tabBarTextColor: Colors.white,
+    ColorKeys.tabBarTextActiveColor: Color(0xff1c1c1c),
+    // search input
+    ColorKeys.textSearch: Colors.black,
+    // jingang
+    ColorKeys.jingangBorder: Color(0xffB5925C),
+    // notice
+    ColorKeys.noticeBg: Colors.white,
   };
 }

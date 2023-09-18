@@ -52,12 +52,6 @@ class VideoState extends State<Video> {
 
   @override
   Widget build(BuildContext context) {
-    // return VideoScreen(
-    //   key: ValueKey(widget.args['id']),
-    //   id: int.parse(widget.args['id'].toString()),
-    //   name: widget.args['name'],
-    // );
-
     var id = int.parse(widget.args['id'].toString());
     var name = widget.args['name'];
     return VideoScreenProvider(
@@ -73,8 +67,7 @@ class VideoState extends State<Video> {
 
         return Scaffold(
           appBar: MyAppBar(
-            titleWidget: video!.chargeType != ChargeType.free.index &&
-                    video.buyPoint != 0
+            titleWidget: !video!.isAvailable
                 ? video.chargeType == ChargeType.vip.index
                     ? Align(
                         alignment: Alignment.centerRight,
@@ -92,7 +85,7 @@ class VideoState extends State<Video> {
                       )
                     : VideoPlayerConsumer(
                         tag: videoUrl,
-                        child: (videoPlayerInfo) {
+                        child: (VideoPlayerInfo videoPlayerInfo) {
                           return Align(
                               alignment: Alignment.centerRight,
                               child: InkWell(
@@ -119,6 +112,7 @@ class VideoState extends State<Video> {
             child: Column(
               children: [
                 VideoPlayerProvider(
+                  key: Key(videoUrl),
                   tag: videoUrl,
                   autoPlay: kIsWeb ? false : true,
                   videoUrl: videoUrl,

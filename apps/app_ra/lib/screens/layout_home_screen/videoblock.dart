@@ -16,7 +16,7 @@ import 'package:shared/widgets/video_block_template/block_7.dart';
 
 import '../../config/colors.dart';
 import '../../widgets/video_block_footer.dart';
-import '../../widgets/video_preview_in_channel.dart';
+import '../../widgets/video_preview.dart';
 import 'channel_area_banner.dart';
 
 class VideoBlock extends BaseVideoBlock {
@@ -44,7 +44,7 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
     Vod video, {
     hasTags = true,
   }) {
-    return ChannelVideoPreviewWidget(
+    return VideoPreviewWidget(
       id: video.id,
       title: video.title,
       tags: video.tags ?? [],

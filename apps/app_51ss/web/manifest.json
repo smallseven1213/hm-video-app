@@ -1,11 +1,11 @@
 {
-    "name": "app_51ss",
-    "short_name": "app_51ss",
+    "name": "色色視頻",
+    "short_name": "色色視頻",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "色色視頻 打開你的 AV 新世界",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

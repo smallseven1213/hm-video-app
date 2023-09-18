@@ -1,19 +1,23 @@
+import 'package:shared/services/system_config.dart';
 import '../models/product.dart';
 import '../utils/fetcher.dart';
 
-class ProductProvider {
-  static final ProductProvider _instance = ProductProvider._internal();
+final systemConfig = SystemConfig();
+String apiPrefix = '${systemConfig.apiHost}/public/products';
 
-  ProductProvider._internal();
+class ProductApi {
+  static final ProductApi _instance = ProductApi._internal();
 
-  factory ProductProvider() {
+  ProductApi._internal();
+
+  factory ProductApi() {
     return _instance;
   }
-
+  // VIP列表、金幣列表 type: 1-金幣包 2-VIP
   Future<List<Product>> getManyBy(
       {int type = 1, int page = 1, int limit = 100}) async {
-    var res =
-        await fetcher(url: '/product/list?page=$page&limit=$limit&type=$type');
+    var res = await fetcher(
+        url: '$apiPrefix/product/list?page=$page&limit=$limit&type=$type');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -24,7 +28,7 @@ class ProductProvider {
   Future<Product> getOne(int id) async {
     var res = await fetcher(url: '/product?id=$id');
     if (res.data['code'] != '00') {
-      return Product();
+      return Product(id: 0);
     }
     return Product.fromJson(res.data['data']);
   }

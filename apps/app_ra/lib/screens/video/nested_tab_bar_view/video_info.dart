@@ -1,7 +1,6 @@
 import 'package:app_ra/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
@@ -9,6 +8,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/title.dart';
+import 'package:video_player/video_player.dart';
 
 final logger = Logger();
 
@@ -20,7 +20,7 @@ class VideoInfo extends StatelessWidget {
   final int viewTimes;
   final List<Actor>? actor;
   final Publisher? publisher;
-  final ObservableVideoPlayerController? videoPlayerController;
+  final VideoPlayerController? videoPlayerController;
 
   const VideoInfo({
     super.key,

@@ -1,6 +1,7 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
+
+import '../config/colors.dart';
 
 class NoDataWidget extends StatelessWidget {
   const NoDataWidget({Key? key}) : super(key: key);

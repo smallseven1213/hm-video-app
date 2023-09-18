@@ -1,9 +1,9 @@
-import 'package:app_51ss/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_video_screen_controller.dart';
 import 'package:shared/models/color_keys.dart';
 
+import '../../config/colors.dart';
 import 'option_button.dart';
 
 class FilterOptions extends StatelessWidget {
