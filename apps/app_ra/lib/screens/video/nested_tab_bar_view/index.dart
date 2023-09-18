@@ -86,10 +86,15 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               child: Padding(
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: VideoActions(
-                  videoDetail: Vod.fromJson({
-                    ...widget.videoDetail.toJson(),
-                    ...widget.videoBase.toJson(),
-                  }),
+                  videoDetail: Vod(
+                    widget.videoBase.id,
+                    widget.videoBase.title,
+                    coverHorizontal: widget.videoBase.coverHorizontal!,
+                    coverVertical: widget.videoBase.coverVertical!,
+                    timeLength: widget.videoBase.timeLength!,
+                    tags: widget.videoBase.tags!,
+                    videoViewTimes: widget.videoDetail.videoViewTimes!,
+                  ),
                 ),
               ),
             ),

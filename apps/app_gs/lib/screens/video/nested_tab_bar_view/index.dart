@@ -3,13 +3,14 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/videos/video_by_actor_consumer.dart';
 import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 import 'package:shared/modules/videos/video_by_tag_consumer.dart';
 
 import '../../../widgets/list_no_more.dart';
-import '../../../widgets/sliver_vod_grid.dart';
 import '../../../widgets/tab_bar.dart';
+import '../../../widgets/sliver_vod_grid.dart';
 import 'app_download_ad.dart';
 import 'banner.dart';
 import 'video_actions.dart';
@@ -42,7 +43,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
   void initState() {
     super.initState();
     _tabController = TabController(
-        vsync: this, length: widget.video.actors!.isEmpty ? 2 : 3);
+        vsync: this, length: widget.videoDetail.actors!.isEmpty ? 2 : 3);
   }
 
   @override
@@ -55,6 +56,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
   Widget build(BuildContext context) {
     final obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+
     final List<String> tabs = widget.videoDetail.actors!.isEmpty
         ? ['同類型', '同標籤']
         : ['同演員', '同類型', '同標籤'];
@@ -69,13 +71,13 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: VideoInfo(
                   videoPlayerController: obsVideoPlayerController,
-                  externalId: widget.video.externalId ?? '',
-                  title: widget.video.title,
-                  tags: widget.video.tags ?? [],
-                  timeLength: widget.video.timeLength ?? 0,
-                  actor: widget.video.actors,
-                  publisher: widget.video.publisher,
+                  externalId: widget.videoDetail.externalId ?? '',
+                  title: widget.videoDetail.title,
+                  tags: widget.videoDetail.tags ?? [],
+                  timeLength: widget.videoDetail.timeLength ?? 0,
                   viewTimes: widget.videoDetail.videoViewTimes ?? 0,
+                  actor: widget.videoDetail.actors,
+                  publisher: widget.videoDetail.publisher,
                 ),
               ),
             ),
@@ -117,10 +119,10 @@ class NestedTabBarViewState extends State<NestedTabBarView>
           controller: _tabController,
           physics: const BouncingScrollPhysics(),
           children: [
-            if (widget.video.actors!.isNotEmpty)
+            if (widget.videoDetail.actors!.isNotEmpty)
               VideoByActorConsumer(
-                excludeId: widget.video.id.toString(),
-                actorId: [widget.video.actors![0]],
+                excludeId: widget.videoDetail.id.toString(),
+                actorId: [widget.videoDetail.actors![0]],
                 child: (videos) {
                   return SliverVodGrid(
                     key: const Key('video_by_actor'),
@@ -134,8 +136,8 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                 },
               ),
             VideoByInternalTagConsumer(
-              excludeId: widget.video.id.toString(),
-              internalTagIds: widget.video.internalTagIds ?? [],
+              excludeId: widget.videoDetail.id.toString(),
+              internalTagIds: widget.videoDetail.internalTagIds ?? [],
               child: (videos) {
                 return SliverVodGrid(
                   key: const Key('video_by_internal_tag'),
@@ -149,8 +151,8 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               },
             ),
             VideoByTagConsumer(
-              excludeId: widget.video.id.toString(),
-              tags: widget.video.tags ?? [],
+              excludeId: widget.videoDetail.id.toString(),
+              tags: widget.videoDetail.tags ?? [],
               child: (videos) {
                 return SliverVodGrid(
                   key: const Key('video_by_tag'),
