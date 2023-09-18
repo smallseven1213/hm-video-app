@@ -19,7 +19,7 @@ class OrderConfirmPage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 60),
             child: Text(
-              '訂單已建立，付款確認中',
+              '訂單已建立，付款確認中...',
               style: Theme.of(context).textTheme.headlineLarge,
             ),
           ),

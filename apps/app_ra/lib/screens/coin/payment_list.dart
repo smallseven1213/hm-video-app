@@ -1,9 +1,11 @@
 import 'package:app_ra/widgets/button.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/orders_api.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/modules/user/user_payment_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 
@@ -30,13 +32,11 @@ class _PaymentListState extends State<PaymentList> {
   String? selectedType;
   bool isLoading = false;
 
-  sendOrder({required int paymentChannelId}) async {
+  sendOrder(context, {required int paymentChannelId}) async {
     print('sandOrder');
     print('paymentChannelId: $paymentChannelId');
     try {
-      setState(() {
-        isLoading = true;
-      });
+      setState(() => isLoading = true);
       var res = await orderApi.makeOrder(
         productId: widget.productId,
         paymentChannelId: paymentChannelId,
@@ -44,7 +44,22 @@ class _PaymentListState extends State<PaymentList> {
 
       print('res: $res');
       if (!mounted) return;
-      if (res['code'] != '00') {
+      var paymentLink = res['data']['paymentLink'];
+      if (res.isNotEmpty && paymentLink.startsWith('http')) {
+        if (GetPlatform.isWeb) {
+          await Future.delayed(const Duration(milliseconds: 500));
+          setState(() => isLoading = false);
+          Navigator.pop(context);
+          launch(paymentLink, webOnlyWindowName: '_blank');
+          MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
+        } else {
+          await launch(paymentLink, webOnlyWindowName: '_blank');
+          setState(() => isLoading = false);
+          Navigator.pop(context);
+          MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
+        }
+      } else {
+        setState(() => isLoading = false);
         showConfirmDialog(
           context: context,
           title: '付款錯誤',
@@ -54,14 +69,6 @@ class _PaymentListState extends State<PaymentList> {
             Navigator.of(context).pop();
           },
         );
-        setState(() {
-          isLoading = false;
-        });
-      } else {
-        setState(() {
-          isLoading = false;
-        });
-        MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
       }
     } catch (error) {
       print(error);
@@ -169,7 +176,10 @@ class _PaymentListState extends State<PaymentList> {
                                 : 'primary',
                             onPressed: () {
                               if (isLoading) return;
-                              sendOrder(paymentChannelId: selectedId ?? 0);
+                              sendOrder(
+                                context,
+                                paymentChannelId: selectedId ?? 0,
+                              );
                             },
                           ),
                         ),
