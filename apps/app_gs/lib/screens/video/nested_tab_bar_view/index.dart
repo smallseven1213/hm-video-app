@@ -55,8 +55,9 @@ class NestedTabBarViewState extends State<NestedTabBarView>
   Widget build(BuildContext context) {
     final obsVideoPlayerController =
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
-    final List<String> tabs =
-        widget.video.actors!.isEmpty ? ['同類型', '同標籤'] : ['同演員', '同類型', '同標籤'];
+    final List<String> tabs = widget.videoDetail.actors!.isEmpty
+        ? ['同類型', '同標籤']
+        : ['同演員', '同類型', '同標籤'];
 
     return Scaffold(
       body: NestedScrollView(
