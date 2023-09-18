@@ -13,7 +13,7 @@ class OrderApi {
     return _instance;
   }
 
-  Future<String> makeOrder({
+  Future<Map> makeOrder({
     String agentAccount = '',
     required int productId,
     required int paymentChannelId,
@@ -30,9 +30,9 @@ class OrderApi {
     );
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
-      return res['code'];
+      return res;
     }
-    return res['data']['paymentLink'];
+    return res;
   }
 
   Future<List<Order>> getManyBy({

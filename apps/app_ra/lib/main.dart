@@ -31,6 +31,9 @@ void main() async {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       primaryColor: AppColors.colors[ColorKeys.primary],
+      progressIndicatorTheme: ProgressIndicatorThemeData(
+        color: AppColors.colors[ColorKeys.primary],
+      ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
           fontSize: 20,
