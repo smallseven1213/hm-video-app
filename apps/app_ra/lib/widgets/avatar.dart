@@ -41,14 +41,14 @@ class Avatar extends StatelessWidget {
                       end: Alignment.bottomCenter,
                       colors: hasNoAvatar
                           ? [
-                              const Color(0xFF00B2FF),
-                              const Color(0xFFCCEAFF),
-                              const Color(0xFF00B2FF),
+                              const Color(0xFFD9D9D9),
+                              const Color(0xFFFDDCEF),
+                              const Color(0xFFD9D9D9),
                             ]
                           : [
-                              const Color(0xFFFFC700),
-                              const Color(0xFFFE8900),
-                              const Color(0xFFFFC700),
+                              const Color(0xFFD9D9D9),
+                              const Color(0xFFFDDCEF),
+                              const Color(0xFFD9D9D9),
                             ],
                     ),
             ),
@@ -64,7 +64,11 @@ class Avatar extends StatelessWidget {
                         width: 2,
                       ),
                     ),
-                  )
+                    child: const Icon(
+                      Icons.person,
+                      color: Color.fromARGB(255, 144, 144, 144),
+                      size: 30,
+                    ))
                 : CircleAvatar(
                     radius: 30,
                     backgroundColor: Colors.white,

@@ -5,7 +5,6 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/modules/user/user_data_getting_status_consumer.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/avatar.dart';
 import '../../widgets/button.dart';
@@ -156,7 +155,7 @@ class UserInfo extends StatelessWidget {
                           children: [
                             const Text('永久至尊特權會員',
                                 style: TextStyle(
-                                  color: const Color(0xFFFDDCEF),
+                                  color: Color(0xFFFDDCEF),
                                   fontSize: 16,
                                 )),
                             Text('效期至 ${info.vipExpiredAt}',
