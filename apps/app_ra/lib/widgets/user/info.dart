@@ -93,10 +93,10 @@ class UserInfo extends StatelessWidget {
                                 },
                                 child: Container(
                                   padding: const EdgeInsets.all(5),
-                                  child: const Image(
-                                    image: AssetImage(
-                                        'assets/images/user_screen_info_editor.png'),
-                                    width: 15,
+                                  child: Icon(
+                                    Icons.create_rounded,
+                                    size: 12,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               );
