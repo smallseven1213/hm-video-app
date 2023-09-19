@@ -161,6 +161,15 @@ class ListMenuState extends State<ListMenu> {
             name: item.name ?? '',
             icon: item.photoSid ?? '',
             onTap: () {
+              if (item.path == '/notopen') {
+                showConfirmDialog(
+                  context: context,
+                  title: '提示',
+                  message: '敬請期待',
+                  showCancelButton: false,
+                );
+                return;
+              }
               MyRouteDelegate.of(context).push(item.path ?? '');
             },
           );
