@@ -11,6 +11,21 @@ const buttonBg = {
   'primary': Colors.transparent,
   'secondary': Color(0xFF273262),
   'cancel': Colors.transparent,
+  'disabled': Colors.transparent,
+};
+
+final defaultBorderColor = {
+  'primary': Colors.white,
+  'secondary': const Color(0xffFDDCEF),
+  'cancel': Colors.white,
+  'disabled': Colors.white.withOpacity(0.3),
+};
+
+final defaultTextColor = {
+  'primary': Colors.white,
+  'secondary': const Color(0xffFDDCEF),
+  'cancel': Colors.white,
+  'disabled': Colors.white.withOpacity(0.3),
 };
 
 class Button extends StatelessWidget {
@@ -20,7 +35,7 @@ class Button extends StatelessWidget {
   final VoidCallback onPressed;
 
   final dynamic icon; // GlowingIcon or Icon
-  final String? type; // primary, secondary, cancel
+  final String? type; // primary, secondary, cancel, disabled
   final String? size; // small, medium, large
 
   const Button({
@@ -50,7 +65,7 @@ class Button extends StatelessWidget {
             padding: buttonPadding[size],
             decoration: BoxDecoration(
               border: Border.all(
-                color: borderColor ?? const Color(0xffFDDCEF),
+                color: borderColor ?? defaultBorderColor[type] ?? Colors.white,
                 width: 2,
               ),
               borderRadius: BorderRadius.circular(25),
@@ -64,10 +79,7 @@ class Button extends StatelessWidget {
                   Text(
                     text,
                     style: TextStyle(
-                      color: textColor ??
-                          (type == 'secondary'
-                              ? const Color(0xffFDDCEF)
-                              : Colors.white),
+                      color: textColor ?? defaultTextColor[type],
                       fontSize: size == 'small' ? 12 : 14,
                       fontWeight: FontWeight.w500,
                     ),

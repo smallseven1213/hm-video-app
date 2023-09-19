@@ -33,6 +33,7 @@ import '../pages/id.dart' as id_page;
 import '../pages/update_password.dart' as update_password_page;
 import '../pages/configs.dart' as configs_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
+import '../pages/order_confirm.dart' as order_confirm_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -101,4 +102,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.idCard: (context, args) => const id_page.IDCardPage(),
   AppRoutes.suppliers: (context, args) =>
       const suppliers_screen.SuppliersPage(),
+  AppRoutes.orderConfirm: (context, args) =>
+      const order_confirm_page.OrderConfirmPage(),
 };

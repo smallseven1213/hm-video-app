@@ -145,7 +145,11 @@ class VipPage extends StatelessWidget {
                       return GestureDetector(
                         onTap: () => showCustomModalBottomSheet(
                           context,
-                          child: PaymentList(productId: product.id ?? 0),
+                          child: PaymentList(
+                            productId: product.id ?? 0,
+                            amount: product.discount ?? 0,
+                            name: product.name,
+                          ),
                         ),
                         child: _buildProductCard(context, product),
                       );

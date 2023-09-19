@@ -77,8 +77,6 @@ class RegisterPage extends StatelessWidget {
                   width: double.infinity,
                   child: Button(
                     text: '註冊',
-                    type: 'primary',
-                    borderColor: Colors.white,
                     onPressed: () {
                       handleRegister();
                     },

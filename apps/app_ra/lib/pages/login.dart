@@ -63,7 +63,6 @@ class LoginPage extends StatelessWidget {
                   width: double.infinity,
                   child: Button(
                     text: '登入',
-                    borderColor: Colors.white,
                     onPressed: () => handleLogin(),
                   ),
                 ),
