@@ -5,8 +5,11 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/controllers/video_popular_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/home_navigator_pathes.dart';
+import 'package:shared/modules/main_navigation/main_navigation_link_button.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../widgets/avatar.dart';
 import '../../widgets/static_search_input.dart';
 
 class ChannelSearchBar extends StatelessWidget {
@@ -23,6 +26,16 @@ class ChannelSearchBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(
+            width: 10,
+          ),
+          MainNavigationLinkButton(
+            screenKey: HomeNavigatorPathes.user,
+            child: Avatar(
+              width: 30,
+              height: 60,
+            ),
+          ),
           Expanded(
             child: Obx(() {
               int listLength = videoPopularController.data.length;
@@ -53,14 +66,14 @@ class ChannelSearchBar extends StatelessWidget {
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
-            child: Container(
-                width: 40,
+            child: const SizedBox(
+                width: 20,
                 height: 60,
                 // color: AppColors.colors[ColorKeys.background],
-                child: const Center(
+                child: Center(
                   child: SizedBox(
-                    width: 17,
-                    height: 17,
+                    width: 20,
+                    height: 20,
                     child: Image(
                       fit: BoxFit.cover,
                       image: AssetImage(
@@ -68,6 +81,9 @@ class ChannelSearchBar extends StatelessWidget {
                     ),
                   ),
                 )),
+          ),
+          const SizedBox(
+            width: 10,
           ),
         ],
       ),
