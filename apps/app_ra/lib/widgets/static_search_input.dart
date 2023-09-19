@@ -19,10 +19,10 @@ class StaticSearchInput extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Container(
-        height: 37,
+        height: 30,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(15)),
+          borderRadius: const BorderRadius.all(Radius.circular(20)),
           border: Border.all(
               color: AppColors.colors[ColorKeys.textPrimary]!, width: 2),
           // color: Colors.white,
@@ -46,24 +46,13 @@ class StaticSearchInput extends StatelessWidget {
                   child: Text(
                     defaultValue,
                     style: const TextStyle(color: Colors.white),
+                    overflow: TextOverflow
+                        .ellipsis, // This line ensures that the text gets truncated
+                    maxLines:
+                        1, // This line ensures that the text stays in one line
                   ),
                 ),
               ),
-              // Container(
-              //   width: 50,
-              //   alignment: Alignment.center,
-              //   decoration: const BoxDecoration(
-              //     borderRadius: BorderRadius.all(Radius.circular(10)),
-              //     color: Color(0xFFFF3B52),
-              //   ),
-              //   child: TextButton(
-              //     onPressed: onSearchButtonClick,
-              //     child: const Text(
-              //       '搜索',
-              //       style: TextStyle(color: Colors.white),
-              //     ),
-              //   ),
-              // ),
             ],
           ),
         ),

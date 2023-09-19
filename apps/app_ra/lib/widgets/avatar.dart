@@ -8,9 +8,13 @@ class Avatar extends StatelessWidget {
   Avatar({
     Key? key,
     this.onTap,
+    this.height,
+    this.width,
   }) : super(key: key);
 
   final Function? onTap;
+  final double? height;
+  final double? width;
   final userController = Get.find<UserController>();
 
   @override
@@ -50,8 +54,8 @@ class Avatar extends StatelessWidget {
             ),
             child: hasNoAvatar
                 ? Container(
-                    width: 60,
-                    height: 60,
+                    width: width ?? 60,
+                    height: height ?? 60,
                     decoration: BoxDecoration(
                       color: const Color(0xFFD9D9D9),
                       shape: BoxShape.circle,
