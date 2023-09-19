@@ -1,8 +1,8 @@
+import 'package:app_ra/widgets/shimmer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
-import 'package:shimmer/shimmer.dart';
 
 class Avatar extends StatelessWidget {
   Avatar({
@@ -12,21 +12,6 @@ class Avatar extends StatelessWidget {
 
   final Function? onTap;
   final userController = Get.find<UserController>();
-
-  Widget _buildShimmer() {
-    return Shimmer.fromColors(
-      baseColor: const Color(0xFF003068),
-      highlightColor: const Color(0xFF00234d),
-      child: Container(
-        width: 60,
-        height: 60,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          shape: BoxShape.circle,
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +23,7 @@ class Avatar extends StatelessWidget {
             userController.info.value.avatar == null;
 
         if (isLoading && userController.info.value.avatar == null) {
-          return _buildShimmer();
+          return const ShimmerWidget(width: 60, height: 60);
         }
         return Container(
             padding: const EdgeInsets.all(

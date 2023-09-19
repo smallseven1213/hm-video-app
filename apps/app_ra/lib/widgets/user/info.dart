@@ -9,27 +9,13 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/avatar.dart';
 import '../../widgets/button.dart';
+import '../shimmer.dart';
 
 final logger = Logger();
-const Color baseColor = Color(0xFF003068);
+const Color baseColor = Color.fromARGB(255, 83, 6, 6);
 
 class UserInfo extends StatelessWidget {
   const UserInfo({Key? key}) : super(key: key);
-
-  Widget _buildShimmer({required double width, required double height}) {
-    return Shimmer.fromColors(
-      baseColor: const Color(0xFF003068),
-      highlightColor: const Color(0xFF00234d),
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-          color: baseColor,
-          borderRadius: BorderRadius.circular(4),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +52,7 @@ class UserInfo extends StatelessWidget {
                         UserDataGettingStatusConsumer(
                           child: (isLoading) {
                             if (isLoading) {
-                              return _buildShimmer(width: 80, height: 14);
+                              return const ShimmerWidget(width: 80, height: 14);
                             } else {
                               return UserInfoConsumer(
                                 child: (info, isVIP, isGuest) {
@@ -109,7 +95,7 @@ class UserInfo extends StatelessWidget {
                     const SizedBox(height: 5),
                     UserDataGettingStatusConsumer(child: (isLoading) {
                       if (isLoading && !kIsWeb) {
-                        return _buildShimmer(width: 50, height: 12);
+                        return const ShimmerWidget(width: 50, height: 12);
                       } else {
                         return UserInfoConsumer(
                           child: (info, isVIP, isGuest) {

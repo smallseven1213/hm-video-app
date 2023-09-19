@@ -183,6 +183,7 @@ class ListMenuState extends State<ListMenu> {
                         child: SidImage(
                           sid: item.icon,
                           width: 20,
+                          fit: BoxFit.contain,
                         ),
                       ),
                       Text(
