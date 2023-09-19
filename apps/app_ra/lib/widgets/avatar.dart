@@ -8,9 +8,13 @@ class Avatar extends StatelessWidget {
   Avatar({
     Key? key,
     this.onTap,
+    this.height,
+    this.width,
   }) : super(key: key);
 
   final Function? onTap;
+  final double? height;
+  final double? width;
   final userController = Get.find<UserController>();
 
   Widget _buildShimmer() {
@@ -18,8 +22,8 @@ class Avatar extends StatelessWidget {
       baseColor: const Color(0xFF003068),
       highlightColor: const Color(0xFF00234d),
       child: Container(
-        width: 60,
-        height: 60,
+        width: width ?? 60,
+        height: height ?? 60,
         decoration: const BoxDecoration(
           color: Colors.white,
           shape: BoxShape.circle,
@@ -65,8 +69,8 @@ class Avatar extends StatelessWidget {
             ),
             child: hasNoAvatar
                 ? Container(
-                    width: 60,
-                    height: 60,
+                    width: width ?? 60,
+                    height: height ?? 60,
                     decoration: BoxDecoration(
                       color: const Color(0xFFD9D9D9),
                       shape: BoxShape.circle,
