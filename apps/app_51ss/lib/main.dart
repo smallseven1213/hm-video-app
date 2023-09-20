@@ -25,7 +25,7 @@ void main() async {
     allRoutes.keys.first,
     // [必填]DlJSON來源
     [
-      'https://dl.122349323.store/$env/dl.json',
+      'https://dl.dl51ss.info/$env/dl.json',
       'https://dl.dl51ss.com/$env/dl.json',
       'https://dl.dl51ss.net/$env/dl.json',
       //先使用sv的配置

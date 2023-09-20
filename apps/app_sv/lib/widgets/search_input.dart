@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared/models/color_keys.dart';
-
-import '../config/colors.dart';
 
 class SearchInput extends StatefulWidget {
   const SearchInput({
@@ -66,10 +63,6 @@ class SearchInputState extends State<SearchInput> {
       child: SizedBox(
         height: 30,
         child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Colors.white,
-          ),
           padding: const EdgeInsets.all(2),
           child: TextField(
             onTap: widget.onTap,
@@ -80,7 +73,7 @@ class SearchInputState extends State<SearchInput> {
             decoration: InputDecoration(
               contentPadding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
               border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
                 borderSide: BorderSide.none,
               ),
               hintText: widget.placeHolder,
@@ -100,7 +93,7 @@ class SearchInputState extends State<SearchInput> {
                 ),
               ),
             ),
-            style: const TextStyle(color: Colors.black, fontSize: 14),
+            style: const TextStyle(color: Colors.white, fontSize: 14),
             autofocus: widget.autoFocus,
             focusNode: widget.focusNode,
           ),
