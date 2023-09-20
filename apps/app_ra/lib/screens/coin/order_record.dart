@@ -34,40 +34,64 @@ class CustomDropdownMenu extends StatefulWidget {
 }
 
 class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
-  String dropdownValue = option.first['value'];
+  String? _selectedValue = "";
+  bool isMenuOpen = false;
 
   @override
   Widget build(BuildContext context) {
-    print('@@@dropdownValue: ${option}');
+    Widget selectedOption = Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          option.firstWhere((e) => e['value'] == _selectedValue)['name'],
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 12,
+          ),
+        ),
+        const Icon(Icons.keyboard_arrow_down_rounded,
+            size: 16, color: Colors.white),
+      ],
+    );
 
-    return Container(
-      height: 33,
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        border: Border.all(color: Colors.white, width: 2),
-      ),
-      child: DropdownButton<String>(
-        value: dropdownValue,
-        dropdownColor:
-            Theme.of(context).scaffoldBackgroundColor.withOpacity(0.85),
-        iconSize: 20,
-        icon:
-            const Icon(Icons.keyboard_arrow_down_rounded, color: Colors.white),
-        style: const TextStyle(fontSize: 12, color: Colors.white),
-        onChanged: (String? value) {
-          // This is called when the user selects an item.
-          setState(() {
-            dropdownValue = value!;
-          });
-          widget.onChanged!(value!);
-        },
-        items: option.map<DropdownMenuItem<String>>((Map option) {
-          return DropdownMenuItem<String>(
-            value: option['value'],
-            child: Text(option['name']),
-          );
-        }).toList(),
+    return InkWell(
+      onTap: () => setState(() => isMenuOpen = !isMenuOpen),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+        width: 80,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 2),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: isMenuOpen
+            ? Column(
+                children: [
+                  selectedOption,
+                  ...option.map(
+                    (e) => InkWell(
+                      onTap: () => setState(() {
+                        isMenuOpen = !isMenuOpen;
+                        _selectedValue = e['value'];
+                        widget.onChanged!(e['value']!);
+                      }),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Text(
+                          e['name'],
+                          textAlign: TextAlign.left,
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: _selectedValue == e['value']
+                                ? Colors.white
+                                : Colors.grey,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              )
+            : selectedOption,
       ),
     );
   }
