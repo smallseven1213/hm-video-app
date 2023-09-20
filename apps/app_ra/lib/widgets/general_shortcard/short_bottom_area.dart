@@ -44,6 +44,9 @@ class ShortBottomArea extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          const SizedBox(
+            width: 10,
+          ),
           ShortVideoFavoriteCountConsumer(
               videoId: shortData.id,
               tag: tag,
@@ -56,7 +59,7 @@ class ShortBottomArea extends StatelessWidget {
                           displayFavoriteAndCollectCount,
                       count: favoriteCount,
                       subscribe: '喜歡就點讚',
-                      icon: Icons.favorite_rounded,
+                      icon: Icons.favorite_outline_rounded,
                       isLike: isLike,
                       onTap: () {
                         if (isLike) {
@@ -73,6 +76,9 @@ class ShortBottomArea extends StatelessWidget {
                       },
                     );
                   })),
+          const SizedBox(
+            width: 10,
+          ),
           ShortVideoCollectCountConsumer(
               videoId: shortData.id,
               tag: tag,
@@ -86,7 +92,7 @@ class ShortBottomArea extends StatelessWidget {
                           displayFavoriteAndCollectCount,
                       count: collectCount,
                       subscribe: '添加到收藏',
-                      icon: Icons.star_rounded,
+                      icon: Icons.bookmark_border_outlined,
                       iconSize: 30,
                       isLike: isLike,
                       onTap: () {
@@ -104,6 +110,9 @@ class ShortBottomArea extends StatelessWidget {
                       },
                     );
                   }))),
+          const SizedBox(
+            width: 10,
+          ),
         ],
       ),
     );
