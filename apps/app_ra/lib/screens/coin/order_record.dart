@@ -40,7 +40,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
   @override
   Widget build(BuildContext context) {
     Widget selectedOption = Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
           option.firstWhere((e) => e['value'] == _selectedValue)['name'],

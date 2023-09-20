@@ -95,7 +95,11 @@ class PlayRecordPageState extends State<PlayRecordPage>
               },
               child: Text(
                 listEditorController.isEditing.value ? '取消' : '編輯',
-                style: const TextStyle(color: Color(0xffFDDCEF)),
+                style: const TextStyle(
+                  color: Color(0xffFDDCEF),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
               )))
         ],
         bottom:

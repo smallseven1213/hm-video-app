@@ -58,7 +58,11 @@ class NotificationsPageState extends State<NotificationsPage>
                   },
                   child: Text(
                     listEditorController.isEditing.value ? '取消' : '編輯',
-                    style: const TextStyle(color: Color(0xffFDDCEF)),
+                    style: const TextStyle(
+                      color: Color(0xffFDDCEF),
+                      fontSize: 15,
+                      fontWeight:  FontWeight.w500,
+                    ),
                   ))),
         ],
       ),
