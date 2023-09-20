@@ -149,8 +149,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
               borderRadius: BorderRadius.all(Radius.circular(4)),
             ),
             clipBehavior: Clip.antiAlias,
-            child:
-             Stack(
+            child: Stack(
               children: [
                 AspectRatio(
                   aspectRatio: defaultImageRatio,
@@ -239,7 +238,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                                         MyRouteDelegate.of(context)
                                             .push(AppRoutes.supplierTag, args: {
                                           'tagId': tag.id,
-                                          'tagName': tag.name
+                                          'tagName': tag.name,
+                                          'defaultTabIndex': 1,
                                         });
                                       } else if (film == 3) {}
                                     },
