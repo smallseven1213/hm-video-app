@@ -9,12 +9,14 @@ class TagPage extends StatefulWidget {
   final int id;
   final String title;
   final int film;
+  final int? defaultTabIndex;
 
   const TagPage({
     Key? key,
     required this.id,
     required this.title,
     this.film = 1,
+    this.defaultTabIndex,
   }) : super(key: key);
 
   @override
@@ -29,7 +31,8 @@ class TagPageState extends State<TagPage> with SingleTickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(
+        vsync: this, length: 2, initialIndex: widget.defaultTabIndex ?? 0);
   }
 
   @override
