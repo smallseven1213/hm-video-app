@@ -95,11 +95,14 @@ class PlayRecordPageState extends State<PlayRecordPage>
               },
               child: Text(
                 listEditorController.isEditing.value ? '取消' : '編輯',
-                style: const TextStyle(color: Color(0xffFDDCEF)),
+                style: const TextStyle(
+                  color: Color(0xffFDDCEF),
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                ),
               )))
         ],
-        bottom:
-            RATabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
+        bottom: RATabBar(tabs: const ['長片', '短片'], controller: _tabController),
       ),
       body: Stack(
         children: [

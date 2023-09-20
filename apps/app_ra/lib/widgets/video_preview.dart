@@ -59,7 +59,7 @@ class ViewInfo extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: kIsWeb
             ? null
-            : const BorderRadius.vertical(bottom: Radius.circular(10)),
+            : const BorderRadius.vertical(bottom: Radius.circular(4)),
         color: Colors.black.withOpacity(0.5),
       ),
       child: Row(
@@ -207,11 +207,6 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                         alignment: Alignment.centerLeft,
                         child: Container(
                           height: 20,
-                          decoration: kIsWeb
-                              ? null
-                              : BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
                           clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
                           child: Wrap(
                             spacing: 5.0,

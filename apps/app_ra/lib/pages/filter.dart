@@ -48,7 +48,7 @@ class FilterScrollViewState extends State<FilterPage>
         appBar: MyAppBar(
           title: '篩選',
           bottom: filterScreenController.showTabBar.value
-              ? RATabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController)
+              ? RATabBar(tabs: const ['長片', '短片'], controller: _tabController)
               : null,
         ),
         body: TabBarView(

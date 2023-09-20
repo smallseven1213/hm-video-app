@@ -68,7 +68,7 @@ class FilterBarState extends State<FilterBar> {
 
   Widget _buildClosed() {
     List<Widget> childrenWithSpacing = [
-      OptionButton(isSelected: true, name: widget.film == 1 ? '長視頻' : '短視頻'),
+      OptionButton(isSelected: true, name: widget.film == 1 ? '長片' : '短片'),
       const SizedBox(width: 10),
     ];
     List<Widget> children = widget.selectedOptions.entries

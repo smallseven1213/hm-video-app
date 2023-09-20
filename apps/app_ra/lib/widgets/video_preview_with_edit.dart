@@ -71,7 +71,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final Function()? onTap;
   final bool? noTags;
   final bool? noInfoView;
-  final int? film; // 1長視頻, 2短視頻, 3漫畫
+  final int? film; // 1長片, 2短片, 3漫畫
   final int? blockId;
   final bool? hasRadius; // 要不要圓角
   final bool? hasTitle; // 要不要標題
