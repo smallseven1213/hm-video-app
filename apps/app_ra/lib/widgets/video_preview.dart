@@ -130,129 +130,131 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
-    //   return VideoEmbeddedAdWidget(
-    //     imageRatio: imageRatio ?? 374 / 198,
-    //     detail: detail!,
-    //     displayCoverVertical: displayCoverVertical,
-    //   );
-    // }
+    double defaultImageRatio =
+        imageRatio ?? (displayCoverVertical == true ? 119 / 179 : 374 / 198);
+
+    if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
+      return VideoEmbeddedAdWidget(
+        imageRatio: defaultImageRatio,
+        detail: detail!,
+        displayCoverVertical: displayCoverVertical,
+      );
+    }
 
     return GestureDetector(
-      onTap: () => super.onVideoTap(context),
-      child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
-        ),
-        clipBehavior: Clip.antiAlias,
-        child: Column(
-          children: [
-            // 影片封面
-            Stack(children: [
-              AspectRatio(
-                aspectRatio: imageRatio ??
-                    (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-                child: SidImageVisibilityDetector(
-                  child: SidImage(
-                    key: ValueKey('video-preview-$id'),
-                    sid: displayCoverVertical ? coverVertical : coverHorizontal,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-              if (hasInfoView == true)
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: ViewInfo(
-                    videoCollectTimes: videoCollectTimes,
-                    viewCount: videoViewTimes ?? 0,
-                    duration: timeLength,
-                    displayVideoTimes: displayVideoTimes,
-                    displayViewTimes: displayViewTimes,
-                    displayVideoCollectTimes: displayVideoCollectTimes,
-                  ),
-                ),
-            ]),
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
-              child: Column(
-                children: [
-                  // 標題
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      style: TextStyle(
-                        color: AppColors.colors[ColorKeys.videoTitle]!,
-                        fontSize: 16,
-                      ),
+        onTap: () => super.onVideoTap(context),
+        child: Column(children: [
+          Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child:
+             Stack(
+              children: [
+                AspectRatio(
+                  aspectRatio: defaultImageRatio,
+                  child: SidImageVisibilityDetector(
+                    child: SidImage(
+                      key: ValueKey('video-preview-$id'),
+                      sid: displayCoverVertical
+                          ? coverVertical
+                          : coverHorizontal,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                   ),
-                  // tags
-                  if (tags.isNotEmpty && hasTags == true)
-                    Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Align(
-                          alignment: Alignment.centerLeft,
-                          child: Container(
-                            height: 20,
-                            decoration: kIsWeb
-                                ? null
-                                : BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                ),
+                if (hasInfoView == true)
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: ViewInfo(
+                      videoCollectTimes: videoCollectTimes,
+                      viewCount: videoViewTimes ?? 0,
+                      duration: timeLength,
+                      displayVideoTimes: displayVideoTimes,
+                      displayViewTimes: displayViewTimes,
+                      displayVideoCollectTimes: displayVideoCollectTimes,
+                    ),
+                  ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+            child: Column(
+              children: [
+                // 標題
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.left,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                    style: TextStyle(
+                      color: AppColors.colors[ColorKeys.videoTitle]!,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                // tags
+                if (tags.isNotEmpty && hasTags == true)
+                  Padding(
+                      padding: const EdgeInsets.only(top: 5),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          height: 20,
+                          decoration: kIsWeb
+                              ? null
+                              : BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                          clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
+                          child: Wrap(
+                            spacing: 5.0,
+                            alignment: WrapAlignment.center,
+                            runSpacing: 5.0,
+                            clipBehavior: Clip.antiAlias,
+                            crossAxisAlignment: WrapCrossAlignment.center,
+                            children: tags
+                                .take(3)
+                                .map(
+                                  (tag) => TagItem(
+                                    tag: '#${tag.name}',
+                                    onTap: () {
+                                      if (film == 1) {
+                                        MyRouteDelegate.of(context).push(
+                                          AppRoutes.tag,
+                                          args: {
+                                            'id': tag.id,
+                                            'title': tag.name
+                                          },
+                                          removeSamePath: true,
+                                        );
+                                      } else if (film == 2) {
+                                        MyRouteDelegate.of(context)
+                                            .push(AppRoutes.supplierTag, args: {
+                                          'tagId': tag.id,
+                                          'tagName': tag.name
+                                        });
+                                      } else if (film == 3) {}
+                                    },
                                   ),
-                            clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
-                            child: Wrap(
-                              spacing: 5.0,
-                              alignment: WrapAlignment.center,
-                              runSpacing: 5.0,
-                              clipBehavior: Clip.antiAlias,
-                              crossAxisAlignment: WrapCrossAlignment.center,
-                              children: tags
-                                  .take(3)
-                                  .map(
-                                    (tag) => TagItem(
-                                      tag: '#${tag.name}',
-                                      onTap: () {
-                                        if (film == 1) {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.tag,
-                                            args: {
-                                              'id': tag.id,
-                                              'title': tag.name
-                                            },
-                                            removeSamePath: true,
-                                          );
-                                        } else if (film == 2) {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.tag,
-                                            args: {
-                                              'id': tag.id,
-                                              'title': tag.name,
-                                              'defaultTabIndex': 1
-                                            },
-                                            removeSamePath: true,
-                                          );
-                                        } else if (film == 3) {}
-                                      },
-                                    ),
-                                  )
-                                  .toList(),
-                            ),
+                                )
+                                .toList(),
                           ),
-                        )),
-                ],
-              ),
-            )
-          ],
-        ),
-      ),
-    );
+                        ),
+                      )),
+              ],
+            ),
+          )
+        ]));
   }
 }
+
+
+// 

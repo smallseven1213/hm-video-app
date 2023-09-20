@@ -112,7 +112,7 @@ class Block7WidgetState extends State<Block7Widget> {
                   var vod = videos[itemIndex];
                   return Center(
                     child: SizedBox(
-                      height: 267,
+                      height: 270,
                       width: 160,
                       child: widget.buildVideoPreview(vod),
                     ),

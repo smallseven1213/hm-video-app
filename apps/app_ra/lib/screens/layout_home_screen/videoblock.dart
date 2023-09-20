@@ -43,6 +43,7 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
     int film,
     Vod video, {
     hasTags = true,
+    hasInfoView = true,
   }) {
     return VideoPreviewWidget(
       id: video.id,
@@ -58,10 +59,11 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
       displayVideoTimes: film == 1,
       displayViewTimes: film == 1,
       displayVideoCollectTimes: film == 2,
-      displayCoverVertical: film == 2,
+      displayCoverVertical: film == 2 || video.dataType == 3,
       film: film,
       blockId: block.id,
       hasTags: hasTags,
+      hasInfoView: hasInfoView,
     );
   }
 
@@ -165,7 +167,12 @@ class VideoBlockState extends BaseVideoBlockState<VideoBlock> {
           block: block,
           updateBlock: updateBlock,
           channelId: channelId,
-          buildVideoPreview: (video) => _buildVideoPreview(film, video),
+          buildVideoPreview: (video) => _buildVideoPreview(
+            film,
+            video,
+            hasTags: false,
+            hasInfoView: false,
+          ),
           gradientBgTopColor:
               AppColors.colors[ColorKeys.gradientBgTopColor] as Color,
           gradientBgBottomColor:

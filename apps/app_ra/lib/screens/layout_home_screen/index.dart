@@ -1,16 +1,11 @@
 import 'package:app_ra/config/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
-import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:shared/widgets/popular_search_title_builder.dart';
 
 import '../../widgets/wave_loading.dart';
 import 'channel_search_bar.dart';
 import 'channels.dart';
-import 'layout_tab_bar.dart';
 
 class LayoutHomeScreen extends StatelessWidget {
   final int layoutId;

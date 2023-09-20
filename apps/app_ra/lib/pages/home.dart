@@ -18,6 +18,8 @@ import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
 import '../screens/layout_user_screen/layout_user_screen.dart';
 import 'apps.dart';
+import 'coin.dart';
+import 'vip.dart';
 
 UserApi userApi = UserApi();
 final screens = {
@@ -37,7 +39,9 @@ final screens = {
       ),
   HomeNavigatorPathes.game: () => const LayoutGameScreen(),
   HomeNavigatorPathes.apps: () => const AppsPage(),
-  HomeNavigatorPathes.user: () => const LayoutUserScreen()
+  HomeNavigatorPathes.user: () => const LayoutUserScreen(),
+  HomeNavigatorPathes.coin: () => const CoinPage(),
+  HomeNavigatorPathes.vip: () => const VipPage(),
 };
 
 class HomePage extends StatefulWidget {

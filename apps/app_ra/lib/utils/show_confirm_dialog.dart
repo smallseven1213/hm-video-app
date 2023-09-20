@@ -30,8 +30,9 @@ Future<bool?> showConfirmDialog({
             constraints: const BoxConstraints(minHeight: 180),
             width: 280,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6),
               color: AppColors.colors[ColorKeys.background],
+              border: Border.all(color: AppColors.colors[ColorKeys.primary]!),
+              borderRadius: BorderRadius.circular(6),
             ),
             child: Column(
               children: [

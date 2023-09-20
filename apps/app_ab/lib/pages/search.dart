@@ -143,6 +143,7 @@ class SearchPageState extends State<SearchPage> {
               },
               defaultValue: searchKeyword,
               placeHolder: widget.inputDefaultValue,
+              backgroundColor: AppColors.colors[ColorKeys.searchBgColor]!,
             ),
           ),
         ),
