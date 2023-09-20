@@ -109,7 +109,7 @@ class Coin extends StatelessWidget {
           children: [
             // todo : 標題：試看結束，升級觀看完整版
             const Text(
-              '試看結束，此視頻需付費購買',
+              '試看結束，此影片需付費購買',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

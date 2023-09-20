@@ -90,8 +90,7 @@ class CollectionPageState extends State<CollectionPage>
                 ),
               )))
         ],
-        bottom:
-            RATabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
+        bottom: RATabBar(tabs: const ['長片', '短片'], controller: _tabController),
       ),
       body: Stack(
         children: [
