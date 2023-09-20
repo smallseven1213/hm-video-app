@@ -8,7 +8,7 @@ class AppColors {
     ColorKeys.secondary: Color(0xffF4CDCA),
     ColorKeys.background: Color(0xff0F1320),
     ColorKeys.formBg: Color(0xfff2f2f2),
-    ColorKeys.videoPreviewBg: Color(0xffefefef),
+    ColorKeys.videoPreviewBg: Color(0xff1c202f),
     // text
     ColorKeys.textPrimary: Colors.white,
     ColorKeys.textSecondary: Color(0xff979797),

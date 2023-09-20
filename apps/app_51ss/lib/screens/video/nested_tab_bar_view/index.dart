@@ -8,6 +8,7 @@ import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/sliver_vod_list.dart';
 import '../../main_screen/block_header.dart';
+import 'video_actor.dart';
 import 'app_download_ad.dart';
 import 'banner.dart';
 import 'video_actions.dart';
@@ -89,6 +90,17 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                 child: VideoScreenBanner(),
               ),
             ),
+            if (widget.videoDetail.actors!.isNotEmpty)
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.only(top: 16, right: 8, left: 8),
+                  child: BlockHeader(text: '演員'),
+                ),
+              ),
+            if (widget.videoDetail.actors!.isNotEmpty)
+              SliverToBoxAdapter(
+                child: VideoActor(actors: widget.videoDetail.actors),
+              ),
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 16, right: 8, left: 8),
