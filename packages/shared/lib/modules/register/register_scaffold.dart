@@ -80,7 +80,8 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
 
         if (res.code == '00') {
           userController.fetchUserInfo();
-          // MyRouteDelegate.of(context).popRoute();
+          // ignore: use_build_context_synchronously
+          MyRouteDelegate.of(context).popRoute();
         } else {
           widget.onError!('註冊錯誤', '帳號或密碼不正確');
         }

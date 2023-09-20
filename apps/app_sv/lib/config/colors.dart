@@ -40,6 +40,7 @@ class AppColors {
     ColorKeys.tabBarTextActiveColor: Color(0xffF4CDCA),
     // search input
     ColorKeys.textSearch: Color(0xff919BB3),
+    ColorKeys.searchBgColor: Color(0xff3f4253),
     // jingang
     ColorKeys.jingangBorder: Color(0xffF4CDCA),
     // notice
