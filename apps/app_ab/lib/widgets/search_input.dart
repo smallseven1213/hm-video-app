@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared/models/color_keys.dart';
-
-import '../config/colors.dart';
 
 class SearchInput extends StatefulWidget {
   const SearchInput({
@@ -66,10 +63,6 @@ class SearchInputState extends State<SearchInput> {
       child: SizedBox(
         height: 30,
         child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            color: Colors.white,
-          ),
           padding: const EdgeInsets.all(2),
           child: TextField(
             onTap: widget.onTap,

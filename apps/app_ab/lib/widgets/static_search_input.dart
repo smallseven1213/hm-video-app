@@ -19,9 +19,9 @@ class StaticSearchInput extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       padding: const EdgeInsets.only(left: 15),
-      decoration: const BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(20)),
-        color: Colors.white,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        color: AppColors.colors[ColorKeys.searchBgColor],
       ),
       child: Row(
         children: [

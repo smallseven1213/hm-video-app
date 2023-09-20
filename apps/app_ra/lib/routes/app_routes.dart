@@ -55,6 +55,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         id: args['id'] as int,
         title: args['title'] as String,
         film: args['film'] == null ? 1 : args['film'] as int,
+        defaultTabIndex: args['defaultTabIndex'] as int?,
       ),
   AppRoutes.actor: (context, args) => actor_page.ActorPage(
         id: args['id'] as int,
