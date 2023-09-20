@@ -27,7 +27,11 @@ class Avatar extends StatelessWidget {
             userController.info.value.avatar == null;
 
         if (isLoading && userController.info.value.avatar == null) {
-          return const ShimmerWidget(width: 60, height: 60);
+          return const ShimmerWidget(
+            width: 60,
+            height: 60,
+            isCircle: true,
+          );
         }
         return Container(
             padding: const EdgeInsets.all(
@@ -64,10 +68,10 @@ class Avatar extends StatelessWidget {
                         width: 2,
                       ),
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.person,
-                      color: Color.fromARGB(255, 144, 144, 144),
-                      size: 30,
+                      color: const Color.fromARGB(255, 144, 144, 144),
+                      size: width != null ? width! * 0.6 : 30,
                     ))
                 : CircleAvatar(
                     radius: 30,

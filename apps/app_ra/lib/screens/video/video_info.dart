@@ -4,8 +4,6 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
-import 'package:shared/widgets/video/video_time.dart';
-import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/title.dart';
 import 'package:video_player/video_player.dart';
 

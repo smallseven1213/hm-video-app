@@ -30,15 +30,8 @@ class StaticSearchInput extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(
-                icon: const Icon(
-                  Icons.search,
-                  size: 16,
-                ),
-                onPressed: onInputClick,
-              ),
+              const SizedBox(width: 4),
               Expanded(
                 flex: 1,
                 child: GestureDetector(
@@ -51,6 +44,17 @@ class StaticSearchInput extends StatelessWidget {
                     maxLines:
                         1, // This line ensures that the text stays in one line
                   ),
+                ),
+              ),
+              Center(
+                child: IconButton(
+                  padding: const EdgeInsets.all(0),
+                  icon: const Icon(
+                    Icons.search,
+                    color: Colors.white,
+                    size: 17,
+                  ),
+                  onPressed: onInputClick,
                 ),
               ),
             ],
