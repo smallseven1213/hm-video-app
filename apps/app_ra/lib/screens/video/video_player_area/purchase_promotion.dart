@@ -129,7 +129,7 @@ class Coin extends StatelessWidget {
               style: Theme.of(context).textTheme.bodySmall,
             ),
             Text(
-              '您目前擁有的金的：$userPoints金幣',
+              '您目前擁有的金幣：$userPoints金幣',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 12,
@@ -142,16 +142,16 @@ class Coin extends StatelessWidget {
         SizedBox(
           width: 87,
           height: 35,
-          child: Button(
-            size: 'small',
-            text:
-                int.parse(userPoints) < int.parse(buyPoints) ? '金幣不足' : '付費觀看',
-            onPressed: () => purchase(
-              context,
-              id: videoId,
-              onSuccess: () => videoPlayerInfo.videoPlayerController?.play(),
-            ),
-          ),
+          // child: Button(
+          //   size: 'small',
+          //   text:
+          //       int.parse(userPoints) < int.parse(buyPoints) ? '金幣不足' : '付費觀看',
+          //   onPressed: () => purchase(
+          //     context,
+          //     id: videoId,
+          //     onSuccess: () => videoPlayerInfo.videoPlayerController?.play(),
+          //   ),
+          // ),
         ),
       ],
     );
