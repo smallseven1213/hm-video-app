@@ -1,8 +1,10 @@
+import 'package:app_ab/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_collect_count_consumer.dart';
 import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
@@ -34,11 +36,11 @@ class ShortBottomArea extends StatelessWidget {
     return Container(
       height: 76 + paddingBottom,
       padding: EdgeInsets.only(bottom: paddingBottom),
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Colors.black,
-            Color(0xffb5925c),
+            AppColors.colors[ColorKeys.buttonBgPrimary]!,
           ],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
