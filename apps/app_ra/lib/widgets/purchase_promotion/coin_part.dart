@@ -90,39 +90,45 @@ class Coin extends StatelessWidget {
     }
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // todo : 標題：試看結束，升級觀看完整版
-        const Text(
-          '試看結束，此影片需付費購買',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        Text(
-          '片長：${getTimeString(timeLength)}',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-        Text(
-          '價格：$buyPoints金幣',
-          style: Theme.of(context).textTheme.bodySmall,
-        ),
-        Text(
-          '您目前擁有的金幣：$userPoints金幣',
-          style: const TextStyle(
-            color: Colors.white,
-            fontSize: 12,
+        Container(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '試看結束，此影片需付費購買',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+              Text(
+                '片長：${getTimeString(timeLength)}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                '價格：$buyPoints金幣',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
+              Text(
+                '您目前擁有的金幣：$userPoints金幣',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: 15),
-        //開通VIP按鈕
         SizedBox(
           width: 87,
           height: 35,
@@ -131,13 +137,14 @@ class Coin extends StatelessWidget {
             text: double.parse(userPoints) < double.parse(buyPoints)
                 ? '金幣不足'
                 : '付費觀看',
+            backgroundColor: Colors.black,
             onPressed: () => purchase(
               context,
               id: videoId,
               onSuccess: onSuccess,
             ),
           ),
-        )
+        ),
       ],
     );
   }
