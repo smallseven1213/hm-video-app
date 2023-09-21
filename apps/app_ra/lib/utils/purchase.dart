@@ -19,11 +19,6 @@ void purchase(
     HMApiResponse results = await vodApi.purchase(id);
     bool coinNotEnough = results.code == '50508';
     if (results.code == '00') {
-      // 付費成功後，重新取得影片Url
-      final controllerTag = genaratorLongVideoDetailTag(id.toString());
-      final videoDetailController =
-          Get.find<VideoDetailController>(tag: controllerTag);
-      videoDetailController.mutateAll();
       onSuccess!();
     } else {
       if (context.mounted) {
@@ -47,7 +42,7 @@ void purchase(
       message: '購買失敗',
       showCancelButton: false,
       onConfirm: () {
-        Navigator.of(context).pop();
+        // Navigator.of(context).pop();
       },
     );
   }

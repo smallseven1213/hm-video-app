@@ -2,18 +2,14 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
-import 'package:shared/models/user.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
-
-import '../../screens/video/video_player_area/purchase_promotion.dart';
-import '../button.dart';
 import '../short/fullscreen_controls.dart';
+import 'purchase_promotion.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
@@ -180,77 +176,41 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              // if (widget.shortData.isAvailable == false &&
-              //     videoPlayerInfo.videoAction == 'end')
-              //   Positioned.fill(
-              //     child: ShortVideoConsumer(
-              //       vodId: widget.id,
-              //       tag: widget.tag,
-              //       child: ({
-              //         required isLoading,
-              //         required video,
-              //         required videoDetail,
-              //         required videoUrl,
-              //       }) =>
-              //           PurchasePromotion(
-              //         coverHorizontal: "",
-              //         buyPoints: video!.buyPoint.toString(),
-              //         timeLength: video.timeLength ?? 0,
-              //         chargeType: video.chargeType ?? 0,
-              //         videoId: video.id,
-              //         videoPlayerInfo: videoPlayerInfo,
-              //       ),
-              //     ),
-              //   ),
-              Positioned.fill(
-                top: 0,
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ShortVideoConsumer(
-                        vodId: widget.id,
-                        tag: widget.tag,
-                        child: ({
-                          required isLoading,
-                          required video,
-                          required videoDetail,
-                          required videoUrl,
-                        }) =>
-                            UserInfoConsumer(
-                              child: (User info, isVIP, isGuest) {
-                                if (info.id.isEmpty) {
-                                  return const SizedBox();
-                                }
-                                return Coin(
-                                  userPoints: info.points ?? '0',
-                                  buyPoints: video!.buyPoint.toString(),
-                                  videoId: video.id,
-                                  videoPlayerInfo: videoPlayerInfo,
-                                  timeLength: video.timeLength ?? 0,
-                                );
-                              },
-                            )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      width: 80,
-                      height: 35,
-                      child: Button(
-                        onPressed: () {},
-                        size: 'small',
-                        backgroundColor: const Color(0xFF030923),
-                        text: '按此購買',
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              // const FloatPageBackButton()
+              ShortVideoConsumer(
+                  vodId: widget.id,
+                  tag: widget.tag,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      video?.isAvailable == false &&
+                              videoPlayerInfo.videoAction == 'end'
+                          ? Positioned.fill(
+                              top: 0,
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                color: Colors.black.withOpacity(0.3),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    PurchasePromotion(
+                                      tag: widget.tag,
+                                      buyPoints: video!.buyPoint.toString(),
+                                      timeLength: video.timeLength ?? 0,
+                                      chargeType: video.chargeType ?? 0,
+                                      videoId: video.id,
+                                      videoPlayerInfo: videoPlayerInfo,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink()),
             ],
           ),
         );
