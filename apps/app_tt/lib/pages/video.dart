@@ -79,10 +79,10 @@ class VideoState extends State<Video> {
     return VideoScreenProvider(
       id: id,
       name: name,
-      child: (
-          {required String? videoUrl,
-          required Vod? video,
-          required Vod? videoDetail}) {
+      child: ({
+        required String? videoUrl,
+        required Vod? videoDetail,
+      }) {
         if (videoUrl == null) {
           return const WaveLoading();
         }
@@ -94,21 +94,21 @@ class VideoState extends State<Video> {
                 tag: videoUrl,
                 autoPlay: kIsWeb ? false : true,
                 videoUrl: videoUrl,
-                video: video!,
-                videoDetail: videoDetail!,
+                video: videoDetail!,
+                videoDetail: videoDetail,
                 loadingWidget: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Container(
                     color: Colors.black,
                     child: VideoLoading(
-                        coverHorizontal: video.coverHorizontal ?? ''),
+                        coverHorizontal: videoDetail.coverHorizontal ?? ''),
                   ),
                 ),
                 child: (isReady) {
                   return VideoPlayerArea(
                     name: name,
                     videoUrl: videoUrl,
-                    video: video,
+                    video: videoDetail,
                   );
                 },
               ),
@@ -244,7 +244,7 @@ class VideoState extends State<Video> {
                                 onTap: () {
                                   _scrollToPosition(_belongVideoKey);
                                 },
-                                child: Padding(
+                                child: const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 10),
                                   child: Text('選集'),
                                 ),
@@ -253,7 +253,7 @@ class VideoState extends State<Video> {
                               onTap: () {
                                 _scrollToPosition(_tagVideoKey);
                               },
-                              child: Padding(
+                              child: const Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 10),
                                 child: Text('同標籤'),
                               ),
@@ -278,7 +278,7 @@ class VideoState extends State<Video> {
 
     _controller.animateTo(
       -position.dy,
-      duration: Duration(milliseconds: 700),
+      duration: const Duration(milliseconds: 700),
       curve: Curves.easeInOut,
     );
   }

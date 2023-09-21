@@ -52,10 +52,10 @@ class VideoScreenState extends State<VideoScreen> {
       child: VideoScreenProvider(
         id: widget.id,
         name: widget.name,
-        child: (
-            {required String? videoUrl,
-            required Vod? video,
-            required Vod? videoDetail}) {
+        child: ({
+          required String? videoUrl,
+          required Vod? videoDetail,
+        }) {
           if (videoUrl == null) {
             return const Center(child: FlashLoading());
           }
@@ -67,28 +67,27 @@ class VideoScreenState extends State<VideoScreen> {
                   tag: videoUrl,
                   autoPlay: kIsWeb ? false : true,
                   videoUrl: videoUrl,
-                  video: video!,
-                  videoDetail: videoDetail!,
+                  video: videoDetail!,
+                  videoDetail: videoDetail,
                   loadingWidget: AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Container(
                       color: Colors.black,
                       child: VideoLoading(
-                          coverHorizontal: video.coverHorizontal ?? ''),
+                          coverHorizontal: videoDetail.coverHorizontal ?? ''),
                     ),
                   ),
                   child: (isReady) {
                     return VideoPlayerArea(
                       name: widget.name,
                       videoUrl: videoUrl,
-                      video: video,
+                      video: videoDetail,
                     );
                   },
                 ),
                 Expanded(
                   child: NestedTabBarView(
                     videoUrl: videoUrl,
-                    video: video,
                     videoDetail: videoDetail,
                   ),
                 )

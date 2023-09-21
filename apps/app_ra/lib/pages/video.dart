@@ -57,18 +57,18 @@ class VideoState extends State<Video> {
     return VideoScreenProvider(
       id: id,
       name: name,
-      child: (
-          {required String? videoUrl,
-          required Vod? video,
-          required Vod? videoDetail}) {
+      child: ({
+        required String? videoUrl,
+        required Vod? videoDetail,
+      }) {
         if (videoUrl == null) {
           return const WaveLoading();
         }
 
         return Scaffold(
           appBar: MyAppBar(
-            titleWidget: !video!.isAvailable
-                ? video.chargeType == ChargeType.vip.index
+            titleWidget: !videoDetail!.isAvailable
+                ? videoDetail.chargeType == ChargeType.vip.index
                     ? Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
@@ -97,7 +97,7 @@ class VideoState extends State<Video> {
                                       ?.play(),
                                 ),
                                 child: Text(
-                                  '${video.buyPoint}金幣解鎖',
+                                  '${videoDetail.buyPoint}金幣解鎖',
                                   style: TextStyle(
                                     fontSize: 15,
                                     color:
@@ -116,21 +116,20 @@ class VideoState extends State<Video> {
                   tag: videoUrl,
                   autoPlay: kIsWeb ? false : true,
                   videoUrl: videoUrl,
-                  video: video,
-                  videoDetail: videoDetail!,
+                  videoDetail: videoDetail,
                   loadingWidget: AspectRatio(
                     aspectRatio: 16 / 9,
                     child: Container(
                       color: Colors.black,
                       child: VideoLoading(
-                          coverHorizontal: video.coverHorizontal ?? ''),
+                          coverHorizontal: videoDetail.coverHorizontal ?? ''),
                     ),
                   ),
                   child: (isReady) {
                     return VideoPlayerArea(
                       name: name,
                       videoUrl: videoUrl,
-                      video: video,
+                      video: videoDetail,
                     );
                   },
                 ),

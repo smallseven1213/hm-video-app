@@ -19,12 +19,10 @@ final logger = Logger();
 
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
-  final Vod video;
   final String videoUrl;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
-    required this.video,
     required this.videoUrl,
   }) : super(key: key);
 
@@ -64,22 +62,6 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                     videoDetail: widget.videoDetail,
                   )),
             ),
-            // SliverToBoxAdapter(
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-            //     child: VideoActions(
-            //       videoDetail: Vod(
-            //         widget.video.id,
-            //         widget.video.title,
-            //         coverHorizontal: widget.video.coverHorizontal!,
-            //         coverVertical: widget.video.coverVertical!,
-            //         timeLength: widget.video.timeLength!,
-            //         tags: widget.video.tags!,
-            //         videoViewTimes: widget.videoDetail.videoViewTimes!,
-            //       ),
-            //     ),
-            //   ),
-            // ),
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 8, right: 8, left: 8),
