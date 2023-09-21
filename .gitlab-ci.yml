@@ -16,6 +16,7 @@ show_variables:
     - gitlab-shared-runner
   script: 
     - echo $CI_COMMIT_REF_NAME
+    - echo $CI_COMMIT_TAG
     - echo $test
     - echo $test_tag
 
