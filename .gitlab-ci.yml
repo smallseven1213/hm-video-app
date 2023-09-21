@@ -188,8 +188,21 @@ deploy-sv-job:      # This job runs in the deploy stage.
       - develop
   script:
     - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-sv" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-sv/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-sv -n video-dev
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-sv" -f /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
+
+build-prod-job: 
+  stage: build
+  tags: 
+    - gitlab-shared-runner
+  only: 
+    refs: 
+      - tags
+  script: 
+    - PROJECT=$(echo $CI_COMMIT_REF_NAME | awk -F '.' '{print $NF}')
+    - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_$PROJECT -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-$PROJECT:${CI_COMMIT_TAG} .
+    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-$PROJECT:${CI_COMMIT_TAG}
 
 build-gs-prod-job: 
   stage: build
@@ -218,20 +231,6 @@ deploy-gs-prod-job:
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/gs --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh gs prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
 
-build-sv-prod-job: 
-  stage: build
-  tags: 
-    - gitlab-shared-runner
-  only: 
-    refs: 
-      - tags
-    variables: 
-      - $CI_COMMIT_REF_NAME =~ /sv$/
-  script: 
-    - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_sv -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:${CI_COMMIT_TAG} .
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:${CI_COMMIT_TAG}
-
 deploy-sv-prod-job: 
   stage: deploy
   tags: 
@@ -242,8 +241,8 @@ deploy-sv-prod-job:
     variables: 
       - $CI_COMMIT_REF_NAME =~ /sv$/
   script: 
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/sv --install ${CI_PROJECT_NAME}-sv --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-sv -n prod
-    - /bin/bash /home/gitlab-runner/tg-notify.sh sv prod ${CI_PROJECT_NAME}-sv ${CI_COMMIT_TAG}
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/sv --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME} -n prod
+    - /bin/bash /home/gitlab-runner/tg-notify.sh sv prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
 
 build-ab-prod-job: 
   stage: build
