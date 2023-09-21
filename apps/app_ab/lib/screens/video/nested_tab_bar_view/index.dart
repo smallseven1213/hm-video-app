@@ -19,12 +19,10 @@ final logger = Logger();
 
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
-  final Vod video;
   final String videoUrl;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
-    required this.video,
     required this.videoUrl,
   }) : super(key: key);
 
