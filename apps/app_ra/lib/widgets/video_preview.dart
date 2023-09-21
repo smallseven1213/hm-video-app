@@ -205,9 +205,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                       padding: const EdgeInsets.only(top: 5),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Container(
+                        child: SizedBox(
                           height: 20,
-                          clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
                           child: Wrap(
                             spacing: 5.0,
                             alignment: WrapAlignment.center,
