@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
+import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../screens/video/video_player_area/enums.dart';
 import '../actor_avatar.dart';
 import '../short/short_card_info_tag.dart';
 
@@ -109,21 +111,31 @@ class ShortCardInfo extends StatelessWidget {
                         .toList(),
                   ),
                 ],
-                UserInfoConsumer(child: (info, isVIP, isGuest) {
-                  if (!isVIP) {
-                    return InkWell(
-                      onTap: () {
-                        MyRouteDelegate.of(context).push(AppRoutes.vip);
-                      },
-                      child: const Padding(
-                          padding: EdgeInsets.only(top: 10),
-                          child: Text('開通 VIP 無限看片',
-                              style: TextStyle(
-                                  color: Color(0xFFFDDCEF), fontSize: 16))),
-                    );
-                  }
-                  return const SizedBox.shrink();
-                }),
+                ShortVideoConsumer(
+                  vodId: data.id,
+                  tag: tag,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      UserInfoConsumer(child: (info, isVIP, isGuest) {
+                    if (!isVIP && video!.chargeType == ChargeType.vip.index) {
+                      return InkWell(
+                        onTap: () {
+                          MyRouteDelegate.of(context).push(AppRoutes.vip);
+                        },
+                        child: const Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text('開通 VIP 無限看片',
+                                style: TextStyle(
+                                    color: Color(0xFFFDDCEF), fontSize: 16))),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  }),
+                ),
                 const SizedBox(height: 10),
               ],
             ),
