@@ -1,7 +1,5 @@
-/**
- * 影片資料的Provider, 必須在影片最上面
- * 可以提供videoUrl, video, videoDetail三個值
- */
+/// 影片資料的Provider, 必須在影片最上面
+/// 可以提供videoUrl, video, videoDetail三個值
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart' as rx;
@@ -20,7 +18,6 @@ class VideoScreenProvider extends StatefulWidget {
   final String? name;
   final Widget Function({
     required String? videoUrl,
-    required Vod? video,
     required Vod? videoDetail,
   }) child;
 
@@ -117,7 +114,6 @@ class VideoScreenProviderState extends State<VideoScreenProvider> {
   Widget build(BuildContext context) {
     return widget.child(
       videoUrl: stateVideoUrl,
-      video: stateVideo,
       videoDetail: stateVideoDetail,
     );
   }
