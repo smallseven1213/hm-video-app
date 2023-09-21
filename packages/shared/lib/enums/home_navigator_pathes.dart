@@ -4,4 +4,6 @@ class HomeNavigatorPathes {
   static const String game = '/game';
   static const String apps = '/apps';
   static const String user = '/user';
+  static const String coin = '/coin';
+  static const String vip = '/vip';
 }

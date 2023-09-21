@@ -3,6 +3,7 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 import '../../config/colors.dart';
+import '../button.dart';
 
 class ShortMenuButton extends StatelessWidget {
   final String subscribe;
@@ -29,48 +30,65 @@ class ShortMenuButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      flex: 1,
-      child: GestureDetector(
-        onTap: () {
-          onTap?.call();
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: iconSize ?? 24,
-              color:
-                  isLike ? AppColors.colors[ColorKeys.primary] : Colors.white,
-            ),
-            const SizedBox(width: 10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (displayFavoriteAndCollectCount == true)
-                  Text(
-                    formatNumberToUnit(count ?? 0,
-                        shouldCalculateThousands: false),
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Colors.white,
-                    ),
-                  ),
-                Text(
-                  subscribe,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ),
-    );
+        flex: 1,
+        child: SizedBox(
+          height: 40,
+          child: Button(
+              onPressed: () {
+                onTap?.call();
+              },
+              textColor: Colors.white,
+              borderColor: Colors.white,
+              icon: Icon(
+                icon,
+                size: 16,
+                color:
+                    isLike ? AppColors.colors[ColorKeys.primary] : Colors.white,
+              ),
+              size: 'medium',
+              text: subscribe),
+        )
+        // child: GestureDetector(
+        //   onTap: () {
+        //     onTap?.call();
+        //   },
+        //   child: Row(
+        //     mainAxisSize: MainAxisSize.min,
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: [
+        // Icon(
+        //   icon,
+        //   size: iconSize ?? 24,
+        //   color:
+        //       isLike ? AppColors.colors[ColorKeys.primary] : Colors.white,
+        // ),
+        //       const SizedBox(width: 10),
+        //       Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           if (displayFavoriteAndCollectCount == true)
+        //             Text(
+        //               formatNumberToUnit(count ?? 0,
+        //                   shouldCalculateThousands: false),
+        //               style: const TextStyle(
+        //                 fontSize: 13,
+        //                 color: Colors.white,
+        //               ),
+        //             ),
+        //           Text(
+        //             subscribe,
+        //             style: const TextStyle(
+        //               fontSize: 13,
+        //               color: Colors.white,
+        //             ),
+        //           ),
+        //         ],
+        //       )
+        //     ],
+        //   ),
+        // ),
+        );
   }
 }

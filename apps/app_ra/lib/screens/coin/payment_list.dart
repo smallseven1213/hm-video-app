@@ -33,8 +33,6 @@ class _PaymentListState extends State<PaymentList> {
   bool isLoading = false;
 
   sendOrder(context, {required int paymentChannelId}) async {
-    print('sandOrder');
-    print('paymentChannelId: $paymentChannelId');
     try {
       setState(() => isLoading = true);
       var res = await orderApi.makeOrder(

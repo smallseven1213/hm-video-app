@@ -40,10 +40,10 @@ class UserApi {
       if (!kIsWeb) {
         if (Platform.isAndroid) {
           var info = await deviceInfo.androidInfo;
-          registerDeviceGuid = json.encode(info);
+          registerDeviceGuid = json.encode(info.data);
         } else if (Platform.isIOS) {
           var info = await deviceInfo.iosInfo;
-          registerDeviceGuid = json.encode(info);
+          registerDeviceGuid = json.encode(info.data);
         }
       } else {
         registerDeviceGuid =

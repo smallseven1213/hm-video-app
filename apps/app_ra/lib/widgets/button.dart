@@ -32,6 +32,7 @@ class Button extends StatelessWidget {
   final String text;
   final Color? borderColor;
   final Color? textColor;
+  final Color? backgroundColor;
   final VoidCallback onPressed;
 
   final dynamic icon; // GlowingIcon or Icon
@@ -44,6 +45,7 @@ class Button extends StatelessWidget {
     required this.onPressed,
     this.borderColor,
     this.textColor,
+    this.backgroundColor,
     this.icon,
     this.type = 'primary',
     this.size = 'medium',
@@ -57,7 +59,7 @@ class Button extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: buttonBg[type],
+          color: backgroundColor ?? buttonBg[type],
         ),
         clipBehavior: Clip.antiAliasWithSaveLayer,
         child: CustomPaint(

@@ -135,7 +135,7 @@ class SuppliersPageState extends State<SuppliersPage>
                       flex: 1,
                       child: Row(
                         children: [
-                          _buildCustomRadioButton(1, '視頻'),
+                          _buildCustomRadioButton(1, '影片'),
                           _buildCustomRadioButton(2, '人氣'),
                         ],
                       ),

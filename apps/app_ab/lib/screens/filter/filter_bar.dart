@@ -1,8 +1,8 @@
-// FilterBar is a statefull widget that is used to display the filter bar
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
+import 'package:shared/models/color_keys.dart';
+import 'package:app_ab/config/colors.dart';
 
 import 'option_button.dart';
 import 'options.dart';
@@ -46,9 +46,7 @@ class FilterBarState extends State<FilterBar> {
 
   Widget _buildOpen() {
     return Container(
-      color: const Color(0xFF001A40),
-      // padding: const EdgeInsets.all(8),
-      // color: Colors.red,
+      color: AppColors.colors[ColorKeys.background],
       width: double.infinity,
       height: 130,
       child: FilterOptions(
@@ -89,7 +87,7 @@ class FilterBarState extends State<FilterBar> {
     }
 
     return Container(
-      color: Colors.white,
+      color: AppColors.colors[ColorKeys.background],
       padding: const EdgeInsets.all(8),
       width: double.infinity,
       height: 46,

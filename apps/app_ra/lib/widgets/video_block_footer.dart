@@ -5,6 +5,7 @@ import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../screens/layout_home_screen/channel_area_banner.dart';
+import 'button.dart';
 
 enum ButtonType { primary, secondary }
 
@@ -86,26 +87,26 @@ class VideoBlockFooter extends StatelessWidget {
           children: [
             if (block.isChange == true)
               Expanded(
-                child: MyButton(
+                child: Button(
                   text: '換一批',
-                  type: ButtonType.secondary,
+                  type: 'primary',
                   // icon: GlowingIcon(
                   //   color: AppColors.colors[ColorKeys.textPrimary]!,
                   //   size: 20,
                   //   iconData: Icons.refresh,
                   // ),
-                  onTap: () {
+                  onPressed: () {
                     updateBlock();
                   },
                 ),
               ),
             if (block.isCheckMore == true) ...[
-              const SizedBox(width: 8),
+              if (block.isChange == true) const SizedBox(width: 8),
               Expanded(
-                child: MyButton(
+                child: Button(
                   text: '進入櫥窗',
-                  type: ButtonType.primary,
-                  onTap: () {
+                  type: 'secondary',
+                  onPressed: () {
                     if (film == 1) {
                       MyRouteDelegate.of(context).push(
                         AppRoutes.videoByBlock,

@@ -140,6 +140,7 @@ class SliverBlockWidget extends StatelessWidget {
                         displayViewTimes: film == 1,
                         displayCoverVertical: film == 2,
                         videoCollectTimes: vods[index * 2].videoCollectTimes!,
+                        displayVideoCollectTimes: false,
                       ),
                     ),
                     const SizedBox(
@@ -162,6 +163,7 @@ class SliverBlockWidget extends StatelessWidget {
                               displayVideoTimes: film == 1,
                               displayViewTimes: film == 1,
                               displayCoverVertical: film == 2,
+                              displayVideoCollectTimes: false,
                               videoCollectTimes:
                                   vods[index * 2 + 1].videoCollectTimes!,
                             ),

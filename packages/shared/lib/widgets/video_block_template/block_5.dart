@@ -33,7 +33,7 @@ class Block5Widget extends StatelessWidget {
           children: [
             SizedBox(
               height:
-                  (MediaQuery.of(context).size.width - 16) / 2.5 / 16 * 9 + 40,
+                  (MediaQuery.of(context).size.width - 16) / 2.5 / 16 * 9 + 42,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -48,7 +48,11 @@ class Block5Widget extends StatelessWidget {
                 ),
               ),
             ),
-            buildFooter ?? const SizedBox.shrink(),
+            if (buildFooter != null)
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: buildFooter,
+              )
           ],
         ),
       ),

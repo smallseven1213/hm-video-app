@@ -13,7 +13,7 @@ import '../widgets/list_page_panel.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 
-const tabs = ['長視頻', '短視頻', '演員'];
+const tabs = ['長片', '短片', '演員'];
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -95,7 +95,11 @@ class FavoritesPageState extends State<FavoritesPage>
                 },
                 child: Text(
                   listEditorController.isEditing.value ? '取消' : '編輯',
-                  style: const TextStyle(color: Color(0xffFDDCEF)),
+                  style: const TextStyle(
+                    color: Color(0xffFDDCEF),
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
                 )))
           ],
           bottom: RATabBar(tabs: tabs, controller: _tabController),

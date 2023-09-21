@@ -36,6 +36,7 @@ enum ColorKeys {
   tabBarTextColor,
   tabBarTextActiveColor,
   textSearch,
+  searchBgColor,
   jingangBorder,
   noticeBg,
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
+import 'package:shared/modules/short_video/short_video_consumer.dart';
+import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../screens/video/video_player_area/enums.dart';
 import '../actor_avatar.dart';
 import '../short/short_card_info_tag.dart';
 
@@ -28,6 +31,7 @@ class ShortCardInfo extends StatelessWidget {
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
             width: MediaQuery.of(context).size.width,
+            color: Colors.black.withOpacity(0.5),
             padding:
                 const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
             child: Column(
@@ -62,26 +66,24 @@ class ShortCardInfo extends StatelessWidget {
                             : const SizedBox(),
                         Text(
                             '${displayActorAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
-                            style: TextStyle(
-                              fontSize: displayActorAvatar == true ? 13 : 15,
-                              color: Colors.white,
-                            )),
+                            style: const TextStyle(
+                                fontSize: 16,
+                                color: Color(0xFFFDDCEF),
+                                fontWeight: FontWeight.bold)),
                         const SizedBox(height: 8),
                       ],
                     ),
                   )
                 ],
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text(
-                    title,
-                    style: const TextStyle(
-                      fontSize: 15,
+                Text(
+                  title,
+                  style: const TextStyle(
+                      fontSize: 12,
                       color: Colors.white,
-                    ),
-                  ),
+                      fontWeight: FontWeight.bold),
                 ),
-                if (data.tag.isNotEmpty)
+                const SizedBox(height: 10),
+                if (data.tag.isNotEmpty) ...[
                   Wrap(
                     direction: Axis.horizontal,
                     spacing: 4,
@@ -93,8 +95,14 @@ class ShortCardInfo extends StatelessWidget {
                                   .videoPlayerController
                                   ?.pause();
                               await MyRouteDelegate.of(context).push(
-                                  AppRoutes.supplierTag,
-                                  args: {'tagId': e.id, 'tagName': e.name});
+                                AppRoutes.tag,
+                                args: {
+                                  'id': e.id,
+                                  'title': e.name,
+                                  'defaultTabIndex': 1
+                                },
+                                removeSamePath: true,
+                              );
                               videoPlayerInfo.observableVideoPlayerController
                                   .videoPlayerController
                                   ?.play();
@@ -102,6 +110,33 @@ class ShortCardInfo extends StatelessWidget {
                             child: ShortCardInfoTag(name: '#${e.name}')))
                         .toList(),
                   ),
+                ],
+                ShortVideoConsumer(
+                  vodId: data.id,
+                  tag: tag,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      UserInfoConsumer(child: (info, isVIP, isGuest) {
+                    if (!isVIP && video!.chargeType == ChargeType.vip.index) {
+                      return InkWell(
+                        onTap: () {
+                          MyRouteDelegate.of(context).push(AppRoutes.vip);
+                        },
+                        child: const Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Text('開通 VIP 無限看片',
+                                style: TextStyle(
+                                    color: Color(0xFFFDDCEF), fontSize: 16))),
+                      );
+                    }
+                    return const SizedBox.shrink();
+                  }),
+                ),
+                const SizedBox(height: 10),
               ],
             ),
           );

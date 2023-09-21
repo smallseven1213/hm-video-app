@@ -71,7 +71,7 @@ class IDCard extends StatelessWidget {
         height: 350,
         padding: const EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: const Color(0xFF273262),
+          color: const Color(0xFF030923),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: const Color(0xFFFDDCEF),
@@ -187,7 +187,6 @@ class IDCardContentState extends State<IDCardContent> {
               borderColor: Colors.white,
               textColor: Colors.white,
               text: '請截圖保存',
-              type: 'secondary',
               onPressed: _captureAndSaveScreenshot,
             ),
           ),

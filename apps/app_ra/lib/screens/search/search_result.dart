@@ -58,8 +58,8 @@ class SearchResultPageState extends State<SearchResultPage>
         RATabBar(
           controller: _tabController,
           tabs: const [
-            '長視頻',
-            '短視頻',
+            '長片',
+            '短片',
           ],
         ),
         // SliverVodGrid

@@ -8,8 +8,8 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
-
 import '../short/fullscreen_controls.dart';
+import 'purchase_promotion.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
@@ -72,8 +72,6 @@ class ShortCardState extends State<ShortCard> {
                 videoPlayerInfo: videoPlayerInfo,
                 toggleFullScreen: widget.toggleFullScreen,
               ),
-              // error
-
               if (videoPlayerInfo
                       .observableVideoPlayerController.videoAction.value ==
                   'error')
@@ -178,7 +176,41 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              // const FloatPageBackButton()
+              ShortVideoConsumer(
+                  vodId: widget.id,
+                  tag: widget.tag,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      video?.isAvailable == false &&
+                              videoPlayerInfo.videoAction == 'end'
+                          ? Positioned.fill(
+                              top: 0,
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                color: Colors.black.withOpacity(0.3),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    PurchasePromotion(
+                                      tag: widget.tag,
+                                      buyPoints: video!.buyPoint.toString(),
+                                      timeLength: video.timeLength ?? 0,
+                                      chargeType: video.chargeType ?? 0,
+                                      videoId: video.id,
+                                      videoPlayerInfo: videoPlayerInfo,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink()),
             ],
           ),
         );

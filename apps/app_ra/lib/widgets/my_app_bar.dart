@@ -53,7 +53,10 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           Text(
             title!,
             style: TextStyle(
-                fontSize: 15, color: AppColors.colors[ColorKeys.textPrimary]),
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.colors[ColorKeys.textPrimary],
+            ),
           ),
       bottom: bottom,
       actions: actions, // 將actions添加到AppBar

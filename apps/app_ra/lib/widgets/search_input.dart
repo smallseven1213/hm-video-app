@@ -85,29 +85,27 @@ class SearchInputState extends State<SearchInput> {
                 borderSide: BorderSide.none,
               ),
               hintText: widget.placeHolder,
-              hintStyle: const TextStyle(color: Colors.white),
+              hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
               fillColor: AppColors.colors[ColorKeys.background]!,
-              // suffixIcon: GestureDetector(
-              //   onTap: () {
-              //     if (widget.onSearchButtonClick != null) {
-              //       widget.onSearchButtonClick!(_controller!.text);
-              //     }
-              //   },
-              //   child: const SizedBox(
-              //     width: 17,
-              //     height: 17,
-              //     child: Center(
-              //       child: SizedBox(
-              //         width: 17,
-              //         height: 17,
-              //         child: Image(
-              //           image: AssetImage('assets/images/search_button.png'),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              suffixIcon: GestureDetector(
+                onTap: () {
+                  if (widget.onSearchButtonClick != null) {
+                    widget.onSearchButtonClick!(_controller!.text);
+                  }
+                },
+                child: const SizedBox(
+                  width: 17,
+                  height: 17,
+                  child: Center(
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 17,
+                    ),
+                  ),
+                ),
+              ),
             ),
             style: const TextStyle(color: Colors.white, fontSize: 14),
             autofocus: widget.autoFocus,
