@@ -56,7 +56,7 @@ class ChannelSearchBar extends StatelessWidget {
                 onInputClick: () {
                   MyRouteDelegate.of(context).push(AppRoutes.search, args: {
                     'inputDefaultValue': randomTitle,
-                    'autoSearch': false
+                    'autoSearch': true
                   });
                 },
               );

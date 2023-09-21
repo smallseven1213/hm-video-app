@@ -46,8 +46,12 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Theme.of(context).primaryColor,
+          width: 2,
+        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.25),
@@ -72,18 +76,22 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          RotationTransition(
-            turns: _animation,
-            child: const Image(
-              image: AssetImage('assets/images/loading.png'),
-              width: 30.0,
-              height: 30.0,
+          Transform.scale(
+            scale: .7,
+            child: CircularProgressIndicator(
+              strokeWidth: 3,
+              valueColor: _animationController.drive(
+                ColorTween(
+                  begin: Theme.of(context).primaryColor.withOpacity(0.5),
+                  end: Theme.of(context).primaryColor,
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 10),
           DefaultTextStyle(
-            style: const TextStyle(
-              color: Color(0xFF00B0D4),
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
               fontSize: 10,
             ),
             child: Text(widget.loadingText ?? ''),

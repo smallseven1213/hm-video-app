@@ -18,12 +18,10 @@ final logger = Logger();
 
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
-  final Vod videoBase;
   final String videoUrl;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
-    required this.videoBase,
     required this.videoUrl,
   }) : super(key: key);
 
@@ -87,12 +85,12 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                 padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
                 child: VideoActions(
                   videoDetail: Vod(
-                    widget.videoBase.id,
-                    widget.videoBase.title,
-                    coverHorizontal: widget.videoBase.coverHorizontal!,
-                    coverVertical: widget.videoBase.coverVertical!,
-                    timeLength: widget.videoBase.timeLength!,
-                    tags: widget.videoBase.tags!,
+                    widget.videoDetail.id,
+                    widget.videoDetail.title,
+                    coverHorizontal: widget.videoDetail.coverHorizontal!,
+                    coverVertical: widget.videoDetail.coverVertical!,
+                    timeLength: widget.videoDetail.timeLength!,
+                    tags: widget.videoDetail.tags!,
                     videoViewTimes: widget.videoDetail.videoViewTimes!,
                   ),
                 ),

@@ -182,7 +182,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+            padding: const EdgeInsets.only(top: 5),
             child: Column(
               children: [
                 // 標題
@@ -206,7 +206,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: SizedBox(
-                          height: 20,
+                          height: 18,
                           child: Wrap(
                             spacing: 5.0,
                             alignment: WrapAlignment.center,

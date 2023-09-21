@@ -137,7 +137,6 @@ class VideoState extends State<Video> {
                 Expanded(
                   child: NestedTabBarView(
                     videoUrl: videoUrl,
-                    videoBase: video,
                     videoDetail: videoDetail,
                   ),
                 )
