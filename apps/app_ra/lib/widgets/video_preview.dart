@@ -95,7 +95,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     Function()? onTap,
     bool? hasTapEvent = true,
     Function(int id)? onOverrideRedirectTap,
-    bool? displayVideoCollectTimes = true,
+    bool? displayVideoCollectTimes = false,
     bool? displayVideoTimes = true,
     bool? displayViewTimes = true,
     bool? displaySupplier = true,
