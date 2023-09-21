@@ -50,10 +50,7 @@ class VideoDetailController extends GetxController {
 
   Future<void> fetchAllData(int videoId) async {
     try {
-      await Future.wait([
-        fetchVideoUrl(videoId),
-        fetchVideoDetail(videoId),
-      ]);
+      fetchVideoDetail(videoId);
       isLoading.value = false;
     } catch (error) {
       logger.i(error);
@@ -73,7 +70,14 @@ class VideoDetailController extends GetxController {
   }
 
   Future<void> fetchVideoDetail(int videoId) async {
-    Vod videoDetailFromApi = await vodApi.getVodDetail(videoId);
-    videoDetail.value = videoDetailFromApi;
+    try {
+      Vod videoDetailFromApi = await vodApi.getVodDetail(videoId);
+      videoDetail.value = videoDetailFromApi;
+      videoUrl.value = getVideoUrl(videoDetailFromApi.videoUrl)!;
+      _videoUrlReady.complete();
+    } catch (error) {
+      logger.i(error);
+      _videoUrlReady.completeError(error);
+    }
   }
 }

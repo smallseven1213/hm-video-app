@@ -5,7 +5,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart' as rx;
-import 'package:uuid/uuid.dart' as uuid;
 import '../../controllers/play_record_controller.dart';
 import '../../controllers/video_detail_controller.dart';
 import '../../enums/play_record_type.dart';
@@ -20,7 +19,6 @@ class VideoScreenProvider extends StatefulWidget {
   final String? name;
   final Widget Function({
     required String? videoUrl,
-    required Vod? video,
     required Vod? videoDetail,
   }) child;
 
@@ -66,36 +64,33 @@ class VideoScreenProviderState extends State<VideoScreenProvider> {
     isReadySubject = rx.BehaviorSubject<bool>.seeded(false);
 
     // 監聽三個值的變化
-    rx.Rx.combineLatest3<String, Vod?, Vod?, bool>(
+    rx.Rx.combineLatest2<String, Vod?, bool>(
       controller.videoUrl.stream,
-      controller.video.stream,
       controller.videoDetail.stream,
-      (videoUrl, video, videoDetail) =>
-          videoUrl.isNotEmpty && video != null && videoDetail != null,
+      (videoUrl, videoDetail) => videoUrl.isNotEmpty && videoDetail != null,
     ).listen((isReady) {
       // 一旦三個值都有值，則執行相應的操作
       if (isReady) {
         isReadySubject.add(isReady);
         var videoUrl = controller.videoUrl.value;
-        var video = controller.video.value;
         var videoDetail = controller.videoDetail.value;
 
         if (mounted) {
           setState(() {
             stateVideoUrl = controller.videoUrl.value;
-            stateVideo = controller.video.value;
+            stateVideo = controller.videoDetail.value;
             stateVideoDetail = controller.videoDetail.value;
           });
         }
 
-        if (videoDetail != null && video != null) {
+        if (videoDetail != null) {
           var playRecord = Vod(
-            video.id,
-            video.title,
-            coverHorizontal: video.coverHorizontal!,
-            coverVertical: video.coverVertical!,
-            timeLength: video.timeLength!,
-            tags: video.tags!,
+            videoDetail.id,
+            videoDetail.title,
+            coverHorizontal: videoDetail.coverHorizontal!,
+            coverVertical: videoDetail.coverVertical!,
+            timeLength: videoDetail.timeLength!,
+            tags: videoDetail.tags!,
             videoViewTimes: videoDetail.videoViewTimes!,
           );
           Get.find<PlayRecordController>(tag: PlayRecordType.video.toString())
@@ -117,7 +112,6 @@ class VideoScreenProviderState extends State<VideoScreenProvider> {
   Widget build(BuildContext context) {
     return widget.child(
       videoUrl: stateVideoUrl,
-      video: stateVideo,
       videoDetail: stateVideoDetail,
     );
   }
