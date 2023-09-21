@@ -32,8 +32,8 @@ class ListPagePanelWidget extends StatelessWidget {
         right: 0,
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 25),
-          decoration: const BoxDecoration(
-            color: Color(0xfff9f9f9),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.5),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
