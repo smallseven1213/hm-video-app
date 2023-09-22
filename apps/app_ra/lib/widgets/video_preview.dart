@@ -230,9 +230,9 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                                         );
                                       } else if (film == 2) {
                                         MyRouteDelegate.of(context)
-                                            .push(AppRoutes.supplierTag, args: {
-                                          'tagId': tag.id,
-                                          'tagName': tag.name,
+                                            .push(AppRoutes.tag, args: {
+                                          'id': tag.id,
+                                          'title': tag.name,
                                           'defaultTabIndex': 1,
                                         });
                                       } else if (film == 3) {}
