@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -7,6 +9,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../screens/video/video_player_area/enums.dart';
+import '../../utils/purchase.dart';
 import '../actor_avatar.dart';
 import '../short/short_card_info_tag.dart';
 
@@ -110,6 +113,7 @@ class ShortCardInfo extends StatelessWidget {
                             child: ShortCardInfoTag(name: '#${e.name}')))
                         .toList(),
                   ),
+                  const SizedBox(height: 10)
                 ],
                 ShortVideoConsumer(
                     vodId: data.id,
@@ -120,21 +124,45 @@ class ShortCardInfo extends StatelessWidget {
                       required videoDetail,
                       required videoUrl,
                     }) =>
-                        !video!.isAvailable &&
-                                video.chargeType == ChargeType.vip.index
-                            ? InkWell(
-                                onTap: () {
-                                  MyRouteDelegate.of(context)
-                                      .push(AppRoutes.vip);
-                                },
-                                child: const Padding(
-                                    padding: EdgeInsets.only(top: 10),
-                                    child: Text('開通 VIP 無限看片',
+                        !video!.isAvailable
+                            ? video.chargeType == ChargeType.vip.index
+                                ? InkWell(
+                                    onTap: () => MyRouteDelegate.of(context)
+                                        .push(AppRoutes.vip),
+                                    child: const Text('開通 VIP 無限看片',
                                         style: TextStyle(
                                             color: Color(0xFFFDDCEF),
-                                            fontSize: 16))),
-                              )
-                            : const SizedBox.shrink()),
+                                            fontSize: 16)),
+                                  )
+                                : VideoPlayerConsumer(
+                                    tag: tag,
+                                    child: (VideoPlayerInfo videoPlayerInfo) {
+                                      return InkWell(
+                                        onTap: () => purchase(
+                                          context,
+                                          id: video.id,
+                                          onSuccess: () {
+                                            final ShortVideoDetailController
+                                                shortVideoDetailController =
+                                                Get.find<
+                                                        ShortVideoDetailController>(
+                                                    tag: tag);
+                                            shortVideoDetailController
+                                                .mutateAll();
+                                            videoPlayerInfo
+                                                .videoPlayerController
+                                                ?.play();
+                                          },
+                                        ),
+                                        child: Text(
+                                          '${video.buyPoint}金幣解鎖',
+                                          style: const TextStyle(
+                                              color: Color(0xFFFDDCEF),
+                                              fontSize: 16),
+                                        ),
+                                      );
+                                    })
+                            : const SizedBox()),
                 const SizedBox(height: 10),
               ],
             ),
