@@ -95,7 +95,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     Function()? onTap,
     bool? hasTapEvent = true,
     Function(int id)? onOverrideRedirectTap,
-    bool? displayVideoCollectTimes = true,
+    bool? displayVideoCollectTimes = false,
     bool? displayVideoTimes = true,
     bool? displayViewTimes = true,
     bool? displaySupplier = true,
@@ -182,7 +182,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
             ),
           ),
           Container(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+            padding: const EdgeInsets.only(top: 5),
             child: Column(
               children: [
                 // 標題
@@ -205,9 +205,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                       padding: const EdgeInsets.only(top: 5),
                       child: Align(
                         alignment: Alignment.centerLeft,
-                        child: Container(
-                          height: 20,
-                          clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
+                        child: SizedBox(
+                          height: 18,
                           child: Wrap(
                             spacing: 5.0,
                             alignment: WrapAlignment.center,

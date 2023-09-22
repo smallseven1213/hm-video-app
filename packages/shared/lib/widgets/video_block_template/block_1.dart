@@ -11,8 +11,10 @@ List<List<Vod>> organizeRowData(List<Vod> videos, Blocks block) {
   List<List<Vod>> result = [];
   int blockQuantity = block.quantity ?? 0;
   int blockLength = block.isAreaAds == true ? 6 : 5;
+  int videoWithoutAdLength =
+      videos.where((video) => video.dataType == 1).toList().length;
   int videoLength =
-      videos.length > blockQuantity ? blockQuantity : videos.length;
+      videoWithoutAdLength > blockQuantity ? blockQuantity : videos.length;
 
   try {
     for (int i = 0; i < videoLength;) {
@@ -69,34 +71,44 @@ class Block1Widget extends StatelessWidget {
     // bool containsAreaAd = videos.any((item) => item.dataType == 3);
     List<List<Vod>> result = organizeRowData(videos, block);
 
+    if (block.name == '氣質女神-辛尤里') {
+      print('@@@ :result ${result}');
+    }
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return Padding(
+          return Container(
             padding:
                 const EdgeInsets.only(top: 8, left: 8, right: 8, bottom: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  child: index % 4 == 0 ||
-                          (block.isAreaAds == true && index % 4 == 3)
-                      ? result[index][0].dataType == VideoType.areaAd.index
-                          ? buildBanner(result[index][0])
-                          : buildVideoPreview(result[index][0])
-                      : VideoBlockGridViewRow(
-                          videoData: result[index],
-                          imageRatio: BlockImageRatio.block1.ratio,
-                          isEmbeddedAds: block.isEmbeddedAds ?? false,
-                          displayVideoTimes: film == 1,
-                          displayViewTimes: film == 1,
-                          displayVideoCollectTimes: film == 2,
-                          buildVideoPreview: buildVideoPreview,
-                        ),
+                  child: (() {
+                    if (result[index][0].dataType == VideoType.areaAd.index) {
+                      return buildBanner(result[index][0]);
+                    }
+                    if (block.isAreaAds == false && index % 3 == 0) {
+                      return buildVideoPreview(result[index][0]);
+                    }
+                    if (block.isAreaAds == true &&
+                        (index % 4 == 0 || index % 4 == 3)) {
+                      return buildVideoPreview(result[index][0]);
+                    }
+                    return VideoBlockGridViewRow(
+                      videoData: result[index],
+                      imageRatio: BlockImageRatio.block1.ratio,
+                      isEmbeddedAds: block.isEmbeddedAds ?? false,
+                      displayVideoTimes: film == 1,
+                      displayViewTimes: film == 1,
+                      displayVideoCollectTimes: film == 2,
+                      buildVideoPreview: buildVideoPreview,
+                    );
+                  }()),
                 ),
                 if (index == result.length - 1) ...[
                   const SizedBox(height: 16),
-                  buildFooter ?? Container(),
+                  buildFooter ?? const SizedBox(),
                 ]
               ],
             ),

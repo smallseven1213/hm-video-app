@@ -54,7 +54,7 @@ class StaticSearchInput extends StatelessWidget {
                     color: Colors.white,
                     size: 17,
                   ),
-                  onPressed: onInputClick,
+                  onPressed: onSearchButtonClick,
                 ),
               ),
             ],

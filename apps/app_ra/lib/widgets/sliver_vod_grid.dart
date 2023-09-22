@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 import 'no_data.dart';
 import 'sliver_video_preview_skelton_list.dart';
@@ -34,7 +33,7 @@ class SliverVodGrid extends StatefulWidget {
     this.headerExtends,
     this.onScrollEnd,
     this.displayCoverVertical = false,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoCollectTimes = false,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.customScrollController,

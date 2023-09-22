@@ -92,6 +92,11 @@ class _PaymentListState extends State<PaymentList> {
       child: (payments) {
         return Container(
             padding: const EdgeInsets.all(16),
+            height: payments.isEmpty
+                ? 250
+                : payments.length > 5
+                    ? 420
+                    : payments.length * 80,
             child: Stack(
               children: [
                 Column(
@@ -107,43 +112,55 @@ class _PaymentListState extends State<PaymentList> {
                             const TextStyle(fontSize: 12, color: Colors.white),
                       ),
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: payments.length,
-                        itemBuilder: (context, index) {
-                          final payment = payments[index];
-                          final bool isSelected = payment.id == selectedId;
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedId = payment.id;
-                                selectedType = payment.type;
-                              });
-                            },
-                            child: Container(
-                              padding: const EdgeInsets.all(10),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: isSelected
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.white),
-                                borderRadius: BorderRadius.circular(8),
-                                color:
-                                    isSelected ? const Color(0xFF273262) : null,
-                              ),
-                              margin: const EdgeInsets.only(bottom: 8),
+                    payments.isEmpty
+                        ? const Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(top: 20),
                               child: Text(
-                                payment.type.toString(),
-                                style: TextStyle(
-                                    color: isSelected
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.white),
+                                '無可用支付方式',
+                                style: TextStyle(color: Colors.grey),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                    ),
+                          )
+                        : Expanded(
+                            child: ListView.builder(
+                              itemCount: payments.length,
+                              itemBuilder: (context, index) {
+                                final payment = payments[index];
+                                final bool isSelected =
+                                    payment.id == selectedId;
+                                return GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedId = payment.id;
+                                      selectedType = payment.type;
+                                    });
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          color: isSelected
+                                              ? Theme.of(context).primaryColor
+                                              : Colors.white),
+                                      borderRadius: BorderRadius.circular(8),
+                                      color: isSelected
+                                          ? const Color(0xFF273262)
+                                          : null,
+                                    ),
+                                    margin: const EdgeInsets.only(bottom: 8),
+                                    child: Text(
+                                      payment.type.toString(),
+                                      style: TextStyle(
+                                          color: isSelected
+                                              ? Theme.of(context).primaryColor
+                                              : Colors.white),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

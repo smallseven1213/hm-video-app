@@ -33,7 +33,7 @@ class Block5Widget extends StatelessWidget {
           children: [
             SizedBox(
               height:
-                  (MediaQuery.of(context).size.width - 16) / 2.5 / 16 * 9 + 49,
+                  (MediaQuery.of(context).size.width - 16) / 2.5 / 16 * 9 + 42,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(

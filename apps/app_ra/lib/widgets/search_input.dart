@@ -85,7 +85,7 @@ class SearchInputState extends State<SearchInput> {
                 borderSide: BorderSide.none,
               ),
               hintText: widget.placeHolder,
-              hintStyle: const TextStyle(color: Colors.white),
+              hintStyle: const TextStyle(color: Colors.grey),
               filled: true,
               fillColor: AppColors.colors[ColorKeys.background]!,
               suffixIcon: GestureDetector(
