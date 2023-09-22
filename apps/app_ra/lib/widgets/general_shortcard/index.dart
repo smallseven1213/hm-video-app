@@ -113,7 +113,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                                   title: widget.title,
                                 )
                               : const SizedBox.shrink(),
-                          const SizedBox(height: 16),
                           ShortBottomArea(
                             tag: widget.tag,
                             shortData: widget.shortData,
