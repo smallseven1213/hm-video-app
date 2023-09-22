@@ -66,7 +66,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get maxExtent =>
-      200; // You can adjust this value for the initial height of the ActorCard
+      175; // You can adjust this value for the initial height of the ActorCard
 
   @override
   Widget build(
@@ -96,48 +96,48 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
         supplier.description != null && supplier.description!.isNotEmpty;
 
     return Container(
-      color: const Color(0xFF001a40).withOpacity(1 - opacity),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Stack(
         children: [
-          const Positioned.fill(
-            child: Image(
-              image: AssetImage('assets/images/supplier_card_bg.webp'),
-              fit: BoxFit.fill,
-            ),
-          ),
-          if (supplier.coverVertical != null)
-            Opacity(
-              opacity: opacity,
-              child: SidImage(
-                key: ValueKey(supplier.coverVertical),
-                sid: supplier.coverVertical!,
-                width: 500,
-                height: 500,
-                fit: BoxFit.cover,
-              ),
-            ),
-          if (opacity > 0)
-            Container(
-              height: 200,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(67, 120, 220, 0.65),
-                    Color(0xFF001C46),
-                  ],
-                  stops: [
-                    -0.06,
-                    1.0,
-                  ],
-                ),
-              ),
-            ),
+          // const Positioned.fill(
+          //   child: Image(
+          //     image: AssetImage('assets/images/supplier_card_bg.webp'),
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
+          // if (supplier.coverVertical != null)
+          //   Opacity(
+          //     opacity: opacity,
+          //     child: SidImage(
+          //       key: ValueKey(supplier.coverVertical),
+          //       sid: supplier.coverVertical!,
+          //       width: 500,
+          //       height: 500,
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // if (opacity > 0)
+          //   Container(
+          //     height: 200,
+          //     width: double.infinity,
+          //     decoration: const BoxDecoration(
+          //       gradient: LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Color.fromRGBO(67, 120, 220, 0.65),
+          //           Color(0xFF001C46),
+          //         ],
+          //         stops: [
+          //           -0.06,
+          //           1.0,
+          //         ],
+          //       ),
+          //     ),
+          //   ),
           Positioned(
             top: lerpDouble(
-                100,
+                60,
                 ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(17, leftPadding, percentage)!,
@@ -149,7 +149,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                108,
+                75,
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
@@ -162,7 +162,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-              top: 135,
+              top: 100,
               left: 90,
               child: SizedBox(
                   width: screenWidth - 100,
@@ -276,7 +276,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                   ))),
           Positioned(
             top: lerpDouble(
-                114, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+                80, (kToolbarHeight - 12) / 2 + fontSize, percentage),
             right: 8,
             child: Obx(() {
               var isLiked = userFavoritesSupplierController.suppliers

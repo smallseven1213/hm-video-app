@@ -28,7 +28,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
 
   @override
   double get maxExtent =>
-      200; // You can adjust this value for the initial height of the ActorCard
+      150; // You can adjust this value for the initial height of the ActorCard
 
   @override
   Widget build(
@@ -54,47 +54,47 @@ class ActorCard extends SliverPersistentHeaderDelegate {
     final leftPadding = (screenWidth - imageSize - textWidth - 8) / 2;
 
     return Container(
-      color: const Color(0xFF001a40).withOpacity(1 - opacity),
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: Stack(
         children: [
-          const Positioned.fill(
-            child: Image(
-              image: AssetImage('assets/images/supplier_card_bg.webp'),
-              fit: BoxFit.fill,
-            ),
-          ),
-          Opacity(
-            opacity: opacity,
-            child: SidImage(
-              key: ValueKey(actor.coverVertical),
-              sid: actor.coverVertical!,
-              width: 500,
-              height: 500,
-              fit: BoxFit.cover,
-            ),
-          ),
-          if (opacity > 0)
-            Container(
-              height: 200,
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Color.fromRGBO(67, 120, 220, 0.65),
-                    Color(0xFF001C46),
-                  ],
-                  stops: [
-                    -0.06,
-                    1.0,
-                  ],
-                ),
-              ),
-            ),
+          // const Positioned.fill(
+          //   child: Image(
+          //     image: AssetImage('assets/images/supplier_card_bg.webp'),
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
+          // Opacity(
+          //   opacity: opacity,
+          //   child: SidImage(
+          //     key: ValueKey(actor.coverVertical),
+          //     sid: actor.coverVertical!,
+          //     width: 500,
+          //     height: 500,
+          //     fit: BoxFit.cover,
+          //   ),
+          // ),
+          // if (opacity > 0)
+          //   Container(
+          //     height: 200,
+          //     width: double.infinity,
+          //     decoration: const BoxDecoration(
+          //       gradient: LinearGradient(
+          //         begin: Alignment.topCenter,
+          //         end: Alignment.bottomCenter,
+          //         colors: [
+          //           Color.fromRGBO(67, 120, 220, 0.65),
+          //           Color(0xFF001C46),
+          //         ],
+          //         stops: [
+          //           -0.06,
+          //           1.0,
+          //         ],
+          //       ),
+          //     ),
+          //   ),
           Positioned(
             top: lerpDouble(
-                100,
+                60,
                 ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(10, leftPadding, percentage)!,
@@ -106,7 +106,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                105,
+                75,
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(100, leftPadding + imageSize + 8, percentage)!,
@@ -135,7 +135,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                130, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+                100, (kToolbarHeight - 12) / 2 + fontSize, percentage),
             left: 100,
             child: Opacity(
               opacity: opacity,
@@ -170,7 +170,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                105, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+                85, (kToolbarHeight - 12) / 2 + fontSize, percentage),
             right: 8,
             child: Opacity(
                 opacity: opacity,
@@ -226,7 +226,7 @@ class UserLike extends StatelessWidget {
             Icon(
               iconData,
               size: 20,
-              color: const Color(0xFF21AFFF),
+              color: Theme.of(context).primaryColor,
             ),
             const SizedBox(width: 6),
             Text(
