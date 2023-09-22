@@ -126,7 +126,7 @@ deploy-gs-job:      # This job runs in the deploy stage.
       - develop
   script:
     - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME} -n video-dev
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/gs/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/gs/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
   
 deploy-tt-job:      # This job runs in the deploy stage.
@@ -150,7 +150,7 @@ deploy-51ss-job:      # This job runs in the deploy stage.
       - develop
   script:
     - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-51ss" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss -n video-dev
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-51ss" -f /home/gitlab-runner/hm-helm/helm-charts/51ss/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/51ss/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
 
 deploy-ra-job:      # This job runs in the deploy stage.
@@ -176,7 +176,7 @@ deploy-ab-job:      # This job runs in the deploy stage.
       - develop
   script:
     - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ab" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ab/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ab -n video-dev
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ab" -f /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
 
 deploy-sv-job:      # This job runs in the deploy stage.
@@ -205,19 +205,19 @@ build-prod-job:
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-$PROJECT:${CI_COMMIT_TAG}
 
-build-gs-prod-job: 
-  stage: build
-  tags: 
-    - gitlab-shared-runner
-  only: 
-    refs: 
-      - tags
-    variables: 
-      - $CI_COMMIT_REF_NAME =~ /gs$/
-  script: 
-    - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}
+#build-gs-prod-job: 
+#  stage: build
+#  tags: 
+#    - gitlab-shared-runner
+#  only: 
+#    refs: 
+#      - tags
+#    variables: 
+#      - $CI_COMMIT_REF_NAME =~ /gs$/
+#  script: 
+#    - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
+#    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+#    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}
 
 deploy-gs-prod-job: 
   stage: deploy
@@ -269,5 +269,5 @@ deploy-ab-prod-job:
     variables: 
       - $CI_COMMIT_REF_NAME =~ /ab$/
   script: 
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/ab --install ${CI_PROJECT_NAME}-ab --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-ab -n prod
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/ab --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh ab prod ${CI_PROJECT_NAME}-ab ${CI_COMMIT_TAG}
