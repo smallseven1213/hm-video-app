@@ -93,40 +93,38 @@ class Coin extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                '試看結束，此影片需付費購買',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w700,
-                ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '試看結束，此影片需付費購買',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
               ),
-              Text(
-                '片長：${getTimeString(timeLength)}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
-                ),
+            ),
+            Text(
+              '片長：${getTimeString(timeLength)}',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
+                fontWeight: FontWeight.w500,
               ),
-              Text(
-                '價格：$buyPoints金幣',
-                style: Theme.of(context).textTheme.bodySmall,
+            ),
+            Text(
+              '價格：$buyPoints金幣',
+              style: Theme.of(context).textTheme.bodySmall,
+            ),
+            Text(
+              '您目前擁有的金幣：$userPoints金幣',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 12,
               ),
-              Text(
-                '您目前擁有的金幣：$userPoints金幣',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
         const SizedBox(height: 15),
         SizedBox(
