@@ -231,8 +231,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                                       } else if (film == 2) {
                                         MyRouteDelegate.of(context)
                                             .push(AppRoutes.tag, args: {
-                                          'tagId': tag.id,
-                                          'tagName': tag.name,
+                                          'id': tag.id,
+                                          'title': tag.name,
                                           'defaultTabIndex': 1,
                                         });
                                       } else if (film == 3) {}
