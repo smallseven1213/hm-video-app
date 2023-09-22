@@ -150,7 +150,7 @@ deploy-51ss-job:      # This job runs in the deploy stage.
       - develop
   script:
     - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-51ss" -f /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/stt/${CI_PROJECT_NAME}-51ss -n video-dev
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-51ss" -f /home/gitlab-runner/hm-helm/helm-charts/51ss/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/51ss/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
 
 deploy-ra-job:      # This job runs in the deploy stage.
@@ -176,7 +176,7 @@ deploy-ab-job:      # This job runs in the deploy stage.
       - develop
   script:
     - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ab" -f /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME}-ab/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME}-ab -n video-dev
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-ab" -f /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
 
 deploy-sv-job:      # This job runs in the deploy stage.
