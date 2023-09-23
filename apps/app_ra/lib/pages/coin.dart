@@ -43,6 +43,7 @@ class CoinPageState extends State<CoinPage>
   @override
   Widget build(BuildContext context) {
     return UserSettingScaffold(
+      preventBackNavigation: false,
       onAccountProtectionShownH5: () {
         showConfirmDialog(
           context: context,
