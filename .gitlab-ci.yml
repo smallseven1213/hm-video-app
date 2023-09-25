@@ -243,7 +243,7 @@ deploy-sv-prod-job:
       - $CI_COMMIT_REF_NAME =~ /sv$/
   script: 
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/sv --install "${CI_PROJECT_NAME}" --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME} -n prod
-    #- /bin/bash /home/gitlab-runner/tg-notify.sh sv prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
+    - /bin/bash /home/gitlab-runner/tg-notify.sh sv prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
 
 build-ab-prod-job: 
   stage: build
