@@ -190,19 +190,12 @@ class NoticeDialogState extends State<NoticeDialog> {
             titlePadding: EdgeInsets.zero,
             title: null,
             contentPadding: EdgeInsets.zero,
-            content: Container(
+            content: SizedBox(
               width: 270,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      borderRadius:
-                          const BorderRadius.all(Radius.circular(10.0)),
-                      border: Border.all(
-                          color: Theme.of(context).primaryColor, width: 1),
-                    ),
+                  SizedBox(
                     child: AspectRatio(
                       aspectRatio: 9 / 12,
                       child: AdBanner(image: banner, fit: BoxFit.contain),
