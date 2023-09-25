@@ -9,12 +9,14 @@ class UserSettingScaffold extends StatefulWidget {
   final Function() onAccountProtectionShownH5;
   final Function() onAccountProtectionShown;
   final Widget child;
-  const UserSettingScaffold(
-      {Key? key,
-      required this.onAccountProtectionShown,
-      required this.onAccountProtectionShownH5,
-      required this.child})
-      : super(key: key);
+  final bool preventBackNavigation;
+  const UserSettingScaffold({
+    Key? key,
+    required this.onAccountProtectionShown,
+    required this.onAccountProtectionShownH5,
+    required this.child,
+    this.preventBackNavigation = true,
+  }) : super(key: key);
 
   @override
   UserSettingScaffoldState createState() => UserSettingScaffoldState();
@@ -50,9 +52,13 @@ class UserSettingScaffoldState extends State<UserSettingScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false, // HC: 煩死，勿動!!
-      child: widget.child,
-    );
+    if (widget.preventBackNavigation) {
+      return WillPopScope(
+        onWillPop: () async => false,
+        child: widget.child,
+      );
+    } else {
+      return widget.child;
+    }
   }
 }
