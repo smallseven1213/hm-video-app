@@ -36,7 +36,19 @@ class ShortCardInfo extends StatelessWidget {
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
             width: MediaQuery.of(context).size.width,
-            color: Colors.black.withOpacity(0.5),
+            // 做垂直漸層, 底部全透明，上面為Colors.black.withOpacity(0.5)
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.5),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+            // margin bottom 10
+            margin: const EdgeInsets.only(bottom: 5),
             padding:
                 const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
             child: Column(
