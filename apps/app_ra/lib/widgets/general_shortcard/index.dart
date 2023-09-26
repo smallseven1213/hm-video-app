@@ -63,7 +63,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.tag,
+            key: Key(widget.videoUrl),
+            tag: widget.videoUrl,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -78,8 +79,10 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             ),
             loadingWidget: const WaveLoading(),
             child: (isReady) => ShortCard(
+              key: Key(widget.tag),
               index: widget.index,
               tag: widget.tag,
+              videoUrl: widget.videoUrl,
               isActive: widget.isActive,
               id: widget.shortData.id,
               title: widget.shortData.title,
@@ -108,6 +111,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
+                                  videourl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
