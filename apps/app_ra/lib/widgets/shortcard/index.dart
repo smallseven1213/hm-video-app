@@ -13,6 +13,7 @@ import 'purchase_promotion.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
+  final String videoUrl;
   final int index;
   final int id;
   final String title;
@@ -24,6 +25,7 @@ class ShortCard extends StatefulWidget {
 
   const ShortCard({
     Key? key,
+    required this.videoUrl,
     required this.tag,
     required this.index,
     required this.id,
@@ -49,7 +51,7 @@ class ShortCardState extends State<ShortCard> {
     final screen = MediaQuery.of(context);
 
     return VideoPlayerConsumer(
-      tag: widget.tag,
+      tag: widget.videoUrl,
       child: (VideoPlayerInfo videoPlayerInfo) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();

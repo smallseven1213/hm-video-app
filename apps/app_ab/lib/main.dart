@@ -20,13 +20,14 @@ void main() async {
 
   runningMain(
     // [非必填]SentryDNS
-    'https://ede485f417b04ffe9d9632e2cdd2361b@sentry.hmtech.club/4',
+    'null',
     // [非必填]進入的第一個畫面
     allRoutes.keys.first,
     // [必填]DlJSON來源
     [
-      'https://dl.dlsv.net/$env/dl.json',
-      'https://dl.dlsv.app/$env/dl.json',
+      'https://dl.dlaabb.com/$env/dl.json',
+      'https://dl.dlaabb.info/$env/dl.json',
+      'https://dl.dlaabb.net/$env/dl.json',
     ],
     allRoutes,
     AppColors.colors,

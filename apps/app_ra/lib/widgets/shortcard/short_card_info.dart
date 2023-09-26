@@ -14,6 +14,7 @@ import '../actor_avatar.dart';
 import '../short/short_card_info_tag.dart';
 
 class ShortCardInfo extends StatelessWidget {
+  final String videourl;
   final ShortVideoDetail data;
   final String title;
   final String tag;
@@ -21,6 +22,7 @@ class ShortCardInfo extends StatelessWidget {
 
   const ShortCardInfo({
     Key? key,
+    required this.videourl,
     required this.data,
     required this.title,
     required this.tag,
@@ -30,11 +32,23 @@ class ShortCardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: tag,
+        tag: videourl,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
             width: MediaQuery.of(context).size.width,
-            color: Colors.black.withOpacity(0.5),
+            // 做垂直漸層, 底部全透明，上面為Colors.black.withOpacity(0.5)
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.black.withOpacity(0.5),
+                  Colors.transparent,
+                ],
+              ),
+            ),
+            // margin bottom 10
+            margin: const EdgeInsets.only(bottom: 5),
             padding:
                 const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
             child: Column(
@@ -115,6 +129,36 @@ class ShortCardInfo extends StatelessWidget {
                   ),
                   const SizedBox(height: 10)
                 ],
+                // ShortVideoConsumer(
+                //     vodId: data.id,
+                //     tag: tag,
+                //     child: ({
+                //       required isLoading,
+                //       required video,
+                //       required videoDetail,
+                //       required videoUrl,
+                //     }) =>
+                //         VideoPlayerConsumer(
+                //             tag: videoUrl ?? "",
+                //             child: (VideoPlayerInfo videoPlayerInfo) {
+                //               return InkWell(
+                //                 onTap: () {
+                //                   final ShortVideoDetailController
+                //                       shortVideoDetailController =
+                //                       Get.find<ShortVideoDetailController>(
+                //                           tag: tag);
+                //                   shortVideoDetailController.mutateAll();
+                //                   // videoPlayerInfo
+                //                   //     .videoPlayerController
+                //                   //     ?.play();
+                //                 },
+                //                 child: Text(
+                //                   '測試金幣解鎖',
+                //                   style: const TextStyle(
+                //                       color: Color(0xFFFDDCEF), fontSize: 16),
+                //                 ),
+                //               );
+                //             })),
                 ShortVideoConsumer(
                     vodId: data.id,
                     tag: tag,
@@ -135,7 +179,7 @@ class ShortCardInfo extends StatelessWidget {
                                             fontSize: 16)),
                                   )
                                 : VideoPlayerConsumer(
-                                    tag: tag,
+                                    tag: videoUrl ?? "",
                                     child: (VideoPlayerInfo videoPlayerInfo) {
                                       return InkWell(
                                         onTap: () => purchase(
@@ -149,9 +193,9 @@ class ShortCardInfo extends StatelessWidget {
                                                     tag: tag);
                                             shortVideoDetailController
                                                 .mutateAll();
-                                            videoPlayerInfo
-                                                .videoPlayerController
-                                                ?.play();
+                                            // videoPlayerInfo
+                                            //     .videoPlayerController
+                                            //     ?.play();
                                           },
                                         ),
                                         child: Text(
