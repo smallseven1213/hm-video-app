@@ -40,7 +40,7 @@ class _SideInfoState extends State<SideInfo> {
         Get.find<UserFavoritesShortController>();
 
     return VideoPlayerConsumer(
-        tag: widget.tag,
+        tag: widget.shortData.videoUrl ?? '',
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Positioned(
             right: 8,

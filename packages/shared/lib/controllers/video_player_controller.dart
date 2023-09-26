@@ -57,7 +57,8 @@ class ObservableVideoPlayerController extends GetxController {
   // }
 
   Future<void> _initializePlayer() async {
-    videoPlayerController = VideoPlayerController.network(videoUrl);
+    videoPlayerController =
+        VideoPlayerController.networkUrl(Uri.parse(videoUrl));
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) {
       isReady.value = true;
