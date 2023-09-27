@@ -161,14 +161,8 @@ class IDCardContentState extends State<IDCardContent> {
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
                       successMessage: '已成功保存身份卡',
-                      child: Center(
-                        child: Text(
-                          '請截圖保存',
-                          style: TextStyle(
-                              color: AppColors
-                                      .colors[ColorKeys.buttonTextSecondary]
-                                  as Color),
-                        ),
+                      child: const Center(
+                        child: Text('請截圖保存'),
                       ),
                     ),
                   ),
