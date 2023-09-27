@@ -108,12 +108,10 @@ class _OrderRecordState extends State<OrderRecord> {
   String chargeType = option.first['value'];
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
       children: [
-        Positioned(
-          // alignment: Alignment.centerRight,
-          right: 0,
-          top: 0,
+        Align(
+          alignment: Alignment.centerRight,
           child: CustomDropdownMenu(
             onChanged: (String? value) {
               logger.i(value);
