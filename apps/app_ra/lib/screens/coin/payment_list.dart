@@ -1,4 +1,5 @@
 import 'package:app_ra/widgets/button.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/orders_api.dart';
@@ -90,7 +91,6 @@ class _PaymentListState extends State<PaymentList> {
     return PaymentConsumer(
       id: widget.productId,
       child: (payments) {
-        print('payments: $payments');
         return Container(
             padding: const EdgeInsets.all(16),
             height: payments.isEmpty ? 250 : 420,
@@ -112,14 +112,15 @@ class _PaymentListState extends State<PaymentList> {
                     payments.isEmpty
                         ? const Expanded(
                             child: Padding(
-                              padding: EdgeInsets.only(top: 20),
+                              padding: EdgeInsets.only(top: 5),
                               child: Text(
                                 '無可用支付方式',
                                 style: TextStyle(color: Colors.grey),
                               ),
                             ),
                           )
-                        : Expanded(
+                        : SizedBox(
+                            height: 200,
                             child: ListView.builder(
                               itemCount: payments.length,
                               itemBuilder: (context, index) {
@@ -166,7 +167,6 @@ class _PaymentListState extends State<PaymentList> {
                           child: Button(
                             text: '取消',
                             type: isLoading ? 'disabled' : 'cancel',
-                            size: 'small',
                             onPressed: () {
                               if (isLoading) return;
                               setState(() {
@@ -182,12 +182,11 @@ class _PaymentListState extends State<PaymentList> {
                           width: 80,
                           child: Button(
                             text: '確認',
-                            size: 'small',
                             type: selectedId == null || isLoading
                                 ? 'disabled'
                                 : 'primary',
                             onPressed: () {
-                              if (isLoading) return;
+                              if (selectedId == null || isLoading) return;
                               sendOrder(
                                 context,
                                 paymentChannelId: selectedId ?? 0,
@@ -196,7 +195,8 @@ class _PaymentListState extends State<PaymentList> {
                           ),
                         ),
                       ],
-                    )
+                    ),
+                    if (!kIsWeb) const SizedBox(height: 40),
                   ],
                 ),
                 if (isLoading) const Center(child: CircularProgressIndicator()),
