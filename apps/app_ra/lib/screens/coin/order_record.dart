@@ -110,20 +110,19 @@ class _OrderRecordState extends State<OrderRecord> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: CustomDropdownMenu(
-            onChanged: (String? value) {
-              logger.i(value);
-              setState(() {
-                chargeType = value!;
-              });
-            },
+        Stack(alignment: Alignment.topRight, children: [
+          Positioned(
+            child: CustomDropdownMenu(
+              onChanged: (String? value) {
+                logger.i(value);
+                setState(() {
+                  chargeType = value!;
+                });
+              },
+            ),
           ),
-        ),
-        const SizedBox(height: 8),
-        Expanded(
-          child: UserOrderRecordConsumer(
+          const SizedBox(height: 8),
+          UserOrderRecordConsumer(
               key: Key('order-record-$chargeType'),
               type: chargeType,
               child: (List<Order> records) {
@@ -179,7 +178,7 @@ class _OrderRecordState extends State<OrderRecord> {
                   },
                 );
               }),
-        ),
+        ]),
       ],
     );
   }
