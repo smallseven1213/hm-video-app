@@ -90,13 +90,10 @@ class _PaymentListState extends State<PaymentList> {
     return PaymentConsumer(
       id: widget.productId,
       child: (payments) {
+        print('payments: $payments');
         return Container(
             padding: const EdgeInsets.all(16),
-            height: payments.isEmpty
-                ? 250
-                : payments.length > 5
-                    ? 420
-                    : payments.length * 80,
+            height: payments.isEmpty ? 250 : 420,
             child: Stack(
               children: [
                 Column(
