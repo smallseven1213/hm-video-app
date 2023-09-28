@@ -71,13 +71,15 @@ class NoticeDialogState extends State<NoticeDialog> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
             titlePadding: EdgeInsets.zero,
             contentPadding: EdgeInsets.zero,
             scrollable: true,
             backgroundColor: Colors.transparent,
             title: const Image(
               image: AssetImage('assets/images/notice-header.png'),
-              height: 90,
+              height: 95,
               fit: BoxFit.fitWidth,
             ),
             content: SizedBox(
