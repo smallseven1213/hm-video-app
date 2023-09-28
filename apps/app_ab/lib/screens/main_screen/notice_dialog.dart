@@ -79,7 +79,7 @@ class NoticeDialogState extends State<NoticeDialog> {
             backgroundColor: Colors.transparent,
             title: const Image(
               image: AssetImage('assets/images/notice-header.png'),
-              height: 100,
+              height: 90,
               fit: BoxFit.fitWidth,
             ),
             content: SizedBox(
