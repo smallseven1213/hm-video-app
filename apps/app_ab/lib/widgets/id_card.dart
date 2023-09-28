@@ -121,7 +121,7 @@ class IDCardContentState extends State<IDCardContent> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Text(
-                    '官方地址：ab.me',
+                    '官方地址：MXTV.APP',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.buttonBgPrimary],
                       fontSize: 12,
@@ -161,14 +161,8 @@ class IDCardContentState extends State<IDCardContent> {
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
                       successMessage: '已成功保存身份卡',
-                      child: Center(
-                        child: Text(
-                          '請截圖保存',
-                          style: TextStyle(
-                              color: AppColors
-                                      .colors[ColorKeys.buttonTextSecondary]
-                                  as Color),
-                        ),
+                      child: const Center(
+                        child: Text('請截圖保存'),
                       ),
                     ),
                   ),

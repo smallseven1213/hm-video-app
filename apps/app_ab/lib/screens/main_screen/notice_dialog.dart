@@ -71,102 +71,99 @@ class NoticeDialogState extends State<NoticeDialog> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            shape: RoundedRectangleBorder(
-                side:
-                    BorderSide(color: Colors.white.withOpacity(0.5), width: 1),
-                borderRadius: const BorderRadius.all(Radius.circular(10.0))),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(10.0))),
+            titlePadding: EdgeInsets.zero,
             contentPadding: EdgeInsets.zero,
             scrollable: true,
-            content: Container(
-                width: 270,
-                height: 320,
-                decoration: BoxDecoration(
-                  color: AppColors.colors[ColorKeys.noticeBg],
-                  image: const DecorationImage(
-                    image: AssetImage('assets/images/notice-header.png'),
-                    alignment: Alignment.topCenter,
-                    fit: BoxFit.fitWidth,
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
-                ),
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 95,
-                        left: 25,
-                        right: 25,
-                        bottom: 20,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Center(
-                            child: Text(
-                              notice.title,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: AppColors.colors[ColorKeys.textPrimary],
-                                fontSize: 14,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Center(
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                top: 10,
-                              ),
-                              height: 132,
-                              child: SingleChildScrollView(
-                                physics: kIsWeb
-                                    ? null
-                                    : const ClampingScrollPhysics(),
-                                child: HtmlWidget(
-                                  notice.content ?? '',
-                                  textStyle: TextStyle(
-                                    color:
-                                        AppColors.colors[ColorKeys.textPrimary],
-                                  ),
-                                  onTapUrl: (url) => launchUrl(Uri.parse(url)),
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              notice.leftButton != null
-                                  ? SizedBox(
-                                      width: 105,
-                                      child: Button(
-                                        text: notice.leftButton ?? '取消',
-                                        type: 'cancel',
-                                        onPressed: () => handleUrl(
-                                            notice.leftButtonUrl, context),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                              notice.rightButton != null
-                                  ? SizedBox(
-                                      width: 105,
-                                      child: Button(
-                                        text: notice.rightButton ?? '確認',
-                                        type: 'primary',
-                                        onPressed: () => handleUrl(
-                                            notice.rightButtonUrl, context),
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                            ],
-                          ),
-                        ],
-                      ),
+            backgroundColor: Colors.transparent,
+            title: const Image(
+              image: AssetImage('assets/images/notice-header.png'),
+              height: 100,
+              fit: BoxFit.fitWidth,
+            ),
+            content: SizedBox(
+              width: 270,
+              height: 310,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    color: AppColors.colors[ColorKeys.noticeBg],
+                    padding: const EdgeInsets.only(
+                      top: 20,
+                      left: 20,
+                      right: 20,
+                      bottom: 20,
                     ),
-                  ],
-                )),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            notice.title,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: AppColors.colors[ColorKeys.textPrimary],
+                              fontSize: 14,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Center(
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                            ),
+                            height: 132,
+                            child: SingleChildScrollView(
+                              physics:
+                                  kIsWeb ? null : const ClampingScrollPhysics(),
+                              child: HtmlWidget(
+                                notice.content ?? '',
+                                textStyle: TextStyle(
+                                  color:
+                                      AppColors.colors[ColorKeys.textPrimary],
+                                ),
+                                onTapUrl: (url) => launchUrl(Uri.parse(url)),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 15),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            notice.leftButton != null
+                                ? SizedBox(
+                                    width: 105,
+                                    child: Button(
+                                      text: notice.leftButton ?? '取消',
+                                      type: 'cancel',
+                                      onPressed: () => handleUrl(
+                                          notice.leftButtonUrl, context),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                            notice.rightButton != null
+                                ? SizedBox(
+                                    width: 105,
+                                    child: Button(
+                                      text: notice.rightButton ?? '確認',
+                                      type: 'primary',
+                                      onPressed: () => handleUrl(
+                                          notice.rightButtonUrl, context),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         },
       ).then((value) {
