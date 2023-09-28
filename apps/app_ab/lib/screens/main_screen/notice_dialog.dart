@@ -77,6 +77,7 @@ class NoticeDialogState extends State<NoticeDialog> {
             contentPadding: EdgeInsets.zero,
             scrollable: true,
             backgroundColor: Colors.transparent,
+            elevation: 0,
             title: const Image(
               image: AssetImage('assets/images/notice-header.png'),
               height: 95,
