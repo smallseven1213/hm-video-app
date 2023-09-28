@@ -71,8 +71,6 @@ class NoticeDialogState extends State<NoticeDialog> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0))),
             titlePadding: EdgeInsets.zero,
             contentPadding: EdgeInsets.zero,
             scrollable: true,
@@ -89,7 +87,13 @@ class NoticeDialogState extends State<NoticeDialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    color: AppColors.colors[ColorKeys.noticeBg],
+                    decoration: BoxDecoration(
+                      color: AppColors.colors[ColorKeys.noticeBg],
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
                     padding: const EdgeInsets.only(
                       top: 20,
                       left: 20,
