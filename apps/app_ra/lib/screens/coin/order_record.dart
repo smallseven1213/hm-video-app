@@ -62,6 +62,7 @@ class _CustomDropdownMenuState extends State<CustomDropdownMenu> {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 2),
           borderRadius: BorderRadius.circular(16),
+          color: Theme.of(context).scaffoldBackgroundColor,
         ),
         child: isMenuOpen
             ? Column(
@@ -108,31 +109,24 @@ class _OrderRecordState extends State<OrderRecord> {
   String chargeType = option.first['value'];
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
-        Align(
-          alignment: Alignment.centerRight,
-          child: CustomDropdownMenu(
-            onChanged: (String? value) {
-              logger.i(value);
-              setState(() {
-                chargeType = value!;
-              });
-            },
-          ),
-        ),
-        const SizedBox(height: 8),
-        Expanded(
-          child: UserOrderRecordConsumer(
-              key: Key('order-record-$chargeType'),
-              type: chargeType,
-              child: (List<Order> records) {
-                if (records.isEmpty) return const NoData();
-                return ListView.builder(
-                  itemCount: records.length,
-                  itemBuilder: (context, index) {
-                    final record = records[index];
-                    return Container(
+        Padding(
+          padding: const EdgeInsets.only(top: 50), // 調整padding來避免重疊
+          child: Column(
+            children: [
+              const SizedBox(height: 8),
+              Expanded(
+                child: UserOrderRecordConsumer(
+                  key: Key('order-record-$chargeType'),
+                  type: chargeType,
+                  child: (List<Order> records) {
+                    if (records.isEmpty) return const NoData();
+                    return ListView.builder(
+                      itemCount: records.length,
+                      itemBuilder: (context, index) {
+                        final record = records[index];
+                        return Container(
                       padding: const EdgeInsets.all(20),
                       margin: const EdgeInsets.only(bottom: 8),
                       decoration: BoxDecoration(
@@ -176,9 +170,24 @@ class _OrderRecordState extends State<OrderRecord> {
                         ],
                       ),
                     );
-                  },
-                );
-              }),
+                      },
+                    );
+                  }),
+              ),
+            ],
+          ),
+        ),
+        Positioned(
+          right: 0,
+          top: 0,
+          child: CustomDropdownMenu(
+            onChanged: (String? value) {
+              logger.i(value);
+              setState(() {
+                chargeType = value!;
+              });
+            },
+          ),
         ),
       ],
     );

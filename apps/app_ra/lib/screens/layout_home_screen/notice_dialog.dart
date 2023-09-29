@@ -1,5 +1,4 @@
-import 'package:app_ab/config/colors.dart';
-import 'package:app_ab/widgets/button.dart';
+import 'package:app_ra/widgets/button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -8,7 +7,6 @@ import 'package:logger/logger.dart';
 import 'package:shared/apis/notice_api.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/banner_photo.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/ad_banner.dart';
@@ -71,106 +69,102 @@ class NoticeDialogState extends State<NoticeDialog> {
         context: context,
         builder: (BuildContext ctx) {
           return AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10.0))),
-            titlePadding: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+                side:
+                    BorderSide(color: Theme.of(context).primaryColor, width: 1),
+                borderRadius: const BorderRadius.all(Radius.circular(10.0))),
             contentPadding: EdgeInsets.zero,
             scrollable: true,
-            backgroundColor: Colors.transparent,
-            elevation: 0,
-            title: const Image(
-              image: AssetImage('assets/images/notice-header.png'),
-              height: 95,
-              fit: BoxFit.fitWidth,
-            ),
-            content: SizedBox(
-              width: 270,
-              height: 310,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.colors[ColorKeys.noticeBg],
-                      borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
+            content: Container(
+                width: 270,
+                height: 320,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                ),
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: 30,
+                        left: 25,
+                        right: 25,
+                        bottom: 20,
                       ),
-                    ),
-                    padding: const EdgeInsets.only(
-                      top: 20,
-                      left: 20,
-                      right: 20,
-                      bottom: 20,
-                    ),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            notice.title,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: AppColors.colors[ColorKeys.textPrimary],
-                              fontSize: 14,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: Text('系統公告',
+                                style:
+                                    Theme.of(context).textTheme.headlineLarge),
                           ),
-                        ),
-                        Center(
-                          child: Container(
-                            padding: const EdgeInsets.only(
-                              top: 10,
+                          const SizedBox(height: 35),
+                          Center(
+                            child: Text(
+                              notice.title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                            height: 132,
-                            child: SingleChildScrollView(
-                              physics:
-                                  kIsWeb ? null : const ClampingScrollPhysics(),
-                              child: HtmlWidget(
-                                notice.content ?? '',
-                                textStyle: TextStyle(
-                                  color:
-                                      AppColors.colors[ColorKeys.textPrimary],
+                          ),
+                          Center(
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                top: 10,
+                              ),
+                              height: 132,
+                              child: SingleChildScrollView(
+                                physics: kIsWeb
+                                    ? null
+                                    : const ClampingScrollPhysics(),
+                                child: HtmlWidget(
+                                  notice.content ?? '',
+                                  textStyle: const TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  onTapUrl: (url) => launchUrl(Uri.parse(url)),
                                 ),
-                                onTapUrl: (url) => launchUrl(Uri.parse(url)),
                               ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 15),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            notice.leftButton != null
-                                ? SizedBox(
-                                    width: 105,
-                                    child: Button(
-                                      text: notice.leftButton ?? '取消',
-                                      type: 'cancel',
-                                      onPressed: () => handleUrl(
-                                          notice.leftButtonUrl, context),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                            notice.rightButton != null
-                                ? SizedBox(
-                                    width: 105,
-                                    child: Button(
-                                      text: notice.rightButton ?? '確認',
-                                      type: 'primary',
-                                      onPressed: () => handleUrl(
-                                          notice.rightButtonUrl, context),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                          ],
-                        ),
-                      ],
+                          const SizedBox(height: 15),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              notice.leftButton != null
+                                  ? SizedBox(
+                                      width: 105,
+                                      child: Button(
+                                        text: notice.leftButton ?? '取消',
+                                        type: 'cancel',
+                                        onPressed: () => handleUrl(
+                                            notice.leftButtonUrl, context),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              notice.rightButton != null
+                                  ? SizedBox(
+                                      width: 105,
+                                      child: Button(
+                                        text: notice.rightButton ?? '確認',
+                                        type: 'primary',
+                                        onPressed: () => handleUrl(
+                                            notice.rightButtonUrl, context),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                  ],
+                )),
           );
         },
       ).then((value) {

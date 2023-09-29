@@ -16,6 +16,7 @@ import '../config/layouts.dart';
 import '../screens/home/custom_bottom_bar_item.dart';
 import '../screens/layout_game_screen.dart';
 import '../screens/layout_home_screen/index.dart';
+import '../screens/layout_home_screen/notice_dialog.dart';
 import '../screens/layout_user_screen/layout_user_screen.dart';
 import 'apps.dart';
 import 'coin.dart';
@@ -136,6 +137,7 @@ class HomeState extends State<HomePage> {
                         )
                       : const SizedBox.shrink();
                 }),
+                if (widget.defaultScreenKey == null) const NoticeDialog()
               ],
             );
           }),
