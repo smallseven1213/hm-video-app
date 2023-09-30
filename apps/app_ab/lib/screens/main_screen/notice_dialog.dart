@@ -77,9 +77,10 @@ class NoticeDialogState extends State<NoticeDialog> {
             contentPadding: EdgeInsets.zero,
             scrollable: true,
             backgroundColor: Colors.transparent,
+            elevation: 0,
             title: const Image(
               image: AssetImage('assets/images/notice-header.png'),
-              height: 100,
+              height: 95,
               fit: BoxFit.fitWidth,
             ),
             content: SizedBox(
@@ -89,7 +90,13 @@ class NoticeDialogState extends State<NoticeDialog> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    color: AppColors.colors[ColorKeys.noticeBg],
+                    decoration: BoxDecoration(
+                      color: AppColors.colors[ColorKeys.noticeBg],
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                      ),
+                    ),
                     padding: const EdgeInsets.only(
                       top: 20,
                       left: 20,
