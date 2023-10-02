@@ -1,10 +1,13 @@
 import 'package:app_sv/config/colors.dart';
 import 'package:app_sv/screens/video/video_player_area/flash_loading.dart';
 import 'package:app_sv/screens/video/video_player_area/index.dart';
+import 'package:app_sv/screens/video/video_player_area/purchase_block.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
@@ -84,6 +87,11 @@ class VideoScreenState extends State<VideoScreen> {
                       video: videoDetail,
                     );
                   },
+                ),
+                PurchaseBlock(
+                  id: widget.id.toString(),
+                  videoDetail: videoDetail,
+                  videoUrl: videoUrl,
                 ),
                 Expanded(
                   child: NestedTabBarView(
