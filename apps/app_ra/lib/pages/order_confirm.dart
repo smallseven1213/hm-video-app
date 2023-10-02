@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -12,6 +15,8 @@ class OrderConfirmPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bottomNavigatorController = Get.find<BottomNavigatorController>();
+
     return Scaffold(
       appBar: const MyAppBar(title: '付款確認中'),
       body: Column(
@@ -27,8 +32,14 @@ class OrderConfirmPage extends StatelessWidget {
             width: 120,
             child: Button(
               text: '去看片',
-              onPressed: () =>
-                  MyRouteDelegate.of(context).push(AppRoutes.home),
+              onPressed: () => {
+                MyRouteDelegate.of(context).pushAndRemoveUntil(
+                  AppRoutes.home,
+                  hasTransition: false,
+                  args: {'defaultScreenKey': HomeNavigatorPathes.layout1},
+                ),
+                bottomNavigatorController.changeKey(HomeNavigatorPathes.layout1)
+              },
             ),
           ),
           const SizedBox(height: 30),
