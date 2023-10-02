@@ -29,7 +29,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace "com.example.app_ra"
+    namespace "com.example.app_sv"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
