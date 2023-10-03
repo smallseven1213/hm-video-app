@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/redemption_api.dart';
+import 'package:shared/controllers/redemption_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_redemption_consumer.dart';
 import '../config/colors.dart';
@@ -56,7 +59,7 @@ class _RedemptionPageState extends State<RedemptionPage> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 80,
                   child: Button(
                     onPressed: () async {
@@ -73,6 +76,7 @@ class _RedemptionPageState extends State<RedemptionPage> {
                           ),
                         ),
                       );
+                      Get.put(RedemptionController(), tag: 'redemption-record');
                     },
                     text: '兌換',
                     size: 'small',
@@ -89,51 +93,50 @@ class _RedemptionPageState extends State<RedemptionPage> {
                 style: Theme.of(context).textTheme.headlineMedium,
               ),
             ),
-            Expanded(child: UserRedemptionConsumer(child: (records) {
-              if (records.isEmpty) return const NoData();
+            Expanded(
+              child: UserRedemptionConsumer(
+                child: (records) {
+                  if (records.isEmpty) return const NoData();
 
-              return ListView.builder(
-                itemCount: records.length,
-                itemBuilder: (context, index) {
-                  print('records: $records');
-
-                  final record = records[index];
-                  logger.i('records: $record');
-
-                  return Container(
-                    padding: const EdgeInsets.all(20),
-                    margin: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            record.name ?? '',
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 2,
-                            style: Theme.of(context).textTheme.bodySmall,
+                  return ListView.builder(
+                    itemCount: records.length,
+                    itemBuilder: (context, index) {
+                      final record = records[index];
+                      return Container(
+                        padding: const EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Theme.of(context).primaryColor,
+                            ),
                           ),
                         ),
-                        const SizedBox(width: 22),
-                        Text(
-                          record.updatedAt ?? '',
-                          style: Theme.of(context).textTheme.bodySmall,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                record.name ?? '',
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2,
+                                style: Theme.of(context).textTheme.bodySmall,
+                              ),
+                            ),
+                            const SizedBox(width: 22),
+                            Text(
+                              record.updatedAt ?? '',
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      );
+                    },
                   );
                 },
-                // ),
-              );
-            })),
+              ),
+            ),
           ],
         ));
   }
