@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'auth_text_field_suffixicon.dart';
 
 class AuthTextField extends StatefulWidget {
-  final String label;
+  final String? label;
   final String placeholderText;
   final FormFieldValidator<String>? validator;
   final TextEditingController controller;
@@ -11,7 +11,7 @@ class AuthTextField extends StatefulWidget {
 
   const AuthTextField({
     Key? key,
-    required this.label,
+    this.label,
     required this.placeholderText,
     this.validator,
     required this.controller,
@@ -34,19 +34,20 @@ class AuthTextFieldState extends State<AuthTextField> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              height: 36,
-              padding: const EdgeInsets.only(top: 2),
-              alignment: Alignment.centerLeft,
-              child: Text(
-                widget.label,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Color(0xFFFDDCEF),
-                  height: 1,
+            if (widget.label != null)
+              Container(
+                height: 36,
+                padding: const EdgeInsets.only(top: 2),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  widget.label ?? '',
+                  style: const TextStyle(
+                    fontSize: 12,
+                    color: Color(0xFFFDDCEF),
+                    height: 1,
+                  ),
                 ),
               ),
-            ),
             Container(
               height: 60,
               alignment: Alignment.topLeft,
