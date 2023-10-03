@@ -34,6 +34,7 @@ import '../pages/update_password.dart' as update_password_page;
 import '../pages/configs.dart' as configs_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
 import '../pages/order_confirm.dart' as order_confirm_page;
+import '../pages/redemption.dart' as redemption_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -105,4 +106,5 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       const suppliers_screen.SuppliersPage(),
   AppRoutes.orderConfirm: (context, args) =>
       const order_confirm_page.OrderConfirmPage(),
+  AppRoutes.redemption: (context, args) => const redemption_page.RedemptionPage(),
 };

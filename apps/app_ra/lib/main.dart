@@ -40,6 +40,11 @@ void main() async {
           fontWeight: FontWeight.bold,
           color: AppColors.colors[ColorKeys.textPrimary]!,
         ),
+        headlineMedium: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+          color: AppColors.colors[ColorKeys.textPrimary]!,
+        ),
         bodySmall: TextStyle(
           fontSize: 12,
           color: AppColors.colors[ColorKeys.textPrimary]!,

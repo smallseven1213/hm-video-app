@@ -36,4 +36,5 @@ class AppRoutes {
   static const String vip = '/vip';
   static const String coin = '/coin';
   static const String orderConfirm = '/order_confirm';
+  static const String redemption = '/redemption';
 }
