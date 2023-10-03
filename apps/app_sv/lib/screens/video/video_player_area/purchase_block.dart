@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:app_sv/config/colors.dart';
 import 'package:app_sv/utils/purchase.dart';
 
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'enums.dart';
@@ -32,19 +30,77 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: !widget.videoDetail.isAvailable
           ? widget.videoDetail.chargeType == ChargeType.vip.index
-              ? Align(
-                  alignment: Alignment.centerRight,
-                  child: InkWell(
-                    onTap: () =>
-                        MyRouteDelegate.of(context).push(AppRoutes.vip),
-                    child: Text(
-                      '開通 VIP 無限看片',
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: AppColors.colors[ColorKeys.textPrimary],
+              ? Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.sizeOf(context).width - 20,
+                      height: 64,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6.0),
+                        image: const DecorationImage(
+                          image:
+                              AssetImage('assets/images/purchase/img-vip.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 41,
+                        right: 36,
+                      ),
+                      child: Row(
+                        children: [
+                          const Expanded(
+                            child: Row(
+                              children: [
+                                Image(
+                                  image: AssetImage(
+                                      'assets/images/purchase/icon-vip.webp'),
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                SizedBox(
+                                  width: 8,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    '開通 VIP 無限看片',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () =>
+                                MyRouteDelegate.of(context).push(AppRoutes.vip),
+                            child: Container(
+                              padding: const EdgeInsets.only(
+                                top: 5,
+                                bottom: 5,
+                                left: 15,
+                                right: 15,
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(32.0),
+                                border: Border.all(color: Colors.white),
+                              ),
+                              child: const Text(
+                                '查看詳情',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 )
               : VideoPlayerConsumer(
                   tag: widget.videoUrl,
@@ -74,7 +130,12 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                               Expanded(
                                 child: Row(
                                   children: [
-                                    // VDIcon(VIcons.diamond),
+                                    const Image(
+                                      image: AssetImage(
+                                          'assets/images/purchase/icon-coin.webp'),
+                                      width: 20,
+                                      height: 20,
+                                    ),
                                     const SizedBox(
                                       width: 8,
                                     ),
