@@ -114,7 +114,7 @@ class UserScreenState extends State<UserScreen> {
                     child: Text(
                       '版本號:${systemConfig.version}',
                       style: TextStyle(
-                          color: AppColors.colors[ColorKeys.primary],
+                          color: AppColors.colors[ColorKeys.textPrimary],
                           fontSize: 12),
                     ),
                   ),
