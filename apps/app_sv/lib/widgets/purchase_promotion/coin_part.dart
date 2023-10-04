@@ -40,7 +40,6 @@ class Coin extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              // todo : 標題：試看結束，升級觀看完整版
               const Text(
                 '試看結束，此影片需付費購買',
                 style: TextStyle(
@@ -81,12 +80,12 @@ class Coin extends StatelessWidget {
             child: Button(
               size: 'small',
               text: double.parse(userPoints) < double.parse(buyPoints)
-                  ? '金幣不足'
+                  ? '購買金幣'
                   : '付費觀看',
               onPressed: () => purchase(
                 context,
                 id: videoId,
-                onSuccess: onSuccess,
+                onSuccess: onSuccess!,
               ),
             ),
           ),
@@ -138,12 +137,12 @@ class Coin extends StatelessWidget {
           child: Button(
             size: 'small',
             text: double.parse(userPoints) < double.parse(buyPoints)
-                ? '金幣不足'
+                ? '購買金幣'
                 : '付費觀看',
             onPressed: () => purchase(
               context,
               id: videoId,
-              onSuccess: onSuccess,
+              onSuccess: onSuccess!,
             ),
           ),
         ),
