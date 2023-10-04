@@ -18,12 +18,14 @@ class VideoPlayerArea extends StatefulWidget {
   final String? name;
   final String videoUrl;
   final Vod video;
+  final String tag;
 
   const VideoPlayerArea({
     Key? key,
     required this.videoUrl,
     required this.video,
     this.name,
+    required this.tag,
   }) : super(key: key);
 
   @override
@@ -139,6 +141,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
               videoId: widget.video.id,
               videoPlayerInfo: videoPlayerInfo,
               title: widget.video.title,
+              tag: widget.tag,
             );
           }
 
