@@ -7,19 +7,20 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import 'enums.dart';
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
   final String id;
   final String videoUrl;
+  final String tag;
 
   const PurchaseBlock({
     super.key,
     required this.videoDetail,
     required this.id,
     required this.videoUrl,
+    required this.tag,
   });
 
   @override
@@ -157,12 +158,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 onTap: () => purchase(context,
                                     id: int.parse(widget.id.toString()),
                                     onSuccess: () {
-                                  final controllerTag =
-                                      genaratorLongVideoDetailTag(
-                                          widget.id.toString());
                                   final videoDetailController =
                                       Get.find<VideoDetailController>(
-                                          tag: controllerTag);
+                                          tag: widget.tag);
                                   videoDetailController.mutateAll();
                                   videoPlayerInfo.videoPlayerController?.play();
                                 }),

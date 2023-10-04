@@ -12,6 +12,7 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 
 import 'nested_tab_bar_view/index.dart';
 import 'video_player_area/loading.dart';
@@ -59,6 +60,9 @@ class VideoScreenState extends State<VideoScreen> {
           required String? videoUrl,
           required Vod? videoDetail,
         }) {
+          final controllerTag =
+              genaratorLongVideoDetailTag(widget.id.toString());
+
           if (videoUrl == null) {
             return const Center(child: FlashLoading());
           }
@@ -85,6 +89,7 @@ class VideoScreenState extends State<VideoScreen> {
                       name: widget.name,
                       videoUrl: videoUrl,
                       video: videoDetail,
+                      tag: controllerTag,
                     );
                   },
                 ),
@@ -92,6 +97,7 @@ class VideoScreenState extends State<VideoScreen> {
                   id: widget.id.toString(),
                   videoDetail: videoDetail,
                   videoUrl: videoUrl,
+                  tag: controllerTag,
                 ),
                 Expanded(
                   child: NestedTabBarView(
