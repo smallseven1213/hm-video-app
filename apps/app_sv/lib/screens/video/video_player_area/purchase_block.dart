@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:app_sv/utils/purchase.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import 'enums.dart';
 
 class PurchaseBlock extends StatefulWidget {
@@ -151,13 +154,18 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () => purchase(
-                                  context,
-                                  id: int.parse(widget.id.toString()),
-                                  onSuccess: () => videoPlayerInfo
-                                      .videoPlayerController
-                                      ?.play(),
-                                ),
+                                onTap: () => purchase(context,
+                                    id: int.parse(widget.id.toString()),
+                                    onSuccess: () {
+                                  final controllerTag =
+                                      genaratorLongVideoDetailTag(
+                                          widget.id.toString());
+                                  final videoDetailController =
+                                      Get.find<VideoDetailController>(
+                                          tag: controllerTag);
+                                  videoDetailController.mutateAll();
+                                  videoPlayerInfo.videoPlayerController?.play();
+                                }),
                                 child: Container(
                                   padding: const EdgeInsets.only(
                                     top: 5,

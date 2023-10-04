@@ -10,13 +10,13 @@ final vodApi = VodApi();
 void purchase(
   BuildContext context, {
   required int id,
-  Function? onSuccess,
+  required Function onSuccess,
 }) async {
   try {
     HMApiResponse results = await vodApi.purchase(id);
     bool coinNotEnough = results.code == '50508';
     if (results.code == '00') {
-      onSuccess!();
+      onSuccess();
     } else {
       if (context.mounted) {
         showConfirmDialog(
