@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../../widgets/purchase_promotion/coin_part.dart';
@@ -17,6 +16,7 @@ class PurchasePromotion extends StatelessWidget {
   final int chargeType;
   final int videoId;
   final VideoPlayerInfo videoPlayerInfo;
+  final String tag;
 
   const PurchasePromotion({
     Key? key,
@@ -26,6 +26,7 @@ class PurchasePromotion extends StatelessWidget {
     required this.chargeType,
     required this.videoId,
     required this.videoPlayerInfo,
+    required this.tag,
   }) : super(key: key);
 
   @override
@@ -56,10 +57,8 @@ class PurchasePromotion extends StatelessWidget {
                     videoPlayerInfo: videoPlayerInfo,
                     timeLength: timeLength,
                     onSuccess: () {
-                      final controllerTag =
-                          genaratorLongVideoDetailTag(videoId.toString());
                       final videoDetailController =
-                          Get.find<VideoDetailController>(tag: controllerTag);
+                          Get.find<VideoDetailController>(tag: tag);
                       videoDetailController.mutateAll();
                       videoPlayerInfo.videoPlayerController?.play();
                     },
