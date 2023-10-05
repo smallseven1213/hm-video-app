@@ -73,15 +73,12 @@ class Coin extends StatelessWidget {
             ],
           ),
           const SizedBox(width: 15),
-          //開通VIP按鈕
           SizedBox(
             width: 87,
             height: 35,
             child: Button(
               size: 'small',
-              text: double.parse(userPoints) < double.parse(buyPoints)
-                  ? '購買金幣'
-                  : '付費觀看',
+              text: '付費觀看',
               onPressed: () => purchase(
                 context,
                 id: videoId,
@@ -136,9 +133,7 @@ class Coin extends StatelessWidget {
           height: 35,
           child: Button(
             size: 'small',
-            text: double.parse(userPoints) < double.parse(buyPoints)
-                ? '購買金幣'
-                : '付費觀看',
+            text: '付費觀看',
             onPressed: () => purchase(
               context,
               id: videoId,
