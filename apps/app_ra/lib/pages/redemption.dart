@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/redemption_api.dart';
+import 'package:shared/controllers/event_controller.dart';
 import 'package:shared/controllers/redemption_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_redemption_consumer.dart';
@@ -25,10 +26,13 @@ class RedemptionPage extends StatefulWidget {
 class _RedemptionPageState extends State<RedemptionPage> {
   bool isSwitched = false;
   TextEditingController? _controller;
+  late RedemptionController redemptionController;
+
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    redemptionController = Get.find<RedemptionController>();
   }
 
   @override
@@ -76,7 +80,8 @@ class _RedemptionPageState extends State<RedemptionPage> {
                           ),
                         ),
                       );
-                      Get.put(RedemptionController(), tag: 'redemption-record');
+                      redemptionController.fetchData();
+                      Get.put(EventController());
                     },
                     text: '兌換',
                     size: 'small',
@@ -94,48 +99,46 @@ class _RedemptionPageState extends State<RedemptionPage> {
               ),
             ),
             Expanded(
-              child: UserRedemptionConsumer(
-                child: (records) {
-                  if (records.isEmpty) return const NoData();
-
-                  return ListView.builder(
-                    itemCount: records.length,
-                    itemBuilder: (context, index) {
-                      final record = records[index];
-                      return Container(
-                        padding: const EdgeInsets.all(20),
-                        margin: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
+              child: Obx(() {
+                final records = redemptionController.records;
+                if (records.isEmpty) return const NoData();
+                return ListView.builder(
+                  itemCount: records.length,
+                  itemBuilder: (context, index) {
+                    final record = records[index];
+                    return Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                record.name ?? '',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ),
-                            const SizedBox(width: 22),
-                            Text(
-                              record.updatedAt ?? '',
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              record.name ?? '',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+                          ),
+                          const SizedBox(width: 22),
+                          Text(
+                            record.updatedAt ?? '',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }),
             ),
           ],
         ));

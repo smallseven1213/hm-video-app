@@ -179,13 +179,14 @@ class SliverBlockWidget extends StatelessWidget {
                 ),
                 if (index > 0 &&
                     (index + 1) % 3 == 0 &&
-                    index != vods.length - 1)
+                    index != vods.length - 1 &&
+                    adWindowController.data.value.areaBanners.isNotEmpty)
                   Obx(() {
                     var bannerIndex = (index / 3 - 1).ceil() %
-                        (adWindowController.data.value.channelBanners.length);
+                        (adWindowController.data.value.areaBanners.length);
 
-                    var data = adWindowController
-                        .data.value.channelBanners[bannerIndex];
+                    var data =
+                        adWindowController.data.value.areaBanners[bannerIndex];
 
                     return Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),

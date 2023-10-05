@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app_sv/utils/purchase.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -11,12 +13,14 @@ class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
   final String id;
   final String videoUrl;
+  final String tag;
 
   const PurchaseBlock({
     super.key,
     required this.videoDetail,
     required this.id,
     required this.videoUrl,
+    required this.tag,
   });
 
   @override
@@ -151,13 +155,15 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () => purchase(
-                                  context,
-                                  id: int.parse(widget.id.toString()),
-                                  onSuccess: () => videoPlayerInfo
-                                      .videoPlayerController
-                                      ?.play(),
-                                ),
+                                onTap: () => purchase(context,
+                                    id: int.parse(widget.id.toString()),
+                                    onSuccess: () {
+                                  final videoDetailController =
+                                      Get.find<VideoDetailController>(
+                                          tag: widget.tag);
+                                  videoDetailController.mutateAll();
+                                  videoPlayerInfo.videoPlayerController?.play();
+                                }),
                                 child: Container(
                                   padding: const EdgeInsets.only(
                                     top: 5,

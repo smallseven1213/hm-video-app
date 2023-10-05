@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
+import 'package:shared/utils/datetime_formatter.dart';
 
 class SystemEventCard extends StatelessWidget {
   final int id;
@@ -27,18 +28,10 @@ class SystemEventCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
-      margin: const EdgeInsets.only(bottom: 10),
+      margin: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors.white, width: 1),
-        gradient: const LinearGradient(
-          colors: [
-            Color(0xFF131E34),
-            Color(0xFF4378DC),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
       ),
       child: Stack(
         children: [
@@ -47,7 +40,8 @@ class SystemEventCard extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 14, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 14, color: Theme.of(context).primaryColor),
               ),
               const SizedBox(height: 8),
               Text(
@@ -58,7 +52,7 @@ class SystemEventCard extends StatelessWidget {
               Align(
                 alignment: Alignment.centerRight,
                 child: Text(
-                  time,
+                  formatDateTime(time),
                   style: TextStyle(
                       fontSize: 12, color: Colors.white.withOpacity(0.5)),
                 ),
@@ -80,8 +74,8 @@ class SystemEventCard extends StatelessWidget {
                         isSelected
                             ? Icons.check_box
                             : Icons.check_box_outline_blank,
-                        color: Colors.white,
-                        size: 10,
+                        color: Theme.of(context).primaryColor,
+                        size: 16,
                       ),
                     ),
                   ),

@@ -2,8 +2,10 @@ import 'package:app_ra/utils/purchase.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
@@ -11,6 +13,7 @@ import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import '../config/colors.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
 import '../screens/video/video_player_area/enums.dart';
@@ -53,6 +56,8 @@ class VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
+    final controllerTag = genaratorLongVideoDetailTag(id.toString());
+
     var name = widget.args['name'];
     return VideoScreenProvider(
       id: id,
@@ -92,9 +97,14 @@ class VideoState extends State<Video> {
                                 onTap: () => purchase(
                                   context,
                                   id: id,
-                                  onSuccess: () => videoPlayerInfo
-                                      .videoPlayerController
-                                      ?.play(),
+                                  onSuccess: () {
+                                    final videoDetailController =
+                                        Get.find<VideoDetailController>(
+                                            tag: controllerTag);
+                                    videoDetailController.mutateAll();
+                                    videoPlayerInfo.videoPlayerController
+                                        ?.play();
+                                  },
                                 ),
                                 child: Text(
                                   '${videoDetail.buyPoint}金幣解鎖',
@@ -130,6 +140,7 @@ class VideoState extends State<Video> {
                       name: name,
                       videoUrl: videoUrl,
                       video: videoDetail,
+                      tag: controllerTag,
                     );
                   },
                 ),

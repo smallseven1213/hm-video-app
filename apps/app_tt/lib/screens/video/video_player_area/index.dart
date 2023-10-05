@@ -17,11 +17,13 @@ class VideoPlayerArea extends StatefulWidget {
   final String? name;
   final String videoUrl;
   final Vod video;
+  final String tag;
 
   const VideoPlayerArea({
     Key? key,
     required this.videoUrl,
     required this.video,
+    required this.tag,
     this.name,
   }) : super(key: key);
 

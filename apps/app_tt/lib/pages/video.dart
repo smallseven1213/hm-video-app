@@ -7,6 +7,7 @@ import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/modules/videos/video_by_tag_consumer.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import '../screens/video/actors.dart';
 import '../screens/video/app_download_ad.dart';
 import '../screens/video/banner.dart';
@@ -68,13 +69,9 @@ class VideoState extends State<Video> {
 
   @override
   Widget build(BuildContext context) {
-    // return VideoScreen(
-    //   key: ValueKey(widget.args['id']),
-    //   id: int.parse(widget.args['id'].toString()),
-    //   name: widget.args['name'],
-    // );
-
     var id = int.parse(widget.args['id'].toString());
+    final controllerTag = genaratorLongVideoDetailTag(id.toString());
+
     var name = widget.args['name'];
     return VideoScreenProvider(
       id: id,
@@ -91,11 +88,11 @@ class VideoState extends State<Video> {
           child: Column(
             children: [
               VideoPlayerProvider(
+                key: Key(videoUrl),
                 tag: videoUrl,
                 autoPlay: kIsWeb ? false : true,
                 videoUrl: videoUrl,
-                video: videoDetail!,
-                videoDetail: videoDetail,
+                videoDetail: videoDetail!,
                 loadingWidget: AspectRatio(
                   aspectRatio: 16 / 9,
                   child: Container(
@@ -109,6 +106,7 @@ class VideoState extends State<Video> {
                     name: name,
                     videoUrl: videoUrl,
                     video: videoDetail,
+                    tag: controllerTag,
                   );
                 },
               ),
