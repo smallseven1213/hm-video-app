@@ -11,18 +11,14 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 submitDepositOrder(
-  BuildContext context, {
+  context, {
   required String amount,
   required int paymentChannelId,
   required String? userName,
   required String activePayment,
 }) async {
   onLoading(context, status: true);
-  // ignore: avoid_init_to_null
-  if (await canLaunchUrl(Uri.parse(''))) {
-    await launchUrl(Uri.parse(''), webOnlyWindowName: '_blank');
-  }
-  await Future.delayed(const Duration(milliseconds: 66));
+
   try {
     var value = await GameLobbyApi().makeOrderV2(
       amount: amount,
@@ -34,8 +30,6 @@ submitDepositOrder(
         await Future.delayed(const Duration(milliseconds: 500));
         onLoading(context, status: false);
         Navigator.pop(context);
-        // windowRef?.location.href = value;
-        // ignore: deprecated_member_use
         launch(value, webOnlyWindowName: '_blank');
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
       } else {
