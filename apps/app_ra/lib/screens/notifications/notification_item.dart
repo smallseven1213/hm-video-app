@@ -5,11 +5,13 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 class NotificationItem extends StatefulWidget {
   final String title;
   final String content;
+  final String? startedAt;
 
   const NotificationItem({
     Key? key,
     required this.title,
     required this.content,
+    this.startedAt,
   }) : super(key: key);
 
   @override
@@ -64,11 +66,11 @@ class NotificationItemState extends State<NotificationItem>
             children: [
               Text(
                 widget.title,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: Theme.of(context).textTheme.headlineMedium,
               ),
-              const Text(
-                '2022-2-2',
-                style: TextStyle(color: Colors.grey, fontSize: 12),
+              Text(
+                widget.startedAt ?? '',
+                style: TextStyle(color: Colors.white, fontSize: 12),
               ),
             ],
           ),

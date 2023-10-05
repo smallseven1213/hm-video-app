@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/redemption_api.dart';
+import 'package:shared/controllers/event_controller.dart';
 import 'package:shared/controllers/redemption_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_redemption_consumer.dart';
@@ -80,6 +81,7 @@ class _RedemptionPageState extends State<RedemptionPage> {
                         ),
                       );
                       redemptionController.fetchData();
+                      Get.put(EventController());
                     },
                     text: '兌換',
                     size: 'small',

@@ -1,3 +1,5 @@
+import '../utils/datetime_formatter.dart';
+
 class Notice {
   final int id;
   final String title;
@@ -34,7 +36,7 @@ class Notice {
       leftButtonUrl: json['leftButtonUrl'],
       rightButton: json['rightButton'],
       rightButtonUrl: json['rightButtonUrl'],
-      startedAt: json['startedAt'] == null ? null : DateTime.parse(json['startedAt'] ?? '').add(const Duration(hours: 8)).toIso8601String(),
+      startedAt: formatDateTime(json['createdAt']),
       endedAt: json['endedAt'],
     );
   }
