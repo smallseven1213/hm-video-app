@@ -11,10 +11,10 @@ class RedemptionController extends GetxController {
   var records = <Redemption>[].obs;
 
   RedemptionController() {
-    _fetchData();
+    fetchData();
   }
 
-  _fetchData() async {
+  fetchData() async {
     var res = await redemptionApi.records();
     records.value = res;
   }

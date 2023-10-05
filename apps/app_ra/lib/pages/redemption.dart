@@ -25,10 +25,13 @@ class RedemptionPage extends StatefulWidget {
 class _RedemptionPageState extends State<RedemptionPage> {
   bool isSwitched = false;
   TextEditingController? _controller;
+  late RedemptionController redemptionController;
+
   @override
   void initState() {
     super.initState();
     _controller = TextEditingController();
+    redemptionController = Get.find<RedemptionController>();
   }
 
   @override
@@ -76,7 +79,7 @@ class _RedemptionPageState extends State<RedemptionPage> {
                           ),
                         ),
                       );
-                      Get.put(RedemptionController(), tag: 'redemption-record');
+                      redemptionController.fetchData();
                     },
                     text: '兌換',
                     size: 'small',
@@ -94,48 +97,46 @@ class _RedemptionPageState extends State<RedemptionPage> {
               ),
             ),
             Expanded(
-              child: UserRedemptionConsumer(
-                child: (records) {
-                  if (records.isEmpty) return const NoData();
-
-                  return ListView.builder(
-                    itemCount: records.length,
-                    itemBuilder: (context, index) {
-                      final record = records[index];
-                      return Container(
-                        padding: const EdgeInsets.all(20),
-                        margin: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: Theme.of(context).primaryColor,
-                            ),
+              child: Obx(() {
+                final records = redemptionController.records;
+                if (records.isEmpty) return const NoData();
+                return ListView.builder(
+                  itemCount: records.length,
+                  itemBuilder: (context, index) {
+                    final record = records[index];
+                    return Container(
+                      padding: const EdgeInsets.all(20),
+                      margin: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom: BorderSide(
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Text(
-                                record.name ?? '',
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2,
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ),
-                            const SizedBox(width: 22),
-                            Text(
-                              record.updatedAt ?? '',
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              record.name ?? '',
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 2,
                               style: Theme.of(context).textTheme.bodySmall,
                             ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+                          ),
+                          const SizedBox(width: 22),
+                          Text(
+                            record.updatedAt ?? '',
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              }),
             ),
           ],
         ));
