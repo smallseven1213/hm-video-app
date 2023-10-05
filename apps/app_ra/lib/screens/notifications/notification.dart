@@ -19,6 +19,7 @@ class NotificationScreen extends StatelessWidget {
                     .map((e) => NotificationItem(
                           title: e.title,
                           content: e.content ?? '',
+                          startedAt: e.startedAt,
                         )),
               ],
             )));
