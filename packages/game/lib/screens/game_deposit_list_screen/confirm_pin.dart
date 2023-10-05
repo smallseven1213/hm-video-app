@@ -3,12 +3,22 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+
+import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:logger/logger.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
-
-import 'package:game/screens/game_deposit_list_screen/submit_deposit_order.dart';
-import 'package:game/screens/game_theme_config.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:game/enums/game_app_routes.dart';
+import 'package:game/widgets/button.dart';
+import 'package:game/apis/game_api.dart';
+import 'package:game/screens/game_theme_config.dart';
+import 'package:game/screens/game_deposit_list_screen/submit_deposit_order.dart';
+import 'package:game/utils/on_loading.dart';
+import 'package:game/utils/show_form_dialog.dart';
+
+import 'package:shared/navigator/delegate.dart';
 
 final logger = Logger();
 
@@ -35,6 +45,7 @@ class ConfirmPinState extends State<ConfirmPin> {
   bool enableSubmit = false;
   bool hasError = false;
   String currentText = '';
+  String redirectUrl = '';
 
   final _formKey = GlobalKey<FormBuilderState>();
   TextEditingController textEditingController = TextEditingController();
@@ -62,11 +73,11 @@ class ConfirmPinState extends State<ConfirmPin> {
       height: 360,
       child: Column(children: [
         Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 10),
+          padding: const EdgeInsets.only(bottom: 5),
           child: Image.asset(
             'packages/game/assets/images/game_deposit/deposit_confirm-$theme.webp',
-            width: 65,
-            height: 65,
+            width: 60,
+            height: 60,
             fit: BoxFit.cover,
           ),
         ),
@@ -79,14 +90,14 @@ class ConfirmPinState extends State<ConfirmPin> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 16),
+          padding: const EdgeInsets.only(top: 10),
           child: Divider(
             color: gameLobbyDividerColor,
             thickness: 1,
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 8, bottom: 14),
+          padding: const EdgeInsets.only(top: 5, bottom: 10),
           child: Text(
             _code,
             style: TextStyle(
@@ -128,7 +139,7 @@ class ConfirmPinState extends State<ConfirmPin> {
               errorAnimationController: errorController,
               controller: textEditingController,
               keyboardType: TextInputType.number,
-              onCompleted: (v) {
+              onCompleted: (v) async {
                 _formKey.currentState!.validate();
                 // conditions for validating
                 if (currentText.length != 4 || currentText != _code) {
@@ -144,13 +155,46 @@ class ConfirmPinState extends State<ConfirmPin> {
                   });
                 }
                 if (hasError == false && enableSubmit == true) {
-                  submitDepositOrder(
-                    context,
-                    amount: widget.amount,
-                    paymentChannelId: int.parse(widget.paymentChannelId),
-                    userName: widget.userName,
-                    activePayment: widget.activePayment,
-                  );
+                  if (GetPlatform.isWeb) {
+                    try {
+                      var value = await GameLobbyApi().makeOrderV2(
+                        amount: widget.amount,
+                        paymentChannelId: int.parse(widget.paymentChannelId),
+                        name: widget.userName,
+                      );
+                      setState(() {
+                        redirectUrl = value;
+                      });
+                    } catch (e) {
+                      showFormDialog(
+                        context,
+                        title: '交易失敗',
+                        content: SizedBox(
+                          height: 24,
+                          child: Center(
+                            child: Text(
+                              '訂單建立失敗，請聯繫客服',
+                              style:
+                                  TextStyle(color: gameLobbyPrimaryTextColor),
+                            ),
+                          ),
+                        ),
+                        confirmText: '確認',
+                        onConfirm: () => {
+                          Navigator.pop(context),
+                          Navigator.pop(context),
+                        },
+                      );
+                    }
+                  } else {
+                    submitDepositOrder(
+                      context,
+                      amount: widget.amount,
+                      paymentChannelId: int.parse(widget.paymentChannelId),
+                      userName: widget.userName,
+                      activePayment: widget.activePayment,
+                    );
+                  }
                 }
               },
               onChanged: (value) {
@@ -186,6 +230,27 @@ class ConfirmPinState extends State<ConfirmPin> {
                 color: gameLobbyPrimaryTextColor),
           ),
         ),
+        if (GetPlatform.isWeb)
+          Container(
+            padding: const EdgeInsets.only(top: 5),
+            width: 70,
+            child: GameButton(
+              text: '確認',
+              onPressed: () {
+                if (redirectUrl != '' && redirectUrl.isNotEmpty) {
+                  onLoading(context, status: false);
+                  Navigator.pop(context);
+                  launch(redirectUrl, webOnlyWindowName: '_blank');
+                  MyRouteDelegate.of(context)
+                      .push(GameAppRoutes.paymentResult.value);
+                }
+              },
+              disabled: hasError ||
+                  !enableSubmit ||
+                  redirectUrl == '' ||
+                  redirectUrl.isEmpty,
+            ),
+          )
       ]),
     );
   }
