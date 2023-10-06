@@ -7,10 +7,13 @@ import 'package:shared/enums/list_editor_category.dart';
 import '../../widgets/list_page_panel.dart';
 import 'system_event_card.dart';
 
-class SystemScreen extends StatelessWidget {
-  SystemScreen({Key? key}) : super(key: key);
+class SystemScreen extends StatefulWidget {
+  @override
+  _SystemScreenState createState() => _SystemScreenState();
+}
 
-  final eventsController = Get.put(EventController());
+class _SystemScreenState extends State<SystemScreen> {
+  late EventController eventsController;
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(
           tag: ListEditorCategory.notifications.toString());
@@ -27,7 +30,20 @@ class SystemScreen extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+    eventsController = Get.put(EventController());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    eventsController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('build system screen');
     return Stack(
       children: [
         Obx(() => ListView(

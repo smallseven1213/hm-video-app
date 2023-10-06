@@ -2,22 +2,15 @@ import 'package:get/get.dart';
 
 import '../apis/event_api.dart';
 import '../models/event.dart';
-import 'auth_controller.dart';
 
 class EventController extends GetxController {
   List<Event> data = <Event>[].obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
-    fetchBanner();
-
-    Get.find<AuthController>().token.listen((event) {
-      fetchBanner();
-    });
+  EventController() {
+    fetchData();
   }
 
-  Future<void> fetchBanner() async {
+  Future<void> fetchData() async {
     EventApi eventApi = EventApi();
     var result = await eventApi.getEvents();
 
