@@ -2,10 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:game/screens/game_deposit_list_screen/submit_deposit_order.dart';
+import 'package:game/utils/show_form_dialog.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:logger/logger.dart';
+
+import 'package:game/utils/on_loading.dart';
+import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/button.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:game/enums/game_app_routes.dart';
+
+import 'package:shared/navigator/delegate.dart';
+
+final logger = Logger();
 
 class ConfirmName extends StatefulWidget {
   final String amount;
@@ -33,6 +43,8 @@ class ConfirmNameState extends State<ConfirmName> {
           ? GetStorage().read('pageColor')
           : 1]
       .toString();
+  String redirectUrl = '';
+  bool submitDepositSuccess = false;
 
   @override
   void dispose() {
@@ -41,9 +53,60 @@ class ConfirmNameState extends State<ConfirmName> {
     super.dispose();
   }
 
-  void _submitForm() async {
+  void submitDepositOrderForName(
+    context, {
+    required String amount,
+    required int paymentChannelId,
+    required String? userName,
+    required String activePayment,
+  }) async {
+    try {
+      var value = await GameLobbyApi().makeOrderV2(
+        amount: widget.amount,
+        paymentChannelId: int.parse(widget.paymentChannelId),
+        name: userName,
+      );
+      setState(() {
+        redirectUrl = value;
+        submitDepositSuccess = true;
+      });
+      if (submitDepositSuccess) {
+        onLoading(context, status: false);
+        Navigator.pop(context);
+        launch(redirectUrl, webOnlyWindowName: '_blank');
+        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
+      }
+    } catch (e) {
+      logger.e('name 交易失敗 $e');
+      onLoading(context, status: false);
+      showFormDialog(
+        context,
+        title: '交易失敗',
+        content: SizedBox(
+          height: 60,
+          child: Center(
+            child: Text(
+              '訂單建立失敗，請聯繫客服',
+              style: TextStyle(color: gameLobbyPrimaryTextColor),
+            ),
+          ),
+        ),
+        confirmText: '確認',
+        onConfirm: () => {
+          Navigator.pop(context),
+          Navigator.pop(context),
+        },
+      );
+      setState(() {
+        submitDepositSuccess = false;
+      });
+    }
+  }
+
+  void _submitForm() {
+    onLoading(context, status: true);
     if (_formKey.currentState!.saveAndValidate()) {
-      await submitDepositOrder(
+      submitDepositOrderForName(
         context,
         amount: widget.amount,
         paymentChannelId: int.parse(widget.paymentChannelId),
