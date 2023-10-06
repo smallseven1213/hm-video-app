@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:game/utils/show_form_dialog.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:logger/logger.dart';
 
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/button.dart';
-import 'package:game/enums/game_app_routes.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
@@ -38,13 +36,14 @@ class ConfirmNameState extends State<ConfirmName> {
   final _formKey = GlobalKey<FormBuilderState>();
   TextEditingController textEditingController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
-  bool isUnfocus = false;
+  // bool isUnfocus = false;
   final theme = themeMode[GetStorage().hasData('pageColor')
           ? GetStorage().read('pageColor')
           : 1]
       .toString();
   String redirectUrl = '';
   bool submitDepositSuccess = false;
+  String isFetching = '';
 
   @override
   void dispose() {
@@ -69,57 +68,21 @@ class ConfirmNameState extends State<ConfirmName> {
       setState(() {
         redirectUrl = value;
         submitDepositSuccess = true;
+        isFetching = 'complete';
       });
-      if (submitDepositSuccess) {
-        onLoading(context, status: false);
-        Navigator.pop(context);
-        launch(redirectUrl, webOnlyWindowName: '_blank');
-        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
-      }
     } catch (e) {
-      logger.e('name 交易失敗 $e');
-      onLoading(context, status: false);
-      showFormDialog(
-        context,
-        title: '交易失敗',
-        content: SizedBox(
-          height: 60,
-          child: Center(
-            child: Text(
-              '訂單建立失敗，請聯繫客服',
-              style: TextStyle(color: gameLobbyPrimaryTextColor),
-            ),
-          ),
-        ),
-        confirmText: '確認',
-        onConfirm: () => {
-          Navigator.pop(context),
-          Navigator.pop(context),
-        },
-      );
+      logger.e('name 交易失敗: $e');
       setState(() {
         submitDepositSuccess = false;
+        isFetching = 'complete';
       });
     }
   }
 
-  void _submitForm() {
-    onLoading(context, status: true);
-    if (_formKey.currentState!.saveAndValidate()) {
-      submitDepositOrderForName(
-        context,
-        amount: widget.amount,
-        paymentChannelId: int.parse(widget.paymentChannelId),
-        userName: textEditingController.text,
-        activePayment: widget.activePayment,
-      );
-    }
-
-    textEditingController.clear();
-    setState(() {
-      enableSubmit = false;
-    });
-  }
+  final borderStyle = OutlineInputBorder(
+    borderSide: BorderSide(color: gameLobbyLoginFormBorderColor),
+    borderRadius: const BorderRadius.all(Radius.circular(5)),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -127,11 +90,11 @@ class ConfirmNameState extends State<ConfirmName> {
       height: 360,
       child: Column(children: [
         Padding(
-          padding: const EdgeInsets.only(top: 5, bottom: 10),
+          padding: const EdgeInsets.only(bottom: 10),
           child: Image.asset(
             'packages/game/assets/images/game_deposit/deposit_confirm-$theme.webp',
-            width: 65,
-            height: 65,
+            width: 60,
+            height: 60,
             fit: BoxFit.cover,
           ),
         ),
@@ -143,7 +106,7 @@ class ConfirmNameState extends State<ConfirmName> {
               color: gameLobbyPrimaryTextColor),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 16),
+          padding: const EdgeInsets.only(top: 10),
           child: Divider(
             color: gameLobbyDividerColor,
             thickness: 1,
@@ -160,7 +123,7 @@ class ConfirmNameState extends State<ConfirmName> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
                     '請輸入真實姓名',
                     style: TextStyle(
@@ -179,21 +142,10 @@ class ConfirmNameState extends State<ConfirmName> {
                         fontWeight: FontWeight.bold,
                         color: gameLobbyLoginPlaceholderColor),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-                    border: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: gameLobbyLoginFormBorderColor),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: gameLobbyLoginFormBorderColor),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(color: gameLobbyLoginFormBorderColor),
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                    ),
+                    border: borderStyle,
+                    focusedBorder: borderStyle,
+                    enabledBorder: borderStyle,
+                    disabledBorder: borderStyle,
                   ),
                   style: TextStyle(
                     fontSize: 14,
@@ -204,36 +156,73 @@ class ConfirmNameState extends State<ConfirmName> {
                     FormBuilderValidators.match(r"^[a-zA-Z\u4e00-\u9fa5]+$",
                         errorText: '姓名格式錯誤'),
                   ]),
+                  enabled: isFetching != 'complete',
                 ),
-                // 一個確認按鈕用來送出表單
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: GameButton(
-                    text: '確認',
-                    onPressed: () {
-                      _focusNode.unfocus();
-                      _focusNode.requestFocus(FocusNode()); //remove focus
-                      SystemChannels.textInput.invokeMethod('TextInput.hide');
-                      setState(() {
-                        isUnfocus = true;
-                      });
-
-                      if (!_focusNode.hasFocus && enableSubmit && isUnfocus) {
-                        // 當焦點失去時，執行 submit 的動作
-                        Future.delayed(const Duration(milliseconds: 100), () {
-                          _submitForm();
-                          setState(() {
-                            isUnfocus = false;
-                          });
-                        });
-                      }
-                    },
-                    disabled: !enableSubmit,
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    enableSubmit && isFetching == 'start'
+                        ? '取得充值連結...'
+                        : submitDepositSuccess && isFetching == 'complete'
+                            ? '充值連結取得成功！'
+                            : !submitDepositSuccess && isFetching == 'complete'
+                                ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
+                                : '',
+                    style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: gameLobbyPrimaryTextColor,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
+                _buildSubmitButton(),
               ],
             )),
       ]),
     );
+  }
+
+  Widget _buildSubmitButton() {
+    if (isFetching != 'complete') {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: GameButton(
+          text: '確認',
+          onPressed: () {
+            if (enableSubmit == true) {
+              setState(() => isFetching = 'start');
+              submitDepositOrderForName(
+                context,
+                amount: widget.amount,
+                paymentChannelId: int.parse(widget.paymentChannelId),
+                userName: textEditingController.text,
+                activePayment: widget.activePayment,
+              );
+            }
+          },
+          disabled: !enableSubmit,
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10),
+        child: GameButton(
+          text: submitDepositSuccess ? '開啟充值頁' : '關閉',
+          onPressed: () {
+            if (submitDepositSuccess) {
+              onLoading(context, status: false);
+              Navigator.pop(context);
+              launch(redirectUrl, webOnlyWindowName: '_blank');
+              MyRouteDelegate.of(context)
+                  .push(GameAppRoutes.paymentResult.value);
+            } else {
+              Navigator.pop(context);
+            }
+          },
+          disabled: !enableSubmit,
+        ),
+      );
+    }
   }
 }
