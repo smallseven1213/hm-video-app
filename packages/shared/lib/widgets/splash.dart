@@ -226,7 +226,11 @@ class _SplashState extends State<Splash> {
           if (res.code == '51633') {
             message = '帳號建立失敗，裝置停用。';
           } else {
-            message = '帳號建立失敗。';
+            final String code = res.code ?? '';
+            final String data = res.data.toString();
+            final String response = 'code: $code, data: $data';
+            message = '帳號建立失敗。$response';
+            await Clipboard.setData(ClipboardData(text: response));
           }
           if (mounted) {
             alertDialog(

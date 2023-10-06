@@ -102,7 +102,6 @@ class AuthApi {
     String invitationCode = '',
   }) async {
     var registerIp = '0.0.0.0';
-
     var res = await fetcher(
       url: '${systemConfig.apiHost}/public/auth/auth/register',
       method: 'POST',
@@ -114,7 +113,14 @@ class AuthApi {
         'invitationCode': invitationCode
       },
     );
-    return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+    try {
+      return HMApiResponseBaseWithDataWithData.fromJson(res.data);
+    } catch (e) {
+      return HMApiResponseBaseWithDataWithData(
+        code: 'FormatException',
+        data: res.data,
+      );
+    }
   }
 
   Future<HMApiResponseBaseWithDataWithData?> loginByCode(String code) async {
