@@ -75,7 +75,7 @@ class ConfirmPinState extends State<ConfirmPin> {
         setState(() => isFetching = 'complete');
       });
     } catch (e) {
-      logger.e('交易失敗: $e');
+      logger.e('pin 交易失敗: $e');
       setState(() {
         submitDepositSuccess = false;
         setState(() => isFetching = 'complete');
