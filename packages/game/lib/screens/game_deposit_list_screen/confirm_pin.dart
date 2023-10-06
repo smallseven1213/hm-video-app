@@ -4,7 +4,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:logger/logger.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:get_storage/get_storage.dart';
@@ -14,7 +13,6 @@ import 'package:game/enums/game_app_routes.dart';
 import 'package:game/widgets/button.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/screens/game_deposit_list_screen/submit_deposit_order.dart';
 import 'package:game/utils/on_loading.dart';
 
 import 'package:shared/navigator/delegate.dart';
@@ -58,7 +56,7 @@ class ConfirmPinState extends State<ConfirmPin> {
           : 1]
       .toString();
 
-  void submitDepositOrderForWeb(
+  void submitDepositOrderForPin(
     context, {
     required String amount,
     required int paymentChannelId,
@@ -183,24 +181,13 @@ class ConfirmPinState extends State<ConfirmPin> {
                 }
                 if (hasError == false && enableSubmit == true) {
                   setState(() => isFetching = 'start');
-                  if (GetPlatform.isWeb) {
-                    submitDepositOrderForWeb(
-                      context,
-                      amount: widget.amount,
-                      paymentChannelId: int.parse(widget.paymentChannelId),
-                      userName: widget.userName,
-                      activePayment: widget.activePayment,
-                    );
-                  } else {
-                    submitDepositOrder(
-                      context,
-                      amount: widget.amount,
-                      paymentChannelId: int.parse(widget.paymentChannelId),
-                      userName: widget.userName,
-                      activePayment: widget.activePayment,
-                    );
-                    setState(() => isFetching = 'complete');
-                  }
+                  submitDepositOrderForPin(
+                    context,
+                    amount: widget.amount,
+                    paymentChannelId: int.parse(widget.paymentChannelId),
+                    userName: widget.userName,
+                    activePayment: widget.activePayment,
+                  );
                 }
               },
               onChanged: (value) {
@@ -246,7 +233,7 @@ class ConfirmPinState extends State<ConfirmPin> {
             textAlign: TextAlign.center,
           ),
         ),
-        if (GetPlatform.isWeb && redirectUrl != '' && redirectUrl.isNotEmpty)
+        if (redirectUrl != '' && redirectUrl.isNotEmpty)
           Container(
             padding: const EdgeInsets.only(top: 10),
             width: 90,
