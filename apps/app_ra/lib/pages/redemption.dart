@@ -81,7 +81,6 @@ class _RedemptionPageState extends State<RedemptionPage> {
                         ),
                       );
                       redemptionController.fetchData();
-                      Get.put(EventController());
                     },
                     text: '兌換',
                     size: 'small',

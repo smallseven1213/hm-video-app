@@ -2,16 +2,32 @@ import 'package:app_ra/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
+Widget _buildDot() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 2, left: 1.0),
+    child: Container(
+      width: 5,
+      height: 5,
+      decoration: const BoxDecoration(
+        color: Colors.red,
+        shape: BoxShape.circle,
+      ),
+    ),
+  );
+}
+
 class RATabBar extends StatelessWidget implements PreferredSizeWidget {
   final List<String> tabs;
   final TabController? controller;
   final EdgeInsetsGeometry? padding;
+  final List<int> dotIndexes;
 
   const RATabBar({
     super.key,
     required this.tabs,
     this.controller,
     this.padding,
+    this.dotIndexes = const [],
   });
 
   @override
@@ -40,12 +56,20 @@ class RATabBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             indicatorSize: TabBarIndicatorSize.tab,
             tabs: tabs
+                .asMap()
+                .entries
                 .map(
-                  (text) => Tab(
+                  (entry) => Tab(
                     height: 24,
-                    child: Text(
-                      text,
-                      style: Theme.of(context).textTheme.bodySmall,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          entry.value,
+                          style: Theme.of(context).textTheme.bodySmall,
+                        ),
+                        if (dotIndexes.contains(entry.key)) _buildDot()
+                      ],
                     ),
                   ),
                 )
