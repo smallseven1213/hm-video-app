@@ -16,7 +16,6 @@ import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_deposit_list_screen/submit_deposit_order.dart';
 import 'package:game/utils/on_loading.dart';
-import 'package:game/utils/show_form_dialog.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
@@ -46,6 +45,7 @@ class ConfirmPinState extends State<ConfirmPin> {
   bool hasError = false;
   String currentText = '';
   String redirectUrl = '';
+  bool submitDepositSuccess = false;
 
   final _formKey = GlobalKey<FormBuilderState>();
   TextEditingController textEditingController = TextEditingController();
@@ -56,6 +56,31 @@ class ConfirmPinState extends State<ConfirmPin> {
           ? GetStorage().read('pageColor')
           : 1]
       .toString();
+
+  void submitDepositOrderForWeb(
+    context, {
+    required String amount,
+    required int paymentChannelId,
+    required String? userName,
+    required String activePayment,
+  }) async {
+    try {
+      var value = await GameLobbyApi().makeOrderV2(
+        amount: widget.amount,
+        paymentChannelId: int.parse(widget.paymentChannelId),
+        name: widget.userName,
+      );
+      setState(() {
+        redirectUrl = value;
+        submitDepositSuccess = true;
+      });
+    } catch (e) {
+      logger.e('交易失敗: $e');
+      setState(() {
+        submitDepositSuccess = false;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -70,7 +95,7 @@ class ConfirmPinState extends State<ConfirmPin> {
     logger.i('_code: $_code');
 
     return SizedBox(
-      height: 360,
+      height: 355,
       child: Column(children: [
         Padding(
           padding: const EdgeInsets.only(bottom: 5),
@@ -141,7 +166,6 @@ class ConfirmPinState extends State<ConfirmPin> {
               keyboardType: TextInputType.number,
               onCompleted: (v) async {
                 _formKey.currentState!.validate();
-                // conditions for validating
                 if (currentText.length != 4 || currentText != _code) {
                   errorController.add(ErrorAnimationType
                       .shake); // Triggering error shake animation
@@ -156,36 +180,13 @@ class ConfirmPinState extends State<ConfirmPin> {
                 }
                 if (hasError == false && enableSubmit == true) {
                   if (GetPlatform.isWeb) {
-                    try {
-                      var value = await GameLobbyApi().makeOrderV2(
-                        amount: widget.amount,
-                        paymentChannelId: int.parse(widget.paymentChannelId),
-                        name: widget.userName,
-                      );
-                      setState(() {
-                        redirectUrl = value;
-                      });
-                    } catch (e) {
-                      showFormDialog(
-                        context,
-                        title: '交易失敗',
-                        content: SizedBox(
-                          height: 24,
-                          child: Center(
-                            child: Text(
-                              '訂單建立失敗，請聯繫客服',
-                              style:
-                                  TextStyle(color: gameLobbyPrimaryTextColor),
-                            ),
-                          ),
-                        ),
-                        confirmText: '確認',
-                        onConfirm: () => {
-                          Navigator.pop(context),
-                          Navigator.pop(context),
-                        },
-                      );
-                    }
+                    submitDepositOrderForWeb(
+                      context,
+                      amount: widget.amount,
+                      paymentChannelId: int.parse(widget.paymentChannelId),
+                      userName: widget.userName,
+                      activePayment: widget.activePayment,
+                    );
                   } else {
                     submitDepositOrder(
                       context,
@@ -212,7 +213,7 @@ class ConfirmPinState extends State<ConfirmPin> {
         // 在row輸入框的下方顯示驗證錯誤的訊息，文字是驗證碼錯誤
         if (hasError)
           const Align(
-              alignment: Alignment.centerLeft,
+              alignment: Alignment.center,
               child: Text(
                 '驗證碼錯誤',
                 style: TextStyle(
@@ -220,35 +221,41 @@ class ConfirmPinState extends State<ConfirmPin> {
                     fontWeight: FontWeight.bold,
                     color: Colors.red),
               )),
-        Padding(
-          padding: const EdgeInsets.only(top: 10),
-          child: Text(
-            '如訂單無誤，請輸入以上驗證碼',
-            style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: gameLobbyPrimaryTextColor),
-          ),
-        ),
-        if (GetPlatform.isWeb)
-          Container(
+        if (!hasError)
+          Padding(
             padding: const EdgeInsets.only(top: 5),
-            width: 70,
+            child: Text(
+              enableSubmit
+                  ? redirectUrl != ''
+                      ? submitDepositSuccess
+                          ? '充值連結取得成功！'
+                          : '充值連結取得失敗 請更換充值渠道或聯繫客服'
+                      : '取得充值連結...'
+                  : '如訂單無誤，請輸入以上驗證碼',
+              style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.bold,
+                  color: gameLobbyPrimaryTextColor),
+            ),
+          ),
+        if (GetPlatform.isWeb && redirectUrl != '' && redirectUrl.isNotEmpty)
+          Container(
+            padding: const EdgeInsets.only(top: 10),
+            width: 90,
             child: GameButton(
-              text: '確認',
+              text: submitDepositSuccess ? '開啟充值頁' : '關閉',
               onPressed: () {
-                if (redirectUrl != '' && redirectUrl.isNotEmpty) {
+                if (submitDepositSuccess) {
                   onLoading(context, status: false);
                   Navigator.pop(context);
                   launch(redirectUrl, webOnlyWindowName: '_blank');
                   MyRouteDelegate.of(context)
                       .push(GameAppRoutes.paymentResult.value);
+                } else {
+                  Navigator.pop(context);
                 }
               },
-              disabled: hasError ||
-                  !enableSubmit ||
-                  redirectUrl == '' ||
-                  redirectUrl.isEmpty,
+              disabled: hasError || !enableSubmit,
             ),
           )
       ]),
