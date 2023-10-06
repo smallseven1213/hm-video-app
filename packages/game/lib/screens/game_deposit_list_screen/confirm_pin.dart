@@ -233,7 +233,7 @@ class ConfirmPinState extends State<ConfirmPin> {
             textAlign: TextAlign.center,
           ),
         ),
-        if (redirectUrl != '' && redirectUrl.isNotEmpty)
+        if (isFetching == 'complete')
           Container(
             padding: const EdgeInsets.only(top: 10),
             width: 90,
