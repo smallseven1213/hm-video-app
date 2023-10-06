@@ -46,6 +46,7 @@ class ConfirmPinState extends State<ConfirmPin> {
   String currentText = '';
   String redirectUrl = '';
   bool submitDepositSuccess = false;
+  String isFetching = '';
 
   final _formKey = GlobalKey<FormBuilderState>();
   TextEditingController textEditingController = TextEditingController();
@@ -73,11 +74,13 @@ class ConfirmPinState extends State<ConfirmPin> {
       setState(() {
         redirectUrl = value;
         submitDepositSuccess = true;
+        setState(() => isFetching = 'complete');
       });
     } catch (e) {
       logger.e('交易失敗: $e');
       setState(() {
         submitDepositSuccess = false;
+        setState(() => isFetching = 'complete');
       });
     }
   }
@@ -179,6 +182,7 @@ class ConfirmPinState extends State<ConfirmPin> {
                   });
                 }
                 if (hasError == false && enableSubmit == true) {
+                  setState(() => isFetching = 'start');
                   if (GetPlatform.isWeb) {
                     submitDepositOrderForWeb(
                       context,
@@ -195,6 +199,7 @@ class ConfirmPinState extends State<ConfirmPin> {
                       userName: widget.userName,
                       activePayment: widget.activePayment,
                     );
+                    setState(() => isFetching = 'complete');
                   }
                 }
               },
@@ -221,23 +226,26 @@ class ConfirmPinState extends State<ConfirmPin> {
                     fontWeight: FontWeight.bold,
                     color: Colors.red),
               )),
-        if (!hasError)
-          Padding(
-            padding: const EdgeInsets.only(top: 5),
-            child: Text(
-              enableSubmit
-                  ? redirectUrl != ''
-                      ? submitDepositSuccess
-                          ? '充值連結取得成功！'
-                          : '充值連結取得失敗 請更換充值渠道或聯繫客服'
-                      : '取得充值連結...'
-                  : '如訂單無誤，請輸入以上驗證碼',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: gameLobbyPrimaryTextColor),
+        Align(
+          alignment: Alignment.center,
+          child: Text(
+            enableSubmit && isFetching == 'start'
+                ? '取得充值連結...'
+                : hasError
+                    ? ''
+                    : submitDepositSuccess && isFetching == 'complete'
+                        ? '充值連結取得成功！'
+                        : !submitDepositSuccess && isFetching == 'complete'
+                            ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
+                            : '如訂單無誤，請輸入以上驗證碼',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: gameLobbyPrimaryTextColor,
             ),
+            textAlign: TextAlign.center,
           ),
+        ),
         if (GetPlatform.isWeb && redirectUrl != '' && redirectUrl.isNotEmpty)
           Container(
             padding: const EdgeInsets.only(top: 10),
