@@ -4,17 +4,12 @@ import '../apis/event_api.dart';
 import '../models/event.dart';
 
 class EventController extends GetxController {
-  List<Event> data = <Event>[].obs;
-
-  EventController() {
-    fetchData();
-  }
+  var data = <Event>[].obs;
 
   Future<void> fetchData() async {
     EventApi eventApi = EventApi();
     var result = await eventApi.getEvents();
-
-    data.addAll(result);
+    data.value = result;
   }
 
   // deleteIds

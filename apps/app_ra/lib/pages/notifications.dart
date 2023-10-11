@@ -19,7 +19,7 @@ class NotificationsPage extends StatefulWidget {
 class NotificationsPageState extends State<NotificationsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late EventController eventsController;
+  final eventsController = Get.find<EventController>();
 
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(
@@ -30,7 +30,7 @@ class NotificationsPageState extends State<NotificationsPage>
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(_handleTabSelection);
-    eventsController = Get.put(EventController());
+    eventsController.fetchData();
   }
 
   void _handleTabSelection() {
@@ -42,7 +42,6 @@ class NotificationsPageState extends State<NotificationsPage>
   void dispose() {
     _tabController.removeListener(_handleTabSelection);
     _tabController.dispose();
-    eventsController.dispose();
     super.dispose();
   }
 
