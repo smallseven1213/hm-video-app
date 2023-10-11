@@ -124,12 +124,12 @@ flutter:
   # see https://flutter.dev/custom-fonts/#from-packages
 
 #下方是pubspec.yaml版本，用flutter packages pub run sentry_dart_plugin跑的
-sentry:
-  upload_source_maps: true
-  upload_sources: true
-  project: hm-video-app
-  org: sentry
-  auth_token: 2d48ecec405b4497a4eb6c63b6ed0d07a6e82704e1134b2fb7308e430c404954
-  url: https://sentry.hmtech.club/
-  log_level: error # possible values: trace, debug, info, warn, error
-  release: RELEASE_CHANGE_ME
+# sentry:
+#   upload_source_maps: true
+#   upload_sources: true
+#   project: hm-video-app
+#   org: sentry
+#   auth_token: 4010d9f6f60d4eceb957671f5aff1dde485ae6a953e0446396bc3e66e6d9c0fb
+#   url: https://sentry.hmtech.club/
+#   log_level: error # possible values: trace, debug, info, warn, error
+#   release: RELEASE_CHANGE_ME

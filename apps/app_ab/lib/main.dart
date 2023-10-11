@@ -20,7 +20,7 @@ void main() async {
 
   runningMain(
     // [非必填]SentryDNS
-    'https://fd04e33b855d46499ea4833f28d369ba@sentry.hmtech.club/6',
+    'https://f8f4eea92f0f45ba93348e5d975c8b76@sentry.hmtech.club/4',
     // [非必填]進入的第一個畫面
     allRoutes.keys.first,
     // [必填]DlJSON來源

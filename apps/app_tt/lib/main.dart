@@ -14,7 +14,7 @@ void main() async {
   };
 
   runningMain(
-    'https://5975596ddf0f4a6b95b09de1adda3d53@sentry.hmtech.club/3',
+    'https://da90e5b7def842619c300395450aeb77@sentry.hmtech.club/7',
     allRoutes.keys.first,
     [
       'https://dl.dlsv.net/$env/dl.json',
