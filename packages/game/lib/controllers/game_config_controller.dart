@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
+final GameLobbyApi gameLobbyApi = GameLobbyApi();
 final logger = Logger();
 
 class GameConfigController extends GetxController {
   var switchPaymentPage = 0.obs;
   var gamePageColor = 1;
+  var isShowEnvelope = false.obs;
 
   GetStorage box = GetStorage();
 
@@ -24,8 +26,9 @@ class GameConfigController extends GetxController {
 
   _getGameConfig() async {
     try {
-      var res = await Get.put(GameLobbyApi()).getGameConfig();
+      var res = await gameLobbyApi.getGameConfig();
       switchPaymentPage.value = res.paymentPage;
+      isShowEnvelope.value = res.distributed;
       gamePageColor = res.pageColor;
 
       if (box.read('pageColor') == null) {
@@ -36,6 +39,10 @@ class GameConfigController extends GetxController {
     } catch (e) {
       logger.i('_getGameConfig error: $e');
     }
+  }
+
+  void setEnvelopeStatus(bool status) {
+    isShowEnvelope.value = status;
   }
 }
 
