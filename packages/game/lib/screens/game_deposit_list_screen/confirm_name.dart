@@ -158,6 +158,7 @@ class ConfirmNameState extends State<ConfirmName> {
                   ]),
                   enabled: isFetching != 'complete',
                 ),
+                const SizedBox(height: 5),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
