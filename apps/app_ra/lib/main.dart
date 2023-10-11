@@ -16,7 +16,7 @@ void main() async {
   };
 
   runningMain(
-    'https://45f8d2078d0f48a2ad32be194630b9f6@sentry.hmtech.club/5',
+    'https://b8f5f2b4ae004112a6125b24da2451c3@sentry.hmtech.club/5',
     allRoutes.keys.first,
     [
       'https://dl.dlra.info/$env/dl.json',
