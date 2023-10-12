@@ -22,18 +22,25 @@ class GameParamConfig {
   final String withdrawalFee;
   final String withdrawalMode;
   final String withdrawalLowerLimit;
+  final String? appDownload;
+  final String? activityEntrance;
 
   GameParamConfig({
     required this.withdrawalFee,
     required this.withdrawalMode,
     required this.withdrawalLowerLimit,
+    this.appDownload,
+    this.activityEntrance,
   });
 
   factory GameParamConfig.fromJson(Map<String, dynamic> json) {
     return GameParamConfig(
-        withdrawalFee: json['WITHDRAWAL_FEE'],
-        withdrawalMode: json['WITHDRAWAL_MODE'],
-        withdrawalLowerLimit: json['WITHDRAWAL_LOWER_LIMIT']);
+      withdrawalFee: json['WITHDRAWAL_FEE'],
+      withdrawalMode: json['WITHDRAWAL_MODE'],
+      withdrawalLowerLimit: json['WITHDRAWAL_LOWER_LIMIT'],
+      appDownload: json['APP_DOWNLOAD'],
+      activityEntrance: json['ACTIVITY_ENTRANCE'],
+    );
   }
 }
 

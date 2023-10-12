@@ -1,10 +1,10 @@
 import 'dart:io';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
-import 'package:game/models/game_payment_channel_detail.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+
 import 'package:game/models/bank.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/models/game_order.dart';
@@ -14,8 +14,15 @@ import 'package:game/models/hm_api_response_with_data.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/models/game_withdraw_record.dart';
 import 'package:game/models/game_withdraw_stack_limit.dart';
+import 'package:game/models/game_activity.dart';
+import 'package:game/models/game_payment_channel_detail.dart';
+
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/fetcher.dart';
+
+import 'package:shared/services/platform_service.app.dart'
+    if (dart.library.html) 'package:shared/services/platform_service.web.dart'
+    as app_platform_service;
 
 final systemConfig = GameSystemConfig();
 String apiPrefix =
@@ -34,6 +41,14 @@ _checkMaintenance(String code) {
 }
 
 class GameLobbyApi {
+  static final GameLobbyApi _instance = GameLobbyApi._internal();
+
+  GameLobbyApi._internal();
+
+  factory GameLobbyApi() {
+    return _instance;
+  }
+
   Future<void> register() =>
       fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
 
@@ -516,5 +531,66 @@ class GameLobbyApi {
     _checkMaintenance(res['code']);
 
     return HMApiResponse.fromJson(res);
+  }
+
+  // 遊戲大廳 取得活動列表
+  Future<List<ActivityItem>> getActivityList() async {
+    var value = await fetcher(url: '$apiPrefix/campaign?page=1&limit=100');
+    var res = (value.data as Map<String, dynamic>);
+    // _checkIsMaintenance(res['code']);
+
+    if (res['code'] != '00') {
+      return [];
+    }
+
+    List<ActivityItem> record = List.from((res['data'] as List<dynamic>)
+        .map((e) => ActivityItem.fromJson(e))
+        .toList());
+
+    return record;
+  }
+
+  // 遊戲大廳 申請活動
+  Future<Map> submitCampaign(
+    int id,
+  ) async {
+    var value = await fetcher(
+        url: '$apiPrefix/campaign', method: 'POST', body: {'campaignId': id});
+    var res = (value.data as Map<String, dynamic>);
+
+    if (res['code'] != '00') {
+      return {
+        'code': res['code'],
+      };
+    }
+    return {
+      'code': res['code'],
+      'message': res['data']['message'],
+    };
+  }
+
+  // 取得apk下載位置
+  Future getApkPath() async {
+    var host = app_platform_service.AppPlatformService().getHost();
+    var value =
+        await fetcher(url: '$apiPrefix/apk-path?host=$host&device=ANDROID');
+    var res = (value.data as Map<String, dynamic>);
+
+    if (res['code'] != '00') {
+      return [];
+    }
+    return res['data'];
+  }
+
+  // 取得隨機帳密
+  Future getDiversion() async {
+    var value = await fetcher(url: '$apiPrefix/diversion-update');
+    if (value == null) return [];
+
+    var res = (value.data as Map<String, dynamic>);
+
+    if (res['code'] == '00' && res['data'] != null) {
+      return res['data'];
+    }
   }
 }

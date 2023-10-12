@@ -1,5 +1,6 @@
 library game_routes;
 
+import 'package:app_ab/screens/games/game_activity.dart';
 import 'package:app_ab/screens/games/game_lobby.dart';
 import 'package:app_ab/screens/games/game_webview.dart';
 import 'package:app_ab/screens/games/game_withdraw.dart';
@@ -39,4 +40,5 @@ final Map<String, RouteWidgetBuilder> gameRoutes = {
       const GameDepositRecordScreen(),
   GameAppRoutes.withdrawRecord.value: (context, args) =>
       const GameWithdrawRecordScreen(),
+  GameAppRoutes.activity.value: (context, args) => const GameActivityScreen(),
 };
