@@ -62,16 +62,18 @@ class _GameActivityState extends State<GameActivity> {
                   size: 40,
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  '尚未充值，快前往充值吧！',
-                  style:
-                      TextStyle(color: gameLobbyPrimaryTextColor, fontSize: 14),
-                ),
+                if (res['message'].isNotEmpty)
+                  Text(
+                    res['message'],
+                    style: TextStyle(
+                        color: gameLobbyPrimaryTextColor, fontSize: 14),
+                  ),
               ],
             ),
           ),
-          confirmText: res['message'] ?? '確認',
+          confirmText: '確認',
           onConfirm: () => {
+            getActivityList(),
             Navigator.pop(context),
           },
         );
@@ -90,16 +92,18 @@ class _GameActivityState extends State<GameActivity> {
                   size: 40,
                 ),
                 const SizedBox(height: 20),
-                Text(
-                  '不符合申請資格',
-                  style:
-                      TextStyle(color: gameLobbyPrimaryTextColor, fontSize: 14),
-                ),
+                if (res['message'].isNotEmpty)
+                  Text(
+                    res['message'],
+                    style: TextStyle(
+                        color: gameLobbyPrimaryTextColor, fontSize: 14),
+                  ),
               ],
             ),
           ),
           confirmText: '確認',
           onConfirm: () => {
+            getActivityList(),
             Navigator.pop(context),
           },
         );
@@ -298,7 +302,7 @@ class _GameActivityState extends State<GameActivity> {
                                           }
                                         else
                                           submitCampaign(
-                                              context, activityList[index].id)
+                                              context, activityList[index].id),
                                       },
                                     ),
                                   ),
