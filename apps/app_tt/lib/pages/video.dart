@@ -15,6 +15,7 @@ import '../screens/video/belong_video.dart';
 import '../screens/video/video_info.dart';
 import '../screens/video/video_player_area/index.dart';
 import '../screens/video/video_player_area/loading.dart';
+import '../screens/video/video_player_area/purchase_block.dart';
 import '../widgets/title_header.dart';
 import '../widgets/video_preview.dart';
 import '../widgets/wave_loading.dart';
@@ -116,6 +117,14 @@ class VideoState extends State<Video> {
                   CustomScrollView(
                     controller: _controller,
                     slivers: [
+                      SliverToBoxAdapter(
+                        child: PurchaseBlock(
+                          id: videoDetail.id.toString(),
+                          videoDetail: videoDetail,
+                          videoUrl: videoUrl,
+                          tag: controllerTag,
+                        ),
+                      ),
                       SliverToBoxAdapter(
                         child: VideoPlayerConsumer(
                           tag: videoUrl,

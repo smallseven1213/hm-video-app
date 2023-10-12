@@ -6,7 +6,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:video_player/video_player.dart';
-
+import 'purchase_promotion.dart';
 import 'controls_overlay.dart';
 import 'error.dart';
 import 'loading.dart';
@@ -114,6 +114,35 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
           var aspectRatio = videoSize.width == 0 || videoSize.height == 0
               ? 16 / 9
               : videoSize.width / videoSize.height;
+          final coverHorizontal = widget.video.coverHorizontal ?? '';
+
+          if (videoPlayerInfo.videoAction == 'error') {
+            return VideoError(
+              coverHorizontal: coverHorizontal,
+              onTap: () {
+                videoPlayerInfo.videoPlayerController?.play();
+              },
+            );
+          }
+
+          if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
+              false) {
+            return VideoLoading(coverHorizontal: coverHorizontal);
+          }
+
+          if (widget.video.isAvailable == false &&
+              videoPlayerInfo.videoAction == 'end') {
+            return PurchasePromotion(
+              coverHorizontal: coverHorizontal,
+              buyPoints: widget.video.buyPoint.toString(),
+              timeLength: widget.video.timeLength ?? 0,
+              chargeType: widget.video.chargeType ?? 0,
+              videoId: widget.video.id,
+              videoPlayerInfo: videoPlayerInfo,
+              title: widget.video.title,
+              tag: widget.tag,
+            );
+          }
 
           return Stack(
             alignment: Alignment.center,
