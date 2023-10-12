@@ -2,12 +2,14 @@ import 'package:app_tt/screens/layout_user_screen/collection.dart';
 import 'package:app_tt/screens/layout_user_screen/favorites.dart';
 import 'package:app_tt/screens/layout_user_screen/playrecord.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import 'layout_user_screen_tabbar_header_delegate.dart';
 import 'user_card.dart';
+import 'user_grid_menu_button.dart';
 import 'user_header.dart';
 
 class LayoutUserScreen extends StatefulWidget {
@@ -60,27 +62,103 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                     ),
                     SliverToBoxAdapter(
                       child: Container(
-                        color: Colors.white,
-                        height: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center, // 水平居中
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(20),
+                            topRight: Radius.circular(20),
+                          ),
+                        ),
+                        child: Column(
                           children: [
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.red), // 第一个物件
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.green), // 第二个物件
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.blue), // 第三个物件
-                            Container(
-                                width: 60,
-                                height: 60,
-                                color: Colors.yellow), // 第四个物件
+                            const SizedBox(height: 20),
+                            const Align(
+                              // left
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                children: [
+                                  SizedBox(width: 16),
+                                  Text('100',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17,
+                                      )),
+                                  SizedBox(width: 3),
+                                  Text('個讚數',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: Color(0xFF73747b))),
+                                  SizedBox(width: 20),
+                                  Text('100',
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 17,
+                                      )),
+                                  SizedBox(width: 3),
+                                  Text('個讚數',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13,
+                                          color: Color(0xFF73747b))),
+                                ],
+                              ),
+                            ),
+                            const SizedBox(height: 30),
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center, // 水平居中
+                              children: [
+                                UserGridMenuButton(
+                                  iconWidget: SvgPicture.asset(
+                                    'svgs/ic-myid.svg',
+                                    colorFilter: const ColorFilter.mode(
+                                        Color(0xFF161823), BlendMode.srcIn),
+                                  ),
+                                  text: '身份卡',
+                                  onTap: () {
+                                    _tabController.animateTo(1);
+                                  },
+                                ),
+                                const SizedBox(width: 50),
+                                UserGridMenuButton(
+                                  iconWidget: SvgPicture.asset(
+                                    'svgs/ic-myshare.svg',
+                                    colorFilter: const ColorFilter.mode(
+                                        Color(0xFF161823), BlendMode.srcIn),
+                                  ),
+                                  text: '推廣分享',
+                                  onTap: () {
+                                    _tabController.animateTo(1);
+                                  },
+                                ),
+                                const SizedBox(width: 50),
+                                UserGridMenuButton(
+                                  iconWidget: SvgPicture.asset(
+                                    'svgs/ic-myservice.svg',
+                                    colorFilter: const ColorFilter.mode(
+                                        Color(0xFF161823), BlendMode.srcIn),
+                                  ),
+                                  text: '在線客服',
+                                  onTap: () {
+                                    _tabController.animateTo(1);
+                                  },
+                                ),
+                                const SizedBox(width: 50),
+                                UserGridMenuButton(
+                                  iconWidget: SvgPicture.asset(
+                                    'svgs/ic-myapp.svg',
+                                    colorFilter: const ColorFilter.mode(
+                                        Color(0xFF161823), BlendMode.srcIn),
+                                  ),
+                                  text: '應用中心',
+                                  onTap: () {
+                                    _tabController.animateTo(1);
+                                  },
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 25),
                           ],
                         ),
                       ),

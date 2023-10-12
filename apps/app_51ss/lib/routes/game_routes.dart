@@ -1,5 +1,6 @@
 library game_routes;
 
+import 'package:app_51ss/screens/games/game_activity.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -40,4 +41,5 @@ final Map<String, RouteWidgetBuilder> gameRoutes = {
       const GameDepositRecordScreen(),
   GameAppRoutes.withdrawRecord.value: (context, args) =>
       const GameWithdrawRecordScreen(),
+  GameAppRoutes.activity.value: (context, args) => const GameActivityScreen(),
 };

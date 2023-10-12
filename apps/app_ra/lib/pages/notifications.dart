@@ -19,8 +19,7 @@ class NotificationsPage extends StatefulWidget {
 class NotificationsPageState extends State<NotificationsPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  late EventController eventsController;
-
+  final eventsController = Get.find<EventController>();
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(
           tag: ListEditorCategory.notifications.toString());
@@ -30,11 +29,14 @@ class NotificationsPageState extends State<NotificationsPage>
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(_handleTabSelection);
-    eventsController = Get.put(EventController());
+    eventsController.fetchData();
   }
 
   void _handleTabSelection() {
     listEditorController.clearSelected();
+    if (_tabController.index == 1) {
+      eventsController.markAllAsRead();
+    }
     setState(() {});
   }
 
@@ -42,21 +44,18 @@ class NotificationsPageState extends State<NotificationsPage>
   void dispose() {
     _tabController.removeListener(_handleTabSelection);
     _tabController.dispose();
-    eventsController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      bool hasUnRead =
-          eventsController.data.any((element) => element.isRead == false);
       return Scaffold(
         appBar: MyAppBar(
           title: '消息中心',
           bottom: RATabBar(
             tabs: const ['公告', '系統通知'],
-            dotIndexes: hasUnRead ? [1] : [],
+            dotIndexes: eventsController.hasUnRead.value ? [1] : [],
             controller: _tabController,
           ),
           actions: [

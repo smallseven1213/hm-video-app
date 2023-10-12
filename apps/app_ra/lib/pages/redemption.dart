@@ -69,18 +69,20 @@ class _RedemptionPageState extends State<RedemptionPage> {
                     onPressed: () async {
                       var result =
                           await redemptionApi.redeem(_controller!.text);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          margin: EdgeInsets.fromLTRB(50, 0, 50, 200),
-                          content: Text(
-                            result,
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.bodySmall,
+                      if (mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            behavior: SnackBarBehavior.floating,
+                            margin: EdgeInsets.fromLTRB(50, 0, 50, 200),
+                            content: Text(
+                              result,
+                              textAlign: TextAlign.center,
+                              style: Theme.of(context).textTheme.bodySmall,
+                            ),
                           ),
-                        ),
-                      );
-                      redemptionController.fetchData();
+                        );
+                        redemptionController.fetchData();
+                      }
                     },
                     text: '兌換',
                     size: 'small',

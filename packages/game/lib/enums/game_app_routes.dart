@@ -11,6 +11,7 @@ enum GameAppRoutes {
   setBankcard,
   depositRecord,
   withdrawRecord,
+  activity,
 }
 
 extension AppRoutesExtension on GameAppRoutes {
@@ -38,6 +39,8 @@ extension AppRoutesExtension on GameAppRoutes {
         return '/game/deposit/record';
       case GameAppRoutes.withdrawRecord:
         return '/game/withdraw/record';
+      case GameAppRoutes.activity:
+        return '/game/activity';
       default:
         return '/unknown';
     }

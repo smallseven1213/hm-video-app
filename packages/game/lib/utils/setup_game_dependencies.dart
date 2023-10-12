@@ -1,4 +1,5 @@
 import 'package:game/controllers/game_config_controller.dart';
+import 'package:game/controllers/game_param_config_controller.dart';
 import 'package:get/get.dart';
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_list_controller.dart';
@@ -12,10 +13,11 @@ void setupGameDependencies() {
   Get.lazyPut<GameAuthController>(() => GameAuthController());
   Get.lazyPut<GameApiResponseErrorCatchController>(
       () => GameApiResponseErrorCatchController());
-  Get.lazyPut<GameConfigController>(() => GameConfigController());
   Get.lazyPut<UserController>(() => UserController());
   Get.lazyPut<GameBannerController>(() => GameBannerController());
   Get.lazyPut<GamesListController>(() => GamesListController());
   Get.lazyPut<GameWalletController>(() => GameWalletController());
   Get.lazyPut<GameWithdrawController>(() => GameWithdrawController());
+  Get.lazyPut<GameConfigController>(() => GameConfigController());
+  Get.lazyPut<GameParamConfigController>(() => GameParamConfigController());
 }

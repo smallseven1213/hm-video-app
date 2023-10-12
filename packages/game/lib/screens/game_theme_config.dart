@@ -94,6 +94,10 @@ final gameLobbyEmptyColor =
     gameTheme[theme]!['gameLobbyEmptyColor'] ?? Colors.transparent;
 final gameLobbyTabActiveBgColor =
     gameTheme[theme]!['gameLobbyTabActiveBgColor'] ?? Colors.transparent;
+final gameActivityIconColor =
+    gameTheme[theme]!['gameActivityIconColor'] ?? Colors.transparent;
+final gameActivityContentTextColor =
+    gameTheme[theme]!['gameActivityContentTextColor'] ?? Colors.transparent;
 
 class DarkThemeColors {
   static const gameLobbyBgColor = Color(0xff1E2123);
@@ -137,6 +141,8 @@ class DarkThemeColors {
   static const gameRecordLabelTextColor = Colors.white;
   static const gameLobbyEmptyColor = Color(0xff2c2c2c);
   static const gameLobbyTabActiveBgColor = Color(0xff3f454d);
+  static const gameActivityIconColor = Colors.white;
+  static const gameActivityContentTextColor = Colors.white;
 }
 
 class LightThemeColors {
@@ -181,6 +187,8 @@ class LightThemeColors {
   static const gameRecordLabelTextColor = Color(0xFF979797);
   static const gameLobbyEmptyColor = Color(0xffededed);
   static const gameLobbyTabActiveBgColor = Color(0xffe6f9f2);
+  static const gameActivityIconColor = Color(0xffeeeeee);
+  static const gameActivityContentTextColor = Color(0xff43474a);
 }
 
 Map<String, Map<String, Color>> gameTheme = {
@@ -229,6 +237,9 @@ Map<String, Map<String, Color>> gameTheme = {
     'gameRecordLabelTextColor': LightThemeColors.gameRecordLabelTextColor,
     'gameLobbyEmptyColor': LightThemeColors.gameLobbyEmptyColor,
     'gameLobbyTabActiveBgColor': LightThemeColors.gameLobbyTabActiveBgColor,
+    'gameActivityIconColor': LightThemeColors.gameActivityIconColor,
+    'gameActivityContentTextColor':
+        LightThemeColors.gameActivityContentTextColor,
   },
   'dark': {
     'gameLobbyBgColor': DarkThemeColors.gameLobbyBgColor,
@@ -275,5 +286,8 @@ Map<String, Map<String, Color>> gameTheme = {
     'gameRecordLabelTextColor': DarkThemeColors.gameRecordLabelTextColor,
     'gameLobbyEmptyColor': DarkThemeColors.gameLobbyEmptyColor,
     'gameLobbyTabActiveBgColor': DarkThemeColors.gameLobbyTabActiveBgColor,
+    'gameActivityIconColor': DarkThemeColors.gameActivityIconColor,
+    'gameActivityContentTextColor':
+        DarkThemeColors.gameActivityContentTextColor,
   }
 };

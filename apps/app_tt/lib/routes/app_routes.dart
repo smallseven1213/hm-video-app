@@ -15,6 +15,8 @@ import '../pages/video_by_block.dart' as video_by_block_page;
 import '../pages/actors.dart' as actors_page;
 import '../pages/filter.dart' as filter_page;
 import '../pages/search.dart' as search_page;
+import '../pages/vip.dart' as vip_page;
+import '../pages/coin.dart' as coin_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -60,6 +62,9 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.filter: (context, args) => const filter_page.FilterPage(),
   AppRoutes.actors: (context, args) => const actors_page.ActorsPage(),
+  AppRoutes.vip: (context, args) => const vip_page.VipPage(),
+  AppRoutes.coin: (context, args) => const coin_page.CoinPage(),
+
   // AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
   //       id: args['id'] as int,
   //     ),

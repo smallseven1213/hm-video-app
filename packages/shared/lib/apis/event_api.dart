@@ -28,6 +28,6 @@ class EventApi {
 
   void deleteEvents(List<int> ids) async {
     await fetcher(
-        url: '$apiPrefix/event/id=${ids.join(',')}', method: 'delete');
+        url: '$apiPrefix/event?id=${ids.join(',')}', method: 'delete');
   }
 }

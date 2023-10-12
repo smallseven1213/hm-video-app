@@ -72,13 +72,13 @@ class ConfirmPinState extends State<ConfirmPin> {
       setState(() {
         redirectUrl = value;
         submitDepositSuccess = true;
-        setState(() => isFetching = 'complete');
+        isFetching = 'complete';
       });
     } catch (e) {
       logger.e('pin 交易失敗: $e');
       setState(() {
         submitDepositSuccess = false;
-        setState(() => isFetching = 'complete');
+        isFetching = 'complete';
       });
     }
   }

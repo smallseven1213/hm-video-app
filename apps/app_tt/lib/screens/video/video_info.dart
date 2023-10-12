@@ -140,7 +140,7 @@ class VideoInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
+      padding: const EdgeInsets.only(top: 0, right: 8, left: 8),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

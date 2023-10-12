@@ -5,6 +5,7 @@ import '../controllers/apps_controller.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/banner_controller.dart';
 import '../controllers/bottom_navigator_controller.dart';
+import '../controllers/event_controller.dart';
 import '../controllers/filter_screen_controller.dart';
 import '../controllers/filter_short_screen_controller.dart';
 import '../controllers/filter_temp_controller.dart';
@@ -80,5 +81,5 @@ void setupDependencies() {
   Get.lazyPut<SearchPageDataController>(() => SearchPageDataController());
   Get.lazyPut<SearchTempShortController>(() => SearchTempShortController());
   Get.lazyPut<RedemptionController>(() => RedemptionController());
-
+  Get.lazyPut<EventController>(() => EventController());
 }
