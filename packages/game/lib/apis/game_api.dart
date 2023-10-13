@@ -566,6 +566,7 @@ class GameLobbyApi {
     return {
       'code': res['code'],
       'message': res['data']['message'],
+      'status': res['data']['status'],
     };
   }
 
