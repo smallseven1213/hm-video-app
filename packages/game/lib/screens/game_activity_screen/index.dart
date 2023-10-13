@@ -25,6 +25,7 @@ class GameActivity extends StatefulWidget {
 class _GameActivityState extends State<GameActivity> {
   List activityList = [];
   List<bool> _isExpandedList = [];
+  bool buttonDisable = false;
 
   @override
   void initState() {
@@ -50,7 +51,7 @@ class _GameActivityState extends State<GameActivity> {
       if (res['code'] == '00') {
         showFormDialog(
           context,
-          title: '已申請',
+          title: activityResStatus[res['status']]!,
           content: SizedBox(
             height: 85,
             child: Column(
@@ -71,9 +72,11 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText: '確認',
+          confirmText:
+              res['status'] == activityButtonStatus['DISABLE'] ? '關閉' : '確認',
           onConfirm: () => {
-            getActivityList(),
+            if (res['status'] == activityButtonStatus['DISABLE'])
+              setState(() => buttonDisable = true),
             Navigator.pop(context),
           },
         );
@@ -103,7 +106,6 @@ class _GameActivityState extends State<GameActivity> {
           ),
           confirmText: '確認',
           onConfirm: () => {
-            getActivityList(),
             Navigator.pop(context),
           },
         );
@@ -292,6 +294,7 @@ class _GameActivityState extends State<GameActivity> {
                                           SizedBox(
                                     width: 220,
                                     child: GameButton(
+                                      disabled: buttonDisable,
                                       text: activityList[index].buttonName,
                                       onPressed: () => {
                                         if (activityList[index].buttonStyle ==

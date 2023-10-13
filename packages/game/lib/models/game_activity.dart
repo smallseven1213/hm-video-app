@@ -52,8 +52,18 @@ Map<int, Map<String, dynamic>> activityTypeMapper = {
   },
 };
 
-Map<int, String> activityButtonType = {
-  1: 'NONE',
-  2: 'CS',
-  3: 'SUBMIT_CAMPAIGN',
+Map<String, int> activityButtonType = {
+  'NONE': 1,
+  'CS': 2,
+  'SUBMIT_CAMPAIGN': 3,
 };
+
+Map<int, String> activityResStatus = {
+  0: '未充值',
+  1: '已申請',
+  2: '審核中',
+  3: '已發放',
+  4: '申請失敗',
+};
+
+Map<String, int> activityButtonStatus = {'DISABLE': 0};
