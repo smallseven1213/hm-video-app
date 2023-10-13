@@ -66,4 +66,4 @@ Map<int, String> activityResStatus = {
   4: '申請失敗',
 };
 
-Map<String, int> activityButtonStatus = {'DISABLE': 0};
+Map<String, int> activityButtonStatus = {'ENABLE': 0};

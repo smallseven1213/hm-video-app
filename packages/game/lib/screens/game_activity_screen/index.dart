@@ -73,9 +73,9 @@ class _GameActivityState extends State<GameActivity> {
             ),
           ),
           confirmText:
-              res['status'] == activityButtonStatus['DISABLE'] ? '關閉' : '確認',
+              res['status'] == activityButtonStatus['ENABLE'] ? '關閉' : '確認',
           onConfirm: () => {
-            if (res['status'] == activityButtonStatus['DISABLE'])
+            if (res['status'] != activityButtonStatus['ENABLE'])
               setState(() => buttonDisable = true),
             Navigator.pop(context),
           },
