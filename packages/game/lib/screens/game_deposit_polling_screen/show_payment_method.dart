@@ -1,18 +1,18 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:game/screens/game_deposit_polling_screen/payment_method_item.dart';
+import 'package:logger/logger.dart';
+
 import 'package:game/apis/game_api.dart';
-import 'package:game/enums/game_app_routes.dart';
 import 'package:game/models/game_payment.dart';
 import 'package:game/screens/game_deposit_list_screen/show_user_name.dart';
+import 'package:game/screens/game_deposit_polling_screen/payment_link_res.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/on_loading.dart';
 import 'package:game/utils/show_form_dialog.dart';
-import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:game/utils/show_model.dart';
 
 final logger = Logger();
+final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 Future<void> showPaymentMethod({
   context,
@@ -22,8 +22,8 @@ Future<void> showPaymentMethod({
   Function? onClose,
 }) async {
   int paymentMethod = 0;
-  List<Payment> payments = await GameLobbyApi()
-      .getPaymentsBy(productId, balanceFiatMoneyPrice.split('.').first);
+  List<Payment> payments = await gameLobbyApi.getPaymentsBy(
+      productId, balanceFiatMoneyPrice.split('.').first);
   if (payments.isNotEmpty) {
     paymentMethod = payments.first.id;
   } else {
@@ -48,76 +48,6 @@ Future<void> showPaymentMethod({
     return;
   }
 
-  void submitOrder(int productId, String? userName) async {
-    onLoading(context, status: true);
-    // ignore: avoid_init_to_null
-    if (await canLaunchUrl(Uri.parse(''))) {
-      await launchUrl(Uri.parse(''), webOnlyWindowName: '_blank');
-    }
-    await Future.delayed(const Duration(milliseconds: 100));
-    try {
-      var value = await GameLobbyApi().makeOrder(
-        productId: productId,
-        paymentChannelId: paymentMethod,
-        name: userName,
-      );
-      if (value.isNotEmpty && value.startsWith('http')) {
-        if (GetPlatform.isWeb) {
-          await Future.delayed(const Duration(milliseconds: 500));
-          onLoading(context, status: false);
-          Navigator.pop(context);
-          launch(value, webOnlyWindowName: '_blank');
-          MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
-        } else {
-          await launch(value, webOnlyWindowName: '_blank');
-          onLoading(context, status: false);
-          Navigator.pop(context);
-          MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
-        }
-      } else {
-        onLoading(context, status: false);
-        showFormDialog(
-          context,
-          title: '交易失敗',
-          content: SizedBox(
-            height: 24,
-            child: Center(
-              child: Text(
-                value == '51728' ? '當前支付人數眾多，請稍後再試！' : '訂單建立失敗，請聯繫客服',
-                style: TextStyle(color: gameLobbyPrimaryTextColor),
-              ),
-            ),
-          ),
-          confirmText: '確認',
-          onConfirm: () => {
-            Navigator.pop(context),
-            Navigator.pop(context),
-          },
-        );
-      }
-    } catch (e) {
-      onLoading(context, status: false);
-      showFormDialog(
-        context,
-        title: '交易失敗',
-        content: SizedBox(
-          height: 60,
-          child: Center(
-            child: Text(
-              '訂單建立失敗，請聯繫客服',
-              style: TextStyle(color: gameLobbyPrimaryTextColor),
-            ),
-          ),
-        ),
-        confirmText: '確認',
-        onConfirm: () => {
-          Navigator.of(context).pop(),
-        },
-      );
-      logger.i('submitDepositOrder error: $e');
-    }
-  }
-
   await showModalBottomSheet(
     isDismissible: false,
     context: context,
@@ -139,12 +69,10 @@ Future<void> showPaymentMethod({
               ),
               color: gameItemMainColor,
             ),
-            height: 190 + payments.length * 60,
+            height: (kIsWeb ? 160 : 190) + payments.length * 60,
             child: Column(
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 15),
                 Stack(
                   children: [
                     Center(
@@ -173,29 +101,15 @@ Future<void> showPaymentMethod({
                   ],
                 ),
                 Container(
-                  // padding x 36, top 33, bottom 24
-                  margin: const EdgeInsets.only(
-                    left: 36,
-                    right: 36,
-                    top: 25,
-                    bottom: 20,
-                  ),
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
                   child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          borderRadius:
-                              const BorderRadius.all(Radius.circular(4)),
-                          border: Border.fromBorderSide(
-                            BorderSide(
-                              color: gamePrimaryButtonColor,
-                              width: 1,
-                            ),
-                          ),
-                        ),
+                      Icon(
+                        Icons.radio_button_unchecked_rounded,
+                        size: 10,
+                        color: gamePrimaryButtonColor,
                       ),
                       const SizedBox(
                         width: 8,
@@ -211,100 +125,22 @@ Future<void> showPaymentMethod({
                 ),
                 Column(
                   children: [
-                    ...payments.where((product) => product.type != '').map((e) {
-                      return Container(
-                        margin: const EdgeInsets.only(
-                            bottom: 10, left: 24, right: 24),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                              color: gameLobbyDividerColor,
-                              width: 1,
-                            ),
-                          ),
-                        ),
-                        child: InkWell(
-                          onTap: () async {
-                            setModalState(() {
-                              paymentMethod = e.id;
-                            });
-                          },
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            margin: const EdgeInsets.only(left: 16, right: 16),
-                            padding: const EdgeInsets.only(
-                              left: 8,
-                              right: 8,
-                            ),
-                            child: Row(
-                              children: [
-                                e.type == "支付寶"
-                                    ? SvgPicture.asset(
-                                        'packages/game/assets/svg/icon-payment-alipay.svg',
-                                        width: 18,
-                                        height: 18,
-                                      )
-                                    : e.type == "雲閃付"
-                                        ? SvgPicture.asset(
-                                            'packages/game/assets/svg/icon-payment-quickpass.svg',
-                                            width: 18,
-                                            height: 18,
-                                          )
-                                        : e.type == "銀行卡"
-                                            ? SvgPicture.asset(
-                                                'packages/game/assets/svg/icon-payment-paypal.svg',
-                                                width: 18,
-                                                height: 18,
-                                              )
-                                            : SvgPicture.asset(
-                                                'packages/game/assets/svg/icon-payment-wechat.svg',
-                                                width: 18,
-                                                height: 18,
-                                              ),
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    e.type ?? '',
-                                    style: TextStyle(
-                                      color: gameLobbyPrimaryTextColor,
-                                    ),
-                                  ),
-                                ),
-                                Checkbox(
-                                  activeColor: const Color(0xff0bb563),
-                                  checkColor: gameLobbyBgColor,
-                                  value: paymentMethod == e.id,
-                                  onChanged: (val) {
-                                    if (val == true) {
-                                      setModalState(() {
-                                        paymentMethod = e.id;
-                                      });
-                                    }
-                                  },
-                                  side: MaterialStateBorderSide.resolveWith(
-                                    (states) => BorderSide.none,
-                                  ),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(64.0)),
-                                ),
-                                Container(
-                                  height: 1,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                    ...payments
+                        .where((product) => product.paymentType != '')
+                        .map((payment) {
+                      return PaymentMethodItem(
+                        payment: payment,
+                        paymentMethod: paymentMethod,
+                        onPaymentSelected: (int selectedPayment) {
+                          setModalState(() {
+                            paymentMethod = selectedPayment;
+                          });
+                        },
                       );
                     }).toList(),
                   ],
                 ),
-                SizedBox(
-                  height: GetPlatform.isWeb ? 20 : 0,
-                ),
+                const SizedBox(height: 15),
                 InkWell(
                   onTap: () async {
                     if (paymentMethod == 0) {
@@ -315,27 +151,36 @@ Future<void> showPaymentMethod({
                     if (payments
                             .firstWhere(
                                 (element) => element.id == paymentMethod)
-                            .type ==
-                        "銀行卡") {
+                            .paymentType ==
+                        'debit') {
                       showUserName(
                         context,
-                        onSuccess: (userName) {
-                          Navigator.of(context).pop();
-                          submitOrder(productId, userName);
+                        onSuccess: (userName) => {
+                          showModel(
+                            context,
+                            content: PaymentLinkRes(
+                              productId: productId,
+                              userName: userName,
+                              paymentChannelId: paymentMethod,
+                            ),
+                          )
                         },
                       );
                     } else {
-                      Navigator.of(context).pop();
-                      submitOrder(productId, null);
+                      showModel(
+                        context,
+                        content: PaymentLinkRes(
+                          productId: productId,
+                          paymentChannelId: paymentMethod,
+                          userName: null,
+                        ),
+                      );
                     }
                   },
                   child: Container(
                     alignment: Alignment.center,
-                    margin: const EdgeInsets.only(left: 16, right: 16),
-                    padding: const EdgeInsets.only(
-                      top: 10,
-                      bottom: 10,
-                    ),
+                    margin: const EdgeInsets.symmetric(horizontal: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 10),
                     decoration: BoxDecoration(
                       color: gamePrimaryButtonColor,
                       borderRadius: BorderRadius.circular(24.0),

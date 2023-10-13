@@ -5,7 +5,7 @@ void showModel(
   BuildContext context, {
   String? title,
   required Widget content,
-  required Function() onClosed,
+  Function()? onClosed,
 }) {
   showDialog(
     context: context,
@@ -40,23 +40,24 @@ void showModel(
                     ),
                   ),
                 ),
-              Expanded(
-                  flex: 1,
-                  child: Padding(
-                    padding: title != null
-                        ? const EdgeInsets.all(0)
-                        : const EdgeInsets.only(right: 15, top: 15),
-                    child: InkWell(
-                      onTap: () {
-                        onClosed();
-                      },
-                      child: Icon(
-                        Icons.close,
-                        color: gameLobbyLoginFormColor,
-                        size: 24,
+              if (onClosed != null)
+                Expanded(
+                    flex: 1,
+                    child: Padding(
+                      padding: title != null
+                          ? const EdgeInsets.all(0)
+                          : const EdgeInsets.only(right: 15, top: 15),
+                      child: InkWell(
+                        onTap: () {
+                          onClosed();
+                        },
+                        child: Icon(
+                          Icons.close,
+                          color: gameLobbyLoginFormColor,
+                          size: 24,
+                        ),
                       ),
-                    ),
-                  )),
+                    )),
             ],
           ),
           content: SizedBox(
