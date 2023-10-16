@@ -6,6 +6,10 @@ import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/enums/play_record_type.dart';
 
+import 'playrecord/short.dart';
+import 'playrecord/video.dart';
+import 'shared/sub_tabbar.dart';
+
 final logger = Logger();
 
 class PlayRecordPage extends StatefulWidget {
@@ -79,35 +83,26 @@ class PlayRecordPageState extends State<PlayRecordPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: CustomAppBar(
-      //   title: '我的足跡',
-      //   actions: [
-      //     Obx(() => TextButton(
-      //         onPressed: () {
-      //           listEditorController.toggleEditing();
-      //         },
-      //         child: Text(
-      //           listEditorController.isEditing.value ? '取消' : '編輯',
-      //           style: const TextStyle(color: Color(0xff00B0D4)),
-      //         )))
-      //   ],
-      //   bottom:
-      //       TabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
-      // ),
-      body: Stack(
-        children: [
-          TabBarView(
+    return NestedScrollView(
+      physics: const NeverScrollableScrollPhysics(),
+      controller: PrimaryScrollController.of(context),
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          SubTabBar(
+            tabs: const ['長視頻', '短視頻'],
             controller: _tabController,
-            children: [
-              // PlayRecordVideoScreen(),
-              // PlayRecordShortScreen(),
-            ],
+            onSelectAll: () {},
+            isEditing: false,
           ),
-          // ListPagePanelWidget(
-          //     listEditorController: listEditorController,
-          //     onSelectButtonClick: _handleSelectAll,
-          //     onDeleteButtonClick: _handleDeleteAll),
+        ];
+      },
+      body: TabBarView(
+        physics: const NeverScrollableScrollPhysics(),
+        controller: _tabController,
+        // physics: const BouncingScrollPhysics(),
+        children: [
+          PlayRecordVideoScreen(),
+          PlayRecordShortScreen(),
         ],
       ),
     );
