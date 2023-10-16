@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MenuItem extends StatelessWidget {
-  final IconData icon;
+  final Widget icon;
   final String text;
   final VoidCallback onTap;
 
@@ -14,10 +14,28 @@ class MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(text),
+    return GestureDetector(
       onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 15.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(width: 30.0),
+            icon,
+            const SizedBox(width: 15.0),
+            Expanded(
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 16.0,
+                  color: Colors.black87,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

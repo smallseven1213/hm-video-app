@@ -17,6 +17,7 @@ import '../pages/filter.dart' as filter_page;
 import '../pages/search.dart' as search_page;
 import '../pages/vip.dart' as vip_page;
 import '../pages/coin.dart' as coin_page;
+import '../pages/share.dart' as share_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -45,15 +46,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.login: (context, args) => const login_page.LoginPage(),
   // AppRoutes.nickname: (context, args) => const nickname_page.NicknamePage(),
   AppRoutes.register: (context, args) => const register_page.RegisterPage(),
-  // AppRoutes.share: (context, args) => const share_page.SharePage(),
-  // AppRoutes.playRecord: (context, args) =>
-  //     const playrecord_page.PlayRecordPage(),
+  AppRoutes.share: (context, args) => const share_page.SharePage(),
   // AppRoutes.shareRecord: (context, args) =>
   //     const sharerecord_page.ShareRecord(),
   AppRoutes.apps: (context, args) => const apps_page.AppsPage(),
-  // AppRoutes.favorites: (context, args) => const favorites_page.FavoritesPage(),
-  // AppRoutes.collection: (context, args) =>
-  //     const collection_page.CollectionPage(),
   // AppRoutes.notifications: (context, args) =>
   //     const notifications_page.NotificationsPage(),
   AppRoutes.search: (context, args) => search_page.SearchPage(
