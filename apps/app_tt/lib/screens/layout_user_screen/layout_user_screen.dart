@@ -23,6 +23,7 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late TabController _tabController;
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -37,10 +38,12 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
         onAccountProtectionShown: () {},
         child: Scaffold(
           key: _scaffoldKey,
+          backgroundColor: Colors.white,
           body: Stack(
             children: [
               NestedScrollView(
-                physics: const BouncingScrollPhysics(),
+                controller: scrollController,
+                // physics: const BouncingScrollPhysics(),
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
@@ -49,17 +52,15 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                         height: MediaQuery.of(context).padding.top,
                       ),
                     ),
-                    // UserInfoConsumer(
-                    //   child: (info, isVIP, isGuest) => SliverPersistentHeader(
-                    //     delegate: UserHeader(info: info, context: context),
-                    //     pinned: true,
+                    SliverPersistentHeader(
+                      delegate: UserHeader(context: context),
+                      pinned: true,
+                    ),
+                    // SliverToBoxAdapter(
+                    //   child: UserInfoConsumer(
+                    //     child: (info, isVIP, isGuest) => UserCard(info: info),
                     //   ),
                     // ),
-                    SliverToBoxAdapter(
-                      child: UserInfoConsumer(
-                        child: (info, isVIP, isGuest) => UserCard(info: info),
-                      ),
-                    ),
                     SliverToBoxAdapter(
                       child: Container(
                         decoration: const BoxDecoration(
@@ -171,9 +172,10 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                   ];
                 },
                 body: TabBarView(
+                  physics: const NeverScrollableScrollPhysics(),
                   controller: _tabController,
-                  physics: const BouncingScrollPhysics(),
-                  children: const [
+                  // physics: const BouncingScrollPhysics(),
+                  children: [
                     PlayRecordPage(),
                     FavoritesPage(),
                     CollectionPage()

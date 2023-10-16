@@ -11,10 +11,6 @@ class LayoutUserScreenTabBarHeaderDelegate
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    // return TTTabBar(
-    //   controller: tabController,
-    //   tabs: const ['我的足跡', '我的喜歡', '我的收藏'],
-    // );
     return Container(
       height: 60,
       color: Colors.white,

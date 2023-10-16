@@ -1,8 +1,9 @@
+import 'package:app_tt/screens/layout_user_screen/user_card/open_drawer_button.dart';
+import 'package:app_tt/screens/layout_user_screen/user_card/search_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/user.dart';
 
 import '../../widgets/actor_avatar.dart';
-import 'user_card_menu_button.dart';
 
 class UserCard extends StatelessWidget {
   final User info;
@@ -17,60 +18,64 @@ class UserCard extends StatelessWidget {
     // final screenWidth = MediaQuery.of(context).size.width;
     final systemTopBarHeight = MediaQuery.of(context).padding.top;
 
-    return Padding(
+    return Container(
       padding: EdgeInsets.only(top: systemTopBarHeight),
-      child: Container(
-        color: const Color(0xFF001a40),
-        height: 240,
-        child: Stack(
-          children: [
-            // const Positioned.fill(
-            //   child: Image(
-            //     image: AssetImage('assets/images/supplier_card_bg.webp'),
-            //     fit: BoxFit.fill,
-            //   ),
-            // ),
-            // DrawerButton
-            const Positioned(
-              top: 10,
-              right: 16,
-              child: UserCardMenuButton(),
+      height: 300,
+      child: Stack(
+        children: [
+          // const Positioned.fill(
+          //   child: Image(
+          //     image: AssetImage('assets/images/supplier_card_bg.webp'),
+          //     fit: BoxFit.fill,
+          //   ),
+          // ),
+          // DrawerButton
+          Positioned(
+            top: 50,
+            right: 16,
+            child: Row(
+              children: [
+                SearchButton(),
+                const SizedBox(width: 10),
+                OpenDrawerButton()
+              ],
             ),
-            // 大頭照
-            Positioned(
-              top: 59,
-              child: ActorAvatar(
-                photoSid: info.avatar,
-                width: 99,
-                height: 99,
-              ),
+          ),
+          // 大頭照
+          Positioned(
+            top: 99,
+            left: 16,
+            child: ActorAvatar(
+              photoSid: info.avatar,
+              width: 99,
+              height: 99,
             ),
-            // 名字
-            Positioned(
-              top: 83,
-              left: 100,
-              child: Text(
-                info.nickname ?? '',
+          ),
+          // 名字
+          Positioned(
+            top: 123,
+            left: 123,
+            child: Text(
+              info.nickname ?? '',
+              style: const TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 21,
+                  color: Colors.white),
+            ),
+          ),
+          // 用戶ID
+          Positioned(
+            top: 155,
+            left: 123,
+            child: Text('用戶ID: ${info.uid}',
                 style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 21,
-                    color: Colors.white),
-              ),
-            ),
-            // 用戶ID
-            Positioned(
-              top: 110,
-              left: 100,
-              child: Text(
-                '用戶ID: ${info.id}',
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                    color: Colors.white),
-              ),
-            ),
-          ],
-        ),
+                  fontWeight: FontWeight.normal,
+                  fontSize: 14,
+                  // color is white, and opacity is 0.5
+                  color: Color(0x80ffffff),
+                )),
+          ),
+        ],
       ),
     );
   }
