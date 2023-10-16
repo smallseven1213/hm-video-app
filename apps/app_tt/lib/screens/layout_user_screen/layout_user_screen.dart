@@ -41,6 +41,10 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
           backgroundColor: Colors.white,
           body: Stack(
             children: [
+              const Image(
+                fit: BoxFit.cover,
+                image: AssetImage('assets/images/user-bg.webp'),
+              ),
               NestedScrollView(
                 controller: scrollController,
                 // physics: const BouncingScrollPhysics(),
@@ -176,9 +180,9 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                   controller: _tabController,
                   // physics: const BouncingScrollPhysics(),
                   children: [
-                    PlayRecordPage(),
-                    FavoritesPage(),
-                    CollectionPage()
+                    Container(color: Colors.white, child: PlayRecordPage()),
+                    Container(color: Colors.white, child: FavoritesPage()),
+                    Container(color: Colors.white, child: CollectionPage()),
                   ],
                 ),
               ),
