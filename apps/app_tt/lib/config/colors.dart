@@ -24,5 +24,7 @@ class AppColors {
     ColorKeys.formBg: Color(0xfff6f6f6),
     ColorKeys.gradientBgTopColor: Colors.transparent,
     ColorKeys.gradientBgBottomColor: Colors.transparent,
+    // video
+    ColorKeys.textVideoInfoDetail: Color(0xff939393),
   };
 }
