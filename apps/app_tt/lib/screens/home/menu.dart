@@ -4,6 +4,7 @@ import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dar
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../widgets/id_card.dart';
 import 'menu_item.dart';
 
 class UserMenuWidget extends StatelessWidget {
@@ -26,7 +27,20 @@ class UserMenuWidget extends StatelessWidget {
                 : Container(),
             text: item.name ?? '',
             onTap: () {
-              MyRouteDelegate.of(context).push(item.path ?? '');
+              if (item.name == '身份卡') {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const Dialog(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      child: IDCard(),
+                    );
+                  },
+                );
+              } else {
+                MyRouteDelegate.of(context).push(item.path ?? '');
+              }
             },
           );
         }).toList();
