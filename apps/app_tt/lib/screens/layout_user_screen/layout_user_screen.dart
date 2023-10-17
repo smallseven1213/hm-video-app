@@ -7,6 +7,7 @@ import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
+import 'grid_menu.dart';
 import 'layout_user_screen_tabbar_header_delegate.dart';
 import 'user_card.dart';
 import 'user_grid_menu_button.dart';
@@ -110,59 +111,7 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                               ),
                             ),
                             const SizedBox(height: 30),
-                            Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.center, // 水平居中
-                              children: [
-                                UserGridMenuButton(
-                                  iconWidget: SvgPicture.asset(
-                                    'svgs/ic-myid.svg',
-                                    colorFilter: const ColorFilter.mode(
-                                        Color(0xFF161823), BlendMode.srcIn),
-                                  ),
-                                  text: '身份卡',
-                                  onTap: () {
-                                    _tabController.animateTo(1);
-                                  },
-                                ),
-                                const SizedBox(width: 50),
-                                UserGridMenuButton(
-                                  iconWidget: SvgPicture.asset(
-                                    'svgs/ic-myshare.svg',
-                                    colorFilter: const ColorFilter.mode(
-                                        Color(0xFF161823), BlendMode.srcIn),
-                                  ),
-                                  text: '推廣分享',
-                                  onTap: () {
-                                    _tabController.animateTo(1);
-                                  },
-                                ),
-                                const SizedBox(width: 50),
-                                UserGridMenuButton(
-                                  iconWidget: SvgPicture.asset(
-                                    'svgs/ic-myservice.svg',
-                                    colorFilter: const ColorFilter.mode(
-                                        Color(0xFF161823), BlendMode.srcIn),
-                                  ),
-                                  text: '在線客服',
-                                  onTap: () {
-                                    _tabController.animateTo(1);
-                                  },
-                                ),
-                                const SizedBox(width: 50),
-                                UserGridMenuButton(
-                                  iconWidget: SvgPicture.asset(
-                                    'svgs/ic-myapp.svg',
-                                    colorFilter: const ColorFilter.mode(
-                                        Color(0xFF161823), BlendMode.srcIn),
-                                  ),
-                                  text: '應用中心',
-                                  onTap: () {
-                                    _tabController.animateTo(1);
-                                  },
-                                ),
-                              ],
-                            ),
+                            GridMenu(),
                             const SizedBox(height: 25),
                           ],
                         ),
@@ -180,9 +129,12 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                   controller: _tabController,
                   // physics: const BouncingScrollPhysics(),
                   children: [
-                    Container(color: Colors.white, child: PlayRecordPage()),
-                    Container(color: Colors.white, child: FavoritesPage()),
-                    Container(color: Colors.white, child: CollectionPage()),
+                    Container(
+                        color: Colors.white, child: const PlayRecordPage()),
+                    Container(
+                        color: Colors.white, child: const FavoritesPage()),
+                    Container(
+                        color: Colors.white, child: const CollectionPage()),
                   ],
                 ),
               ),
