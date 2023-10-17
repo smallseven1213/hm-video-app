@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/user_favorites_video_controlle.dart';
+import 'package:shared/controllers/user_video_collection_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
-import 'package:shared/widgets/video/video_time.dart';
-import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/title.dart';
 import 'package:video_player/video_player.dart';
+
+import 'video_collect.dart';
+import 'video_favorite.dart';
 
 final logger = Logger();
 
@@ -123,8 +127,9 @@ class VideoInfo extends StatelessWidget {
   final List<Actor>? actor;
   final Publisher? publisher;
   final int videoCollectTimes;
+  final Vod videoDetail;
 
-  const VideoInfo({
+  VideoInfo({
     super.key,
     required this.videoPlayerController,
     required this.title,
@@ -132,10 +137,14 @@ class VideoInfo extends StatelessWidget {
     required this.timeLength,
     required this.viewTimes,
     required this.videoCollectTimes,
+    required this.videoDetail,
     this.actor,
     this.externalId,
     this.publisher,
   });
+
+  final userVodCollectionController = Get.find<UserVodCollectionController>();
+  final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
 
   @override
   Widget build(BuildContext context) {
@@ -198,14 +207,8 @@ class VideoInfo extends StatelessWidget {
                         times: viewTimes,
                         color: const Color(0xff939393),
                       ),
-                      Favorite(
-                        times: 12345, //videoCollectTimes
-                        color: const Color(0xff939393),
-                      ),
-                      Collect(
-                        times: videoCollectTimes, //videoCollectTimes
-                        color: const Color(0xff939393),
-                      )
+                      VideoFavorite(videoDetail: videoDetail),
+                      VideoCollect(videoDetail: videoDetail),
                     ],
                   ),
                 )

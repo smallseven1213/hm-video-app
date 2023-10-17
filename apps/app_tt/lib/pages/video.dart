@@ -141,6 +141,7 @@ class VideoState extends State<Video> {
                             publisher: videoDetail.publisher,
                             videoCollectTimes:
                                 videoDetail.videoCollectTimes ?? 0,
+                            videoDetail: videoDetail,
                           ),
                         ),
                       ),
