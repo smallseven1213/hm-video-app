@@ -281,9 +281,9 @@ class GameLobbyApi {
   }
 
 // 遊戲大廳 取得支付渠道
-  Future<List<Payment>> getPaymentsBy(int productId, String amount) => fetcher(
+  Future<List<Payment>> getPaymentsBy(String amount) => fetcher(
               url:
-                  '$apiPrefix/payment-channel?productId=$productId&deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}&amount=$amount')
+                  '$apiPrefix/payment-channel?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}&amount=$amount')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
         _checkMaintenance(res['code']);
@@ -377,21 +377,28 @@ class GameLobbyApi {
     }
   }
 
-  Future<List<Product>> getProductManyBy(
-          {int type = 1, int page = 1, int limit = 100}) =>
-      fetcher(
-              url:
-                  '${systemConfig.apiHost}/public/products/product/list?page=$page&limit=$limit&type=$type')
-          .then((value) {
-        var res = (value.data as Map<String, dynamic>);
-        _checkMaintenance(res['code']);
+  // 參數配置 > 取得存款金額配置
+  Future<List<int>> getAmount() async {
+    try {
+      var value = await fetcher(url: '$apiPrefix/amount-config');
+      var res = value.data as Map<String, dynamic>;
+      _checkMaintenance(res['code']);
 
-        if (res['code'] != '00') {
-          return [];
-        }
-        return List.from((res['data']['data'] as List<dynamic>)
-            .map((e) => Product.fromJson(e)));
-      });
+      if (res['code'] != '00') {
+        res['code'];
+      }
+
+      var depositAmountString = res['data']['DEPOSIT_AMOUNT'] as String;
+      var depositAmountList =
+          depositAmountString.split(',').map(int.parse).toList();
+
+      logger.i('depositAmountList: $depositAmountList');
+      return depositAmountList;
+    } catch (e) {
+      logger.i('getAmount error: $e');
+      return [];
+    }
+  }
 
   // 遊戲大廳 取得存款記錄
   Future<List<GameOrder>> getManyBy({
@@ -460,31 +467,6 @@ class GameLobbyApi {
               .map((e) => WithdrawalRecord.fromJson(e)));
       return record;
     });
-  }
-
-  // 遊戲大廳 存款申請
-  Future<String> makeOrder({
-    String agentAccount = '',
-    required int productId,
-    required int paymentChannelId,
-    String? name,
-  }) async {
-    var value = await fetcher(
-      url: '$apiPrefix/deposit',
-      method: 'POST',
-      body: {
-        'name': name,
-        'productId': productId,
-        'paymentChannelId': paymentChannelId,
-      },
-    );
-    var res = (value.data as Map<String, dynamic>);
-    _checkMaintenance(res['code']);
-
-    if (res['code'] != '00') {
-      return res['code'];
-    }
-    return res['data']['paymentLink'];
   }
 
   // new version 遊戲大廳 存款申請v2

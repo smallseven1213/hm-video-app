@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/screens/game_deposit_polling_screen/payment_method_item.dart';
 import 'package:logger/logger.dart';
 
 import 'package:game/apis/game_api.dart';
 import 'package:game/models/game_payment.dart';
+import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_deposit_list_screen/show_user_name.dart';
 import 'package:game/screens/game_deposit_polling_screen/payment_link_res.dart';
-import 'package:game/screens/game_theme_config.dart';
+import 'package:game/screens/game_deposit_polling_screen/payment_method_item.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/utils/show_model.dart';
 
@@ -16,14 +16,11 @@ final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 Future<void> showPaymentMethod({
   context,
-  int productId = 0,
-  String balanceFiatMoneyPrice = '',
-  String name = '',
+  required amount,
   Function? onClose,
 }) async {
   int paymentMethod = 0;
-  List<Payment> payments = await gameLobbyApi.getPaymentsBy(
-      productId, balanceFiatMoneyPrice.split('.').first);
+  List<Payment> payments = await gameLobbyApi.getPaymentsBy(amount.toString());
   if (payments.isNotEmpty) {
     paymentMethod = payments.first.id;
   } else {
@@ -34,7 +31,7 @@ Future<void> showPaymentMethod({
         height: 24,
         child: Center(
           child: Text(
-            payments == '51728' ? '當前支付人數眾多，請稍後再試！' : '訂單建立失敗，請聯繫客服',
+            '訂單建立失敗，請聯繫客服',
             style: TextStyle(color: gameLobbyPrimaryTextColor),
           ),
         ),
@@ -69,7 +66,7 @@ Future<void> showPaymentMethod({
               ),
               color: gameItemMainColor,
             ),
-            height: (kIsWeb ? 160 : 190) + payments.length * 60,
+            height: (kIsWeb ? 150 : 190) + payments.length * 55,
             child: Column(
               children: [
                 const SizedBox(height: 15),
@@ -101,8 +98,8 @@ Future<void> showPaymentMethod({
                   ],
                 ),
                 Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 15, horizontal: 35),
+                  margin: const EdgeInsets.only(
+                      top: 10, bottom: 5, left: 35, right: 35),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -117,7 +114,7 @@ Future<void> showPaymentMethod({
                       const Text("需支付金額",
                           style: TextStyle(
                               fontSize: 12, color: Color(0xff979797))),
-                      Text(" ¥$balanceFiatMoneyPrice",
+                      Text("$amount 元",
                           style:
                               const TextStyle(fontSize: 15, color: Colors.red)),
                     ],
@@ -140,7 +137,7 @@ Future<void> showPaymentMethod({
                     }).toList(),
                   ],
                 ),
-                const SizedBox(height: 15),
+                const SizedBox(height: 5),
                 InkWell(
                   onTap: () async {
                     if (paymentMethod == 0) {
@@ -159,7 +156,7 @@ Future<void> showPaymentMethod({
                           showModel(
                             context,
                             content: PaymentLinkRes(
-                              productId: productId,
+                              amount: amount.toString(),
                               userName: userName,
                               paymentChannelId: paymentMethod,
                             ),
@@ -170,7 +167,7 @@ Future<void> showPaymentMethod({
                       showModel(
                         context,
                         content: PaymentLinkRes(
-                          productId: productId,
+                          amount: amount.toString(),
                           paymentChannelId: paymentMethod,
                           userName: null,
                         ),

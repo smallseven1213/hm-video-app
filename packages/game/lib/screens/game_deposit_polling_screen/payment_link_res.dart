@@ -10,13 +10,13 @@ import 'package:url_launcher/url_launcher.dart';
 final logger = Logger();
 
 class PaymentLinkRes extends StatefulWidget {
-  final int productId;
+  final String amount;
   final int paymentChannelId;
   final String? userName;
 
   const PaymentLinkRes({
     super.key,
-    required this.productId,
+    required this.amount,
     required this.paymentChannelId,
     required this.userName,
   });
@@ -37,16 +37,16 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
     super.initState();
     setState(() => isFetching = 'start');
     checkLinkRes(
-      widget.productId,
+      widget.amount,
       widget.paymentChannelId,
       widget.userName,
     );
   }
 
-  void checkLinkRes(int productId, int paymentChannelId, String? name) async {
+  void checkLinkRes(String amount, int paymentChannelId, String? name) async {
     try {
-      var value = await GameLobbyApi().makeOrder(
-        productId: productId,
+      var value = await GameLobbyApi().makeOrderV2(
+        amount: amount,
         paymentChannelId: paymentChannelId,
         name: name,
       );
