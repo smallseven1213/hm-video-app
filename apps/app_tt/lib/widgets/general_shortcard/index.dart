@@ -6,6 +6,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
+import '../short/side_info.dart';
 import '../shortcard/index.dart';
 import '../shortcard/short_card_info.dart';
 import '../wave_loading.dart';
@@ -55,6 +56,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
 
   @override
   Widget build(BuildContext context) {
+    print('GeneralShortCard build');
     if (widget.videoUrl.isEmpty) {
       return const WaveLoading();
     }
@@ -63,7 +65,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.tag,
+            key: Key(widget.videoUrl),
+            tag: widget.videoUrl,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -78,8 +81,10 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             ),
             loadingWidget: const WaveLoading(),
             child: (isReady) => ShortCard(
+              key: Key(widget.tag),
               index: widget.index,
               tag: widget.tag,
+              videoUrl: widget.videoUrl,
               isActive: widget.isActive,
               id: widget.shortData.id,
               title: widget.shortData.title,
@@ -88,11 +93,17 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               allowFullsreen: true,
             ),
           ),
+          SideInfo(
+            videoId: widget.id,
+            shortData: widget.shortData,
+            tag: widget.tag,
+            videoUrl: widget.videoUrl,
+          ),
           Obx(
             () => uiController.isFullscreen.value == true
                 ? const SizedBox.shrink()
                 : Positioned(
-                    bottom: 0,
+                    bottom: 30,
                     left: 0,
                     right: 0,
                     child: ShortVideoConsumer(
@@ -108,18 +119,13 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
+                                  videourl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
+                                  displayActorAvatar: false,
                                 )
                               : const SizedBox.shrink(),
-                          const SizedBox(height: 16),
-                          ShortBottomArea(
-                            tag: widget.tag,
-                            shortData: widget.shortData,
-                            displayFavoriteAndCollectCount:
-                                widget.displayFavoriteAndCollectCount,
-                          ),
                         ],
                       ),
                     ),

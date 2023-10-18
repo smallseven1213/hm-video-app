@@ -11,6 +11,7 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../config/layouts.dart';
+import '../controllers/tt_ui_controller.dart';
 import '../screens/home/controllers/home_page_controller.dart';
 import '../screens/home/menu.dart';
 import '../screens/layout_game_screen.dart';
@@ -54,11 +55,14 @@ class HomePage extends StatefulWidget {
 class HomeState extends State<HomePage> {
   late final HomePageController homePageController;
   late final UIController uiController;
+  late final TTUIController ttUiController;
 
   @override
   void initState() {
     super.initState();
     uiController = Get.put(UIController());
+    ttUiController = Get.put(TTUIController());
+
     Get.put(GameStartupController());
     homePageController = Get.put(HomePageController());
 
@@ -109,11 +113,11 @@ class HomeState extends State<HomePage> {
                         .entries
                         .map(
                           (entry) => Expanded(
-                            child: LayoutTabItem(
-                                isActive: entry.value.path! == activeKey,
-                                label: entry.value.name!,
-                                onTap: () => changeTabKey(entry.value.path!)),
-                          ),
+                              child: LayoutTabItem(
+                            isActive: entry.value.path! == activeKey,
+                            label: entry.value.name!,
+                            onTap: () => changeTabKey(entry.value.path!),
+                          )),
                         )
                         .toList(),
                   ),

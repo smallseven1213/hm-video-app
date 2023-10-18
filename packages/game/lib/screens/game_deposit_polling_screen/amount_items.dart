@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:game/apis/game_api.dart';
-import 'package:game/models/game_order.dart';
 import 'package:game/screens/game_deposit_polling_screen/show_payment_method.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/loading.dart';
+
+final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 class AmountItems extends StatefulWidget {
   const AmountItems({Key? key}) : super(key: key);
@@ -14,6 +15,13 @@ class AmountItems extends StatefulWidget {
 
 class AmountItemsState extends State<AmountItems> {
   bool selected = false;
+  late Future<List<int>> amountFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    amountFuture = gameLobbyApi.getAmount();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +45,6 @@ class AmountItemsState extends State<AmountItems> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                // a circle graphic, it has back background, and has a border ebfe69
                 Container(
                   width: 8,
                   height: 8,
@@ -63,8 +70,8 @@ class AmountItemsState extends State<AmountItems> {
                 ),
               ],
             ),
-            FutureBuilder<List<Product>>(
-              future: GameLobbyApi().getProductManyBy(type: 1),
+            FutureBuilder<List<int>>(
+              future: amountFuture,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return GridView.count(
@@ -79,7 +86,6 @@ class AmountItemsState extends State<AmountItems> {
                         .map(
                           (e) => TextButton(
                             style: TextButton.styleFrom(
-                              // padding y 10
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
@@ -98,10 +104,7 @@ class AmountItemsState extends State<AmountItems> {
                                 });
                                 showPaymentMethod(
                                   context: context,
-                                  productId: e.id ?? 0,
-                                  balanceFiatMoneyPrice:
-                                      e.balanceFiatMoneyPrice ?? '',
-                                  name: e.name ?? '',
+                                  amount: e,
                                   onClose: () => setState(() {
                                     selected = false;
                                   }),
@@ -113,22 +116,13 @@ class AmountItemsState extends State<AmountItems> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  e.name.toString(),
+                                  '$e 元',
                                   style: TextStyle(
                                     color: gamePrimaryButtonColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                if (e.subTitle != null && e.subTitle != '')
-                                  Text(
-                                    e.subTitle.toString(),
-                                    style: const TextStyle(
-                                      color: Color(0xffc7cab6),
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )
                               ],
                             ),
                           ),

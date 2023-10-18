@@ -61,3 +61,30 @@ Map<int, Map<String, dynamic>> depositChannelLabel = {
     ),
   },
 };
+
+Map<String, Map<String, String>> paymentsMapper = {
+  'alipay': {
+    // 支付寶
+    'icon': 'packages/game/assets/images/game_deposit/icon-alipay.webp',
+  },
+  'debit': {
+    // 網銀入款or銀行卡
+    'icon': 'packages/game/assets/images/game_deposit/icon-debit.webp',
+  },
+  'unionpay': {
+    // 雲閃付
+    'icon': 'packages/game/assets/images/game_deposit/icon-unionpay.webp',
+  },
+  'wechat': {
+    // 微信
+    'icon': 'packages/game/assets/images/game_deposit/icon-wechat.webp',
+  },
+  'selfdebit': {
+    // 銀行轉帳
+    'icon': 'packages/game/assets/images/game_deposit/icon-selfdebit.webp',
+  },
+  'selfusdt': {
+    // USDT轉帳
+    'icon': 'packages/game/assets/images/game_deposit/icon-selfusdt.webp',
+  },
+};

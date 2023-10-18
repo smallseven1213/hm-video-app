@@ -3,6 +3,11 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
+import 'package:shared/enums/list_editor_category.dart';
+
+import 'collection/short.dart';
+import 'collection/video.dart';
+import 'shared/sub_tabbar.dart';
 
 class CollectionPage extends StatefulWidget {
   const CollectionPage({Key? key}) : super(key: key);
@@ -18,7 +23,8 @@ class CollectionPageState extends State<CollectionPage>
   final UserShortCollectionController userShortCollectionController =
       Get.find<UserShortCollectionController>();
   final ListEditorController listEditorController =
-      Get.find<ListEditorController>(tag: 'collection');
+      Get.find<ListEditorController>(
+          tag: ListEditorCategory.collection.toString());
   late TabController _tabController;
 
   @override
@@ -41,15 +47,15 @@ class CollectionPageState extends State<CollectionPage>
     super.dispose();
   }
 
-  void _handleSelectAll() {
-    if (_tabController.index == 0) {
-      var allData = userVodCollectionController.videos;
-      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-    } else if (_tabController.index == 1) {
-      var allData = userShortCollectionController.data;
-      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-    }
-  }
+  // void _handleSelectAll() {
+  //   if (_tabController.index == 0) {
+  //     var allData = userVodCollectionController.videos;
+  //     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+  //   } else if (_tabController.index == 1) {
+  //     var allData = userShortCollectionController.data;
+  //     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+  //   }
+  // }
 
   void _handleDeleteAll() {
     if (_tabController.index == 0) {
@@ -65,36 +71,24 @@ class CollectionPageState extends State<CollectionPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // appBar: CustomAppBar(
-      //   title: '我的收藏',
-      //   actions: [
-      //     Obx(() => TextButton(
-      //         onPressed: () {
-      //           listEditorController.toggleEditing();
-      //         },
-      //         child: Text(
-      //           listEditorController.isEditing.value ? '取消' : '編輯',
-      //           style: const TextStyle(color: Color(0xff00B0D4)),
-      //         )))
-      //   ],
-      //   bottom:
-      //       GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
-      // ),
-      body: Stack(
-        children: [
-          TabBarView(
+    return NestedScrollView(
+      physics: const BouncingScrollPhysics(),
+      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+        return <Widget>[
+          SubTabBar(
+            tabs: const ['長視頻', '短視頻'],
             controller: _tabController,
-            children: [
-              // CollectionVideo(),
-              // CollectionShortScreen(),
-            ],
+            onSelectAll: () {},
+            isEditing: false,
           ),
-          // ListPagePanelWidget(
-          //   listEditorController: listEditorController,
-          //   onSelectButtonClick: _handleSelectAll,
-          //   onDeleteButtonClick: _handleDeleteAll,
-          // ),
+        ];
+      },
+      body: TabBarView(
+        controller: _tabController,
+        physics: const BouncingScrollPhysics(),
+        children: [
+          CollectionVideo(),
+          CollectionShortScreen(),
         ],
       ),
     );

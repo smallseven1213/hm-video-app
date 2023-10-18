@@ -1,18 +1,21 @@
+import 'package:app_tt/config/colors.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
-
 import '../short/fullscreen_controls.dart';
+import 'purchase_promotion.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
+  final String videoUrl;
   final int index;
   final int id;
   final String title;
@@ -24,6 +27,7 @@ class ShortCard extends StatefulWidget {
 
   const ShortCard({
     Key? key,
+    required this.videoUrl,
     required this.tag,
     required this.index,
     required this.id,
@@ -49,7 +53,7 @@ class ShortCardState extends State<ShortCard> {
     final screen = MediaQuery.of(context);
 
     return VideoPlayerConsumer(
-      tag: widget.tag,
+      tag: widget.videoUrl,
       child: (VideoPlayerInfo videoPlayerInfo) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
@@ -72,8 +76,6 @@ class ShortCardState extends State<ShortCard> {
                 videoPlayerInfo: videoPlayerInfo,
                 toggleFullScreen: widget.toggleFullScreen,
               ),
-              // error
-
               if (videoPlayerInfo
                       .observableVideoPlayerController.videoAction.value ==
                   'error')
@@ -105,7 +107,7 @@ class ShortCardState extends State<ShortCard> {
           child: Stack(
             children: [
               SizedBox(
-                height: screen.size.height - 76 - screen.padding.bottom,
+                height: screen.size.height - screen.padding.bottom,
                 width: double.infinity,
                 child: ShortVideoConsumer(
                   vodId: widget.id,
@@ -127,7 +129,7 @@ class ShortCardState extends State<ShortCard> {
                 ),
               ),
               Positioned(
-                bottom: -16,
+                bottom: -15,
                 left: 0,
                 right: 0,
                 child: Listener(
@@ -169,7 +171,7 @@ class ShortCardState extends State<ShortCard> {
                         allowScrubbing: true,
                         padding: const EdgeInsets.symmetric(vertical: 16.0),
                         colors: VideoProgressColors(
-                          playedColor: const Color(0xffFFC700),
+                          playedColor: const Color(0xFFFDDCEF),
                           bufferedColor: Colors.grey,
                           backgroundColor: Colors.white.withOpacity(0.3),
                         ),
@@ -178,7 +180,41 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              // const FloatPageBackButton()
+              ShortVideoConsumer(
+                  vodId: widget.id,
+                  tag: widget.tag,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      video?.isAvailable == false &&
+                              videoPlayerInfo.videoAction == 'end'
+                          ? Positioned.fill(
+                              top: 0,
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                color: Colors.black.withOpacity(0.3),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    PurchasePromotion(
+                                      tag: widget.tag,
+                                      buyPoints: video!.buyPoint.toString(),
+                                      timeLength: video.timeLength ?? 0,
+                                      chargeType: video.chargeType ?? 0,
+                                      videoId: video.id,
+                                      videoPlayerInfo: videoPlayerInfo,
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink()),
             ],
           ),
         );

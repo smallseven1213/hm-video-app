@@ -68,7 +68,7 @@ class UserApi {
 
   // 使用者進入大廳（只記錄初次）
   Future writeUserEnterHallRecord() async {
-    if (systemConfig.box.read('entry-count') == 1) {
+    if (systemConfig.box.read('entered') == null) {
       try {
         fetcher(
           url:
@@ -78,6 +78,7 @@ class UserApi {
             'version': systemConfig.version,
           },
         );
+        systemConfig.box.write('entered', true);
       } catch (err) {
         if (kDebugMode) {
           logger.i(err);

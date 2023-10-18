@@ -5,10 +5,11 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import 'package:shared/widgets/float_page_back_button.dart';
+import '../short/side_info.dart';
 import '../shortcard/index.dart';
 import '../shortcard/short_card_info.dart';
 import '../wave_loading.dart';
-import 'side_info.dart';
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;
@@ -24,12 +25,12 @@ class HomeUseShortCard extends StatefulWidget {
   const HomeUseShortCard({
     Key? key,
     required this.index,
-    required this.tag,
     required this.id,
     required this.title,
     required this.shortData,
     required this.toggleFullScreen,
     required this.videoUrl,
+    required this.tag,
     // required this.isFullscreen,
     this.isActive = true,
     this.displayFavoriteAndCollectCount = true,
@@ -53,17 +54,22 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
   }
 
   @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
       return const WaveLoading();
     }
-
     return Container(
       color: Colors.black,
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.tag,
+            key: Key(widget.videoUrl),
+            tag: widget.videoUrl,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -77,8 +83,62 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const WaveLoading(),
-            child: (isReady) => Container(),
+            child: (isReady) => ShortCard(
+              key: Key(widget.tag),
+              index: widget.index,
+              tag: widget.tag,
+              videoUrl: widget.videoUrl,
+              isActive: widget.isActive,
+              id: widget.shortData.id,
+              title: widget.shortData.title,
+              shortData: widget.shortData,
+              toggleFullScreen: widget.toggleFullScreen,
+              allowFullsreen: true,
+            ),
           ),
+          SideInfo(
+            videoId: widget.id,
+            shortData: widget.shortData,
+            tag: widget.tag,
+            videoUrl: widget.videoUrl,
+          ),
+          Obx(
+            () => uiController.isFullscreen.value == true
+                ? const SizedBox.shrink()
+                : Positioned(
+                    bottom: 30,
+                    left: 0,
+                    right: 0,
+                    child: ShortVideoConsumer(
+                      vodId: widget.id,
+                      tag: widget.tag,
+                      child: ({
+                        required isLoading,
+                        required video,
+                        required videoDetail,
+                        required videoUrl,
+                      }) =>
+                          Column(
+                        children: [
+                          videoDetail != null
+                              ? ShortCardInfo(
+                                  videourl: videoUrl ?? "",
+                                  tag: widget.tag,
+                                  data: videoDetail,
+                                  title: widget.title,
+                                  displayActorAvatar: false,
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      ),
+                    ),
+                  ),
+          ),
+          Obx(
+            () => uiController.isFullscreen.value != true
+                ? const FloatPageBackButton()
+                : const SizedBox.shrink(),
+          )
         ],
       ),
     );
