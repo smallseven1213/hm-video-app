@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/services/system_config.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../widgets/id_card.dart';
 import 'user_grid_menu_button.dart';
@@ -43,6 +45,9 @@ class GridMenu extends StatelessWidget {
                       );
                     },
                   );
+                } else if (item.name == '在線客服') {
+                  launchUrl(Uri.parse(
+                      '${SystemConfig().apiHost}/public/domains/domain/customer-services'));
                 } else {
                   MyRouteDelegate.of(context).push(item.path ?? '');
                 }
