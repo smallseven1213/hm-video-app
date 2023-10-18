@@ -17,7 +17,7 @@ class IDCard extends StatelessWidget {
       key: _globalKey,
       child: Container(
         width: 270,
-        height: 415,
+        height: 420,
         // 白色背景, radius 4
         decoration: BoxDecoration(
           color: Colors.white,
@@ -67,15 +67,48 @@ class IDCardContentState extends State<IDCardContent> {
                 right: 0,
                 bottom: 0,
                 child: Center(
-                  child: QrImageView(
-                    data: 'This QR code has an embedded image as well',
-                    version: QrVersions.auto,
-                    size: 150,
-                    gapless: false,
-                    embeddedImage: const AssetImage(
-                        'assets/images/video_preview_hot_icon.png'),
-                    embeddedImageStyle: const QrEmbeddedImageStyle(
-                      size: Size(74, 74),
+                  child: Container(
+                    width: 150,
+                    height: 150,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: const Color(0xFFb4b1b1),
+                        width: 3,
+                      ),
+                    ),
+                    child: Center(
+                      child: QrImageView.withQr(
+                        qr: QrCode.fromData(
+                            data: '123123123',
+                            errorCorrectLevel:
+                                QrErrorCorrectLevel.L), // 替換為您的 QrCode 物件
+                        eyeStyle: const QrEyeStyle(
+                          eyeShape: QrEyeShape.square,
+                          color: Colors.grey, // 設置眼睛顏色為灰色
+                        ),
+                        dataModuleStyle: const QrDataModuleStyle(
+                          dataModuleShape: QrDataModuleShape.square,
+                          color: Colors.grey, // 設置數據模塊顏色為灰色
+                        ),
+                        embeddedImage: const AssetImage(
+                            'assets/images/video_preview_hot_icon.png'), // 替換為您的圖片路徑
+                        embeddedImageStyle: const QrEmbeddedImageStyle(
+                          size: Size(40, 40), // 設置圖片大小為 40x40
+                        ),
+                      ),
+                      // child: QrImageView(
+                      //   data: 'This QR code has an embedded image as well',
+                      //   version: QrVersions.auto,
+                      //   size: 130,
+                      //   gapless: false,
+                      //   embeddedImage: const AssetImage(
+                      //       'assets/images/video_preview_hot_icon.png'),
+                      //   embeddedImageStyle: const QrEmbeddedImageStyle(
+                      //     size: Size(74, 74),
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),
