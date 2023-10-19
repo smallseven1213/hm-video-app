@@ -5,6 +5,7 @@ import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/controllers/user_video_collection_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 
+import '../../widgets/list_page_panel.dart';
 import 'collection/short.dart';
 import 'collection/video.dart';
 import 'shared/sub_tabbar.dart';
@@ -47,15 +48,15 @@ class CollectionPageState extends State<CollectionPage>
     super.dispose();
   }
 
-  // void _handleSelectAll() {
-  //   if (_tabController.index == 0) {
-  //     var allData = userVodCollectionController.videos;
-  //     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-  //   } else if (_tabController.index == 1) {
-  //     var allData = userShortCollectionController.data;
-  //     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-  //   }
-  // }
+  void _handleSelectAll() {
+    if (_tabController.index == 0) {
+      var allData = userVodCollectionController.videos;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    } else if (_tabController.index == 1) {
+      var allData = userShortCollectionController.data;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    }
+  }
 
   void _handleDeleteAll() {
     if (_tabController.index == 0) {
@@ -71,26 +72,35 @@ class CollectionPageState extends State<CollectionPage>
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      physics: const BouncingScrollPhysics(),
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[
-          SubTabBar(
-            tabs: const ['長視頻', '短視頻'],
-            controller: _tabController,
-            onSelectAll: () {},
-            isEditing: false,
-          ),
-        ];
-      },
-      body: TabBarView(
-        controller: _tabController,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          CollectionVideo(),
-          CollectionShortScreen(),
-        ],
-      ),
+    return Stack(
+      children: [
+        CustomScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: PrimaryScrollController.of(context),
+          slivers: <Widget>[
+            SubTabBar(
+              editorTag: ListEditorCategory.collection,
+              tabs: const ['長視頻', '短視頻'],
+              controller: _tabController,
+              onSelectAll: () {},
+            ),
+            SliverFillRemaining(
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _tabController,
+                children: [
+                  CollectionVideo(),
+                  CollectionShortScreen(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        ListPagePanelWidget(
+            listEditorController: listEditorController,
+            onSelectButtonClick: _handleSelectAll,
+            onDeleteButtonClick: _handleDeleteAll),
+      ],
     );
   }
 }

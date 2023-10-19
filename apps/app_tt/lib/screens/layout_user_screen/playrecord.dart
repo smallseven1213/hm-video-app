@@ -6,6 +6,7 @@ import 'package:shared/controllers/play_record_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/enums/play_record_type.dart';
 
+import '../../widgets/list_page_panel.dart';
 import 'playrecord/short.dart';
 import 'playrecord/video.dart';
 import 'shared/sub_tabbar.dart';
@@ -83,28 +84,35 @@ class PlayRecordPageState extends State<PlayRecordPage>
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      controller: PrimaryScrollController.of(context),
-      headerSliverBuilder: (context, innerBoxIsScrolled) {
-        return [
-          SubTabBar(
-            tabs: const ['長視頻', '短視頻'],
-            controller: _tabController,
-            onSelectAll: () {},
-            isEditing: false,
-          ),
-        ];
-      },
-      body: TabBarView(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: _tabController,
-        // physics: const BouncingScrollPhysics(),
-        children: [
-          PlayRecordVideoScreen(),
-          PlayRecordShortScreen(),
-        ],
-      ),
+    return Stack(
+      children: [
+        CustomScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: PrimaryScrollController.of(context),
+          slivers: <Widget>[
+            SubTabBar(
+              editorTag: ListEditorCategory.playrecord,
+              tabs: const ['長視頻', '短視頻'],
+              controller: _tabController,
+              onSelectAll: () {},
+            ),
+            SliverFillRemaining(
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _tabController,
+                children: [
+                  PlayRecordVideoScreen(),
+                  PlayRecordShortScreen(),
+                ],
+              ),
+            ),
+          ],
+        ),
+        ListPagePanelWidget(
+            listEditorController: listEditorController,
+            onSelectButtonClick: _handleSelectAll,
+            onDeleteButtonClick: _handleDeleteAll),
+      ],
     );
   }
 }

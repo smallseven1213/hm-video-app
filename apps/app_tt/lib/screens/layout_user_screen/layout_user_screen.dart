@@ -47,7 +47,7 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                 image: AssetImage('assets/images/user-bg.webp'),
               ),
               NestedScrollView(
-                controller: scrollController,
+                // controller: scrollController,
                 // physics: const BouncingScrollPhysics(),
                 headerSliverBuilder:
                     (BuildContext context, bool innerBoxIsScrolled) {
