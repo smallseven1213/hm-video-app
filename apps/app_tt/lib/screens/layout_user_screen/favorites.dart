@@ -6,6 +6,7 @@ import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_favorites_video_controlle.dart';
 import 'package:shared/enums/list_editor_category.dart';
 
+import '../../widgets/list_page_panel.dart';
 import 'favorites/actor.dart';
 import 'favorites/short.dart';
 import 'favorites/video.dart';
@@ -52,18 +53,18 @@ class FavoritesPageState extends State<FavoritesPage>
   final userFavoritesVideoController = Get.find<UserFavoritesVideoController>();
   final userFavoritesShortController = Get.find<UserFavoritesShortController>();
 
-  // void _handleSelectAll() {
-  //   if (_tabController.index == 0) {
-  //     var allData = userFavoritesVideoController.videos;
-  //     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-  //   } else if (_tabController.index == 1) {
-  //     var allData = userFavoritesShortController.data;
-  //     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-  //   } else {
-  //     var allData = userFavoritesActorController.actors;
-  //     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
-  //   }
-  // }
+  void _handleSelectAll() {
+    if (_tabController.index == 0) {
+      var allData = userFavoritesVideoController.videos;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    } else if (_tabController.index == 1) {
+      var allData = userFavoritesShortController.data;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    } else {
+      var allData = userFavoritesActorController.actors;
+      listEditorController.saveBoundData(allData.map((e) => e.id).toList());
+    }
+  }
 
   void _handleDeleteAll() {
     if (_tabController.index == 0) {
@@ -83,28 +84,36 @@ class FavoritesPageState extends State<FavoritesPage>
 
   @override
   Widget build(BuildContext context) {
-    return NestedScrollView(
-      physics: const NeverScrollableScrollPhysics(),
-      controller: PrimaryScrollController.of(context),
-      headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-        return <Widget>[
-          SubTabBar(
-            tabs: const ['長視頻', '短視頻', '演員'],
-            controller: _tabController,
-            onSelectAll: () {},
-            isEditing: false,
-          ),
-        ];
-      },
-      body: TabBarView(
-        controller: _tabController,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          FavoritesVideoScreen(),
-          FavoritesShortScreen(),
-          FavoritesActorScreen()
-        ],
-      ),
+    return Stack(
+      children: [
+        CustomScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: PrimaryScrollController.of(context),
+          slivers: <Widget>[
+            SubTabBar(
+              editorTag: ListEditorCategory.favorites,
+              tabs: const ['長視頻', '短視頻', '演員'],
+              controller: _tabController,
+              onSelectAll: () {},
+            ),
+            SliverFillRemaining(
+              child: TabBarView(
+                physics: const NeverScrollableScrollPhysics(),
+                controller: _tabController,
+                children: [
+                  FavoritesVideoScreen(),
+                  FavoritesShortScreen(),
+                  FavoritesActorScreen()
+                ],
+              ),
+            ),
+          ],
+        ),
+        ListPagePanelWidget(
+            listEditorController: listEditorController,
+            onSelectButtonClick: _handleSelectAll,
+            onDeleteButtonClick: _handleDeleteAll),
+      ],
     );
   }
 }
