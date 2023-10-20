@@ -59,7 +59,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
-      return const FlashLoading();
+      return const Center(child: FlashLoading());
     }
     return Container(
       color: Colors.black,
@@ -80,7 +80,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: const FlashLoading(),
+            loadingWidget: const Center(child: FlashLoading()),
             child: (isReady) => ShortCard(
               key: Key(widget.tag),
               index: widget.index,
