@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/apis/jingang_api.dart';
 import 'package:shared/enums/jingang.dart';
 import 'package:shared/models/jingang_detail.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:shared/widgets/jingang_link_button.dart';
 
 import 'circle_sidimage_text_item.dart';
 
@@ -26,31 +25,16 @@ class JingangButton extends StatelessWidget {
     bool isRounded = outerFrameStyle == OuterFrameStyle.circle.index;
     final Size size = MediaQuery.sizeOf(context);
 
-    return CircleTextItem(
+    return JingangLinkButton(
+      item: item,
+      child: CircleTextItem(
         text: item?.name ?? '',
         photoSid: item?.photoSid ?? '',
         imageWidth: size.width * 0.15,
         imageHeight: size.width * 0.15,
         isRounded: isRounded,
         hasBorder: hasBorder,
-        onTap: () async {
-          jingangApi.recordJingangClick(item?.id ?? 0);
-          if (item!.url!.startsWith('http://') ||
-              item!.url!.startsWith('https://')) {
-            // ignore: deprecated_member_use
-            launch(item!.url ?? '', webOnlyWindowName: '_blank');
-          } else {
-            List<String> parts = item!.url!.split('/');
-
-            // 從列表中獲取所需的字串和數字
-            String path = '/${parts[1]}';
-            int id = int.parse(parts[2]);
-
-            // 創建一個 Object，包含 id
-            var args = {'id': id};
-
-            MyRouteDelegate.of(context).push(path, args: args);
-          }
-        });
+      ),
+    );
   }
 }
