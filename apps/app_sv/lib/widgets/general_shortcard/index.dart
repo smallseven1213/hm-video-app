@@ -63,7 +63,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.tag,
+            key: Key(widget.videoUrl),
+            tag: widget.videoUrl,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -78,6 +79,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             ),
             loadingWidget: const Center(child: FlashLoading()),
             child: (isReady) => ShortCard(
+              key: Key(widget.tag),
               index: widget.index,
               tag: widget.tag,
               isActive: widget.isActive,
@@ -86,6 +88,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
+              videoUrl: widget.videoUrl,
             ),
           ),
           Obx(
@@ -108,12 +111,13 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
+                                  videoUrl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
                                 )
                               : const SizedBox.shrink(),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 15),
                           ShortBottomArea(
                             tag: widget.tag,
                             shortData: widget.shortData,
