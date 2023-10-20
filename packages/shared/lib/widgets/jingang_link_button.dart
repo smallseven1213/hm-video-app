@@ -41,10 +41,11 @@ class JingangLinkButton extends StatelessWidget {
           bottomNavigatorController.changeKey('/$defaultScreenKey');
         } else {
           final List<String> segments = parsedUrl.pathSegments;
+          int id = int.parse(segments[1]);
           if (segments.length == 2) {
             // 狀況3: 如果item?.url為 /{path}/{id}，則跳轉到該頁面並帶上id
             MyRouteDelegate.of(context)
-                .push('/${segments[0]}', args: {'id': segments[1]});
+                .push('/${segments[0]}', args: {'id': id});
           } else {
             // 狀況4: 如果item?.url為 /{path}，則跳轉到該頁面
             MyRouteDelegate.of(context).push('/${segments[0]}');
