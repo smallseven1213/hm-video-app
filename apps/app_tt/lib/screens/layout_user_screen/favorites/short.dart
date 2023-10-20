@@ -26,46 +26,56 @@ class FavoritesShortScreen extends StatelessWidget {
       if (videos.isEmpty) {
         return const NoDataWidget();
       }
-      return GridView.builder(
-        physics: const NeverScrollableScrollPhysics(),
-        controller: PrimaryScrollController.of(context),
-        itemCount: userFavoritesShortController.data.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          childAspectRatio: gridRatio,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 1,
+      return Padding(
+        padding: const EdgeInsets.only(top: 10.0, right: 8, left: 8),
+        child: CustomScrollView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: PrimaryScrollController.of(context),
+          slivers: <Widget>[
+            SliverGrid(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                childAspectRatio: gridRatio,
+                crossAxisSpacing: 1,
+                mainAxisSpacing: 1,
+              ),
+              delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+                  var vod = videos[index];
+                  return Obx(() => VideoPreviewWithEditWidget(
+                      id: vod.id,
+                      film: 2,
+                      isEditing: listEditorController.isEditing.value,
+                      isSelected:
+                          listEditorController.selectedIds.contains(vod.id),
+                      displayVideoCollectTimes: false,
+                      displayVideoTimes: false,
+                      displayViewTimes: false,
+                      onEditingTap: () {
+                        listEditorController.toggleSelected(vod.id);
+                      },
+                      onOverrideRedirectTap: (id) {
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.shortsByLocal,
+                          args: {'videoId': vod.id, 'itemId': 2},
+                        );
+                      },
+                      hasRadius: false,
+                      hasTitle: false,
+                      imageRatio: gridRatio,
+                      displayCoverVertical: true,
+                      coverVertical: vod.coverVertical ?? '',
+                      coverHorizontal: vod.coverHorizontal ?? '',
+                      timeLength: vod.timeLength ?? 0,
+                      tags: vod.tags ?? [],
+                      title: vod.title,
+                      videoViewTimes: vod.videoViewTimes!));
+                },
+                childCount: videos.length, // 这里需要指定子元素的数量
+              ),
+            ),
+          ],
         ),
-        itemBuilder: (BuildContext context, int index) {
-          var vod = userFavoritesShortController.data[index];
-          return Obx(() => VideoPreviewWithEditWidget(
-              id: vod.id,
-              film: 2,
-              isEditing: listEditorController.isEditing.value,
-              isSelected: listEditorController.selectedIds.contains(vod.id),
-              displayVideoCollectTimes: false,
-              displayVideoTimes: false,
-              displayViewTimes: false,
-              onEditingTap: () {
-                listEditorController.toggleSelected(vod.id);
-              },
-              onOverrideRedirectTap: (id) {
-                MyRouteDelegate.of(context).push(
-                  AppRoutes.shortsByLocal,
-                  args: {'videoId': vod.id, 'itemId': 2},
-                );
-              },
-              hasRadius: false,
-              hasTitle: false,
-              imageRatio: gridRatio,
-              displayCoverVertical: true,
-              coverVertical: vod.coverVertical ?? '',
-              coverHorizontal: vod.coverHorizontal ?? '',
-              timeLength: vod.timeLength ?? 0,
-              tags: vod.tags ?? [],
-              title: vod.title,
-              videoViewTimes: vod.videoViewTimes!));
-        },
       );
     });
   }

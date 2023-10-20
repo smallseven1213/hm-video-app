@@ -9,6 +9,11 @@ import 'package:shared/utils/video_info_formatter.dart';
 import '../../utils/purchase.dart';
 import '../button.dart';
 
+enum Direction {
+  horizontal,
+  vertical,
+}
+
 class Coin extends StatelessWidget {
   final String buyPoints;
   final String userPoints;
@@ -16,7 +21,7 @@ class Coin extends StatelessWidget {
   final VideoPlayerInfo videoPlayerInfo;
   final int timeLength;
   final Function? onSuccess;
-  final int? direction; // 0:水平, else:垂直
+  final Direction? direction; // 0:水平, else:垂直
   const Coin({
     super.key,
     required this.buyPoints,
@@ -24,13 +29,13 @@ class Coin extends StatelessWidget {
     required this.videoId,
     required this.videoPlayerInfo,
     required this.timeLength,
-    this.direction = 0,
+    this.direction = Direction.horizontal,
     this.onSuccess,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (direction == 0) {
+    if (direction == Direction.horizontal) {
       return Row(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +79,7 @@ class Coin extends StatelessWidget {
           ),
           const SizedBox(width: 15),
           SizedBox(
-            width: 87,
+            width: 90,
             height: 35,
             child: Button(
               size: 'small',
@@ -110,26 +115,29 @@ class Coin extends StatelessWidget {
               '片長：${getTimeString(timeLength)}',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: 13,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
               '價格：$buyPoints金幣',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: TextStyle(
+                color: AppColors.colors[ColorKeys.secondary],
+                fontSize: 13,
+              ),
             ),
             Text(
               '您目前擁有的金幣：$userPoints金幣',
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: 13,
               ),
             ),
           ],
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         SizedBox(
-          width: 87,
+          width: 100,
           height: 35,
           child: Button(
             size: 'small',
@@ -152,7 +160,7 @@ class CoinPart extends StatelessWidget {
   final VideoPlayerInfo videoPlayerInfo;
   final int timeLength;
   final Function? onSuccess;
-  final int? direction; // 0:水平, else:垂直
+  final Direction? direction; // 0:水平, else:垂直
 
   const CoinPart({
     Key? key,
@@ -161,7 +169,7 @@ class CoinPart extends StatelessWidget {
     required this.videoPlayerInfo,
     required this.timeLength,
     this.onSuccess,
-    this.direction = 0,
+    this.direction = Direction.horizontal,
   }) : super(key: key);
 
   @override

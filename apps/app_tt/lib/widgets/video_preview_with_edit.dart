@@ -153,14 +153,25 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
               ),
             ),
           ),
-        if (isEditing && isSelected)
-          const Positioned(
+        if (isEditing)
+          Positioned(
               top: 4,
               right: 4,
-              child: Image(
-                image: AssetImage('assets/images/video_selected.png'),
+              child: Container(
                 width: 20,
                 height: 20,
+                // 半透明背景，黑色0.5
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: isSelected
+                    ? const Image(
+                        image: AssetImage('assets/images/check_yes.png'),
+                        width: 20,
+                        height: 20,
+                      )
+                    : null,
               )),
       ],
     );
