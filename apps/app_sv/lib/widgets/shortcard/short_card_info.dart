@@ -108,7 +108,8 @@ class ShortCardInfo extends StatelessWidget {
                                 args: {
                                   'id': e.id,
                                   'title': e.name,
-                                  'defaultTabIndex': 1
+                                  'defaultTabIndex': 1,
+                                  'film': 2,
                                 },
                                 removeSamePath: true,
                               );
