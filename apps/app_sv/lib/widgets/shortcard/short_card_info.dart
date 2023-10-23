@@ -104,14 +104,8 @@ class ShortCardInfo extends StatelessWidget {
                                   .videoPlayerController
                                   ?.pause();
                               await MyRouteDelegate.of(context).push(
-                                AppRoutes.tag,
-                                args: {
-                                  'id': e.id,
-                                  'title': e.name,
-                                  'defaultTabIndex': 1,
-                                  'film': 2,
-                                },
-                                removeSamePath: true,
+                                AppRoutes.supplierTag,
+                                args: {'tagId': e.id, 'tagName': e.name},
                               );
                               videoPlayerInfo.observableVideoPlayerController
                                   .videoPlayerController
