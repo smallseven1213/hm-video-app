@@ -161,14 +161,13 @@ class ShortCardInfo extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        Positioned(
-                                          left: 0,
-                                          child: IconButton(
-                                              color: Colors.white,
-                                              icon: const Icon(
-                                                  Icons.arrow_back_ios_new,
-                                                  size: 16),
-                                              onPressed: () => {}),
+                                        const Positioned(
+                                          left: -1,
+                                          child: Image(
+                                            image: AssetImage(
+                                                'assets/images/purchase/icon-short-vip.webp'),
+                                            width: 25,
+                                          ),
                                         ),
                                       ],
                                     ),
