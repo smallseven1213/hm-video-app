@@ -163,6 +163,7 @@ class ShortCardInfo extends StatelessWidget {
                                           ),
                                         ),
                                         const Positioned(
+                                          top: -1,
                                           left: -1,
                                           child: Image(
                                             image: AssetImage(
@@ -212,6 +213,7 @@ class ShortCardInfo extends StatelessWidget {
                                           ),
                                         ),
                                         const Positioned(
+                                          top: -1,
                                           left: -1,
                                           child: Image(
                                             image: AssetImage(
