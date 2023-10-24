@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:app_tt/screens/layout_user_screen/user_card/open_drawer_button.dart';
 import 'package:app_tt/screens/layout_user_screen/user_card/search_button.dart';
 import 'package:flutter/material.dart';
@@ -67,7 +68,7 @@ class UserCard extends StatelessWidget {
           Positioned(
             top: 155,
             left: 123,
-            child: Text('用戶ID: ${info.uid}',
+            child: Text('${I18n.memberId}: ${info.uid}',
                 style: const TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,

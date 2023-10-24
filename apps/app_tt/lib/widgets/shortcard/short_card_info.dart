@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
@@ -142,8 +143,9 @@ class ShortCardInfo extends StatelessWidget {
                                 ? InkWell(
                                     onTap: () => MyRouteDelegate.of(context)
                                         .push(AppRoutes.vip),
-                                    child: const Text('開通 VIP 無限看片',
-                                        style: TextStyle(
+                                    child: Text(
+                                        I18n.upgradeToVipForUnlimitedMovie,
+                                        style: const TextStyle(
                                             color: Color(0xFFFDDCEF),
                                             fontSize: 16)),
                                   )
@@ -168,7 +170,7 @@ class ShortCardInfo extends StatelessWidget {
                                           },
                                         ),
                                         child: Text(
-                                          '${video.buyPoint}金幣解鎖',
+                                          '${video.buyPoint}${I18n.countGoldCoinsToUnlock}',
                                           style: const TextStyle(
                                               color: Color(0xFFFDDCEF),
                                               fontSize: 16),

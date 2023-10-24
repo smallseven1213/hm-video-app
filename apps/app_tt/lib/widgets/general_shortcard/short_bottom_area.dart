@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
@@ -55,7 +56,7 @@ class ShortBottomArea extends StatelessWidget {
                       displayFavoriteAndCollectCount:
                           displayFavoriteAndCollectCount,
                       count: favoriteCount,
-                      subscribe: '喜歡就點讚',
+                      subscribe: I18n.pressLikeItIfYouLikeIt,
                       icon: Icons.favorite_rounded,
                       isLike: isLike,
                       onTap: () {
@@ -85,7 +86,7 @@ class ShortBottomArea extends StatelessWidget {
                       displayFavoriteAndCollectCount:
                           displayFavoriteAndCollectCount,
                       count: collectCount,
-                      subscribe: '添加到收藏',
+                      subscribe: I18n.addToFavorites,
                       icon: Icons.star_rounded,
                       iconSize: 30,
                       isLike: isLike,

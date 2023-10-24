@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 class StaticSearchInput extends StatelessWidget {
@@ -54,9 +55,9 @@ class StaticSearchInput extends StatelessWidget {
                 ),
                 child: TextButton(
                   onPressed: onSearchButtonClick,
-                  child: const Text(
-                    '搜索',
-                    style: TextStyle(color: Colors.white),
+                  child: Text(
+                    I18n.searchFor,
+                    style: const TextStyle(color: Colors.white),
                   ),
                 ),
               ),

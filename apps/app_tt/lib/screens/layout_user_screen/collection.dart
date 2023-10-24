@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -80,7 +81,7 @@ class CollectionPageState extends State<CollectionPage>
           slivers: <Widget>[
             SubTabBar(
               editorTag: ListEditorCategory.collection,
-              tabs: const ['長視頻', '短視頻'],
+              tabs: [I18n.longVideo, I18n.shortVideo],
               controller: _tabController,
               onSelectAll: () {},
             ),

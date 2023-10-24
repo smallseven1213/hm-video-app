@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/widgets/refresh_list.dart';
@@ -122,9 +123,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                           )
                                         }
                                     },
-                                child: const Text(
-                                  '更多 >',
-                                  style: TextStyle(
+                                child: Text(
+                                  '${I18n.more} >',
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),

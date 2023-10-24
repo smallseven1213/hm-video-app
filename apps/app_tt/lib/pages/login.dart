@@ -1,5 +1,6 @@
 // LoginPage , has button , click push to '/register'
 
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shared/enums/app_routes.dart';
@@ -21,8 +22,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
-        title: '會員登入',
+      appBar: MyAppBar(
+        title: I18n.memberLogin,
       ),
       body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -50,7 +51,7 @@ class LoginPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '帳號密碼登入',
+                    I18n.accountPasswordLogin,
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.textPrimary],
                       fontSize: 20,
@@ -60,16 +61,16 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 AuthTextField(
-                  label: '帳號',
+                  label: I18n.account,
                   controller: accountController,
-                  placeholderText: '請輸入帳號',
+                  placeholderText: I18n.pleaseEnterYourAccountNumber,
                   validator: validateUsername,
                 ),
                 const SizedBox(height: 10),
                 AuthTextField(
-                  label: '密碼',
+                  label: I18n.password,
                   controller: passwordController,
-                  placeholderText: '請輸入密碼',
+                  placeholderText: I18n.pleaseEnterYourPassword,
                   obscureText: true,
                   validator: validatePassword,
                 ),
@@ -77,7 +78,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: Button(
-                    text: '登入',
+                    text: I18n.login,
                     onPressed: () => handleLogin(),
                   ),
                 ),
@@ -91,7 +92,7 @@ class LoginPage extends StatelessWidget {
                             .push(AppRoutes.register, deletePreviousCount: 1);
                       },
                       child: Text(
-                        '還沒有帳號',
+                        I18n.noAccountYet,
                         style: TextStyle(
                           color: AppColors.colors[ColorKeys.textLink],
                           fontSize: 12,
@@ -101,7 +102,7 @@ class LoginPage extends StatelessWidget {
                     InkWell(
                       onTap: () {},
                       child: Text(
-                        '手機號登入',
+                        I18n.loginWithPhoneNumber,
                         style: TextStyle(
                           color: AppColors.colors[ColorKeys.textLink],
                           fontSize: 12,

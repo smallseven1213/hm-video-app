@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,7 +44,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
               backgroundColor: Colors.white,
               elevation: 0,
               title: Text(
-                info.nickname ?? "會員中心",
+                info.nickname ?? I18n.memberCenter,
                 style: const TextStyle(color: Colors.black),
               ),
               centerTitle: true, // This will center the title

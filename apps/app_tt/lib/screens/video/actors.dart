@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/videos/actor_latest_videos_consumer.dart';
@@ -38,9 +39,9 @@ class Actors extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Padding(
-            padding: EdgeInsets.only(bottom: 8, left: 8, right: 8),
-            child: TitleHeader(text: '同演員')),
+        Padding(
+            padding: const EdgeInsets.only(bottom: 8, left: 8, right: 8),
+            child: TitleHeader(text: I18n.sameActor)),
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           height: 44.0,

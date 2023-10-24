@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 class NoDataWidget extends StatelessWidget {
@@ -14,7 +15,7 @@ class NoDataWidget extends StatelessWidget {
               width: 48,
               height: 48,
             ),
-            Text('這裡什麼都沒有',
+            Text(I18n.thereIsNothingHere,
                 style: TextStyle(color: Colors.white.withOpacity(0.6)))
           ],
         ),
