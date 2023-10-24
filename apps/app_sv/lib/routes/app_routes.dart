@@ -33,6 +33,7 @@ import '../pages/video.dart' as video_page;
 import '../pages/nickname.dart' as nickname_page;
 import '../pages/vip.dart' as vip_page;
 import '../pages/coin.dart' as coin_page;
+import '../pages/redemption.dart' as redemption_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -103,4 +104,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.nickname: (context, args) => const nickname_page.NicknamePage(),
   AppRoutes.vip: (context, args) => const vip_page.VipPage(),
   AppRoutes.coin: (context, args) => const coin_page.CoinPage(),
+  AppRoutes.redemption: (context, args) =>
+      const redemption_page.RedemptionPage(),
 };
