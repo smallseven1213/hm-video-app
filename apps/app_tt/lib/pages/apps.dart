@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/ad.dart';
 import 'package:shared/modules/apps/apps_provider.dart';
@@ -16,8 +17,8 @@ class AppsPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          appBar: const MyAppBar(
-            title: '應用中心',
+          appBar: MyAppBar(
+            title: I18n.appCenter,
           ),
           body: AppsProvider(
             child: ((
