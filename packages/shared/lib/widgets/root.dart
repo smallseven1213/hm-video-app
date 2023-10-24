@@ -16,10 +16,10 @@ class RootWidget extends StatelessWidget {
   final Map<ColorKeys, Color> appColors;
   final Function? loading;
   final Widget Function({int countdownSeconds})? countdown;
-  ThemeData? theme;
+  final ThemeData? theme;
   final bool? i18nSupport;
 
-  RootWidget(
+  const RootWidget(
       {Key? key,
       required this.homePath,
       required this.routes,
@@ -50,14 +50,18 @@ class RootWidget extends StatelessWidget {
 
     final parser = MyRouteParser();
 
+    if (i18nSupport == null || i18nSupport == false) {
+      return MaterialApp.router(
+        routerDelegate: delegate,
+        routeInformationParser: parser,
+        theme: theme,
+      );
+    }
+
     return MaterialApp.router(
-      localizationsDelegates:
-          i18nSupport == true ? context.localizationDelegates : null,
-      supportedLocales: i18nSupport == true
-          ? context.supportedLocales
-          : const <Locale>[Locale('zh', 'TW')],
-      locale: i18nSupport == true ? context.locale : null,
-      debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       routerDelegate: delegate,
       routeInformationParser: parser,
       theme: theme,
