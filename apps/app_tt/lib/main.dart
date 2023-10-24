@@ -28,6 +28,6 @@ void main() async {
         Countdown(countdownSeconds: countdownSeconds),
     i18nSupport: true,
     supportedLocales: I18n.supportedLocales,
-    i18nPath: 'langs/langs.csv',
+    i18nPath: 'assets/langs/langs.csv',
   );
 }
