@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
@@ -74,10 +75,10 @@ class PopularWidget extends StatelessWidget {
                         decoration: const BoxDecoration(
                             color: Color(0xFFfe2c55),
                             borderRadius: BorderRadius.all(Radius.circular(4))),
-                        child: const Center(
+                        child: Center(
                           child: Text(
-                            '立刻下載',
-                            style: TextStyle(
+                            I18n.downloadNow,
+                            style: const TextStyle(
                               color: Colors.white,
                               fontSize: 12,
                             ),

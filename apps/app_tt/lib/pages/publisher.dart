@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:app_tt/screens/publisher/videos.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,8 @@ class VendorVideosPageState extends State<PublisherPage>
                 fontSize: 15,
               ),
             )),
-        bottom: TTTabBar(tabs: const ['最新', '最熱'], controller: _tabController),
+        bottom: TTTabBar(
+            tabs: [I18n.newest, I18n.hottest], controller: _tabController),
       ),
       body: TabBarView(
         controller: _tabController,

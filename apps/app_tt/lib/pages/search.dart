@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
@@ -140,11 +141,11 @@ class SearchPageState extends State<SearchPage> {
                       onTap: () {
                         // 處理點擊事件的邏輯，如果需要
                       },
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                       ),
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
                     ),
@@ -185,9 +186,9 @@ class SearchPageState extends State<SearchPage> {
                 }
                 setState(() {});
               },
-              child: const Text(
-                '搜索',
-                style: TextStyle(
+              child: Text(
+                I18n.searchFor,
+                style: const TextStyle(
                   color: Color(0xFFfe2c55),
                   fontSize: 15,
                 ),

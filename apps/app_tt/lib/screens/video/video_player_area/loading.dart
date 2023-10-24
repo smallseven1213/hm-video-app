@@ -1,4 +1,5 @@
 // VideoPlayerArea stateful widget
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -41,16 +42,16 @@ class VideoLoading extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        const Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Image(
+        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Image(
             image: AssetImage('assets/images/logo.png'),
             width: 60.0,
           ),
-          DotLineAnimation(),
-          SizedBox(height: 15),
+          const DotLineAnimation(),
+          const SizedBox(height: 15),
           Text(
-            '精彩即將呈現',
-            style: TextStyle(fontSize: 12, color: Colors.white),
+            I18n.comingSoon,
+            style: const TextStyle(fontSize: 12, color: Colors.white),
           )
         ]),
         const FloatPageBackButton(),

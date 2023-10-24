@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -76,7 +77,7 @@ class SharePage extends StatelessWidget {
           //   ),
           // ),
           MyAppBar(
-            title: '推廣分享',
+            title: I18n.promotionalShare,
             backgroundColor: Colors.transparent,
             actions: [
               Center(
@@ -87,9 +88,9 @@ class SharePage extends StatelessWidget {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
-                      '推廣紀錄',
-                      style: TextStyle(
+                    child: Text(
+                      I18n.promotionRecord,
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 12,
                       ),
@@ -197,7 +198,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
               height: 10,
             ),
             Text(
-              '${promoteData.promotedMembers}人推廣',
+              '${promoteData.promotedMembers}${I18n.countPersonPromotion}',
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,
@@ -205,9 +206,9 @@ class ContentAndButtonState extends State<ContentAndButton> {
               ),
             ),
             const SizedBox(height: 10),
-            const Text(
-              '已推廣',
-              style: TextStyle(
+            Text(
+              I18n.promoted,
+              style: const TextStyle(
                 color: Color(0xFF505159),
                 fontWeight: FontWeight.normal,
                 fontSize: 12,
@@ -225,7 +226,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
               ),
               child: Center(
                 child: Text(
-                  "邀請碼 ${promoteData.invitationCode}",
+                  "${I18n.invitationCode} ${promoteData.invitationCode}",
                   style: const TextStyle(
                     fontSize: 12,
                     color: Colors.white,
@@ -237,26 +238,26 @@ class ContentAndButtonState extends State<ContentAndButton> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: Button(
-                text: '複製分享',
+                text: I18n.copyAndShare,
                 type: 'primary',
                 onPressed: () {
                   Clipboard.setData(ClipboardData(
                       text: "https://${promoteData.promoteLink}"));
                   ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(
-                    const SnackBar(
+                    SnackBar(
                       content: Text(
-                        '複製成功',
-                        style: TextStyle(color: Colors.white),
+                        I18n.successfullyCopied,
+                        style: const TextStyle(color: Colors.white),
                       ),
                     ),
                   );
                 },
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
               child: Button(
-                text: '截圖分享',
+                text: I18n.screenShortShare,
                 type: 'primary',
                 onPressed: _captureAndSaveScreenshot,
               ),

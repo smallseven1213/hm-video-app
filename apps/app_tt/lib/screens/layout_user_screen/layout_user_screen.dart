@@ -75,10 +75,10 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                             topRight: Radius.circular(20),
                           ),
                         ),
-                        child: Column(
+                        child: const Column(
                           children: [
-                            const SizedBox(height: 20),
-                            const Align(
+                            SizedBox(height: 20),
+                            Align(
                               // left
                               alignment: Alignment.centerLeft,
                               child: Row(
@@ -110,9 +110,9 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                                 ],
                               ),
                             ),
-                            const SizedBox(height: 30),
+                            SizedBox(height: 30),
                             GridMenu(),
-                            const SizedBox(height: 25),
+                            SizedBox(height: 25),
                           ],
                         ),
                       ),

@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -179,17 +180,18 @@ class VideoState extends State<Video> {
                         child: Column(
                           key: _tagVideoKey, // 使用GlobalKey
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8),
-                              child: TitleHeader(text: '同標籤'),
+                            Padding(
+                              padding: const EdgeInsets.all(8),
+                              child: TitleHeader(text: I18n.sameTag),
                             ),
                             if (videoDetail.tags!.isEmpty)
-                              const Padding(
-                                padding: EdgeInsets.symmetric(vertical: 20),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 20),
                                 child: Center(
                                   child: Text(
-                                    '找不到相關影片，猜您也會喜歡',
-                                    style: TextStyle(
+                                    I18n.noRelatedVideoAndGuessYouLike,
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       color: Color(0xFF161823),
                                       fontWeight: FontWeight.w500,
@@ -252,18 +254,20 @@ class VideoState extends State<Video> {
                                 onTap: () {
                                   _scrollToPosition(_belongVideoKey);
                                 },
-                                child: const Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: 10),
-                                  child: Text('選集'),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Text(I18n.highlights),
                                 ),
                               ),
                             InkWell(
                               onTap: () {
                                 _scrollToPosition(_tagVideoKey);
                               },
-                              child: const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                child: Text('同標籤'),
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 10),
+                                child: Text(I18n.sameTag),
                               ),
                             ),
                           ],

@@ -22,7 +22,7 @@ void main() async {
     ],
     allRoutes,
     AppColors.colors,
-    ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
+    ({String? text}) => Loading(loadingText: text ?? I18n.loadingNow),
     null,
     ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
