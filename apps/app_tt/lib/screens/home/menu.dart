@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/navigation.dart';
-import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dart';
+import 'package:shared/modules/user_setting/user_setting_more_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/services/system_config.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -16,9 +17,9 @@ class UserMenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UserSettingQuickLinkConsumer(
-      child: (List<Navigation> quickLinks) {
-        var menuItems = quickLinks.map((Navigation item) {
+    return UserSettingMoreLinkConsumer(
+      child: (List<Navigation> moreLinks) {
+        var menuItems = moreLinks.map((Navigation item) {
           return MenuItem(
             icon: item.photoSid != null
                 ? SidImage(
@@ -54,7 +55,19 @@ class UserMenuWidget extends StatelessWidget {
           color: Colors.white,
           padding: const EdgeInsets.only(top: 48),
           child: ListView(
-            children: menuItems,
+            children: [
+              ...menuItems,
+              MenuItem(
+                icon: const Icon(
+                  Icons.language,
+                  size: 22,
+                ),
+                text: '切換語系',
+                onTap: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.demo);
+                },
+              )
+            ],
           ),
         );
       },

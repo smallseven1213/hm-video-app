@@ -47,6 +47,8 @@ dependencies:
   permission_handler: ^10.2.0
   restart_app: ^1.2.1
   marquee: ^2.2.3
+  easy_localization: ^3.0.3
+  easy_localization_loader: ^1.0.1+1
 
 dev_dependencies:
   flutter_test:

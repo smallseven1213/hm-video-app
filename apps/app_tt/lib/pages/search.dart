@@ -4,9 +4,7 @@ import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
 import 'package:shared/controllers/search_page_data_controller.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
-import 'package:shared/models/color_keys.dart';
 
-import '../config/colors.dart';
 import '../screens/search/recommand.dart';
 import '../screens/search/search_result.dart';
 
