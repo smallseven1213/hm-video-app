@@ -111,7 +111,7 @@ class ActorPageState extends State<ActorPage>
                             Row(
                               children: [
                                 StatisticsItem(
-                                  count: actor.collectTimes ?? 0,
+                                  count: actor.actorCollectTimes ?? 0,
                                   label: '讚數',
                                 ),
                                 const SizedBox(width: 20),

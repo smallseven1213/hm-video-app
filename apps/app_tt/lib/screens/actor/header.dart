@@ -2,6 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/actor_controller.dart';
 
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/actor.dart';
@@ -49,6 +51,9 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
     final double percentage = shrinkOffset / maxExtent;
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
 
+    ActorController actorController =
+        Get.find<ActorController>(tag: 'actor-${id}');
+
     return shouldShowAppBar
         ? ActorConsumer(
             id: id,
@@ -66,7 +71,15 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
                 info: info,
                 child: (isLiked, handleLike) => HeaderFollowButton(
                   isLiked: isLiked,
-                  handleLike: handleLike,
+                  handleLike: () {
+                    handleLike!();
+                    if (isLiked) {
+                      actorController.decrementActorCollectTimes();
+                      return;
+                    } else {
+                      actorController.incrementActorCollectTimes();
+                    }
+                  },
                   photoSid: info.photoSid,
                 ),
               ),

@@ -1,8 +1,9 @@
 import 'package:app_tt/screens/actor/profile_cards.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
-
 
 class FollowButton extends StatefulWidget {
   final int id;
@@ -29,6 +30,8 @@ class _FollowButtonState extends State<FollowButton> {
 
   @override
   Widget build(BuildContext context) {
+    ActorController actorController =
+        Get.put(ActorController(actorId: widget.id), tag: 'actor-${widget.id}');
     return Column(
       children: [
         Row(
@@ -39,7 +42,15 @@ class _FollowButtonState extends State<FollowButton> {
                 id: widget.id,
                 info: widget.actor,
                 child: (isLiked, handleLike) => InkWell(
-                  onTap: handleLike,
+                  onTap: () {
+                    handleLike!();
+                    if (isLiked) {
+                      actorController.decrementActorCollectTimes();
+                      return;
+                    } else {
+                      actorController.incrementActorCollectTimes();
+                    }
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
@@ -100,4 +111,3 @@ class _FollowButtonState extends State<FollowButton> {
     );
   }
 }
-
