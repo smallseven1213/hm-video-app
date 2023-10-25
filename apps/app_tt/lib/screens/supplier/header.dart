@@ -1,5 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/supplier/supplier_consumer.dart';
@@ -44,6 +46,8 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
     final shouldShowAppBar = shrinkOffset >= 164;
     final double percentage = shrinkOffset / maxExtent;
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
+    SupplierController supplierController =
+        Get.find<SupplierController>(tag: 'supplier-$id');
 
     return shouldShowAppBar
         ? SupplierConsumer(
@@ -60,7 +64,15 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
                 info: info,
                 child: (isLiked, handleLike) => HeaderFollowButton(
                   isLiked: isLiked,
-                  handleLike: handleLike,
+                  handleLike: () {
+                    handleLike!();
+                    if (isLiked) {
+                      supplierController.decrementTotal('follow');
+                      return;
+                    } else {
+                      supplierController.incrementTotal('follow');
+                    }
+                  },
                   photoSid: info.photoSid ?? '',
                 ),
               ),

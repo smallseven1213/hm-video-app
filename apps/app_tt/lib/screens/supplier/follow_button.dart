@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
 
@@ -29,6 +31,9 @@ class _FollowButtonState extends State<FollowButton> {
 
   @override
   Widget build(BuildContext context) {
+    SupplierController supplierController =
+        Get.find<SupplierController>(tag: 'supplier-${widget.id}');
+
     return Column(
       children: [
         Row(
@@ -39,7 +44,15 @@ class _FollowButtonState extends State<FollowButton> {
                 id: widget.id,
                 info: widget.supplier,
                 child: (isLiked, handleLike) => InkWell(
-                  onTap: handleLike,
+                  onTap: () {
+                    handleLike!();
+                    if (isLiked) {
+                      supplierController.decrementTotal('follow');
+                      return;
+                    } else {
+                      supplierController.incrementTotal('follow');
+                    }
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(8.0),
                     decoration: BoxDecoration(
