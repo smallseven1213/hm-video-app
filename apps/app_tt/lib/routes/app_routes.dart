@@ -5,6 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../pages/actor.dart' as actor_page;
 import '../pages/home.dart' as home_page;
 import '../pages/video.dart' as video_page;
 import '../pages/publisher.dart' as publisher_page;
@@ -45,9 +46,9 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         title: args['title'] as String,
         film: args['film'] == null ? 1 : args['film'] as int,
       ),
-  // AppRoutes.actor: (context, args) => actor_page.ActorPage(
-  //       id: args['id'] as int,
-  //     ),
+  AppRoutes.actor: (context, args) => actor_page.ActorPage(
+        id: args['id'] as int,
+      ),
   AppRoutes.login: (context, args) => const login_page.LoginPage(),
   // AppRoutes.nickname: (context, args) => const nickname_page.NicknamePage(),
   AppRoutes.register: (context, args) => const register_page.RegisterPage(),

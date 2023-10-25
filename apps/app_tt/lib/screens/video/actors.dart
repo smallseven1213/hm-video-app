@@ -1,7 +1,9 @@
 import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/videos/actor_latest_videos_consumer.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/actor_avatar.dart';
 import '../../widgets/list_no_more.dart';
@@ -62,10 +64,20 @@ class Actors extends StatelessWidget {
                             padding: const EdgeInsets.all(8),
                             child: Row(
                               children: [
-                                ActorAvatar(
-                                  photoSid: actor.photoSid,
-                                  width: 44,
-                                  height: 44,
+                                InkWell(
+                                  onTap: () => MyRouteDelegate.of(context).push(
+                                    AppRoutes.actor,
+                                    args: {
+                                      'id': actor.id,
+                                      'title': actor.name,
+                                    },
+                                    removeSamePath: true,
+                                  ),
+                                  child: ActorAvatar(
+                                    photoSid: actor.photoSid,
+                                    width: 44,
+                                    height: 44,
+                                  ),
                                 ),
                                 const SizedBox(width: 5),
                                 Text(

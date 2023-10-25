@@ -12,6 +12,7 @@ class ActorsController extends GetxController {
   var actors = <Actor>[].obs;
   Rx<int?> region = Rx<int?>(null);
   Rx<String?> name = Rx<String?>(null);
+  Rx<bool?> isRecommend = Rx<bool?>(null);
   Rx<int> sortBy = Rx<int>(0);
 
   final actorRegionController = Get.find<ActorRegionController>();
@@ -43,6 +44,21 @@ class ActorsController extends GetxController {
     _fetchData();
   }
 
+  // 提供给外部的方法，以改变isRecommend并重新获取数据
+  void setIsRecommend(bool newIsRecommend) {
+    isRecommend.value = newIsRecommend;
+    _fetchData();
+  }
+
+  // 提供给外部的方法，根据指定的index删除actors中的某一条数据
+  void removeActorByIndex(int index) {
+    if (index >= 0 && index < actors.length) {
+      actors.removeAt(index);
+    } else {
+      logger.e("Index out of bounds: $index");
+    }
+  }
+
   _fetchData() async {
     var res = await actorApi.getManyBy(
       page: 1,
@@ -50,6 +66,7 @@ class ActorsController extends GetxController {
       region: region.value,
       name: name.value,
       sortBy: sortBy.value,
+      isRecommend: isRecommend.value,
     );
     actors.value = res;
   }

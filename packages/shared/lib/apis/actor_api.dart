@@ -16,7 +16,6 @@ class ActorApi {
   static final ActorApi _instance = ActorApi._internal();
 
   ActorApi._internal();
-
   factory ActorApi() {
     return _instance;
   }
@@ -27,12 +26,16 @@ class ActorApi {
     String? name,
     int? sortBy,
     int? region,
+    bool? isRecommend,
   }) async {
     String nameQuery = name != null ? '&name=$name' : '';
     String regionQuery = region != null ? '&region=$region' : '';
+    String isRecommendQuery =
+        isRecommend != null ? '&isRecommend=$isRecommend' : '';
+
     var res = await fetcher(
         url:
-            '$apiPrefix/actor/list?page=$page&limit=$limit$nameQuery$regionQuery&isSortByVideos=${sortBy ?? 0}');
+            '$apiPrefix/actor/list?page=$page&limit=$limit$nameQuery$regionQuery$isRecommendQuery&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }
