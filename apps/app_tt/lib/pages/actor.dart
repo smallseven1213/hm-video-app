@@ -12,10 +12,11 @@ import 'package:shared/modules/videos/actor_latest_videos_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
-import '../screens/actor/statistics_row.dart';
+import '../screens/actor/header.dart';
 import '../widgets/actor_avatar.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_vod_grid.dart';
+import '../widgets/statistic_item.dart';
 
 class ActorPage extends StatefulWidget {
   final int id;
@@ -89,7 +90,7 @@ class ActorPageState extends State<ActorPage>
                     ),
                   ),
                   SliverPersistentHeader(
-                    delegate: UserHeader(context: context, id: widget.id),
+                    delegate: ActorHeader(context: context, id: widget.id),
                     pinned: true,
                   ),
                   SliverToBoxAdapter(
@@ -102,20 +103,26 @@ class ActorPageState extends State<ActorPage>
                         ),
                       ),
                       padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ActorConsumer(
-                            id: widget.id,
-                            child: (Actor actor) => StatisticsRow(
-                              likes: actor.collectTimes.toString(),
-                              videos: actor.containVideos.toString(),
+                      child: ActorConsumer(
+                        id: widget.id,
+                        child: (Actor actor) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                StatisticsItem(
+                                  count: actor.collectTimes ?? 0,
+                                  label: '讚數',
+                                ),
+                                const SizedBox(width: 20),
+                                StatisticsItem(
+                                  count: actor.containVideos ?? 0,
+                                  label: '影片數',
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          ActorConsumer(
-                            id: widget.id,
-                            child: (Actor actor) => Text(
+                            const SizedBox(height: 10),
+                            Text(
                               actor.description!,
                               softWrap: true,
                               maxLines: null,
@@ -125,14 +132,10 @@ class ActorPageState extends State<ActorPage>
                                 color: Colors.grey,
                               ),
                             ),
-                          ),
-                          const SizedBox(height: 10),
-                          ActorConsumer(
-                            id: widget.id,
-                            child: (Actor actor) =>
-                                FollowButton(id: widget.id, actor: actor),
-                          ),
-                        ],
+                            const SizedBox(height: 10),
+                            FollowButton(id: widget.id, actor: actor),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -224,145 +227,6 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(covariant TabBarHeaderDelegate oldDelegate) {
-    return false;
-  }
-}
-
-class UserHeader extends SliverPersistentHeaderDelegate {
-  final BuildContext context;
-  final int id;
-
-  UserHeader({
-    required this.context,
-    required this.id,
-  });
-
-  @override
-  double get minExtent {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
-    return kToolbarHeight + statusBarHeight;
-  }
-
-  @override
-  double get maxExtent =>
-      164 + kToolbarHeight + MediaQuery.of(context).padding.top;
-
-  @override
-  Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final shouldShowAppBar = shrinkOffset >= 164;
-    final double percentage = shrinkOffset / maxExtent;
-
-    final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
-    final double fontSize = lerpDouble(21, 15, percentage)!;
-    final double fontSize2 = lerpDouble(14, 10, percentage)!;
-
-    return shouldShowAppBar
-        ? ActorConsumer(
-            id: id,
-            child: (Actor info) => AppBar(
-              // iconTheme: const IconThemeData(color: Colors.black),
-              backgroundColor: Colors.white,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-                onPressed: () {
-                  MyRouteDelegate.of(context).pop();
-                },
-              ),
-              elevation: 0,
-              title: UserFavoritesActorConsumer(
-                  id: id,
-                  info: info,
-                  child: (isLiked, handleLike) => InkWell(
-                        onTap: handleLike,
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(18),
-                            color: isLiked
-                                ? const Color(0xfff1f1f2)
-                                : const Color(0xfffff3f5),
-                          ),
-                          padding: const EdgeInsets.all(3),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              ActorAvatar(
-                                  width: 21,
-                                  height: 21,
-                                  photoSid: info.photoSid),
-                              const SizedBox(width: 8),
-                              Text(
-                                isLiked ? '已關注' : '+ 關注',
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: isLiked
-                                      ? const Color(0xff161823)
-                                      : const Color(0xfffe2c55),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      )),
-              centerTitle: false, // This will center the title
-              actions: <Widget>[
-                IconButton(
-                  icon: const Icon(Icons.search_rounded,
-                      color: Colors.black, size: 24),
-                  onPressed: () {
-                    MyRouteDelegate.of(context).push(AppRoutes.search, args: {
-                      'inputDefaultValue': info.name,
-                      'autoSearch': true
-                    });
-                  },
-                ),
-              ],
-            ),
-          )
-        : SizedBox(
-            height: maxExtent - shrinkOffset,
-            child: ActorConsumer(
-              id: id,
-              child: (Actor actor) => Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    children: [
-                      ActorAvatar(
-                        photoSid: actor.photoSid,
-                        width: imageSize,
-                        height: imageSize,
-                      ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            actor.name,
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: fontSize,
-                                color: Colors.white),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            '用戶ID: ${actor.id}',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: fontSize2,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  )),
-            ),
-          );
-  }
-
-  @override
-  bool shouldRebuild(covariant UserHeader oldDelegate) {
     return false;
   }
 }

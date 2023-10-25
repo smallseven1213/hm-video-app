@@ -1,18 +1,11 @@
 import 'dart:ui';
 
 import 'package:app_tt/localization/i18n.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/actor_controller.dart';
-import 'package:shared/controllers/user_favorites_actor_controller.dart';
-import 'package:shared/models/actor.dart';
-import 'package:shared/models/user.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
-import 'package:shared/widgets/sid_image.dart';
 
-import '../../widgets/actor_avatar.dart';
 import '../home/controllers/home_page_controller.dart';
 import 'user_card.dart';
 
@@ -51,7 +44,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
               actions: <Widget>[
                 IconButton(
                   icon: SvgPicture.asset(
-                    'svgs/ic-changepassword.svg',
+                    'svgs/ic-search.svg',
                     width: 17,
                     height: 17,
                     colorFilter:
