@@ -42,7 +42,9 @@ class StaticSearchInput extends StatelessWidget {
                   onTap: onInputClick,
                   child: Text(
                     defaultValue,
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                   ),
                 ),
               ),
