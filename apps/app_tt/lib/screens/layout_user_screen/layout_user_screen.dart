@@ -2,15 +2,11 @@ import 'package:app_tt/screens/layout_user_screen/collection.dart';
 import 'package:app_tt/screens/layout_user_screen/favorites.dart';
 import 'package:app_tt/screens/layout_user_screen/playrecord.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import 'grid_menu.dart';
 import 'layout_user_screen_tabbar_header_delegate.dart';
-import 'user_card.dart';
-import 'user_grid_menu_button.dart';
 import 'user_header.dart';
 
 class LayoutUserScreen extends StatefulWidget {

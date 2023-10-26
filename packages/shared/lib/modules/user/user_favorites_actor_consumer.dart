@@ -22,28 +22,15 @@ class UserFavoritesActorConsumer extends StatelessWidget {
     final UserFavoritesActorController userFavoritesActorController =
         Get.find<UserFavoritesActorController>();
 
-    late ActorController actorController;
-
-    bool isExists = Get.isRegistered<ActorController>(tag: 'actor-${id}');
-    if (isExists) {
-      actorController = Get.find<ActorController>(tag: 'actor-${id}');
-    } else {
-      actorController =
-          Get.put(ActorController(actorId: id), tag: 'actor-${id}');
-    }
-
-    
     return Obx(() {
       var isLiked = userFavoritesActorController.actors.any((e) => e.id == id);
 
       handleLike() {
         if (isLiked) {
           userFavoritesActorController.removeActor([id]);
-          actorController.decrementActorCollectTimes();
           return;
         } else {
           userFavoritesActorController.addActor(info);
-          actorController.incrementActorCollectTimes();
         }
       }
 

@@ -24,13 +24,13 @@ class ActorPageState extends State<ActorProvider> {
   @override
   void initState() {
     super.initState();
-    actorController =
-        Get.put(ActorController(actorId: widget.id), tag: 'actor-${widget.id}');
+    actorController = Get.put(ActorController(actorId: widget.id),
+        tag: 'actor-${widget.id}', permanent: true);
   }
 
   @override
   void dispose() {
-    actorController.dispose();
+    // actorController.dispose();
     super.dispose();
   }
 

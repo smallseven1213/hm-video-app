@@ -29,6 +29,15 @@ class SuppliersController extends GetxController {
     _fetchData();
   }
 
+  // 提供给外部的方法，根据指定的index删除actors中的某一条数据
+  void removeSupplierByIndex(int index) {
+    if (index >= 0 && index < actors.length) {
+      actors.removeAt(index);
+    } else {
+      logger.e("Index out of bounds: $index");
+    }
+  }
+
   _fetchData() async {
     var res = await supplierApi.getManyBy(
         page: 1,

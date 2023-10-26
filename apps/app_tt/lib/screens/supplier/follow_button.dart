@@ -1,18 +1,19 @@
-import 'package:app_tt/screens/actor/profile_cards.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/actor_controller.dart';
-import 'package:shared/models/actor.dart';
-import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
+import 'package:shared/controllers/supplier_controller.dart';
+import 'package:shared/models/supplier.dart';
+import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
+
+import '../actor/profile_cards.dart';
 
 class FollowButton extends StatefulWidget {
   final int id;
-  final Actor actor;
+  final Supplier supplier;
 
   const FollowButton({
     super.key,
     required this.id,
-    required this.actor,
+    required this.supplier,
   });
 
   @override
@@ -30,25 +31,26 @@ class _FollowButtonState extends State<FollowButton> {
 
   @override
   Widget build(BuildContext context) {
-    ActorController actorController =
-        Get.put(ActorController(actorId: widget.id), tag: 'actor-${widget.id}');
+    SupplierController supplierController =
+        Get.find<SupplierController>(tag: 'supplier-${widget.id}');
+
     return Column(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Expanded(
-              child: UserFavoritesActorConsumer(
+              child: UserFavoritesSupplierConsumer(
                 id: widget.id,
-                info: widget.actor,
+                info: widget.supplier,
                 child: (isLiked, handleLike) => InkWell(
                   onTap: () {
                     handleLike!();
                     if (isLiked) {
-                      actorController.decrementActorCollectTimes();
+                      supplierController.decrementTotal('follow');
                       return;
                     } else {
-                      actorController.incrementActorCollectTimes();
+                      supplierController.incrementTotal('follow');
                     }
                   },
                   child: Container(

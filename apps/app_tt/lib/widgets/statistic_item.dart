@@ -1,31 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:shared/utils/video_info_formatter.dart';
 
-class StatisticsRow extends StatelessWidget {
-  final String likes;
-  final String videos;
+class StatisticsItem extends StatelessWidget {
+  final int count;
+  final String label;
 
-  const StatisticsRow({
+  const StatisticsItem({
     super.key,
-    required this.likes,
-    required this.videos,
+    required this.count,
+    required this.label,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        _buildStatisticItem(likes, '讚數'),
-        const SizedBox(width: 20),
-        _buildStatisticItem(videos, '作品'),
-      ],
-    );
-  }
-
-  Widget _buildStatisticItem(String count, String label) {
-    return Row(
-      children: [
         Text(
-          count,
+          formatNumberToUnit(count),
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 17,
@@ -44,5 +35,3 @@ class StatisticsRow extends StatelessWidget {
     );
   }
 }
-
-

@@ -52,6 +52,7 @@ class RootWidget extends StatelessWidget {
 
     if (i18nSupport == null || i18nSupport == false) {
       return MaterialApp.router(
+        debugShowCheckedModeBanner: false,
         routerDelegate: delegate,
         routeInformationParser: parser,
         theme: theme,
@@ -62,6 +63,7 @@ class RootWidget extends StatelessWidget {
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
+      debugShowCheckedModeBanner: false,
       routerDelegate: delegate,
       routeInformationParser: parser,
       theme: theme,

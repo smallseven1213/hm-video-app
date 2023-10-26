@@ -17,6 +17,7 @@ import '../pages/video_by_block.dart' as video_by_block_page;
 import '../pages/actors.dart' as actors_page;
 import '../pages/filter.dart' as filter_page;
 import '../pages/search.dart' as search_page;
+import '../pages/supplier.dart' as supplier_page;
 import '../pages/vip.dart' as vip_page;
 import '../pages/coin.dart' as coin_page;
 import '../pages/share.dart' as share_page;
@@ -47,6 +48,9 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         film: args['film'] == null ? 1 : args['film'] as int,
       ),
   AppRoutes.actor: (context, args) => actor_page.ActorPage(
+        id: args['id'] as int,
+      ),
+  AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
         id: args['id'] as int,
       ),
   AppRoutes.login: (context, args) => const login_page.LoginPage(),
