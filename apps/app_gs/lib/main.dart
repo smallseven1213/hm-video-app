@@ -1,6 +1,7 @@
 import 'package:app_gs/widgets/countdown.dart';
 import 'package:app_gs/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:game/routes/game_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
@@ -8,14 +9,13 @@ import 'config/colors.dart';
 // import './routes/app_routes.dart'
 //     if (dart.library.html) './routes/app_routes_web.dart' as app_routes;
 import './routes/app_routes.dart' as app_routes;
-import './routes/game_routes.dart' as game_routes;
 
 const env = String.fromEnvironment('ENV', defaultValue: 'dev');
 
 void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
-    ...game_routes.gameRoutes,
+    ...gameRoutes,
   };
 
   runningMain(
