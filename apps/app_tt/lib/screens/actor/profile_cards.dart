@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/actors_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/actor_avatar.dart';
 
 class ProfileCards extends StatefulWidget {
-  const ProfileCards({super.key});
+  final int? regionId;
+  const ProfileCards({
+    super.key,
+    this.regionId,
+  });
 
   @override
   _ProfileCardsState createState() => _ProfileCardsState();
@@ -20,7 +26,11 @@ class _ProfileCardsState extends State<ProfileCards> {
   @override
   void initState() {
     super.initState();
-    actorsController = Get.put(ActorsController());
+    actorsController = Get.put(ActorsController(
+      initialIsRecommend: true,
+      initialRegion: widget.regionId,
+      initialLimit: 20,
+    ));
   }
 
   @override
@@ -66,21 +76,27 @@ class _ProfileCardsState extends State<ProfileCards> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ActorAvatar(width: 40, height: 40, photoSid: photoSid),
-                  const SizedBox(height: 10),
+                  InkWell(
+                    onTap: () => MyRouteDelegate.of(context).push(
+                      AppRoutes.actor,
+                      args: {'id': actor.id, 'title': actor.name},
+                      removeSamePath: true,
+                    ),
+                    child: ActorAvatar(
+                        width: 100, height: 100, photoSid: photoSid),
+                  ),
+                  const SizedBox(height: 8),
                   Text(name,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 5),
-                  Text('ID: $id', style: const TextStyle(fontSize: 16)),
-                  const SizedBox(height: 10),
+                          fontSize: 13, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
                   UserFavoritesActorConsumer(
                     id: id,
                     info: actor,
                     child: (isLiked, handleLike) => InkWell(
                       onTap: handleLike,
                       child: Container(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(6.0),
                         decoration: BoxDecoration(
                           color: isLiked
                               ? const Color(0xfff1f1f2)

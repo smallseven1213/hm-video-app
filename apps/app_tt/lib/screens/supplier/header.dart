@@ -32,8 +32,6 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent =>
       164 + kToolbarHeight + MediaQuery.of(context).padding.top;
 
-  
-
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -71,7 +69,7 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
                 ),
               ),
               centerTitle: false,
-              actions: const <Widget>[SearchButton(), SizedBox(width: 50)],
+              actions: const <Widget>[SearchButton()],
             ),
           )
         : SizedBox(

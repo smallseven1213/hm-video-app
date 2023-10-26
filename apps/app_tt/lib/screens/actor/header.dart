@@ -36,7 +36,6 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent =>
       164 + kToolbarHeight + MediaQuery.of(context).padding.top;
 
-
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
@@ -54,9 +53,7 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
               backgroundColor: Colors.white,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-                onPressed: () {
-                  MyRouteDelegate.of(context).pop();
-                },
+                onPressed: () => MyRouteDelegate.of(context).pop(),
               ),
               elevation: 0,
               title: UserFavoritesActorConsumer(
@@ -77,7 +74,7 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
                 ),
               ),
               centerTitle: false, // This will center the title
-              actions: const <Widget>[SearchButton(), SizedBox(width: 50)],
+              actions: const <Widget>[SearchButton()],
             ),
           )
         : SizedBox(

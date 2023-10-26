@@ -41,7 +41,6 @@ class JingangLinkButton extends StatelessWidget {
           bottomNavigatorController.changeKey('/$defaultScreenKey');
         } else {
           final List<String> segments = parsedUrl.pathSegments;
-          print('segments: $segments');
           String path = '/${segments[0]}';
           if (segments.length == 2) {
             int id = int.parse(segments[1]);

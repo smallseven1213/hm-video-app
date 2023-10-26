@@ -45,7 +45,7 @@ class ActorHeaderInfo extends StatelessWidget {
             ),
             const SizedBox(height: 5),
             Text(
-              '用戶ID: $id',
+              '$id',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: fontSize2,

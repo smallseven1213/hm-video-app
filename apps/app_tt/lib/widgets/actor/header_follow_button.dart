@@ -22,7 +22,7 @@ class HeaderFollowButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(18),
           color: isLiked ? const Color(0xfff1f1f2) : const Color(0xfffff3f5),
         ),
-        padding: const EdgeInsets.all(3),
+        padding: const EdgeInsets.only(left: 3, top: 5, bottom: 5, right: 8),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

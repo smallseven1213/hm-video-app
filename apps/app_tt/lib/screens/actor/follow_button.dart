@@ -92,18 +92,18 @@ class _FollowButtonState extends State<FollowButton> {
         ),
         const SizedBox(height: 10),
         if (_isExpanded)
-          const AnimatedSize(
-            duration: Duration(milliseconds: 300),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 300),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '你可能感興趣',
                   textAlign: TextAlign.left,
                   style: TextStyle(color: Color(0xff73747b), fontSize: 13),
                 ),
-                SizedBox(height: 10),
-                ProfileCards()
+                const SizedBox(height: 10),
+                ProfileCards(regionId: widget.actor.regionId)
               ],
             ),
           ),
