@@ -1,17 +1,17 @@
 import 'package:app_tt/widgets/countdown.dart';
+import 'package:game/routes/game_routes.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
 import 'localization/i18n.dart';
 import 'widgets/loading.dart';
 import './routes/app_routes.dart' as app_routes;
-import './routes/game_routes.dart' as game_routes;
 
 const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
 void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
-    ...game_routes.gameRoutes,
+    ...gameRoutes,
   };
 
   runningMain(
