@@ -32,7 +32,7 @@ class _VideoByTagConsumerState extends State<VideoByTagConsumer> {
         excludeId: widget.excludeId,
         tagId: ids,
       ),
-      tag: ids,
+      tag: '${ids}_${widget.excludeId}',
     );
   }
 
