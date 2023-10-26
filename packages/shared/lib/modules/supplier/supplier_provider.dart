@@ -30,7 +30,7 @@ class SupplierPageState extends State<SupplierProvider> {
 
   @override
   void dispose() {
-    supplierController.dispose();
+    // supplierController.dispose();
     super.dispose();
   }
 
