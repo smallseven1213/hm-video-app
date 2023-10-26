@@ -32,13 +32,7 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent =>
       164 + kToolbarHeight + MediaQuery.of(context).padding.top;
 
-  handleSearch(keyword) {
-    MyRouteDelegate.of(context).push(
-      AppRoutes.search,
-      args: {'inputDefaultValue': keyword, 'autoSearch': true},
-      removeSamePath: true,
-    );
-  }
+  
 
   @override
   Widget build(
@@ -77,13 +71,7 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
                 ),
               ),
               centerTitle: false,
-              actions: <Widget>[
-                SearchButton(
-                  handleSearch: handleSearch,
-                  keyword: info.aliasName ?? '',
-                ),
-                SizedBox(width: 50)
-              ],
+              actions: const <Widget>[SearchButton(), SizedBox(width: 50)],
             ),
           )
         : SizedBox(
@@ -101,10 +89,7 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
                         percentage: percentage,
                         imageSize: imageSize,
                       ),
-                      RoundedSearchButton(
-                        handleSearch: handleSearch,
-                        keyword: info.aliasName ?? '',
-                      ),
+                      const RoundedSearchButton(),
                     ],
                   )),
             ),

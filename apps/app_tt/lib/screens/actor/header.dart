@@ -36,13 +36,6 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
   double get maxExtent =>
       164 + kToolbarHeight + MediaQuery.of(context).padding.top;
 
-  handleSearch(keyword) {
-    MyRouteDelegate.of(context).push(
-      AppRoutes.search,
-      args: {'inputDefaultValue': keyword, 'autoSearch': true},
-      removeSamePath: true,
-    );
-  }
 
   @override
   Widget build(
@@ -84,10 +77,7 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
                 ),
               ),
               centerTitle: false, // This will center the title
-              actions: <Widget>[
-                SearchButton(handleSearch: handleSearch, keyword: info.name),
-                SizedBox(width: 50)
-              ],
+              actions: const <Widget>[SearchButton(), SizedBox(width: 50)],
             ),
           )
         : SizedBox(
@@ -105,10 +95,7 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
                         percentage: percentage,
                         imageSize: imageSize,
                       ),
-                      RoundedSearchButton(
-                        handleSearch: handleSearch,
-                        keyword: info.name,
-                      ),
+                      const RoundedSearchButton(),
                     ],
                   )),
             ),

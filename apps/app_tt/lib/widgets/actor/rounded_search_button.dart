@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class RoundedSearchButton extends StatelessWidget {
-  final Function handleSearch;
-  final String keyword;
-
   const RoundedSearchButton({
     Key? key,
-    required this.handleSearch,
-    required this.keyword,
   }) : super(key: key);
 
   @override
@@ -17,7 +14,8 @@ class RoundedSearchButton extends StatelessWidget {
       top: 50,
       right: 16,
       child: GestureDetector(
-        onTap: () => handleSearch(keyword),
+        onTap: () => MyRouteDelegate.of(context).push(AppRoutes.search,
+            args: {'inputDefaultValue': '', 'autoSearch': false}),
         child: Container(
           width: 31,
           height: 31,
