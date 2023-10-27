@@ -12,7 +12,7 @@ import 'package:shared/navigator/delegate.dart';
 import '../../../widgets/no_data.dart';
 import '../../../widgets/video_preview_with_edit.dart';
 
-const gridRatio = 128 / 227;
+const gridRatio = 128 / 173;
 
 final logger = Logger();
 
@@ -41,98 +41,88 @@ class PlayRecordShortScreen extends StatelessWidget {
             SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  var video1 = videos[index * 2];
-                  Vod? video2;
-                  if (index * 2 + 1 < videos.length) {
-                    video2 = videos[index * 2 + 1];
+                  List<Vod?> videosInRow = [];
+                  for (int i = 0; i < 3; i++) {
+                    int videoIndex = index * 3 + i;
+                    if (videoIndex < videos.length) {
+                      videosInRow.add(videos[videoIndex]);
+                    } else {
+                      videosInRow.add(null);
+                    }
                   }
+
                   return Column(
                     children: [
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Obx(() => VideoPreviewWithEditWidget(
-                                  id: video1.id,
-                                  film: 2, // 來自原始B Code的額外參數
-                                  isEditing:
-                                      listEditorController.isEditing.value,
-                                  isSelected: listEditorController.selectedIds
-                                      .contains(video1.id),
-                                  onEditingTap: () {
-                                    listEditorController
-                                        .toggleSelected(video1.id);
-                                  },
-                                  onOverrideRedirectTap: (id) {
-                                    // 來自原始B Code的額外功能
-                                    MyRouteDelegate.of(context).push(
-                                      AppRoutes.shortsByLocal,
-                                      args: {'videoId': video1.id, 'itemId': 1},
-                                    );
-                                  },
-                                  coverVertical: video1.coverVertical ?? '',
-                                  coverHorizontal: video1.coverHorizontal ?? '',
-                                  timeLength: video1.timeLength ?? 0,
-                                  tags: video1.tags ?? [],
-                                  title: video1.title,
-                                  videoViewTimes: video1.videoViewTimes ??
-                                      0, // 替換videoCollectTimes
-                                  displayVideoCollectTimes: false,
-                                  // 移除不需要的屬性
-                                )),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                            child: video2 != null
-                                ? Obx(() => VideoPreviewWithEditWidget(
-                                      id: video2!.id,
-                                      film: 2, // 來自原始B Code的額外參數
-                                      isEditing:
-                                          listEditorController.isEditing.value,
-                                      isSelected: listEditorController
-                                          .selectedIds
-                                          .contains(video2!.id),
-                                      onEditingTap: () {
-                                        listEditorController
-                                            .toggleSelected(video2!.id);
-                                      },
-                                      onOverrideRedirectTap: (id) {
-                                        // 來自原始B Code的額外功能
-                                        MyRouteDelegate.of(context).push(
-                                          AppRoutes.shortsByLocal,
-                                          args: {
-                                            'videoId': video2!.id,
-                                            'itemId': 1
-                                          },
-                                        );
-                                      },
-                                      coverVertical:
-                                          video2!.coverVertical ?? '',
-                                      coverHorizontal:
-                                          video2!.coverHorizontal ?? '',
-                                      timeLength: video2!.timeLength ?? 0,
-                                      tags: video2!.tags ?? [],
-                                      title: video2!.title,
-                                      videoViewTimes: video2!.videoViewTimes ??
-                                          0, // 替換videoCollectTimes
-                                      displayVideoCollectTimes: false,
-                                      // 移除不需要的屬性
-                                    ))
-                                : const SizedBox(),
-                          ),
-                        ],
+                        children: insertSeparators(
+                            videosInRow.map((video) {
+                              if (video == null) {
+                                return Expanded(child: const SizedBox());
+                              }
+                              return Expanded(
+                                  child: _buildVideoWidget(video, gridRatio,
+                                      listEditorController, context));
+                            }).toList(),
+                            const SizedBox(width: 2)),
                       ),
-                      const SizedBox(height: 8), // 替代 separatorBuilder
+                      const SizedBox(height: 2),
                     ],
                   );
                 },
-                // 計算視頻數量，每行兩個
-                childCount: (videos.length / 2).ceil(),
+                childCount: (videos.length / 3).ceil(),
               ),
-            ),
+            )
           ],
         ),
       );
     });
+  }
+
+  List<Widget> insertSeparators(List<Widget> widgets, Widget separator) {
+    if (widgets.isEmpty) return [];
+
+    List<Widget> withSeparators = [];
+    for (int i = 0; i < widgets.length - 1; i++) {
+      withSeparators.add(widgets[i]);
+      withSeparators.add(separator);
+    }
+    withSeparators.add(widgets.last);
+
+    return withSeparators;
+  }
+
+  Widget _buildVideoWidget(Vod video, double gridRatio,
+      ListEditorController listEditorController, BuildContext context) {
+    return Obx(() => VideoPreviewWithEditWidget(
+          id: video.id,
+          film: 2,
+          isEditing: listEditorController.isEditing.value,
+          isSelected: listEditorController.selectedIds.contains(video.id),
+          onEditingTap: () {
+            listEditorController.toggleSelected(video.id);
+          },
+          onOverrideRedirectTap: (id) {
+            MyRouteDelegate.of(context).push(
+              AppRoutes.shortsByLocal,
+              args: {'videoId': video.id, 'itemId': 1},
+            );
+          },
+          displayVideoCollectTimes: false,
+          hasRadius: false,
+          hasTitle: false,
+          hasTags: false,
+          imageRatio: gridRatio,
+          displayCoverVertical: true,
+          coverVertical: video.coverVertical ?? '',
+          coverHorizontal: video.coverHorizontal ?? '',
+          timeLength: video.timeLength ?? 0,
+          tags: video.tags ?? [],
+          title: video.title,
+          videoViewTimes: video.videoViewTimes ?? 0,
+          videoCollectTimes: video.videoCollectTimes ?? 0,
+          displayVideoTimes: false,
+          displayViewTimes: false,
+        ));
   }
 }
