@@ -1,4 +1,4 @@
-import 'package:app_ab/routes/game_routes.dart';
+import 'package:game/routes/game_routes.dart';
 import 'package:app_ab/widgets/countdown.dart';
 import 'package:app_ab/widgets/loading.dart';
 import 'package:flutter/material.dart';
