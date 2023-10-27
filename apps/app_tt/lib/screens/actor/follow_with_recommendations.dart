@@ -54,7 +54,7 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
                     }
                   },
                   child: Container(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       color: isLiked
                           ? const Color(0xfff1f1f2)
@@ -74,20 +74,19 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
               ),
             ),
             const SizedBox(width: 10),
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFf1f1f2),
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-              width: 36,
-              height: 36,
-              child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_drop_down,
-                  color: Colors.black,
-                  size: 24.0,
+            Center(
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color(0xfff1f1f2),
+                  borderRadius: BorderRadius.all(Radius.circular(4.0)),
                 ),
-                onPressed: _toggleExpand,
+                child: IconButton(
+                  icon: Icon(_isExpanded
+                      ? Icons.arrow_drop_up
+                      : Icons.arrow_drop_down),
+                  color: Colors.black,
+                  onPressed: _toggleExpand,
+                ),
               ),
             ),
           ],
