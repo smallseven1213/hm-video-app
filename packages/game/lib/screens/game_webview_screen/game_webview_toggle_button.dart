@@ -130,8 +130,8 @@ class _GameWebviewToggleButtonWidget
                   MyRouteDelegate.of(context).push(
                     gameConfigController.switchPaymentPage.value ==
                             switchPaymentPageType['list']
-                        ? GameAppRoutes.depositList.value
-                        : GameAppRoutes.depositPolling.value,
+                        ? GameAppRoutes.depositList
+                        : GameAppRoutes.depositPolling,
                   );
                 },
                 child: Column(

@@ -152,7 +152,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                       Navigator.pop(context),
                       launch(redirectUrl, webOnlyWindowName: '_blank'),
                       MyRouteDelegate.of(context)
-                          .push(GameAppRoutes.paymentResult.value),
+                          .push(GameAppRoutes.paymentResult),
                     },
                     child: Text(
                       '開啟',

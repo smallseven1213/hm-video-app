@@ -116,7 +116,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
       onConfirm: () {
         gameWithdrawController.setLoadingStatus(false);
         Navigator.of(context).pop();
-        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword);
       },
     );
   }
@@ -273,7 +273,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                         child: InkWell(
                           onTap: () {
                             MyRouteDelegate.of(context)
-                                .push(GameAppRoutes.withdrawRecord.value);
+                                .push(GameAppRoutes.withdrawRecord);
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

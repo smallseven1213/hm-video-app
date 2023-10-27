@@ -215,8 +215,7 @@ class ConfirmNameState extends State<ConfirmName> {
               onLoading(context, status: false);
               Navigator.pop(context);
               launch(redirectUrl, webOnlyWindowName: '_blank');
-              MyRouteDelegate.of(context)
-                  .push(GameAppRoutes.paymentResult.value);
+              MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult);
             } else {
               Navigator.pop(context);
             }

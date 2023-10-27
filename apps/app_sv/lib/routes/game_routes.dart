@@ -16,29 +16,29 @@ import 'package:game/enums/game_app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 final Map<String, RouteWidgetBuilder> gameRoutes = {
-  GameAppRoutes.lobby.value: (context, args) => const GameScreen(),
-  GameAppRoutes.webview.value: (context, args) => GameWebviewScreen(
+  GameAppRoutes.lobby: (context, args) => const GameScreen(),
+  GameAppRoutes.webview: (context, args) => GameWebviewScreen(
         gameUrl: args['url'] as String,
         direction: args['direction'] as int,
       ),
-  GameAppRoutes.depositList.value: (context, args) =>
-      const GameDepositListScreen(),
-  GameAppRoutes.depositPolling.value: (context, args) =>
+  GameAppRoutes.depositList: (context, args) => const GameDepositListScreen(),
+  GameAppRoutes.depositPolling: (context, args) =>
       const GameDepositPollingScreen(),
-  GameAppRoutes.depositDetail.value: (context, args) => GameDepositDetailScreen(
+  GameAppRoutes.depositDetail: (context, args) => GameDepositDetailScreen(
         payment: args['payment'] as String,
         paymentChannelId: args['paymentChannelId'] as int,
       ),
-  GameAppRoutes.withdraw.value: (context, args) => const GameWithdrawScreen(),
-  GameAppRoutes.setFundPassword.value: (context, args) =>
+  GameAppRoutes.withdraw: (context, args) => const GameWithdrawScreen(),
+  GameAppRoutes.setFundPassword: (context, args) =>
       const GameSetFundPasswordScreen(),
-  GameAppRoutes.setBankcard.value: (context, args) =>
-      const GameSetBankCardScreen(),
-  GameAppRoutes.paymentResult.value: (context, args) =>
+  GameAppRoutes.setBankcard: (context, args) => const GameSetBankCardScreen(),
+  GameAppRoutes.paymentResult: (context, args) =>
       const GamePaymentResultScreen(),
-  GameAppRoutes.depositRecord.value: (context, args) =>
+  GameAppRoutes.depositRecord: (context, args) =>
       const GameDepositRecordScreen(),
-  GameAppRoutes.withdrawRecord.value: (context, args) =>
+  GameAppRoutes.withdrawRecord: (context, args) =>
       const GameWithdrawRecordScreen(),
-  GameAppRoutes.activity.value: (context, args) => const GameActivityScreen(),
+  GameAppRoutes.activity: (context, args) => GameActivityScreen(
+        id: args['id'] as int,
+      ),
 };

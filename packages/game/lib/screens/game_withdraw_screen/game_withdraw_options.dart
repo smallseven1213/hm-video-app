@@ -66,7 +66,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
       onConfirm: () {
         gameWithdrawalController.setLoadingStatus(false);
         Navigator.of(context).pop();
-        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword);
       },
       onCancel: () => Navigator.of(context).pop(),
     );
@@ -144,8 +144,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
               if (gameWithdrawalController.paymentPin.value == false) {
                 showFundPassword();
               } else {
-                MyRouteDelegate.of(context)
-                    .push(GameAppRoutes.setBankcard.value);
+                MyRouteDelegate.of(context).push(GameAppRoutes.setBankcard);
               }
             },
             disabled: gameWithdrawalController.hasPaymentData.value,

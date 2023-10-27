@@ -5,7 +5,6 @@ import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
-import 'package:get/get.dart';
 import 'package:shared/navigator/delegate.dart';
 
 class GameDepositPolling extends StatefulWidget {
@@ -41,8 +40,7 @@ class GameDepositPollingState extends State<GameDepositPolling> {
           actions: [
             TextButton(
               onPressed: () {
-                MyRouteDelegate.of(context)
-                    .push(GameAppRoutes.depositRecord.value);
+                MyRouteDelegate.of(context).push(GameAppRoutes.depositRecord);
               },
               child: Text(
                 '存款記錄',

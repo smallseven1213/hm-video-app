@@ -16,7 +16,8 @@ final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 class GameActivity extends StatefulWidget {
-  const GameActivity({Key? key}) : super(key: key);
+  final int id;
+  const GameActivity({Key? key, required this.id}) : super(key: key);
 
   @override
   State<GameActivity> createState() => _GameActivityState();

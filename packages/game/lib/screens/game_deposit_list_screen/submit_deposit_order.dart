@@ -31,13 +31,13 @@ submitDepositOrder(
         onLoading(context, status: false);
         Navigator.pop(context);
         launch(value, webOnlyWindowName: '_blank');
-        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult);
       } else {
         // ignore: deprecated_member_use
         await launch(value, webOnlyWindowName: '_blank');
         onLoading(context, status: false);
         Navigator.pop(context);
-        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult);
       }
     } else {
       onLoading(context, status: false);
