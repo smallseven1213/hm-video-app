@@ -70,12 +70,13 @@ class SharePage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // const Positioned(
-          //   child: Image(
-          //     width: double.infinity,
-          //     image: AssetImage('assets/images/share_bg.webp'),
-          //   ),
-          // ),
+          const Positioned(
+            child: Image(
+              width: double.infinity,
+              fit: BoxFit.fill,
+              image: AssetImage('assets/images/share_page_bg.webp'),
+            ),
+          ),
           MyAppBar(
             title: I18n.promotionalShare,
             backgroundColor: Colors.transparent,
