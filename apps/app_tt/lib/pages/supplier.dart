@@ -8,7 +8,7 @@ import 'package:shared/modules/supplier/supplier_consumer.dart';
 import 'package:shared/modules/supplier/supplier_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
-import '../screens/supplier/follow_button.dart';
+import '../screens/supplier/follow_with_recommendations.dart';
 import '../screens/supplier/header.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
@@ -142,7 +142,8 @@ class SupplierPageState extends State<SupplierPage>
                               ),
                             ),
                             const SizedBox(height: 10),
-                            FollowButton(id: widget.id, supplier: supplier),
+                            FollowWithRecommendations(
+                                id: widget.id, supplier: supplier),
                           ],
                         ),
                       ),

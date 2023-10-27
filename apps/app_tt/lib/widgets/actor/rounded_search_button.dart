@@ -23,13 +23,11 @@ class RoundedSearchButton extends StatelessWidget {
             color: Color.fromRGBO(0, 0, 0, 0.3),
             shape: BoxShape.circle,
           ),
-          child: Center(
-            child: SvgPicture.asset(
-              'svgs/ic-search.svg',
-              width: 17,
-              height: 17,
-              colorFilter:
-                  const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+          child: const Center(
+            child: Icon(
+              Icons.search,
+              color: Colors.white,
+              size: 18,
             ),
           ),
         ),

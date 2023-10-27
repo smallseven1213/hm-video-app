@@ -2,7 +2,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/supplier/supplier_consumer.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';

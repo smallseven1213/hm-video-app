@@ -11,9 +11,28 @@ class SuppliersController extends GetxController {
   var actors = <Supplier>[].obs;
   Rx<int?> region = Rx<int?>(null);
   Rx<String?> name = Rx<String?>(null);
+  Rx<bool?> isRecommend = Rx<bool?>(null);
   Rx<int> sortBy = Rx<int>(1);
+  Rx<int> limit = Rx<int>(1000);
 
-  SuppliersController() {
+  SuppliersController({
+    String? initialName,
+    bool? initialIsRecommend,
+    int? initialSortBy,
+    int? initialLimit,
+  }) {
+    if (initialName != null) {
+      name.value = initialName;
+    }
+    if (initialIsRecommend != null) {
+      isRecommend.value = initialIsRecommend;
+    }
+    if (initialSortBy != null) {
+      sortBy.value = initialSortBy;
+    }
+    if (initialLimit != null) {
+      limit.value = initialLimit;
+    }
     _fetchData();
   }
 
@@ -40,11 +59,12 @@ class SuppliersController extends GetxController {
 
   _fetchData() async {
     var res = await supplierApi.getManyBy(
-        page: 1,
-        limit: 1000,
-        name: name.value ?? '',
-        sortBy: sortBy.value,
-        isRecommend: false);
+      page: 1,
+      limit: limit.value,
+      name: name.value ?? '',
+      sortBy: sortBy.value,
+      isRecommend: isRecommend.value,
+    );
     actors.value = res;
   }
 }

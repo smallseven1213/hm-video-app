@@ -5,21 +5,22 @@ import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
 
-class FollowButton extends StatefulWidget {
+class FollowWithRecommendations extends StatefulWidget {
   final int id;
   final Actor actor;
 
-  const FollowButton({
+  const FollowWithRecommendations({
     super.key,
     required this.id,
     required this.actor,
   });
 
   @override
-  _FollowButtonState createState() => _FollowButtonState();
+  _FollowWithRecommendationsState createState() =>
+      _FollowWithRecommendationsState();
 }
 
-class _FollowButtonState extends State<FollowButton> {
+class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
   bool _isExpanded = false;
 
   void _toggleExpand() {
@@ -32,6 +33,7 @@ class _FollowButtonState extends State<FollowButton> {
   Widget build(BuildContext context) {
     ActorController actorController =
         Get.put(ActorController(actorId: widget.id), tag: 'actor-${widget.id}');
+
     return Column(
       children: [
         Row(

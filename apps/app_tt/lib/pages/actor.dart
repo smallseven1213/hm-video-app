@@ -1,19 +1,13 @@
-import 'dart:ui';
-
-import 'package:app_tt/screens/actor/follow_button.dart';
+import 'package:app_tt/screens/actor/follow_with_recommendations.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/actor/actor_consumer.dart';
 import 'package:shared/modules/actor/actor_provider.dart';
 import 'package:shared/modules/videos/actor_hotest_videos_consumer.dart';
-import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
 import 'package:shared/modules/videos/actor_latest_videos_consumer.dart';
-import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/actor/header.dart';
-import '../widgets/actor_avatar.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_vod_grid.dart';
 import '../widgets/statistic_item.dart';
@@ -133,7 +127,8 @@ class ActorPageState extends State<ActorPage>
                               ),
                             ),
                             const SizedBox(height: 10),
-                            FollowButton(id: widget.id, actor: actor),
+                            FollowWithRecommendations(
+                                id: widget.id, actor: actor),
                           ],
                         ),
                       ),

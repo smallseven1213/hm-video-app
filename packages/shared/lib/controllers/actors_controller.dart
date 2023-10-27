@@ -83,7 +83,6 @@ class ActorsController extends GetxController {
   }
 
   _fetchData() async {
-    print('@@@ fetch data: ${region.value}');
     var res = await actorApi.getManyBy(
       page: 1,
       limit: limit.value,

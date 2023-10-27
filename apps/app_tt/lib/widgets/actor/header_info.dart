@@ -22,7 +22,6 @@ class ActorHeaderInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double fontSize = lerpDouble(21, 15, percentage)!;
-    final double fontSize2 = lerpDouble(14, 10, percentage)!;
 
     return Row(
       children: [
@@ -42,15 +41,6 @@ class ActorHeaderInfo extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: fontSize,
                   color: Colors.white),
-            ),
-            const SizedBox(height: 5),
-            Text(
-              '$id',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: fontSize2,
-                color: Colors.white,
-              ),
             ),
           ],
         ),

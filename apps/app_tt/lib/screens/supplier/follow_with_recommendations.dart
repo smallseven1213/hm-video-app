@@ -3,24 +3,24 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
+import 'profile_cards.dart';
 
-import '../actor/profile_cards.dart';
-
-class FollowButton extends StatefulWidget {
+class FollowWithRecommendations extends StatefulWidget {
   final int id;
   final Supplier supplier;
 
-  const FollowButton({
+  const FollowWithRecommendations({
     super.key,
     required this.id,
     required this.supplier,
   });
 
   @override
-  _FollowButtonState createState() => _FollowButtonState();
+  _FollowWithRecommendationsState createState() =>
+      _FollowWithRecommendationsState();
 }
 
-class _FollowButtonState extends State<FollowButton> {
+class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
   bool _isExpanded = false;
 
   void _toggleExpand() {

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/suppliers_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
-
+import 'package:shared/navigator/delegate.dart';
+import '../../widgets/actor/follow_button.dart';
 import '../../widgets/actor_avatar.dart';
 
 class ProfileCards extends StatefulWidget {
@@ -20,7 +22,10 @@ class _ProfileCardsState extends State<ProfileCards> {
   @override
   void initState() {
     super.initState();
-    suppliersController = Get.put(SuppliersController());
+    suppliersController = Get.put(SuppliersController(
+      initialIsRecommend: true,
+      initialLimit: 20,
+    ));
   }
 
   @override
@@ -66,38 +71,26 @@ class _ProfileCardsState extends State<ProfileCards> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ActorAvatar(width: 40, height: 40, photoSid: photoSid),
-                  const SizedBox(height: 10),
+                  InkWell(
+                    onTap: () => MyRouteDelegate.of(context).push(
+                      AppRoutes.supplier,
+                      args: {'id': supplier.id, 'title': supplier.name},
+                      removeSamePath: true,
+                    ),
+                    child: ActorAvatar(
+                        width: 100, height: 100, photoSid: photoSid),
+                  ),
+                  const SizedBox(height: 8),
                   Text(name,
                       style: const TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 5),
-                  Text('ID: $id', style: const TextStyle(fontSize: 16)),
-                  const SizedBox(height: 10),
+                          fontSize: 13, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
                   UserFavoritesSupplierConsumer(
                     id: id,
                     info: supplier,
                     child: (isLiked, handleLike) => InkWell(
                       onTap: handleLike,
-                      child: Container(
-                        padding: const EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: isLiked
-                              ? const Color(0xfff1f1f2)
-                              : const Color(0xfffe2c55),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          isLiked ? '已關注' : '+ 關注',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: isLiked
-                                ? const Color(0xff161823)
-                                : Colors.white,
-                          ),
-                        ),
-                      ),
+                      child: FollowButton(isLiked: isLiked),
                     ),
                   ),
                 ],

@@ -86,7 +86,7 @@ class SupplierApi {
     int limit = 10,
     String? name,
     int sortBy = 0,
-    bool? isRecommend = true,
+    bool? isRecommend,
   }) async {
     var res = await fetcher(
         url:

@@ -5,7 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-
+import '../../widgets/actor/follow_button.dart';
 import '../../widgets/actor_avatar.dart';
 
 class ProfileCards extends StatefulWidget {
@@ -95,25 +95,7 @@ class _ProfileCardsState extends State<ProfileCards> {
                     info: actor,
                     child: (isLiked, handleLike) => InkWell(
                       onTap: handleLike,
-                      child: Container(
-                        padding: const EdgeInsets.all(6.0),
-                        decoration: BoxDecoration(
-                          color: isLiked
-                              ? const Color(0xfff1f1f2)
-                              : const Color(0xfffe2c55),
-                          borderRadius: BorderRadius.circular(4.0),
-                        ),
-                        alignment: Alignment.center,
-                        child: Text(
-                          isLiked ? '已關注' : '+ 關注',
-                          style: TextStyle(
-                            fontSize: 13,
-                            color: isLiked
-                                ? const Color(0xff161823)
-                                : Colors.white,
-                          ),
-                        ),
-                      ),
+                      child: FollowButton(isLiked: isLiked),
                     ),
                   ),
                 ],
