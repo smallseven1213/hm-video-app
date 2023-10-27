@@ -68,7 +68,7 @@ void handleGameItem(BuildContext context,
       onLoading(context, status: false);
       // ignore: use_build_context_synchronously
       MyRouteDelegate.of(context).pushAndRemoveUntil(
-        GameAppRoutes.webview.value,
+        GameAppRoutes.webview,
         args: {
           'url': gameUrl,
           'direction': direction,

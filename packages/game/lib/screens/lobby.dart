@@ -185,9 +185,8 @@ class _GameLobbyState extends State<GameLobby>
                                           gameConfigController.switchPaymentPage
                                                       .value ==
                                                   switchPaymentPageType['list']
-                                              ? GameAppRoutes.depositList.value
-                                              : GameAppRoutes
-                                                  .depositPolling.value,
+                                              ? GameAppRoutes.depositList
+                                              : GameAppRoutes.depositPolling,
                                         );
                                       },
                                     ),
@@ -195,7 +194,7 @@ class _GameLobbyState extends State<GameLobby>
                                     UserInfoWithdraw(
                                       onTap: () {
                                         MyRouteDelegate.of(context).push(
-                                          GameAppRoutes.withdraw.value,
+                                          GameAppRoutes.withdraw,
                                         );
                                       },
                                     ),
@@ -219,7 +218,7 @@ class _GameLobbyState extends State<GameLobby>
                                   'true')
                                 InkWell(
                                   onTap: () => MyRouteDelegate.of(context)
-                                      .push(GameAppRoutes.activity.value),
+                                      .push(GameAppRoutes.activity),
                                   child: Image.asset(
                                     'packages/game/assets/images/game_lobby/gift.webp',
                                     width: 64,

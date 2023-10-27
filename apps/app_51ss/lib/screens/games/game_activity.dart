@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/game_activity_screen/index.dart';
 
 class GameActivityScreen extends StatelessWidget {
-  const GameActivityScreen({Key? key}) : super(key: key);
+  final int id;
+  const GameActivityScreen({Key? key, required this.id}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const GameActivity();
+    return GameActivity(id: id);
   }
 }

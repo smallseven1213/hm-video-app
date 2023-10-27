@@ -10,7 +10,6 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -81,8 +80,7 @@ class GameDepositListState extends State<GameDepositList> {
           actions: [
             TextButton(
               onPressed: () {
-                MyRouteDelegate.of(context)
-                    .push(GameAppRoutes.depositRecord.value);
+                MyRouteDelegate.of(context).push(GameAppRoutes.depositRecord);
               },
               child: Text(
                 '存款記錄',

@@ -1,3 +1,4 @@
+import 'package:app_ab/routes/game_routes.dart';
 import 'package:app_ab/widgets/countdown.dart';
 import 'package:app_ab/widgets/loading.dart';
 import 'package:flutter/material.dart';
@@ -8,14 +9,13 @@ import 'config/colors.dart';
 // 以下自行決定App要什麼路由，路由的key管理則是統一放在shared中
 // 如果此App沒有遊戲，那就不需要寫入game_routes
 import './routes/app_routes.dart' as app_routes;
-import './routes/game_routes.dart' as game_routes;
 
 const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
 void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
-    ...game_routes.gameRoutes,
+    ...gameRoutes,
   };
 
   runningMain(
