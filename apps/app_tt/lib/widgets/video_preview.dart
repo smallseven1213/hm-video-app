@@ -1,7 +1,9 @@
 import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/index.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/base_video_preview.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video_collection_times.dart';
@@ -155,18 +157,81 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
             AspectRatio(
               aspectRatio: imageRatio ??
                   (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-              child: SidImageVisibilityDetector(
-                child: SidImage(
-                  key: ValueKey('video-preview-$id'),
-                  sid: displayCoverVertical ? coverVertical : coverHorizontal,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              child: Stack(
+                children: [
+                  SidImage(
+                    key: ValueKey('video-preview-$id'),
+                    sid: displayCoverVertical ? coverVertical : coverHorizontal,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      width: double.infinity,
+                      height: 30,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black87,
+                          ],
+                        ),
+                      ),
+                      child: Center(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // in children: left is play button and flex 1 , right is video time and width by content
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                height: 30,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    const Image(
+                                      width: 15,
+                                      height: 17,
+                                      image: AssetImage(
+                                          'assets/images/play_count.webp'),
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      videoViewTimes.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(right: 5),
+                              child: VideoTime(time: timeLength),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
               child: Column(
                 children: [
                   Align(
@@ -183,39 +248,39 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     ),
                   ),
                   Row(
-                    children: [
-                      if (displaySupplier == true)
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              I18n.username,
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: const TextStyle(
-                                color: Color(0xFF6B6B6B),
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (displayViewTimes == true)
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            videoViewTimes.toString(),
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: false,
-                            style: const TextStyle(
-                              color: Color(0xFF6B6B6B),
-                              fontSize: 12,
-                            ),
+                    children: tags
+                        .take(3)
+                        .map(
+                          (tag) => GestureDetector(
+                            onTap: () {
+                              if (film == 1) {
+                                MyRouteDelegate.of(context).push(
+                                  AppRoutes.tag,
+                                  args: {'id': tag.id, 'title': tag.name},
+                                  removeSamePath: true,
+                                );
+                              } else if (film == 2) {
+                                MyRouteDelegate.of(context)
+                                    .push(AppRoutes.supplierTag, args: {
+                                  'tagId': tag.id,
+                                  'tagName': tag.name
+                                });
+                              } else if (film == 3) {}
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
+                                child: Text(
+                                  '${kIsWeb ? '#' : ''}${tag.name}',
+                                  style: const TextStyle(
+                                    color: Color(0xFF73747b),
+                                    fontSize: 10,
+                                    height: 1.4,
+                                  ),
+                                )),
                           ),
                         )
-                    ],
+                        .toList(),
                   )
                 ],
               ),
