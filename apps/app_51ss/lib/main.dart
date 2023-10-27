@@ -1,4 +1,4 @@
-import 'package:app_51ss/routes/game_routes.dart';
+import 'package:game/routes/game_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart'; // 如果需要管理色碼的話，使用這個
 import 'package:shared/utils/running_main.dart'; // 啟動專案必須要引用shared的runningMain

@@ -35,6 +35,6 @@ final Map<String, RouteWidgetBuilder> gameRoutes = {
   GameAppRoutes.depositRecord: (context, args) => const GameDepositRecord(),
   GameAppRoutes.withdrawRecord: (context, args) => const GameWithdrawRecord(),
   GameAppRoutes.activity: (context, args) => GameActivity(
-        id: args['id'] as int,
+        id: args['id'] as int?,
       ),
 };
