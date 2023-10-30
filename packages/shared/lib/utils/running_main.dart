@@ -79,7 +79,7 @@ Future<void> runningMain(
 
   SentryFlutter.init((options) {
     options.dsn = sentryDSN;
-    options.tracesSampleRate = kDebugMode ? 0 : 1.0;
+    options.tracesSampleRate = kDebugMode ? 0 : 0.1;
     options.release = SystemConfig().version;
     options.environment = kDebugMode ? 'development' : 'production';
   },
