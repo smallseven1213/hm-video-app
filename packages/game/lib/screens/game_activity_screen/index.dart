@@ -291,7 +291,8 @@ class _GameActivityState extends State<GameActivity> {
                                 ),
                                 const SizedBox(height: 14),
                                 if (activityList[index].buttonStyle !=
-                                    activityButtonType['NONE'])
+                                        activityButtonType['NONE'] ||
+                                    activityList[index].buttonName != null)
                                   GameBannerAndMarqueeConsumer(
                                     child:
                                         (banner, marquee, customerServiceUrl) =>

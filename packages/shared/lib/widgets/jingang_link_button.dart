@@ -33,13 +33,10 @@ class JingangLinkButton extends StatelessWidget {
           final defaultScreenKey =
               Uri.parse(url).queryParameters['defaultScreenKey'];
           final routePath = url.substring(0, url.indexOf('?'));
-          final removeSamePath = routePath.split('/').length > 1;
 
           MyRouteDelegate.of(context).push(
             routePath,
-            hasTransition: false,
             args: {'defaultScreenKey': '/$defaultScreenKey'},
-            removeSamePath: removeSamePath,
           );
           bottomNavigatorController.changeKey('/$defaultScreenKey');
         } else {
