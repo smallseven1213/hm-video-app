@@ -10,5 +10,5 @@ class GameAppRoutes {
   static const String webview = '/game/webview';
   static const String depositRecord = '/game/deposit/record';
   static const String withdrawRecord = '/game/withdraw/record';
-  static const String activity = '/game/activity';
+  static const String activity = '/game-activity';
 }
