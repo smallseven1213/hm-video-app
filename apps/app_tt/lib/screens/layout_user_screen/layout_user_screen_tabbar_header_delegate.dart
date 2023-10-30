@@ -23,8 +23,8 @@ class LayoutUserScreenTabBarHeaderDelegate
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
           indicator: const UnderlineTabIndicator(
             borderSide: BorderSide(
-              color: Color(0xFF161823), // 这里是你想要的颜色
-              width: 2.0, // 这是下划线的宽度，可以根据需要进行调整
+              color: Color(0xFF161823),
+              width: 2.0,
             ),
           ),
           tabs: [
