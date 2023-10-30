@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/user.dart';
 
 import '../../widgets/actor_avatar.dart';
+import '../../widgets/user_empty_avatar.dart';
 
 class UserCard extends StatelessWidget {
   final User info;
@@ -46,11 +47,13 @@ class UserCard extends StatelessWidget {
           Positioned(
             top: 99,
             left: 16,
-            child: ActorAvatar(
-              photoSid: info.avatar,
-              width: 99,
-              height: 99,
-            ),
+            child: info.avatar == null
+                ? const UserEmptyAvatar()
+                : ActorAvatar(
+                    photoSid: info.avatar,
+                    width: 99,
+                    height: 99,
+                  ),
           ),
           // 名字
           Positioned(
