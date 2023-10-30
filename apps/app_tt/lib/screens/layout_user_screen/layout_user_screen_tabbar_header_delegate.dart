@@ -1,8 +1,6 @@
 import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/tt_tab_bar.dart';
-
 class LayoutUserScreenTabBarHeaderDelegate
     extends SliverPersistentHeaderDelegate {
   final TabController tabController;

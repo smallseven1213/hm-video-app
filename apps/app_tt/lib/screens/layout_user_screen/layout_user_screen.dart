@@ -2,6 +2,7 @@ import 'package:app_tt/screens/layout_user_screen/collection.dart';
 import 'package:app_tt/screens/layout_user_screen/favorites.dart';
 import 'package:app_tt/screens/layout_user_screen/playrecord.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
@@ -74,39 +75,39 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                         child: const Column(
                           children: [
                             SizedBox(height: 20),
-                            Align(
-                              // left
-                              alignment: Alignment.centerLeft,
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 16),
-                                  Text('100',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                      )),
-                                  SizedBox(width: 3),
-                                  Text('個讚數',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          color: Color(0xFF73747b))),
-                                  SizedBox(width: 20),
-                                  Text('100',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                      )),
-                                  SizedBox(width: 3),
-                                  Text('個讚數',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          color: Color(0xFF73747b))),
-                                ],
-                              ),
-                            ),
-                            SizedBox(height: 30),
+                            // Align(
+                            //   // left
+                            //   alignment: Alignment.centerLeft,
+                            //   child: Row(
+                            //     children: [
+                            //       SizedBox(width: 16),
+                            //       Text('100',
+                            //           style: TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 17,
+                            //           )),
+                            //       SizedBox(width: 3),
+                            //       Text('個讚數',
+                            //           style: TextStyle(
+                            //               fontWeight: FontWeight.bold,
+                            //               fontSize: 13,
+                            //               color: Color(0xFF73747b))),
+                            //       SizedBox(width: 20),
+                            //       Text('100',
+                            //           style: TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 17,
+                            //           )),
+                            //       SizedBox(width: 3),
+                            //       Text('個讚數',
+                            //           style: TextStyle(
+                            //               fontWeight: FontWeight.bold,
+                            //               fontSize: 13,
+                            //               color: Color(0xFF73747b))),
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(height: 30),
                             GridMenu(),
                             SizedBox(height: 25),
                           ],
