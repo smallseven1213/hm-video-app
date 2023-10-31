@@ -13,6 +13,8 @@ import 'package:game/widgets/button.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class ConfirmName extends StatefulWidget {
@@ -189,7 +191,7 @@ class ConfirmNameState extends State<ConfirmName> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GameButton(
-          text: '確認',
+          text: I18n.confirm,
           onPressed: () {
             if (enableSubmit == true) {
               setState(() => isFetching = 'start');
@@ -209,7 +211,7 @@ class ConfirmNameState extends State<ConfirmName> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GameButton(
-          text: submitDepositSuccess ? '開啟充值頁' : '關閉',
+          text: submitDepositSuccess ? '開啟充值頁' : I18n.close,
           onPressed: () {
             if (submitDepositSuccess) {
               onLoading(context, status: false);

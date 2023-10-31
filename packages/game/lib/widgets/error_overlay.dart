@@ -5,6 +5,8 @@ import 'package:game/controllers/game_response_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/i18n.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class ErrorOverlayWidget extends StatefulWidget {
@@ -37,7 +39,7 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
                     MyRouteDelegate.of(context)
                         .push(AppRoutes.home, removeSamePath: true);
                   },
-                  child: const Text('確認'),
+                  child: Text(I18n.confirm),
                 ),
               ],
             ),

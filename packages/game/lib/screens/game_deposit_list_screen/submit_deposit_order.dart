@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/i18n.dart';
+
 submitDepositOrder(
   context, {
   required String amount,
@@ -53,7 +55,7 @@ submitDepositOrder(
             ),
           ),
         ),
-        confirmText: '確認',
+        confirmText: I18n.confirm,
         onConfirm: () => {
           Navigator.pop(context),
           Navigator.pop(context),
@@ -74,7 +76,7 @@ submitDepositOrder(
           ),
         ),
       ),
-      confirmText: '確認',
+      confirmText: I18n.confirm,
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class GameSetFundPassword extends StatefulWidget {
@@ -48,7 +50,7 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
         title: "",
         content: "設置成功",
         barrierDismissible: false,
-        confirmText: "確認",
+        confirmText: I18n.confirm,
         onConfirm: () => {
           gameWithdrawController.mutate(),
           gameWithdrawController.setLoadingStatus(false),
