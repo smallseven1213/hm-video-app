@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_short_by_channel_style6.dart';
 
-import '../../../controllers/tt_ui_controller.dart';
 import '../../../widgets/base_short_page.dart';
 import '../../../widgets/wave_loading.dart';
 import 'suppliers.dart';
@@ -31,27 +30,16 @@ class ChannelStyle6 extends StatefulWidget {
 
 class _ChannelStyle6State extends State<ChannelStyle6> {
   late final VideoShortByChannelStyle6Controller controller;
-  final TTUIController ttUiController = Get.find<TTUIController>();
 
   @override
   void initState() {
     super.initState();
     controller = Get.put(VideoShortByChannelStyle6Controller());
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   ttUiController.setDarkMode(true);
-    // });
-    // print("@@@ ChannelStyle6 關注 initState");
   }
 
   @override
   void dispose() {
-    // controller.dispose();'
-    // print("@@@ ChannelStyle6 關注 dispose");
     Get.delete<VideoShortByChannelStyle6Controller>();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   ttUiController.setDarkMode(false);
-    // });
-
     super.dispose();
   }
 

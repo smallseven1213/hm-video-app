@@ -38,7 +38,7 @@ class LayoutTabBar extends StatelessWidget {
                         color: isActive
                             ? isDarkMode
                                 ? Colors.white
-                                : Colors.white
+                                : Colors.black
                             : const Color(0xffCFCECE),
                       ),
                     );
