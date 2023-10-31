@@ -10,12 +10,14 @@ import '../../physics/channel_page_scroll_physics.dart';
 class ChannelsScaffold extends StatefulWidget {
   final int layoutId;
   final Widget? notFoundWidget;
+  final void Function(int index, SlimChannel channelData)? onPageChanged;
   final Widget Function(SlimChannel channelData) child;
 
   const ChannelsScaffold({
     Key? key,
     required this.layoutId,
     required this.child,
+    this.onPageChanged,
     this.notFoundWidget,
   }) : super(key: key);
 
@@ -71,8 +73,15 @@ class ChannelsScaffoldState extends State<ChannelsScaffold> {
       () {
         return PageView(
             controller: controller,
-            onPageChanged: (value) =>
-                channelScreenTabController.tabIndex.value = value,
+            onPageChanged: (value) {
+              channelScreenTabController.tabIndex.value = value;
+              if (widget.onPageChanged != null) {
+                widget.onPageChanged!(
+                    value,
+                    layoutController
+                        .layout[channelScreenTabController.tabIndex.value]);
+              }
+            },
             allowImplicitScrolling: false,
             physics: kIsWeb ? null : const ChannelPageScrollPhysics(),
             children: layoutController.layout

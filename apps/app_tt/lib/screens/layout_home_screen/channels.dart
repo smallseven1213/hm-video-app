@@ -47,6 +47,9 @@ class Channels extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChannelsScaffold(
         layoutId: layoutId,
+        onPageChanged: (index, channelData) {
+          print(channelData.style);
+        },
         child: (channelData) {
           var getWidget = styleWidgetMap[channelData.style];
           if (getWidget == null) {
