@@ -19,17 +19,20 @@ class _ChannelStyle2State extends State<ChannelStyle2> {
   void initState() {
     super.initState();
     _controller = Get.put(VideoShortByChannelStyle2Controller());
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ttUiController.setDarkMode(true);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   ttUiController.setDarkMode(true);
+    // });
+    // print("@@@ ChannelStyle2 推薦 initState");
   }
 
   @override
   void dispose() {
     Get.delete<VideoShortByChannelStyle2Controller>();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      ttUiController.setDarkMode(false);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   ttUiController.setDarkMode(false);
+    // });
+    // print("@@@ ChannelStyle2 推薦 dispose");
+
     super.dispose();
   }
 
