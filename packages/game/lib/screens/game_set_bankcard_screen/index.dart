@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class GameSetBankCard extends StatefulWidget {
@@ -311,7 +313,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                         ),
                         const SizedBox(height: 44),
                         GameButton(
-                          text: '確認',
+                          text: I18n.confirm,
                           onPressed: () => _onSubmit(),
                           disabled: _legalNameEnable == false ||
                               _bankNameEnable.value == false ||

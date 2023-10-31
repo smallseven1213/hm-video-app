@@ -108,7 +108,7 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText: '確認',
+          confirmText: I18n.confirm,
           onConfirm: () => {
             Navigator.pop(context),
           },
