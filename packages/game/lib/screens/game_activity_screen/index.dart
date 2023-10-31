@@ -12,6 +12,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/widgets/button.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
@@ -73,8 +75,9 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText:
-              res['status'] == activityButtonStatus['ENABLE'] ? '關閉' : '確認',
+          confirmText: res['status'] == activityButtonStatus['ENABLE']
+              ? I18n.close
+              : I18n.confirm,
           onConfirm: () => {
             if (res['status'] != activityButtonStatus['ENABLE'])
               setState(() => buttonDisable = true),
