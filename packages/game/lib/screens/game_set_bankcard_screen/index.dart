@@ -237,7 +237,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return AutoComplete(
-                              label: '銀行名稱',
+                              label: I18n.bankName,
                               hint: '請輸入銀行名稱',
                               controller: bankNameController,
                               listContent: bankList,
@@ -259,7 +259,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: '支行名稱',
+                              label: I18n.branchName,
                               hint: '請輸入支行名稱(選填)',
                               controller: branchNameController,
                               onChanged: (val) => logger.i(val.toString()),
@@ -274,7 +274,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           name: 'account',
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: '銀行卡號',
+                              label: I18n.bankCardNumber,
                               hint: '請輸入您的銀行卡號',
                               controller: accountController,
                               onChanged: (value) => {
