@@ -101,7 +101,7 @@ class ConfirmNameState extends State<ConfirmName> {
           ),
         ),
         Text(
-          '存款金額：${widget.amount}',
+          '${I18n.depositAmount}: ${widget.amount}',
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,

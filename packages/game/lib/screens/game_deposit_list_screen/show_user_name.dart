@@ -19,7 +19,7 @@ void showUserName(
 
   showFormDialog(
     context,
-    title: '輸入真實姓名',
+    title: I18n.pleaseEnterYourRealName,
     content: FormBuilder(
       key: formKey,
       onChanged: () {
@@ -45,7 +45,7 @@ void showUserName(
               fontSize: 14,
             ),
             decoration: InputDecoration(
-              hintText: '請填寫真實姓名',
+              hintText: I18n.pleaseEnterYourRealName,
               errorText: field.errorText,
               hintStyle: TextStyle(
                 color: gameLobbyPrimaryTextColor,
