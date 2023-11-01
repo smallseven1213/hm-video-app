@@ -168,7 +168,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                 child: Column(
                   children: [
                     GameLabel(
-                      label: I18n.transferAmount,
+                      label: '轉帳金額',
                       text: widget.payment == 'selfusdt'
                           ? '${gameWithdrawController.paymentAmount.value} USDT'
                           : '¥${gameWithdrawController.paymentAmount.value}元',

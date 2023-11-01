@@ -16,8 +16,6 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 class CustomTriangleClipper extends CustomClipper<Path> {
@@ -511,8 +509,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                     ),
                   ),
                   // 存款金額
-                  DepositTitle(
-                    title: I18n.depositAmount,
+                  const DepositTitle(
+                    title: '存款金額',
                   ),
                   if (channels[_channelActiveIndex]['amountType'] ==
                           depositAmountType['showInput'] &&

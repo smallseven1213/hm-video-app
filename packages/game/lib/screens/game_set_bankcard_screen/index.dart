@@ -162,7 +162,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
   void _validateLegalName(String? value) {
     if (value!.isEmpty) {
-      _legalNameError = I18n.pleaseEnterYourRealName;
+      _legalNameError = '請輸入您的真實姓名';
     } else if (value.isNotEmpty) {
       logger.i('value.isNotEmpty');
       _legalNameError = null;
@@ -296,7 +296,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           builder: (FormFieldState field) {
                             return GameInput(
                               label: '真實姓名',
-                              hint: I18n.pleaseEnterYourRealName,
+                              hint: '請輸入您的真實姓名',
                               controller: legalNameController,
                               onChanged: (value) => {
                                 _validateLegalName(value),
