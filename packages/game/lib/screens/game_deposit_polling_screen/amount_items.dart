@@ -4,6 +4,8 @@ import 'package:game/screens/game_deposit_polling_screen/show_payment_method.dar
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/loading.dart';
 
+import '../../localization/i18n.dart';
+
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 class AmountItems extends StatefulWidget {
@@ -116,7 +118,7 @@ class AmountItemsState extends State<AmountItems> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  '$e 元',
+                                  '$e ${I18n.dollar}',
                                   style: TextStyle(
                                     color: gamePrimaryButtonColor,
                                     fontSize: 16,

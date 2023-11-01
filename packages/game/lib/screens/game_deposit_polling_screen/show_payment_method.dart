@@ -116,7 +116,7 @@ Future<void> showPaymentMethod({
                       const Text("需支付金額",
                           style: TextStyle(
                               fontSize: 12, color: Color(0xff979797))),
-                      Text("$amount 元",
+                      Text("$amount ${I18n.dollar}",
                           style:
                               const TextStyle(fontSize: 15, color: Colors.red)),
                     ],

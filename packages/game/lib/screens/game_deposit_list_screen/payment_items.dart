@@ -492,7 +492,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          '沒有支付通道',
+                          I18n.noPaymentChannel,
                           style: TextStyle(color: gameLobbyPrimaryTextColor),
                         ),
                       ],
@@ -568,7 +568,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    '${channels[_channelActiveIndex]['specificAmounts'][index].toString()}元',
+                                    '${channels[_channelActiveIndex]['specificAmounts'][index].toString()} ${I18n.dollar}',
                                     style: TextStyle(
                                       color: gamePrimaryButtonColor,
                                       fontSize: 12,
