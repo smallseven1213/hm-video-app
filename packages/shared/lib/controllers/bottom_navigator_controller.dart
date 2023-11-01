@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -15,11 +16,13 @@ class BottomNavigatorController extends GetxController {
   final activeKey = ''.obs;
   final navigatorItems = <Navigation>[].obs;
   final displayItems = true.obs;
+  final fabLink = <Navigation>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     fetchData();
+    fetchFabData();
   }
 
   // set display function
@@ -57,5 +60,10 @@ class BottomNavigatorController extends GetxController {
 
   void setNavigatorItems(List<Navigation> items) {
     navigatorItems.value = items;
+  }
+
+  fetchFabData() async {
+    var fabData = await NavigatorApi().getNavigations(4);
+    fabLink.value = fabData;
   }
 }
