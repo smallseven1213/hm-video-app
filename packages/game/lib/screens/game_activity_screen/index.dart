@@ -129,7 +129,7 @@ class _GameActivityState extends State<GameActivity> {
         ),
         centerTitle: true,
         title: Text(
-          '熱門活動',
+          I18n.hotEvents,
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
