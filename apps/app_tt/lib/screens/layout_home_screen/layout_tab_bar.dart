@@ -32,14 +32,17 @@ class LayoutTabBar extends StatelessWidget {
                   color: Colors.transparent,
                   child: Obx(() {
                     final isDarkMode = ttUiController.isDarkMode.value;
+                    final fontColor = isDarkMode
+                        ? isActive
+                            ? Colors.white
+                            : const Color(0xFF676970)
+                        : isActive
+                            ? Colors.black
+                            : const Color(0xFF999999);
                     return Text(
                       name,
                       style: TextStyle(
-                        color: isActive
-                            ? isDarkMode
-                                ? Colors.white
-                                : Colors.black
-                            : const Color(0xffCFCECE),
+                        color: fontColor,
                       ),
                     );
                   }))),

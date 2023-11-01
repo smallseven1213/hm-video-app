@@ -15,7 +15,7 @@ import '../actor_avatar.dart';
 import '../short/short_card_info_tag.dart';
 
 class ShortCardInfo extends StatelessWidget {
-  final String videourl;
+  final String videoUrl;
   final ShortVideoDetail data;
   final String title;
   final String tag;
@@ -23,7 +23,7 @@ class ShortCardInfo extends StatelessWidget {
 
   const ShortCardInfo({
     Key? key,
-    required this.videourl,
+    required this.videoUrl,
     required this.data,
     required this.title,
     required this.tag,
@@ -33,7 +33,7 @@ class ShortCardInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: videourl,
+        tag: videoUrl,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
             width: MediaQuery.of(context).size.width,

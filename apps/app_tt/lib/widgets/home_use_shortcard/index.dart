@@ -21,6 +21,7 @@ class HomeUseShortCard extends StatefulWidget {
   final bool? isActive;
   final Function toggleFullScreen;
   final String videoUrl;
+  final String? controllerTag;
 
   const HomeUseShortCard({
     Key? key,
@@ -34,6 +35,7 @@ class HomeUseShortCard extends StatefulWidget {
     // required this.isFullscreen,
     this.isActive = true,
     this.displayFavoriteAndCollectCount = true,
+    this.controllerTag,
   }) : super(key: key);
 
   @override
@@ -96,12 +98,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               allowFullsreen: true,
             ),
           ),
-          SideInfo(
-            videoId: widget.id,
-            shortData: widget.shortData,
-            tag: widget.tag,
-            videoUrl: widget.videoUrl,
-          ),
           Obx(
             () => uiController.isFullscreen.value == true
                 ? const SizedBox.shrink()
@@ -122,7 +118,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
-                                  videourl: videoUrl ?? "",
+                                  videoUrl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
@@ -133,6 +129,12 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                       ),
                     ),
                   ),
+          ),
+          SideInfo(
+            videoId: widget.id,
+            shortData: widget.shortData,
+            tag: widget.tag,
+            videoUrl: widget.videoUrl,
           ),
           Obx(
             () => uiController.isFullscreen.value != true
