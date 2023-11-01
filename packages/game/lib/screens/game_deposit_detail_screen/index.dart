@@ -15,8 +15,6 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 class GameDepositDetail extends StatefulWidget {
@@ -130,7 +128,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            widget.payment == 'selfusdt' ? 'USDT' : I18n.bankTransfer,
+            widget.payment == 'selfusdt' ? 'USDT' : '銀行轉帳',
             style: TextStyle(
               color: gameLobbyAppBarTextColor,
               fontSize: 18,
@@ -180,7 +178,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                       ),
                     if (widget.payment == 'selfusdt')
                       GameLabel(
-                        label: I18n.estimatedAmount,
+                        label: '預估上分金額',
                         text:
                             '¥${NumberFormat("0.00").format(estimateAmount)}元',
                       ),
@@ -200,8 +198,8 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.payment == 'selfusdt'
-                                  ? I18n.trcAddress
-                                  : I18n.accountInformation,
+                                  ? 'TRC-20地址'
+                                  : '帳戶資訊',
                               style: TextStyle(
                                 color: gameLobbyPrimaryTextColor,
                                 fontSize: 14,
@@ -216,25 +214,25 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                           // 以下是selfdebit時的資訊
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: I18n.bankName,
+                              name: "銀行名稱",
                               value: receiptBank,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: I18n.branchName,
+                              name: "支行名稱",
                               value: branchName,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: I18n.bankCardNumber,
+                              name: "銀行卡號",
                               value: receiptAccount,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: I18n.accountName,
+                              name: "帳戶姓名",
                               value: receiptName,
                               showClipboard: true,
                             ),
@@ -253,10 +251,10 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                       child: Column(
                         children: [
                           GameInput(
-                            label: I18n.transferRemarks,
+                            label: '轉帳備註',
                             hint: widget.payment == 'selfusdt'
-                                ? I18n.pleaseEnterTheLastDigitsOfTheTransferHash
-                                : I18n.pleaseEnterYourRealName,
+                                ? '請輸入轉帳哈希值末 5 碼'
+                                : '請輸入真實姓名',
                             controller: remarkController,
                             isFontBold: true,
                             onClear: () {
@@ -293,7 +291,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                               ),
                               child: Center(
                                 child: Text(
-                                  I18n.confirmationOfTransferAndDelivery,
+                                  "確認已轉帳，送出！",
                                   style: TextStyle(
                                       color: remarkController.text != ''
                                           ? gamePrimaryButtonTextColor

@@ -127,7 +127,7 @@ class ConfirmNameState extends State<ConfirmName> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                    I18n.pleaseEnterYourRealName,
+                    '請輸入真實姓名',
                     style: TextStyle(
                         fontSize: 16, color: gameLobbyPrimaryTextColor),
                   ),
@@ -138,7 +138,7 @@ class ConfirmNameState extends State<ConfirmName> {
                   controller: textEditingController,
                   focusNode: enableSubmit ? null : _focusNode,
                   decoration: InputDecoration(
-                    hintText: I18n.pleaseEnterYourRealName,
+                    hintText: '請輸入真實姓名',
                     hintStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -154,8 +154,7 @@ class ConfirmNameState extends State<ConfirmName> {
                     color: gameLobbyPrimaryTextColor,
                   ),
                   validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(
-                        errorText: I18n.pleaseEnterYourRealName),
+                    FormBuilderValidators.required(errorText: '請輸入真實姓名'),
                     FormBuilderValidators.match(r"^[a-zA-Z\u4e00-\u9fa5]+$",
                         errorText: '姓名格式錯誤'),
                   ]),
