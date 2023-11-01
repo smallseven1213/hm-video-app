@@ -104,14 +104,11 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                       bottomNavigatorController.activeKey.value ==
                                   HomeNavigatorPathes.layout1 &&
                               bottomNavigatorController.fabLink.isNotEmpty &&
-                              !localStorage.hasData('show-video-fab') &&
-                              displayFab
+                              bottomNavigatorController.displayFab.value
                           ? FloatingButton(
                               displayFab: displayFab,
-                              onFabTap: () {
-                                localStorage.write('show-video-fab', true);
-                                setState(() => displayFab = false);
-                              },
+                              onFabTap: () => bottomNavigatorController
+                                  .setDisplayFab(false),
                             )
                           : const SizedBox.shrink()
                     ],

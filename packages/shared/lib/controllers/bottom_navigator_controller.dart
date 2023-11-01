@@ -17,6 +17,7 @@ class BottomNavigatorController extends GetxController {
   final navigatorItems = <Navigation>[].obs;
   final displayItems = true.obs;
   final fabLink = <Navigation>[].obs;
+  final displayFab = true.obs;
 
   @override
   void onInit() {
@@ -62,8 +63,12 @@ class BottomNavigatorController extends GetxController {
     navigatorItems.value = items;
   }
 
-  fetchFabData() async {
+  void fetchFabData() async {
     var fabData = await NavigatorApi().getNavigations(4);
     fabLink.value = fabData;
+  }
+
+  void setDisplayFab(bool value) {
+    displayFab.value = value;
   }
 }
