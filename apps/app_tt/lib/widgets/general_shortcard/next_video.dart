@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-
 class NextVideoWidget extends StatefulWidget {
   final Vod? video;
 
@@ -29,7 +28,7 @@ class _NextVideoWidgetState extends State<NextVideoWidget>
     _opacityAnimation =
         Tween<double>(begin: 1.0, end: 0.0).animate(_animationController);
     _heightAnimation =
-        Tween<double>(begin: 48.0, end: 8.0).animate(_animationController);
+        Tween<double>(begin: 58.0, end: 8.0).animate(_animationController);
   }
 
   @override

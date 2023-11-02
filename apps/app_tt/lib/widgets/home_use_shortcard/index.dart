@@ -8,7 +8,7 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../short/side_info.dart';
 import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
+import 'short_card_info.dart';
 import '../wave_loading.dart';
 
 class HomeUseShortCard extends StatefulWidget {
@@ -21,7 +21,6 @@ class HomeUseShortCard extends StatefulWidget {
   final bool? isActive;
   final Function toggleFullScreen;
   final String videoUrl;
-  final String? controllerTag;
 
   const HomeUseShortCard({
     Key? key,
@@ -35,7 +34,6 @@ class HomeUseShortCard extends StatefulWidget {
     // required this.isFullscreen,
     this.isActive = true,
     this.displayFavoriteAndCollectCount = true,
-    this.controllerTag,
   }) : super(key: key);
 
   @override
@@ -102,7 +100,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
             () => uiController.isFullscreen.value == true
                 ? const SizedBox.shrink()
                 : Positioned(
-                    bottom: 30,
+                    bottom: -8,
                     left: 0,
                     right: 0,
                     child: ShortVideoConsumer(

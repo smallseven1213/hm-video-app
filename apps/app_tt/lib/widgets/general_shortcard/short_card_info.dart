@@ -5,12 +5,12 @@ import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 
+import '../shortcard/supplier_name.dart';
+import '../shortcard/video_progress.dart';
+import '../shortcard/video_tags.dart';
+import '../shortcard/video_title.dart';
 import 'next_video.dart';
-import 'purchase.dart';
-import 'supplier_name.dart';
-import 'video_progress.dart';
-import 'video_tags.dart';
-import 'video_title.dart';
+import '../shortcard/purchase.dart';
 
 class ShortCardInfo extends StatefulWidget {
   final String videoUrl;
@@ -73,29 +73,32 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
             ),
             padding:
                 const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SupplierNameWidget(
-                  data: widget.data,
-                  displayActorAvatar: widget.displayActorAvatar,
-                  videoPlayerInfo: videoPlayerInfo,
-                ),
-                VideoTitleWidget(title: widget.title),
-                VideoTagsWidget(
-                  data: widget.data,
-                  videoPlayerInfo: videoPlayerInfo,
-                ),
-                PurchaseWidget(
-                  vodId: widget.data.id,
-                  tag: widget.tag,
-                ),
-                VideoProgressWidget(
-                  videoPlayerController: videoPlayerInfo.videoPlayerController!,
-                ),
-                NextVideoWidget(video: nextVideo),
-              ],
-            ),
+            child: Stack(children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SupplierNameWidget(
+                    data: widget.data,
+                    displayActorAvatar: widget.displayActorAvatar,
+                    videoPlayerInfo: videoPlayerInfo,
+                  ),
+                  VideoTitleWidget(title: widget.title),
+                  VideoTagsWidget(
+                    data: widget.data,
+                    videoPlayerInfo: videoPlayerInfo,
+                  ),
+                  PurchaseWidget(
+                    vodId: widget.data.id,
+                    tag: widget.tag,
+                  ),
+                  VideoProgressWidget(
+                    videoPlayerController:
+                        videoPlayerInfo.videoPlayerController!,
+                  ),
+                  NextVideoWidget(video: nextVideo),
+                ],
+              ),
+            ]),
           );
         });
   }
