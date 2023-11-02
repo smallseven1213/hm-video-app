@@ -32,6 +32,7 @@ import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 
 import '../enums/game_app_routes.dart';
 import '../../localization/i18n.dart';
+import '../localization/game_localization_deletate.dart';
 
 final logger = Logger();
 
@@ -96,6 +97,7 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
+    GameLocalizations? localizations = GameLocalizations.of(context);
     final gameBannerController = Get.find<GameBannerController>();
     final gamesListController = Get.find<GamesListController>();
 
@@ -107,7 +109,7 @@ class _GameLobbyState extends State<GameLobby>
               backgroundColor: gameLobbyBgColor,
               centerTitle: true,
               title: Text(
-                '游戏大厅',
+                localizations!.translate('hello'),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

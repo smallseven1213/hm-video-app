@@ -1,5 +1,6 @@
 import 'package:app_tt/widgets/countdown.dart';
 import 'package:game/routes/game_routes.dart';
+import 'package:game/widgets/game_provider.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
 import 'localization/i18n.dart';
@@ -29,5 +30,8 @@ void main() async {
     i18nSupport: true,
     supportedLocales: I18n.supportedLocales,
     i18nPath: 'assets/langs/langs.csv',
+    // expandedWidget: (child) => GameProvider,
+    // expandedWidget is GameProvider
+    expandedWidget: (child) => GameProvider(child: child),
   );
 }
