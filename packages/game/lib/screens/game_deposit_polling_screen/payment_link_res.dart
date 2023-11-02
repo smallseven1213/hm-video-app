@@ -6,6 +6,7 @@ import 'package:game/utils/on_loading.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import '../../localization/i18n.dart';
 
 final logger = Logger();
@@ -80,7 +81,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '取得充值網址',
+                      I18n.getRechargeUrl,
                       style: TextStyle(
                           color: gameLobbyPrimaryTextColor, fontSize: 20),
                       textAlign: TextAlign.center,
@@ -96,10 +97,11 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                   alignment: Alignment.center,
                   child: Text(
                     isFetching == 'start'
-                        ? '正在努力取得充值網址，請稍候...'
+                        ? I18n.weAreTryingToGetTheRechargeUrlPleaseWait
                         : (submitDepositSuccess && isFetching == 'complete')
-                            ? '已取得充值網址，點擊開啟充值頁'
-                            : '取得網址失敗\n請重新選擇渠道或聯繫客服',
+                            ? I18n.pleaseClickToOpenTheRechargePage
+                            : I18n
+                                .failedToGetTheWebsiteAddressPleaseChooseANewChannelOrContactCustomerService,
                     style: TextStyle(color: gameLobbyPrimaryTextColor),
                     textAlign: TextAlign.center,
                   ),

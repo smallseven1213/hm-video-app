@@ -148,11 +148,11 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                     left: 16,
                     right: 16,
                   ),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         '溫馨提醒',
                         // color is 979797
                         style: TextStyle(
@@ -161,28 +161,28 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                           color: Color(0xff979797),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
-                        '1：支付不成功，請多次嘗試支付。',
-                        style: TextStyle(
+                        I18n.paymentWasNotSuccessfulPleaseTryToPaySeveralTimes,
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),
                         maxLines: 2,
                       ),
                       Text(
-                        '2：無法拉起支付訂單，是由於拉起訂單人數較多，請多次嘗試拉起支付。',
-                        style: TextStyle(
+                        I18n.canNotPullUpThePaymentOrderIsDueToPullUpTheOrderMorePeoplePleaseTryToPullUpThePaymentSeveralTimes,
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),
                         maxLines: 2,
                       ),
                       Text(
-                        '3：充值成功未到賬，請聯繫在線客服。',
-                        style: TextStyle(
+                        I18n.pleaseContactOurOnlineCustomerServiceIfTheRechargeIsSuccessfulButNotArrived,
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),

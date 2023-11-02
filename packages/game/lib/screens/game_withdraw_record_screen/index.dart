@@ -7,18 +7,20 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
-const remittanceType = {
+import '../../localization/i18n.dart';
+
+Map<int, String> remittanceType = {
   1: '銀行卡',
   2: 'USDT',
 };
 
-const status = {
+Map<int, String> status = {
   1: '審核中',
   2: '出款失敗',
-  3: '已完成',
+  3: I18n.completed,
 };
 
-const auditDate = {
+Map<int, String> auditDate = {
   1: '今天',
   2: '昨天',
   3: '近七天',
@@ -56,7 +58,9 @@ class StatusLabel extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: status[type] == '已完成' ? withdrawalSuccess : withdrawalFelid,
+          color: status[type] == I18n.completed
+              ? withdrawalSuccess
+              : withdrawalFelid,
         ),
         borderRadius: BorderRadius.circular(15),
       ),
@@ -64,7 +68,7 @@ class StatusLabel extends StatelessWidget {
         child: Text(
           status[type] ?? '',
           style: TextStyle(
-            color: status[type] == '已完成'
+            color: status[type] == I18n.completed
                 ? withdrawalSuccess
                 : status[type] == '出款失敗'
                     ? withdrawalFelid
@@ -245,18 +249,18 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                             name: 'status',
                             value: value,
                           ),
-                          items: const [
-                            {
+                          items: [
+                            const {
                               'value': 1,
                               'label': '審核中',
                             },
-                            {
+                            const {
                               'value': 2,
                               'label': '出款失敗',
                             },
                             {
                               'value': 3,
-                              'label': '已完成',
+                              'label': I18n.completed,
                             }
                           ],
                         ),

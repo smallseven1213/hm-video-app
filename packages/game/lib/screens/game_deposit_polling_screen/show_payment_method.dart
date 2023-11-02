@@ -28,12 +28,12 @@ Future<void> showPaymentMethod({
   } else {
     showFormDialog(
       context,
-      title: '交易失敗',
+      title: I18n.transactionFailed,
       content: SizedBox(
         height: 24,
         child: Center(
           child: Text(
-            '訂單建立失敗，請聯繫客服',
+            I18n.orderCreationFailedPleaseContactOurCustomerService,
             style: TextStyle(color: gameLobbyPrimaryTextColor),
           ),
         ),
@@ -76,7 +76,7 @@ Future<void> showPaymentMethod({
                   children: [
                     Center(
                       child: Text(
-                        "請選擇支付方式",
+                        I18n.pleaseSelectPaymentMethod,
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -113,9 +113,13 @@ Future<void> showPaymentMethod({
                       const SizedBox(
                         width: 8,
                       ),
-                      const Text("需支付金額",
-                          style: TextStyle(
-                              fontSize: 12, color: Color(0xff979797))),
+                      Text(
+                        I18n.amountToBePaid,
+                        style: const TextStyle(
+                          fontSize: 12,
+                          color: Color(0xff979797),
+                        ),
+                      ),
                       Text("$amount ${I18n.dollar}",
                           style:
                               const TextStyle(fontSize: 15, color: Colors.red)),
@@ -184,7 +188,7 @@ Future<void> showPaymentMethod({
                       color: gamePrimaryButtonColor,
                       borderRadius: BorderRadius.circular(24.0),
                     ),
-                    child: Text('確認支付',
+                    child: Text(I18n.confirmPayment,
                         style: TextStyle(color: gamePrimaryButtonTextColor)),
                   ),
                 ),

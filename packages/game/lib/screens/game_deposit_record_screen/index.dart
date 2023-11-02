@@ -12,24 +12,24 @@ import '../../localization/i18n.dart';
 
 final logger = Logger();
 
-const auditDate = {
+Map<int, String> auditDate = {
   1: '今天',
   2: '昨天',
   3: '近七天',
   4: '近三十天',
 };
 
-const conditionOrderType = {
+Map<int, String> conditionOrderType = {
   1: '確認中',
-  2: '已完成',
-  3: '失敗',
+  2: I18n.completed,
+  3: I18n.failed,
 };
 
-const orderType = {
+Map<int, String> orderType = {
   1: '確認中',
-  2: '已完成',
-  4: '失敗',
-  5: '失敗',
+  2: I18n.completed,
+  4: I18n.failed,
+  5: I18n.failed,
 };
 
 DateTime now = DateTime.now();
@@ -61,7 +61,7 @@ class StatusLabel extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: conditionOrderType[type] == '已完成'
+          color: conditionOrderType[type] == I18n.completed
               ? withdrawalSuccess
               : withdrawalFelid,
         ),
@@ -71,9 +71,9 @@ class StatusLabel extends StatelessWidget {
         child: Text(
           conditionOrderType[type] ?? '',
           style: TextStyle(
-            color: conditionOrderType[type] == '已完成'
+            color: conditionOrderType[type] == I18n.completed
                 ? withdrawalSuccess
-                : conditionOrderType[type] == '失敗'
+                : conditionOrderType[type] == I18n.failed
                     ? withdrawalFelid
                     : withdrawalSuccess,
           ),
@@ -242,18 +242,18 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                             name: 'paymentStatus',
                             value: value,
                           ),
-                          items: const [
-                            {
+                          items: [
+                            const {
                               'value': 1,
                               'label': '確認中',
                             },
                             {
                               'value': 2,
-                              'label': '已完成',
+                              'label': I18n.completed,
                             },
                             {
                               'value': 3,
-                              'label': '失敗',
+                              'label': I18n.failed,
                             }
                           ],
                         ),
@@ -362,11 +362,13 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                                   vertical: 6, horizontal: 14),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16.0),
-                                color: orderType[item.paymentStatus] == '失敗'
-                                    ? gameLobbyButtonDisableColor
-                                    : Colors.transparent,
+                                color:
+                                    orderType[item.paymentStatus] == I18n.failed
+                                        ? gameLobbyButtonDisableColor
+                                        : Colors.transparent,
                                 border: Border.all(
-                                  color: orderType[item.paymentStatus] == '失敗'
+                                  color: orderType[item.paymentStatus] ==
+                                          I18n.failed
                                       ? withdrawalFelid
                                       : gameLobbyLoginFormBorderColor,
                                   width: 1,
@@ -377,7 +379,8 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                                 style: TextStyle(
                                   color: orderType[item.paymentStatus] == '確認中'
                                       ? withdrawalSuccess
-                                      : orderType[item.paymentStatus] == '已完成'
+                                      : orderType[item.paymentStatus] ==
+                                              I18n.completed
                                           ? modalDropDownActive
                                           : gameLobbyButtonDisableTextColor,
                                   fontSize: 14,

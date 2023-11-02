@@ -161,7 +161,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             onSuccess: (userName) {
               showModel(
                 context,
-                title: '訂單確認',
+                title: I18n.orderConfirmation,
                 content: ConfirmName(
                   amount: channels[_channelActiveIndex]['specificAmounts']
                           [index]
@@ -189,7 +189,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           logger.i('no input && no bank card');
           showModel(
             context,
-            title: '訂單確認',
+            title: I18n.orderConfirmation,
             content: ConfirmPin(
               amount: channels[_channelActiveIndex]['specificAmounts'][index]
                   .toString(),
@@ -298,13 +298,13 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                           ),
                           if (widget.depositData[paymentItem[index]]['label'][0]
                               .isNotEmpty)
-                            const Positioned(
+                            Positioned(
                               top: 0,
                               right: 0,
                               child: OliveShape(
                                 width: 40.0,
                                 type: 'right',
-                                text: '送優惠',
+                                text: I18n.sendOffer,
                               ),
                             )
                         ],
@@ -324,9 +324,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                     channels.isNotEmpty)
                 ? Column(
                     children: [
-                      const DepositTitle(
-                        title: '支付渠道',
-                      ),
+                      DepositTitle(title: I18n.paymentChannel),
                       SizedBox(
                         height: channelHeight.toDouble(),
                         child: Container(

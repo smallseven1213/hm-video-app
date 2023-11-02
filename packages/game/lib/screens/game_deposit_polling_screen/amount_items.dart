@@ -62,9 +62,9 @@ class AmountItemsState extends State<AmountItems> {
                   ),
                 ),
                 const SizedBox(width: 4),
-                const Text(
-                  "請選擇存款金額",
-                  style: TextStyle(
+                Text(
+                  I18n.pleaseSelectDepositAmount,
+                  style: const TextStyle(
                     color: Color(0xff979797),
                     fontSize: 12,
                     fontWeight: FontWeight.w200,

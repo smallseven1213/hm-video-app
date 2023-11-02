@@ -45,12 +45,14 @@ submitDepositOrder(
       onLoading(context, status: false);
       showFormDialog(
         context,
-        title: '交易失敗',
+        title: I18n.transactionFailed,
         content: SizedBox(
           height: 24,
           child: Center(
             child: Text(
-              value == '51728' ? '當前支付人數眾多，請稍後再試！' : '訂單建立失敗，請聯繫客服',
+              value == '51728'
+                  ? I18n.thereAreManyPeoplePayingAtTheMomentPleaseTryAgainLater
+                  : I18n.orderCreationFailedPleaseContactOurCustomerService,
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
@@ -66,12 +68,12 @@ submitDepositOrder(
     onLoading(context, status: false);
     showFormDialog(
       context,
-      title: '交易失敗',
+      title: I18n.transactionFailed,
       content: SizedBox(
         height: 60,
         child: Center(
           child: Text(
-            '訂單建立失敗，請聯繫客服',
+            I18n.orderCreationFailedPleaseContactOurCustomerService,
             style: TextStyle(color: gameLobbyPrimaryTextColor),
           ),
         ),
