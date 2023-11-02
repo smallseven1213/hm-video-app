@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
@@ -56,13 +57,13 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                       ),
                       child: Row(
                         children: [
-                          const Expanded(
+                          Expanded(
                             child: Row(
                               children: [
                                 Expanded(
                                   child: Text(
-                                    '開通 VIP 無限看片',
-                                    style: TextStyle(
+                                    I18n.upgradeToVipForUnlimitedMovie,
+                                    style: const TextStyle(
                                       color: Colors.black,
                                     ),
                                   ),
@@ -80,17 +81,17 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                   left: 15,
                                   right: 15,
                                 ),
-                                child: const Row(
+                                child: Row(
                                   children: [
-                                    Image(
+                                    const Image(
                                       image: AssetImage(
                                           'assets/images/purchase/ic-vip.webp'),
                                       width: 20,
                                       height: 20,
                                     ),
                                     Text(
-                                      '立即升級',
-                                      style: TextStyle(
+                                      I18n.upgradeNow,
+                                      style: const TextStyle(
                                         color: Colors.black,
                                       ),
                                     ),

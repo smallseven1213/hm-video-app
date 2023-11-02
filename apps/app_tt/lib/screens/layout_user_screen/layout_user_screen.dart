@@ -2,15 +2,12 @@ import 'package:app_tt/screens/layout_user_screen/collection.dart';
 import 'package:app_tt/screens/layout_user_screen/favorites.dart';
 import 'package:app_tt/screens/layout_user_screen/playrecord.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
 import 'grid_menu.dart';
 import 'layout_user_screen_tabbar_header_delegate.dart';
-import 'user_card.dart';
-import 'user_grid_menu_button.dart';
 import 'user_header.dart';
 
 class LayoutUserScreen extends StatefulWidget {
@@ -75,44 +72,44 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                             topRight: Radius.circular(20),
                           ),
                         ),
-                        child: Column(
+                        child: const Column(
                           children: [
-                            const SizedBox(height: 20),
-                            const Align(
-                              // left
-                              alignment: Alignment.centerLeft,
-                              child: Row(
-                                children: [
-                                  SizedBox(width: 16),
-                                  Text('100',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                      )),
-                                  SizedBox(width: 3),
-                                  Text('個讚數',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          color: Color(0xFF73747b))),
-                                  SizedBox(width: 20),
-                                  Text('100',
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 17,
-                                      )),
-                                  SizedBox(width: 3),
-                                  Text('個讚數',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 13,
-                                          color: Color(0xFF73747b))),
-                                ],
-                              ),
-                            ),
-                            const SizedBox(height: 30),
+                            SizedBox(height: 20),
+                            // Align(
+                            //   // left
+                            //   alignment: Alignment.centerLeft,
+                            //   child: Row(
+                            //     children: [
+                            //       SizedBox(width: 16),
+                            //       Text('100',
+                            //           style: TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 17,
+                            //           )),
+                            //       SizedBox(width: 3),
+                            //       Text('個讚數',
+                            //           style: TextStyle(
+                            //               fontWeight: FontWeight.bold,
+                            //               fontSize: 13,
+                            //               color: Color(0xFF73747b))),
+                            //       SizedBox(width: 20),
+                            //       Text('100',
+                            //           style: TextStyle(
+                            //             fontWeight: FontWeight.bold,
+                            //             fontSize: 17,
+                            //           )),
+                            //       SizedBox(width: 3),
+                            //       Text('個讚數',
+                            //           style: TextStyle(
+                            //               fontWeight: FontWeight.bold,
+                            //               fontSize: 13,
+                            //               color: Color(0xFF73747b))),
+                            //     ],
+                            //   ),
+                            // ),
+                            // SizedBox(height: 30),
                             GridMenu(),
-                            const SizedBox(height: 25),
+                            SizedBox(height: 25),
                           ],
                         ),
                       ),

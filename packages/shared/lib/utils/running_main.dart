@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_web_plugins/url_strategy.dart' as url_strategy;
 import 'package:flutter/foundation.dart';
@@ -14,7 +16,10 @@ import '../widgets/root.dart';
 
 typedef GlobalLoadingWidget = Widget Function({String? text});
 
-void realMain(Widget widget) async {
+void realMain(Widget widget,
+    {bool? i18nSupport,
+    List<Locale>? supportedLocales,
+    String? i18nPath}) async {
   await Hive.initFlutter();
   if (!kIsWeb) {
     var dir = await getApplicationDocumentsDirectory();
@@ -26,6 +31,10 @@ void realMain(Widget widget) async {
   setupGameDependencies();
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (i18nSupport == true) {
+    await EasyLocalization.ensureInitialized();
+  }
 
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
     SystemUiOverlay.bottom,
@@ -39,7 +48,14 @@ void realMain(Widget widget) async {
   ]).then((_) {
     runApp(DefaultAssetBundle(
       bundle: SentryAssetBundle(),
-      child: widget,
+      child: i18nSupport == true && i18nPath != null && supportedLocales != null
+          ? EasyLocalization(
+              path: i18nPath,
+              supportedLocales: supportedLocales,
+              assetLoader: CsvAssetLoader(),
+              child: widget,
+            )
+          : widget,
     ));
   });
 }
@@ -52,25 +68,32 @@ Future<void> runningMain(
   Map<ColorKeys, Color> appColors,
   GlobalLoadingWidget globalLoadingWidget,
   ThemeData? theme,
-  Widget Function({int countdownSeconds})? countdown,
-) async {
+  Widget Function({int countdownSeconds})? countdown, {
+  bool? i18nSupport,
+  List<Locale>? supportedLocales,
+  String? i18nPath,
+}) async {
   url_strategy.usePathUrlStrategy();
 
   SystemConfig().setDlJsonHosts(dlJsonHosts);
 
   SentryFlutter.init((options) {
     options.dsn = sentryDSN;
-    options.tracesSampleRate = kDebugMode ? 0 : 1.0;
+    options.tracesSampleRate = kDebugMode ? 0 : 0.1;
     options.release = SystemConfig().version;
     options.environment = kDebugMode ? 'development' : 'production';
   },
-      appRunner: () => realMain(RootWidget(
-            homePath: homePath,
-            routes: routes,
-            splashImage: 'assets/images/splash.png',
-            appColors: appColors,
-            loading: globalLoadingWidget,
-            theme: theme,
-            countdown: countdown,
-          )));
+      appRunner: () => realMain(
+          RootWidget(
+              homePath: homePath,
+              routes: routes,
+              splashImage: 'assets/images/splash.png',
+              appColors: appColors,
+              loading: globalLoadingWidget,
+              theme: theme,
+              countdown: countdown,
+              i18nSupport: i18nSupport),
+          i18nSupport: i18nSupport,
+          supportedLocales: supportedLocales,
+          i18nPath: i18nPath));
 }

@@ -24,6 +24,7 @@ class SupplierController extends GetxController {
     } else if (type == 'collect') {
       supplier.value.collectTotal = (supplier.value.collectTotal ?? 0) + 1;
     }
+    supplier.refresh();
   }
 
   void decrementTotal(String type) {
@@ -36,5 +37,6 @@ class SupplierController extends GetxController {
       supplier.value.collectTotal =
           currentCollectTotal > 0 ? currentCollectTotal - 1 : 0;
     }
+    supplier.refresh();
   }
 }

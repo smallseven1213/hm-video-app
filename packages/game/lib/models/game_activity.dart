@@ -10,7 +10,7 @@ class ActivityItem {
     required this.type,
     required this.content,
     required this.buttonStyle,
-    required this.buttonName,
+    this.buttonName,
   });
 
   final int id;
@@ -20,7 +20,7 @@ class ActivityItem {
   final int type;
   final String content;
   final int buttonStyle;
-  final String buttonName;
+  final String? buttonName;
 
   factory ActivityItem.fromRawJson(String str) =>
       ActivityItem.fromJson(json.decode(str));

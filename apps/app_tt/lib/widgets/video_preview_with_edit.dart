@@ -1,14 +1,12 @@
+import 'package:app_tt/widgets/short_video_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/video_time.dart';
 
 import 'video_embedded_ad.dart';
 import 'video_preview.dart';
-
-final logger = Logger();
 
 const gridRatio = 128 / 227;
 
@@ -122,26 +120,36 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
     }
     return Stack(
       children: [
-        VideoPreviewWidget(
-            id: id,
-            film: film,
-            hasTags: hasTags,
-            hasTitle: hasTitle,
-            displayCoverVertical: displayCoverVertical,
-            coverVertical: coverVertical,
-            coverHorizontal: coverHorizontal,
-            imageRatio: imageRatio,
-            timeLength: timeLength,
-            tags: tags,
-            title: title,
-            hasRadius: hasRadius,
-            videoViewTimes: videoViewTimes,
-            videoCollectTimes: videoCollectTimes,
-            hasTapEvent: !isEditing,
-            displayVideoTimes: displayVideoTimes,
-            displayViewTimes: displayViewTimes,
-            displayVideoCollectTimes: displayVideoCollectTimes,
-            onOverrideRedirectTap: onOverrideRedirectTap),
+        film == 1
+            ? VideoPreviewWidget(
+                id: id,
+                film: film,
+                hasTags: hasTags,
+                hasTitle: hasTitle,
+                displayCoverVertical: displayCoverVertical,
+                coverVertical: coverVertical,
+                coverHorizontal: coverHorizontal,
+                imageRatio: imageRatio,
+                timeLength: timeLength,
+                tags: tags,
+                title: title,
+                hasRadius: hasRadius,
+                videoViewTimes: videoViewTimes,
+                videoCollectTimes: videoCollectTimes,
+                hasTapEvent: !isEditing,
+                displayVideoTimes: displayVideoTimes,
+                displayViewTimes: displayViewTimes,
+                displayVideoCollectTimes: displayVideoCollectTimes,
+                onOverrideRedirectTap: onOverrideRedirectTap)
+            : ShortVideoPreviewWidget(
+                id: id,
+                displayCoverVertical: true,
+                coverVertical: coverVertical,
+                coverHorizontal: coverHorizontal,
+                timeLength: timeLength,
+                tags: tags,
+                imageRatio: 128 / 173,
+                title: title),
         if (isEditing)
           Positioned.fill(
             child: GestureDetector(

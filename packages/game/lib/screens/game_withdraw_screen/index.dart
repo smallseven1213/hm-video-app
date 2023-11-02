@@ -3,9 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:game/utils/loading.dart';
-import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options.dart';
 import 'package:game/screens/game_withdraw_screen/label_with_status.dart';
@@ -13,13 +12,15 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 
+import 'package:game/widgets/input.dart';
+import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/utils/show_funding_password_bottom_sheet.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:logger/logger.dart';
+import 'package:game/controllers/game_response_controller.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
@@ -47,6 +48,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
   bool _enableSubmit = false;
   final userController = Get.put(UserController());
   final gameWalletController = Get.put(GameWalletController());
+  final responseController = Get.find<GameApiResponseErrorCatchController>();
+
   bool reachable = false;
   String stakeLimit = '0.00';
   String validStake = '0.00';
@@ -116,7 +119,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
       onConfirm: () {
         gameWithdrawController.setLoadingStatus(false);
         Navigator.of(context).pop();
-        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword.value);
+        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword);
       },
     );
   }
@@ -191,31 +194,38 @@ class _GameWithdrawState extends State<GameWithdraw> {
   void _onConfirm(Type type, context) {
     int intType = type == Type.bankcard ? 1 : 2;
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
-      // call applyWithdrawal
-      var res = await GameLobbyApi().applyWithdrawalV2(
-          intType,
-          amountController.text,
-          pin.toString(),
-          stakeLimit.toString(),
-          validStake.toString());
-      if (res.code == '00') {
-        showConfirmDialog(
-            context: context,
-            title: "申請完成",
-            content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
-            confirmText: "確認",
-            onConfirm: () {
-              setState(() {
-                _enableSubmit = false;
+      try {
+        var res = await GameLobbyApi().applyWithdrawalV2(
+            intType,
+            amountController.text,
+            pin.toString(),
+            stakeLimit.toString(),
+            validStake.toString());
+        if (res.code == '00') {
+          showConfirmDialog(
+              context: context,
+              title: "申請完成",
+              content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
+              confirmText: "確認",
+              onConfirm: () {
+                setState(() {
+                  _enableSubmit = false;
+                });
+                userController.fetchUserInfo();
+                gameWalletController.mutate();
+                amountController.clear();
+                Navigator.of(context).pop();
               });
-              userController.fetchUserInfo();
-              gameWalletController.mutate();
-              amountController.clear();
-              Navigator.of(context).pop();
-            });
-      } else {
+        } else {
+          Fluttertoast.showToast(
+            msg: res.message.toString(),
+            gravity: ToastGravity.CENTER,
+          );
+        }
+      } catch (error) {
+        logger.i('_onConfirm applyWithdrawalV2 error: $error');
         Fluttertoast.showToast(
-          msg: res.message.toString(),
+          msg: responseController.responseMessage.value.toString(),
           gravity: ToastGravity.CENTER,
         );
       }
@@ -273,7 +283,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                         child: InkWell(
                           onTap: () {
                             MyRouteDelegate.of(context)
-                                .push(GameAppRoutes.withdrawRecord.value);
+                                .push(GameAppRoutes.withdrawRecord);
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

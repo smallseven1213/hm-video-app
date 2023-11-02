@@ -1,16 +1,17 @@
 import 'package:app_tt/widgets/countdown.dart';
+import 'package:game/routes/game_routes.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
+import 'localization/i18n.dart';
 import 'widgets/loading.dart';
 import './routes/app_routes.dart' as app_routes;
-import './routes/game_routes.dart' as game_routes;
 
 const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
 void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
-    ...game_routes.gameRoutes,
+    ...gameRoutes,
   };
 
   runningMain(
@@ -21,9 +22,12 @@ void main() async {
     ],
     allRoutes,
     AppColors.colors,
-    ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
+    ({String? text}) => Loading(loadingText: text ?? I18n.loadingNow),
     null,
     ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
+    i18nSupport: true,
+    supportedLocales: I18n.supportedLocales,
+    i18nPath: 'assets/langs/langs.csv',
   );
 }

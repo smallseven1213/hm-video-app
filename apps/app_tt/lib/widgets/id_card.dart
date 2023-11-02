@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:get/get.dart';
@@ -130,9 +131,9 @@ class IDCardContentState extends State<IDCardContent> {
         const SizedBox(
           height: 10,
         ),
-        const Text(
-          '用於找回帳號，請妥善保存，請勿洩露',
-          style: TextStyle(
+        Text(
+          I18n.forAccountRetrieval,
+          style: const TextStyle(
             color: Color(0xFF505159),
             fontWeight: FontWeight.normal,
             fontSize: 12,
@@ -169,7 +170,7 @@ class IDCardContentState extends State<IDCardContent> {
         ),
         CaptureScreenshotButton(
           buttonKey: _globalKey,
-          successMessage: '已成功保存身份卡',
+          successMessage: I18n.identityCardHasBeenSuccessfullySaved,
           child: Container(
             height: 45,
             width: 230,
@@ -177,10 +178,10 @@ class IDCardContentState extends State<IDCardContent> {
               color: const Color(0xFFfe2c55),
               borderRadius: BorderRadius.circular(7),
             ),
-            child: const Center(
+            child: Center(
               child: Text(
-                '請截圖保存',
-                style: TextStyle(
+                I18n.pleaseSaveTheScreenshot,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -205,8 +206,8 @@ class IDCardContentState extends State<IDCardContent> {
             borderRadius: BorderRadius.circular(14.0),
           ),
           child: Text(
-            '官方地址：MXTV.APP',
-            style: TextStyle(
+            '${I18n.officialWebsite}：MXTV.APP',
+            style: const TextStyle(
               // color: AppColors.colors[ColorKeys.buttonBgPrimary],
               fontSize: 12,
             ),

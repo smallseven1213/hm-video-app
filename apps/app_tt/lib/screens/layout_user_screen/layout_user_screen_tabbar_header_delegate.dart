@@ -1,6 +1,5 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
-
-import '../../widgets/tt_tab_bar.dart';
 
 class LayoutUserScreenTabBarHeaderDelegate
     extends SliverPersistentHeaderDelegate {
@@ -22,14 +21,14 @@ class LayoutUserScreenTabBarHeaderDelegate
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
           indicator: const UnderlineTabIndicator(
             borderSide: BorderSide(
-              color: Color(0xFF161823), // 这里是你想要的颜色
-              width: 2.0, // 这是下划线的宽度，可以根据需要进行调整
+              color: Color(0xFF161823),
+              width: 2.0,
             ),
           ),
-          tabs: const [
-            Tab(text: '我的足跡'),
-            Tab(text: '我的喜歡'),
-            Tab(text: '我的收藏')
+          tabs: [
+            Tab(text: I18n.browseHistory),
+            Tab(text: I18n.likePlaylist),
+            Tab(text: I18n.collectPlaylist)
           ]),
     );
   }

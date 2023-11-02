@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -22,11 +23,14 @@ void purchase(
       if (context.mounted) {
         showConfirmDialog(
           context: context,
-          title: coinNotEnough ? '金幣餘額不足' : '購買失敗',
-          message: coinNotEnough ? '請立即前往充值已獲得最完整的體驗' : results.message,
+          title: coinNotEnough
+              ? I18n.insufficientGoldBalance
+              : I18n.purchaseFailed,
+          message:
+              coinNotEnough ? I18n.goToTopUpNowForFullExp : results.message,
           showCancelButton: coinNotEnough,
-          confirmButtonText: coinNotEnough ? '前往充值' : '確認',
-          cancelButtonText: '取消',
+          confirmButtonText: coinNotEnough ? I18n.goToTopUp : I18n.confirm,
+          cancelButtonText: I18n.cancel,
           onConfirm: () => coinNotEnough
               ? MyRouteDelegate.of(context).push(AppRoutes.coin)
               : null,
@@ -37,8 +41,8 @@ void purchase(
     // ignore: use_build_context_synchronously
     showConfirmDialog(
       context: context,
-      title: '購買失敗',
-      message: '購買失敗',
+      title: I18n.purchaseFailed,
+      message: I18n.purchaseFailed,
       showCancelButton: false,
       onConfirm: () {
         // Navigator.of(context).pop();

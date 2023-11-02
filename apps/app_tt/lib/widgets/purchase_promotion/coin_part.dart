@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/user.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
@@ -43,16 +44,16 @@ class Coin extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                '試看結束，此影片需付費購買',
-                style: TextStyle(
+              Text(
+                I18n.thisMovieIsAvailableForPurchase,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                '片長：${getTimeString(timeLength)}',
+                '${I18n.lengthOfFilm}：${getTimeString(timeLength)}',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
@@ -60,14 +61,14 @@ class Coin extends StatelessWidget {
                 ),
               ),
               Text(
-                '價格：$buyPoints金幣',
+                '${I18n.price}：$buyPoints${I18n.coins}',
                 style: const TextStyle(
                   color: Color(0xffffd900),
                   fontSize: 13,
                 ),
               ),
               Text(
-                '您目前擁有的金幣：$userPoints金幣',
+                '${I18n.yourCurrentCoins}：$userPoints${I18n.coins}',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
@@ -81,7 +82,7 @@ class Coin extends StatelessWidget {
             height: 35,
             child: Button(
               size: 'small',
-              text: '付費觀看',
+              text: I18n.payToWatch,
               onPressed: () => purchase(
                 context,
                 id: videoId,
@@ -97,29 +98,29 @@ class Coin extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        const Text(
-          '試看結束，此影片需付費購買',
-          style: TextStyle(
+        Text(
+          I18n.endOfTrialUpgradeToFullVersion,
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 16,
             fontWeight: FontWeight.w700,
           ),
         ),
         Text(
-          '片長：${getTimeString(timeLength)}',
+          '${I18n.lengthOfFilm}：${getTimeString(timeLength)}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 13,
             fontWeight: FontWeight.w500,
           ),
         ),
-        Text('價格：$buyPoints金幣',
+        Text('${I18n.price}：$buyPoints${I18n.coins}',
             style: const TextStyle(
               color: Color(0xffffd900),
               fontSize: 13,
             )),
         Text(
-          '您目前擁有的金幣：$userPoints金幣',
+          '${I18n.yourCurrentCoins}：$userPoints${I18n.coins}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 13,
@@ -131,7 +132,7 @@ class Coin extends StatelessWidget {
           height: 35,
           child: Button(
             size: 'small',
-            text: '付費觀看',
+            text: I18n.payToWatch,
             onPressed: () => purchase(
               context,
               id: videoId,

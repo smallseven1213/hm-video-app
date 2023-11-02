@@ -9,6 +9,7 @@ import 'package:shared/modules/register/register_scaffold.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/i18n.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
@@ -50,7 +51,7 @@ class RegisterPage extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    '帳號密碼註冊',
+                    I18n.accountPasswordLogin,
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.textPrimary],
                       fontSize: 20,
@@ -62,25 +63,25 @@ class RegisterPage extends StatelessWidget {
                 Column(
                   children: [
                     AuthTextField(
-                      label: '帳　　號',
+                      label: I18n.account,
                       controller: accountController,
-                      placeholderText: '請輸入帳號',
+                      placeholderText: I18n.pleaseEnterYourAccountNumber,
                       validator: validateUsername,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '密　　碼',
+                      label: I18n.password,
                       obscureText: true,
                       controller: passwordController,
-                      placeholderText: '請輸入密碼',
+                      placeholderText: I18n.pleaseEnterYourPassword,
                       validator: validatePassword,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '驗證密碼',
+                      label: I18n.verifyPassword,
                       obscureText: true,
                       controller: confirmPasswordController,
-                      placeholderText: '請輸入驗證密碼',
+                      placeholderText: I18n.pleaseEnterTheVerificationPassword,
                       validator: validateConfirmPassword,
                     ),
                   ],
@@ -89,7 +90,7 @@ class RegisterPage extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: Button(
-                    text: '註冊',
+                    text: I18n.register,
                     type: 'primary',
                     onPressed: () {
                       handleRegister();
@@ -111,7 +112,7 @@ class RegisterPage extends StatelessWidget {
                             },
                             child: Column(children: [
                               Text(
-                                '帳號密碼登入',
+                                I18n.accountPasswordLogin,
                                 style: TextStyle(
                                   color: AppColors.colors[ColorKeys.textLink]
                                       as Color,
@@ -124,7 +125,7 @@ class RegisterPage extends StatelessWidget {
                         InkWell(
                           onTap: () {},
                           child: Text(
-                            '手機號登入',
+                            I18n.loginWithPhoneNumber,
                             style: TextStyle(
                               color: AppColors.colors[ColorKeys.textLink],
                               fontSize: 12,

@@ -16,7 +16,8 @@ final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 class GameActivity extends StatefulWidget {
-  const GameActivity({Key? key}) : super(key: key);
+  final int? id;
+  const GameActivity({Key? key, this.id}) : super(key: key);
 
   @override
   State<GameActivity> createState() => _GameActivityState();
@@ -181,7 +182,10 @@ class _GameActivityState extends State<GameActivity> {
                                   ),
                                 ),
                               Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 8,
+                                  horizontal: 15,
+                                ),
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -235,25 +239,25 @@ class _GameActivityState extends State<GameActivity> {
                                     _isExpandedList[index]
                                         ? Transform.rotate(
                                             angle: 3.14,
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons
                                                   .arrow_drop_down_circle_outlined,
-                                              color: gameActivityIconColor,
-                                              size: 16,
+                                              color: Color(0xffebfe69),
+                                              size: 18,
                                             ),
                                           )
-                                        : const Icon(
+                                        : Icon(
                                             Icons
                                                 .arrow_drop_down_circle_outlined,
-                                            color: Color(0xffebfe69),
-                                            size: 16,
+                                            color: gameActivityIconColor,
+                                            size: 18,
                                           )
                                   ],
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    vertical: 1, horizontal: 8),
+                                    vertical: 1, horizontal: 15),
                                 child: Text(
                                   activityList[index].subTitle,
                                   style: TextStyle(
@@ -290,7 +294,8 @@ class _GameActivityState extends State<GameActivity> {
                                 ),
                                 const SizedBox(height: 14),
                                 if (activityList[index].buttonStyle !=
-                                    activityButtonType['NONE'])
+                                        activityButtonType['NONE'] ||
+                                    activityList[index].buttonName != null)
                                   GameBannerAndMarqueeConsumer(
                                     child:
                                         (banner, marquee, customerServiceUrl) =>

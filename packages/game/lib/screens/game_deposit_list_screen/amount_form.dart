@@ -93,7 +93,7 @@ class _AmountFormState extends State<AmountForm> {
             _enableSubmit = true;
           });
           MyRouteDelegate.of(context).push(
-            GameAppRoutes.depositDetail.value,
+            GameAppRoutes.depositDetail,
             args: {
               'payment': widget.activePayment,
               'paymentChannelId': int.parse(widget.paymentChannelId),

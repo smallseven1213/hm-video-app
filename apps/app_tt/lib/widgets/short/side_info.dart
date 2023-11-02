@@ -46,7 +46,7 @@ class _SideInfoState extends State<SideInfo> {
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Positioned(
             right: 8,
-            top: MediaQuery.of(context).size.height * 0.5 - 100,
+            top: MediaQuery.of(context).size.height * 0.5 - 80,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -78,7 +78,7 @@ class _SideInfoState extends State<SideInfo> {
                         return Container();
                       }
                     }),
-                const SizedBox(height: 20),
+                const SizedBox(height: 10),
                 // 按讚
                 ShortVideoFavoriteCountConsumer(
                     videoId: widget.videoId,

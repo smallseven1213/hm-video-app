@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -9,8 +10,6 @@ import 'package:shared/widgets/video_collection_times.dart';
 import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
-
-import 'video_embedded_ad.dart';
 
 class ViewInfo extends StatelessWidget {
   final int viewCount;
@@ -158,18 +157,81 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
             AspectRatio(
               aspectRatio: imageRatio ??
                   (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-              child: SidImageVisibilityDetector(
-                child: SidImage(
-                  key: ValueKey('video-preview-$id'),
-                  sid: displayCoverVertical ? coverVertical : coverHorizontal,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
-                ),
+              child: Stack(
+                children: [
+                  SidImage(
+                    key: ValueKey('video-preview-$id'),
+                    sid: displayCoverVertical ? coverVertical : coverHorizontal,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      width: double.infinity,
+                      height: 30,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Colors.transparent,
+                            Colors.black87,
+                          ],
+                        ),
+                      ),
+                      child: Center(
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // in children: left is play button and flex 1 , right is video time and width by content
+                            Expanded(
+                              flex: 1,
+                              child: SizedBox(
+                                height: 30,
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    const Image(
+                                      width: 15,
+                                      height: 17,
+                                      image: AssetImage(
+                                          'assets/images/play_count.webp'),
+                                    ),
+                                    const SizedBox(
+                                      width: 4,
+                                    ),
+                                    Text(
+                                      videoViewTimes.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(right: 5),
+                              child: VideoTime(time: timeLength),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
               color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
               child: Column(
                 children: [
                   Align(
@@ -186,39 +248,39 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     ),
                   ),
                   Row(
-                    children: [
-                      if (displaySupplier == true)
-                        Expanded(
-                          flex: 1,
-                          child: Container(
-                            alignment: Alignment.centerLeft,
-                            child: Text(
-                              '用戶名稱',
-                              textAlign: TextAlign.left,
-                              overflow: TextOverflow.ellipsis,
-                              softWrap: false,
-                              style: const TextStyle(
-                                color: Color(0xFF6B6B6B),
-                                fontSize: 12,
-                              ),
-                            ),
-                          ),
-                        ),
-                      if (displayViewTimes == true)
-                        Container(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            videoViewTimes.toString(),
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: false,
-                            style: const TextStyle(
-                              color: Color(0xFF6B6B6B),
-                              fontSize: 12,
-                            ),
+                    children: tags
+                        .take(3)
+                        .map(
+                          (tag) => GestureDetector(
+                            onTap: () {
+                              if (film == 1) {
+                                MyRouteDelegate.of(context).push(
+                                  AppRoutes.tag,
+                                  args: {'id': tag.id, 'title': tag.name},
+                                  removeSamePath: true,
+                                );
+                              } else if (film == 2) {
+                                MyRouteDelegate.of(context)
+                                    .push(AppRoutes.supplierTag, args: {
+                                  'tagId': tag.id,
+                                  'tagName': tag.name
+                                });
+                              } else if (film == 3) {}
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 2),
+                                child: Text(
+                                  '${kIsWeb ? '#' : ''}${tag.name}',
+                                  style: const TextStyle(
+                                    color: Color(0xFF73747b),
+                                    fontSize: 10,
+                                    height: 1.4,
+                                  ),
+                                )),
                           ),
                         )
-                    ],
+                        .toList(),
                   )
                 ],
               ),
@@ -227,164 +289,5 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
         ),
       ),
     );
-
-    // return Container(
-    // decoration: const BoxDecoration(
-    //   borderRadius: BorderRadius.all(Radius.circular(4)),
-    // ),
-    //   child: Column(
-    //     children: [
-    //       GestureDetector(
-    //         onTap: () => super.onVideoTap(context),
-    //         child: Stack(children: [
-    //           // 背景
-    //           // AspectRatio(
-    //           //   aspectRatio: imageRatio ??
-    //           //       (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-    //           //   child: Container(
-    //           //       decoration: BoxDecoration(
-    //           //           borderRadius: hasRadius == true
-    //           //               ? const BorderRadius.all(Radius.circular(10))
-    //           //               : null,
-    //           //           color: const Color(0xFF00234D)
-    //           //           // color: Colors.white,
-    //           //           ),
-    //           //       clipBehavior: Clip.antiAlias,
-    //           //       child: const Center(
-    //           //         child: Image(
-    //           //           image:
-    //           //               AssetImage('assets/images/video_preview_loading.png'),
-    //           //           width: 102,
-    //           //           height: 70,
-    //           //         ),
-    //           //       )),
-    //           // ),
-    //           // 主體
-    // AspectRatio(
-    //   aspectRatio: imageRatio ??
-    //       (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-    //   child: Container(
-    //       decoration: BoxDecoration(
-    //         borderRadius: hasRadius == true
-    //             ? const BorderRadius.all(Radius.circular(10))
-    //             : null,
-    //         // color: Colors.white,
-    //       ),
-    //       foregroundDecoration: BoxDecoration(
-    //         gradient: kIsWeb
-    //             ? null
-    //             : LinearGradient(
-    //                 begin: Alignment.topCenter,
-    //                 end: Alignment.bottomCenter,
-    //                 colors: [
-    //                   Colors.black.withOpacity(0.0),
-    //                   Colors.black.withOpacity(0.3),
-    //                 ],
-    //                 stops: const [0.9, 1.0],
-    //               ),
-    //       ),
-    //       clipBehavior: Clip.antiAlias,
-    //       child: SidImageVisibilityDetector(
-    //         child: SidImage(
-    //           key: ValueKey('video-preview-$id'),
-    //           sid: displayCoverVertical
-    //               ? coverVertical
-    //               : coverHorizontal,
-    //           width: double.infinity,
-    //           fit: BoxFit.cover,
-    //         ),
-    //       )),
-    // ),
-    //           if (hasInfoView == true)
-    //             Positioned(
-    //                 left: 0,
-    //                 right: 0,
-    //                 bottom: 0,
-    //                 child: ViewInfo(
-    //                     videoCollectTimes: videoCollectTimes,
-    //                     viewCount: videoViewTimes ?? 0,
-    //                     duration: timeLength,
-    //                     displayVideoTimes: displayVideoTimes,
-    //                     displayViewTimes: displayViewTimes,
-    //                     displayVideoCollectTimes: displayVideoCollectTimes)),
-    //         ]),
-    //       ),
-    //       const SizedBox(height: 5),
-    //       if (hasTitle == true)
-    // Container(
-    //   alignment: Alignment.centerLeft,
-    // child: Text(
-    //   title,
-    //   textAlign: TextAlign.left,
-    //   overflow: TextOverflow.ellipsis,
-    //   softWrap: false,
-    //   style: const TextStyle(
-    //     color: Colors.white,
-    //     fontSize: 12,
-    //   ),
-    // ),
-    // ),
-    //       if (tags.isNotEmpty && hasTags == true) ...[
-    //         const SizedBox(height: 5),
-    //         Align(
-    //           alignment: Alignment.centerLeft,
-    //           child: Container(
-    //             height: 20,
-    //             decoration: kIsWeb
-    //                 ? null
-    //                 : BoxDecoration(
-    //                     borderRadius: BorderRadius.circular(10),
-    //                   ),
-    //             clipBehavior: kIsWeb ? Clip.none : Clip.antiAlias,
-    //             child: Wrap(
-    //               crossAxisAlignment: WrapCrossAlignment.start,
-    //               spacing: 5.0,
-    //               runSpacing: 5.0,
-    //               clipBehavior: Clip.antiAlias,
-    //               children: tags
-    //                   .take(3)
-    //                   .map(
-    //                     (tag) => GestureDetector(
-    //                       onTap: () {
-    //                         if (film == 1) {
-    //                           MyRouteDelegate.of(context).push(
-    //                             AppRoutes.tag,
-    //                             args: {'id': tag.id, 'title': tag.name},
-    //                             removeSamePath: true,
-    //                           );
-    //                         } else if (film == 2) {
-    //                           MyRouteDelegate.of(context).push(
-    //                               AppRoutes.supplierTag,
-    //                               args: {'tagId': tag.id, 'tagName': tag.name});
-    //                         } else if (film == 3) {}
-    //                       },
-    //                       child: Container(
-    //                           padding: const EdgeInsets.symmetric(
-    //                               horizontal: 8, vertical: 2),
-    //                           decoration: BoxDecoration(
-    //                               color: const Color(0xff21488E),
-    //                               borderRadius: kIsWeb
-    //                                   ? BorderRadius.zero
-    //                                   : BorderRadius.circular(10)),
-    //                           child: Text(
-    //                             '${kIsWeb ? '#' : ''}${tag.name}',
-    //                             style: const TextStyle(
-    //                               color: Color(0xff21AFFF),
-    //                               fontSize: 10,
-    //                               height: 1.4,
-    //                             ),
-    //                           )),
-    //                     ),
-    //                   )
-    //                   .toList(),
-    //             ),
-    //           ),
-    //         )
-    //       ]
-    //       // The rest of your UI logic
-    //       // ...
-    //     ],
-    //   ),
-    // );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/ad.dart';
 import 'package:shared/modules/apps/apps_provider.dart';
@@ -16,8 +17,8 @@ class AppsPage extends StatelessWidget {
     return WillPopScope(
       onWillPop: () async => false,
       child: Scaffold(
-          appBar: const MyAppBar(
-            title: '應用中心',
+          appBar: MyAppBar(
+            title: I18n.appCenter,
           ),
           body: AppsProvider(
             child: ((
@@ -43,10 +44,10 @@ class AppsPage extends StatelessWidget {
                       const SliverToBoxAdapter(
                         child: SizedBox(height: 20),
                       ),
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: TitleHeader(text: '熱門推薦'),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: TitleHeader(text: I18n.popularRecommendation),
                         ),
                       ),
                       const SliverToBoxAdapter(
@@ -56,10 +57,10 @@ class AppsPage extends StatelessWidget {
                       const SliverToBoxAdapter(
                         child: SizedBox(height: 20),
                       ),
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: TitleHeader(text: '大家都在玩'),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: TitleHeader(text: I18n.everbodyPlaying),
                         ),
                       ),
                       const SliverToBoxAdapter(

@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -12,8 +13,6 @@ import 'favorites/short.dart';
 import 'favorites/video.dart';
 import 'shared/sub_tabbar.dart';
 
-const tabs = ['長視頻', '短視頻', '演員'];
-
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
 
@@ -24,6 +23,8 @@ class FavoritesPage extends StatefulWidget {
 class FavoritesPageState extends State<FavoritesPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
+  var tabs = [I18n.longVideo, I18n.shortVideo, I18n.actor];
 
   @override
   void initState() {

@@ -36,8 +36,14 @@ class _VideoByInternalTagConsumerState
         excludeId: widget.excludeId,
         internalTagId: ids,
       ),
-      tag: ids,
+      tag: '${ids}_${widget.excludeId}',
     );
+  }
+
+  @override
+  void dispose() {
+    videoByInternalTagController.dispose();
+    super.dispose();
   }
 
   @override

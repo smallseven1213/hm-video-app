@@ -1,48 +1,14 @@
-enum GameAppRoutes {
-  home,
-  lobby,
-  depositList,
-  depositPolling,
-  depositDetail,
-  withdraw,
-  webview,
-  paymentResult,
-  setFundPassword,
-  setBankcard,
-  depositRecord,
-  withdrawRecord,
-  activity,
-}
-
-extension AppRoutesExtension on GameAppRoutes {
-  String get value {
-    switch (this) {
-      case GameAppRoutes.lobby:
-        return '/game';
-      case GameAppRoutes.withdraw:
-        return '/game/withdraw';
-      case GameAppRoutes.setFundPassword:
-        return '/game/set_fund_password';
-      case GameAppRoutes.setBankcard:
-        return '/game/set_bankcard';
-      case GameAppRoutes.depositList:
-        return '/game/deposit_page_list';
-      case GameAppRoutes.depositPolling:
-        return '/game/deposit_page_polling';
-      case GameAppRoutes.depositDetail:
-        return '/game/deposit/detail';
-      case GameAppRoutes.paymentResult:
-        return '/game/deposit/payment-result';
-      case GameAppRoutes.webview:
-        return '/game/webview';
-      case GameAppRoutes.depositRecord:
-        return '/game/deposit/record';
-      case GameAppRoutes.withdrawRecord:
-        return '/game/withdraw/record';
-      case GameAppRoutes.activity:
-        return '/game/activity';
-      default:
-        return '/unknown';
-    }
-  }
+class GameAppRoutes {
+  static const String lobby = '/game';
+  static const String withdraw = '/game/withdraw';
+  static const String setFundPassword = '/game/set_fund_password';
+  static const String setBankcard = '/game/set_bankcard';
+  static const String depositList = '/game/deposit_page_list';
+  static const String depositPolling = '/game/deposit_page_polling';
+  static const String depositDetail = '/game/deposit/detail';
+  static const String paymentResult = '/game/deposit/payment-result';
+  static const String webview = '/game/webview';
+  static const String depositRecord = '/game/deposit/record';
+  static const String withdrawRecord = '/game/withdraw/record';
+  static const String activity = '/game-activity';
 }

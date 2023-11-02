@@ -1,9 +1,11 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:app_tt/screens/layout_user_screen/user_card/open_drawer_button.dart';
 import 'package:app_tt/screens/layout_user_screen/user_card/search_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/user.dart';
 
 import '../../widgets/actor_avatar.dart';
+import '../../widgets/user_empty_avatar.dart';
 
 class UserCard extends StatelessWidget {
   final User info;
@@ -45,11 +47,13 @@ class UserCard extends StatelessWidget {
           Positioned(
             top: 99,
             left: 16,
-            child: ActorAvatar(
-              photoSid: info.avatar,
-              width: 99,
-              height: 99,
-            ),
+            child: info.avatar == null
+                ? const UserEmptyAvatar()
+                : ActorAvatar(
+                    photoSid: info.avatar,
+                    width: 99,
+                    height: 99,
+                  ),
           ),
           // 名字
           Positioned(
@@ -67,7 +71,7 @@ class UserCard extends StatelessWidget {
           Positioned(
             top: 155,
             left: 123,
-            child: Text('用戶ID: ${info.uid}',
+            child: Text('${I18n.memberId}: ${info.uid}',
                 style: const TextStyle(
                   fontWeight: FontWeight.normal,
                   fontSize: 14,

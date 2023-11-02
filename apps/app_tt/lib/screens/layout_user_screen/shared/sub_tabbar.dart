@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/list_editor_category.dart';
 import 'package:shared/modules/list_editor/list_editor_consumer.dart';
@@ -63,15 +64,20 @@ class SubTabBar extends StatelessWidget {
                       tag: editorTag,
                       child: Container(
                         width: 44,
-                        height: 44,
-                        alignment: Alignment.center,
-                        child: const SizedBox(
-                          width: 14,
-                          height: 14,
-                          child: Image(
-                            fit: BoxFit.contain,
-                            image: AssetImage(
-                              'assets/images/editor.webp',
+                        height: 24,
+                        child: const Align(
+                          alignment: Alignment.center,
+                          child: SizedBox(
+                            width: 14,
+                            height: 14,
+                            child: Image(
+                              fit: BoxFit.contain,
+                              alignment: Alignment.center,
+                              width: 14,
+                              height: 14,
+                              image: AssetImage(
+                                'assets/images/editor.webp',
+                              ),
                             ),
                           ),
                         ),
@@ -82,18 +88,11 @@ class SubTabBar extends StatelessWidget {
                     tag: editorTag,
                     child: Container(
                       width: 44,
-                      height: 44,
+                      height: 24,
                       alignment: Alignment.center,
-                      child: const SizedBox(
-                        width: 14,
-                        height: 14,
-                        child: Image(
-                          fit: BoxFit.contain,
-                          image: AssetImage(
-                            'assets/images/trashcan.webp',
-                          ),
-                        ),
-                      ),
+                      child: Text(I18n.cancel,
+                          style: const TextStyle(
+                              fontSize: 10, color: Color(0xFFfe2c55))),
                     ),
                   );
                 },

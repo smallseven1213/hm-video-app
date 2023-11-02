@@ -5,6 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../pages/actor.dart' as actor_page;
 import '../pages/home.dart' as home_page;
 import '../pages/video.dart' as video_page;
 import '../pages/publisher.dart' as publisher_page;
@@ -16,13 +17,17 @@ import '../pages/video_by_block.dart' as video_by_block_page;
 import '../pages/actors.dart' as actors_page;
 import '../pages/filter.dart' as filter_page;
 import '../pages/search.dart' as search_page;
+import '../pages/supplier.dart' as supplier_page;
 import '../pages/vip.dart' as vip_page;
 import '../pages/coin.dart' as coin_page;
 import '../pages/share.dart' as share_page;
 import '../pages/shorts_by_common.dart' as shorts_by_common_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
+import '../pages/demo.dart' as demo_page;
+import '../pages/supplier_tag_video.dart' as supplier_tag_video_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
+  AppRoutes.demo: (context, args) => demo_page.DemoPage(),
   AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),
@@ -43,9 +48,12 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         title: args['title'] as String,
         film: args['film'] == null ? 1 : args['film'] as int,
       ),
-  // AppRoutes.actor: (context, args) => actor_page.ActorPage(
-  //       id: args['id'] as int,
-  //     ),
+  AppRoutes.actor: (context, args) => actor_page.ActorPage(
+        id: args['id'] as int,
+      ),
+  AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
+        id: args['id'] as int,
+      ),
   AppRoutes.login: (context, args) => const login_page.LoginPage(),
   // AppRoutes.nickname: (context, args) => const nickname_page.NicknamePage(),
   AppRoutes.register: (context, args) => const register_page.RegisterPage(),
@@ -67,11 +75,11 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   // AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
   //       id: args['id'] as int,
   //     ),
-  // AppRoutes.supplierTag: (context, args) =>
-  //     supplier_tag_video_page.SupplierTagVideoPage(
-  //       tagId: args['tagId'] as int,
-  //       tagName: args['tagName'],
-  //     ),
+  AppRoutes.supplierTag: (context, args) =>
+      supplier_tag_video_page.SupplierTagVideoPage(
+        tagId: args['tagId'] as int,
+        tagName: args['tagName'],
+      ),
   AppRoutes.shorts: (context, args) => shorts_by_common_page.ShortsByCommonPage(
         uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,

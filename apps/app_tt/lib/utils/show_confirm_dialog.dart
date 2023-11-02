@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/color_keys.dart';
@@ -12,8 +13,8 @@ Future<bool?> showConfirmDialog({
   required BuildContext context,
   String? title,
   String? message,
-  String confirmButtonText = '確定',
-  String cancelButtonText = '取消',
+  String confirmButtonText = "confirm",
+  String cancelButtonText = "cancel",
   Function? onConfirm,
   Function? onCancel,
   bool showConfirmButton = true,

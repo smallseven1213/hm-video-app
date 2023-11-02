@@ -176,7 +176,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             _paymentActiveIndex == 'selfusdt') {
           var paymentChannelId = channels[_channelActiveIndex]['id'];
           MyRouteDelegate.of(context).push(
-            GameAppRoutes.depositDetail.value,
+            GameAppRoutes.depositDetail,
             args: {
               'payment': _paymentActiveIndex,
               'paymentChannelId': paymentChannelId,

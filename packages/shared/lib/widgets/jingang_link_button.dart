@@ -4,7 +4,6 @@ import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../apis/jingang_api.dart';
-import '../enums/app_routes.dart';
 import '../models/jingang_detail.dart';
 import '../navigator/delegate.dart';
 
@@ -13,7 +12,7 @@ class JingangLinkButton extends StatelessWidget {
   final Widget child;
   final JingangApi jingangApi = JingangApi();
 
-  JingangLinkButton({required this.item, required this.child});
+  JingangLinkButton({super.key, required this.item, required this.child});
   final bottomNavigatorController = Get.find<BottomNavigatorController>();
 
   @override
@@ -30,25 +29,26 @@ class JingangLinkButton extends StatelessWidget {
           // 狀況1: 如果item?.url為http://或https://開頭，則直接打開網頁
           launch(url, webOnlyWindowName: '_blank');
         } else if (parsedUrl.queryParameters.containsKey('defaultScreenKey')) {
-          // 狀況2: 如果item?.url有 defaultScreenKey 這個query string，則跳轉到home
+          // 狀況2: 如果item?.url有 defaultScreenKey 這個query string，拿到?之前的url，帶入route，再將defaultScreenKey帶入args
           final defaultScreenKey =
               Uri.parse(url).queryParameters['defaultScreenKey'];
-          MyRouteDelegate.of(context).pushAndRemoveUntil(
-            AppRoutes.home,
-            hasTransition: false,
+          final routePath = url.substring(0, url.indexOf('?'));
+
+          MyRouteDelegate.of(context).push(
+            routePath,
             args: {'defaultScreenKey': '/$defaultScreenKey'},
           );
           bottomNavigatorController.changeKey('/$defaultScreenKey');
         } else {
           final List<String> segments = parsedUrl.pathSegments;
-          int id = int.parse(segments[1]);
+          String path = '/${segments[0]}';
           if (segments.length == 2) {
+            int id = int.parse(segments[1]);
             // 狀況3: 如果item?.url為 /{path}/{id}，則跳轉到該頁面並帶上id
-            MyRouteDelegate.of(context)
-                .push('/${segments[0]}', args: {'id': id});
+            MyRouteDelegate.of(context).push(path, args: {'id': id});
           } else {
             // 狀況4: 如果item?.url為 /{path}，則跳轉到該頁面
-            MyRouteDelegate.of(context).push('/${segments[0]}');
+            MyRouteDelegate.of(context).push(path);
           }
         }
       },

@@ -29,7 +29,7 @@ submitCompanyDepositOrder(
     logger.i('companyOrderDeposit res: $res');
     if (res['code'] == '00') {
       onLoading(context, status: false);
-      MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult.value);
+      MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult);
     } else {
       onLoading(context, status: false);
       showFormDialog(

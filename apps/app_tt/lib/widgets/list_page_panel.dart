@@ -1,5 +1,6 @@
 // PanelWidget stateless
 
+import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -61,17 +62,17 @@ class ListPagePanelWidget extends StatelessWidget {
                   } else {
                     return GestureDetector(
                       onTap: onSelectButtonClick,
-                      child: const Row(
+                      child: Row(
                         children: <Widget>[
-                          Image(
+                          const Image(
                             width: 20,
                             height: 20,
                             fit: BoxFit.contain,
                             image: AssetImage('assets/images/check_no.png'),
                           ),
-                          SizedBox(width: 10.0), // Spacing
-                          Text('全選',
-                              style: TextStyle(
+                          const SizedBox(width: 10.0), // Spacing
+                          Text(I18n.selectAll,
+                              style: const TextStyle(
                                   color: Color(0xFF161823), fontSize: 14.0)),
                         ],
                       ),
@@ -89,10 +90,10 @@ class ListPagePanelWidget extends StatelessWidget {
                         : const Color(0xFFffd0d9),
                     borderRadius: BorderRadius.circular(7.0),
                   ),
-                  child: const Center(
+                  child: Center(
                       child: Text(
-                    '刪除',
-                    style: TextStyle(fontSize: 14.0, color: Colors.white),
+                    I18n.delete,
+                    style: const TextStyle(fontSize: 14.0, color: Colors.white),
                   )),
                 ),
               )

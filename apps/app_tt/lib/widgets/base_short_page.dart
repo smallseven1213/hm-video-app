@@ -11,6 +11,7 @@ import 'wave_loading.dart';
 
 class BaseShortPage extends StatelessWidget {
   final Function() createController;
+  final String? controllerTag;
   final int? videoId;
   final int? itemId; // areaId, tagId, supplierId
   final bool? supportedPlayRecord;
@@ -33,6 +34,7 @@ class BaseShortPage extends StatelessWidget {
     this.style = 1,
     this.uuid,
     this.onScrollBeyondFirst,
+    this.controllerTag,
   }) : super(key: key);
 
   @override
@@ -98,6 +100,7 @@ class BaseShortPage extends StatelessWidget {
                                 shortData: shortData,
                                 toggleFullScreen: toggleFullScreen,
                                 videoUrl: videoUrl!,
+                                controllerTag: controllerTag,
                               ))),
           );
         },

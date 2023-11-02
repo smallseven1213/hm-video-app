@@ -104,13 +104,8 @@ class ShortCardInfo extends StatelessWidget {
                                   .videoPlayerController
                                   ?.pause();
                               await MyRouteDelegate.of(context).push(
-                                AppRoutes.tag,
-                                args: {
-                                  'id': e.id,
-                                  'title': e.name,
-                                  'defaultTabIndex': 1
-                                },
-                                removeSamePath: true,
+                                AppRoutes.supplierTag,
+                                args: {'tagId': e.id, 'tagName': e.name},
                               );
                               videoPlayerInfo.observableVideoPlayerController
                                   .videoPlayerController
@@ -161,14 +156,14 @@ class ShortCardInfo extends StatelessWidget {
                                             ),
                                           ),
                                         ),
-                                        Positioned(
-                                          left: 0,
-                                          child: IconButton(
-                                              color: Colors.white,
-                                              icon: const Icon(
-                                                  Icons.arrow_back_ios_new,
-                                                  size: 16),
-                                              onPressed: () => {}),
+                                        const Positioned(
+                                          top: -1,
+                                          left: -1,
+                                          child: Image(
+                                            image: AssetImage(
+                                                'assets/images/purchase/icon-short-vip.webp'),
+                                            width: 25,
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -212,6 +207,7 @@ class ShortCardInfo extends StatelessWidget {
                                           ),
                                         ),
                                         const Positioned(
+                                          top: -1,
                                           left: -1,
                                           child: Image(
                                             image: AssetImage(

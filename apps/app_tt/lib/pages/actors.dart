@@ -1,3 +1,4 @@
+import 'package:app_tt/localization/i18n.dart';
 import 'package:app_tt/widgets/my_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -143,8 +144,8 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                       flex: 1,
                       child: Row(
                         children: [
-                          _buildCustomRadioButton(0, '視頻'),
-                          _buildCustomRadioButton(1, '人氣'),
+                          _buildCustomRadioButton(0, I18n.video),
+                          _buildCustomRadioButton(1, I18n.popularity),
                         ],
                       ),
                     )
