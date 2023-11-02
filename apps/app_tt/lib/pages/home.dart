@@ -63,7 +63,6 @@ class HomeState extends State<HomePage> {
     uiController = Get.put(UIController());
     ttUiController = Get.put(TTUIController());
 
-    Get.put(GameStartupController());
     homePageController = Get.put(HomePageController());
 
     ever(homePageController.displayDrawer, (bool displayDrawer) {
