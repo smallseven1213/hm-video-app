@@ -29,7 +29,7 @@ class PurchaseWidget extends StatelessWidget {
       }) =>
           Padding(
         padding: const EdgeInsets.only(left: 10, right: 10, bottom: 8),
-        child: video!.isAvailable == true
+        child: video!.isAvailable == false
             ? video.chargeType == ChargeType.vip.index
                 ? InkWell(
                     onTap: () =>
