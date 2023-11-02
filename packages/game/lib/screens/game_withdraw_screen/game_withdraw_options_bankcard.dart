@@ -3,6 +3,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_field.dart';
 
 import '../../models/user_withdrawal_data.dart';
+import '../../localization/i18n.dart';
 
 class GameWithDrawOptionsBankCard extends StatelessWidget {
   const GameWithDrawOptionsBankCard({
@@ -27,21 +28,21 @@ class GameWithDrawOptionsBankCard extends StatelessWidget {
         children: [
           // 白色的"帳戶資訊
           Text(
-            "帳戶資訊",
+            I18n.accountInformation,
             style: TextStyle(color: gameLobbyPrimaryTextColor),
           ),
           Column(
             children: [
               GameWithDrawField(
-                name: "銀行名稱",
+                name: I18n.bankName,
                 value: data.bankName ?? '',
               ),
               GameWithDrawField(
-                name: "支行名稱",
+                name: I18n.branchName,
                 value: data.branchName ?? '',
               ),
               GameWithDrawField(
-                name: "帳戶姓名",
+                name: I18n.accountName,
                 value: data.legalName ?? '',
               ),
               GameWithDrawField(

@@ -15,6 +15,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class GameDepositDetail extends StatefulWidget {
@@ -67,7 +69,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
           showConfirmDialog(
             context: context,
             title: '',
-            content: '你已被登出，請重新登入',
+            content: I18n.youHaveBeenLoggedOutPleaseLogInAgain,
             onConfirm: () async {
               Navigator.pop(context);
               Navigator.pop(context);
@@ -128,7 +130,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            widget.payment == 'selfusdt' ? 'USDT' : '銀行轉帳',
+            widget.payment == 'selfusdt' ? 'USDT' : I18n.bankTransfer,
             style: TextStyle(
               color: gameLobbyAppBarTextColor,
               fontSize: 18,
@@ -166,10 +168,10 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                 child: Column(
                   children: [
                     GameLabel(
-                      label: '轉帳金額',
+                      label: I18n.transferAmount,
                       text: widget.payment == 'selfusdt'
                           ? '${gameWithdrawController.paymentAmount.value} USDT'
-                          : '¥${gameWithdrawController.paymentAmount.value}元',
+                          : '¥${gameWithdrawController.paymentAmount.value} ${I18n.dollar}',
                     ),
                     if (widget.payment == 'selfusdt')
                       GameLabel(
@@ -178,9 +180,9 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                       ),
                     if (widget.payment == 'selfusdt')
                       GameLabel(
-                        label: '預估上分金額',
+                        label: I18n.estimatedAmount,
                         text:
-                            '¥${NumberFormat("0.00").format(estimateAmount)}元',
+                            '¥${NumberFormat("0.00").format(estimateAmount)} ${I18n.dollar}',
                       ),
                     const SizedBox(height: 12),
                     Container(height: 1, color: gameLobbyDividerColor),
@@ -198,8 +200,8 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.payment == 'selfusdt'
-                                  ? 'TRC-20地址'
-                                  : '帳戶資訊',
+                                  ? I18n.trcAddress
+                                  : I18n.accountInformation,
                               style: TextStyle(
                                 color: gameLobbyPrimaryTextColor,
                                 fontSize: 14,
@@ -214,25 +216,25 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                           // 以下是selfdebit時的資訊
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "銀行名稱",
+                              name: I18n.bankName,
                               value: receiptBank,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "支行名稱",
+                              name: I18n.branchName,
                               value: branchName,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "銀行卡號",
+                              name: I18n.bankCardNumber,
                               value: receiptAccount,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "帳戶姓名",
+                              name: I18n.accountName,
                               value: receiptName,
                               showClipboard: true,
                             ),
@@ -251,10 +253,10 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                       child: Column(
                         children: [
                           GameInput(
-                            label: '轉帳備註',
+                            label: I18n.transferRemarks,
                             hint: widget.payment == 'selfusdt'
-                                ? '請輸入轉帳哈希值末 5 碼'
-                                : '請輸入真實姓名',
+                                ? I18n.pleaseEnterTheLastDigitsOfTheTransferHash
+                                : I18n.pleaseEnterYourRealName,
                             controller: remarkController,
                             isFontBold: true,
                             onClear: () {
@@ -291,7 +293,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "確認已轉帳，送出！",
+                                  I18n.confirmationOfTransferAndDelivery,
                                   style: TextStyle(
                                       color: remarkController.text != ''
                                           ? gamePrimaryButtonTextColor

@@ -101,7 +101,7 @@ class ConfirmNameState extends State<ConfirmName> {
           ),
         ),
         Text(
-          '存款金額：${widget.amount}',
+          '${I18n.depositAmount}: ${widget.amount}',
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -127,7 +127,7 @@ class ConfirmNameState extends State<ConfirmName> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                    '請輸入真實姓名',
+                    I18n.pleaseEnterYourRealName,
                     style: TextStyle(
                         fontSize: 16, color: gameLobbyPrimaryTextColor),
                   ),
@@ -138,7 +138,7 @@ class ConfirmNameState extends State<ConfirmName> {
                   controller: textEditingController,
                   focusNode: enableSubmit ? null : _focusNode,
                   decoration: InputDecoration(
-                    hintText: '請輸入真實姓名',
+                    hintText: I18n.pleaseEnterYourRealName,
                     hintStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -154,9 +154,10 @@ class ConfirmNameState extends State<ConfirmName> {
                     color: gameLobbyPrimaryTextColor,
                   ),
                   validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: '請輸入真實姓名'),
+                    FormBuilderValidators.required(
+                        errorText: I18n.pleaseEnterYourRealName),
                     FormBuilderValidators.match(r"^[a-zA-Z\u4e00-\u9fa5]+$",
-                        errorText: '姓名格式錯誤'),
+                        errorText: I18n.wrongNameFormat),
                   ]),
                   enabled: isFetching != 'complete',
                 ),
@@ -165,11 +166,12 @@ class ConfirmNameState extends State<ConfirmName> {
                   alignment: Alignment.center,
                   child: Text(
                     enableSubmit && isFetching == 'start'
-                        ? '取得充值連結...'
+                        ? I18n.getTheLinkToReload
                         : submitDepositSuccess && isFetching == 'complete'
-                            ? '充值連結取得成功！'
+                            ? I18n.theLinkWasSuccessful
                             : !submitDepositSuccess && isFetching == 'complete'
-                                ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
+                                ? I18n
+                                    .failedToGetTheLinkToRechargePleaseChangeTheRechargeChannelOrContactCustomerService
                                 : '',
                     style: TextStyle(
                       fontSize: 14,
@@ -211,7 +213,7 @@ class ConfirmNameState extends State<ConfirmName> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GameButton(
-          text: submitDepositSuccess ? '開啟充值頁' : I18n.close,
+          text: submitDepositSuccess ? I18n.openTopUpPage : I18n.close,
           onPressed: () {
             if (submitDepositSuccess) {
               onLoading(context, status: false);

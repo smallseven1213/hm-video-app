@@ -176,7 +176,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                 barrierDismissible: true,
                 title: "提現確認",
                 content:
-                    "未達成流水限額\n需自行負擔提現手續費 ${(int.parse(widget.applyAmount) * double.parse(widget.withdrawalFee)).toStringAsFixed(2).replaceAll(RegExp(r'\.?0*$'), '')} 元(預估)\n點擊確認送出提現訂單",
+                    "未達成流水限額\n需自行負擔提現手續費 ${(int.parse(widget.applyAmount) * double.parse(widget.withdrawalFee)).toStringAsFixed(2).replaceAll(RegExp(r'\.?0*$'), '')} ${I18n.dollar}(預估)\n點擊確認送出提現訂單",
                 confirmText: I18n.confirm,
                 onConfirm: () {
                   Navigator.of(context).pop();

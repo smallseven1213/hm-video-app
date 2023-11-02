@@ -16,6 +16,8 @@ import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/i18n.dart';
+
 final logger = Logger();
 
 class CustomTriangleClipper extends CustomClipper<Path> {
@@ -159,7 +161,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             onSuccess: (userName) {
               showModel(
                 context,
-                title: '訂單確認',
+                title: I18n.orderConfirmation,
                 content: ConfirmName(
                   amount: channels[_channelActiveIndex]['specificAmounts']
                           [index]
@@ -187,7 +189,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           logger.i('no input && no bank card');
           showModel(
             context,
-            title: '訂單確認',
+            title: I18n.orderConfirmation,
             content: ConfirmPin(
               amount: channels[_channelActiveIndex]['specificAmounts'][index]
                   .toString(),
@@ -296,13 +298,13 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                           ),
                           if (widget.depositData[paymentItem[index]]['label'][0]
                               .isNotEmpty)
-                            const Positioned(
+                            Positioned(
                               top: 0,
                               right: 0,
                               child: OliveShape(
                                 width: 40.0,
                                 type: 'right',
-                                text: '送優惠',
+                                text: I18n.sendOffer,
                               ),
                             )
                         ],
@@ -322,9 +324,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                     channels.isNotEmpty)
                 ? Column(
                     children: [
-                      const DepositTitle(
-                        title: '支付渠道',
-                      ),
+                      DepositTitle(title: I18n.paymentChannel),
                       SizedBox(
                         height: channelHeight.toDouble(),
                         child: Container(
@@ -490,7 +490,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                         ),
                         const SizedBox(height: 16),
                         Text(
-                          '沒有支付通道',
+                          I18n.noPaymentChannel,
                           style: TextStyle(color: gameLobbyPrimaryTextColor),
                         ),
                       ],
@@ -509,8 +509,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                     ),
                   ),
                   // 存款金額
-                  const DepositTitle(
-                    title: '存款金額',
+                  DepositTitle(
+                    title: I18n.depositAmount,
                   ),
                   if (channels[_channelActiveIndex]['amountType'] ==
                           depositAmountType['showInput'] &&
@@ -566,7 +566,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    '${channels[_channelActiveIndex]['specificAmounts'][index].toString()}元',
+                                    '${channels[_channelActiveIndex]['specificAmounts'][index].toString()} ${I18n.dollar}',
                                     style: TextStyle(
                                       color: gamePrimaryButtonColor,
                                       fontSize: 12,

@@ -110,7 +110,7 @@ class ConfirmPinState extends State<ConfirmPin> {
           ),
         ),
         Text(
-          '存款金額：${widget.amount}',
+          '${I18n.depositAmount}: ${widget.amount}',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -206,11 +206,11 @@ class ConfirmPinState extends State<ConfirmPin> {
 
         // 在row輸入框的下方顯示驗證錯誤的訊息，文字是驗證碼錯誤
         if (hasError)
-          const Align(
+          Align(
               alignment: Alignment.center,
               child: Text(
-                '驗證碼錯誤',
-                style: TextStyle(
+                I18n.wrongVerificationCode,
+                style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.red),
@@ -219,14 +219,16 @@ class ConfirmPinState extends State<ConfirmPin> {
           alignment: Alignment.center,
           child: Text(
             enableSubmit && isFetching == 'start'
-                ? '取得充值連結...'
+                ? I18n.getTheLinkToReload
                 : hasError
                     ? ''
                     : submitDepositSuccess && isFetching == 'complete'
-                        ? '充值連結取得成功！'
+                        ? I18n.theLinkWasSuccessful
                         : !submitDepositSuccess && isFetching == 'complete'
-                            ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
-                            : '如訂單無誤，請輸入以上驗證碼',
+                            ? I18n
+                                .failedToGetTheLinkToRechargePleaseChangeTheRechargeChannelOrContactCustomerService
+                            : I18n
+                                .ifTheOrderIsCorrectPleaseEnterTheAboveVerificationCode,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -240,7 +242,7 @@ class ConfirmPinState extends State<ConfirmPin> {
             padding: const EdgeInsets.only(top: 10),
             width: 90,
             child: GameButton(
-              text: submitDepositSuccess ? '開啟充值頁' : I18n.close,
+              text: submitDepositSuccess ? I18n.openTopUpPage : I18n.close,
               onPressed: () {
                 if (submitDepositSuccess) {
                   onLoading(context, status: false);

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 
+import '../../localization/i18n.dart';
+
 class UserInfoDeposit extends StatefulWidget {
   const UserInfoDeposit({Key? key, required this.onTap}) : super(key: key);
   final VoidCallback onTap;
@@ -31,7 +33,7 @@ class _UserInfoDeposit extends State<UserInfoDeposit> {
               height: 28,
             ),
             Text(
-              '存款',
+              I18n.deposit,
               style: TextStyle(
                 color: gameLobbyPrimaryTextColor,
                 fontSize: 12,

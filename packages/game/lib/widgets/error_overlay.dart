@@ -31,7 +31,7 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
             barrierDismissible: false,
             builder: (context) => AlertDialog(
               title: const Text('帳號重複登入'),
-              content: const Text('你已被登出，請重新登入'),
+              content: Text(I18n.youHaveBeenLoggedOutPleaseLogInAgain),
               actions: [
                 TextButton(
                   onPressed: () {
