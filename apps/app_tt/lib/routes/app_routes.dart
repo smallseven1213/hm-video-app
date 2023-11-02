@@ -24,6 +24,7 @@ import '../pages/share.dart' as share_page;
 import '../pages/shorts_by_common.dart' as shorts_by_common_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
 import '../pages/demo.dart' as demo_page;
+import '../pages/supplier_tag_video.dart' as supplier_tag_video_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.demo: (context, args) => demo_page.DemoPage(),
@@ -74,11 +75,11 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   // AppRoutes.supplier: (context, args) => supplier_page.SupplierPage(
   //       id: args['id'] as int,
   //     ),
-  // AppRoutes.supplierTag: (context, args) =>
-  //     supplier_tag_video_page.SupplierTagVideoPage(
-  //       tagId: args['tagId'] as int,
-  //       tagName: args['tagName'],
-  //     ),
+  AppRoutes.supplierTag: (context, args) =>
+      supplier_tag_video_page.SupplierTagVideoPage(
+        tagId: args['tagId'] as int,
+        tagName: args['tagName'],
+      ),
   AppRoutes.shorts: (context, args) => shorts_by_common_page.ShortsByCommonPage(
         uuid: args['uuid'] as String,
         videoId: args['videoId'] as int,

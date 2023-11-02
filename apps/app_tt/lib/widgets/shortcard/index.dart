@@ -128,58 +128,6 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: -15,
-                left: 0,
-                right: 0,
-                child: Listener(
-                  onPointerDown: (details) {
-                    setState(() {
-                      isDragging = true;
-                    });
-                  },
-                  onPointerUp: (details) {
-                    setState(() {
-                      isDragging = false;
-                    });
-                  },
-                  child: RawGestureDetector(
-                    gestures: <Type, GestureRecognizerFactory>{
-                      HorizontalDragGestureRecognizer:
-                          GestureRecognizerFactoryWithHandlers<
-                              HorizontalDragGestureRecognizer>(
-                        () => HorizontalDragGestureRecognizer(),
-                        (HorizontalDragGestureRecognizer instance) {
-                          instance
-                            ..onStart = (DragStartDetails details) {
-                              // 可以处理拖动开始的事件
-                            }
-                            ..onUpdate = (DragUpdateDetails details) {
-                              // 可以处理拖动更新的事件
-                            }
-                            ..onEnd = (DragEndDetails details) {
-                              // 可以处理拖动结束的事件
-                            };
-                        },
-                      ),
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: isDragging ? 40 : 35,
-                      child: VideoProgressIndicator(
-                        videoPlayerInfo.videoPlayerController!,
-                        allowScrubbing: true,
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        colors: VideoProgressColors(
-                          playedColor: const Color(0xFFFDDCEF),
-                          bufferedColor: Colors.grey,
-                          backgroundColor: Colors.white.withOpacity(0.3),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
               ShortVideoConsumer(
                   vodId: widget.id,
                   tag: widget.tag,
