@@ -11,7 +11,6 @@ import 'wave_loading.dart';
 
 class BaseShortPage extends StatelessWidget {
   final Function() createController;
-  final String? controllerTag;
   final int? videoId;
   final int? itemId; // areaId, tagId, supplierId
   final bool? supportedPlayRecord;
@@ -20,7 +19,8 @@ class BaseShortPage extends StatelessWidget {
   final Widget? loadingWidget;
   final int? style; // 1, 2
   final String? uuid;
-  final Function? onScrollBeyondFirst;
+  final Function()? onScrollBeyondFirst;
+  final String? controllerTag;
 
   const BaseShortPage({
     Key? key,
@@ -43,9 +43,7 @@ class BaseShortPage extends StatelessWidget {
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
-        onScrollBeyondFirst: () {
-          onScrollBeyondFirst?.call();
-        },
+        onScrollBeyondFirst: onScrollBeyondFirst,
         loadingWidget: const Center(
           child: WaveLoading(
             color: Color.fromRGBO(255, 255, 255, 0.3),
