@@ -10,8 +10,6 @@ import 'package:get/get.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../localization/i18n.dart';
-
 submitDepositOrder(
   context, {
   required String amount,
@@ -45,19 +43,17 @@ submitDepositOrder(
       onLoading(context, status: false);
       showFormDialog(
         context,
-        title: I18n.transactionFailed,
+        title: '交易失敗',
         content: SizedBox(
           height: 24,
           child: Center(
             child: Text(
-              value == '51728'
-                  ? I18n.thereAreManyPeoplePayingAtTheMomentPleaseTryAgainLater
-                  : I18n.orderCreationFailedPleaseContactOurCustomerService,
+              value == '51728' ? '當前支付人數眾多，請稍後再試！' : '訂單建立失敗，請聯繫客服',
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
         ),
-        confirmText: I18n.confirm,
+        confirmText: '確認',
         onConfirm: () => {
           Navigator.pop(context),
           Navigator.pop(context),
@@ -68,17 +64,17 @@ submitDepositOrder(
     onLoading(context, status: false);
     showFormDialog(
       context,
-      title: I18n.transactionFailed,
+      title: '交易失敗',
       content: SizedBox(
         height: 60,
         child: Center(
           child: Text(
-            I18n.orderCreationFailedPleaseContactOurCustomerService,
+            '訂單建立失敗，請聯繫客服',
             style: TextStyle(color: gameLobbyPrimaryTextColor),
           ),
         ),
       ),
-      confirmText: I18n.confirm,
+      confirmText: '確認',
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

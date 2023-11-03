@@ -31,7 +31,6 @@ import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 
 import '../enums/game_app_routes.dart';
-import '../../localization/i18n.dart';
 import '../localization/game_localization_deletate.dart';
 
 final logger = Logger();
@@ -144,7 +143,7 @@ class _GameLobbyState extends State<GameLobby>
                             ),
                             child: Center(
                               child: Text(
-                                I18n.registerLogin,
+                                '註冊/登入',
                                 style: TextStyle(
                                   color: gamePrimaryButtonTextColor,
                                   fontSize: 14,

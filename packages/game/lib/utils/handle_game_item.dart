@@ -8,7 +8,6 @@ import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
 
 import '../enums/game_app_routes.dart';
-import '../../localization/i18n.dart';
 
 String gameUrl = '';
 
@@ -58,7 +57,7 @@ void handleGameItem(BuildContext context,
         context: context,
         title: '遊戲維護中',
         content: '遊戲維護中，請稍後再試',
-        confirmText: I18n.confirm,
+        confirmText: '確認',
         onConfirm: () {
           Navigator.pop(context);
         },
@@ -82,7 +81,7 @@ void handleGameItem(BuildContext context,
       context: context,
       title: '遊戲維護中',
       content: '遊戲維護中，請稍後再試',
-      confirmText: I18n.confirm,
+      confirmText: '確認',
       onConfirm: () {
         Navigator.pop(context);
       },

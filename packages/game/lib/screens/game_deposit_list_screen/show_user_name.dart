@@ -5,8 +5,6 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:logger/logger.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 void showUserName(
@@ -19,7 +17,7 @@ void showUserName(
 
   showFormDialog(
     context,
-    title: I18n.pleaseEnterYourRealName,
+    title: '輸入真實姓名',
     content: FormBuilder(
       key: formKey,
       onChanged: () {
@@ -30,7 +28,7 @@ void showUserName(
         onChanged: (val) => logger.i(val.toString()),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(
-            errorText: I18n.pleaseEnterYourRealName,
+            errorText: '請輸入真實姓名',
           ),
           FormBuilderValidators.minLength(2, errorText: '請填寫正確姓名'),
           FormBuilderValidators.maxLength(6, errorText: '請填寫正確姓名'),
@@ -45,7 +43,7 @@ void showUserName(
               fontSize: 14,
             ),
             decoration: InputDecoration(
-              hintText: I18n.pleaseEnterYourRealName,
+              hintText: '請填寫真實姓名',
               errorText: field.errorText,
               hintStyle: TextStyle(
                 color: gameLobbyPrimaryTextColor,

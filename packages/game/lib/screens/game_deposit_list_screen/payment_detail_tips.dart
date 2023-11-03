@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../localization/i18n.dart';
-
 class PaymentDetailTips extends StatelessWidget {
   const PaymentDetailTips({Key? key}) : super(key: key);
 
@@ -10,39 +8,39 @@ class PaymentDetailTips extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 10),
-      child: Column(
+      child: const Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            I18n.warmTips,
-            style: const TextStyle(
+            '溫馨提示',
+            style: TextStyle(
               color: Color(0xff999999),
             ),
           ),
-          const SizedBox(
+          SizedBox(
             height: 8,
           ),
           Text(
-            I18n.pleaseBeSureToProvideTrueInformationToFacilitateTheVerificationOfTheTransferData,
-            style: const TextStyle(
+            '1. 請務必提供真實資訊，以利核對轉帳資料。',
+            style: TextStyle(
               fontSize: 12,
               color: Color(0xff999999),
             ),
             maxLines: 2,
           ),
-          const SizedBox(
+          SizedBox(
             height: 3,
           ),
           Text(
-            I18n.pleaseWriteTheRequiredInformationInTheRemittanceRemarksToSpeedUpTheRechargeProcess,
-            style: const TextStyle(
+            '2. 請在匯款備註寫入要求資訊，加速充值流程。',
+            style: TextStyle(
               fontSize: 12,
               color: Color(0xff999999),
             ),
             maxLines: 2,
           ),
-          const SizedBox(
+          SizedBox(
             height: 3,
           ),
         ],

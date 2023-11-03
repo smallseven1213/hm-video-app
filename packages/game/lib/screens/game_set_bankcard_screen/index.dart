@@ -16,8 +16,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 class GameSetBankCard extends StatefulWidget {
@@ -162,7 +160,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
   void _validateLegalName(String? value) {
     if (value!.isEmpty) {
-      _legalNameError = I18n.pleaseEnterYourRealName;
+      _legalNameError = '請輸入您的真實姓名';
     } else if (value.isNotEmpty) {
       logger.i('value.isNotEmpty');
       _legalNameError = null;
@@ -237,7 +235,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return AutoComplete(
-                              label: I18n.bankName,
+                              label: '銀行名稱',
                               hint: '請輸入銀行名稱',
                               controller: bankNameController,
                               listContent: bankList,
@@ -259,7 +257,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: I18n.branchName,
+                              label: '支行名稱',
                               hint: '請輸入支行名稱(選填)',
                               controller: branchNameController,
                               onChanged: (val) => logger.i(val.toString()),
@@ -274,7 +272,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           name: 'account',
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: I18n.bankCardNumber,
+                              label: '銀行卡號',
                               hint: '請輸入您的銀行卡號',
                               controller: accountController,
                               onChanged: (value) => {
@@ -296,7 +294,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           builder: (FormFieldState field) {
                             return GameInput(
                               label: '真實姓名',
-                              hint: I18n.pleaseEnterYourRealName,
+                              hint: '請輸入您的真實姓名',
                               controller: legalNameController,
                               onChanged: (value) => {
                                 _validateLegalName(value),
@@ -313,7 +311,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                         ),
                         const SizedBox(height: 44),
                         GameButton(
-                          text: I18n.confirm,
+                          text: '確認',
                           onPressed: () => _onSubmit(),
                           disabled: _legalNameEnable == false ||
                               _bankNameEnable.value == false ||

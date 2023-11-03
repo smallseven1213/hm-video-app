@@ -5,8 +5,6 @@ import 'package:game/controllers/game_response_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class ErrorOverlayWidget extends StatefulWidget {
@@ -31,7 +29,7 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
             barrierDismissible: false,
             builder: (context) => AlertDialog(
               title: const Text('帳號重複登入'),
-              content: Text(I18n.youHaveBeenLoggedOutPleaseLogInAgain),
+              content: const Text('你已被登出，請重新登入'),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -39,7 +37,7 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
                     MyRouteDelegate.of(context)
                         .push(AppRoutes.home, removeSamePath: true);
                   },
-                  child: Text(I18n.confirm),
+                  child: const Text('確認'),
                 ),
               ],
             ),

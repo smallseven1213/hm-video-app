@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../../localization/i18n.dart';
-
 class DepositChannelEmpty extends StatefulWidget {
   const DepositChannelEmpty({Key? key}) : super(key: key);
 
@@ -47,9 +45,9 @@ class _DepositChannelEmptyState extends State<DepositChannelEmpty> {
                 fit: BoxFit.cover,
               ),
               const SizedBox(height: 18),
-              Text(
-                I18n.thereAreNoAvailablePaymentChannelsPleaseTryAgainLaterOrContactCustomerService,
-                style: const TextStyle(color: Color(0xFF979797)),
+              const Text(
+                '當前無可用支付渠道，請稍候再試或聯繫客服。',
+                style: TextStyle(color: Color(0xFF979797)),
               ),
             ],
           ),

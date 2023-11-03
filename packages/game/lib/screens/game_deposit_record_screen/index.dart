@@ -8,28 +8,26 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
-Map<int, String> auditDate = {
+const auditDate = {
   1: '今天',
   2: '昨天',
   3: '近七天',
   4: '近三十天',
 };
 
-Map<int, String> conditionOrderType = {
+const conditionOrderType = {
   1: '確認中',
-  2: I18n.completed,
-  3: I18n.failed,
+  2: '已完成',
+  3: '失敗',
 };
 
-Map<int, String> orderType = {
+const orderType = {
   1: '確認中',
-  2: I18n.completed,
-  4: I18n.failed,
-  5: I18n.failed,
+  2: '已完成',
+  4: '失敗',
+  5: '失敗',
 };
 
 DateTime now = DateTime.now();
@@ -61,7 +59,7 @@ class StatusLabel extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: conditionOrderType[type] == I18n.completed
+          color: conditionOrderType[type] == '已完成'
               ? withdrawalSuccess
               : withdrawalFelid,
         ),
@@ -71,9 +69,9 @@ class StatusLabel extends StatelessWidget {
         child: Text(
           conditionOrderType[type] ?? '',
           style: TextStyle(
-            color: conditionOrderType[type] == I18n.completed
+            color: conditionOrderType[type] == '已完成'
                 ? withdrawalSuccess
-                : conditionOrderType[type] == I18n.failed
+                : conditionOrderType[type] == '失敗'
                     ? withdrawalFelid
                     : withdrawalSuccess,
           ),
@@ -205,7 +203,7 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
         backgroundColor: gameLobbyBgColor,
         centerTitle: true,
         title: Text(
-          I18n.depositHistory,
+          '存款記錄',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -242,18 +240,18 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                             name: 'paymentStatus',
                             value: value,
                           ),
-                          items: [
-                            const {
+                          items: const [
+                            {
                               'value': 1,
                               'label': '確認中',
                             },
                             {
                               'value': 2,
-                              'label': I18n.completed,
+                              'label': '已完成',
                             },
                             {
                               'value': 3,
-                              'label': I18n.failed,
+                              'label': '失敗',
                             }
                           ],
                         ),
@@ -362,13 +360,11 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                                   vertical: 6, horizontal: 14),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(16.0),
-                                color:
-                                    orderType[item.paymentStatus] == I18n.failed
-                                        ? gameLobbyButtonDisableColor
-                                        : Colors.transparent,
+                                color: orderType[item.paymentStatus] == '失敗'
+                                    ? gameLobbyButtonDisableColor
+                                    : Colors.transparent,
                                 border: Border.all(
-                                  color: orderType[item.paymentStatus] ==
-                                          I18n.failed
+                                  color: orderType[item.paymentStatus] == '失敗'
                                       ? withdrawalFelid
                                       : gameLobbyLoginFormBorderColor,
                                   width: 1,
@@ -379,8 +375,7 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                                 style: TextStyle(
                                   color: orderType[item.paymentStatus] == '確認中'
                                       ? withdrawalSuccess
-                                      : orderType[item.paymentStatus] ==
-                                              I18n.completed
+                                      : orderType[item.paymentStatus] == '已完成'
                                           ? modalDropDownActive
                                           : gameLobbyButtonDisableTextColor,
                                   fontSize: 14,

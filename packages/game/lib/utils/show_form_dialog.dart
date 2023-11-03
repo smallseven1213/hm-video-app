@@ -5,8 +5,8 @@ void showFormDialog(
   BuildContext context, {
   required String title,
   required Widget content,
-  String confirmText = "confirm",
-  String cancelText = "cancel",
+  String confirmText = "確定",
+  String cancelText = "取消",
   bool barrierDismissible = true,
   Function()? onConfirm,
   Function()? onCancel,

@@ -10,8 +10,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 submitCompanyDepositOrder(
@@ -36,17 +34,17 @@ submitCompanyDepositOrder(
       onLoading(context, status: false);
       showFormDialog(
         context,
-        title: I18n.transactionFailed,
+        title: '交易失敗',
         content: SizedBox(
           height: 24,
           child: Center(
             child: Text(
-              I18n.orderCreationFailedPleaseContactOurCustomerService,
+              '訂單建立失敗，請聯繫客服',
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
         ),
-        confirmText: I18n.confirm,
+        confirmText: '確認',
         onConfirm: () => {
           Navigator.pop(context),
           Navigator.pop(context),
@@ -57,14 +55,14 @@ submitCompanyDepositOrder(
     onLoading(context, status: false);
     showFormDialog(
       context,
-      title: I18n.transactionFailed,
+      title: '交易失敗',
       content: Center(
         child: Text(
-          I18n.orderCreationFailedPleaseContactOurCustomerService,
+          '訂單建立失敗，請聯繫客服',
           style: TextStyle(color: gameLobbyPrimaryTextColor),
         ),
       ),
-      confirmText: I18n.confirm,
+      confirmText: '確認',
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

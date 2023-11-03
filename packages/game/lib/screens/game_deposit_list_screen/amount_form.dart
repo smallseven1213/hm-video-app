@@ -13,8 +13,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 class AmountForm extends StatefulWidget {
@@ -78,7 +76,7 @@ class _AmountFormState extends State<AmountForm> {
           logger.i('銀行卡');
           showModel(
             context,
-            title: I18n.orderConfirmation,
+            title: '訂單確認',
             content: ConfirmName(
               amount: widget.controller.text,
               paymentChannelId: widget.paymentChannelId,
@@ -104,7 +102,7 @@ class _AmountFormState extends State<AmountForm> {
         } else {
           showModel(
             context,
-            title: I18n.orderConfirmation,
+            title: '訂單確認',
             content: ConfirmPin(
               amount: widget.controller.text,
               paymentChannelId: widget.paymentChannelId,
@@ -226,7 +224,7 @@ class _AmountFormState extends State<AmountForm> {
                 width: 70,
                 height: 40,
                 child: GameButton(
-                  text: I18n.confirm,
+                  text: "確認",
                   onPressed: () => handleAmount(),
                   disabled: !_enableSubmit,
                 ),

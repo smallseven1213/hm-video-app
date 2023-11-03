@@ -12,8 +12,6 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/widgets/button.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
@@ -75,9 +73,8 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText: res['status'] == activityButtonStatus['ENABLE']
-              ? I18n.close
-              : I18n.confirm,
+          confirmText:
+              res['status'] == activityButtonStatus['ENABLE'] ? '關閉' : '確認',
           onConfirm: () => {
             if (res['status'] != activityButtonStatus['ENABLE'])
               setState(() => buttonDisable = true),
@@ -87,7 +84,7 @@ class _GameActivityState extends State<GameActivity> {
       } else {
         showFormDialog(
           context,
-          title: I18n.failed,
+          title: '申請失敗',
           content: SizedBox(
             height: 85,
             child: Column(
@@ -108,7 +105,7 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText: I18n.confirm,
+          confirmText: '確認',
           onConfirm: () => {
             Navigator.pop(context),
           },
@@ -129,7 +126,7 @@ class _GameActivityState extends State<GameActivity> {
         ),
         centerTitle: true,
         title: Text(
-          I18n.hotEvents,
+          '熱門活動',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,

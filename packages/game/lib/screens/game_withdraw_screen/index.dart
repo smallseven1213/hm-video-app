@@ -27,7 +27,6 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
-import '../../localization/i18n.dart';
 
 final logger = Logger();
 
@@ -148,7 +147,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
           context: context,
           title: "",
           content: "餘額自動轉出遊戲失敗",
-          confirmText: I18n.confirm,
+          confirmText: "確認",
           onConfirm: () {
             Navigator.pop(context);
           },
@@ -207,7 +206,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
               context: context,
               title: "申請完成",
               content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
-              confirmText: I18n.confirm,
+              confirmText: "確認",
               onConfirm: () {
                 setState(() {
                   _enableSubmit = false;
@@ -238,7 +237,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
       if (value == null || value.isEmpty) {
         return '請輸入提現金額';
       } else if (double.parse(value) < double.parse(withdrawalLowerLimit)) {
-        return '輸入金額不得小於$withdrawalLowerLimit${I18n.dollar}';
+        return '輸入金額不得小於$withdrawalLowerLimit元';
       } else if (int.parse(value) > gameWalletController.wallet.value) {
         return '輸入金額不得大於餘額';
       }
@@ -365,7 +364,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                       FormBuilderValidators.min(
                                         double.parse(withdrawalLowerLimit),
                                         errorText:
-                                            '輸入金額不得小於$withdrawalLowerLimit${I18n.dollar}',
+                                            '輸入金額不得小於$withdrawalLowerLimit元',
                                       ),
                                       // 不得大於餘額
                                       FormBuilderValidators.max(

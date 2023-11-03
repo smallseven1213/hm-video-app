@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../../widgets/game_startup.dart';
-import '../../localization/i18n.dart';
 
 final logger = Logger();
 
@@ -69,7 +68,7 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                       borderRadius: BorderRadius.circular(4.0),
                       color: gameLobbyPrimaryTextColor,
                     ),
-                    child: Text(I18n.confirm),
+                    child: const Text('確認'),
                   ),
                 ),
               ],
@@ -133,7 +132,7 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                       color: gamePrimaryButtonColor,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    child: Text(I18n.gameLobby,
+                    child: Text('遊戲大廳',
                         style: TextStyle(color: gamePrimaryButtonTextColor)),
                   ),
                 ),
@@ -148,11 +147,11 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                     left: 16,
                     right: 16,
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
+                      Text(
                         '溫馨提醒',
                         // color is 979797
                         style: TextStyle(
@@ -161,28 +160,28 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                           color: Color(0xff979797),
                         ),
                       ),
-                      const SizedBox(
+                      SizedBox(
                         height: 8,
                       ),
                       Text(
-                        I18n.paymentWasNotSuccessfulPleaseTryToPaySeveralTimes,
-                        style: const TextStyle(
+                        '1：支付不成功，請多次嘗試支付。',
+                        style: TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),
                         maxLines: 2,
                       ),
                       Text(
-                        I18n.canNotPullUpThePaymentOrderIsDueToPullUpTheOrderMorePeoplePleaseTryToPullUpThePaymentSeveralTimes,
-                        style: const TextStyle(
+                        '2：無法拉起支付訂單，是由於拉起訂單人數較多，請多次嘗試拉起支付。',
+                        style: TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),
                         maxLines: 2,
                       ),
                       Text(
-                        I18n.pleaseContactOurOnlineCustomerServiceIfTheRechargeIsSuccessfulButNotArrived,
-                        style: const TextStyle(
+                        '3：充值成功未到賬，請聯繫在線客服。',
+                        style: TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),

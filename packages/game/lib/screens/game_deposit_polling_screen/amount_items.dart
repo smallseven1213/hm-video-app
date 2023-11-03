@@ -4,8 +4,6 @@ import 'package:game/screens/game_deposit_polling_screen/show_payment_method.dar
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/loading.dart';
 
-import '../../localization/i18n.dart';
-
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 class AmountItems extends StatefulWidget {
@@ -62,9 +60,9 @@ class AmountItemsState extends State<AmountItems> {
                   ),
                 ),
                 const SizedBox(width: 4),
-                Text(
-                  I18n.pleaseSelectDepositAmount,
-                  style: const TextStyle(
+                const Text(
+                  "請選擇存款金額",
+                  style: TextStyle(
                     color: Color(0xff979797),
                     fontSize: 12,
                     fontWeight: FontWeight.w200,
@@ -118,7 +116,7 @@ class AmountItemsState extends State<AmountItems> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  '$e ${I18n.dollar}',
+                                  '$e 元',
                                   style: TextStyle(
                                     color: gamePrimaryButtonColor,
                                     fontSize: 16,

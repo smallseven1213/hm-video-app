@@ -14,8 +14,6 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 class GameWebviewToggleButtonWidget extends StatefulWidget {
@@ -166,9 +164,9 @@ class _GameWebviewToggleButtonWidget
                       height: 32,
                     ),
                     const SizedBox(height: 5),
-                    Text(
-                      I18n.close,
-                      style: const TextStyle(
+                    const Text(
+                      "關閉",
+                      style: TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),
