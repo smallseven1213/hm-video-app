@@ -19,8 +19,10 @@ class GameLocalizationsDelegate
   GameLocalizationsDelegate(this.localizedStringsMaps);
 
   @override
-  bool isSupported(Locale locale) =>
-      localizedStringsMaps.keys.contains(locale.toLanguageTag());
+  bool isSupported(Locale locale) {
+    var languageTag = locale.toLanguageTag();
+    return localizedStringsMaps.keys.contains(languageTag);
+  }
 
   @override
   Future<GameLocalizations> load(Locale locale) async {

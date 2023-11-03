@@ -1,4 +1,4 @@
-const Map<String, String> enStrings = {
+const Map<String, String> viVnStrings = {
   "game_lobby": "Sảnh chơi trò chơi",
   "register_login": "Đăng ký/Đăng nhập",
   "close": "Đóng",

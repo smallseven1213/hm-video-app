@@ -1,4 +1,4 @@
-const Map<String, String> enStrings = {
+const Map<String, String> enUsStrings = {
   "game_lobby": "Game Lobby",
   "register_login": "Register/Login",
   "close": "Close",
