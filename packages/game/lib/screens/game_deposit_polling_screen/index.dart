@@ -7,8 +7,6 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 class GameDepositPolling extends StatefulWidget {
   const GameDepositPolling({Key? key}) : super(key: key);
 
@@ -27,7 +25,7 @@ class GameDepositPollingState extends State<GameDepositPolling> {
           toolbarHeight: 48,
           centerTitle: true,
           title: Text(
-            I18n.deposit,
+            '存款',
             style: TextStyle(
               color: gameLobbyAppBarTextColor,
               fontSize: 18,
@@ -45,7 +43,7 @@ class GameDepositPollingState extends State<GameDepositPolling> {
                 MyRouteDelegate.of(context).push(GameAppRoutes.depositRecord);
               },
               child: Text(
-                I18n.depositHistory,
+                '存款記錄',
                 style: TextStyle(
                   color: gameLobbyAppBarTextColor,
                   fontSize: 14,

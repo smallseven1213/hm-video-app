@@ -69,7 +69,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
           showConfirmDialog(
             context: context,
             title: '',
-            content: I18n.youHaveBeenLoggedOutPleaseLogInAgain,
+            content: '你已被登出，請重新登入',
             onConfirm: () async {
               Navigator.pop(context);
               Navigator.pop(context);
@@ -171,7 +171,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                       label: I18n.transferAmount,
                       text: widget.payment == 'selfusdt'
                           ? '${gameWithdrawController.paymentAmount.value} USDT'
-                          : '¥${gameWithdrawController.paymentAmount.value} ${I18n.dollar}',
+                          : '¥${gameWithdrawController.paymentAmount.value}元',
                     ),
                     if (widget.payment == 'selfusdt')
                       GameLabel(
@@ -182,7 +182,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                       GameLabel(
                         label: I18n.estimatedAmount,
                         text:
-                            '¥${NumberFormat("0.00").format(estimateAmount)} ${I18n.dollar}',
+                            '¥${NumberFormat("0.00").format(estimateAmount)}元',
                       ),
                     const SizedBox(height: 12),
                     Container(height: 1, color: gameLobbyDividerColor),

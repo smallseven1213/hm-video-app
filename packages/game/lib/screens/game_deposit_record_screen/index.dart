@@ -8,8 +8,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 Map<int, String> auditDate = {
@@ -205,7 +203,7 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
         backgroundColor: gameLobbyBgColor,
         centerTitle: true,
         title: Text(
-          I18n.depositHistory,
+          '存款記錄',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,

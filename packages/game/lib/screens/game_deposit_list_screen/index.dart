@@ -13,8 +13,6 @@ import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 class GameDepositList extends StatefulWidget {
@@ -41,7 +39,7 @@ class GameDepositListState extends State<GameDepositList> {
         showConfirmDialog(
           context: context,
           title: '',
-          content: I18n.youHaveBeenLoggedOutPleaseLogInAgain,
+          content: '你已被登出，請重新登入',
           onConfirm: () async {
             Navigator.pop(context);
             Navigator.pop(context);
@@ -67,7 +65,7 @@ class GameDepositListState extends State<GameDepositList> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            I18n.deposit,
+            '存款',
             style: TextStyle(
               color: gameLobbyAppBarTextColor,
               fontSize: 18,
@@ -85,7 +83,7 @@ class GameDepositListState extends State<GameDepositList> {
                 MyRouteDelegate.of(context).push(GameAppRoutes.depositRecord);
               },
               child: Text(
-                I18n.depositHistory,
+                '存款記錄',
                 style: TextStyle(
                   color: gameLobbyAppBarTextColor,
                   fontSize: 14,

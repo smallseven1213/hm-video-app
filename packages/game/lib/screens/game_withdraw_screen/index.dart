@@ -238,7 +238,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
       if (value == null || value.isEmpty) {
         return '請輸入提現金額';
       } else if (double.parse(value) < double.parse(withdrawalLowerLimit)) {
-        return '輸入金額不得小於$withdrawalLowerLimit${I18n.dollar}';
+        return '輸入金額不得小於$withdrawalLowerLimit元';
       } else if (int.parse(value) > gameWalletController.wallet.value) {
         return '輸入金額不得大於餘額';
       }
@@ -365,7 +365,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                       FormBuilderValidators.min(
                                         double.parse(withdrawalLowerLimit),
                                         errorText:
-                                            '輸入金額不得小於$withdrawalLowerLimit${I18n.dollar}',
+                                            '輸入金額不得小於$withdrawalLowerLimit元',
                                       ),
                                       // 不得大於餘額
                                       FormBuilderValidators.max(

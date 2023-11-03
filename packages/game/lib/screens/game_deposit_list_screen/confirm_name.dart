@@ -157,7 +157,7 @@ class ConfirmNameState extends State<ConfirmName> {
                     FormBuilderValidators.required(
                         errorText: I18n.pleaseEnterYourRealName),
                     FormBuilderValidators.match(r"^[a-zA-Z\u4e00-\u9fa5]+$",
-                        errorText: I18n.wrongNameFormat),
+                        errorText: '姓名格式錯誤'),
                   ]),
                   enabled: isFetching != 'complete',
                 ),
@@ -166,12 +166,11 @@ class ConfirmNameState extends State<ConfirmName> {
                   alignment: Alignment.center,
                   child: Text(
                     enableSubmit && isFetching == 'start'
-                        ? I18n.getTheLinkToReload
+                        ? '取得充值連結...'
                         : submitDepositSuccess && isFetching == 'complete'
-                            ? I18n.theLinkWasSuccessful
+                            ? '充值連結取得成功！'
                             : !submitDepositSuccess && isFetching == 'complete'
-                                ? I18n
-                                    .failedToGetTheLinkToRechargePleaseChangeTheRechargeChannelOrContactCustomerService
+                                ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
                                 : '',
                     style: TextStyle(
                       fontSize: 14,
@@ -213,7 +212,7 @@ class ConfirmNameState extends State<ConfirmName> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GameButton(
-          text: submitDepositSuccess ? I18n.openTopUpPage : I18n.close,
+          text: submitDepositSuccess ? '開啟充值頁' : I18n.close,
           onPressed: () {
             if (submitDepositSuccess) {
               onLoading(context, status: false);
