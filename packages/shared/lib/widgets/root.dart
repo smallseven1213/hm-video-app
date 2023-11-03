@@ -2,6 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:game/localization/en.dart';
 import 'package:game/localization/game_localization_deletate.dart';
+import 'package:game/localization/vi.dart';
+import 'package:game/localization/zh.dart';
+import 'package:game/localization/zn.dart';
 import 'package:shared/models/color_keys.dart';
 import '../navigator/delegate.dart';
 import '../navigator/parser.dart';
@@ -54,11 +57,19 @@ class RootWidget extends StatelessWidget {
 
     return MaterialApp.router(
       localizationsDelegates: [
+        GameLocalizationsDelegate({
+          'en-US': enUsStrings,
+          'zh-TW': zhTwStrings,
+          'zh-CN': zhCnStrings,
+          'vi-VN': viVnStrings,
+          // 'ja-JP': jpStrings,
+        }),
         ...context.localizationDelegates,
-        GameLocalizationsDelegate(
-            Localizations.localeOf(context).languageCode == 'zh_TW'
-                ? enStrings
-                : enStrings),
+
+        // GameLocalizationsDelegate(
+        //     Localizations.localeOf(context).languageCode == 'zh_TW'
+        //         ? enStrings
+        //         : enStrings),
       ],
       supportedLocales: context.supportedLocales,
       locale: context.locale,

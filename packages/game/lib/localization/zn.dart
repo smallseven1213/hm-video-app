@@ -1,4 +1,4 @@
-const Map<String, String> enStrings = {
+const Map<String, String> zhCnStrings = {
   'gameLobby': '游戏大厅',
   'register_login': '注册/登入',
   'close': '关闭',

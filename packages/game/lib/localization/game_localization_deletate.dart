@@ -14,16 +14,21 @@ class GameLocalizations {
 
 class GameLocalizationsDelegate
     extends LocalizationsDelegate<GameLocalizations> {
-  final Map<String, String> localizedStrings;
+  final Map<String, Map<String, String>> localizedStringsMaps;
 
-  GameLocalizationsDelegate(this.localizedStrings);
+  GameLocalizationsDelegate(this.localizedStringsMaps);
 
   @override
-  bool isSupported(Locale locale) =>
-      ['en', 'zh', 'zn', 'vi'].contains(locale.languageCode);
+  bool isSupported(Locale locale) {
+    var languageTag = locale.toLanguageTag();
+    return localizedStringsMaps.keys.contains(languageTag);
+  }
 
   @override
   Future<GameLocalizations> load(Locale locale) async {
+    // Load the localized strings from the maps provided
+    Map<String, String> localizedStrings =
+        localizedStringsMaps[locale.toLanguageTag()] ?? {};
     return GameLocalizations(localizedStrings);
   }
 

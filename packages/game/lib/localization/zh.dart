@@ -1,5 +1,5 @@
-const Map<String, String> enStrings = {
-  'gameLobby': '遊戲大廳',
+const Map<String, String> zhTwStrings = {
+  'game_lobby': '遊戲大廳',
   'register_login': '註冊/登入',
   'close': '關閉',
   'open': '開啟',
