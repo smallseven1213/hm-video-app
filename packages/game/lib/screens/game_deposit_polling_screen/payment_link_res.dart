@@ -7,6 +7,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 
 class PaymentLinkRes extends StatefulWidget {
@@ -67,6 +69,8 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       height: 180,
       child: Column(
@@ -126,7 +130,9 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                     Navigator.of(context).pop(),
                   },
                   child: Text(
-                    canOpenPayment ? '取消' : '關閉',
+                    canOpenPayment
+                        ? localizations.translate('cancel')
+                        : localizations.translate('open'),
                     style: TextStyle(
                       color: canOpenPayment
                           ? gameLobbyButtonDisableTextColor
@@ -155,7 +161,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                           .push(GameAppRoutes.paymentResult),
                     },
                     child: Text(
-                      '開啟',
+                      localizations.translate('register_login'),
                       style: TextStyle(
                           color: gamePrimaryButtonTextColor, fontSize: 16),
                     ),

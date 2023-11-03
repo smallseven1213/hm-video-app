@@ -27,6 +27,7 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
+import '../../localization/game_localization_deletate.dart';
 
 final logger = Logger();
 
@@ -147,7 +148,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
           context: context,
           title: "",
           content: "餘額自動轉出遊戲失敗",
-          confirmText: "確認",
+          confirmText: GameLocalizations.of(context)!.translate('confirm'),
           onConfirm: () {
             Navigator.pop(context);
           },
@@ -206,7 +207,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
               context: context,
               title: "申請完成",
               content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
-              confirmText: "確認",
+              confirmText: GameLocalizations.of(context)!.translate('confirm'),
               onConfirm: () {
                 setState(() {
                   _enableSubmit = false;

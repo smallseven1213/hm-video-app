@@ -14,6 +14,8 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 
 class GameWebviewToggleButtonWidget extends StatefulWidget {
@@ -40,6 +42,8 @@ class _GameWebviewToggleButtonWidget
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return PointerInterceptor(
       child: RotatedBox(
         quarterTurns: !GetPlatform.isWeb
@@ -164,9 +168,9 @@ class _GameWebviewToggleButtonWidget
                       height: 32,
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      "關閉",
-                      style: TextStyle(
+                    Text(
+                      localizations.translate('close'),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),

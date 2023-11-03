@@ -104,7 +104,6 @@ class _GameLobbyState extends State<GameLobby>
         ? const GameMaintenance()
         : Scaffold(
             appBar: AppBar(
-              leading: Container(),
               backgroundColor: gameLobbyBgColor,
               centerTitle: true,
               title: Text(
@@ -143,7 +142,7 @@ class _GameLobbyState extends State<GameLobby>
                             ),
                             child: Center(
                               child: Text(
-                                '註冊/登入',
+                                localizations.translate('register_login'),
                                 style: TextStyle(
                                   color: gamePrimaryButtonTextColor,
                                   fontSize: 14,

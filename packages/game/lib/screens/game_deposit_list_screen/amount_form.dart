@@ -13,6 +13,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 
 class AmountForm extends StatefulWidget {
@@ -58,6 +60,8 @@ class _AmountFormState extends State<AmountForm> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     // 放入一個Row,有一個input跟一個確認按鈕
     // input有validator,確認按鈕有onPressed和disabledColor
     // input的max和min根據_channels[_channelActiveIndex]['maxAmount']和_channels[_channelActiveIndex]['minAmount']來做驗證，並且只能輸入數字
@@ -224,7 +228,7 @@ class _AmountFormState extends State<AmountForm> {
                 width: 70,
                 height: 40,
                 child: GameButton(
-                  text: "確認",
+                  text: localizations.translate('confirm'),
                   onPressed: () => handleAmount(),
                   disabled: !_enableSubmit,
                 ),

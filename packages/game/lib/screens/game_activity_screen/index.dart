@@ -12,6 +12,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/widgets/button.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
@@ -73,8 +75,9 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText:
-              res['status'] == activityButtonStatus['ENABLE'] ? '關閉' : '確認',
+          confirmText: res['status'] == activityButtonStatus['ENABLE']
+              ? GameLocalizations.of(context)!.translate('close')
+              : GameLocalizations.of(context)!.translate('confirm'),
           onConfirm: () => {
             if (res['status'] != activityButtonStatus['ENABLE'])
               setState(() => buttonDisable = true),
@@ -105,7 +108,7 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText: '確認',
+          confirmText: GameLocalizations.of(context)!.translate('confirm'),
           onConfirm: () => {
             Navigator.pop(context),
           },
@@ -118,6 +121,8 @@ class _GameActivityState extends State<GameActivity> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
@@ -126,7 +131,7 @@ class _GameActivityState extends State<GameActivity> {
         ),
         centerTitle: true,
         title: Text(
-          '熱門活動',
+          localizations.translate('hot_events'),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,

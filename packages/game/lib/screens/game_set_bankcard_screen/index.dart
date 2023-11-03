@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 
 class GameSetBankCard extends StatefulWidget {
@@ -170,6 +172,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
@@ -311,7 +315,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                         ),
                         const SizedBox(height: 44),
                         GameButton(
-                          text: '確認',
+                          text: localizations.translate('confirm'),
                           onPressed: () => _onSubmit(),
                           disabled: _legalNameEnable == false ||
                               _bankNameEnable.value == false ||

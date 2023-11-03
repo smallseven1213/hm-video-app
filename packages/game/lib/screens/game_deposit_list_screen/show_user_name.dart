@@ -5,6 +5,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:logger/logger.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 
 void showUserName(
@@ -12,6 +14,8 @@ void showUserName(
   required Function(String userName) onSuccess,
   Function()? onClose,
 }) {
+  final GameLocalizations localizations = GameLocalizations.of(context)!;
+
   final userNameController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
 
@@ -28,7 +32,7 @@ void showUserName(
         onChanged: (val) => logger.i(val.toString()),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(
-            errorText: '請輸入真實姓名',
+            errorText: localizations.translate('please_enter_your_real_name'),
           ),
           FormBuilderValidators.minLength(2, errorText: '請填寫正確姓名'),
           FormBuilderValidators.maxLength(6, errorText: '請填寫正確姓名'),

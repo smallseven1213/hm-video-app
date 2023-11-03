@@ -3,6 +3,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+import '../../localization/game_localization_deletate.dart';
 import '../../widgets/game_startup.dart';
 
 final logger = Logger();
@@ -68,7 +69,9 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                       borderRadius: BorderRadius.circular(4.0),
                       color: gameLobbyPrimaryTextColor,
                     ),
-                    child: const Text('確認'),
+                    child: Text(
+                      GameLocalizations.of(context)!.translate('confirm'),
+                    ),
                   ),
                 ),
               ],
@@ -81,6 +84,8 @@ class GamePaymentResultState extends State<GamePaymentResult> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       backgroundColor: gameLobbyBgColor,
       appBar: AppBar(
@@ -132,7 +137,7 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                       color: gamePrimaryButtonColor,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    child: Text('遊戲大廳',
+                    child: Text(localizations.translate('game_lobby'),
                         style: TextStyle(color: gamePrimaryButtonTextColor)),
                   ),
                 ),

@@ -17,6 +17,8 @@ import 'package:game/utils/on_loading.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 
 class ConfirmPin extends StatefulWidget {
@@ -238,7 +240,9 @@ class ConfirmPinState extends State<ConfirmPin> {
             padding: const EdgeInsets.only(top: 10),
             width: 90,
             child: GameButton(
-              text: submitDepositSuccess ? '開啟充值頁' : '關閉',
+              text: submitDepositSuccess
+                  ? '開啟充值頁'
+                  : GameLocalizations.of(context)!.translate('close'),
               onPressed: () {
                 if (submitDepositSuccess) {
                   onLoading(context, status: false);

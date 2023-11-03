@@ -11,6 +11,8 @@ import 'package:game/screens/game_deposit_polling_screen/payment_method_item.dar
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/utils/show_model.dart';
 
+import '../../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
@@ -36,7 +38,7 @@ Future<void> showPaymentMethod({
           ),
         ),
       ),
-      confirmText: '確認',
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

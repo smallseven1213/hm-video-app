@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/game_localization_deletate.dart';
+
 final logger = Logger();
 
 submitCompanyDepositOrder(
@@ -44,7 +46,7 @@ submitCompanyDepositOrder(
             ),
           ),
         ),
-        confirmText: '確認',
+        confirmText: GameLocalizations.of(context)!.translate('confirm'),
         onConfirm: () => {
           Navigator.pop(context),
           Navigator.pop(context),
@@ -62,7 +64,7 @@ submitCompanyDepositOrder(
           style: TextStyle(color: gameLobbyPrimaryTextColor),
         ),
       ),
-      confirmText: '確認',
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

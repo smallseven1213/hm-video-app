@@ -8,6 +8,7 @@ import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
 
 import '../enums/game_app_routes.dart';
+import '../localization/game_localization_deletate.dart';
 
 String gameUrl = '';
 
@@ -57,7 +58,7 @@ void handleGameItem(BuildContext context,
         context: context,
         title: '遊戲維護中',
         content: '遊戲維護中，請稍後再試',
-        confirmText: '確認',
+        confirmText: GameLocalizations.of(context)!.translate('confirm'),
         onConfirm: () {
           Navigator.pop(context);
         },
@@ -81,7 +82,7 @@ void handleGameItem(BuildContext context,
       context: context,
       title: '遊戲維護中',
       content: '遊戲維護中，請稍後再試',
-      confirmText: '確認',
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
       onConfirm: () {
         Navigator.pop(context);
       },
