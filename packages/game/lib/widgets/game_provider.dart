@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 
-import '../localization/i18n.dart';
-
 class GameProvider extends StatelessWidget {
   final Widget child;
 
