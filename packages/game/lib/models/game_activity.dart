@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 
-import '../../localization/i18n.dart';
-
 class ActivityItem {
   ActivityItem({
     required this.id,
@@ -65,7 +63,7 @@ Map<int, String> activityResStatus = {
   1: '已申請',
   2: '審核中',
   3: '已發放',
-  4: I18n.failed,
+  4: '申請失敗',
 };
 
 Map<String, int> activityButtonStatus = {'ENABLE': 0};

@@ -36,12 +36,12 @@ submitCompanyDepositOrder(
       onLoading(context, status: false);
       showFormDialog(
         context,
-        title: I18n.transactionFailed,
+        title: '交易失敗',
         content: SizedBox(
           height: 24,
           child: Center(
             child: Text(
-              I18n.orderCreationFailedPleaseContactOurCustomerService,
+              '訂單建立失敗，請聯繫客服',
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
@@ -57,10 +57,10 @@ submitCompanyDepositOrder(
     onLoading(context, status: false);
     showFormDialog(
       context,
-      title: I18n.transactionFailed,
+      title: '交易失敗',
       content: Center(
         child: Text(
-          I18n.orderCreationFailedPleaseContactOurCustomerService,
+          '訂單建立失敗，請聯繫客服',
           style: TextStyle(color: gameLobbyPrimaryTextColor),
         ),
       ),

@@ -87,7 +87,7 @@ class _GameActivityState extends State<GameActivity> {
       } else {
         showFormDialog(
           context,
-          title: I18n.failed,
+          title: '申請失敗',
           content: SizedBox(
             height: 85,
             child: Column(

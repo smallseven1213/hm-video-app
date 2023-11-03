@@ -22,7 +22,7 @@ class Tips extends StatelessWidget {
           SizedBox(
             height: 8,
           ),
-          Text(
+          const Text(
             '1：支付不成功，請多次嘗試支付。',
             style: TextStyle(
               fontSize: 12,
@@ -33,7 +33,7 @@ class Tips extends StatelessWidget {
           SizedBox(
             height: 3,
           ),
-          Text(
+          const Text(
             '2：無法拉起支付訂單，是由於拉起訂單人數較多，請多次嘗試拉起支付。',
             style: TextStyle(
               fontSize: 12,
@@ -44,7 +44,7 @@ class Tips extends StatelessWidget {
           SizedBox(
             height: 3,
           ),
-          Text(
+          const Text(
             '3：充值成功未到賬，請聯繫在線客服。',
             style: TextStyle(
               fontSize: 12,

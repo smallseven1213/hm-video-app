@@ -7,20 +7,18 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
-import '../../localization/i18n.dart';
-
-Map<int, String> remittanceType = {
+const remittanceType = {
   1: '銀行卡',
   2: 'USDT',
 };
 
-Map<int, String> status = {
+const status = {
   1: '審核中',
   2: '出款失敗',
-  3: I18n.completed,
+  3: '已完成',
 };
 
-Map<int, String> auditDate = {
+const auditDate = {
   1: '今天',
   2: '昨天',
   3: '近七天',
@@ -58,9 +56,7 @@ class StatusLabel extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: status[type] == I18n.completed
-              ? withdrawalSuccess
-              : withdrawalFelid,
+          color: status[type] == '已完成' ? withdrawalSuccess : withdrawalFelid,
         ),
         borderRadius: BorderRadius.circular(15),
       ),
@@ -68,7 +64,7 @@ class StatusLabel extends StatelessWidget {
         child: Text(
           status[type] ?? '',
           style: TextStyle(
-            color: status[type] == I18n.completed
+            color: status[type] == '已完成'
                 ? withdrawalSuccess
                 : status[type] == '出款失敗'
                     ? withdrawalFelid
@@ -249,18 +245,18 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                             name: 'status',
                             value: value,
                           ),
-                          items: [
-                            const {
+                          items: const [
+                            {
                               'value': 1,
                               'label': '審核中',
                             },
-                            const {
+                            {
                               'value': 2,
                               'label': '出款失敗',
                             },
                             {
                               'value': 3,
-                              'label': I18n.completed,
+                              'label': '已完成',
                             }
                           ],
                         ),

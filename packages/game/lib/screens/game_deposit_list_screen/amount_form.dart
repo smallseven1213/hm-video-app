@@ -78,7 +78,7 @@ class _AmountFormState extends State<AmountForm> {
           logger.i('銀行卡');
           showModel(
             context,
-            title: I18n.orderConfirmation,
+            title: '訂單確認',
             content: ConfirmName(
               amount: widget.controller.text,
               paymentChannelId: widget.paymentChannelId,
@@ -104,7 +104,7 @@ class _AmountFormState extends State<AmountForm> {
         } else {
           showModel(
             context,
-            title: I18n.orderConfirmation,
+            title: '訂單確認',
             content: ConfirmPin(
               amount: widget.controller.text,
               paymentChannelId: widget.paymentChannelId,
