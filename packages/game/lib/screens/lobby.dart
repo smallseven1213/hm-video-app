@@ -109,7 +109,7 @@ class _GameLobbyState extends State<GameLobby>
               backgroundColor: gameLobbyBgColor,
               centerTitle: true,
               title: Text(
-                localizations!.translate('hello'),
+                localizations!.translate('game_lobby'),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

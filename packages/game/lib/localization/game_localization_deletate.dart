@@ -19,7 +19,8 @@ class GameLocalizationsDelegate
   GameLocalizationsDelegate(this.localizedStrings);
 
   @override
-  bool isSupported(Locale locale) => ['en', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) =>
+      ['en', 'zh', 'zn', 'vi'].contains(locale.languageCode);
 
   @override
   Future<GameLocalizations> load(Locale locale) async {
