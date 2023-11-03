@@ -96,7 +96,7 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
-    GameLocalizations? localizations = GameLocalizations.of(context);
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
     final gameBannerController = Get.find<GameBannerController>();
     final gamesListController = Get.find<GamesListController>();
 
@@ -108,7 +108,7 @@ class _GameLobbyState extends State<GameLobby>
               backgroundColor: gameLobbyBgColor,
               centerTitle: true,
               title: Text(
-                localizations!.translate('game_lobby'),
+                localizations.translate('game_lobby'),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

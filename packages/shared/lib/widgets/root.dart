@@ -55,10 +55,20 @@ class RootWidget extends StatelessWidget {
     return MaterialApp.router(
       localizationsDelegates: [
         ...context.localizationDelegates,
-        GameLocalizationsDelegate(
-            Localizations.localeOf(context).languageCode == 'zh_TW'
-                ? enStrings
-                : enStrings),
+        GameLocalizationsDelegate({
+          'en_US': enStrings,
+          'zh_TW': enStrings,
+          'zn_CN': enStrings,
+          'vi_VN': enStrings,
+          'ja_JP': enStrings,
+        }),
+        // GameLocalizationsDelegate(
+        //     Localizations.localeOf(context).languageCode == 'zh_TW'
+        //         ? enStrings
+        //         : enStrings),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: context.supportedLocales,
       locale: context.locale,
