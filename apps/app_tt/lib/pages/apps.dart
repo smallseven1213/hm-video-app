@@ -8,7 +8,7 @@ import '../screens/apps_screen/hot.dart';
 import '../screens/apps_screen/popular.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/title_header.dart';
-import '../widgets/wave_loading.dart';
+import '../widgets/loading_animation.dart';
 
 class AppsPage extends StatelessWidget {
   const AppsPage({Key? key}) : super(key: key);
@@ -34,10 +34,10 @@ class AppsPage extends StatelessWidget {
                       ),
                     ),
                     if (isLoading)
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.only(top: 150),
-                          child: WaveLoading(),
+                          padding: const EdgeInsets.only(top: 150),
+                          child: LoadingAnimation(),
                         ),
                       )
                     else ...[

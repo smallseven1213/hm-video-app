@@ -7,7 +7,7 @@ import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
-import 'wave_loading.dart';
+import 'loading_animation.dart';
 
 class BaseShortPage extends StatelessWidget {
   final Function() createController;
@@ -44,14 +44,7 @@ class BaseShortPage extends StatelessWidget {
         videoId: videoId,
         itemId: itemId,
         onScrollBeyondFirst: onScrollBeyondFirst,
-        loadingWidget: const Center(
-          child: WaveLoading(
-            color: Color.fromRGBO(255, 255, 255, 0.3),
-            duration: Duration(milliseconds: 1000),
-            size: 17,
-            itemCount: 3,
-          ),
-        ),
+        loadingWidget: Center(child: LoadingAnimation()),
         shortCardBuilder: ({
           required int index,
           required bool isActive,

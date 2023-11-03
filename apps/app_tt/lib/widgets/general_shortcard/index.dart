@@ -8,7 +8,7 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../short/side_info.dart';
 import '../shortcard/index.dart';
-import '../wave_loading.dart';
+import '../loading_animation.dart';
 import 'short_card_info.dart';
 
 class GeneralShortCard extends StatefulWidget {
@@ -59,7 +59,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
   Widget build(BuildContext context) {
     print('GeneralShortCard build');
     if (widget.videoUrl.isEmpty) {
-      return const WaveLoading();
+      return LoadingAnimation();
     }
     return Container(
       color: Colors.black,
@@ -80,7 +80,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: const WaveLoading(),
+            loadingWidget: Center(child: LoadingAnimation()),
             child: (isReady) => ShortCard(
               key: Key(widget.tag),
               index: widget.index,

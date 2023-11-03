@@ -5,7 +5,7 @@ import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.d
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/popular_search_title_builder.dart';
 
-import '../../widgets/wave_loading.dart';
+import '../../widgets/loading_animation.dart';
 import 'channel_search_bar.dart';
 import 'channels.dart';
 import 'layout_tab_bar.dart';
@@ -22,14 +22,9 @@ class LayoutHomeScreen extends StatelessWidget {
           layoutId: layoutId,
           child: (isLoading) {
             if (isLoading) {
-              return const Scaffold(
+              return Scaffold(
                 body: Center(
-                  child: WaveLoading(
-                    color: Color.fromRGBO(255, 255, 255, 0.3),
-                    duration: Duration(milliseconds: 1000),
-                    size: 17,
-                    itemCount: 3,
-                  ),
+                  child: LoadingAnimation(),
                 ),
               );
             }

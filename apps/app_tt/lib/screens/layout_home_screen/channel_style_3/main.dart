@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
 import '../../../widgets/tt_tab_bar.dart';
-import '../../../widgets/wave_loading.dart';
+import '../../../widgets/loading_animation.dart';
 import '../channel_banners.dart';
 import '../channel_jingang_area.dart';
 import '../channel_jingang_area_title.dart';
@@ -91,9 +91,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
         final channelSharedData =
             channelSharedDataController!.channelSharedData.value;
         if (channelSharedDataController!.isLoading.value) {
-          return const Center(
-            child: WaveLoading(),
-          );
+          return Center(child: LoadingAnimation());
         } else if (channelSharedDataController!.isError.value) {
           return Center(
             child: ReloadButton(
