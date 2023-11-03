@@ -11,8 +11,6 @@ import 'package:game/screens/game_deposit_polling_screen/payment_method_item.dar
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/utils/show_model.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
@@ -38,7 +36,7 @@ Future<void> showPaymentMethod({
           ),
         ),
       ),
-      confirmText: I18n.confirm,
+      confirmText: '確認',
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

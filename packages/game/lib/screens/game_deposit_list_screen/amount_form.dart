@@ -13,8 +13,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 class AmountForm extends StatefulWidget {
@@ -226,7 +224,7 @@ class _AmountFormState extends State<AmountForm> {
                 width: 70,
                 height: 40,
                 child: GameButton(
-                  text: I18n.confirm,
+                  text: "確認",
                   onPressed: () => handleAmount(),
                   disabled: !_enableSubmit,
                 ),

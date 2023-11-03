@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../../widgets/game_startup.dart';
-import '../../localization/i18n.dart';
 
 final logger = Logger();
 
@@ -69,7 +68,7 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                       borderRadius: BorderRadius.circular(4.0),
                       color: gameLobbyPrimaryTextColor,
                     ),
-                    child: Text(I18n.confirm),
+                    child: const Text('確認'),
                   ),
                 ),
               ],
@@ -133,7 +132,7 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                       color: gamePrimaryButtonColor,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    child: Text(I18n.gameLobby,
+                    child: Text('遊戲大廳',
                         style: TextStyle(color: gamePrimaryButtonTextColor)),
                   ),
                 ),

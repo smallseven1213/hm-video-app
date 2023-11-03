@@ -144,7 +144,7 @@ class _GameLobbyState extends State<GameLobby>
                             ),
                             child: Center(
                               child: Text(
-                                I18n.registerLogin,
+                                '註冊/登入',
                                 style: TextStyle(
                                   color: gamePrimaryButtonTextColor,
                                   fontSize: 14,

@@ -12,7 +12,6 @@ import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
 import '../../models/user_withdrawal_data.dart';
-import '../../localization/i18n.dart';
 
 final logger = Logger();
 
@@ -130,7 +129,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             widget.bankData.account != null &&
             widget.reachable)
           GameButton(
-            text: I18n.confirm,
+            text: "確認",
             onPressed: () {
               widget.onConfirm(Type.bankcard);
             },
@@ -177,7 +176,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                 title: "提現確認",
                 content:
                     "未達成流水限額\n需自行負擔提現手續費 ${(int.parse(widget.applyAmount) * double.parse(widget.withdrawalFee)).toStringAsFixed(2).replaceAll(RegExp(r'\.?0*$'), '')} 元(預估)\n點擊確認送出提現訂單",
-                confirmText: I18n.confirm,
+                confirmText: "確認",
                 onConfirm: () {
                   Navigator.of(context).pop();
                   widget.onConfirm(Type.bankcard);

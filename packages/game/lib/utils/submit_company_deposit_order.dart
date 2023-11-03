@@ -10,8 +10,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/i18n.dart';
-
 final logger = Logger();
 
 submitCompanyDepositOrder(
@@ -46,7 +44,7 @@ submitCompanyDepositOrder(
             ),
           ),
         ),
-        confirmText: I18n.confirm,
+        confirmText: '確認',
         onConfirm: () => {
           Navigator.pop(context),
           Navigator.pop(context),
@@ -64,7 +62,7 @@ submitCompanyDepositOrder(
           style: TextStyle(color: gameLobbyPrimaryTextColor),
         ),
       ),
-      confirmText: I18n.confirm,
+      confirmText: '確認',
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

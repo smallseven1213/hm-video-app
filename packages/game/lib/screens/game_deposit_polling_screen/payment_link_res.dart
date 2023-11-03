@@ -6,7 +6,6 @@ import 'package:game/utils/on_loading.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../localization/i18n.dart';
 
 final logger = Logger();
 
@@ -127,7 +126,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                     Navigator.of(context).pop(),
                   },
                   child: Text(
-                    canOpenPayment ? I18n.cancel : I18n.close,
+                    canOpenPayment ? '取消' : '關閉',
                     style: TextStyle(
                       color: canOpenPayment
                           ? gameLobbyButtonDisableTextColor
@@ -156,7 +155,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                           .push(GameAppRoutes.paymentResult),
                     },
                     child: Text(
-                      I18n.open,
+                      '開啟',
                       style: TextStyle(
                           color: gamePrimaryButtonTextColor, fontSize: 16),
                     ),
