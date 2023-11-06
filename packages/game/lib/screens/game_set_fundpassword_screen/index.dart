@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 

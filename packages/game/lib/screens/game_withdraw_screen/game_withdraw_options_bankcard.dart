@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_field.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 import '../../models/user_withdrawal_data.dart';
 
 class GameWithDrawOptionsBankCard extends StatelessWidget {
@@ -36,15 +36,15 @@ class GameWithDrawOptionsBankCard extends StatelessWidget {
           Column(
             children: [
               GameWithDrawField(
-                name: "銀行名稱",
+                name: localizations.translate('bank_name'),
                 value: data.bankName ?? '',
               ),
               GameWithDrawField(
-                name: "支行名稱",
+                name: localizations.translate('branch_name'),
                 value: data.branchName ?? '',
               ),
               GameWithDrawField(
-                name: "帳戶姓名",
+                name: localizations.translate('account_name'),
                 value: data.legalName ?? '',
               ),
               GameWithDrawField(

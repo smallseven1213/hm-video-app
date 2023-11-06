@@ -8,27 +8,9 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:logger/logger.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
-
-const auditDate = {
-  1: '今天',
-  2: '昨天',
-  3: '近七天',
-  4: '近三十天',
-};
-
-const conditionOrderType = {
-  1: '確認中',
-  2: '已完成',
-  3: '失敗',
-};
-
-const orderType = {
-  1: '確認中',
-  2: '已完成',
-  4: '失敗',
-  5: '失敗',
-};
 
 DateTime now = DateTime.now();
 DateTime midnight = DateTime(now.year, now.month, now.day).toUtc();
@@ -52,6 +34,12 @@ class StatusLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+    Map<int, String> conditionOrderType = {
+      1: '確認中',
+      2: localizations.translate('completed'),
+      3: '失敗',
+    };
     if (type == 0) return const SizedBox();
     return Container(
       height: 28,
@@ -59,9 +47,10 @@ class StatusLabel extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
-          color: conditionOrderType[type] == '已完成'
-              ? withdrawalSuccess
-              : withdrawalFelid,
+          color:
+              conditionOrderType[type] == localizations.translate('completed')
+                  ? withdrawalSuccess
+                  : withdrawalFelid,
         ),
         borderRadius: BorderRadius.circular(15),
       ),
@@ -69,11 +58,12 @@ class StatusLabel extends StatelessWidget {
         child: Text(
           conditionOrderType[type] ?? '',
           style: TextStyle(
-            color: conditionOrderType[type] == '已完成'
-                ? withdrawalSuccess
-                : conditionOrderType[type] == '失敗'
-                    ? withdrawalFelid
-                    : withdrawalSuccess,
+            color:
+                conditionOrderType[type] == localizations.translate('completed')
+                    ? withdrawalSuccess
+                    : conditionOrderType[type] == '失敗'
+                        ? withdrawalFelid
+                        : withdrawalSuccess,
           ),
         ),
       ),
@@ -198,12 +188,21 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
+    Map<int, String> orderType = {
+      1: '確認中',
+      2: localizations.translate('completed'),
+      4: '失敗',
+      5: '失敗',
+    };
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
         centerTitle: true,
         title: Text(
-          '存款記錄',
+          localizations.translate('deposit_history'),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -240,16 +239,16 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                             name: 'paymentStatus',
                             value: value,
                           ),
-                          items: const [
-                            {
+                          items: [
+                            const {
                               'value': 1,
                               'label': '確認中',
                             },
                             {
                               'value': 2,
-                              'label': '已完成',
+                              'label': localizations.translate('completed'),
                             },
-                            {
+                            const {
                               'value': 3,
                               'label': '失敗',
                             }
@@ -375,7 +374,9 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                                 style: TextStyle(
                                   color: orderType[item.paymentStatus] == '確認中'
                                       ? withdrawalSuccess
-                                      : orderType[item.paymentStatus] == '已完成'
+                                      : orderType[item.paymentStatus] ==
+                                              localizations
+                                                  .translate('completed')
                                           ? modalDropDownActive
                                           : gameLobbyButtonDisableTextColor,
                                   fontSize: 14,

@@ -14,7 +14,7 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 

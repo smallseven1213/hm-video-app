@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:game/localization/en.dart';
-import 'package:game/localization/game_localization_deletate.dart';
+import 'package:game/localization/game_localization_delegate.dart';
 import 'package:game/localization/vi.dart';
 import 'package:game/localization/zh.dart';
 import 'package:game/localization/zn.dart';

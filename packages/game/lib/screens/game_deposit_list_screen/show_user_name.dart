@@ -5,7 +5,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:logger/logger.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -21,7 +21,8 @@ void showUserName(
 
   showFormDialog(
     context,
-    title: '輸入真實姓名',
+    title:
+        GameLocalizations.of(context)!.translate('please_enter_your_real_name'),
     content: FormBuilder(
       key: formKey,
       onChanged: () {
@@ -47,7 +48,8 @@ void showUserName(
               fontSize: 14,
             ),
             decoration: InputDecoration(
-              hintText: '請填寫真實姓名',
+              hintText: GameLocalizations.of(context)!
+                  .translate('please_enter_your_real_name'),
               errorText: field.errorText,
               hintStyle: TextStyle(
                 color: gameLobbyPrimaryTextColor,

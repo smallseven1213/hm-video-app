@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 class UserInfoDeposit extends StatefulWidget {
   const UserInfoDeposit({Key? key, required this.onTap}) : super(key: key);
   final VoidCallback onTap;
@@ -17,6 +19,7 @@ class _UserInfoDeposit extends State<UserInfoDeposit> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
     return SizedBox(
       width: 30,
       height: 60,
@@ -31,7 +34,7 @@ class _UserInfoDeposit extends State<UserInfoDeposit> {
               height: 28,
             ),
             Text(
-              '存款',
+              localizations.translate('deposit'),
               style: TextStyle(
                 color: gameLobbyPrimaryTextColor,
                 fontSize: 12,

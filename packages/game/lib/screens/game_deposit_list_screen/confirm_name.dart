@@ -13,7 +13,7 @@ import 'package:game/widgets/button.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -103,7 +103,7 @@ class ConfirmNameState extends State<ConfirmName> {
           ),
         ),
         Text(
-          '存款金額：${widget.amount}',
+          '${localizations.translate('deposit_amount')}：${widget.amount}',
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -162,7 +162,8 @@ class ConfirmNameState extends State<ConfirmName> {
                           .translate('please_enter_your_real_name'),
                     ),
                     FormBuilderValidators.match(r"^[a-zA-Z\u4e00-\u9fa5]+$",
-                        errorText: '姓名格式錯誤'),
+                        errorText: GameLocalizations.of(context)!
+                            .translate('wrong_name_format')),
                   ]),
                   enabled: isFetching != 'complete',
                 ),
@@ -171,11 +172,12 @@ class ConfirmNameState extends State<ConfirmName> {
                   alignment: Alignment.center,
                   child: Text(
                     enableSubmit && isFetching == 'start'
-                        ? '取得充值連結...'
+                        ? localizations.translate('get_the_link_to_reload')
                         : submitDepositSuccess && isFetching == 'complete'
-                            ? '充值連結取得成功！'
+                            ? localizations.translate('the_link_was_successful')
                             : !submitDepositSuccess && isFetching == 'complete'
-                                ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
+                                ? localizations.translate(
+                                    'failed_to_get_the_link_to_recharge_please_change_the_recharge_channel_or_contact_customer_service')
                                 : '',
                     style: TextStyle(
                       fontSize: 14,
@@ -218,7 +220,7 @@ class ConfirmNameState extends State<ConfirmName> {
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GameButton(
           text: submitDepositSuccess
-              ? '開啟充值頁'
+              ? GameLocalizations.of(context)!.translate('open_top_up_page')
               : GameLocalizations.of(context)!.translate('close'),
           onPressed: () {
             if (submitDepositSuccess) {

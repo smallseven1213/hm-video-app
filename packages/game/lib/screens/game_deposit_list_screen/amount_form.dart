@@ -13,7 +13,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -80,7 +80,8 @@ class _AmountFormState extends State<AmountForm> {
           logger.i('銀行卡');
           showModel(
             context,
-            title: '訂單確認',
+            title:
+                GameLocalizations.of(context)!.translate('order_confirmation'),
             content: ConfirmName(
               amount: widget.controller.text,
               paymentChannelId: widget.paymentChannelId,
@@ -106,7 +107,8 @@ class _AmountFormState extends State<AmountForm> {
         } else {
           showModel(
             context,
-            title: '訂單確認',
+            title:
+                GameLocalizations.of(context)!.translate('order_confirmation'),
             content: ConfirmPin(
               amount: widget.controller.text,
               paymentChannelId: widget.paymentChannelId,

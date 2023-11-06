@@ -31,7 +31,7 @@ import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 
 import '../enums/game_app_routes.dart';
-import '../localization/game_localization_deletate.dart';
+import '../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 

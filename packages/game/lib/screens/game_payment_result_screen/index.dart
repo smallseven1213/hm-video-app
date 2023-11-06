@@ -3,7 +3,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 import '../../widgets/game_startup.dart';
 
 final logger = Logger();
@@ -152,11 +152,11 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                     left: 16,
                     right: 16,
                   ),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         '溫馨提醒',
                         // color is 979797
                         style: TextStyle(
@@ -165,28 +165,31 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                           color: Color(0xff979797),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 8,
                       ),
                       Text(
-                        '1：支付不成功，請多次嘗試支付。',
-                        style: TextStyle(
+                        localizations.translate(
+                            'payment_was_not_successful_please_try_to_pay_several_times'),
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),
                         maxLines: 2,
                       ),
                       Text(
-                        '2：無法拉起支付訂單，是由於拉起訂單人數較多，請多次嘗試拉起支付。',
-                        style: TextStyle(
+                        localizations.translate(
+                            'can_not_pull_up_the_payment_order_is_due_to_pull_up_the_order_more_people_please_try_to_pull_up_the_payment_several_times'),
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),
                         maxLines: 2,
                       ),
                       Text(
-                        '3：充值成功未到賬，請聯繫在線客服。',
-                        style: TextStyle(
+                        localizations.translate(
+                            'please_contact_our_online_customer_service_if_the_recharge_is_successful_but_not_arrived'),
+                        style: const TextStyle(
                           fontSize: 12,
                           color: Color(0xff979797),
                         ),

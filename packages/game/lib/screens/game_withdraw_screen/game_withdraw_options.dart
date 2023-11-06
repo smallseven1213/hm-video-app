@@ -11,7 +11,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 import '../../models/user_withdrawal_data.dart';
 
 final logger = Logger();

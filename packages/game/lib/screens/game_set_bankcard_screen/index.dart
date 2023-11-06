@@ -16,7 +16,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -162,7 +162,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
   void _validateLegalName(String? value) {
     if (value!.isEmpty) {
-      _legalNameError = '請輸入您的真實姓名';
+      _legalNameError = GameLocalizations.of(context)!
+          .translate('please_enter_your_real_name');
     } else if (value.isNotEmpty) {
       logger.i('value.isNotEmpty');
       _legalNameError = null;
@@ -239,7 +240,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return AutoComplete(
-                              label: '銀行名稱',
+                              label: localizations.translate('bank_name'),
                               hint: '請輸入銀行名稱',
                               controller: bankNameController,
                               listContent: bankList,
@@ -261,7 +262,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: '支行名稱',
+                              label: localizations.translate('branch_name'),
                               hint: '請輸入支行名稱(選填)',
                               controller: branchNameController,
                               onChanged: (val) => logger.i(val.toString()),
@@ -276,7 +277,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           name: 'account',
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: '銀行卡號',
+                              label:
+                                  localizations.translate('bank_card_number'),
                               hint: '請輸入您的銀行卡號',
                               controller: accountController,
                               onChanged: (value) => {
@@ -298,7 +300,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           builder: (FormFieldState field) {
                             return GameInput(
                               label: '真實姓名',
-                              hint: '請輸入您的真實姓名',
+                              hint: localizations
+                                  .translate('please_enter_your_real_name'),
                               controller: legalNameController,
                               onChanged: (value) => {
                                 _validateLegalName(value),

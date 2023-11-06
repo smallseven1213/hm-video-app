@@ -17,7 +17,7 @@ import 'package:game/utils/on_loading.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
-import '../../localization/game_localization_deletate.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -96,6 +96,7 @@ class ConfirmPinState extends State<ConfirmPin> {
   @override
   Widget build(BuildContext context) {
     logger.i('_code: $_code');
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
 
     return SizedBox(
       height: 355,
@@ -110,7 +111,7 @@ class ConfirmPinState extends State<ConfirmPin> {
           ),
         ),
         Text(
-          '存款金額：${widget.amount}',
+          '${localizations.translate('deposit_amount')}：${widget.amount}',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.bold,
@@ -206,11 +207,11 @@ class ConfirmPinState extends State<ConfirmPin> {
 
         // 在row輸入框的下方顯示驗證錯誤的訊息，文字是驗證碼錯誤
         if (hasError)
-          const Align(
+          Align(
               alignment: Alignment.center,
               child: Text(
-                '驗證碼錯誤',
-                style: TextStyle(
+                localizations.translate('wrong_verification_code'),
+                style: const TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
                     color: Colors.red),
@@ -219,14 +220,16 @@ class ConfirmPinState extends State<ConfirmPin> {
           alignment: Alignment.center,
           child: Text(
             enableSubmit && isFetching == 'start'
-                ? '取得充值連結...'
+                ? localizations.translate('get_the_link_to_reload')
                 : hasError
                     ? ''
                     : submitDepositSuccess && isFetching == 'complete'
-                        ? '充值連結取得成功！'
+                        ? localizations.translate('the_link_was_successful')
                         : !submitDepositSuccess && isFetching == 'complete'
-                            ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
-                            : '如訂單無誤，請輸入以上驗證碼',
+                            ? localizations.translate(
+                                'failed_to_get_the_link_to_recharge_please_change_the_recharge_channel_or_contact_customer_service')
+                            : localizations.translate(
+                                'if_the_order_is_correct_please_enter_the_above_verification_code'),
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.bold,
@@ -241,8 +244,8 @@ class ConfirmPinState extends State<ConfirmPin> {
             width: 90,
             child: GameButton(
               text: submitDepositSuccess
-                  ? '開啟充值頁'
-                  : GameLocalizations.of(context)!.translate('close'),
+                  ? localizations.translate('open_top_up_page')
+                  : localizations.translate('close'),
               onPressed: () {
                 if (submitDepositSuccess) {
                   onLoading(context, status: false);

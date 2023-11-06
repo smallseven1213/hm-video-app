@@ -4,6 +4,8 @@ import 'package:game/screens/game_deposit_polling_screen/show_payment_method.dar
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/loading.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
 class AmountItems extends StatefulWidget {
@@ -25,6 +27,8 @@ class AmountItemsState extends State<AmountItems> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
         margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -60,9 +64,9 @@ class AmountItemsState extends State<AmountItems> {
                   ),
                 ),
                 const SizedBox(width: 4),
-                const Text(
-                  "請選擇存款金額",
-                  style: TextStyle(
+                Text(
+                  localizations.translate('please_select_deposit_amount'),
+                  style: const TextStyle(
                     color: Color(0xff979797),
                     fontSize: 12,
                     fontWeight: FontWeight.w200,
@@ -116,7 +120,7 @@ class AmountItemsState extends State<AmountItems> {
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Text(
-                                  '$e 元',
+                                  '$e ${localizations.translate('dollar')}',
                                   style: TextStyle(
                                     color: gamePrimaryButtonColor,
                                     fontSize: 16,

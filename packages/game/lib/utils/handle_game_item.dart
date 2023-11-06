@@ -8,7 +8,7 @@ import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
 
 import '../enums/game_app_routes.dart';
-import '../localization/game_localization_deletate.dart';
+import '../localization/game_localization_delegate.dart';
 
 String gameUrl = '';
 

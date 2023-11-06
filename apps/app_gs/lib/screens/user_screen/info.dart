@@ -6,8 +6,6 @@ import 'package:shared/modules/user/user_data_getting_status_consumer.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shimmer/shimmer.dart';
-
-import 'package:game/localization/game_localization_deletate.dart';
 import '../../widgets/avatar.dart';
 
 final logger = Logger();
@@ -33,8 +31,6 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final GameLocalizations localizations = GameLocalizations.of(context)!;
-
     return Container(
       height: 120,
       decoration: BoxDecoration(
@@ -157,9 +153,9 @@ class UserInfo extends StatelessWidget {
                       onTap: () {
                         MyRouteDelegate.of(context).push(AppRoutes.login);
                       },
-                      child: Text(
-                        localizations.translate('register_login'),
-                        style: const TextStyle(
+                      child: const Text(
+                        '註冊/登入',
+                        style: TextStyle(
                           color: Color(0xffFFC700),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
