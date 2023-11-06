@@ -2,10 +2,17 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cross_file/cross_file.dart';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart' as http_parser;
+import 'package:mime/mime.dart';
+import 'dart:html' as html;
+import 'dart:convert';
 import '../models/actor.dart';
 import '../models/block_vod.dart';
 import '../models/hm_api_response.dart';
@@ -438,12 +445,75 @@ class UserApi {
 
   // 上傳頭像給/users/user/avatar, 使用PUT call, 會將file帶入
   // 會傳回body.photoName給我並return String
-  Future<String> uploadAvatar(File file) async {
-    var value = await fetcher(
-        url: '${systemConfig.apiHost}/users/user/avatar',
+  Future<String> uploadAvatar(XFile file) async {
+    // ===FROM OLD
+    var sid = const Uuid().v4();
+    // var form = FormData.fromMap({
+    //   'sid': sid,
+    //   'photo': MultipartFile.fromBytes(
+    //     await file.readAsBytes(),
+    //     filename: file.name,
+    //     contentType: http_parser.MediaType.parse(file.mimeType ?? 'image/png'),
+    //   ),
+    // });
+
+    await fetcher(
+      url: '${systemConfig.apiHost}/public/photos/photo',
+      method: 'POST',
+      body: {
+        'sid': sid,
+        'photo': MultipartFile.fromBytes(
+          await file.readAsBytes(),
+          filename: file.name,
+          contentType:
+              http_parser.MediaType.parse(file.mimeType ?? 'image/png'),
+        )
+      },
+    );
+
+    await fetcher(
+        url: '${systemConfig.apiHost}/public/users/user/avatar',
         method: 'PUT',
-        body: {'file': file});
-    var res = (value.data as Map<String, dynamic>);
-    return res['data']['photoName'];
+        body: {
+          'photoName': sid,
+        });
+
+    return sid;
+
+    // ===NEW
+    // var sid = const Uuid().v4();
+
+    // // Read the file as bytes
+    // Uint8List fileBytes = await file.readAsBytes();
+
+    // // Extract the content type
+    // final contentType = file.mimeType ?? 'image/png';
+
+    // // Create a MultipartFile from the file's content
+    // final multipartFile = http.MultipartFile.fromBytes(
+    //   'photo',
+    //   fileBytes,
+    //   filename: file.name,
+    //   contentType: MediaType.parse(contentType),
+    // );
+
+    // // Create a FormData object
+    // final formData = http.MultipartRequest(
+    //   'PUT',
+    //   Uri.parse('${systemConfig.apiHost}/users/user/avatar'),
+    // )
+    //   ..fields['sid'] = sid
+    //   ..files.add(multipartFile);
+
+    // // Send the request
+    // final response = await http.Response.fromStream(await formData.send());
+
+    // if (response.statusCode == 200) {
+    //   // Parse the response body
+    //   final res = json.decode(response.body) as Map<String, dynamic>;
+    //   return res['data']['photoName'];
+    // } else {
+    //   throw Exception('Failed to upload avatar: ${response.reasonPhrase}');
+    // }
   }
 }

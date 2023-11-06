@@ -52,39 +52,13 @@ class UserEmptyAvatar extends StatelessWidget {
     );
     if (image != null) {
       try {
-        File file = File(image.path);
-        var photoSid = await userApi.uploadAvatar(file);
+        var photoSid = await userApi.uploadAvatar(image);
+        Navigator.pop(context);
 
         Get.find<UserController>().setAvatar(photoSid);
       } catch (e) {
         print(e);
       }
-
-      // String? str = await Scan.parse(image.path);
-      // var res = await authApi.loginByCode(str ?? '');
-      // if (res != null) {
-      //   // do login
-      //   Get.find<AuthController>().setToken(res.data?['token']);
-      //   showConfirmDialog(
-      //     context: context,
-      //     title: '提示',
-      //     message: '登入成功',
-      //     showCancelButton: false,
-      //     onConfirm: () {
-      //       Navigator.of(context).pop();
-      //     },
-      //   );
-      // } else {
-      //   showConfirmDialog(
-      //     context: context,
-      //     title: '提示',
-      //     message: '登入失敗，用戶不存在。',
-      //     showCancelButton: false,
-      //     onConfirm: () {
-      //       Navigator.of(context).pop();
-      //     },
-      //   );
-      // }
     }
   }
 

@@ -71,7 +71,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
               ],
             ),
           )
-        : Container(
+        : SizedBox(
             height: maxExtent - shrinkOffset,
             child: UserInfoConsumer(
               child: (info, isVIP, isGuest) => UserCard(info: info),

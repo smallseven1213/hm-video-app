@@ -61,7 +61,7 @@ class UserController extends GetxController {
 
   setAvatar(String photoSid) {
     info.update((val) {
-      val!.avatar.val(photoSid);
+      val!.avatar = photoSid;
     });
   }
 
