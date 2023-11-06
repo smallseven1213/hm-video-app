@@ -60,7 +60,7 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
     showConfirmDialog(
       context: context,
       title: "",
-      content: "設置失敗",
+      content: GameLocalizations.of(context)!.translate('setting_failed'),
       barrierDismissible: false,
       confirmText: GameLocalizations.of(context)!.translate('confirm'),
       onConfirm: () => Navigator.pop(context),
@@ -149,7 +149,8 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
                         builder: (FormFieldState field) {
                           return GameInput2(
                             label: localizations.translate('input_funds_pin'),
-                            hint: '請輸入6位數字',
+                            hint:
+                                localizations.translate('please_enter_digits'),
                             controller: passwordController,
                             field: field,
                             isPassword: true,
@@ -163,14 +164,17 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
                                 .translate('password_length_should_be_digits');
                           }
                           if (value != passwordController.text) {
-                            return '* 二次驗證密碼輸入應相同';
+                            return localizations.translate(
+                                'the_password_should_be_the_same_for_the_second_time');
                           }
                           return null;
                         },
                         builder: (FormFieldState field) {
                           return GameInput2(
-                            label: '再次確認密碼',
-                            hint: '請再次確認密碼',
+                            label: localizations
+                                .translate('confirm_password_again'),
+                            hint: localizations
+                                .translate('please_confirm_the_password_again'),
                             controller: passwordConfirmController,
                             field: field,
                             isPassword: true,

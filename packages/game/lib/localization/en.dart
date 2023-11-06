@@ -134,13 +134,11 @@ const Map<String, String> enUsStrings = {
   "achieved": "Achieved",
   "not_reached": "Not reached",
   "please_enter_the_withdrawal_amount": "Please enter the withdrawal amount",
-  "input_amount_must_not_be_less_than":
-      "Input amount must not be less than {amount}.",
+  "input_amount_must_not_be_less_than": "Input amount must not be less than",
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Input amount must not be greater than the remaining balance",
   "input_amount_is_in_wrong_format": "Input amount is in wrong format",
-  "minimum_withdrawal_amount_is_cny":
-      "Minimum withdrawal amount is {amount} CNY.",
+  "minimum_withdrawal_amount_is": "Minimum withdrawal amount is",
   "application_completed": "Application Completed",
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":
       "Withdrawal application has been completed, you can check the current application status in the withdrawal log.",

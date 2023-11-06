@@ -9,11 +9,6 @@ import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
-Map<int, String> remittanceType = {
-  1: '銀行卡',
-  2: 'USDT',
-};
-
 DateTime now = DateTime.now();
 DateTime midnight = DateTime(now.year, now.month, now.day).toUtc();
 
@@ -40,8 +35,8 @@ class StatusLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
     Map<int, String> status = {
-      1: '審核中',
-      2: '出款失敗',
+      1: localizations.translate('reviewing'),
+      2: localizations.translate('failed_to_withdraw'),
       3: localizations.translate('completed'),
     };
     if (type == 0) return const SizedBox();
@@ -63,7 +58,7 @@ class StatusLabel extends StatelessWidget {
           style: TextStyle(
             color: status[type] == localizations.translate('completed')
                 ? withdrawalSuccess
-                : status[type] == '出款失敗'
+                : status[type] == localizations.translate('failed_to_withdraw')
                     ? withdrawalFelid
                     : withdrawalSuccess,
           ),
@@ -184,13 +179,17 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
-    logger.i('record: $record');
+    Map<int, String> remittanceType = {
+      1: localizations.translate('bank_card'),
+      2: 'USDT',
+    };
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
         centerTitle: true,
         title: Text(
-          '提現紀錄',
+          localizations.translate('withdrawal_history'),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -219,17 +218,17 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                       Expanded(
                         flex: 2,
                         child: ModalDropDown(
-                          title: '類型',
+                          title: localizations.translate('type'),
                           onChange: (value) => fetchDataByCondition(
                             name: 'remittanceType',
                             value: value,
                           ),
-                          items: const [
+                          items: [
                             {
                               'value': 1,
-                              'label': '銀行卡',
+                              'label': localizations.translate('bank_card'),
                             },
-                            {
+                            const {
                               'value': 2,
                               'label': 'USDT',
                             }
@@ -245,13 +244,14 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                             value: value,
                           ),
                           items: [
-                            const {
+                            {
                               'value': 1,
-                              'label': '審核中',
+                              'label': localizations.translate('reviewing'),
                             },
-                            const {
+                            {
                               'value': 2,
-                              'label': '出款失敗',
+                              'label':
+                                  localizations.translate('failed_to_withdraw'),
                             },
                             {
                               'value': 3,
@@ -360,14 +360,19 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                           ],
                         ),
                         Divider(color: gameLobbyDividerColor),
-                        RowItem(title: '提款帳戶', value: item.account),
-                        RowItem(title: '提款金額', value: item.applyAmount),
                         RowItem(
-                          title: '申請時間',
+                            title:
+                                localizations.translate('withdrawal_account'),
+                            value: item.account),
+                        RowItem(
+                            title: localizations.translate('withdrawal_amount'),
+                            value: item.applyAmount),
+                        RowItem(
+                          title: localizations.translate('application_time'),
                           value: parseDateTime(item.auditDate),
                         ),
                         RowItem(
-                          title: '更新時間',
+                          title: localizations.translate('update_time'),
                           value: parseDateTime(item.updatedAt),
                         ),
                       ],

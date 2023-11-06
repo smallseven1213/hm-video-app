@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 class TurnOverContent extends StatefulWidget {
   const TurnOverContent({
     Key? key,
@@ -24,6 +26,8 @@ class TurnOverContent extends StatefulWidget {
 class TurnOverContentState extends State<TurnOverContent> {
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     var feeParse = (widget.withdrawalFee.toDouble() * 100)
         .toStringAsFixed(2)
         .replaceAll(RegExp(r'\.?0*$'), '');
@@ -72,7 +76,7 @@ class TurnOverContentState extends State<TurnOverContent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '流水限額',
+                  localizations.translate('limit'),
                   style: TextStyle(
                     color: gameLobbyPrimaryTextColor,
                     fontSize: 14,

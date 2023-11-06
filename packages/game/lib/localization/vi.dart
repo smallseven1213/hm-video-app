@@ -141,7 +141,7 @@ const Map<String, String> viVnStrings = {
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Số tiền nhập có định dạng sai",
   "input_amount_is_in_wrong_format": "Số tiền rút tối thiểu là {amount} CNY.",
-  "minimum_withdrawal_amount_is_cny": "Ứng dụng hoàn tất",
+  "minimum_withdrawal_amount_is": "Ứng dụng hoàn tất",
   "application_completed":
       "Đã hoàn tất đơn rút tiền, bạn có thể kiểm tra trạng thái ứng dụng hiện tại trong nhật ký rút tiền.",
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":

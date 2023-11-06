@@ -210,7 +210,8 @@ class _AmountFormState extends State<AmountForm> {
                     ),
                     FormBuilderValidators.match(
                       r'^[0-9]+(\.[0-9]{1,2})?$',
-                      errorText: '輸入金額格式錯誤',
+                      errorText: localizations
+                          .translate('input_amount_is_in_wrong_format'),
                     ),
                     if (widget.min != null)
                       FormBuilderValidators.min(widget.min ?? 0,

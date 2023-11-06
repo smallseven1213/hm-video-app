@@ -61,9 +61,10 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
     showConfirmDialog(
       context: context,
       title: "",
-      content: "請先設置資金密碼",
+      content: GameLocalizations.of(context)!
+          .translate('please_set_the_password_first'),
       barrierDismissible: false,
-      confirmText: "前往設定",
+      confirmText: GameLocalizations.of(context)!.translate('go_to_settings'),
       onConfirm: () {
         gameWithdrawalController.setLoadingStatus(false);
         Navigator.of(context).pop();
@@ -71,6 +72,10 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
       },
       onCancel: () => Navigator.of(context).pop(),
     );
+  }
+
+  String generateContentWithFee(String content, String fee) {
+    return content.replaceAll('{fee}', fee);
   }
 
   @override
@@ -82,16 +87,17 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
       children: [
         Row(
           children: [
-            const SizedBox(
+            SizedBox(
               width: 100,
-              child: Text("提現方式",
-                  style: TextStyle(color: Color(0xff979797), fontSize: 14)),
+              child: Text(localizations.translate('withdrawal_method'),
+                  style:
+                      const TextStyle(color: Color(0xff979797), fontSize: 14)),
             ),
             Expanded(
                 child: Row(
               children: [
                 GameWithdrawalOptionsButton(
-                  text: '銀行卡',
+                  text: localizations.translate('bank_card'),
                   onPressed: () {
                     setState(() {
                       type = Type.bankcard;
@@ -121,7 +127,8 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              "*請完成銀行卡綁定，方可進行提款",
+              localizations.translate(
+                  'please_complete_the_card_binding_before_withdrawing_money'),
               style: TextStyle(color: gameLobbyHintColor, fontSize: 12),
             ),
           ),
@@ -140,7 +147,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
           )
         else if (type == Type.bankcard && widget.bankData.account == null)
           GameButton(
-            text: "前往綁定",
+            text: localizations.translate('go_to_binding'),
             onPressed: () {
               logger.i(
                   'has paymentPin?: ${gameWithdrawalController.paymentPin.value}');
@@ -158,7 +165,8 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             widget.reachable == false &&
             withdrawalModeMapper[widget.withdrawalMode] == 'disable')
           GameButton(
-            text: "流水不足，請繼續遊戲",
+            text: localizations
+                .translate('insufficient_liquidity_please_continue_to_play'),
             onPressed: () async {},
             disabled: true,
           )
@@ -177,8 +185,13 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                 context: context,
                 barrierDismissible: true,
                 title: "提現確認",
-                content:
-                    "未達成流水限額\n需自行負擔提現手續費 ${(int.parse(widget.applyAmount) * double.parse(widget.withdrawalFee)).toStringAsFixed(2).replaceAll(RegExp(r'\.?0*$'), '')} 元(預估)\n點擊確認送出提現訂單",
+                content: generateContentWithFee(
+                    localizations.translate(
+                        'if_you_have_not_reached_the_limit_need_to_pay_the_withdrawal_fee_of_estimated_click_to_confirm_to_send_out_the_withdrawal_order'),
+                    (int.parse(widget.applyAmount) *
+                            double.parse(widget.withdrawalFee))
+                        .toStringAsFixed(2)
+                        .replaceAll(RegExp(r'\.?0*$'), '')),
                 confirmText: localizations.translate('confirm'),
                 onConfirm: () {
                   Navigator.of(context).pop();

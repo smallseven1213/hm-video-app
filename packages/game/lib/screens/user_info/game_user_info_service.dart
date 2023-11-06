@@ -5,6 +5,8 @@ import 'package:game/services/game_system_config.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 class UserInfoService extends StatefulWidget {
   const UserInfoService({Key? key}) : super(key: key);
 
@@ -23,6 +25,8 @@ class _UserInfoService extends State<UserInfoService> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       width: 30,
       height: 60,
@@ -39,7 +43,7 @@ class _UserInfoService extends State<UserInfoService> {
               height: 28,
             ),
             Text(
-              '客服',
+              localizations.translate('customer_service'),
               style: TextStyle(
                 color: gameLobbyPrimaryTextColor,
                 fontSize: 12,

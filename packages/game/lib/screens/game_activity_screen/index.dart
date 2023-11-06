@@ -53,7 +53,7 @@ class _GameActivityState extends State<GameActivity> {
     Map<int, String> activityResStatus = {
       0: '未充值',
       1: '已申請',
-      2: '審核中',
+      2: localizations.translate('reviewing'),
       3: '已發放',
       4: localizations.translate('failed'),
     };
