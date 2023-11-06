@@ -38,11 +38,13 @@ class LayoutTabBar extends StatelessWidget {
                             : const Color(0xFF676970)
                         : isActive
                             ? Colors.black
-                            : const Color(0xFF999999);
+                            : const Color(0xFF676970);
                     return Text(
                       name,
                       style: TextStyle(
                         color: fontColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     );
                   }))),

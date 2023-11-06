@@ -12,7 +12,7 @@ import '../widgets/no_data.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
-const gridRatio = 128 / 227;
+const gridRatio = 128 / 173;
 final logger = Logger();
 
 class SupplierTagVideoPage extends StatefulWidget {
@@ -48,32 +48,33 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                   (BuildContext context, int index) {
                     var vod = vodController.vodList[index];
                     return VideoPreviewWidget(
-                        id: vod.id,
-                        film: 2,
-                        onOverrideRedirectTap: (id) {
-                          MyRouteDelegate.of(context).push(
-                            AppRoutes.shorts,
-                            args: {
-                              'type': ShortsType.tag,
-                              'videoId': vod.id,
-                              'id': widget.tagId
-                            },
-                          );
-                        },
-                        hasRadius: false,
-                        hasTitle: false,
-                        imageRatio: gridRatio,
-                        displayCoverVertical: true,
-                        coverVertical: vod.coverVertical!,
-                        coverHorizontal: vod.coverHorizontal!,
-                        timeLength: vod.timeLength!,
-                        hasTags: false,
-                        tags: vod.tags!,
-                        title: vod.title,
-                        displayVideoTimes: false,
-                        displayViewTimes: false,
-                        videoViewTimes: vod.videoViewTimes!,
-                        videoCollectTimes: vod.videoCollectTimes!);
+                      id: vod.id,
+                      film: 2,
+                      onOverrideRedirectTap: (id) {
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.shorts,
+                          args: {
+                            'type': ShortsType.tag,
+                            'videoId': vod.id,
+                            'id': widget.tagId
+                          },
+                        );
+                      },
+                      hasRadius: false,
+                      hasTitle: false,
+                      imageRatio: gridRatio,
+                      displayCoverVertical: true,
+                      coverVertical: vod.coverVertical!,
+                      coverHorizontal: vod.coverHorizontal!,
+                      timeLength: vod.timeLength!,
+                      hasTags: false,
+                      tags: vod.tags!,
+                      title: vod.title,
+                      displayVideoTimes: true,
+                      displayViewTimes: true,
+                      videoViewTimes: vod.videoViewTimes!,
+                      videoCollectTimes: vod.videoCollectTimes!,
+                    );
                   },
                   childCount: vodController.vodList.length,
                 ),
