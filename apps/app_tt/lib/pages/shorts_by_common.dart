@@ -20,5 +20,6 @@ class ShortsByCommonPage extends BaseShortPage {
           createController: () => Get.put(
               VideoShortsController(type, id, videoId),
               tag: type.toString() + videoId.toString() + id.toString()),
+          controllerTag: type.toString() + videoId.toString() + id.toString(),
         );
 }

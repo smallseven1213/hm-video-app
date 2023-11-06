@@ -110,15 +110,20 @@ class SearchPageState extends State<SearchPage> {
           title: Padding(
             padding: const EdgeInsets.only(right: 8),
             child: Container(
-              height: 35,
               decoration: BoxDecoration(
-                color: Color(0xFFF3F3F4),
+                color: const Color(0xFFF3F3F4),
                 borderRadius: BorderRadius.circular(2),
               ),
               child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.search),
+                    padding: EdgeInsets.zero,
+                    icon: const Icon(
+                      Icons.search,
+                      size: 16,
+                      color: Color(0xff50525a),
+                    ),
                     onPressed: () {
                       // 你的放大鏡按鈕邏輯
                     },
@@ -141,10 +146,8 @@ class SearchPageState extends State<SearchPage> {
                       onTap: () {
                         // 處理點擊事件的邏輯，如果需要
                       },
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 12,
-                      ),
+                      style: const TextStyle(color: Color(0xff50525a)),
+                      maxLines: 1,
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                       ),
@@ -218,7 +221,7 @@ class SearchPageState extends State<SearchPage> {
             if (displaySearchResult)
               // 文字搜尋結果
               Container(
-                color: const Color(0xFF001A40),
+                color: Colors.white,
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: ListView.builder(

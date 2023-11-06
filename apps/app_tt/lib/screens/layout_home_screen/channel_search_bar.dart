@@ -18,7 +18,6 @@ class ChannelSearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -53,14 +52,12 @@ class ChannelSearchBar extends StatelessWidget {
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
-            child: Container(
+            child: const SizedBox(
                 width: 40,
-                height: 60,
-                // color: AppColors.colors[ColorKeys.background],
-                child: const Center(
+                child: Center(
                   child: SizedBox(
-                    width: 17,
-                    height: 17,
+                    width: 16,
+                    height: 16,
                     child: Image(
                       fit: BoxFit.cover,
                       image: AssetImage(

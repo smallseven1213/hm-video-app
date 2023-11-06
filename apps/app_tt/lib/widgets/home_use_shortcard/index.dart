@@ -8,8 +8,8 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../short/side_info.dart';
 import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
-import '../wave_loading.dart';
+import 'short_card_info.dart';
+import '../loading_animation.dart';
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;
@@ -61,7 +61,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
-      return const WaveLoading();
+      return LoadingAnimation();
     }
     return Container(
       color: Colors.black,
@@ -82,7 +82,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: const WaveLoading(),
+            loadingWidget: Center(child: LoadingAnimation()),
             child: (isReady) => ShortCard(
               key: Key(widget.tag),
               index: widget.index,
@@ -96,17 +96,11 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               allowFullsreen: true,
             ),
           ),
-          SideInfo(
-            videoId: widget.id,
-            shortData: widget.shortData,
-            tag: widget.tag,
-            videoUrl: widget.videoUrl,
-          ),
           Obx(
             () => uiController.isFullscreen.value == true
                 ? const SizedBox.shrink()
                 : Positioned(
-                    bottom: 30,
+                    bottom: -8,
                     left: 0,
                     right: 0,
                     child: ShortVideoConsumer(
@@ -122,7 +116,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
-                                  videourl: videoUrl ?? "",
+                                  videoUrl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
@@ -133,6 +127,12 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                       ),
                     ),
                   ),
+          ),
+          SideInfo(
+            videoId: widget.id,
+            shortData: widget.shortData,
+            tag: widget.tag,
+            videoUrl: widget.videoUrl,
           ),
           Obx(
             () => uiController.isFullscreen.value != true

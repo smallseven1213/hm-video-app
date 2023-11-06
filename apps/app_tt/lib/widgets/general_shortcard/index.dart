@@ -8,9 +8,8 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import '../short/side_info.dart';
 import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
-import '../wave_loading.dart';
-import 'short_bottom_area.dart';
+import '../loading_animation.dart';
+import 'short_card_info.dart';
 
 class GeneralShortCard extends StatefulWidget {
   final int index;
@@ -22,6 +21,7 @@ class GeneralShortCard extends StatefulWidget {
   final bool? isActive;
   final Function toggleFullScreen;
   final String videoUrl;
+  final String? controllerTag;
 
   const GeneralShortCard({
     Key? key,
@@ -35,6 +35,7 @@ class GeneralShortCard extends StatefulWidget {
     // required this.isFullscreen,
     this.isActive = true,
     this.displayFavoriteAndCollectCount = true,
+    this.controllerTag,
   }) : super(key: key);
 
   @override
@@ -58,7 +59,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
   Widget build(BuildContext context) {
     print('GeneralShortCard build');
     if (widget.videoUrl.isEmpty) {
-      return const WaveLoading();
+      return LoadingAnimation();
     }
     return Container(
       color: Colors.black,
@@ -79,7 +80,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: const WaveLoading(),
+            loadingWidget: Center(child: LoadingAnimation()),
             child: (isReady) => ShortCard(
               key: Key(widget.tag),
               index: widget.index,
@@ -92,12 +93,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
             ),
-          ),
-          SideInfo(
-            videoId: widget.id,
-            shortData: widget.shortData,
-            tag: widget.tag,
-            videoUrl: widget.videoUrl,
           ),
           Obx(
             () => uiController.isFullscreen.value == true
@@ -119,17 +114,24 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
-                                  videourl: videoUrl ?? "",
+                                  videoUrl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
                                   displayActorAvatar: false,
+                                  controllerTag: widget.controllerTag!,
                                 )
                               : const SizedBox.shrink(),
                         ],
                       ),
                     ),
                   ),
+          ),
+          SideInfo(
+            videoId: widget.id,
+            shortData: widget.shortData,
+            tag: widget.tag,
+            videoUrl: widget.videoUrl,
           ),
           Obx(
             () => uiController.isFullscreen.value != true

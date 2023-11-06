@@ -115,7 +115,10 @@ class HomeState extends State<HomePage> {
                               child: LayoutTabItem(
                             isActive: entry.value.path! == activeKey,
                             label: entry.value.name!,
-                            onTap: () => changeTabKey(entry.value.path!),
+                            onTap: () {
+                              changeTabKey(entry.value.path!);
+                              ttUiController.setDarkMode(false);
+                            },
                           )),
                         )
                         .toList(),

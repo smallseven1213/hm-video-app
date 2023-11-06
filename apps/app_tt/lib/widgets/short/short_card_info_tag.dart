@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class ShortCardInfoTag extends StatelessWidget {
@@ -7,20 +6,20 @@ class ShortCardInfoTag extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: kIsWeb
-          ? null
-          : BoxDecoration(
-              color: const Color.fromRGBO(66, 119, 220, 0.5),
-              borderRadius: BorderRadius.circular(100),
-            ),
-      child: Text(
-        name,
-        style: const TextStyle(
-          fontSize: 12,
-          color: Colors.white,
-        ),
+    return Text(
+      name,
+      style: const TextStyle(
+        fontSize: 15,
+        color: Colors.white,
+        fontWeight: FontWeight.w500,
+        shadows: [
+          Shadow(
+            offset: Offset(0, 2), // Horizontal and Vertical offset
+            blurRadius: 4.0, // Amount of blur
+            color:
+                Color.fromARGB(128, 0, 0, 0), // Color with 50% (0.5) opacity
+          ),
+        ],
       ),
     );
   }
