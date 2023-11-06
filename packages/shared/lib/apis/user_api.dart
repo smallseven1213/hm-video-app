@@ -435,4 +435,15 @@ class UserApi {
 
     return HMApiResponseBaseWithDataWithData<bool>.fromJson(res);
   }
+
+  // 上傳頭像給/users/user/avatar, 使用PUT call, 會將file帶入
+  // 會傳回body.photoName給我並return String
+  Future<String> uploadAvatar(File file) async {
+    var value = await fetcher(
+        url: '${systemConfig.apiHost}/users/user/avatar',
+        method: 'PUT',
+        body: {'file': file});
+    var res = (value.data as Map<String, dynamic>);
+    return res['data']['photoName'];
+  }
 }

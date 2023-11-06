@@ -60,7 +60,13 @@ class RootWidget extends StatelessWidget {
     }
 
     return MaterialApp.router(
-      localizationsDelegates: context.localizationDelegates,
+      localizationsDelegates: [
+        ...context.localizationDelegates,
+        // GameLocalizationsDelegate(
+        //     Localizations.localeOf(context).languageCode == 'zh_TW'
+        //         ? enStrings
+        //         : enStrings),
+      ],
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,

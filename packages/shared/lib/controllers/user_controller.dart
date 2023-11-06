@@ -59,6 +59,12 @@ class UserController extends GetxController {
     }
   }
 
+  setAvatar(String photoSid) {
+    info.update((val) {
+      val!.avatar.val(photoSid);
+    });
+  }
+
   Future<void> getLoginCode() async {
     isLoading.value = true;
     try {
