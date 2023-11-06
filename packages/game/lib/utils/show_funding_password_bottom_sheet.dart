@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 void showFundingPasswordBottomSheet(BuildContext context,
@@ -97,7 +99,8 @@ void showFundingPasswordBottomSheet(BuildContext context,
                       height: 50,
                       child: Center(
                         child: Text(
-                          '輸入資金密碼',
+                          GameLocalizations.of(context)!
+                              .translate('input_funds_pin'),
                           style: TextStyle(
                             color: gameLobbyAppBarTextColor,
                             fontSize: 18,
@@ -124,7 +127,8 @@ void showFundingPasswordBottomSheet(BuildContext context,
                       builder: (FormFieldState field) {
                         return GameInput(
                           label: '資金密碼',
-                          hint: '請輸入資金密碼',
+                          hint: GameLocalizations.of(context)!
+                              .translate('input_funds_pin'),
                           controller: passwordController,
                           isPassword: true,
                           onChanged: (value) => {

@@ -49,6 +49,15 @@ class _GameActivityState extends State<GameActivity> {
   }
 
   void submitCampaign(context, int id) async {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+    Map<int, String> activityResStatus = {
+      0: '未充值',
+      1: '已申請',
+      2: '審核中',
+      3: '已發放',
+      4: localizations.translate('failed'),
+    };
+
     try {
       var res = await gameLobbyApi.submitCampaign(id);
       if (res['code'] == '00') {
@@ -87,7 +96,7 @@ class _GameActivityState extends State<GameActivity> {
       } else {
         showFormDialog(
           context,
-          title: '申請失敗',
+          title: localizations.translate('failed'),
           content: SizedBox(
             height: 85,
             child: Column(

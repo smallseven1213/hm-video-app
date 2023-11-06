@@ -14,13 +14,6 @@ Map<int, String> remittanceType = {
   2: 'USDT',
 };
 
-Map<int, String> auditDate = {
-  1: '今天',
-  2: '昨天',
-  3: '近七天',
-  4: '近三十天',
-};
-
 DateTime now = DateTime.now();
 DateTime midnight = DateTime(now.year, now.month, now.day).toUtc();
 
@@ -246,7 +239,7 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                       Expanded(
                         flex: 2,
                         child: ModalDropDown(
-                          title: '狀態',
+                          title: localizations.translate('status'),
                           onChange: (value) => fetchDataByCondition(
                             name: 'status',
                             value: value,
@@ -270,28 +263,29 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                       Expanded(
                         flex: 3,
                         child: ModalDropDown(
-                          title: '申請時間查詢',
+                          title: localizations
+                              .translate('application_time_enquiry'),
                           onChange: (value) => fetchDataByCondition(
                             name: 'auditDate',
                             value: value,
                           ),
                           isLast: true,
-                          items: const [
+                          items: [
                             {
                               'value': 1,
-                              'label': '今天',
+                              'label': localizations.translate('today'),
                             },
                             {
                               'value': 2,
-                              'label': '昨天',
+                              'label': localizations.translate('yesterday'),
                             },
                             {
                               'value': 3,
-                              'label': '近七天',
+                              'label': localizations.translate('last_7_days'),
                             },
                             {
                               'value': 4,
-                              'label': '近三十日',
+                              'label': localizations.translate('last_30_days'),
                             },
                           ],
                         ),
@@ -326,9 +320,9 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                             fit: BoxFit.cover,
                           ),
                           const SizedBox(height: 10),
-                          const Text(
-                            '暫無紀錄',
-                            style: TextStyle(color: Color(0xFF979797)),
+                          Text(
+                            localizations.translate('no_record'),
+                            style: const TextStyle(color: Color(0xFF979797)),
                           ),
                         ],
                       ),

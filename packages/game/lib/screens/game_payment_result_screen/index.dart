@@ -92,7 +92,7 @@ class GamePaymentResultState extends State<GamePaymentResult> {
         iconTheme: IconThemeData(color: gameLobbyAppBarIconColor),
         centerTitle: true,
         title: Text(
-          '支付確認',
+          localizations.translate('payment_confirmation'),
           style: TextStyle(
             color: gameLobbyAppBarTextColor,
             fontSize: 18,
