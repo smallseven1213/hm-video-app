@@ -9,6 +9,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/user_controller.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 enum Type { login, register }
@@ -47,6 +49,18 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
     super.initState();
   }
 
+  void showRegisterFailDialog() {
+    showConfirmDialog(
+      context: context,
+      title: GameLocalizations.of(context)!.translate('registration_error'),
+      content: GameLocalizations.of(context)!
+          .translate('incorrect_username_or_password'),
+      onConfirm: () {
+        Navigator.of(context).pop();
+      },
+    );
+  }
+
   void _onRegister() async {
     try {
       await authApi
@@ -58,7 +72,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
           .then(
             (value) => {
               Fluttertoast.showToast(
-                msg: '註冊成功',
+                msg: GameLocalizations.of(context)!
+                    .translate('registration_successful'),
                 gravity: ToastGravity.CENTER,
               ),
               widget.onSuccess(),
@@ -66,14 +81,7 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
           );
     } catch (e) {
       logger.i(e.toString());
-      showConfirmDialog(
-        context: context,
-        title: '註冊錯誤',
-        content: '帳號或密碼不正確',
-        onConfirm: () {
-          Navigator.of(context).pop();
-        },
-      );
+      showRegisterFailDialog();
       return;
     }
   }
@@ -93,7 +101,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
     RegExp regString = RegExp(r'^[a-z0-9]{6,12}$');
     if (value!.isEmpty) {
       setState(() {
-        _usernameError = '請輸入帳號';
+        _usernameError = GameLocalizations.of(context)!
+            .translate('please_enter_your_username');
       });
     } else if (value.isNotEmpty) {
       if (value.length >= 6 && value.length <= 12) {
@@ -104,7 +113,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
           value.length > 12 ||
           !regString.hasMatch(value)) {
         setState(() {
-          _usernameError = '帳號為 6~12 位字母及數字';
+          _usernameError = GameLocalizations.of(context)!
+              .translate('account_is_digits_alphabetic_and_numeric');
         });
       }
     }
@@ -115,7 +125,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
     RegExp regString = RegExp(r'^[a-z0-9]{8,20}$');
     if (value!.isEmpty) {
       setState(() {
-        _passwordError = '請輸入密碼';
+        _passwordError = GameLocalizations.of(context)!
+            .translate('please_enter_your_password');
       });
     } else if (value.isNotEmpty) {
       if (value.length >= 8 && value.length <= 20) {
@@ -126,7 +137,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
           value.length > 20 ||
           !regString.hasMatch(value)) {
         setState(() {
-          _passwordError = '*密碼為 8-20 位字母及數字';
+          _passwordError = GameLocalizations.of(context)!
+              .translate('password_is_letters_and_numbers');
         });
       }
     }
@@ -136,7 +148,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
   void _validatePasswordCheck(String? value) {
     if (value!.isEmpty) {
       setState(() {
-        _passwordCheckError = '請輸入密碼';
+        _passwordCheckError = GameLocalizations.of(context)!
+            .translate('please_enter_your_password');
       });
     } else if (value.isNotEmpty) {
       if (value == passwordController.text) {
@@ -145,7 +158,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
         });
       } else {
         setState(() {
-          _passwordCheckError = '*二次密碼不正確';
+          _passwordCheckError = GameLocalizations.of(context)!
+              .translate('incorrect_secondary_password');
         });
       }
     }
@@ -154,6 +168,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return FormBuilder(
       key: _formKey,
       onChanged: () {
@@ -162,8 +178,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
       child: Column(
         children: [
           GameInput(
-            label: "帳號",
-            hint: "6~12位字母及數字",
+            label: localizations.translate('username'),
+            hint: localizations.translate('letters_and_numbers'),
             controller: userNameController,
             onChanged: (value) => _validateUsername(value),
             onClear: () => {
@@ -181,8 +197,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
           ),
           const SizedBox(height: 5),
           GameInput(
-            label: "密碼",
-            hint: "請輸入密碼",
+            label: localizations.translate('password'),
+            hint: localizations.translate('please_enter_your_password'),
             isPassword: true,
             controller: passwordController,
             onChanged: (value) => _validatePassword(value),
@@ -201,8 +217,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
           ),
           const SizedBox(height: 5),
           GameInput(
-            label: "驗證密碼",
-            hint: "請輸入密碼",
+            label: localizations.translate('verify_password'),
+            hint: localizations.translate('please_enter_your_password'),
             isPassword: true,
             controller: passwordCheckController,
             onChanged: (value) => _validatePasswordCheck(value),
@@ -244,7 +260,7 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
                 borderRadius: BorderRadius.circular(24),
               ),
               child: Center(
-                child: Text("立即註冊",
+                child: Text(localizations.translate('register_now'),
                     style: TextStyle(
                         color: enableUsername &&
                                 enablePassword &&

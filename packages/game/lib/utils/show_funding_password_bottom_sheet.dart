@@ -32,7 +32,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
       }
     } catch (e) {
       Fluttertoast.showToast(
-        msg: '密碼錯誤',
+        msg: GameLocalizations.of(context)!.translate('wrong_password'),
         gravity: ToastGravity.CENTER,
       );
       logger.i('onSubmit error:${e.toString()}');
@@ -41,10 +41,12 @@ void showFundingPasswordBottomSheet(BuildContext context,
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      passwordCheckError = '請輸入密碼';
+      passwordCheckError = GameLocalizations.of(context)!
+          .translate('please_enter_your_password');
     } else if (value.isNotEmpty) {
       if (value.length < 6) {
-        passwordCheckError = '密碼長度不足';
+        passwordCheckError =
+            GameLocalizations.of(context)!.translate('insufficient_password');
       } else if (value.length >= 6) {
         passwordCheckError = null;
       }

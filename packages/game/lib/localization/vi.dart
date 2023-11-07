@@ -189,4 +189,7 @@ const Map<String, String> viVnStrings = {
   "estimated_maintenance_time": "Vui lòng thử lại sau, xin lỗi vì sự bất tiện.",
   "please_try_again_later_sorry_for_the_inconvenience":
       "vui lòng_thử_again_later_xin lỗi_vì_sự_bất tiện",
+  "game_maintenance_in_progress": "Trong trò chơi",
+  "the_game_is_under_maintenance_please_try_again_later":
+      "Trong quá trình chơi, hãy thử lại sau khi học",
 };

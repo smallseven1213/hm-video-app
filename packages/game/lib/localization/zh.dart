@@ -136,7 +136,7 @@ const Map<String, String> zhTwStrings = {
   'flow_limit_details': '流水限額詳情',
   'accumulated_liquidity': '累積有效流水',
   'withdrawal_fee_will_be_charged_for_withdrawal_before_reaching_the_limit':
-      '未達流水限額提現需支付提現手續費 {fee} %',
+      '未達流水限額提現需支付提現手續費',
   'login_now': '立即登錄',
   'no_account_yet': '還沒有帳號',
   'forgot_your_password': '忘記密碼',
@@ -171,4 +171,6 @@ const Map<String, String> zhTwStrings = {
   'currently_under_maintenance': '目前系統維護中',
   'estimated_maintenance_time': '預計維護時間 08:00-10:00',
   'please_try_again_later_sorry_for_the_inconvenience': '請稍後再試，造成不便請見諒',
+  "game_maintenance_in_progress": "遊戲維護中",
+  "the_game_is_under_maintenance_please_try_again_later": "遊戲維護中，請稍後再試",
 };

@@ -4,6 +4,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/button.dart';
 
+import '../../../localization/game_localization_delegate.dart';
+
 class GameDownloadDialogContent extends StatefulWidget {
   final Map data;
   final Function onGetApkPath;
@@ -22,6 +24,8 @@ class GameDownloadDialogContent extends StatefulWidget {
 class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       height: 320,
       child: Column(
@@ -33,7 +37,8 @@ class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
           ),
           const SizedBox(height: 10),
           Text(
-            '尊貴的用戶您好\n環球遊戲邀請您下載APP，提升遊戲體驗。',
+            localizations.translate(
+                'greetings_to_our_valued_users_global_gaming_invites_you_to_download_the_app_to_enhance_your_gaming_experience'),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: gameLobbyPrimaryTextColor,
@@ -42,7 +47,8 @@ class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
           ),
           const SizedBox(height: 10),
           Text(
-            '此組帳密僅提供首次登入APP使用\n請務必在登入後，更換帳號密碼。',
+            localizations.translate(
+                'this_password_is_only_for_the_first_time_you_log_in_to_the_app_please_be_sure_to_change_your_password_after_logging_in'),
             textAlign: TextAlign.center,
             style: TextStyle(
               color: gameLobbyPrimaryTextColor,
@@ -63,7 +69,7 @@ class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '帳號',
+                        localizations.translate('username'),
                         style: TextStyle(
                           color: gameLobbyPrimaryTextColor,
                           fontSize: 13,
@@ -92,7 +98,8 @@ class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
                           Clipboard.setData(
                               ClipboardData(text: widget.data['username']));
                           Fluttertoast.showToast(
-                            msg: '帳號已複製',
+                            msg: localizations
+                                .translate('account_has_been_copied'),
                             gravity: ToastGravity.CENTER,
                           );
                         },
@@ -109,7 +116,7 @@ class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        '密碼',
+                        localizations.translate('password'),
                         style: TextStyle(
                           color: gameLobbyPrimaryTextColor,
                           fontSize: 13,
@@ -135,7 +142,7 @@ class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
                           Clipboard.setData(
                               ClipboardData(text: widget.data['password']));
                           Fluttertoast.showToast(
-                            msg: '密碼已複製',
+                            msg: localizations.translate('password_copied'),
                             gravity: ToastGravity.CENTER,
                           );
                         },
@@ -151,7 +158,7 @@ class GameDownloadDialogContentState extends State<GameDownloadDialogContent> {
               )),
           const SizedBox(height: 15),
           GameButton(
-            text: '下載APP',
+            text: localizations.translate('download_app'),
             onPressed: () {
               widget.onGetApkPath();
               Navigator.pop(context);

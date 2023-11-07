@@ -194,6 +194,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
 
   // onConfirm function
   void _onConfirm(Type type, context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     int intType = type == Type.bankcard ? 1 : 2;
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
       try {
@@ -206,8 +208,9 @@ class _GameWithdrawState extends State<GameWithdraw> {
         if (res.code == '00') {
           showConfirmDialog(
               context: context,
-              title: "申請完成",
-              content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
+              title: localizations.translate('application_completed'),
+              content: localizations.translate(
+                  'withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log'),
               confirmText: GameLocalizations.of(context)!.translate('confirm'),
               onConfirm: () {
                 setState(() {

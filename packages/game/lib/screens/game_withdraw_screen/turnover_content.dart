@@ -61,7 +61,7 @@ class TurnOverContentState extends State<TurnOverContent> {
               ),
               const SizedBox(width: 5),
               Text(
-                '流水限額詳情',
+                localizations.translate('flow_limit_details'),
                 style: TextStyle(
                   color: gameLobbyPrimaryTextColor,
                   fontSize: 14,
@@ -99,7 +99,7 @@ class TurnOverContentState extends State<TurnOverContent> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  '累積有效流水',
+                  localizations.translate('accumulated_liquidity'),
                   style: TextStyle(
                     color: gameLobbyPrimaryTextColor,
                     fontSize: 14,
@@ -123,7 +123,7 @@ class TurnOverContentState extends State<TurnOverContent> {
           ),
           const SizedBox(height: 10),
           Text(
-            '未達流水限額提現需支付提現手續費 $feeParse %',
+            '${localizations.translate('withdrawal_fee_will_be_charged_for_withdrawal_before_reaching_the_limit')} $feeParse %',
             style: TextStyle(
               color: gameLobbyHintColor,
               fontSize: 12,

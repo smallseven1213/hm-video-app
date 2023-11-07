@@ -30,7 +30,8 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('帳號重複登入'),
+              title: Text(
+                  GameLocalizations.of(context)!.translate('duplicate_login')),
               content: Text(GameLocalizations.of(context)!
                   .translate('you_have_been_logged_out_please_log_in_again')),
               actions: [

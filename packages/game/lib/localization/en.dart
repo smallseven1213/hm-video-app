@@ -146,7 +146,7 @@ const Map<String, String> enUsStrings = {
   "flow_limit_details": "Flow Limit Details",
   "accumulated_liquidity": "Accumulated Liquidity",
   "withdrawal_fee_will_be_charged_for_withdrawal_before_reaching_the_limit":
-      "Withdrawal fee {fee} % will be charged for withdrawal before reaching the limit.",
+      "Withdrawal fee will be charged for withdrawal before reaching the limit.",
   "login_now": "Login Now",
   "no_account_yet": "No account yet",
   "forgot_your_password": "Forgot your password?",
@@ -182,5 +182,8 @@ const Map<String, String> enUsStrings = {
   "currently_under_maintenance": "Currently under maintenance",
   "estimated_maintenance_time": "Estimated maintenance time 08:00-10:00",
   "please_try_again_later_sorry_for_the_inconvenience":
-      "Please try again later, sorry for the inconvenience."
+      "Please try again later, sorry for the inconvenience.",
+  "game_maintenance_in_progress": "game_maintenance_in_progress",
+  "the_game_is_under_maintenance_please_try_again_later":
+      "The game is under maintenance, please try again later.",
 };

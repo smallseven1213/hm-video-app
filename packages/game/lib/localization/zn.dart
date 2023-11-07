@@ -136,7 +136,7 @@ const Map<String, String> zhCnStrings = {
   'flow_limit_details': '流水限额详情',
   'accumulated_liquidity': '累积有效流水',
   'withdrawal_fee_will_be_charged_for_withdrawal_before_reaching_the_limit':
-      '未达流水限额提现需支付提现手续费 {fee} %',
+      '未达流水限额提现需支付提现手续费',
   'login_now': '立即登录',
   'no_account_yet': '还没有帐号',
   'forgot_your_password': '忘记密码',
@@ -171,4 +171,6 @@ const Map<String, String> zhCnStrings = {
   'currently_under_maintenance': '目前系统维护中',
   'estimated_maintenance_time': '预计维护时间 08:00-10:00',
   'please_try_again_later_sorry_for_the_inconvenience': '请稍后再试，造成不便请见谅',
+  "game_maintenance_in_progress": "游戏维护中",
+  "the_game_is_under_maintenance_please_try_again_later": "游戏维护中，请稍后再试",
 };
