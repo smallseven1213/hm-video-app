@@ -238,13 +238,16 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   String? _validate(String? value) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     if (focusNode.hasFocus) {
       if (value == null || value.isEmpty) {
-        return '請輸入提現金額';
+        return localizations.translate('please_enter_the_withdrawal_amount');
       } else if (double.parse(value) < double.parse(withdrawalLowerLimit)) {
-        return '${GameLocalizations.of(context)!.translate('input_amount_must_not_be_less_than')}$withdrawalLowerLimit${GameLocalizations.of(context)!.translate('dollar')}';
+        return '${localizations.translate('input_amount_must_not_be_less_than')}$withdrawalLowerLimit${localizations.translate('dollar')}';
       } else if (int.parse(value) > gameWalletController.wallet.value) {
-        return '輸入金額不得大於餘額';
+        return localizations.translate(
+            'input_amount_must_not_be_greater_than_the_remaining_balance');
       }
     }
     return null;
@@ -389,8 +392,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                     ]),
                                     builder: (FormFieldState field) {
                                       return GameInput(
-                                        label: "提現金額",
-                                        hint: "請輸入提現金額",
+                                        label: localizations
+                                            .translate('withdrawal_amount'),
+                                        hint: localizations.translate(
+                                            'please_enter_the_withdrawal_amount'),
                                         controller: amountController,
                                         onChanged: (value) => {
                                           value = amountController.text,

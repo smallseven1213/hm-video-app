@@ -245,7 +245,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
                 showConfirmDialog(
                   context: context,
                   title: localizations.translate('forgot_your_password'),
-                  content: '請聯繫客服，或用身份卡登入',
+                  content: localizations.translate(
+                      'please_contact_customer_service_or_log_in_with_your_id_card'),
                   onConfirm: () {
                     Navigator.of(context).pop();
                   },

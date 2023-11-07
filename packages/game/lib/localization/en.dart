@@ -186,4 +186,8 @@ const Map<String, String> enUsStrings = {
   "game_maintenance_in_progress": "game_maintenance_in_progress",
   "the_game_is_under_maintenance_please_try_again_later":
       "The game is under maintenance, please try again later.",
+  "login": "login",
+  "register": "register",
+  "please_contact_customer_service_or_log_in_with_your_id_card":
+      "Please contact customer service or log in with your ID card."
 };

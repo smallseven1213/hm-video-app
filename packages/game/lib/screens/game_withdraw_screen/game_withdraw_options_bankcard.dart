@@ -48,7 +48,7 @@ class GameWithDrawOptionsBankCard extends StatelessWidget {
                 value: data.legalName ?? '',
               ),
               GameWithDrawField(
-                name: "帳    戶",
+                name: localizations.translate('account'),
                 value: data.account ?? '',
               ),
             ],

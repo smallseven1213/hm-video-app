@@ -173,4 +173,7 @@ const Map<String, String> zhCnStrings = {
   'please_try_again_later_sorry_for_the_inconvenience': '请稍后再试，造成不便请见谅',
   "game_maintenance_in_progress": "游戏维护中",
   "the_game_is_under_maintenance_please_try_again_later": "游戏维护中，请稍后再试",
+  "login": "登入",
+  "register": "注册",
+  "please_contact_customer_service_or_log_in_with_your_id_card": "请联系客服，或用身份卡登入"
 };

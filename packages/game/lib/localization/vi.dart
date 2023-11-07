@@ -192,4 +192,8 @@ const Map<String, String> viVnStrings = {
   "game_maintenance_in_progress": "Trong trò chơi",
   "the_game_is_under_maintenance_please_try_again_later":
       "Trong quá trình chơi, hãy thử lại sau khi học",
+  "login": "Đăng nhập",
+  "register": "đăng ký",
+  "please_contact_customer_service_or_log_in_with_your_id_card":
+      "Vui lòng liên hệ bộ phận chăm sóc khách hàng hoặc đăng nhập bằng CMND của bạn"
 };

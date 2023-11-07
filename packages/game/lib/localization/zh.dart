@@ -173,4 +173,7 @@ const Map<String, String> zhTwStrings = {
   'please_try_again_later_sorry_for_the_inconvenience': '請稍後再試，造成不便請見諒',
   "game_maintenance_in_progress": "遊戲維護中",
   "the_game_is_under_maintenance_please_try_again_later": "遊戲維護中，請稍後再試",
+  "login": "登入",
+  "register": "註冊",
+  "please_contact_customer_service_or_log_in_with_your_id_card": "請聯繫客服，或用身份卡登入"
 };
