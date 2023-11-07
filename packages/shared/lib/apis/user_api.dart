@@ -448,28 +448,26 @@ class UserApi {
   Future<String> uploadAvatar(XFile file) async {
     // ===FROM OLD
     var sid = const Uuid().v4();
-    // var form = FormData.fromMap({
-    //   'sid': sid,
-    //   'photo': MultipartFile.fromBytes(
-    //     await file.readAsBytes(),
-    //     filename: file.name,
-    //     contentType: http_parser.MediaType.parse(file.mimeType ?? 'image/png'),
-    //   ),
-    // });
 
-    await fetcher(
-      url: '${systemConfig.apiHost}/public/photos/photo',
-      method: 'POST',
-      body: {
+    try {
+      var form = FormData.fromMap({
         'sid': sid,
         'photo': MultipartFile.fromBytes(
           await file.readAsBytes(),
           filename: file.name,
           contentType:
               http_parser.MediaType.parse(file.mimeType ?? 'image/png'),
-        )
-      },
-    );
+        ),
+      });
+
+      await fetcher(
+        url: '${systemConfig.apiHost}/public/photos/photo',
+        method: 'POST',
+        form: form,
+      );
+    } catch (error) {
+      throw Exception('Failed to upload avatar: $error');
+    }
 
     await fetcher(
         url: '${systemConfig.apiHost}/public/users/user/avatar',
