@@ -1,4 +1,5 @@
 import 'package:app_tt/pages/apps.dart';
+import 'package:app_tt/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
@@ -84,11 +85,7 @@ class HomeState extends State<HomePage> {
       backgroundColor: const Color(0xFFf0f0f0),
       body: MainNavigationScaffold(
           screens: screens,
-          screenNotFoundWidget: const Center(
-            child: Center(
-              child: Text('loading...'),
-            ),
-          ),
+          screenNotFoundWidget: Center(child: LoadingAnimation()),
           bottomNavigationBarWidget: (
               {required String activeKey,
               required List<Navigation> navigatorItems,

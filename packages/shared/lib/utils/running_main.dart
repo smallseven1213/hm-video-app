@@ -66,9 +66,9 @@ Future<void> runningMain(
   List<String> dlJsonHosts,
   RouteObject routes,
   Map<ColorKeys, Color> appColors,
-  GlobalLoadingWidget globalLoadingWidget,
-  ThemeData? theme,
-  Widget Function({int countdownSeconds})? countdown, {
+  ThemeData? theme, {
+  GlobalLoadingWidget? globalLoadingWidget,
+  Widget Function({int countdownSeconds})? countdown,
   bool? i18nSupport,
   List<Locale>? supportedLocales,
   String? i18nPath,
@@ -77,23 +77,26 @@ Future<void> runningMain(
 
   SystemConfig().setDlJsonHosts(dlJsonHosts);
 
-  SentryFlutter.init((options) {
-    options.dsn = sentryDSN;
-    options.tracesSampleRate = kDebugMode ? 0 : 0.1;
-    options.release = SystemConfig().version;
-    options.environment = kDebugMode ? 'development' : 'production';
-  },
-      appRunner: () => realMain(
-          RootWidget(
-              homePath: homePath,
-              routes: routes,
-              splashImage: 'assets/images/splash.png',
-              appColors: appColors,
-              loading: globalLoadingWidget,
-              theme: theme,
-              countdown: countdown,
-              i18nSupport: i18nSupport),
-          i18nSupport: i18nSupport,
-          supportedLocales: supportedLocales,
-          i18nPath: i18nPath));
+  SentryFlutter.init(
+    (options) {
+      options.dsn = sentryDSN;
+      options.tracesSampleRate = kDebugMode ? 0 : 0.1;
+      options.release = SystemConfig().version;
+      options.environment = kDebugMode ? 'development' : 'production';
+    },
+    appRunner: () => realMain(
+      RootWidget(
+          homePath: homePath,
+          routes: routes,
+          splashImage: 'assets/images/splash.png',
+          appColors: appColors,
+          loading: globalLoadingWidget,
+          theme: theme,
+          countdown: countdown,
+          i18nSupport: i18nSupport),
+      i18nSupport: i18nSupport,
+      supportedLocales: supportedLocales,
+      i18nPath: i18nPath,
+    ),
+  );
 }

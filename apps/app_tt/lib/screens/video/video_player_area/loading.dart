@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../../widgets/loading_animation.dart';
 import 'dot_line_animation.dart';
 
 final logger = Logger();
@@ -42,18 +43,7 @@ class VideoLoading extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          const Image(
-            image: AssetImage('assets/images/logo.png'),
-            width: 60.0,
-          ),
-          const DotLineAnimation(),
-          const SizedBox(height: 15),
-          Text(
-            I18n.comingSoon,
-            style: const TextStyle(fontSize: 12, color: Colors.white),
-          )
-        ]),
+        Center(child: LoadingAnimation()),
         const FloatPageBackButton(),
       ],
     );
