@@ -37,12 +37,12 @@ class ViewInfo extends StatelessWidget {
       infoItems.add(ViewTimes(times: viewCount));
     }
 
-    if (displayVideoTimes == true) {
-      infoItems.add(VideoTime(time: duration));
-    }
-
     if (displayVideoCollectTimes == true) {
       infoItems.add(VideoCollectionTimes(times: videoCollectTimes ?? 0));
+    }
+
+    if (displayVideoTimes == true) {
+      infoItems.add(VideoTime(time: duration));
     }
 
     if (infoItems.isEmpty) {
@@ -147,8 +147,8 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     return GestureDetector(
       onTap: () => super.onVideoTap(context),
       child: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(4)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(hasRadius! ? 4 : 0)),
         ),
         clipBehavior: Clip.antiAlias,
         child: Column(
@@ -165,126 +165,96 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
-                  Positioned(
-                    bottom: 0,
-                    left: 0,
-                    right: 0,
-                    child: Container(
-                      width: double.infinity,
-                      height: 30,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Colors.transparent,
-                            Colors.black87,
-                          ],
+                  if (hasInfoView == true)
+                    Positioned(
+                      left: 0,
+                      right: 0,
+                      bottom: 0,
+                      child: Container(
+                        width: double.infinity,
+                        height: 30,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Colors.transparent,
+                              Colors.black87,
+                            ],
+                          ),
                         ),
-                      ),
-                      child: Center(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            // in children: left is play button and flex 1 , right is video time and width by content
-                            Expanded(
-                              flex: 1,
-                              child: SizedBox(
-                                height: 30,
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    const Image(
-                                      width: 15,
-                                      height: 17,
-                                      image: AssetImage(
-                                          'assets/images/play_count.webp'),
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    Text(
-                                      videoViewTimes.toString(),
-                                      style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: const EdgeInsets.only(right: 5),
-                              child: VideoTime(time: timeLength),
-                            ),
-                          ],
+                        child: ViewInfo(
+                          videoCollectTimes: videoCollectTimes,
+                          viewCount: videoViewTimes ?? 0,
+                          duration: timeLength,
+                          displayVideoTimes: displayVideoTimes,
+                          displayViewTimes: displayViewTimes,
+                          displayVideoCollectTimes: displayVideoCollectTimes,
                         ),
                       ),
                     ),
-                  ),
                 ],
               ),
             ),
-            Container(
-              color: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.left,
-                      overflow: TextOverflow.ellipsis,
-                      softWrap: false,
-                      style: const TextStyle(
-                        color: Color(0xFF161823),
-                        fontSize: 13,
+            // 影片標題
+            if (hasTitle == true)
+              Container(
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.left,
+                        overflow: TextOverflow.ellipsis,
+                        softWrap: false,
+                        style: const TextStyle(
+                          color: Color(0xFF161823),
+                          fontSize: 13,
+                        ),
                       ),
                     ),
-                  ),
-                  Row(
-                    children: tags
-                        .take(3)
-                        .map(
-                          (tag) => GestureDetector(
-                            onTap: () {
-                              if (film == 1) {
-                                MyRouteDelegate.of(context).push(
-                                  AppRoutes.tag,
-                                  args: {'id': tag.id, 'title': tag.name},
-                                  removeSamePath: true,
-                                );
-                              } else if (film == 2) {
-                                MyRouteDelegate.of(context)
-                                    .push(AppRoutes.supplierTag, args: {
-                                  'tagId': tag.id,
-                                  'tagName': tag.name
-                                });
-                              } else if (film == 3) {}
-                            },
-                            child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 2),
-                                child: Text(
-                                  '${kIsWeb ? '#' : ''}${tag.name}',
-                                  style: const TextStyle(
-                                    color: Color(0xFF73747b),
-                                    fontSize: 10,
-                                    height: 1.4,
-                                  ),
-                                )),
-                          ),
-                        )
-                        .toList(),
-                  )
-                ],
-              ),
-            )
+                    if (tags.isNotEmpty && hasTags == true)
+                      Row(
+                        children: tags
+                            .take(3)
+                            .map(
+                              (tag) => GestureDetector(
+                                onTap: () {
+                                  if (film == 1) {
+                                    MyRouteDelegate.of(context).push(
+                                      AppRoutes.tag,
+                                      args: {'id': tag.id, 'title': tag.name},
+                                      removeSamePath: true,
+                                    );
+                                  } else if (film == 2) {
+                                    MyRouteDelegate.of(context)
+                                        .push(AppRoutes.supplierTag, args: {
+                                      'tagId': tag.id,
+                                      'tagName': tag.name
+                                    });
+                                  } else if (film == 3) {}
+                                },
+                                child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 2),
+                                    child: Text(
+                                      '${kIsWeb ? '#' : ''}${tag.name}',
+                                      style: const TextStyle(
+                                        color: Color(0xFF73747b),
+                                        fontSize: 10,
+                                        height: 1.4,
+                                      ),
+                                    )),
+                              ),
+                            )
+                            .toList(),
+                      )
+                  ],
+                ),
+              )
           ],
         ),
       ),
