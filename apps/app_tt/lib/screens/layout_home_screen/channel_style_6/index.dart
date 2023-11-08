@@ -59,7 +59,7 @@ class _ChannelStyle6State extends State<ChannelStyle6> {
             ),
           );
         }
-        return Center(child: LoadingAnimation());
+        return ChannelStyle6ShortsPart(controller: controller);
       }
     });
   }

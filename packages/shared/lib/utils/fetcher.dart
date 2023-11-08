@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' as getx;
 import 'package:sentry_dio/sentry_dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
@@ -23,16 +23,17 @@ Future<dynamic> fetcher({
   String? method = 'GET',
   Map<String, dynamic>? headers = const {},
   Map<String, dynamic>? body = const {},
+  FormData? form,
   bool? shouldValidate = true,
 }) async {
   // create a request options
   // Map? authorization = shouldValidate!
   //     ? null
   //     : {'authorization': 'Bearer ${systemConfig.authToken}'};
-  final responseController = Get.find<ApiResponseErrorCatchController>();
+  final responseController = getx.Get.find<ApiResponseErrorCatchController>();
 
-  final token = Get.find<AuthController>().token;
-  AuthController authController = Get.find<AuthController>();
+  final token = getx.Get.find<AuthController>().token;
+  AuthController authController = getx.Get.find<AuthController>();
 
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
@@ -58,7 +59,7 @@ Future<dynamic> fetcher({
     // dio.addSentry();
     final response = await dio.request(
       url,
-      data: data,
+      data: form ?? data,
       options: options,
     );
 

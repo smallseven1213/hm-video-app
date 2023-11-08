@@ -98,7 +98,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             () => uiController.isFullscreen.value == true
                 ? const SizedBox.shrink()
                 : Positioned(
-                    bottom: 30,
+                    bottom: 24,
                     left: 0,
                     right: 0,
                     child: ShortVideoConsumer(

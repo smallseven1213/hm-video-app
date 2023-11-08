@@ -61,17 +61,18 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                         );
                       },
                       hasRadius: false,
-                      hasTitle: false,
                       imageRatio: gridRatio,
                       displayCoverVertical: true,
                       coverVertical: vod.coverVertical!,
                       coverHorizontal: vod.coverHorizontal!,
                       timeLength: vod.timeLength!,
                       hasTags: false,
+                      hasTitle: false,
                       tags: vod.tags!,
                       title: vod.title,
                       displayVideoTimes: true,
-                      displayViewTimes: true,
+                      displayViewTimes: false,
+                      displayVideoCollectTimes: true,
                       videoViewTimes: vod.videoViewTimes!,
                       videoCollectTimes: vod.videoCollectTimes!,
                     );
@@ -90,8 +91,7 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                   child: NoDataWidget(),
                 ),
               if (vodController.displayLoading.value)
-                // ignore: prefer_const_constructors
-                SliverVideoPreviewSkeletonList(),
+                const SliverVideoPreviewSkeletonList(),
               if (vodController.displayNoMoreData.value)
                 SliverToBoxAdapter(
                   child: ListNoMore(),

@@ -30,12 +30,14 @@ void main() async {
     ],
     allRoutes,
     AppColors.colors,
-    ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
     ThemeData(
-        scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent),
-    ({int countdownSeconds = 5}) =>
+      scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+    ),
+    globalLoadingWidget: ({String? text}) =>
+        Loading(loadingText: text ?? '正在加载...'),
+    countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
   );
 }
