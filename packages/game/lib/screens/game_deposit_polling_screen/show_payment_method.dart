@@ -11,6 +11,8 @@ import 'package:game/screens/game_deposit_polling_screen/payment_method_item.dar
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/utils/show_model.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
@@ -26,17 +28,18 @@ Future<void> showPaymentMethod({
   } else {
     showFormDialog(
       context,
-      title: '交易失敗',
+      title: GameLocalizations.of(context)!.translate('transaction_failed'),
       content: SizedBox(
         height: 24,
         child: Center(
           child: Text(
-            '訂單建立失敗，請聯繫客服',
+            GameLocalizations.of(context)!.translate(
+                'order_creation_failed_please_contact_our_customer_service'),
             style: TextStyle(color: gameLobbyPrimaryTextColor),
           ),
         ),
       ),
-      confirmText: '確認',
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),
@@ -56,6 +59,8 @@ Future<void> showPaymentMethod({
     ),
     backgroundColor: gameLobbyBgColor,
     builder: (BuildContext context) {
+      final GameLocalizations localizations = GameLocalizations.of(context)!;
+
       return StatefulBuilder(
         builder: (ctx, setModalState) {
           return Container(
@@ -74,7 +79,7 @@ Future<void> showPaymentMethod({
                   children: [
                     Center(
                       child: Text(
-                        "請選擇支付方式",
+                        localizations.translate('please_select_payment_method'),
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
@@ -111,10 +116,10 @@ Future<void> showPaymentMethod({
                       const SizedBox(
                         width: 8,
                       ),
-                      const Text("需支付金額",
-                          style: TextStyle(
+                      Text(localizations.translate('amount_to_be_paid'),
+                          style: const TextStyle(
                               fontSize: 12, color: Color(0xff979797))),
-                      Text("$amount 元",
+                      Text("$amount ${localizations.translate('dollar')}",
                           style:
                               const TextStyle(fontSize: 15, color: Colors.red)),
                     ],
@@ -182,7 +187,7 @@ Future<void> showPaymentMethod({
                       color: gamePrimaryButtonColor,
                       borderRadius: BorderRadius.circular(24.0),
                     ),
-                    child: Text('確認支付',
+                    child: Text(localizations.translate('confirm_payment'),
                         style: TextStyle(color: gamePrimaryButtonTextColor)),
                   ),
                 ),

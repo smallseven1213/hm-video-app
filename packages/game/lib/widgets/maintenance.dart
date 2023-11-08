@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 
+import '../localization/game_localization_delegate.dart';
+
 class GameMaintenance extends StatelessWidget {
   const GameMaintenance({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -22,7 +26,7 @@ class GameMaintenance extends StatelessWidget {
               ),
               const SizedBox(height: 10),
               Text(
-                '目前系統維護中',
+                localizations.translate('currently_under_maintenance'),
                 style: TextStyle(
                   color: gameLobbyAppBarTextColor,
                   fontSize: 22,
@@ -30,17 +34,18 @@ class GameMaintenance extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 5),
-              const Text(
-                '預計維護時間 08:00-10:00',
-                style: TextStyle(
+              Text(
+                localizations.translate('estimated_maintenance_time'),
+                style: const TextStyle(
                   color: Color(0xff979797),
                   fontSize: 13,
                 ),
               ),
               const SizedBox(height: 5),
-              const Text(
-                '請稍後再試，造成不便請見諒',
-                style: TextStyle(
+              Text(
+                localizations.translate(
+                    'please_try_again_later_sorry_for_the_inconvenience'),
+                style: const TextStyle(
                   color: Color(0xff979797),
                   fontSize: 13,
                 ),

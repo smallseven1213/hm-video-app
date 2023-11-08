@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 submitDepositOrder(
   context, {
   required String amount,
@@ -43,17 +45,21 @@ submitDepositOrder(
       onLoading(context, status: false);
       showFormDialog(
         context,
-        title: '交易失敗',
+        title: GameLocalizations.of(context)!.translate('transaction_failed'),
         content: SizedBox(
           height: 24,
           child: Center(
             child: Text(
-              value == '51728' ? '當前支付人數眾多，請稍後再試！' : '訂單建立失敗，請聯繫客服',
+              value == '51728'
+                  ? GameLocalizations.of(context)!.translate(
+                      'there_are_many_people_paying_at_the_moment_please_try_again_later')
+                  : GameLocalizations.of(context)!.translate(
+                      'order_creation_failed_please_contact_our_customer_service'),
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
         ),
-        confirmText: '確認',
+        confirmText: GameLocalizations.of(context)!.translate('confirm'),
         onConfirm: () => {
           Navigator.pop(context),
           Navigator.pop(context),
@@ -64,17 +70,18 @@ submitDepositOrder(
     onLoading(context, status: false);
     showFormDialog(
       context,
-      title: '交易失敗',
+      title: GameLocalizations.of(context)!.translate('transaction_failed'),
       content: SizedBox(
         height: 60,
         child: Center(
           child: Text(
-            '訂單建立失敗，請聯繫客服',
+            GameLocalizations.of(context)!.translate(
+                'order_creation_failed_please_contact_our_customer_service'),
             style: TextStyle(color: gameLobbyPrimaryTextColor),
           ),
         ),
       ),
-      confirmText: '確認',
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

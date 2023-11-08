@@ -27,6 +27,7 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../enums/game_app_routes.dart';
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -113,9 +114,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
     showConfirmDialog(
       context: context,
       title: "",
-      content: "請先設置資金密碼",
+      content: GameLocalizations.of(context)!
+          .translate('please_set_the_password_first'),
       barrierDismissible: false,
-      confirmText: "前往設定!!",
+      confirmText: GameLocalizations.of(context)!.translate('go_to_settings'),
       onConfirm: () {
         gameWithdrawController.setLoadingStatus(false);
         Navigator.of(context).pop();
@@ -147,7 +149,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
           context: context,
           title: "",
           content: "餘額自動轉出遊戲失敗",
-          confirmText: "確認",
+          confirmText: GameLocalizations.of(context)!.translate('confirm'),
           onConfirm: () {
             Navigator.pop(context);
           },
@@ -192,6 +194,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
 
   // onConfirm function
   void _onConfirm(Type type, context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     int intType = type == Type.bankcard ? 1 : 2;
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
       try {
@@ -204,9 +208,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
         if (res.code == '00') {
           showConfirmDialog(
               context: context,
-              title: "申請完成",
-              content: "提款申請已完成，可於提款紀錄查詢目前申請進度。",
-              confirmText: "確認",
+              title: localizations.translate('application_completed'),
+              content: localizations.translate(
+                  'withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log'),
+              confirmText: GameLocalizations.of(context)!.translate('confirm'),
               onConfirm: () {
                 setState(() {
                   _enableSubmit = false;
@@ -233,13 +238,16 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   String? _validate(String? value) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     if (focusNode.hasFocus) {
       if (value == null || value.isEmpty) {
-        return '請輸入提現金額';
+        return localizations.translate('please_enter_the_withdrawal_amount');
       } else if (double.parse(value) < double.parse(withdrawalLowerLimit)) {
-        return '輸入金額不得小於$withdrawalLowerLimit元';
+        return '${localizations.translate('input_amount_must_not_be_less_than')}$withdrawalLowerLimit${localizations.translate('dollar')}';
       } else if (int.parse(value) > gameWalletController.wallet.value) {
-        return '輸入金額不得大於餘額';
+        return localizations.translate(
+            'input_amount_must_not_be_greater_than_the_remaining_balance');
       }
     }
     return null;
@@ -247,11 +255,13 @@ class _GameWithdrawState extends State<GameWithdraw> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          '遊戲提現',
+          localizations.translate('game_withdrawal'),
           style: TextStyle(
             color: gameLobbyAppBarTextColor,
             fontSize: 18,
@@ -294,7 +304,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                 height: 28,
                               ),
                               Text(
-                                '提現紀錄',
+                                localizations.translate('withdrawal_history'),
                                 style: TextStyle(
                                   color: gameLobbyPrimaryTextColor,
                                   fontSize: 12,
@@ -344,9 +354,11 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                   // ignore: unrelated_type_equality_checks
                                   gameWithdrawController.hasPaymentData == true)
                                 LabelWithStatus(
-                                  label: "流水限額",
+                                  label: localizations.translate('limit'),
                                   reachable: reachable,
-                                  statusText: reachable ? "已達標" : "未達標",
+                                  statusText: reachable
+                                      ? localizations.translate('achieved')
+                                      : localizations.translate('not_reached'),
                                   stakeLimit: stakeLimit,
                                   validStake: validStake,
                                   withdrawalFee: double.parse(withdrawalFee),
@@ -359,12 +371,13 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                         logger.i(val.toString()),
                                     validator: FormBuilderValidators.compose([
                                       FormBuilderValidators.required(
-                                        errorText: '請輸提現金額',
+                                        errorText: localizations.translate(
+                                            'please_enter_the_withdrawal_amount'),
                                       ),
                                       FormBuilderValidators.min(
                                         double.parse(withdrawalLowerLimit),
                                         errorText:
-                                            '輸入金額不得小於$withdrawalLowerLimit元',
+                                            '${localizations.translate('input_amount_must_not_be_less_than')}$withdrawalLowerLimit${localizations.translate('dollar')}',
                                       ),
                                       // 不得大於餘額
                                       FormBuilderValidators.max(
@@ -373,13 +386,16 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                       ),
                                       FormBuilderValidators.match(
                                         r"^(?![-\.])\d*$",
-                                        errorText: '輸入金額格式錯誤',
+                                        errorText: localizations.translate(
+                                            'input_amount_is_in_wrong_format'),
                                       )
                                     ]),
                                     builder: (FormFieldState field) {
                                       return GameInput(
-                                        label: "提現金額",
-                                        hint: "請輸入提現金額",
+                                        label: localizations
+                                            .translate('withdrawal_amount'),
+                                        hint: localizations.translate(
+                                            'please_enter_the_withdrawal_amount'),
                                         controller: amountController,
                                         onChanged: (value) => {
                                           value = amountController.text,
@@ -391,7 +407,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                           })
                                         },
                                         warningMessage:
-                                            "*最低可提金額為 $withdrawalLowerLimit CNY",
+                                            "${localizations.translate('minimum_withdrawal_amount_is')} $withdrawalLowerLimit CNY",
                                         errorMessage:
                                             _validate(amountController.text),
                                         inputFormatters: <TextInputFormatter>[

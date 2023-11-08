@@ -7,6 +7,8 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 class GameDepositPolling extends StatefulWidget {
   const GameDepositPolling({Key? key}) : super(key: key);
 
@@ -17,6 +19,8 @@ class GameDepositPolling extends StatefulWidget {
 class GameDepositPollingState extends State<GameDepositPolling> {
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -25,7 +29,7 @@ class GameDepositPollingState extends State<GameDepositPolling> {
           toolbarHeight: 48,
           centerTitle: true,
           title: Text(
-            '存款',
+            localizations.translate('deposit'),
             style: TextStyle(
               color: gameLobbyAppBarTextColor,
               fontSize: 18,
@@ -43,7 +47,7 @@ class GameDepositPollingState extends State<GameDepositPolling> {
                 MyRouteDelegate.of(context).push(GameAppRoutes.depositRecord);
               },
               child: Text(
-                '存款記錄',
+                localizations.translate('deposit_history'),
                 style: TextStyle(
                   color: gameLobbyAppBarTextColor,
                   fontSize: 14,

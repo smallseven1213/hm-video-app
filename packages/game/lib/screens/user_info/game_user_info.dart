@@ -9,6 +9,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 class GameUserInfo extends StatefulWidget {
   final String? type;
   final Widget child;
@@ -50,6 +52,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
     final gameWalletController = Get.find<GameWalletController>();
 
     return Container(
@@ -111,7 +114,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('餘額',
+                        Text(localizations.translate('balance'),
                             style: TextStyle(
                                 fontSize: 12,
                                 color: gameLobbyPrimaryTextColor)),

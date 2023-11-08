@@ -8,6 +8,7 @@ import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
 
 import '../enums/game_app_routes.dart';
+import '../localization/game_localization_delegate.dart';
 
 String gameUrl = '';
 
@@ -41,6 +42,8 @@ _saveGameHistory({gameId}) async {
 
 void handleGameItem(BuildContext context,
     {gameId, updateGameHistory, tpCode, direction, gameType}) async {
+  final GameLocalizations localizations = GameLocalizations.of(context)!;
+
   try {
     onLoading(context, status: true);
     await getGameUrl(tpCode, gameId, gameType);
@@ -55,9 +58,10 @@ void handleGameItem(BuildContext context,
       // ignore: use_build_context_synchronously
       showConfirmDialog(
         context: context,
-        title: '遊戲維護中',
-        content: '遊戲維護中，請稍後再試',
-        confirmText: '確認',
+        title: localizations.translate('game_maintenance_in_progress'),
+        content: localizations
+            .translate('the_game_is_under_maintenance_please_try_again_later'),
+        confirmText: localizations.translate('confirm'),
         onConfirm: () {
           Navigator.pop(context);
         },
@@ -79,9 +83,10 @@ void handleGameItem(BuildContext context,
     onLoading(context, status: false);
     showConfirmDialog(
       context: context,
-      title: '遊戲維護中',
-      content: '遊戲維護中，請稍後再試',
-      confirmText: '確認',
+      title: localizations.translate('game_maintenance_in_progress'),
+      content: localizations
+          .translate('the_game_is_under_maintenance_please_try_again_later'),
+      confirmText: localizations.translate('confirm'),
       onConfirm: () {
         Navigator.pop(context);
       },

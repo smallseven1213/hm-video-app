@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 submitCompanyDepositOrder(
@@ -34,17 +36,18 @@ submitCompanyDepositOrder(
       onLoading(context, status: false);
       showFormDialog(
         context,
-        title: '交易失敗',
+        title: GameLocalizations.of(context)!.translate('transaction_failed'),
         content: SizedBox(
           height: 24,
           child: Center(
             child: Text(
-              '訂單建立失敗，請聯繫客服',
+              GameLocalizations.of(context)!.translate(
+                  'order_creation_failed_please_contact_our_customer_service'),
               style: TextStyle(color: gameLobbyPrimaryTextColor),
             ),
           ),
         ),
-        confirmText: '確認',
+        confirmText: GameLocalizations.of(context)!.translate('confirm'),
         onConfirm: () => {
           Navigator.pop(context),
           Navigator.pop(context),
@@ -55,14 +58,15 @@ submitCompanyDepositOrder(
     onLoading(context, status: false);
     showFormDialog(
       context,
-      title: '交易失敗',
+      title: GameLocalizations.of(context)!.translate('transaction_failed'),
       content: Center(
         child: Text(
-          '訂單建立失敗，請聯繫客服',
+          GameLocalizations.of(context)!.translate(
+              'order_creation_failed_please_contact_our_customer_service'),
           style: TextStyle(color: gameLobbyPrimaryTextColor),
         ),
       ),
-      confirmText: '確認',
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
       onConfirm: () => {
         Navigator.pop(context),
         Navigator.pop(context),

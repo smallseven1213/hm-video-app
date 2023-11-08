@@ -61,42 +61,48 @@ void realMain(Widget widget,
 }
 
 Future<void> runningMain(
-  String sentryDSN,
-  String homePath,
-  List<String> dlJsonHosts,
-  RouteObject routes,
-  Map<ColorKeys, Color> appColors,
-  ThemeData? theme, {
-  GlobalLoadingWidget? globalLoadingWidget,
-  Widget Function({int countdownSeconds})? countdown,
-  bool? i18nSupport,
-  List<Locale>? supportedLocales,
-  String? i18nPath,
-}) async {
+    String sentryDSN,
+    String homePath,
+    List<String> dlJsonHosts,
+    RouteObject routes,
+    Map<ColorKeys, Color> appColors,
+    ThemeData? theme,
+    {GlobalLoadingWidget? globalLoadingWidget,
+    Widget Function({int countdownSeconds})? countdown,
+    bool? i18nSupport,
+    List<Locale>? supportedLocales,
+    String? i18nPath,
+    Widget Function(Widget child)? expandedWidget}) async {
   url_strategy.usePathUrlStrategy();
 
   SystemConfig().setDlJsonHosts(dlJsonHosts);
 
-  SentryFlutter.init(
-    (options) {
-      options.dsn = sentryDSN;
-      options.tracesSampleRate = kDebugMode ? 0 : 0.1;
-      options.release = SystemConfig().version;
-      options.environment = kDebugMode ? 'development' : 'production';
-    },
-    appRunner: () => realMain(
-      RootWidget(
-          homePath: homePath,
-          routes: routes,
-          splashImage: 'assets/images/splash.png',
-          appColors: appColors,
-          loading: globalLoadingWidget,
-          theme: theme,
-          countdown: countdown,
-          i18nSupport: i18nSupport),
-      i18nSupport: i18nSupport,
-      supportedLocales: supportedLocales,
-      i18nPath: i18nPath,
-    ),
-  );
+  Widget buildOuterWidget(Widget child) {
+    if (expandedWidget != null) {
+      return expandedWidget(child);
+    } else {
+      return child;
+    }
+  }
+
+  SentryFlutter.init((options) {
+    options.dsn = sentryDSN;
+    options.tracesSampleRate = kDebugMode ? 0 : 0.1;
+    options.release = SystemConfig().version;
+    options.environment = kDebugMode ? 'development' : 'production';
+  },
+      appRunner: () => realMain(
+          buildOuterWidget(RootWidget(
+            homePath: homePath,
+            routes: routes,
+            splashImage: 'assets/images/splash.png',
+            appColors: appColors,
+            loading: globalLoadingWidget,
+            theme: theme,
+            countdown: countdown,
+            i18nSupport: i18nSupport,
+          )),
+          i18nSupport: i18nSupport,
+          supportedLocales: supportedLocales,
+          i18nPath: i18nPath));
 }

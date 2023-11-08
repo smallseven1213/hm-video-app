@@ -5,6 +5,8 @@ import 'package:game/controllers/game_response_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/game_localization_delegate.dart';
+
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class ErrorOverlayWidget extends StatefulWidget {
@@ -28,8 +30,10 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
             context: context,
             barrierDismissible: false,
             builder: (context) => AlertDialog(
-              title: const Text('帳號重複登入'),
-              content: const Text('你已被登出，請重新登入'),
+              title: Text(
+                  GameLocalizations.of(context)!.translate('duplicate_login')),
+              content: Text(GameLocalizations.of(context)!
+                  .translate('you_have_been_logged_out_please_log_in_again')),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -37,7 +41,9 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
                     MyRouteDelegate.of(context)
                         .push(AppRoutes.home, removeSamePath: true);
                   },
-                  child: const Text('確認'),
+                  child: Text(
+                    GameLocalizations.of(context)!.translate('confirm'),
+                  ),
                 ),
               ],
             ),
