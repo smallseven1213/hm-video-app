@@ -66,10 +66,10 @@ Future<void> runningMain(
     List<String> dlJsonHosts,
     RouteObject routes,
     Map<ColorKeys, Color> appColors,
-    GlobalLoadingWidget globalLoadingWidget,
     ThemeData? theme,
+    {GlobalLoadingWidget? globalLoadingWidget,
     Widget Function({int countdownSeconds})? countdown,
-    {bool? i18nSupport,
+    bool? i18nSupport,
     List<Locale>? supportedLocales,
     String? i18nPath,
     Widget Function(Widget child)? expandedWidget}) async {
