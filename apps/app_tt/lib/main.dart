@@ -31,8 +31,6 @@ void main() async {
     i18nSupport: true,
     supportedLocales: I18n.supportedLocales,
     i18nPath: 'assets/langs/langs.csv',
-    // expandedWidget: (child) => GameProvider,
-    // expandedWidget is GameProvider
     expandedWidget: (child) => GameProvider(child: child),
   );
 }
