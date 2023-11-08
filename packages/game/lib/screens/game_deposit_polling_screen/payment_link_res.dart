@@ -135,7 +135,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                   child: Text(
                     canOpenPayment
                         ? localizations.translate('cancel')
-                        : localizations.translate('open'),
+                        : localizations.translate('close'),
                     style: TextStyle(
                       color: canOpenPayment
                           ? gameLobbyButtonDisableTextColor
@@ -164,7 +164,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                           .push(GameAppRoutes.paymentResult),
                     },
                     child: Text(
-                      localizations.translate('register_login'),
+                      localizations.translate('open'),
                       style: TextStyle(
                           color: gamePrimaryButtonTextColor, fontSize: 16),
                     ),
