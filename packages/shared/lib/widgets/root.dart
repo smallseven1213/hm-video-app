@@ -64,15 +64,20 @@ class RootWidget extends StatelessWidget {
           'vi-VN': viVnStrings,
           // 'ja-JP': jpStrings,
         }),
-        ...context.localizationDelegates,
+        if (i18nSupport == true) ...context.localizationDelegates,
 
         // GameLocalizationsDelegate(
         //     Localizations.localeOf(context).languageCode == 'zh_TW'
         //         ? enStrings
         //         : enStrings),
       ],
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
+      supportedLocales: i18nSupport == true
+          ? context.supportedLocales
+          : const [
+              Locale('zh', 'TW'),
+              // Locale('ja', 'JP'),
+            ],
+      locale: i18nSupport == true ? context.locale : const Locale('zh', 'TW'),
       debugShowCheckedModeBanner: false,
       routerDelegate: delegate,
       routeInformationParser: parser,
