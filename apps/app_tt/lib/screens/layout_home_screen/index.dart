@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -80,10 +81,22 @@ class LayoutHomeScreen extends StatelessWidget {
                                                             const EdgeInsets
                                                                 .only(top: 6),
                                                         child: IconButton(
-                                                          icon: const Icon(
-                                                            Icons.search,
-                                                            color: Colors.grey,
-                                                            size: 24,
+                                                          icon:
+                                                              SvgPicture.asset(
+                                                            'assets/svgs/ic-search.svg',
+                                                            width: 16,
+                                                            height: 16,
+                                                            theme: const SvgTheme(
+                                                                currentColor:
+                                                                    Colors
+                                                                        .white,
+                                                                fontSize: 24),
+                                                            colorFilter:
+                                                                const ColorFilter
+                                                                    .mode(
+                                                                    Colors.grey,
+                                                                    BlendMode
+                                                                        .srcIn),
                                                           ),
                                                           onPressed: () {
                                                             MyRouteDelegate.of(

@@ -28,7 +28,7 @@ class FloatPageSearchButton extends StatelessWidget {
             ),
             child: Center(
               child: SvgPicture.asset(
-                'svgs/ic-search.svg',
+                'assets/svgs/ic-search.svg',
                 width: 17,
                 height: 17,
                 colorFilter:
@@ -36,16 +36,6 @@ class FloatPageSearchButton extends StatelessWidget {
               ),
             ),
           ),
-
-          //  IconButton(
-          //   padding: EdgeInsets.zero,
-          //   color: Colors.white,
-          //   icon: const Icon(Icons.arrow_back_ios_new, size: 15),
-          //   onPressed: () {
-          //     MyRouteDelegate.of(context).push(AppRoutes.search,
-          //         args: {'inputDefaultValue': '', 'autoSearch': false});
-          //   },
-          // ),
         ),
       );
     }

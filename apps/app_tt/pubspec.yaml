@@ -82,6 +82,7 @@ flutter:
     - assets/images/purchase/
     - assets/images/user/
     - assets/langs/langs.csv
+    - assets/svgs/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

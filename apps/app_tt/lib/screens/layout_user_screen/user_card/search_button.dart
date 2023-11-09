@@ -18,7 +18,7 @@ class SearchButton extends StatelessWidget {
         ),
         child: Center(
           child: SvgPicture.asset(
-            'svgs/ic-search.svg',
+            'assets/svgs/ic-search.svg',
             width: 17,
             height: 17,
             color: Colors.white,

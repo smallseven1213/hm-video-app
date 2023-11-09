@@ -1,5 +1,6 @@
 import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'dart:async';
@@ -119,10 +120,12 @@ class SearchPageState extends State<SearchPage> {
                 children: [
                   IconButton(
                     padding: EdgeInsets.zero,
-                    icon: const Icon(
-                      Icons.search,
-                      size: 16,
-                      color: Color(0xff50525a),
+                    icon: SvgPicture.asset(
+                      'assets/svgs/ic-search.svg',
+                      width: 16,
+                      height: 16,
+                      colorFilter: const ColorFilter.mode(
+                          Color(0xff50525a), BlendMode.srcIn),
                     ),
                     onPressed: () {
                       // 你的放大鏡按鈕邏輯
@@ -153,23 +156,6 @@ class SearchPageState extends State<SearchPage> {
                       ),
                     ),
                   ),
-                  // IconButton(
-                  //   icon: Icon(Icons.search),
-                  //   onPressed: () {
-                  //     var getSearchKeyword = _searchController.text.isEmpty
-                  //         ? widget.inputDefaultValue
-                  //         : _searchController.text;
-                  //     searchPageDataController.setKeyword(getSearchKeyword!);
-
-                  //     if (searchKeyword != '') {
-                  //       displaySearchResult = false;
-                  //       _searchController.text = getSearchKeyword;
-                  //       Get.find<UserSearchHistoryController>()
-                  //           .add(getSearchKeyword);
-                  //     }
-                  //     setState(() {});
-                  //   },
-                  // ),
                 ],
               ),
             ),

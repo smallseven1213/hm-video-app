@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_search_history_controller.dart';
 import 'package:shared/controllers/video_popular_controller.dart';
@@ -52,17 +53,15 @@ class ChannelSearchBar extends StatelessWidget {
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
-            child: const SizedBox(
+            child: SizedBox(
                 width: 40,
                 child: Center(
-                  child: SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: Image(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                          'assets/images/home_search_bar_filter.png'),
-                    ),
+                  child: SvgPicture.asset(
+                    'assets/svgs/ic-filter.svg',
+                    width: 14,
+                    height: 14,
+                    colorFilter:
+                        const ColorFilter.mode(Colors.black, BlendMode.srcIn),
                   ),
                 )),
           ),

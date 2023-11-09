@@ -107,22 +107,20 @@ class SupplierPageState extends State<SupplierPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 StatisticsItem(
                                   count: supplier.collectTotal ?? 0,
                                   label: '讚數',
                                 ),
-                                const SizedBox(width: 20),
                                 StatisticsItem(
                                   count: supplier.followTotal ?? 0,
                                   label: '關注',
                                 ),
-                                const SizedBox(width: 20),
                                 StatisticsItem(
                                   count: supplier.shortVideoTotal ?? 0,
                                   label: '短視頻',
                                 ),
-                                const SizedBox(width: 20),
                                 StatisticsItem(
                                   count: supplier.videoCount ?? 0,
                                   label: '長視頻',

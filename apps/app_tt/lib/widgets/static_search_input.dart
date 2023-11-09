@@ -32,9 +32,12 @@ class StaticSearchInput extends StatelessWidget {
             width: 25,
             child: IconButton(
               padding: EdgeInsets.zero,
-              icon: const Icon(
-                Icons.search,
-                size: 16,
+              icon: SvgPicture.asset(
+                'assets/svgs/ic-search.svg',
+                width: 16,
+                height: 16,
+                colorFilter:
+                    const ColorFilter.mode(Colors.grey, BlendMode.srcIn),
               ),
               onPressed: onInputClick,
             ),
