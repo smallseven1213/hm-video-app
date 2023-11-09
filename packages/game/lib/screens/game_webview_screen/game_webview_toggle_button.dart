@@ -14,6 +14,8 @@ import 'package:pointer_interceptor/pointer_interceptor.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 class GameWebviewToggleButtonWidget extends StatefulWidget {
@@ -40,6 +42,8 @@ class _GameWebviewToggleButtonWidget
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return PointerInterceptor(
       child: RotatedBox(
         quarterTurns: !GetPlatform.isWeb
@@ -61,8 +65,9 @@ class _GameWebviewToggleButtonWidget
                 onTap: () {
                   showConfirmDialog(
                     context: context,
-                    title: '退出遊戲',
-                    content: '你真的要退出遊戲嗎？',
+                    title: localizations.translate('quit_the_game'),
+                    content: localizations
+                        .translate('do_you_really_want_to_quit_the_game'),
                     rotate: !GetPlatform.isWeb
                         ? false
                         : widget.direction == gameWebviewDirection['vertical']
@@ -90,9 +95,9 @@ class _GameWebviewToggleButtonWidget
                       height: 32,
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      "返回大廳",
-                      style: TextStyle(
+                    Text(
+                      localizations.translate('return_to_the_lobby'),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                         fontFeatures: [FontFeature.proportionalFigures()],
@@ -114,9 +119,9 @@ class _GameWebviewToggleButtonWidget
                       height: 32,
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      "客服",
-                      style: TextStyle(
+                    Text(
+                      localizations.translate('customer_service'),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),
@@ -143,9 +148,9 @@ class _GameWebviewToggleButtonWidget
                       height: 32,
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      "充值",
-                      style: TextStyle(
+                    Text(
+                      localizations.translate('recharge'),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),
@@ -164,9 +169,9 @@ class _GameWebviewToggleButtonWidget
                       height: 32,
                     ),
                     const SizedBox(height: 5),
-                    const Text(
-                      "關閉",
-                      style: TextStyle(
+                    Text(
+                      localizations.translate('close'),
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 12,
                       ),

@@ -5,6 +5,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:logger/logger.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 void showUserName(
@@ -12,12 +14,15 @@ void showUserName(
   required Function(String userName) onSuccess,
   Function()? onClose,
 }) {
+  final GameLocalizations localizations = GameLocalizations.of(context)!;
+
   final userNameController = TextEditingController();
   final formKey = GlobalKey<FormBuilderState>();
 
   showFormDialog(
     context,
-    title: '輸入真實姓名',
+    title:
+        GameLocalizations.of(context)!.translate('please_enter_your_real_name'),
     content: FormBuilder(
       key: formKey,
       onChanged: () {
@@ -28,7 +33,7 @@ void showUserName(
         onChanged: (val) => logger.i(val.toString()),
         validator: FormBuilderValidators.compose([
           FormBuilderValidators.required(
-            errorText: '請輸入真實姓名',
+            errorText: localizations.translate('please_enter_your_real_name'),
           ),
           FormBuilderValidators.minLength(2, errorText: '請填寫正確姓名'),
           FormBuilderValidators.maxLength(6, errorText: '請填寫正確姓名'),
@@ -43,7 +48,8 @@ void showUserName(
               fontSize: 14,
             ),
             decoration: InputDecoration(
-              hintText: '請填寫真實姓名',
+              hintText: GameLocalizations.of(context)!
+                  .translate('please_enter_your_real_name'),
               errorText: field.errorText,
               hintStyle: TextStyle(
                 color: gameLobbyPrimaryTextColor,

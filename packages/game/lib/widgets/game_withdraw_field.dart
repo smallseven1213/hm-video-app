@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:game/screens/game_theme_config.dart';
 
+import '../localization/game_localization_delegate.dart';
+
 class GameWithDrawField extends StatelessWidget {
   const GameWithDrawField({
     Key? key,
@@ -20,6 +22,8 @@ class GameWithDrawField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       height: 30,
       child: Row(
@@ -55,7 +59,7 @@ class GameWithDrawField extends StatelessWidget {
                     onTap: () {
                       Clipboard.setData(ClipboardData(text: value));
                       Fluttertoast.showToast(
-                        msg: '已複製',
+                        msg: localizations.translate('duplicated'),
                         gravity: ToastGravity.CENTER,
                       );
                     },

@@ -31,6 +31,7 @@ import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 
 import '../enums/game_app_routes.dart';
+import '../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -95,6 +96,7 @@ class _GameLobbyState extends State<GameLobby>
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
     final gameBannerController = Get.find<GameBannerController>();
     final gamesListController = Get.find<GamesListController>();
 
@@ -102,11 +104,10 @@ class _GameLobbyState extends State<GameLobby>
         ? const GameMaintenance()
         : Scaffold(
             appBar: AppBar(
-              leading: Container(),
               backgroundColor: gameLobbyBgColor,
               centerTitle: true,
               title: Text(
-                '游戏大厅',
+                localizations.translate('game_lobby'),
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.w500,
@@ -141,7 +142,7 @@ class _GameLobbyState extends State<GameLobby>
                             ),
                             child: Center(
                               child: Text(
-                                '註冊/登入',
+                                localizations.translate('register_login'),
                                 style: TextStyle(
                                   color: gamePrimaryButtonTextColor,
                                   fontSize: 14,

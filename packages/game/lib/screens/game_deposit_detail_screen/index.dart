@@ -15,6 +15,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 class GameDepositDetail extends StatefulWidget {
@@ -67,7 +69,8 @@ class GameDepositDetailState extends State<GameDepositDetail> {
           showConfirmDialog(
             context: context,
             title: '',
-            content: '你已被登出，請重新登入',
+            content: GameLocalizations.of(context)!
+                .translate('you_have_been_logged_out_please_log_in_again'),
             onConfirm: () async {
               Navigator.pop(context);
               Navigator.pop(context);
@@ -114,6 +117,7 @@ class GameDepositDetailState extends State<GameDepositDetail> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
     final gameWithdrawController = Get.put(GameWithdrawController());
 
     var estimateAmount =
@@ -128,7 +132,9 @@ class GameDepositDetailState extends State<GameDepositDetail> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            widget.payment == 'selfusdt' ? 'USDT' : '銀行轉帳',
+            widget.payment == 'selfusdt'
+                ? 'USDT'
+                : localizations.translate('bank_transfer'),
             style: TextStyle(
               color: gameLobbyAppBarTextColor,
               fontSize: 18,
@@ -166,21 +172,21 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                 child: Column(
                   children: [
                     GameLabel(
-                      label: '轉帳金額',
+                      label: localizations.translate('transfer_amount'),
                       text: widget.payment == 'selfusdt'
                           ? '${gameWithdrawController.paymentAmount.value} USDT'
-                          : '¥${gameWithdrawController.paymentAmount.value}元',
+                          : '¥${gameWithdrawController.paymentAmount.value}${localizations.translate('dollar')}',
                     ),
                     if (widget.payment == 'selfusdt')
                       GameLabel(
-                        label: '匯  率',
+                        label: localizations.translate('exchange_rate'),
                         text: exchangeRate.toString(),
                       ),
                     if (widget.payment == 'selfusdt')
                       GameLabel(
-                        label: '預估上分金額',
+                        label: localizations.translate('estimated_amount'),
                         text:
-                            '¥${NumberFormat("0.00").format(estimateAmount)}元',
+                            '¥${NumberFormat("0.00").format(estimateAmount)}${localizations.translate('dollar')}',
                       ),
                     const SizedBox(height: 12),
                     Container(height: 1, color: gameLobbyDividerColor),
@@ -198,8 +204,9 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                               widget.payment == 'selfusdt'
-                                  ? 'TRC-20地址'
-                                  : '帳戶資訊',
+                                  ? localizations.translate('trc_address')
+                                  : localizations
+                                      .translate('account_information'),
                               style: TextStyle(
                                 color: gameLobbyPrimaryTextColor,
                                 fontSize: 14,
@@ -214,25 +221,25 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                           // 以下是selfdebit時的資訊
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "銀行名稱",
+                              name: localizations.translate('bank_name'),
                               value: receiptBank,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "支行名稱",
+                              name: localizations.translate('branch_name'),
                               value: branchName,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "銀行卡號",
+                              name: localizations.translate('bank_card_number'),
                               value: receiptAccount,
                               showClipboard: true,
                             ),
                           if (widget.payment != 'selfusdt')
                             GameWithDrawField(
-                              name: "帳戶姓名",
+                              name: localizations.translate('account_name'),
                               value: receiptName,
                               showClipboard: true,
                             ),
@@ -251,10 +258,12 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                       child: Column(
                         children: [
                           GameInput(
-                            label: '轉帳備註',
+                            label: localizations.translate('transfer_remarks'),
                             hint: widget.payment == 'selfusdt'
-                                ? '請輸入轉帳哈希值末 5 碼'
-                                : '請輸入真實姓名',
+                                ? localizations.translate(
+                                    'please_enter_the_last_digits_of_the_transfer_hash')
+                                : localizations
+                                    .translate('please_enter_your_real_name'),
                             controller: remarkController,
                             isFontBold: true,
                             onClear: () {
@@ -291,7 +300,8 @@ class GameDepositDetailState extends State<GameDepositDetail> {
                               ),
                               child: Center(
                                 child: Text(
-                                  "確認已轉帳，送出！",
+                                  localizations.translate(
+                                      'confirmation_of_transfer_and_delivery'),
                                   style: TextStyle(
                                       color: remarkController.text != ''
                                           ? gamePrimaryButtonTextColor

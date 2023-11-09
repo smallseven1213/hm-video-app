@@ -9,6 +9,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 class GameSetFundPassword extends StatefulWidget {
@@ -38,40 +40,49 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
     super.dispose();
   }
 
+  void showSuccessDialog() {
+    showConfirmDialog(
+      context: context,
+      title: "",
+      content: GameLocalizations.of(context)!.translate('setup_successful'),
+      barrierDismissible: false,
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
+      onConfirm: () => {
+        gameWithdrawController.mutate(),
+        gameWithdrawController.setLoadingStatus(false),
+        Navigator.pop(context),
+        MyRouteDelegate.of(context).popRoute(),
+      },
+    );
+  }
+
+  void showFailDialog() {
+    showConfirmDialog(
+      context: context,
+      title: "",
+      content: GameLocalizations.of(context)!.translate('setting_failed'),
+      barrierDismissible: false,
+      confirmText: GameLocalizations.of(context)!.translate('confirm'),
+      onConfirm: () => Navigator.pop(context),
+    );
+  }
+
   updateFundPassword() async {
     if (!isConfirmButtonEnabled) return;
     try {
       await Get.find<GameLobbyApi>().updatePaymentPin(passwordController.text);
-      // ignore: use_build_context_synchronously
-      showConfirmDialog(
-        context: context,
-        title: "",
-        content: "設置成功",
-        barrierDismissible: false,
-        confirmText: "確認",
-        onConfirm: () => {
-          gameWithdrawController.mutate(),
-          gameWithdrawController.setLoadingStatus(false),
-          Navigator.pop(context),
-          MyRouteDelegate.of(context).popRoute(),
-        },
-      );
+      showSuccessDialog();
     } catch (e) {
       logger.i('res: $e');
       // 設置失敗
-      showConfirmDialog(
-        context: context,
-        title: "",
-        content: "設置失敗",
-        barrierDismissible: false,
-        confirmText: "確定",
-        onConfirm: () => Navigator.pop(context),
-      );
+      showFailDialog();
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
@@ -130,14 +141,16 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
                       FormField(
                         validator: (value) {
                           if (value.toString().length != 6) {
-                            return '* 密碼長度應為6位數';
+                            return localizations
+                                .translate('password_length_should_be_digits');
                           }
                           return null;
                         },
                         builder: (FormFieldState field) {
                           return GameInput2(
-                            label: '輸入資金密碼',
-                            hint: '請輸入6位數字',
+                            label: localizations.translate('input_funds_pin'),
+                            hint:
+                                localizations.translate('please_enter_digits'),
                             controller: passwordController,
                             field: field,
                             isPassword: true,
@@ -147,17 +160,21 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
                       FormField(
                         validator: (value) {
                           if (value.toString().length != 6) {
-                            return '* 密碼長度應為6位數';
+                            return localizations
+                                .translate('password_length_should_be_digits');
                           }
                           if (value != passwordController.text) {
-                            return '* 二次驗證密碼輸入應相同';
+                            return localizations.translate(
+                                'the_password_should_be_the_same_for_the_second_time');
                           }
                           return null;
                         },
                         builder: (FormFieldState field) {
                           return GameInput2(
-                            label: '再次確認密碼',
-                            hint: '請再次確認密碼',
+                            label: localizations
+                                .translate('confirm_password_again'),
+                            hint: localizations
+                                .translate('please_confirm_the_password_again'),
                             controller: passwordConfirmController,
                             field: field,
                             isPassword: true,

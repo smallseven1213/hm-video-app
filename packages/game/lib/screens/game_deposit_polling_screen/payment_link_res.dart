@@ -7,6 +7,8 @@ import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 class PaymentLinkRes extends StatefulWidget {
@@ -67,6 +69,8 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       height: 180,
       child: Column(
@@ -79,7 +83,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                   Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '取得充值網址',
+                      localizations.translate('get_recharge_url'),
                       style: TextStyle(
                           color: gameLobbyPrimaryTextColor, fontSize: 20),
                       textAlign: TextAlign.center,
@@ -95,10 +99,13 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                   alignment: Alignment.center,
                   child: Text(
                     isFetching == 'start'
-                        ? '正在努力取得充值網址，請稍候...'
+                        ? localizations.translate(
+                            'we_are_trying_to_get_the_recharge_url_please_wait')
                         : (submitDepositSuccess && isFetching == 'complete')
-                            ? '已取得充值網址，點擊開啟充值頁'
-                            : '取得網址失敗\n請重新選擇渠道或聯繫客服',
+                            ? localizations.translate(
+                                'please_click_to_open_the_recharge_page')
+                            : localizations.translate(
+                                'failed_to_get_the_website_address_please_choose_a_new_channel_or_contact_customer_service'),
                     style: TextStyle(color: gameLobbyPrimaryTextColor),
                     textAlign: TextAlign.center,
                   ),
@@ -126,7 +133,9 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                     Navigator.of(context).pop(),
                   },
                   child: Text(
-                    canOpenPayment ? '取消' : '關閉',
+                    canOpenPayment
+                        ? localizations.translate('cancel')
+                        : localizations.translate('close'),
                     style: TextStyle(
                       color: canOpenPayment
                           ? gameLobbyButtonDisableTextColor
@@ -155,7 +164,7 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                           .push(GameAppRoutes.paymentResult),
                     },
                     child: Text(
-                      '開啟',
+                      localizations.translate('open'),
                       style: TextStyle(
                           color: gamePrimaryButtonTextColor, fontSize: 16),
                     ),

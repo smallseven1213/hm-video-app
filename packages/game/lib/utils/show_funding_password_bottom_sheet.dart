@@ -10,6 +10,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 void showFundingPasswordBottomSheet(BuildContext context,
@@ -30,7 +32,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
       }
     } catch (e) {
       Fluttertoast.showToast(
-        msg: '密碼錯誤',
+        msg: GameLocalizations.of(context)!.translate('wrong_password'),
         gravity: ToastGravity.CENTER,
       );
       logger.i('onSubmit error:${e.toString()}');
@@ -39,10 +41,12 @@ void showFundingPasswordBottomSheet(BuildContext context,
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      passwordCheckError = '請輸入密碼';
+      passwordCheckError = GameLocalizations.of(context)!
+          .translate('please_enter_your_password');
     } else if (value.isNotEmpty) {
       if (value.length < 6) {
-        passwordCheckError = '密碼長度不足';
+        passwordCheckError =
+            GameLocalizations.of(context)!.translate('insufficient_password');
       } else if (value.length >= 6) {
         passwordCheckError = null;
       }
@@ -97,7 +101,8 @@ void showFundingPasswordBottomSheet(BuildContext context,
                       height: 50,
                       child: Center(
                         child: Text(
-                          '輸入資金密碼',
+                          GameLocalizations.of(context)!
+                              .translate('input_funds_pin'),
                           style: TextStyle(
                             color: gameLobbyAppBarTextColor,
                             fontSize: 18,
@@ -124,7 +129,8 @@ void showFundingPasswordBottomSheet(BuildContext context,
                       builder: (FormFieldState field) {
                         return GameInput(
                           label: '資金密碼',
-                          hint: '請輸入資金密碼',
+                          hint: GameLocalizations.of(context)!
+                              .translate('input_funds_pin'),
                           controller: passwordController,
                           isPassword: true,
                           onChanged: (value) => {
