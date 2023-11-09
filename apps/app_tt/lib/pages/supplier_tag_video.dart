@@ -70,7 +70,7 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                       hasTitle: false,
                       tags: vod.tags!,
                       title: vod.title,
-                      displayVideoTimes: true,
+                      displayVideoTimes: false,
                       displayViewTimes: false,
                       displayVideoCollectTimes: true,
                       videoViewTimes: vod.videoViewTimes!,

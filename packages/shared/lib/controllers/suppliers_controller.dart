@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 
 import '../apis/supplier_api.dart';
 import '../models/supplier.dart';
+import 'user_favorites_supplier_controller.dart';
 
 final SupplierApi supplierApi = SupplierApi();
 final logger = Logger();
@@ -55,6 +56,17 @@ class SuppliersController extends GetxController {
     } else {
       logger.e("Index out of bounds: $index");
     }
+  }
+
+  void fetchUnfollowedSuppliers() {
+    final UserFavoritesSupplierController userFavoritesSupplierController =
+        Get.find<UserFavoritesSupplierController>();
+    _fetchData().then((_) {
+      actors.value = actors
+          .where((supplier) =>
+              !userFavoritesSupplierController.isSupplierLiked(supplier.id ?? 0))
+          .toList();
+    });
   }
 
   _fetchData() async {

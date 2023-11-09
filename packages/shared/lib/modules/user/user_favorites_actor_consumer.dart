@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/actor_controller.dart';
 import '../../controllers/user_favorites_actor_controller.dart';
 import '../../models/actor.dart';
 

@@ -16,7 +16,6 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
   final Vod video;
   final Function toggleFullscreen;
   final bool? allowFullsreen;
-  final uiController = Get.put(UIController());
 
   VideoPlayerDisplayWidget({
     super.key,
@@ -113,11 +112,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                   bottom: 150,
                   child: Center(
                       child: ElevatedButton.icon(
-                    onPressed: () {
-                      toggleFullscreen();
-                      // uiController.displayHomeNavigationBar.value = false;
-                      // uiController.displayChannelTab.value = false;
-                    },
+                    onPressed: () => toggleFullscreen(),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor:

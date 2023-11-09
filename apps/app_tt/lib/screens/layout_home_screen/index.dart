@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
@@ -12,7 +14,9 @@ import 'layout_tab_bar.dart';
 
 class LayoutHomeScreen extends StatelessWidget {
   final int layoutId;
-  const LayoutHomeScreen({Key? key, required this.layoutId}) : super(key: key);
+  final uiController = Get.find<UIController>();
+
+  LayoutHomeScreen({Key? key, required this.layoutId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,57 +46,67 @@ class LayoutHomeScreen extends StatelessWidget {
                         SizedBox(
                           height: MediaQuery.of(context).padding.top,
                         ),
-                        SizedBox(
-                          height: 55,
-                          child: Row(
-                            children: [
-                              Expanded(
-                                  child: SizedBox(
-                                      height: 45,
-                                      child: LayoutTabBar(
+                        Obx(
+                          () => uiController.displayChannelTab.value
+                              ? SizedBox(
+                                  height: 55,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: SizedBox(
+                                            height: 45,
+                                            child: LayoutTabBar(
+                                              layoutId: layoutId,
+                                            )),
+                                      ),
+                                      DisplayLayoutTabSearchConsumer(
                                         layoutId: layoutId,
-                                      ))),
-                              DisplayLayoutTabSearchConsumer(
-                                layoutId: layoutId,
-                                child: ({required bool displaySearchBar}) =>
-                                    displaySearchBar
-                                        ? Container()
-                                        : PopularSearchTitleBuilder(
-                                            child: (
-                                                    {required String
-                                                        searchKeyword}) =>
-                                                SizedBox(
-                                              width: 46,
-                                              height: 55,
-                                              child: Center(
-                                                  child: Padding(
-                                                // padding top 5
-                                                padding: const EdgeInsets.only(
-                                                    top: 6),
-                                                child: IconButton(
-                                                  icon: const Image(
-                                                    width: 28,
-                                                    height: 28,
-                                                    fit: BoxFit.cover,
-                                                    image: AssetImage(
-                                                        'assets/images/layout_tabbar_search.png'),
+                                        child: (
+                                                {required bool
+                                                    displaySearchBar}) =>
+                                            displaySearchBar
+                                                ? Container()
+                                                : PopularSearchTitleBuilder(
+                                                    child: (
+                                                            {required String
+                                                                searchKeyword}) =>
+                                                        SizedBox(
+                                                      width: 46,
+                                                      height: 55,
+                                                      child: Center(
+                                                          child: Padding(
+                                                        // padding top 5
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .only(top: 6),
+                                                        child: IconButton(
+                                                          icon: const Icon(
+                                                            Icons.search,
+                                                            color: Colors.grey,
+                                                            size: 24,
+                                                          ),
+                                                          onPressed: () {
+                                                            MyRouteDelegate.of(
+                                                                    context)
+                                                                .push(
+                                                                    AppRoutes
+                                                                        .search,
+                                                                    args: {
+                                                                  'inputDefaultValue':
+                                                                      searchKeyword,
+                                                                  'autoSearch':
+                                                                      false
+                                                                });
+                                                          },
+                                                        ),
+                                                      )),
+                                                    ),
                                                   ),
-                                                  onPressed: () {
-                                                    MyRouteDelegate.of(context)
-                                                        .push(AppRoutes.search,
-                                                            args: {
-                                                          'inputDefaultValue':
-                                                              searchKeyword,
-                                                          'autoSearch': false
-                                                        });
-                                                  },
-                                                ),
-                                              )),
-                                            ),
-                                          ),
-                              )
-                            ],
-                          ),
+                                      )
+                                    ],
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
                         ),
                         DisplayLayoutTabSearchConsumer(
                             layoutId: layoutId,
@@ -104,7 +118,7 @@ class LayoutHomeScreen extends StatelessWidget {
                                       )
                                     : Container()))
                       ],
-                    )),
+                    ))
                   ],
                 ));
           },

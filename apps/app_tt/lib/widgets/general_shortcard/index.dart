@@ -119,7 +119,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                                   data: videoDetail,
                                   title: widget.title,
                                   displayActorAvatar: false,
-                                  controllerTag: widget.controllerTag!,
+                                  controllerTag: widget.controllerTag ?? "",
                                 )
                               : const SizedBox.shrink(),
                         ],

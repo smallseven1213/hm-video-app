@@ -93,35 +93,39 @@ class HomeState extends State<HomePage> {
             final paddingBottom = MediaQuery.of(context).padding.bottom;
             return Stack(
               children: [
-                Container(
-                  padding: EdgeInsets.only(bottom: paddingBottom),
-                  height: 76 + paddingBottom,
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Color(0xFFe4e4e5),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    children: navigatorItems
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => Expanded(
-                              child: LayoutTabItem(
-                            isActive: entry.value.path! == activeKey,
-                            label: entry.value.name!,
-                            onTap: () {
-                              changeTabKey(entry.value.path!);
-                              ttUiController.setDarkMode(false);
-                            },
-                          )),
+                Obx(() {
+                  return uiController.displayHomeNavigationBar.value
+                      ? Container(
+                          padding: EdgeInsets.only(bottom: paddingBottom),
+                          height: 76 + paddingBottom,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              top: BorderSide(
+                                color: Color(0xFFe4e4e5),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            children: navigatorItems
+                                .asMap()
+                                .entries
+                                .map(
+                                  (entry) => Expanded(
+                                      child: LayoutTabItem(
+                                    isActive: entry.value.path! == activeKey,
+                                    label: entry.value.name!,
+                                    onTap: () {
+                                      changeTabKey(entry.value.path!);
+                                      ttUiController.setDarkMode(false);
+                                    },
+                                  )),
+                                )
+                                .toList(),
+                          ),
                         )
-                        .toList(),
-                  ),
-                ),
+                      : const SizedBox.shrink();
+                }),
               ],
             );
           }),

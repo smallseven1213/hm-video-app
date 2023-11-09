@@ -18,7 +18,7 @@ class ShortCardInfo extends StatefulWidget {
   final String title;
   final String tag;
   final bool displayActorAvatar;
-  final String controllerTag;
+  final String? controllerTag;
 
   const ShortCardInfo({
     Key? key,
@@ -27,7 +27,7 @@ class ShortCardInfo extends StatefulWidget {
     required this.title,
     required this.tag,
     this.displayActorAvatar = true,
-    required this.controllerTag,
+    this.controllerTag,
   }) : super(key: key);
 
   @override
@@ -49,7 +49,9 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
 
   @override
   void initState() {
-    _setupNextVideo();
+    if (widget.controllerTag != null && widget.controllerTag!.isNotEmpty) {
+      _setupNextVideo();
+    }
     super.initState();
   }
 
@@ -95,7 +97,9 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
                     videoPlayerController:
                         videoPlayerInfo.videoPlayerController!,
                   ),
-                  NextVideoWidget(video: nextVideo),
+                  if (widget.controllerTag != null &&
+                      widget.controllerTag!.isNotEmpty)
+                    NextVideoWidget(video: nextVideo),
                 ],
               ),
             ]),

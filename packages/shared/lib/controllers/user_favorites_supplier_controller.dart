@@ -67,4 +67,8 @@ class UserFavoritesSupplierController extends GetxController {
       await box.put(supplier.id.toString(), supplierStr);
     }
   }
+
+  bool isSupplierLiked(int supplierId) {
+    return suppliers.any((supplier) => supplier.id == supplierId);
+  }
 }

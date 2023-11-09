@@ -8,9 +8,10 @@ import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/actor/header_follow_button.dart';
-import '../../widgets/actor/rounded_search_button.dart';
 import '../../widgets/actor/search_button.dart';
 import '../../widgets/actor/header_info.dart';
+import '../../widgets/float_page_search_button.dart';
+import '../../widgets/float_page_back_button.dart';
 
 class SupplierHeader extends SliverPersistentHeaderDelegate {
   final BuildContext context;
@@ -29,12 +30,12 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
 
   @override
   double get maxExtent =>
-      164 + kToolbarHeight + MediaQuery.of(context).padding.top;
+      100 + kToolbarHeight + MediaQuery.of(context).padding.top;
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final shouldShowAppBar = shrinkOffset >= 164;
+    final shouldShowAppBar = shrinkOffset >= 100;
     final double percentage = shrinkOffset / maxExtent;
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
     SupplierController supplierController =
@@ -76,7 +77,8 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
             child: SupplierConsumer(
               id: id,
               child: (Supplier info) => Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding:
+                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
                   child: Stack(
                     children: [
                       ActorHeaderInfo(
@@ -86,7 +88,8 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
                         percentage: percentage,
                         imageSize: imageSize,
                       ),
-                      const RoundedSearchButton(),
+                      const FloatPageBackButton(),
+                      const FloatPageSearchButton()
                     ],
                   )),
             ),

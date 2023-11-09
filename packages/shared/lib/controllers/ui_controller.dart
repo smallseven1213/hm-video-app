@@ -1,8 +1,5 @@
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
-import '../utils/screen_control.dart';
 
 var logger = Logger();
 

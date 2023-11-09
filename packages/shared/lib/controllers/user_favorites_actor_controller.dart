@@ -67,4 +67,8 @@ class UserFavoritesActorController extends GetxController {
       await box.put(actor.id.toString(), actorStr);
     }
   }
+
+  bool isActorLiked(int actorId) {
+    return actors.any((actor) => actor.id == actorId);
+  }
 }

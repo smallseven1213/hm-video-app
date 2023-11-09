@@ -44,7 +44,7 @@ class SupplierVods extends StatelessWidget {
             ),
           if (totalRows > 0)
             SliverPadding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(2.0),
               sliver: SliverGrid(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
@@ -71,9 +71,10 @@ class SupplierVods extends StatelessWidget {
                         hasRadius: false,
                         hasTitle: false,
                         imageRatio: gridRatio,
-                        displayVideoTimes: false,
-                        displayViewTimes: false,
+                        displayVideoTimes: true,
+                        displayViewTimes: true,
                         displayCoverVertical: true,
+                        displayVideoCollectTimes: false,
                         coverVertical: vod.coverVertical!,
                         coverHorizontal: vod.coverHorizontal!,
                         timeLength: vod.timeLength!,

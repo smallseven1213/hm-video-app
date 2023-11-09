@@ -6,7 +6,6 @@ import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/supplier/supplier_consumer.dart';
 import 'package:shared/modules/supplier/supplier_provider.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/supplier/follow_with_recommendations.dart';
 import '../screens/supplier/header.dart';
@@ -196,6 +195,7 @@ class SupplierPageState extends State<SupplierPage>
                       },
                       child: Obx(() => SliverVodGrid(
                           key: const Key('supplier_short'),
+                          padding: 2,
                           videos: supplierVideoController.vodList,
                           displayLoading:
                               supplierVideoController.displayLoading.value,
@@ -213,7 +213,6 @@ class SupplierPageState extends State<SupplierPage>
                 ],
               ),
             ),
-            const FloatPageBackButton()
           ],
         ),
       ),

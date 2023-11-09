@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
+import 'package:shared/controllers/suppliers_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
 import 'profile_cards.dart';
@@ -21,11 +22,28 @@ class FollowWithRecommendations extends StatefulWidget {
 }
 
 class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
+  late SuppliersController suppliersController;
   bool _isExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    suppliersController = Get.put(
+      SuppliersController(
+        initialIsRecommend: true,
+        initialLimit: 20,
+      ),
+      tag: 'actor-${widget.id}',
+    );
+  }
 
   void _toggleExpand() {
     setState(() {
       _isExpanded = !_isExpanded;
+      if (_isExpanded) {
+        suppliersController.fetchUnfollowedSuppliers();
+      }
     });
   }
 
@@ -55,6 +73,7 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(8.0),
+                    height: 36,
                     decoration: BoxDecoration(
                       color: isLiked
                           ? const Color(0xfff1f1f2)
@@ -82,8 +101,9 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
               width: 36,
               height: 36,
               child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_drop_down,
+                padding: EdgeInsets.zero,
+                icon: Icon(
+                  _isExpanded ? Icons.arrow_drop_up : Icons.arrow_drop_down,
                   color: Colors.black,
                   size: 24.0,
                 ),
@@ -94,18 +114,18 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
         ),
         const SizedBox(height: 10),
         if (_isExpanded)
-          const AnimatedSize(
-            duration: Duration(milliseconds: 300),
+          AnimatedSize(
+            duration: const Duration(milliseconds: 300),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   '你可能感興趣',
                   textAlign: TextAlign.left,
                   style: TextStyle(color: Color(0xff73747b), fontSize: 13),
                 ),
-                SizedBox(height: 10),
-                ProfileCards()
+                const SizedBox(height: 10),
+                ProfileCards(id: widget.id)
               ],
             ),
           ),
