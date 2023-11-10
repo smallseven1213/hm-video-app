@@ -151,6 +151,27 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
             clipBehavior: Clip.antiAlias,
             child: Stack(
               children: [
+                // 背景
+                AspectRatio(
+                  aspectRatio: defaultImageRatio,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: hasRadius == true
+                          ? const BorderRadius.all(Radius.circular(10))
+                          : null,
+                      color: AppColors.colors[ColorKeys.videoPreviewBg],
+                    ),
+                    clipBehavior: Clip.antiAlias,
+                    child: const Center(
+                      child: Image(
+                        image: AssetImage(
+                            'assets/images/video_preview_loading.png'),
+                        width: 102,
+                        height: 70,
+                      ),
+                    ),
+                  ),
+                ),
                 AspectRatio(
                   aspectRatio: defaultImageRatio,
                   child: SidImageVisibilityDetector(
