@@ -6,6 +6,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
 import 'package:video_player/video_player.dart';
+import 'package:shared/widgets/video_ads/index.dart';
 import 'purchase_promotion.dart';
 import 'controls_overlay.dart';
 import 'error.dart';
@@ -179,7 +180,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                   toggleFullscreen: (status) {
                     toggleFullscreen(fullScreen: status);
                   },
-                )
+                ),
               ] else if (videoPlayerInfo
                       .videoPlayerController?.value.isInitialized ==
                   false) ...[
@@ -187,6 +188,9 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                   coverHorizontal: widget.video.coverHorizontal ?? '',
                 )
               ],
+              PlayerPositionAd(videoPlayerInfo: videoPlayerInfo),
+              PauseAd(videoPlayerInfo: videoPlayerInfo),
+              PlayingAd(videoPlayerInfo: videoPlayerInfo),
             ],
           );
         },
