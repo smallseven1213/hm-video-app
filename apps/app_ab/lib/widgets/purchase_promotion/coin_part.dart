@@ -57,7 +57,7 @@ class Coin extends StatelessWidget {
                 '片長：${getTimeString(timeLength)}',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -65,14 +65,14 @@ class Coin extends StatelessWidget {
                 '價格：$buyPoints金幣',
                 style: TextStyle(
                   color: AppColors.colors[ColorKeys.secondary],
-                  fontSize: 10,
+                  fontSize: 13,
                 ),
               ),
               Text(
                 '您目前擁有的金幣：$userPoints金幣',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 13,
                 ),
               ),
             ],
