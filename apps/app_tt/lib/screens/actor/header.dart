@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/actor_controller.dart';
@@ -81,11 +82,12 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
                 id: id,
                 child: (Actor info) => Container(
                     padding: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top),
+                        top: kIsWeb ? 10 : MediaQuery.of(context).padding.top),
                     child: Stack(
                       children: [
                         ActorHeaderInfo(
-                          name: info.aliasName ?? '',
+                          name: info.name,
+                          aliasName: info.aliasName ?? '',
                           id: info.id,
                           photoSid: info.photoSid,
                           percentage: percentage,
