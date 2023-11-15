@@ -27,10 +27,10 @@ class VipPage extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 20),
+                padding: const EdgeInsets.only(bottom: 40),
                 child: InkWell(
                   onTap: () {
-                    MyRouteDelegate.of(context).push(
+                    MyRouteDelegate.of(context).pushAndRemoveUntil(
                       AppRoutes.home,
                       args: {'defaultScreenKey': '/game'},
                     );
