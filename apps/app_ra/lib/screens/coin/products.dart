@@ -15,7 +15,7 @@ Widget _buildProductCard(context, Product product) {
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8),
       border: Border.all(
-        color: AppColors.colors[ColorKeys.primary],
+        color: Theme.of(context).primaryColor,
       ),
     ),
     child: Row(
@@ -34,7 +34,7 @@ Widget _buildProductCard(context, Product product) {
               style: TextStyle(
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
-                color: AppColors.colors[ColorKeys.primary],
+                color: Theme.of(context).primaryColor,
               ),
             ),
             Text('\$原價: ${product.fiatMoneyPrice}',

@@ -81,7 +81,7 @@ class UserInfo extends StatelessWidget {
                                   child: Icon(
                                     Icons.create_rounded,
                                     size: 12,
-                                    color: AppColors.colors[ColorKeys.primary],
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                 ),
                               );

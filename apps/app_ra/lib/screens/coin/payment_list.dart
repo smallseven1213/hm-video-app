@@ -139,8 +139,7 @@ class _PaymentListState extends State<PaymentList> {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                           color: isSelected
-                                              ? AppColors
-                                                  .colors[ColorKeys.primary]
+                                              ? Theme.of(context).primaryColor
                                               : Colors.white),
                                       borderRadius: BorderRadius.circular(8),
                                       color: isSelected
@@ -152,8 +151,7 @@ class _PaymentListState extends State<PaymentList> {
                                       payment.type.toString(),
                                       style: TextStyle(
                                           color: isSelected
-                                              ? AppColors
-                                                  .colors[ColorKeys.primary]
+                                              ? Theme.of(context).primaryColor
                                               : Colors.white),
                                     ),
                                   ),

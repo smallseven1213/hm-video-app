@@ -113,7 +113,7 @@ class _RedemptionPageState extends State<RedemptionPage> {
                       decoration: BoxDecoration(
                         border: Border(
                           bottom: BorderSide(
-                            color: AppColors.colors[ColorKeys.primary],
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ),
