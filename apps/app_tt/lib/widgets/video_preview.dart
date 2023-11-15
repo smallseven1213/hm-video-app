@@ -1,4 +1,5 @@
 import 'package:app_tt/localization/i18n.dart';
+import 'package:app_tt/widgets/video_embedded_ad.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -136,13 +137,17 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
-    //   return VideoEmbeddedAdWidget(
-    //     imageRatio: imageRatio ?? 374 / 198,
-    //     detail: detail!,
-    //     displayCoverVertical: displayCoverVertical,
-    //   );
-    // }
+    //
+    double defaultImageRatio =
+        imageRatio ?? (displayCoverVertical == true ? 119 / 179 : 374 / 198);
+
+    if (detail?.dataType == VideoType.embeddedAd.index && isEmbeddedAds) {
+      return VideoEmbeddedAdWidget(
+        imageRatio: defaultImageRatio,
+        detail: detail!,
+        displayCoverVertical: displayCoverVertical,
+      );
+    }
 
     return GestureDetector(
       onTap: () => super.onVideoTap(context),
@@ -155,15 +160,42 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
           children: [
             // 影片封面
             AspectRatio(
-              aspectRatio: imageRatio ??
-                  (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+              aspectRatio: defaultImageRatio,
               child: Stack(
                 children: [
-                  SidImage(
-                    key: ValueKey('video-preview-$id'),
-                    sid: displayCoverVertical ? coverVertical : coverHorizontal,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
+                  // 背景
+                  AspectRatio(
+                    aspectRatio: defaultImageRatio,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: hasRadius == true
+                            ? const BorderRadius.all(Radius.circular(10))
+                            : null,
+                        color: Colors.grey,
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: const Center(
+                        child: Image(
+                          image: AssetImage(
+                              'assets/images/video_preview_loading.png'),
+                          width: 102,
+                          height: 70,
+                        ),
+                      ),
+                    ),
+                  ),
+                  AspectRatio(
+                    aspectRatio: defaultImageRatio,
+                    child: SidImageVisibilityDetector(
+                      child: SidImage(
+                        key: ValueKey('video-preview-$id'),
+                        sid: displayCoverVertical
+                            ? coverVertical
+                            : coverHorizontal,
+                        width: double.infinity,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   if (hasInfoView == true)
                     Positioned(

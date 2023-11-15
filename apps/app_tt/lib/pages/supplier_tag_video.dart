@@ -12,7 +12,7 @@ import '../widgets/no_data.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
 
-const gridRatio = 128 / 173;
+const gridRatio = 128 / 227;
 final logger = Logger();
 
 class SupplierTagVideoPage extends StatefulWidget {
