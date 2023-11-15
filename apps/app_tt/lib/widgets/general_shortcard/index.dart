@@ -114,7 +114,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
-                                  videoUrl: videoUrl ?? "",
+                                  key: Key(videoUrl!),
+                                  videoUrl: videoUrl,
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
