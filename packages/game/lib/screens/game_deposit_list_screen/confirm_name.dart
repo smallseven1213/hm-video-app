@@ -13,6 +13,8 @@ import 'package:game/widgets/button.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 class ConfirmName extends StatefulWidget {
@@ -86,6 +88,8 @@ class ConfirmNameState extends State<ConfirmName> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       height: 360,
       child: Column(children: [
@@ -99,7 +103,7 @@ class ConfirmNameState extends State<ConfirmName> {
           ),
         ),
         Text(
-          '存款金額：${widget.amount}',
+          '${localizations.translate('deposit_amount')}：${widget.amount}',
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -125,7 +129,7 @@ class ConfirmNameState extends State<ConfirmName> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                    '請輸入真實姓名',
+                    localizations.translate('please_enter_your_real_name'),
                     style: TextStyle(
                         fontSize: 16, color: gameLobbyPrimaryTextColor),
                   ),
@@ -136,7 +140,8 @@ class ConfirmNameState extends State<ConfirmName> {
                   controller: textEditingController,
                   focusNode: enableSubmit ? null : _focusNode,
                   decoration: InputDecoration(
-                    hintText: '請輸入真實姓名',
+                    hintText:
+                        localizations.translate('please_enter_your_real_name'),
                     hintStyle: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -152,9 +157,13 @@ class ConfirmNameState extends State<ConfirmName> {
                     color: gameLobbyPrimaryTextColor,
                   ),
                   validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(errorText: '請輸入真實姓名'),
+                    FormBuilderValidators.required(
+                      errorText: localizations
+                          .translate('please_enter_your_real_name'),
+                    ),
                     FormBuilderValidators.match(r"^[a-zA-Z\u4e00-\u9fa5]+$",
-                        errorText: '姓名格式錯誤'),
+                        errorText: GameLocalizations.of(context)!
+                            .translate('wrong_name_format')),
                   ]),
                   enabled: isFetching != 'complete',
                 ),
@@ -163,11 +172,12 @@ class ConfirmNameState extends State<ConfirmName> {
                   alignment: Alignment.center,
                   child: Text(
                     enableSubmit && isFetching == 'start'
-                        ? '取得充值連結...'
+                        ? localizations.translate('get_the_link_to_reload')
                         : submitDepositSuccess && isFetching == 'complete'
-                            ? '充值連結取得成功！'
+                            ? localizations.translate('the_link_was_successful')
                             : !submitDepositSuccess && isFetching == 'complete'
-                                ? '充值連結取得失敗\n請更換充值渠道或聯繫客服'
+                                ? localizations.translate(
+                                    'failed_to_get_the_link_to_recharge_please_change_the_recharge_channel_or_contact_customer_service')
                                 : '',
                     style: TextStyle(
                       fontSize: 14,
@@ -189,7 +199,7 @@ class ConfirmNameState extends State<ConfirmName> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GameButton(
-          text: '確認',
+          text: GameLocalizations.of(context)!.translate('confirm'),
           onPressed: () {
             if (enableSubmit == true) {
               setState(() => isFetching = 'start');
@@ -209,7 +219,9 @@ class ConfirmNameState extends State<ConfirmName> {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: GameButton(
-          text: submitDepositSuccess ? '開啟充值頁' : '關閉',
+          text: submitDepositSuccess
+              ? GameLocalizations.of(context)!.translate('open_top_up_page')
+              : GameLocalizations.of(context)!.translate('close'),
           onPressed: () {
             if (submitDepositSuccess) {
               onLoading(context, status: false);

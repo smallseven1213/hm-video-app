@@ -5,7 +5,6 @@ import 'package:shared/modules/actor/actor_consumer.dart';
 import 'package:shared/modules/actor/actor_provider.dart';
 import 'package:shared/modules/videos/actor_hotest_videos_consumer.dart';
 import 'package:shared/modules/videos/actor_latest_videos_consumer.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/actor/header.dart';
 import '../widgets/list_no_more.dart';
@@ -58,6 +57,7 @@ class ActorPageState extends State<ActorPage>
         isListEmpty: isListEmpty,
         noMoreWidget: ListNoMore(),
         displayVideoCollectTimes: false,
+        padding: 2,
       ),
     );
   }
@@ -179,7 +179,6 @@ class ActorPageState extends State<ActorPage>
                 ],
               ),
             ),
-            const FloatPageBackButton()
           ],
         ),
       ),

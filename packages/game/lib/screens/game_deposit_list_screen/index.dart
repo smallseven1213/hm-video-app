@@ -13,6 +13,8 @@ import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 class GameDepositList extends StatefulWidget {
@@ -31,20 +33,24 @@ class GameDepositListState extends State<GameDepositList> {
     _getDepositChannel();
   }
 
+  void showConfirmDialogWrapper() {
+    showConfirmDialog(
+      context: context,
+      title: '',
+      content: GameLocalizations.of(context)!
+          .translate('you_have_been_logged_out_please_log_in_again'),
+      onConfirm: () {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      },
+    );
+  }
+
   void _getDepositChannel() async {
     try {
       var res = await GameLobbyApi().getDepositChannel();
       if (res['code'] != '00') {
-        // ignore: use_build_context_synchronously
-        showConfirmDialog(
-          context: context,
-          title: '',
-          content: '你已被登出，請重新登入',
-          onConfirm: () async {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          },
-        );
+        showConfirmDialogWrapper();
         return;
       } else {
         setState(() {
@@ -58,6 +64,8 @@ class GameDepositListState extends State<GameDepositList> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -65,7 +73,7 @@ class GameDepositListState extends State<GameDepositList> {
         appBar: AppBar(
           centerTitle: true,
           title: Text(
-            '存款',
+            localizations.translate('deposit'),
             style: TextStyle(
               color: gameLobbyAppBarTextColor,
               fontSize: 18,
@@ -83,7 +91,7 @@ class GameDepositListState extends State<GameDepositList> {
                 MyRouteDelegate.of(context).push(GameAppRoutes.depositRecord);
               },
               child: Text(
-                '存款記錄',
+                localizations.translate('deposit_history'),
                 style: TextStyle(
                   color: gameLobbyAppBarTextColor,
                   fontSize: 14,

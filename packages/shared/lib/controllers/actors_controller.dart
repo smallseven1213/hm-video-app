@@ -4,6 +4,7 @@ import 'package:logger/logger.dart';
 import '../apis/actor_api.dart';
 import '../models/actor.dart';
 import 'actor_region_controller.dart';
+import 'user_favorites_actor_controller.dart';
 
 final ActorApi actorApi = ActorApi();
 final logger = Logger();
@@ -80,6 +81,18 @@ class ActorsController extends GetxController {
     } else {
       logger.e("Index out of bounds: $index");
     }
+  }
+
+  // 這個方法將被用來刷新未關注演員的列表
+  void fetchUnfollowedActors() {
+    final UserFavoritesActorController userFavoritesActorController =
+        Get.find<UserFavoritesActorController>();
+    _fetchData().then((_) {
+      actors.value = actors
+          .where(
+              (actor) => !userFavoritesActorController.isActorLiked(actor.id))
+          .toList();
+    });
   }
 
   _fetchData() async {

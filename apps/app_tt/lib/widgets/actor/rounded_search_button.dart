@@ -11,27 +11,30 @@ class RoundedSearchButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 50,
-      right: 16,
-      child: GestureDetector(
-        onTap: () => MyRouteDelegate.of(context).push(AppRoutes.search,
-            args: {'inputDefaultValue': '', 'autoSearch': false}),
-        child: Container(
-          width: 31,
-          height: 31,
-          decoration: const BoxDecoration(
-            color: Color.fromRGBO(0, 0, 0, 0.3),
-            shape: BoxShape.circle,
-          ),
-          child: const Center(
-            child: Icon(
-              Icons.search,
-              color: Colors.white,
-              size: 18,
+        top: 10,
+        right: 0,
+        child: GestureDetector(
+          onTap: () {
+            MyRouteDelegate.of(context).push(AppRoutes.search,
+                args: {'inputDefaultValue': '', 'autoSearch': false});
+          },
+          child: Container(
+            width: 31,
+            height: 31,
+            decoration: const BoxDecoration(
+              color: Color.fromRGBO(0, 0, 0, 0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: SvgPicture.asset(
+                'assets/svgs/ic-search.svg',
+                width: 17,
+                height: 17,
+                colorFilter:
+                    const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

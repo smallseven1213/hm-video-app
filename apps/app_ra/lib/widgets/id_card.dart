@@ -110,31 +110,10 @@ class IDCardContentState extends State<IDCardContent> {
       () => Column(
         children: [
           const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: const Color(0xFFD9D9D9),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: const Color(0xFFFDDCEF),
-                    width: 2,
-                  ),
-                ),
-              ),
-              const SizedBox(width: 10),
-              const Text(
-                'RA',
-                style: TextStyle(
-                  color: Color(0xFFFDDCEF),
-                  fontWeight: FontWeight.w800,
-                  fontSize: 16,
-                ),
-              ),
-            ],
+          const Image(
+            image: AssetImage('assets/images/logo_h.png'),
+            width: 130,
+            fit: BoxFit.fill,
           ),
           const SizedBox(height: 20),
           const Padding(

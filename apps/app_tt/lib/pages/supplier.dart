@@ -6,7 +6,6 @@ import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/supplier/supplier_consumer.dart';
 import 'package:shared/modules/supplier/supplier_provider.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../screens/supplier/follow_with_recommendations.dart';
 import '../screens/supplier/header.dart';
@@ -108,22 +107,20 @@ class SupplierPageState extends State<SupplierPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 StatisticsItem(
                                   count: supplier.collectTotal ?? 0,
                                   label: '讚數',
                                 ),
-                                const SizedBox(width: 20),
                                 StatisticsItem(
                                   count: supplier.followTotal ?? 0,
                                   label: '關注',
                                 ),
-                                const SizedBox(width: 20),
                                 StatisticsItem(
                                   count: supplier.shortVideoTotal ?? 0,
                                   label: '短視頻',
                                 ),
-                                const SizedBox(width: 20),
                                 StatisticsItem(
                                   count: supplier.videoCount ?? 0,
                                   label: '長視頻',
@@ -196,6 +193,7 @@ class SupplierPageState extends State<SupplierPage>
                       },
                       child: Obx(() => SliverVodGrid(
                           key: const Key('supplier_short'),
+                          padding: 2,
                           videos: supplierVideoController.vodList,
                           displayLoading:
                               supplierVideoController.displayLoading.value,
@@ -213,7 +211,6 @@ class SupplierPageState extends State<SupplierPage>
                 ],
               ),
             ),
-            const FloatPageBackButton()
           ],
         ),
       ),

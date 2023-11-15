@@ -1,0 +1,162 @@
+str,en_US,zh_TW,zn_CN
+game_lobby,Game Lobby,遊戲大廳,游戏大厅
+register_login,Register/Login,註冊/登入,注册/登入
+close,Close,關閉,关闭
+open,Open,開啟,开启
+cancel,Cancel,取消,取消
+confirm,Confirm,確認,确认
+hot_events,Hot Events,熱門活動,热门活动
+bank_transfer,Bank Transfer,銀行轉帳,银行转帐
+trc_address,TRC-20 Address,TRC-20地址,TRC-20地址
+account_information,Account Information,帳戶資訊,帐户资讯
+confirmation_of_transfer_and_delivery,Confirmation of transfer and delivery!,確認已轉帳，送出！,确认已转帐，送出！
+transfer_remarks,Transfer Remarks,轉帳備註,转帐备注
+please_enter_the_last_digits_of_the_transfer_hash,Please enter the last 5 digits of the transfer hash.,請輸入轉帳哈希值末 5 碼,请输入转帐哈希值末 5 码
+please_enter_your_real_name,Please enter your real name,請輸入真實姓名,请输入真实姓名
+account_name,Account Name,帳戶姓名,帐户姓名
+bank_card_number,Bank Card Number,銀行卡號,银行卡号
+branch_name,Branch Name,支行名稱,支行名称
+bank_name,Bank Name,銀行名稱,银行名称
+estimated_amount,Estimated Amount,預估上分金額,预估上分金额
+exchange_rate,Exchange Rate,匯率,汇率
+transfer_amount,Transfer Amount,轉帳金額,转帐金额
+there_are_no_available_payment_channels_please_try_again_later_or_contact_customer_service,"There are no available payment channels, please try again later or contact customer service.",當前無可用支付渠道，請稍候再試或聯繫客服。,当前无可用支付渠道，请稍候再试或联系客服。
+deposit_amount,Deposit Amount,存款金額,存款金额
+please_enter_your_real_name,Please enter your real name,請輸入真實姓名,请输入真实姓名
+get_the_link_to_reload,Get the link to reload...,取得充值連結...,取得充值连结...
+the_link_was_successful,The link was successful!,充值連結取得成功！,充值连结取得成功！
+failed_to_get_the_link_to_recharge_please_change_the_recharge_channel_or_contact_customer_service,Failed to get the link to recharge \n Please change the recharge channel or contact customer service.,充值連結取得失敗\n請更換充值渠道或聯繫客服,充值连结取得失败\n请更换充值渠道或联系客服
+open_top_up_page,Open top up page,開啟充值頁,开启充值页
+wrong_name_format,Wrong name format,姓名格式錯誤,姓名格式错误
+wrong_verification_code,Wrong verification code,驗證碼錯誤,验证码错误
+if_the_order_is_correct_please_enter_the_above_verification_code,"If the order is correct, please enter the above verification code.",如訂單無誤，請輸入以上驗證碼,如订单无误，请输入以上验证码
+deposit,Deposit,存款,存款
+deposit_history,Deposit History,存款記錄,存款记录
+you_have_been_logged_out_please_log_in_again,"You have been logged out, please log in again",你已被登出，請重新登入,你已被登出，请重新登入
+warm_tips,Warm Tips,溫馨提示,温馨提示
+please_be_sure_to_provide_true_information_to_facilitate_the_verification_of_the_transfer_data,1. Please be sure to provide true information to facilitate the verification of the transfer data.,1. 請務必提供真實資訊，以利核對轉帳資料。,1. 请务必提供真实资讯，以利核对转帐资料。
+please_write_the_required_information_in_the_remittance_remarks_to_speed_up_the_recharge_process,2. Please write the required information in the Remittance Remarks to speed up the recharge process.,2. 請在匯款備註寫入要求資訊，加速充值流程。,2. 请在汇款备注写入要求资讯，加速充值流程。
+no_payment_channel,No Payment Channel,沒有支付通道,没有支付通道
+dollar,Dollar,元,元
+send_offer,Send Offer,送優惠,送优惠
+payment_channel,Payment Channel,支付渠道,支付渠道
+order_confirmation,Order Confirmation,訂單確認,订单确认
+transaction_failed,Transaction Failed,交易失敗,交易失败
+there_are_many_people_paying_at_the_moment_please_try_again_later,"There are many people paying at the moment, please try again later!",當前支付人數眾多，請稍後再試！,当前支付人数众多，请稍后再试！
+order_creation_failed_please_contact_our_customer_service,"Order creation failed, please contact our customer service.",訂單建立失敗，請聯繫客服,订单建立失败，请联系客服
+payment_was_not_successful_please_try_to_pay_several_times,"1：Payment was not successful, please try to pay several times.",1：支付不成功，請多次嘗試支付。,1：支付不成功，请多次尝试支付。
+can_not_pull_up_the_payment_order_is_due_to_pull_up_the_order_more_people_please_try_to_pull_up_the_payment_several_times,"2：Can not pull up the payment order, is due to pull up the order more people, please try to pull up the payment several times.",2：無法拉起支付訂單，是由於拉起訂單人數較多，請多次嘗試拉起支付。,2：无法拉起支付订单，是由于拉起订单人数较多，请多次尝试拉起支付。
+please_contact_our_online_customer_service_if_the_recharge_is_successful_but_not_arrived,3：Please contact our online customer service if the recharge is successful but not arrived.,3：充值成功未到賬，請聯繫在線客服。,3：充值成功未到账，请联系在线客服。
+please_select_deposit_amount,Please select deposit amount,請選擇存款金額,请选择存款金额
+get_recharge_url,Get recharge URL,取得充值網址,取得充值网址
+we_are_trying_to_get_the_recharge_url_please_wait,"We are trying to get the recharge URL, please wait...",正在努力取得充值網址，請稍候...,正在努力取得充值网址，请稍候...
+please_click_to_open_the_recharge_page,Please click to open the recharge page.,已取得充值網址，點擊開啟充值頁,已取得充值网址，点击开启充值页
+failed_to_get_the_website_address_please_choose_a_new_channel_or_contact_customer_service,Failed to get the website address \n please choose a new channel or contact customer service,取得網址失敗\n請重新選擇渠道或聯繫客服,取得网址失败\n请重新选择渠道或联系客服
+please_select_payment_method,Please select payment method,請選擇支付方式,请选择支付方式
+amount_to_be_paid,Amount to be paid,需支付金額,需支付金额
+confirm_payment,Confirm payment,確認支付,确认支付
+completed,Completed,已完成,已完成
+failed,Failed,失敗,失败
+no_record,No record,暫無紀錄,暂无纪录
+confirming,Confirming,確認中,确认中
+amount,Amount,金額,金额
+order_time,Order Time,訂單時間,订单时间
+order_number,Order Number,訂單編號,订单编号
+last_30_days,Last 30 days,近三十日,近三十日
+last_7_days,Last 7 days,近七天,近七天
+yesterday,Yesterday,昨天,昨天
+today,Today,今天,今天
+application_time_enquiry,Application Time Enquiry,申請時間查詢,申请时间查询
+status,Status,狀態,状态
+payment_confirmation,Payment Confirmation,支付確認,支付确认
+bank_card_setting,Bank Card Setting,銀行卡設置,银行卡设置
+please_make_sure_you_fill_in_the_correct_information_to_avoid_affecting_the_payment,Please make sure you fill in the correct information to avoid affecting the payment.,綁定後不可更改，請確認資料填寫正確，避免影響到帳。,绑定后不可更改，请确认资料填写正确，避免影响到帐。
+please_enter_your_bank_name,Please enter your bank name,請輸入銀行名稱,请输入银行名称
+branch_name,Branch Name,支行名稱,支行名称
+please_enter_the_name_of_the_branch_optional,Please enter the name of the branch (optional),請輸入支行名稱(選填),请输入支行名称(选填)
+card_number,Card Number,銀行卡號,银行卡号
+please_enter_your_bank_card_number,Please enter your bank card number,請輸入您的銀行卡號,请输入您的银行卡号
+real_name,Real Name,真實姓名,真实姓名
+please_enter_your_real_name,Please enter your real name,請輸入您的真實姓名,请输入您的真实姓名
+account_length,Account Length 16~19,帳戶長度為16~19,帐户长度为16~19
+please_enter_your_bank_card_number,Please enter your bank card number,請輸入您的銀行卡號,请输入您的银行卡号
+setup_successful,Setup Successful,設置成功,设置成功
+password_length_should_be_digits,Password length should be 6 digits,密碼長度應為6位數,密码长度应为6位数
+input_funds_pin,Input Funds PIN,輸入資金密碼,输入资金密码
+please_enter_digits,Please enter 6 digits,請輸入6位數字,请输入6位数字
+the_password_should_be_the_same_for_the_second_time,The password should be the same for the second time,二次驗證密碼輸入應相同,二次验证密码输入应相同
+confirm_password_again,Confirm password again,再次確認密碼,再次确认密码
+please_confirm_the_password_again,Please confirm the password again,請再次確認密碼,请再次确认密码
+setting_failed,Setting failed,設置失敗,设置失败
+successful,Successful,設置成功,设置成功
+return_to_the_lobby,Return to the lobby,返回大廳,返回大厅
+customer_service,Customer Service,客服,客服
+recharge,Recharge,充值,充值
+quit_the_game,Quit the game,退出遊戲,退出游戏
+do_you_really_want_to_quit_the_game,Do you really want to quit the game?,你真的要退出遊戲嗎？,你真的要退出游戏吗？
+failed_to_withdraw,Failed to withdraw,出款失敗,出款失败
+withdrawal_history,Withdrawal History,提現紀錄,提现纪录
+withdrawal_account,Withdrawal Account,提款帳戶,提款帐户
+withdrawal_amount,Withdrawal amount,提款金額,提款金额
+application_time,Application Time,申請時間,申请时间
+update_time,Update Time,更新時間,更新时间
+reviewing,Reviewing,審核中,审核中
+bank_card,Bank Card,銀行卡,银行卡
+type,Type,類型,类型
+account,Account,帳戶,帐户
+withdrawal_method,Withdrawal Method,提現方式,提现方式
+please_complete_the_card_binding_before_withdrawing_money,Please complete the card binding before withdrawing money.,請完成銀行卡綁定，方可進行提款,请完成银行卡绑定，方可进行提款
+go_to_binding,Go to Binding,前往綁定,前往绑定
+insufficient_liquidity_please_continue_to_play,"Insufficient liquidity, please continue to play",流水不足，請繼續遊戲,流水不足，请继续游戏
+if_you_have_not_reached_the_limit_need_to_pay_the_withdrawal_fee_of_estimated_click_to_confirm_to_send_out_the_withdrawal_order,If you have not reached the limit \n need to pay the withdrawal fee of {fee} (estimated)\n Click to confirm to send out the withdrawal order.,未達成流水限額\n需自行負擔提現手續費 {fee} 元(預估)\n點擊確認送出提現訂單,未达成流水限额\n需自行负担提现手续费 {fee} 元(预估)\n点击确认送出提现订单
+please_set_the_password_first,Please set the password first,請先設置資金密碼,请先设置资金密码
+go_to_settings,Go to Settings,前往設定,前往设定
+game_withdrawal,Game Withdrawal,遊戲提現,游戏提现
+limit,Limit,流水限額,流水限额
+achieved,Achieved,已達標,已达标
+not_reached,Not reached,未達標,未达标
+please_enter_the_withdrawal_amount,Please enter the withdrawal amount,請輸提現金額,请输提现金额
+input_amount_must_not_be_less_than,Input amount must not be less than {amount}.,輸入金額不得小於{amount}元,输入金额不得小于{amount}元
+input_amount_must_not_be_greater_than_the_remaining_balance,Input amount must not be greater than the remaining balance,輸入金額不得大於餘額,输入金额不得大于余额
+input_amount_is_in_wrong_format,Input amount is in wrong format,輸入金額格式錯誤,输入金额格式错误
+minimum_withdrawal_amount_is_cny,Minimum withdrawal amount is {amount} CNY.,最低可提金額為 {amount} CNY,最低可提金额为 {amount} CNY
+application_completed,Application Completed,申請完成,申请完成
+withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log,"Withdrawal application has been completed, you can check the current application status in the withdrawal log.",提款申請已完成，可於提款紀錄查詢目前申請進度。,提款申请已完成，可于提款纪录查询目前申请进度。
+minimum_withdrawable_amount,Minimum Withdrawable Amount,最低可提現金額,最低可提现金额
+flow_limit_details,Flow Limit Details,流水限額詳情,流水限额详情
+accumulated_liquidity,Accumulated Liquidity,累積有效流水,累积有效流水
+withdrawal_fee_will_be_charged_for_withdrawal_before_reaching_the_limit,Withdrawal fee {fee} % will be charged for withdrawal before reaching the limit.,未達流水限額提現需支付提現手續費 {fee} %,未达流水限额提现需支付提现手续费 {fee} %
+login_now,Login Now,立即登錄,立即登录
+no_account_yet,No account yet,還沒有帳號,还没有帐号
+forgot_your_password,Forgot your password?,忘記密碼,忘记密码
+please_enter_your_password,Please enter your password,請輸入密碼,请输入密码
+password,Password,密碼,密码
+username,Username,帳號,帐号
+letters_and_numbers,6~12 letters and numbers,6~12位字母及數字,6~12位字母及数字
+password_is_letters_and_numbers,Password is 8-20 letters and numbers,密碼為 8-20 位字母及數字,密码为 8-20 位字母及数字
+account_is_digits_alphabetic_and_numeric,Account is 6~12 digits alphabetic and numeric,帳號為 6~12 位字母及數字,帐号为 6~12 位字母及数字
+please_enter_your_username,Please enter your username,請輸入帳號,请输入帐号
+incorrect_username_or_password,Incorrect username or password,帳號或密碼不正確,帐号或密码不正确
+login_error,Login Error,登入錯誤,登入错误
+login_successful,Login Successful,登入成功,登入成功
+register_now,Register Now,立即註冊,立即注册
+verify_password,Verify Password,驗證密碼,验证密码
+incorrect_secondary_password,Incorrect secondary password,二次密碼不正確,二次密码不正确
+registration_error,Registration Error,註冊錯誤,注册错误
+registration_successful,Registration Successful,註冊成功,注册成功
+download_app,Download APP,下載APP,下载APP
+greetings_to_our_valued_users_global_gaming_invites_you_to_download_the_app_to_enhance_your_gaming_experience,Greetings to our valued users \n Global Gaming invites you to download the APP to enhance your gaming experience.,尊貴的用戶您好\n環球遊戲邀請您下載APP，提升遊戲體驗。,尊贵的用户您好\n环球游戏邀请您下载APP，提升游戏体验。
+this_password_is_only_for_the_first_time_you_log_in_to_the_app_please_be_sure_to_change_your_password_after_logging_in,This password is only for the first time you log in to the APP \nPlease be sure to change your password after logging in.,此組帳密僅提供首次登入APP使用\n請務必在登入後，更換帳號密碼。,此组帐密仅提供首次登入APP使用\n请务必在登入后，更换帐号密码。
+password_copied,Password copied,密碼已複製,密码已复制
+account_has_been_copied,Account has been copied,帳號已複製,帐号已复制
+withdrawal,Withdrawal,提現,提现
+balance,Balance,餘額,余额
+insufficient_password,Insufficient password,密碼長度不足,密码长度不足
+please_enter_your_password,Please enter your password,請輸入資金密碼,请输入资金密码
+wrong_password,Wrong password,密碼錯誤,密码错误
+duplicate_login,Duplicate Login,帳號重複登入,帐号重复登入
+you_have_been_logged_out_please_log_in_again,"You have been logged out, please log in again",你已被登出，請重新登入,你已被登出，请重新登入
+duplicated,Duplicated,已複製,已复制
+currently_under_maintenance,Currently under maintenance,目前系統維護中,目前系统维护中
+estimated_maintenance_time,Estimated maintenance time 08:00-10:00,預計維護時間 08:00-10:00,预计维护时间 08:00-10:00
+please_try_again_later_sorry_for_the_inconvenience,"Please try again later, sorry for the inconvenience.",請稍後再試，造成不便請見諒,请稍后再试，造成不便请见谅

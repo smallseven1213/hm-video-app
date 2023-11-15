@@ -10,6 +10,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/input.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 enum Type { login, register }
@@ -46,6 +48,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
   }
 
   void _onLogin(context) async {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     try {
       var authToken = await authApi.login(
         username: userNameController.text,
@@ -54,8 +58,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
       if (authToken == null) {
         showConfirmDialog(
           context: context,
-          title: '登入錯誤',
-          content: '帳號或密碼不正確',
+          title: localizations.translate('login_error'),
+          content: localizations.translate('incorrect_username_or_password'),
           onConfirm: () {
             Navigator.of(context).pop();
           },
@@ -65,15 +69,15 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
         Get.find<AuthController>().setToken(authToken);
         widget.onSuccess();
         Fluttertoast.showToast(
-          msg: '登入成功',
+          msg: localizations.translate('login_successful'),
           gravity: ToastGravity.CENTER,
         );
       }
     } catch (e) {
       showConfirmDialog(
         context: context,
-        title: '登入錯誤',
-        content: '帳號或密碼不正確',
+        title: localizations.translate('login_error'),
+        content: localizations.translate('incorrect_username_or_password'),
         onConfirm: () {
           Navigator.of(context).pop();
         },
@@ -96,7 +100,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
     RegExp regString = RegExp(r'^[a-z0-9]{6,12}$');
     if (value!.isEmpty) {
       setState(() {
-        _usernameError = '請輸入帳號';
+        _usernameError = GameLocalizations.of(context)!
+            .translate('please_enter_your_username');
       });
     } else if (value.isNotEmpty) {
       if (value.length >= 6 && value.length <= 12) {
@@ -107,7 +112,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
           value.length > 12 ||
           !regString.hasMatch(value)) {
         setState(() {
-          _usernameError = '帳號為 6~12 位字母及數字';
+          _usernameError = GameLocalizations.of(context)!
+              .translate('account_is_digits_alphabetic_and_numeric');
         });
       }
     }
@@ -118,7 +124,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
     RegExp regString = RegExp(r'^[a-z0-9]{8,20}$');
     if (value!.isEmpty) {
       setState(() {
-        _passwordError = '請輸入密碼';
+        _passwordError = GameLocalizations.of(context)!
+            .translate('please_enter_your_password');
       });
     } else if (value.isNotEmpty) {
       if (value.length >= 8 && value.length <= 20) {
@@ -129,7 +136,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
           value.length > 20 ||
           !regString.hasMatch(value)) {
         setState(() {
-          _passwordError = '*密碼為 8-20 位字母及數字';
+          _passwordError = GameLocalizations.of(context)!
+              .translate('password_is_letters_and_numbers');
         });
       }
     }
@@ -138,11 +146,13 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Column(
       children: [
         GameInput(
-          label: "帳號",
-          hint: "6~12位字母及數字",
+          label: localizations.translate('username'),
+          hint: localizations.translate('letters_and_numbers'),
           controller: userNameController,
           onChanged: (value) => _validateUsername(value),
           onClear: () {
@@ -160,8 +170,8 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
         ),
         const SizedBox(height: 20),
         GameInput(
-          label: "密碼",
-          hint: "請輸入密碼",
+          label: localizations.translate('password'),
+          hint: localizations.translate('please_enter_your_password'),
           isPassword: true,
           controller: passwordController,
           onChanged: (value) => _validatePassword(value),
@@ -199,7 +209,7 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
               borderRadius: BorderRadius.circular(24),
             ),
             child: Center(
-              child: Text("立即登錄",
+              child: Text(localizations.translate('login_now'),
                   style: TextStyle(
                       color: enableUsername && enablePassword
                           ? gamePrimaryButtonTextColor
@@ -218,7 +228,7 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
                 widget.onToggleTab();
               },
               child: Text(
-                "還沒有帳號",
+                localizations.translate('no_account_yet'),
                 style: TextStyle(color: gamePrimaryButtonColor, fontSize: 14),
               ),
             ),
@@ -234,15 +244,16 @@ class GameLobbyLoginFormState extends State<GameLobbyLoginForm> {
               onTap: () {
                 showConfirmDialog(
                   context: context,
-                  title: '忘記密碼',
-                  content: '請聯繫客服，或用身份卡登入',
+                  title: localizations.translate('forgot_your_password'),
+                  content: localizations.translate(
+                      'please_contact_customer_service_or_log_in_with_your_id_card'),
                   onConfirm: () {
                     Navigator.of(context).pop();
                   },
                 );
               },
               child: Text(
-                "忘記密碼",
+                localizations.translate('forgot_your_password'),
                 style: TextStyle(
                   color: gameLobbyButtonDisableTextColor,
                   fontSize: 14,

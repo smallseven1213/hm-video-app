@@ -58,12 +58,4 @@ Map<String, int> activityButtonType = {
   'SUBMIT_CAMPAIGN': 3,
 };
 
-Map<int, String> activityResStatus = {
-  0: '未充值',
-  1: '已申請',
-  2: '審核中',
-  3: '已發放',
-  4: '申請失敗',
-};
-
 Map<String, int> activityButtonStatus = {'ENABLE': 0};

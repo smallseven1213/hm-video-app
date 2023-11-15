@@ -1,8 +1,10 @@
 import 'package:app_ra/widgets/countdown.dart';
 import 'package:flutter/material.dart';
+import 'package:game/widgets/game_provider.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
+import 'localization/i18n.dart';
 import 'widgets/loading.dart';
 import './routes/app_routes.dart' as app_routes;
 import './routes/game_routes.dart' as game_routes;
@@ -25,14 +27,16 @@ void main() async {
     ],
     allRoutes,
     AppColors.colors,
-    ({String? text}) => Loading(loadingText: text ?? '正在加载...'),
     ThemeData(
       scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
-      primaryColor: AppColors.colors[ColorKeys.primary],
+      primaryColor: Colors.black,
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: AppColors.colors[ColorKeys.primary],
+      ),
+      colorScheme: ColorScheme.light(
+        primary: AppColors.colors[ColorKeys.primary] ?? Colors.white, // 主要颜色
       ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
@@ -60,7 +64,13 @@ void main() async {
         ),
       ),
     ),
-    ({int countdownSeconds = 5}) =>
+    globalLoadingWidget: ({String? text}) =>
+        Loading(loadingText: text ?? '正在加载...'),
+    countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
+    i18nSupport: true,
+    supportedLocales: I18n.supportedLocales,
+    i18nPath: 'assets/langs/langs.csv',
+    expandedWidget: (child) => GameProvider(child: child),
   );
 }

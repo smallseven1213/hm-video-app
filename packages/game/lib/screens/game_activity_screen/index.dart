@@ -12,6 +12,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/widgets/button.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 
@@ -47,6 +49,15 @@ class _GameActivityState extends State<GameActivity> {
   }
 
   void submitCampaign(context, int id) async {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+    Map<int, String> activityResStatus = {
+      0: '未充值',
+      1: '已申請',
+      2: localizations.translate('reviewing'),
+      3: '已發放',
+      4: localizations.translate('failed'),
+    };
+
     try {
       var res = await gameLobbyApi.submitCampaign(id);
       if (res['code'] == '00') {
@@ -73,8 +84,9 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText:
-              res['status'] == activityButtonStatus['ENABLE'] ? '關閉' : '確認',
+          confirmText: res['status'] == activityButtonStatus['ENABLE']
+              ? GameLocalizations.of(context)!.translate('close')
+              : GameLocalizations.of(context)!.translate('confirm'),
           onConfirm: () => {
             if (res['status'] != activityButtonStatus['ENABLE'])
               setState(() => buttonDisable = true),
@@ -84,7 +96,7 @@ class _GameActivityState extends State<GameActivity> {
       } else {
         showFormDialog(
           context,
-          title: '申請失敗',
+          title: localizations.translate('failed'),
           content: SizedBox(
             height: 85,
             child: Column(
@@ -105,7 +117,7 @@ class _GameActivityState extends State<GameActivity> {
               ],
             ),
           ),
-          confirmText: '確認',
+          confirmText: GameLocalizations.of(context)!.translate('confirm'),
           onConfirm: () => {
             Navigator.pop(context),
           },
@@ -118,6 +130,8 @@ class _GameActivityState extends State<GameActivity> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
@@ -126,7 +140,7 @@ class _GameActivityState extends State<GameActivity> {
         ),
         centerTitle: true,
         title: Text(
-          '熱門活動',
+          localizations.translate('hot_events'),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,

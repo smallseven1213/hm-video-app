@@ -7,11 +7,10 @@ import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
-import 'wave_loading.dart';
+import 'loading_animation.dart';
 
 class BaseShortPage extends StatelessWidget {
   final Function() createController;
-  final String? controllerTag;
   final int? videoId;
   final int? itemId; // areaId, tagId, supplierId
   final bool? supportedPlayRecord;
@@ -20,7 +19,8 @@ class BaseShortPage extends StatelessWidget {
   final Widget? loadingWidget;
   final int? style; // 1, 2
   final String? uuid;
-  final Function? onScrollBeyondFirst;
+  final Function()? onScrollBeyondFirst;
+  final String? controllerTag;
 
   const BaseShortPage({
     Key? key,
@@ -43,17 +43,8 @@ class BaseShortPage extends StatelessWidget {
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
-        onScrollBeyondFirst: () {
-          onScrollBeyondFirst?.call();
-        },
-        loadingWidget: const Center(
-          child: WaveLoading(
-            color: Color.fromRGBO(255, 255, 255, 0.3),
-            duration: Duration(milliseconds: 1000),
-            size: 17,
-            itemCount: 3,
-          ),
-        ),
+        onScrollBeyondFirst: onScrollBeyondFirst,
+        loadingWidget: Center(child: LoadingAnimation()),
         shortCardBuilder: ({
           required int index,
           required bool isActive,

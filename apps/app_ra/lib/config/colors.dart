@@ -7,6 +7,8 @@ class AppColors {
     ColorKeys.primary: Color(0xffFDDCEF),
     ColorKeys.accent: Color(0x00ffffff),
     ColorKeys.background: Color(0xff030923),
+    ColorKeys.videoPreviewBg: Color(0xffD9D9D9),
+
     // text
     ColorKeys.textPrimary: Color(0xffFDDCEF),
     ColorKeys.textSecondary: Color(0xff73747b),

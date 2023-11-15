@@ -30,6 +30,10 @@ class _ChannelStyle2State extends State<ChannelStyle2> {
     return BaseShortPage(
       style: 2,
       createController: () => _controller,
+      onScrollBeyondFirst: () {
+        final controller = Get.find<VideoShortByChannelStyle2Controller>();
+        controller.fetchData();
+      },
     );
   }
 }

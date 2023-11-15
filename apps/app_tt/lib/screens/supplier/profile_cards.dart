@@ -8,30 +8,24 @@ import 'package:shared/navigator/delegate.dart';
 import '../../widgets/actor/follow_button.dart';
 import '../../widgets/actor_avatar.dart';
 
-class ProfileCards extends StatefulWidget {
-  const ProfileCards({super.key});
-
-  @override
-  _ProfileCardsState createState() => _ProfileCardsState();
-}
-
-class _ProfileCardsState extends State<ProfileCards> {
-  bool isDeleting = false;
-  late SuppliersController suppliersController;
-
-  @override
-  void initState() {
-    super.initState();
-    suppliersController = Get.put(SuppliersController(
-      initialIsRecommend: true,
-      initialLimit: 20,
-    ));
-  }
+class ProfileCards extends StatelessWidget {
+  final int? regionId;
+  final int? id;
+  const ProfileCards({
+    Key? key,
+    this.regionId,
+    this.id,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final SuppliersController suppliersController =
+        Get.find<SuppliersController>(tag: 'actor-$id');
+
     return Obx(() {
       List<Supplier> suppliers = suppliersController.actors;
+      suppliers = suppliers.where((actor) => actor.id != id).toList();
+
       return SizedBox(
         width: double.infinity,
         height: suppliers.isEmpty ? 30 : 200,
@@ -42,6 +36,7 @@ class _ProfileCardsState extends State<ProfileCards> {
                 itemCount: suppliers.length,
                 itemBuilder: (context, index) {
                   return profileCard(
+                    context,
                     suppliers[index].photoSid ?? '',
                     suppliers[index].name ?? '',
                     suppliers[index].id ?? 0,
@@ -56,8 +51,14 @@ class _ProfileCardsState extends State<ProfileCards> {
     });
   }
 
-  Widget profileCard(String photoSid, String name, int id,
-      {supplier, Function()? onDelete}) {
+  Widget profileCard(
+    context,
+    String photoSid,
+    String name,
+    int id, {
+    supplier,
+    Function()? onDelete,
+  }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       child: Stack(

@@ -4,6 +4,7 @@ import 'package:game/utils/show_model.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../localization/game_localization_delegate.dart';
 import 'game_download_dialog_content.dart';
 
 class GameDownloadButton extends StatefulWidget {
@@ -52,6 +53,8 @@ class GameDownloadButtonState extends State<GameDownloadButton> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       width: 65,
       height: 65,
@@ -87,9 +90,9 @@ class GameDownloadButtonState extends State<GameDownloadButton> {
                         // scale: undefined,
                       ),
                     ),
-                    child: const Text('下載APP',
+                    child: Text(localizations.translate('download_app'),
                         textAlign: TextAlign.center,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 11,
                           fontWeight: FontWeight.w600,

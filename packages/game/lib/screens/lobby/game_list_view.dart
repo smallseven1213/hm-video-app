@@ -10,6 +10,7 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../localization/game_localization_delegate.dart';
 import '../../widgets/cache_image.dart';
 import 'game_scroll_view_tabs.dart';
 
@@ -248,6 +249,8 @@ class GameListViewState extends State<GameListView>
   }
 
   Widget _buildGameList(int gameType) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     final gameListResult = gameType == 0
         ? gamesListController.games
         : gameHistoryList.isNotEmpty && gameType == -1
@@ -305,7 +308,7 @@ class GameListViewState extends State<GameListView>
                 ),
                 const SizedBox(height: 12),
                 Text(
-                  '暫無紀錄',
+                  localizations.translate('no_record'),
                   style: TextStyle(color: gameLobbyLoginFormColor),
                 )
               ],

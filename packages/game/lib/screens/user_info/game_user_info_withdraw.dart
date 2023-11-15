@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 class UserInfoWithdraw extends StatefulWidget {
   const UserInfoWithdraw({Key? key, required this.onTap}) : super(key: key);
   final VoidCallback onTap;
@@ -12,6 +14,8 @@ class UserInfoWithdraw extends StatefulWidget {
 class _UserInfoWithdraw extends State<UserInfoWithdraw> {
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       width: 30,
       height: 60,
@@ -26,7 +30,7 @@ class _UserInfoWithdraw extends State<UserInfoWithdraw> {
               height: 28,
             ),
             Text(
-              '提現',
+              localizations.translate('withdrawal'),
               style: TextStyle(
                 color: gameLobbyPrimaryTextColor,
                 fontSize: 12,

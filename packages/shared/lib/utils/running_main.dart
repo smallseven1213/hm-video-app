@@ -61,21 +61,29 @@ void realMain(Widget widget,
 }
 
 Future<void> runningMain(
-  String sentryDSN,
-  String homePath,
-  List<String> dlJsonHosts,
-  RouteObject routes,
-  Map<ColorKeys, Color> appColors,
-  GlobalLoadingWidget globalLoadingWidget,
-  ThemeData? theme,
-  Widget Function({int countdownSeconds})? countdown, {
-  bool? i18nSupport,
-  List<Locale>? supportedLocales,
-  String? i18nPath,
-}) async {
+    String sentryDSN,
+    String homePath,
+    List<String> dlJsonHosts,
+    RouteObject routes,
+    Map<ColorKeys, Color> appColors,
+    ThemeData? theme,
+    {GlobalLoadingWidget? globalLoadingWidget,
+    Widget Function({int countdownSeconds})? countdown,
+    bool? i18nSupport,
+    List<Locale>? supportedLocales,
+    String? i18nPath,
+    Widget Function(Widget child)? expandedWidget}) async {
   url_strategy.usePathUrlStrategy();
 
   SystemConfig().setDlJsonHosts(dlJsonHosts);
+
+  Widget buildOuterWidget(Widget child) {
+    if (expandedWidget != null) {
+      return expandedWidget(child);
+    } else {
+      return child;
+    }
+  }
 
   SentryFlutter.init((options) {
     options.dsn = sentryDSN;
@@ -84,15 +92,16 @@ Future<void> runningMain(
     options.environment = kDebugMode ? 'development' : 'production';
   },
       appRunner: () => realMain(
-          RootWidget(
-              homePath: homePath,
-              routes: routes,
-              splashImage: 'assets/images/splash.png',
-              appColors: appColors,
-              loading: globalLoadingWidget,
-              theme: theme,
-              countdown: countdown,
-              i18nSupport: i18nSupport),
+          buildOuterWidget(RootWidget(
+            homePath: homePath,
+            routes: routes,
+            splashImage: 'assets/images/splash.png',
+            appColors: appColors,
+            loading: globalLoadingWidget,
+            theme: theme,
+            countdown: countdown,
+            i18nSupport: i18nSupport,
+          )),
           i18nSupport: i18nSupport,
           supportedLocales: supportedLocales,
           i18nPath: i18nPath));

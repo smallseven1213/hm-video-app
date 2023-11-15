@@ -21,6 +21,7 @@ class SliverVodGrid extends StatefulWidget {
   final bool? displayCoverVertical;
   final ScrollController? customScrollController;
   final Function(int id)? onOverrideRedirectTap;
+  final double? padding;
 
   const SliverVodGrid({
     Key? key,
@@ -38,6 +39,7 @@ class SliverVodGrid extends StatefulWidget {
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.customScrollController,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -62,7 +64,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
           ),
         if (totalRows > 0)
           SliverPadding(
-            padding: const EdgeInsets.all(8.0),
+            padding: EdgeInsets.all(widget.padding ?? 8.0),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -103,7 +105,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                   widget.onOverrideRedirectTap,
                             ),
                           ),
-                          const SizedBox(width: 8),
+                          SizedBox(width: widget.padding ?? 8),
                           Expanded(
                               child: secondVideo != null
                                   ? VideoPreviewWidget(

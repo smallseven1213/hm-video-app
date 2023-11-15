@@ -9,7 +9,7 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import '../short/side_info.dart';
 import '../shortcard/index.dart';
 import 'short_card_info.dart';
-import '../wave_loading.dart';
+import '../loading_animation.dart';
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;
@@ -61,7 +61,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
-      return const WaveLoading();
+      return LoadingAnimation();
     }
     return Container(
       color: Colors.black,
@@ -82,7 +82,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: const WaveLoading(),
+            loadingWidget: Center(child: LoadingAnimation()),
             child: (isReady) => ShortCard(
               key: Key(widget.tag),
               index: widget.index,

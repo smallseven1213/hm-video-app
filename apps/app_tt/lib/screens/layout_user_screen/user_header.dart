@@ -44,7 +44,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
               actions: <Widget>[
                 IconButton(
                   icon: SvgPicture.asset(
-                    'svgs/ic-search.svg',
+                    'assets/svgs/ic-search.svg',
                     width: 17,
                     height: 17,
                     colorFilter:
@@ -57,7 +57,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
                 GetBuilder<HomePageController>(
                   builder: (controller) => IconButton(
                     icon: SvgPicture.asset(
-                      'svgs/ic-filter.svg',
+                      'assets/svgs/ic-filter.svg',
                       width: 14,
                       height: 14,
                       colorFilter:
@@ -71,7 +71,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
               ],
             ),
           )
-        : Container(
+        : SizedBox(
             height: maxExtent - shrinkOffset,
             child: UserInfoConsumer(
               child: (info, isVIP, isGuest) => UserCard(info: info),

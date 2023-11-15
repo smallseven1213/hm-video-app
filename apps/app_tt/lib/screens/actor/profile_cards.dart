@@ -8,35 +8,24 @@ import 'package:shared/navigator/delegate.dart';
 import '../../widgets/actor/follow_button.dart';
 import '../../widgets/actor_avatar.dart';
 
-class ProfileCards extends StatefulWidget {
+class ProfileCards extends StatelessWidget {
   final int? regionId;
+  final int? id;
   const ProfileCards({
-    super.key,
+    Key? key,
     this.regionId,
-  });
-
-  @override
-  _ProfileCardsState createState() => _ProfileCardsState();
-}
-
-class _ProfileCardsState extends State<ProfileCards> {
-  bool isDeleting = false;
-  late ActorsController actorsController;
-
-  @override
-  void initState() {
-    super.initState();
-    actorsController = Get.put(ActorsController(
-      initialIsRecommend: true,
-      initialRegion: widget.regionId,
-      initialLimit: 20,
-    ));
-  }
+    this.id,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ActorsController actorsController =
+        Get.find<ActorsController>(tag: 'actor-$id');
+
     return Obx(() {
       List<Actor> actors = actorsController.actors;
+      actors = actors.where((actor) => actor.id != id).toList();
+
       return SizedBox(
         width: double.infinity,
         height: actors.isEmpty ? 30 : 200,
@@ -47,6 +36,7 @@ class _ProfileCardsState extends State<ProfileCards> {
                 itemCount: actors.length,
                 itemBuilder: (context, index) {
                   return profileCard(
+                    context,
                     actors[index].photoSid,
                     actors[index].name,
                     actors[index].id,
@@ -61,8 +51,14 @@ class _ProfileCardsState extends State<ProfileCards> {
     });
   }
 
-  Widget profileCard(String photoSid, String name, int id,
-      {actor, Function()? onDelete}) {
+  Widget profileCard(
+    context,
+    String photoSid,
+    String name,
+    int id, {
+    required Actor actor,
+    required Function() onDelete,
+  }) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       child: Stack(

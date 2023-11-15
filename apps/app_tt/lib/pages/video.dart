@@ -19,7 +19,7 @@ import '../screens/video/video_player_area/loading.dart';
 import '../screens/video/video_player_area/purchase_block.dart';
 import '../widgets/title_header.dart';
 import '../widgets/video_preview.dart';
-import '../widgets/wave_loading.dart';
+import '../widgets/loading_animation.dart';
 
 final userApi = UserApi();
 
@@ -83,7 +83,7 @@ class VideoState extends State<Video> {
         required Vod? videoDetail,
       }) {
         if (videoUrl == null) {
-          return const WaveLoading();
+          return Center(child: LoadingAnimation());
         }
 
         return SafeArea(

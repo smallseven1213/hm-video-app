@@ -16,6 +16,8 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 final logger = Logger();
 
 class GameSetBankCard extends StatefulWidget {
@@ -85,7 +87,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
           formData['branchName']);
       if (res.code == '00') {
         Fluttertoast.showToast(
-          msg: '設置成功',
+          msg: GameLocalizations.of(context)!.translate('setup_successful'),
           gravity: ToastGravity.CENTER,
         );
         gameWithdrawController.setLoadingStatus(false);
@@ -128,7 +130,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
   void _validateAccount(String? value) {
     if (value!.isEmpty) {
       setState(() {
-        _accountError = '請輸入您的銀行卡號';
+        _accountError = GameLocalizations.of(context)!
+            .translate('please_enter_your_bank_card_number');
       });
     } else if (value.isNotEmpty) {
       if (value.length >= 16 && value.length <= 19) {
@@ -138,7 +141,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
         });
       } else if (value.length < 16 || value.length > 19) {
         setState(() {
-          _accountError = '帳戶長度為16~19';
+          _accountError =
+              GameLocalizations.of(context)!.translate('account_length');
         });
       }
     }
@@ -148,7 +152,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
   void _validateBankName(String? value) {
     if (value!.isEmpty) {
       setState(() {
-        _bankNameError = '請輸入銀行名稱';
+        _bankNameError = GameLocalizations.of(context)!
+            .translate('please_enter_your_bank_name');
       });
     } else if (value.isNotEmpty) {
       setState(() {
@@ -160,7 +165,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
   void _validateLegalName(String? value) {
     if (value!.isEmpty) {
-      _legalNameError = '請輸入您的真實姓名';
+      _legalNameError = GameLocalizations.of(context)!
+          .translate('please_enter_your_real_name');
     } else if (value.isNotEmpty) {
       logger.i('value.isNotEmpty');
       _legalNameError = null;
@@ -170,12 +176,14 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
         centerTitle: true,
         title: Text(
-          '銀行卡設置',
+          localizations.translate('bank_card_setting'),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -204,7 +212,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                         ),
                       ),
                       TextSpan(
-                        text: ' 綁定後不可更改，請確認資料填寫正確，避免影響到帳。',
+                        text: localizations.translate(
+                            'please_make_sure_you_fill_in_the_correct_information_to_avoid_affecting_the_payment'),
                         style: TextStyle(
                           color: gameLobbyHintColor,
                           fontSize: 12,
@@ -235,8 +244,9 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return AutoComplete(
-                              label: '銀行名稱',
-                              hint: '請輸入銀行名稱',
+                              label: localizations.translate('bank_name'),
+                              hint: localizations
+                                  .translate('please_enter_your_bank_name'),
                               controller: bankNameController,
                               listContent: bankList,
                               onChanged: (value) => {
@@ -257,8 +267,9 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           onChanged: (val) => logger.i(val.toString()),
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: '支行名稱',
-                              hint: '請輸入支行名稱(選填)',
+                              label: localizations.translate('branch_name'),
+                              hint: localizations.translate(
+                                  'please_enter_the_name_of_the_branch_optional'),
                               controller: branchNameController,
                               onChanged: (val) => logger.i(val.toString()),
                               onClear: () => branchNameController.clear(),
@@ -272,8 +283,10 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           name: 'account',
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: '銀行卡號',
-                              hint: '請輸入您的銀行卡號',
+                              label:
+                                  localizations.translate('bank_card_number'),
+                              hint: localizations.translate(
+                                  'please_enter_your_bank_card_number'),
                               controller: accountController,
                               onChanged: (value) => {
                                 _validateAccount(value),
@@ -293,8 +306,9 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                           name: 'legalName',
                           builder: (FormFieldState field) {
                             return GameInput(
-                              label: '真實姓名',
-                              hint: '請輸入您的真實姓名',
+                              label: localizations.translate('real_name'),
+                              hint: localizations
+                                  .translate('please_enter_your_real_name'),
                               controller: legalNameController,
                               onChanged: (value) => {
                                 _validateLegalName(value),
@@ -311,7 +325,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                         ),
                         const SizedBox(height: 44),
                         GameButton(
-                          text: '確認',
+                          text: localizations.translate('confirm'),
                           onPressed: () => _onSubmit(),
                           disabled: _legalNameEnable == false ||
                               _bankNameEnable.value == false ||

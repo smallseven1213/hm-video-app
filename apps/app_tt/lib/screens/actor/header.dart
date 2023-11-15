@@ -1,21 +1,19 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/actor_controller.dart';
 
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/actor.dart';
 import 'package:shared/modules/actor/actor_consumer.dart';
 import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/actor/header_follow_button.dart';
-import '../../widgets/actor/rounded_search_button.dart';
 import '../../widgets/actor/search_button.dart';
-import '../../widgets/actor_avatar.dart';
 import '../../widgets/actor/header_info.dart';
+import '../../widgets/float_page_back_button.dart';
+import '../../widgets/float_page_search_button.dart';
 
 class ActorHeader extends SliverPersistentHeaderDelegate {
   final BuildContext context;
@@ -34,12 +32,12 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
 
   @override
   double get maxExtent =>
-      164 + kToolbarHeight + MediaQuery.of(context).padding.top;
+      100 + kToolbarHeight + MediaQuery.of(context).padding.top;
 
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    final shouldShowAppBar = shrinkOffset >= 164;
+    final shouldShowAppBar = shrinkOffset >= 100;
     final double percentage = shrinkOffset / maxExtent;
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
 
@@ -80,22 +78,23 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
         : SizedBox(
             height: maxExtent - shrinkOffset,
             child: ActorConsumer(
-              id: id,
-              child: (Actor info) => Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Stack(
-                    children: [
-                      ActorHeaderInfo(
-                        name: info.name,
-                        id: info.id,
-                        photoSid: info.photoSid,
-                        percentage: percentage,
-                        imageSize: imageSize,
-                      ),
-                      const RoundedSearchButton(),
-                    ],
-                  )),
-            ),
+                id: id,
+                child: (Actor info) => Container(
+                    padding: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top),
+                    child: Stack(
+                      children: [
+                        ActorHeaderInfo(
+                          name: info.aliasName ?? '',
+                          id: info.id,
+                          photoSid: info.photoSid,
+                          percentage: percentage,
+                          imageSize: imageSize,
+                        ),
+                        const FloatPageBackButton(),
+                        const FloatPageSearchButton()
+                      ],
+                    ))),
           );
   }
 

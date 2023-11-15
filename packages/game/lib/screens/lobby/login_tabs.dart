@@ -3,6 +3,8 @@ import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/login_tabs_form_login.dart';
 import 'package:game/screens/lobby/login_tabs_form_register.dart';
 
+import '../../localization/game_localization_delegate.dart';
+
 enum Type { login, register }
 
 class GameLobbyLoginTabs extends StatefulWidget {
@@ -37,6 +39,8 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
 
   @override
   Widget build(BuildContext context) {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return SizedBox(
       height: 340,
       child: Column(
@@ -78,7 +82,7 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                     // ),
                   ),
                   child: Text(
-                    "登入",
+                    localizations.translate('login'),
                     style: TextStyle(
                         color: tabsType == Type.login
                             ? gamePrimaryButtonTextColor
@@ -122,7 +126,7 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                     //       ),
                   ),
                   child: Text(
-                    "註冊",
+                    localizations.translate('register'),
                     style: TextStyle(
                         color: tabsType == Type.register
                             ? gamePrimaryButtonTextColor

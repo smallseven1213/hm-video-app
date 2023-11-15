@@ -22,7 +22,7 @@ class OpenDrawerButton extends StatelessWidget {
                 child: Center(
                   // child is SVG Icon by flutter_svg plugin
                   child: SvgPicture.asset(
-                    'svgs/ic-filter.svg',
+                    'assets/svgs/ic-filter.svg',
                     width: 14,
                     height: 14,
                     colorFilter:

@@ -47,6 +47,9 @@ dependencies:
   easy_localization: ^3.0.3
   easy_localization_loader: ^1.0.1+1
   easy_localization_generator: ^0.3.1
+  image_picker: ^1.0.4
+  mime: ^1.0.4
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +82,7 @@ flutter:
     - assets/images/purchase/
     - assets/images/user/
     - assets/langs/langs.csv
+    - assets/svgs/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

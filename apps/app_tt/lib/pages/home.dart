@@ -1,4 +1,5 @@
 import 'package:app_tt/pages/apps.dart';
+import 'package:app_tt/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
@@ -63,7 +64,6 @@ class HomeState extends State<HomePage> {
     uiController = Get.put(UIController());
     ttUiController = Get.put(TTUIController());
 
-    Get.put(GameStartupController());
     homePageController = Get.put(HomePageController());
 
     ever(homePageController.displayDrawer, (bool displayDrawer) {
@@ -84,11 +84,7 @@ class HomeState extends State<HomePage> {
       backgroundColor: const Color(0xFFf0f0f0),
       body: MainNavigationScaffold(
           screens: screens,
-          screenNotFoundWidget: const Center(
-            child: Center(
-              child: Text('loading...'),
-            ),
-          ),
+          screenNotFoundWidget: Center(child: LoadingAnimation()),
           bottomNavigationBarWidget: (
               {required String activeKey,
               required List<Navigation> navigatorItems,
@@ -96,32 +92,39 @@ class HomeState extends State<HomePage> {
             final paddingBottom = MediaQuery.of(context).padding.bottom;
             return Stack(
               children: [
-                Container(
-                  padding: EdgeInsets.only(bottom: paddingBottom),
-                  height: 76 + paddingBottom,
-                  decoration: const BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: Color(0xFFe4e4e5),
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    children: navigatorItems
-                        .asMap()
-                        .entries
-                        .map(
-                          (entry) => Expanded(
-                              child: LayoutTabItem(
-                            isActive: entry.value.path! == activeKey,
-                            label: entry.value.name!,
-                            onTap: () => changeTabKey(entry.value.path!),
-                          )),
+                Obx(() {
+                  return uiController.displayHomeNavigationBar.value
+                      ? Container(
+                          padding: EdgeInsets.only(bottom: paddingBottom),
+                          height: 76 + paddingBottom,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              top: BorderSide(
+                                color: Color(0xFFe4e4e5),
+                                width: 1,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            children: navigatorItems
+                                .asMap()
+                                .entries
+                                .map(
+                                  (entry) => Expanded(
+                                      child: LayoutTabItem(
+                                    isActive: entry.value.path! == activeKey,
+                                    label: entry.value.name!,
+                                    onTap: () {
+                                      changeTabKey(entry.value.path!);
+                                      ttUiController.setDarkMode(false);
+                                    },
+                                  )),
+                                )
+                                .toList(),
+                          ),
                         )
-                        .toList(),
-                  ),
-                ),
+                      : const SizedBox.shrink();
+                }),
               ],
             );
           }),

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/video_short_by_channel_style6.dart';
 
 import '../../../widgets/base_short_page.dart';
-import '../../../widgets/wave_loading.dart';
+import '../../../widgets/loading_animation.dart';
 import 'suppliers.dart';
 
 class ChannelStyle6ShortsPart extends BaseShortPage {
@@ -47,7 +47,7 @@ class _ChannelStyle6State extends State<ChannelStyle6> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isInit.value == false) {
-        return const Center(child: WaveLoading());
+        return Center(child: LoadingAnimation());
       } else {
         if (controller.data.isEmpty) {
           return Container(
@@ -59,7 +59,6 @@ class _ChannelStyle6State extends State<ChannelStyle6> {
             ),
           );
         }
-
         return ChannelStyle6ShortsPart(controller: controller);
       }
     });

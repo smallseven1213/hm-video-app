@@ -48,32 +48,34 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                   (BuildContext context, int index) {
                     var vod = vodController.vodList[index];
                     return VideoPreviewWidget(
-                        id: vod.id,
-                        film: 2,
-                        onOverrideRedirectTap: (id) {
-                          MyRouteDelegate.of(context).push(
-                            AppRoutes.shorts,
-                            args: {
-                              'type': ShortsType.tag,
-                              'videoId': vod.id,
-                              'id': widget.tagId
-                            },
-                          );
-                        },
-                        hasRadius: false,
-                        hasTitle: false,
-                        imageRatio: gridRatio,
-                        displayCoverVertical: true,
-                        coverVertical: vod.coverVertical!,
-                        coverHorizontal: vod.coverHorizontal!,
-                        timeLength: vod.timeLength!,
-                        hasTags: false,
-                        tags: vod.tags!,
-                        title: vod.title,
-                        displayVideoTimes: false,
-                        displayViewTimes: false,
-                        videoViewTimes: vod.videoViewTimes!,
-                        videoCollectTimes: vod.videoCollectTimes!);
+                      id: vod.id,
+                      film: 2,
+                      onOverrideRedirectTap: (id) {
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.shorts,
+                          args: {
+                            'type': ShortsType.tag,
+                            'videoId': vod.id,
+                            'id': widget.tagId
+                          },
+                        );
+                      },
+                      hasRadius: false,
+                      imageRatio: gridRatio,
+                      displayCoverVertical: true,
+                      coverVertical: vod.coverVertical!,
+                      coverHorizontal: vod.coverHorizontal!,
+                      timeLength: vod.timeLength!,
+                      hasTags: false,
+                      hasTitle: false,
+                      tags: vod.tags!,
+                      title: vod.title,
+                      displayVideoTimes: false,
+                      displayViewTimes: false,
+                      displayVideoCollectTimes: true,
+                      videoViewTimes: vod.videoViewTimes!,
+                      videoCollectTimes: vod.videoCollectTimes!,
+                    );
                   },
                   childCount: vodController.vodList.length,
                 ),
@@ -89,8 +91,7 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                   child: NoDataWidget(),
                 ),
               if (vodController.displayLoading.value)
-                // ignore: prefer_const_constructors
-                SliverVideoPreviewSkeletonList(),
+                const SliverVideoPreviewSkeletonList(),
               if (vodController.displayNoMoreData.value)
                 SliverToBoxAdapter(
                   child: ListNoMore(),

@@ -49,7 +49,7 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Theme.of(context).primaryColor,
+          color: Theme.of(context).colorScheme.primary,
           width: 2,
         ),
         boxShadow: [
@@ -82,8 +82,8 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
               strokeWidth: 3,
               valueColor: _animationController.drive(
                 ColorTween(
-                  begin: Theme.of(context).primaryColor.withOpacity(0.5),
-                  end: Theme.of(context).primaryColor,
+                  begin: Theme.of(context).colorScheme.primary.withOpacity(0.5),
+                  end: Theme.of(context).colorScheme.primary,
                 ),
               ),
             ),
@@ -91,7 +91,7 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
           const SizedBox(height: 10),
           DefaultTextStyle(
             style: TextStyle(
-              color: Theme.of(context).primaryColor,
+              color: Theme.of(context).colorScheme.primary,
               fontSize: 10,
             ),
             child: Text(widget.loadingText ?? ''),
