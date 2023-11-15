@@ -28,39 +28,39 @@ void main() async {
     allRoutes,
     AppColors.colors,
     ThemeData(
-      scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
-      primaryColor: AppColors.colors[ColorKeys.primary],
-      progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: AppColors.colors[ColorKeys.primary],
-      ),
-      textTheme: TextTheme(
-        headlineLarge: TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: AppColors.colors[ColorKeys.textPrimary]!,
+        // scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+        // highlightColor: Colors.transparent,
+        // splashColor: Colors.transparent,
+        // // primaryColor: AppColors.colors[ColorKeys.primary],
+        // progressIndicatorTheme: ProgressIndicatorThemeData(
+        //   color: AppColors.colors[ColorKeys.primary],
+        // ),
+        // textTheme: TextTheme(
+        //   headlineLarge: TextStyle(
+        //     fontSize: 20,
+        //     fontWeight: FontWeight.bold,
+        //     color: AppColors.colors[ColorKeys.textPrimary]!,
+        //   ),
+        //   headlineMedium: TextStyle(
+        //     fontSize: 16,
+        //     fontWeight: FontWeight.bold,
+        //     color: AppColors.colors[ColorKeys.textPrimary]!,
+        //   ),
+        //   bodySmall: TextStyle(
+        //     fontSize: 12,
+        //     color: AppColors.colors[ColorKeys.textPrimary]!,
+        //   ),
+        // ),
+        // bottomSheetTheme: BottomSheetThemeData(
+        //   backgroundColor: AppColors.colors[ColorKeys.background],
+        //   shadowColor: AppColors.colors[ColorKeys.textPrimary]!,
+        //   shape: const RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.vertical(
+        //       top: Radius.circular(8),
+        //     ),
+        //   ),
+        // ),
         ),
-        headlineMedium: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: AppColors.colors[ColorKeys.textPrimary]!,
-        ),
-        bodySmall: TextStyle(
-          fontSize: 12,
-          color: AppColors.colors[ColorKeys.textPrimary]!,
-        ),
-      ),
-      bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: AppColors.colors[ColorKeys.background],
-        shadowColor: AppColors.colors[ColorKeys.textPrimary]!,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            top: Radius.circular(8),
-          ),
-        ),
-      ),
-    ),
     globalLoadingWidget: ({String? text}) =>
         Loading(loadingText: text ?? '正在加载...'),
     countdown: ({int countdownSeconds = 5}) =>
