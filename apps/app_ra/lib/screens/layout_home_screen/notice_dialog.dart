@@ -70,8 +70,8 @@ class NoticeDialogState extends State<NoticeDialog> {
         builder: (BuildContext ctx) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
-                side:
-                    BorderSide(color: Theme.of(context).primaryColor, width: 1),
+                side: BorderSide(
+                    color: Theme.of(context).colorScheme.primary, width: 1),
                 borderRadius: const BorderRadius.all(Radius.circular(10.0))),
             contentPadding: EdgeInsets.zero,
             scrollable: true,

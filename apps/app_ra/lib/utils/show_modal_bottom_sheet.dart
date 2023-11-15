@@ -10,7 +10,7 @@ void showCustomModalBottomSheet(
       return Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: Theme.of(context).primaryColor,
+            color: Theme.of(context).colorScheme.primary,
             width: 1,
           ),
           borderRadius: const BorderRadius.only(

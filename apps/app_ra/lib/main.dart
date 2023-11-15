@@ -35,6 +35,9 @@ void main() async {
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: AppColors.colors[ColorKeys.primary],
       ),
+      colorScheme: ColorScheme.light(
+        primary: AppColors.colors[ColorKeys.primary] ?? Colors.white, // 主要颜色
+      ),
       textTheme: TextTheme(
         headlineLarge: TextStyle(
           fontSize: 20,

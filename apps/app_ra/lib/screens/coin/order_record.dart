@@ -118,61 +118,67 @@ class _OrderRecordState extends State<OrderRecord> {
               const SizedBox(height: 8),
               Expanded(
                 child: UserOrderRecordConsumer(
-                  key: Key('order-record-$chargeType'),
-                  type: chargeType,
-                  child: (List<Order> records) {
-                    if (records.isEmpty) return const NoData();
-                    return ListView.builder(
-                      itemCount: records.length,
-                      itemBuilder: (context, index) {
-                        final record = records[index];
-                        return Container(
-                      padding: const EdgeInsets.all(20),
-                      margin: const EdgeInsets.only(bottom: 8),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        border:
-                            Border.all(color: Theme.of(context).primaryColor),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                record.product!.name ?? '',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).primaryColor,
-                                  overflow: TextOverflow.ellipsis,
+                    key: Key('order-record-$chargeType'),
+                    type: chargeType,
+                    child: (List<Order> records) {
+                      if (records.isEmpty) return const NoData();
+                      return ListView.builder(
+                        itemCount: records.length,
+                        itemBuilder: (context, index) {
+                          final record = records[index];
+                          return Container(
+                            padding: const EdgeInsets.all(20),
+                            margin: const EdgeInsets.only(bottom: 8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                  color: Theme.of(context).colorScheme.primary),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      record.product!.name ?? '',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                    Text(
+                                      '\$ ${record.orderAmount}',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    Text(
+                                      '訂單時間 ${record.createdAt}',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                    Text(
+                                      '訂單編號 ${record.id}',
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              Text(
-                                '\$ ${record.orderAmount}',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              Text(
-                                '訂單時間 ${record.createdAt}',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                              Text(
-                                '訂單編號 ${record.id}',
-                                style: Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          ),
-                          Text(
-                            record.paymentStatus == 0 ? '成功' : '失敗',
-                            style: Theme.of(context).textTheme.headlineLarge,
-                          ),
-                        ],
-                      ),
-                    );
-                      },
-                    );
-                  }),
+                                Text(
+                                  record.paymentStatus == 0 ? '成功' : '失敗',
+                                  style:
+                                      Theme.of(context).textTheme.headlineLarge,
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    }),
               ),
             ],
           ),
