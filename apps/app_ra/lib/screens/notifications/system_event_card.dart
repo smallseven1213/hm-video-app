@@ -31,7 +31,8 @@ class SystemEventCard extends StatelessWidget {
       margin: const EdgeInsets.only(left: 8, right: 8, bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Theme.of(context).primaryColor, width: 2),
+        border:
+            Border.all(color: AppColors.colors[ColorKeys.primary], width: 2),
       ),
       child: Stack(
         children: [
@@ -41,7 +42,7 @@ class SystemEventCard extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                    fontSize: 14, color: Theme.of(context).primaryColor),
+                    fontSize: 14, color: AppColors.colors[ColorKeys.primary]),
               ),
               const SizedBox(height: 8),
               Text(
@@ -74,7 +75,7 @@ class SystemEventCard extends StatelessWidget {
                         isSelected
                             ? Icons.check_box
                             : Icons.check_box_outline_blank,
-                        color: Theme.of(context).primaryColor,
+                        color: AppColors.colors[ColorKeys.primary],
                         size: 16,
                       ),
                     ),

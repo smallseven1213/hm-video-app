@@ -226,7 +226,7 @@ class UserLike extends StatelessWidget {
             Icon(
               iconData,
               size: 20,
-              color: Theme.of(context).primaryColor,
+              color: AppColors.colors[ColorKeys.primary],
             ),
             const SizedBox(width: 6),
             Text(

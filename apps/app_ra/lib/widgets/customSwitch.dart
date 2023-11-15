@@ -40,7 +40,8 @@ class _CustomSwitchState extends State<CustomSwitch>
   @override
   Widget build(BuildContext context) {
     bool open = widget.value == true;
-    Color enableColor = widget.enableColor ?? Theme.of(context).primaryColor;
+    Color enableColor =
+        widget.enableColor ?? AppColors.colors[ColorKeys.primary];
     Color disableColor = widget.disableColor ?? Colors.white;
     return AnimatedBuilder(
       animation: _animationController,

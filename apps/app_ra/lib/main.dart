@@ -29,8 +29,8 @@ void main() async {
     AppColors.colors,
     ThemeData(
       scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
-      highlightColor: Colors.transparent,
-      splashColor: Colors.transparent,
+      // highlightColor: Colors.black,
+      // splashColor: Colors.black,
       primaryColor: Colors.black,
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: AppColors.colors[ColorKeys.primary],
