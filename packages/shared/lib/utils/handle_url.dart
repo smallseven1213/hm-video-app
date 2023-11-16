@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,7 +45,6 @@ void handlePathWithId(BuildContext context, String url) {
 
 // 狀況5: 如果包含depositType
 void handleGameDepositType(BuildContext context, String url) {
-  debugger();
   logger.i('url: $url');
   final depositType = Uri.parse(url).queryParameters['depositType'];
   MyRouteDelegate.of(context).push(
