@@ -23,7 +23,7 @@ void handleDefaultScreenKey(BuildContext context, String url) {
   final defaultScreenKey = Uri.parse(url).queryParameters['defaultScreenKey'];
   final routePath = url.substring(0, url.indexOf('?'));
 
-  MyRouteDelegate.of(context).push(
+  MyRouteDelegate.of(context).pushAndRemoveUntil(
     routePath,
     args: {'defaultScreenKey': '/$defaultScreenKey'},
   );
@@ -47,7 +47,7 @@ void handlePathWithId(BuildContext context, String url) {
 void handleGameDepositType(BuildContext context, String url) {
   logger.i('url: $url');
   final depositType = Uri.parse(url).queryParameters['depositType'];
-  MyRouteDelegate.of(context).push(
+  MyRouteDelegate.of(context).pushAndRemoveUntil(
     gameDepositPage[int.parse(depositType!)].toString(),
     args: {'defaultScreenKey': '/game'},
   );
