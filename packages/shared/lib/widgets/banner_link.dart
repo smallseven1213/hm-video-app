@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/banner_controller.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:shared/utils/handle_url.dart';
 
 class BannerLink extends StatelessWidget {
   final int id;
@@ -21,11 +20,17 @@ class BannerLink extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Get.find<BannerController>().recordBannerClick(id);
+
+        final Uri parsedUrl = Uri.parse(url);
+
         if (url.startsWith('http://') || url.startsWith('https://')) {
-          // ignore: deprecated_member_use
-          launch(url, webOnlyWindowName: '_blank');
+          handleHttpUrl(url);
+        } else if (parsedUrl.queryParameters.containsKey('depositType')) {
+          handleGameDepositType(context, url);
+        } else if (parsedUrl.queryParameters.containsKey('defaultScreenKey')) {
+          handleDefaultScreenKey(context, url);
         } else {
-          MyRouteDelegate.of(context).push(url);
+          handlePathWithId(context, url);
         }
       },
       child: child,
