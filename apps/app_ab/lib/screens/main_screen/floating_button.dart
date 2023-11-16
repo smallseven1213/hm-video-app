@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:shared/models/navigation.dart';
 
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/handle_url.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 
@@ -68,15 +69,19 @@ class _FloatingButtonState extends State<FloatingButton> {
                 elevation: 0,
                 onPressed: () {
                   final path = fabLinkData.path!;
-                  final defaultScreenKey =
-                      Uri.parse(path).queryParameters['defaultScreenKey'];
-                  final routePath = path.substring(0, path.indexOf('?'));
-
-                  MyRouteDelegate.of(context).push(
-                    routePath,
-                    args: {'defaultScreenKey': '/$defaultScreenKey'},
-                  );
-                  bottomNavigatorController.changeKey('/$defaultScreenKey');
+                  final Uri parsedUrl = Uri.parse(path);
+                  if (path.startsWith('http://') ||
+                      path.startsWith('https://')) {
+                    handleHttpUrl(path);
+                  } else if (parsedUrl.queryParameters
+                      .containsKey('depositType')) {
+                    handleGameDepositType(context, path);
+                  } else if (parsedUrl.queryParameters
+                      .containsKey('defaultScreenKey')) {
+                    handleDefaultScreenKey(context, path);
+                  } else {
+                    handlePathWithId(context, path);
+                  }
                 },
                 child: SidImage(
                   key: ValueKey(fabLinkData.id),
