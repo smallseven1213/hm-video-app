@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as getx;
 import 'package:logger/logger.dart';
-import 'package:shared/services/system_config.dart';
 
-final systemConfig = SystemConfig();
+import '../controllers/system_config_controller.dart';
+
 final logger = Logger();
 
 class DlApi {
@@ -16,6 +17,13 @@ class DlApi {
     return _instance;
   }
 
+  final SystemConfigController _systemConfigController =
+      getx.Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  List<String> get dlJsonHostList =>
+      _systemConfigController.dlJsonHostList.value;
+
   // 1: 不更新、2: 建議更新、3: 強制更新
 
   fetchDlJson() async {
@@ -25,6 +33,7 @@ class DlApi {
         Dio dio,
       ) async {
         var completer = Completer<Response>();
+
         for (String url in apiList) {
           var now = DateTime.now().millisecondsSinceEpoch;
           var newUrl = '$url?timestamp=$now';
@@ -39,7 +48,7 @@ class DlApi {
       }
 
       Response response = await getResponse(
-        systemConfig.dlJsonHostList,
+        dlJsonHostList,
         Dio(),
       );
       var res = (response.data as Map<String, dynamic>);

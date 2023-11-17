@@ -5,12 +5,13 @@ import 'package:game/localization/game_localization_delegate.dart';
 import 'package:game/localization/vi.dart';
 import 'package:game/localization/zh.dart';
 import 'package:game/localization/zn.dart';
+import 'package:get/get.dart';
 import 'package:shared/models/color_keys.dart';
+import '../controllers/system_config_controller.dart';
 import '../navigator/delegate.dart';
 import '../navigator/parser.dart';
 import 'ad.dart';
 import 'splash.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 typedef RouteObject = Map<String, RouteWidgetBuilder>;
 
@@ -23,6 +24,7 @@ class RootWidget extends StatelessWidget {
   final Widget Function({int countdownSeconds})? countdown;
   final ThemeData? theme;
   final bool? i18nSupport;
+  final List<String> dlJsonHosts;
 
   const RootWidget(
       {Key? key,
@@ -33,11 +35,13 @@ class RootWidget extends StatelessWidget {
       this.theme,
       this.loading,
       this.countdown,
-      this.i18nSupport})
+      this.i18nSupport,
+      required this.dlJsonHosts})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    Get.find<SystemConfigController>().setDlJsonHosts(dlJsonHosts);
     final RouteObject baseRoutes = {
       '/': (context, args) =>
           Splash(backgroundAssetPath: splashImage, loading: loading),

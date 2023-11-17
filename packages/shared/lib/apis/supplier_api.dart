@@ -1,13 +1,11 @@
+import 'package:get/get.dart';
 import 'package:shared/models/supplier_with_vods.dart';
 
+import '../controllers/system_config_controller.dart';
 import '../models/block_vod.dart';
 import '../models/supplier.dart';
 import '../models/vod.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/suppliers';
 
 class SupplierApi {
   static final SupplierApi _instance = SupplierApi._internal();
@@ -17,6 +15,12 @@ class SupplierApi {
   factory SupplierApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/suppliers';
 
   // Get suppliers/supplier/?id=20 By id
   Future<Supplier> getOneSupplier(int id) async {

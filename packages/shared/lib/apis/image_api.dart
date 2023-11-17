@@ -1,9 +1,9 @@
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-import '../services/system_config.dart';
+import '../controllers/system_config_controller.dart';
 import '../utils/fetcher.dart';
 
-final systemConfig = SystemConfig();
 final logger = Logger();
 
 class ImageApi {
@@ -15,9 +15,16 @@ class ImageApi {
     return _instance;
   }
 
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get imgHost => _systemConfigController.imgHost.value!;
+  String get apiPrefix => '$apiHost/public/jingangs';
+
   Future<String?> getSidImageData(String sid) async {
     try {
-      var res = await fetcher(url: '${systemConfig.imgHost}/images/$sid');
+      var res = await fetcher(url: '$imgHost/images/$sid');
       var result = res.data;
       return result;
     } catch (e) {

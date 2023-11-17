@@ -7,8 +7,9 @@ import 'config/colors.dart';
 import 'localization/i18n.dart';
 import './routes/app_routes.dart' as app_routes;
 import 'widgets/loading_animation.dart';
+import 'package:live_core/widgets/live_provider.dart';
 
-const env = String.fromEnvironment('ENV', defaultValue: 'prod');
+const env = String.fromEnvironment('ENV', defaultValue: 'dev');
 
 void main() async {
   final allRoutes = {
@@ -31,6 +32,6 @@ void main() async {
     i18nSupport: true,
     supportedLocales: I18n.supportedLocales,
     i18nPath: 'assets/langs/langs.csv',
-    expandedWidget: (child) => GameProvider(child: child),
+    expandedWidget: (child) => LiveProvider(child: GameProvider(child: child)),
   );
 }

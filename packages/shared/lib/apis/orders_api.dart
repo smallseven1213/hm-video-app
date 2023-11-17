@@ -1,8 +1,8 @@
+import 'package:get/get.dart';
 import 'package:shared/models/user_order.dart';
-import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 
-final systemConfig = SystemConfig();
+import '../controllers/system_config_controller.dart';
 
 class OrderApi {
   static final OrderApi _instance = OrderApi._internal();
@@ -13,6 +13,11 @@ class OrderApi {
     return _instance;
   }
 
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+
   Future<Map> makeOrder({
     String agentAccount = '',
     required int productId,
@@ -20,7 +25,7 @@ class OrderApi {
     String? name,
   }) async {
     var value = await fetcher(
-      url: '${systemConfig.apiHost}/public/orders/order',
+      url: '$apiHost/public/orders/order',
       method: 'POST',
       body: {
         'name': name,
@@ -43,8 +48,7 @@ class OrderApi {
     String? startedAt,
     String? endedAt,
   }) async {
-    var url =
-        '${systemConfig.apiHost}/public/orders/order/record?page=$page&limit=$limit';
+    var url = '$apiHost/public/orders/order/record?page=$page&limit=$limit';
     if (paymentStatus != null) {
       url += '&paymentStatus=$paymentStatus';
     }

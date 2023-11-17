@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/user_setting/user_setting_more_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/services/system_config.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,6 +18,7 @@ class UserMenuWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final systemConfigController = Get.find<SystemConfigController>();
     return UserSettingMoreLinkConsumer(
       child: (List<Navigation> moreLinks) {
         var menuItems = moreLinks.map((Navigation item) {
@@ -43,7 +45,7 @@ class UserMenuWidget extends StatelessWidget {
                 );
               } else if (item.name == '在線客服') {
                 launchUrl(Uri.parse(
-                    '${SystemConfig().apiHost}/public/domains/domain/customer-services'));
+                    '${systemConfigController.apiHost.value}/public/domains/domain/customer-services'));
               } else {
                 MyRouteDelegate.of(context).push(item.path ?? '');
               }

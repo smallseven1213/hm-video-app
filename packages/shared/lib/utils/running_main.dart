@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_web_plugins/url_strategy.dart' as url_strategy;
 import 'package:flutter/foundation.dart';
@@ -8,11 +9,11 @@ import 'package:flutter/services.dart';
 import 'package:game/utils/setup_game_dependencies.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/utils/setup_dependencies.dart';
 
 import '../models/color_keys.dart';
-import '../services/system_config.dart';
-import '../widgets/root.dart';
+import '../widgets/root.dart' as root;
 
 typedef GlobalLoadingWidget = Widget Function({String? text});
 
@@ -64,7 +65,7 @@ Future<void> runningMain(
     String sentryDSN,
     String homePath,
     List<String> dlJsonHosts,
-    RouteObject routes,
+    root.RouteObject routes,
     Map<ColorKeys, Color> appColors,
     ThemeData? theme,
     {GlobalLoadingWidget? globalLoadingWidget,
@@ -74,8 +75,6 @@ Future<void> runningMain(
     String? i18nPath,
     Widget Function(Widget child)? expandedWidget}) async {
   url_strategy.usePathUrlStrategy();
-
-  SystemConfig().setDlJsonHosts(dlJsonHosts);
 
   Widget buildOuterWidget(Widget child) {
     if (expandedWidget != null) {
@@ -88,11 +87,11 @@ Future<void> runningMain(
   SentryFlutter.init((options) {
     options.dsn = sentryDSN;
     options.tracesSampleRate = kDebugMode ? 0 : 0.1;
-    options.release = SystemConfig().version;
+    // options.release = systemConfigController.version.value;
     options.environment = kDebugMode ? 'development' : 'production';
   },
       appRunner: () => realMain(
-          buildOuterWidget(RootWidget(
+          buildOuterWidget(root.RootWidget(
             homePath: homePath,
             routes: routes,
             splashImage: 'assets/images/splash.png',
@@ -101,6 +100,7 @@ Future<void> runningMain(
             theme: theme,
             countdown: countdown,
             i18nSupport: i18nSupport,
+            dlJsonHosts: dlJsonHosts,
           )),
           i18nSupport: i18nSupport,
           supportedLocales: supportedLocales,

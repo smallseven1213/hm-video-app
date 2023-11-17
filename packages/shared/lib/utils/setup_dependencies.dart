@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/controllers/user_navigator_controller.dart';
 import '../controllers/actor_region_controller.dart';
 import '../controllers/apps_controller.dart';
@@ -32,8 +33,14 @@ import '../controllers/video_ads_controller.dart';
 import '../enums/list_editor_category.dart';
 import '../enums/play_record_type.dart';
 
-void setupDependencies() {
+void setupDependencies() async {
   Get.put(RouteController());
+  Get.lazyPut<SystemConfigController>(() => SystemConfigController());
+  Get.putAsync<SystemConfigController>(() async {
+    await Future.delayed(const Duration(seconds: 1));
+
+    return SystemConfigController();
+  });
   Get.lazyPut<AuthController>(() => AuthController());
   Get.lazyPut<ApiResponseErrorCatchController>(
       () => ApiResponseErrorCatchController());

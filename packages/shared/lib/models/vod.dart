@@ -1,11 +1,10 @@
+import 'package:get/get.dart';
+import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/models/publisher.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/models/tag.dart';
 
-import '../services/system_config.dart';
 import 'actor.dart';
-
-final systemConfig = SystemConfig();
 
 enum VideoType {
   none,
@@ -274,6 +273,7 @@ class Vod {
   }
 
   String? getVideoUrl() {
+    final systemConfigController = Get.find<SystemConfigController>();
     if (videoUrl != null && videoUrl!.isNotEmpty) {
       // logger.i(videoUrlUd);
       String uri = videoUrl!.replaceAll('\\', '/').replaceAll('//', '/');
@@ -282,7 +282,7 @@ class Vod {
         return uri;
       }
       String id = uri.substring(uri.indexOf('/') + 1);
-      return '${systemConfig.vodHost}/$id/$id.m3u8';
+      return '${systemConfigController.vodHost.value}/$id/$id.m3u8';
     }
     return null;
   }

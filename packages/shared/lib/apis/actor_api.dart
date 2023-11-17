@@ -1,14 +1,12 @@
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/system_config_controller.dart';
 
 import '../models/actor.dart';
 import '../models/actor_with_vods.dart';
 import '../models/block_vod.dart';
 import '../models/vod.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/actors';
 
 final logger = Logger();
 
@@ -19,6 +17,12 @@ class ActorApi {
   factory ActorApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  // 动态获取apiPrefix
+  String get apiPrefix => _systemConfigController.apiHost.value!;
 
   Future<List<Actor>> getManyBy({
     required int page,

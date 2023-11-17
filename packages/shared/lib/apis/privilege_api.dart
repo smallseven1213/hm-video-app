@@ -1,9 +1,7 @@
+import 'package:get/get.dart';
 import 'package:shared/models/user_privilege_record.dart';
-import 'package:shared/services/system_config.dart';
+import '../controllers/system_config_controller.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/privileges';
 
 class PrivilegeApi {
   static final PrivilegeApi _instance = PrivilegeApi._internal();
@@ -13,6 +11,12 @@ class PrivilegeApi {
   factory PrivilegeApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/privileges';
 
   Future<List<UserPrivilegeRecord>> getManyBy({
     required String userId,

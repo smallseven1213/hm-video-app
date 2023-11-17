@@ -1,20 +1,20 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:game/models/hm_api_response_pagination.dart';
+import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/response/response.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/hm_api_response.dart';
 import '../controllers/response_controller.dart';
+import '../controllers/system_config_controller.dart';
 import '../enums/shorts_type.dart';
 import '../models/area_info_with_block_vod.dart';
 import '../models/block_vod.dart';
 import '../models/channel_info.dart';
 import '../models/short_video_detail.dart';
 import '../models/vod.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
-final systemConfig = SystemConfig();
 final logger = Logger();
 
 class VodApi {
@@ -26,9 +26,14 @@ class VodApi {
     return _instance;
   }
 
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+
   Future<HMApiResponse> purchase(int videoId) async {
     var value = await fetcher(
-        url: '${systemConfig.apiHost}/public/videos/video/purchase',
+        url: '$apiHost/public/videos/video/purchase',
         method: 'POST',
         body: {'videoId': videoId});
 
@@ -55,7 +60,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/list?page=$page&limit=$limit&film=$film&$queryString');
+            '$apiHost/public/videos/video/list?page=$page&limit=$limit&film=$film&$queryString');
 
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
@@ -73,7 +78,7 @@ class VodApi {
       String keyword, int page, int limit, int film) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit&film=$film');
+            '$apiHost/public/videos/video/searchV2?keyword=$keyword&page=$page&limit=$limit&film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -97,7 +102,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/sameTags?id=$tagId&film=1&page=$page&limit=$limit');
+            '$apiHost/public/videos/video/sameTags?id=$tagId&film=1&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -117,7 +122,7 @@ class VodApi {
   Future<BlockVod> getManyByChannel(int blockId, {int? offset = 1}) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/index?areaId=$blockId&offset=$offset');
+            '$apiHost/public/videos/video/index?areaId=$blockId&offset=$offset');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -137,7 +142,7 @@ class VodApi {
   // Future<List<Block>> getManyByChannel2(int blockId, {int? offset = 1}) async {
   //   var res = await fetcher(
   //       url:
-  //           '${systemConfig.apiHost}/public/videos/video/index?areaId=$blockId&offset=$offset');
+  //           '$apiHost/public/videos/video/index?areaId=$blockId&offset=$offset');
   //   if (res.data['code'] != '00') {
   //     return [];
   //   }
@@ -157,7 +162,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/moreVideo?page=$page&limit=$limit&areaId=$areaId');
+            '$apiHost/public/videos/video/moreVideo?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -175,8 +180,8 @@ class VodApi {
   }
 
   Future<Vod> getVodUrl(int vodId) async {
-    var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/videos/video/videoUrl?id=$vodId');
+    var res =
+        await fetcher(url: '$apiHost/public/videos/video/videoUrl?id=$vodId');
     if (res.data['code'] != '00') {
       return Vod(0, '');
     }
@@ -190,7 +195,7 @@ class VodApi {
   // Future<Vod> refreshVodUrl(Vod vod) async {
   //   var res = await fetcher(
   //       url:
-  //           '${systemConfig.apiHost}/public/videos/video/videoUrl?id=${vod.id}');
+  //           '$apiHost/public/videos/video/videoUrl?id=${vod.id}');
   //   if (res.data['code'] != '00') {
   //     return Vod(0, '');
   //   }
@@ -217,8 +222,7 @@ class VodApi {
 
   Future<Vod> getVodDetail(int vodId) async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/videoDetail?id=$vodId');
+        url: '$apiHost/public/videos/video/videoDetail?id=$vodId');
     if (res.data['code'] != '00') {
       return res.data['data'];
     }
@@ -233,7 +237,7 @@ class VodApi {
       {int? page = 1}) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/shortVideo/follow?page=$page&limit=50');
+            '$apiHost/public/videos/video/shortVideo/follow?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return HMApiResponsePaginationData(
         data: [],
@@ -254,8 +258,7 @@ class VodApi {
   Future<HMApiResponsePaginationData<List<Vod>>> getRecommends(
       {int? page = 1}) async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/recommend?page=$page&limit=50');
+        url: '$apiHost/public/videos/video/recommend?page=$page&limit=50');
     if (res.data['code'] != '00') {
       return HMApiResponsePaginationData(
         data: [],
@@ -276,7 +279,7 @@ class VodApi {
   Future<List<Vod>> getPopular(int areaId, int videoId) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/shortVideo/popular?areaId=$areaId&videoId=$videoId');
+            '$apiHost/public/videos/video/shortVideo/popular?areaId=$areaId&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -286,8 +289,7 @@ class VodApi {
 
   Future<ShortVideoDetail> getShortVideoDetailById(int id) async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/shortVideoDetail?id=$id');
+        url: '$apiHost/public/videos/video/shortVideoDetail?id=$id');
     if (res.data['code'] != '00') {
       return ShortVideoDetail.fromJson({});
     }
@@ -296,8 +298,7 @@ class VodApi {
 
   Future<Vod> getById(int videoId) async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/shortVideoDetail?id=$videoId');
+        url: '$apiHost/public/videos/video/shortVideoDetail?id=$videoId');
 
     try {
       return Vod.fromJson(res.data['data']);
@@ -325,7 +326,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/v2/videoBlocks?offset=$offset&channelId=$channelId&deviceId=$deviceId');
+            '$apiHost/public/videos/video/v2/videoBlocks?offset=$offset&channelId=$channelId&deviceId=$deviceId');
     try {
       return ChannelInfo.fromJson(res.data['data']);
     } catch (e) {
@@ -351,7 +352,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/v2/videoBlocks?offset=$offset&areaId=$blockId&deviceId=$deviceId');
+            '$apiHost/public/videos/video/v2/videoBlocks?offset=$offset&areaId=$blockId&deviceId=$deviceId');
     try {
       return Blocks.fromJson(res.data['data']);
     } catch (e) {
@@ -367,7 +368,7 @@ class VodApi {
   ) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/internalTags/internalTag/views?excludeId=$excludeId&internalTagId=$internalTagId');
+            '$apiHost/public/internalTags/internalTag/views?excludeId=$excludeId&internalTagId=$internalTagId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -384,7 +385,7 @@ class VodApi {
     String? excludeId,
     String? tagId,
   }) async {
-    String url = '${systemConfig.apiHost}/public/tags/tag/views';
+    String url = '$apiHost/public/tags/tag/views';
     List<String> queryParams = [];
 
     if (excludeId != null) {
@@ -418,7 +419,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/sameActors?actorId=$actorId&excludeId=$excludeId');
+            '$apiHost/public/videos/video/sameActors?actorId=$actorId&excludeId=$excludeId');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -433,8 +434,7 @@ class VodApi {
   // search keyword
   Future<List<String>> getSearchKeyword(String keyword) async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/videos/video/keywordV2?keyword=$keyword');
+        url: '$apiHost/public/videos/video/keywordV2?keyword=$keyword');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -453,7 +453,7 @@ class VodApi {
   }) async {
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/v2/areaInfo?page=$page&limit=$limit&areaId=$areaId');
+            '$apiHost/public/videos/video/v2/areaInfo?page=$page&limit=$limit&areaId=$areaId');
     if (res.data['code'] != '00') {
       return null;
     }
@@ -493,7 +493,7 @@ class VodApi {
 
     var res = await fetcher(
         url:
-            '${systemConfig.apiHost}/public/videos/video/shortVideo/playlist?$queryString&videoId=$videoId');
+            '$apiHost/public/videos/video/shortVideo/playlist?$queryString&videoId=$videoId');
     if (res.data['code'] != '00') {
       return [];
     }

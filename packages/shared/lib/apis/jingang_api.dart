@@ -1,6 +1,7 @@
-import '../utils/fetcher.dart';
+import 'package:get/get.dart';
 
-String apiPrefix = '${systemConfig.apiHost}/public/jingangs';
+import '../controllers/system_config_controller.dart';
+import '../utils/fetcher.dart';
 
 class JingangApi {
   static final JingangApi _instance = JingangApi._internal();
@@ -10,6 +11,12 @@ class JingangApi {
   factory JingangApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/jingangs';
 
   Future<void> recordJingangClick(int jingangId) async {
     if (jingangId == 0) {
