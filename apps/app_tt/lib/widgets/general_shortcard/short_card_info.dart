@@ -4,6 +4,7 @@ import 'package:shared/controllers/video_shorts_controller.dart';
 import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:video_player/video_player.dart';
 
 import '../shortcard/supplier_name.dart';
 import '../shortcard/video_progress.dart';
@@ -60,6 +61,9 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
     return VideoPlayerConsumer(
         tag: widget.videoUrl,
         child: (VideoPlayerInfo videoPlayerInfo) {
+          if (videoPlayerInfo.videoPlayerController == null) {
+            return Container();
+          }
           return Container(
             width: MediaQuery.of(context).size.width,
             decoration: BoxDecoration(

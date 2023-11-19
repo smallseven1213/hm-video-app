@@ -14,13 +14,13 @@ class ViewTimes extends StatelessWidget {
       ),
       TextSpan(
         children: [
-          WidgetSpan(
+          const WidgetSpan(
             child: Align(
               alignment: Alignment.center,
-              child: Icon(
-                Icons.remove_red_eye_outlined,
-                color: color ?? Colors.white,
-                size: 16,
+              child: Image(
+                width: 15,
+                height: 17,
+                image: AssetImage('assets/images/play_count.webp'),
               ),
             ),
           ),

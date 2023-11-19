@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
@@ -77,8 +78,8 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
             child: SupplierConsumer(
               id: id,
               child: (Supplier info) => Container(
-                  padding:
-                      EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+                  padding: EdgeInsets.only(
+                      top: kIsWeb ? 10 : MediaQuery.of(context).padding.top),
                   child: Stack(
                     children: [
                       ActorHeaderInfo(

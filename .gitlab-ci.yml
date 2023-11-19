@@ -271,3 +271,16 @@ deploy-ab-prod-job:
   script: 
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/ab --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/ab/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh ab prod ${CI_PROJECT_NAME}-ab ${CI_COMMIT_TAG}
+
+deploy-ra-prod-job: 
+  stage: deploy
+  tags: 
+    - gitlab-shared-runner
+  only: 
+    refs: 
+      - tags
+    variables: 
+      - $CI_COMMIT_REF_NAME =~ /ra$/
+  script: 
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/ra --install "${CI_PROJECT_NAME}" --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/ra/${CI_PROJECT_NAME} -n prod
+    - /bin/bash /home/gitlab-runner/tg-notify.sh ra prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}

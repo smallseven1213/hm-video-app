@@ -4,7 +4,10 @@ import 'package:video_player/video_player.dart';
 class VideoProgressWidget extends StatefulWidget {
   final VideoPlayerController videoPlayerController;
 
-  VideoProgressWidget({required this.videoPlayerController});
+  const VideoProgressWidget({
+    super.key,
+    required this.videoPlayerController,
+  });
 
   @override
   _VideoProgressWidgetState createState() => _VideoProgressWidgetState();
