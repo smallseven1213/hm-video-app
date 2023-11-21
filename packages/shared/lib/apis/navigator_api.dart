@@ -1,10 +1,10 @@
 // NavigatorApi, has GET'navigations/navigation' by fetcher function
 
-import '../models/navigation.dart';
-import '../services/system_config.dart';
-import '../utils/fetcher.dart';
+import 'package:get/get.dart';
 
-final systemConfig = SystemConfig();
+import '../controllers/system_config_controller.dart';
+import '../models/navigation.dart';
+import '../utils/fetcher.dart';
 
 class NavigatorApi {
   static final NavigatorApi _instance = NavigatorApi._internal();
@@ -15,11 +15,15 @@ class NavigatorApi {
     return _instance;
   }
 
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+
   Future<List<Navigation>> getNavigations(int type) async {
     try {
       var res = await fetcher(
-          url:
-              '${systemConfig.apiHost}/public/navigations/navigation?type=$type');
+          url: '$apiHost/public/navigations/navigation?type=$type');
       if (res.data['code'] != '00') {
         return [];
       }

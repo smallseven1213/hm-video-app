@@ -1,11 +1,10 @@
+import 'package:get/get.dart';
 import 'package:shared/models/block_vod.dart';
 import 'package:shared/models/user_purchase_record.dart';
-import 'package:shared/services/system_config.dart';
 import 'package:shared/utils/fetcher.dart';
 
+import '../controllers/system_config_controller.dart';
 import '../models/vod.dart';
-
-final systemConfig = SystemConfig();
 
 class PointApi {
   static final PointApi _instance = PointApi._internal();
@@ -16,9 +15,13 @@ class PointApi {
     return _instance;
   }
 
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+
   Future<BlockVod> getManyBy() async {
-    var url =
-        '${systemConfig.apiHost}/public/points/purchase-record/list/video';
+    var url = '$apiHost/public/points/purchase-record/list/video';
     var value = await fetcher(url: url);
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
@@ -32,7 +35,7 @@ class PointApi {
   Future<List<UserPurchaseRecord>> getPoints(
       {int limit = 100, int page = 1}) async {
     var url =
-        '${systemConfig.apiHost}/public/points/purchase-record/list?page=$page&limit=$limit';
+        '$apiHost/public/points/purchase-record/list?page=$page&limit=$limit';
     var value = await fetcher(url: url);
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {

@@ -37,4 +37,5 @@ class AppRoutes {
   static const String coin = '/coin';
   static const String orderConfirm = '/order_confirm';
   static const String redemption = '/redemption';
+  static const String live = '/live';
 }

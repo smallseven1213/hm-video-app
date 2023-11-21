@@ -164,6 +164,7 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Widget build(BuildContext context) {
+    print("MyRouteDelegate _stack $homePath > $_stack");
     return Stack(
       children: [
         Navigator(

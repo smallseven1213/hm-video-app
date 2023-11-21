@@ -1,15 +1,21 @@
-name: stream
+name: live_ui_basic
 description: A new Flutter package project.
 version: 0.0.1
+publish_to: 'none'
 homepage:
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
+  sdk: '>=3.1.5 <4.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  shared:
+    path: ../../packages/shared
+  live_core:
+    path: ../../packages/live_core
+  navigator: ^1.1.1
 
 dev_dependencies:
   flutter_test:

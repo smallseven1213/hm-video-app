@@ -1,14 +1,13 @@
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+import '../controllers/system_config_controller.dart';
 import '../models/block_vod.dart';
 import '../models/publisher.dart';
 import '../models/vod.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
-final systemConfig = SystemConfig();
 final logger = Logger();
-final apiPrefixUrl = '${systemConfig.apiHost}/public/publishers';
 
 class PublisherApi {
   static final PublisherApi _instance = PublisherApi._internal();
@@ -19,11 +18,17 @@ class PublisherApi {
     return _instance;
   }
 
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/publishers';
+
   Future<List<Publisher>> getManyBy(
       {required int page, String? name, int? sortBy}) async {
     var res = await fetcher(
         url:
-            '$apiPrefixUrl/publisher/list?page=$page&limit=48&name=$name&isSortByVideos=${sortBy ?? 0}');
+            '$apiPrefix/publisher/list?page=$page&limit=48&name=$name&isSortByVideos=${sortBy ?? 0}');
     if (res.data['code'] != '00') {
       return [];
     }
@@ -32,7 +37,7 @@ class PublisherApi {
   }
 
   Future<Publisher> getOne(int publisherId) async {
-    var res = await fetcher(url: '$apiPrefixUrl/publisher?id=$publisherId');
+    var res = await fetcher(url: '$apiPrefix/publisher?id=$publisherId');
     if (res.data['code'] != '00') {
       return Publisher(0, '出版商', '');
     }
@@ -43,7 +48,7 @@ class PublisherApi {
       {int page = 1, int limit = 10, required int publisherId}) async {
     var res = await fetcher(
         url:
-            '$apiPrefixUrl/publisher/latest?id=$publisherId&page=$page&limit=$limit');
+            '$apiPrefix/publisher/latest?id=$publisherId&page=$page&limit=$limit');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -59,7 +64,7 @@ class PublisherApi {
       {int page = 1, int limit = 10, required int publisherId}) async {
     var res = await fetcher(
         url:
-            '$apiPrefixUrl/publisher/hottest?id=$publisherId&page=$page&limit=$limit');
+            '$apiPrefix/publisher/hottest?id=$publisherId&page=$page&limit=$limit');
 
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
@@ -74,7 +79,7 @@ class PublisherApi {
 
   Future<List<Publisher>> getRecommend() async {
     var res = await fetcher(
-        url: '$apiPrefixUrl/publisher/list?page=1&limit=100&isRecommend=true');
+        url: '$apiPrefix/publisher/list?page=1&limit=100&isRecommend=true');
     if (res.data['code'] != '00') {
       return [];
     }

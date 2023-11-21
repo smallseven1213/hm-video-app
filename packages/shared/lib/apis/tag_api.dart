@@ -1,12 +1,11 @@
+import 'package:get/get.dart';
+
+import '../controllers/system_config_controller.dart';
 import '../models/block_vod.dart';
 import '../models/tag.dart';
 import '../models/videos_tag.dart';
 import '../models/vod.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/tags';
 
 class TagApi {
   static final TagApi _instance = TagApi._internal();
@@ -16,6 +15,12 @@ class TagApi {
   factory TagApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/tags';
 
   Future<List<Tag>> getManyBy({
     required int page,

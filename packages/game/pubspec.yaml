@@ -27,7 +27,7 @@ dependencies:
   uuid: ^3.0.7
   cached_network_image: ^3.2.3
   decimal: ^2.2.0
-  intl: ^0.18.0
+  intl: ^0.18.1
   flutter_form_builder: ^9.0.0
   form_builder_validators: ^9.0.0
   carousel_slider: ^4.2.1

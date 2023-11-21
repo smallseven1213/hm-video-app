@@ -1,10 +1,8 @@
-import 'package:shared/services/system_config.dart';
+import 'package:get/get.dart';
 import 'package:shared/utils/fetcher.dart';
 
+import '../controllers/system_config_controller.dart';
 import '../models/banner_photo.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/banners';
 
 class BannerApi {
   static final BannerApi _instance = BannerApi._internal();
@@ -14,6 +12,12 @@ class BannerApi {
   factory BannerApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/banners';
 
   // 取得banner by id
   Future<List<BannerPhoto>> getBannerById({

@@ -1,10 +1,9 @@
-import 'package:shared/services/system_config.dart';
+import 'package:get/get.dart';
+
+import '../controllers/system_config_controller.dart';
 import '../models/banner_photo.dart';
 import '../utils/fetcher.dart';
 import '../models/index.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/notices';
 
 class NoticeApi {
   static final NoticeApi _instance = NoticeApi._internal();
@@ -14,6 +13,12 @@ class NoticeApi {
   factory NoticeApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/notices';
 
   // 消息中心的公告
   Future<List<Notice>> getNoticeAnnouncement(int page, int limit) async {
@@ -43,9 +48,8 @@ class NoticeApi {
       });
 
   // 彈窗公告
-  Future<Map?> getBounce() async => await fetcher(
-              url:
-                  '${systemConfig.apiHost}/public/banners/banner/v2/bounceData')
+  Future<Map?> getBounce() async =>
+      await fetcher(url: '$apiHost/public/banners/banner/v2/bounceData')
           .then((res) {
         if (res.data['code'] != '00') {
           return null;

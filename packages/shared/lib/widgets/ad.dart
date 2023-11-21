@@ -3,17 +3,17 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
+import '../controllers/system_config_controller.dart';
 import '../enums/app_routes.dart';
 import '../models/banner_photo.dart';
 import '../navigator/delegate.dart';
-import '../services/system_config.dart';
 import '../controllers/banner_controller.dart';
 
-final systemConfig = SystemConfig();
 final logger = Logger();
 
 class Ad extends StatefulWidget {
@@ -34,7 +34,9 @@ class Ad extends StatefulWidget {
 
 class AdState extends State<Ad> {
   BannerController bannerController = Get.find<BannerController>();
+  final systemConfigController = Get.find<SystemConfigController>();
   late BannerPhoto currentBanner;
+  GetStorage box = GetStorage();
 
   int countdownSeconds = 5;
   bool imageLoaded = false;
@@ -44,8 +46,8 @@ class AdState extends State<Ad> {
   void initState() {
     super.initState();
     // 紀錄入站次數，用來取得對應的廣告圖片
-    final entryCount = systemConfig.box.read('entry-count') ?? 0;
-    systemConfig.box.write('entry-count', entryCount + 1);
+    final entryCount = box.read('entry-count') ?? 0;
+    box.write('entry-count', entryCount + 1);
     final landingBanners = bannerController.banners[BannerPosition.landing];
     logger.i(landingBanners);
     if (mounted) {
@@ -144,7 +146,7 @@ class AdState extends State<Ad> {
                 bottom: kIsWeb ? 20 : 70,
                 right: 20,
                 child: Text(
-                  '版本 ${systemConfig.version}',
+                  '版本 ${systemConfigController.version.value}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,

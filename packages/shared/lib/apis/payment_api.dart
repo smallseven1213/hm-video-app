@@ -1,9 +1,8 @@
-import 'package:shared/services/system_config.dart';
+import 'package:get/get.dart';
+
+import '../controllers/system_config_controller.dart';
 import '../models/payment.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/payments';
 
 class PaymentApi {
   static final PaymentApi _instance = PaymentApi._internal();
@@ -13,6 +12,13 @@ class PaymentApi {
   factory PaymentApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/payments';
+
 // deviceType=2 代表是app端 3代表是web端
   Future<List<Payment>> getPaymentsBy(int productId) async {
     var res = await fetcher(
