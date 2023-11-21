@@ -1,4 +1,5 @@
 import 'package:shared/controllers/system_config_controller.dart';
+import 'package:shared/models/hm_api_response_with_data.dart';
 import 'package:shared/utils/fetcher.dart';
 import 'package:get/get.dart';
 
@@ -12,11 +13,14 @@ class AuthApi {
     return _instance;
   }
 
-  Future<void> login(String token) => fetcher(
-          url: '${systemController.apiHost.value}/api/v1/third/login',
-          // url: 'https://auth-api.hmtech-dev.com/api/v1/third/login',
-          method: 'POST',
-          body: {
-            'apiId': 2,
-          });
+  Future<HMApiResponseBaseWithDataWithData> login(String token) async {
+    var response = await fetcher(
+        url: '${systemController.apiHost.value}/api/v1/third/login',
+        method: 'POST',
+        body: {
+          'apiId': 2,
+        });
+
+    return HMApiResponseBaseWithDataWithData.fromJson(response.data);
+  }
 }

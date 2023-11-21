@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
-import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/header.dart';
@@ -12,9 +12,6 @@ import 'grid_menu.dart';
 import 'info.dart';
 import 'list_menu.dart';
 
-final systemConfig = SystemConfig();
-final logger = Logger();
-
 class UserScreen extends StatefulWidget {
   const UserScreen({Key? key}) : super(key: key);
 
@@ -23,6 +20,8 @@ class UserScreen extends StatefulWidget {
 }
 
 class UserScreenState extends State<UserScreen> {
+  final systemConfigController = Get.find<SystemConfigController>();
+
   @override
   Widget build(BuildContext context) {
     return UserSettingScaffold(
@@ -98,7 +97,7 @@ class UserScreenState extends State<UserScreen> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '版本號:${systemConfig.version}',
+                      '版本號:${systemConfigController.version.value}',
                       style: const TextStyle(
                           color: Color(0xFFFFFFFF), fontSize: 12),
                     ),
