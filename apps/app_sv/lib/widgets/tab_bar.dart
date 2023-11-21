@@ -2,11 +2,26 @@ import 'package:app_sv/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
+Widget _buildDot() {
+  return Padding(
+    padding: const EdgeInsets.only(top: 2, left: 1.0),
+    child: Container(
+      width: 5,
+      height: 5,
+      decoration: const BoxDecoration(
+        color: Colors.red,
+        shape: BoxShape.circle,
+      ),
+    ),
+  );
+}
+
 class TabBarWidget extends StatefulWidget implements PreferredSizeWidget {
   final List<String> tabs;
   final TabController? controller;
   final EdgeInsetsGeometry? padding;
   final Function(int)? onTabChange;
+  final List<int> dotIndexes;
 
   const TabBarWidget({
     Key? key,
@@ -14,6 +29,7 @@ class TabBarWidget extends StatefulWidget implements PreferredSizeWidget {
     this.onTabChange,
     this.controller,
     this.padding,
+    this.dotIndexes = const [],
   }) : super(key: key);
 
   @override
@@ -67,7 +83,20 @@ class TabBarWidgetState extends State<TabBarWidget> {
               ),
             ),
             tabs: widget.tabs
-                .map((text) => Tab(height: 20, child: Text(text)))
+                .asMap()
+                .entries
+                .map(
+                  (entry) => Tab(
+                    height: 20,
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(entry.value),
+                        if (widget.dotIndexes.contains(entry.key)) _buildDot()
+                      ],
+                    ),
+                  ),
+                )
                 .toList(),
           ),
         ));
