@@ -48,32 +48,34 @@ class NotificationsPageState extends State<NotificationsPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: '消息中心',
-        bottom: TabBarWidget(
-            tabs: const ['公告', '系統通知'],
-            dotIndexes: eventsController.hasUnRead.value ? [1] : [],
-            controller: _tabController),
-        actions: [
-          _tabController.index == 0
-              ? const SizedBox.shrink()
-              : Obx(() => TextButton(
-                  onPressed: () {
-                    listEditorController.toggleEditing();
-                  },
-                  child: Text(
-                    listEditorController.isEditing.value ? '取消' : '編輯',
-                    style: const TextStyle(color: Colors.white),
-                  ))),
-        ],
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [
-          NotificationScreen(),
-          SystemScreen(eventsController: eventsController)
-        ],
+    return Obx(
+      () => Scaffold(
+        appBar: CustomAppBar(
+          title: '消息中心',
+          bottom: TabBarWidget(
+              tabs: const ['公告', '系統通知'],
+              dotIndexes: eventsController.hasUnRead.value ? [1] : [],
+              controller: _tabController),
+          actions: [
+            _tabController.index == 0
+                ? const SizedBox.shrink()
+                : TextButton(
+                    onPressed: () {
+                      listEditorController.toggleEditing();
+                    },
+                    child: Text(
+                      listEditorController.isEditing.value ? '取消' : '編輯',
+                      style: const TextStyle(color: Colors.white),
+                    ))
+          ],
+        ),
+        body: TabBarView(
+          controller: _tabController,
+          children: [
+            NotificationScreen(),
+            SystemScreen(eventsController: eventsController)
+          ],
+        ),
       ),
     );
   }
