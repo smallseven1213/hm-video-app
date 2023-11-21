@@ -39,4 +39,5 @@ enum ColorKeys {
   searchBgColor,
   jingangBorder,
   noticeBg,
+  systemCardDividerColor,
 }

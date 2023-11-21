@@ -5,12 +5,13 @@ import 'package:shared/controllers/list_editor_controller.dart';
 import 'package:shared/enums/list_editor_category.dart';
 
 import '../../widgets/list_page_panel.dart';
+import '../../utils/show_confirm_dialog.dart';
 import 'system_event_card.dart';
 
 class SystemScreen extends StatelessWidget {
-  SystemScreen({Key? key}) : super(key: key);
+  final EventController eventsController;
+  SystemScreen({Key? key, required this.eventsController}) : super(key: key);
 
-  final eventsController = Get.put(EventController());
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(
           tag: ListEditorCategory.notifications.toString());
@@ -20,10 +21,17 @@ class SystemScreen extends StatelessWidget {
     listEditorController.saveBoundData(allData.map((e) => e.id).toList());
   }
 
-  void _handleDeleteAll() {
+  void _handleDelete(BuildContext context) {
     var selectedIds = listEditorController.selectedIds.toList();
-    eventsController.deleteEvents(selectedIds);
-    listEditorController.removeBoundData(selectedIds);
+    showConfirmDialog(
+      context: context,
+      title: '是否刪除',
+      message: '是否刪除勾選項目',
+      onConfirm: () => {
+        eventsController.deleteEvents(selectedIds),
+        listEditorController.removeBoundData(selectedIds),
+      },
+    );
   }
 
   @override
@@ -43,9 +51,10 @@ class SystemScreen extends StatelessWidget {
               ],
             )),
         ListPagePanelWidget(
-            listEditorController: listEditorController,
-            onSelectButtonClick: _handleSelectAll,
-            onDeleteButtonClick: _handleDeleteAll),
+          listEditorController: listEditorController,
+          onSelectButtonClick: _handleSelectAll,
+          onDeleteButtonClick: () => _handleDelete(context),
+        ),
       ],
     );
   }
