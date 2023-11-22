@@ -28,6 +28,7 @@ void main() async {
     allRoutes,
     AppColors.colors,
     ThemeData(
+      useMaterial3: false,
       scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
