@@ -119,12 +119,12 @@ class ShortVideoPreviewWidget extends BaseVideoPreviewWidget {
                               const SizedBox(
                                 width: 4,
                               ),
-                              const Image(
-                                width: 15,
-                                height: 17,
-                                image:
-                                    AssetImage('assets/images/play_count.webp'),
-                              ),
+                              // const Image(
+                              //   width: 15,
+                              //   height: 17,
+                              //   image:
+                              //       AssetImage('assets/images/play_count.webp'),
+                              // ),
                               const SizedBox(
                                 width: 4,
                               ),

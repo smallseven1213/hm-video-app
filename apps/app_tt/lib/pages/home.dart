@@ -3,6 +3,7 @@ import 'package:app_tt/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
+import 'package:live_ui_basic/pages/live.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/ui_controller.dart';
@@ -41,7 +42,8 @@ final screens = {
       ),
   HomeNavigatorPathes.game: () => const LayoutGameScreen(),
   HomeNavigatorPathes.apps: () => const AppsPage(),
-  HomeNavigatorPathes.user: () => const LayoutUserScreen()
+  HomeNavigatorPathes.user: () => const LayoutUserScreen(),
+  HomeNavigatorPathes.live: () => LivePage(),
 };
 
 class HomePage extends StatefulWidget {
@@ -129,12 +131,6 @@ class HomeState extends State<HomePage> {
                 ],
               );
             }),
-        endDrawer: UserMenuWidget(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            MyRouteDelegate.of(context).push('/live');
-          },
-          child: const Icon(Icons.gamepad),
-        ));
+        endDrawer: UserMenuWidget());
   }
 }
