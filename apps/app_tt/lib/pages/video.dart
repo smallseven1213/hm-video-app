@@ -2,7 +2,9 @@ import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:shared/apis/user_api.dart';
+import 'package:shared/controllers/video_ads_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
@@ -40,6 +42,7 @@ class VideoState extends State<Video> {
   // 為需要滾動到的部分添加GlobalKey
   final GlobalKey _belongVideoKey = GlobalKey(debugLabel: '_belongVideoKey');
   final GlobalKey _tagVideoKey = GlobalKey(debugLabel: '_tagVideoKey');
+  final VideoAdsController videoAdsController = Get.find<VideoAdsController>();
 
   @override
   void initState() {
@@ -89,28 +92,37 @@ class VideoState extends State<Video> {
         return SafeArea(
           child: Column(
             children: [
-              VideoPlayerProvider(
-                key: Key(videoUrl),
-                tag: videoUrl,
-                autoPlay: kIsWeb ? false : true,
-                videoUrl: videoUrl,
-                videoDetail: videoDetail!,
-                loadingWidget: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    color: Colors.black,
-                    child: VideoLoading(
-                        coverHorizontal: videoDetail.coverHorizontal ?? ''),
+              Obx(
+                () => VideoPlayerProvider(
+                  key: Key(videoUrl),
+                  tag: videoUrl,
+                  autoPlay: videoAdsController.videoAds.value.playerPositions !=
+                              null &&
+                          videoAdsController
+                              .videoAds.value.playerPositions!.isNotEmpty
+                      ? false
+                      : kIsWeb
+                          ? false
+                          : true,
+                  videoUrl: videoUrl,
+                  videoDetail: videoDetail!,
+                  loadingWidget: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      color: Colors.black,
+                      child: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                    ),
                   ),
+                  child: (isReady) {
+                    return VideoPlayerArea(
+                      name: name,
+                      videoUrl: videoUrl,
+                      video: videoDetail,
+                      tag: controllerTag,
+                    );
+                  },
                 ),
-                child: (isReady) {
-                  return VideoPlayerArea(
-                    name: name,
-                    videoUrl: videoUrl,
-                    video: videoDetail,
-                    tag: controllerTag,
-                  );
-                },
               ),
               Expanded(
                   child: Stack(
@@ -120,7 +132,7 @@ class VideoState extends State<Video> {
                     slivers: [
                       SliverToBoxAdapter(
                         child: PurchaseBlock(
-                          id: videoDetail.id.toString(),
+                          id: videoDetail!.id.toString(),
                           videoDetail: videoDetail,
                           videoUrl: videoUrl,
                           tag: controllerTag,
