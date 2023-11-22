@@ -26,7 +26,9 @@ void main() async {
     ],
     allRoutes,
     AppColors.colors,
-    null,
+    ThemeData(
+      useMaterial3: false,
+    ),
     globalLoadingWidget: ({String? text}) => Center(child: LoadingAnimation()),
     countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
