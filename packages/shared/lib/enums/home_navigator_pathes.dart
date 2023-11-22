@@ -6,4 +6,5 @@ class HomeNavigatorPathes {
   static const String user = '/user';
   static const String coin = '/coin';
   static const String vip = '/vip';
+  static const String live = '/live';
 }

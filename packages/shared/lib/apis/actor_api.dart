@@ -22,7 +22,8 @@ class ActorApi {
       Get.find<SystemConfigController>();
 
   // 动态获取apiPrefix
-  String get apiPrefix => _systemConfigController.apiHost.value!;
+  String get apiPrefix =>
+      "${_systemConfigController.apiHost.value!}/public/actors";
 
   Future<List<Actor>> getManyBy({
     required int page,
