@@ -10,6 +10,7 @@ import '../shortcard/supplier_name.dart';
 import '../shortcard/video_progress.dart';
 import '../shortcard/video_tags.dart';
 import '../shortcard/video_title.dart';
+import 'app_download_ad.dart';
 import 'next_video.dart';
 import '../shortcard/purchase.dart';
 
@@ -37,14 +38,17 @@ class ShortCardInfo extends StatefulWidget {
 
 class _ShortCardInfoState extends State<ShortCardInfo> {
   Vod? nextVideo;
+  int currentVideoIndex = 0;
 
   void _setupNextVideo() {
     final VideoShortsController videoShortsController =
         Get.find<VideoShortsController>(tag: widget.controllerTag);
     final int index = videoShortsController.data
         .indexWhere((element) => element.id == widget.data.id);
+
     setState(() {
       nextVideo = videoShortsController.data[index + 1];
+      currentVideoIndex = index;
     });
   }
 
@@ -79,34 +83,36 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
             ),
             padding:
                 const EdgeInsets.only(top: 0, left: 0, right: 0, bottom: 20),
-            child: Stack(children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SupplierNameWidget(
-                    data: widget.data,
-                    displayActorAvatar: widget.displayActorAvatar,
-                    videoPlayerInfo: videoPlayerInfo,
-                  ),
-                  VideoTitleWidget(title: widget.title),
-                  VideoTagsWidget(
-                    data: widget.data,
-                    videoPlayerInfo: videoPlayerInfo,
-                  ),
-                  PurchaseWidget(
-                    vodId: widget.data.id,
-                    tag: widget.tag,
-                  ),
-                  VideoProgressWidget(
-                    videoPlayerController:
-                        videoPlayerInfo.videoPlayerController!,
-                  ),
-                  if (widget.controllerTag != null &&
-                      widget.controllerTag!.isNotEmpty)
-                    NextVideoWidget(video: nextVideo),
-                ],
-              ),
-            ]),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SupplierNameWidget(
+                  data: widget.data,
+                  displayActorAvatar: widget.displayActorAvatar,
+                  videoPlayerInfo: videoPlayerInfo,
+                ),
+                VideoTitleWidget(title: widget.title),
+                VideoTagsWidget(
+                  data: widget.data,
+                  videoPlayerInfo: videoPlayerInfo,
+                ),
+                PurchaseWidget(
+                  vodId: widget.data.id,
+                  tag: widget.tag,
+                ),
+                VideoProgressWidget(
+                  videoPlayerController: videoPlayerInfo.videoPlayerController!,
+                ),
+                Stack(
+                  children: [
+                    if (widget.controllerTag != null &&
+                        widget.controllerTag!.isNotEmpty)
+                      NextVideoWidget(video: nextVideo),
+                    AppDownloadAdWidget(videoIndex: currentVideoIndex),
+                  ],
+                )
+              ],
+            ),
           );
         });
   }
