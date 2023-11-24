@@ -1,4 +1,6 @@
+import 'package:app_tt/widgets/shorts_playing_ad.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/short_video/short_video_provider.dart';
@@ -45,6 +47,10 @@ class BaseShortPage extends StatelessWidget {
         itemId: itemId,
         onScrollBeyondFirst: onScrollBeyondFirst,
         loadingWidget: Center(child: LoadingAnimation()),
+        playingAdBuilder: ({
+          required BannerPhoto ad,
+        }) =>
+            ShortsPlayingAd(ad: ad),
         shortCardBuilder: ({
           required int index,
           required bool isActive,
