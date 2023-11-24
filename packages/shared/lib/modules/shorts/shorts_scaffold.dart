@@ -121,7 +121,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     if (widget.playingAdBuilder == null) return;
     // 獲取最新的廣告數據
     List<BannerPhoto> newAds =
-        shortVideoAdsController.videoAds.value.playingAds ?? [];
+        shortVideoAdsController.videoAds.value.shortPlayingAds ?? [];
 
     if (newAds.isNotEmpty) {
       shortVideoAds = newAds;

@@ -25,64 +25,67 @@ class _ShortPlayingAdState extends State<ShortsPlayingAd> {
 
     return Scaffold(
       backgroundColor: Colors.black,
-      body: Container(
-          width: double.infinity,
-          padding: EdgeInsets.only(
-              top: screen.padding.top + 10, bottom: screen.padding.bottom),
-          child: Stack(children: [
-            Center(
-              child: SidImage(
-                sid: widget.ad.photoSid,
-                fit: BoxFit.cover,
-                width: double.infinity,
-              ),
-            ),
-            Positioned(
-              bottom: 24,
-              left: 0,
-              right: 0,
-              child: Container(
-                color: Colors.black.withOpacity(0.5),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      stops: const [0.0, 1.51],
-                      colors: [
-                        Colors.black.withOpacity(0.9),
-                        Colors.transparent,
-                      ],
-                    ),
-                  ),
-                  padding: const EdgeInsets.only(
-                      top: 0, left: 0, right: 0, bottom: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SupplierNameWidget(data: widget.ad),
-                      VideoTitleWidget(title: widget.ad.title ?? ''),
-                      const SizedBox(height: 10),
-                      Container(
-                        height: 4.0,
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.6),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(top: 10, left: 8, right: 8),
-                        child: AppDownloadAdWidget(data: widget.ad),
-                      ),
-                    ],
+      body: BannerLink(
+          id: widget.ad.id,
+          url: widget.ad.url ?? '',
+          child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(
+                  top: screen.padding.top + 10, bottom: screen.padding.bottom),
+              child: Stack(children: [
+                Center(
+                  child: SidImage(
+                    sid: widget.ad.photoSid,
+                    fit: BoxFit.cover,
+                    width: double.infinity,
                   ),
                 ),
-              ),
-            ),
-            const FloatPageBackButton()
-          ])),
+                Positioned(
+                  bottom: 24,
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    color: Colors.black.withOpacity(0.5),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.bottomCenter,
+                          end: Alignment.topCenter,
+                          stops: const [0.0, 1.51],
+                          colors: [
+                            Colors.black.withOpacity(0.9),
+                            Colors.transparent,
+                          ],
+                        ),
+                      ),
+                      padding: const EdgeInsets.only(
+                          top: 0, left: 0, right: 0, bottom: 20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SupplierNameWidget(data: widget.ad),
+                          VideoTitleWidget(title: widget.ad.title ?? ''),
+                          const SizedBox(height: 10),
+                          Container(
+                            height: 4.0,
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.6),
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                top: 10, left: 8, right: 8),
+                            child: AppDownloadAdWidget(data: widget.ad),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                const FloatPageBackButton()
+              ]))),
     );
   }
 }
@@ -192,7 +195,7 @@ class SupplierNameWidget extends StatelessWidget {
                   height: 40,
                 )),
             Text(
-              '@${data.title}',
+              '@${data.name}',
               style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,

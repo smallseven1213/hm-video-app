@@ -1,19 +1,21 @@
 import 'package:get/get.dart';
 import 'package:shared/apis/ad_api.dart';
-// import 'package:shared/models/short_video_ads.dart';
-
-import '../models/video_ads.dart';
+import 'package:shared/models/short_video_ads.dart';
 
 class ShortVideoAdsController extends GetxController {
   final AdApi adApi = AdApi();
+  int videoViews = 0;
   bool isFetched = false;
   var videoAds =
-      VideoAds(bannerParamConfig: BannerParamConfig(config: [20, 20, 30]))
+      ShortVideoAds(bannerParamConfig: BannerParamConfig(config: [20, 20, 30]))
           .obs;
+  // GetStorage box = GetStorage();
+  // var entryCount = 0;
 
   @override
   void onInit() async {
     super.onInit();
+    // entryCount = box.read('entry-count') ?? 0;
     if (isFetched == false) {
       init();
     }
@@ -21,12 +23,16 @@ class ShortVideoAdsController extends GetxController {
 
   Future<void> init() async {
     try {
-      VideoAds res = await adApi.getVideoPageAds();
+      ShortVideoAds res = await adApi.getShortVideoPageAds();
       videoAds.value = res;
       isFetched = true;
     } catch (error) {
       logger.i(error);
     }
   }
-}
 
+  // // 紀錄觀看次數
+  // void recordVideoViews() {
+  //   videoViews = videoViews + 1;
+  // }
+}

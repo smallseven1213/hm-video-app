@@ -47,7 +47,7 @@ class AdApi {
 
   Future<ShortVideoAds> getShortVideoPageAds() async {
     var res =
-        await fetcher(url: '$apiHost/public/banners/banner/short-playing-position');
+        await fetcher(url: '$apiHost/api/v1/banner/short-playing-position');
     if (res.data['code'] != '00') {
       throw Exception('Error fetching video page ads: ${res.data['message']}');
     }
