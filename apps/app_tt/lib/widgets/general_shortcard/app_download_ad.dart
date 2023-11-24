@@ -123,15 +123,6 @@ class _AppDownloadAdWidgetState extends State<AppDownloadAdWidget>
                   ),
                 ),
               ),
-              // IconButton(
-              //   icon: const Icon(Icons.close, color: Colors.white, size: 20),
-              //   onPressed: () async {
-              //     await _animationController.forward();
-              //     if (mounted) {
-              //       setState(() {});
-              //     }
-              //   },
-              // ),
               Container(
                 width: 60,
                 height: 25,

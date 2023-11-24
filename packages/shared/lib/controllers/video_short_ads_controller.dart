@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shared/apis/ad_api.dart';
 import 'package:shared/models/short_video_ads.dart';
 
