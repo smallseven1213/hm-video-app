@@ -6,9 +6,10 @@ class ShortVideoAdsController extends GetxController {
   final AdApi adApi = AdApi();
   int videoViews = 0;
   bool isFetched = false;
-  var videoAds =
-      ShortVideoAds(bannerParamConfig: BannerParamConfig(config: [20, 20, 30]))
-          .obs;
+  var videoAds = ShortVideoAds(
+          // bannerParamConfig: BannerParamConfig(config: [20, 20, 30]),
+          )
+      .obs;
   // GetStorage box = GetStorage();
   // var entryCount = 0;
 
