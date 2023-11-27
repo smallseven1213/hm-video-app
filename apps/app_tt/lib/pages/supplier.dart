@@ -44,7 +44,9 @@ class SupplierPageState extends State<SupplierPage>
 
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
-        _parentScrollController.jumpTo(0.0);
+        if (_parentScrollController.hasClients) {
+          _parentScrollController.jumpTo(0.0);
+        }
 
         if (_tabController.index == 0) {
           shortVideoController.reset();
@@ -191,21 +193,23 @@ class SupplierPageState extends State<SupplierPage>
                         }
                         return false;
                       },
-                      child: Obx(() => SliverVodGrid(
-                          key: const Key('supplier_short'),
-                          padding: 2,
-                          videos: supplierVideoController.vodList,
-                          displayLoading:
-                              supplierVideoController.displayLoading.value,
-                          displayNoMoreData:
-                              supplierVideoController.displayNoMoreData.value,
-                          isListEmpty:
-                              supplierVideoController.isListEmpty.value,
-                          noMoreWidget: ListNoMore(),
-                          displayVideoCollectTimes: false,
-                          onScrollEnd: () {
-                            supplierVideoController.loadMoreData();
-                          })),
+                      child: Obx(
+                        () => SliverVodGrid(
+                            key: const Key('supplier_short'),
+                            padding: 2,
+                            videos: supplierVideoController.vodList.value,
+                            displayLoading:
+                                supplierVideoController.displayLoading.value,
+                            displayNoMoreData:
+                                supplierVideoController.displayNoMoreData.value,
+                            isListEmpty:
+                                supplierVideoController.isListEmpty.value,
+                            noMoreWidget: ListNoMore(),
+                            displayVideoCollectTimes: false,
+                            onScrollEnd: () {
+                              supplierVideoController.loadMoreData();
+                            }),
+                      ),
                     ),
                   ),
                 ],
