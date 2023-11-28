@@ -126,10 +126,11 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
       shortVideoAds = newAds;
       List<dynamic> newCachedVods = [];
       int adIndex = 0;
+      int videoCount = 5;
 
       for (int i = 0; i < cachedVods.length; i++) {
         newCachedVods.add(cachedVods[i]);
-        if ((i + 1) % 3 == 0 && i != cachedVods.length - 1) {
+        if ((i + 1) % videoCount == 0 && i != cachedVods.length - 1) {
           newCachedVods.add(shortVideoAds[adIndex]);
           adIndex = (adIndex + 1) % shortVideoAds.length;
         }

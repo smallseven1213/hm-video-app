@@ -107,7 +107,8 @@ class _ShortCardInfoState extends State<ShortCardInfo> {
                     if (widget.controllerTag != null &&
                         widget.controllerTag!.isNotEmpty)
                       NextVideoWidget(video: nextVideo),
-                    AppDownloadAdWidget(videoIndex: currentVideoIndex),
+                    if (currentVideoIndex != 0 && currentVideoIndex % 3 == 0)
+                      AppDownloadAdWidget(videoIndex: currentVideoIndex),
                   ],
                 )
               ],
