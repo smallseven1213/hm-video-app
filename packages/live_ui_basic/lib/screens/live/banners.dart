@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 class BannersWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200, // Set the height you want
-      child: PageView(
-        children: [
-          // Replace with your actual banner widgets
-          Container(color: Colors.red),
-          Container(color: Colors.green),
-          Container(color: Colors.blue),
-        ],
-      ),
-    );
+    return AspectRatio(
+        aspectRatio: 341 / 143,
+        child: Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(30),
+            ),
+          ),
+        ));
   }
 }

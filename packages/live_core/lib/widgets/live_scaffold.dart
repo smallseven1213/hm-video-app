@@ -10,12 +10,14 @@ class LiveScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
   final Widget? body;
   final Widget? floatingActionButton;
+  final Color? backgroundColor;
 
   const LiveScaffold({
     super.key,
     this.body,
     this.appBar,
     this.floatingActionButton,
+    this.backgroundColor,
   });
 
   @override
@@ -34,6 +36,9 @@ class _LiveScaffoldState extends State<LiveScaffold> {
     // if (widget.token != null) {
     //   _loginAndSaveToken(widget.token);
     // }
+    if (authController.token.value.isNotEmpty) {
+      _loginAndSaveToken(authController.token.value);
+    }
 
     // listen for AuthController token changes, if changes then login
     ever(authController.token, (token) {
@@ -46,13 +51,14 @@ class _LiveScaffoldState extends State<LiveScaffold> {
   Future<void> _loginAndSaveToken(String token) async {
     final authApi = AuthApi();
     var response = await authApi.login(token);
-    if (response.code == '200') {
-      GetStorage().write('token', token);
+    if (response.code == '00') {
+      GetStorage().write('live-token', response.data["token"]);
       isLogin = true;
     } else {
       isLogin = false;
     }
     isLoading = false;
+    setState(() {});
   }
 
   @override
@@ -73,6 +79,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
     return Scaffold(
       appBar: widget.appBar,
       body: widget.body,
+      backgroundColor: widget.backgroundColor,
       floatingActionButton: widget.floatingActionButton,
       // 其他 Scaffold 屬性...
     );
