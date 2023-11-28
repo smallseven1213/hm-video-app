@@ -49,8 +49,9 @@ class BaseShortPage extends StatelessWidget {
         loadingWidget: Center(child: LoadingAnimation()),
         playingAdBuilder: ({
           required BannerPhoto ad,
+          required Vod? nextShortData,
         }) =>
-            ShortsPlayingAd(ad: ad),
+            ShortsPlayingAd(ad: ad, nextShortData: nextShortData),
         shortCardBuilder: ({
           required int index,
           required bool isActive,

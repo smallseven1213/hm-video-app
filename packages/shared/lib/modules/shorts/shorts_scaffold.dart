@@ -27,6 +27,7 @@ class ShortsScaffold extends StatefulWidget {
       required Function toggleFullScreen}) shortCardBuilder;
   final Function({
     required BannerPhoto ad,
+    required Vod? nextShortData,
   })? playingAdBuilder;
 
   const ShortsScaffold({
@@ -121,7 +122,6 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     // 獲取最新的廣告數據
     List<BannerPhoto> newAds =
         shortVideoAdsController.videoAds.value.shortPlayingAds ?? [];
-
     if (newAds.isNotEmpty) {
       shortVideoAds = newAds;
       List<dynamic> newCachedVods = [];
@@ -129,7 +129,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
 
       for (int i = 0; i < cachedVods.length; i++) {
         newCachedVods.add(cachedVods[i]);
-        if ((i + 1) % 2 == 0 && i != cachedVods.length - 1) {
+        if ((i + 1) % 3 == 0 && i != cachedVods.length - 1) {
           newCachedVods.add(shortVideoAds[adIndex]);
           adIndex = (adIndex + 1) % shortVideoAds.length;
         }
@@ -182,7 +182,11 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
       itemBuilder: (BuildContext context, int index) {
         if (cachedVods[index] is BannerPhoto &&
             widget.playingAdBuilder != null) {
-          return widget.playingAdBuilder!(ad: cachedVods[index]);
+          return widget.playingAdBuilder!(
+            ad: cachedVods[index],
+            nextShortData:
+                index != cachedVods.length - 1 ? cachedVods[index + 1] : null,
+          );
         }
         return widget.shortCardBuilder(
           index: index,

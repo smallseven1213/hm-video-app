@@ -57,7 +57,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
 
   @override
   Widget build(BuildContext context) {
-    print('GeneralShortCard build');
+    print('GeneralShortCard build: ${widget.index}');
     if (widget.videoUrl.isEmpty) {
       return LoadingAnimation();
     }
