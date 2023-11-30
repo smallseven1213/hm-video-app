@@ -31,6 +31,7 @@ class _PlayerLayoutState extends State<PlayerLayout> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.orange,
       child: VideoPlayer(videoController),
     );
   }

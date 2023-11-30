@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/widgets/live_scaffold.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../screens/live/banners.dart';
 import '../screens/live/list.dart';
@@ -47,6 +48,19 @@ class _LivePageState extends State<LivePage> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
             sliver: LiveList(),
+          ),
+          // 測試用
+          SliverToBoxAdapter(
+            child: TextButton(
+              onPressed: () {
+                MyRouteDelegate.of(context).push(
+                  "/live_room",
+                  // args: {"pid": room.pid},
+                  args: {"pid": 269},
+                );
+              },
+              child: const Text("Test Room"),
+            ),
           ),
         ],
       ),

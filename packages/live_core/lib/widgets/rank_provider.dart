@@ -1,11 +1,12 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:live_core/models/room_rank.dart';
 
 import '../apis/live_api.dart';
 
 class RankProvider extends StatefulWidget {
-  final Widget child;
+  final Widget Function(RoomRank? roomRank) child;
 
   const RankProvider({Key? key, required this.child}) : super(key: key);
 
@@ -14,7 +15,7 @@ class RankProvider extends StatefulWidget {
 }
 
 class _RankProviderState extends State<RankProvider> {
-  // timer
+  RoomRank? roomRank;
   late Timer _timer;
   @override
   void initState() {
@@ -29,13 +30,20 @@ class _RankProviderState extends State<RankProvider> {
   }
 
   void _startRankTimer() {
-    _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      LiveApi().getRank();
+    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
+      try {
+        var getRoomRank = await LiveApi().getRank();
+        setState(() {
+          roomRank = getRoomRank.data;
+        });
+      } catch (e) {
+        print(e);
+      }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
+    return widget.child(roomRank);
   }
 }

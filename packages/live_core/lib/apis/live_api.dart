@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/models/hm_api_response_with_data.dart';
@@ -62,13 +63,14 @@ class LiveApi {
       return LiveApiResponseBase<LiveRoom>(
         code: apiResponse.code,
         data: LiveRoom(
-            chattoken: apiResponse.data.chattoken,
-            pid: apiResponse.data.pid,
-            pullurl: apiResponse.data.pullurl,
-            // pullUrlDecode: decryptedData,
-            // 下面測試用
-            pullUrlDecode:
-                'rtmp://dev-live-ext.aizepin.com/live/yuki?txSecret=a0c69febcb0ce2d27c9c5696224f886b&txTime=6566B37B'),
+          chattoken: apiResponse.data.chattoken,
+          pid: apiResponse.data.pid,
+          pullurl: apiResponse.data.pullurl,
+          pullUrlDecode: decryptedData.trim().trimRight(),
+        ),
+        // 下面測試用
+        // pullUrlDecode:
+        //     'rtmp://dev-live-ext.aizepin.com/live/yuki?txSecret=a0c69febcb0ce2d27c9c5696224f886b&txTime=6566B37B'),
         msg: apiResponse.msg,
       );
     } catch (e) {
@@ -77,15 +79,14 @@ class LiveApi {
     }
   }
 
-  // get "/rank", return dynamic
-  Future<LiveApiResponseBase<dynamic>> getRank() async {
+  Future<LiveApiResponseBase<RoomRank>> getRank() async {
     var response = await liveFetcher(
       url: 'https://dev-live-ext.hmtech-dev.com/rank',
     );
 
-    LiveApiResponseBase<dynamic> parsedResponse = LiveApiResponseBase.fromJson(
+    LiveApiResponseBase<RoomRank> parsedResponse = LiveApiResponseBase.fromJson(
       response.data,
-      (data) => data,
+      (data) => RoomRank.fromJson(data as Map<String, dynamic>),
     );
 
     return parsedResponse;
