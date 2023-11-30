@@ -16,6 +16,8 @@ dependencies:
   live_core:
     path: ../../packages/live_core
   navigator: ^1.1.1
+  get: ^4.6.6
+  video_player: ^2.8.1
 
 dev_dependencies:
   flutter_test:
