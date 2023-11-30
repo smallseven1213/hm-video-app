@@ -1,14 +1,21 @@
 import 'package:socket_io_client/socket_io_client.dart' as io;
+import 'dart:convert';
 
 class LiveSocketIOManager {
   static final LiveSocketIOManager _instance = LiveSocketIOManager._internal();
   io.Socket? _socket;
+  String chatToken = '';
+
+  io.Socket? get socket => _socket;
 
   factory LiveSocketIOManager() {
     return _instance;
   }
 
-  LiveSocketIOManager._internal();
+  LiveSocketIOManager._internal() {
+    print("LiveSocketIOManager singleton instance created");
+    // 初始化操作
+  }
 
   void connect(String url, String chatToken) {
     _socket = io.io(url, <String, dynamic>{
@@ -25,6 +32,31 @@ class LiveSocketIOManager {
       _onMessageReceived(data);
     });
 
+    // on 'loginresult
+    _socket!.on('loginresult', (data) {
+      // 解析 JSON 字符串
+      var decodedData = jsonDecode(data);
+
+      // 提取 'code' 和 'token' 值
+      var code = decodedData['code'];
+      var token = decodedData['token'];
+      this.chatToken = token;
+
+      print('Code: $code, Token: $token');
+    });
+
+    _socket!.on('chatresult', (data) {
+      // // 解析 JSON 字符串
+      // var decodedData = jsonDecode(data);
+
+      // // 提取 'code' 和 'token' 值
+      // var code = decodedData['code'];
+      // var token = decodedData['token'];
+      // this.chatToken = token;
+
+      print(data);
+    });
+
     _socket!.onError((data) {
       _onError(data);
     });
@@ -36,12 +68,10 @@ class LiveSocketIOManager {
 
   void _login(String chatToken) {
     var loginData = {
-      'cmd': 'login',
-      'data': {
-        'token': chatToken,
-      },
+      'token': chatToken,
     };
-    _socket!.emit('event', loginData); // 发送登录请求
+    var dataString = jsonEncode(loginData);
+    _socket!.emit('login', dataString); // 发送登录请求
   }
 
   void _onMessageReceived(data) {
@@ -56,8 +86,10 @@ class LiveSocketIOManager {
     // 处理连接关闭
   }
 
-  void send(String message) {
-    _socket?.emit('message', message);
+  void send(String key, dynamic message) {
+    message['token'] = chatToken;
+    String jsonData = jsonEncode(message);
+    _socket?.emit(key, jsonData);
   }
 
   void close() {

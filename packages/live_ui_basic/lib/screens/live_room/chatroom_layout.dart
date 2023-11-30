@@ -5,6 +5,8 @@ import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'chatroom_messages.dart';
+
 class ChatroomLayout extends StatefulWidget {
   final String token;
   const ChatroomLayout({Key? key, required this.token}) : super(key: key);
@@ -19,17 +21,12 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
   void sendMessage() {
     String message = _messageController.text.trim();
     if (message.isNotEmpty) {
-      String token = GetStorage().read('live-token');
-      String jsonData = jsonEncode({
-        'cmd': 'chat',
-        'data': {
-          'token': token,
-          'msg': message,
-          'ntype': 1,
-        }
-      });
+      dynamic jsonData = {
+        'msg': message,
+        'ntype': 1,
+      };
 
-      socketManager.send(jsonData);
+      socketManager.send('chat', jsonData);
       _messageController.clear();
     }
   }
@@ -38,18 +35,19 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
   Widget build(BuildContext context) {
     return ChatroomProvider(
         chatToken: widget.token,
-        child: Container(
-          height: 300,
-          width: 200,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height - 100,
+          width: MediaQuery.of(context).size.width - 100,
           child: Column(
             children: [
-              Expanded(child: Container()),
+              const Expanded(child: ChatroomMessages()),
+              const SizedBox(height: 25),
               TextField(
                 controller: _messageController,
                 decoration: InputDecoration(
                   hintText: '輸入訊息',
                   suffixIcon: IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.send,
                       color: Colors.black,
                     ),
@@ -57,6 +55,7 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
                   ),
                 ),
               ),
+              const SizedBox(height: 25),
             ],
           ),
         ));

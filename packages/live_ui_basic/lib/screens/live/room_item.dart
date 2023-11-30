@@ -14,7 +14,7 @@ class RoomItem extends StatelessWidget {
         MyRouteDelegate.of(context).push(
           "/live_room",
           // args: {"pid": room.pid},
-          args: {"pid": 230},
+          args: {"pid": 247},
         );
       },
       child: Container(

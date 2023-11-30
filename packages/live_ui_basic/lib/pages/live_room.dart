@@ -74,12 +74,9 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             PlayerLayout(
               uri: Uri.parse(controller.liveRoom.value.pullUrlDecode!),
             ),
-            // Positioned(
-            //     top: MediaQuery.of(context).padding.top + 50,
-            //     child: Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 7),
-            //       child: TopControllers(),
-            //     )),
+            Positioned(
+                top: MediaQuery.of(context).padding.top + 50,
+                child: TopControllers()),
             // Positioned(
             //     top: MediaQuery.of(context).padding.top + 120,
             //     child: Padding(
@@ -95,7 +92,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             //     )),
             Positioned(
                 bottom: 0,
-                left: 0,
+                left: 7,
                 child: ChatroomLayout(
                   token: controller.liveRoom.value.chattoken,
                 ))

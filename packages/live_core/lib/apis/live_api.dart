@@ -76,4 +76,18 @@ class LiveApi {
       throw e;
     }
   }
+
+  // get "/rank", return dynamic
+  Future<LiveApiResponseBase<dynamic>> getRank() async {
+    var response = await liveFetcher(
+      url: 'https://dev-live-ext.hmtech-dev.com/rank',
+    );
+
+    LiveApiResponseBase<dynamic> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data,
+    );
+
+    return parsedResponse;
+  }
 }
