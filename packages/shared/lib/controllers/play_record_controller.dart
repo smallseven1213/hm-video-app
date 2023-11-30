@@ -75,7 +75,9 @@ class PlayRecordController extends GetxController {
   Future<void> _updateHive() async {
     var box = await boxFuture;
     await box.clear();
-    for (var video in data) {
+    var dataCopy = List<Vod>.from(data);
+
+    for (var video in dataCopy) {
       final videoStr = jsonEncode(video.toJson());
       await box.put(video.id.toString(), videoStr);
     }

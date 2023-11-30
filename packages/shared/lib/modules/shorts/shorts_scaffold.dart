@@ -1,12 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:uuid/uuid.dart';
 import 'package:flutter/services.dart';
 import 'package:shared/controllers/pageview_index_controller.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/vod.dart';
 
 import '../../controllers/ui_controller.dart';
-import '../../physics/tiktok_scroll_physics.dart';
+import '../../controllers/video_short_ads_controller.dart';
+import '../../models/banner_photo.dart';
 import '../../utils/screen_control.dart';
 
 class ShortsScaffold extends StatefulWidget {
@@ -24,6 +25,10 @@ class ShortsScaffold extends StatefulWidget {
       required bool isActive,
       required Vod shortData,
       required Function toggleFullScreen}) shortCardBuilder;
+  final Function({
+    required BannerPhoto ad,
+    required Vod? nextShortData,
+  })? playingAdBuilder;
 
   const ShortsScaffold({
     required this.createController,
@@ -35,6 +40,7 @@ class ShortsScaffold extends StatefulWidget {
     this.loadingWidget,
     this.onScrollBeyondFirst,
     this.refreshIndicatorWidget,
+    this.playingAdBuilder,
     required this.shortCardBuilder,
     Key? key,
   }) : super(key: key);
@@ -50,16 +56,23 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
   bool isLoading = false;
   PageController? _pageController;
   int currentPage = 0;
-  List<Vod> cachedVods = [];
+  List<dynamic> cachedVods = [];
   final PageViewIndexController pageviewIndexController =
       Get.find<PageViewIndexController>();
   final UIController uiController = Get.find<UIController>();
   String refreshIndicatorWidgetKey = '';
+  final ShortVideoAdsController shortVideoAdsController =
+      Get.find<ShortVideoAdsController>();
+  List<BannerPhoto> shortVideoAds = [];
 
   @override
   void initState() {
     super.initState();
+    initShorts().then((_) => updateAds());
+    setupAdsListener();
+  }
 
+  Future<void> initShorts() async {
     final controller = widget.createController();
     int initialPageIndex =
         controller.data.indexWhere((data) => data.id == widget.videoId);
@@ -93,10 +106,40 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
         setState(() {
           cachedVods = d as List<Vod>;
         });
+        updateAds();
       });
     }
 
     currentPage = initialPageIndex;
+  }
+
+  void setupAdsListener() {
+    ever(shortVideoAdsController.videoAds, (_) => updateAds());
+  }
+
+  void updateAds() {
+    if (widget.playingAdBuilder == null) return;
+    // 獲取最新的廣告數據
+    List<BannerPhoto> newAds =
+        shortVideoAdsController.videoAds.value.shortPlayingAds ?? [];
+    if (newAds.isNotEmpty) {
+      shortVideoAds = newAds;
+      List<dynamic> newCachedVods = [];
+      int adIndex = 0;
+      int videoCount = 5;
+
+      for (int i = 0; i < cachedVods.length; i++) {
+        newCachedVods.add(cachedVods[i]);
+        if ((i + 1) % videoCount == 0 && i != cachedVods.length - 1) {
+          newCachedVods.add(shortVideoAds[adIndex]);
+          adIndex = (adIndex + 1) % shortVideoAds.length;
+        }
+      }
+
+      setState(() {
+        cachedVods = newCachedVods;
+      });
+    }
   }
 
   @override
@@ -138,6 +181,14 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
         });
       },
       itemBuilder: (BuildContext context, int index) {
+        if (cachedVods[index] is BannerPhoto &&
+            widget.playingAdBuilder != null) {
+          return widget.playingAdBuilder!(
+            ad: cachedVods[index],
+            nextShortData:
+                index != cachedVods.length - 1 ? cachedVods[index + 1] : null,
+          );
+        }
         return widget.shortCardBuilder(
           index: index,
           shortData: cachedVods[index],
@@ -167,50 +218,4 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
           : pageView,
     );
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       backgroundColor: Colors.black,
-  //       body: SmartRefresher(
-  //         controller: _refreshController,
-  //         enablePullDown: widget.onScrollBeyondFirst == null ? false : true,
-  //         enablePullUp: false,
-  //         onRefresh: () async {
-  //           widget.onScrollBeyondFirst?.call();
-  //           _refreshController.refreshCompleted();
-  //           Future.delayed(const Duration(milliseconds: 800), () {
-  //             setState(() {
-  //               refreshIndicatorWidgetKey = const Uuid().v4();
-  //             });
-  //           });
-  //         },
-  //         // header: widget.refreshIndicatorWidget == null
-  //         //     ? null
-  //         //     : CustomHeader(
-  //         //         height: 80,
-  //         //         builder: (context, mode) =>
-  //         //             widget.refreshIndicatorWidget!(refreshIndicatorWidgetKey),
-  //         //       ),
-  //         child: CustomScrollView(
-  //           physics: TiktokScrollPhysics(),
-  //           controller: _pageController,
-  //           slivers: <Widget>[
-  //             SliverFillViewport(
-  //                 delegate: SliverChildListDelegate([
-  //               ...cachedVods.map((vod) {
-  //                 return widget.shortCardBuilder(
-  //                   index: cachedVods.indexOf(vod),
-  //                   shortData: vod,
-  //                   isActive: cachedVods.indexOf(vod) == currentPage,
-  //                   toggleFullScreen: () {
-  //                     toggleFullScreen();
-  //                   },
-  //                 );
-  //               }).toList(),
-  //             ]))
-  //           ],
-  //         ),
-  //       ));
-  // }
 }

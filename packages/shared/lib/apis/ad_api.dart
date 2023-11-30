@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 
 import '../controllers/system_config_controller.dart';
 import '../models/channel_banner.dart';
+import '../models/short_video_ads.dart';
 import '../models/video_ads.dart';
 import '../utils/fetcher.dart';
 
@@ -42,5 +43,14 @@ class AdApi {
       throw Exception('Error fetching video page ads: ${res.data['message']}');
     }
     return VideoAds.fromJson(res.data['data']);
+  }
+
+  Future<ShortVideoAds> getShortVideoPageAds() async {
+    var res =
+        await fetcher(url: '$apiHost/api/v1/banner/short-playing-position');
+    if (res.data['code'] != '00') {
+      throw Exception('Error fetching video page ads: ${res.data['message']}');
+    }
+    return ShortVideoAds.fromJson(res.data['data']);
   }
 }

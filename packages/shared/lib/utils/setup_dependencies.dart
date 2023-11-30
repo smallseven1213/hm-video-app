@@ -30,6 +30,7 @@ import '../controllers/user_search_history_controller.dart';
 import '../controllers/user_short_collection_controller.dart';
 import '../controllers/user_video_collection_controller.dart';
 import '../controllers/video_ads_controller.dart';
+import '../controllers/video_short_ads_controller.dart';
 import '../enums/list_editor_category.dart';
 import '../enums/play_record_type.dart';
 
@@ -81,6 +82,7 @@ void setupDependencies() async {
   Get.lazyPut<FilterTempShortController>(() => FilterTempShortController());
   Get.lazyPut<ActorRegionController>(() => ActorRegionController());
   Get.lazyPut<VideoAdsController>(() => VideoAdsController());
+  Get.lazyPut<ShortVideoAdsController>(() => ShortVideoAdsController());
   // lazyPut UserSearchHistoryController
   Get.lazyPut<UIController>(() => UIController());
   Get.lazyPut<UserSearchHistoryController>(() => UserSearchHistoryController());
