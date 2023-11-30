@@ -76,6 +76,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             ),
             Positioned(
                 top: MediaQuery.of(context).padding.top + 50,
+                left: 0,
                 child: TopControllers()),
             // Positioned(
             //     top: MediaQuery.of(context).padding.top + 120,

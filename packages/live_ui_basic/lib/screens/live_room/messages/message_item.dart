@@ -35,9 +35,11 @@ class MessageItem extends StatelessWidget {
             child: Row(
               children: [
                 Text(message.objChat.name,
-                    style: TextStyle(color: Colors.white)),
+                    style: TextStyle(color: Colors.white, fontSize: 12)),
+                Text(" : ",
+                    style: TextStyle(color: Colors.white, fontSize: 12)),
                 Text(message.objChat.data,
-                    style: TextStyle(color: Colors.white)),
+                    style: TextStyle(color: Colors.white, fontSize: 12)),
               ],
             ),
           ),
