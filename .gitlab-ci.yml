@@ -2,7 +2,7 @@
 #
 #
 variables: 
-  test_tag: '2023.01.01.009.ra.gs.tt.n51.ab'
+  test_tag: '2023.01.01.009.ra.tt.n51.ab'
 
 stages:          # List of stages for jobs, and their order of execution
   - preBuild1
@@ -32,19 +32,6 @@ testProd:
   script: 
     - echo ' i am testProd'  
 
-
-build-gs-job:       # This job runs in the build stage, which runs first.
-  stage: build
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev .
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:dev
-    - echo "Compile complete."
 
 build-tt-job:       # This job runs in the build stage, which runs first.
   stage: build
@@ -116,18 +103,6 @@ build-sv-job:       # This job runs in the build stage, which runs first.
     - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_sv -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev
-
-deploy-gs-job:      # This job runs in the deploy stage.
-  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  tags:
-    - gitlab-shared-runner
-  only:
-    refs:
-      - develop
-  script:
-    - echo "Deploying application..."
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}" -f /home/gitlab-runner/hm-helm/helm-charts/gs/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/gs/${CI_PROJECT_NAME} -n video-dev
-    - echo "Application successfully deployed."
   
 deploy-tt-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
@@ -205,32 +180,6 @@ build-prod-job:
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-$PROJECT:${CI_COMMIT_TAG}
 
-#build-gs-prod-job: 
-#  stage: build
-#  tags: 
-#    - gitlab-shared-runner
-#  only: 
-#    refs: 
-#      - tags
-#    variables: 
-#      - $CI_COMMIT_REF_NAME =~ /gs$/
-#  script: 
-#    - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_gs -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG} .
-#    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-#    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}:${CI_COMMIT_TAG}
-
-deploy-gs-prod-job: 
-  stage: deploy
-  tags: 
-    - gitlab-shared-runner
-  only: 
-    refs: 
-      - tags
-    variables: 
-      - $CI_COMMIT_REF_NAME =~ /gs$/
-  script: 
-    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/gs --install ${CI_PROJECT_NAME} --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/gs/${CI_PROJECT_NAME} -n prod
-    - /bin/bash /home/gitlab-runner/tg-notify.sh gs prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
 
 deploy-sv-prod-job: 
   stage: deploy
