@@ -5,7 +5,9 @@ import 'package:live_core/widgets/live_scaffold.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../screens/live/banners.dart';
+import '../screens/live/filter.dart';
 import '../screens/live/list.dart';
+import '../screens/live/navigation.dart';
 import '../screens/live/room_item.dart';
 import '../screens/live/search.dart';
 
@@ -42,6 +44,24 @@ class _LivePageState extends State<LivePage> {
             ),
           ),
           // h 10
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 10),
+          ),
+
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: NavigationWidget(),
+            ),
+          ),
+          // h 10
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 10),
+          ),
+
+          const SliverToBoxAdapter(
+            child: FilterWidget(),
+          ),
           const SliverToBoxAdapter(
             child: SizedBox(height: 10),
           ),
