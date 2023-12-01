@@ -12,7 +12,7 @@ class LiveList extends StatelessWidget {
         return Obx(() {
           if (_.rooms.isEmpty) {
             return const SliverToBoxAdapter(
-              child: SizedBox.shrink(),
+              child: SizedBox.shrink()
             ); // 或者顯示一個加載中的指示器
           }
           return SliverGrid(
