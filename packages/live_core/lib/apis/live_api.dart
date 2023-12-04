@@ -8,9 +8,11 @@ import 'package:shared/utils/fetcher.dart';
 import 'package:get/get.dart';
 
 import '../libs/decryptAES256ECB.dart';
+import '../models/gift.dart';
 import '../models/live_api_response_base.dart';
 import '../models/live_room.dart';
 import '../models/room.dart';
+import '../models/command.dart';
 
 class LiveApi {
   static final LiveApi _instance = LiveApi._internal();
@@ -87,6 +89,34 @@ class LiveApi {
     LiveApiResponseBase<RoomRank> parsedResponse = LiveApiResponseBase.fromJson(
       response.data,
       (data) => RoomRank.fromJson(data as Map<String, dynamic>),
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase<List<Gift>>> getGifts() async {
+    var response = await liveFetcher(
+      url: 'https://dev-live-ext.hmtech-dev.com/giftlist',
+    );
+
+    LiveApiResponseBase<List<Gift>> parsedResponse =
+        LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => (data as List).map((item) => Gift.fromJson(item)).toList(),
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase<List<Command>>> getCommands() async {
+    var response = await liveFetcher(
+      url: 'https://dev-live-ext.hmtech-dev.com/cmdlist',
+    );
+
+    LiveApiResponseBase<List<Command>> parsedResponse =
+        LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => (data as List).map((item) => Command.fromJson(item)).toList(),
     );
 
     return parsedResponse;

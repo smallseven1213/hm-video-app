@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 
 import '../apis/live_api.dart';
-import '../models/gift.dart';
+import '../models/command.dart';
 
-class GiftsController extends GetxController {
+class CommandsController extends GetxController {
   final liveApi = LiveApi();
-  Rx<List<Gift>> gifts = Rx<List<Gift>>([]);
+  Rx<List<Command>> commands = Rx<List<Command>>([]);
 
   @override
   void onInit() {
@@ -15,8 +15,8 @@ class GiftsController extends GetxController {
 
   void fetchGifts() async {
     try {
-      var response = await liveApi.getGifts();
-      gifts.value = response.data;
+      var response = await liveApi.getCommands();
+      commands.value = response.data;
     } catch (e) {
       print(e);
     }

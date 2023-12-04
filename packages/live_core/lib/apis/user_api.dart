@@ -41,37 +41,6 @@ class UserApi {
     return parsedResponse;
   }
 
-  // Get "/app/gift-list"
-  Future<LiveApiResponseBase<List<dynamic>>> getGifts() async {
-    var response = await fetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/app/gift-list',
-    );
-
-    // LiveApiResponseBase<List<Gift>> parsedResponse =
-    //     LiveApiResponseBase.fromJson(
-    //   response.data,
-    //   (data) => (data as List).map((item) => Gift.fromJson(item)).toList(),
-    // );
-
-    return response;
-  }
-
-  // get /app/command-list?streamer_id=21
-  Future<LiveApiResponseBase<List<dynamic>>> getCommands(int streamerId) async {
-    var response = await liveFetcher(
-      url:
-          'https://dev-live-ext.hmtech-dev.com/app/command-list?streamer_id=$streamerId',
-    );
-
-    // LiveApiResponseBase<List<Gift>> parsedResponse =
-    //     LiveApiResponseBase.fromJson(
-    //   response.data,
-    //   (data) => (data as List).map((item) => Gift.fromJson(item)).toList(),
-    // );
-
-    return response;
-  }
-
   // get /room/detail?id=253
   Future<LiveApiResponseBase<Room>> getRoomDetail(int roomId) async {
     var response = await liveFetcher(

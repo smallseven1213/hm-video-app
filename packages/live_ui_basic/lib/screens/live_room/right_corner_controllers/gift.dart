@@ -37,14 +37,20 @@ class Gifts extends StatelessWidget {
       child: Obx(
         () => ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: giftsController.gifts.value.data.length,
+          itemCount: giftsController.gifts.value.length,
           itemBuilder: (context, index) {
-            return Container(
+            var gift = giftsController.gifts.value[index];
+            return SizedBox(
               width: 100,
               height: 100,
-              child: Image.network(
-                giftsController.gifts.value.data[index]['image'],
-                fit: BoxFit.cover,
+              child: Column(
+                children: [
+                  Image.network(
+                    gift.image,
+                    fit: BoxFit.cover,
+                  ),
+                  Text(gift.name),
+                ],
               ),
             );
           },
