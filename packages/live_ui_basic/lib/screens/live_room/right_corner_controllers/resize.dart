@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
+
+final liveApi = LiveApi();
 
 class Resize extends StatelessWidget {
   const Resize({Key? key}) : super(key: key);
@@ -41,15 +44,43 @@ class Commands extends StatelessWidget {
           itemCount: commandsController.commands.value.length,
           itemBuilder: (context, index) {
             var command = commandsController.commands.value[index];
-            return SizedBox(
-              width: 100,
-              height: 100,
-              child: Column(
-                children: [
-                  Text(command.name),
-                  // price
-                  Text(command.price.toString()),
-                ],
+            return InkWell(
+              onTap: () async {
+                try {
+                  var price = int.parse(command.price);
+                  await liveApi.sendCommand(command.id, price);
+                } catch (e) {
+                  print(e);
+                  // show dialog for error
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Error'),
+                        content: Text('Something went wrong'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              child: SizedBox(
+                width: 100,
+                height: 100,
+                child: Column(
+                  children: [
+                    Text(command.name),
+                    // price
+                    Text(command.price.toString()),
+                  ],
+                ),
               ),
             );
           },
