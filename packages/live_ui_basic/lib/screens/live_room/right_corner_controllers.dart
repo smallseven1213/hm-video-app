@@ -18,7 +18,7 @@ class RightCornerControllers extends StatelessWidget {
         SizedBox(height: 15),
         Sound(),
         SizedBox(height: 20),
-        Gift(),
+        GiftWidget(),
       ],
     );
   }

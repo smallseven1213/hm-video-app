@@ -108,6 +108,24 @@ class LiveApi {
     return parsedResponse;
   }
 
+  Future<LiveApiResponseBase> sendGift(int gid, double amount) async {
+    var response = await liveFetcher(
+      url: 'https://dev-live-ext.hmtech-dev.com/gift',
+      method: 'POST',
+      body: {
+        'gid': gid,
+        'amount': amount,
+      },
+    );
+
+    LiveApiResponseBase parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data,
+    );
+
+    return parsedResponse;
+  }
+
   Future<LiveApiResponseBase<List<Command>>> getCommands() async {
     var response = await liveFetcher(
       url: 'https://dev-live-ext.hmtech-dev.com/cmdlist',
@@ -117,6 +135,24 @@ class LiveApi {
         LiveApiResponseBase.fromJson(
       response.data,
       (data) => (data as List).map((item) => Command.fromJson(item)).toList(),
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase> sendCommand(int cid, int amount) async {
+    var response = await liveFetcher(
+      url: 'https://dev-live-ext.hmtech-dev.com/cmd',
+      method: 'POST',
+      body: {
+        'cid': cid,
+        'amount': amount,
+      },
+    );
+
+    LiveApiResponseBase parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data,
     );
 
     return parsedResponse;
