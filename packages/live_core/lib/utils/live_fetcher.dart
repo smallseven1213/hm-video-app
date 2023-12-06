@@ -27,7 +27,7 @@ Future<dynamic> liveFetcher({
 
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
-    'authorization': token,
+    'authorization': 'Bearer $token',
   };
 
   final options = Options(
