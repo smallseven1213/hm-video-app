@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+
+final logger = Logger();
 
 class GameLocalizations {
   final Map<String, String> _localizedStrings;
@@ -27,8 +30,8 @@ class GameLocalizationsDelegate
   @override
   Future<GameLocalizations> load(Locale locale) async {
     // Load the localized strings from the maps provided
-    Map<String, String> localizedStrings =
-        localizedStringsMaps[locale.toLanguageTag()] ?? {};
+    logger.i('current game locale: ${locale.toLanguageTag()}');
+    Map<String, String> localizedStrings = localizedStringsMaps['zh-TW'] ?? {};
     return GameLocalizations(localizedStrings);
   }
 
