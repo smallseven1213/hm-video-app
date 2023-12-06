@@ -1,12 +1,11 @@
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+import '../controllers/system_config_controller.dart';
 import '../models/event.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
 final logger = Logger();
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/events';
 
 class EventApi {
   static final EventApi _instance = EventApi._internal();
@@ -16,6 +15,12 @@ class EventApi {
   factory EventApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/events';
 
   Future<List<Event>> getEvents() async {
     var res = await fetcher(url: '$apiPrefix/event/list');

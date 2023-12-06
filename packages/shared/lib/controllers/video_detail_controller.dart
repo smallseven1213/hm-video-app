@@ -4,19 +4,20 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/services/system_config.dart';
 
-final systemConfig = SystemConfig();
+import 'system_config_controller.dart';
+
 final logger = Logger();
 
 String? getVideoUrl(String? videoUrl) {
+  final systemConfigController = Get.find<SystemConfigController>();
   if (videoUrl != null && videoUrl.isNotEmpty) {
     String uri = videoUrl.replaceAll('\\', '/').replaceAll('//', '/');
     if (uri.startsWith('http')) {
       return uri;
     }
     String id = uri.substring(uri.indexOf('/') + 1);
-    return '${systemConfig.vodHost}/$id/$id.m3u8';
+    return '${systemConfigController.vodHost.value}/$id/$id.m3u8';
   }
   return null;
 }

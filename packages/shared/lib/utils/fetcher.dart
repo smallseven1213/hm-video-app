@@ -1,16 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as getx;
-import 'package:sentry_dio/sentry_dio.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/services/system_config.dart';
 import '../controllers/auth_controller.dart';
 import '../controllers/response_controller.dart';
 
 // create a dio instance
 final logger = Logger();
 final dio = Dio();
-final SystemConfig systemConfig = SystemConfig();
 
 /// url: 網址
 /// method: 請求方法

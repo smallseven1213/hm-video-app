@@ -1,14 +1,13 @@
+import 'package:get/get.dart';
+
+import '../controllers/system_config_controller.dart';
 import '../models/banner_photo.dart';
 import '../models/channel_info.dart';
 import '../models/channel_shared_data.dart';
 import '../models/jingang.dart';
 import '../models/slim_channel.dart';
 import '../models/tag.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/channels';
 
 class ChannelApi {
   static final ChannelApi _instance = ChannelApi._internal();
@@ -18,6 +17,12 @@ class ChannelApi {
   factory ChannelApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/channels';
 
   Future<List<SlimChannel>> getManyByLayout(int layoutId) async {
     var res = await fetcher(url: '$apiPrefix/channel/v2/list?layout=$layoutId');

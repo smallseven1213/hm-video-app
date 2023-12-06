@@ -1,15 +1,10 @@
 import 'package:app_sv/widgets/custom_app_bar.dart';
 import 'package:app_sv/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
-import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
-
-final systemConfig = SystemConfig();
-final logger = Logger();
 
 class CoinPage extends StatefulWidget {
   const CoinPage({Key? key}) : super(key: key);

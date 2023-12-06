@@ -14,9 +14,9 @@ import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/controllers/response_controller.dart';
-import 'package:shared/services/system_config.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../controllers/system_config_controller.dart';
 import '../controllers/tag_popular_controller.dart';
 import '../controllers/video_popular_controller.dart';
 import '../enums/app_routes.dart';
@@ -69,7 +69,9 @@ void alertDialog(
 }
 
 class _SplashState extends State<Splash> {
-  SystemConfig systemConfig = SystemConfig();
+  final SystemConfigController systemConfigController =
+      Get.find<SystemConfigController>();
+  // SystemConfig systemConfig = SystemConfig();
   GameSystemConfig gameSystemConfig = GameSystemConfig();
   DlApi dlApi = DlApi();
   ApkApi apkApi = ApkApi();
@@ -114,10 +116,11 @@ class _SplashState extends State<Splash> {
     if (res != null) {
       // 設定apiHost & vodHost & imageHost & maintenance
       // https://api.pkonly8.com/
-      systemConfig.setApiHost('https://api.${res['apl']?.first}');
-      systemConfig.setVodHost('https://${res['dl']?.first}');
-      systemConfig.setImageHost('https://${res['pl']?.first}');
-      systemConfig.setMaintenance(res['maintenance'] == 'true' ? true : false);
+      systemConfigController.setApiHost('https://api.${res['apl']?.first}');
+      systemConfigController.setVodHost('https://${res['dl']?.first}');
+      systemConfigController.setImageHost('https://${res['pl']?.first}');
+      systemConfigController
+          .setMaintenance(res['maintenance'] == 'true' ? true : false);
 
       gameSystemConfig.setApiHost('https://api.${res['apl']?.first}');
     }
@@ -127,11 +130,11 @@ class _SplashState extends State<Splash> {
 
   // Step4: 檢查維護中
   checkIsMaintenance() async {
-    logger.i('step4: 檢查是否維護中${systemConfig.isMaintenance}');
-    if (systemConfig.isMaintenance) {
+    logger.i('step4: 檢查是否維護中${systemConfigController.isMaintenance}');
+    if (systemConfigController.isMaintenance.value) {
       alertDialog(context, content: '系統維護中，請稍後再試。', actions: []);
     }
-    return systemConfig.isMaintenance;
+    return systemConfigController.isMaintenance.value;
   }
 
   // Step5: 檢查是否有更新
@@ -142,8 +145,8 @@ class _SplashState extends State<Splash> {
     }
     logger.i('step5: 檢查是否有更新');
     ApkUpdate apkUpdate = await apkApi.checkVersion(
-      version: systemConfig.version,
-      agentCode: systemConfig.agentCode,
+      version: systemConfigController.version.value,
+      agentCode: systemConfigController.agentCode.value,
     );
     logger.i('apkUpdate: ${apkUpdate.status}');
 
@@ -334,7 +337,7 @@ class _SplashState extends State<Splash> {
               bottom: kIsWeb ? 20 : 70,
               right: 20,
               child: Text(
-                '版本 ${systemConfig.version}',
+                '版本 ${systemConfigController.version.value}',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,

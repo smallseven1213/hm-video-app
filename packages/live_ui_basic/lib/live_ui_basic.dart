@@ -1,4 +1,4 @@
-library stream;
+library live_ui_basic;
 
 /// A Calculator.
 class Calculator {

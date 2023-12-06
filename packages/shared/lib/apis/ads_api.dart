@@ -1,12 +1,11 @@
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
+import '../controllers/system_config_controller.dart';
 import '../models/ad.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
 final logger = Logger();
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/ads-apps';
 
 class AdsApi {
   static final AdsApi _instance = AdsApi._internal();
@@ -16,6 +15,12 @@ class AdsApi {
   factory AdsApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiPrefix =>
+      "${_systemConfigController.apiHost.value!}/public/ads-apps";
 
   Future<List<Ads>> getManyBy({
     int page = 1,

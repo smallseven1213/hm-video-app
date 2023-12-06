@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
-import 'package:shared/services/system_config.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
@@ -14,7 +13,6 @@ import '../widgets/ra_tab_bar.dart';
 import '../widgets/user/balance.dart';
 import '../widgets/user/info.dart';
 
-final systemConfig = SystemConfig();
 final logger = Logger();
 
 class CoinPage extends StatefulWidget {

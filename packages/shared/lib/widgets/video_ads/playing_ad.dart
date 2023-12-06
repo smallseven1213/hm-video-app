@@ -53,98 +53,81 @@ class _PlayingAdState extends State<PlayingAd> {
   final VideoAdsController controller = Get.find<VideoAdsController>();
   int adIndex = 0;
   bool adShow = false;
+  Timer? _timer;
+  Timer? _timer2;
+  Timer? _timer3;
   bool startTimer = false;
-  Timer? _adTimer;
 
   @override
   void initState() {
     super.initState();
   }
 
-  void startAdSequence() {
-    if (startTimer || _adTimer != null) return;
-
+  void showAdTimer() {
     var bannerParamConfig = controller.videoAds.value.bannerParamConfig.config;
     List stopConfig =
         bannerParamConfig.length < 3 ? [30, 60, 180] : bannerParamConfig;
-    int initialDelay = stopConfig[0];
-    int period = stopConfig[1];
-
-    _adTimer = Timer.periodic(Duration(seconds: period), (timer) {
-      if (timer.tick == 1) {
-        _showAd();
-      } else {
-        _updateAdIndex();
-      }
-
-      if (timer.tick * period >= stopConfig[2]) {
-        timer.cancel();
-        _startExtendedAdSequence(stopConfig[2]);
-      }
-    });
-
-    Future.delayed(Duration(seconds: initialDelay)).then((value) {
-      if (mounted) {
-        setState(() => startTimer = true);
-      }
-    });
-  }
-
-  void _startExtendedAdSequence(int period) {
-    _adTimer = Timer.periodic(Duration(seconds: period), (timer) {
-      _updateAdIndex();
-    });
-  }
-
-  void _showAd() {
-    if (mounted) {
+    if (startTimer) return;
+    _timer = Timer(Duration(seconds: stopConfig[0]), () {
       setState(() {
         adShow = true;
       });
-    }
-    _autoCloseAd();
-  }
-
-  void _updateAdIndex() {
-    if (mounted) {
-      setState(() {
-        adIndex = (adIndex + 1) % controller.videoAds.value.playingAds!.length;
-        adShow = true;
+      autoCloseAd();
+      _timer2 = Timer(Duration(seconds: stopConfig[1]), () {
+        updateAdIndex('${stopConfig[1]}秒后更换广告');
+        _timer3 = Timer.periodic(Duration(seconds: stopConfig[2]), (timer) {
+          updateAdIndex('${stopConfig[2]}秒后更换广告，之后每180秒更换广告');
+        });
       });
-    }
-    _autoCloseAd();
+    });
+    setState(() {
+      startTimer = true;
+    });
   }
 
-  void _autoCloseAd() {
+  void updateAdIndex(String text) {
+    logger.i(text);
+    setState(() {
+      adIndex = (adIndex + 1) % controller.videoAds.value.playingAds!.length;
+      adShow = true;
+    });
+    autoCloseAd();
+  }
+
+  void autoCloseAd() {
     if (controller.videoAds.value.playingAds?.isNotEmpty == true &&
         controller.videoAds.value.playingAds?[adIndex].isAutoClose == true) {
-      Future.delayed(const Duration(seconds: 5)).then((value) => _closeAd());
+      Future.delayed(const Duration(seconds: 5)).then((value) => closeAd());
     }
   }
 
-  void _closeAd() {
-    if (mounted) {
-      setState(() {
-        adShow = false;
-      });
-    }
+  void closeAd() {
+    setState(() {
+      adShow = false;
+    });
   }
 
   @override
   void didUpdateWidget(covariant PlayingAd oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.videoPlayerInfo.videoPlayerController?.value.isPlaying == true) {
-      startAdSequence();
+      showAdTimer();
     } else {
-      _adTimer?.cancel();
-      _adTimer = null;
-      setState(() => startTimer = false);
+      _timer?.cancel();
+      _timer2?.cancel();
+      _timer3?.cancel();
+
+      setState(() {
+        startTimer = false;
+      });
     }
   }
 
   @override
   void dispose() {
-    _adTimer?.cancel();
+    _timer?.cancel();
+    _timer2?.cancel();
+    _timer3?.cancel();
     super.dispose();
   }
 
@@ -205,7 +188,7 @@ class _PlayingAdState extends State<PlayingAd> {
                           size: 14,
                           color: Colors.black,
                         ),
-                        onPressed: _closeAd,
+                        onPressed: closeAd,
                       ),
                     ],
                   ),

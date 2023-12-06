@@ -2,18 +2,20 @@ import 'package:app_tt/widgets/countdown.dart';
 import 'package:flutter/material.dart';
 import 'package:game/routes/game_routes.dart';
 import 'package:game/widgets/game_provider.dart';
+import 'package:live_ui_basic/routes/live_routes.dart';
 import 'package:shared/utils/running_main.dart';
 import 'config/colors.dart';
 import 'localization/i18n.dart';
 import './routes/app_routes.dart' as app_routes;
 import 'widgets/loading_animation.dart';
 
-const env = String.fromEnvironment('ENV', defaultValue: 'prod');
+const env = String.fromEnvironment('ENV', defaultValue: 'dev');
 
 void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
     ...gameRoutes,
+    ...liveRoutes,
   };
 
   runningMain(
@@ -24,7 +26,9 @@ void main() async {
     ],
     allRoutes,
     AppColors.colors,
-    null,
+    ThemeData(
+      useMaterial3: false,
+    ),
     globalLoadingWidget: ({String? text}) => Center(child: LoadingAnimation()),
     countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),

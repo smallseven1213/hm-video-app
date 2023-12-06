@@ -4,12 +4,15 @@ import 'dart:io';
 
 import 'package:cross_file/cross_file.dart';
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http_parser/http_parser.dart' as http_parser;
 import 'dart:convert';
+import '../controllers/system_config_controller.dart';
 import '../models/actor.dart';
 import '../models/block_vod.dart';
 import '../models/hm_api_response.dart';
@@ -21,10 +24,8 @@ import '../models/user_promote_record.dart';
 import '../models/user_promote_with_totalcount.dart';
 import '../models/user_withdrawal_data.dart';
 import '../models/vod.dart';
-import '../services/system_config.dart';
 import '../utils/fetcher.dart';
 
-final systemConfig = SystemConfig();
 final logger = Logger();
 
 class UserApi {
@@ -35,6 +36,11 @@ class UserApi {
   factory UserApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
 
   // 使用者登入紀錄
   Future writeUserLoginRecord() async {
@@ -55,11 +61,11 @@ class UserApi {
       }
 
       fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/userLoginRecord',
+        url: '$apiHost/public/users/user/userLoginRecord',
         method: 'POST',
         body: {
-          'device': systemConfig.userDevice,
-          'version': systemConfig.version,
+          'device': _systemConfigController.userDevice.value,
+          'version': _systemConfigController.version.value,
           'userAgent': registerDeviceGuid,
         },
       );
@@ -72,17 +78,17 @@ class UserApi {
 
   // 使用者進入大廳（只記錄初次）
   Future writeUserEnterHallRecord() async {
-    if (systemConfig.box.read('entered') == null) {
+    GetStorage box = GetStorage();
+    if (box.read('entered') == null) {
       try {
         fetcher(
-          url:
-              '${systemConfig.apiHost}/public/users/user/userEventRecord/enterHall',
+          url: '$apiHost/public/users/user/userEventRecord/enterHall',
           method: 'POST',
           body: {
-            'version': systemConfig.version,
+            'version': _systemConfigController.version.value,
           },
         );
-        systemConfig.box.write('entered', true);
+        box.write('entered', true);
       } catch (err) {
         if (kDebugMode) {
           logger.i(err);
@@ -100,7 +106,7 @@ class UserApi {
     String? startedAt,
     String? endedAt,
   }) {
-    String path = '${systemConfig.apiHost}/user/withdrawal';
+    String path = '$apiHost/user/withdrawal';
     Map qs = <String, dynamic>{};
     if (page != 1) {
       qs['page'] = page;
@@ -144,12 +150,10 @@ class UserApi {
 
   // 更新使用者pin資料
   Future<void> updatePaymentPin(String paymentPin) async {
-    var value = await fetcher(
-        url: '${systemConfig.apiHost}/user/paymentPin',
-        method: 'PUT',
-        body: {
-          'paymentPin': paymentPin,
-        });
+    var value =
+        await fetcher(url: '$apiHost/user/paymentPin', method: 'PUT', body: {
+      'paymentPin': paymentPin,
+    });
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] != '00') {
       throw Exception(res['message']);
@@ -166,52 +170,50 @@ class UserApi {
       });
 
   Future<HMApiResponseBaseWithDataWithData> getPlayHistory() =>
-      fetcher(url: '${systemConfig.apiHost}/public/users/user/watchRecord')
-          .then((value) {
+      fetcher(url: '$apiHost/public/users/user/watchRecord').then((value) {
         var result = HMApiResponseBaseWithDataWithData.fromJson(value.data);
 
         return result;
       });
   Future<void> addPlayHistory(int videoId) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/watchRecord',
+      url: '$apiHost/public/users/user/watchRecord',
       method: 'POST',
       body: {'videoId': videoId});
 
   Future<void> deletePlayHistory(List<int> videoId) => fetcher(
       url:
-          '${systemConfig.apiHost}/public/users/user/watchRecord?videoId=${videoId.join(',')}',
+          '$apiHost/public/users/user/watchRecord?videoId=${videoId.join(',')}',
       method: 'DELETE');
 
   Future<void> addFavoriteVideo(int vodId) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/collectRecord',
+      url: '$apiHost/public/users/user/collectRecord',
       method: 'POST',
       body: {'videoId': vodId});
 
   Future<void> addFavoritSupplier(int supplierId) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/supplierFollowRecord',
+      url: '$apiHost/public/users/user/supplierFollowRecord',
       method: 'POST',
       body: {'supplierId': supplierId});
 
   Future<void> deleteFavoriteVideo(List<int> vodId) => fetcher(
       url:
-          '${systemConfig.apiHost}/public/users/user/collectRecord?videoId=${vodId.join(',')}',
+          '$apiHost/public/users/user/collectRecord?videoId=${vodId.join(',')}',
       method: 'DELETE');
 
   Future<void> deleteActorFavorite(List<int> vodId) => fetcher(
       url:
-          '${systemConfig.apiHost}/public/users/user/actorCollectRecord?actorId=${vodId.join(',')}',
+          '$apiHost/public/users/user/actorCollectRecord?actorId=${vodId.join(',')}',
       method: 'DELETE');
 
   Future<void> deleteSupplierFavorite(List<int> supplierId) => fetcher(
       url:
-          '${systemConfig.apiHost}/public/users/user/supplierFollowRecord?supplierId=${supplierId.join(',')}',
+          '$apiHost/public/users/user/supplierFollowRecord?supplierId=${supplierId.join(',')}',
       method: 'DELETE');
 
   // 獲得視頻喜愛紀錄清單
   Future<BlockVod> getFavoriteVideo({int? film = 1}) async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/users/user/collectRecord?film=$film');
+        url: '$apiHost/public/users/user/collectRecord?film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -224,20 +226,19 @@ class UserApi {
   }
 
   Future<void> addFavoriteActor(int actorId) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/actorCollectRecord',
+      url: '$apiHost/public/users/user/actorCollectRecord',
       method: 'POST',
       body: {'actorId': actorId});
 
   Future<void> deleteFavoriteActor(List<int> actorId) => fetcher(
       url:
-          '${systemConfig.apiHost}/public/users/user/actorCollectRecord?videoId=${actorId.join(',')}',
+          '$apiHost/public/users/user/actorCollectRecord?videoId=${actorId.join(',')}',
       method: 'DELETE');
 
   // 獲得視頻收藏紀錄清單
   Future<BlockVod> getVideoCollection({int? film = 1}) async {
     var res = await fetcher(
-        url:
-            '${systemConfig.apiHost}/public/users/user/favoriteRecord?film=$film');
+        url: '$apiHost/public/users/user/favoriteRecord?film=$film');
     if (res.data['code'] != '00') {
       return BlockVod([], 0);
     }
@@ -250,19 +251,19 @@ class UserApi {
   }
 
   Future<void> addVideoCollection(int videoId) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/favoriteRecord',
+      url: '$apiHost/public/users/user/favoriteRecord',
       method: 'POST',
       body: {'videoId': videoId});
 
   Future<void> deleteVideoCollection(List<int> videoId) => fetcher(
       url:
-          '${systemConfig.apiHost}/public/users/user/favoriteRecord?videoId=${videoId.join(',')}',
+          '$apiHost/public/users/user/favoriteRecord?videoId=${videoId.join(',')}',
       method: 'DELETE');
 
   // 演員喜愛紀錄清單
   Future<List<Actor>> getFavoriteActor() async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/actorCollectRecord',
+        url: '$apiHost/public/users/user/actorCollectRecord',
         method: 'GET',
         shouldValidate: true);
     if (res.data['code'] != '00') {
@@ -276,7 +277,7 @@ class UserApi {
   // UP主(供應商)喜愛紀錄清單
   Future<List<Supplier>> getFavoriteSupplier() async {
     var res = await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/supplierFollowRecord',
+        url: '$apiHost/public/users/user/supplierFollowRecord',
         method: 'GET',
         shouldValidate: true);
     if (res.data['code'] != '00') {
@@ -288,28 +289,26 @@ class UserApi {
   }
 
   Future<void> deleteTagFollowRecord(int tagId) => fetcher(
-      url:
-          '${systemConfig.apiHost}/public/users/user/tagFollowRecord?tagId=$tagId',
+      url: '$apiHost/public/users/user/tagFollowRecord?tagId=$tagId',
       method: 'DELETE');
 
   Future<void> addTagFollowRecord(int tagId) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/tagFollowRecord',
+      url: '$apiHost/public/users/user/tagFollowRecord',
       method: 'POST',
       body: {'tagId': tagId});
 
   Future<void> deleteSupplierFollowRecord(int supplierId) => fetcher(
       url:
-          '${systemConfig.apiHost}/public/users/user/supplierFollowRecord?supplierId=$supplierId',
+          '$apiHost/public/users/user/supplierFollowRecord?supplierId=$supplierId',
       method: 'DELETE');
 
   Future<void> addSupplierFollowRecord(int supplierId) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/supplierFollowRecord',
+      url: '$apiHost/public/users/user/supplierFollowRecord',
       method: 'POST',
       body: {'supplierId': supplierId});
 
   Future<void> addUserEventRecord(String version) => fetcher(
-      url:
-          '${systemConfig.apiHost}/public/users/user/userEventRecord/enterHall',
+      url: '$apiHost/public/users/user/userEventRecord/enterHall',
       method: 'POST',
       body: {'version': version});
 
@@ -319,7 +318,7 @@ class UserApi {
   }) =>
       fetcher(
               url:
-                  '${systemConfig.apiHost}/public/users/user/promoteRecord?page=$page&limit=$limit')
+                  '$apiHost/public/users/user/promoteRecord?page=$page&limit=$limit')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
         // logger.i(res['data']);
@@ -334,8 +333,7 @@ class UserApi {
       });
 
   Future<UserPromote> getUserPromote() =>
-      fetcher(url: '${systemConfig.apiHost}/public/users/user/userPromote')
-          .then((value) {
+      fetcher(url: '$apiHost/public/users/user/userPromote').then((value) {
         var res = (value.data as Map<String, dynamic>);
         // logger.i(res['data']);
         if (res['code'] != '00') {
@@ -346,7 +344,7 @@ class UserApi {
 
   Future<User> getCurrentUser() => fetcher(
               url:
-                  '${systemConfig.apiHost}/public/users/user/info?ts=${DateTime.now().millisecondsSinceEpoch}')
+                  '$apiHost/public/users/user/info?ts=${DateTime.now().millisecondsSinceEpoch}')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
         // logger.i(res['data']);
@@ -356,9 +354,8 @@ class UserApi {
         return User.fromJson(res['data'] as Map<String, dynamic>);
       });
 
-  Future<User> getCurrentUserWithdraw() => fetcher(
-              url: '${systemConfig.apiHost}/user/withdrawal?page=1&limit=20',
-              method: 'GET')
+  Future<User> getCurrentUserWithdraw() =>
+      fetcher(url: '$apiHost/user/withdrawal?page=1&limit=20', method: 'GET')
           .then((value) {
         var res = (value.data as Map<String, dynamic>);
         // logger.i(res['data']);
@@ -369,13 +366,13 @@ class UserApi {
       });
 
   Future<void> updateNickname(String nickname) => fetcher(
-      url: '${systemConfig.apiHost}/public/users/user/nickname',
+      url: '$apiHost/public/users/user/nickname',
       method: 'PUT',
       body: {'nickname': nickname});
 
   Future updatePassword(String origin, String newer) async {
     var value = await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/password',
+        url: '$apiHost/public/users/user/password',
         method: 'PUT',
         body: {'password': origin, 'newPassword': newer});
     var res = (value.data as Map<String, dynamic>);
@@ -383,8 +380,8 @@ class UserApi {
   }
 
   Future<UserWithdrawalData?> getUserGameWithdrawalData() async {
-    var value = await fetcher(
-        url: '${systemConfig.apiHost}/user/gameWithdrawal', method: 'GET');
+    var value =
+        await fetcher(url: '$apiHost/user/gameWithdrawal', method: 'GET');
     var res = (value.data as Map<String, dynamic>);
     if (res['code'] == '04') return null;
     return UserWithdrawalData.fromJson(res['data']);
@@ -393,14 +390,12 @@ class UserApi {
   // 提款申請, 帶入remittanceType,applyAmount與paymentPin共3個欄位, 去post to /user/withdrawal
   Future<HMApiResponse> applyWithdrawal(
       int remittanceType, String applyAmount, String paymentPin) async {
-    var value = await fetcher(
-        url: '${systemConfig.apiHost}/user/withdrawal',
-        method: 'POST',
-        body: {
-          'remittanceType': remittanceType,
-          'applyAmount': applyAmount,
-          'paymentPin': paymentPin
-        });
+    var value =
+        await fetcher(url: '$apiHost/user/withdrawal', method: 'POST', body: {
+      'remittanceType': remittanceType,
+      'applyAmount': applyAmount,
+      'paymentPin': paymentPin
+    });
     var res = (value.data as Map<String, dynamic>);
 
     return HMApiResponse.fromJson(res);
@@ -414,7 +409,7 @@ class UserApi {
       String legalName,
       String branchName) async {
     var value = await fetcher(
-        url: '${systemConfig.apiHost}/user/paymentSecurity',
+        url: '$apiHost/user/paymentSecurity',
         method: 'POST',
         body: {
           'account': account,
@@ -433,8 +428,7 @@ class UserApi {
   Future<HMApiResponseBaseWithDataWithData<bool>> checkPaymentPin(
       String paymentPin) async {
     var value = await fetcher(
-        url: '${systemConfig.apiHost}/user/paymentPin?paymentPin=$paymentPin',
-        method: 'GET');
+        url: '$apiHost/user/paymentPin?paymentPin=$paymentPin', method: 'GET');
     var res = (value.data as Map<String, dynamic>);
 
     return HMApiResponseBaseWithDataWithData<bool>.fromJson(res);
@@ -447,9 +441,9 @@ class UserApi {
     var sid = const Uuid().v4();
 
     try {
-      var form = FormData.fromMap({
+      var form = dio.FormData.fromMap({
         'sid': sid,
-        'photo': MultipartFile.fromBytes(
+        'photo': dio.MultipartFile.fromBytes(
           await file.readAsBytes(),
           filename: file.name,
           contentType:
@@ -458,7 +452,7 @@ class UserApi {
       });
 
       await fetcher(
-        url: '${systemConfig.apiHost}/public/photos/photo',
+        url: '$apiHost/public/photos/photo',
         method: 'POST',
         form: form,
       );
@@ -467,7 +461,7 @@ class UserApi {
     }
 
     await fetcher(
-        url: '${systemConfig.apiHost}/public/users/user/avatar',
+        url: '$apiHost/public/users/user/avatar',
         method: 'PUT',
         body: {
           'photoName': sid,
@@ -495,7 +489,7 @@ class UserApi {
     // // Create a FormData object
     // final formData = http.MultipartRequest(
     //   'PUT',
-    //   Uri.parse('${systemConfig.apiHost}/users/user/avatar'),
+    //   Uri.parse('$apiHost/users/user/avatar'),
     // )
     //   ..fields['sid'] = sid
     //   ..files.add(multipartFile);

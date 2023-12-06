@@ -1,10 +1,11 @@
 // GridMenu is a stateless widget
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/services/system_config.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -18,6 +19,7 @@ class GridMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final systemConfigController = Get.find<SystemConfigController>();
     return UserSettingQuickLinkConsumer(
       child: (List<Navigation> quickLinks) {
         List<Widget> menuItemsWithSpacing = [];
@@ -47,7 +49,7 @@ class GridMenu extends StatelessWidget {
                   );
                 } else if (item.name == '在線客服') {
                   launchUrl(Uri.parse(
-                      '${SystemConfig().apiHost}/public/domains/domain/customer-services'));
+                      '${systemConfigController.apiHost.value}/public/domains/domain/customer-services'));
                 } else {
                   MyRouteDelegate.of(context).push(item.path ?? '');
                 }

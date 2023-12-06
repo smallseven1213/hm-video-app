@@ -32,6 +32,7 @@ class AppColors {
     ColorKeys.dividerColor: Color(0xffeeeeee),
     ColorKeys.gradientBgTopColor: Color(0xff46454a),
     ColorKeys.gradientBgBottomColor: Color(0xff1c1c1c),
+    ColorKeys.systemCardDividerColor: Color(0xff1e212c),
     // tabs
     ColorKeys.tabBgColor: Color(0xff0F1320), // layout tab
     ColorKeys.tabTextColor: Color(0xff919BB3), // layout tab

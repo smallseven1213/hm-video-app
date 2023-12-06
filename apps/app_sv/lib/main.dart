@@ -36,6 +36,7 @@ void main() async {
       scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
+      useMaterial3: false,
     ),
     globalLoadingWidget: ({String? text}) =>
         Loading(loadingText: text ?? '正在加载...'),

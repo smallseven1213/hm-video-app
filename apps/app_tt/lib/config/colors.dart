@@ -14,7 +14,7 @@ class AppColors {
     ColorKeys.textPlaceholder: Color(0xffCACACA),
     // button
     ColorKeys.buttonBgPrimary: Colors.white,
-    ColorKeys.buttonBgSecondary: Colors.white,
+    ColorKeys.buttonBgSecondary: Color(0xfffe2c55),
     ColorKeys.buttonBgCancel: Color(0xffdedede),
     ColorKeys.noImageBgTop: Color(0xff00234D),
     ColorKeys.noImageBgBottom: Color(0xff002D62),

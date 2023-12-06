@@ -1,9 +1,8 @@
-import 'package:shared/services/system_config.dart';
+import 'package:get/get.dart';
+
+import '../controllers/system_config_controller.dart';
 import '../models/product.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/products';
 
 class ProductApi {
   static final ProductApi _instance = ProductApi._internal();
@@ -13,6 +12,13 @@ class ProductApi {
   factory ProductApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/products';
+
   // VIP列表、金幣列表 type: 1-金幣包 2-VIP
   Future<List<Product>> getManyBy(
       {int type = 1, int page = 1, int limit = 100}) async {

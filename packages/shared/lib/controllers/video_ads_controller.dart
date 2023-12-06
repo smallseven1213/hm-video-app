@@ -1,9 +1,7 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared/apis/ad_api.dart';
-import 'package:shared/services/system_config.dart';
 import '../models/video_ads.dart';
-
-final systemConfig = SystemConfig();
 
 class VideoAdsController extends GetxController {
   final AdApi adApi = AdApi();
@@ -11,11 +9,13 @@ class VideoAdsController extends GetxController {
   bool isFetched = false;
   var videoAds =
       VideoAds(bannerParamConfig: BannerParamConfig(config: [20, 20, 30])).obs;
-  final entryCount = systemConfig.box.read('entry-count') ?? 0;
+  GetStorage box = GetStorage();
+  var entryCount = 0;
 
   @override
   void onInit() async {
     super.onInit();
+    entryCount = box.read('entry-count') ?? 0;
     if (isFetched == false) {
       init();
     }

@@ -1,9 +1,7 @@
+import 'package:get/get.dart';
 import 'package:shared/models/redemption.dart';
-import 'package:shared/services/system_config.dart';
+import '../controllers/system_config_controller.dart';
 import '../utils/fetcher.dart';
-
-final systemConfig = SystemConfig();
-String apiPrefix = '${systemConfig.apiHost}/public/redemption/redemption';
 
 class RedemptionApi {
   static final RedemptionApi _instance = RedemptionApi._internal();
@@ -13,6 +11,12 @@ class RedemptionApi {
   factory RedemptionApi() {
     return _instance;
   }
+
+  final SystemConfigController _systemConfigController =
+      Get.find<SystemConfigController>();
+
+  String get apiHost => _systemConfigController.apiHost.value!;
+  String get apiPrefix => '$apiHost/public/redemption/redemption';
 
   Future<List<Redemption>> records() async {
     var res = await fetcher(url: '$apiPrefix/records');
