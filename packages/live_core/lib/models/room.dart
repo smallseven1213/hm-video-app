@@ -16,35 +16,33 @@ class Room {
   final int pid;
   final String title;
   final List<Tag> tags;
-  final String image; // 節目封面
-  final String player_cover; // 播放器封面
+  final String? playerCover; // 播放器封面
   final int status; // 1: 未開始 2: 直播中 3: 已結束
   final int isPorn;
   final int chargeType; // 1: 免費 2: 一次性 3: 每n分鐘
   final String chargeAmount;
   final String? reserveAt; // 預約開播時間
   final int hid; // 主播id
-  final String hostenter; // 主播建立時間
+  final String hostEnter; // 主播建立時間
   final String nickname; // 主播暱稱
-  final int userlive; // 當前場次實際人數
-  final int usercost; // 當前場次收益
+  final int userLive; // 當前場次實際人數
+  final int userCost; // 當前場次收益
 
   Room({
     required this.pid,
     required this.title,
     required this.tags,
-    required this.image,
-    required this.player_cover,
     required this.status,
     required this.isPorn,
     required this.chargeType,
     required this.chargeAmount,
+    this.playerCover,
     this.reserveAt,
     required this.hid,
-    required this.hostenter,
+    required this.hostEnter,
     required this.nickname,
-    required this.userlive,
-    required this.usercost,
+    required this.userLive,
+    required this.userCost,
   });
 
   factory Room.fromJson(Map<String, dynamic> json) {
@@ -54,18 +52,17 @@ class Room {
       pid: json['pid'],
       title: json['title'],
       tags: tags,
-      image: json['image'],
-      player_cover: json['player_cover'],
+      playerCover: json['player_cover'] ?? '',
       status: json['status'],
       isPorn: json['is_porn'],
       chargeType: json['charge_type'],
       chargeAmount: json['charge_amount'],
       reserveAt: json['reserve_at'],
       hid: json['hid'],
-      hostenter: json['hostenter'],
+      hostEnter: json['hostenter'],
       nickname: json['nickname'],
-      userlive: json['userlive'],
-      usercost: json['usercost'],
+      userLive: json['userlive'],
+      userCost: json['usercost'],
     );
   }
 }
