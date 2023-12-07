@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared/models/hm_api_response_with_data.dart';
 
 import '../apis/auth_api.dart';
+import '../controllers/live_system_controller.dart';
 
 class LiveScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
@@ -29,6 +30,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
   bool isLoading = true;
   bool isLogin = false;
   final authController = Get.find<AuthController>();
+  final liveSystemController = Get.put(LiveSystemController());
 
   @override
   void initState() {
@@ -53,6 +55,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
     var response = await authApi.login(token);
     if (response.code == '00') {
       GetStorage().write('live-token', response.data["token"]);
+      liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;
     } else {
       isLogin = false;
