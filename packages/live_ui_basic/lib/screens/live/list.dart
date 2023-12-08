@@ -7,9 +7,9 @@ class LiveList extends StatelessWidget {
   const LiveList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<LiveListController>();
+    final LiveListController controller = Get.find();
     return Obx(() {
-      if (controller.rooms.isEmpty) {
+      if (controller.filteredRooms.isEmpty) {
         return const SliverToBoxAdapter(
             child: SizedBox.shrink()); // 或者顯示一個加載中的指示器
       }
@@ -21,10 +21,8 @@ class LiveList extends StatelessWidget {
           mainAxisSpacing: 10, // 垂直間隔
         ),
         delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            return RoomItem(room: controller.rooms[index]);
-          },
-          childCount: controller.rooms.length,
+          (context, index) => RoomItem(room: controller.filteredRooms[index]),
+          childCount: controller.filteredRooms.length,
         ),
       );
     });
