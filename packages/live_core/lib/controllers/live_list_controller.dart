@@ -34,6 +34,7 @@ class LiveListController extends GetxController {
     try {
       LiveApiResponseBase<List<Room>> res = await liveApi.getRooms();
       rooms.value = res.data;
+      filteredRooms.value = res.data;
     } catch (e) {
       print(e);
     }
