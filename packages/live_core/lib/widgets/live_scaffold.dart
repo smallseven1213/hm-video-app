@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared/models/hm_api_response_with_data.dart';
 
 import '../apis/auth_api.dart';
+import '../controllers/live_list_controller.dart';
 import '../controllers/live_system_controller.dart';
 
 class LiveScaffold extends StatefulWidget {
@@ -79,6 +80,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
         ),
       );
     }
+    Get.put(LiveListController());
     return Scaffold(
       appBar: widget.appBar,
       body: widget.body,

@@ -25,4 +25,9 @@ class LiveListController extends GetxController {
       print(e);
     }
   }
+
+  // get room by id
+  Room? getRoomById(int id) {
+    return rooms.firstWhere((room) => room.pid == id);
+  }
 }
