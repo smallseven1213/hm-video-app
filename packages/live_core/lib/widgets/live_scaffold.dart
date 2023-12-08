@@ -36,9 +36,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
   @override
   void initState() {
     super.initState();
-    // if (widget.token != null) {
-    //   _loginAndSaveToken(widget.token);
-    // }
+
     if (authController.token.value.isNotEmpty) {
       _loginAndSaveToken(authController.token.value);
     }
@@ -58,6 +56,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
       GetStorage().write('live-token', response.data["token"]);
       liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;
+      Get.put(LiveListController());
     } else {
       isLogin = false;
     }

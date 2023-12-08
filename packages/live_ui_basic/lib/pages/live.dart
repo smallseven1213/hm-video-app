@@ -19,12 +19,9 @@ class LivePage extends StatefulWidget {
 }
 
 class _LivePageState extends State<LivePage> {
-  late final LiveListController liveListController;
-
   @override
   void initState() {
     super.initState();
-    liveListController = Get.put(LiveListController());
   }
 
   @override
