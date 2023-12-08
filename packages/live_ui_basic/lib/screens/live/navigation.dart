@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/models/navigation.dart';
 import 'package:live_core/widgets/navigation_provider.dart';
 import 'package:get/get.dart';
@@ -8,22 +9,23 @@ class NavigationWidget extends StatefulWidget {
 
   @override
   _NavigationWidgetState createState() => _NavigationWidgetState();
-} 
+}
 
 class _NavigationWidgetState extends State<NavigationWidget> {
-  int _selectedIndex = 0; // 跟踪選中的索引
+  LiveListController liveListController = Get.find<LiveListController>();
+  int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
-    final Color activeColor = Colors.white;
-    final Color inactiveColor = Color(0xFF898B99);
+    const Color activeColor = Colors.white;
+    const Color inactiveColor = Color(0xFF898B99);
 
     return NavigationProvider(child: (List<Navigation> navigation) {
       if (navigation.isEmpty) {
         return const SizedBox.shrink();
       }
 
-      return Container(
+      return SizedBox(
         height: 30,
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -34,12 +36,16 @@ class _NavigationWidgetState extends State<NavigationWidget> {
             return GestureDetector(
               onTap: () {
                 setState(() {
-                  _selectedIndex = index; // 更新選中的索引
+                  _selectedIndex = index;
                 });
-                // 實現導航邏輯
+                if (nav.rule == 'custom') {
+                  liveListController.filter(tagId: null);
+                } else {
+                  liveListController.filter(tagId: nav.id);
+                }
               },
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 10), // 文字間距為10px
+                padding: const EdgeInsets.symmetric(horizontal: 10),
                 alignment: Alignment.center,
                 child: Text(
                   nav.name,

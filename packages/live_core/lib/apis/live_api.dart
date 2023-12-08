@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:live_core/controllers/live_system_controller.dart';
 import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
@@ -25,8 +26,9 @@ class LiveApi {
   }
 
   Future<LiveApiResponseBase<List<Room>>> getRooms() async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/roomlist',
+      url: '$liveApiHost/roomlist',
     );
 
     LiveApiResponseBase<List<Room>> parsedResponse =
@@ -40,8 +42,9 @@ class LiveApi {
 
   Future<LiveApiResponseBase<LiveRoom>> enterRoom(int pid) async {
     try {
+      final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
       var response = await liveFetcher(
-        url: 'https://dev-live-ext.hmtech-dev.com/enterroom',
+        url: '$liveApiHost/enterroom',
         method: 'POST',
         body: {
           'pid': pid,
@@ -82,8 +85,9 @@ class LiveApi {
   }
 
   Future<LiveApiResponseBase<RoomRank>> getRank() async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/rank',
+      url: '$liveApiHost/rank',
     );
 
     LiveApiResponseBase<RoomRank> parsedResponse = LiveApiResponseBase.fromJson(
@@ -95,8 +99,9 @@ class LiveApi {
   }
 
   Future<LiveApiResponseBase<List<Gift>>> getGifts() async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/giftlist',
+      url: '$liveApiHost/giftlist',
     );
 
     LiveApiResponseBase<List<Gift>> parsedResponse =
@@ -109,8 +114,9 @@ class LiveApi {
   }
 
   Future<LiveApiResponseBase> sendGift(int gid, double amount) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/gift',
+      url: '$liveApiHost/gift',
       method: 'POST',
       body: {
         'gid': gid,
@@ -127,8 +133,9 @@ class LiveApi {
   }
 
   Future<LiveApiResponseBase<List<Command>>> getCommands() async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/cmdlist',
+      url: '$liveApiHost/cmdlist',
     );
 
     LiveApiResponseBase<List<Command>> parsedResponse =
@@ -140,9 +147,10 @@ class LiveApi {
     return parsedResponse;
   }
 
-  Future<LiveApiResponseBase> sendCommand(int cid, int amount) async {
+  Future<LiveApiResponseBase> sendCommand(int cid, double amount) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/cmd',
+      url: '$liveApiHost/cmd',
       method: 'POST',
       body: {
         'cid': cid,

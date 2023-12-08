@@ -10,6 +10,7 @@ import '../screens/live/list.dart';
 import '../screens/live/navigation.dart';
 import '../screens/live/room_item.dart';
 import '../screens/live/search.dart';
+import '../screens/live/sort.dart';
 
 class LivePage extends StatefulWidget {
   const LivePage({Key? key}) : super(key: key);
@@ -18,6 +19,14 @@ class LivePage extends StatefulWidget {
 }
 
 class _LivePageState extends State<LivePage> {
+  late final LiveListController liveListController;
+
+  @override
+  void initState() {
+    super.initState();
+    liveListController = Get.put(LiveListController());
+  }
+
   @override
   Widget build(BuildContext context) {
     return LiveScaffold(
@@ -60,8 +69,14 @@ class _LivePageState extends State<LivePage> {
           ),
 
           const SliverToBoxAdapter(
-            child: FilterWidget(),
-          ),
+              child: Padding(
+            padding: EdgeInsets.only(right: 10),
+            child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+              FilterWidget(),
+              SizedBox(width: 16),
+              SortWidget(),
+            ]),
+          )),
           const SliverToBoxAdapter(
             child: SizedBox(height: 10),
           ),
@@ -76,7 +91,7 @@ class _LivePageState extends State<LivePage> {
                 MyRouteDelegate.of(context).push(
                   "/live_room",
                   // args: {"pid": room.pid},
-                  args: {"pid": 322},
+                  args: {"pid": 325},
                 );
               },
               child: const Text("Test Room"),

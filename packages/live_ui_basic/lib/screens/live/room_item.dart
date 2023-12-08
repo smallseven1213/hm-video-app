@@ -59,7 +59,7 @@ class RoomItem extends StatelessWidget {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(30),
-              child: NetworkImageWidget(url: room.image),
+              child: NetworkImageWidget(url: room.playerCover ?? ''),
             ),
             Positioned(
               left: 10,
@@ -67,12 +67,12 @@ class RoomItem extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(
-                    room.userlive > 1000
+                    room.userLive > 1000
                         ? Icons.local_fire_department
                         : Icons.remove_red_eye,
                   ),
                   const SizedBox(width: 4),
-                  Text('${room.userlive}'),
+                  Text('${room.userLive}'),
                 ],
               ),
             ),
@@ -85,14 +85,14 @@ class RoomItem extends StatelessWidget {
                             ? const Color(0xffe65fcf95)
                             : const Color(0xffe6845fcf),
                         text: room.chargeType == RoomChargeType.free.index
-                            ? '付費'
-                            : '免費',
+                            ? '免費'
+                            : '付費',
                       )
                     : _buildLabel(
                         color: const Color(0xffe6cf795f),
                         text: room.status == RoomStatus.ended.index
                             ? '已結束'
-                            : formatDateTime(room.reserveAt),
+                            : formatDateTime(room.reserveAt ?? ''),
                         icon: Icon(Icons.access_time,
                             size: 12, color: Colors.white),
                       )),
