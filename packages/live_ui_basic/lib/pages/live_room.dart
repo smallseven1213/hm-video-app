@@ -30,7 +30,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
     final liveListController = Get.find<LiveListController>();
     final room = liveListController.getRoomById(widget.pid);
     if (room != null) {
-      controller.liveRoomInfo.value = room!;
+      controller.liveRoomInfo.value = room;
     }
 
     // 監聽hasError的變化
