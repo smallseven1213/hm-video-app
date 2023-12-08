@@ -10,66 +10,69 @@ class StreamerInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     final liveRoomController =
         Get.find<LiveRoomController>(tag: pid.toString());
-    var roomInfo = liveRoomController.liveRoomInfo.value;
-    return Obx(() => Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: Colors.black,
-          ),
-          width: 135,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 30,
-                height: 30,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.pink,
-                ),
+
+    return Obx(() {
+      var roomInfo = liveRoomController.liveRoomInfo.value;
+      return Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: Colors.black,
+        ),
+        width: 135,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 30,
+              height: 30,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.pink,
               ),
-              const SizedBox(width: 4),
-              Expanded(
-                child: Column(
-                  // vertical center
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // horizal left
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      roomInfo?.nickname ?? "",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 10,
-                      ),
+            ),
+            const SizedBox(width: 4),
+            Expanded(
+              child: Column(
+                // vertical center
+                mainAxisAlignment: MainAxisAlignment.center,
+                // horizal left
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    roomInfo?.nickname ?? "",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 10,
                     ),
-                    Text(
-                      roomInfo?.chargeAmount ?? "",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 9,
-                      ),
+                  ),
+                  Text(
+                    roomInfo?.chargeAmount ?? "",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 9,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              Container(
-                width: 30,
-                height: 30,
-                child: Center(
-                  child: Container(
-                    width: 25,
-                    height: 25,
-                    child: Image(
-                      image: AssetImage(
-                          "packages/live_ui_basic/assets/images/room_add_icon.webp"),
-                    ),
+            ),
+            Container(
+              width: 30,
+              height: 30,
+              child: Center(
+                child: Container(
+                  width: 25,
+                  height: 25,
+                  child: Image(
+                    image: AssetImage(
+                        "packages/live_ui_basic/assets/images/room_add_icon.webp"),
                   ),
                 ),
               ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      );
+    });
   }
 }
