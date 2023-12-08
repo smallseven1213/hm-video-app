@@ -34,7 +34,6 @@ class LiveListController extends GetxController {
     try {
       LiveApiResponseBase<List<Room>> res = await liveApi.getRooms();
       rooms.value = res.data;
-
     } catch (e) {
       print(e);
     }
@@ -42,7 +41,10 @@ class LiveListController extends GetxController {
 
   // get room by id
   Room? getRoomById(int id) {
-    return rooms.firstWhere((room) => room.pid == id);
+    if (rooms.value.isEmpty) {
+      return null;
+    }
+    return rooms.value.firstWhere((room) => room.pid == id);
   }
 
   void filter({
