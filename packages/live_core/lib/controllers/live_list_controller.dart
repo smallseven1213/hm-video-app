@@ -40,6 +40,11 @@ class LiveListController extends GetxController {
     }
   }
 
+  // get room by id
+  Room? getRoomById(int id) {
+    return rooms.firstWhere((room) => room.pid == id);
+  }
+
   void filter({
     int? tagId,
     RoomChargeType? roomChargeType,
