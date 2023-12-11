@@ -66,6 +66,8 @@ class RoomItem extends StatelessWidget {
               top: 10,
               child: Row(
                 children: [
+                  // 測東西用
+                  Text('${room.pid}'),
                   Icon(
                     room.userLive > 1000
                         ? Icons.local_fire_department

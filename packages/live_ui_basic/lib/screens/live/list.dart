@@ -4,6 +4,7 @@ import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_ui_basic/screens/live/room_item.dart';
 
 class LiveList extends StatelessWidget {
+  const LiveList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final LiveListController controller = Get.find();

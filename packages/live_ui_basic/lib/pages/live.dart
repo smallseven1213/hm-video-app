@@ -19,12 +19,9 @@ class LivePage extends StatefulWidget {
 }
 
 class _LivePageState extends State<LivePage> {
-  late final LiveListController liveListController;
-
   @override
   void initState() {
     super.initState();
-    liveListController = Get.put(LiveListController());
   }
 
   @override
@@ -91,7 +88,7 @@ class _LivePageState extends State<LivePage> {
                 MyRouteDelegate.of(context).push(
                   "/live_room",
                   // args: {"pid": room.pid},
-                  args: {"pid": 325},
+                  args: {"pid": 347},
                 );
               },
               child: const Text("Test Room"),
