@@ -1,9 +1,10 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/chatroom_provider.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'chatroom_messages.dart';
 
@@ -16,37 +17,34 @@ class ChatroomLayout extends StatefulWidget {
 
 class _ChatroomLayoutState extends State<ChatroomLayout> {
   final TextEditingController _messageController = TextEditingController();
-  final FocusNode _textFieldFocusNode = FocusNode(); // Persistent FocusNode
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
+  late StreamSubscription<bool> keyboardSubscription;
+
+  bool isBottomSheetDisplayed = false;
 
   void _showBottomSheet() {
+    setState(() => isBottomSheetDisplayed = true);
+
     showModalBottomSheet(
       context: context,
-      isScrollControlled: false, // not true
+      isScrollControlled: true,
       builder: (BuildContext context) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          FocusScope.of(context).requestFocus(_textFieldFocusNode);
-        });
         return Padding(
-          padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context)
-                .viewInsets
-                .bottom, // This adds padding equal to the keyboard height
-          ),
-          child: Container(
-            height: 46.0, // Fixed height for the container
-            child: MessageInputWidget(
-              controller: _messageController,
-              focusNode: _textFieldFocusNode,
-              onSend: sendMessage,
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: SizedBox(
+            child: Wrap(
+              children: [
+                MessageInputWidget(
+                  controller: _messageController,
+                  onSend: sendMessage,
+                )
+              ],
             ),
           ),
         );
       },
-    ).then((value) {
-      // This is to unfocus the text field when the bottom sheet is dismissed
-      _textFieldFocusNode.unfocus();
-    });
+    ).whenComplete(() => setState(() => isBottomSheetDisplayed = false));
   }
 
   void sendMessage() {
@@ -59,14 +57,33 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
 
       socketManager.send('chat', jsonData);
       _messageController.clear();
+      Navigator.of(context)
+          .pop(); // Dismiss the bottom sheet after sending the message
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    var keyboardVisibilityController = KeyboardVisibilityController();
+    // Query
+    print(
+        'Keyboard visibility direct query: ${keyboardVisibilityController.isVisible}');
+
+    // Subscribe
+    keyboardSubscription =
+        keyboardVisibilityController.onChange.listen((bool visible) {
+      if (!visible && isBottomSheetDisplayed) {
+        Navigator.of(context).pop();
+      }
+    });
   }
 
   @override
   void dispose() {
     // Dispose the controller and focus node when the widget is removed from the widget tree
     _messageController.dispose();
-    _textFieldFocusNode.dispose();
+    keyboardSubscription.cancel();
     super.dispose();
   }
 
@@ -97,21 +114,35 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
   }
 }
 
-class MessageInputWidget extends StatelessWidget {
+class MessageInputWidget extends StatefulWidget {
   final TextEditingController controller;
-  final FocusNode focusNode; // Add this line
   final VoidCallback onSend;
 
   const MessageInputWidget({
     Key? key,
     required this.controller,
-    required this.focusNode, // Add this line
     required this.onSend,
   }) : super(key: key);
 
   @override
+  _MessageInputWidgetState createState() => _MessageInputWidgetState();
+}
+
+class _MessageInputWidgetState extends State<MessageInputWidget> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
+      height: 54,
       padding: EdgeInsets.only(
         left: 5,
         right: 5,
@@ -123,29 +154,28 @@ class MessageInputWidget extends StatelessWidget {
         children: [
           Expanded(
             child: Container(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 8), // Adjust the padding as needed
+              padding: const EdgeInsets.symmetric(horizontal: 8),
               decoration: BoxDecoration(
-                color: Colors.white, // Set the background color to white
-                borderRadius:
-                    BorderRadius.circular(5), // Set the border radius to 5
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(5),
               ),
               child: TextField(
-                focusNode: focusNode,
-                controller: controller,
+                autofocus: true,
+                controller: widget.controller,
                 style: const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
                 decoration: const InputDecoration(
                   hintText: '和主播說些什麼吧///',
                   hintStyle: TextStyle(fontSize: 14, color: Color(0xFF7b7b7b)),
-                  border: InputBorder.none, // No border
-                  contentPadding: EdgeInsets.fromLTRB(
-                      10, 10, 10, 10), // Padding inside the TextField
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.all(10),
                 ),
               ),
             ),
           ),
           InkWell(
-            onTap: onSend,
+            onTap: () {
+              widget.onSend();
+            },
             child: const SizedBox(
               width: 60,
               child: Center(
