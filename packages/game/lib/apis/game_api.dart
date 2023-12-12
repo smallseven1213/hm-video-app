@@ -281,19 +281,33 @@ class GameLobbyApi {
   }
 
 // 遊戲大廳 取得支付渠道
-  Future<List<Payment>> getPaymentsBy(String amount) => fetcher(
-              url:
-                  '$apiPrefix/payment-channel?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}&amount=$amount')
-          .then((value) {
-        var res = (value.data as Map<String, dynamic>);
-        _checkMaintenance(res['code']);
+  Future<List<Payment>> getPaymentsBy(String amount) async {
+    Map<String, int> deviceType = {
+      'web': 1,
+      'ios': 2,
+      'android': 3,
+    };
 
-        if (res['code'] != '00') {
-          return [];
-        }
-        return List.from(
-            (res['data'] as List<dynamic>).map((e) => Payment.fromJson(e)));
-      });
+    String platformKey = GetPlatform.isWeb
+        ? 'web'
+        : Platform.isAndroid
+            ? 'android'
+            : 'ios';
+
+    return fetcher(
+            url:
+                '$apiPrefix/payment-channel?deviceType=${deviceType[platformKey] ?? 1}&amount=$amount')
+        .then((value) {
+      var res = (value.data as Map<String, dynamic>);
+      _checkMaintenance(res['code']);
+
+      if (res['code'] != '00') {
+        return [];
+      }
+      return List.from(
+          (res['data'] as List<dynamic>).map((e) => Payment.fromJson(e)));
+    });
+  }
 
   // new version 遊戲大廳 取得支付渠道
   Future<Map> getDepositChannel() async {
