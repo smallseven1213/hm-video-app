@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/widgets/live_scaffold.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -8,7 +6,6 @@ import '../screens/live/banners.dart';
 import '../screens/live/filter.dart';
 import '../screens/live/list.dart';
 import '../screens/live/navigation.dart';
-import '../screens/live/room_item.dart';
 import '../screens/live/search.dart';
 import '../screens/live/sort.dart';
 
