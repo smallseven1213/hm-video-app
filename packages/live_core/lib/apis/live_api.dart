@@ -12,6 +12,7 @@ import '../libs/decryptAES256ECB.dart';
 import '../models/gift.dart';
 import '../models/live_api_response_base.dart';
 import '../models/live_room.dart';
+import '../models/live_user_detail.dart';
 import '../models/room.dart';
 import '../models/command.dart';
 
@@ -161,6 +162,22 @@ class LiveApi {
     LiveApiResponseBase parsedResponse = LiveApiResponseBase.fromJson(
       response.data,
       (data) => data,
+    );
+
+    return parsedResponse;
+  }
+
+  // Get /user/detail
+  Future<LiveApiResponseBase<LiveUserDetail>> getUserDetail() async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/user/v1/user/detail',
+    );
+
+    LiveApiResponseBase<LiveUserDetail> parsedResponse =
+        LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => LiveUserDetail.fromJson(data as Map<String, dynamic>),
     );
 
     return parsedResponse;
