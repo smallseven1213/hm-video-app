@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
+import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/gift.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -125,10 +126,31 @@ class GiftItem extends StatelessWidget {
       onTap: () async {
         try {
           var price = double.parse(gift.price);
-          var response = await liveApi.sendGift(gift.id, price);
-          if (response.code == 200) {
+          var userAmount = Get.find<LiveUserController>().getAmount;
+          if (userAmount < price) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: Text('Not enough money'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
           } else {
-            throw Exception(response.data["msg"]);
+            var response = await liveApi.sendGift(gift.id, price);
+            if (response.code == 200) {
+            } else {
+              throw Exception(response.data["msg"]);
+            }
           }
         } catch (e) {
           print(e);
