@@ -8,6 +8,8 @@ final LiveApi liveApi = LiveApi();
 class LiveUserController extends GetxController {
   var userDetail = Rxn<LiveUserDetail>();
 
+  double get getAmount => userDetail.value?.wallet ?? 0;
+
   @override
   void onInit() {
     super.onInit();
@@ -15,7 +17,6 @@ class LiveUserController extends GetxController {
   }
 
   void getUserDetail() async {
-    // Call the API to get user details
     var getUserDetails = await liveApi.getUserDetail();
     userDetail.value = getUserDetails.data;
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
+import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/command.dart';
 
 import 'right_corner_controllers/user_diamonds.dart';
@@ -114,7 +115,32 @@ class CommandItem extends StatelessWidget {
       onTap: () async {
         try {
           var price = double.parse(command.price);
-          await liveApi.sendCommand(command.id, price);
+          var userAmount = Get.find<LiveUserController>().getAmount;
+          if (userAmount < price) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('Error'),
+                  content: Text('Not enough money'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
+          } else {
+            var response = await liveApi.sendCommand(command.id, price);
+            if (response.code == 200) {
+            } else {
+              throw Exception(response.data["msg"]);
+            }
+          }
         } catch (e) {
           print(e);
           // show dialog for error
