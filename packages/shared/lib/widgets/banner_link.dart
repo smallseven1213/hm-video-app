@@ -21,6 +21,8 @@ class BannerLink extends StatelessWidget {
       onTap: () {
         Get.find<BannerController>().recordBannerClick(id);
 
+        if (url.isEmpty) return;
+
         final Uri parsedUrl = Uri.parse(url);
 
         if (url.startsWith('http://') || url.startsWith('https://')) {
