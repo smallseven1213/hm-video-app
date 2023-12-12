@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({Key? key}) : super(key: key);
@@ -37,12 +38,15 @@ class SearchWidget extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(width: 10),
-        Image(
-          image:
-              AssetImage('packages/live_ui_basic/assets/images/ic_rank.webp'),
-          width: 30,
-          height: 30,
+        const SizedBox(width: 10),
+        InkWell(
+          onTap: () => MyRouteDelegate.of(context).push("/streamer_rank"),
+          child: const Image(
+            image:
+                AssetImage('packages/live_ui_basic/assets/images/ic_rank.webp'),
+            width: 30,
+            height: 30,
+          ),
         ),
       ],
     );

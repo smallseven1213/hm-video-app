@@ -4,6 +4,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/datetime_formatter.dart';
 
 import '../../widgets/network_image.dart';
+import 'countdown_timer.dart';
 
 class RoomItem extends StatelessWidget {
   final Room room;
@@ -52,7 +53,7 @@ class RoomItem extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30),
-          color: Colors.white,
+          color: Colors.grey,
         ),
         padding: const EdgeInsets.all(6),
         child: Stack(
@@ -68,42 +69,48 @@ class RoomItem extends StatelessWidget {
                 children: [
                   // 測東西用
                   Text('${room.pid}'),
-                  Icon(
-                    room.userLive > 1000
-                        ? Icons.local_fire_department
-                        : Icons.remove_red_eye,
+                  Image.asset(
+                    "packages/live_ui_basic/assets/images/${room.userLive > 1000 ? 'ic_hot' : 'ic_view'}.webp",
+                    width: 22,
                   ),
-                  const SizedBox(width: 4),
+                  const SizedBox(width: 2),
                   Text('${room.userLive}'),
                 ],
               ),
             ),
             Positioned(
-                right: 8,
-                top: 8,
-                child: room.status == RoomStatus.live.index
-                    ? _buildLabel(
-                        color: room.chargeType == RoomChargeType.free.index
-                            ? const Color(0xffe65fcf95)
-                            : const Color(0xffe6845fcf),
-                        text: room.chargeType == RoomChargeType.free.index
-                            ? '免費'
-                            : '付費',
-                      )
-                    : _buildLabel(
-                        color: const Color(0xffe6cf795f),
-                        text: room.status == RoomStatus.ended.index
-                            ? '已結束'
-                            : formatDateTime(room.reserveAt ?? ''),
-                        icon: Icon(Icons.access_time,
-                            size: 12, color: Colors.white),
-                      )),
+              right: 8,
+              top: 8,
+              child: room.status == RoomStatus.live.index
+                  ? _buildLabel(
+                      color: room.chargeType == RoomChargeType.free.index
+                          ? const Color(0xffe65fcf95)
+                          : const Color(0xffe6845fcf),
+                      text: room.chargeType == RoomChargeType.free.index
+                          ? '免費'
+                          : '付費',
+                    )
+                  : room.status == RoomStatus.ended.index
+                      ? _buildLabel(
+                          color: const Color(0xffe6cf795f),
+                          text: '已結束',
+                          icon: const Icon(Icons.access_time,
+                              size: 12, color: Colors.white),
+                        )
+                      : CountdownTimer(
+                          reserveAt: room.reserveAt ?? '',
+                          chargeType: room.chargeType,
+                        ),
+            ),
             Positioned(
               left: 10,
               bottom: 30,
               child: Text(
                 '@${room.nickname}',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ),
             Positioned(
@@ -111,7 +118,7 @@ class RoomItem extends StatelessWidget {
               bottom: 10,
               child: Text(
                 room.tags.map((tag) => tag.name).join(', '),
-                style: TextStyle(fontSize: 14),
+                style: const TextStyle(fontSize: 14, color: Colors.white),
               ),
             ),
           ],

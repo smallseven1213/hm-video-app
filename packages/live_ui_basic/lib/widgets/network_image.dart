@@ -38,7 +38,8 @@ class NetworkImageWidget extends StatelessWidget {
           ),
         );
       },
-      errorBuilder: (context, error, stackTrace) => const Icon(Icons.error),
+      errorBuilder: (context, error, stackTrace) =>
+          const Center(child: Icon(Icons.error)),
     );
   }
 }
