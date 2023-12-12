@@ -9,6 +9,8 @@ import 'package:live_ui_basic/screens/live_room/right_corner_controllers.dart';
 import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 import 'package:video_player/video_player.dart';
 
+import '../screens/live_room/command_controller.dart';
+
 class LiveRoomPage extends StatefulWidget {
   final int pid;
   const LiveRoomPage({Key? key, required this.pid}) : super(key: key);
@@ -100,7 +102,11 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 left: 7,
                 child: ChatroomLayout(
                   token: controller.liveRoom.value.chattoken,
-                ))
+                )),
+            Positioned(
+                top: MediaQuery.of(context).padding.top + 100,
+                right: 10,
+                child: CommandController())
           ],
         ),
       );

@@ -88,7 +88,7 @@ class Gifts extends StatelessWidget {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
-                      childAspectRatio: 100 / 140,
+                      childAspectRatio: 100 / 110,
                     ),
                     physics: NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
                     itemCount: pageItems.length,
@@ -156,9 +156,7 @@ class GiftItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           LiveImage(
-            // base64String: gift.image,
-            base64Url:
-                "https://cdn.hubeibk.com/live/webp/app_gifts/018c38d8-5088-71ee-8a45-26f87e492309",
+            base64Url: gift.image,
           ),
           // Image.network(
           //   // gift.image,
