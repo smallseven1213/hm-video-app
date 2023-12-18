@@ -41,14 +41,27 @@ class VodsState extends State<Vods> {
 
   void _scrollListener() {
     if (isRefreshing) return;
-    if (_scrollController!.position.pixels ==
-        _scrollController!.position.maxScrollExtent) {
+
+    if (_scrollController!.position.pixels >=
+        _scrollController!.position.maxScrollExtent - 50) {
+      // 加载更多数据
       debounce(
         fn: () {
+          print('loadMoreData');
           vodController!.loadMoreData();
         },
       );
     }
+
+    // if (_scrollController!.position.pixels ==
+    //     _scrollController!.position.maxScrollExtent) {
+    //   debounce(
+    //     fn: () {
+    //       print('loadMoreData');
+    //       vodController!.loadMoreData();
+    //     },
+    //   );
+    // }
   }
 
   @override
@@ -92,6 +105,7 @@ class VodsState extends State<Vods> {
   }
 
   void _onRefresh() async {
+    print('onRefresh');
     setState(() {
       isRefreshing = true;
     });
