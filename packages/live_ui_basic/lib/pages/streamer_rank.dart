@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:live_core/apis/streamer_api.dart';
 import 'package:live_core/controllers/streamer_rank_controller.dart';
+import 'package:live_core/controllers/user_follows_controller.dart';
+import 'package:live_core/models/streamer.dart';
 import 'package:live_core/models/streamer_rank.dart';
 import 'package:live_ui_basic/widgets/rank_number.dart';
 
@@ -61,6 +63,7 @@ class RankingScreen extends StatefulWidget {
 
 class _RankingScreenState extends State<RankingScreen> {
   late StreamerRankController controller;
+  final userFollowsController = Get.find<UserFollowsController>();
 
   @override
   void initState() {
@@ -85,7 +88,7 @@ class _RankingScreenState extends State<RankingScreen> {
                 itemBuilder: (context, index) {
                   return Container(
                     padding: const EdgeInsets.all(8.0),
-                    color: Colors.black26, // 背景颜色
+                    color: Colors.black26,
                     child: Row(
                       children: <Widget>[
                         RankNumber(
@@ -121,24 +124,32 @@ class _RankingScreenState extends State<RankingScreen> {
                                         color: Colors.white, fontSize: 10)),
                               )
                             : Container(),
-
-                        // 如果不是直播，这里可以为空或放置其他组件
                         const Spacer(),
-
-                        ElevatedButton(
-                          onPressed: () {
-                            // 关注按钮点击事件
-                            // TODO: 关注按钮点击事件
-                            _streamerApi.followStreamer(rankItems[index].id);
-                          },
-                          child: Text('關注',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 12)),
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.all(
-                                Color(0xffae57ff)), // 按钮颜色
-                          ),
-                        ),
+                        Obx(() {
+                          var isFollowed = userFollowsController.follows
+                              .any((e) => e.id == rankItems[index].id);
+                          return ElevatedButton(
+                            onPressed: () {
+                              Streamer streamer = Streamer(
+                                  id: rankItems[index].id,
+                                  nickname: rankItems[index].nickname);
+                              if (isFollowed) {
+                                userFollowsController.unfollow(streamer);
+                              } else {
+                                userFollowsController.follow(streamer);
+                              }
+                            },
+                            child: Text(isFollowed ? '已關注' : '關注',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12)),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  isFollowed
+                                      ? const Color(0xff7b7b7b)
+                                      : const Color(0xffae57ff)),
+                            ),
+                          );
+                        }),
                       ],
                     ),
                   );

@@ -1,6 +1,4 @@
 import 'package:get/get.dart';
-import 'package:live_core/controllers/live_system_controller.dart';
-import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 
@@ -29,6 +27,10 @@ class StreamerApi {
           '$userApiHost/streamer/ranking?rank_type=${rankType.index}&time_type=${timeType.index}',
     );
 
+    if (response.data['data'].isEmpty) {
+      return [];
+    }
+
     List<StreamerRank> data = (response.data['data'] as List)
         .map((item) => StreamerRank.fromJson(item))
         .toList();
@@ -37,7 +39,7 @@ class StreamerApi {
   }
 
   // 關注
-  Future<LiveApiResponseBase> followStreamer(int streamerId) async {
+  Future<LiveApiResponseBase> follow(int streamerId) async {
     var response = await liveFetcher(
       url: '$userApiHost/streamer/follow',
       method: 'POST',
@@ -55,7 +57,7 @@ class StreamerApi {
   }
 
   // 取消關注
-  Future<LiveApiResponseBase> unfollowStreamer(int streamerId) async {
+  Future<LiveApiResponseBase> unfollow(int streamerId) async {
     var response = await liveFetcher(
       url: '$userApiHost/streamer/unfollow',
       method: 'POST',

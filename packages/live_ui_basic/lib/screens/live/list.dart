@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:live_core/controllers/live_list_controller.dart';
+import 'package:live_core/models/room.dart';
+import 'package:live_core/widgets/live_list_provider.dart';
 import 'package:live_ui_basic/screens/live/room_item.dart';
 
 class LiveList extends StatelessWidget {
   const LiveList({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final LiveListController controller = Get.find();
-    return Obx(() {
-      if (controller.filteredRooms.isEmpty) {
+    return LiveListProvider(child: (List<Room> rooms) {
+      if (rooms.isEmpty) {
         return const SliverToBoxAdapter(
             child: SizedBox.shrink()); // 或者顯示一個加載中的指示器
       }
@@ -21,8 +20,8 @@ class LiveList extends StatelessWidget {
           mainAxisSpacing: 10, // 垂直間隔
         ),
         delegate: SliverChildBuilderDelegate(
-          (context, index) => RoomItem(room: controller.filteredRooms[index]),
-          childCount: controller.filteredRooms.length,
+          (context, index) => RoomItem(room: rooms[index]),
+          childCount: rooms.length,
         ),
       );
     });
