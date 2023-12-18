@@ -8,8 +8,10 @@ import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/gift.dart';
 import 'package:live_core/widgets/live_image.dart';
+import 'package:live_ui_basic/widgets/live_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../../libs/showLiveDialog.dart';
 import 'user_diamonds.dart';
 
 final liveApi = LiveApi();
@@ -128,22 +130,27 @@ class GiftItem extends StatelessWidget {
           var price = double.parse(gift.price);
           var userAmount = Get.find<LiveUserController>().getAmount;
           if (userAmount < price) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Error'),
-                  content: Text('Not enough money'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('OK'),
-                    ),
-                  ],
-                );
-              },
+            showLiveDialog(
+              context,
+              title: '鑽石不足',
+              content: Center(
+                child: Text('鑽石不足，請前往充值',
+                    style: TextStyle(color: Colors.white, fontSize: 11)),
+              ),
+              actions: [
+                LiveButton(
+                    text: '取消',
+                    type: ButtonType.secondary,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    }),
+                LiveButton(
+                    text: '確定',
+                    type: ButtonType.primary,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    })
+              ],
             );
           } else {
             var response = await liveApi.sendGift(gift.id, price);
