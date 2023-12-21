@@ -12,10 +12,10 @@ class LiveListProvider extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  AdPageState createState() => AdPageState();
+  LiveListState createState() => LiveListState();
 }
 
-class AdPageState extends State<LiveListProvider> {
+class LiveListState extends State<LiveListProvider> {
   final LiveListController controller = Get.find();
 
   @override
