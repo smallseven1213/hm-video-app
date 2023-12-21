@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
+import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/gift.dart';
 import 'package:live_core/widgets/live_image.dart';
+import 'package:live_ui_basic/widgets/live_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../../libs/showLiveDialog.dart';
 import 'user_diamonds.dart';
 
 final liveApi = LiveApi();
@@ -88,7 +91,7 @@ class Gifts extends StatelessWidget {
                   return GridView.builder(
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
-                      childAspectRatio: 100 / 140,
+                      childAspectRatio: 100 / 110,
                     ),
                     physics: NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
                     itemCount: pageItems.length,
@@ -125,10 +128,36 @@ class GiftItem extends StatelessWidget {
       onTap: () async {
         try {
           var price = double.parse(gift.price);
-          var response = await liveApi.sendGift(gift.id, price);
-          if (response.code == 200) {
+          var userAmount = Get.find<LiveUserController>().getAmount;
+          if (userAmount < price) {
+            showLiveDialog(
+              context,
+              title: '鑽石不足',
+              content: Center(
+                child: Text('鑽石不足，請前往充值',
+                    style: TextStyle(color: Colors.white, fontSize: 11)),
+              ),
+              actions: [
+                LiveButton(
+                    text: '取消',
+                    type: ButtonType.secondary,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    }),
+                LiveButton(
+                    text: '確定',
+                    type: ButtonType.primary,
+                    onTap: () {
+                      Navigator.of(context).pop();
+                    })
+              ],
+            );
           } else {
-            throw Exception(response.data["msg"]);
+            var response = await liveApi.sendGift(gift.id, price);
+            if (response.code == 200) {
+            } else {
+              throw Exception(response.data["msg"]);
+            }
           }
         } catch (e) {
           print(e);
@@ -156,9 +185,7 @@ class GiftItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           LiveImage(
-            // base64String: gift.image,
-            base64Url:
-                "https://cdn.hubeibk.com/live/webp/app_gifts/018c38d8-5088-71ee-8a45-26f87e492309",
+            base64Url: gift.image,
           ),
           // Image.network(
           //   // gift.image,

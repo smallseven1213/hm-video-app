@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:live_core/models/room.dart';
 import 'package:live_core/models/room_rank.dart';
-
-import 'rank_number.dart';
+import 'package:live_ui_basic/widgets/rank_number.dart';
 
 class RankDataDialog extends StatefulWidget {
   final RoomRank? roomRank;
@@ -36,9 +35,7 @@ class _RankDataDialogState extends State<RankDataDialog>
         return Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            RankNumber(
-              number: index + 1,
-            ),
+            RankNumber(number: index + 1),
             Container(
               width: 18,
               height: 18,

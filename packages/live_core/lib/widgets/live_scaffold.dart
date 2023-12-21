@@ -7,6 +7,8 @@ import 'package:shared/models/hm_api_response_with_data.dart';
 import '../apis/auth_api.dart';
 import '../controllers/live_list_controller.dart';
 import '../controllers/live_system_controller.dart';
+import '../controllers/live_user_controller.dart';
+import '../controllers/user_follows_controller.dart';
 
 class LiveScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
@@ -57,6 +59,8 @@ class _LiveScaffoldState extends State<LiveScaffold> {
       liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;
       Get.put(LiveListController());
+      Get.put(LiveUserController());
+      Get.put(UserFollowsController());
     } else {
       isLogin = false;
     }

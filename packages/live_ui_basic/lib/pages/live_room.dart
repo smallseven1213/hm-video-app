@@ -4,10 +4,10 @@ import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
 import 'package:live_ui_basic/screens/live_room/player_layout.dart';
-import 'package:live_ui_basic/screens/live_room/rank.dart';
 import 'package:live_ui_basic/screens/live_room/right_corner_controllers.dart';
 import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
-import 'package:video_player/video_player.dart';
+
+import '../screens/live_room/command_controller.dart';
 
 class LiveRoomPage extends StatefulWidget {
   final int pid;
@@ -100,7 +100,11 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 left: 7,
                 child: ChatroomLayout(
                   token: controller.liveRoom.value.chattoken,
-                ))
+                )),
+            Positioned(
+                top: MediaQuery.of(context).padding.top + 100,
+                right: 10,
+                child: CommandController())
           ],
         ),
       );

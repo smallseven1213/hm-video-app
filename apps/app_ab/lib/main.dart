@@ -12,7 +12,8 @@ import 'config/colors.dart';
 import './routes/app_routes.dart' as app_routes;
 import 'localization/i18n.dart';
 
-const env = String.fromEnvironment('ENV', defaultValue: 'prod');
+// const env = String.fromEnvironment('ENV', defaultValue: 'prod');
+const env = 'prod';
 
 void main() async {
   final allRoutes = {

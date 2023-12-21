@@ -12,6 +12,7 @@ dependencies:
   encrypt: ^5.0.3
   flutter:
     sdk: flutter
+  hive: ^2.2.3
   shared:
     path: ../../packages/shared
   socket_io_client: ^2.0.3+1

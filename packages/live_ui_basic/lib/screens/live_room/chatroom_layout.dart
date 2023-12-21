@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
@@ -164,7 +163,7 @@ class _MessageInputWidgetState extends State<MessageInputWidget> {
                 controller: widget.controller,
                 style: const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
                 decoration: const InputDecoration(
-                  hintText: '和主播說些什麼吧///',
+                  hintText: '和主播說些什麼吧...',
                   hintStyle: TextStyle(fontSize: 14, color: Color(0xFF7b7b7b)),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10),

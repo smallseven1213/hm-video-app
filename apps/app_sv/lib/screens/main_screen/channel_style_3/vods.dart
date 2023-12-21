@@ -41,12 +41,10 @@ class VodsState extends State<Vods> {
 
   void _scrollListener() {
     if (isRefreshing) return;
-    if (_scrollController!.position.pixels ==
-        _scrollController!.position.maxScrollExtent) {
+    if (_scrollController!.position.pixels >=
+        _scrollController!.position.maxScrollExtent - 30) {
       debounce(
-        fn: () {
-          vodController!.loadMoreData();
-        },
+        fn: () => vodController!.loadMoreData(),
       );
     }
   }

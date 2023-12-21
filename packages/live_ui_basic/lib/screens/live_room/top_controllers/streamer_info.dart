@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/widgets/live_image.dart';
 
 class StreamerInfo extends StatelessWidget {
   final int pid;
@@ -25,10 +26,19 @@ class StreamerInfo extends StatelessWidget {
             Container(
               width: 30,
               height: 30,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.pink,
               ),
+              child: roomInfo?.playerCover != null
+                  ? ClipOval(
+                      child: LiveImage(
+                        base64Url: roomInfo!.playerCover!,
+                        width: 30,
+                        height: 30,
+                      ),
+                    )
+                  : Container(),
             ),
             const SizedBox(width: 4),
             Expanded(

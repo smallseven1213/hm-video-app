@@ -7,11 +7,13 @@ class LiveApiResponseBase<T> {
       {required this.code, required this.data, required this.msg});
 
   factory LiveApiResponseBase.fromJson(
-      Map<String, dynamic> json, T Function(Object?) fromJsonT) {
+    Map<String, dynamic> json,
+    T Function(Object?) fromJsonT,
+  ) {
     return LiveApiResponseBase(
       code: json['code'],
       data: fromJsonT(json['data']),
-      msg: json['msg'],
+      msg: json['msg'] ?? json['message'],
     );
   }
 }
