@@ -60,7 +60,7 @@ class UserApi {
 
     LiveApiResponseBase<List<Streamer>> parsedResponse =
         LiveApiResponseBase.fromJson(
-      response.data == {} ? [] : response.data,
+      response.data,
       (data) => (data as List).map((item) => Streamer.fromJson(item)).toList(),
     );
 

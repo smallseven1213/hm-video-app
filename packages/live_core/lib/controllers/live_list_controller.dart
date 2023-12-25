@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../apis/live_api.dart';
 import '../models/live_api_response_base.dart';
 import '../models/room.dart';
+import '../models/streamer.dart';
 
 final liveApi = LiveApi();
 
@@ -13,15 +14,21 @@ enum LiveListSortType {
   hostEnter,
 }
 
+enum FollowType {
+  none,
+  followed,
+}
+
 class LiveListController extends GetxController {
   var rooms = <Room>[].obs; // 用于存储从API获取的所有房间数据
   var filteredRooms = <Room>[].obs;
   var roomsWithoutSort = <Room>[].obs;
 
-  var _tagId = Rxn<int>();
-  var chargeType = RoomChargeType.none.obs;
+  final _tagId = Rxn<int>();
   var status = RoomStatus.none.obs;
+  var chargeType = RoomChargeType.none.obs;
   var sortType = LiveListSortType.defaultSort.obs; // 使用 .obs 使其成为可观察的
+  var followType = FollowType.none.obs;
 
   // init
   @override
@@ -94,5 +101,24 @@ class LiveListController extends GetxController {
     }
 
     update();
+  }
+
+  void filterVideosByFollowedStreamers({
+    FollowType? filterFollowType,
+    required List<Streamer> follows,
+  }) {
+    // 创建包含 follows 列表中所有主播ID的集合
+    Set<int> followedStreamerIds =
+        follows.map((streamer) => streamer.id).toSet();
+    followType.value = filterFollowType ?? followType.value;
+
+    if (followedStreamerIds.isEmpty) {
+      filteredRooms.value = rooms;
+    } else {
+      // 过滤出 videoList 中主播ID存在于 followedStreamerIds 的视频
+      filteredRooms.value = filteredRooms
+          .where((video) => followedStreamerIds.contains(video.hid))
+          .toList();
+    }
   }
 }
