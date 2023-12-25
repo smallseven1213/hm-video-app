@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared/models/hm_api_response_with_data.dart';
 
 import '../apis/auth_api.dart';
+import '../controllers/gifts_controller.dart';
 import '../controllers/live_list_controller.dart';
 import '../controllers/live_system_controller.dart';
 import '../controllers/live_user_controller.dart';
@@ -61,6 +62,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
       Get.put(LiveListController());
       Get.put(LiveUserController());
       Get.put(UserFollowsController());
+      Get.put(GiftsController());
     } else {
       isLogin = false;
     }
