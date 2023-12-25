@@ -9,11 +9,8 @@ final liveApi = LiveApi();
 class LiveRoomController extends GetxController {
   Rx<Room?> liveRoomInfo = Rx<Room?>(null);
   var liveRoom = LiveRoom(
-    chattoken: '',
-    pid: 0,
-    pullurl: '',
-    pullUrlDecode: null,
-  ).obs;
+          chattoken: '', pid: 0, pullurl: '', pullUrlDecode: null, amount: 0)
+      .obs;
   var hasError = false.obs;
   LiveRoomController(int pid) {
     _fetchData(pid);

@@ -15,6 +15,7 @@ class TopControllers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RankProvider(
+      pid: pid,
       child: (RoomRank? roomRank) => Container(
         padding: const EdgeInsets.symmetric(horizontal: 7),
         child: Column(
