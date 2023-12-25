@@ -8,6 +8,7 @@ import 'package:live_ui_basic/screens/live_room/right_corner_controllers.dart';
 import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 
 import '../screens/live_room/command_controller.dart';
+import '../widgets/room_payment_button.dart';
 
 class LiveRoomPage extends StatefulWidget {
   final int pid;
@@ -104,7 +105,15 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             Positioned(
                 top: MediaQuery.of(context).padding.top + 100,
                 right: 10,
-                child: CommandController())
+                child: CommandController()),
+            Positioned(
+                bottom: 20,
+                left: 40,
+                right: 40,
+                child: RoomPaymentButton(
+                  onTap: () {},
+                  pid: widget.pid,
+                ))
           ],
         ),
       );
