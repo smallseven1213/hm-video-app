@@ -7,6 +7,7 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/gift.dart';
+import 'package:live_core/models/live_api_response_base.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:live_ui_basic/widgets/live_button.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -54,7 +55,7 @@ class Gifts extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 '禮物清單',
                 style: TextStyle(
                   color: Colors.white,
@@ -75,7 +76,7 @@ class Gifts extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          UserDiamonds(),
+          const UserDiamonds(),
           const SizedBox(height: 15),
           Expanded(
             child: Obx(
@@ -89,11 +90,13 @@ class Gifts extends StatelessWidget {
                       giftsController.gifts.value.sublist(startIndex, endIndex);
 
                   return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 4,
                       childAspectRatio: 100 / 110,
                     ),
-                    physics: NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
+                    physics:
+                        const NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
                     itemCount: pageItems.length,
                     itemBuilder: (context, index) {
                       var gift = pageItems[index];
@@ -153,11 +156,14 @@ class GiftItem extends StatelessWidget {
               ],
             );
           } else {
-            var response = await liveApi.sendGift(gift.id, price);
+            LiveApiResponseBase<bool> response =
+                await liveApi.sendGift(gift.id, price);
             if (response.code == 200) {
+              Get.find<LiveUserController>().getUserDetail();
             } else {
-              throw Exception(response.data["msg"]);
+              throw Exception(response.data);
             }
+            Navigator.of(context).pop();
           }
         } catch (e) {
           print(e);

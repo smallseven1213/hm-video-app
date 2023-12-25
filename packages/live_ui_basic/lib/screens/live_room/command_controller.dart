@@ -137,6 +137,7 @@ class CommandItem extends StatelessWidget {
           } else {
             var response = await liveApi.sendCommand(command.id, price);
             if (response.code == 200) {
+              Get.find<LiveUserController>().getUserDetail();
             } else {
               throw Exception(response.data["msg"]);
             }
