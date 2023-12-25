@@ -5,11 +5,11 @@ class Gift {
   final String description;
   final String price;
   final String animation;
-  final int animationTime;
+  // final int animationTime;
   final int sorting;
-  final String createdAt;
-  final String updatedAt;
-  final String? deletedAt;
+  // final String createdAt;
+  // final String updatedAt;
+  // final String? deletedAt;
 
   Gift({
     required this.id,
@@ -18,11 +18,11 @@ class Gift {
     required this.description,
     required this.price,
     required this.animation,
-    required this.animationTime,
+    // required this.animationTime,
     required this.sorting,
-    required this.createdAt,
-    required this.updatedAt,
-    this.deletedAt,
+    // required this.createdAt,
+    // required this.updatedAt,
+    // this.deletedAt,
   });
 
   factory Gift.fromJson(Map<String, dynamic> json) {
@@ -33,11 +33,11 @@ class Gift {
       description: json['description'],
       price: json['price'],
       animation: json['animation'],
-      animationTime: json['animation_time'],
+      // animationTime: json['animation_time'],
       sorting: json['sorting'],
-      createdAt: json['created_at'],
-      updatedAt: json['updated_at'],
-      deletedAt: json['deleted_at'],
+      // createdAt: json['created_at'],
+      // updatedAt: json['updated_at'],
+      // deletedAt: json['deleted_at'],
     );
   }
 }
