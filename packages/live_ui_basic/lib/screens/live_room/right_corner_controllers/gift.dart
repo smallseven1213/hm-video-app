@@ -42,7 +42,7 @@ class Gifts extends StatelessWidget {
   const Gifts({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final giftsController = Get.put(GiftsController());
+    final giftsController = Get.find<GiftsController>();
     return Container(
       height: 366,
       color: Colors.black,
