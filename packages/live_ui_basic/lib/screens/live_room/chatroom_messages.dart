@@ -57,10 +57,10 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     //   }
     // }
     // refactor top-up code, get latest record and setAnimation
-    var latestMessage = newMessages.last;
-    if (latestMessage.objChat.ntype == MessageType.gift) {
-      setLottieAnimation(latestMessage.objChat.data);
-    }
+    var latestGiftMessage = newMessages
+        .where((element) => element.objChat.ntype == MessageType.gift)
+        .last;
+    setLottieAnimation(latestGiftMessage.objChat.data);
 
     // ForTest
     // showLottieDialog(LottieDataProvider.network,

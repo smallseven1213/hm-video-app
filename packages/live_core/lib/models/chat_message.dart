@@ -17,12 +17,14 @@ class ChatUser {
   final String name;
   final MessageType ntype;
   final String data;
+  final String avatar;
 
   ChatUser({
     required this.uid,
     required this.name,
     required this.ntype,
     required this.data,
+    this.avatar = '',
   });
 
   factory ChatUser.fromJson(Map<String, dynamic> json) {
@@ -31,6 +33,7 @@ class ChatUser {
       name: json['name'],
       ntype: _mapNtypeToMessageType(json['ntype']),
       data: json['data'],
+      avatar: json['avatar'],
     );
   }
 
