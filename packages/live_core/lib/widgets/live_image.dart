@@ -53,8 +53,8 @@ class LiveImage extends StatelessWidget {
         } else if (snapshot.hasData) {
           return Image(
             image: snapshot.data!,
-            width: 73,
-            height: 73,
+            width: width ?? 73,
+            height: height ?? 73,
             fit: fit ?? BoxFit.cover, // Provide a default value if fit is null
             alignment: alignment ??
                 Alignment

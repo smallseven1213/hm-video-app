@@ -63,7 +63,7 @@ class RoomItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
                 child: LiveImage(
                   base64Url: room.playerCover ?? '',
-                  fit: BoxFit.fitHeight,
+                  fit: BoxFit.cover,
                   width: double.infinity,
                   height: double.infinity,
                 )),

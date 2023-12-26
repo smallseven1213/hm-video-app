@@ -26,7 +26,7 @@ class Room {
   final String hostEnter; // 主播建立時間
   final String nickname; // 主播暱稱
   final int userLive; // 當前場次實際人數
-  final int userCost; // 當前場次收益
+  final double userCost; // 當前場次收益
 
   Room({
     required this.pid,
