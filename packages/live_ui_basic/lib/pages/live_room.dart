@@ -105,7 +105,8 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             //       padding: const EdgeInsets.symmetric(horizontal: 7),
             //       child: Rank(),
             //     )),
-            Positioned(bottom: 25, right: 10, child: RightCornerControllers()),
+            const Positioned(
+                bottom: 25, right: 10, child: RightCornerControllers()),
             Positioned(
                 bottom: 0,
                 left: 7,
