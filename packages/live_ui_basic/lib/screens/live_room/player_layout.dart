@@ -29,6 +29,12 @@ class _PlayerLayoutState extends State<PlayerLayout> {
   }
 
   @override
+  void dispose() {
+    videoController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.orange,
