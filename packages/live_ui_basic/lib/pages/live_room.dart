@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
@@ -9,6 +10,8 @@ import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 
 import '../screens/live_room/command_controller.dart';
 import '../widgets/room_payment_button.dart';
+
+final liveApi = LiveApi();
 
 class LiveRoomPage extends StatefulWidget {
   final int pid;
@@ -80,9 +83,16 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
       return Scaffold(
         body: Stack(
           children: [
-            PlayerLayout(
-              uri: Uri.parse(controller.liveRoom.value.pullUrlDecode!),
-            ),
+            Obx(() {
+              if (controller.liveRoom.value.amount > 0) {
+                return Container(
+                  color: Colors.black,
+                );
+              }
+              return PlayerLayout(
+                uri: Uri.parse(controller.liveRoom.value.pullUrlDecode!),
+              );
+            }),
             Positioned(
                 top: MediaQuery.of(context).padding.top + 50,
                 left: 0,
@@ -111,7 +121,26 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 left: 40,
                 right: 40,
                 child: RoomPaymentButton(
-                  onTap: () {},
+                  onTap: () async {
+                    if (controller.liveRoomInfo.value?.chargeType == 3) {
+                      // 計時付費
+                      var result = await liveApi.buyWatch(widget.pid);
+                      if (result.data == true) {
+                        // enterroom again
+                        controller.fetchData();
+                      } else {
+                        // show alert
+                      }
+                    } else if (controller.liveRoomInfo.value?.chargeType == 2) {
+                      // 付費直播
+                      var result = await liveApi.buyTicket(widget.pid);
+                      if (result.data == true) {
+                        controller.fetchData();
+                      } else {
+                        // show alert
+                      }
+                    }
+                  },
                   pid: widget.pid,
                 ))
           ],
