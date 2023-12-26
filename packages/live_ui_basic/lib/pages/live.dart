@@ -79,18 +79,18 @@ class _LivePageState extends State<LivePage> {
             sliver: LiveList(),
           ),
           // 測試用
-          SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {
-                MyRouteDelegate.of(context).push(
-                  "/live_room",
-                  // args: {"pid": room.pid},
-                  args: {"pid": 347},
-                );
-              },
-              child: const Text("Test Room"),
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: TextButton(
+          //     onPressed: () {
+          //       MyRouteDelegate.of(context).push(
+          //         "/live_room",
+          //         // args: {"pid": room.pid},
+          //         args: {"pid": 347},
+          //       );
+          //     },
+          //     child: const Text("Test Room"),
+          //   ),
+          // ),
         ],
       ),
     );
