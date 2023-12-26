@@ -7,17 +7,18 @@ import '../models/room.dart';
 final liveApi = LiveApi();
 
 class LiveRoomController extends GetxController {
+  int pid;
   Rx<Room?> liveRoomInfo = Rx<Room?>(null);
   var liveRoom = LiveRoom(
           chattoken: '', pid: 0, pullurl: '', pullUrlDecode: null, amount: 0)
       .obs;
   var hasError = false.obs;
-  LiveRoomController(int pid) {
-    _fetchData(pid);
+  LiveRoomController(this.pid) {
+    fetchData();
   }
 
   // fetch from "liveApi.getList"
-  Future<void> _fetchData(int pid) async {
+  Future<void> fetchData() async {
     try {
       hasError.value = false;
       var res = await liveApi.enterRoom(pid);

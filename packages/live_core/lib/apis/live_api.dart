@@ -182,4 +182,35 @@ class LiveApi {
 
     return parsedResponse;
   }
+
+  // 購買單次門票
+  Future<LiveApiResponseBase<bool>> buyTicket(int pid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/buyticket?pid=$pid',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase<bool>> buyWatch(int pid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/buywatch?pid=$pid&autobuy=true',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
+    );
+
+    return parsedResponse;
+  }
 }
