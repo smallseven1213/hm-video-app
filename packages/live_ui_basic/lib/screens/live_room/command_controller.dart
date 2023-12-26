@@ -32,7 +32,7 @@ class Commands extends StatelessWidget {
   const Commands({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final commandsController = Get.put(CommandsController());
+    final commandsController = Get.find<CommandsController>();
     return Container(
       height: 366,
       padding: const EdgeInsets.all(18),

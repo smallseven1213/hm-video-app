@@ -33,14 +33,14 @@ class MessageItem extends StatelessWidget {
           .name;
       messageText = "${message.objChat.name} 送出指令 $commandText";
     } else if (message.objChat.ntype == MessageType.system) {
-      messageText = message.objChat.data;
+      messageText = "${message.objChat.name} ${message.objChat.data}";
     } else {
-      messageText = message.objChat.data;
+      messageText = "${message.objChat.name} : ${message.objChat.data}";
     }
     return Container(
-      // margin top 10
       margin: const EdgeInsets.only(top: 10),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipOval(
             child: Container(
