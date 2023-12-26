@@ -22,6 +22,12 @@ String decryptAES256ECB(String encryptedText) {
   final key = Key.fromUtf8(g_arEnKeys[nKeyIdx]);
   final encrypter = Encrypter(AES(key, mode: AESMode.ecb, padding: null));
 
+  // final decrypted = encrypter.decrypt16(enData);
+  // return decrypted.trim();
+
   final decrypted = encrypter.decrypt16(enData);
-  return decrypted.trim();
+  String result = String.fromCharCodes(decrypted.runes.where((rune) {
+    return rune != 0x07; // 移除 %07 字符
+  }));
+  return result;
 }
