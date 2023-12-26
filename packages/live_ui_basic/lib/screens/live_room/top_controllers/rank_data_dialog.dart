@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:live_core/models/room.dart';
 import 'package:live_core/models/room_rank.dart';
 import 'package:live_ui_basic/widgets/rank_number.dart';
 
 class RankDataDialog extends StatefulWidget {
   final RoomRank? roomRank;
 
-  RankDataDialog({Key? key, this.roomRank}) : super(key: key);
+  const RankDataDialog({Key? key, this.roomRank}) : super(key: key);
 
   @override
   _RankDataDialogState createState() => _RankDataDialogState();
@@ -75,7 +74,7 @@ class _RankDataDialogState extends State<RankDataDialog>
 
     return Material(
       type: MaterialType.transparency,
-      child: Container(
+      child: SizedBox(
         height: 150,
         child: Column(
           children: [

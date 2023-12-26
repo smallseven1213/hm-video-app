@@ -23,26 +23,40 @@ class _RankDataState extends State<RankData> {
     final offset = renderBox.localToGlobal(Offset.zero);
 
     overlayEntry = OverlayEntry(
-      builder: (context) => Positioned(
-        left: 10,
-        top: offset.dy + size.height + 10, // Container height + desired space
-        width: 250,
-        child: Container(
-          height: 160,
-          width: 250,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6),
-            color: Color(0xcc242a3d),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: RankDataDialog(roomRank: widget.roomRank),
-          ),
+      builder: (context) => GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          overlayEntry!.remove();
+          overlayEntry = null;
+        },
+        child: Stack(
+          children: [
+            Positioned(
+              left: 10,
+              top: offset.dy + size.height + 10,
+              width: 250,
+              child: GestureDetector(
+                onTap: () {}, // 防止點擊事件冒泡到外層的 GestureDetector
+                child: Container(
+                  height: 160,
+                  width: 250,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6),
+                    color: Color(0xcc242a3d),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: RankDataDialog(roomRank: widget.roomRank),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
 
-    Overlay.of(context)?.insert(overlayEntry!);
+    Overlay.of(context).insert(overlayEntry!);
   }
 
   @override
