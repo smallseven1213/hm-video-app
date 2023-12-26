@@ -89,8 +89,8 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   color: Colors.black,
                 );
               }
-              String url = controller.liveRoom.value.pullUrlDecode!.trim();
-              url = url.replaceAll('%07', '');
+              String url = Uri.decodeFull(
+                  controller.liveRoom.value.pullUrlDecode!.trim());
               Uri parsedUri = Uri.parse(url);
               return PlayerLayout(uri: parsedUri);
             }),
