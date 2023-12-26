@@ -85,6 +85,34 @@ class LiveApi {
     }
   }
 
+  Future<LiveApiResponseBase<bool>> exitRoom() async {
+    try {
+      final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+      var response = await liveFetcher(
+        url: '$liveApiHost/exitroom',
+        method: 'GET',
+      );
+
+      if (response.data["code"] != 200) {
+        throw Exception('No response from server');
+      }
+
+      LiveApiResponseBase<bool> apiResponse = LiveApiResponseBase.fromJson(
+        response.data,
+        (data) => data == true,
+      );
+
+      return LiveApiResponseBase<bool>(
+        code: apiResponse.code,
+        data: apiResponse.data,
+        msg: apiResponse.msg,
+      );
+    } catch (e) {
+      // Handle the exception
+      throw e;
+    }
+  }
+
   Future<LiveApiResponseBase<RoomRank>> getRank() async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
