@@ -90,8 +90,9 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 );
               }
               return PlayerLayout(
-                uri: Uri.parse(controller.liveRoom.value.pullUrlDecode!),
-              );
+                  // uri: Uri.parse(controller.liveRoom.value.pullUrlDecode!),
+                  uri: Uri.parse(
+                      "https://dev-live-ext.hnqdjsk.com/live1111/2begfcncgxu1b7tb.m3u8?txSecret=f6aa3a9be11fbcbfaea68832cfc8e80b&txTime=658BD663"));
             }),
             Positioned(
                 top: MediaQuery.of(context).padding.top + 50,
