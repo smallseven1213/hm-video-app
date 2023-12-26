@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:live_core/models/room.dart';
+import 'package:live_core/widgets/live_image.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/datetime_formatter.dart';
 
@@ -55,13 +56,17 @@ class RoomItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(30),
           color: Colors.grey,
         ),
-        padding: const EdgeInsets.all(6),
+        // padding: const EdgeInsets.all(6),
         child: Stack(
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(30),
-              child: NetworkImageWidget(url: room.playerCover ?? ''),
-            ),
+                borderRadius: BorderRadius.circular(30),
+                child: LiveImage(
+                  base64Url: room.playerCover ?? '',
+                  fit: BoxFit.fitHeight,
+                  width: double.infinity,
+                  height: double.infinity,
+                )),
             Positioned(
               left: 10,
               top: 10,
