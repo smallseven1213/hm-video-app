@@ -89,10 +89,10 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   color: Colors.black,
                 );
               }
-              return PlayerLayout(
-                  // uri: Uri.parse(controller.liveRoom.value.pullUrlDecode!),
-                  uri: Uri.parse(
-                      "https://dev-live-ext.hnqdjsk.com/live1111/2begfcncgxu1b7tb.m3u8?txSecret=f6aa3a9be11fbcbfaea68832cfc8e80b&txTime=658BD663"));
+              String url = controller.liveRoom.value.pullUrlDecode!.trim();
+              url = url.replaceAll('%07', '');
+              Uri parsedUri = Uri.parse(url);
+              return PlayerLayout(uri: parsedUri);
             }),
             Positioned(
                 top: MediaQuery.of(context).padding.top + 50,
