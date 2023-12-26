@@ -62,6 +62,7 @@ class MessageItem extends StatelessWidget {
             ),
             padding: const EdgeInsets.all(5),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(messageText,
                     style: const TextStyle(color: Colors.white, fontSize: 12)),
