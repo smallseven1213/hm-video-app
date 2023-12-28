@@ -46,30 +46,36 @@ class MessageItem extends StatelessWidget {
             child: Container(
               width: 25.0,
               height: 25.0,
-              // bg red
               color: Colors.red,
-              // child: Image.network(
-              //   message.objChat.,
-              //   fit: BoxFit.cover, // 確保圖片覆蓋整個容器
-              // ),
             ),
           ),
           const SizedBox(width: 6),
-          Container(
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.7),
-              borderRadius: BorderRadius.circular(5),
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width - 120,
             ),
-            padding: const EdgeInsets.all(5),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(messageText,
-                    style: const TextStyle(color: Colors.white, fontSize: 12)),
-                const SizedBox(width: 5),
-                Text(formatTimestamp(message.timestamp),
-                    style: const TextStyle(color: Colors.white, fontSize: 12)),
-              ],
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.7),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              padding: const EdgeInsets.all(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                    messageText,
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                    overflow: TextOverflow.clip,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    formatTimestamp(message.timestamp),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ],
+              ),
             ),
           ),
         ],
