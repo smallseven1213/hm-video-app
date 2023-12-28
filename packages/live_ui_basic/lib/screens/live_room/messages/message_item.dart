@@ -60,16 +60,15 @@ class MessageItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
               padding: const EdgeInsets.all(5),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 10, // 水平間距
+                runSpacing: 4, // 垂直間距
                 children: [
                   Text(
                     messageText,
                     style: const TextStyle(color: Colors.white, fontSize: 12),
-                    overflow: TextOverflow.clip,
                   ),
-                  const SizedBox(width: 10),
                   Text(
                     formatTimestamp(message.timestamp),
                     style: const TextStyle(color: Colors.white, fontSize: 12),
