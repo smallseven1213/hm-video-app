@@ -136,7 +136,10 @@ class LiveApi {
     LiveApiResponseBase<List<Gift>> parsedResponse =
         LiveApiResponseBase.fromJson(
       response.data,
-      (data) => (data as List).map((item) => Gift.fromJson(item)).toList(),
+      (data) => (data as List).map((item) {
+        print(item);
+        return Gift.fromJson(item);
+      }).toList(),
     );
 
     return parsedResponse;
