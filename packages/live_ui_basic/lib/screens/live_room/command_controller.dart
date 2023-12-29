@@ -104,66 +104,86 @@ class Commands extends StatelessWidget {
   }
 }
 
-class CommandItem extends StatelessWidget {
+class CommandItem extends StatefulWidget {
   final Command command;
 
   const CommandItem({Key? key, required this.command}) : super(key: key);
 
   @override
+  _CommandItemState createState() => _CommandItemState();
+}
+
+class _CommandItemState extends State<CommandItem> {
+  bool arrowSend = true;
+
+  @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () async {
-        try {
-          var price = double.parse(command.price);
-          var userAmount = Get.find<LiveUserController>().getAmount;
-          if (userAmount < price) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Error'),
-                  content: Text('Not enough money'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('OK'),
-                    ),
-                  ],
-                );
-              },
-            );
-          } else {
-            var response = await liveApi.sendCommand(command.id, price);
-            if (response.code == 200) {
-              Get.find<LiveUserController>().getUserDetail();
-            } else {
-              throw Exception(response.data["msg"]);
-            }
-          }
-        } catch (e) {
-          print(e);
-          // show dialog for error
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Error'),
-                content: Text('Something went wrong'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
+      onTap: arrowSend
+          ? () async {
+              setState(() {
+                arrowSend = false;
+              });
+
+              try {
+                var price = double.parse(widget.command.price);
+                var userAmount = Get.find<LiveUserController>().getAmount;
+                if (userAmount < price) {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Error'),
+                        content: Text('Not enough money'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('OK'),
+                          ),
+                        ],
+                      );
                     },
-                    child: Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
-        }
-      },
+                  );
+                } else {
+                  var response =
+                      await liveApi.sendCommand(widget.command.id, price);
+                  if (response.code == 200) {
+                    Get.find<LiveUserController>().getUserDetail();
+                    setState(() {
+                      arrowSend = true;
+                    });
+                  } else {
+                    throw Exception(response.data["msg"]);
+                  }
+                }
+              } catch (e) {
+                print(e);
+                // show dialog for error
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Error'),
+                      content: Text('Something went wrong'),
+                      actions: [
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                          child: Text('OK'),
+                        ),
+                      ],
+                    );
+                  },
+                );
+                setState(() {
+                  arrowSend = true;
+                });
+              }
+            }
+          : null,
       child: Container(
         width: 100,
         height: 30,
@@ -175,7 +195,7 @@ class CommandItem extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              command.name,
+              widget.command.name,
               style: TextStyle(color: Colors.white, fontSize: 12),
             ),
             const SizedBox(width: 2),
@@ -186,7 +206,7 @@ class CommandItem extends StatelessWidget {
             ),
             const SizedBox(width: 2),
             Text(
-              command.price.toString(),
+              widget.command.price.toString(),
               style: TextStyle(color: Colors.white, fontSize: 12),
             ),
           ],
