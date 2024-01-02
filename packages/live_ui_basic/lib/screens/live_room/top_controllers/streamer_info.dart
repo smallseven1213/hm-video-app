@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/widgets/follow_live_check_provider.dart';
 import 'package:live_core/widgets/live_image.dart';
 
 class StreamerInfo extends StatelessWidget {
@@ -66,20 +67,22 @@ class StreamerInfo extends StatelessWidget {
                 ],
               ),
             ),
-            Container(
-              width: 30,
-              height: 30,
-              child: Center(
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  child: Image(
-                    image: AssetImage(
-                        "packages/live_ui_basic/assets/images/room_add_icon.webp"),
-                  ),
-                ),
-              ),
-            ),
+            FollowLiveCheckProvider(
+                child: (isFollowed) => Container(
+                      width: 30,
+                      height: 30,
+                      child: Center(
+                        child: Container(
+                          width: 25,
+                          height: 25,
+                          child: Image(
+                            image: AssetImage(isFollowed
+                                ? "packages/live_ui_basic/assets/images/room_is_followed_icon.webp"
+                                : "packages/live_ui_basic/assets/images/room_is_not_followed_icon.webp"),
+                          ),
+                        ),
+                      ),
+                    )),
           ],
         ),
       );
