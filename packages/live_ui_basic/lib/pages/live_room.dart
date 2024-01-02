@@ -103,114 +103,101 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
             child: CircularProgressIndicator(),
           ));
     }
-    return Obx(() {
-      if (controller.liveRoom.value.pullUrlDecode == null) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(''),
-          ),
-          body: Center(
-            child: CircularProgressIndicator(),
-          ),
-        );
-      }
-
-      return Scaffold(
-        body: Stack(
-          children: [
-            Obx(() {
-              if (controller.liveRoom.value.amount > 0) {
-                return Container(
-                  color: Colors.black,
-                );
-              }
-              String url = Uri.decodeFull(
-                  controller.liveRoom.value.pullUrlDecode!.trim());
-              Uri parsedUri = Uri.parse(url);
-              return PlayerLayout(uri: parsedUri);
-            }),
-            Positioned(
-                top: MediaQuery.of(context).padding.top + 50,
-                left: 0,
-                child: TopControllers(
-                  pid: widget.pid,
-                )),
-            // Positioned(
-            //     top: MediaQuery.of(context).padding.top + 120,
-            //     child: Padding(
-            //       padding: const EdgeInsets.symmetric(horizontal: 7),
-            //       child: Rank(),
-            //     )),
-            const Positioned(
-                bottom: 25, right: 10, child: RightCornerControllers()),
-            Positioned(
-                bottom: 0,
-                left: 7,
-                child: ChatroomLayout(
-                  token: controller.liveRoom.value.chattoken,
-                )),
-            Positioned(
-                top: MediaQuery.of(context).padding.top + 100,
-                right: 10,
-                child: CommandController()),
-            Positioned(
-                bottom: 20,
-                left: 40,
-                right: 40,
-                child: RoomPaymentButton(
-                  onTap: () async {
-                    var price = controller.liveRoom.value.amount ?? 0;
-                    var userAmount = Get.find<LiveUserController>().getAmount;
-                    if (userAmount < price) {
-                      showLiveDialog(
-                        context,
-                        title: '鑽石不足',
-                        content: const Center(
-                          child: Text('鑽石不足，請前往充值',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 11)),
-                        ),
-                        actions: [
-                          LiveButton(
-                              text: '取消',
-                              type: ButtonType.secondary,
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              }),
-                          LiveButton(
-                              text: '確定',
-                              type: ButtonType.primary,
-                              onTap: () {
-                                Navigator.of(context).pop();
-                              })
-                        ],
-                      );
-                    } else {
-                      if (controller.liveRoomInfo.value?.chargeType == 3) {
-                        // 計時付費
-                        var result = await liveApi.buyWatch(widget.pid);
-                        if (result.data == true) {
-                          controller.fetchData();
-                        } else {
-                          // show alert
-                        }
-                      } else if (controller.liveRoomInfo.value?.chargeType ==
-                          2) {
-                        // 付費直播
-                        var result = await liveApi.buyTicket(widget.pid);
-                        if (result.data == true) {
-                          controller.fetchData();
-                        } else {
-                          // show alert
-                        }
+    return Scaffold(
+      body: Stack(
+        children: [
+          Obx(() {
+            if (controller.liveRoom.value.amount > 0 ||
+                controller.liveRoom.value.pullUrlDecode == null) {
+              return Container(
+                color: Colors.black,
+              );
+            }
+            String url =
+                Uri.decodeFull(controller.liveRoom.value.pullUrlDecode!.trim());
+            Uri parsedUri = Uri.parse(url);
+            return PlayerLayout(uri: parsedUri);
+          }),
+          Positioned(
+              top: MediaQuery.of(context).padding.top + 50,
+              left: 0,
+              child: TopControllers(
+                pid: widget.pid,
+              )),
+          // Positioned(
+          //     top: MediaQuery.of(context).padding.top + 120,
+          //     child: Padding(
+          //       padding: const EdgeInsets.symmetric(horizontal: 7),
+          //       child: Rank(),
+          //     )),
+          const Positioned(
+              bottom: 25, right: 10, child: RightCornerControllers()),
+          // Positioned(
+          //     bottom: 0,
+          //     left: 7,
+          //     child: ChatroomLayout(
+          //       token: controller.liveRoom.value.chattoken,
+          //     )),
+          Positioned(
+              top: MediaQuery.of(context).padding.top + 100,
+              right: 10,
+              child: CommandController()),
+          Positioned(
+              bottom: 20,
+              left: 40,
+              right: 40,
+              child: RoomPaymentButton(
+                onTap: () async {
+                  var price = controller.liveRoom.value.amount ?? 0;
+                  var userAmount = Get.find<LiveUserController>().getAmount;
+                  if (userAmount < price) {
+                    showLiveDialog(
+                      context,
+                      title: '鑽石不足',
+                      content: const Center(
+                        child: Text('鑽石不足，請前往充值',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 11)),
+                      ),
+                      actions: [
+                        LiveButton(
+                            text: '取消',
+                            type: ButtonType.secondary,
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            }),
+                        LiveButton(
+                            text: '確定',
+                            type: ButtonType.primary,
+                            onTap: () {
+                              Navigator.of(context).pop();
+                            })
+                      ],
+                    );
+                  } else {
+                    if (controller.liveRoomInfo.value?.chargeType == 3) {
+                      // 計時付費
+                      var result = await liveApi.buyWatch(widget.pid);
+                      if (result.data == true) {
+                        controller.fetchData();
+                      } else {
+                        // show alert
+                      }
+                    } else if (controller.liveRoomInfo.value?.chargeType == 2) {
+                      // 付費直播
+                      var result = await liveApi.buyTicket(widget.pid);
+                      if (result.data == true) {
+                        controller.fetchData();
+                      } else {
+                        // show alert
                       }
                     }
-                  },
-                  pid: widget.pid,
-                ))
-          ],
-        ),
-      );
-    });
+                  }
+                },
+                pid: widget.pid,
+              ))
+        ],
+      ),
+    );
   }
 }
