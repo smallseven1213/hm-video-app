@@ -42,7 +42,7 @@ class RankItem {
   int rank;
   String nickname;
   String avatar;
-  int amount;
+  double amount;
 
   RankItem(
       {required this.rank,
@@ -55,7 +55,7 @@ class RankItem {
       rank: json['rank'] as int,
       nickname: json['nickname'] as String,
       avatar: json['avatar'] as String,
-      amount: json['amount'] as int,
+      amount: json['amount'] as double,
     );
   }
 }
