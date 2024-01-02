@@ -42,11 +42,16 @@ class _RankDataState extends State<RankData> {
                   width: 250,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(6),
-                    color: Color(0xcc242a3d),
+                    color: const Color(0xcc242a3d),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
-                    child: RankDataDialog(roomRank: widget.roomRank),
+                    child: RankDataDialog(
+                        roomRank: widget.roomRank,
+                        onClose: () {
+                          overlayEntry!.remove();
+                          overlayEntry = null;
+                        }),
                   ),
                 ),
               ),

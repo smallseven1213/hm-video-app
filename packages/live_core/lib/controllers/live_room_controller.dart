@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../apis/live_api.dart';
 import '../models/live_room.dart';
 import '../models/room.dart';
+import 'commands_controller.dart';
 
 final liveApi = LiveApi();
 
@@ -13,9 +14,7 @@ class LiveRoomController extends GetxController {
           chattoken: '', pid: 0, pullurl: '', pullUrlDecode: null, amount: 0)
       .obs;
   var hasError = false.obs;
-  LiveRoomController(this.pid) {
-    fetchData();
-  }
+  LiveRoomController(this.pid);
 
   // fetch from "liveApi.getList"
   Future<void> fetchData() async {

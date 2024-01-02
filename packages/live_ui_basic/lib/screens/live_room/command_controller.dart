@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/command.dart';
 
+import '../../libs/showLiveDialog.dart';
+import '../../widgets/live_button.dart';
 import 'right_corner_controllers/user_diamonds.dart';
 
 final liveApi = LiveApi();
@@ -74,9 +77,7 @@ class Commands extends StatelessWidget {
                 var startIndex = index * 2;
                 var endIndex = startIndex + 1;
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ),
+                  padding: const EdgeInsets.only(bottom: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -86,7 +87,7 @@ class Commands extends StatelessWidget {
                               commandsController.commands.value[startIndex],
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: CommandItem(
                           command: commandsController.commands.value[endIndex],
@@ -113,6 +114,32 @@ class CommandItem extends StatelessWidget {
   Widget build(BuildContext context) {
     bool arrowSend = true;
 
+    void showToast() {
+      FToast fToast = FToast();
+      fToast.init(context);
+
+      Widget toast = Container(
+        height: 30,
+        width: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.7),
+          color: Colors.black,
+        ),
+        child: const Center(
+          child: Text(
+            "發送成功",
+            style: TextStyle(color: Colors.white, fontSize: 12.7),
+          ),
+        ),
+      );
+
+      fToast.showToast(
+        child: toast,
+        gravity: ToastGravity.CENTER,
+        toastDuration: Duration(seconds: 2),
+      );
+    }
+
     return InkWell(
       onTap: () async {
         if (arrowSend) {
@@ -122,27 +149,34 @@ class CommandItem extends StatelessWidget {
             var price = double.parse(command.price);
             var userAmount = Get.find<LiveUserController>().getAmount;
             if (userAmount < price) {
-              showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return AlertDialog(
-                    title: Text('Error'),
-                    content: Text('Not enough money'),
-                    actions: [
-                      TextButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: Text('OK'),
-                      ),
-                    ],
-                  );
-                },
+              showLiveDialog(
+                context,
+                title: '鑽石不足',
+                content: Center(
+                  child: Text('鑽石不足，請前往充值',
+                      style: TextStyle(color: Colors.white, fontSize: 11)),
+                ),
+                actions: [
+                  LiveButton(
+                      text: '取消',
+                      type: ButtonType.secondary,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      }),
+                  LiveButton(
+                      text: '確定',
+                      type: ButtonType.primary,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      })
+                ],
               );
             } else {
               var response = await liveApi.sendCommand(command.id, price);
               if (response.code == 200) {
+                showToast();
                 Get.find<LiveUserController>().getUserDetail();
+                Navigator.of(context).pop();
                 arrowSend = true;
               } else {
                 throw Exception(response.data["msg"]);
@@ -180,6 +214,7 @@ class CommandItem extends StatelessWidget {
           color: const Color(0xFFae57ff),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(

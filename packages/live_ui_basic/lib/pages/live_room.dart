@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:live_core/apis/live_api.dart';
+import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
@@ -23,12 +25,28 @@ class LiveRoomPage extends StatefulWidget {
 
 class _LiveRoomPageState extends State<LiveRoomPage> {
   late final LiveRoomController controller;
+  late final CommandsController commandsController;
+  bool isLiveRoomReady = false;
 
   @override
   void initState() {
     super.initState();
-    controller =
-        Get.put(LiveRoomController(widget.pid), tag: widget.pid.toString());
+    initializeController();
+  }
+
+  Future<void> initializeController() async {
+    controller = await Get.putAsync<LiveRoomController>(() async {
+      var liveRoomController = LiveRoomController(widget.pid);
+      await liveRoomController.fetchData();
+      return liveRoomController;
+    }, tag: widget.pid.toString());
+
+    setState(() {
+      isLiveRoomReady = true;
+    });
+
+    Get.delete<CommandsController>();
+    commandsController = Get.put(CommandsController());
 
     // 用pid去LiveListController撈資料並傳入LiveRoomController
     final liveListController = Get.find<LiveListController>();
@@ -65,12 +83,20 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
 
   @override
   void dispose() {
-    controller.dispose(); // 適當地清理controller
+    controller.dispose();
+    commandsController.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    if (!isLiveRoomReady) {
+      return const Scaffold(
+          body: Center(
+        child: CircularProgressIndicator(),
+      ));
+    }
     return Obx(() {
       if (controller.liveRoom.value.pullUrlDecode == null) {
         return const Scaffold(

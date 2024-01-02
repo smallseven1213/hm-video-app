@@ -30,7 +30,7 @@ class Gift {
       id: json['id'],
       name: json['name'],
       image: json['image'],
-      description: json['description'],
+      description: json['description'] as String,
       price: json['price'],
       animation: json['animation'],
       // animationTime: json['animation_time'],
