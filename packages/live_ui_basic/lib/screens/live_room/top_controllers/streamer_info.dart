@@ -58,7 +58,7 @@ class StreamerInfo extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    roomInfo?.chargeAmount ?? "",
+                    roomInfo?.chargeAmount.toString() ?? "",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 9,

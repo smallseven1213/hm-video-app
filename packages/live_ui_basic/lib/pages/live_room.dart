@@ -92,14 +92,20 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
   @override
   Widget build(BuildContext context) {
     if (!isLiveRoomReady) {
-      return const Scaffold(
-          body: Center(
-        child: CircularProgressIndicator(),
-      ));
+      return Scaffold(
+          appBar: AppBar(
+            title: Text(''),
+          ),
+          body: const Center(
+            child: CircularProgressIndicator(),
+          ));
     }
     return Obx(() {
       if (controller.liveRoom.value.pullUrlDecode == null) {
-        return const Scaffold(
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(''),
+          ),
           body: Center(
             child: CircularProgressIndicator(),
           ),
