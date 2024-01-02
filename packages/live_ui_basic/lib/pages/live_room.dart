@@ -5,12 +5,15 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
 import 'package:live_ui_basic/screens/live_room/player_layout.dart';
 import 'package:live_ui_basic/screens/live_room/right_corner_controllers.dart';
 import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 
+import '../libs/showLiveDialog.dart';
 import '../screens/live_room/command_controller.dart';
+import '../widgets/live_button.dart';
 import '../widgets/room_payment_button.dart';
 
 final liveApi = LiveApi();
@@ -156,22 +159,50 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 right: 40,
                 child: RoomPaymentButton(
                   onTap: () async {
-                    if (controller.liveRoomInfo.value?.chargeType == 3) {
-                      // 計時付費
-                      var result = await liveApi.buyWatch(widget.pid);
-                      if (result.data == true) {
-                        // enterroom again
-                        controller.fetchData();
-                      } else {
-                        // show alert
-                      }
-                    } else if (controller.liveRoomInfo.value?.chargeType == 2) {
-                      // 付費直播
-                      var result = await liveApi.buyTicket(widget.pid);
-                      if (result.data == true) {
-                        controller.fetchData();
-                      } else {
-                        // show alert
+                    var price = controller.liveRoom.value.amount ?? 0;
+                    var userAmount = Get.find<LiveUserController>().getAmount;
+                    if (userAmount < price) {
+                      showLiveDialog(
+                        context,
+                        title: '鑽石不足',
+                        content: const Center(
+                          child: Text('鑽石不足，請前往充值',
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 11)),
+                        ),
+                        actions: [
+                          LiveButton(
+                              text: '取消',
+                              type: ButtonType.secondary,
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              }),
+                          LiveButton(
+                              text: '確定',
+                              type: ButtonType.primary,
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              })
+                        ],
+                      );
+                    } else {
+                      if (controller.liveRoomInfo.value?.chargeType == 3) {
+                        // 計時付費
+                        var result = await liveApi.buyWatch(widget.pid);
+                        if (result.data == true) {
+                          controller.fetchData();
+                        } else {
+                          // show alert
+                        }
+                      } else if (controller.liveRoomInfo.value?.chargeType ==
+                          2) {
+                        // 付費直播
+                        var result = await liveApi.buyTicket(widget.pid);
+                        if (result.data == true) {
+                          controller.fetchData();
+                        } else {
+                          // show alert
+                        }
                       }
                     }
                   },
