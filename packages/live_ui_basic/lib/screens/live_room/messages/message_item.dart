@@ -56,7 +56,7 @@ class MessageItem extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.7),
+                color: const Color(0x65242a3d),
                 borderRadius: BorderRadius.circular(5),
               ),
               padding: const EdgeInsets.all(5),

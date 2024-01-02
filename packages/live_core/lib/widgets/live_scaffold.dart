@@ -64,7 +64,6 @@ class _LiveScaffoldState extends State<LiveScaffold> {
       Get.put(LiveUserController());
       Get.put(UserFollowsController());
       Get.put(GiftsController());
-      Get.put(CommandsController());
     } else {
       isLogin = false;
     }
