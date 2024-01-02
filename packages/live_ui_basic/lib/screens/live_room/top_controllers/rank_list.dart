@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:live_core/models/room_rank.dart';
+import 'package:live_core/widgets/live_image.dart';
 
 class RankList extends StatelessWidget {
   final RoomRank? roomRank;
@@ -17,12 +18,22 @@ class RankList extends StatelessWidget {
       itemBuilder: (context, index) {
         RankItem item = roomRank!.rank[index];
         return Container(
-          width: 20,
-          height: 20,
-          margin: EdgeInsets.all(5),
-          color: Colors.blue, // 或者您想要的任何颜色
-          // 可以在这里添加更多的样式或内容
-        );
+            width: 20,
+            height: 20,
+            margin: const EdgeInsets.only(left: 10),
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: item.avatar.isNotEmpty && item.avatar != ""
+                ? LiveImage(
+                    base64Url: item.avatar,
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.cover,
+                  )
+                : Container());
       },
     );
   }
