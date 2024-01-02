@@ -91,7 +91,7 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
     return ChatroomProvider(
       chatToken: widget.token,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height - 100,
+        height: MediaQuery.of(context).size.height / 2,
         width: MediaQuery.of(context).size.width - 100,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
