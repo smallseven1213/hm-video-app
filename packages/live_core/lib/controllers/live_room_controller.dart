@@ -21,7 +21,6 @@ class LiveRoomController extends GetxController {
     try {
       hasError.value = false;
       var res = await liveApi.enterRoom(pid);
-      var codeUrl = res.data.pullUrlDecode;
       liveRoom.value = res.data;
     } catch (e) {
       print(e);

@@ -13,7 +13,7 @@ class RoomPaymentButton extends StatelessWidget {
     final LiveRoomController liveroomController = Get.find(tag: pid.toString());
     return Obx(() {
       if (liveroomController.liveRoomInfo.value?.chargeType == 1 ||
-          liveroomController.liveRoom.value.amount > 0) {
+          liveroomController.liveRoom.value.amount <= 0) {
         return Container();
       } else {
         return GestureDetector(
