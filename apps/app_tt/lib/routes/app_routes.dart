@@ -23,11 +23,11 @@ import '../pages/coin.dart' as coin_page;
 import '../pages/share.dart' as share_page;
 import '../pages/shorts_by_common.dart' as shorts_by_common_page;
 import '../pages/shorts_by_local.dart' as shorts_by_local_page;
-import '../pages/demo.dart' as demo_page;
+// import '../pages/demo.dart' as demo_page;
 import '../pages/supplier_tag_video.dart' as supplier_tag_video_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
-  AppRoutes.demo: (context, args) => demo_page.DemoPage(),
+  // AppRoutes.demo: (context, args) => demo_page.DemoPage(),
   AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),

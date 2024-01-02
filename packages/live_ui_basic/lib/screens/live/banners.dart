@@ -42,7 +42,13 @@ class BannersWidget extends StatelessWidget {
                     Radius.circular(30),
                   ),
                 ),
-                child: Center(child: LiveImage(base64Url: ad.image)),
+                clipBehavior: Clip.antiAlias,
+                child: LiveImage(
+                  base64Url: ad.image,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             );
           },
