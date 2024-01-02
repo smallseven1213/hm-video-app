@@ -72,8 +72,6 @@ class RoomItem extends StatelessWidget {
               top: 10,
               child: Row(
                 children: [
-                  // 測東西用
-                  Text('${room.pid}'),
                   Image.asset(
                     "packages/live_ui_basic/assets/images/${room.userLive > 1000 ? 'ic_hot' : 'ic_view'}.webp",
                     width: 22,
