@@ -175,47 +175,57 @@ class MyRouteDelegate extends RouterDelegate<String>
           ],
           onPopPage: _onPopPage,
           pages: _stack.map<Page<dynamic>>((stack) {
-            final widget = routes[stack.path]!(context, stack.args);
+            try {
+              final widget = routes[stack.path]!(context, stack.args);
 
-            if (stack.hasTransition == true) {
+              if (stack.hasTransition == true) {
+                return CupertinoPage(
+                  // key is a new Global key
+                  key: ValueKey(stack.path + stack.args.toString()),
+                  // key: ValueKey(stack.args['uuid']),
+                  maintainState: false,
+                  name: stack.path,
+                  child: Stack(
+                    children: [
+                      ErrorOverlayWidget(
+                        child: widget,
+                      ),
+                      const TestWidget(),
+                      Positioned(
+                          top: 0,
+                          left: 0,
+                          child: Container(
+                              width: 16,
+                              height: MediaQuery.of(context).size.height,
+                              color: Colors.transparent))
+                    ],
+                  ),
+                  fullscreenDialog: stack.useBottomToTopAnimation,
+                );
+              }
+              if (stack.hasTransition == false) {
+                return NoAnimationPage(
+                  key: ValueKey(stack.path + stack.args.toString()),
+                  name: stack.path,
+                  child: ErrorOverlayWidget(
+                    child: widget,
+                  ),
+                );
+              }
               return CupertinoPage(
-                // key is a new Global key
-                key: ValueKey(stack.path + stack.args.toString()),
-                // key: ValueKey(stack.args['uuid']),
-                maintainState: false,
-                name: stack.path,
-                child: Stack(
-                  children: [
-                    ErrorOverlayWidget(
-                      child: widget,
-                    ),
-                    const TestWidget(),
-                    Positioned(
-                        top: 0,
-                        left: 0,
-                        child: Container(
-                            width: 16,
-                            height: MediaQuery.of(context).size.height,
-                            color: Colors.transparent))
-                  ],
-                ),
-                fullscreenDialog: stack.useBottomToTopAnimation,
+                key: const ValueKey('/'),
+                name: '/',
+                child: routes['/']!(context, {}),
+              );
+            } catch (e, stackTrace) {
+              print('MyRouteDelegate build error: $e');
+              print('MyRouteDelegate build error: $stackTrace');
+              return CupertinoPage(
+                key: const ValueKey('/'),
+                name: '/',
+                child: routes['/']!(context, {}),
               );
             }
-            if (stack.hasTransition == false) {
-              return NoAnimationPage(
-                key: ValueKey(stack.path + stack.args.toString()),
-                name: stack.path,
-                child: ErrorOverlayWidget(
-                  child: widget,
-                ),
-              );
-            }
-            return CupertinoPage(
-              key: const ValueKey('/'),
-              name: '/',
-              child: routes['/']!(context, {}),
-            );
           }).toList(),
         ),
       ],
