@@ -1,7 +1,7 @@
 class LiveRoom {
-  final String chattoken;
-  final int pid;
-  final String pullurl;
+  String chattoken;
+  int pid;
+  String pullurl;
   int amount;
   String? pullUrlDecode;
 
