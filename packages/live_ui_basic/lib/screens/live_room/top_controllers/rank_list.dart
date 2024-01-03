@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/widgets/live_image.dart';
 
@@ -33,7 +34,12 @@ class RankList extends StatelessWidget {
                     height: 20,
                     fit: BoxFit.cover,
                   )
-                : Container());
+                : SvgPicture.asset(
+                    'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+                    width: 20,
+                    height: 20,
+                    fit: BoxFit.cover,
+                  ));
       },
     );
   }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
+import 'package:live_core/widgets/live_image.dart';
 
 import '../../../libs/format_timestamp.dart';
 
@@ -43,12 +45,20 @@ class MessageItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipOval(
-            child: Container(
-              width: 25.0,
-              height: 25.0,
-              color: Colors.red,
-            ),
-          ),
+              child: Container(
+                  width: 25.0,
+                  height: 25.0,
+                  color: Colors.black,
+                  child: message.objChat.avatar == ""
+                      ? SvgPicture.asset(
+                          'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+                          fit: BoxFit.cover,
+                        )
+                      : LiveImage(
+                          base64Url: message.objChat.avatar,
+                          width: 25,
+                          height: 25,
+                        ))),
           const SizedBox(width: 6),
           ConstrainedBox(
             constraints: BoxConstraints(

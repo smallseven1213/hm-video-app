@@ -10,7 +10,9 @@ import 'top_controllers/streamer_info.dart';
 
 class TopControllers extends StatelessWidget {
   final int pid;
-  const TopControllers({Key? key, required this.pid}) : super(key: key);
+  final int hid;
+  const TopControllers({Key? key, required this.pid, required this.hid})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +31,7 @@ class TopControllers extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // Room Info
-                  StreamerInfo(pid: pid),
+                  StreamerInfo(pid: pid, hid: hid),
                   Expanded(
                     flex: 1,
                     child: RankList(
