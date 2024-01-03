@@ -39,9 +39,10 @@ class LiveListController extends GetxController {
 
   Future<void> _fetchData() async {
     try {
-      LiveApiResponseBase<List<Room>> res = await liveApi.getRooms();
-      rooms.value = res.data;
-      filteredRooms.value = res.data;
+      List<Room> res = await liveApi.getRooms();
+      rooms.value = res;
+      filteredRooms.value = res;
+      roomsWithoutSort.value = res;
     } catch (e) {
       print(e);
     }
@@ -52,7 +53,7 @@ class LiveListController extends GetxController {
     if (rooms.value.isEmpty) {
       return null;
     }
-    return rooms.value.firstWhere((room) => room.pid == id);
+    return rooms.value.firstWhere((room) => room.id == id);
   }
 
   void filter({
@@ -117,7 +118,7 @@ class LiveListController extends GetxController {
     } else {
       // 过滤出 videoList 中主播ID存在于 followedStreamerIds 的视频
       filteredRooms.value = filteredRooms
-          .where((video) => followedStreamerIds.contains(video.hid))
+          .where((video) => followedStreamerIds.contains(video.streamerId))
           .toList();
     }
   }

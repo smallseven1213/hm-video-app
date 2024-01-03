@@ -1,20 +1,28 @@
 class Streamer {
   final int id;
+  final String nickname;
+  final String? avatar;
+  final String? createdAt;
+  final int? fansCount;
   final String? account;
-  final String? nickname;
 
   Streamer({
     required this.id,
+    required this.nickname,
+    this.avatar,
+    this.createdAt,
+    this.fansCount,
     this.account,
-    this.nickname,
   });
 
   factory Streamer.fromJson(Map<String, dynamic> json) {
-    print('@@@json: $json');
     return Streamer(
       id: json['id'],
-      account: json['account'],
       nickname: json['nickname'],
+      avatar: json['avatar'],
+      createdAt: json['created_at'],
+      fansCount: json['fans_count'],
+      account: json['account'],
     );
   }
 
@@ -23,6 +31,9 @@ class Streamer {
       'id': id,
       'account': account,
       'nickname': nickname,
+      'avatar': avatar,
+      'created_at': createdAt,
+      'fans_count': fansCount,
     };
   }
 }

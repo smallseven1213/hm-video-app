@@ -1,11 +1,8 @@
-import 'dart:convert';
 
 import 'package:live_core/controllers/live_system_controller.dart';
 import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
-import 'package:shared/models/hm_api_response_with_data.dart';
-import 'package:shared/utils/fetcher.dart';
 import 'package:get/get.dart';
 
 import '../libs/decryptAES256ECB.dart';
@@ -26,19 +23,23 @@ class LiveApi {
     return _instance;
   }
 
-  Future<LiveApiResponseBase<List<Room>>> getRooms() async {
-    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+  // 主播排行榜
+  Future<List<Room>> getRooms() async {
+    const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
+
     var response = await liveFetcher(
-      url: '$liveApiHost/roomlist',
+      url: '$userApiHost/room/list',
     );
 
-    LiveApiResponseBase<List<Room>> parsedResponse =
-        LiveApiResponseBase.fromJson(
-      response.data,
-      (data) => (data as List).map((item) => Room.fromJson(item)).toList(),
-    );
+    if (response.data['data'].isEmpty) {
+      return [];
+    }
 
-    return parsedResponse;
+    List<Room> data = (response.data["data"]["list"]["items"] as List)
+        .map((item) => Room.fromJson(item))
+        .toList();
+
+    return data;
   }
 
   Future<LiveApiResponseBase<LiveRoom>> enterRoom(int pid) async {
