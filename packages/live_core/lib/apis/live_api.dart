@@ -244,4 +244,34 @@ class LiveApi {
 
     return parsedResponse;
   }
+
+  Future<LiveApiResponseBase<bool>> follow(int hid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/follow?hid=$hid',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase<bool>> unfollow(int hid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/unfollow?hid=$hid',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
+    );
+
+    return parsedResponse;
+  }
 }

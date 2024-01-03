@@ -6,7 +6,9 @@ import 'package:live_core/widgets/live_image.dart';
 
 class StreamerInfo extends StatelessWidget {
   final int pid;
-  const StreamerInfo({Key? key, required this.pid}) : super(key: key);
+  final int hid;
+  const StreamerInfo({Key? key, required this.pid, required this.hid})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +70,7 @@ class StreamerInfo extends StatelessWidget {
               ),
             ),
             FollowLiveCheckProvider(
+                hid: hid,
                 child: (isFollowed) => Container(
                       width: 30,
                       height: 30,

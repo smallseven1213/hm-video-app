@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:live_core/models/room_rank.dart';
+import 'package:live_core/widgets/live_image.dart';
 import 'package:live_ui_basic/widgets/rank_number.dart';
 
 class RankDataDialog extends StatefulWidget {
@@ -42,17 +44,28 @@ class _RankDataDialogState extends State<RankDataDialog>
               RankNumber(number: index + 1),
               const SizedBox(width: 3),
               Container(
-                width: 18,
-                height: 18,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(9),
-                  color: Colors.white,
-                  image: DecorationImage(
-                    image: NetworkImage(rankItems[index].avatar),
-                    fit: BoxFit.cover,
+                  width: 18,
+                  height: 18,
+                  margin: const EdgeInsets.only(left: 10),
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
                   ),
-                ),
-              ),
+                  clipBehavior: Clip.antiAlias,
+                  child: rankItems[index].avatar.isNotEmpty &&
+                          rankItems[index].avatar != ""
+                      ? LiveImage(
+                          base64Url: rankItems[index].avatar,
+                          width: 18,
+                          height: 18,
+                          fit: BoxFit.cover,
+                        )
+                      : SvgPicture.asset(
+                          'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+                          width: 18,
+                          height: 18,
+                          fit: BoxFit.cover,
+                        )),
               const SizedBox(width: 3),
               Expanded(
                 flex: 1,
