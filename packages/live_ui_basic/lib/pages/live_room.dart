@@ -132,12 +132,13 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
           //     )),
           const Positioned(
               bottom: 25, right: 10, child: RightCornerControllers()),
-          // Positioned(
-          //     bottom: 0,
-          //     left: 7,
-          //     child: ChatroomLayout(
-          //       token: controller.liveRoom.value.chattoken,
-          //     )),
+          if (controller.liveRoom.value.chattoken.isNotEmpty)
+            Positioned(
+                bottom: 0,
+                left: 7,
+                child: ChatroomLayout(
+                  token: controller.liveRoom.value.chattoken,
+                )),
           Positioned(
               top: MediaQuery.of(context).padding.top + 100,
               right: 10,
