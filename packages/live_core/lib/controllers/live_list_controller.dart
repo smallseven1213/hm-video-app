@@ -106,16 +106,16 @@ class LiveListController extends GetxController {
 
   void filterVideosByFollowedStreamers({
     FollowType? filterFollowType,
-    required List<Streamer> follows,
+    List<Streamer>? follows,
   }) {
     // 创建包含 follows 列表中所有主播ID的集合
-    Set<int> followedStreamerIds =
-        follows.map((streamer) => streamer.id).toSet();
-    followType.value = filterFollowType ?? followType.value;
-
-    if (followedStreamerIds.isEmpty) {
+    if (follows == null) {
       filteredRooms.value = rooms;
     } else {
+      Set<int> followedStreamerIds =
+          follows.map((streamer) => streamer.id).toSet();
+      followType.value = filterFollowType ?? followType.value;
+
       // 过滤出 videoList 中主播ID存在于 followedStreamerIds 的视频
       filteredRooms.value = filteredRooms
           .where((video) => followedStreamerIds.contains(video.streamerId))
