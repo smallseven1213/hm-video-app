@@ -10,9 +10,7 @@ final liveApi = LiveApi();
 class LiveRoomController extends GetxController {
   int pid;
   Rx<Room?> liveRoomInfo = Rx<Room?>(null);
-  var liveRoom = LiveRoom(
-          chattoken: '', pid: 0, pullurl: '', pullUrlDecode: null, amount: 0)
-      .obs;
+  var liveRoom = Rx<LiveRoom?>(null);
   var hasError = false.obs;
   LiveRoomController(this.pid);
 
@@ -25,6 +23,16 @@ class LiveRoomController extends GetxController {
     } catch (e) {
       print(e);
       hasError.value = true;
+    }
+  }
+
+  // exit room
+  Future<void> exitRoom() async {
+    try {
+      await liveApi.exitRoom();
+      liveRoom.value = null;
+    } catch (e) {
+      print(e);
     }
   }
 }

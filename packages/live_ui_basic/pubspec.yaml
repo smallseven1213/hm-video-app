@@ -25,6 +25,7 @@ dependencies:
   intl: ^0.18.1
   lottie: ^2.7.0
   flutter_svg: ^2.0.9
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:

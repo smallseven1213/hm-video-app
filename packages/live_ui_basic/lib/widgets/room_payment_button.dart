@@ -12,8 +12,9 @@ class RoomPaymentButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final LiveRoomController liveroomController = Get.find(tag: pid.toString());
     return Obx(() {
-      if (liveroomController.liveRoomInfo.value?.chargeType == 1 ||
-          liveroomController.liveRoom.value.amount <= 0) {
+      if (liveroomController.liveRoom.value == null &&
+          (liveroomController.liveRoomInfo.value?.chargeType == 1 ||
+              liveroomController.liveRoom.value!.amount <= 0)) {
         return Container();
       } else {
         return GestureDetector(
@@ -39,8 +40,10 @@ class RoomPaymentButton extends StatelessWidget {
                   height: 16,
                 ),
                 const SizedBox(width: 5),
-                Text(liveroomController.liveRoom.value.amount.toString(),
-                    style: const TextStyle(color: Colors.white, fontSize: 12)),
+                if (liveroomController.liveRoom.value!.amount > 0)
+                  Text(liveroomController.liveRoom.value!.amount.toString(),
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 12)),
               ],
             ),
           ),
