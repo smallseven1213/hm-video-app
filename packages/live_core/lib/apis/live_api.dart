@@ -70,6 +70,7 @@ class LiveApi {
       return LiveApiResponseBase<LiveRoom>(
         code: apiResponse.code,
         data: LiveRoom(
+          hid: apiResponse.data.hid,
           chattoken: apiResponse.data.chattoken,
           pid: apiResponse.data.pid,
           pullurl: apiResponse.data.pullurl,

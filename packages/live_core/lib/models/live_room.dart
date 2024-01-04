@@ -1,14 +1,18 @@
 class LiveRoom {
-  final String chattoken;
-  final int pid;
-  final String pullurl;
+  String chattoken;
+  int pid;
+  int hid;
+  bool follow;
+  String pullurl;
   int amount;
   String? pullUrlDecode;
 
   LiveRoom(
       {required this.chattoken,
       required this.pid,
+      required this.hid,
       required this.pullurl,
+      this.follow = false,
       this.amount = 0,
       this.pullUrlDecode});
 
@@ -16,8 +20,10 @@ class LiveRoom {
     return LiveRoom(
       chattoken: json['chattoken'],
       pid: json['pid'],
+      hid: int.parse(json['hid']),
       pullurl: json['pullurl'],
       amount: json['amount'],
+      follow: json['follow'] ?? false,
     );
   }
 
@@ -26,6 +32,9 @@ class LiveRoom {
       'chattoken': chattoken,
       'pid': pid,
       'pullurl': pullurl,
+      'amount': amount,
+      'follow': follow,
+      'hid': hid,
     };
   }
 }

@@ -14,6 +14,7 @@ import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 import '../libs/showLiveDialog.dart';
 import '../screens/live_room/command_controller.dart';
 import '../widgets/live_button.dart';
+import '../widgets/live_room_skelton.dart';
 import '../widgets/room_payment_button.dart';
 
 final liveApi = LiveApi();
@@ -27,9 +28,9 @@ class LiveRoomPage extends StatefulWidget {
 }
 
 class _LiveRoomPageState extends State<LiveRoomPage> {
+  bool _isControllerInitialized = false;
   late final LiveRoomController controller;
   late final CommandsController commandsController;
-  bool isLiveRoomReady = false;
 
   @override
   void initState() {
@@ -43,10 +44,6 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
       await liveRoomController.fetchData();
       return liveRoomController;
     }, tag: widget.pid.toString());
-
-    setState(() {
-      isLiveRoomReady = true;
-    });
 
     Get.delete<CommandsController>();
     commandsController = Get.put(CommandsController());
@@ -82,120 +79,241 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
         );
       }
     });
+
+    setState(() {
+      _isControllerInitialized = true;
+    });
   }
 
   @override
   void dispose() {
     controller.dispose();
     commandsController.dispose();
+    Get.delete<LiveRoomController>(tag: widget.pid.toString());
 
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: isLiveRoomReady
-            ? [
-                Obx(() {
-                  if (controller.liveRoom.value.amount > 0 ||
-                      controller.liveRoom.value.pullUrlDecode == null) {
-                    return Container(
-                      color: Colors.black,
-                    );
-                  }
-                  String url = Uri.decodeFull(
-                      controller.liveRoom.value.pullUrlDecode!.trim());
-                  Uri parsedUri = Uri.parse(url);
-                  return PlayerLayout(uri: parsedUri);
-                }),
-                Positioned(
-                    top: MediaQuery.of(context).padding.top + 50,
-                    left: 0,
-                    child: TopControllers(
-                      hid: controller.liveRoomInfo.value?.hid ?? 0,
-                      pid: widget.pid,
-                    )),
-                // Positioned(
-                //     top: MediaQuery.of(context).padding.top + 120,
-                //     child: Padding(
-                //       padding: const EdgeInsets.symmetric(horizontal: 7),
-                //       child: Rank(),
-                //     )),
-                const Positioned(
-                    bottom: 25, right: 10, child: RightCornerControllers()),
-                if (controller.liveRoom.value.chattoken.isNotEmpty)
-                  Positioned(
-                      bottom: 0,
-                      left: 7,
-                      child: ChatroomLayout(
-                        token: controller.liveRoom.value.chattoken,
-                      )),
-                Positioned(
-                    top: MediaQuery.of(context).padding.top + 100,
-                    right: 10,
-                    child: CommandController()),
-                Positioned(
-                    bottom: 20,
-                    left: 40,
-                    right: 40,
-                    child: RoomPaymentButton(
-                      onTap: () async {
-                        var price = controller.liveRoom.value.amount ?? 0;
-                        var userAmount =
-                            Get.find<LiveUserController>().getAmount;
-                        if (userAmount < price) {
-                          showLiveDialog(
-                            context,
-                            title: '鑽石不足',
-                            content: const Center(
-                              child: Text('鑽石不足，請前往充值',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 11)),
-                            ),
-                            actions: [
-                              LiveButton(
-                                  text: '取消',
-                                  type: ButtonType.secondary,
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  }),
-                              LiveButton(
-                                  text: '確定',
-                                  type: ButtonType.primary,
-                                  onTap: () {
-                                    Navigator.of(context).pop();
-                                  })
-                            ],
-                          );
-                        } else {
-                          if (controller.liveRoomInfo.value?.chargeType == 3) {
-                            // 計時付費
-                            var result = await liveApi.buyWatch(widget.pid);
-                            if (result.data == true) {
-                              controller.fetchData();
-                            } else {
-                              // show alert
-                            }
-                          } else if (controller
-                                  .liveRoomInfo.value?.chargeType ==
-                              2) {
-                            // 付費直播
-                            var result = await liveApi.buyTicket(widget.pid);
-                            if (result.data == true) {
-                              controller.fetchData();
-                            } else {
-                              // show alert
-                            }
+    if (!_isControllerInitialized) {
+      return LiveRoomSkeleton(
+        pid: widget.pid,
+      );
+    }
+    return Obx(() {
+      print(controller.liveRoom.value);
+      if (controller.liveRoom.value != null) {
+        return Scaffold(
+          body: Stack(
+            children: [
+              if (controller.liveRoom.value!.amount > 0 ||
+                  controller.liveRoom.value!.pullUrlDecode == null)
+                Container(color: Colors.black),
+              if (controller.liveRoom.value!.amount <= 0 &&
+                  controller.liveRoom.value!.pullUrlDecode != null)
+                PlayerLayout(
+                    uri: Uri.parse(controller.liveRoom.value!.pullUrlDecode!)),
+              Positioned(
+                top: MediaQuery.of(context).padding.top + 50,
+                left: 0,
+                child: TopControllers(
+                  hid: controller.liveRoomInfo.value?.hid ?? 0,
+                  pid: widget.pid,
+                ),
+              ),
+              const Positioned(
+                  bottom: 25, right: 10, child: RightCornerControllers()),
+              Positioned(
+                  bottom: 0,
+                  left: 7,
+                  child: ChatroomLayout(
+                    token: controller.liveRoom.value!.chattoken,
+                  )),
+              Positioned(
+                  top: MediaQuery.of(context).padding.top + 100,
+                  right: 10,
+                  child: const CommandController()),
+              Positioned(
+                  bottom: 20,
+                  left: 40,
+                  right: 40,
+                  child: RoomPaymentButton(
+                    onTap: () async {
+                      var price = controller.liveRoom.value!.amount;
+                      var userAmount = Get.find<LiveUserController>().getAmount;
+                      if (userAmount < price) {
+                        showLiveDialog(
+                          context,
+                          title: '鑽石不足',
+                          content: const Center(
+                            child: Text('鑽石不足，請前往充值',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 11)),
+                          ),
+                          actions: [
+                            LiveButton(
+                                text: '取消',
+                                type: ButtonType.secondary,
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                }),
+                            LiveButton(
+                                text: '確定',
+                                type: ButtonType.primary,
+                                onTap: () {
+                                  Navigator.of(context).pop();
+                                })
+                          ],
+                        );
+                      } else {
+                        if (controller.liveRoomInfo.value?.chargeType == 3) {
+                          // 計時付費
+                          var result = await liveApi.buyWatch(widget.pid);
+                          if (result.data == true) {
+                            controller.fetchData();
+                          } else {
+                            // show alert
+                          }
+                        } else if (controller.liveRoomInfo.value?.chargeType ==
+                            2) {
+                          // 付費直播
+                          var result = await liveApi.buyTicket(widget.pid);
+                          if (result.data == true) {
+                            controller.fetchData();
+                          } else {
+                            // show alert
                           }
                         }
-                      },
-                      pid: widget.pid,
-                    ))
-              ]
-            : [],
-      ),
-    );
+                      }
+                    },
+                    pid: widget.pid,
+                  )),
+            ],
+          ),
+        );
+      } else {
+        return LiveRoomSkeleton(
+          pid: widget.pid,
+        );
+      }
+    });
+
+    // if (!_isControllerInitialized) {
+    //   return CircularProgressIndicator(); // or some placeholder widget
+    // }
+    // return Scaffold(
+    //   body: Stack(
+    //     children: controller.liveRoom.value != null
+    //         ? [
+    //             Obx(() {
+    //               if (controller.liveRoom.value!.amount > 0 ||
+    //                   controller.liveRoom.value!.pullUrlDecode == null) {
+    //                 return Container(
+    //                   color: Colors.black,
+    //                 );
+    //               }
+    //               String url = Uri.decodeFull(
+    //                   controller.liveRoom.value!.pullUrlDecode!.trim());
+    //               Uri parsedUri = Uri.parse(url);
+    //               return PlayerLayout(uri: parsedUri);
+    //             }),
+    //             Positioned(
+    //                 top: MediaQuery.of(context).padding.top + 50,
+    //                 left: 0,
+    //                 child: TopControllers(
+    //                   hid: controller.liveRoomInfo.value?.hid ?? 0,
+    //                   pid: widget.pid,
+    //                 )),
+    //             // Positioned(
+    //             //     top: MediaQuery.of(context).padding.top + 120,
+    //             //     child: Padding(
+    //             //       padding: const EdgeInsets.symmetric(horizontal: 7),
+    //             //       child: Rank(),
+    //             //     )),
+    //             const Positioned(
+    //                 bottom: 25, right: 10, child: RightCornerControllers()),
+    //             // Obx(() => Positioned(
+    //             //     bottom: 0,
+    //             //     left: 7,
+    //             //     child: controller.liveRoom.value.chattoken.isNotEmpty
+    // ? ChatroomLayout(
+    //     token: controller.liveRoom.value.chattoken,
+    //   )
+    //             //         : Container())),
+    //             Obx(() {
+    //               print(controller.liveRoom.value);
+    //               return Positioned(
+    //                   bottom: 0,
+    //                   left: 7,
+    //                   child: Container(
+    //                     child: Text(controller.liveRoom.value!.chattoken),
+    //                   ));
+    //             }),
+    //             Positioned(
+    //                 top: MediaQuery.of(context).padding.top + 100,
+    //                 right: 10,
+    //                 child: CommandController()),
+    //             Positioned(
+    //                 bottom: 20,
+    //                 left: 40,
+    //                 right: 40,
+    // child: RoomPaymentButton(
+    //   onTap: () async {
+    //     var price = controller.liveRoom.value!.amount;
+    //     var userAmount =
+    //         Get.find<LiveUserController>().getAmount;
+    //     if (userAmount < price) {
+    //       showLiveDialog(
+    //         context,
+    //         title: '鑽石不足',
+    //         content: const Center(
+    //           child: Text('鑽石不足，請前往充值',
+    //               style: TextStyle(
+    //                   color: Colors.white, fontSize: 11)),
+    //         ),
+    //         actions: [
+    //           LiveButton(
+    //               text: '取消',
+    //               type: ButtonType.secondary,
+    //               onTap: () {
+    //                 Navigator.of(context).pop();
+    //               }),
+    //           LiveButton(
+    //               text: '確定',
+    //               type: ButtonType.primary,
+    //               onTap: () {
+    //                 Navigator.of(context).pop();
+    //               })
+    //         ],
+    //       );
+    //     } else {
+    //       if (controller.liveRoomInfo.value?.chargeType == 3) {
+    //         // 計時付費
+    //         var result = await liveApi.buyWatch(widget.pid);
+    //         if (result.data == true) {
+    //           controller.fetchData();
+    //         } else {
+    //           // show alert
+    //         }
+    //       } else if (controller
+    //               .liveRoomInfo.value?.chargeType ==
+    //           2) {
+    //         // 付費直播
+    //         var result = await liveApi.buyTicket(widget.pid);
+    //         if (result.data == true) {
+    //           controller.fetchData();
+    //         } else {
+    //           // show alert
+    //         }
+    //       }
+    //     }
+    //   },
+    //   pid: widget.pid,
+    // ))
+    //           ]
+    //         : [],
+    //   ),
+    // );
   }
 }
