@@ -1,0 +1,74 @@
+import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:shared/navigator/delegate.dart';
+
+enum LottieDataProvider { network, asset }
+
+class LottieDialog extends StatefulWidget {
+  final String path;
+  final LottieDataProvider provider;
+
+  LottieDialog({Key? key, required this.path, required this.provider})
+      : super(key: key);
+
+  @override
+  _LottieDialogState createState() => _LottieDialogState();
+}
+
+class _LottieDialogState extends State<LottieDialog>
+    with SingleTickerProviderStateMixin {
+  AnimationController? _lottieController;
+
+  @override
+  void initState() {
+    super.initState();
+    _lottieController = AnimationController(vsync: this)
+      ..addStatusListener((status) {
+        if (status == AnimationStatus.completed) {
+          Navigator.of(context).pop();
+        }
+      });
+  }
+
+  @override
+  void dispose() {
+    _lottieController?.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        dialogBackgroundColor: Colors.transparent,
+        dialogTheme: const DialogTheme(
+          elevation: 0, // Set elevation to 0 to remove shadow
+        ),
+      ),
+      child: Dialog(
+        backgroundColor: Colors.transparent,
+        child: Lottie.network(
+          widget.path,
+          controller: _lottieController,
+          onLoaded: (composition) {
+            _lottieController!
+              ..duration = composition.duration
+              ..forward();
+          },
+          errorBuilder:
+              (BuildContext context, Object exception, StackTrace? stackTrace) {
+            return Lottie.asset(
+              'packages/live_ui_basic/assets/lotties/present.json',
+              controller: _lottieController,
+              onLoaded: (composition) {
+                _lottieController!
+                  ..duration = composition.duration
+                  ..forward();
+              },
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
