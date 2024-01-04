@@ -7,9 +7,8 @@ import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:lottie/lottie.dart';
 
+import 'lottie_dialog.dart';
 import 'messages/message_item.dart';
-
-enum LottieDataProvider { network, asset }
 
 class LottieData {
   final LottieDataProvider provider;
@@ -30,19 +29,11 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   List<ChatMessage> messages = [];
   LottieData? lottieData;
 
-  AnimationController? lottieController;
-
   @override
   void initState() {
     super.initState();
-    lottieController = AnimationController(vsync: this);
-    socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
-  }
 
-  @override
-  void dispose() {
-    lottieController?.dispose();
-    super.dispose();
+    socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
   }
 
   void handleChatResult(dynamic data) {
@@ -51,21 +42,12 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         .map((item) => ChatMessage.fromJson(item))
         .toList();
 
-    // for (var element in newMessages) {
-    //   if (element.objChat.ntype == MessageType.gift) {
-    //     setLottieAnimation(element.objChat.data);
-    //   }
-    // }
-    // refactor top-up code, get latest record and setAnimation
     try {
       var latestGiftMessage = newMessages
           .lastWhere((element) => element.objChat.ntype == MessageType.gift);
       setLottieAnimation(latestGiftMessage.objChat.data);
     } catch (e) {}
 
-    // ForTest
-    // showLottieDialog(LottieDataProvider.network,
-    //     'https://cdn.hubeibk.com/live/webp/app_gifts/018c5766-ab64-7360-a2ce-195b0455ebb1.json');
     setState(() {
       messages.addAll(newMessages);
     });
@@ -90,38 +72,36 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
       barrierDismissible: true,
       barrierColor: Colors.transparent, // Transparent background
       builder: (BuildContext context) {
-        return Dialog(
-          backgroundColor: Colors.transparent, // Transparent Dialog
-          child: provider == LottieDataProvider.network
-              ? Lottie.network(
-                  path,
-                  controller: lottieController,
-                  onLoaded: (composition) {
-                    // Set the duration and start the animation
-                    lottieController!
-                      ..duration = composition.duration
-                      ..forward();
-                  },
-                )
-              : Lottie.asset(
-                  path,
-                  controller: lottieController,
-                ),
+        return LottieDialog(
+          path: path,
+          provider: provider,
         );
+        // return Dialog(
+        //   backgroundColor: Colors.transparent, // Transparent Dialog
+        //   child: provider == LottieDataProvider.network
+        //       ? Lottie.network(
+        //           path,
+        //           controller: lottieController,
+        //           onLoaded: (composition) {
+        //             // Set the duration and start the animation
+        //             lottieController!
+        //               ..duration = composition.duration
+        //               ..forward();
+        //           },
+        //         )
+        //       : Lottie.asset(
+        //           path,
+        //           controller: lottieController,
+        //         ),
+        // );
       },
-    ).then((_) {
-      // When dialog is dismissed
-      if (lottieController != null) {
-        lottieController!.dispose();
-        lottieController = null;
-      }
-    });
+    );
 
-    lottieController?.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        Navigator.of(context).pop(); // Close the dialog
-      }
-    });
+    // lottieController?.addStatusListener((status) {
+    //   if (status == AnimationStatus.completed) {
+    //     Navigator.of(context).pop(); // Close the dialog
+    //   }
+    // });
   }
 
   @override
