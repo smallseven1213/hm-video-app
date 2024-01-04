@@ -12,7 +12,7 @@ class RoomPaymentButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final LiveRoomController liveroomController = Get.find(tag: pid.toString());
     return Obx(() {
-      if (liveroomController.liveRoom.value == null &&
+      if (liveroomController.liveRoom.value == null ||
           (liveroomController.liveRoomInfo.value?.chargeType == 1 ||
               liveroomController.liveRoom.value!.amount <= 0)) {
         return Container();
