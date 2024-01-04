@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:live_core/models/room.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/datetime_formatter.dart';
 
-import '../../widgets/network_image.dart';
 import 'countdown_timer.dart';
 
 class RoomItem extends StatelessWidget {
@@ -48,7 +46,7 @@ class RoomItem extends StatelessWidget {
       onTap: () {
         MyRouteDelegate.of(context).push(
           "/live_room",
-          args: {"pid": room.pid},
+          args: {"pid": room.id},
         );
       },
       child: Container(

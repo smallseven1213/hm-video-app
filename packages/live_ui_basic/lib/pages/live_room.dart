@@ -118,7 +118,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 top: MediaQuery.of(context).padding.top + 50,
                 left: 0,
                 child: TopControllers(
-                  hid: controller.liveRoomInfo.value?.hid ?? 0,
+                  hid: controller.liveRoomInfo.value?.streamerId ?? 0,
                   pid: widget.pid,
                 ),
               ),
