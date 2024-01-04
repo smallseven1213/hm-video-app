@@ -56,12 +56,12 @@ class UserFollowsController extends GetxController {
     streamerApi.follow(streamer.id);
   }
 
-  void unfollow(Streamer streamer) async {
-    follows.removeWhere((v) => v.id == streamer.id);
+  void unfollow(int streamerId) async {
+    follows.removeWhere((v) => v.id == streamerId);
     follows.refresh();
 
     await _updateHive();
-    streamerApi.unfollow(streamer.id);
+    streamerApi.unfollow(streamerId);
   }
 
   Future<void> _updateHive() async {

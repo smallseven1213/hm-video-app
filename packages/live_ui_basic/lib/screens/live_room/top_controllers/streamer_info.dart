@@ -71,6 +71,7 @@ class StreamerInfo extends StatelessWidget {
             ),
             FollowLiveCheckProvider(
                 hid: hid,
+                streamerNickname: roomInfo?.nickname ?? "",
                 child: (isFollowed) => Container(
                       width: 30,
                       height: 30,

@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 
 import '../apis/live_api.dart';
 import '../controllers/user_follows_controller.dart';
+import '../models/streamer.dart';
 
 final liveApi = LiveApi();
 
 class FollowLiveCheckProvider extends StatefulWidget {
   final int hid;
+  final String streamerNickname;
   final Widget Function(
     bool isFollowed,
   ) child;
@@ -15,6 +17,7 @@ class FollowLiveCheckProvider extends StatefulWidget {
   const FollowLiveCheckProvider({
     Key? key,
     required this.hid,
+    required this.streamerNickname,
     required this.child,
   }) : super(key: key);
 
@@ -43,10 +46,14 @@ class _FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
   void handleTap() async {
     if (isFollowed) {
       // Unfollow
-      await liveApi.unfollow(widget.hid);
+      userFollowsController.unfollow(widget.hid);
     } else {
       // Follow
-      await liveApi.follow(widget.hid);
+      userFollowsController.follow(Streamer(
+        id: widget.hid,
+        nickname: widget.streamerNickname,
+        account: '',
+      ));
     }
 
     setState(() {

@@ -140,7 +140,7 @@ class _RankingScreenState extends State<RankingScreen> {
                                     id: rankItems[index].id,
                                     nickname: rankItems[index].nickname);
                                 if (isFollowed) {
-                                  userFollowsController.unfollow(streamer);
+                                  userFollowsController.unfollow(streamer.id);
                                 } else {
                                   userFollowsController.follow(streamer);
                                 }
