@@ -42,4 +42,36 @@ class SearchApi {
 
     return data;
   }
+
+  // 取得關鍵字列表
+  Future<List<String>> getRecommendKeywords(keyword) async {
+    var response = await liveFetcher(
+      url: '$userApiHost/search/recommend?keyword=$keyword',
+    );
+
+    List<String> data = (response.data['data']['keywords'] as List)
+        .map((item) => item.toString())
+        .toList();
+
+    return data;
+  }
+
+  // 搜尋
+  Future<List<StreamerProfile>> search({
+    String? keyword,
+    int page = 1,
+    int perPage = 20,
+  }) async {
+    var response = await liveFetcher(
+      url:
+          '$userApiHost/search/streamers?keyword=$keyword&page=$page&per_page=$perPage',
+    );
+
+    List<StreamerProfile> data =
+        (response.data['data']['list']['items'] as List)
+            .map((item) => StreamerProfile.fromJson(item))
+            .toList();
+
+    return data;
+  }
 }

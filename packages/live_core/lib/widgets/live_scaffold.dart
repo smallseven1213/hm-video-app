@@ -9,6 +9,7 @@ import '../controllers/commands_controller.dart';
 import '../controllers/gifts_controller.dart';
 import '../controllers/live_list_controller.dart';
 import '../controllers/live_search_controller.dart';
+import '../controllers/live_search_history_controller.dart';
 import '../controllers/live_system_controller.dart';
 import '../controllers/live_user_controller.dart';
 import '../controllers/user_follows_controller.dart';
@@ -66,6 +67,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
       Get.put(UserFollowsController());
       Get.put(GiftsController());
       Get.put(LiveSearchController());
+      Get.lazyPut(() => LiveSearchHistoryController());
     } else {
       isLogin = false;
     }

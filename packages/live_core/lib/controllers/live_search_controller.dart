@@ -7,6 +7,8 @@ final _searchApi = SearchApi();
 class LiveSearchController extends GetxController {
   var fansRecommend = <StreamerProfile>[].obs;
   var popularStreamers = <StreamerProfile>[].obs;
+  var recommendKeywords = <String>[].obs;
+  var searchResult = <StreamerProfile>[].obs;
 
   LiveSearchController() {
     fetchData();
@@ -27,4 +29,23 @@ class LiveSearchController extends GetxController {
   // void updateRanking(RankType rankType, TimeType timeType) {
   //   fetchData(rankType, timeType);
   // }
+
+  void getKeywords(keyword) async {
+    try {
+      List<String> res = await _searchApi.getRecommendKeywords(keyword);
+      recommendKeywords.value = res;
+      print(res);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  void search(keyword) async {
+    try {
+      List<StreamerProfile> res = await _searchApi.search(keyword: keyword);
+      searchResult.value = res;
+    } catch (e) {
+      print(e);
+    }
+  }
 }

@@ -1,55 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:live_core/controllers/live_search_history_controller.dart';
 
-class RecentSearches extends StatefulWidget {
-  @override
-  // ignore: library_private_types_in_public_api
-  _RecentSearchesState createState() => _RecentSearchesState();
-}
+import '../../pages/search.dart';
 
-class _RecentSearchesState extends State<RecentSearches> {
-  int _selectedFilter = 0;
-  final List<String> _filters = ['全部>全部', '女神', '熱門', '全部>全部'];
+class RecentSearches extends StatelessWidget {
+  final searchHistoryController = Get.find<LiveSearchHistoryController>();
+  final Function(String)? onSearch;
+
+  RecentSearches({
+    Key? key,
+    this.onSearch,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Wrap(
-          direction: Axis.horizontal, // 標籤的排列方向
-          spacing: 8, // 標籤之間的水平間距
-          runSpacing: 8, // 標籤之間的垂直間距
-          children: [
-            '全部>全部',
-            '女神',
-            '熱門',
-            '熱門2',
-            '熱門2',
-            '熱門2',
-            '熱門2',
-            '熱門2',
-            '熱門2',
-            '熱門2',
-            '熱門2'
-          ]
-              .map(
-                (tag) => Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 13, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF343b4f),
-                  ),
-                  child: Text(
-                    '六個字六個字',
-                    style: TextStyle(
-                      color: Color(0xFF6f6f79),
-                    ),
-                  ),
+    return Obx(
+      () => searchHistoryController.searchHistory.isNotEmpty
+          ? Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SectionTitle(title: '最近搜尋'),
+                Wrap(
+                  direction: Axis.horizontal, // 標籤的排列方向
+                  spacing: 8, // 標籤之間的水平間距
+                  runSpacing: 8, // 標籤之間的垂直間距
+                  children: searchHistoryController.searchHistory
+                      .map((tag) => InkWell(
+                            onTap: () {
+                              Get.find<LiveSearchHistoryController>().add(tag);
+                              onSearch!(tag);
+                            },
+                            child: Container(
+                              height: 26,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 13, vertical: 3),
+                              decoration:
+                                  const BoxDecoration(color: Color(0xFF343b4f)),
+                              child: Text(
+                                tag,
+                                style:
+                                    const TextStyle(color: Color(0xFF6f6f79)),
+                              ),
+                            ),
+                          ))
+                      .toList()
+                      .cast<Widget>(),
                 ),
-              )
-              .toList()
-              .cast<Widget>(),
-        ),
-      ],
+                // Wrap(
+              ],
+            )
+          : const SizedBox(),
     );
   }
 }
