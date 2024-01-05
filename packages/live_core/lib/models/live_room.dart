@@ -1,3 +1,5 @@
+import 'package:shared/helpers/getField.dart';
+
 class LiveRoom {
   String chattoken;
   int pid;
@@ -18,12 +20,17 @@ class LiveRoom {
 
   factory LiveRoom.fromJson(Map<String, dynamic> json) {
     return LiveRoom(
-      chattoken: json['chattoken'],
-      pid: json['pid'],
-      hid: int.parse(json['hid']),
-      pullurl: json['pullurl'],
-      amount: json['amount'],
-      follow: json['follow'] ?? false,
+      chattoken: getField(json, 'chattoken', defaultValue: ''),
+      pid: getField(json, 'pid', defaultValue: 0),
+      hid: getField(json, 'hid', defaultValue: 0),
+      pullurl: getField(json, 'pullurl', defaultValue: ''),
+      amount: getField(json, 'amount', defaultValue: 0),
+
+      // pid: json['pid'],
+      // hid: int.parse(json['hid']),
+      // pullurl: json['pullurl'],
+      // amount: json['amount'],
+      // follow: json['follow'] ?? false,
     );
   }
 
