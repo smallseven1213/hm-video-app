@@ -1,3 +1,5 @@
+import 'package:shared/helpers/getField.dart';
+
 enum RoomStatus {
   none,
   notStarted,
@@ -48,19 +50,24 @@ class Room {
       var tagsList = json['tags'] as List;
       List<Tag> tags = tagsList.map((i) => Tag.fromJson(i)).toList();
       return Room(
-        chargeAmount: json['charge_amount'],
-        chargeType: json['charge_type'],
-        hostEnter: json['streamer']['created_at'],
-        id: json['id'],
-        nickname: json['streamer']['nickname'],
-        playerCover: json['streamer']['avatar'], // 暫時拿主播頭像當封面
-        reserveAt: json['reserve_at'],
-        status: json['status'],
-        streamerId: json['streamer']['id'],
+        chargeAmount: getField<String>(json, 'charge_amount', defaultValue: ''),
+        chargeType: getField<int>(json, 'charge_type', defaultValue: 0),
+        hostEnter:
+            getField<String>(json['streamer'], 'created_at', defaultValue: ''),
+        id: getField<int>(json, 'id', defaultValue: 0),
+        nickname:
+            getField<String>(json['streamer'], 'nickname', defaultValue: ''),
+        playerCover: getField<String>(json['streamer'], 'avatar',
+            defaultValue: ''), // 暫時拿主播頭像當封面
+        reserveAt: getField<String>(json, 'reserve_at', defaultValue: ''),
+        status: getField<int>(json, 'status', defaultValue: 0),
+        streamerId: getField<int>(json['streamer'], 'id', defaultValue: 0),
         tags: tags,
-        title: json['title'],
-        userCost: double.parse(json['statistic']['total_income']),
-        userLive: json['statistic']['watch_count'],
+        title: getField<String>(json, 'title', defaultValue: ''),
+        userCost: getField<double>(json['statistic'], 'total_income',
+            defaultValue: 0),
+        userLive:
+            getField<int>(json['statistic'], 'watch_count', defaultValue: 0),
       );
     } catch (e) {
       print(e);
