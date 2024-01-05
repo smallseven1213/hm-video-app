@@ -1,4 +1,3 @@
-
 import 'package:live_core/controllers/live_system_controller.dart';
 import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/utils/live_fetcher.dart';
@@ -65,7 +64,9 @@ class LiveApi {
       );
 
       // Assuming that the `data` field in the response is a JSON string
-      String decryptedData = decryptAES256ECB(apiResponse.data.pullurl);
+      String decryptedData = apiResponse.data.pullurl.isNotEmpty
+          ? decryptAES256ECB(apiResponse.data.pullurl)
+          : "";
 
       return LiveApiResponseBase<LiveRoom>(
         code: apiResponse.code,
@@ -75,6 +76,7 @@ class LiveApi {
           pid: apiResponse.data.pid,
           pullurl: apiResponse.data.pullurl,
           pullUrlDecode: decryptedData.trim().trimRight(),
+          amount: apiResponse.data.amount,
         ),
         // 下面測試用
         // pullUrlDecode:
