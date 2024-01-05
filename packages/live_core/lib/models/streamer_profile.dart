@@ -1,6 +1,6 @@
 import 'package:shared/helpers/getField.dart';
 
-class Streamer {
+class StreamerProfile {
   final int id;
   final String nickname;
   final String? avatar;
@@ -9,7 +9,7 @@ class Streamer {
   final String? account;
   final bool? isLive;
 
-  Streamer({
+  StreamerProfile({
     required this.id,
     required this.nickname,
     this.avatar,
@@ -19,8 +19,8 @@ class Streamer {
     this.isLive,
   });
 
-  factory Streamer.fromJson(Map<String, dynamic> json) {
-    return Streamer(
+  factory StreamerProfile.fromJson(Map<String, dynamic> json) {
+    return StreamerProfile(
       id: getField<int>(json, 'streamer_id', defaultValue: 0),
       nickname: getField<String>(json, 'nickname', defaultValue: ''),
       avatar: getField<String>(json, 'avatar', defaultValue: ''),

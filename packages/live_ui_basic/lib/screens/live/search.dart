@@ -8,33 +8,36 @@ class SearchWidget extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: Container(
-            height: 30,
-            decoration: BoxDecoration(
-              color: const Color(0xFF323d5c),
-              borderRadius: BorderRadius.circular(15),
-            ),
-            child: Row(
-              children: [
-                // padding l 10, child is Icon
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Icon(
-                    Icons.search,
-                    color: Colors.white54,
-                  ),
-                ),
-                // padding l 10, child is Text
-                const Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Search',
-                    style: TextStyle(
-                      color: Color(0xFF5a6077),
+          child: InkWell(
+            onTap: () => MyRouteDelegate.of(context).push("/live_search"),
+            child: Container(
+              height: 30,
+              decoration: BoxDecoration(
+                color: const Color(0xFF323d5c),
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: const Row(
+                children: [
+                  // padding l 10, child is Icon
+                  Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white54,
                     ),
                   ),
-                ),
-              ],
+                  // padding l 10, child is Text
+                  const Padding(
+                    padding: EdgeInsets.only(left: 10),
+                    child: Text(
+                      'Search',
+                      style: TextStyle(
+                        color: Color(0xFF5a6077),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

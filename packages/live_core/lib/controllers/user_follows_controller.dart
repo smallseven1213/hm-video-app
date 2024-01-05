@@ -28,9 +28,9 @@ class UserFollowsController extends GetxController {
     box = await Hive.openBox<String>(_boxName);
 
     if (box.isNotEmpty) {
-      follows.value = box.values.map((videoStr) {
-        final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
-        return Streamer.fromJson(videoJson);
+      follows.value = box.values.map((followsStr) {
+        final followsJson = jsonDecode(followsStr) as Map<String, dynamic>;
+        return Streamer.fromJson(followsJson);
       }).toList();
     } else {
       await _fetchAndSaveCollection();

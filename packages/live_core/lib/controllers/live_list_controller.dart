@@ -122,4 +122,15 @@ class LiveListController extends GetxController {
           .toList();
     }
   }
+
+  // get room by streamer id
+  Room? getRoomByStreamerId(int streamerId) {
+    for (var room in rooms.value) {
+      if (room.streamerId == streamerId) {
+        return room;
+      }
+    }
+
+    return null;
+  }
 }

@@ -4,6 +4,7 @@ import 'package:shared/navigator/delegate.dart';
 
 import '../pages/live.dart';
 import '../pages/live_room.dart';
+import '../pages/search.dart';
 import '../pages/streamer_rank.dart';
 
 final Map<String, RouteWidgetBuilder> liveRoutes = {
@@ -12,4 +13,7 @@ final Map<String, RouteWidgetBuilder> liveRoutes = {
         pid: args['pid'] as int,
       ),
   "/streamer_rank": (context, args) => const StreamerRankPage(),
+  "/live_search": (context, args) => SearchPage(
+      // query: args['query'] as String,
+      ),
 };
