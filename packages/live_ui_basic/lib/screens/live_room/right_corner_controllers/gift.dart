@@ -89,20 +89,45 @@ class Gifts extends StatelessWidget {
                   var pageItems =
                       giftsController.gifts.value.sublist(startIndex, endIndex);
 
-                  return GridView.builder(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio: 100 / 110,
-                    ),
-                    physics:
-                        const NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
-                    itemCount: pageItems.length,
-                    itemBuilder: (context, index) {
-                      var gift = pageItems[index];
-                      return GiftItem(gift: gift);
-                    },
+                  return Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          GiftItem(gift: pageItems[0]),
+                          GiftItem(gift: pageItems[1]),
+                          GiftItem(gift: pageItems[2]),
+                          GiftItem(gift: pageItems[3]),
+                        ],
+                      ),
+                      // height 10
+                      const SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: <Widget>[
+                          GiftItem(gift: pageItems[4]),
+                          GiftItem(gift: pageItems[5]),
+                          GiftItem(gift: pageItems[6]),
+                          GiftItem(gift: pageItems[7]),
+                        ],
+                      ),
+                    ],
                   );
+
+                  // return GridView.builder(
+                  //   gridDelegate:
+                  //       const SliverGridDelegateWithFixedCrossAxisCount(
+                  //     crossAxisCount: 4,
+                  //     childAspectRatio: 100 / 110,
+                  //   ),
+                  //   physics:
+                  //       const NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
+                  //   itemCount: pageItems.length,
+                  //   itemBuilder: (context, index) {
+                  //     var gift = pageItems[index];
+                  //     return GiftItem(gift: gift);
+                  //   },
+                  // );
                 },
                 options: CarouselOptions(
                   height: double.infinity,
@@ -196,8 +221,18 @@ class GiftItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          LiveImage(
-            base64Url: gift.image,
+          Container(
+            height: 73,
+            width: 73,
+            // radius 10
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: LiveImage(
+              base64Url: gift.image,
+              fit: BoxFit.cover,
+            ),
           ),
           // Image.network(
           //   // gift.image,
@@ -215,7 +250,7 @@ class GiftItem extends StatelessWidget {
             ),
           ),
           // height 5
-          const SizedBox(height: 5),
+          const SizedBox(height: 3),
           Text(
             gift.price,
             style: TextStyle(
