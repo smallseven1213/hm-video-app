@@ -31,7 +31,7 @@ class GameLocalizationsDelegate
   Future<GameLocalizations> load(Locale locale) async {
     // Load the localized strings from the maps provided
     logger.i('current game locale: ${locale.toLanguageTag()}');
-    Map<String, String> localizedStrings = localizedStringsMaps['zh-TW'] ?? {};
+    Map<String, String> localizedStrings = localizedStringsMaps['en-US'] ?? {};
     return GameLocalizations(localizedStrings);
   }
 
