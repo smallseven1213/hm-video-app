@@ -24,7 +24,7 @@ class _LottieDialogState extends State<LottieDialog>
     super.initState();
     _lottieController = AnimationController(vsync: this)
       ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
+        if (status == AnimationStatus.completed && mounted) {
           Navigator.of(context).pop();
         }
       });
@@ -41,9 +41,7 @@ class _LottieDialogState extends State<LottieDialog>
     return Theme(
       data: Theme.of(context).copyWith(
         dialogBackgroundColor: Colors.transparent,
-        dialogTheme: const DialogTheme(
-          elevation: 0, // Set elevation to 0 to remove shadow
-        ),
+        dialogTheme: const DialogTheme(elevation: 0),
       ),
       child: Dialog(
         backgroundColor: Colors.transparent,
