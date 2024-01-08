@@ -39,11 +39,27 @@ class GiftWidget extends StatelessWidget {
   }
 }
 
-class Gifts extends StatelessWidget {
+class Gifts extends StatefulWidget {
   const Gifts({Key? key}) : super(key: key);
+
+  @override
+  _GiftsState createState() => _GiftsState();
+}
+
+class _GiftsState extends State<Gifts> {
+  final giftsController = Get.find<GiftsController>();
+  ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    _currentIndexNotifier.dispose(); // 釋放資源
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final giftsController = Get.find<GiftsController>();
+    int totalPageCount = (giftsController.gifts.value.length / 8).ceil();
     return Container(
       height: 366,
       color: Colors.black,
@@ -89,57 +105,86 @@ class Gifts extends StatelessWidget {
                   var pageItems =
                       giftsController.gifts.value.sublist(startIndex, endIndex);
 
-                  return Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          GiftItem(gift: pageItems[0]),
-                          GiftItem(gift: pageItems[1]),
-                          GiftItem(gift: pageItems[2]),
-                          GiftItem(gift: pageItems[3]),
-                        ],
-                      ),
-                      // height 10
-                      const SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          GiftItem(gift: pageItems[4]),
-                          GiftItem(gift: pageItems[5]),
-                          GiftItem(gift: pageItems[6]),
-                          GiftItem(gift: pageItems[7]),
-                        ],
+                  // 創建一個填充剩餘空間的透明Container
+                  Widget transparentContainer = Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 73,
+                        width: 73,
                       ),
                     ],
                   );
 
-                  // return GridView.builder(
-                  //   gridDelegate:
-                  //       const SliverGridDelegateWithFixedCrossAxisCount(
-                  //     crossAxisCount: 4,
-                  //     childAspectRatio: 100 / 110,
-                  //   ),
-                  //   physics:
-                  //       const NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
-                  //   itemCount: pageItems.length,
-                  //   itemBuilder: (context, index) {
-                  //     var gift = pageItems[index];
-                  //     return GiftItem(gift: gift);
-                  //   },
-                  // );
+                  // 動態生成小部件列表，包括占位符
+                  List<Widget> createGiftRow(int rowStart, int rowEnd) {
+                    // 確保行中至少有四個小部件，包括真實的項目和占位符
+                    return List<Widget>.generate(4, (index) {
+                      // 確定是否應該顯示真實的禮物項目
+                      if (rowStart + index < pageItems.length) {
+                        // 如果應該顯示禮物項目，則返回一個帶有邊距的禮物項目
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0), // 調整邊距以符合您的設計
+                          child: GiftItem(gift: pageItems[rowStart + index]),
+                        );
+                      } else {
+                        // 如果不顯示禮物項目，則返回一個相同大小的透明容器作為占位符
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0), // 調整邊距以符合您的設計
+                          child: transparentContainer,
+                        );
+                      }
+                    });
+                  }
+
+                  return Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: createGiftRow(0, 4),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: createGiftRow(4, 8),
+                      ),
+                    ],
+                  );
                 },
                 options: CarouselOptions(
                   height: double.infinity,
                   viewportFraction: 1.0,
                   enableInfiniteScroll: false,
                   onPageChanged: (index, reason) {
-                    // 在这里处理页面改变的事件
+                    _currentIndexNotifier.value = index;
                   },
                 ),
               ),
             ),
-          )
+          ),
+          AnimatedBuilder(
+            animation: _currentIndexNotifier, // 監聽ValueNotifier
+            builder: (context, child) {
+              // 這個builder只會重建以下小部件，當_currentIndexNotifier發生變化時
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(totalPageCount, (index) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndexNotifier.value == index
+                          ? Colors.white
+                          : Colors.grey,
+                    ),
+                  );
+                }),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -241,7 +286,7 @@ class GiftItem extends StatelessWidget {
           //   width: 73,
           //   height: 73,
           // ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           Text(
             gift.name,
             style: TextStyle(
@@ -249,8 +294,6 @@ class GiftItem extends StatelessWidget {
               fontSize: 12,
             ),
           ),
-          // height 5
-          const SizedBox(height: 3),
           Text(
             gift.price,
             style: TextStyle(
