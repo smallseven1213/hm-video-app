@@ -41,7 +41,10 @@ class _RankProviderState extends State<RankProvider> {
       try {
         var getRoomRank = await LiveApi().getRank();
 
-        liveRoomController.liveRoom.value?.amount = getRoomRank.data.amount;
+        // liveRoomController.liveRoom.value?.amount = getRoomRank.data.amount;
+        liveRoomController.liveRoom.update((val) {
+          val!.amount = getRoomRank.data.amount;
+        });
 
         setState(() {
           roomRank = getRoomRank.data;
