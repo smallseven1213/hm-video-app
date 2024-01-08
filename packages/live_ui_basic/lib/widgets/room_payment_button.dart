@@ -44,6 +44,10 @@ class RoomPaymentButton extends StatelessWidget {
                   Text(liveroomController.liveRoom.value!.amount.toString(),
                       style:
                           const TextStyle(color: Colors.white, fontSize: 12)),
+                if (liveroomController.liveRoomInfo.value?.chargeType == 3)
+                  Text(' /10分',
+                      style: const TextStyle(
+                          color: Color(0xFFc8c8c8), fontSize: 12)),
               ],
             ),
           ),
