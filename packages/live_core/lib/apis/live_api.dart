@@ -141,7 +141,6 @@ class LiveApi {
         LiveApiResponseBase.fromJson(
       response.data,
       (data) => (data as List).map((item) {
-        print(item);
         return Gift.fromJson(item);
       }).toList(),
     );

@@ -9,6 +9,7 @@ class LiveSearchController extends GetxController {
   var popularStreamers = <StreamerProfile>[].obs;
   var recommendKeywords = <String>[].obs;
   var searchResult = <StreamerProfile>[].obs;
+  var keyword = ''.obs;
 
   LiveSearchController() {
     fetchData();
@@ -30,9 +31,9 @@ class LiveSearchController extends GetxController {
   //   fetchData(rankType, timeType);
   // }
 
-  void getKeywords(keyword) async {
+  void getKeywords(text) async {
     try {
-      List<String> res = await _searchApi.getRecommendKeywords(keyword);
+      List<String> res = await _searchApi.getRecommendKeywords(text);
       recommendKeywords.value = res;
       print(res);
     } catch (e) {
@@ -40,10 +41,11 @@ class LiveSearchController extends GetxController {
     }
   }
 
-  void search(keyword) async {
+  void search(text) async {
     try {
-      List<StreamerProfile> res = await _searchApi.search(keyword: keyword);
+      List<StreamerProfile> res = await _searchApi.search(keyword: text);
       searchResult.value = res;
+      keyword.value = text;
     } catch (e) {
       print(e);
     }

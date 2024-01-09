@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:live_core/controllers/live_search_history_controller.dart';
+import 'package:live_core/controllers/live_search_controller.dart';
 
 class SearchInputWidget extends StatefulWidget {
   final String? query;
@@ -24,11 +24,21 @@ class SearchInputWidget extends StatefulWidget {
 
 class _SearchInputWidgetState extends State<SearchInputWidget> {
   final TextEditingController _controller = TextEditingController();
+  final LiveSearchController liveSearchController = Get.find();
+  late final RxString keyword;
 
   @override
   void initState() {
     super.initState();
-    _controller.text = widget.query ?? '';
+    ever(liveSearchController.keyword, (_) {
+      _controller.text = liveSearchController.keyword.value;
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -50,9 +60,9 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
               style: const TextStyle(
                 color: Colors.white,
               ),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: '搜尋主播ID暱稱',
-                hintStyle: const TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: Colors.white),
                 border: InputBorder.none,
               ),
               onChanged: (value) {
@@ -61,7 +71,6 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
                 }
               },
               onSubmitted: (value) {
-                print('@@@ onSubmitted: $value');
                 if (widget.onSearch != null) {
                   widget.onSearch!(value);
                 }

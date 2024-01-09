@@ -63,7 +63,7 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   Expanded(
                     child: SearchInputWidget(
-                      query: widget.query,
+                      // query: keyword,
                       showCancel: displayKeywordResult || displaySearchResult,
                       onChanged: (value) {
                         setState(() {

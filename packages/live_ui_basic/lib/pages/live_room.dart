@@ -102,7 +102,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
       );
     }
     return Obx(() {
-      print(controller.liveRoom.value);
+      // print(controller.liveRoom.value);
       if (controller.liveRoom.value != null) {
         return Scaffold(
           body: Stack(
