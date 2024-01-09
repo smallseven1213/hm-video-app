@@ -5,6 +5,7 @@ import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/models/room_rank.dart';
 
 import '../apis/live_api.dart';
+import '../models/live_room.dart';
 
 class RankProvider extends StatefulWidget {
   final int pid;
@@ -22,18 +23,38 @@ class _RankProviderState extends State<RankProvider> {
   late Timer _timer;
   late LiveRoomController liveRoomController;
 
+  // listRoomControllerLisnter
+  late StreamSubscription<LiveRoom?> listRoomControllerLisnter;
+
   @override
   void initState() {
     super.initState();
     liveRoomController =
         Get.find<LiveRoomController>(tag: widget.pid.toString());
-    _startRankTimer();
+
+    if (liveRoomController.liveRoom.value?.pullurl != null &&
+        liveRoomController.liveRoom.value?.pullurl != "") {
+      _startRankTimer();
+    }
+
+    String? lastPullUrl;
+
+    // 監聽liveRoomController.liveRoom.value?.pullUrl的值，如果為不為null也不為""，則開始計時"
+    listRoomControllerLisnter = liveRoomController.liveRoom.listen((liveRoom) {
+      if (liveRoom != null && liveRoom.pullurl != lastPullUrl) {
+        lastPullUrl = liveRoom.pullurl; // 更新儲存的pullurl
+        if (liveRoom.pullurl.isNotEmpty) {
+          _startRankTimer(); // 只有在pullurl變化時才呼叫這個方法
+        }
+      }
+    });
   }
 
   @override
   void dispose() {
-    super.dispose();
     _timer.cancel();
+    listRoomControllerLisnter.cancel();
+    super.dispose();
   }
 
   void _startRankTimer() {

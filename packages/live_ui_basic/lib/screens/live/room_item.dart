@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/models/room.dart';
 import 'package:live_core/widgets/live_image.dart';
+import 'package:live_ui_basic/libs/showLiveDialog.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'countdown_timer.dart';
+
+final liveApi = LiveApi();
 
 class RoomItem extends StatelessWidget {
   final Room room;
@@ -43,7 +47,7 @@ class RoomItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
+      onTap: () async {
         MyRouteDelegate.of(context).push(
           "/live_room",
           args: {"pid": room.id},
