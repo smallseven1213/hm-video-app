@@ -41,7 +41,7 @@ class LiveApi {
     return data;
   }
 
-  Future<LiveApiResponseBase<LiveRoom>> enterRoom(int pid) async {
+  Future<LiveApiResponseBase<LiveRoom?>> enterRoom(int pid) async {
     try {
       final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
       var response = await liveFetcher(
@@ -234,10 +234,11 @@ class LiveApi {
     return parsedResponse;
   }
 
-  Future<LiveApiResponseBase<bool>> buyWatch(int pid) async {
+  Future<LiveApiResponseBase<bool>> buyWatch(
+      int pid, bool userIsAutoRenew) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: '$liveApiHost/buywatch?pid=$pid&autobuy=true',
+      url: '$liveApiHost/buywatch?pid=$pid&autobuy=$userIsAutoRenew',
       method: 'GET',
     );
 
