@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:live_core/controllers/live_search_history_controller.dart';
+import 'package:live_core/controllers/live_search_controller.dart';
 
 class SearchInputWidget extends StatefulWidget {
   final String? query;
@@ -24,35 +24,43 @@ class SearchInputWidget extends StatefulWidget {
 
 class _SearchInputWidgetState extends State<SearchInputWidget> {
   final TextEditingController _controller = TextEditingController();
+  final LiveSearchController liveSearchController = Get.find();
+  late final RxString keyword;
 
   @override
   void initState() {
     super.initState();
-    _controller.text = widget.query ?? '';
+    ever(liveSearchController.keyword, (_) {
+      _controller.text = liveSearchController.keyword.value;
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 30,
       decoration: BoxDecoration(
-        color: const Color(0xFF1f2533),
+        color: const Color(0xFF323d5c),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         children: [
           const SizedBox(width: 10),
-          const Icon(Icons.search, color: Colors.white),
+          const Icon(Icons.search, color: Colors.white, size: 18),
           const SizedBox(width: 10),
           Expanded(
             child: TextField(
               controller: _controller,
-              style: const TextStyle(
-                color: Colors.white,
-              ),
-              decoration: InputDecoration(
+              style: const TextStyle(color: Colors.white, fontSize: 14),
+              decoration: const InputDecoration(
                 hintText: '搜尋主播ID暱稱',
-                hintStyle: const TextStyle(color: Colors.white),
+                hintStyle: TextStyle(color: Color(0xff5a6077), fontSize: 14),
                 border: InputBorder.none,
               ),
               onChanged: (value) {
@@ -61,7 +69,6 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
                 }
               },
               onSubmitted: (value) {
-                print('@@@ onSubmitted: $value');
                 if (widget.onSearch != null) {
                   widget.onSearch!(value);
                 }
@@ -76,7 +83,7 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
                   widget.onCancel!();
                 }
               },
-              icon: const Icon(Icons.close, color: Colors.white),
+              icon: const Icon(Icons.close, color: Colors.white, size: 14),
             ),
         ],
       ),

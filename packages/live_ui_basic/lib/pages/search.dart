@@ -55,15 +55,12 @@ class _SearchPageState extends State<SearchPage> {
               Row(
                 children: [
                   TextButton(
-                    onPressed: () => Navigator.pop(context),
-                    child: const Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                  ),
+                      onPressed: () => Navigator.pop(context),
+                      child: const Icon(Icons.arrow_back_ios,
+                          color: Colors.white, size: 16)),
                   Expanded(
                     child: SearchInputWidget(
-                      query: widget.query,
+                      // query: keyword,
                       showCancel: displayKeywordResult || displaySearchResult,
                       onChanged: (value) {
                         setState(() {
@@ -86,7 +83,7 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () => onSearch(keyword),
                     child: const Text(
                       '搜尋',
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   )
                 ],
@@ -117,8 +114,7 @@ class SectionTitle extends StatelessWidget {
         title,
         style: const TextStyle(
           color: Color(0xff6f6f79),
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
+          fontSize: 14,
         ),
       ),
     );
@@ -137,12 +133,12 @@ class RecommendScreen extends StatelessWidget {
         SliverToBoxAdapter(child: RecentSearches(onSearch: onSearch)),
         const SliverToBoxAdapter(child: SectionTitle(title: '粉絲推薦')),
         const SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          padding: EdgeInsets.symmetric(horizontal: 4.0),
           sliver: FanRecommendationWidget(),
         ),
         const SliverToBoxAdapter(child: SectionTitle(title: '熱門推薦')),
         const SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          padding: EdgeInsets.symmetric(horizontal: 4.0),
           sliver: PopularStreamersWidget(),
         ),
       ],

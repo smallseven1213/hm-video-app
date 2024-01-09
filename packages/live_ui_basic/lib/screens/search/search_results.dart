@@ -37,7 +37,7 @@ class SearchResults extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
             ),
             subtitle: Text(
-              '粉絲人數: ${steamer[index].fansCount}',
+              '關注人數: ${steamer[index].fansCount}',
               style: const TextStyle(color: Colors.white70),
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.white),

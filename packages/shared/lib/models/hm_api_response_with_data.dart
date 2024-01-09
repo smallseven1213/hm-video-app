@@ -1,5 +1,5 @@
 class HMApiResponseBaseWithDataWithData<T> {
-  String? code;
+  dynamic code;
   T? data;
 
   HMApiResponseBaseWithDataWithData({this.code, this.data});
