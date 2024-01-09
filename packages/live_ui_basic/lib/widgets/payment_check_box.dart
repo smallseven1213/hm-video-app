@@ -38,7 +38,6 @@ class PaymentCheckbox extends StatelessWidget {
               color: Colors.white, // Change the color to match your design
             ),
           ),
-          const SizedBox(height: 8),
         ],
       ),
     );
