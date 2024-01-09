@@ -83,7 +83,7 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () => onSearch(keyword),
                     child: const Text(
                       '搜尋',
-                      style: TextStyle(color: Color(0xff5a6077), fontSize: 14),
+                      style: TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   )
                 ],
