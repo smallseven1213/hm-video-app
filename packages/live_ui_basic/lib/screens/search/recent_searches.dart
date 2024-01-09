@@ -35,8 +35,10 @@ class RecentSearches extends StatelessWidget {
                               height: 26,
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 13, vertical: 3),
-                              decoration:
-                                  const BoxDecoration(color: Color(0xFF343b4f)),
+                              decoration: const BoxDecoration(
+                                  color: Color(0xFF343b4f),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(5))),
                               child: Text(
                                 tag,
                                 style:
