@@ -8,6 +8,7 @@ import '../screens/search/keyword_list.dart';
 import '../screens/search/popular_streamers.dart';
 import '../screens/search/fan_recommendation.dart';
 import '../screens/search/recent_searches.dart';
+import '../screens/search/search_results.dart';
 
 class SearchPage extends StatefulWidget {
   final String? query;

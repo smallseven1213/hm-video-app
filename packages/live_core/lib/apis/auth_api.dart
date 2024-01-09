@@ -1,7 +1,8 @@
 import 'package:shared/controllers/system_config_controller.dart';
-import 'package:shared/models/hm_api_response_with_data.dart';
 import 'package:shared/utils/fetcher.dart';
 import 'package:get/get.dart';
+
+import '../models/live_api_response_with_data.dart';
 
 class AuthApi {
   static final AuthApi _instance = AuthApi._internal();
@@ -13,7 +14,7 @@ class AuthApi {
     return _instance;
   }
 
-  Future<HMApiResponseBaseWithDataWithData> login(String token) async {
+  Future<LiveApiResponseBaseWithDataWithData> login(String token) async {
     var response = await fetcher(
         url: '${systemController.apiHost.value}/api/v1/third/login',
         method: 'POST',
@@ -21,6 +22,6 @@ class AuthApi {
           'apiId': 2,
         });
 
-    return HMApiResponseBaseWithDataWithData.fromJson(response.data);
+    return LiveApiResponseBaseWithDataWithData.fromJson(response.data);
   }
 }

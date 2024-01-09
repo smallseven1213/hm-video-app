@@ -58,7 +58,7 @@ class _LiveScaffoldState extends State<LiveScaffold> {
   Future<void> _loginAndSaveToken(String token) async {
     final authApi = AuthApi();
     var response = await authApi.login(token);
-    if (response.code == '00') {
+    if (response.code == 200) {
       GetStorage().write('live-token', response.data["token"]);
       liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;

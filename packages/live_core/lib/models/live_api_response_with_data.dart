@@ -1,10 +1,10 @@
-class HMApiResponseBaseWithDataWithData<T> {
-  String? code;
+class LiveApiResponseBaseWithDataWithData<T> {
+  int? code;
   T? data;
 
-  HMApiResponseBaseWithDataWithData({this.code, this.data});
+  LiveApiResponseBaseWithDataWithData({this.code, this.data});
 
-  HMApiResponseBaseWithDataWithData.fromJson(Map<String, dynamic> json) {
+  LiveApiResponseBaseWithDataWithData.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     data = json['data'];
   }

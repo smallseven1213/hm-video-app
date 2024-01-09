@@ -33,9 +33,12 @@ class LiveSearchController extends GetxController {
 
   void getKeywords(text) async {
     try {
+      if (text.isEmpty) {
+        recommendKeywords.value = [];
+        return;
+      }
       List<String> res = await _searchApi.getRecommendKeywords(text);
       recommendKeywords.value = res;
-      print(res);
     } catch (e) {
       print(e);
     }

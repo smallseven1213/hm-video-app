@@ -6,6 +6,8 @@ import 'package:live_core/controllers/live_search_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../widgets/no_result.dart';
+
 class SearchResults extends StatelessWidget {
   final LiveSearchController controller = Get.find();
   final LiveListController liveListController = Get.find();
@@ -18,6 +20,9 @@ class SearchResults extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(() {
       var steamer = controller.searchResult;
+      if (steamer.isEmpty) {
+        return const NoResult();
+      }
       return ListView.builder(
         itemCount: steamer.length,
         itemBuilder: (context, index) {
