@@ -90,7 +90,6 @@ class _LiveScaffoldState extends State<LiveScaffold> {
         ),
       );
     }
-    Get.put(LiveListController());
     return Scaffold(
       appBar: widget.appBar,
       body: widget.body,

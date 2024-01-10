@@ -84,14 +84,15 @@ class FilterGroup extends StatelessWidget {
 
   void filter(Option option) {
     if (name == 'chargeType') {
-      liveListController.filter(roomChargeType: option.value);
+      liveListController.setChargeType(option.value);
     } else if (name == 'status') {
-      liveListController.filter(roomStatus: option.value);
+      liveListController.setStatus(option.value);
     } else if (name == 'follow') {
       final userFollowsController = Get.find<UserFollowsController>();
       List<Streamer>? followedList = option.value == FollowType.followed
           ? userFollowsController.follows
           : null;
+
       liveListController.filterVideosByFollowedStreamers(
         follows: followedList,
         filterFollowType: option.value,

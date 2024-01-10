@@ -5,7 +5,7 @@ import '../controllers/live_list_controller.dart';
 import '../models/room.dart';
 
 class LiveListProvider extends StatefulWidget {
-  final Widget Function(List<Room> ads) child;
+  final Widget Function(List<Room> rooms) child;
   const LiveListProvider({
     Key? key,
     required this.child,
@@ -25,6 +25,6 @@ class LiveListState extends State<LiveListProvider> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => widget.child(controller.filteredRooms));
+    return Obx(() => widget.child(controller.rooms));
   }
 }
