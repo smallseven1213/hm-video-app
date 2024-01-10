@@ -93,7 +93,6 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
-    print('@_timeLeft: $_timeLeft');
     return _timeLeft.isNegative
         ? _buildLabel(
             color: widget.chargeType == RoomChargeType.free.index

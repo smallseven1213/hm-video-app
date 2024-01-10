@@ -69,10 +69,9 @@ class LiveListController extends GetxController {
             .toList();
   }
 
-  Room? getRoomById(int id) =>
-      rooms.value.firstWhereOrNull((room) => room.id == id);
+  Room? getRoomById(int id) => rooms.firstWhereOrNull((room) => room.id == id);
   Room? getRoomByStreamerId(int streamerId) =>
-      rooms.value.firstWhereOrNull((room) => room.streamerId == streamerId);
+      rooms.firstWhereOrNull((room) => room.streamerId == streamerId);
 
   void filterVideosByFollowedStreamers({
     FollowType? filterFollowType,
@@ -82,7 +81,7 @@ class LiveListController extends GetxController {
     if (follows != null) {
       Set<int> followedStreamerIds =
           follows.map((streamer) => streamer.id).toSet();
-      rooms.value = rooms.value
+      rooms.value = rooms
           .where((video) => followedStreamerIds.contains(video.streamerId))
           .toList();
     }
