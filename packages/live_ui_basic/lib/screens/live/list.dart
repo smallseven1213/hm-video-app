@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:live_core/models/room.dart';
 import 'package:live_core/widgets/live_list_provider.dart';
 import 'package:live_ui_basic/screens/live/room_item.dart';
+import 'package:live_ui_basic/widgets/no_result.dart';
 
 class LiveList extends StatelessWidget {
   const LiveList({Key? key}) : super(key: key);
@@ -9,8 +10,7 @@ class LiveList extends StatelessWidget {
   Widget build(BuildContext context) {
     return LiveListProvider(child: (List<Room> rooms) {
       if (rooms.isEmpty) {
-        return const SliverToBoxAdapter(
-            child: SizedBox.shrink()); // 或者顯示一個加載中的指示器
+        return const SliverToBoxAdapter(child: NoResult()); // 或者顯示一個加載中的指示器
       }
       return SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
