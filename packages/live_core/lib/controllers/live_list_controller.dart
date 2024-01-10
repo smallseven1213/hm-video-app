@@ -33,13 +33,13 @@ class LiveListController extends GetxController {
   Rx<FollowType> followType = Rx<FollowType>(FollowType.none);
 
   LiveListController() {
-    ever(status, (_) => _fetchData());
-    ever(chargeType, (_) => _fetchData());
-    ever(sortType, (_) => _fetchData());
-    ever(followType, (_) => _fetchData());
+    ever(status, (_) => fetchData());
+    ever(chargeType, (_) => fetchData());
+    ever(sortType, (_) => fetchData());
+    ever(followType, (_) => fetchData());
     ever(tagId, (_) => filterRoomsByTagId());
 
-    _fetchData();
+    fetchData();
   }
 
   void setStatus(RoomStatus newStatus) => status.value = newStatus;
@@ -50,7 +50,7 @@ class LiveListController extends GetxController {
       followType.value = newFollowType;
   void setTagId(int? newTagId) => tagId.value = newTagId;
 
-  _fetchData() async {
+  fetchData() async {
     var res = await liveApi.getRooms(
       chargeType: chargeType.value.index,
       status: status.value.index,

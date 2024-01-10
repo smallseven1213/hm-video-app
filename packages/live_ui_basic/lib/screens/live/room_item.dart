@@ -64,6 +64,7 @@ class RoomItem extends StatelessWidget {
             ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: LiveImage(
+                  key: ValueKey(room.playerCover ?? ''), 
                   base64Url: room.playerCover ?? '',
                   fit: BoxFit.cover,
                   width: double.infinity,
