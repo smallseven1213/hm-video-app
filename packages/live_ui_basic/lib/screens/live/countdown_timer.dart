@@ -60,14 +60,16 @@ class _CountdownTimerState extends State<CountdownTimer> {
     if (widget.reserveAt.isEmpty) return;
 
     final endTime = DateTime.parse(widget.reserveAt);
-    final currentTime = DateTime.now();
 
     if (endTime.isBefore(DateTime.now())) {
+      final currentTime = DateTime.now();
       setState(() {
         _timeLeft = endTime.difference(currentTime);
       });
     } else {
       _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+        final currentTime = DateTime.now();
+
         setState(() {
           _timeLeft = endTime.difference(currentTime);
           if (_timeLeft.isNegative) {
@@ -91,6 +93,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
+    print('@_timeLeft: $_timeLeft');
     return _timeLeft.isNegative
         ? _buildLabel(
             color: widget.chargeType == RoomChargeType.free.index
