@@ -53,19 +53,33 @@ class StreamerInfo extends StatelessWidget {
                 children: [
                   Text(
                     roomInfo?.nickname ?? "",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 10,
                     ),
                   ),
-                  Text(
-                    roomInfo?.chargeAmount.toString() ?? "",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 9,
-                    ),
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    // 水平置左
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        liveRoomController.displayUserCount.value > 1000
+                            ? 'packages/live_ui_basic/assets/images/ic_hot.webp'
+                            : 'packages/live_ui_basic/assets/images/ic_view.webp',
+                        width: 8,
+                        height: 8,
+                      ),
+                      Text(
+                        liveRoomController.displayUserCount.value.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),

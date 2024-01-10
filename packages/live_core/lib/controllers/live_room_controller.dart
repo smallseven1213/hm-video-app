@@ -11,6 +11,7 @@ class LiveRoomController extends GetxController {
   Rx<Room?> liveRoomInfo = Rx<Room?>(null);
   var liveRoom = Rx<LiveRoom?>(null);
   var displayAmount = 0.obs; // 會與liveRoom.value?.amount同步
+  var displayUserCount = 0.obs; // 人數
   var hasError = false.obs;
   LiveRoomController(this.pid);
 
@@ -34,6 +35,11 @@ class LiveRoomController extends GetxController {
     // liveRoom.update((val) {
     //   val!.amount = amount;
     // });
+  }
+
+  // setUserCount
+  void setUserCount(int userCount) {
+    displayUserCount.value = userCount;
   }
 
   // exit room
