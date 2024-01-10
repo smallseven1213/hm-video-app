@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../apis/live_api.dart';
+import '../controllers/live_room_controller.dart';
 import '../controllers/user_follows_controller.dart';
 import '../models/streamer.dart';
 
@@ -9,6 +10,7 @@ final liveApi = LiveApi();
 
 class FollowLiveCheckProvider extends StatefulWidget {
   final int hid;
+  final int pid;
   final String streamerNickname;
   final Widget Function(
     bool isFollowed,
@@ -16,6 +18,7 @@ class FollowLiveCheckProvider extends StatefulWidget {
 
   const FollowLiveCheckProvider({
     Key? key,
+    required this.pid,
     required this.hid,
     required this.streamerNickname,
     required this.child,
@@ -27,23 +30,25 @@ class FollowLiveCheckProvider extends StatefulWidget {
 }
 
 class _FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
-  bool isFollowed = false;
   final userFollowsController = Get.find<UserFollowsController>();
+  late LiveRoomController liveRoomController;
+
+  bool isFollowed = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchFollowState();
-  }
 
-  void _fetchFollowState() {
-    var response = userFollowsController.isFollowed(widget.hid);
+    liveRoomController =
+        Get.find<LiveRoomController>(tag: widget.pid.toString());
+
     setState(() {
-      isFollowed = response;
+      isFollowed = liveRoomController.liveRoom.value?.follow ?? false;
     });
   }
 
   void handleTap() async {
+    var isFollowed = liveRoomController.liveRoom.value?.follow ?? false;
     if (isFollowed) {
       // Unfollow
       userFollowsController.unfollow(widget.hid);

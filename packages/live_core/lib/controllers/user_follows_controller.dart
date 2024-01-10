@@ -73,7 +73,7 @@ class UserFollowsController extends GetxController {
     follows.refresh();
   }
 
-  bool isFollowed(int streamerId) {
-    return follows.any((streamer) => streamer.id == streamerId);
-  }
+  // bool isFollowed(int streamerId) {
+  //   return follows.any((streamer) => streamer.id == streamerId);
+  // }
 }
