@@ -34,7 +34,7 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
     return Obx(() {
       if (liveroomController.liveRoom.value == null ||
           liveroomController.liveRoomInfo.value?.chargeType == 1 ||
-          liveroomController.liveRoom.value!.amount <= 0) {
+          liveroomController.displayAmount.value <= 0) {
         return Container();
       } else {
         return Column(
@@ -45,7 +45,7 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
             const SizedBox(height: 8),
             InkWell(
               onTap: () async {
-                var price = liveroomController.liveRoom.value!.amount;
+                var price = liveroomController.displayAmount.value;
                 var userAmount = Get.find<LiveUserController>().getAmount;
                 if (userAmount < price) {
                   showLiveDialog(
@@ -148,11 +148,9 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                           height: 16,
                         ),
                         const SizedBox(width: 5),
-                        if (liveroomController.liveRoom.value?.amount != null &&
-                            liveroomController.liveRoom.value!.amount > 0)
+                        if (liveroomController.displayAmount.value > 0)
                           Text(
-                              liveroomController.liveRoom.value!.amount
-                                  .toString(),
+                              liveroomController.displayAmount.value.toString(),
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 12)),
                         if (liveroomController.liveRoomInfo.value?.chargeType ==

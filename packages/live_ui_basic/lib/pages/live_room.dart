@@ -102,10 +102,10 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
         return Scaffold(
           body: Stack(
             children: [
-              if (controller.liveRoom.value!.amount > 0 ||
+              if (controller.displayAmount.value > 0 ||
                   controller.liveRoom.value!.pullUrlDecode == null)
                 Container(color: Colors.black),
-              if (controller.liveRoom.value!.amount <= 0 &&
+              if (controller.displayAmount.value <= 0 &&
                   controller.liveRoom.value!.pullUrlDecode != null)
                 PlayerLayout(
                     uri: Uri.parse(controller.liveRoom.value!.pullUrlDecode!)),
@@ -113,6 +113,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 top: MediaQuery.of(context).padding.top + 50,
                 left: 0,
                 child: TopControllers(
+                  key: ValueKey(controller.liveRoomInfo.value?.streamerId),
                   hid: controller.liveRoomInfo.value?.streamerId ?? 0,
                   pid: widget.pid,
                 ),
@@ -123,6 +124,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   bottom: 0,
                   left: 7,
                   child: ChatroomLayout(
+                    key: ValueKey(controller.liveRoomInfo.value?.streamerId),
                     token: controller.liveRoom.value!.chattoken,
                   )),
               Positioned(
@@ -134,6 +136,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   left: 40,
                   right: 40,
                   child: RoomPaymentButton(
+                    key: ValueKey(widget.pid),
                     pid: widget.pid,
                   )),
             ],

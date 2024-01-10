@@ -117,7 +117,7 @@ class LiveApi {
     }
   }
 
-  Future<LiveApiResponseBase<RoomRank>> getRank() async {
+  Future<LiveApiResponseBase<RoomRank>> getRank(int pid) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
       url: '$liveApiHost/rank',
