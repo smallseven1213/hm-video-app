@@ -4,6 +4,7 @@ import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:get/get.dart';
 
+import '../controllers/live_list_controller.dart';
 import '../libs/decryptAES256ECB.dart';
 import '../models/gift.dart';
 import '../models/live_api_response_base.dart';
@@ -23,11 +24,32 @@ class LiveApi {
   }
 
   // 主播排行榜
-  Future<List<Room>> getRooms() async {
-    const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
+  Future<List<Room>> getRooms({
+    status = 0,
+    chargeType = 0,
+    ranking =
+        SortType.defaultSort, // default / watch / income / newcomer / fans
+  }) async {
+    var _ranking = ranking;
+    switch (ranking) {
+      case SortType.defaultSort:
+        _ranking = "default";
+      case SortType.watch:
+        _ranking = "watch";
+      case SortType.income:
+        _ranking = "income";
+      case SortType.newcomer:
+        _ranking = "newcomer";
+      case SortType.fans:
+        _ranking = "fans";
+      default:
+        _ranking = "default";
+    }
 
+    const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
     var response = await liveFetcher(
-      url: '$userApiHost/room/list',
+      url:
+          '$userApiHost/room/list?page=1&per_page=20&status=$status&charge_type=$chargeType&ranking=$_ranking',
     );
 
     if (response.data['data'].isEmpty) {

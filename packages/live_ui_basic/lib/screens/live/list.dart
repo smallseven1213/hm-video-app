@@ -1,16 +1,46 @@
-import 'package:flutter/material.dart';
-import 'package:live_core/models/room.dart';
-import 'package:live_core/widgets/live_list_provider.dart';
-import 'package:live_ui_basic/screens/live/room_item.dart';
+import 'dart:async';
 
-class LiveList extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:live_core/controllers/live_list_controller.dart';
+import 'package:live_ui_basic/screens/live/room_item.dart';
+import 'package:live_ui_basic/widgets/no_result.dart';
+
+class LiveList extends StatefulWidget {
   const LiveList({Key? key}) : super(key: key);
+
+  @override
+  _LiveListState createState() => _LiveListState();
+}
+
+class _LiveListState extends State<LiveList> {
+  Timer? _timer;
+
+  final LiveListController _controller = Get.find<LiveListController>();
+
+  @override
+  void initState() {
+    super.initState();
+    _startAutoRefresh();
+  }
+
+  void _startAutoRefresh() {
+    _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
+      _controller.fetchData();
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer?.cancel(); // 取消定时器
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return LiveListProvider(child: (List<Room> rooms) {
-      if (rooms.isEmpty) {
-        return const SliverToBoxAdapter(
-            child: SizedBox.shrink()); // 或者顯示一個加載中的指示器
+    return Obx(() {
+      if (_controller.rooms.isEmpty) {
+        return const SliverToBoxAdapter(child: NoResult()); // 或者顯示一個加載中的指示器
       }
       return SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -20,8 +50,11 @@ class LiveList extends StatelessWidget {
           mainAxisSpacing: 10, // 垂直間隔
         ),
         delegate: SliverChildBuilderDelegate(
-          (context, index) => RoomItem(room: rooms[index]),
-          childCount: rooms.length,
+          (context, index) => RoomItem(
+            key: ValueKey(_controller.rooms[index].id),
+            room: _controller.rooms[index],
+          ),
+          childCount: _controller.rooms.length,
         ),
       );
     });

@@ -41,24 +41,24 @@ class _SelectionScreenState extends State<SelectionScreen> {
   final LiveListController liveListController = Get.find<LiveListController>();
 
   void sortRooms(int index) {
-    LiveListSortType sortType = LiveListSortType.defaultSort;
+    SortType sortType = SortType.defaultSort;
     switch (index) {
       case 0:
-        sortType = LiveListSortType.defaultSort;
+        sortType = SortType.defaultSort;
         break;
       case 1:
-        sortType = LiveListSortType.userLive;
+        sortType = SortType.watch;
         break;
       case 2:
-        sortType = LiveListSortType.userCost;
+        sortType = SortType.income;
         break;
       case 3:
-        sortType = LiveListSortType.hostEnter;
+        sortType = SortType.newcomer;
         break;
       default:
         break;
     }
-    liveListController.sort(liveListSortType: sortType);
+    liveListController.setSortType(sortType);
   }
 
   Widget optionTile(String title, int index) {

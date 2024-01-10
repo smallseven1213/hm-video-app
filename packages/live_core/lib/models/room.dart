@@ -26,7 +26,7 @@ class Room {
   final int streamerId; // 主播id
   final List<Tag> tags;
   final String title;
-  final double userCost; // 當前場次收益
+  final String userCost; // 當前場次收益
   final int userLive; // 當前場次實際人數
 
   Room({
@@ -64,8 +64,8 @@ class Room {
         streamerId: getField<int>(json['streamer'], 'id', defaultValue: 0),
         tags: tags,
         title: getField<String>(json, 'title', defaultValue: ''),
-        userCost: getField<double>(json['statistic'], 'total_income',
-            defaultValue: 0),
+        userCost: getField<String>(json['statistic'], 'total_income',
+            defaultValue: ''),
         userLive:
             getField<int>(json['statistic'], 'watch_count', defaultValue: 0),
       );
@@ -84,7 +84,7 @@ class Room {
         hostEnter: '',
         nickname: '',
         userLive: 0,
-        userCost: 0,
+        userCost: '',
       );
     }
   }

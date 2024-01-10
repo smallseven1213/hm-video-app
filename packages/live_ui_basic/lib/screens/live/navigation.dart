@@ -39,9 +39,9 @@ class _NavigationWidgetState extends State<NavigationWidget> {
                   _selectedIndex = index;
                 });
                 if (nav.rule == 'custom') {
-                  liveListController.filter(tagId: null);
+                  liveListController.setTagId(null);
                 } else {
-                  liveListController.filter(tagId: nav.id);
+                  liveListController.setTagId(nav.id);
                 }
               },
               child: Container(
