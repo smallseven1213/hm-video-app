@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/models/room_rank.dart';
+import 'package:live_core/widgets/rank_consumer.dart';
 import 'package:live_core/widgets/rank_provider.dart';
 
 import 'top_controllers/rank_data.dart';
@@ -18,10 +19,9 @@ class TopControllers extends StatelessWidget {
   Widget build(BuildContext context) {
     return RankProvider(
       pid: pid,
-      child: (RoomRank? roomRank) => Container(
+      child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 7),
         child: Column(
-          // align left
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
@@ -30,12 +30,16 @@ class TopControllers extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Room Info
-                  StreamerInfo(pid: pid, hid: hid),
+                  StreamerInfo(key: ValueKey(pid), pid: pid, hid: hid),
                   Expanded(
                     flex: 1,
-                    child: RankList(
-                      roomRank: roomRank,
+                    child: RankConsumer(
+                      pid: pid,
+                      child: (RoomRank? roomRank) {
+                        return RankList(
+                          roomRank: roomRank,
+                        );
+                      },
                     ),
                   ),
                   GestureDetector(
@@ -65,11 +69,15 @@ class TopControllers extends StatelessWidget {
                 ],
               ),
             ),
-            // height 10
             const SizedBox(height: 10),
-            RankData(
-              roomRank: roomRank,
-            )
+            RankConsumer(
+              pid: pid,
+              child: (RoomRank? roomRank) {
+                return RankData(
+                  roomRank: roomRank,
+                );
+              },
+            ),
           ],
         ),
       ),

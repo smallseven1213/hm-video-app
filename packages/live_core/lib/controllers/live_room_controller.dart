@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import '../apis/live_api.dart';
 import '../models/live_room.dart';
 import '../models/room.dart';
-import 'commands_controller.dart';
 
 final liveApi = LiveApi();
 
@@ -11,6 +10,7 @@ class LiveRoomController extends GetxController {
   int pid;
   Rx<Room?> liveRoomInfo = Rx<Room?>(null);
   var liveRoom = Rx<LiveRoom?>(null);
+  var displayAmount = 0.obs; // 會與liveRoom.value?.amount同步
   var hasError = false.obs;
   LiveRoomController(this.pid);
 
@@ -20,10 +20,20 @@ class LiveRoomController extends GetxController {
       hasError.value = false;
       var res = await liveApi.enterRoom(pid);
       liveRoom.value = res.data;
+      displayAmount.value = res.data?.amount ?? 0;
     } catch (e) {
-      print(e);
       hasError.value = true;
     }
+  }
+
+  // setAmount
+  void setAmount(int amount) {
+    displayAmount.value = amount;
+
+    // amount第一次取代會更新沒錯，但接下來顯示用displayAmount
+    // liveRoom.update((val) {
+    //   val!.amount = amount;
+    // });
   }
 
   // exit room
