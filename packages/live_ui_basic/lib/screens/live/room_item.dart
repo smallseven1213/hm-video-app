@@ -67,10 +67,16 @@ class RoomItem extends StatelessWidget {
 
           return;
         }
-        MyRouteDelegate.of(context).push(
+
+        bool updateRoomList = await MyRouteDelegate.of(context).push(
           "/live_room",
           args: {"pid": room.id},
         );
+
+        if (updateRoomList) {
+          _controller.fetchData();
+          _controller.startAutoRefresh();
+        }
       },
       child: Container(
         decoration: BoxDecoration(
