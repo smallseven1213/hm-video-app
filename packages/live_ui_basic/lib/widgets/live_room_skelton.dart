@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LiveRoomSkeleton extends StatelessWidget {
@@ -28,7 +29,7 @@ class LiveRoomSkeleton extends StatelessWidget {
                     children: [
                       GestureDetector(
                         onTap: () {
-                          Navigator.of(context).pop();
+                          Navigator.of(context).pop(true);
                           final liveRoomController =
                               Get.find<LiveRoomController>(tag: pid.toString());
                           liveRoomController.exitRoom();

@@ -67,7 +67,7 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   List<String> get stack => List.unmodifiable(_stack);
 
-  Future<void> push(String routeName,
+  Future<dynamic> push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,
       bool removeSamePath = false,
@@ -154,8 +154,8 @@ class MyRouteDelegate extends RouterDelegate<String>
   bool _onPopPage(Route<dynamic> route, dynamic result) {
     if (_stack.isNotEmpty) {
       if (_stack.last.path == route.settings.name) {
-        final lastStackData = _stack.removeLast();
-        lastStackData.completer.complete();
+        StackData lastStackData = _stack.removeLast();
+        lastStackData.completer.complete(result); // 完成 completer
         notifyListeners();
       }
     }
