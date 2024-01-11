@@ -99,6 +99,7 @@ class LiveApi {
           pullurl: apiResponse.data.pullurl,
           pullUrlDecode: decryptedData.trim().trimRight(),
           amount: apiResponse.data.amount,
+          follow: apiResponse.data.follow,
         ),
         // 下面測試用
         // pullUrlDecode:

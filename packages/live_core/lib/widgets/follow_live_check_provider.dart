@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../apis/live_api.dart';
+import '../controllers/live_room_controller.dart';
 import '../controllers/user_follows_controller.dart';
 import '../models/streamer.dart';
 
@@ -9,6 +10,7 @@ final liveApi = LiveApi();
 
 class FollowLiveCheckProvider extends StatefulWidget {
   final int hid;
+  final int pid;
   final String streamerNickname;
   final Widget Function(
     bool isFollowed,
@@ -16,6 +18,7 @@ class FollowLiveCheckProvider extends StatefulWidget {
 
   const FollowLiveCheckProvider({
     Key? key,
+    required this.pid,
     required this.hid,
     required this.streamerNickname,
     required this.child,
@@ -27,24 +30,23 @@ class FollowLiveCheckProvider extends StatefulWidget {
 }
 
 class _FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
-  bool isFollowed = false;
   final userFollowsController = Get.find<UserFollowsController>();
+  late LiveRoomController liveRoomController;
+
+  bool isFollowed = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchFollowState();
-  }
-
-  void _fetchFollowState() {
-    var response = userFollowsController.isFollowed(widget.hid);
-    setState(() {
-      isFollowed = response;
-    });
+    liveRoomController =
+        Get.find<LiveRoomController>(tag: widget.pid.toString());
+    isFollowed = liveRoomController.liveRoom.value?.follow ?? false; // 初始值設置
   }
 
   void handleTap() async {
-    if (isFollowed) {
+    var currentFollowStatus =
+        liveRoomController.liveRoom.value?.follow ?? false;
+    if (currentFollowStatus) {
       // Unfollow
       userFollowsController.unfollow(widget.hid);
     } else {
@@ -56,8 +58,10 @@ class _FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
       ));
     }
 
+    var nextFollow = !currentFollowStatus;
+    liveRoomController.liveRoom.value?.follow = nextFollow;
     setState(() {
-      isFollowed = !isFollowed;
+      isFollowed = nextFollow; // 使用 setState 更新 isFollowed
     });
   }
 
