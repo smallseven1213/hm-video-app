@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
+import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/models/room.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
@@ -11,8 +13,12 @@ final liveApi = LiveApi();
 
 class RoomItem extends StatelessWidget {
   final Room room;
+  final LiveListController _controller = Get.find<LiveListController>();
 
-  const RoomItem({super.key, required this.room});
+  RoomItem({
+    super.key,
+    required this.room,
+  });
 
   Widget _buildLabel({
     required Color color,
@@ -48,6 +54,19 @@ class RoomItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+        _controller.autoRefreshCancel();
+        if (room.status == RoomStatus.ended.index) {
+          showLiveDialog(
+            context,
+            title: '直播已結束',
+            content: const Center(
+              child: Text('直播已結束',
+                  style: TextStyle(color: Colors.white, fontSize: 11)),
+            ),
+          );
+
+          return;
+        }
         MyRouteDelegate.of(context).push(
           "/live_room",
           args: {"pid": room.id},
@@ -64,7 +83,7 @@ class RoomItem extends StatelessWidget {
             ClipRRect(
                 borderRadius: BorderRadius.circular(30),
                 child: LiveImage(
-                  key: ValueKey(room.playerCover ?? ''), 
+                  key: ValueKey(room.playerCover ?? ''),
                   base64Url: room.playerCover ?? '',
                   fit: BoxFit.cover,
                   width: double.infinity,
