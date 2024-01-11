@@ -28,10 +28,13 @@ class _SearchPageState extends State<SearchPage> {
   @override
   void initState() {
     super.initState();
-    // TODO: Call your search API here and update the searchResults list.
   }
 
   onSearch(String value) {
+    if (value.isEmpty) {
+      onCancel();
+      return;
+    }
     setState(() {
       keyword = value;
       displayKeywordResult = false;
@@ -42,6 +45,14 @@ class _SearchPageState extends State<SearchPage> {
     Get.find<LiveSearchController>().search(keyword);
     // todo search
     // searchPageDataController.setKeyword(_searchController.text);
+  }
+
+  onCancel() {
+    setState(() {
+      keyword = '';
+      displaySearchResult = false;
+      displayKeywordResult = false;
+    });
   }
 
   @override
@@ -61,7 +72,6 @@ class _SearchPageState extends State<SearchPage> {
                           color: Colors.white, size: 16)),
                   Expanded(
                     child: SearchInputWidget(
-                      // query: keyword,
                       showCancel: displayKeywordResult || displaySearchResult,
                       onChanged: (value) {
                         setState(() {
@@ -71,13 +81,7 @@ class _SearchPageState extends State<SearchPage> {
                         Get.find<LiveSearchController>().getKeywords(keyword);
                       },
                       onSearch: onSearch,
-                      onCancel: () {
-                        setState(() {
-                          keyword = '';
-                          displaySearchResult = false;
-                          displayKeywordResult = false;
-                        });
-                      },
+                      onCancel: onCancel,
                     ),
                   ),
                   TextButton(
