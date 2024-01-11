@@ -55,6 +55,7 @@ class RoomRankController extends GetxController {
     try {
       var getRoomRank = await LiveApi().getRank(pid);
       liveRoomController.setAmount(getRoomRank.data.amount);
+      liveRoomController.setUserCount(getRoomRank.data.users);
       roomRank.value = getRoomRank.data;
     } catch (e) {
       print(e);

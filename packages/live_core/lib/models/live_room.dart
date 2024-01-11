@@ -19,19 +19,16 @@ class LiveRoom {
       this.pullUrlDecode});
 
   factory LiveRoom.fromJson(Map<String, dynamic> json) {
+    var follow = json['follow'];
     return LiveRoom(
-      chattoken: getField(json, 'chattoken', defaultValue: ''),
-      pid: getField(json, 'pid', defaultValue: 0),
-      hid: getField(json, 'hid', defaultValue: 0),
-      pullurl: getField(json, 'pullurl', defaultValue: ''),
-      amount: getField(json, 'amount', defaultValue: 0),
-
-      // pid: json['pid'],
-      // hid: int.parse(json['hid']),
-      // pullurl: json['pullurl'],
-      // amount: json['amount'],
-      // follow: json['follow'] ?? false,
-    );
+        chattoken: getField(json, 'chattoken', defaultValue: ''),
+        pid: getField(json, 'pid', defaultValue: 0),
+        // hid: getField(json, 'hid', defaultValue: 0),
+        hid: int.parse(json['hid']),
+        pullurl: getField(json, 'pullurl', defaultValue: ''),
+        amount: getField(json, 'amount', defaultValue: 0),
+        // follow: getField(json, 'follow', defaultValue: false),
+        follow: follow);
   }
 
   Map<String, dynamic> toJson() {

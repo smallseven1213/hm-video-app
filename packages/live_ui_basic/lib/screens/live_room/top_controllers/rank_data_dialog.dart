@@ -54,11 +54,11 @@ class _RankDataDialogState extends State<RankDataDialog>
                   clipBehavior: Clip.antiAlias,
                   child: rankItems[index].avatar.isNotEmpty &&
                           rankItems[index].avatar != ""
-                      ? LiveImage(
-                          base64Url: rankItems[index].avatar,
+                      ? Image.network(
+                          rankItems[index].avatar,
+                          fit: BoxFit.cover,
                           width: 18,
                           height: 18,
-                          fit: BoxFit.cover,
                         )
                       : SvgPicture.asset(
                           'packages/live_ui_basic/assets/svgs/default_avatar.svg',

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../apis/live_api.dart';
 import '../models/live_room.dart';
 import '../models/room.dart';
+import 'live_user_controller.dart';
 
 final liveApi = LiveApi();
 
@@ -11,14 +12,23 @@ class LiveRoomController extends GetxController {
   Rx<Room?> liveRoomInfo = Rx<Room?>(null);
   var liveRoom = Rx<LiveRoom?>(null);
   var displayAmount = 0.obs; // 會與liveRoom.value?.amount同步
+  var displayUserCount = 0.obs; // 人數
   var hasError = false.obs;
   LiveRoomController(this.pid);
+
+  // initState
+  @override
+  void onInit() {
+    super.onInit();
+    Get.find<LiveUserController>().getUserDetail();
+  }
 
   // fetch from "liveApi.getList"
   Future<void> fetchData() async {
     try {
       hasError.value = false;
       var res = await liveApi.enterRoom(pid);
+      print(res);
       liveRoom.value = res.data;
       displayAmount.value = res.data?.amount ?? 0;
     } catch (e) {
@@ -34,6 +44,11 @@ class LiveRoomController extends GetxController {
     // liveRoom.update((val) {
     //   val!.amount = amount;
     // });
+  }
+
+  // setUserCount
+  void setUserCount(int userCount) {
+    displayUserCount.value = userCount;
   }
 
   // exit room
