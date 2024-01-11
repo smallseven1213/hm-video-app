@@ -41,6 +41,7 @@ class LiveSearchController extends GetxController {
   }
 
   void search(text) async {
+    searchResult.value = [];
     try {
       List<StreamerProfile> res = await _searchApi.search(keyword: text);
       searchResult.value = res;

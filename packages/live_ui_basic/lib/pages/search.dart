@@ -24,6 +24,8 @@ class _SearchPageState extends State<SearchPage> {
   String keyword = '';
   bool displayKeywordResult = false;
   bool displaySearchResult = false;
+  final LiveSearchController liveSearchController = Get.find();
+  final LiveSearchHistoryController liveSearchHistoryController = Get.find();
 
   @override
   void initState() {
@@ -41,8 +43,8 @@ class _SearchPageState extends State<SearchPage> {
       displaySearchResult = true;
     });
 
-    Get.find<LiveSearchHistoryController>().add(keyword);
-    Get.find<LiveSearchController>().search(keyword);
+    liveSearchHistoryController.add(keyword);
+    liveSearchController.search(keyword);
   }
 
   onCancel() {
@@ -51,7 +53,7 @@ class _SearchPageState extends State<SearchPage> {
       displaySearchResult = false;
       displayKeywordResult = false;
     });
-    Get.find<LiveSearchController>().clearSearchResult();
+    liveSearchController.clearSearchResult();
   }
 
   @override
