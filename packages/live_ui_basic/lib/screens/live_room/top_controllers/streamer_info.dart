@@ -87,21 +87,24 @@ class StreamerInfo extends StatelessWidget {
                 pid: pid,
                 hid: hid,
                 streamerNickname: roomInfo?.nickname ?? "",
-                child: (isFollowed) => Container(
-                      width: 30,
-                      height: 30,
-                      child: Center(
-                        child: Container(
-                          width: 25,
-                          height: 25,
-                          child: Image(
-                            image: AssetImage(isFollowed
-                                ? "packages/live_ui_basic/assets/images/room_is_followed_icon.webp"
-                                : "packages/live_ui_basic/assets/images/room_is_not_followed_icon.webp"),
-                          ),
+                child: (isFollowed) {
+                  print('isFollowed: $isFollowed');
+                  return SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: Center(
+                      child: SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: Image(
+                          image: AssetImage(isFollowed
+                              ? "packages/live_ui_basic/assets/images/room_is_followed_icon.webp"
+                              : "packages/live_ui_basic/assets/images/room_is_not_followed_icon.webp"),
                         ),
                       ),
-                    )),
+                    ),
+                  );
+                }),
           ],
         ),
       );

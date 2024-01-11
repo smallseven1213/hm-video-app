@@ -54,10 +54,10 @@ class MessageItem extends StatelessWidget {
                           'packages/live_ui_basic/assets/svgs/default_avatar.svg',
                           fit: BoxFit.cover,
                         )
-                      : LiveImage(
-                          base64Url: message.objChat.avatar,
-                          width: 25,
-                          height: 25,
+                      : // message.objChat.avatar use Image remote
+                      Image.network(
+                          message.objChat.avatar,
+                          fit: BoxFit.cover,
                         ))),
           const SizedBox(width: 6),
           ConstrainedBox(

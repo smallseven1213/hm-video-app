@@ -38,18 +38,15 @@ class _FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
   @override
   void initState() {
     super.initState();
-
     liveRoomController =
         Get.find<LiveRoomController>(tag: widget.pid.toString());
-
-    setState(() {
-      isFollowed = liveRoomController.liveRoom.value?.follow ?? false;
-    });
+    isFollowed = liveRoomController.liveRoom.value?.follow ?? false; // 初始值設置
   }
 
   void handleTap() async {
-    var isFollowed = liveRoomController.liveRoom.value?.follow ?? false;
-    if (isFollowed) {
+    var currentFollowStatus =
+        liveRoomController.liveRoom.value?.follow ?? false;
+    if (currentFollowStatus) {
       // Unfollow
       userFollowsController.unfollow(widget.hid);
     } else {
@@ -61,8 +58,10 @@ class _FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
       ));
     }
 
+    var nextFollow = !currentFollowStatus;
+    liveRoomController.liveRoom.value?.follow = nextFollow;
     setState(() {
-      isFollowed = !isFollowed;
+      isFollowed = nextFollow; // 使用 setState 更新 isFollowed
     });
   }
 

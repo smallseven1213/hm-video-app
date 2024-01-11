@@ -28,12 +28,12 @@ class RankList extends StatelessWidget {
             ),
             clipBehavior: Clip.antiAlias,
             child: item.avatar.isNotEmpty && item.avatar != ""
-                ? LiveImage(
-                    base64Url: item.avatar,
-                    width: 20,
-                    height: 20,
-                    fit: BoxFit.cover,
-                  )
+                ? Image.network(
+                          item.avatar,
+                          fit: BoxFit.cover,
+                          width: 20,
+                          height: 20
+                        )
                 : SvgPicture.asset(
                     'packages/live_ui_basic/assets/svgs/default_avatar.svg',
                     width: 20,
