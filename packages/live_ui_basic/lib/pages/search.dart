@@ -43,8 +43,6 @@ class _SearchPageState extends State<SearchPage> {
 
     Get.find<LiveSearchHistoryController>().add(keyword);
     Get.find<LiveSearchController>().search(keyword);
-    // todo search
-    // searchPageDataController.setKeyword(_searchController.text);
   }
 
   onCancel() {
@@ -53,6 +51,7 @@ class _SearchPageState extends State<SearchPage> {
       displaySearchResult = false;
       displayKeywordResult = false;
     });
+    Get.find<LiveSearchController>().clearSearchResult();
   }
 
   @override

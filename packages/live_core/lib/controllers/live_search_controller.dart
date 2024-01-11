@@ -27,10 +27,6 @@ class LiveSearchController extends GetxController {
     }
   }
 
-  // void updateRanking(RankType rankType, TimeType timeType) {
-  //   fetchData(rankType, timeType);
-  // }
-
   void getKeywords(text) async {
     try {
       if (text.isEmpty) {
@@ -52,5 +48,10 @@ class LiveSearchController extends GetxController {
     } catch (e) {
       print(e);
     }
+  }
+
+  void clearSearchResult() {
+    keyword.value = '';
+    searchResult.value = [];
   }
 }
