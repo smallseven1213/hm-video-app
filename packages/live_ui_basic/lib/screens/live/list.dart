@@ -14,25 +14,17 @@ class LiveList extends StatefulWidget {
 }
 
 class _LiveListState extends State<LiveList> {
-  Timer? _timer;
-
   final LiveListController _controller = Get.find<LiveListController>();
 
   @override
   void initState() {
     super.initState();
-    _startAutoRefresh();
-  }
-
-  void _startAutoRefresh() {
-    _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
-      _controller.fetchData();
-    });
+    _controller.startAutoRefresh();
   }
 
   @override
   void dispose() {
-    _timer?.cancel(); // 取消定时器
+    _controller.autoRefreshCancel();
     super.dispose();
   }
 

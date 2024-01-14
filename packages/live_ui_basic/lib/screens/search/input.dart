@@ -37,7 +37,6 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
