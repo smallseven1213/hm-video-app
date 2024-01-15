@@ -56,26 +56,53 @@ class _PaymentDialogState extends State<PaymentDialog> {
               text: '確定',
               type: ButtonType.primary,
               onTap: () async {
-                if (!isPurchasing) {
-                  setState(() {
-                    isPurchasing = true;
-                  });
-                  try {
-                    var userIsAutoRenew =
-                        Get.find<LiveUserController>().isAutoRenew.value;
-                    var result =
-                        await liveApi.buyWatch(widget.pid, userIsAutoRenew);
-                    if (result.code == 200) {
-                      liveroomController.fetchData();
-                    } else {
-                      // show alert
-                    }
-                  } on Exception catch (e) {
-                    print(e);
-                  } finally {
+                var price = liveroomController.displayAmount.value;
+                var userAmount = Get.find<LiveUserController>().getAmount;
+                if (userAmount < price) {
+                  showLiveDialog(
+                    context,
+                    title: '鑽石不足',
+                    content: const Center(
+                      child: Text('鑽石不足，請前往充值',
+                          style: TextStyle(color: Colors.white, fontSize: 11)),
+                    ),
+                    actions: [
+                      LiveButton(
+                          text: '取消',
+                          type: ButtonType.secondary,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          }),
+                      LiveButton(
+                          text: '確定',
+                          type: ButtonType.primary,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                          })
+                    ],
+                  );
+                } else {
+                  if (!isPurchasing) {
                     setState(() {
-                      isPurchasing = false;
+                      isPurchasing = true;
                     });
+                    try {
+                      var userIsAutoRenew =
+                          Get.find<LiveUserController>().isAutoRenew.value;
+                      var result =
+                          await liveApi.buyWatch(widget.pid, userIsAutoRenew);
+                      if (result.code == 200) {
+                        liveroomController.fetchData();
+                      } else {
+                        // show alert
+                      }
+                    } on Exception catch (e) {
+                      print(e);
+                    } finally {
+                      setState(() {
+                        isPurchasing = false;
+                      });
+                    }
                   }
                 }
               })
