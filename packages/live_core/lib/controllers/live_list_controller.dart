@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -23,6 +25,7 @@ enum FollowType {
 final logger = Logger();
 
 class LiveListController extends GetxController {
+  Timer? _timer;
   var roomsWithoutFilter = <Room>[].obs;
   var rooms = <Room>[].obs;
 
@@ -56,7 +59,8 @@ class LiveListController extends GetxController {
       status: status.value.index,
       ranking: sortType.value,
     );
-    roomsWithoutFilter.value = res;
+    List<Room> mockData = List<Room>.generate(100, (i) => res[i % res.length]);
+    roomsWithoutFilter.value = mockData;
     filterRoomsByTagId();
   }
 
@@ -85,5 +89,15 @@ class LiveListController extends GetxController {
           .where((video) => followedStreamerIds.contains(video.streamerId))
           .toList();
     }
+  }
+
+  void startAutoRefresh() {
+    _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
+      fetchData();
+    });
+  }
+
+  void autoRefreshCancel() {
+    _timer?.cancel();
   }
 }

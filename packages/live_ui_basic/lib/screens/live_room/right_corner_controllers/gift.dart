@@ -106,10 +106,10 @@ class _GiftsState extends State<Gifts> {
                       giftsController.gifts.value.sublist(startIndex, endIndex);
 
                   // 創建一個填充剩餘空間的透明Container
-                  Widget transparentContainer = Column(
+                  Widget transparentContainer = const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      SizedBox(
                         height: 73,
                         width: 73,
                       ),
@@ -209,7 +209,7 @@ class GiftItem extends StatelessWidget {
               showLiveDialog(
                 context,
                 title: '鑽石不足',
-                content: Center(
+                content: const Center(
                   child: Text('鑽石不足，請前往充值',
                       style: TextStyle(color: Colors.white, fontSize: 11)),
                 ),
@@ -267,8 +267,8 @@ class GiftItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 73,
-            width: 73,
+            height: 63,
+            width: 63,
             // radius 10
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

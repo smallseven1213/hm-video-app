@@ -46,7 +46,7 @@ class TopControllers extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pop();
+                      Navigator.of(context).pop(true);
                       final liveRoomController =
                           Get.find<LiveRoomController>(tag: pid.toString());
                       liveRoomController.exitRoom();

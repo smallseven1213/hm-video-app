@@ -12,6 +12,7 @@ import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 
 import '../screens/live_room/command_controller.dart';
 import '../widgets/live_button.dart';
+import '../screens/live_room/room_charge_type.dart';
 import '../widgets/live_room_skelton.dart';
 import '../widgets/room_payment_button.dart';
 
@@ -141,10 +142,16 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   pid: widget.pid,
                 ),
               ),
-              const Positioned(
-                  bottom: 25, right: 10, child: RightCornerControllers()),
               Positioned(
-                  bottom: 0,
+                  top: MediaQuery.of(context).padding.top + 100,
+                  left: 0,
+                  child: RoomChargeType(pid: widget.pid)),
+              Positioned(
+                  bottom: MediaQuery.of(context).padding.bottom + 25,
+                  right: 10,
+                  child: const RightCornerControllers()),
+              Positioned(
+                  bottom: MediaQuery.of(context).padding.bottom,
                   left: 7,
                   child: ChatroomLayout(
                     key: ValueKey(controller.liveRoomInfo.value?.streamerId),
@@ -155,7 +162,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   right: 10,
                   child: const CommandController()),
               Positioned(
-                  bottom: 20,
+                  bottom: MediaQuery.of(context).padding.bottom + 20,
                   left: 40,
                   right: 40,
                   child: RoomPaymentButton(
