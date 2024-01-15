@@ -4,12 +4,14 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_ui_basic/libs/showLiveDialog.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
 import 'package:live_ui_basic/screens/live_room/player_layout.dart';
 import 'package:live_ui_basic/screens/live_room/right_corner_controllers.dart';
 import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 
 import '../screens/live_room/command_controller.dart';
+import '../widgets/live_button.dart';
 import '../widgets/live_room_skelton.dart';
 import '../widgets/room_payment_button.dart';
 
@@ -42,6 +44,27 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
     }, tag: widget.pid.toString());
 
     Get.delete<CommandsController>();
+
+    if (controller.hasError.value) {
+      showLiveDialog(
+        context,
+        title: '直播間沒開',
+        content: const Center(
+          child: Text('直播間沒開',
+              style: TextStyle(color: Colors.white, fontSize: 11)),
+        ),
+        actions: [
+          LiveButton(
+              text: '確定',
+              type: ButtonType.primary,
+              onTap: () async {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              })
+        ],
+      );
+    }
+
     commandsController = Get.put(CommandsController());
 
     // 用pid去LiveListController撈資料並傳入LiveRoomController

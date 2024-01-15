@@ -16,6 +16,8 @@ class RoomRankController extends GetxController {
   String? lastPullUrl;
   int pid;
   late Worker _worker;
+  var shouldShowPaymentPrompt = false.obs;
+  bool userClosedDialog = false;
 
   RoomRankController(this.pid);
 
@@ -51,15 +53,31 @@ class RoomRankController extends GetxController {
     });
   }
 
-  Future<void> _fetchData() async {
+  void _fetchData() async {
     try {
       var getRoomRank = await LiveApi().getRank(pid);
       liveRoomController.setAmount(getRoomRank.data.amount);
       liveRoomController.setUserCount(getRoomRank.data.users);
       roomRank.value = getRoomRank.data;
+
+      // 處理UI要不要顯示付費提示 Dialog
+      if (liveRoomController.liveRoomInfo.value?.chargeType == 3 &&
+          getRoomRank.data.amount > 0) {
+        if (!userClosedDialog) {
+          shouldShowPaymentPrompt.value = true;
+        }
+      } else {
+        shouldShowPaymentPrompt.value = false;
+        userClosedDialog = false;
+      }
     } catch (e) {
       print(e);
     }
+  }
+
+  void setUserClosedDialog() {
+    userClosedDialog = true;
+    shouldShowPaymentPrompt.value = false;
   }
 
   @override

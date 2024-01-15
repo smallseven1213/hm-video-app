@@ -5,6 +5,7 @@ import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/widgets/rank_consumer.dart';
 import 'package:live_core/widgets/rank_provider.dart';
 
+import 'payment_dialog.dart';
 import 'top_controllers/rank_data.dart';
 import 'top_controllers/rank_list.dart';
 import 'top_controllers/streamer_info.dart';
@@ -30,6 +31,7 @@ class TopControllers extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  PaymentDialog(pid: pid),
                   StreamerInfo(key: ValueKey(pid), pid: pid, hid: hid),
                   Expanded(
                     flex: 1,
