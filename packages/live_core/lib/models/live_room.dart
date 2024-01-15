@@ -23,11 +23,9 @@ class LiveRoom {
     return LiveRoom(
         chattoken: getField(json, 'chattoken', defaultValue: ''),
         pid: getField(json, 'pid', defaultValue: 0),
-        // hid: getField(json, 'hid', defaultValue: 0),
-        hid: int.parse(json['hid']),
+        hid: getField(json, 'hid', defaultValue: 0),
         pullurl: getField(json, 'pullurl', defaultValue: ''),
         amount: getField(json, 'amount', defaultValue: 0),
-        // follow: getField(json, 'follow', defaultValue: false),
         follow: follow);
   }
 
