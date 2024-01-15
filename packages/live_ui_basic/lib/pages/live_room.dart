@@ -143,8 +143,8 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                 ),
               ),
               Positioned(
-                  top: MediaQuery.of(context).padding.top + 100,
-                  left: 0,
+                  top: MediaQuery.of(context).padding.top + 80,
+                  right: 10,
                   child: RoomChargeType(pid: widget.pid)),
               Positioned(
                   bottom: MediaQuery.of(context).padding.bottom + 25,
@@ -158,7 +158,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                     token: controller.liveRoom.value!.chattoken,
                   )),
               Positioned(
-                  top: MediaQuery.of(context).padding.top + 100,
+                  top: MediaQuery.of(context).padding.top + 110,
                   right: 10,
                   child: const CommandController()),
               Positioned(

@@ -25,12 +25,14 @@ class RoomChargeType extends StatelessWidget {
 
     return Obx(() => Container(
           height: 20,
-          decoration: const BoxDecoration(
+          // padding 10
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(
+            color: Color(
+                chargeTypeBGColors[controller.liveRoomInfo.value?.chargeType] ??
+                    0xe6845fcf),
             borderRadius: const BorderRadius.all(Radius.circular(3.3)),
           ),
-          color: Color(
-              chargeTypeBGColors[controller.liveRoomInfo.value?.chargeType] ??
-                  0xe6845fcf),
           child: Center(
             child: Text(
                 chargeTypeTexts[controller.liveRoomInfo.value?.chargeType] ??
