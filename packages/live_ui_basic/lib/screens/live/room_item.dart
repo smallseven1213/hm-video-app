@@ -121,8 +121,8 @@ class RoomItem extends StatelessWidget {
               child: room.status == RoomStatus.live.index
                   ? _buildLabel(
                       color: room.chargeType == RoomChargeType.free.index
-                          ? const Color(0xffe65fcf95)
-                          : const Color(0xffe6845fcf),
+                          ? const Color(0xffe6845fcf)
+                          : const Color(0xffe65fcf95),
                       text: room.chargeType == RoomChargeType.free.index
                           ? '免費'
                           : '付費',
