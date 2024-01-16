@@ -42,7 +42,9 @@ class MessageItem extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        // vertical top
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           ClipOval(
               child: Container(
@@ -70,20 +72,22 @@ class MessageItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(5),
               ),
               padding: const EdgeInsets.all(5),
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                spacing: 10, // 水平間距
-                runSpacing: 4, // 垂直間距
-                children: [
-                  Text(
-                    messageText,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  Text(
-                    formatTimestamp(message.timestamp),
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                ],
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: messageText,
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                    WidgetSpan(
+                      child: SizedBox(width: 10), // 提供固定的 10 單位空間
+                    ),
+                    TextSpan(
+                      text: formatTimestamp(message.timestamp),
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -92,3 +96,6 @@ class MessageItem extends StatelessWidget {
     );
   }
 }
+
+
+// 截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截
