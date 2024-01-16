@@ -22,42 +22,6 @@ class _RankProviderState extends State<RankProvider> {
     super.initState();
     _rankController =
         Get.put(RoomRankController(widget.pid), tag: widget.pid.toString());
-
-    ever(_rankController.shouldShowPaymentPrompt,
-        _handleShouldShowPaymentPrompt);
-  }
-
-  // _handleShouldShowPaymentPrompt
-  void _handleShouldShowPaymentPrompt(bool shouldShowPaymentPrompt) {
-    if (shouldShowPaymentPrompt) {
-      // 顯示對話框
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('提示'),
-            content: const Text('您的餘額不足，請儲值'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: const Text('取消'),
-              ),
-              TextButton(
-                onPressed: () {
-                  Get.back();
-                },
-                child: const Text('確認'),
-              ),
-            ],
-          );
-        },
-      ).then((value) {
-        // 重置 shouldShowPaymentPrompt
-        _rankController.shouldShowPaymentPrompt.value = false;
-      });
-    }
   }
 
   @override

@@ -93,6 +93,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
                           await liveApi.buyWatch(widget.pid, userIsAutoRenew);
                       if (result.code == 200) {
                         liveroomController.fetchData();
+                        Navigator.of(context).pop();
                       } else {
                         // show alert
                       }
