@@ -5,6 +5,7 @@ import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/models/room.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'countdown_timer.dart';
@@ -54,6 +55,7 @@ class RoomItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+        bool updateRoomList = false;
         _controller.autoRefreshCancel();
         if (room.status == RoomStatus.ended.index) {
           showLiveDialog(
@@ -64,14 +66,18 @@ class RoomItem extends StatelessWidget {
                   style: TextStyle(color: Colors.white, fontSize: 11)),
             ),
           );
-
           return;
+        } else if (room.status == RoomStatus.notStarted.index) {
+          updateRoomList = await MyRouteDelegate.of(context).push(
+            AppRoutes.supplier,
+            args: {'id': room.streamerId},
+          );
+        } else {
+          updateRoomList = await MyRouteDelegate.of(context).push(
+            "/live_room",
+            args: {"pid": room.id},
+          );
         }
-
-        bool updateRoomList = await MyRouteDelegate.of(context).push(
-          "/live_room",
-          args: {"pid": room.id},
-        );
 
         if (updateRoomList) {
           _controller.fetchData();

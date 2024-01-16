@@ -59,8 +59,7 @@ class LiveListController extends GetxController {
       status: status.value.index,
       ranking: sortType.value,
     );
-    List<Room> mockData = List<Room>.generate(100, (i) => res[i % res.length]);
-    roomsWithoutFilter.value = mockData;
+    roomsWithoutFilter.value = res;
     filterRoomsByTagId();
   }
 
