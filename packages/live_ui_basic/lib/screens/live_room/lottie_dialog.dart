@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:shared/navigator/delegate.dart';
 
 enum LottieDataProvider { network, asset }
 
@@ -8,14 +7,17 @@ class LottieDialog extends StatefulWidget {
   final String path;
   final LottieDataProvider provider;
 
-  LottieDialog({Key? key, required this.path, required this.provider})
-      : super(key: key);
+  const LottieDialog({
+    Key? key,
+    required this.path,
+    required this.provider,
+  }) : super(key: key);
 
   @override
-  _LottieDialogState createState() => _LottieDialogState();
+  LottieDialogState createState() => LottieDialogState();
 }
 
-class _LottieDialogState extends State<LottieDialog>
+class LottieDialogState extends State<LottieDialog>
     with SingleTickerProviderStateMixin {
   AnimationController? _lottieController;
 

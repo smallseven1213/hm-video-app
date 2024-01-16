@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
-import 'package:lottie/lottie.dart';
 
 import 'lottie_dialog.dart';
 import 'messages/message_item.dart';
@@ -28,6 +27,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
   List<ChatMessage> messages = [];
   LottieData? lottieData;
+  bool isLottieDialogOpen = false;
 
   @override
   void initState() {
@@ -67,6 +67,9 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   }
 
   void showLottieDialog(LottieDataProvider provider, String path) {
+    if (isLottieDialogOpen) return;
+
+    isLottieDialogOpen = true;
     showDialog(
       context: context,
       barrierDismissible: true,
@@ -76,32 +79,12 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
           path: path,
           provider: provider,
         );
-        // return Dialog(
-        //   backgroundColor: Colors.transparent, // Transparent Dialog
-        //   child: provider == LottieDataProvider.network
-        //       ? Lottie.network(
-        //           path,
-        //           controller: lottieController,
-        //           onLoaded: (composition) {
-        //             // Set the duration and start the animation
-        //             lottieController!
-        //               ..duration = composition.duration
-        //               ..forward();
-        //           },
-        //         )
-        //       : Lottie.asset(
-        //           path,
-        //           controller: lottieController,
-        //         ),
-        // );
       },
-    );
-
-    // lottieController?.addStatusListener((status) {
-    //   if (status == AnimationStatus.completed) {
-    //     Navigator.of(context).pop(); // Close the dialog
-    //   }
-    // });
+    ).then((_) {
+      setState(() {
+        isLottieDialogOpen = false;
+      });
+    });
   }
 
   @override
