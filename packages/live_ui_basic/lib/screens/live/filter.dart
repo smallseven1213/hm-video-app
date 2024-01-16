@@ -138,7 +138,7 @@ void _showFilterBottomSheet(BuildContext context) {
         children: [
           Container(
             padding:
-                const EdgeInsets.only(top: 20, left: 20, right: 8, bottom: 20),
+                const EdgeInsets.only(top: 20, left: 20, right: 8, bottom: 30),
             color: Colors.black,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -196,6 +196,7 @@ void _showFilterBottomSheet(BuildContext context) {
                     defaultValue: liveListController.status.value,
                   );
                 }),
+                const SizedBox(height: 20),
               ],
             ),
           )

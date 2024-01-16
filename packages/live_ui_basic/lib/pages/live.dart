@@ -72,6 +72,9 @@ class _LivePageState extends State<LivePage> {
             padding: EdgeInsets.symmetric(horizontal: 10),
             sliver: LiveList(),
           ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: 10),
+          ),
           // 測試用
           // SliverToBoxAdapter(
           //   child: TextButton(
