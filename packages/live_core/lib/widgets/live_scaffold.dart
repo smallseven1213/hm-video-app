@@ -92,7 +92,9 @@ class _LiveScaffoldState extends State<LiveScaffold> {
     }
     return Scaffold(
       appBar: widget.appBar,
-      body: widget.body,
+      body: SafeArea(
+        child: widget.body ?? const SizedBox(),
+      ),
       backgroundColor: widget.backgroundColor,
       floatingActionButton: widget.floatingActionButton,
       // 其他 Scaffold 屬性...

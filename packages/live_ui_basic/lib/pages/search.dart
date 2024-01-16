@@ -101,6 +101,7 @@ class _SearchPageState extends State<SearchPage> {
                         ? SearchResults()
                         : RecommendScreen(onSearch: (value) => onSearch(value)),
               ),
+              const SizedBox(height: 8),
             ],
           )),
     );
