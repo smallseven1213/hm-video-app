@@ -236,28 +236,28 @@ class GiftItem extends StatelessWidget {
               } else {
                 throw Exception(response.data);
               }
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
             }
           } catch (e) {
             print(e);
             // show dialog for error
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: Text('Error'),
-                  content: Text('Something went wrong'),
-                  actions: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text('OK'),
-                    ),
-                  ],
-                );
-              },
-            );
+            // showDialog(
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return AlertDialog(
+            //       title: Text('Error'),
+            //       content: Text('Something went wrong'),
+            //       actions: [
+            //         TextButton(
+            //           onPressed: () {
+            //             Navigator.of(context).pop();
+            //           },
+            //           child: Text('OK'),
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // );
           } finally {
             arrowSend = true;
           }
