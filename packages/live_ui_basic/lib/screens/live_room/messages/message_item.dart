@@ -8,6 +8,12 @@ import 'package:live_core/widgets/live_image.dart';
 
 import '../../../libs/format_timestamp.dart';
 
+// 多語系mapping，先做假的
+// {key: "String"}
+const Map<String, String> translations = {
+  "userjoin": "已加入",
+};
+
 class MessageItem extends StatelessWidget {
   final ChatMessage message;
 
@@ -35,7 +41,8 @@ class MessageItem extends StatelessWidget {
           .name;
       messageText = "${message.objChat.name} 送出指令 $commandText";
     } else if (message.objChat.ntype == MessageType.system) {
-      messageText = "${message.objChat.name} ${message.objChat.data}";
+      messageText =
+          "${message.objChat.name} ${translations[message.objChat.data] ?? message.objChat.data}";
     } else {
       messageText = "${message.objChat.name} : ${message.objChat.data}";
     }
