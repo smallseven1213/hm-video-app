@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
+import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
+import 'package:live_ui_basic/screens/live_room/command_controller.dart';
 
 import '../libs/showLiveDialog.dart';
 import 'live_button.dart';
@@ -81,7 +83,9 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                       var result =
                           await liveApi.buyWatch(widget.pid, userIsAutoRenew);
                       if (result.code == 200) {
-                        liveroomController.fetchData();
+                        await liveroomController.fetchData();
+                        Get.find<CommandsController>().fetchGifts();
+                        Get.find<LiveUserController>().getUserDetail();
                       } else {
                         // show alert
                       }
