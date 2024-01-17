@@ -99,4 +99,19 @@ class LiveListController extends GetxController {
   void autoRefreshCancel() {
     _timer?.cancel();
   }
+
+  void reset() {
+    tagId.value = null;
+    status.value = RoomStatus.none;
+    chargeType.value = RoomChargeType.none;
+    sortType.value = SortType.defaultSort;
+    followType.value = FollowType.none;
+
+    // Clear the room lists
+    roomsWithoutFilter.clear();
+    rooms.clear();
+
+    // Cancel any ongoing timer for auto-refresh
+    autoRefreshCancel();
+  }
 }
