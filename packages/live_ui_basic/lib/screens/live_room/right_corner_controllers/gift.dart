@@ -191,19 +191,25 @@ class _GiftsState extends State<Gifts> {
   }
 }
 
-class GiftItem extends StatelessWidget {
+class GiftItem extends StatefulWidget {
   final Gift gift;
 
   const GiftItem({Key? key, required this.gift}) : super(key: key);
 
   @override
+  _GiftItemState createState() => _GiftItemState();
+}
+
+class _GiftItemState extends State<GiftItem> {
+  bool arrowSend = true;
+
+  @override
   Widget build(BuildContext context) {
-    bool arrowSend = true;
     return InkWell(
       onTap: () async {
         if (arrowSend) {
           try {
-            var price = double.parse(gift.price);
+            var price = double.parse(widget.gift.price);
             var userAmount = Get.find<LiveUserController>().getAmount;
             if (userAmount < price) {
               showLiveDialog(
@@ -230,7 +236,7 @@ class GiftItem extends StatelessWidget {
               );
             } else {
               LiveApiResponseBase<bool> response =
-                  await liveApi.sendGift(gift.id, price);
+                  await liveApi.sendGift(widget.gift.id, price);
               if (response.code == 200) {
                 Get.find<LiveUserController>().getUserDetail();
               } else {
@@ -259,7 +265,9 @@ class GiftItem extends StatelessWidget {
             //   },
             // );
           } finally {
-            arrowSend = true;
+            setState(() {
+              arrowSend = true; // Reset to true after operation is complete
+            });
           }
         }
       },
@@ -275,7 +283,7 @@ class GiftItem extends StatelessWidget {
             ),
             clipBehavior: Clip.antiAlias,
             child: LiveImage(
-              base64Url: gift.image,
+              base64Url: widget.gift.image,
               fit: BoxFit.cover,
             ),
           ),
@@ -288,14 +296,14 @@ class GiftItem extends StatelessWidget {
           // ),
           const SizedBox(height: 5),
           Text(
-            gift.name,
+            widget.gift.name,
             style: TextStyle(
               color: Colors.white,
               fontSize: 12,
             ),
           ),
           Text(
-            gift.price,
+            widget.gift.price,
             style: TextStyle(
               color: Colors.white,
               fontSize: 12,
