@@ -90,6 +90,19 @@ build-sv-job:       # This job runs in the build stage, which runs first.
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev
   
+build-wl-tw1-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  tags:
+    - gitlab-shared-runner
+  only:
+    refs:
+      - develop
+  allow_failure: true
+  script:
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl-tw1:dev .
+    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl-tw1:dev
+
 deploy-tt-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   tags:
@@ -138,6 +151,18 @@ deploy-sv-job:      # This job runs in the deploy stage.
   script:
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-sv" -f /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME} -n video-dev
+    - echo "Application successfully deployed."
+
+deploy-wl-tw1-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  tags:
+    - gitlab-shared-runner
+  only:
+    refs:
+      - develop
+  script:
+    - echo "Deploying application..."
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-tw1" -f /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
 
 build-prod-job: 
