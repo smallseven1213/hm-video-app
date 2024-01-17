@@ -7,6 +7,7 @@ final LiveApi liveApi = LiveApi();
 
 class LiveUserController extends GetxController {
   var userDetail = Rxn<LiveUserDetail>();
+  var isAutoRenew = false.obs;
 
   double get getAmount => userDetail.value?.wallet ?? 0;
 
@@ -19,5 +20,9 @@ class LiveUserController extends GetxController {
   void getUserDetail() async {
     var getUserDetails = await liveApi.getUserDetail();
     userDetail.value = getUserDetails.data;
+  }
+
+  void setAutoRenew(bool value) {
+    isAutoRenew.value = value;
   }
 }

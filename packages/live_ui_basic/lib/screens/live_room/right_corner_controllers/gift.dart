@@ -7,6 +7,7 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/gift.dart';
+import 'package:live_core/models/live_api_response_base.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:live_ui_basic/widgets/live_button.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -38,11 +39,27 @@ class GiftWidget extends StatelessWidget {
   }
 }
 
-class Gifts extends StatelessWidget {
+class Gifts extends StatefulWidget {
   const Gifts({Key? key}) : super(key: key);
+
+  @override
+  _GiftsState createState() => _GiftsState();
+}
+
+class _GiftsState extends State<Gifts> {
+  final giftsController = Get.find<GiftsController>();
+  ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
+
+  @override
+  void dispose() {
+    _currentIndexNotifier.dispose(); // 釋放資源
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final giftsController = Get.put(GiftsController());
+    final giftsController = Get.find<GiftsController>();
+    int totalPageCount = (giftsController.gifts.value.length / 8).ceil();
     return Container(
       height: 366,
       color: Colors.black,
@@ -54,7 +71,7 @@ class Gifts extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
+              const Text(
                 '禮物清單',
                 style: TextStyle(
                   color: Colors.white,
@@ -75,7 +92,7 @@ class Gifts extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          UserDiamonds(),
+          const UserDiamonds(),
           const SizedBox(height: 15),
           Expanded(
             child: Obx(
@@ -88,17 +105,50 @@ class Gifts extends StatelessWidget {
                   var pageItems =
                       giftsController.gifts.value.sublist(startIndex, endIndex);
 
-                  return GridView.builder(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 4,
-                      childAspectRatio: 100 / 110,
-                    ),
-                    physics: NeverScrollableScrollPhysics(), // 禁用GridView内部的滚动
-                    itemCount: pageItems.length,
-                    itemBuilder: (context, index) {
-                      var gift = pageItems[index];
-                      return GiftItem(gift: gift);
-                    },
+                  // 創建一個填充剩餘空間的透明Container
+                  Widget transparentContainer = const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 73,
+                        width: 73,
+                      ),
+                    ],
+                  );
+
+                  // 動態生成小部件列表，包括占位符
+                  List<Widget> createGiftRow(int rowStart, int rowEnd) {
+                    // 確保行中至少有四個小部件，包括真實的項目和占位符
+                    return List<Widget>.generate(4, (index) {
+                      // 確定是否應該顯示真實的禮物項目
+                      if (rowStart + index < pageItems.length) {
+                        // 如果應該顯示禮物項目，則返回一個帶有邊距的禮物項目
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0), // 調整邊距以符合您的設計
+                          child: GiftItem(gift: pageItems[rowStart + index]),
+                        );
+                      } else {
+                        // 如果不顯示禮物項目，則返回一個相同大小的透明容器作為占位符
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0), // 調整邊距以符合您的設計
+                          child: transparentContainer,
+                        );
+                      }
+                    });
+                  }
+
+                  return Column(
+                    children: <Widget>[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: createGiftRow(0, 4),
+                      ),
+                      const SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: createGiftRow(4, 8),
+                      ),
+                    ],
                   );
                 },
                 options: CarouselOptions(
@@ -106,12 +156,35 @@ class Gifts extends StatelessWidget {
                   viewportFraction: 1.0,
                   enableInfiniteScroll: false,
                   onPageChanged: (index, reason) {
-                    // 在这里处理页面改变的事件
+                    _currentIndexNotifier.value = index;
                   },
                 ),
               ),
             ),
-          )
+          ),
+          AnimatedBuilder(
+            animation: _currentIndexNotifier, // 監聽ValueNotifier
+            builder: (context, child) {
+              // 這個builder只會重建以下小部件，當_currentIndexNotifier發生變化時
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: List.generate(totalPageCount, (index) {
+                  return Container(
+                    width: 8.0,
+                    height: 8.0,
+                    margin: const EdgeInsets.symmetric(
+                        vertical: 10.0, horizontal: 2.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: _currentIndexNotifier.value == index
+                          ? Colors.white
+                          : Colors.grey,
+                    ),
+                  );
+                }),
+              );
+            },
+          ),
         ],
       ),
     );
@@ -120,72 +193,91 @@ class Gifts extends StatelessWidget {
 
 class GiftItem extends StatelessWidget {
   final Gift gift;
+
   const GiftItem({Key? key, required this.gift}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    bool arrowSend = true;
     return InkWell(
       onTap: () async {
-        try {
-          var price = double.parse(gift.price);
-          var userAmount = Get.find<LiveUserController>().getAmount;
-          if (userAmount < price) {
-            showLiveDialog(
-              context,
-              title: '鑽石不足',
-              content: Center(
-                child: Text('鑽石不足，請前往充值',
-                    style: TextStyle(color: Colors.white, fontSize: 11)),
-              ),
-              actions: [
-                LiveButton(
-                    text: '取消',
-                    type: ButtonType.secondary,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    }),
-                LiveButton(
-                    text: '確定',
-                    type: ButtonType.primary,
-                    onTap: () {
-                      Navigator.of(context).pop();
-                    })
-              ],
-            );
-          } else {
-            var response = await liveApi.sendGift(gift.id, price);
-            if (response.code == 200) {
-            } else {
-              throw Exception(response.data["msg"]);
-            }
-          }
-        } catch (e) {
-          print(e);
-          // show dialog for error
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Error'),
-                content: Text('Something went wrong'),
+        if (arrowSend) {
+          try {
+            var price = double.parse(gift.price);
+            var userAmount = Get.find<LiveUserController>().getAmount;
+            if (userAmount < price) {
+              showLiveDialog(
+                context,
+                title: '鑽石不足',
+                content: const Center(
+                  child: Text('鑽石不足，請前往充值',
+                      style: TextStyle(color: Colors.white, fontSize: 11)),
+                ),
                 actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('OK'),
-                  ),
+                  LiveButton(
+                      text: '取消',
+                      type: ButtonType.secondary,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      }),
+                  LiveButton(
+                      text: '確定',
+                      type: ButtonType.primary,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      })
                 ],
               );
-            },
-          );
+            } else {
+              LiveApiResponseBase<bool> response =
+                  await liveApi.sendGift(gift.id, price);
+              if (response.code == 200) {
+                Get.find<LiveUserController>().getUserDetail();
+              } else {
+                throw Exception(response.data);
+              }
+              // Navigator.of(context).pop();
+            }
+          } catch (e) {
+            print(e);
+            // show dialog for error
+            // showDialog(
+            //   context: context,
+            //   builder: (BuildContext context) {
+            //     return AlertDialog(
+            //       title: Text('Error'),
+            //       content: Text('Something went wrong'),
+            //       actions: [
+            //         TextButton(
+            //           onPressed: () {
+            //             Navigator.of(context).pop();
+            //           },
+            //           child: Text('OK'),
+            //         ),
+            //       ],
+            //     );
+            //   },
+            // );
+          } finally {
+            arrowSend = true;
+          }
         }
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          LiveImage(
-            base64Url: gift.image,
+          Container(
+            height: 63,
+            width: 63,
+            // radius 10
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            clipBehavior: Clip.antiAlias,
+            child: LiveImage(
+              base64Url: gift.image,
+              fit: BoxFit.cover,
+            ),
           ),
           // Image.network(
           //   // gift.image,
@@ -194,7 +286,7 @@ class GiftItem extends StatelessWidget {
           //   width: 73,
           //   height: 73,
           // ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
           Text(
             gift.name,
             style: TextStyle(
@@ -202,8 +294,6 @@ class GiftItem extends StatelessWidget {
               fontSize: 12,
             ),
           ),
-          // height 5
-          const SizedBox(height: 5),
           Text(
             gift.price,
             style: TextStyle(

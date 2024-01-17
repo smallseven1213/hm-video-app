@@ -90,6 +90,19 @@ build-sv-job:       # This job runs in the build stage, which runs first.
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev
   
+build-wl-tw1-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  tags:
+    - gitlab-shared-runner
+  only:
+    refs:
+      - develop
+  allow_failure: true
+  script:
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl-tw1:dev .
+    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl-tw1:dev
+
 deploy-tt-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   tags:
@@ -140,6 +153,20 @@ deploy-sv-job:      # This job runs in the deploy stage.
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-sv" -f /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
 
+deploy-wl-tw1-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  tags:
+    - gitlab-shared-runner
+  only:
+    refs:
+      - develop
+  script:
+    - echo "Deploying application..."
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-tw1" -f /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME} -n video-dev
+    - echo "Application successfully deployed."
+
+################### --- ####################
+
 build-prod-job: 
   stage: build
   tags: 
@@ -167,20 +194,6 @@ deploy-sv-prod-job:
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/sv --install "${CI_PROJECT_NAME}" --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/sv/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh sv prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
 
-build-ab-prod-job: 
-  stage: build
-  tags: 
-    - gitlab-shared-runner
-  only: 
-    refs: 
-      - tags
-    variables: 
-      - $CI_COMMIT_REF_NAME =~ /ab$/
-  script: 
-    - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_ab -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:${CI_COMMIT_TAG} .
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
-    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:${CI_COMMIT_TAG}
-
 deploy-ab-prod-job: 
   stage: deploy
   tags: 
@@ -206,3 +219,16 @@ deploy-ra-prod-job:
   script: 
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/ra --install "${CI_PROJECT_NAME}" --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/ra/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh ra prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
+
+deploy-wl-tw1-prod-job: 
+  stage: deploy
+  tags: 
+    - gitlab-shared-runner
+  only: 
+    refs: 
+      - tags
+    variables: 
+      - $CI_COMMIT_REF_NAME =~ /wl_tw1$/
+  script: 
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/wl-tw1 --install "${CI_PROJECT_NAME}" --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME} -n prod
+    #- /bin/bash /home/gitlab-runner/tg-notify.sh wl-tw1 prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/command.dart';
 
+import '../../libs/showLiveDialog.dart';
+import '../../widgets/live_button.dart';
 import 'right_corner_controllers/user_diamonds.dart';
 
 final liveApi = LiveApi();
@@ -32,7 +35,7 @@ class Commands extends StatelessWidget {
   const Commands({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final commandsController = Get.put(CommandsController());
+    final commandsController = Get.find<CommandsController>();
     return Container(
       height: 366,
       padding: const EdgeInsets.all(18),
@@ -74,9 +77,7 @@ class Commands extends StatelessWidget {
                 var startIndex = index * 2;
                 var endIndex = startIndex + 1;
                 return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 15,
-                  ),
+                  padding: const EdgeInsets.only(bottom: 15),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -86,7 +87,7 @@ class Commands extends StatelessWidget {
                               commandsController.commands.value[startIndex],
                         ),
                       ),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       Expanded(
                         child: CommandItem(
                           command: commandsController.commands.value[endIndex],
@@ -111,18 +112,85 @@ class CommandItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool arrowSend = true;
+
+    void showToast() {
+      FToast fToast = FToast();
+      fToast.init(context);
+
+      Widget toast = Container(
+        height: 30,
+        width: 200,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.7),
+          color: Colors.black,
+        ),
+        child: const Center(
+          child: Text(
+            "發送成功",
+            style: TextStyle(color: Colors.white, fontSize: 12.7),
+          ),
+        ),
+      );
+
+      fToast.showToast(
+        child: toast,
+        gravity: ToastGravity.CENTER,
+        toastDuration: Duration(seconds: 2),
+      );
+    }
+
     return InkWell(
       onTap: () async {
-        try {
-          var price = double.parse(command.price);
-          var userAmount = Get.find<LiveUserController>().getAmount;
-          if (userAmount < price) {
+        if (arrowSend) {
+          arrowSend = false;
+
+          try {
+            var price = double.parse(command.price);
+            var userAmount = Get.find<LiveUserController>().getAmount;
+            if (userAmount < price) {
+              showLiveDialog(
+                context,
+                title: '鑽石不足',
+                content: Center(
+                  child: Text('鑽石不足，請前往充值',
+                      style: TextStyle(color: Colors.white, fontSize: 11)),
+                ),
+                actions: [
+                  LiveButton(
+                      text: '取消',
+                      type: ButtonType.secondary,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      }),
+                  LiveButton(
+                      text: '確定',
+                      type: ButtonType.primary,
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      })
+                ],
+              );
+            } else {
+              var response = await liveApi.sendCommand(command.id, price);
+              if (response.code == 200) {
+                showToast();
+                Get.find<LiveUserController>().getUserDetail();
+                Navigator.of(context).pop();
+                arrowSend = true;
+              } else {
+                throw Exception(response.data["msg"]);
+              }
+            }
+          } catch (e) {
+            print(e);
+            // show dialog for error
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
                   title: Text('Error'),
-                  content: Text('Not enough money'),
+                  content: Text('Something went wrong'),
                   actions: [
                     TextButton(
                       onPressed: () {
@@ -134,33 +202,8 @@ class CommandItem extends StatelessWidget {
                 );
               },
             );
-          } else {
-            var response = await liveApi.sendCommand(command.id, price);
-            if (response.code == 200) {
-            } else {
-              throw Exception(response.data["msg"]);
-            }
+            arrowSend = true;
           }
-        } catch (e) {
-          print(e);
-          // show dialog for error
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('Error'),
-                content: Text('Something went wrong'),
-                actions: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                    child: Text('OK'),
-                  ),
-                ],
-              );
-            },
-          );
         }
       },
       child: Container(
@@ -171,6 +214,7 @@ class CommandItem extends StatelessWidget {
           color: const Color(0xFFae57ff),
         ),
         child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(

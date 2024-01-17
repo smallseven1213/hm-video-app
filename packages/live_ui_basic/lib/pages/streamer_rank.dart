@@ -79,7 +79,6 @@ class _RankingScreenState extends State<RankingScreen> {
           rankType: widget.rankType,
           timeType: widget.timeType,
           child: (List<StreamerRank> rankItems, updateCallback) {
-            print('@@@: rankItems $rankItems');
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -140,7 +139,7 @@ class _RankingScreenState extends State<RankingScreen> {
                                     id: rankItems[index].id,
                                     nickname: rankItems[index].nickname);
                                 if (isFollowed) {
-                                  userFollowsController.unfollow(streamer);
+                                  userFollowsController.unfollow(streamer.id);
                                 } else {
                                   userFollowsController.follow(streamer);
                                 }

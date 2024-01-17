@@ -1,49 +1,38 @@
-import 'dart:async';
-
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:live_core/models/room_rank.dart';
 
-import '../apis/live_api.dart';
+import '../controllers/room_rank_controller.dart';
 
 class RankProvider extends StatefulWidget {
-  final Widget Function(RoomRank? roomRank) child;
+  final int pid;
+  final Widget child;
 
-  const RankProvider({Key? key, required this.child}) : super(key: key);
+  const RankProvider({Key? key, required this.pid, required this.child})
+      : super(key: key);
 
   @override
   _RankProviderState createState() => _RankProviderState();
 }
 
 class _RankProviderState extends State<RankProvider> {
-  RoomRank? roomRank;
-  late Timer _timer;
+  late RoomRankController _rankController;
+
   @override
   void initState() {
     super.initState();
-    _startRankTimer();
+    _rankController =
+        Get.put(RoomRankController(widget.pid), tag: widget.pid.toString());
   }
 
   @override
   void dispose() {
+    // 删除控制器
+    Get.delete<RoomRankController>(tag: widget.pid.toString());
     super.dispose();
-    _timer.cancel();
-  }
-
-  void _startRankTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 5), (timer) async {
-      try {
-        var getRoomRank = await LiveApi().getRank();
-        setState(() {
-          roomRank = getRoomRank.data;
-        });
-      } catch (e) {
-        print(e);
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.child(roomRank);
+    return widget.child;
   }
 }

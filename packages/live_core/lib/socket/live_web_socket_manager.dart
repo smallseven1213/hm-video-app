@@ -76,14 +76,17 @@ class LiveSocketIOManager {
 
   void _onMessageReceived(data) {
     // 处理接收到的消息
+    print('IO-Message received: $data');
   }
 
   void _onError(data) {
     // 处理错误
+    print('IO-Error: $data');
   }
 
   void _onDone() {
     // 处理连接关闭
+    print('IO-Connection closed');
   }
 
   void send(String key, dynamic message) {
@@ -93,6 +96,7 @@ class LiveSocketIOManager {
   }
 
   void close() {
-    _socket?.disconnect();
+    // _socket?.disconnect();
+    _socket?.close();
   }
 }

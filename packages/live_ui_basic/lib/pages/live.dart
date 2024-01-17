@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:live_core/widgets/live_scaffold.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../screens/live/banners.dart';
 import '../screens/live/filter.dart';
@@ -23,46 +22,41 @@ class _LivePageState extends State<LivePage> {
 
   @override
   Widget build(BuildContext context) {
-    return LiveScaffold(
-      backgroundColor: const Color(0xFF242a3d),
+    return const LiveScaffold(
+      backgroundColor: Color(0xFF242a3d),
       body: CustomScrollView(
         slivers: [
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 50),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               child: SearchWidget(),
             ),
           ),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 10),
           ),
-          // ratio w 341 : h 143 , change to Ratio Widget
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: BannersWidget(), // 確保 BannersWidget 支持這種布局
             ),
           ),
-          // h 10
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 10),
           ),
-
           SliverToBoxAdapter(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10),
               child: NavigationWidget(),
             ),
           ),
-          // h 10
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 10),
           ),
-
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
               child: Padding(
             padding: EdgeInsets.only(right: 10),
             child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -71,26 +65,29 @@ class _LivePageState extends State<LivePage> {
               SortWidget(),
             ]),
           )),
-          const SliverToBoxAdapter(
+          SliverToBoxAdapter(
             child: SizedBox(height: 10),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: EdgeInsets.symmetric(horizontal: 10),
             sliver: LiveList(),
           ),
-          // 測試用
           SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {
-                MyRouteDelegate.of(context).push(
-                  "/live_room",
-                  // args: {"pid": room.pid},
-                  args: {"pid": 347},
-                );
-              },
-              child: const Text("Test Room"),
-            ),
+            child: SizedBox(height: 10),
           ),
+          // 測試用
+          // SliverToBoxAdapter(
+          //   child: TextButton(
+          //     onPressed: () {
+          //       MyRouteDelegate.of(context).push(
+          //         "/live_room",
+          //         // args: {"pid": room.pid},
+          //         args: {"pid": 347},
+          //       );
+          //     },
+          //     child: const Text("Test Room"),
+          //   ),
+          // ),
         ],
       ),
     );

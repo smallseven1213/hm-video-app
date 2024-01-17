@@ -28,9 +28,9 @@ class UserFollowsController extends GetxController {
     box = await Hive.openBox<String>(_boxName);
 
     if (box.isNotEmpty) {
-      follows.value = box.values.map((videoStr) {
-        final videoJson = jsonDecode(videoStr) as Map<String, dynamic>;
-        return Streamer.fromJson(videoJson);
+      follows.value = box.values.map((followsStr) {
+        final followsJson = jsonDecode(followsStr) as Map<String, dynamic>;
+        return Streamer.fromJson(followsJson);
       }).toList();
     } else {
       await _fetchAndSaveCollection();
@@ -56,12 +56,12 @@ class UserFollowsController extends GetxController {
     streamerApi.follow(streamer.id);
   }
 
-  void unfollow(Streamer streamer) async {
-    follows.removeWhere((v) => v.id == streamer.id);
+  void unfollow(int streamerId) async {
+    follows.removeWhere((v) => v.id == streamerId);
     follows.refresh();
 
     await _updateHive();
-    streamerApi.unfollow(streamer.id);
+    streamerApi.unfollow(streamerId);
   }
 
   Future<void> _updateHive() async {
@@ -73,7 +73,7 @@ class UserFollowsController extends GetxController {
     follows.refresh();
   }
 
-  bool isFollowed(int streamerId) {
-    return follows.any((streamer) => streamer.id == streamerId);
-  }
+  // bool isFollowed(int streamerId) {
+  //   return follows.any((streamer) => streamer.id == streamerId);
+  // }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
+import 'package:live_core/controllers/user_follows_controller.dart';
 import 'package:live_core/models/room.dart';
+import 'package:live_core/models/streamer.dart';
 
 class Option {
   final String name;
@@ -82,9 +84,19 @@ class FilterGroup extends StatelessWidget {
 
   void filter(Option option) {
     if (name == 'chargeType') {
-      liveListController.filter(roomChargeType: option.value);
+      liveListController.setChargeType(option.value);
     } else if (name == 'status') {
-      liveListController.filter(roomStatus: option.value);
+      liveListController.setStatus(option.value);
+    } else if (name == 'follow') {
+      final userFollowsController = Get.find<UserFollowsController>();
+      List<Streamer>? followedList = option.value == FollowType.followed
+          ? userFollowsController.follows
+          : null;
+
+      liveListController.filterVideosByFollowedStreamers(
+        follows: followedList,
+        filterFollowType: option.value,
+      );
     }
   }
 
@@ -126,7 +138,7 @@ void _showFilterBottomSheet(BuildContext context) {
         children: [
           Container(
             padding:
-                const EdgeInsets.only(top: 20, left: 20, right: 8, bottom: 20),
+                const EdgeInsets.only(top: 20, left: 20, right: 8, bottom: 30),
             color: Colors.black,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -147,14 +159,17 @@ void _showFilterBottomSheet(BuildContext context) {
                   ],
                 ),
                 const SizedBox(height: 20),
-                FilterGroup(
-                  title: '追蹤的主播',
-                  name: 'follow',
-                  options: [
-                    Option(name: '不限', value: 'all'),
-                    Option(name: '已追蹤的主播', value: 'followed')
-                  ],
-                ),
+                Obx(() {
+                  return FilterGroup(
+                    title: '追蹤的主播',
+                    name: 'follow',
+                    options: [
+                      Option(name: '不限', value: FollowType.none),
+                      Option(name: '已追蹤的主播', value: FollowType.followed),
+                    ],
+                    defaultValue: liveListController.followType.value,
+                  );
+                }),
                 const SizedBox(height: 20),
                 Obx(() {
                   return FilterGroup(
@@ -181,6 +196,7 @@ void _showFilterBottomSheet(BuildContext context) {
                     defaultValue: liveListController.status.value,
                   );
                 }),
+                const SizedBox(height: 20),
               ],
             ),
           )

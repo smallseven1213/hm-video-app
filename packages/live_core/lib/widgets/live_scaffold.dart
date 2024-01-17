@@ -5,7 +5,11 @@ import 'package:get/get.dart';
 import 'package:shared/models/hm_api_response_with_data.dart';
 
 import '../apis/auth_api.dart';
+import '../controllers/commands_controller.dart';
+import '../controllers/gifts_controller.dart';
 import '../controllers/live_list_controller.dart';
+import '../controllers/live_search_controller.dart';
+import '../controllers/live_search_history_controller.dart';
 import '../controllers/live_system_controller.dart';
 import '../controllers/live_user_controller.dart';
 import '../controllers/user_follows_controller.dart';
@@ -54,13 +58,16 @@ class _LiveScaffoldState extends State<LiveScaffold> {
   Future<void> _loginAndSaveToken(String token) async {
     final authApi = AuthApi();
     var response = await authApi.login(token);
-    if (response.code == '00') {
+    if (response.code == 200) {
       GetStorage().write('live-token', response.data["token"]);
       liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;
       Get.put(LiveListController());
       Get.put(LiveUserController());
       Get.put(UserFollowsController());
+      Get.put(GiftsController());
+      Get.put(LiveSearchController());
+      Get.lazyPut(() => LiveSearchHistoryController());
     } else {
       isLogin = false;
     }
@@ -83,10 +90,11 @@ class _LiveScaffoldState extends State<LiveScaffold> {
         ),
       );
     }
-    Get.put(LiveListController());
     return Scaffold(
       appBar: widget.appBar,
-      body: widget.body,
+      body: SafeArea(
+        child: widget.body ?? const SizedBox(),
+      ),
       backgroundColor: widget.backgroundColor,
       floatingActionButton: widget.floatingActionButton,
       // 其他 Scaffold 屬性...

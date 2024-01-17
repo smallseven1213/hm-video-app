@@ -12,6 +12,7 @@ dependencies:
   encrypt: ^5.0.3
   flutter:
     sdk: flutter
+  get: ^4.6.6
   hive: ^2.2.3
   shared:
     path: ../../packages/shared

@@ -49,12 +49,18 @@ class LiveImage extends StatelessWidget {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return CircularProgressIndicator();
         } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
+          return Container(
+            color: Colors.grey,
+            child: Text(
+              'Error: ${snapshot.error}',
+              style: TextStyle(color: Colors.red),
+            ),
+          );
         } else if (snapshot.hasData) {
           return Image(
             image: snapshot.data!,
-            width: 73,
-            height: 73,
+            width: width ?? double.infinity,
+            height: height ?? double.infinity,
             fit: fit ?? BoxFit.cover, // Provide a default value if fit is null
             alignment: alignment ??
                 Alignment

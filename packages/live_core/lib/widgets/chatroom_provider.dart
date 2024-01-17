@@ -6,7 +6,8 @@ class ChatroomProvider extends StatefulWidget {
   final String chatToken;
   final Widget child;
 
-  ChatroomProvider({required this.chatToken, required this.child});
+  const ChatroomProvider(
+      {super.key, required this.chatToken, required this.child});
 
   @override
   _ChatroomProviderState createState() => _ChatroomProviderState();

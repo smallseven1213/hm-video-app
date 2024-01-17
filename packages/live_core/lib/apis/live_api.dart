@@ -1,13 +1,10 @@
-import 'dart:convert';
-
 import 'package:live_core/controllers/live_system_controller.dart';
 import 'package:live_core/models/room_rank.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
-import 'package:shared/models/hm_api_response_with_data.dart';
-import 'package:shared/utils/fetcher.dart';
 import 'package:get/get.dart';
 
+import '../controllers/live_list_controller.dart';
 import '../libs/decryptAES256ECB.dart';
 import '../models/gift.dart';
 import '../models/live_api_response_base.dart';
@@ -26,22 +23,47 @@ class LiveApi {
     return _instance;
   }
 
-  Future<LiveApiResponseBase<List<Room>>> getRooms() async {
-    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+  // 主播排行榜
+  Future<List<Room>> getRooms({
+    status = 0,
+    chargeType = 0,
+    ranking =
+        SortType.defaultSort, // default / watch / income / newcomer / fans
+  }) async {
+    var _ranking = ranking;
+    switch (ranking) {
+      case SortType.defaultSort:
+        _ranking = "default";
+      case SortType.watch:
+        _ranking = "watch";
+      case SortType.income:
+        _ranking = "income";
+      case SortType.newcomer:
+        _ranking = "newcomer";
+      case SortType.fans:
+        _ranking = "fans";
+      default:
+        _ranking = "default";
+    }
+
+    const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
     var response = await liveFetcher(
-      url: '$liveApiHost/roomlist',
+      url:
+          '$userApiHost/room/list?page=1&per_page=20&status=$status&charge_type=$chargeType&ranking=$_ranking',
     );
 
-    LiveApiResponseBase<List<Room>> parsedResponse =
-        LiveApiResponseBase.fromJson(
-      response.data,
-      (data) => (data as List).map((item) => Room.fromJson(item)).toList(),
-    );
+    if (response.data['data'].isEmpty) {
+      return [];
+    }
 
-    return parsedResponse;
+    List<Room> data = (response.data["data"]["list"]["items"] as List)
+        .map((item) => Room.fromJson(item))
+        .toList();
+
+    return data;
   }
 
-  Future<LiveApiResponseBase<LiveRoom>> enterRoom(int pid) async {
+  Future<LiveApiResponseBase<LiveRoom?>> enterRoom(int pid) async {
     try {
       final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
       var response = await liveFetcher(
@@ -64,15 +86,20 @@ class LiveApi {
       );
 
       // Assuming that the `data` field in the response is a JSON string
-      String decryptedData = decryptAES256ECB(apiResponse.data.pullurl);
+      String decryptedData = apiResponse.data.pullurl.isNotEmpty
+          ? decryptAES256ECB(apiResponse.data.pullurl)
+          : "";
 
       return LiveApiResponseBase<LiveRoom>(
         code: apiResponse.code,
         data: LiveRoom(
+          hid: apiResponse.data.hid,
           chattoken: apiResponse.data.chattoken,
           pid: apiResponse.data.pid,
           pullurl: apiResponse.data.pullurl,
           pullUrlDecode: decryptedData.trim().trimRight(),
+          amount: apiResponse.data.amount,
+          follow: apiResponse.data.follow,
         ),
         // 下面測試用
         // pullUrlDecode:
@@ -85,7 +112,35 @@ class LiveApi {
     }
   }
 
-  Future<LiveApiResponseBase<RoomRank>> getRank() async {
+  Future<LiveApiResponseBase<bool>> exitRoom() async {
+    try {
+      final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+      var response = await liveFetcher(
+        url: '$liveApiHost/exitroom',
+        method: 'GET',
+      );
+
+      if (response.data["code"] != 200) {
+        throw Exception('No response from server');
+      }
+
+      LiveApiResponseBase<bool> apiResponse = LiveApiResponseBase.fromJson(
+        response.data,
+        (data) => data == true,
+      );
+
+      return LiveApiResponseBase<bool>(
+        code: apiResponse.code,
+        data: apiResponse.data,
+        msg: apiResponse.msg,
+      );
+    } catch (e) {
+      // Handle the exception
+      throw e;
+    }
+  }
+
+  Future<LiveApiResponseBase<RoomRank>> getRank(int pid) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
       url: '$liveApiHost/rank',
@@ -108,13 +163,15 @@ class LiveApi {
     LiveApiResponseBase<List<Gift>> parsedResponse =
         LiveApiResponseBase.fromJson(
       response.data,
-      (data) => (data as List).map((item) => Gift.fromJson(item)).toList(),
+      (data) => (data as List).map((item) {
+        return Gift.fromJson(item);
+      }).toList(),
     );
 
     return parsedResponse;
   }
 
-  Future<LiveApiResponseBase> sendGift(int gid, double amount) async {
+  Future<LiveApiResponseBase<bool>> sendGift(int gid, double amount) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
       url: '$liveApiHost/gift',
@@ -125,9 +182,9 @@ class LiveApi {
       },
     );
 
-    LiveApiResponseBase parsedResponse = LiveApiResponseBase.fromJson(
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
       response.data,
-      (data) => data,
+      (data) => data == true,
     );
 
     return parsedResponse;
@@ -178,6 +235,68 @@ class LiveApi {
         LiveApiResponseBase.fromJson(
       response.data,
       (data) => LiveUserDetail.fromJson(data as Map<String, dynamic>),
+    );
+
+    return parsedResponse;
+  }
+
+  // 購買單次門票
+  Future<LiveApiResponseBase<bool>> buyTicket(int pid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/buyticket?pid=$pid',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase<bool>> buyWatch(
+      int pid, bool userIsAutoRenew) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/buywatch?pid=$pid&autobuy=$userIsAutoRenew',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase<bool>> follow(int hid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/follow?hid=$hid',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
+    );
+
+    return parsedResponse;
+  }
+
+  Future<LiveApiResponseBase<bool>> unfollow(int hid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/unfollow?hid=$hid',
+      method: 'GET',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data == true,
     );
 
     return parsedResponse;

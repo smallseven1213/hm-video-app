@@ -32,7 +32,7 @@ class ShareView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250,
+      height: MediaQuery.of(context).padding.bottom + 200,
       width: double.infinity,
       padding: const EdgeInsets.only(left: 8, right: 8, bottom: 20),
       child: Column(

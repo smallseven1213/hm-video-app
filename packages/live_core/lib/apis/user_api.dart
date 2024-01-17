@@ -60,8 +60,23 @@ class UserApi {
 
     LiveApiResponseBase<List<Streamer>> parsedResponse =
         LiveApiResponseBase.fromJson(
-      response.data == {} ? [] : response.data,
+      response.data,
       (data) => (data as List).map((item) => Streamer.fromJson(item)).toList(),
+    );
+
+    return parsedResponse;
+  }
+
+  // 帶入hid(stream id), 取得有沒有追蹤, 回傳boolean
+  Future<LiveApiResponseBase<bool>> getIsFollow(int hid) async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+    var response = await liveFetcher(
+      url: '$liveApiHost/user/v1/user/isfollow?hid=$hid',
+    );
+
+    LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
+      response.data,
+      (data) => data as bool,
     );
 
     return parsedResponse;

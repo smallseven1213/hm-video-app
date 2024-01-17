@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -29,8 +30,10 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsets.only(
+              bottom: GetPlatform.isWeb
+                  ? 0
+                  : MediaQuery.of(context).viewInsets.bottom),
           child: SizedBox(
             child: Wrap(
               children: [
@@ -91,7 +94,7 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
     return ChatroomProvider(
       chatToken: widget.token,
       child: SizedBox(
-        height: MediaQuery.of(context).size.height - 100,
+        height: MediaQuery.of(context).size.height / 2,
         width: MediaQuery.of(context).size.width - 100,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -49,7 +49,7 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
               backgroundColor: Colors.white,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-                onPressed: () => MyRouteDelegate.of(context).pop(),
+                onPressed: () => Navigator.of(context).pop(true),
               ),
               elevation: 0,
               title: UserFavoritesSupplierConsumer(

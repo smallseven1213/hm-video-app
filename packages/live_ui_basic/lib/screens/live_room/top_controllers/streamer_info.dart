@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/widgets/follow_live_check_provider.dart';
 import 'package:live_core/widgets/live_image.dart';
 
 class StreamerInfo extends StatelessWidget {
   final int pid;
-  const StreamerInfo({Key? key, required this.pid}) : super(key: key);
+  final int hid;
+  const StreamerInfo({Key? key, required this.pid, required this.hid})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,36 +53,58 @@ class StreamerInfo extends StatelessWidget {
                 children: [
                   Text(
                     roomInfo?.nickname ?? "",
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                       fontSize: 10,
                     ),
                   ),
-                  Text(
-                    roomInfo?.chargeAmount ?? "",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 9,
-                    ),
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    // 水平置左
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        liveRoomController.displayUserCount.value > 1000
+                            ? 'packages/live_ui_basic/assets/images/ic_hot.webp'
+                            : 'packages/live_ui_basic/assets/images/ic_view.webp',
+                        width: 8,
+                        height: 8,
+                      ),
+                      Text(
+                        liveRoomController.displayUserCount.value.toString(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 9,
+                        ),
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
-            Container(
-              width: 30,
-              height: 30,
-              child: Center(
-                child: Container(
-                  width: 25,
-                  height: 25,
-                  child: Image(
-                    image: AssetImage(
-                        "packages/live_ui_basic/assets/images/room_add_icon.webp"),
-                  ),
-                ),
-              ),
-            ),
+            FollowLiveCheckProvider(
+                pid: pid,
+                hid: hid,
+                streamerNickname: roomInfo?.nickname ?? "",
+                child: (isFollowed) {
+                  print('isFollowed: $isFollowed');
+                  return SizedBox(
+                    width: 30,
+                    height: 30,
+                    child: Center(
+                      child: SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: Image(
+                          image: AssetImage(isFollowed
+                              ? "packages/live_ui_basic/assets/images/room_is_followed_icon.webp"
+                              : "packages/live_ui_basic/assets/images/room_is_not_followed_icon.webp"),
+                        ),
+                      ),
+                    ),
+                  );
+                }),
           ],
         ),
       );

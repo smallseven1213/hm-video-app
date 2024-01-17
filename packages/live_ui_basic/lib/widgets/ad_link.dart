@@ -19,19 +19,24 @@ class AdLink extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.find<AdController>().recordAdClick(id);
-        if (url.isEmpty) return;
+        try {
+          Get.find<AdController>().recordAdClick(id);
+          if (url.isEmpty) return;
 
-        final Uri parsedUrl = Uri.parse(url);
+          final Uri parsedUrl = Uri.parse(url);
 
-        if (url.startsWith('http://') || url.startsWith('https://')) {
-          handleHttpUrl(url);
-        } else if (parsedUrl.queryParameters.containsKey('depositType')) {
-          handleGameDepositType(context, url);
-        } else if (parsedUrl.queryParameters.containsKey('defaultScreenKey')) {
-          handleDefaultScreenKey(context, url);
-        } else {
-          handlePathWithId(context, url);
+          if (url.startsWith('http://') || url.startsWith('https://')) {
+            handleHttpUrl(url);
+          } else if (parsedUrl.queryParameters.containsKey('depositType')) {
+            handleGameDepositType(context, url);
+          } else if (parsedUrl.queryParameters
+              .containsKey('defaultScreenKey')) {
+            handleDefaultScreenKey(context, url);
+          } else {
+            handlePathWithId(context, url);
+          }
+        } catch (e) {
+          print(e);
         }
       },
       child: child,
