@@ -99,7 +99,7 @@ build-wl-tw1-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl-tw1:dev .
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw1:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl-tw1:dev
 
