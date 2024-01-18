@@ -107,10 +107,6 @@ class LiveListController extends GetxController {
     sortType.value = SortType.defaultSort;
     followType.value = FollowType.none;
 
-    // Clear the room lists
-    roomsWithoutFilter.clear();
-    rooms.clear();
-
     // Cancel any ongoing timer for auto-refresh
     autoRefreshCancel();
   }
