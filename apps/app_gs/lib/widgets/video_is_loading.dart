@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 class VideoListLoading extends StatelessWidget {
@@ -6,10 +7,6 @@ class VideoListLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? const Center(
-            child: Text('讀取中'),
-          )
-        : const SizedBox();
+    return isLoading ? Center(child: Text(I18n.loading)) : const SizedBox();
   }
 }

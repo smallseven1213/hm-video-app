@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/modules/actor/actor_consumer.dart';
@@ -139,7 +140,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return GSTabBar(
       controller: tabController,
-      tabs: const ['最新', '最熱'],
+      tabs: [I18n.newest, I18n.hottest],
     );
   }
 

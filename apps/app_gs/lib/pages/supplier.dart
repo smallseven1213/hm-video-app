@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -159,7 +160,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return GSTabBar(
       controller: tabController,
-      tabs: const ['短視頻', '長視頻'],
+      tabs: [I18n.shortVideo, I18n.longVideo],
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'dart:ui';
 import 'dart:io';
 
@@ -46,12 +47,10 @@ Future<void> _captureAndSaveScreenshot() async {
     // 顯示保存成功提示
     // 注意这里我们再次获取context，因为此处的context可能已经发生改变
     ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(
-          '已成功保存身份卡',
-          style: TextStyle(
-            color: Colors.white,
-          ),
+          I18n.identityCardHasBeenSuccessfullySaved,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -223,10 +222,10 @@ class IDCardContentState extends State<IDCardContent> {
 
           // Add the button widget here
           const SizedBox(height: 33),
-          const SizedBox(
+          SizedBox(
             width: 208,
             child: Button(
-              text: '請截圖保存',
+              text: I18n.pleaseSaveTheScreenshot,
               type: 'secondary',
               onPressed: _captureAndSaveScreenshot,
             ),

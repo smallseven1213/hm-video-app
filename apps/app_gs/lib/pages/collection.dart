@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -75,19 +76,20 @@ class CollectionPageState extends State<CollectionPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '我的收藏',
+        title: I18n.collectPlaylist,
         actions: [
           Obx(() => TextButton(
               onPressed: () {
                 listEditorController.toggleEditing();
               },
               child: Text(
-                listEditorController.isEditing.value ? '取消' : '編輯',
+                listEditorController.isEditing.value ? I18n.cancel : '編輯',
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],
-        bottom:
-            GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
+        bottom: GSTabBar(
+            tabs: [I18n.longVideo, I18n.shortVideo],
+            controller: _tabController),
       ),
       body: Stack(
         children: [

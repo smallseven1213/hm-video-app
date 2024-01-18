@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 // VideoScreen stateless
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class VideoActions extends StatelessWidget {
             var isLiked = userFavoritesVideoController.videos
                 .any((e) => e.id == videoDetail.id);
             return LikeButton(
-              text: '喜歡就點讚',
+              text: I18n.pressLikeItIfYouLikeIt,
               isLiked: isLiked,
               onPressed: () {
                 if (isLiked) {

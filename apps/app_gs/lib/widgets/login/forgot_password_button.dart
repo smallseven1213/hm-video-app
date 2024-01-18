@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../../utils/show_confirm_dialog.dart';
@@ -11,13 +12,13 @@ class ForgotPasswordButton extends StatelessWidget {
       onTap: () {
         showConfirmDialog(
             context: context,
-            title: '忘記密碼',
-            message: '請聯繫客服人員',
+            title: I18n.forgotPassword,
+            message: I18n.contactCustomerService,
             showCancelButton: false,
             onConfirm: () {});
       },
-      child: const Column(children: [
-        Text('忘記密碼', style: TextStyle(color: Colors.white)),
+      child: Column(children: [
+        Text(I18n.forgotPassword, style: const TextStyle(color: Colors.white)),
       ]),
     );
   }

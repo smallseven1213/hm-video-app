@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/button.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
@@ -187,7 +188,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                       height: 38,
                                       width: 183,
                                       child: Button(
-                                        text: '探索更多內容',
+                                        text: I18n.discover,
                                         onPressed: () {
                                           MyRouteDelegate.of(context)
                                               .push(AppRoutes.filter);

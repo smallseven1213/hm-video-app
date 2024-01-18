@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -43,7 +44,8 @@ class VendorVideosPageState extends State<PublisherPage>
                 fontSize: 15,
               ),
             )),
-        bottom: GSTabBar(tabs: const ['最新', '最熱'], controller: _tabController),
+        bottom: GSTabBar(
+            tabs: [I18n.newest, I18n.hottest], controller: _tabController),
       ),
       body: TabBarView(
         controller: _tabController,

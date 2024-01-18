@@ -1,4 +1,6 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -12,9 +14,14 @@ import 'popular.dart';
 
 final logger = Logger();
 
-class AppsScreen extends StatelessWidget {
+class AppsScreen extends StatefulWidget {
   const AppsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<AppsScreen> createState() => _AppsScreenState();
+}
+
+class _AppsScreenState extends State<AppsScreen> {
   @override
   Widget build(BuildContext context) {
     return AppsProvider(
@@ -42,8 +49,8 @@ class AppsScreen extends StatelessWidget {
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),
                 ),
-                const SliverToBoxAdapter(
-                  child: Header(text: '熱門推薦'),
+                SliverToBoxAdapter(
+                  child: Header(text: I18n.recommended),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),
@@ -52,8 +59,8 @@ class AppsScreen extends StatelessWidget {
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),
                 ),
-                const SliverToBoxAdapter(
-                  child: Header(text: '大家都在玩'),
+                SliverToBoxAdapter(
+                  child: Header(text: I18n.everbodyPlaying),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),

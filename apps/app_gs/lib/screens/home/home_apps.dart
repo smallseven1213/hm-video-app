@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 // HomeAppsScreen is a staltess widget which has no any containt.
 
 import 'package:flutter/material.dart';
@@ -12,11 +13,11 @@ class HomeAppsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async => false, // HC: 煩死，勿動!!
-      child: const Scaffold(
+      child: Scaffold(
         appBar: CustomAppBar(
-          title: '應用中心',
+          title: I18n.appCenter,
         ),
-        body: AppsScreen(),
+        body: const AppsScreen(),
       ),
     );
   }

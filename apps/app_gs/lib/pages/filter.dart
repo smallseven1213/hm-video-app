@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -48,9 +49,11 @@ class FilterScrollViewState extends State<FilterPage>
     return Obx(() {
       return Scaffold(
         appBar: CustomAppBar(
-          title: '篩選',
+          title: I18n.filter,
           bottom: filterScreenController.showTabBar.value
-              ? GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController)
+              ? GSTabBar(
+                  tabs: [I18n.longVideo, I18n.shortVideo],
+                  controller: _tabController)
               : null,
         ),
         body: TabBarView(

@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
@@ -118,18 +119,14 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                     ], // 圓角大小
                   ),
                   padding: const EdgeInsets.all(4),
-                  child: const Row(
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.download,
-                        color: Colors.black,
-                        size: 10,
-                      ),
-                      SizedBox(width: 1),
+                      const Icon(Icons.download, color: Colors.black, size: 10),
+                      const SizedBox(width: 1),
                       Text(
-                        '立刻下載',
-                        style: TextStyle(
+                        I18n.downloadNow,
+                        style: const TextStyle(
                           color: Colors.black,
                           fontSize: 10,
                         ),

@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -148,7 +149,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.leftButton ?? '取消',
+                                        text: notice.leftButton ?? I18n.cancel,
                                         type: 'cancel',
                                         onPressed: () => handleUrl(
                                             notice.leftButtonUrl, context),
@@ -159,7 +160,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.rightButton ?? '確認',
+                                        text: notice.rightButton ?? I18n.confirm,
                                         type: 'primary',
                                         onPressed: () => handleUrl(
                                             notice.rightButtonUrl, context),

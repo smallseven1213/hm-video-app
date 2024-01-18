@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -87,19 +88,21 @@ class PlayRecordPageState extends State<PlayRecordPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '我的足跡',
+        title: I18n.browseHistory,
         actions: [
           Obx(() => TextButton(
               onPressed: () {
                 listEditorController.toggleEditing();
               },
               child: Text(
-                listEditorController.isEditing.value ? '取消' : '編輯',
+                listEditorController.isEditing.value ? I18n.cancel : '編輯',
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],
-        bottom:
-            GSTabBar(tabs: const ['長視頻', '短視頻'], controller: _tabController),
+        bottom: GSTabBar(
+          tabs: [I18n.longVideo, I18n.shortVideo],
+          controller: _tabController,
+        ),
       ),
       body: Stack(
         children: [
