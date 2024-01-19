@@ -60,6 +60,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
                 var price = liveroomController.displayAmount.value;
                 var userAmount = Get.find<LiveUserController>().getAmount;
                 if (userAmount < price) {
+                  Navigator.of(context).pop();
                   showLiveDialog(
                     context,
                     title: '鑽石不足',
