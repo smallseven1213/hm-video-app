@@ -1,46 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
-import 'package:live_core/widgets/live_image.dart';
 
 import '../../../libs/format_timestamp.dart';
-import 'message_item_for_command.dart';
-import 'message_item_for_gift.dart';
 
-// 多語系mapping，先做假的
-// {key: "String"}
-const Map<String, String> translations = {
-  "userjoin": "已加入",
-};
-
-class MessageItem extends StatelessWidget {
+class MessageItemForGift extends StatelessWidget {
   final ChatMessage message;
 
-  const MessageItem({Key? key, required this.message}) : super(key: key);
+  const MessageItemForGift({Key? key, required this.message}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final commandsController = Get.find<CommandsController>();
-    var messageText = "";
-    if (message.objChat.ntype == MessageType.text) {
-      messageText = '${message.objChat.name} : ${message.objChat.data}';
-    } else if (message.objChat.ntype == MessageType.auction) {
-      messageText = "出價 ${message.objChat.data}";
-    } else if (message.objChat.ntype == MessageType.system) {
-      messageText =
-          "${message.objChat.name} ${translations[message.objChat.data] ?? message.objChat.data}";
-    } else {
-      messageText = "${message.objChat.name} : ${message.objChat.data}";
-    }
+    final giftsController = Get.find<GiftsController>();
+    var giftName = giftsController.gifts.value
+        .firstWhere((element) => element.id == int.parse(message.objChat.data))
+        .name;
+    var messageText = "${message.objChat.name} 贈送禮物 $giftName";
 
-    if (message.objChat.ntype == MessageType.gift) {
-      return MessageItemForGift(message: message);
-    } else if (message.objChat.ntype == MessageType.command) {
-      return MessageItemForCommand(message: message);
-    }
     return Container(
       margin: const EdgeInsets.only(top: 10),
       child: Row(
@@ -95,9 +73,6 @@ class MessageItem extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ); // Placeholder for actual UI
   }
 }
-
-
-// 截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截

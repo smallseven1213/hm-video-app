@@ -24,7 +24,7 @@ class _LiveListState extends State<LiveList> {
 
   @override
   void dispose() {
-    _controller.autoRefreshCancel();
+    _controller.reset();
     super.dispose();
   }
 
