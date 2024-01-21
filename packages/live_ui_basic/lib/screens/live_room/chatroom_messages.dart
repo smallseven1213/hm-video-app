@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   List<ChatMessage> messages = [];
   LottieData? lottieData;
   bool isLottieDialogOpen = false;
+  Queue<ChatMessage> giftMessageQueue = Queue<ChatMessage>();
 
   @override
   void initState() {
@@ -43,14 +45,29 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         .toList();
 
     try {
-      var latestGiftMessage = newMessages
-          .lastWhere((element) => element.objChat.ntype == MessageType.gift);
-      setLottieAnimation(latestGiftMessage.objChat.data);
+      for (var message in newMessages) {
+        if (message.objChat.ntype == MessageType.gift) {
+          giftMessageQueue.add(message);
+        }
+      }
+
+      // setLottieAnimation(latestGiftMessage.objChat.data);
     } catch (e) {}
 
     setState(() {
       messages.addAll(newMessages);
     });
+  }
+
+  void processGiftQueue() {
+    if (giftMessageQueue.isNotEmpty) {
+      var giftMessage = giftMessageQueue.removeFirst();
+      showLottieDialog(
+        LottieDataProvider.network,
+        giftMessage.objChat.data,
+        onFinish: () => processGiftQueue(),
+      );
+    }
   }
 
   void setLottieAnimation(String data) {
@@ -66,25 +83,30 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     }
   }
 
-  void showLottieDialog(LottieDataProvider provider, String path) {
+  void showLottieDialog(LottieDataProvider provider, String path,
+      {VoidCallback? onFinish}) {
     if (isLottieDialogOpen) return;
 
     isLottieDialogOpen = true;
     showDialog(
       context: context,
       barrierDismissible: true,
-      barrierColor: Colors.transparent, // Transparent background
+      barrierColor: Colors.transparent,
       builder: (BuildContext context) {
         return LottieDialog(
           path: path,
           provider: provider,
+          onFinish: () {
+            if (onFinish != null) {
+              onFinish();
+            }
+            setState(() {
+              isLottieDialogOpen = false;
+            });
+          },
         );
       },
-    ).then((_) {
-      setState(() {
-        isLottieDialogOpen = false;
-      });
-    });
+    );
   }
 
   @override

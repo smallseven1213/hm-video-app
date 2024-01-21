@@ -6,11 +6,13 @@ enum LottieDataProvider { network, asset }
 class LottieDialog extends StatefulWidget {
   final String path;
   final LottieDataProvider provider;
+  final VoidCallback? onFinish;
 
   const LottieDialog({
     Key? key,
     required this.path,
     required this.provider,
+    this.onFinish,
   }) : super(key: key);
 
   @override
@@ -28,6 +30,7 @@ class LottieDialogState extends State<LottieDialog>
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed && mounted) {
           Navigator.of(context).pop();
+          widget.onFinish?.call();
         }
       });
   }
