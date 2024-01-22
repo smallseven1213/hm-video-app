@@ -29,13 +29,22 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   List<ChatMessage> messages = [];
   LottieData? lottieData;
   bool isLottieDialogOpen = false;
-  Queue<ChatMessage> giftMessageQueue = Queue<ChatMessage>();
+
+  // Using ValueNotifier for the gift message queue
+  ValueNotifier<Queue<ChatMessage>> giftMessageQueue =
+      ValueNotifier(Queue<ChatMessage>());
 
   @override
   void initState() {
     super.initState();
-
     socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
+
+    // Adding listener to the giftMessageQueue
+    giftMessageQueue.addListener(() {
+      if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
+        processGiftQueue();
+      }
+    });
   }
 
   void handleChatResult(dynamic data) {
@@ -44,28 +53,46 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         .map((item) => ChatMessage.fromJson(item))
         .toList();
 
-    try {
-      for (var message in newMessages) {
-        if (message.objChat.ntype == MessageType.gift) {
-          giftMessageQueue.add(message);
-        }
-      }
-
-      // setLottieAnimation(latestGiftMessage.objChat.data);
-    } catch (e) {}
-
     setState(() {
       messages.addAll(newMessages);
     });
+
+    for (var message in newMessages) {
+      if (message.objChat.ntype == MessageType.gift) {
+        updateGiftQueue(message);
+      }
+    }
+  }
+
+  void updateGiftQueue(ChatMessage message) {
+    // Create a new instance of Queue with the current items and the new message
+    var updatedQueue = Queue<ChatMessage>.from(giftMessageQueue.value)
+      ..add(message);
+
+    // Update the ValueNotifier with the new queue instance
+    giftMessageQueue.value = updatedQueue;
   }
 
   void processGiftQueue() {
-    if (giftMessageQueue.isNotEmpty) {
-      var giftMessage = giftMessageQueue.removeFirst();
+    if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
+      var giftMessage = giftMessageQueue.value.first;
+
       showLottieDialog(
         LottieDataProvider.network,
         giftMessage.objChat.data,
-        onFinish: () => processGiftQueue(),
+        onFinish: () {
+          // Remove the processed gift message from the queue
+          giftMessageQueue.value.removeFirst();
+
+          setState(() {
+            isLottieDialogOpen = false;
+          });
+
+          // Check if there are more gifts in the queue and process them
+          if (giftMessageQueue.value.isNotEmpty) {
+            processGiftQueue(); // Continue processing the next gift
+          }
+        },
       );
     }
   }
@@ -97,16 +124,29 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
           path: path,
           provider: provider,
           onFinish: () {
+            // This will be called when the animation finishes
             if (onFinish != null) {
               onFinish();
             }
-            setState(() {
-              isLottieDialogOpen = false;
-            });
           },
         );
       },
-    );
+    ).then((_) {
+      // This gets called when the dialog is dismissed, including when the user taps outside the dialog
+      if (mounted) {
+        setState(() {
+          isLottieDialogOpen = false;
+        });
+      }
+    });
+  }
+
+  // dispose
+  @override
+  void dispose() {
+    socketManager.socket!.off('chatresult');
+    giftMessageQueue.dispose();
+    super.dispose();
   }
 
   @override
