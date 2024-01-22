@@ -25,6 +25,7 @@ class RootWidget extends StatelessWidget {
   final ThemeData? theme;
   final bool? i18nSupport;
   final List<String> dlJsonHosts;
+  final Locale? defaultLocale;
 
   const RootWidget(
       {Key? key,
@@ -36,6 +37,7 @@ class RootWidget extends StatelessWidget {
       this.loading,
       this.countdown,
       this.i18nSupport,
+      this.defaultLocale,
       required this.dlJsonHosts})
       : super(key: key);
 
@@ -58,6 +60,11 @@ class RootWidget extends StatelessWidget {
     );
 
     final parser = MyRouteParser();
+
+    // if defaultLocale not null, then use it
+    if (defaultLocale != null) {
+      context.setLocale(defaultLocale!);
+    }
 
     return MaterialApp.router(
       localizationsDelegates: [
