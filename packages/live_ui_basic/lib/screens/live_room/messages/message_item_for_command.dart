@@ -34,7 +34,7 @@ class MessageItemForCommand extends StatelessWidget {
             color: const Color(0x65ae57ff),
           ),
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ClipOval(
@@ -58,13 +58,6 @@ class MessageItemForCommand extends StatelessWidget {
                   children: [
                     TextSpan(
                       text: messageText,
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                    ),
-                    const WidgetSpan(
-                      child: SizedBox(width: 10), // 提供固定的 10 單位空間
-                    ),
-                    TextSpan(
-                      text: formatTimestamp(message.timestamp),
                       style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
                   ],

@@ -38,7 +38,15 @@ class _PlayerLayoutState extends State<PlayerLayout> {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.orange,
-      child: VideoPlayer(videoController),
+      alignment: Alignment.center,
+      child: FittedBox(
+        fit: BoxFit.cover,
+        child: SizedBox(
+          width: videoController.value.size.width,
+          height: videoController.value.size.height,
+          child: VideoPlayer(videoController),
+        ),
+      ),
     );
   }
 }
