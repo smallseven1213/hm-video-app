@@ -116,6 +116,8 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         Expanded(
           child: ListView.builder(
             reverse: true,
+            // padding 0
+            padding: EdgeInsets.zero,
             itemCount: messages.length,
             itemBuilder: (context, index) {
               int reversedIndex = messages.length - 1 - index;
