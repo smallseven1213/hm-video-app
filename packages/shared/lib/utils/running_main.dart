@@ -73,7 +73,8 @@ Future<void> runningMain(
     bool? i18nSupport,
     List<Locale>? supportedLocales,
     String? i18nPath,
-    Widget Function(Widget child)? expandedWidget}) async {
+    Widget Function(Widget child)? expandedWidget,
+    Locale? defaultLocale}) async {
   url_strategy.usePathUrlStrategy();
 
   Widget buildOuterWidget(Widget child) {
@@ -91,18 +92,20 @@ Future<void> runningMain(
     options.environment = kDebugMode ? 'development' : 'production';
   },
       appRunner: () => realMain(
-          buildOuterWidget(root.RootWidget(
-            homePath: homePath,
-            routes: routes,
-            splashImage: 'assets/images/splash.png',
-            appColors: appColors,
-            loading: globalLoadingWidget,
-            theme: theme,
-            countdown: countdown,
+            buildOuterWidget(root.RootWidget(
+              homePath: homePath,
+              routes: routes,
+              splashImage: 'assets/images/splash.png',
+              appColors: appColors,
+              loading: globalLoadingWidget,
+              theme: theme,
+              countdown: countdown,
+              i18nSupport: i18nSupport,
+              dlJsonHosts: dlJsonHosts,
+              defaultLocale: defaultLocale,
+            )),
             i18nSupport: i18nSupport,
-            dlJsonHosts: dlJsonHosts,
-          )),
-          i18nSupport: i18nSupport,
-          supportedLocales: supportedLocales,
-          i18nPath: i18nPath));
+            supportedLocales: supportedLocales,
+            i18nPath: i18nPath,
+          ));
 }
