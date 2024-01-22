@@ -163,7 +163,7 @@ class VideoBlockFooter extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: '換一批',
+                  text: I18n.refreshBatch,
                   animate: true,
                   icon: GlowingIcon(
                     color: AppColors.colors[ColorKeys.textPrimary]!,

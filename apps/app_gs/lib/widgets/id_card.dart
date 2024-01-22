@@ -138,11 +138,11 @@ class IDCardContentState extends State<IDCardContent> {
                   ),
 
                   // 2. Platform title
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(bottom: 10),
                     child: Text(
-                      'G 點視頻',
-                      style: TextStyle(
+                      I18n.gPointVideo,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -154,7 +154,7 @@ class IDCardContentState extends State<IDCardContent> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
-                      '用於找回帳號，請妥善保存，請勿露餡',
+                      I18n.accountRecoveryInstructions,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.5),
                         fontWeight: FontWeight.w400,
@@ -207,9 +207,9 @@ class IDCardContentState extends State<IDCardContent> {
                         color: const Color.fromRGBO(66, 119, 220, 0.5),
                       ),
                       width: 115,
-                      child: const Text(
-                        '官網地址 : gdtv.app',
-                        style: TextStyle(
+                      child: Text(
+                        '${I18n.website}gdtv.app',
+                        style: const TextStyle(
                           color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,
                           fontSize: 10,

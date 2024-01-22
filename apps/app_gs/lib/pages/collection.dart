@@ -83,7 +83,7 @@ class CollectionPageState extends State<CollectionPage>
                 listEditorController.toggleEditing();
               },
               child: Text(
-                listEditorController.isEditing.value ? I18n.cancel : '編輯',
+                listEditorController.isEditing.value ? I18n.cancel : I18n.editTranslation,
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],

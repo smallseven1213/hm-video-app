@@ -116,7 +116,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
               Expanded(
                   flex: 1,
                   child: SearchInput(
-                    placeHolder: '輸入名稱',
+                    placeHolder: I18n.inputName,
                     onSubmitted: (val) {
                       actorsController.setName(val);
                     },

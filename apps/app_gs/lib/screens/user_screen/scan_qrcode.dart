@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:app_gs/localization/i18n.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
@@ -49,8 +50,8 @@ class _ScanQRViewState extends State<ScanQRView> {
         if (mounted) {
           showConfirmDialog(
               context: context,
-              title: '提示',
-              message: '登入成功',
+              title: I18n.hintMessage,
+              message: I18n.loginSuccess,
               showCancelButton: false,
               onConfirm: () {
                 Navigator.of(context).pop();
@@ -60,8 +61,8 @@ class _ScanQRViewState extends State<ScanQRView> {
         if (mounted) {
           showConfirmDialog(
               context: context,
-              title: '提示',
-              message: '登入失敗，用戶不存在。',
+              title: I18n.hintMessage,
+              message: I18n.loginFailedUserDoesNotExist,
               showCancelButton: false,
               onConfirm: () {
                 controller.resumeCamera();

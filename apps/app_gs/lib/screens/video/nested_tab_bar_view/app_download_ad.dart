@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_ads_controller.dart';
@@ -120,18 +121,18 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
-                              child: const Center(
+                              child: Center(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(
+                                    const Icon(
                                       Icons.download,
                                       color: Color(0xffffffff),
                                       size: 16,
                                     ),
                                     Text(
-                                      '立即下載',
-                                      style: TextStyle(
+                                      I18n.immediateDownload,
+                                      style: const TextStyle(
                                         fontSize: 12,
                                         color: Color(0xffffffff),
                                       ),

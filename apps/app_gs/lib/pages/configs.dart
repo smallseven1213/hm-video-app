@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class CellData {
 //       width: 20,
 //       height: 20,
 //     ),
-//     text: '修改密碼',
+//     text: I18n.modifyPassword,
 //     onTap: () {
 //       MyRouteDelegate.of(context).push(AppRoutes.updatePassword.value);
 //     },
@@ -43,7 +44,7 @@ class CellData {
 //       width: 20,
 //       height: 20,
 //     ),
-//     text: '帳號憑證',
+//     text: I18n.accountCredentials,
 //     onTap: () {
 //       MyRouteDelegate.of(context).push(AppRoutes.idCard.value);
 //     },
@@ -54,7 +55,7 @@ class CellData {
 //       width: 20,
 //       height: 20,
 //     ),
-//     text: '個性設置',
+//     text: I18n.personalizationSettings,
 //     onTap: () {
 //       logger.i('Settings tapped');
 //     },
@@ -65,8 +66,8 @@ class CellData {
 //       width: 20,
 //       height: 20,
 //     ),
-//     text: '安全鎖設置',
-//     label: const Text('未設置'),
+//     text: I18n.safetyLockSettings,
+//     label: const Text(I18n.notSet),
 //     onTap: () {
 //       logger.i('Settings tapped');
 //     },
@@ -77,7 +78,7 @@ class CellData {
 //       width: 20,
 //       height: 20,
 //     ),
-//     text: '更新檢查',
+//     text: I18n.updateCheck,
 //     onTap: () {
 //       logger.i('Settings tapped');
 //     },
@@ -85,7 +86,7 @@ class CellData {
 // ];
 
 //     return Scaffold(
-//       appBar: const CustomAppBar(title: '設置'),
+//       appBar: const CustomAppBar(title: I18n.settingTranslationKey),
 //       body: Padding(
 //         padding: const EdgeInsets.symmetric(horizontal: 8),
 //         child: Obx(() {
@@ -127,7 +128,7 @@ class ConfigsPage extends StatelessWidget {
           width: 20,
           height: 20,
         ),
-        text: '修改密碼',
+        text: I18n.modifyPassword,
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.updatePassword);
         },
@@ -138,7 +139,7 @@ class ConfigsPage extends StatelessWidget {
           width: 20,
           height: 20,
         ),
-        text: '帳號憑證',
+        text: I18n.accountCredentials,
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.idCard);
         },
@@ -149,7 +150,7 @@ class ConfigsPage extends StatelessWidget {
       //     width: 20,
       //     height: 20,
       //   ),
-      //   text: '個性設置',
+      //   text: I18n.personalizationSettings,
       //   onTap: () {
       //     logger.i('Settings tapped');
       //   },
@@ -160,8 +161,8 @@ class ConfigsPage extends StatelessWidget {
       //     width: 20,
       //     height: 20,
       //   ),
-      //   text: '安全鎖設置',
-      //   label: const Text('未設置'),
+      //   text: I18n.safetyLockSettings,
+      //   label: const Text(I18n.notSet),
       //   onTap: () {
       //     logger.i('Settings tapped');
       //   },
@@ -172,20 +173,20 @@ class ConfigsPage extends StatelessWidget {
       //     width: 20,
       //     height: 20,
       //   ),
-      //   text: '更新檢查',
+      //   text: I18n.updateCheck,
       //   onTap: () {
       //     logger.i('Settings tapped');
       //   },
       // ),
     ];
     return Scaffold(
-      appBar: const CustomAppBar(title: '設置'),
+      appBar: CustomAppBar(title: I18n.settingTranslationKey),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Obx(() {
           // 檢查是否為 guest，如果是則不顯示修改密碼的項目
           final displayedCellDataList = cellDataList.where((data) {
-            return data.text != '修改密碼' ||
+            return data.text != I18n.modifyPassword ||
                 !userController.info.value.roles.contains('guest');
           }).toList();
           return ListView.builder(

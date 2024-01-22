@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 class VideoPreviewSkeletonList extends StatelessWidget {
@@ -17,12 +18,12 @@ class VideoPreviewSkeletonList extends StatelessWidget {
     //   mainAxisSpacing: 12.0,
     //   crossAxisSpacing: 10.0,
     // );
-    return const Padding(
-      padding: EdgeInsets.symmetric(vertical: 60),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 60),
       child: Center(
         child: Text(
-          '更多影片讀取中...',
-          style: TextStyle(color: Colors.white),
+          I18n.moreVideosLoading,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );

@@ -128,7 +128,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                         }
                                     },
                                 child: const Text(
-                                  '更多 >',
+                                  'I18n.more >',
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,

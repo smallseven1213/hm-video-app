@@ -40,7 +40,7 @@ class ScreenLockState extends State<ScreenLock> {
                 onPressed: () {
                   widget.onScreenLock(!widget.isScreenLocked);
                   setState(() {
-                    message = !widget.isScreenLocked ? "螢幕已鎖定" : "螢幕已解鎖";
+                    message = !widget.isScreenLocked ? "I18n.screenIsLocked" : "I18n.screenIsUnlocked";
                   });
                   Future.delayed(const Duration(seconds: 1), () {
                     setState(() {

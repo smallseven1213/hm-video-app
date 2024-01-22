@@ -63,7 +63,7 @@ class ChannelStyle5 extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: Header(
-                            text: '精選UP主',
+                            text: '補翻譯精選UP主',
                             moreButton: GestureDetector(
                                 onTap: () => {
                                       MyRouteDelegate.of(context).push(
@@ -71,7 +71,7 @@ class ChannelStyle5 extends StatelessWidget {
                                       )
                                     },
                                 child: const Text(
-                                  '更多 >',
+                                  'I18n.more >',
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
@@ -206,7 +206,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                                       .ellipsis,
                                                             ),
                                                           Text(
-                                                              '人氣:${data.supplier.followTimes}',
+                                                              'I18n.popularity:${data.supplier.followTimes}',
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white
@@ -234,7 +234,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                               EdgeInsets.only(
                                                                   top: 18),
                                                           child: Text(
-                                                            '查看全部',
+                                                            '補翻譯查看全部',
                                                             style: TextStyle(
                                                                 color: Colors
                                                                     .white),
@@ -340,7 +340,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                       horizontal: 9,
                                                       vertical: 4),
                                                   child: Text(
-                                                    '${data.supplier.containVideos}部影片',
+                                                    '${data.supplier.containVideos}補翻譯部影片',
                                                     style: const TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.white),

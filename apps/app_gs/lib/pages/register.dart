@@ -1,5 +1,6 @@
 // RegisterPage , has button , click push to '/register'
 
+import 'package:app_gs/localization/i18n.dart';
 import 'package:dio/dio.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:app_gs/widgets/login/forgot_password_button.dart';
@@ -36,11 +37,11 @@ class RegisterPageState extends State<RegisterPage> {
 
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入帳號';
+      return I18n.pleaseEnterYourAccountNumber;
     }
 
     if (!RegExp(r'^[a-zA-Z0-9]{6,12}$').hasMatch(value)) {
-      return '帳號為6-12位字母及數字';
+      return I18n.accountLength6To12LettersNumbers;
     }
 
     return null;
@@ -48,20 +49,20 @@ class RegisterPageState extends State<RegisterPage> {
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入密碼';
+      return I18n.pleaseEnterYourPassword;
     }
     if (!RegExp(r'^[a-zA-Z0-9]{8,20}$').hasMatch(value)) {
-      return '密碼為8-20位字母及數字';
+      return I18n.passwordLength8To20CharactersAndNumbers;
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入驗證密碼';
+      return I18n.pleaseEnterTheVerificationPassword;
     }
     if (value != _passwordController.text) {
-      return '驗證密碼不一致';
+      return I18n.validatePasswordMismatch;
     }
     // 可在此添加其他驗證邏輯
     return null;
@@ -82,8 +83,8 @@ class RegisterPageState extends State<RegisterPage> {
         } else {
           showConfirmDialog(
             context: context,
-            title: '註冊錯誤',
-            message: '帳號或密碼不正確',
+            title: I18n.registerError,
+            message: I18n.invalidAccountOrPassword,
             showCancelButton: false,
             onConfirm: () {
               // Navigator.of(context).pop();
@@ -94,8 +95,8 @@ class RegisterPageState extends State<RegisterPage> {
         if (error.response?.data['code'] == '40000') {
           showConfirmDialog(
             context: context,
-            title: '註冊錯誤',
-            message: '帳號已存在',
+            title: I18n.registerError,
+            message: I18n.accountAlreadyExists,
             showCancelButton: false,
             onConfirm: () {
               // Navigator.of(context).pop();
@@ -104,8 +105,8 @@ class RegisterPageState extends State<RegisterPage> {
         } else {
           showConfirmDialog(
             context: context,
-            title: '註冊錯誤',
-            message: '帳號或密碼不正確',
+            title: I18n.registerError,
+            message: I18n.invalidAccountOrPassword,
             showCancelButton: false,
             onConfirm: () {
               // Navigator.of(context).pop();
@@ -133,25 +134,25 @@ class RegisterPageState extends State<RegisterPage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '帳　　號',
+                      label: I18n.account,
                       controller: _accountController,
-                      placeholderText: '請輸入帳號',
+                      placeholderText: I18n.pleaseEnterYourAccountNumber,
                       validator: _validateUsername,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '密　　碼',
+                      label: I18n.password,
                       obscureText: true,
                       controller: _passwordController,
-                      placeholderText: '請輸入密碼',
+                      placeholderText: I18n.pleaseEnterYourPassword,
                       validator: _validatePassword,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '驗證密碼',
+                      label: I18n.verifyPassword,
                       obscureText: true,
                       controller: _confirmPasswordController,
-                      placeholderText: '請輸入驗證密碼',
+                      placeholderText: I18n.pleaseEnterTheVerificationPassword,
                       validator: _validateConfirmPassword,
                     ),
                   ],
@@ -165,7 +166,7 @@ class RegisterPageState extends State<RegisterPage> {
                   children: [
                     Expanded(
                       child: Button(
-                        text: '註冊',
+                        text: I18n.register,
                         onPressed: () {
                           _handleRegister(context);
                         },
@@ -174,7 +175,7 @@ class RegisterPageState extends State<RegisterPage> {
                     const SizedBox(width: 10),
                     Expanded(
                       child: Button(
-                        text: '取消',
+                        text: I18n.cancel,
                         type: 'cancel',
                         onPressed: () {
                           MyRouteDelegate.of(context).popRoute();
@@ -197,9 +198,9 @@ class RegisterPageState extends State<RegisterPage> {
                             MyRouteDelegate.of(context)
                                 .push(AppRoutes.login, deletePreviousCount: 1);
                           },
-                          child: const Column(children: [
-                            Text('前往登入',
-                                style: TextStyle(
+                          child: Column(children: [
+                            Text(I18n.goToLogin,
+                                style: const TextStyle(
                                   color: Color(0xFF00B2FF),
                                   decoration: TextDecoration.underline,
                                 )),

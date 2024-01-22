@@ -1,4 +1,5 @@
 // NicknamePage , has button , click push to '/info'
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/button.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class NicknamePageState extends State<NicknamePage> {
 
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入暱稱';
+      return I18n.pleaseEnterNickname;
     }
     // 可在此添加其他驗證邏輯
     return null;
@@ -45,7 +46,7 @@ class NicknamePageState extends State<NicknamePage> {
       } catch (error) {
         showConfirmDialog(
           context: context,
-          title: '修改錯誤',
+          title: I18n.editError,
           message: '',
           showCancelButton: false,
           onConfirm: () {
@@ -59,8 +60,8 @@ class NicknamePageState extends State<NicknamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '修改暱稱',
+      appBar:  CustomAppBar(
+        title: I18n.modifyNickname,
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -73,9 +74,9 @@ class NicknamePageState extends State<NicknamePage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '新暱稱',
+                      label: I18n.newNickname,
                       controller: _accountController,
-                      placeholderText: '請輸入暱稱',
+                      placeholderText: I18n.pleaseEnterNickname,
                       validator: _validateUsername,
                     ),
                   ],
@@ -85,7 +86,7 @@ class NicknamePageState extends State<NicknamePage> {
               SizedBox(
                 width: 200,
                 child: Button(
-                  text: '設置完成',
+                  text: I18n.setupCompleted,
                   onPressed: () => _handleLogin(context),
                 ),
               ),

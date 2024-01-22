@@ -97,8 +97,8 @@ class SuppliersPageState extends State<SuppliersPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '全部UP主',
+      appBar: CustomAppBar(
+        title: I18n.allCreators,
       ),
       body: Column(
         children: [
@@ -110,7 +110,7 @@ class SuppliersPageState extends State<SuppliersPage>
               Expanded(
                   flex: 1,
                   child: SearchInput(
-                    placeHolder: '輸入名稱',
+                    placeHolder: I18n.inputName,
                     onSubmitted: (val) {
                       suppliersController.setName(val);
                     },

@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -8,12 +9,12 @@ class IDCardPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(
-        title: '帳號憑證',
+        title: I18n.accountCredentials,
       ),
       extendBodyBehindAppBar: true,
-      body: Center(
+      body: const Center(
         child: IDCard(),
       ),
     );
