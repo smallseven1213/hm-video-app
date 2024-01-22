@@ -258,3 +258,16 @@ deploy-wl-tw1-prod-job:
   script: 
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/wl-tw1 --install "${CI_PROJECT_NAME}" --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/wl-tw1/${CI_PROJECT_NAME} -n prod
     - /bin/bash /home/gitlab-runner/tg-notify.sh wl-tw1 prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
+
+deploy-wl-id1-prod-job: 
+  stage: deploy
+  tags: 
+    - gitlab-shared-runner
+  only: 
+    refs: 
+      - tags
+    variables: 
+      - $CI_COMMIT_REF_NAME =~ /wl_id1$/
+  script: 
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/wl-id1 --install "${CI_PROJECT_NAME}" --wait --set global.release=${CI_COMMIT_TAG} --set global.image.tag=${CI_COMMIT_TAG} /home/gitlab-runner/hm-helm/helm-charts/wl-id1/${CI_PROJECT_NAME} -n prod
+    - /bin/bash /home/gitlab-runner/tg-notify.sh wl-id1 prod ${CI_PROJECT_NAME} ${CI_COMMIT_TAG}
