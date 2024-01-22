@@ -12,19 +12,35 @@ class PlayerLayout extends StatefulWidget {
 
 class _PlayerLayoutState extends State<PlayerLayout> {
   late VideoPlayerController videoController;
+  bool hasError = false; // Flag to indicate if there's an error
 
   @override
   void initState() {
     super.initState();
     videoController = VideoPlayerController.networkUrl(widget.uri)
       ..initialize().then((_) {
-        // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
         setState(() {});
+      }).catchError((error) {
+        // Handle initialization error
+        setState(() {
+          hasError = true;
+        });
       });
+
+    videoController.addListener(() {
+      if (videoController.value.hasError) {
+        // Update state if there's an error during video playback
+        setState(() {
+          hasError = true;
+        });
+      }
+    });
 
     // if UI ready, then play
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      videoController.play();
+      if (!hasError) {
+        videoController.play();
+      }
     });
   }
 
@@ -36,6 +52,16 @@ class _PlayerLayoutState extends State<PlayerLayout> {
 
   @override
   Widget build(BuildContext context) {
+    if (hasError) {
+      return Container(
+        color: Colors.black,
+        alignment: Alignment.center,
+        child: Text(
+          'Error loading video',
+          style: TextStyle(color: Colors.white),
+        ),
+      );
+    }
     return Container(
       color: Colors.orange,
       alignment: Alignment.center,

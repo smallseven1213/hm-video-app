@@ -208,6 +208,9 @@ class _GiftItemState extends State<GiftItem> {
     return InkWell(
       onTap: () async {
         if (arrowSend) {
+          setState(() {
+            arrowSend = false;
+          });
           try {
             var price = double.parse(widget.gift.price);
             var userAmount = Get.find<LiveUserController>().getAmount;
