@@ -63,16 +63,23 @@ class _PlayerLayoutState extends State<PlayerLayout> {
       );
     }
     return Container(
-      color: Colors.orange,
+      color: Colors.black,
       alignment: Alignment.center,
-      child: FittedBox(
-        fit: BoxFit.cover,
-        child: SizedBox(
-          width: videoController.value.size.width,
-          height: videoController.value.size.height,
-          child: VideoPlayer(videoController),
+      child: OverflowBox(
+        minWidth: 0.0,
+        minHeight: 0.0,
+        maxWidth: double.infinity,
+        maxHeight: double.infinity,
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: SizedBox(
+            width: videoController.value.size.width,
+            height: videoController.value.size.height,
+            child: VideoPlayer(videoController),
+          ),
         ),
       ),
     );
+    ;
   }
 }
