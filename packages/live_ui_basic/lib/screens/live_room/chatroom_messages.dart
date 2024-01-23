@@ -80,11 +80,12 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
       if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
         var giftMessage = giftMessageQueue.value.removeFirst();
-        showLottieDialog(
-          LottieDataProvider.network,
-          giftMessage.objChat.data,
-          onFinish: () => isLottieDialogOpen = false,
-        );
+        // showLottieDialog(
+        //   LottieDataProvider.network,
+        //   giftMessage.objChat.data,
+        //   onFinish: () => isLottieDialogOpen = false,
+        // );
+        setLottieAnimation(giftMessage.objChat.data);
       } else {
         timer.cancel();
       }
@@ -97,10 +98,18 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
       var gift = giftsController.gifts.value
           .firstWhere((element) => element.id == giftId);
       if (gift.animation.isNotEmpty) {
-        showLottieDialog(LottieDataProvider.network, gift.animation);
+        showLottieDialog(
+          LottieDataProvider.network,
+          gift.animation,
+          onFinish: () => isLottieDialogOpen = false,
+        );
       }
     } catch (e) {
-      showLottieDialog(LottieDataProvider.asset, 'assets/lotties/present.json');
+      showLottieDialog(
+        LottieDataProvider.asset,
+        'assets/lotties/present.json',
+        onFinish: () => isLottieDialogOpen = false,
+      );
     }
   }
 
