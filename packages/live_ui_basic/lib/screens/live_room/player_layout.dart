@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -40,6 +41,7 @@ class _PlayerLayoutState extends State<PlayerLayout> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!hasError) {
         videoController.play();
+        setState(() {});
       }
     });
   }
@@ -62,6 +64,9 @@ class _PlayerLayoutState extends State<PlayerLayout> {
         ),
       );
     }
+    if (kIsWeb) {
+      return VideoPlayer(videoController);
+    }
     return Container(
       color: Colors.black,
       alignment: Alignment.center,
@@ -80,6 +85,5 @@ class _PlayerLayoutState extends State<PlayerLayout> {
         ),
       ),
     );
-    ;
   }
 }
