@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/screens/search/tag_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class RecommandScreenState extends State<RecommandScreen> {
           }
           return SliverToBoxAdapter(
             child: Header(
-                text: '搜索紀錄',
+                text: I18n.searchRecord,
                 // moreButton is a Button from Image AssetImage
                 moreButton: GestureDetector(
                   onTap: () {
@@ -93,11 +94,7 @@ class RecommandScreenState extends State<RecommandScreen> {
             ),
           );
         }),
-        const SliverToBoxAdapter(
-          child: Header(
-            text: '搜索推薦',
-          ),
-        ),
+        SliverToBoxAdapter(child: Header(text: I18n.searchRecommendation)),
         Obx(() => SliverList(
               delegate: SliverChildListDelegate([
                 Padding(
@@ -122,11 +119,7 @@ class RecommandScreenState extends State<RecommandScreen> {
             height: 20,
           ),
         ),
-        const SliverToBoxAdapter(
-          child: Header(
-            text: '熱門推薦',
-          ),
-        ),
+        SliverToBoxAdapter(child: Header(text: I18n.recommended)),
         const SliverToBoxAdapter(
           child: SizedBox(
             height: 10,

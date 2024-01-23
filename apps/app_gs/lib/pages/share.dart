@@ -1,19 +1,18 @@
 import 'dart:io';
 import 'dart:ui';
 
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/button.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:logger/logger.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/modules/user/user_promo_consumer.dart';
 
 final GlobalKey _globalKey = GlobalKey();
@@ -49,12 +48,10 @@ Future<void> _captureAndSaveScreenshot() async {
 
   // 顯示保存成功提示
   ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(
-    const SnackBar(
+    SnackBar(
       content: Text(
-        '已成功保存推廣卡',
-        style: TextStyle(
-          color: Colors.white,
-        ),
+        I18n.promotionalCardHasBeenSuccessfullySaved,
+        style: const TextStyle(color: Colors.white),
       ),
     ),
   );
@@ -75,7 +72,7 @@ class SharePage extends StatelessWidget {
             ),
           ),
           CustomAppBar(
-            title: '推廣分享',
+            title: I18n.promotionalShare,
             backgroundColor: Colors.transparent,
             actions: [
               Center(
@@ -86,9 +83,9 @@ class SharePage extends StatelessWidget {
                   },
                   child: Container(
                     padding: const EdgeInsets.all(10),
-                    child: const Text(
-                      '推廣紀錄',
-                      style: TextStyle(
+                    child: Text(
+                      I18n.promotionRecord,
+                      style: const TextStyle(
                         color: Color(0xff00B0D4),
                         fontSize: 12,
                       ),
@@ -162,7 +159,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      '${promoteData.promotedMembers}人推廣',
+                      '${promoteData.promotedMembers}I18n.countPersonPromotion',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
@@ -173,7 +170,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
 
                   // 3. Info text
                   Text(
-                    '已推廣',
+                    I18n.promoted,
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.5),
                       fontWeight: FontWeight.w400,
@@ -194,7 +191,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ),
                       width: 115,
                       child: Text(
-                        '邀請碼 ${promoteData.invitationCode}',
+                        'I18n.invitationCode ${promoteData.invitationCode}',
                         style: const TextStyle(
                           color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,
@@ -224,27 +221,28 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: Button(
-                      text: '複製分享',
+                      text: I18n.copyAndShare,
                       type: 'secondary',
                       onPressed: () {
                         Clipboard.setData(ClipboardData(
                             text: "https://${promoteData.promoteLink}"));
                         ScaffoldMessenger.of(_globalKey.currentContext!)
                             .showSnackBar(
-                          const SnackBar(
+                          SnackBar(
                             content: Text(
-                              '複製成功',
-                              style: TextStyle(color: Colors.white),
+                              I18n.successfullyCopied,
+                              style: const TextStyle(color: Colors.white),
                             ),
                           ),
                         );
                       },
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                  Padding(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
                     child: Button(
-                      text: '截圖分享',
+                      text: I18n.screenShortShare,
                       type: 'primary',
                       onPressed: _captureAndSaveScreenshot,
                     ),

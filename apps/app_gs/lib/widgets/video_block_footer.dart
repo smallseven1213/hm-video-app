@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/config/colors.dart';
 import 'package:app_gs/widgets/channel_area_banner.dart';
 import 'package:app_gs/widgets/glowing_icon.dart';
@@ -127,7 +128,7 @@ class VideoBlockFooter extends StatelessWidget {
             if (block.isCheckMore == true)
               Expanded(
                 child: CustomButton(
-                  text: '進入櫥窗',
+                  text: I18n.entryWindow,
                   icon: GlowingIcon(
                     color: AppColors.colors[ColorKeys.textPrimary]!,
                     size: 20,
@@ -162,7 +163,7 @@ class VideoBlockFooter extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: '換一批',
+                  text: I18n.refreshBatch,
                   animate: true,
                   icon: GlowingIcon(
                     color: AppColors.colors[ColorKeys.textPrimary]!,

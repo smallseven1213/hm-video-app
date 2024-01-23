@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -153,9 +154,9 @@ class UserInfo extends StatelessWidget {
                       onTap: () {
                         MyRouteDelegate.of(context).push(AppRoutes.login);
                       },
-                      child: const Text(
-                        '註冊/登入',
-                        style: TextStyle(
+                      child: Text(
+                        I18n.login,
+                        style: const TextStyle(
                           color: Color(0xffFFC700),
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

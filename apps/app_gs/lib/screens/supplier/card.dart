@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -195,8 +196,8 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500)),
                                   const SizedBox(width: 5),
-                                  const Text('長視頻',
-                                      style: TextStyle(
+                                  Text(I18n.longVideo,
+                                      style: const TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,
                                       ))
@@ -215,8 +216,8 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500)),
                                   const SizedBox(width: 5),
-                                  const Text('短視頻',
-                                      style: TextStyle(
+                                  Text(I18n.shortVideo,
+                                      style: const TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,
                                       ))
@@ -235,7 +236,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500)),
                                   const SizedBox(width: 5),
-                                  const Text('收藏',
+                                  const Text('補翻譯收藏',
                                       style: TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,
@@ -263,8 +264,8 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                         fontSize: 15,
                                       ))),
                                   const SizedBox(width: 5),
-                                  const Text('點讚',
-                                      style: TextStyle(
+                                  Text(I18n.likeButton,
+                                      style: const TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,
                                       ))

@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -28,12 +30,23 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   List<ChatMessage> messages = [];
   LottieData? lottieData;
   bool isLottieDialogOpen = false;
+  Timer? timer;
+
+  // Using ValueNotifier for the gift message queue
+  ValueNotifier<Queue<ChatMessage>> giftMessageQueue =
+      ValueNotifier(Queue<ChatMessage>());
 
   @override
   void initState() {
     super.initState();
-
     socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
+
+    // Adding listener to the giftMessageQueue
+    giftMessageQueue.addListener(() {
+      if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
+        processGiftQueue();
+      }
+    });
   }
 
   void handleChatResult(dynamic data) {
@@ -42,14 +55,39 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         .map((item) => ChatMessage.fromJson(item))
         .toList();
 
-    try {
-      var latestGiftMessage = newMessages
-          .lastWhere((element) => element.objChat.ntype == MessageType.gift);
-      setLottieAnimation(latestGiftMessage.objChat.data);
-    } catch (e) {}
-
     setState(() {
       messages.addAll(newMessages);
+    });
+
+    for (var message in newMessages) {
+      if (message.objChat.ntype == MessageType.gift) {
+        updateGiftQueue(message);
+      }
+    }
+  }
+
+  void updateGiftQueue(ChatMessage message) {
+    // Create a new instance of Queue with the current items and the new message
+    var updatedQueue = Queue<ChatMessage>.from(giftMessageQueue.value)
+      ..add(message);
+
+    // Update the ValueNotifier with the new queue instance
+    giftMessageQueue.value = updatedQueue;
+  }
+
+  void processGiftQueue() {
+    timer?.cancel();
+    timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
+        var giftMessage = giftMessageQueue.value.removeFirst();
+        showLottieDialog(
+          LottieDataProvider.network,
+          giftMessage.objChat.data,
+          onFinish: () => isLottieDialogOpen = false,
+        );
+      } else {
+        timer.cancel();
+      }
     });
   }
 
@@ -66,25 +104,38 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     }
   }
 
-  void showLottieDialog(LottieDataProvider provider, String path) {
+  void showLottieDialog(LottieDataProvider provider, String path,
+      {VoidCallback? onFinish}) {
     if (isLottieDialogOpen) return;
 
     isLottieDialogOpen = true;
     showDialog(
       context: context,
       barrierDismissible: true,
-      barrierColor: Colors.transparent, // Transparent background
+      barrierColor: Colors.transparent,
       builder: (BuildContext context) {
         return LottieDialog(
           path: path,
           provider: provider,
+          onFinish: onFinish ?? () {},
         );
       },
     ).then((_) {
-      setState(() {
-        isLottieDialogOpen = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLottieDialogOpen = false;
+        });
+      }
     });
+  }
+
+  // dispose
+  @override
+  void dispose() {
+    socketManager.socket!.off('chatresult');
+    giftMessageQueue.dispose();
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -94,6 +145,8 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         Expanded(
           child: ListView.builder(
             reverse: true,
+            // padding 0
+            padding: EdgeInsets.zero,
             itemCount: messages.length,
             itemBuilder: (context, index) {
               int reversedIndex = messages.length - 1 - index;

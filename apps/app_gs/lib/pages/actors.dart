@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/search_input.dart';
@@ -103,9 +104,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '全部女優',
-      ),
+      appBar: CustomAppBar(title: I18n.allFemaleActors),
       body: Column(
         children: [
           const ActorsTabBar(),
@@ -117,7 +116,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
               Expanded(
                   flex: 1,
                   child: SearchInput(
-                    placeHolder: '輸入名稱',
+                    placeHolder: I18n.inputName,
                     onSubmitted: (val) {
                       actorsController.setName(val);
                     },
@@ -130,12 +129,13 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
               Expanded(
                 child: Row(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Center(
                         child: Text(
-                          '排序',
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          I18n.sort,
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.white),
                         ),
                       ),
                     ),
@@ -143,8 +143,8 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                       flex: 1,
                       child: Row(
                         children: [
-                          _buildCustomRadioButton(0, '視頻'),
-                          _buildCustomRadioButton(1, '人氣'),
+                          _buildCustomRadioButton(0, I18n.video),
+                          _buildCustomRadioButton(1, I18n.popularity),
                         ],
                       ),
                     )

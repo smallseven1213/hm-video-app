@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'dart:ui';
 import 'dart:io';
 
@@ -46,12 +47,10 @@ Future<void> _captureAndSaveScreenshot() async {
     // 顯示保存成功提示
     // 注意这里我们再次获取context，因为此处的context可能已经发生改变
     ScaffoldMessenger.of(_globalKey.currentContext!).showSnackBar(
-      const SnackBar(
+      SnackBar(
         content: Text(
-          '已成功保存身份卡',
-          style: TextStyle(
-            color: Colors.white,
-          ),
+          I18n.identityCardHasBeenSuccessfullySaved,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -139,11 +138,11 @@ class IDCardContentState extends State<IDCardContent> {
                   ),
 
                   // 2. Platform title
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.only(bottom: 10),
                     child: Text(
-                      'G 點視頻',
-                      style: TextStyle(
+                      I18n.gPointVideo,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
                         fontSize: 14,
@@ -155,7 +154,7 @@ class IDCardContentState extends State<IDCardContent> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: 15),
                     child: Text(
-                      '用於找回帳號，請妥善保存，請勿露餡',
+                      I18n.accountRecoveryInstructions,
                       style: TextStyle(
                         color: Colors.white.withOpacity(0.5),
                         fontWeight: FontWeight.w400,
@@ -208,9 +207,9 @@ class IDCardContentState extends State<IDCardContent> {
                         color: const Color.fromRGBO(66, 119, 220, 0.5),
                       ),
                       width: 115,
-                      child: const Text(
-                        '官網地址 : gdtv.app',
-                        style: TextStyle(
+                      child: Text(
+                        '${I18n.website}gdtv.app',
+                        style: const TextStyle(
                           color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,
                           fontSize: 10,
@@ -223,10 +222,10 @@ class IDCardContentState extends State<IDCardContent> {
 
           // Add the button widget here
           const SizedBox(height: 33),
-          const SizedBox(
+          SizedBox(
             width: 208,
             child: Button(
-              text: '請截圖保存',
+              text: I18n.pleaseSaveTheScreenshot,
               type: 'secondary',
               onPressed: _captureAndSaveScreenshot,
             ),

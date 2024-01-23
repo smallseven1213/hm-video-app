@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 // PanelWidget stateless
 
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class ListPagePanelWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: Button(
-                        text: '全選',
+                        text: I18n.selectAll,
                         type: 'primary',
                         onPressed: onSelectButtonClick!),
                   )),
@@ -53,7 +54,7 @@ class ListPagePanelWidget extends StatelessWidget {
                   child: SizedBox(
                     height: 50,
                     child: Button(
-                        text: '刪除',
+                        text: I18n.delete,
                         type: listEditorController.selectedIds.isNotEmpty
                             ? 'secondary'
                             : 'primary',

@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/actor_avatar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class ChannelStyle6Suppliers extends StatelessWidget {
               const SizedBox(
                 height: 7,
               ),
-              const Text("關注某個UP主，以查看其最新影片。",
+              const Text("補翻譯關注某個UP主，以查看其最新影片。",
                   style: TextStyle(
                     color: Color(0xFFcfcece),
                     fontSize: 14,
@@ -105,9 +106,11 @@ class ChannelStyle6Suppliers extends StatelessWidget {
                                   ),
                                 ),
                                 Align(
-                                  alignment: Alignment.bottomCenter, // 由下往上（置底）
+                                  alignment:
+                                      Alignment.bottomCenter, // 由下往上（置底）
                                   child: Column(
-                                    mainAxisSize: MainAxisSize.min, // 使用最小的空间
+                                    mainAxisSize:
+                                        MainAxisSize.min, // 使用最小的空间
                                     mainAxisAlignment:
                                         MainAxisAlignment.center, // 居中对齐
                                     crossAxisAlignment:
@@ -174,10 +177,10 @@ class ChannelStyle6Suppliers extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(4),
                                           ),
-                                          child: const Center(
+                                          child: Center(
                                             child: Text(
-                                              '關注',
-                                              style: TextStyle(
+                                              I18n.followStatus,
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.w500),

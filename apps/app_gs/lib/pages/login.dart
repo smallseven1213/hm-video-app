@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 // LoginPage , has button , click push to '/register'
 
 import 'package:app_gs/widgets/button.dart';
@@ -22,9 +23,7 @@ class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(
-          title: '登入',
-        ),
+        appBar: CustomAppBar(title: I18n.login),
         body: LoginPageScaffold(
           onError: (title, message) {
             showConfirmDialog(
@@ -48,16 +47,16 @@ class LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       AuthTextField(
-                        label: '帳號',
+                        label: I18n.account,
                         controller: accountController,
-                        placeholderText: '請輸入帳號',
+                        placeholderText: I18n.pleaseEnterYourAccountNumber,
                         validator: validateUsername,
                       ),
                       const SizedBox(height: 10),
                       AuthTextField(
-                        label: '密碼',
+                        label: I18n.password,
                         controller: passwordController,
-                        placeholderText: '請輸入密碼',
+                        placeholderText: I18n.pleaseEnterYourPassword,
                         obscureText: true,
                         validator: validatePassword,
                       ),
@@ -68,7 +67,7 @@ class LoginPageState extends State<LoginPage> {
                 SizedBox(
                   width: 200,
                   child: Button(
-                    text: '登入',
+                    text: I18n.login,
                     onPressed: () => handleLogin(),
                   ),
                 ),
@@ -84,9 +83,9 @@ class LoginPageState extends State<LoginPage> {
                             MyRouteDelegate.of(context).push(AppRoutes.register,
                                 deletePreviousCount: 1);
                           },
-                          child: const Column(children: [
-                            Text('還沒有帳號',
-                                style: TextStyle(
+                          child: Column(children: [
+                            Text(I18n.noAccountYet,
+                                style: const TextStyle(
                                   color: Color(0xFF00B2FF),
                                   decoration: TextDecoration.underline,
                                 )),

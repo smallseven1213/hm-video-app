@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 class ReloadButton extends StatelessWidget {
@@ -9,10 +10,10 @@ class ReloadButton extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        const Text('輸入異常',
-            style: TextStyle(color: Color.fromRGBO(255, 255, 255, 0.3))),
-        const Text('請重新加載',
-            style: TextStyle(color: Color.fromRGBO(255, 255, 255, 0.3))),
+        Text(I18n.inputAbnormal,
+            style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 0.3))),
+        Text(I18n.pleaseReload,
+            style: const TextStyle(color: Color.fromRGBO(255, 255, 255, 0.3))),
         IconButton(
           onPressed: () => onPressed!(),
           icon: const Icon(

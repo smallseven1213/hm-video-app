@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/screens/notifications/notification.dart';
 import 'package:app_gs/screens/notifications/system.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
@@ -45,9 +46,10 @@ class NotificationsPageState extends State<NotificationsPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: '消息中心',
-        bottom:
-            GSTabBar(tabs: const ['公告', '系統通知'], controller: _tabController),
+        title: I18n.messageCenter,
+        bottom: GSTabBar(
+            tabs: [I18n.announcement, I18n.systemNotification],
+            controller: _tabController),
         actions: [
           _tabController.index == 0
               ? const SizedBox.shrink()
@@ -56,7 +58,9 @@ class NotificationsPageState extends State<NotificationsPage>
                     listEditorController.toggleEditing();
                   },
                   child: Text(
-                    listEditorController.isEditing.value ? '取消' : '編輯',
+                    listEditorController.isEditing.value
+                        ? I18n.cancel
+                        : I18n.editTranslation,
                     style: const TextStyle(color: Color(0xff00B0D4)),
                   ))),
         ],

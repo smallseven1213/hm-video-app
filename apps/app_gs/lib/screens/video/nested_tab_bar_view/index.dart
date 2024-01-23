@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -56,8 +57,8 @@ class NestedTabBarViewState extends State<NestedTabBarView>
         Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
 
     final List<String> tabs = widget.videoDetail.actors!.isEmpty
-        ? ['同類型', '同標籤']
-        : ['同演員', '同類型', '同標籤'];
+        ? [I18n.sameType, I18n.sameTag]
+        : [I18n.sameActor, I18n.sameType, I18n.sameTag];
 
     return Scaffold(
       body: NestedScrollView(

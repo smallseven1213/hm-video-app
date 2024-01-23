@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/custom_app_bar.dart';
 import 'package:app_gs/widgets/no_data.dart';
 import 'package:app_gs/widgets/search_input.dart';
@@ -96,8 +97,8 @@ class SuppliersPageState extends State<SuppliersPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '全部UP主',
+      appBar: CustomAppBar(
+        title: I18n.allCreators,
       ),
       body: Column(
         children: [
@@ -109,7 +110,7 @@ class SuppliersPageState extends State<SuppliersPage>
               Expanded(
                   flex: 1,
                   child: SearchInput(
-                    placeHolder: '輸入名稱',
+                    placeHolder: I18n.inputName,
                     onSubmitted: (val) {
                       suppliersController.setName(val);
                     },
@@ -122,12 +123,13 @@ class SuppliersPageState extends State<SuppliersPage>
               Expanded(
                 child: Row(
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Center(
                         child: Text(
-                          '排序',
-                          style: TextStyle(fontSize: 12, color: Colors.white),
+                          I18n.sort,
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.white),
                         ),
                       ),
                     ),
@@ -135,8 +137,8 @@ class SuppliersPageState extends State<SuppliersPage>
                       flex: 1,
                       child: Row(
                         children: [
-                          _buildCustomRadioButton(1, '視頻'),
-                          _buildCustomRadioButton(2, '人氣'),
+                          _buildCustomRadioButton(1, I18n.video),
+                          _buildCustomRadioButton(2, I18n.popularity),
                         ],
                       ),
                     )

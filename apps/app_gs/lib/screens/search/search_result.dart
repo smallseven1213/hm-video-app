@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -57,10 +58,7 @@ class SearchResultPageState extends State<SearchResultPage>
         // GSTabBar
         GSTabBar(
           controller: _tabController,
-          tabs: const [
-            '長視頻',
-            '短視頻',
-          ],
+          tabs: [I18n.longVideo, I18n.shortVideo],
         ),
         // SliverVodGrid
         Expanded(

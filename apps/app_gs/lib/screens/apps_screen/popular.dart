@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/ads_api.dart';
 import 'package:shared/models/index.dart';
@@ -91,19 +92,19 @@ class PopularWidget extends StatelessWidget {
                             bottomRight: Radius.circular(15),
                           ),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image(
+                              const Image(
                                 image: AssetImage(
                                     'assets/images/apps_download.png'),
                                 height: 11.0,
                               ),
-                              SizedBox(width: 2),
+                              const SizedBox(width: 2),
                               Text(
-                                '下載',
-                                style: TextStyle(
+                                I18n.downloadFile,
+                                style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 12,
                                 ),

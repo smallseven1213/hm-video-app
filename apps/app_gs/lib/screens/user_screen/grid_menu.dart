@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/navigation.dart';
@@ -32,7 +33,7 @@ class GridMenuState extends State<GridMenu> {
     return UserSettingQuickLinkConsumer(
       child: (List<Navigation> quickLinks) {
         var menuItems = quickLinks.map((Navigation item) {
-          if (item.name == '身份卡') {
+          if (item.name == I18n.idCard) {
             return GridMenuItem(
               name: item.name ?? '',
               icon: item.photoSid ?? '',

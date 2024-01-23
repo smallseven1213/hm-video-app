@@ -1,3 +1,4 @@
+import 'package:app_gs/localization/i18n.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/apps_screen/index.dart';
@@ -8,11 +9,11 @@ class AppsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(
-        title: '應用中心',
+        title: I18n.appCenter,
       ),
-      body: AppsScreen(),
+      body: const AppsScreen(),
     );
   }
 }

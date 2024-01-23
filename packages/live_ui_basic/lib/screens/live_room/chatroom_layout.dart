@@ -23,7 +23,7 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
   bool isBottomSheetDisplayed = false;
 
   void _showBottomSheet() {
-    setState(() => isBottomSheetDisplayed = true);
+    isBottomSheetDisplayed = true;
 
     showModalBottomSheet(
       context: context,
@@ -46,7 +46,9 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
           ),
         );
       },
-    ).whenComplete(() => setState(() => isBottomSheetDisplayed = false));
+    ).whenComplete(() {
+      isBottomSheetDisplayed = false;
+    });
   }
 
   void sendMessage() {
