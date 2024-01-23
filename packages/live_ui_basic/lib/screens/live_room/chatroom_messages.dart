@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
@@ -29,6 +30,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   List<ChatMessage> messages = [];
   LottieData? lottieData;
   bool isLottieDialogOpen = false;
+  Timer? timer;
 
   // Using ValueNotifier for the gift message queue
   ValueNotifier<Queue<ChatMessage>> giftMessageQueue =
@@ -74,27 +76,19 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   }
 
   void processGiftQueue() {
-    if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
-      var giftMessage = giftMessageQueue.value.first;
-
-      showLottieDialog(
-        LottieDataProvider.network,
-        giftMessage.objChat.data,
-        onFinish: () {
-          // Remove the processed gift message from the queue
-          giftMessageQueue.value.removeFirst();
-
-          setState(() {
-            isLottieDialogOpen = false;
-          });
-
-          // Check if there are more gifts in the queue and process them
-          if (giftMessageQueue.value.isNotEmpty) {
-            processGiftQueue(); // Continue processing the next gift
-          }
-        },
-      );
-    }
+    timer?.cancel();
+    timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
+      if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
+        var giftMessage = giftMessageQueue.value.removeFirst();
+        showLottieDialog(
+          LottieDataProvider.network,
+          giftMessage.objChat.data,
+          onFinish: () => isLottieDialogOpen = false,
+        );
+      } else {
+        timer.cancel();
+      }
+    });
   }
 
   void setLottieAnimation(String data) {
@@ -123,16 +117,10 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         return LottieDialog(
           path: path,
           provider: provider,
-          onFinish: () {
-            // This will be called when the animation finishes
-            if (onFinish != null) {
-              onFinish();
-            }
-          },
+          onFinish: onFinish ?? () {},
         );
       },
     ).then((_) {
-      // This gets called when the dialog is dismissed, including when the user taps outside the dialog
       if (mounted) {
         setState(() {
           isLottieDialogOpen = false;
@@ -146,6 +134,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   void dispose() {
     socketManager.socket!.off('chatresult');
     giftMessageQueue.dispose();
+    timer?.cancel();
     super.dispose();
   }
 
