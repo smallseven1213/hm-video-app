@@ -24,7 +24,7 @@ void main() async {
       'https://1faee0b12b854234b5bfb9546a7d5927@sentry.hmtech.club/2',
       allRoutes.keys.first,
       [
-        'https:/dl.dlwlid1.com/$env/dl.json',
+        'https://dl.dlwlid1.com/$env/dl.json',
         'https://dl.dlwlid1.net/$env/dl.json',
         'https://dl.dlwlid1.info/$env/dl.json',
       ],
