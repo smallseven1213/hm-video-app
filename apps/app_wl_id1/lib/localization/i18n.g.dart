@@ -6,7 +6,7 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Thu, 18 Jan 2024 18:09:35 +08:00
+// Generated at: Wed, 24 Jan 2024 10:29:40 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
@@ -533,4 +533,23 @@ class I18n {
 
   // website
   static String get website => 'website'.tr();
+
+  // popular
+  static String get popularFemaleActors => 'popular_female_actors'.tr();
+
+  // view
+  static String get viewAll => 'view_all'.tr();
+
+  // selected
+  static String get selectedUp => 'selected_up'.tr();
+
+  // favorites
+  static String get favorites => 'favorites'.tr();
+
+  // followed
+  static String get followedUpUserSeeMoreVideo =>
+      'followed_up_user_see_more_video'.tr();
+
+  // number
+  static String get numberOfVideos => 'number_of_videos'.tr();
 }

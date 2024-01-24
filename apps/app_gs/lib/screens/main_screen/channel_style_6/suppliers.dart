@@ -1,4 +1,3 @@
-import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/actor_avatar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +7,8 @@ import 'package:shared/controllers/user_favorites_supplier_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
+
+import '../../../localization/i18n.dart';
 
 class ChannelStyle6Suppliers extends StatelessWidget {
   ChannelStyle6Suppliers({Key? key}) : super(key: key);
@@ -32,8 +33,8 @@ class ChannelStyle6Suppliers extends StatelessWidget {
               const SizedBox(
                 height: 7,
               ),
-              const Text("補翻譯關注某個UP主，以查看其最新影片。",
-                  style: TextStyle(
+              Text(I18n.followedUpUserSeeMoreVideo,
+                  style: const TextStyle(
                     color: Color(0xFFcfcece),
                     fontSize: 14,
                   )),
@@ -106,11 +107,9 @@ class ChannelStyle6Suppliers extends StatelessWidget {
                                   ),
                                 ),
                                 Align(
-                                  alignment:
-                                      Alignment.bottomCenter, // 由下往上（置底）
+                                  alignment: Alignment.bottomCenter, // 由下往上（置底）
                                   child: Column(
-                                    mainAxisSize:
-                                        MainAxisSize.min, // 使用最小的空间
+                                    mainAxisSize: MainAxisSize.min, // 使用最小的空间
                                     mainAxisAlignment:
                                         MainAxisAlignment.center, // 居中对齐
                                     crossAxisAlignment:

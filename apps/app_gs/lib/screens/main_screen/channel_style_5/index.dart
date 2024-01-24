@@ -12,6 +12,7 @@ import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.da
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../../localization/i18n.dart';
 import '../../../widgets/actor_avatar.dart';
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
@@ -63,7 +64,7 @@ class ChannelStyle5 extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: Header(
-                            text: '補翻譯精選UP主',
+                            text: I18n.selectedUp,
                             moreButton: GestureDetector(
                                 onTap: () => {
                                       MyRouteDelegate.of(context).push(
@@ -229,15 +230,17 @@ class ChannelStyle5 extends StatelessWidget {
                                                             },
                                                           );
                                                         },
-                                                        child: const Padding(
+                                                        child: Padding(
                                                           padding:
-                                                              EdgeInsets.only(
+                                                              const EdgeInsets
+                                                                  .only(
                                                                   top: 18),
                                                           child: Text(
-                                                            '補翻譯查看全部',
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .white),
+                                                            I18n.viewAll,
+                                                            style:
+                                                                const TextStyle(
+                                                                    color: Colors
+                                                                        .white),
                                                           ),
                                                         ),
                                                       ),
@@ -340,7 +343,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                       horizontal: 9,
                                                       vertical: 4),
                                                   child: Text(
-                                                    '${data.supplier.containVideos}補翻譯部影片',
+                                                    '${data.supplier.containVideos}${I18n.numberOfVideos}',
                                                     style: const TextStyle(
                                                         fontSize: 12,
                                                         color: Colors.white),
