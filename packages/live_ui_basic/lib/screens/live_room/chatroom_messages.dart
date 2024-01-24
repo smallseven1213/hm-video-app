@@ -32,19 +32,17 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   bool isLottieDialogOpen = false;
   Timer? timer;
 
-  // Using ValueNotifier for the gift message queue
-  ValueNotifier<Queue<ChatMessage>> giftMessageQueue =
-      ValueNotifier(Queue<ChatMessage>());
+  Queue<ChatMessage> giftMessageQueue = Queue<ChatMessage>();
 
   @override
   void initState() {
     super.initState();
     socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
 
-    // Adding listener to the giftMessageQueue
-    giftMessageQueue.addListener(() {
-      if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
-        processGiftQueue();
+    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (giftMessageQueue.isNotEmpty && !isLottieDialogOpen) {
+        var giftMessage = giftMessageQueue.removeFirst();
+        setLottieAnimation(giftMessage.objChat.data);
       }
     });
   }
@@ -67,29 +65,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   }
 
   void updateGiftQueue(ChatMessage message) {
-    // Create a new instance of Queue with the current items and the new message
-    var updatedQueue = Queue<ChatMessage>.from(giftMessageQueue.value)
-      ..add(message);
-
-    // Update the ValueNotifier with the new queue instance
-    giftMessageQueue.value = updatedQueue;
-  }
-
-  void processGiftQueue() {
-    timer?.cancel();
-    timer = Timer.periodic(Duration(milliseconds: 500), (timer) {
-      if (giftMessageQueue.value.isNotEmpty && !isLottieDialogOpen) {
-        var giftMessage = giftMessageQueue.value.removeFirst();
-        // showLottieDialog(
-        //   LottieDataProvider.network,
-        //   giftMessage.objChat.data,
-        //   onFinish: () => isLottieDialogOpen = false,
-        // );
-        setLottieAnimation(giftMessage.objChat.data);
-      } else {
-        timer.cancel();
-      }
-    });
+    giftMessageQueue.add(message);
   }
 
   void setLottieAnimation(String data) {
@@ -115,8 +91,6 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
 
   void showLottieDialog(LottieDataProvider provider, String path,
       {VoidCallback? onFinish}) {
-    if (isLottieDialogOpen) return;
-
     isLottieDialogOpen = true;
     showDialog(
       context: context,
@@ -130,11 +104,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
         );
       },
     ).then((_) {
-      if (mounted) {
-        setState(() {
-          isLottieDialogOpen = false;
-        });
-      }
+      isLottieDialogOpen = false;
     });
   }
 
@@ -142,7 +112,6 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   @override
   void dispose() {
     socketManager.socket!.off('chatresult');
-    giftMessageQueue.dispose();
     timer?.cancel();
     super.dispose();
   }
