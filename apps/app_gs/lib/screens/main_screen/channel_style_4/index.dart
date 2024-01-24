@@ -70,9 +70,9 @@ class ChannelStyle4 extends StatelessWidget {
                                         AppRoutes.actors,
                                       )
                                     },
-                                child: const Text(
-                                  'I18n.more >',
-                                  style: TextStyle(
+                                child:  Text(
+                                  '${I18n.more} >',
+                                  style:const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),

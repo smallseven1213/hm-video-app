@@ -63,16 +63,16 @@ class ChannelStyle4 extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: Header(
-                            text: I18n.popularActor,
+                            text: I18n.popularFemaleActors,
                             moreButton: GestureDetector(
                                 onTap: () => {
                                       MyRouteDelegate.of(context).push(
                                         AppRoutes.actors,
                                       )
                                     },
-                                child: const Text(
-                                  'I18n.more >',
-                                  style: TextStyle(
+                                child: Text(
+                                  '${I18n.more} >',
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),
