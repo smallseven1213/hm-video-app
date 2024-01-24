@@ -127,9 +127,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                           )
                                         }
                                     },
-                                child: const Text(
-                                  'I18n.more >',
-                                  style: TextStyle(
+                                child: Text(
+                                  '${I18n.more} >',
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),

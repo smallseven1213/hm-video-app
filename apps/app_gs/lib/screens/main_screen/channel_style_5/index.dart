@@ -71,9 +71,9 @@ class ChannelStyle5 extends StatelessWidget {
                                         AppRoutes.suppliers,
                                       )
                                     },
-                                child: const Text(
-                                  'I18n.more >',
-                                  style: TextStyle(
+                                child: Text(
+                                  '${I18n.more} >',
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),
