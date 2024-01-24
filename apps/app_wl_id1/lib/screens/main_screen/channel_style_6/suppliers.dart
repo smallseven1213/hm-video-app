@@ -23,8 +23,8 @@ class ChannelStyle6Suppliers extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center, // 垂直居中
             crossAxisAlignment: CrossAxisAlignment.center, // 水平居中
             children: [
-              const Text("精選UP主",
-                  style: TextStyle(
+              Text(I18n.selectedUp,
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   )),
@@ -32,8 +32,8 @@ class ChannelStyle6Suppliers extends StatelessWidget {
               const SizedBox(
                 height: 7,
               ),
-              const Text("補翻譯關注某個UP主，以查看其最新影片。",
-                  style: TextStyle(
+              Text(I18n.followedUpUserSeeMoreVideo,
+                  style: const TextStyle(
                     color: Color(0xFFcfcece),
                     fontSize: 14,
                   )),

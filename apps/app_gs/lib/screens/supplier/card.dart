@@ -236,8 +236,8 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500)),
                                   const SizedBox(width: 5),
-                                  const Text('補翻譯收藏',
-                                      style: TextStyle(
+                                  Text(I18n.favorites,
+                                      style: const TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,
                                       ))
