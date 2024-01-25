@@ -7,6 +7,7 @@ class RankNumber extends StatelessWidget {
   final double? height;
 
   const RankNumber({
+    super.key,
     required this.number,
     this.width = 13,
     this.height = 8,
@@ -32,10 +33,10 @@ class RankNumber extends StatelessWidget {
           Center(
             child: Text(
               number < 4 ? number.toString() : "0${number.toString()}",
-              style: TextStyle(
-                fontSize: 8,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(
+                  fontSize: 8,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white),
             ),
           )
         ],
