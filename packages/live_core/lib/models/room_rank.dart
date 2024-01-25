@@ -1,5 +1,6 @@
 class RoomRank {
   int trank;
+  List<RankItem> current;
   List<RankItem> rank;
   List<RankItem> rank1;
   List<RankItem> rank7;
@@ -9,6 +10,7 @@ class RoomRank {
 
   RoomRank(
       {required this.trank,
+      this.current = const [],
       this.rank = const [],
       this.rank1 = const [],
       this.rank7 = const [],
@@ -19,6 +21,10 @@ class RoomRank {
   factory RoomRank.fromJson(Map<String, dynamic> json) {
     return RoomRank(
       trank: json['trank'] as int,
+      current: (json['current'] as List?)
+              ?.map((item) => RankItem.fromJson(item))
+              .toList() ??
+          [],
       rank: (json['rank'] as List?)
               ?.map((item) => RankItem.fromJson(item))
               .toList() ??

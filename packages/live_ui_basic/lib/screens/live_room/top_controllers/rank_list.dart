@@ -6,7 +6,7 @@ import 'package:live_core/widgets/live_image.dart';
 class RankList extends StatelessWidget {
   final RoomRank? roomRank;
 
-  RankList({Key? key, this.roomRank}) : super(key: key);
+  const RankList({Key? key, this.roomRank}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class RankList extends StatelessWidget {
       scrollDirection: Axis.horizontal,
       itemCount: roomRank!.rank.length,
       itemBuilder: (context, index) {
-        RankItem item = roomRank!.rank[index];
+        RankItem item = roomRank!.current[index];
         return Container(
             width: 20,
             height: 20,
@@ -28,12 +28,8 @@ class RankList extends StatelessWidget {
             ),
             clipBehavior: Clip.antiAlias,
             child: item.avatar.isNotEmpty && item.avatar != ""
-                ? Image.network(
-                          item.avatar,
-                          fit: BoxFit.cover,
-                          width: 20,
-                          height: 20
-                        )
+                ? Image.network(item.avatar,
+                    fit: BoxFit.cover, width: 20, height: 20)
                 : SvgPicture.asset(
                     'packages/live_ui_basic/assets/svgs/default_avatar.svg',
                     width: 20,

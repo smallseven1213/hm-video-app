@@ -25,7 +25,7 @@ class TopControllers extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
+            SizedBox(
               height: 30,
               width: MediaQuery.of(context).size.width,
               child: Row(
