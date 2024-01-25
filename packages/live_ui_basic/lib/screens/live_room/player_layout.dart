@@ -65,10 +65,18 @@ class _PlayerLayoutState extends State<PlayerLayout> {
       );
     }
     if (kIsWeb) {
-      return Container(
-        color: Colors.black,
-        alignment: Alignment.center,
-        child: VideoPlayer(videoController),
+      return Center(
+        // A Widget
+        child: Container(
+          width: 100,
+          height: 100,
+          color: Colors.blue,
+          child: SizedBox(
+            width: videoController.value.size.width,
+            height: videoController.value.size.height,
+            child: VideoPlayer(videoController),
+          ),
+        ),
       );
     }
     return Container(

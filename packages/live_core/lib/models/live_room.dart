@@ -6,7 +6,7 @@ class LiveRoom {
   int hid;
   bool follow;
   String pullurl;
-  int amount;
+  double amount;
   String? pullUrlDecode;
 
   LiveRoom(

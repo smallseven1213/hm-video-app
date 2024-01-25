@@ -35,6 +35,7 @@ class _RankDataDialogState extends State<RankDataDialog>
   Widget buildTabView(List<RankItem> rankItems) {
     return ListView.builder(
       itemCount: rankItems.length,
+      padding: const EdgeInsets.only(top: 0),
       itemBuilder: (BuildContext context, int index) {
         return Container(
           padding: const EdgeInsets.only(bottom: 5),

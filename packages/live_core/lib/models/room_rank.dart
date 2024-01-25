@@ -1,3 +1,5 @@
+import 'package:shared/helpers/getField.dart';
+
 class RoomRank {
   int trank;
   List<RankItem> current;
@@ -5,7 +7,7 @@ class RoomRank {
   List<RankItem> rank1;
   List<RankItem> rank7;
   List<RankItem> rank30;
-  int amount;
+  double amount;
   int users;
 
   RoomRank(
@@ -20,7 +22,7 @@ class RoomRank {
 
   factory RoomRank.fromJson(Map<String, dynamic> json) {
     return RoomRank(
-      trank: json['trank'] as int,
+      trank: getField<int>(json, 'trank', defaultValue: 0),
       current: (json['current'] as List?)
               ?.map((item) => RankItem.fromJson(item))
               .toList() ??
@@ -41,8 +43,8 @@ class RoomRank {
               ?.map((item) => RankItem.fromJson(item))
               .toList() ??
           [],
-      amount: json['amount'] as int,
-      users: json['users'] as int,
+      amount: getField<double>(json, 'amount', defaultValue: 0),
+      users: getField<int>(json, 'users', defaultValue: 0),
     );
   }
 }
@@ -61,10 +63,10 @@ class RankItem {
 
   factory RankItem.fromJson(Map<String, dynamic> json) {
     return RankItem(
-      rank: json['rank'] as int,
-      nickname: json['nickname'] as String,
-      avatar: json['avatar'] as String,
-      amount: json['amount'] as double,
+      rank: getField(json, 'rank', defaultValue: 0),
+      nickname: getField(json, 'nickname', defaultValue: ''),
+      avatar: getField(json, 'avatar', defaultValue: ''),
+      amount: getField(json, 'amount', defaultValue: 0),
     );
   }
 }

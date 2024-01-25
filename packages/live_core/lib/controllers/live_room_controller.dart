@@ -11,7 +11,7 @@ class LiveRoomController extends GetxController {
   int pid;
   Rx<Room?> liveRoomInfo = Rx<Room?>(null);
   var liveRoom = Rx<LiveRoom?>(null);
-  var displayAmount = 0.obs; // 會與liveRoom.value?.amount同步
+  Rx<double> displayAmount = 0.0.obs; // 金額
   var displayUserCount = 0.obs; // 人數
   var hasError = false.obs;
   LiveRoomController(this.pid);
@@ -37,7 +37,7 @@ class LiveRoomController extends GetxController {
   }
 
   // setAmount
-  void setAmount(int amount) {
+  void setAmount(double amount) {
     displayAmount.value = amount;
 
     // amount第一次取代會更新沒錯，但接下來顯示用displayAmount

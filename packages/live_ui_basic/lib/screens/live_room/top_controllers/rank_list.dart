@@ -15,7 +15,7 @@ class RankList extends StatelessWidget {
     }
     return ListView.builder(
       scrollDirection: Axis.horizontal,
-      itemCount: roomRank!.rank.length,
+      itemCount: roomRank!.current.length,
       itemBuilder: (context, index) {
         RankItem item = roomRank!.current[index];
         return Container(
