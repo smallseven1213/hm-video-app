@@ -66,7 +66,7 @@ class RankItem {
       rank: getField(json, 'rank', defaultValue: 0),
       nickname: getField(json, 'nickname', defaultValue: ''),
       avatar: getField(json, 'avatar', defaultValue: ''),
-      amount: getField(json, 'amount', defaultValue: 0),
+      amount: getField<double>(json, 'amount', defaultValue: 0),
     );
   }
 }
