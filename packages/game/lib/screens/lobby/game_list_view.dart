@@ -151,6 +151,51 @@ class GameListViewState extends State<GameListView>
 
   // 寫一個篩選遊戲類別的方法
   _filterGameCategories() {
+    final GameLocalizations localizations = GameLocalizations.of(context)!;
+
+    List gameCategoriesMapper = [
+      {
+        'name': localizations.translate('all'),
+        'gameType': 0,
+        'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
+      },
+      {
+        'name': localizations.translate('recent'),
+        'gameType': -1,
+        'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
+      },
+      {
+        'name': localizations.translate('fish'),
+        'gameType': 1,
+        'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
+      },
+      {
+        'name': localizations.translate('live'),
+        'gameType': 2,
+        'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
+      },
+      {
+        'name': localizations.translate('card'),
+        'gameType': 3,
+        'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
+      },
+      {
+        'name': localizations.translate('slots'),
+        'gameType': 4,
+        'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
+      },
+      {
+        'name': localizations.translate('sports'),
+        'gameType': 5,
+        'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
+      },
+      {
+        'name': localizations.translate('lottery'),
+        'gameType': 6,
+        'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
+      }
+    ];
+
     Set<int> gameTypes = <int>{};
 
     for (var game in gamesListController.games) {

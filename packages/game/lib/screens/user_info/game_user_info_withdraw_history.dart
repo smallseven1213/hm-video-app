@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:shared/navigator/delegate.dart';
 
+import '../../enums/game_app_routes.dart';
 import '../../localization/game_localization_delegate.dart';
 
-class UserInfoWithdraw extends StatefulWidget {
-  const UserInfoWithdraw({Key? key, required this.onTap}) : super(key: key);
-  final VoidCallback onTap;
+class UserInfoWithdrawHistory extends StatefulWidget {
+  const UserInfoWithdrawHistory({Key? key}) : super(key: key);
 
   @override
-  State<UserInfoWithdraw> createState() => _UserInfoWithdraw();
+  State<UserInfoWithdrawHistory> createState() => _UserInfoWithdrawHistory();
 }
 
-class _UserInfoWithdraw extends State<UserInfoWithdraw> {
+class _UserInfoWithdrawHistory extends State<UserInfoWithdrawHistory> {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
@@ -20,17 +21,19 @@ class _UserInfoWithdraw extends State<UserInfoWithdraw> {
       width: 60,
       height: 60,
       child: InkWell(
-        onTap: widget.onTap,
+        onTap: () {
+          MyRouteDelegate.of(context).push(GameAppRoutes.withdrawRecord);
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.asset(
-              "packages/game/assets/images/game_lobby/withdraw.webp",
+              "packages/game/assets/images/game_lobby/withdraw-record.webp",
               width: 28,
               height: 28,
             ),
             Text(
-              localizations.translate('withdrawal'),
+              localizations.translate('withdrawal_history'),
               textAlign: TextAlign.center,
               style: TextStyle(
                 color: gameLobbyPrimaryTextColor,

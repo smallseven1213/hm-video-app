@@ -88,8 +88,9 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
         Row(
           children: [
             SizedBox(
-              width: 100,
+              width: 110,
               child: Text(localizations.translate('withdrawal_method'),
+                  textAlign: TextAlign.center,
                   style:
                       const TextStyle(color: Color(0xff979797), fontSize: 14)),
             ),

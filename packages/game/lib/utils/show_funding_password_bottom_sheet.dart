@@ -128,7 +128,8 @@ void showFundingPasswordBottomSheet(BuildContext context,
                       onChanged: (val) => logger.i(val.toString()),
                       builder: (FormFieldState field) {
                         return GameInput(
-                          label: '資金密碼',
+                          label: GameLocalizations.of(context)!
+                              .translate('funds_pin'),
                           hint: GameLocalizations.of(context)!
                               .translate('input_funds_pin'),
                           controller: passwordController,
