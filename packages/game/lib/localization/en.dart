@@ -1,6 +1,6 @@
 const Map<String, String> enUsStrings = {
   "game_lobby": "Game Lobby",
-  "register_login": "Register/Login",
+  "register_login": "Register Login",
   "close": "Close",
   "open": "Open",
   "cancel": "Cancel",
@@ -81,7 +81,7 @@ const Map<String, String> enUsStrings = {
   "last_7_days": "Last 7 days",
   "yesterday": "Yesterday",
   "today": "Today",
-  "application_time_enquiry": "Application Time Enquiry",
+  "application_time_enquiry": "Application Time",
   "status": "Status",
   "payment_confirmation": "Payment Confirmation",
   "bank_card_setting": "Bank Card Setting",
@@ -126,11 +126,11 @@ const Map<String, String> enUsStrings = {
   "insufficient_liquidity_please_continue_to_play":
       "Insufficient liquidity, please continue to play",
   "if_you_have_not_reached_the_limit_need_to_pay_the_withdrawal_fee_of_estimated_click_to_confirm_to_send_out_the_withdrawal_order":
-      "If you have not reached the limit \n need to pay the withdrawal fee of {fee} (estimated)\n Click to confirm to send out the withdrawal order",
+      "If you have not reached the stake limit \n need to pay the withdrawal fee of {fee} (estimated)\n Click to confirm to send out the withdrawal order.",
   "please_set_the_password_first": "Please set the password first",
   'go_to_settings': 'Go to Settings',
   "game_withdrawal": "Game Withdrawal",
-  "limit": "Limit",
+  "limit": "Stake Limit",
   "achieved": "Achieved",
   "not_reached": "Not reached",
   "please_enter_the_withdrawal_amount": "Please enter the withdrawal amount",
@@ -143,7 +143,7 @@ const Map<String, String> enUsStrings = {
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":
       "Withdrawal application has been completed, you can check the current application status in the withdrawal log.",
   "minimum_withdrawable_amount": "Minimum Withdrawable Amount",
-  "flow_limit_details": "Flow Limit Details",
+  "flow_limit_details": "Stake Limit Details",
   "accumulated_liquidity": "Accumulated Liquidity",
   "withdrawal_fee_will_be_charged_for_withdrawal_before_reaching_the_limit":
       "Withdrawal fee will be charged for withdrawal before reaching the limit.",
@@ -189,5 +189,19 @@ const Map<String, String> enUsStrings = {
   "login": "login",
   "register": "register",
   "please_contact_customer_service_or_log_in_with_your_id_card":
-      "Please contact customer service or log in with your ID card."
+      "Please contact customer service or log in with your ID card.",
+  "all": "All",
+  "recent": "Recent",
+  "fish": "Fish",
+  "card": "Card",
+  "slots": "Slots",
+  "live": "Live",
+  "sports": "Sports",
+  "lottery": "Lottery",
+  "alipay": "Alipay",
+  "wechat": "Wechat",
+  "bank": "Bank",
+  "set_a_funds_pin": "Set a Funds PIN",
+  "funds_pin": "Funds PIN",
+  "tips": "Tips",
 };

@@ -86,7 +86,7 @@ class RowItem extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 80,
+          width: 100,
           child: Text(
             title,
             style: const TextStyle(color: Color(0xff979797)),
@@ -354,7 +354,7 @@ class _GameDepositRecordState extends State<GameDepositRecord> {
                               ),
                             ),
                             Container(
-                              width: 80,
+                              width: 100,
                               alignment: Alignment.center,
                               padding: const EdgeInsets.symmetric(
                                   vertical: 6, horizontal: 14),
