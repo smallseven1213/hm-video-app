@@ -4,11 +4,13 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
 import 'package:live_ui_basic/screens/live_room/player_layout.dart';
 import 'package:live_ui_basic/screens/live_room/right_corner_controllers.dart';
 import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../screens/live_room/command_controller.dart';
 import '../widgets/live_button.dart';
@@ -132,7 +134,8 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               if (controller.displayAmount.value <= 0 &&
                   controller.liveRoom.value!.pullUrlDecode != null)
                 PlayerLayout(
-                    uri: Uri.parse(controller.liveRoom.value!.pullUrlDecode!)),
+                    uri: Uri.parse(
+                        '${controller.liveRoom.value!.pullUrlDecode!}&token=${GetStorage().read('live-token')}')),
               Positioned(
                 top: MediaQuery.of(context).padding.top + 50,
                 left: 0,
