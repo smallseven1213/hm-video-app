@@ -207,7 +207,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                                       .ellipsis,
                                                             ),
                                                           Text(
-                                                              'I18n.popularity:${data.supplier.followTimes}',
+                                                              '${I18n.popularity}:${data.supplier.followTimes}',
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white

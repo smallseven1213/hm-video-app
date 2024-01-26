@@ -114,14 +114,15 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                               ),
                             ),
                             Container(
-                              width: 90,
                               height: 25,
                               decoration: const BoxDecoration(
                                 color: Color(0xff21478d),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
-                              child: Center(
+                              child: Padding(  padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: IntrinsicWidth(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [

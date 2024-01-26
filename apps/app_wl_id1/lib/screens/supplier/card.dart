@@ -138,7 +138,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
             ),
           Positioned(
             top: lerpDouble(
-                100,
+                95,
                 ((kToolbarHeight - imageSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(17, leftPadding, percentage)!,
@@ -150,7 +150,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
           ),
           Positioned(
             top: lerpDouble(
-                108,
+                103,
                 ((kToolbarHeight - fontSize) / 2) + systemTopBarHeight,
                 percentage),
             left: lerpDouble(107, leftPadding + imageSize + 8, percentage)!,
@@ -163,7 +163,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
             ),
           ),
           Positioned(
-              top: 135,
+              top: 130,
               left: 90,
               child: SizedBox(
                   width: screenWidth - 100,

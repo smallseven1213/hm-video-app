@@ -183,7 +183,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                                   fontSize:
                                                                       14)),
                                                           Text(
-                                                              'I18n.popularity:${data.actor.collectTimes}',
+                                                              '${I18n.popularity}:${data.actor.collectTimes}',
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white
