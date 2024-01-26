@@ -2,7 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_video_screen_controller.dart';
 
+import '../../localization/i18n.dart';
 import 'option_button.dart';
+
+final i18nKeyMapping = {
+  'latest': I18n.latest,
+  'hottest': I18n.hottest,
+  'all_regions': I18n.allRegions,
+  'all_publisher': I18n.allPublisher,
+  'all_supplier': I18n.allPublisher,
+  'all_charge_type': I18n.allChargeType,
+  'free': I18n.free,
+  'coin': I18n.coin,
+  'vip': I18n.vip,
+};
 
 class FilterOptions extends StatelessWidget {
   final RxList<Map<String, dynamic>> menuData;
@@ -23,7 +36,7 @@ class FilterOptions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(() {
-        logger.i('menuData => $menuData');
+        logger.i('@@@ menuData => $menuData');
         return Column(
           children: List.generate(
             menuData.length,
@@ -41,13 +54,17 @@ class FilterOptions extends StatelessWidget {
                       final isSelected =
                           selectedOptions[menuData[index]['key']]!
                               .contains(option['value']);
-
+                      print('@@@:i18nKey: ${option['i18nKey']}');
+                      print('@@@@@: 最新 ${I18n.latest}');
+                      print('@@@@@: ${i18nKeyMapping[option['i18nKey']]}');
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 5, horizontal: 10),
                         child: OptionButton(
                             isSelected: isSelected,
-                            name: option['name'],
+                            name: i18nKeyMapping[option['i18nKey']] ??
+                                option['name'] ??
+                                'N/A',
                             onTap: () {
                               var key = menuData[index]['key'];
                               handleOptionChange(key, option['value']);

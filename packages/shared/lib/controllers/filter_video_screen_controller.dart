@@ -18,31 +18,31 @@ class FilterVideoScreenController extends GetxController {
     {
       'key': 'order',
       'options': [
-        {'name': '最新', 'value': 1},
-        {'name': '最熱', 'value': 2}
+        {'name': '最新', 'value': 1, 'i18nKey': 'latest'},
+        {'name': '最熱', 'value': 2, 'i18nKey': 'hottest'},
       ],
     },
     {
       'key': 'regionId',
       'options': [
-        {'name': '全部地區', 'value': 0},
+        {'name': '全部地區', 'value': 0, 'i18nKey': 'all_regions'},
         // 這裡使用 API 請求填充其他選項
       ],
     },
     {
       'key': 'publisherId',
       'options': [
-        {'name': '全部廠商', 'value': 0},
+        {'name': '全部廠商', 'value': 0, 'i18nKey': 'all_publisher'},
         // 這裡使用 API 請求填充其他選項
       ],
     },
     {
       'key': 'chargeType',
       'options': [
-        {'name': '全部付費類型', 'value': 0},
-        {'name': '免費', 'value': 1},
-        {'name': '金幣', 'value': 2},
-        {'name': 'VIP', 'value': 3}
+        {'name': '全部付費類型', 'value': 0, 'i18nKey': 'all_charge_type'},
+        {'name': '免費', 'value': 1, 'i18nKey': 'free'},
+        {'name': '金幣', 'value': 2, 'i18nKey': 'coin'},
+        {'name': 'VIP', 'value': 3, 'i18nKey': 'vip'}
       ],
     },
     // {
