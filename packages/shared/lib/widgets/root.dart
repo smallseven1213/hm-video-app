@@ -73,6 +73,7 @@ class RootWidget extends StatelessWidget {
           'zh-TW': zhTwStrings,
           'zh-CN': zhCnStrings,
           'vi-VN': viVnStrings,
+          'id-ID': enUsStrings,
           // 'ja-JP': jpStrings,
         }),
         ...context.localizationDelegates,
