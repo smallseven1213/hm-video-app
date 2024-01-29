@@ -1,4 +1,4 @@
-const Map<String, String> idiDStrings = {
+const Map<String, String> idIdStrings = {
   "game_lobby": "Sảnh chơi trò chơi",
   "register_login": "Đăng ký/Đăng nhập",
   "close": "Đóng",

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:game/localization/en.dart';
 import 'package:game/localization/game_localization_delegate.dart';
+import 'package:game/localization/id.dart';
 import 'package:game/localization/vi.dart';
 import 'package:game/localization/zh.dart';
 import 'package:game/localization/zn.dart';
@@ -73,7 +74,7 @@ class RootWidget extends StatelessWidget {
           'zh-TW': zhTwStrings,
           'zh-CN': zhCnStrings,
           'vi-VN': viVnStrings,
-          'id-ID': enUsStrings,
+          'id-ID': idIdStrings,
           // 'ja-JP': jpStrings,
         }),
         ...context.localizationDelegates,
