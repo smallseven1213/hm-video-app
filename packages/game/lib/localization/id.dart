@@ -34,7 +34,7 @@ const Map<String, String> idIdStrings = {
   "wrong_verification_code": "Kode verifikasi salah",
   "if_the_order_is_correct_please_enter_the_above_verification_code":
       "Jika pesanan benar, silakan masukkan kode verifikasi di atas.",
-  "deposit": "Deposit",
+  "deposit": "Setoran",
   "deposit_history": "Riwayat Deposit",
   "you_have_been_logged_out_please_log_in_again":
       "Anda telah keluar, silakan login kembali",
@@ -202,7 +202,7 @@ const Map<String, String> idIdStrings = {
   "recent": "Terbaru",
   "fish": "Pancing",
   "card": "Kartu",
-  "slots": "Mesin Slot",
+  "slots": "slots",
   "live": "Langsung",
   "sports": "Olahraga",
   "lottery": "Undian",
