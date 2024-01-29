@@ -47,7 +47,7 @@ class VideoActions extends StatelessWidget {
             var isLiked = userVodCollectionController.videos
                 .any((e) => e.id == videoDetail.id);
             return LikeButton(
-              text: '收藏',
+              text: I18n.favorites,
               type: LikeButtonType.bookmark,
               isLiked: isLiked,
               onPressed: () {

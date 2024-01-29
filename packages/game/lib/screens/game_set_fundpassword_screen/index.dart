@@ -88,7 +88,7 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
         backgroundColor: gameLobbyBgColor,
         centerTitle: true,
         title: Text(
-          '設置資金密碼',
+          localizations.translate('set_a_funds_pin'),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,

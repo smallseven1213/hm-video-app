@@ -156,10 +156,9 @@ class GamePaymentResultState extends State<GamePaymentResult> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        '溫馨提醒',
-                        // color is 979797
-                        style: TextStyle(
+                      Text(
+                        localizations.translate('tips'),
+                        style: const TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Color(0xff979797),

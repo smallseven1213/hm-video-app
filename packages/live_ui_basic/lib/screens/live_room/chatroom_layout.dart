@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
@@ -30,21 +31,25 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
       isScrollControlled: true,
       builder: (BuildContext context) {
         return Padding(
-          padding: EdgeInsets.only(
-              bottom: GetPlatform.isWeb
-                  ? 0
-                  : MediaQuery.of(context).viewInsets.bottom),
-          child: SizedBox(
-            child: Wrap(
-              children: [
-                MessageInputWidget(
-                  controller: _messageController,
-                  onSend: sendMessage,
-                )
-              ],
-            ),
-          ),
-        );
+            padding: EdgeInsets.only(
+                bottom: kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
+            child: SizedBox(
+              height: 64 + MediaQuery.of(context).padding.bottom,
+              child: MessageInputWidget(
+                controller: _messageController,
+                onSend: sendMessage,
+              ),
+            )
+            // child: Column(
+            //   mainAxisSize: MainAxisSize.min,
+            //   children: [
+            // MessageInputWidget(
+            //   controller: _messageController,
+            //   onSend: sendMessage,
+            // )
+            //   ],
+            // ),
+            );
       },
     ).whenComplete(() {
       isBottomSheetDisplayed = false;

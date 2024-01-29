@@ -1,6 +1,6 @@
 str,en_US,zh_TW,zn_CN,vi_VN,ja_JP,id_ID
-title,TT Application,TT 應用程式,TT 应用程式,Ứng dụng TT,TTアプリケーション,Pusat Aplikasi
-app_center,Applications,應用中心,应用中心,Ứng dụng,アプリケーション,
+title,TT Application,TT 應用程式,TT 应用程式,Ứng dụng TT,TTアプリケーション,Aplikasi TT
+app_center,Applications,應用中心,应用中心,Ứng dụng,アプリケーション,Pusat Aplikasi
 sort,Sort,排序,排序,Sắp xếp,分類する,Urutan
 video,Video,視頻,視頻,Video,ビデオ,Video
 popularity,Popularity,人氣,人氣,Sự phổ biến,人気,Popularitas
@@ -48,37 +48,37 @@ like_playlist,Like Playlist,我的喜歡,我的喜歡,Sở thích của tôi,プ
 collect_playlist,Collect Playlist,我的收藏,我的收藏,Bộ sưu tập của tôi,プレイリストを集める,Koleksi Saya
 count_likes,Likes,個讚數,個讚數,Số lượt thích,Translation: いいね,Jumlah suka
 member_id,Member ID,用戶ID,用戶ID,ID người dùng,メンバーID,ID Pengguna
-member_center,Member center,會員中心,會員中心,Trung tâm thành viên,メンバーセンター,Translation: Pusat Keanggotaan
+member_center,Member center,會員中心,會員中心,Trung tâm thành viên,メンバーセンター, Pusat Keanggotaan
 search_record,Search record,搜索紀錄,搜索紀錄,Lịch sử tìm kiếm,検索記録,Catatan pencarian
 search_recommendation,Search Recommendation,搜索推薦,搜索推薦,Tìm kiếm đề xuất,検索推奨,Rekomendasi pencarian
 popular_recommendation,Popular Recommendation,熱門推薦,熱門推薦,Đề xuất phổ biến,人気のおすすめ,Rekomendasi Populer
 coming_soon,Coming soon,精彩即將呈現,精彩即將呈現,Sắp tới sẽ có những điều thú vị,Translation: 近日公開,Keseruan segera hadir
 upgrade_to_vip_for_unlimited_movie,Open VIP for unlimited movie watching,開通 VIP 無限看片,開通 VIP 無限看片,Mở VIP để xem phim vô hạn,無制限の映画鑑賞のためのVIPを開放してください。,Aktifkan VIP untuk tontonan tak terbatas
 upgrade_now,Upgrade Now,立即升級,立即升級,Nâng cấp ngay,アップグレードする,Tingkatkan sekarang
-not_enough,Not enough,看不過癮,看不過癮,Không thể thỏa mãn được,足りません。,Translation: Tidak puas melihatnya
-unlock_now,Unlock Now,立即解鎖,立即解鎖,Mở khóa ngay lập tức,今すぐ解除,Translation: Buka kunci sekarang
+not_enough,Not enough,看不過癮,看不過癮,Không thể thỏa mãn được,足りません。,Tidak puas melihatnya
+unlock_now,Unlock Now,立即解鎖,立即解鎖,Mở khóa ngay lập tức,今すぐ解除,Buka kunci sekarang
 screen_is_locked,Screen is locked,螢幕已鎖定,螢幕已鎖定,Màn hình đã bị khóa,画面がロックされています。,Layar telah terkunci
 screen_is_unlocked,Screen is unlocked,螢幕已解鎖,螢幕已解鎖,Màn hình đã được mở khóa,画面がロック解除されました。,Layar telah terbuka kunci
-same_actor,Same actor,同演員,同演員,Cùng diễn viên,同じ俳優。,Translation: Aktor yang sama
+same_actor,Same actor,同演員,同演員,Cùng diễn viên,同じ俳優。,Aktor yang sama
 highlights,Highlights,選集,選集,Tuyển tập,ハイライト,Kompilasi
 insufficient_gold_balance,Insufficient Gold Balance,金幣餘額不足,金幣餘額不足,Số dư tiền xu không đủ,不足しているゴールド残高,Saldo koin tidak cukup
 purchase_failed,Purchase Failed,購買失敗,購買失敗,Mua hàng thất bại,購入に失敗しました。,Pembelian gagal
 go_to_top_up_now_for_full_exp,Go to Top Up now to get the full experience!,請立即前往充值已獲得最完整的體驗,請立即前往充值已獲得最完整的體驗,Vui lòng điền ngay để nạp tiền để có trải nghiệm tốt nhất,フルエクスペリエンスを得るために、今すぐトップアップへ行ってください！,Silakan segera isi ulang untuk mendapatkan pengalaman yang paling lengkap
 go_to_top_up,Go to Top Up,前往充值,前往充值,Đi đến nạp tiền,チャージに行く,Pergi untuk isi ulang
 confirm,Confirm,確認,確認,Xác nhận,確認してください。,Konfirmasi
-cancel,Cancel,取消,取消,Hủy bỏ,キャンセル,Translation: Batal
-press_like_it_if_you_like_it,Press Like it if you like it.,喜歡就點讚,喜歡就點讚,Hãy thích nếu bạn thích,Translation: もし気に入ったら「いいね！」を押してください。,"Translation: Suka, tekan like"
+cancel,Cancel,取消,取消,Hủy bỏ,キャンセル,Batal
+press_like_it_if_you_like_it,Press Like it if you like it.,喜歡就點讚,喜歡就點讚,Hãy thích nếu bạn thích,Translation: もし気に入ったら「いいね！」を押してください。,Like jika Anda menikmati
 add_to_favorites,Add to Favorites,添加到收藏,添加到收藏,Thêm vào danh sách yêu thích,お気に入りに追加,Tambahkan ke favorit
 this_movie_is_available_for_purchase,End of Trial. This movie is available for purchase.,試看結束，此影片需付費購買,試看結束，此影片需付費購買,"Sau khi xem xong, bạn cần phải mua để xem tiếp video này",試用期間終了。この映画は購入可能です。,"Masa percobaan telah berakhir, video ini memerlukan pembelian untuk diakses"
 price,Price,價格,價格,Giá cả,価格,Harga
-coins,Coins,金幣,金幣,Tiền vàng,コイン,Translation: Koin Emas
+coins,Coins,金幣,金幣,Tiền vàng,コイン,Koin
 your_current_coins,Your current coins,您目前擁有的金幣,您目前擁有的金幣,Số tiền xu bạn hiện đang sở hữu,あなたの現在のコイン。,Anda saat ini memiliki koin emas
 pay_to_watch,Pay to watch,付費觀看,付費觀看,Xem trả phí,支払って視聴する,Translation: Berbayar untuk menonton
 end_of_Trial_upgrade_to_full_version,"End of Trial, Upgrade to Full Version",試看結束，升級觀看完整版,試看結束，升級觀看完整版,"Khi kết thúc thử nghiệm, hãy nâng cấp để xem phiên bản đầy đủ",試用期間の終了、完全版へのアップグレード。,"Masa percobaan telah berakhir, tingkatkan untuk menonton versi lengkap"
 length_of_film,Length,片長,片長,Thời lượng phim,長さ,Durasi film
 unlocked_for_full_playback,Unlocked for full playback,解鎖後可完整播放,解鎖後可完整播放,"Sau khi mở khóa, bạn có thể phát lại hoàn toàn",フル再生のためにアンロックされました。,"Setelah membuka kunci, dapat diputar secara penuh"
 upgrade_now_for_unlock,Upgrade Now For Unlock,立即升級解鎖,立即升級解鎖,Nâng cấp và mở khóa ngay lập tức,アップグレードして今すぐアンロック,Tingkatkan sekarang untuk membuka kunci
-count_gold_coins_to_unlock,coins to unlock,金幣解鎖,金幣解鎖,Mở khóa bằng vàng,解除するためのコイン,Translation: Koin Membuka Kunci
+count_gold_coins_to_unlock,coins to unlock,金幣解鎖,金幣解鎖,Mở khóa bằng vàng,解除するためのコイン,Koin Membuka Kunci
 enter_now,Enter Now,立即進入,立即進入,Vào ngay,Translation: 今すぐ入力してください。,Masuk sekarang
 count_down,wait..,倒數,倒數,Đếm ngược,待って,Translation: Hitung mundur
 forgot_password,Forgot password,忘記密碼,忘記密碼,Quên mật khẩu,パスワードを忘れた,Lupa kata sandi
@@ -92,9 +92,9 @@ official_website,official website,官方地址,官方地址,Địa chỉ chính 
 the_top_is_down,The top is down,頂到底了,頂到底了,Đạt đến đáy rồi,トップは下がっています。,Sudah mencapai batas atas
 its_too_deep_maam,"It's too deep, ma'am",太深了客倌,太深了客倌,Quá sâu rồi khách ơi,奥が深すぎます、奥様。,"Terlalu dalam, Tuan"
 take_your_time_dont_be_so_picky,"Take your time, don't be so picky",慢慢看，別這麼挑,慢慢看，別這麼挑,"Hãy nhìn chậm, đừng chọn lựa quá kỹ",ゆっくり時間をかけて、そんなに好き嫌いしないでください。,"Lihatlah dengan perlahan, jangan terlalu pilih-pilih"
-ive_reached_the_center_of_my_heart,I've reached the center of my heart,花心已抵達,花心已抵達,Hoa đã đến,私の心の中心に達しました。,Translation: Hati bunga telah tiba
-im_sure_your_are_the_same_kind_of_me,I'm sure you're the same kind of me,確認過眼神，您是同道中人,確認過眼神，您是同道中人,"Xác nhận qua ánh mắt, bạn là người cùng chí hướng",私はあなたも私と同じ種類の人間だと確信しています。,"Translation: Konfirmasi lewat tatapan mata, Anda seorang teman sejati"
-select_all,Select All,全選,全選,Chọn tất cả,全て選択,Translation: Pilih Semua
+ive_reached_the_center_of_my_heart,I've reached the center of my heart,花心已抵達,花心已抵達,Hoa đã đến,私の心の中心に達しました。,Hati bunga telah tiba
+im_sure_your_are_the_same_kind_of_me,I'm sure you're the same kind of me,確認過眼神，您是同道中人,確認過眼神，您是同道中人,"Xác nhận qua ánh mắt, bạn là người cùng chí hướng",私はあなたも私と同じ種類の人間だと確信しています。,"Konfirmasi lewat tatapan mata, Anda seorang teman sejati"
+select_all,Select All,全選,全選,Chọn tất cả,全て選択,Pilih Semua
 delete,Delete,刪除,刪除,Xóa bỏ,削除,Hapus
 there_is_nothing_here,There is nothing here,這裡什麼都沒有,這裡什麼都沒有,Ở đây không có gì cả,ここには何もありません。,Tidak ada apa-apa di sini
 loading,Loading,讀取中,讀取中,Đang tải,Translation: ローディング,Sedang memuat
@@ -110,68 +110,79 @@ trying_to_move_bricks,Trying to move bricks,拼命搬磚中,拼命搬磚中,Đan
 loading_now,Loading now,正在加載,正在加载,Đang tải,読み込み中です。,Sedang memuat
 all_female_actors,All girls,全部女優,全部女優,Tất cả nữ diễn viên,全ての女優リスト,Semua aktris
 login,Login,登入,登入,Đăng nhập,ログイン,Masuk
-confirm_action,,確定,,,確認,Pastikan
-same_type,,同類型,,,同類型: 同じタイプ,Translation: Sejenis
-immediate_download,,立即下載,,,直ちにダウンロード,Unduh sekarang
-hint_message,,提示,,,ヒント,Petunjuk
-maintain_account_please_register_to_prevent_loss,,為保持您的帳號，請先註冊防止丟失,,,アカウントを維持するために、まず登録して失うことがないようにしてください。,"Untuk menjaga akun Anda, silakan daftar terlebih dahulu untuk mencegah kehilangan"
-more_services,,更多服務,,,より多くのサービス,Layanan Lainnya
-version_number,,版本號:,,,バージョン番号：,Versi:
-register_login,,註冊/登入,,,登録/ログイン,Daftar/Masuk
-login_success,,登入成功,,,ログイン成功,Berhasil masuk
-login_failed_user_does_not_exist,,登入失敗，用戶不存在。,,,ログインに失敗しました、ユーザーが存在しません。,"Login gagal, pengguna tidak ada"
-album_selection,,相簿選擇,,,アルバム選択,Pilihan Album
-take_photo,,拍照,,,写真を撮る,Ambil foto
-insufficient_permissions,,權限不足,,,権限が不足しています。,Izin tidak cukup
-allow_camera_access,,請允許訪問相機,,,カメラへのアクセスを許可してください。,Translation: Mohon izinkan akses kamera
-find_account,,找回帳號,,,アカウントを取り戻す,Mengembalikan Akun
-use_mobile_app_to_recover_account,,請使用手機應用程式找回帳號,,,スマートフォンアプリを使用してアカウントを回復してください。,Silakan gunakan aplikasi seluler untuk mengambil kembali akun Anda
-download_file,,下載,,,ダウンロード,Unduh
-like_button,,點讚,,,いいね,Translation: Menyukai
-more_options,,更多 >,,,もっと見る >,Lebih banyak >
-follow_status,,關注,,,注目,Perhatian
-account_credentials,,帳號憑證,,,アカウント認証,Kredensial akun
-edit_translation,,編輯,,,編集,Edit: Sunting
-input_name,,輸入名稱,,,名称を入力してください。,Masukkan nama
-please_enter_nickname,,請輸入暱稱,,,ニックネームを入力してください。,Silakan masukkan nama panggilan
-edit_error,,修改錯誤,,,誤りを修正する,Translation: Mengedit kesalahan
-modify_nickname,,修改暱稱,,,ニックネームを変更する,Ubah nama panggilan
-new_nickname,,新暱稱,,,新しいニックネーム,Nama panggilan baru
-setup_completed,,設置完成,,,設定完了,Pengaturan selesai
-all_creators,,全部UP主,,,全てのUP主,Semua Kreator
-account_length_6_to_12_letters_numbers,,帳號為6-12位字母及數字,,,アカウントは6～12文字の英数字です。,Akun harus terdiri dari 6-12 huruf dan angka
-password_length_8_to_20_characters_and_numbers,,密碼為8-20位字母及數字,,,パスワードは8-20文字の英数字です。,Kata sandi harus terdiri dari 8-20 huruf dan angka
-validate_password_mismatch,,驗證密碼不一致,,,パスワードが一致していません。,Kata sandi verifikasi tidak konsisten
-register_error,,註冊錯誤,,,登録エラー,Kesalahan pendaftaran
-invalid_account_or_password,,帳號或密碼不正確,,,アカウントまたはパスワードが正しくありません。,Akun atau kata sandi tidak benar
-account_already_exists,,帳號已存在,,,アカウントは既に存在しています。,Akun sudah ada
-go_to_login,,前往登入,,,ログインに進む,Pergi untuk masuk
-message_center,,消息中心,,,ニュースセンター,Pusat Pesan
-announcement,,公告,,,公告,Pengumuman
-system_notification,,系統通知,,,システム通知,Notifikasi sistem
-password_saved_successfully,,已成功保存密碼,,,パスワードが正常に保存されました。,Kata sandi telah berhasil disimpan
-password_error,,密碼錯誤,,,パスワードが間違っています。,Kata sandi salah
-original_password_incorrect,,原密碼錯誤,,,原パスワードが間違っています。,Kata sandi lama salah
-modify_password,,修改密碼,,,パスワードを変更する,Ubah Kata Sandi
-original_password,,原密碼,,,原密碼的日文翻譯是「元のパスワード」。,Kata Sandi Lama
-enter_original_password,,請輸入原密碼,,,元のパスワードを入力してください。,Silakan masukkan kata sandi asli
-new_password,,新密碼,,,新しいパスワード,Kata Sandi Baru
-confirm_edit,,確認修改,,,変更を確認,Konfirmasi perubahan
-personalization_settings,,個性設置,,,個性設定,Pengaturan Personalisasi
-safety_lock_settings,,安全鎖設置,,,セーフティロック設定,Pengaturan kunci keamanan
-not_set,,未設置,,,未設定,Belum diatur
-update_check,,更新檢查,,,更新チェック,Pemeriksaan pembaruan
-setting_translation_key,,設置,,,設置: 設置,Pengaturan
-promotion_person,,人推廣,,,人推廣 in Japanese can be translated as 人のプロモーション,Translation: Promosi oleh orang
-refresh_batch,,換一批,,,交換一組,Ganti satu kelompok
-more_videos_loading,,更多影片讀取中...,,,さらに動画を読み込み中…,Memuat lebih banyak video
-countdown_timer,,倒數,,,カウントダウン,Translation: Hitung mundur
-g_point_video,,G 點視頻,,,G点视频,Video G-spot
-account_recovery_instructions,,用於找回帳號，請妥善保存，請勿露餡,,,アカウントを回復するために使用しますので、大切に保管してください。漏らさないでください。,"Digunakan untuk mengambil kembali akun, harap disimpan dengan baik, jangan bocorkan"
-website,,官網地址：,,,公式ウェブサイトのアドレス：,Alamat situs resmi:
-popular_female_actors,,人氣女優,,,,
-view_all,,查看全部,,,,
-selected_up,,精選UP主,,,,
-favorites,,收藏,,,,
-followed_up_user_see_more_video,,關注某個UP主，以查看其最新影片。,,,,
-number_of_videos,,部影片,,,,
+confirm_action,Confirm,確定,確定,Xác nhận,確認,Pastikan
+same_type,Same Type,同類型,同類型,Cùng Loại,同類型: 同じタイプ,Sejenis
+immediate_download,Immediate Download,立即下載,立即下載,Tải Ngay,直ちにダウンロード,Unduh sekarang
+hint_message,Hint,提示,提示,Gợi Ý,ヒント,Petunjuk
+maintain_account_please_register_to_prevent_loss,"To maintain your account, please register to prevent loss.",為保持您的帳號，請先註冊防止丟失,為保持您的帳號，請先註冊防止丟失,"Để bảo vệ tài khoản của bạn, vui lòng đăng ký để tránh mất mát.",アカウントを維持するために、まず登録して失うことがないようにしてください。,"Untuk menjaga akun Anda, silakan daftar terlebih dahulu untuk mencegah kehilangan"
+more_services,More Services,更多服務,更多服務,Dịch vụ Khác,より多くのサービス,Lebih banyak layanan
+version_number,Version Number:,版本號:,版本號:,Số Phiên Bản:,バージョン番号：,Versi:
+register_login,Register/Login,註冊/登入,註冊/登入,Đăng Ký/Đăng Nhập,登録/ログイン,Daftar/Masuk
+login_success,Login Successful,登入成功,登入成功,Đăng Nhập Thành Công,ログイン成功,Berhasil masuk
+login_failed_user_does_not_exist,"Login failed, user does not exist.",登入失敗，用戶不存在。,登入失敗，用戶不存在。,"Đăng nhập thất bại, người dùng không tồn tại.",ログインに失敗しました、ユーザーが存在しません。,"Login gagal, pengguna tidak ada"
+album_selection,Album Selection,相簿選擇,相簿選擇,Chọn Album,アルバム選択,pilih foto
+take_photo,Take Photo,拍照,拍照,Chụp Ảnh,写真を撮る,Ambil foto
+insufficient_permissions,Insufficient Permissions,權限不足,權限不足,Quyền Truy Cập Không Đủ,権限が不足しています。,Izin tidak cukup
+allow_camera_access,Please allow access to the camera,請允許訪問相機,請允許訪問相機,Vui lòng cho phép truy cập máy ảnh,カメラへのアクセスを許可してください。,Translation: Mohon izinkan akses kamera
+find_account,Find Account,找回帳號,找回帳號,Tìm Tài Khoản,アカウントを取り戻す,Mengembalikan Akun
+use_mobile_app_to_recover_account,Please use the mobile app to recover your account,請使用手機應用程式找回帳號,請使用手機應用程式找回帳號,Vui lòng sử dụng ứng dụng di động để khôi phục tài khoản của bạn,スマートフォンアプリを使用してアカウントを回復してください。,Silakan gunakan aplikasi seluler untuk mengambil kembali akun Anda
+download_file,Download,下載,下載,Tải Xuống,ダウンロード,Unduh
+like_button,Like,點讚,點讚,Thích,いいね,Translation: Menyukai
+more_options,More >,更多 >,更多 >,Thêm >,もっと見る >,Lebih banyak >
+follow_status,Follow,關注,關注,Theo Dõi,注目,Perhatian
+account_credentials,Account Credentials,帳號憑證,帳號憑證,Chứng Nhận Tài Khoản,アカウント認証,Kredensial akun
+edit_translation,Edit,編輯,編輯,Chỉnh Sửa,編集,Sunting
+input_name,Input Name,輸入名稱,輸入名稱,Nhập Tên,名称を入力してください。,Masukkan nama
+please_enter_nickname,Please enter a nickname,請輸入暱稱,請輸入暱稱,Vui lòng nhập biệt danh,ニックネームを入力してください。,Silakan masukkan nama panggilan
+edit_error,Edit Error,修改錯誤,修改錯誤,Lỗi Chỉnh Sửa,誤りを修正する,Translation: Mengedit kesalahan
+modify_nickname,Modify Nickname,修改暱稱,修改暱稱,Chỉnh Sửa Biệt Danh,ニックネームを変更する,Ubah nama panggilan
+new_nickname,New Nickname,新暱稱,新暱稱,Biệt Danh Mới,新しいニックネーム,Nama panggilan baru
+setup_completed,Setup Completed,設置完成,設置完成,Cài Đặt Hoàn Tất,設定完了,Pengaturan selesai
+all_creators,All Creators,全部UP主,全部UP主,Tất Cả Người Tạo Nội Dung,全てのUP主,Semua Kreator
+account_length_6_to_12_letters_numbers,"Account must be 6-12 characters, letters, and numbers",帳號為6-12位字母及數字,帳號為6-12位字母及數字,Tài khoản phải có từ 6-12 ký tự chữ cái và số,アカウントは6～12文字の英数字です。,Akun harus terdiri dari 6-12 huruf dan angka
+password_length_8_to_20_characters_and_numbers,"Password must be 8-20 characters, letters, and numbers",密碼為8-20位字母及數字,密碼為8-20位字母及數字,Mật khẩu phải có từ 8-20 ký tự chữ cái và số,パスワードは8-20文字の英数字です。,Kata sandi harus terdiri dari 8-20 huruf dan angka
+validate_password_mismatch,Validation password mismatch,驗證密碼不一致,驗證密碼不一致,Kiểm tra Mật khẩu không trùng khớp,パスワードが一致していません。,Kata sandi verifikasi tidak konsisten
+register_error,Registration Error,註冊錯誤,註冊錯誤,Lỗi Đăng Ký,登録エラー,Kesalahan pendaftaran
+invalid_account_or_password,Invalid account or password,帳號或密碼不正確,帳號或密碼不正確,Tài khoản hoặc mật khẩu không chính xác,アカウントまたはパスワードが正しくありません。,Akun atau kata sandi tidak benar
+account_already_exists,Account already exists,帳號已存在,帳號已存在,Tài khoản đã tồn tại,アカウントは既に存在しています。,Akun sudah ada
+go_to_login,Go to Login,前往登入,前往登入,Chuyển đến Đăng Nhập,ログインに進む,Pergi untuk masuk
+message_center,Message Center,消息中心,消息中心,Trung Tâm Tin Nhắn,ニュースセンター,Pusat Pesan
+announcement,Announcement,公告,公告,Thông Báo,公告,Pengumuman
+system_notification,System Notification,系統通知,系統通知,Thông Báo Hệ Thống,システム通知,Notifikasi sistem
+password_saved_successfully,Password saved successfully,已成功保存密碼,已成功保存密碼,Mật khẩu đã được lưu thành công,パスワードが正常に保存されました。,Kata sandi telah berhasil disimpan
+password_error,Password Error,密碼錯誤,密碼錯誤,Lỗi Mật Khẩu,パスワードが間違っています。,Kata sandi salah
+original_password_incorrect,Original password incorrect,原密碼錯誤,原密碼錯誤,Mật khẩu gốc không chính xác,原パスワードが間違っています。,Kata sandi lama salah
+modify_password,Modify Password,修改密碼,修改密碼,Chỉnh Sửa Mật Khẩu,パスワードを変更する,Ubah Kata Sandi
+original_password,Original Password,原密碼,原密碼,Mật Khẩu Gốc,原密碼的日文翻譯是「元のパスワード」。,Kata Sandi Lama
+enter_original_password,Please enter the original password,請輸入原密碼,請輸入原密碼,Vui lòng nhập mật khẩu gốc,元のパスワードを入力してください。,Silakan masukkan kata sandi asli
+new_password,New Password,新密碼,新密碼,Mật Khẩu Mới,新しいパスワード,Kata Sandi Baru
+confirm_edit,Confirm Edit,確認修改,確認修改,Xác Nhận Chỉnh Sửa,変更を確認,Konfirmasi perubahan
+personalization_settings,Personalization Settings,個性設置,個性設置,Cài Đặt Cá Nhân Hóa,個性設定,Pengaturan Personalisasi
+safety_lock_settings,Safety Lock Settings,安全鎖設置,安全鎖設置,Cài Đặt Khóa An Toàn,セーフティロック設定,Pengaturan kunci keamanan
+not_set,Not Set,未設置,未設置,Chưa Đặt,未設定,Belum diatur
+update_check,Update Check,更新檢查,更新檢查,Kiểm Tra Cập Nhật,更新チェック,Pemeriksaan pembaruan
+setting_translation_key,Settings,設置,設置,Cài Đặt,設置: 設置,mempersiapkan
+promotion_person,Promotion Person,人推廣,人推廣,Người Thúc Đẩy,人推廣 in Japanese can be translated as 人のプロモーション,promosi
+refresh_batch,Refresh Batch,換一批,換一批,Làm Mới Batch,交換一組,Segarkan Batch
+more_videos_loading,More videos loading...,更多影片讀取中...,更多影片讀取中...,Đang Tải Thêm Video...,さらに動画を読み込み中…,Memuat lebih banyak video
+countdown_timer,Countdown,倒數,倒數,Đếm Ngược,カウントダウン,Translation: Hitung mundur
+g_point_video,G-Point Video,G 點視頻,G 點視頻,Video G-Point,G点视频,Video G-spot
+account_recovery_instructions,"Used for account recovery, please keep it safe, do not disclose",用於找回帳號，請妥善保存，請勿露餡,用於找回帳號，請妥善保存，請勿露餡,"Dùng để khôi phục tài khoản, vui lòng lưu trữ cẩn thận, không tiết lộ",アカウントを回復するために使用しますので、大切に保管してください。漏らさないでください。,"Digunakan untuk mengambil kembali akun, harap disimpan dengan baik, jangan bocorkan"
+website,Official Website:,官網地址：,官網地址：,Trang Web Chính Thức:,公式ウェブサイトのアドレス：,Alamat situs resmi:
+popular_female_actors,Popular Actress,人氣女優,,,,Popular Actress
+view_all,View All,查看全部,,,,Lihat Semua
+selected_up,Featured Content Creators,精選UP主,,,,Pencipta Konten Unggulan
+favorites,Bookmark,收藏,,,,Tandai
+followed_up_user_see_more_video,Follow a specific content creator to see their latest videos.,關注某個UP主，以查看其最新影片。,,,,Ikuti pencipta konten tertentu untuk melihat video terbaru mereka.
+number_of_videos,Video Categories,部影片,,,,Kategori Video
+latest,Latest,最新,,,,Terbaru
+hot,Hot,最熱,,,,Hot
+all_regions,All Regions,全部地區,,,,Semua Daerah
+all_publisher,All Companies,全部廠商,,,,Semua Perusahaan
+all_supplier,All Content Creators,全部 UP主,,,,Semua Pencipta Konten
+all_charge_type,All Payment Types,全部付費類型,,,,Semua Tipe Pembayaran
+free,Free,免費,,,,Gratis
+coin,Coins,金幣,,,,Koin
+vip,VIP,VIP,,,,VIP
+guest,Guest,訪客,,,,Tamu
+content_updated,Content Updated,內容已更新,,,,Konten Diperbarui

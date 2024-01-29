@@ -28,7 +28,7 @@ class _UserInfoService extends State<UserInfoService> {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
     return SizedBox(
-      width: 30,
+      width: 60,
       height: 60,
       child: InkWell(
         onTap: () {
@@ -44,6 +44,7 @@ class _UserInfoService extends State<UserInfoService> {
             ),
             Text(
               localizations.translate('customer_service'),
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: gameLobbyPrimaryTextColor,
                 fontSize: 12,

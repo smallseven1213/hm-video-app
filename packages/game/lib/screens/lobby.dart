@@ -143,6 +143,7 @@ class _GameLobbyState extends State<GameLobby>
                             child: Center(
                               child: Text(
                                 localizations.translate('register_login'),
+                                textAlign: TextAlign.center,
                                 style: TextStyle(
                                   color: gamePrimaryButtonTextColor,
                                   fontSize: 14,

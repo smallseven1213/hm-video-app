@@ -159,7 +159,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   Padding(
                     padding: const EdgeInsets.only(top: 20),
                     child: Text(
-                      '${promoteData.promotedMembers}I18n.countPersonPromotion',
+                      '${promoteData.promotedMembers} ${I18n.countPersonPromotion}',
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w400,
@@ -191,7 +191,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ),
                       width: 115,
                       child: Text(
-                        'I18n.invitationCode ${promoteData.invitationCode}',
+                        '${I18n.invitationCode} ${promoteData.invitationCode}',
                         style: const TextStyle(
                           color: Color(0xFF21AFFF),
                           fontWeight: FontWeight.w400,

@@ -195,5 +195,19 @@ const Map<String, String> viVnStrings = {
   "login": "Đăng nhập",
   "register": "đăng ký",
   "please_contact_customer_service_or_log_in_with_your_id_card":
-      "Vui lòng liên hệ bộ phận chăm sóc khách hàng hoặc đăng nhập bằng CMND của bạn"
+      "Vui lòng liên hệ bộ phận chăm sóc khách hàng hoặc đăng nhập bằng CMND của bạn",
+  "all": "Tất cả",
+  "recent": "Gần đây",
+  "fish": "Câu cá",
+  "card": "Bài",
+  "slots": "Máy đánh bạc",
+  "live": "Sống",
+  "sports": "Thể thao",
+  "lottery": "vé số",
+  "alipay": "Alipay",
+  "wechat": "WeChat",
+  "bank": "Nạp tiền qua ngân hàng",
+  "set_a_funds_pin": "Đặt mật khẩu quỹ",
+  "funds_pin": "Mật khẩu quỹ",
+  "tips": "Lời nhắc",
 };

@@ -71,9 +71,6 @@ class Block1Widget extends StatelessWidget {
     // bool containsAreaAd = videos.any((item) => item.dataType == 3);
     List<List<Vod>> result = organizeRowData(videos, block);
 
-    if (block.name == '氣質女神-辛尤里') {
-      print('@@@ :result ${result}');
-    }
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {

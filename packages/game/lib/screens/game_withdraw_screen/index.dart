@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:game/screens/user_info/game_user_info_withdraw_history.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -280,42 +281,14 @@ class _GameWithdrawState extends State<GameWithdraw> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
+              const Padding(
+                padding: EdgeInsets.all(8),
                 child: GameUserInfo(
                   child: Wrap(
                     spacing: 20,
                     children: [
-                      // 提現紀錄
-                      SizedBox(
-                        width: 50,
-                        height: 60,
-                        child: InkWell(
-                          onTap: () {
-                            MyRouteDelegate.of(context)
-                                .push(GameAppRoutes.withdrawRecord);
-                          },
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Image.asset(
-                                "packages/game/assets/images/game_lobby/withdraw-record.webp",
-                                width: 28,
-                                height: 28,
-                              ),
-                              Text(
-                                localizations.translate('withdrawal_history'),
-                                style: TextStyle(
-                                  color: gameLobbyPrimaryTextColor,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      const UserInfoService(),
+                      UserInfoWithdrawHistory(),
+                      UserInfoService(),
                     ],
                   ),
                 ),

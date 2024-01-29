@@ -70,9 +70,9 @@ class ChannelStyle4 extends StatelessWidget {
                                         AppRoutes.actors,
                                       )
                                     },
-                                child:  Text(
+                                child: Text(
                                   '${I18n.more} >',
-                                  style:const TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14,
                                   ),
@@ -183,7 +183,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                                   fontSize:
                                                                       14)),
                                                           Text(
-                                                              'I18n.popularity:${data.actor.collectTimes}',
+                                                              '${I18n.popularity}:${data.actor.collectTimes}',
                                                               style: TextStyle(
                                                                   color: Colors
                                                                       .white

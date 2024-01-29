@@ -29,7 +29,6 @@ class StreamerRankState extends State<StreamerRankProvider> {
   @override
   void initState() {
     super.initState();
-    print('@@@: initState ${widget.rankType}, ${widget.timeType}');
     streamerRankController = Get.put(
       StreamerRankController(
         rankType: widget.rankType,

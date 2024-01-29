@@ -199,7 +199,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
               height: 10,
             ),
             Text(
-              '${promoteData.promotedMembers}${I18n.countPersonPromotion}',
+              '${promoteData.promotedMembers} ${I18n.countPersonPromotion}',
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w500,

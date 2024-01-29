@@ -61,16 +61,6 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
       decoration: BoxDecoration(
         color: gameLobbyUserInfoColor1,
         borderRadius: BorderRadius.circular(8),
-        // gradient: kIsWeb
-        //     ? null
-        //     : LinearGradient(
-        //         begin: Alignment.topCenter,
-        //         end: Alignment.bottomCenter,
-        //         colors: [
-        //           gameLobbyUserInfoColor1,
-        //           gameLobbyUserInfoColor2,
-        //         ],
-        //       ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -186,7 +176,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
+            padding: const EdgeInsets.symmetric(horizontal: 22),
             child: Container(
               color: gameLobbyDividerColor,
               child: const SizedBox(

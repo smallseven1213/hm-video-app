@@ -175,5 +175,20 @@ const Map<String, String> zhTwStrings = {
   "the_game_is_under_maintenance_please_try_again_later": "遊戲維護中，請稍後再試",
   "login": "登入",
   "register": "註冊",
-  "please_contact_customer_service_or_log_in_with_your_id_card": "請聯繫客服，或用身份卡登入"
+  "please_contact_customer_service_or_log_in_with_your_id_card":
+      "請聯繫客服，或用身份卡登入",
+  "all": "全部",
+  "recent": "最近",
+  "fish": "捕魚",
+  "card": "棋牌",
+  "slots": "電子",
+  "live": "真人",
+  "sports": "體育",
+  "lottery": "彩票",
+  "alipay": "支付寶",
+  "wechat": "微信",
+  "bank": "網銀入款",
+  "set_a_funds_pin": "設置資金密碼",
+  "funds_pin": "資金密碼",
+  "tips": "溫馨提醒",
 };

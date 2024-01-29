@@ -58,7 +58,7 @@ class _PlayerLayoutState extends State<PlayerLayout> {
       return Container(
         color: Colors.black,
         alignment: Alignment.center,
-        child: Text(
+        child: const Text(
           'Error loading video',
           style: TextStyle(color: Colors.white),
         ),
@@ -66,8 +66,8 @@ class _PlayerLayoutState extends State<PlayerLayout> {
     }
     if (kIsWeb) {
       return Container(
-        color: Colors.black,
         alignment: Alignment.center,
+        color: Colors.black,
         child: VideoPlayer(videoController),
       );
     }

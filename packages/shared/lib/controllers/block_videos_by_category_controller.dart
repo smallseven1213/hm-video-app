@@ -28,7 +28,6 @@ class BlockVideosByCategoryController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    logger.i('@@@@@@ init');
     mutateAll();
 
     Get.find<AuthController>().token.listen((event) {

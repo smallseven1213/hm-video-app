@@ -42,7 +42,7 @@ class StatusLabel extends StatelessWidget {
     if (type == 0) return const SizedBox();
     return Container(
       height: 28,
-      width: 80,
+      width: 90,
       decoration: BoxDecoration(
         border: Border.all(
           width: 1,
@@ -84,7 +84,7 @@ class RowItem extends StatelessWidget {
     return Row(
       children: [
         SizedBox(
-          width: 80,
+          width: 140,
           child: Text(
             title,
             style: const TextStyle(color: Color(0xff979797)),
@@ -261,7 +261,7 @@ class _GameWithdrawRecordState extends State<GameWithdrawRecord> {
                         ),
                       ),
                       Expanded(
-                        flex: 3,
+                        flex: 4,
                         child: ModalDropDown(
                           title: localizations
                               .translate('application_time_enquiry'),

@@ -21,7 +21,7 @@ class _UserInfoDeposit extends State<UserInfoDeposit> {
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
     return SizedBox(
-      width: 30,
+      width: 60,
       height: 60,
       child: InkWell(
         onTap: widget.onTap,
@@ -35,6 +35,7 @@ class _UserInfoDeposit extends State<UserInfoDeposit> {
             ),
             Text(
               localizations.translate('deposit'),
+              textAlign: TextAlign.center,
               style: TextStyle(
                 color: gameLobbyPrimaryTextColor,
                 fontSize: 12,
