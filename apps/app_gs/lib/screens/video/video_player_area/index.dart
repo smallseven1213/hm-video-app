@@ -70,7 +70,6 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
     final _orientation =
         // ignore: deprecated_member_use
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
-    // logger.i("@@@@@@@@@ didChangeMetrics: $_orientation");
     if (_orientation == Orientation.landscape) {
       // 隱藏狀態欄
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);

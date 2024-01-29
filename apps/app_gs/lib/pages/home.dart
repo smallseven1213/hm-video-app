@@ -84,8 +84,6 @@ class HomeState extends State<HomePage> {
           return Stack(
             children: [
               Obx(() {
-                print(
-                    '@@@ displayHomeNavigationBar.value: ${uiController.displayHomeNavigationBar.value}');
                 return uiController.displayHomeNavigationBar.value
                     ? Container(
                         padding: EdgeInsets.only(bottom: paddingBottom),

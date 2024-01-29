@@ -55,8 +55,6 @@ class HomeMainScreen extends StatelessWidget {
                               child: SizedBox(
                             height: 45,
                             child: Obx(() {
-                              print(
-                                  '@@@ displayHomeNavigationBar.value: ${uiController.displayHomeNavigationBar.value}');
                               return uiController.displayHomeNavigationBar.value
                                   ? LayoutTabBar(
                                       layoutId: layoutId,

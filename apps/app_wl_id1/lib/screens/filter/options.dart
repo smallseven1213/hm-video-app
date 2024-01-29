@@ -36,7 +36,6 @@ class FilterOptions extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Obx(() {
-        logger.i('@@@ menuData => $menuData');
         return Column(
           children: List.generate(
             menuData.length,
@@ -54,9 +53,6 @@ class FilterOptions extends StatelessWidget {
                       final isSelected =
                           selectedOptions[menuData[index]['key']]!
                               .contains(option['value']);
-                      print('@@@:i18nKey: ${option['i18nKey']}');
-                      print('@@@@@: 最新 ${I18n.latest}');
-                      print('@@@@@: ${i18nKeyMapping[option['i18nKey']]}');
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 5, horizontal: 10),
