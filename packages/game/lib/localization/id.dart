@@ -111,7 +111,7 @@ const Map<String, String> idIdStrings = {
   "quit_the_game": "Keluar dari permainan",
   "do_you_really_want_to_quit_the_game":
       "Apakah Anda benar-benar ingin keluar dari permainan?",
-  "failed_to_withdraw": "Gagal menarik",
+  "failed_to_withdraw": "Gagal melakukan penarikan",
   "withdrawal_history": "Riwayat Penarikan",
   "withdrawal_account": "Akun Penarikan",
   "withdrawal_amount": "Jumlah Penarikan",
@@ -135,16 +135,14 @@ const Map<String, String> idIdStrings = {
   "limit": "Batas Taruhan",
   "achieved": "Tercapai",
   "not_reached": "Belum tercapai",
-  "please_enter_the_withdrawal_amount":
-      "Jumlah yang dimasukkan tidak boleh kurang dari {amount}.",
+  "please_enter_the_withdrawal_amount": "Silakan masukkan jumlah penarikan",
   "input_amount_must_not_be_less_than":
-      "Jumlah yang dimasukkan tidak boleh lebih besar dari saldo yang tersisa",
+      "Jumlah yang dimasukkan tidak boleh kurang dari {amount}",
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Jumlah masukan tidak boleh lebih dari saldo yang tersisa",
   "input_amount_is_in_wrong_format": "Format jumlah masukan salah",
   "minimum_withdrawal_amount_is": "Minimal penarikan: {amount} IDR",
-  "application_completed":
-      "Pemesanan penarikan selesai, Anda dapat memeriksa status aplikasi saat ini dalam log penarikan.",
+  "application_completed": "Aplikasi Selesai",
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":
       "Pengajuan penarikan telah selesai, Anda dapat memeriksa status pengajuan saat ini di log penarikan.",
   "minimum_withdrawable_amount": "Jumlah Penarikan Minimum",
@@ -157,7 +155,7 @@ const Map<String, String> idIdStrings = {
   "forgot_your_password": "Lupa kata sandi?",
   "please_enter_your_password": "Silakan masukkan kata sandi Anda",
   "password": "Kata Sandi",
-  "username": "Username",
+  "username": "Nama Pengguna",
   "letters_and_numbers": "6~12 huruf dan angka",
   "password_is_letters_and_numbers": "Kata sandi adalah 8-20 huruf dan angka",
   "account_is_digits_alphabetic_and_numeric":
@@ -173,7 +171,7 @@ const Map<String, String> idIdStrings = {
   "registration_successful": "Pendaftaran Berhasil",
   "download_app": "Unduh APP",
   "greetings_to_our_valued_users_global_gaming_invites_you_to_download_the_app_to_enhance_your_gaming_experience":
-      "Salam kepada pengguna kami yang terhormat \n Global Gaming mengundang Anda untuk mengunduh APP untuk meningkatkan pengalaman bermain Anda.",
+      "Salam untuk pengguna kami yang terhormat, \n Global Gaming mengundang Anda untuk mengunduh APLIKASI agar pengalaman bermain game Anda semakin meningkat.",
   "this_password_is_only_for_the_first_time_you_log_in_to_the_app_please_be_sure_to_change_your_password_after_logging_in":
       "Kata sandi ini hanya untuk pertama kali Anda masuk ke APP \nPastikan untuk mengubah kata sandi Anda setelah masuk.",
   "password_copied": "Kata sandi disalin",
@@ -183,12 +181,12 @@ const Map<String, String> idIdStrings = {
   "insufficient_password": "Kata sandi tidak cukup",
   "wrong_password": "Kata sandi salah",
   "duplicate_login": "Login ganda",
-  "duplicated": "Ganda",
-  "currently_under_maintenance": "Saat ini sedang dalam pemeliharaan",
-  "estimated_maintenance_time": "Waktu pemeliharaan perkiraan dari 08:00-10:00",
+  "duplicated": "Terduplikasi",
+  "currently_under_maintenance": "Sedang dalam perawatan",
+  "estimated_maintenance_time": "Perkiraan waktu perawatan 08:00-10:00",
   "please_try_again_later_sorry_for_the_inconvenience":
       "Silakan coba lagi nanti, maaf atas ketidaknyamanannya.",
-  "game_maintenance_in_progress": "Pemeliharaan dalam progress",
+  "game_maintenance_in_progress": "perawatan game sedang berlangsung",
   "the_game_is_under_maintenance_please_try_again_later":
       "Game sedang dalam pemeliharaan, silakan coba lagi nanti",
   "login": "Masuk",
