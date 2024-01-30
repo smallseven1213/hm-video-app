@@ -29,6 +29,7 @@ void main() async {
     ThemeData(
       useMaterial3: false,
     ),
+    defaultLocale: const Locale('zh', 'TW'),
     globalLoadingWidget: ({String? text}) => Center(child: LoadingAnimation()),
     countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
