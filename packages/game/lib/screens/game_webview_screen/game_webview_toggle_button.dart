@@ -61,122 +61,138 @@ class _GameWebviewToggleButtonWidget
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              InkWell(
-                onTap: () {
-                  showConfirmDialog(
-                    context: context,
-                    title: localizations.translate('quit_the_game'),
-                    content: localizations
-                        .translate('do_you_really_want_to_quit_the_game'),
-                    rotate: !GetPlatform.isWeb
-                        ? false
-                        : widget.direction == gameWebviewDirection['vertical']
-                            ? (orientation == Orientation.portrait
-                                ? false
-                                : true)
-                            : (orientation == Orientation.portrait
-                                ? true
-                                : false),
-                    onConfirm: () {
-                      Get.find<GameStartupController>()
-                          .goBackToAppHome(context);
-                    },
-                    onCancel: () {
-                      Navigator.pop(context);
-                    },
-                  );
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'packages/game/assets/svg/icon-game-home.svg',
-                      width: 32,
-                      height: 32,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      localizations.translate('return_to_the_lobby'),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
-                        fontFeatures: [FontFeature.proportionalFigures()],
+              SizedBox(
+                width: 58,
+                child: InkWell(
+                  onTap: () {
+                    showConfirmDialog(
+                      context: context,
+                      title: localizations.translate('quit_the_game'),
+                      content: localizations
+                          .translate('do_you_really_want_to_quit_the_game'),
+                      rotate: !GetPlatform.isWeb
+                          ? false
+                          : widget.direction == gameWebviewDirection['vertical']
+                              ? (orientation == Orientation.portrait
+                                  ? false
+                                  : true)
+                              : (orientation == Orientation.portrait
+                                  ? true
+                                  : false),
+                      onConfirm: () {
+                        Get.find<GameStartupController>()
+                            .goBackToAppHome(context);
+                      },
+                      onCancel: () {
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'packages/game/assets/svg/icon-game-home.svg',
+                        width: 32,
+                        height: 32,
                       ),
-                    ), // <-- Text
-                  ],
+                      const SizedBox(height: 5),
+                      Text(
+                        localizations.translate('return_to_the_lobby'),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                          fontFeatures: [FontFeature.proportionalFigures()],
+                        ),
+                      ), // <-- Text
+                    ],
+                  ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  launch(gameBannerController.customerServiceUrl.value);
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'packages/game/assets/svg/icon-game-service.svg',
-                      width: 32,
-                      height: 32,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      localizations.translate('customer_service'),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+              SizedBox(
+                width: 58,
+                child: InkWell(
+                  onTap: () {
+                    launch(gameBannerController.customerServiceUrl.value);
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'packages/game/assets/svg/icon-game-service.svg',
+                        width: 32,
+                        height: 32,
                       ),
-                    ), // <-- Text
-                  ],
+                      const SizedBox(height: 5),
+                      Text(
+                        localizations.translate('customer_service'),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ), // <-- Text
+                    ],
+                  ),
                 ),
               ),
-              InkWell(
-                onTap: () {
-                  logger.i('充值');
-                  MyRouteDelegate.of(context).push(
-                    gameConfigController.switchPaymentPage.value ==
-                            switchPaymentPageType['list']
-                        ? GameAppRoutes.depositList
-                        : GameAppRoutes.depositPolling,
-                  );
-                },
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'packages/game/assets/svg/icon-game-deposit.svg',
-                      width: 32,
-                      height: 32,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      localizations.translate('recharge'),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+              SizedBox(
+                width: 58,
+                child: InkWell(
+                  onTap: () {
+                    logger.i('充值');
+                    MyRouteDelegate.of(context).push(
+                      gameConfigController.switchPaymentPage.value ==
+                              switchPaymentPageType['list']
+                          ? GameAppRoutes.depositList
+                          : GameAppRoutes.depositPolling,
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'packages/game/assets/svg/icon-game-deposit.svg',
+                        width: 32,
+                        height: 32,
                       ),
-                    ), // <-- Text
-                  ],
+                      const SizedBox(height: 5),
+                      Text(
+                        localizations.translate('recharge'),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ), // <-- Text
+                    ],
+                  ),
                 ),
               ),
-              InkWell(
-                onTap: () => widget.toggleButtonRow(),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'packages/game/assets/svg/icon-game-close.svg',
-                      width: 32,
-                      height: 32,
-                    ),
-                    const SizedBox(height: 5),
-                    Text(
-                      localizations.translate('close'),
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 12,
+              SizedBox(
+                width: 58,
+                child: InkWell(
+                  onTap: () => widget.toggleButtonRow(),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'packages/game/assets/svg/icon-game-close.svg',
+                        width: 32,
+                        height: 32,
                       ),
-                    ), // <-- Text
-                  ],
+                      const SizedBox(height: 5),
+                      Text(
+                        localizations.translate('close'),
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ), // <-- Text
+                    ],
+                  ),
                 ),
               ),
             ],

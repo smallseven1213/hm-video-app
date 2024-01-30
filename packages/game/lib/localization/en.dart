@@ -104,7 +104,7 @@ const Map<String, String> enUsStrings = {
   "please_confirm_the_password_again": "Please confirm the password again",
   "setting_failed": "Setting failed",
   "successful": "Successful",
-  "return_to_the_lobby": "Return to the lobby",
+  "return_to_the_lobby": "Lobby",
   "customer_service": "Customer Service",
   "recharge": "Recharge",
   "quit_the_game": "Quit the game",
