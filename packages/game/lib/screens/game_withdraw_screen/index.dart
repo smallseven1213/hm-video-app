@@ -380,7 +380,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                           })
                                         },
                                         warningMessage:
-                                            "${localizations.translate('minimum_withdrawal_amount_is')} $withdrawalLowerLimit CNY",
+                                            "${localizations.translate('minimum_withdrawal_amount_is')} $withdrawalLowerLimit",
                                         errorMessage:
                                             _validate(amountController.text),
                                         inputFormatters: <TextInputFormatter>[

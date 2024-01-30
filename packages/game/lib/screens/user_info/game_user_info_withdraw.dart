@@ -17,7 +17,7 @@ class _UserInfoWithdraw extends State<UserInfoWithdraw> {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
     return SizedBox(
-      width: 60,
+      width: 62,
       height: 60,
       child: InkWell(
         onTap: widget.onTap,
