@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+import '../../localization/game_localization_delegate.dart';
 
 void showConfirmDialog({
   required BuildContext context,
@@ -18,6 +19,8 @@ void showConfirmDialog({
     context: context,
     barrierDismissible: barrierDismissible,
     builder: (context) {
+      final GameLocalizations localizations = GameLocalizations.of(context)!;
+
       return WillPopScope(
         onWillPop: () async => false,
         child: PointerInterceptor(
@@ -36,17 +39,6 @@ void showConfirmDialog({
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 decoration: BoxDecoration(
                   color: gameLobbyDialogColor1,
-                  // gradient: kIsWeb
-                  //     ? null
-                  //     : LinearGradient(
-                  //         // 設定漸層的背景顏色
-                  //         colors: [
-                  //           gameLobbyDialogColor1,
-                  //           gameLobbyDialogColor2
-                  //         ], // 漸層的顏色列表
-                  //         begin: Alignment.topCenter, // 漸層的起點位置
-                  //         end: Alignment.bottomCenter, // 漸層的終點位置
-                  //       ),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(24),
                     topRight: Radius.circular(24),
@@ -102,16 +94,6 @@ void showConfirmDialog({
                         child: Ink(
                           decoration: BoxDecoration(
                             color: gameSecondButtonColor1,
-                            // gradient: kIsWeb
-                            //     ? null
-                            //     : LinearGradient(
-                            //         colors: [
-                            //           gameSecondButtonColor1,
-                            //           gameSecondButtonColor2
-                            //         ],
-                            //         begin: Alignment.topCenter,
-                            //         end: Alignment.bottomCenter,
-                            //       ),
                             borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(24),
                               bottomRight: Radius.circular(0),
@@ -123,7 +105,7 @@ void showConfirmDialog({
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Center(
                                 child: Text(
-                                  cancelText,
+                                  localizations.translate('cancel'),
                                   style: TextStyle(
                                       color: gameSecondButtonTextColor,
                                       fontSize: 16),
@@ -137,16 +119,6 @@ void showConfirmDialog({
                       child: Ink(
                         decoration: BoxDecoration(
                           color: gamePrimaryButtonColor,
-                          // gradient: kIsWeb
-                          //     ? null
-                          //     : LinearGradient(
-                          //         colors: [
-                          //           gamePrimaryButtonColor,
-                          //           gamePrimaryButtonColor
-                          //         ],
-                          //         begin: Alignment.topCenter,
-                          //         end: Alignment.bottomCenter,
-                          //       ),
                           borderRadius: BorderRadius.only(
                             bottomLeft:
                                 Radius.circular(onCancel == null ? 24 : 0),
@@ -164,7 +136,7 @@ void showConfirmDialog({
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             child: Center(
                               child: Text(
-                                confirmText,
+                                localizations.translate('confirm'),
                                 style: TextStyle(
                                     color: gamePrimaryButtonTextColor,
                                     fontSize: 16),

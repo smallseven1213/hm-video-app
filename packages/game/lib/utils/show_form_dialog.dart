@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
+import '../../localization/game_localization_delegate.dart';
 
 void showFormDialog(
   BuildContext context, {
@@ -16,6 +17,8 @@ void showFormDialog(
     context: context,
     barrierDismissible: barrierDismissible,
     builder: (context) {
+      final GameLocalizations localizations = GameLocalizations.of(context)!;
+
       return AlertDialog(
         titlePadding: title != ''
             ? const EdgeInsets.fromLTRB(24.0, 24.0, 24.0, 10)
@@ -97,7 +100,7 @@ void showFormDialog(
                     ),
                     onPressed: onCancel,
                     child: Text(
-                      cancelText,
+                      localizations.translate('cancel'),
                       style: TextStyle(
                         color: gameLobbyButtonDisableTextColor,
                         fontSize: 16,
@@ -123,7 +126,7 @@ void showFormDialog(
                       onConfirm();
                     },
                     child: Text(
-                      confirmText,
+                      localizations.translate('confirm'),
                       style: TextStyle(
                           color: gamePrimaryButtonTextColor, fontSize: 16),
                     ),
