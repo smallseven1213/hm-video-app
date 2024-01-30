@@ -57,7 +57,7 @@ class RedemptionPageState extends State<RedemptionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const CustomAppBar(
-          title: '序號兌換',
+          title: '序号兑换',
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +79,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                         child: AuthTextField(
                           label: "",
                           controller: _controller!,
-                          placeholderText: '請輸入序號',
+                          placeholderText: '请输入序号',
                         ),
                       ),
                     ),
@@ -88,7 +88,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                     width: 80,
                     child: Button(
                       onPressed: () => _redeemRequest(),
-                      text: '兌換',
+                      text: '兑换',
                       size: 'small',
                     ),
                   ),
@@ -99,7 +99,7 @@ class RedemptionPageState extends State<RedemptionPage> {
             Padding(
               padding: const EdgeInsets.all(8),
               child: Text(
-                '兌換記錄',
+                '兑换记录',
                 textAlign: TextAlign.left,
                 style: TextStyle(
                   fontSize: 14,
@@ -115,7 +115,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '兌換名稱',
+                    '兑换名称',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.colors[ColorKeys.tabBarTextColor],
@@ -123,7 +123,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    '兌換時間',
+                    '兑换时间',
                     style: TextStyle(
                       fontSize: 14,
                       color: AppColors.colors[ColorKeys.tabBarTextColor],

@@ -63,7 +63,7 @@ class ChannelStyle4 extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: BlockHeader(
-                            text: '人氣女優',
+                            text: '人气女优',
                             moreButton: GestureDetector(
                                 onTap: () => {
                                       MyRouteDelegate.of(context).push(
@@ -188,7 +188,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                                   fontSize:
                                                                       14)),
                                                           Text(
-                                                              '人氣:${data.actor.collectTimes}',
+                                                              '人气:${data.actor.collectTimes}',
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                           .colors[

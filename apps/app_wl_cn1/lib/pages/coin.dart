@@ -37,7 +37,7 @@ class CoinPageState extends State<CoinPage>
         showConfirmDialog(
           context: context,
           title: '提示',
-          message: '為保持您的帳號，請先註冊防止丟失',
+          message: '为保持您的帐号，请先注册防止丢失',
           showCancelButton: false,
           onConfirm: () => {},
         );
@@ -56,7 +56,7 @@ class CoinPageState extends State<CoinPage>
       },
       child: Scaffold(
         appBar: const CustomAppBar(
-          title: '金幣錢包',
+          title: '金币钱包',
         ),
         body: Column(
           children: [
@@ -64,7 +64,7 @@ class CoinPageState extends State<CoinPage>
             // const UserBalance(),
             TabBarWidget(
               controller: _tabController,
-              tabs: const ['金幣', '購買記錄', '特權紀錄', '存款記錄'],
+              tabs: const ['金币', '购买记录', '特权纪录', '存款记录'],
             ),
             Expanded(
               child: Padding(

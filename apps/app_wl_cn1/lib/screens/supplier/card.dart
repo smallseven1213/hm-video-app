@@ -197,7 +197,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500)),
                                   const SizedBox(width: 5),
-                                  const Text('長視頻',
+                                  const Text('长视频',
                                       style: TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,
@@ -217,7 +217,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                           fontSize: 15,
                                           fontWeight: FontWeight.w500)),
                                   const SizedBox(width: 5),
-                                  const Text('短視頻',
+                                  const Text('短视频',
                                       style: TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,
@@ -265,7 +265,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                                         fontSize: 15,
                                       ))),
                                   const SizedBox(width: 5),
-                                  const Text('點讚',
+                                  const Text('点赞',
                                       style: TextStyle(
                                         color: Color(0xFFD4D4D4),
                                         fontSize: 12,

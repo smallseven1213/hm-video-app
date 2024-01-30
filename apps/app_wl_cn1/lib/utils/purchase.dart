@@ -21,10 +21,10 @@ void purchase(
       if (context.mounted) {
         showConfirmDialog(
           context: context,
-          title: coinNotEnough ? '金幣餘額不足' : '購買失敗',
-          message: coinNotEnough ? '請立即前往充值已獲得最完整的體驗' : results.message,
+          title: coinNotEnough ? '金币余额不足' : '购买失败',
+          message: coinNotEnough ? '请立即前往充值已获得最完整的体验' : results.message,
           showCancelButton: coinNotEnough,
-          confirmButtonText: coinNotEnough ? '前往充值' : '確認',
+          confirmButtonText: coinNotEnough ? '前往充值' : '确认',
           cancelButtonText: '取消',
           onConfirm: () => coinNotEnough
               ? MyRouteDelegate.of(context).push(AppRoutes.coin)
@@ -36,8 +36,8 @@ void purchase(
     // ignore: use_build_context_synchronously
     showConfirmDialog(
       context: context,
-      title: '購買失敗',
-      message: '購買失敗',
+      title: '购买失败',
+      message: '购买失败',
       showCancelButton: false,
       onConfirm: () {
         // Navigator.of(context).pop();

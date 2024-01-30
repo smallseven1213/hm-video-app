@@ -9,10 +9,10 @@ class HomeAppsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false, // HC: 煩死，勿動!!
+      onWillPop: () async => false, // HC: 烦死，勿动!!
       child: const Scaffold(
         appBar: CustomAppBar(
-          title: '應用中心',
+          title: '应用中心',
         ),
         body: AppsScreen(),
       ),

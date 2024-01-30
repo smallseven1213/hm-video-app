@@ -74,7 +74,7 @@ class IDCardContentState extends State<IDCardContent> {
             child: Column(
               children: [
                 Text(
-                  '用於找回帳號，請妥善保存，請勿洩露',
+                  '用于找回帐号，请妥善保存，请勿泄露',
                   style: TextStyle(
                     color: AppColors.colors[ColorKeys.textSecondary],
                     fontWeight: FontWeight.w400,
@@ -163,7 +163,7 @@ class IDCardContentState extends State<IDCardContent> {
                       successMessage: '已成功保存身份卡',
                       child: Center(
                         child: Text(
-                          '請截圖保存',
+                          '请截图保存',
                           style: TextStyle(
                               color: AppColors
                                       .colors[ColorKeys.buttonTextSecondary]

@@ -156,7 +156,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,
                       loadingWidget: const VideoListLoadingText(),
-                      loadingText: Text('內容已更新',
+                      loadingText: Text('内容已更新',
                           style: TextStyle(
                             fontSize: 13,
                             color: AppColors.colors[ColorKeys.textSecondary],
@@ -196,7 +196,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                       height: 38,
                                       width: 183,
                                       child: Button(
-                                        text: '探索更多內容',
+                                        text: '探索更多内容',
                                         onPressed: () {
                                           MyRouteDelegate.of(context)
                                               .push(AppRoutes.filter);

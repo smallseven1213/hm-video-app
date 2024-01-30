@@ -48,16 +48,16 @@ class LoginPage extends StatelessWidget {
               children: [
                 const SizedBox(height: 80),
                 AuthTextField(
-                  label: '帳號',
+                  label: '帐号',
                   controller: accountController,
-                  placeholderText: '請輸入帳號',
+                  placeholderText: '请输入帐号',
                   validator: validateUsername,
                 ),
                 const SizedBox(height: 10),
                 AuthTextField(
-                  label: '密碼',
+                  label: '密码',
                   controller: passwordController,
-                  placeholderText: '請輸入密碼',
+                  placeholderText: '请输入密码',
                   obscureText: true,
                   validator: validatePassword,
                 ),
@@ -80,7 +80,7 @@ class LoginPage extends StatelessWidget {
                       },
                       child: Column(children: [
                         Text(
-                          '還沒有帳號',
+                          '还没有帐号',
                           style: TextStyle(
                             color: AppColors.colors[ColorKeys.textPrimary],
                           ),

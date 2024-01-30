@@ -44,7 +44,7 @@ class NoticeDialogState extends State<NoticeDialog> {
         // Navigate to internal route
         List<String> parts = url.split('/');
 
-        // 從列表中獲取所需的字串和數字
+        // 从列表中获取所需的字串和数字
         String path = '/${parts[1]}';
 
         if (parts.length == 3) {
@@ -153,7 +153,7 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.rightButton ?? '確認',
+                                        text: notice.rightButton ?? '确认',
                                         type: 'primary',
                                         onPressed: () => handleUrl(
                                             notice.rightButtonUrl, context),

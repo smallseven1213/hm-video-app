@@ -94,7 +94,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: '全部女優',
+        title: '全部女优',
       ),
       body: Column(
         children: [
@@ -107,7 +107,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
               Expanded(
                   flex: 1,
                   child: SearchInput(
-                    placeHolder: '輸入名稱',
+                    placeHolder: '输入名称',
                     backgroundColor:
                         AppColors.colors[ColorKeys.formBg] as Color,
                     onSubmitted: (val) {
@@ -137,8 +137,8 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                       flex: 1,
                       child: Row(
                         children: [
-                          _buildCustomRadioButton(0, '視頻'),
-                          _buildCustomRadioButton(1, '人氣'),
+                          _buildCustomRadioButton(0, '视频'),
+                          _buildCustomRadioButton(1, '人气'),
                         ],
                       ),
                     )

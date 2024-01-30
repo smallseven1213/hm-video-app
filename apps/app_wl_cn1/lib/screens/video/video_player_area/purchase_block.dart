@@ -70,7 +70,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 ),
                                 Expanded(
                                   child: Text(
-                                    '開通 VIP 無限看片',
+                                    '开通 VIP 无限看片',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),
@@ -94,7 +94,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 border: Border.all(color: Colors.white),
                               ),
                               child: const Text(
-                                '查看詳情',
+                                '查看详情',
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
@@ -145,7 +145,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        '看不過癮，${widget.videoDetail.buyPoint}金幣解鎖',
+                                        '看不过瘾，${widget.videoDetail.buyPoint}金币解锁',
                                         style: const TextStyle(
                                           color: Color(0xff644c14),
                                         ),
@@ -177,7 +177,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     border: Border.all(color: Colors.white),
                                   ),
                                   child: const Text(
-                                    '立即解鎖',
+                                    '立即解锁',
                                     style: TextStyle(
                                       color: Colors.white,
                                     ),

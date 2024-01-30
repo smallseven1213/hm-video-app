@@ -21,7 +21,7 @@ class AppDownloadAdState extends State<AppDownloadAd> {
   @override
   void initState() {
     super.initState();
-    controller.recordVideoViews(); // 紀錄觀看次數
+    controller.recordVideoViews(); // 纪录观看次数
   }
 
   @override
@@ -123,7 +123,7 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                                       size: 16,
                                     ),
                                     Text(
-                                      '立即下載',
+                                      '立即下载',
                                       style: TextStyle(
                                         fontSize: 12,
                                         color: Color(0xffffffff),

@@ -25,10 +25,10 @@ class FilterScrollViewState extends State<FilterPage>
     super.initState();
     _tabController = TabController(vsync: this, length: 2);
 
-    // 監聽tab滑動
+    // 监听tab滑动
     _tabController.animation!.addListener(() {
       if (_tabController.animation!.value % 1 != 0) {
-        // 如果動畫值不是整數，表示滑動正在進行中
+        // 如果动画值不是整数，表示滑动正在进行中
         filterScreenController.handleOption(showTab: true, openOption: false);
       }
     });
@@ -36,7 +36,7 @@ class FilterScrollViewState extends State<FilterPage>
 
   @override
   void dispose() {
-    _tabController.animation!.removeListener(() {}); // 別忘了在 dispose 中移除監聽器
+    _tabController.animation!.removeListener(() {}); // 别忘了在 dispose 中移除监听器
     _tabController.dispose();
     super.dispose();
   }
@@ -46,10 +46,10 @@ class FilterScrollViewState extends State<FilterPage>
     return Obx(() {
       return Scaffold(
         appBar: CustomAppBar(
-          title: '篩選',
+          title: '筛选',
           bottom: filterScreenController.showTabBar.value
               ? TabBarWidget(
-                  tabs: const ['長視頻', '短視頻'], controller: _tabController)
+                  tabs: const ['长视频', '短视频'], controller: _tabController)
               : null,
         ),
         body: TabBarView(

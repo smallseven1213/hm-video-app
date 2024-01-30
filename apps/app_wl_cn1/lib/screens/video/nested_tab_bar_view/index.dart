@@ -78,7 +78,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               const SliverToBoxAdapter(
                 child: Padding(
                   padding: EdgeInsets.only(top: 16, right: 8, left: 8),
-                  child: BlockHeader(text: '演員'),
+                  child: BlockHeader(text: '演员'),
                 ),
               ),
             if (widget.videoDetail.actors!.isNotEmpty)
@@ -88,7 +88,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
             const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.only(top: 16, right: 8, left: 8),
-                child: BlockHeader(text: '推薦'),
+                child: BlockHeader(text: '推荐'),
               ),
             ),
           ];

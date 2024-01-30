@@ -80,7 +80,7 @@ class PopularWidget extends StatelessWidget {
                               ],
                             )),
                       ),
-                      // 按鈕
+                      // 按钮
                       Container(
                         width: 60,
                         height: 28,
@@ -91,7 +91,7 @@ class PopularWidget extends StatelessWidget {
                                 const BorderRadius.all(Radius.circular(4))),
                         child: const Center(
                           child: Text(
-                            '下載',
+                            '下载',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 12,

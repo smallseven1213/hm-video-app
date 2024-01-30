@@ -9,11 +9,11 @@ class ListNoMore extends StatelessWidget {
 
   // 定义可能的文字
   final List<String> messages = [
-    '頂到底了',
+    '顶到底了',
     '太深了客倌',
-    '慢慢看，別這麼挑',
-    '花心已抵達',
-    '確認過眼神，您是同道中人'
+    '慢慢看，别这么挑',
+    '花心已抵达',
+    '确认过眼神，您是同道中人'
   ];
 
   @override

@@ -35,7 +35,7 @@ class UserScreenState extends State<UserScreen> {
           showConfirmDialog(
             context: context,
             title: '提示',
-            message: '為保持您的帳號，請先註冊防止丟失',
+            message: '为保持您的帐号，请先注册防止丢失',
             showCancelButton: false,
             onConfirm: () => {},
           );
@@ -97,7 +97,7 @@ class UserScreenState extends State<UserScreen> {
                 ),
               ),
               const SliverToBoxAdapter(
-                child: Header(text: '更多服務'),
+                child: Header(text: '更多服务'),
               ),
               const SliverToBoxAdapter(
                 child: SizedBox(
@@ -112,7 +112,7 @@ class UserScreenState extends State<UserScreen> {
                   child: Align(
                     alignment: Alignment.bottomCenter,
                     child: Text(
-                      '版本號:${systemConfigController.version.value}',
+                      '版本号:${systemConfigController.version.value}',
                       style: TextStyle(
                           color: AppColors.colors[ColorKeys.textPrimary],
                           fontSize: 12),

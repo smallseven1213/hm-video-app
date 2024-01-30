@@ -61,7 +61,7 @@ class _ScanQRViewState extends State<ScanQRView> {
           showConfirmDialog(
               context: context,
               title: '提示',
-              message: '登入失敗，用戶不存在。',
+              message: '登入失败，用户不存在。',
               showCancelButton: false,
               onConfirm: () {
                 controller.resumeCamera();

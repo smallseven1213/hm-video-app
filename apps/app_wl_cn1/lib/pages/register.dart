@@ -21,7 +21,7 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: '註冊',
+        title: '注册',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 35),
@@ -51,25 +51,25 @@ class RegisterPage extends StatelessWidget {
                 Column(
                   children: [
                     AuthTextField(
-                      label: '帳　　號',
+                      label: '帐　　号',
                       controller: accountController,
-                      placeholderText: '請輸入帳號',
+                      placeholderText: '请输入帐号',
                       validator: validateUsername,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '密　　碼',
+                      label: '密　　码',
                       obscureText: true,
                       controller: passwordController,
-                      placeholderText: '請輸入密碼',
+                      placeholderText: '请输入密码',
                       validator: validatePassword,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '驗證密碼',
+                      label: '验证密码',
                       obscureText: true,
                       controller: confirmPasswordController,
-                      placeholderText: '請輸入驗證密碼',
+                      placeholderText: '请输入验证密码',
                       validator: validateConfirmPassword,
                     ),
                   ],
@@ -82,7 +82,7 @@ class RegisterPage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Button(
-                          text: '註冊',
+                          text: '注册',
                           type: 'primary',
                           onPressed: () {
                             handleRegister();

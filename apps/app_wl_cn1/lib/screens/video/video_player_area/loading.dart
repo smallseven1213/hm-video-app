@@ -48,7 +48,7 @@ class VideoLoading extends StatelessWidget {
             Center(child: FlashLoading()),
             SizedBox(height: 15),
             Text(
-              '精彩即將呈現',
+              '精彩即将呈现',
               style: TextStyle(fontSize: 12, color: Colors.white),
             )
           ],

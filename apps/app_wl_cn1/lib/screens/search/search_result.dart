@@ -58,8 +58,8 @@ class SearchResultPageState extends State<SearchResultPage>
         TabBarWidget(
           controller: _tabController,
           tabs: const [
-            '長視頻',
-            '短視頻',
+            '长视频',
+            '短视频',
           ],
         ),
         // SliverVodGrid

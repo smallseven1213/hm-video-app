@@ -10,7 +10,7 @@ class AppsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       appBar: CustomAppBar(
-        title: '應用中心',
+        title: '应用中心',
       ),
       body: AppsScreen(),
     );

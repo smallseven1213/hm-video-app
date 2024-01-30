@@ -60,7 +60,7 @@ class ShortBottomArea extends StatelessWidget {
                       displayFavoriteAndCollectCount:
                           displayFavoriteAndCollectCount,
                       count: favoriteCount,
-                      subscribe: '喜歡就點讚',
+                      subscribe: '喜欢就点赞',
                       icon: Icons.favorite_rounded,
                       isLike: isLike,
                       onTap: () {
