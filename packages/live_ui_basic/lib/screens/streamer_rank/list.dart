@@ -21,6 +21,7 @@ class _StreamerRankPageState extends State<StreamerRankPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('主播排行'),
+        centerTitle: true,
       ),
       body: DefaultTabController(
         length: 3,
