@@ -27,7 +27,7 @@ String decryptAES256ECB(String encryptedText) {
 
   final decrypted = encrypter.decrypt16(enData);
   String result = String.fromCharCodes(decrypted.runes.where((rune) {
-    return rune != 0x07; // 移除 %07 字符
+    return rune != 0x07 && rune != 0x02; // 移除 %07 和 %02 字符
   }));
   return result;
 }
