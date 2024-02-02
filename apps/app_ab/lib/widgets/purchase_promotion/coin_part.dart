@@ -46,7 +46,7 @@ class Coin extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                '試看結束，此影片需付費購買',
+                '试看结束，此影片需付费购买',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,
@@ -54,7 +54,7 @@ class Coin extends StatelessWidget {
                 ),
               ),
               Text(
-                '片長：${getTimeString(timeLength)}',
+                '片长：${getTimeString(timeLength)}',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
@@ -62,14 +62,14 @@ class Coin extends StatelessWidget {
                 ),
               ),
               Text(
-                '價格：$buyPoints金幣',
+                '价格：$buyPoints金币',
                 style: TextStyle(
                   color: AppColors.colors[ColorKeys.secondary],
                   fontSize: 13,
                 ),
               ),
               Text(
-                '您目前擁有的金幣：$userPoints金幣',
+                '您目前拥有的金币：$userPoints金币',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
@@ -83,7 +83,7 @@ class Coin extends StatelessWidget {
             height: 35,
             child: Button(
               size: 'small',
-              text: '付費觀看',
+              text: '付费观看',
               onPressed: () => purchase(
                 context,
                 id: videoId,
@@ -104,7 +104,7 @@ class Coin extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              '試看結束，此影片需付費購買',
+              '试看结束，此影片需付费购买',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
@@ -112,7 +112,7 @@ class Coin extends StatelessWidget {
               ),
             ),
             Text(
-              '片長：${getTimeString(timeLength)}',
+              '片长：${getTimeString(timeLength)}',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
@@ -120,14 +120,14 @@ class Coin extends StatelessWidget {
               ),
             ),
             Text(
-              '價格：$buyPoints金幣',
+              '价格：$buyPoints金币',
               style: TextStyle(
                 color: AppColors.colors[ColorKeys.secondary],
                 fontSize: 13,
               ),
             ),
             Text(
-              '您目前擁有的金幣：$userPoints金幣',
+              '您目前拥有的金币：$userPoints金币',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 13,
@@ -141,7 +141,7 @@ class Coin extends StatelessWidget {
           height: 35,
           child: Button(
             size: 'small',
-            text: '付費觀看',
+            text: '付费观看',
             onPressed: () => purchase(
               context,
               id: videoId,

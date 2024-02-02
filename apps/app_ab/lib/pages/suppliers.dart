@@ -102,7 +102,7 @@ class SuppliersPageState extends State<SuppliersPage>
               Expanded(
                   flex: 1,
                   child: SearchInput(
-                    placeHolder: '輸入名稱',
+                    placeHolder: '输入名称',
                     backgroundColor:
                         AppColors.colors[ColorKeys.formBg] as Color,
                     onSubmitted: (val) {
@@ -133,8 +133,8 @@ class SuppliersPageState extends State<SuppliersPage>
                       flex: 1,
                       child: Row(
                         children: [
-                          _buildCustomRadioButton(1, '視頻'),
-                          _buildCustomRadioButton(2, '人氣'),
+                          _buildCustomRadioButton(1, '视频'),
+                          _buildCustomRadioButton(2, '人气'),
                         ],
                       ),
                     )

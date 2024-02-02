@@ -123,7 +123,7 @@ class VideoBlockFooter extends StatelessWidget {
             if (block.isCheckMore == true)
               Expanded(
                 child: CustomButton(
-                  text: '進入櫥窗',
+                  text: '进入橱窗',
                   buttonBgColor: AppColors.colors[ColorKeys.buttonBgPrimary],
                   buttonTextColor:
                       AppColors.colors[ColorKeys.buttonTextPrimary],
@@ -162,7 +162,7 @@ class VideoBlockFooter extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                 child: CustomButton(
-                  text: '換一批',
+                  text: '换一批',
                   animate: true,
                   buttonBgColor: AppColors.colors[ColorKeys.buttonBgCancel],
                   buttonTextColor: AppColors.colors[ColorKeys.buttonTextCancel],

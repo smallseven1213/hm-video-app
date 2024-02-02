@@ -75,12 +75,12 @@ class CollectionPageState extends State<CollectionPage>
                 listEditorController.toggleEditing();
               },
               child: Text(
-                listEditorController.isEditing.value ? '取消' : '編輯',
+                listEditorController.isEditing.value ? '取消' : '编辑',
                 style: const TextStyle(color: Colors.white),
               )))
         ],
         bottom: TabBarWidget(
-            tabs: const ['長視頻', '短視頻'], controller: _tabController),
+            tabs: const ['长视频', '短视频'], controller: _tabController),
       ),
       body: Stack(
         children: [

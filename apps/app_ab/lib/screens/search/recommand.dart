@@ -50,7 +50,7 @@ class RecommandScreenState extends State<RecommandScreen> {
           }
           return SliverToBoxAdapter(
             child: BlockHeader(
-                text: '搜索紀錄',
+                text: '搜索纪录',
                 // moreButton is a Button from Image AssetImage
                 moreButton: GestureDetector(
                   onTap: () {
@@ -77,8 +77,8 @@ class RecommandScreenState extends State<RecommandScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
-                    spacing: 8, // 標籤之間的水平間距
-                    runSpacing: 8, // 標籤之間的垂直間距
+                    spacing: 8, // 标签之间的水平间距
+                    runSpacing: 8, // 标签之间的垂直间距
                     children: userSearchHistoryController.searchHistory
                         .map((keyword) => TagItem(
                             tag: '#$keyword',
@@ -95,7 +95,7 @@ class RecommandScreenState extends State<RecommandScreen> {
         }),
         const SliverToBoxAdapter(
           child: BlockHeader(
-            text: '搜索推薦',
+            text: '搜索推荐',
           ),
         ),
         Obx(() => SliverList(
@@ -103,8 +103,8 @@ class RecommandScreenState extends State<RecommandScreen> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Wrap(
-                    spacing: 8, // 標籤之間的水平間距
-                    runSpacing: 8, // 標籤之間的垂直間距
+                    spacing: 8, // 标签之间的水平间距
+                    runSpacing: 8, // 标签之间的垂直间距
                     children: tagPopularController.data
                         .map((tag) => TagItem(
                             tag: '#${tag.name}',
@@ -124,7 +124,7 @@ class RecommandScreenState extends State<RecommandScreen> {
         ),
         const SliverToBoxAdapter(
           child: BlockHeader(
-            text: '熱門推薦',
+            text: '热门推荐',
           ),
         ),
         const SliverToBoxAdapter(

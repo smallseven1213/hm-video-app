@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
 final List<String> loadingTextList = [
-  '檔案很大，你忍一下',
-  '還沒準備好，你先悠著來',
-  '精彩即將呈現',
-  '努力加載中',
-  '讓檔案載一會兒',
+  '档案很大，你忍一下',
+  '还没准备好，你先悠著来',
+  '精彩即将呈现',
+  '努力加载中',
+  '让档案载一会儿',
   '美好事物，值得等待',
-  '拼命搬磚中',
+  '拼命搬砖中',
 ];
 
 class VideoListLoadingText extends StatefulWidget {

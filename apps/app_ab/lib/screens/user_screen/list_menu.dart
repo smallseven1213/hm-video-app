@@ -49,7 +49,7 @@ class ListMenuState extends State<ListMenu> {
             children: <Widget>[
               ListTile(
                   leading: const Icon(Icons.photo_library),
-                  title: const Text('相簿選擇'),
+                  title: const Text('相簿选择'),
                   onTap: () {
                     imgFromGallery(context);
                   }),
@@ -88,14 +88,14 @@ class ListMenuState extends State<ListMenu> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('權限不足'),
-            content: const Text('請允許訪問相機'),
+            title: const Text('权限不足'),
+            content: const Text('请允许访问相机'),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('確定'),
+                child: const Text('确定'),
               ),
             ],
           );
@@ -127,7 +127,7 @@ class ListMenuState extends State<ListMenu> {
         showConfirmDialog(
           context: context,
           title: '提示',
-          message: '登入失敗，用戶不存在。',
+          message: '登入失败，用户不存在。',
           showCancelButton: false,
           onConfirm: () {
             Navigator.of(context).pop();
@@ -142,7 +142,7 @@ class ListMenuState extends State<ListMenu> {
     return UserSettingMoreLinkConsumer(
       child: (quickLinks) {
         final items = quickLinks.map((Navigation item) {
-          if (item.name == '找回帳號') {
+          if (item.name == '找回帐号') {
             return ListMenuItem(
               name: item.name ?? '',
               icon: item.photoSid ?? '',
@@ -151,7 +151,7 @@ class ListMenuState extends State<ListMenu> {
                   showConfirmDialog(
                     context: context,
                     title: '提示',
-                    message: '請使用手機應用程式找回帳號',
+                    message: '请使用手机应用程式找回帐号',
                     showCancelButton: false,
                   );
                 } else {

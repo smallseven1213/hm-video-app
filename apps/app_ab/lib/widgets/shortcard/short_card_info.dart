@@ -149,7 +149,7 @@ class ShortCardInfo extends StatelessWidget {
                                             ),
                                           ),
                                           child: Text(
-                                            '升級觀看完整版 ${getTimeString(video.timeLength)}',
+                                            '升级观看完整版 ${getTimeString(video.timeLength)}',
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,
@@ -199,7 +199,7 @@ class ShortCardInfo extends StatelessWidget {
                                             ),
                                           ),
                                           child: Text(
-                                            '${video.buyPoint} 金幣購買完整版 ${getTimeString(video.timeLength)}',
+                                            '${video.buyPoint} 金币购买完整版 ${getTimeString(video.timeLength)}',
                                             style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12,

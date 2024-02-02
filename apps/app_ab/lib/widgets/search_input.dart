@@ -15,7 +15,7 @@ class SearchInput extends StatefulWidget {
     this.enableInteractiveSelection = true,
     this.onSearchButtonClick,
     this.backgroundColor = Colors.white,
-  }) // 新的回調
+  }) // 新的回调
   : super(key: key);
 
   final TextEditingController? controller;
