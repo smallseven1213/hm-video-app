@@ -25,7 +25,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          // 廣告封麵
+          // 广告封面
           AspectRatio(
             aspectRatio: imageRatio,
             child: Container(
@@ -75,13 +75,13 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
               ],
-              // 主標+副標
+              // 主标+副标
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // 主標
+                    // 主标
                     Text(
                       detail.title,
                       maxLines: 1,
@@ -91,7 +91,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                         color: AppColors.colors[ColorKeys.textPrimary],
                       ),
                     ),
-                    // 副標
+                    // 副标
                     // Text(
                     //   detail.titleSub ?? '',
                     //   maxLines: 1,
@@ -105,7 +105,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                 ),
               ),
               if (imageRatio == 374 / 198) ...[
-                // 下載按鈕
+                // 下载按钮
                 const SizedBox(width: 8),
                 Container(
                   width: 60,
@@ -117,7 +117,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                         color: Colors.yellow.shade700.withOpacity(0.6),
                         blurRadius: 5,
                       ),
-                    ], // 圓角大小
+                    ], // 圆角大小
                   ),
                   padding: const EdgeInsets.all(4),
                   child: const Row(
@@ -130,7 +130,7 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                       ),
                       SizedBox(width: 1),
                       Text(
-                        '立刻下載',
+                        '立刻下载',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 10,

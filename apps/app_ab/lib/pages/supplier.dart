@@ -162,7 +162,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: const ['短視頻', '長視頻'],
+      tabs: const ['短视频', '长视频'],
     );
   }
 

@@ -83,7 +83,7 @@ class _SideInfoState extends State<SideInfo> {
                       }
                     }),
                 const SizedBox(height: 20),
-                // 按讚
+                // 按赞
                 ShortVideoFavoriteCountConsumer(
                     videoId: widget.videoId,
                     tag: widget.tag,

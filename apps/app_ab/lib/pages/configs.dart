@@ -30,20 +30,20 @@ class ConfigsPage extends StatelessWidget {
           Icons.lock_open_outlined,
           size: 20,
         ),
-        text: '修改密碼',
+        text: '修改密码',
         onTap: () {
           MyRouteDelegate.of(context).push(AppRoutes.updatePassword);
         },
       ),
     ];
     return Scaffold(
-      appBar: const CustomAppBar(title: '設置'),
+      appBar: const CustomAppBar(title: '设置'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: UserInfoConsumer(child: (info, isVIP, isGuest) {
-          // 檢查是否為 guest，如果是則不顯示修改密碼的項目
+          // 检查是否为 guest，如果是则不显示修改密码的项目
           final displayedCellDataList = cellDataList.where((data) {
-            return data.text != '修改密碼' || !isGuest;
+            return data.text != '修改密码' || !isGuest;
           }).toList();
 
           return ListView.builder(

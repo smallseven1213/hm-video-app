@@ -116,7 +116,7 @@ class VodsState extends State<Vods> {
           },
           loadingWidget: const VideoListLoadingText(),
           loadingText: Text(
-            '內容已更新',
+            '内容已更新',
             style: TextStyle(
               fontSize: 13,
               color: AppColors.colors[ColorKeys.textSecondary],

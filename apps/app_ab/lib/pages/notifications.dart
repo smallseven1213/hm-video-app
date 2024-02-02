@@ -53,7 +53,7 @@ class NotificationsPageState extends State<NotificationsPage>
         appBar: CustomAppBar(
           title: '消息中心',
           bottom: TabBarWidget(
-              tabs: const ['公告', '系統通知'],
+              tabs: const ['公告', '系统通知'],
               dotIndexes: eventsController.hasUnRead.value ? [1] : [],
               controller: _tabController),
           actions: [
@@ -64,7 +64,7 @@ class NotificationsPageState extends State<NotificationsPage>
                       listEditorController.toggleEditing();
                     },
                     child: Text(
-                      listEditorController.isEditing.value ? '取消' : '編輯',
+                      listEditorController.isEditing.value ? '取消' : '编辑',
                       style: const TextStyle(color: Colors.white),
                     ))
           ],

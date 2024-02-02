@@ -43,7 +43,7 @@ class AppsScreen extends StatelessWidget {
                   child: SizedBox(height: 20),
                 ),
                 const SliverToBoxAdapter(
-                  child: Header(text: '熱門推薦'),
+                  child: Header(text: '热门推荐'),
                 ),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 20),

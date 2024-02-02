@@ -126,7 +126,7 @@ class SearchPageState extends State<SearchPage> {
                     .add(_searchController.text);
               },
               onTap: () {
-                // 處理點擊事件的邏輯，如果需要
+                // 处理点击事件的逻辑，如果需要
               },
               onSearchButtonClick: (value) {
                 var getSearchKeyword = _searchController.text.isEmpty
@@ -150,7 +150,7 @@ class SearchPageState extends State<SearchPage> {
         body: Stack(
           children: [
             searchKeyword == ''
-                // 預設的搜尋頁面
+                // 预设的搜寻页面
                 ? RecommandScreen(
                     onClickTag: (tag) {
                       setState(() {
@@ -161,13 +161,13 @@ class SearchPageState extends State<SearchPage> {
                       _searchController.text = tag;
                     },
                   )
-                // 點擊"文字搜尋結果"後呈現的影片列表
+                // 点击"文字搜寻结果"后呈现的影片列表
                 : SearchResultPage(
                     keyword: searchKeyword,
                     key: ValueKey(searchKeyword),
                   ),
             if (displaySearchResult)
-              // 文字搜尋結果
+              // 文字搜寻结果
               Container(
                 color: AppColors.colors[ColorKeys.background],
                 child: Padding(

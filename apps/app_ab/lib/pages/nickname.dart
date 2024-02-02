@@ -30,9 +30,9 @@ class NicknamePageState extends State<NicknamePage> {
 
   String? _validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入暱稱';
+      return '请输入暱称';
     }
-    // 可在此添加其他驗證邏輯
+    // 可在此添加其他验证逻辑
     return null;
   }
 
@@ -45,7 +45,7 @@ class NicknamePageState extends State<NicknamePage> {
       } catch (error) {
         showConfirmDialog(
           context: context,
-          title: '修改錯誤',
+          title: '修改错误',
           message: '',
           showCancelButton: false,
           onConfirm: () {
@@ -60,7 +60,7 @@ class NicknamePageState extends State<NicknamePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: '修改暱稱',
+        title: '修改暱称',
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -73,9 +73,9 @@ class NicknamePageState extends State<NicknamePage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '新暱稱',
+                      label: '新暱称',
                       controller: _accountController,
-                      placeholderText: '請輸入暱稱',
+                      placeholderText: '请输入暱称',
                       validator: _validateUsername,
                     ),
                   ],
@@ -85,7 +85,7 @@ class NicknamePageState extends State<NicknamePage> {
               SizedBox(
                 width: 200,
                 child: Button(
-                  text: '設置完成',
+                  text: '设置完成',
                   onPressed: () => _handleLogin(context),
                 ),
               ),

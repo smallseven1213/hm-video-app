@@ -24,17 +24,17 @@ class SharePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false, // HC: 煩死，勿動!!
+      onWillPop: () async => false, // HC: 烦死，勿动!!
       child: Scaffold(
         appBar: CustomAppBar(
-          title: '推廣分享',
+          title: '推广分享',
           actions: [
             TextButton(
               onPressed: () {
                 // share record
               },
               child: Text(
-                '推廣紀錄',
+                '推广纪录',
                 style: TextStyle(
                   color: AppColors.colors[ColorKeys.buttonTextPrimary],
                   fontSize: 14,
@@ -55,8 +55,8 @@ class SharePage extends StatelessWidget {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   border: Border.all(
-                    color: const Color(0xff5e5a5b), // 邊框顏色
-                    width: 15.0, // 邊框寬度
+                    color: const Color(0xff5e5a5b), // 边框颜色
+                    width: 15.0, // 边框宽度
                   ),
                 ),
                 child: const ContentAndButton(),
@@ -94,7 +94,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   // 2. Platform title
 
                   Text(
-                    '${promoteData.promotedMembers}人推廣',
+                    '${promoteData.promotedMembers}人推广',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.textPrimary],
                       fontWeight: FontWeight.w400,
@@ -104,7 +104,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
 
                   // 3. Info text
                   Text(
-                    '已推廣',
+                    '已推广',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.textSecondary],
                       fontWeight: FontWeight.w400,
@@ -130,7 +130,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ),
                       width: double.infinity,
                       child: Text(
-                        '邀請碼 ${promoteData.invitationCode}',
+                        '邀请码 ${promoteData.invitationCode}',
                         style: TextStyle(
                           color: AppColors.colors[ColorKeys.buttonBgPrimary],
                           fontWeight: FontWeight.w400,
@@ -157,7 +157,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   ),
                   const SizedBox(height: 25),
                   Button(
-                    text: '複製分享',
+                    text: '复制分享',
                     type: 'primary',
                     onPressed: () {
                       Clipboard.setData(ClipboardData(
@@ -165,7 +165,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text(
-                            '複製成功',
+                            '复制成功',
                             style: TextStyle(color: Colors.white),
                           ),
                         ),
@@ -182,10 +182,10 @@ class ContentAndButtonState extends State<ContentAndButton> {
                     ),
                     child: CaptureScreenshotButton(
                       buttonKey: _globalKey,
-                      successMessage: '已成功保存推廣卡',
+                      successMessage: '已成功保存推广卡',
                       child: Center(
                         child: Text(
-                          '截圖分享',
+                          '截图分享',
                           style: TextStyle(
                               color: AppColors
                                       .colors[ColorKeys.buttonTextSecondary]

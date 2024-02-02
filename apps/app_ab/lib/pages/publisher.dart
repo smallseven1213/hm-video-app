@@ -44,7 +44,7 @@ class VendorVideosPageState extends State<PublisherPage>
               ),
             )),
         bottom:
-            TabBarWidget(tabs: const ['最新', '最熱'], controller: _tabController),
+            TabBarWidget(tabs: const ['最新', '最热'], controller: _tabController),
       ),
       body: TabBarView(
         controller: _tabController,

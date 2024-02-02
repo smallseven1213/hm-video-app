@@ -39,7 +39,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
   bool hasError = false;
   bool isScreenLocked = false;
   Orientation orientation = Orientation.portrait;
-  bool isFirstLookForWeb = true; // 給web feature專用，如果是web都要檢查此值做些事情
+  bool isFirstLookForWeb = true; // 给web feature专用，如果是web都要检查此值做些事情
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
       setScreenLandScape();
     } else {
       setScreenPortrait();
-      // 五秒後偵測螢幕方向
+      // 五秒后侦测萤幕方向
       Future.delayed(const Duration(seconds: 2), () {
         setScreenRotation();
       });
@@ -75,10 +75,10 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
         MediaQueryData.fromWindow(WidgetsBinding.instance.window).orientation;
     // logger.i("@@@@@@@@@ didChangeMetrics: $_orientation");
     if (_orientation == Orientation.landscape) {
-      // 隱藏狀態欄
+      // 隐藏状态栏
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     } else {
-      // 顯示狀態欄
+      // 显示状态栏
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
         SystemUiOverlay.bottom,
         SystemUiOverlay.top,

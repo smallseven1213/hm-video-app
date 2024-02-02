@@ -64,7 +64,7 @@ class ChannelStyle5 extends StatelessWidget {
                       ),
                       SliverToBoxAdapter(
                         child: BlockHeader(
-                            text: '精選UP主',
+                            text: '精选UP主',
                             moreButton: GestureDetector(
                                 onTap: () => {
                                       MyRouteDelegate.of(context).push(
@@ -210,7 +210,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                                       .ellipsis,
                                                             ),
                                                           Text(
-                                                              '人氣:${data.supplier.followTimes}',
+                                                              '人气:${data.supplier.followTimes}',
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                           .colors[
