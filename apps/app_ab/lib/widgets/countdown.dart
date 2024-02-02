@@ -37,7 +37,7 @@ class CountdownState extends State<Countdown>
             borderRadius: BorderRadius.circular(60),
           ),
           child: Text(
-            widget.countdownSeconds == 0 ? '進入' : '${widget.countdownSeconds}S',
+            widget.countdownSeconds == 0 ? '进入' : '${widget.countdownSeconds}S',
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,

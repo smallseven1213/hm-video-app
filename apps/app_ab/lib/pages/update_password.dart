@@ -33,20 +33,20 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
 
   String? _validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入密碼';
+      return '请输入密码';
     }
     if (!RegExp(r'^[a-zA-Z0-9]{8,20}$').hasMatch(value)) {
-      return '密碼為8-20位字母及數字';
+      return '密码为8-20位字母及数字';
     }
     return null;
   }
 
   String? _validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入驗證密碼';
+      return '请输入验证密码';
     }
     if (value != _passwordController.text) {
-      return '驗證密碼不一致';
+      return '验证密码不一致';
     }
     return null;
   }
@@ -63,7 +63,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text(
-                '已成功保存密碼',
+                '已成功保存密码',
                 style: TextStyle(
                   color: Colors.white,
                 ),
@@ -74,8 +74,8 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         } else {
           showConfirmDialog(
             context: context,
-            title: '密碼錯誤',
-            message: '原密碼錯誤',
+            title: '密码错误',
+            message: '原密码错误',
             showCancelButton: false,
             onConfirm: () {
               Navigator.of(context).pop();
@@ -86,8 +86,8 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         logger.i(error);
         showConfirmDialog(
           context: context,
-          title: '密碼錯誤',
-          message: '原密碼錯誤',
+          title: '密码错误',
+          message: '原密码错误',
           showCancelButton: false,
           onConfirm: () {
             Navigator.of(context).pop();
@@ -101,7 +101,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomAppBar(
-        title: '修改密碼',
+        title: '修改密码',
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -114,25 +114,25 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                 child: Column(
                   children: [
                     AuthTextField(
-                      label: '原密碼',
+                      label: '原密码',
                       obscureText: true,
                       controller: _originPasswordController,
-                      placeholderText: '請輸入原密碼',
+                      placeholderText: '请输入原密码',
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '新密碼',
+                      label: '新密码',
                       obscureText: true,
                       controller: _passwordController,
-                      placeholderText: '請輸入密碼',
+                      placeholderText: '请输入密码',
                       validator: _validatePassword,
                     ),
                     const SizedBox(height: 10),
                     AuthTextField(
-                      label: '驗證密碼',
+                      label: '验证密码',
                       obscureText: true,
                       controller: _confirmPasswordController,
-                      placeholderText: '請輸入驗證密碼',
+                      placeholderText: '请输入验证密码',
                       validator: _validateConfirmPassword,
                     ),
                   ],
@@ -146,7 +146,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
                   children: [
                     Expanded(
                       child: Button(
-                        text: '確認修改',
+                        text: '确认修改',
                         type: 'secondary',
                         onPressed: () {
                           _handleUpdatePassword(context);

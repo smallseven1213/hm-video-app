@@ -25,8 +25,8 @@ class SystemScreen extends StatelessWidget {
     var selectedIds = listEditorController.selectedIds.toList();
     showConfirmDialog(
       context: context,
-      title: '是否刪除',
-      message: '是否刪除勾選項目',
+      title: '是否删除',
+      message: '是否删除勾选项目',
       onConfirm: () => {
         eventsController.deleteEvents(selectedIds),
         listEditorController.removeBoundData(selectedIds),

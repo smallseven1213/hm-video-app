@@ -4,7 +4,7 @@ enum SideControlsType { none, sound, brightness }
 
 enum ChargeType {
   none,
-  free, // 1: 免費
-  coin, // 2: 金幣
+  free, // 1: 免费
+  coin, // 2: 金币
   vip, // 3: VIP
 }

@@ -8,7 +8,7 @@ Future<bool?> showConfirmDialog({
   required BuildContext context,
   String? title,
   String? message,
-  String confirmButtonText = '確定',
+  String confirmButtonText = '确定',
   String cancelButtonText = '取消',
   Function? onConfirm,
   Function? onCancel,
@@ -63,7 +63,7 @@ Future<bool?> showConfirmDialog({
                         : const SizedBox.shrink(),
                   ),
                 ),
-                // 以下是按鈕區
+                // 以下是按钮区
                 SizedBox(
                   height: 80,
                   child: Padding(

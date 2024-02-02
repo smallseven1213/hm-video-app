@@ -12,7 +12,7 @@ import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
 import '../widgets/list_page_panel.dart';
 
-const tabs = ['長視頻', '短視頻', '演員'];
+const tabs = ['长视频', '短视频', '演员'];
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -86,14 +86,14 @@ class FavoritesPageState extends State<FavoritesPage>
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: '我的喜歡',
+          title: '我的喜欢',
           actions: [
             Obx(() => TextButton(
                 onPressed: () {
                   listEditorController.toggleEditing();
                 },
                 child: Text(
-                  listEditorController.isEditing.value ? '取消' : '編輯',
+                  listEditorController.isEditing.value ? '取消' : '编辑',
                   style: const TextStyle(color: Colors.white),
                 )))
           ],
