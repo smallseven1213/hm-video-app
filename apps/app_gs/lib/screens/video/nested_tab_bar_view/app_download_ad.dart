@@ -120,28 +120,30 @@ class AppDownloadAdState extends State<AppDownloadAd> {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8.0)),
                               ),
-                              child: Padding(  padding:
+                              child: Padding(
+                                padding:
                                     const EdgeInsets.symmetric(horizontal: 8.0),
                                 child: IntrinsicWidth(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    const Icon(
-                                      Icons.download,
-                                      color: Color(0xffffffff),
-                                      size: 16,
-                                    ),
-                                    Text(
-                                      I18n.immediateDownload,
-                                      style: const TextStyle(
-                                        fontSize: 12,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(
+                                        Icons.download,
                                         color: Color(0xffffffff),
+                                        size: 16,
                                       ),
-                                    ),
-                                  ],
+                                      Text(
+                                        I18n.immediateDownload,
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                          color: Color(0xffffffff),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
+                            )
                           ],
                         ),
                       ],

@@ -144,12 +144,24 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
             : ShortVideoPreviewWidget(
                 id: id,
                 displayCoverVertical: true,
+                film: film,
                 coverVertical: coverVertical,
                 coverHorizontal: coverHorizontal,
                 timeLength: timeLength,
                 tags: tags,
                 imageRatio: 128 / 173,
-                title: title),
+                title: title,
+                hasTags: hasTags,
+                hasTitle: hasTitle,
+                hasRadius: hasRadius,
+                videoViewTimes: videoViewTimes,
+                videoCollectTimes: videoCollectTimes,
+                hasTapEvent: !isEditing,
+                displayVideoTimes: displayVideoTimes,
+                displayViewTimes: displayViewTimes,
+                displayVideoCollectTimes: displayVideoCollectTimes,
+                onOverrideRedirectTap: onOverrideRedirectTap,
+              ),
         if (isEditing)
           Positioned.fill(
             child: GestureDetector(
