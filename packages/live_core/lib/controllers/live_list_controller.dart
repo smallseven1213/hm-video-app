@@ -58,6 +58,7 @@ class LiveListController extends GetxController {
       chargeType: chargeType.value.index,
       status: status.value.index,
       ranking: sortType.value,
+      followType: followType.value.index,
     );
     roomsWithoutFilter.value = res;
     filterRoomsByTagId();
@@ -75,20 +76,6 @@ class LiveListController extends GetxController {
   Room? getRoomById(int id) => rooms.firstWhereOrNull((room) => room.id == id);
   Room? getRoomByStreamerId(int streamerId) =>
       rooms.firstWhereOrNull((room) => room.streamerId == streamerId);
-
-  void filterVideosByFollowedStreamers({
-    FollowType? filterFollowType,
-    List<Streamer>? follows,
-  }) {
-    followType.value = filterFollowType ?? followType.value;
-    if (follows != null) {
-      Set<int> followedStreamerIds =
-          follows.map((streamer) => streamer.id).toSet();
-      rooms.value = rooms
-          .where((video) => followedStreamerIds.contains(video.streamerId))
-          .toList();
-    }
-  }
 
   void startAutoRefresh() {
     _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {

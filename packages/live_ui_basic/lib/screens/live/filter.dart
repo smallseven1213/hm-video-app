@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
-import 'package:live_core/controllers/user_follows_controller.dart';
 import 'package:live_core/models/room.dart';
-import 'package:live_core/models/streamer.dart';
 
 class Option {
   final String name;
@@ -88,15 +86,7 @@ class FilterGroup extends StatelessWidget {
     } else if (name == 'status') {
       liveListController.setStatus(option.value);
     } else if (name == 'follow') {
-      final userFollowsController = Get.find<UserFollowsController>();
-      List<Streamer>? followedList = option.value == FollowType.followed
-          ? userFollowsController.follows
-          : null;
-
-      liveListController.filterVideosByFollowedStreamers(
-        follows: followedList,
-        filterFollowType: option.value,
-      );
+      liveListController.setFollowType(option.value);
     }
   }
 

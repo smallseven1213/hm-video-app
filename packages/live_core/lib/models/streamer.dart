@@ -21,7 +21,7 @@ class Streamer {
 
   factory Streamer.fromJson(Map<String, dynamic> json) {
     return Streamer(
-      id: getField<int>(json, 'streamer_id', defaultValue: 0),
+      id: getField<int>(json, 'id', defaultValue: 0),
       nickname: getField<String>(json, 'nickname', defaultValue: ''),
       avatar: getField<String>(json, 'avatar', defaultValue: ''),
       createdAt: getField<String>(json, 'created_at', defaultValue: ''),
