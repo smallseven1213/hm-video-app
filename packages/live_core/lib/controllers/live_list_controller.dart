@@ -78,9 +78,9 @@ class LiveListController extends GetxController {
       rooms.firstWhereOrNull((room) => room.streamerId == streamerId);
 
   void startAutoRefresh() {
-    _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
-      fetchData();
-    });
+    // _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
+    //   fetchData();
+    // });
   }
 
   void autoRefreshCancel() {
