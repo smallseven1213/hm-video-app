@@ -172,15 +172,13 @@ class LiveApi {
     return parsedResponse;
   }
 
-  Future<LiveApiResponseBase<bool>> sendGift(int gid, double amount) async {
+  Future<LiveApiResponseBase<bool>> sendGift(
+      int gid, double amount, int quantity) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
       url: '$liveApiHost/gift',
       method: 'POST',
-      body: {
-        'gid': gid,
-        'amount': amount,
-      },
+      body: {'gid': gid, 'amount': amount, 'quantity': quantity},
     );
 
     LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(
