@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -13,35 +12,48 @@ class PlayerLayout extends StatefulWidget {
 
 class _PlayerLayoutState extends State<PlayerLayout> {
   late VideoPlayerController videoController;
-  bool hasError = false; // Flag to indicate if there's an error
+  bool hasError = false;
 
   @override
   void initState() {
     super.initState();
-    videoController = VideoPlayerController.networkUrl(widget.uri)
-      ..initialize().then((_) {
-        setState(() {});
-      }).catchError((error) {
-        // Handle initialization error
-        setState(() {
-          hasError = true;
-        });
-      });
+    initializeVideoPlayer();
+  }
+
+  void initializeVideoPlayer() {
+    videoController =
+        VideoPlayerController.networkUrl(Uri.parse(widget.uri.toString()))
+          ..initialize().then((_) {
+            if (mounted) {
+              setState(() {
+                hasError = false;
+              });
+              videoController.play();
+            }
+          }).catchError((error) {
+            if (mounted) {
+              setState(() {
+                hasError = true;
+              });
+              handleVideoError();
+            }
+          });
 
     videoController.addListener(() {
       if (videoController.value.hasError) {
-        // Update state if there's an error during video playback
         setState(() {
           hasError = true;
         });
+        handleVideoError();
       }
     });
+  }
 
-    // if UI ready, then play
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!hasError) {
-        videoController.play();
-        setState(() {});
+  void handleVideoError() {
+    Future.delayed(const Duration(seconds: 3), () {
+      if (mounted) {
+        // 重新初始化視頻播放器
+        initializeVideoPlayer();
       }
     });
   }
@@ -59,35 +71,18 @@ class _PlayerLayoutState extends State<PlayerLayout> {
         color: Colors.black,
         alignment: Alignment.center,
         child: const Text(
-          'Error loading video',
+          'Error loading video. Attempting to reconnect...',
           style: TextStyle(color: Colors.white),
         ),
       );
     }
-    if (kIsWeb) {
-      return Container(
-        alignment: Alignment.center,
-        color: Colors.black,
-        child: VideoPlayer(videoController),
-      );
-    }
+
     return Container(
       color: Colors.black,
       alignment: Alignment.center,
-      child: OverflowBox(
-        minWidth: 0.0,
-        minHeight: 0.0,
-        maxWidth: double.infinity,
-        maxHeight: double.infinity,
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: SizedBox(
-            width: videoController.value.size.width,
-            height: videoController.value.size.height,
-            child: VideoPlayer(videoController),
-          ),
-        ),
-      ),
+      child: videoController.value.isInitialized
+          ? VideoPlayer(videoController)
+          : const CircularProgressIndicator(),
     );
   }
 }
