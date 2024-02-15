@@ -1,8 +1,8 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 
 import '../../utils/show_confirm_dialog.dart';
-import '../config/colors.dart';
 
 class ForgotPasswordButton extends StatelessWidget {
   const ForgotPasswordButton({Key? key}) : super(key: key);

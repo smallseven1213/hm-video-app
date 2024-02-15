@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 
+import 'package:app_wl_tw1/screens/main_screen/block_header.dart';
+import 'package:app_wl_tw1/widgets/sliver_vod_list.dart';
+
 import '../../../widgets/list_no_more.dart';
-import '../../../widgets/sliver_vod_list.dart';
-import '../../main_screen/block_header.dart';
 import 'video_actor.dart';
 import 'app_download_ad.dart';
 import 'banner.dart';
-import 'video_actions.dart';
 import 'video_info.dart';
 
 final logger = Logger();
@@ -58,23 +59,8 @@ class NestedTabBarViewState extends State<NestedTabBarView>
                     actor: widget.videoDetail.actors,
                     publisher: widget.videoDetail.publisher,
                     viewTimes: widget.videoDetail.videoViewTimes ?? 0,
+                    videoDetail: widget.videoDetail,
                   )),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
-                child: VideoActions(
-                  videoDetail: Vod(
-                    widget.videoDetail.id,
-                    widget.videoDetail.title,
-                    coverHorizontal: widget.videoDetail.coverHorizontal!,
-                    coverVertical: widget.videoDetail.coverVertical!,
-                    timeLength: widget.videoDetail.timeLength!,
-                    tags: widget.videoDetail.tags!,
-                    videoViewTimes: widget.videoDetail.videoViewTimes!,
-                  ),
-                ),
-              ),
             ),
             const SliverToBoxAdapter(
               child: Padding(

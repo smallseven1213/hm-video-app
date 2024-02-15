@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_popular_controller.dart';
@@ -9,7 +10,6 @@ import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.da
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-import '../../../config/colors.dart';
 import '../../../widgets/actor_avatar.dart';
 import '../../../widgets/video_preview.dart';
 import '../block_header.dart';
@@ -40,7 +40,7 @@ class ChannelStyle5 extends StatelessWidget {
       child: (({required bool displaySearchBar}) {
         return Padding(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top +
+                top: MediaQuery.paddingOf(context).top +
                     (displaySearchBar ? 90 : 50)),
             child: ChannelProvider(
                 channelId: channelId,

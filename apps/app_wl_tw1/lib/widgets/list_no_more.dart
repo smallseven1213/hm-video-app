@@ -1,9 +1,8 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
 import 'package:shared/models/color_keys.dart';
-
-import '../config/colors.dart';
 
 class ListNoMore extends StatelessWidget {
   ListNoMore({Key? key}) : super(key: key);

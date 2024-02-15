@@ -1,3 +1,5 @@
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/widgets/channel_area_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';
@@ -14,7 +16,6 @@ import 'package:shared/widgets/video_block_template/block_5.dart';
 import 'package:shared/widgets/video_block_template/block_6.dart';
 import 'package:shared/widgets/video_block_template/block_7.dart';
 
-import '../../widgets/channel_area_banner.dart';
 import '../../widgets/video_block_footer.dart';
 import '../../widgets/video_preview.dart';
 

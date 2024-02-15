@@ -1,9 +1,12 @@
 import 'package:logger/logger.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
+import 'package:app_wl_tw1/screens/home/home_apps.dart';
+import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
+
+import 'package:flutter/material.dart';
 import 'package:game/screens/lobby.dart';
 import 'package:game/widgets/game_startup.dart';
+import 'package:get/get.dart';
 
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
@@ -13,11 +16,9 @@ import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
-import '../screens/home/home_apps.dart';
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
-import '../screens/video/video_player_area/flash_loading.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();
@@ -73,7 +74,7 @@ class HomeState extends State<HomePage> {
             {required String activeKey,
             required List<Navigation> navigatorItems,
             required Function(String tabKey) changeTabKey}) {
-          final paddingBottom = MediaQuery.of(context).padding.bottom;
+          final paddingBottom = MediaQuery.paddingOf(context).bottom;
           return Stack(
             children: [
               Obx(() {

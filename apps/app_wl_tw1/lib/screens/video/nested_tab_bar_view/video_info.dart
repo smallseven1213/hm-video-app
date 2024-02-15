@@ -1,3 +1,6 @@
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/screens/video/nested_tab_bar_view/video_collect.dart';
+import 'package:app_wl_tw1/screens/video/nested_tab_bar_view/video_favorite.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
@@ -8,8 +11,6 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/title.dart';
-
-import '../../../config/colors.dart';
 
 final logger = Logger();
 
@@ -22,6 +23,7 @@ class VideoInfo extends StatelessWidget {
   final List<Actor>? actor;
   final Publisher? publisher;
   final ObservableVideoPlayerController? videoPlayerController;
+  final Vod videoDetail;
 
   const VideoInfo({
     super.key,
@@ -33,6 +35,7 @@ class VideoInfo extends StatelessWidget {
     this.actor,
     this.externalId,
     this.publisher,
+    required this.videoDetail,
   });
 
   @override
@@ -51,75 +54,42 @@ class VideoInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              if (publisher != null || (actor != null && actor!.isNotEmpty))
+              if (publisher != null)
                 Expanded(
-                  flex: 3,
-                  child: Row(
-                    children: [
-                      if (publisher != null) ...[
-                        GestureDetector(
-                          onTap: () async {
-                            videoPlayerController!.pause();
-                            await MyRouteDelegate.of(context).push(
-                              AppRoutes.publisher,
-                              args: {
-                                'id': publisher!.id,
-                                'title': publisher!.name
-                              },
-                              removeSamePath: true,
-                            );
-                            videoPlayerController!.play();
-                          },
-                          child: Text(
-                            publisher!.name,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color(0xffC7C3C3),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 16,
-                        )
-                      ],
-                      if (actor != null && actor!.isNotEmpty)
-                        GestureDetector(
-                          onTap: () async {
-                            videoPlayerController!.pause();
-                            await MyRouteDelegate.of(context).push(
-                              AppRoutes.actor,
-                              args: {
-                                'id': actor![0].id,
-                                'title': actor![0].name
-                              },
-                              removeSamePath: true,
-                            );
-                            videoPlayerController!.play();
-                          },
-                          child: Text(
-                            actor![0].name,
-                            style: const TextStyle(
-                              fontSize: 12,
-                              color: Color(0xffC7C3C3),
-                            ),
-                          ),
-                        ),
-                    ],
+                  flex: 1,
+                  child: GestureDetector(
+                    onTap: () async {
+                      videoPlayerController!.pause();
+                      await MyRouteDelegate.of(context).push(
+                        AppRoutes.publisher,
+                        args: {'id': publisher!.id, 'title': publisher!.name},
+                        removeSamePath: true,
+                      );
+                      videoPlayerController!.play();
+                    },
+                    child: Text(
+                      publisher!.name,
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: AppColors.colors[ColorKeys.textVideoInfoDetail],
+                      ),
+                    ),
                   ),
                 ),
-              // const Spacer(),
               Expanded(
-                  flex: 2,
+                  flex: 4,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ViewTimes(
                         times: viewTimes,
-                        color: const Color(0xffC7C3C3),
+                        color: AppColors.colors[ColorKeys.textVideoInfoDetail],
                       ),
+                      VideoFavorite(videoDetail: videoDetail),
+                      VideoCollect(videoDetail: videoDetail),
                       VideoTime(
                         time: timeLength,
-                        color: const Color(0xffC7C3C3),
+                        color: AppColors.colors[ColorKeys.textVideoInfoDetail],
                         hasIcon: true,
                       ),
                     ],

@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,6 @@ import '../../../widgets/tab_bar.dart';
 import '../../../widgets/wave_loading.dart';
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
-import '../../video/video_player_area/flash_loading.dart';
 import '../channel_jingang_area_title.dart';
 import '../reload_button.dart';
 import 'tags.dart';

@@ -27,7 +27,7 @@ class ChannelJingangArea extends StatelessWidget {
         if (jingang.jingangStyle == JingangStyle.single.index) {
           return SliverToBoxAdapter(
             child: SizedBox(
-              height: MediaQuery.of(context).size.width * 0.26,
+              height: MediaQuery.sizeOf(context).width * 0.26,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: jingang.jingangDetail?.length ?? 0,

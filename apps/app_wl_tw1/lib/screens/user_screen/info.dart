@@ -11,7 +11,7 @@ import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../config/colors.dart';
+import 'package:app_wl_tw1/config/colors.dart';
 import '../../widgets/avatar.dart';
 
 final logger = Logger();

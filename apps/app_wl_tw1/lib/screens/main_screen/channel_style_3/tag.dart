@@ -1,11 +1,10 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
-
-import '../../../config/colors.dart';
 
 class TagWidget extends StatelessWidget {
   final int id;

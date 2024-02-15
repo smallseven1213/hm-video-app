@@ -92,7 +92,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
             return;
           }
           double dragPercentage = details.delta.dx /
-              (MediaQuery.of(context).size.width * 0.3); // 计算滑动距离占屏幕宽度的比例
+              (MediaQuery.sizeOf(context).width * 0.3); // 计算滑动距离占屏幕宽度的比例
           int newPositionSeconds = widget.videoPlayerInfo.videoPosition +
               (dragPercentage * widget.videoPlayerInfo.videoDuration)
                   .toInt(); // 使用滑动比例来更新视频位置
@@ -168,7 +168,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
             Positioned(
               bottom: 0,
               child: SizedBox(
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery.sizeOf(context).width,
                 child: Row(
                   children: [
                     IconButton(
@@ -239,7 +239,7 @@ class ControlsOverlayState extends State<FullScreenControls> {
             //       widget.pageviewIndexController.toggleFullscreen(),
             // ),
             Positioned(
-              top: 0 + MediaQuery.of(context).padding.top,
+              top: 0 + MediaQuery.paddingOf(context).top,
               left: 0,
               child: SizedBox(
                 width: kToolbarHeight, // width of the AppBar's leading area

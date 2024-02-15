@@ -1,12 +1,11 @@
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/widgets/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
-
-import '../../config/colors.dart';
-import '../../widgets/id_card.dart';
 
 class GridMenuItem {
   final String name;
