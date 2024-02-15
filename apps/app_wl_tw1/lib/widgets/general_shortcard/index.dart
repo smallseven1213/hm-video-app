@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import '../../screens/video/video_player_area/flash_loading.dart';
 import '../shortcard/index.dart';
 import '../shortcard/short_card_info.dart';
 import 'short_bottom_area.dart';
@@ -63,7 +63,8 @@ class GeneralShortCardState extends State<GeneralShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.tag,
+            key: Key(widget.videoUrl),
+            tag: widget.videoUrl,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -78,6 +79,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             ),
             loadingWidget: const Center(child: FlashLoading()),
             child: (isReady) => ShortCard(
+              key: Key(widget.tag),
               index: widget.index,
               tag: widget.tag,
               isActive: widget.isActive,
@@ -86,6 +88,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
+              videoUrl: widget.videoUrl,
             ),
           ),
           Obx(
@@ -108,12 +111,13 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
+                                  videoUrl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
                                 )
                               : const SizedBox.shrink(),
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 15),
                           ShortBottomArea(
                             tag: widget.tag,
                             shortData: widget.shortData,

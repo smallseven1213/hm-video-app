@@ -1,15 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 
-import '../../config/colors.dart';
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/widgets/id_card.dart';
+
 import '../../widgets/header.dart';
 import '../../utils/show_confirm_dialog.dart';
-import '../../widgets/id_card.dart';
 
 import 'banner.dart';
 import 'grid_menu.dart';
@@ -57,7 +59,7 @@ class UserScreenState extends State<UserScreen> {
               SliverToBoxAdapter(
                 child: Container(
                   color: AppColors.colors[ColorKeys.primary],
-                  height: MediaQuery.of(context).padding.top,
+                  height: MediaQuery.paddingOf(context).top,
                 ),
               ),
               const SliverToBoxAdapter(
@@ -112,7 +114,7 @@ class UserScreenState extends State<UserScreen> {
                     child: Text(
                       '版本號:${systemConfigController.version.value}',
                       style: TextStyle(
-                          color: AppColors.colors[ColorKeys.primary],
+                          color: AppColors.colors[ColorKeys.textPrimary],
                           fontSize: 12),
                     ),
                   ),

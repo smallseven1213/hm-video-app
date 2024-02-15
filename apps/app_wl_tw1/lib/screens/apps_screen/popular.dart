@@ -1,11 +1,10 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/ads_api.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../config/colors.dart';
 
 class PopularWidget extends StatelessWidget {
   final List<Ads> items;

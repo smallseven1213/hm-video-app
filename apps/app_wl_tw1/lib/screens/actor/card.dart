@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +11,6 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shimmer/shimmer.dart';
 
-import '../../config/colors.dart';
 import '../../widgets/actor_avatar.dart';
 
 class ActorCard extends SliverPersistentHeaderDelegate {
@@ -24,7 +24,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
 
   @override
   double get minExtent {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double statusBarHeight = MediaQuery.paddingOf(context).top;
     return kToolbarHeight + statusBarHeight;
   }
 
@@ -41,7 +41,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
     final double fontSize = lerpDouble(14, 15, percentage)!;
 
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
     final textPainter = TextPainter(
       text: TextSpan(
         text: actor.name,
@@ -52,7 +52,7 @@ class ActorCard extends SliverPersistentHeaderDelegate {
     );
     textPainter.layout();
     final textWidth = textPainter.width;
-    final systemTopBarHeight = MediaQuery.of(context).padding.top;
+    final systemTopBarHeight = MediaQuery.paddingOf(context).top;
     final leftPadding = (screenWidth - imageSize - textWidth - 8) / 2;
 
     return Container(

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/actor_region_controller.dart';
 import 'package:shared/controllers/actors_controller.dart';
 
-import '../../widgets/tab_bar.dart';
+import 'package:app_wl_tw1/widgets/tab_bar.dart';
 
 class ActorsTabBar extends StatefulWidget {
   const ActorsTabBar({Key? key}) : super(key: key);

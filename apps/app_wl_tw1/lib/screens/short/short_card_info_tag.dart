@@ -1,5 +1,7 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/color_keys.dart';
 
 class ShortCardInfoTag extends StatelessWidget {
   const ShortCardInfoTag({Key? key, required this.name}) : super(key: key);

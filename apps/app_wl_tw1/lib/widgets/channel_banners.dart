@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app_wl_tw1/widgets/carousel.dart';
 import 'package:shared/modules/channel/channel_banners_consumer.dart';
-
-import 'carousel.dart';
 
 class ChannelBanners extends StatelessWidget {
   final int channelId;

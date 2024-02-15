@@ -1,3 +1,5 @@
+import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
+import 'package:app_wl_tw1/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -8,9 +10,7 @@ import 'package:shared/enums/list_editor_category.dart';
 import '../screens/favorites/short.dart';
 import '../screens/favorites/video.dart';
 import '../screens/favorites/actor.dart';
-import '../widgets/custom_app_bar.dart';
 import '../widgets/list_page_panel.dart';
-import '../widgets/tab_bar.dart';
 
 const tabs = ['長視頻', '短視頻', '演員'];
 

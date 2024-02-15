@@ -1,11 +1,10 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
-
-import '../config/colors.dart';
 
 class VideoEmbeddedAdWidget extends StatelessWidget {
   final Vod detail;

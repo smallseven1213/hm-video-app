@@ -10,11 +10,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_promo_consumer.dart';
 
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/widgets/button.dart';
 import 'package:shared/widgets/capture_screenshot_button.dart';
-
-import '../config/colors.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/button.dart';
+import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 final logger = Logger();

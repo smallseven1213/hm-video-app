@@ -1,11 +1,10 @@
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-
-import '../config/colors.dart';
-import '../widgets/custom_app_bar.dart';
 
 class CellData {
   final Widget image;

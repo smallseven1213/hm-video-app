@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_controller.dart';
@@ -9,7 +10,6 @@ import 'package:shared/models/supplier.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-import '../../config/colors.dart';
 import '../../widgets/actor_avatar.dart';
 
 class SupplierCard extends StatefulWidget {
@@ -62,7 +62,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   double get minExtent {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
+    final double statusBarHeight = MediaQuery.paddingOf(context).top;
     return kToolbarHeight + statusBarHeight;
   }
 
@@ -81,7 +81,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
     final double fontSize = lerpDouble(18, 15, percentage)!;
 
-    final screenWidth = MediaQuery.of(context).size.width;
+    final screenWidth = MediaQuery.sizeOf(context).width;
     final textPainter = TextPainter(
       text: TextSpan(
         text: supplier.aliasName ?? '--',
@@ -92,7 +92,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
     );
     textPainter.layout();
     final textWidth = textPainter.width;
-    final systemTopBarHeight = MediaQuery.of(context).padding.top;
+    final systemTopBarHeight = MediaQuery.paddingOf(context).top;
     final leftPadding = (screenWidth - imageSize - textWidth - 8) / 2;
     final bool hasDescription =
         supplier.description != null && supplier.description!.isNotEmpty;

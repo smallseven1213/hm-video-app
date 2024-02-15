@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -11,7 +12,6 @@ import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 
-import '../config/colors.dart';
 import 'video_embedded_ad.dart';
 
 class ViewInfo extends StatelessWidget {

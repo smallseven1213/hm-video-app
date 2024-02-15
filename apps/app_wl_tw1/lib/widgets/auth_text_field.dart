@@ -1,6 +1,6 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
-import '../config/colors.dart';
 import 'auth_text_field_suffixicon.dart';
 
 class AuthTextField extends StatefulWidget {

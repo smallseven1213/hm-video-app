@@ -1,16 +1,17 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
 import 'package:shared/modules/main_layout/layout_style_tab_bg_consumer.dart';
 
-import '../video/video_player_area/flash_loading.dart';
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/screens/main_screen/channels.dart';
+import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
+
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
-import 'channels.dart';
-import '../../config/colors.dart';
 
 class HomeMainScreen extends StatelessWidget {
   final int layoutId;
@@ -46,7 +47,7 @@ class HomeMainScreen extends StatelessWidget {
                             color: needTabBgColor
                                 ? AppColors.colors[ColorKeys.primary]
                                 : Colors.transparent,
-                            height: MediaQuery.of(context).padding.top,
+                            height: MediaQuery.paddingOf(context).top,
                           )),
                     ),
                     DisplayLayoutTabSearchConsumer(
@@ -72,7 +73,7 @@ class HomeMainScreen extends StatelessWidget {
                                   ),
                                 )),
                           )
-                        : const SizedBox.shrink())
+                        : const SizedBox.shrink()),
                   ],
                 )),
               ],

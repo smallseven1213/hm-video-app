@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,14 +13,14 @@ import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.da
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/refresh_list.dart';
 
-import '../../../config/colors.dart';
-import '../../../widgets/button.dart';
+import 'package:app_wl_tw1/widgets/button.dart';
+import 'package:app_wl_tw1/widgets/reload_button.dart';
+import 'package:app_wl_tw1/widgets/video_list_loading_text.dart';
+
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../../../widgets/channel_skelton.dart';
 import '../../../widgets/header.dart';
-import '../../../widgets/reload_button.dart';
-import '../../../widgets/video_list_loading_text.dart';
 import '../videoblock.dart';
 
 final logger = Logger();
@@ -67,7 +68,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
         child: (({required bool displaySearchBar}) {
           return Padding(
             padding: EdgeInsets.only(
-                top: MediaQuery.of(context).padding.top +
+                top: MediaQuery.paddingOf(context).top +
                     (displaySearchBar ? 90 : 50)),
             child: Obx(() {
               ChannelInfo? channelData =
@@ -186,7 +187,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                   const Positioned.fill(
                                     child: Image(
                                       image: AssetImage(
-                                          'assets/images/channel_more_button.webp'),
+                                          'assets/images/channel_more_button.png'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),

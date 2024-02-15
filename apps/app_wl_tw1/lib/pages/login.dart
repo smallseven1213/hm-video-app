@@ -7,12 +7,13 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/login/login_scaffold.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../config/colors.dart';
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
+import 'package:app_wl_tw1/widgets/forgot_password_button.dart';
+
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
-import '../widgets/custom_app_bar.dart';
-import '../widgets/forgot_password_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
