@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({Key? key}) : super(key: key);
@@ -51,6 +52,17 @@ class SearchWidget extends StatelessWidget {
             height: 30,
           ),
         ),
+        const SizedBox(width: 10),
+        InkWell(
+          onTap: () => launch(
+              "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2",
+              webOnlyWindowName: '_blank'),
+          child: const Icon(
+            Icons.support_agent_rounded,
+            size: 25,
+            color: Color(0xFF5a6077),
+          ),
+        )
       ],
     );
   }
