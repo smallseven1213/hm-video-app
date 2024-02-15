@@ -34,10 +34,15 @@ class _PlayerLayoutState extends State<PlayerLayout> {
         setState(() {
           hasError = true;
         });
+        Future.delayed(Duration(seconds: 5), () {
+          if (mounted && hasError) {
+            videoController.play();
+            setState(() {});
+          }
+        });
       }
     });
 
-    // if UI ready, then play
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!hasError) {
         videoController.play();
