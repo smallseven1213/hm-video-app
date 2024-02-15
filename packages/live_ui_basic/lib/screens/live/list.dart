@@ -1,14 +1,10 @@
-import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
-import 'package:live_core/socket/live_web_socket_manager.dart';
-import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:live_ui_basic/screens/live/room_item.dart';
 import 'package:live_ui_basic/widgets/no_result.dart';
 import 'package:live_core/widgets/room_list_provider.dart';
-import 'package:get_storage/get_storage.dart';
 
 class LiveList extends StatefulWidget {
   const LiveList({Key? key}) : super(key: key);
@@ -35,7 +31,6 @@ class _LiveListState extends State<LiveList> {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: RoomListProvider(
-        // chatToken: GetStorage().read('live-token'),
         child: Obx(() {
           if (_controller.rooms.isEmpty) {
             return const NoResult(); // 或者顯示一個加載中的指示器

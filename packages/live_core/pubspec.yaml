@@ -16,7 +16,7 @@ dependencies:
   hive: ^2.2.3
   shared:
     path: ../../packages/shared
-  socket_io_client: ^2.0.3+1
+  socket_io_client: ^1.0.0
   web_socket_channel: ^2.4.0
 
 dev_dependencies:

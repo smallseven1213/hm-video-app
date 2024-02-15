@@ -56,7 +56,6 @@ class RoomItem extends StatelessWidget {
     return InkWell(
       onTap: () async {
         bool updateRoomList = false;
-        _controller.autoRefreshCancel();
         if (room.status == RoomStatus.ended.index) {
           showLiveDialog(
             context,
@@ -81,7 +80,6 @@ class RoomItem extends StatelessWidget {
 
         if (updateRoomList) {
           _controller.fetchData();
-          _controller.startAutoRefresh();
         }
       },
       child: Container(

@@ -1,15 +1,14 @@
-import 'package:get_storage/get_storage.dart';
+import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 import '../socket/live_web_socket_manager.dart';
 
 class RoomListProvider extends StatefulWidget {
-  // final String chatToken;
   final Widget child;
 
   const RoomListProvider({
     super.key,
-    // required this.chatToken,
     required this.child,
   });
 
@@ -19,20 +18,32 @@ class RoomListProvider extends StatefulWidget {
 
 class _RoomListProviderState extends State<RoomListProvider> {
   late LiveSocketIOManager socketIOManager;
+  String? latestMessage;
+  late StreamSubscription _messageSubscription;
 
   @override
   void initState() {
     super.initState();
     final token = GetStorage().read('live-token');
     socketIOManager = LiveSocketIOManager();
+
     socketIOManager.connect(
-        'wss://dev-live-ext-ws.hmtech-dev.com:443/user?token=$token', token);
+      'wss://dev-live-ext-ws.hmtech-dev.com:443/user?token=$token',
+      token,
+    );
+
+    _messageSubscription = socketIOManager.messages.listen((message) {
+      setState(() {
+        latestMessage = message.toString();
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return RoomListSocketIOProvider(
-      manager: socketIOManager,
+    print('### latestMessage: ${socketIOManager.messages}');
+    return MessageProvider(
+      message: latestMessage,
       child: widget.child,
     );
   }
@@ -40,24 +51,26 @@ class _RoomListProviderState extends State<RoomListProvider> {
   @override
   void dispose() {
     socketIOManager.close();
+    _messageSubscription.cancel();
     super.dispose();
   }
 }
 
-class RoomListSocketIOProvider extends InheritedWidget {
-  final LiveSocketIOManager manager;
+class MessageProvider extends InheritedWidget {
+  final String? message;
 
-  RoomListSocketIOProvider({required this.manager, required Widget child})
-      : super(child: child);
+  const MessageProvider({
+    Key? key,
+    required this.message,
+    required Widget child,
+  }) : super(key: key, child: child);
 
-  static RoomListSocketIOProvider? of(BuildContext context) {
-    return context
-        .dependOnInheritedWidgetOfExactType<RoomListSocketIOProvider>();
+  static MessageProvider? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<MessageProvider>();
   }
 
   @override
-  bool updateShouldNotify(RoomListSocketIOProvider oldWidget) {
-    print('### oldWidget : ${oldWidget.manager}');
-    return manager != oldWidget.manager;
+  bool updateShouldNotify(MessageProvider oldWidget) {
+    return message != oldWidget.message;
   }
 }

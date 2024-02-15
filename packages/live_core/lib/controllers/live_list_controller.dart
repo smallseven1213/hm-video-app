@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import '../apis/live_api.dart';
 import '../models/room.dart';
 import '../models/streamer.dart';
+import '../socket/live_web_socket_manager.dart';
 
 final liveApi = LiveApi();
 
@@ -26,6 +27,8 @@ final logger = Logger();
 
 class LiveListController extends GetxController {
   Timer? _timer;
+  StreamSubscription<dynamic>? _messageSubscription;
+
   var roomsWithoutFilter = <Room>[].obs;
   var rooms = <Room>[].obs;
 
@@ -43,6 +46,18 @@ class LiveListController extends GetxController {
     ever(tagId, (_) => filterRoomsByTagId());
 
     fetchData();
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    LiveSocketIOManager socketManager = LiveSocketIOManager();
+
+    _messageSubscription = socketManager.messages.listen((message) {
+      if (message.contains('refresh:room:list')) {
+        fetchData();
+      }
+    });
   }
 
   void setStatus(RoomStatus newStatus) => status.value = newStatus;
@@ -77,15 +92,15 @@ class LiveListController extends GetxController {
   Room? getRoomByStreamerId(int streamerId) =>
       rooms.firstWhereOrNull((room) => room.streamerId == streamerId);
 
-  void startAutoRefresh() {
-    // _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
-    //   fetchData();
-    // });
-  }
+  // void startAutoRefresh() {
+  //   // _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
+  //   //   fetchData();
+  //   // });
+  // }
 
-  void autoRefreshCancel() {
-    _timer?.cancel();
-  }
+  // void autoRefreshCancel() {
+  //   _timer?.cancel();
+  // }
 
   void reset() {
     tagId.value = null;
@@ -95,6 +110,5 @@ class LiveListController extends GetxController {
     followType.value = FollowType.none;
 
     // Cancel any ongoing timer for auto-refresh
-    autoRefreshCancel();
   }
 }
