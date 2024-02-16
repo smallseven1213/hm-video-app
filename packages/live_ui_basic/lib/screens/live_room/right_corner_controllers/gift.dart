@@ -239,14 +239,15 @@ class _GiftItemState extends State<GiftItem>
     // Start a new timer
     debounceTimer = Timer(const Duration(milliseconds: 300), () async {
       try {
-        var price = double.parse(widget.gift.price) * clickCount;
+        var price = double.parse(widget.gift.price);
+        var totalPrice = price * clickCount;
         var userAmount = Get.find<LiveUserController>().getAmount;
-        if (userAmount < price) {
+        if (userAmount < totalPrice) {
           // If insufficient funds, show dialog and reset count
           showInsufficientFundsDialog(context);
         } else {
-          LiveApiResponseBase<bool> response =
-              await liveApi.sendGift(widget.gift.id, price, clickCount);
+          LiveApiResponseBase<bool> response = await liveApi.sendGift(
+              widget.gift.id, price, clickCount);
           if (response.code == 200) {
             Get.find<LiveUserController>().getUserDetail();
           } else {
