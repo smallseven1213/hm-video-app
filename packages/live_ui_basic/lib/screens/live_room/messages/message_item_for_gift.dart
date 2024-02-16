@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
+import 'package:shared/models/gift_message_data.dart';
 
 import '../../../libs/format_timestamp.dart';
 
@@ -14,8 +17,12 @@ class MessageItemForGift extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final giftsController = Get.find<GiftsController>();
+    // message.objChat.data會return 字串的JSON {gid, quantity, animation_layout}
+    // 將message.objChat.data轉成GiftMessageData
+    var giftMessage = GiftMessageData.fromJSON(
+        Map<String, dynamic>.from(jsonDecode(message.objChat.data)));
     var giftName = giftsController.gifts.value
-        .firstWhere((element) => element.id == int.parse(message.objChat.data))
+        .firstWhere((element) => element.id == giftMessage.gid)
         .name;
     var messageText = "${message.objChat.name} 贈送禮物 $giftName";
 
