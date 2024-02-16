@@ -27,8 +27,9 @@ void main() async {
     allRoutes.keys.first,
     // [必填]DlJSON來源
     [
-      'https://dl.dlsv.net/$env/dl.json',
-      'https://dl.dlsv.app/$env/dl.json',
+      'https://dl.dlwltw1.com/$env/dl.json',
+      'https://dl.dlwltw1.net/$env/dl.json',
+      'https://dl.dlwltw1.info/$env/dl.json',
     ],
     allRoutes,
     AppColors.colors,
