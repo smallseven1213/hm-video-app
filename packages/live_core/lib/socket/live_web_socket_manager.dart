@@ -49,18 +49,6 @@ class LiveSocketIOManager {
       print('Code: $code, Token: $token');
     });
 
-    _socket!.on('chatresult', (data) {
-      // // 解析 JSON 字符串
-      // var decodedData = jsonDecode(data);
-
-      // // 提取 'code' 和 'token' 值
-      // var code = decodedData['code'];
-      // var token = decodedData['token'];
-      // this.chatToken = token;
-
-      print(data);
-    });
-
     _socket!.onError((data) {
       _onError(data);
     });

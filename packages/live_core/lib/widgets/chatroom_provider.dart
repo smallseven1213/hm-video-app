@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:live_core/controllers/chat_result_controller.dart';
 
 import '../socket/live_web_socket_manager.dart';
 
@@ -22,6 +24,7 @@ class _ChatroomProviderState extends State<ChatroomProvider> {
     socketIOManager = LiveSocketIOManager();
     socketIOManager.connect(
         'wss://dev-live-chat.hmtech-dev.com:443/', widget.chatToken);
+    Get.put(ChatResultController());
   }
 
   @override
@@ -35,6 +38,7 @@ class _ChatroomProviderState extends State<ChatroomProvider> {
   @override
   void dispose() {
     socketIOManager.close();
+    Get.delete<ChatResultController>();
     super.dispose();
   }
 }
