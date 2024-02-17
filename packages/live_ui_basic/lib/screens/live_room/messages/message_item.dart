@@ -12,8 +12,8 @@ const Map<String, String> translations = {
   "userjoin": "已加入",
 };
 
-class MessageItem extends StatelessWidget {
-  final ChatMessage message;
+class MessageItem<T> extends StatelessWidget {
+  final ChatMessage<T> message;
 
   const MessageItem({Key? key, required this.message}) : super(key: key);
 
@@ -32,9 +32,11 @@ class MessageItem extends StatelessWidget {
     }
 
     if (message.objChat.ntype == MessageType.gift) {
-      return MessageItemForGift(message: message);
+      final messageForGIft = message as ChatMessage<ChatGiftMessageObjChatData>;
+      return MessageItemForGift(message: messageForGIft);
     } else if (message.objChat.ntype == MessageType.command) {
-      return MessageItemForCommand(message: message);
+      final messageForCommand = message as ChatMessage<String>;
+      return MessageItemForCommand(message: messageForCommand);
     }
     return Container(
       margin: const EdgeInsets.only(top: 10),

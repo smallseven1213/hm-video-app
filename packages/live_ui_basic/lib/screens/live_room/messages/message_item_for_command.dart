@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/commands_controller.dart';
-import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 
-import '../../../libs/format_timestamp.dart';
-
 class MessageItemForCommand extends StatelessWidget {
-  final ChatMessage message;
+  final ChatMessage<String> message;
 
   const MessageItemForCommand({Key? key, required this.message})
       : super(key: key);
