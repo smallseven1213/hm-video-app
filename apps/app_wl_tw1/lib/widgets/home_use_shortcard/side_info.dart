@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -17,7 +18,6 @@ import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 import '../../config/colors.dart';
-import '../actor_avatar.dart';
 
 final logger = Logger();
 
@@ -50,7 +50,7 @@ class _SideInfoState extends State<SideInfo> {
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Positioned(
             right: 8,
-            top: MediaQuery.of(context).size.height * 0.5 - 100,
+            top: MediaQuery.sizeOf(context).height * 0.5 - 100,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [

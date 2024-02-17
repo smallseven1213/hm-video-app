@@ -1,3 +1,6 @@
+import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
+import 'package:app_wl_tw1/widgets/channel_area_banner.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,8 +9,6 @@ import 'package:shared/controllers/block_vod_controller.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/vod.dart';
 
-import '../widgets/channel_area_banner.dart';
-import '../widgets/custom_app_bar.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/no_data.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';

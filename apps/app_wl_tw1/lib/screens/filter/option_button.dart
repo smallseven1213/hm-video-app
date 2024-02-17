@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:shared/models/color_keys.dart';
-
-import '../../config/colors.dart';
 
 class OptionButton extends StatelessWidget {
   final bool isSelected;

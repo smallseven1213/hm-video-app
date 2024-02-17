@@ -1,12 +1,16 @@
+import 'dart:async';
+
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'dart:convert';
 
 class LiveSocketIOManager {
   static final LiveSocketIOManager _instance = LiveSocketIOManager._internal();
   io.Socket? _socket;
+  io.Socket? get socket => _socket;
   String chatToken = '';
 
-  io.Socket? get socket => _socket;
+  final _messageController = StreamController<dynamic>.broadcast();
+  Stream<dynamic> get messages => _messageController.stream;
 
   factory LiveSocketIOManager() {
     return _instance;
@@ -77,6 +81,7 @@ class LiveSocketIOManager {
   void _onMessageReceived(data) {
     // 处理接收到的消息
     print('IO-Message received: $data');
+    _messageController.add(data); // Broadcast the message
   }
 
   void _onError(data) {
@@ -97,6 +102,7 @@ class LiveSocketIOManager {
 
   void close() {
     // _socket?.disconnect();
+    _messageController.close();
     _socket?.close();
   }
 }

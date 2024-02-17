@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/refresh_list.dart';
@@ -8,7 +9,6 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/channe_block_vod_controller.dart';
 import 'package:shared/widgets/base_video_block_template.dart';
 
-import '../../../config/colors.dart';
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/no_data.dart';
 import '../../../widgets/sliver_video_preview_skelton_list.dart';
@@ -41,9 +41,8 @@ class VodsState extends State<Vods> {
 
   void _scrollListener() {
     if (isRefreshing) return;
-    const threshold = 30;
     if (_scrollController!.position.pixels >=
-        _scrollController!.position.maxScrollExtent - threshold) {
+        _scrollController!.position.maxScrollExtent - 30) {
       debounce(
         fn: () => vodController!.loadMoreData(),
       );

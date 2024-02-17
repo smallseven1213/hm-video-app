@@ -1,5 +1,7 @@
-import 'package:game/routes/game_routes.dart';
+import 'package:app_wl_tw1/widgets/countdown.dart';
+import 'package:app_wl_tw1/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:game/routes/game_routes.dart';
 import 'package:game/widgets/game_provider.dart';
 import 'package:shared/models/color_keys.dart'; // 如果需要管理色碼的話，使用這個
 import 'package:shared/utils/running_main.dart'; // 啟動專案必須要引用shared的runningMain
@@ -9,8 +11,6 @@ import 'config/colors.dart';
 // 如果此App沒有遊戲，那就不需要寫入game_routes
 import './routes/app_routes.dart' as app_routes;
 import 'localization/i18n.dart';
-import 'widgets/countdown.dart';
-import 'widgets/loading.dart';
 
 const env = String.fromEnvironment('ENV', defaultValue: 'prod');
 
@@ -22,7 +22,7 @@ void main() async {
 
   runningMain(
     // [非必填]SentryDNS
-    'https://12f8cb06f0e94290864331bbc88fbab0@sentry.hmtech.club/3',
+    'https://8532367f0b894ccc84ef17e9d2785c1f@sentry.hmtech.club/6',
     // [非必填]進入的第一個畫面
     allRoutes.keys.first,
     // [必填]DlJSON來源
@@ -30,17 +30,15 @@ void main() async {
       'https://dl.dlwltw1.com/$env/dl.json',
       'https://dl.dlwltw1.net/$env/dl.json',
       'https://dl.dlwltw1.info/$env/dl.json',
-      //先使用sv的配置
-      // 'https://dl.dlsv.net/$env/dl.json',
-      // 'https://dl.dlsv.app/$env/dl.json'
     ],
     allRoutes,
     AppColors.colors,
     ThemeData(
-        useMaterial3: false,
-        scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent),
+      scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+      highlightColor: Colors.transparent,
+      splashColor: Colors.transparent,
+      useMaterial3: false,
+    ),
     globalLoadingWidget: ({String? text}) =>
         Loading(loadingText: text ?? '正在加载...'),
     countdown: ({int countdownSeconds = 5}) =>

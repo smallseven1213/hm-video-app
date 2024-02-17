@@ -32,7 +32,7 @@ class FavoritesActorScreen extends StatelessWidget {
           },
           itemCount: (actors.length / 5).ceil(),
           itemBuilder: (BuildContext context, int index) {
-            final Size size = MediaQuery.of(context).size;
+            final Size size = MediaQuery.sizeOf(context);
             return Wrap(
               children: List.generate(5, (i) {
                 final int actorIndex = index * 5 + i;

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 import 'package:shared/models/color_keys.dart';
-import '../../config/colors.dart';
+import 'package:app_wl_tw1/config/colors.dart';
 
 import 'option_button.dart';
 import 'options.dart';

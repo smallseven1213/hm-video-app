@@ -1,9 +1,9 @@
+import 'package:app_wl_tw1/widgets/video_preview_style_2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'no_data.dart';
 import 'sliver_video_preview_skelton_list.dart';
-import 'video_preview_style_2.dart';
 
 class SliverVodList extends StatefulWidget {
   final int? film;

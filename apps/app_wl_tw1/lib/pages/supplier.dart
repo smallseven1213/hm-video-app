@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,7 +7,6 @@ import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
-import '../config/colors.dart';
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
@@ -82,7 +82,7 @@ class _SupplierPageState extends State<SupplierPage>
                 SliverToBoxAdapter(
                   child: Container(
                     color: AppColors.colors[ColorKeys.primary],
-                    height: MediaQuery.of(context).padding.top,
+                    height: MediaQuery.paddingOf(context).top,
                   ),
                 ),
                 SupplierCard(id: widget.id),

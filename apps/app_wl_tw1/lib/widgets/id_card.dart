@@ -6,7 +6,7 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/capture_screenshot_button.dart';
 
-import '../config/colors.dart';
+import 'package:app_wl_tw1/config/colors.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 
@@ -121,7 +121,7 @@ class IDCardContentState extends State<IDCardContent> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Text(
-                    '官方地址：51ss.me',
+                    '官方地址：ab.me',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.buttonBgPrimary],
                       fontSize: 12,

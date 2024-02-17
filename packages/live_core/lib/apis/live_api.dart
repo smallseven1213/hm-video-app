@@ -29,6 +29,7 @@ class LiveApi {
     chargeType = 0,
     ranking =
         SortType.defaultSort, // default / watch / income / newcomer / fans
+    followType = 0,
   }) async {
     var _ranking = ranking;
     switch (ranking) {
@@ -49,7 +50,7 @@ class LiveApi {
     const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
     var response = await liveFetcher(
       url:
-          '$userApiHost/room/list?page=1&per_page=20&status=$status&charge_type=$chargeType&ranking=$_ranking',
+          '$userApiHost/room/list?page=1&per_page=20&status=$status&charge_type=$chargeType&ranking=$_ranking&follow=$followType',
     );
 
     if (response.data['data'].isEmpty) {
@@ -171,15 +172,13 @@ class LiveApi {
     return parsedResponse;
   }
 
-  Future<LiveApiResponseBase<bool>> sendGift(int gid, double amount) async {
+  Future<LiveApiResponseBase<bool>> sendGift(
+      int gid, double amount, int quantity) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
       url: '$liveApiHost/gift',
       method: 'POST',
-      body: {
-        'gid': gid,
-        'amount': amount,
-      },
+      body: {'gid': gid, 'amount': amount, 'quantity': quantity},
     );
 
     LiveApiResponseBase<bool> parsedResponse = LiveApiResponseBase.fromJson(

@@ -1,8 +1,7 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/sid_image.dart';
-
-import '../config/colors.dart';
 
 class CustomBottomBarItem extends StatelessWidget {
   final bool isActive;
@@ -25,7 +24,7 @@ class CustomBottomBarItem extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-          color: Colors.transparent,
+          color: AppColors.colors[ColorKeys.menuBgColor],
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -5,7 +6,6 @@ import 'package:shared/models/ad.dart';
 import 'package:shared/modules/apps/apps_provider.dart';
 
 import '../../widgets/header.dart';
-import '../video/video_player_area/flash_loading.dart';
 import 'banner.dart';
 import 'hot.dart';
 import 'popular.dart';

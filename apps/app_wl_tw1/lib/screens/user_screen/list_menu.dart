@@ -13,9 +13,9 @@ import 'package:shared/modules/user_setting/user_setting_more_link_consumer.dart
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-import '../../config/colors.dart';
-import '../../utils/show_confirm_dialog.dart';
-import 'scan_qrcode.dart';
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/screens/user_screen/scan_qrcode.dart';
+import 'package:app_wl_tw1/utils/show_confirm_dialog.dart';
 
 final logger = Logger();
 

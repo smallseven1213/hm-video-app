@@ -1,8 +1,7 @@
+import 'package:app_wl_tw1/screens/main_screen/block_header.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
-
-import 'block_header.dart';
 
 class ChannelJingangAreaTitle extends StatelessWidget {
   final int channelId;

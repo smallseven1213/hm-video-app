@@ -1,12 +1,11 @@
+import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/sid_image.dart';
-
-import '../../../config/colors.dart';
-import 'flash_loading.dart';
 
 final logger = Logger();
 

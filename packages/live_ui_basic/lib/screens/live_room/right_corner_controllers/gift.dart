@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
@@ -200,116 +201,170 @@ class GiftItem extends StatefulWidget {
   _GiftItemState createState() => _GiftItemState();
 }
 
-class _GiftItemState extends State<GiftItem> {
-  bool arrowSend = true;
+class _GiftItemState extends State<GiftItem>
+    with SingleTickerProviderStateMixin {
+  int clickCount = 0; // To keep track of clicks
+  Timer? debounceTimer;
+  late AnimationController _animationController;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      duration: const Duration(milliseconds: 150), // 动画持续时间
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(begin: 0.8, end: 1).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    debounceTimer?.cancel(); // Cancel the timer if the widget is disposed
+    super.dispose();
+  }
+
+  void handleTap() {
+    _animationController
+      ..reset() // 重置动画
+      ..forward();
+    clickCount += 1; // Increment click count on every tap
+
+    if (debounceTimer?.isActive ?? false) {
+      debounceTimer!.cancel(); // Cancel existing timer if it's active
+    }
+
+    // Start a new timer
+    debounceTimer = Timer(const Duration(milliseconds: 300), () async {
+      try {
+        var price = double.parse(widget.gift.price);
+        var totalPrice = price * clickCount;
+        var userAmount = Get.find<LiveUserController>().getAmount;
+        if (userAmount < totalPrice) {
+          // If insufficient funds, show dialog and reset count
+          showInsufficientFundsDialog(context);
+        } else {
+          LiveApiResponseBase<bool> response = await liveApi.sendGift(
+              widget.gift.id, price, clickCount);
+          if (response.code == 200) {
+            Get.find<LiveUserController>().getUserDetail();
+          } else {
+            throw Exception(response.data);
+          }
+        }
+      } catch (e) {
+        print(e);
+        // Optionally show error dialog
+      } finally {
+        setState(() {
+          clickCount =
+              0; // Reset click count after sending data to server or on error
+        });
+      }
+    });
+
+    setState(() {}); // Update UI to reflect the new click count immediately
+  }
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        if (arrowSend) {
-          arrowSend = false;
-          try {
-            var price = double.parse(widget.gift.price);
-            var userAmount = Get.find<LiveUserController>().getAmount;
-            if (userAmount < price) {
-              showLiveDialog(
-                context,
-                title: '鑽石不足',
-                content: const Center(
-                  child: Text('鑽石不足，請前往充值',
-                      style: TextStyle(color: Colors.white, fontSize: 11)),
+    return Stack(
+      alignment: Alignment.bottomRight,
+      children: [
+        InkWell(
+          onTap: handleTap,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 63,
+                width: 63,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-                actions: [
-                  LiveButton(
-                      text: '取消',
-                      type: ButtonType.secondary,
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      }),
-                  LiveButton(
-                      text: '確定',
-                      type: ButtonType.primary,
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      })
-                ],
-              );
-            } else {
-              LiveApiResponseBase<bool> response =
-                  await liveApi.sendGift(widget.gift.id, price);
-              if (response.code == 200) {
-                Get.find<LiveUserController>().getUserDetail();
-              } else {
-                throw Exception(response.data);
-              }
-              // Navigator.of(context).pop();
-            }
-          } catch (e) {
-            print(e);
-            // show dialog for error
-            // showDialog(
-            //   context: context,
-            //   builder: (BuildContext context) {
-            //     return AlertDialog(
-            //       title: Text('Error'),
-            //       content: Text('Something went wrong'),
-            //       actions: [
-            //         TextButton(
-            //           onPressed: () {
-            //             Navigator.of(context).pop();
-            //           },
-            //           child: Text('OK'),
-            //         ),
-            //       ],
-            //     );
-            //   },
-            // );
-          } finally {
-            arrowSend = true;
-          }
-        }
-      },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            height: 63,
-            width: 63,
-            // radius 10
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: LiveImage(
-              base64Url: widget.gift.image,
-              fit: BoxFit.cover,
+                clipBehavior: Clip.antiAlias,
+                child: LiveImage(
+                  base64Url: widget.gift.image,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const SizedBox(height: 5),
+              Text(
+                widget.gift.name,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+              Text(
+                widget.gift.price,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (clickCount > 1) // Display click count if greater than 1
+          ScaleTransition(
+            scale: _scaleAnimation,
+            child: Container(
+              height: 50,
+              padding: const EdgeInsets.all(2),
+              child: Align(
+                alignment: Alignment.center,
+                child: Text(
+                  'x$clickCount',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    fontSize: clickCount > 5
+                        ? clickCount > 10
+                            ? 22
+                            : 20
+                        : 18,
+                    shadows: const [
+                      Shadow(
+                        color: Colors.black,
+                        blurRadius: 2,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
           ),
-          // Image.network(
-          //   // gift.image,
-          //   "https://cdn.hubeibk.com/live/webp/app_gifts/018c38d8-5088-71ee-8a45-26f87e492309",
-          //   fit: BoxFit.cover,
-          //   width: 73,
-          //   height: 73,
-          // ),
-          const SizedBox(height: 5),
-          Text(
-            widget.gift.name,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
-          ),
-          Text(
-            widget.gift.price,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 12,
-            ),
-          ),
-        ],
+      ],
+    );
+  }
+
+  void showInsufficientFundsDialog(BuildContext context) {
+    showLiveDialog(
+      context,
+      title: '鑽石不足',
+      content: const Center(
+        child: Text('鑽石不足，請前往充值',
+            style: TextStyle(color: Colors.white, fontSize: 11)),
       ),
+      actions: [
+        LiveButton(
+            text: '取消',
+            type: ButtonType.secondary,
+            onTap: () {
+              Navigator.of(context).pop();
+            }),
+        LiveButton(
+            text: '確定',
+            type: ButtonType.primary,
+            onTap: () {
+              Navigator.of(context).pop();
+            })
+      ],
     );
   }
 }

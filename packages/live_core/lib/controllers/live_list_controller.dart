@@ -6,6 +6,7 @@ import 'package:logger/logger.dart';
 import '../apis/live_api.dart';
 import '../models/room.dart';
 import '../models/streamer.dart';
+import '../socket/live_web_socket_manager.dart';
 
 final liveApi = LiveApi();
 
@@ -26,6 +27,8 @@ final logger = Logger();
 
 class LiveListController extends GetxController {
   Timer? _timer;
+  StreamSubscription<dynamic>? _messageSubscription;
+
   var roomsWithoutFilter = <Room>[].obs;
   var rooms = <Room>[].obs;
 
@@ -45,6 +48,18 @@ class LiveListController extends GetxController {
     fetchData();
   }
 
+  @override
+  void onInit() {
+    super.onInit();
+    LiveSocketIOManager socketManager = LiveSocketIOManager();
+
+    _messageSubscription = socketManager.messages.listen((message) {
+      if (message.contains('refresh:room:list')) {
+        fetchData();
+      }
+    });
+  }
+
   void setStatus(RoomStatus newStatus) => status.value = newStatus;
   void setSortType(SortType newSortType) => sortType.value = newSortType;
   void setChargeType(RoomChargeType newChargeType) =>
@@ -58,6 +73,7 @@ class LiveListController extends GetxController {
       chargeType: chargeType.value.index,
       status: status.value.index,
       ranking: sortType.value,
+      followType: followType.value.index,
     );
     roomsWithoutFilter.value = res;
     filterRoomsByTagId();
@@ -76,29 +92,15 @@ class LiveListController extends GetxController {
   Room? getRoomByStreamerId(int streamerId) =>
       rooms.firstWhereOrNull((room) => room.streamerId == streamerId);
 
-  void filterVideosByFollowedStreamers({
-    FollowType? filterFollowType,
-    List<Streamer>? follows,
-  }) {
-    followType.value = filterFollowType ?? followType.value;
-    if (follows != null) {
-      Set<int> followedStreamerIds =
-          follows.map((streamer) => streamer.id).toSet();
-      rooms.value = rooms
-          .where((video) => followedStreamerIds.contains(video.streamerId))
-          .toList();
-    }
-  }
+  // void startAutoRefresh() {
+  //   // _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
+  //   //   fetchData();
+  //   // });
+  // }
 
-  void startAutoRefresh() {
-    _timer = Timer.periodic(const Duration(seconds: 10), (Timer t) {
-      fetchData();
-    });
-  }
-
-  void autoRefreshCancel() {
-    _timer?.cancel();
-  }
+  // void autoRefreshCancel() {
+  //   _timer?.cancel();
+  // }
 
   void reset() {
     tagId.value = null;
@@ -108,6 +110,5 @@ class LiveListController extends GetxController {
     followType.value = FollowType.none;
 
     // Cancel any ongoing timer for auto-refresh
-    autoRefreshCancel();
   }
 }

@@ -1,5 +1,6 @@
 // UpdatePasswordPage , has button , click push to '/register'
 
+import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -9,7 +10,6 @@ import 'package:shared/controllers/user_controller.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
-import '../widgets/custom_app_bar.dart';
 
 final logger = Logger();
 

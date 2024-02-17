@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
@@ -7,7 +8,6 @@ import 'package:shared/modules/videos/actor_hotest_videos_consumer.dart';
 import 'package:shared/modules/videos/actor_latest_videos_consumer.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 
-import '../config/colors.dart';
 import '../screens/actor/card.dart';
 import '../widgets/list_no_more.dart';
 import '../widgets/sliver_vod_grid.dart';
@@ -77,7 +77,7 @@ class ActorPageState extends State<ActorPage>
                   SliverToBoxAdapter(
                     child: Container(
                       color: AppColors.colors[ColorKeys.primary],
-                      height: MediaQuery.of(context).padding.top,
+                      height: MediaQuery.paddingOf(context).top,
                     ),
                   ),
                   ActorConsumer(

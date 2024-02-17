@@ -32,7 +32,9 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   bool isLottieDialogOpen = false;
   Timer? timer;
 
-  Queue<ChatMessage> giftMessageQueue = Queue<ChatMessage>();
+  // 用於type2與3的queue
+  Queue<ChatMessage<ChatGiftMessageObjChatData>> centerGiftAnimationQueue =
+      Queue<ChatMessage<ChatGiftMessageObjChatData>>();
 
   @override
   void initState() {
@@ -40,18 +42,22 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
 
     timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      if (giftMessageQueue.isNotEmpty && !isLottieDialogOpen) {
-        var giftMessage = giftMessageQueue.removeFirst();
-        setLottieAnimation(giftMessage.objChat.data);
+      if (centerGiftAnimationQueue.isNotEmpty && !isLottieDialogOpen) {
+        var giftMessage = centerGiftAnimationQueue.removeFirst();
+        setLottieAnimation(giftMessage.objChat.data.gid);
       }
     });
   }
 
   void handleChatResult(dynamic data) {
     var decodedData = jsonDecode(data);
-    List<ChatMessage> newMessages = (decodedData as List)
-        .map((item) => ChatMessage.fromJson(item))
-        .toList();
+    List<ChatMessage> newMessages = (decodedData as List).map((item) {
+      if (item['objChat']['ntype'] == 3) {
+        return ChatMessage<ChatGiftMessageObjChatData>.fromJson(item);
+      } else {
+        return ChatMessage<String>.fromJson(item);
+      }
+    }).toList();
 
     setState(() {
       messages.addAll(newMessages);
@@ -59,20 +65,28 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
 
     for (var message in newMessages) {
       if (message.objChat.ntype == MessageType.gift) {
-        updateGiftQueue(message);
+        var giftMesssage = message as ChatMessage<ChatGiftMessageObjChatData>;
+        if (giftMesssage.objChat.data.animationLayout == 2 ||
+            giftMesssage.objChat.data.animationLayout == 3) {
+          updateCenterGiftQueue(
+              giftMesssage, giftMesssage.objChat.data.animationLayout);
+        }
       }
     }
   }
 
-  void updateGiftQueue(ChatMessage message) {
-    giftMessageQueue.add(message);
+  // 大圖用
+  void updateCenterGiftQueue(
+      ChatMessage<ChatGiftMessageObjChatData> message, int animationLayout) {
+    for (var i = 0; i < message.objChat.data.quantity; i++) {
+      centerGiftAnimationQueue.add(message);
+    }
   }
 
-  void setLottieAnimation(String data) {
+  void setLottieAnimation(int gid) {
     try {
-      var giftId = int.parse(data);
       var gift = giftsController.gifts.value
-          .firstWhere((element) => element.id == giftId);
+          .firstWhere((element) => element.id == gid);
       if (gift.animation.isNotEmpty) {
         showLottieDialog(
           LottieDataProvider.network,
@@ -83,7 +97,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     } catch (e) {
       showLottieDialog(
         LottieDataProvider.asset,
-        'assets/lotties/present.json',
+        'packages/live_ui_basic/assets/lotties/present.json',
         onFinish: () => isLottieDialogOpen = false,
       );
     }

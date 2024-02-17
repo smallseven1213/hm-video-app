@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
-import '../../config/colors.dart';
 import '../../utils/show_confirm_dialog.dart';
 
 final authApi = AuthApi();
@@ -87,8 +87,8 @@ class _ScanQRViewState extends State<ScanQRView> {
 
   @override
   Widget build(BuildContext context) {
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
+    var scanArea = (MediaQuery.sizeOf(context).width < 400 ||
+            MediaQuery.sizeOf(context).height < 400)
         ? 200.0
         : 300.0;
     return Scaffold(

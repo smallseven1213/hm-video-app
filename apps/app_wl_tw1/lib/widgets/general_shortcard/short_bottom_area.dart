@@ -1,4 +1,4 @@
-import '../../config/colors.dart';
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -27,7 +27,7 @@ class ShortBottomArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingBottom = MediaQuery.of(context).padding.bottom;
+    final paddingBottom = MediaQuery.paddingOf(context).bottom;
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =

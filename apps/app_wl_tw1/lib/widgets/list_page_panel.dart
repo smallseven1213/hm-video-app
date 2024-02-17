@@ -20,7 +20,7 @@ class ListPagePanelWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingBottom = MediaQuery.of(context).padding.bottom;
+    final paddingBottom = MediaQuery.paddingOf(context).bottom;
     return Obx(
       () => AnimatedPositioned(
         duration: const Duration(milliseconds: 300),

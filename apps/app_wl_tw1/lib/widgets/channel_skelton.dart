@@ -1,9 +1,8 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../config/colors.dart';
 
 class ChannelSkeleton extends StatelessWidget {
   const ChannelSkeleton({Key? key}) : super(key: key);
@@ -68,7 +67,7 @@ class ChannelSkeleton extends StatelessWidget {
                           ),
                           const SizedBox(height: 8),
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.7,
+                            width: MediaQuery.sizeOf(context).width * 0.7,
                             height: 12,
                             color: baseColor,
                           ),
@@ -102,7 +101,7 @@ class ChannelSkeleton extends StatelessWidget {
                             ),
                             const SizedBox(height: 8),
                             Container(
-                              width: MediaQuery.of(context).size.width * 0.7,
+                              width: MediaQuery.sizeOf(context).width * 0.7,
                               height: 12,
                               color: Colors.grey,
                             ),

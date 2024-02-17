@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +8,6 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:volume_control/volume_control.dart';
 
-import '../../../config/colors.dart';
 import 'enums.dart';
 import 'player_header.dart';
 import 'screen_lock.dart';
@@ -102,7 +102,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
             // 檢查滑動是發生在畫面的左半邊還是右半邊
             bool isVolume = details.globalPosition.dx >
-                MediaQuery.of(context).size.width / 2;
+                MediaQuery.sizeOf(context).width / 2;
             if (isVolume) {
               volume = verticalDragPosition;
               volume = volume.clamp(0.0, 1.0);
@@ -145,7 +145,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               return;
             }
             double dragPercentage = details.delta.dx /
-                (MediaQuery.of(context).size.width * 0.3); // 计算滑动距离占屏幕宽度的比例
+                (MediaQuery.sizeOf(context).width * 0.3); // 计算滑动距离占屏幕宽度的比例
             int newPositionSeconds = videoPlayerInfo.videoPosition +
                 (dragPercentage * videoPlayerInfo.videoDuration)
                     .toInt(); // 使用滑动比例来更新视频位置
@@ -262,7 +262,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 Positioned(
                   bottom: 0,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
+                    width: MediaQuery.sizeOf(context).width,
                     child: Row(
                       children: [
                         IconButton(
