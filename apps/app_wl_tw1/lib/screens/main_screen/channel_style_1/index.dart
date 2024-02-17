@@ -187,7 +187,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                   const Positioned.fill(
                                     child: Image(
                                       image: AssetImage(
-                                          'assets/images/channel_more_button.png'),
+                                          'assets/images/channel_more_button.webp'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
