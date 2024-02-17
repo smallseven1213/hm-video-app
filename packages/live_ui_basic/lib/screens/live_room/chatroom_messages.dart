@@ -83,7 +83,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     } catch (e) {
       showLottieDialog(
         LottieDataProvider.asset,
-        'assets/lotties/present.json',
+        'packages/live_ui_basic/assets/lotties/present.json',
         onFinish: () => isLottieDialogOpen = false,
       );
     }
