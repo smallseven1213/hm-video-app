@@ -18,7 +18,6 @@ class ChatResultController extends GetxController {
 
   @override
   void onInit() {
-    var socketGetter = socketManager.socket;
     socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
     super.onInit();
   }

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:live_core/models/gift.dart';
 import 'package:lottie/lottie.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
@@ -34,85 +35,79 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
     with SingleTickerProviderStateMixin {
   AnimationController? _lottieController;
   final GiftsController giftsController = Get.find<GiftsController>();
-  final LiveSocketIOManager socketManager = LiveSocketIOManager();
   final ChatResultController chatResultController =
       Get.find<ChatResultController>();
+  GiftAnimationData? giftAnimationData;
 
   @override
   void initState() {
     super.initState();
-    // 監聽giftLeftSideMessagesQueue的變化
-    chatResultController.giftLeftSideMessagesQueue.listen((_) {
-      // 確認隊列中有資料且動畫未在播放時，播放動畫
-      if (chatResultController.giftLeftSideMessagesQueue.isNotEmpty &&
-          (_lottieController?.isAnimating ?? false) == false) {
-        playAnimation();
-      }
-    });
+    _lottieController = AnimationController(vsync: this);
+    chatResultController.giftLeftSideMessagesQueue
+        .listen((_) => playAnimation());
   }
 
   void playAnimation() {
-    // 取出隊列中的第一筆資料
+    if (chatResultController.giftLeftSideMessagesQueue.isEmpty ||
+        _lottieController!.isAnimating) return;
+
     var giftData = chatResultController.giftLeftSideMessagesQueue.first;
-    // 使用Lottie播放動畫
-    _lottieController = AnimationController(vsync: this)
+    Gift giftInfo = giftsController.gifts.value
+        .firstWhere((element) => element.id == giftData.objChat.data.gid);
+
+    setState(() {
+      giftAnimationData = GiftAnimationData(
+        quantity: giftData.objChat.data.quantity,
+        userName: giftData.objChat.name,
+        userAvatar: giftData.objChat.avatar,
+        giftName: giftInfo.name,
+        giftLottiePath: giftInfo.animation,
+      );
+    });
+
+    _lottieController!
+      ..reset()
       ..addListener(() {
         if (_lottieController!.isCompleted) {
-          // 動畫播放完畢後，移除已播放的動畫資料
           chatResultController.giftLeftSideMessagesQueue.removeAt(0);
-          // 更新回chatResultController.giftLeftSideMessagesQueue.value
-          chatResultController.giftLeftSideMessagesQueue.refresh();
+          // 检查队列是否为空，如果为空，则将 giftAnimationData 设置为 null
+          if (chatResultController.giftLeftSideMessagesQueue.isEmpty) {
+            setState(() {
+              giftAnimationData = null;
+            });
+          } else {
+            // 如果队列不为空，尝试播放下一个动画
+            playAnimation();
+          }
           _lottieController!.reset();
-          // 檢查是否有更多動畫需要播放
-          // if (chatResultController.giftLeftSideMessagesQueue.isNotEmpty) {
-          //   playAnimation();
-          // }
         }
-      });
-    _lottieController!.forward();
+      })
+      ..forward();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.white,
+      height: 80,
+      child: giftAnimationData == null
+          ? Container()
+          : Lottie.network(
+              giftAnimationData!.giftLottiePath,
+              controller: _lottieController,
+              onLoaded: (composition) {
+                _lottieController!.duration = composition.duration;
+              },
+              height: 80,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) => Text('動畫載入失敗'),
+            ),
+    );
   }
 
   @override
   void dispose() {
     _lottieController?.dispose();
     super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 80,
-      child: Obx(() {
-        if (chatResultController.giftLeftSideMessagesQueue.isNotEmpty) {
-          var giftData = chatResultController.giftLeftSideMessagesQueue.first;
-          // 與GiftsController比對出gift data
-          var giftInfo = giftsController.gifts.value.firstWhere(
-            (element) => element.id == giftData.objChat.data.gid,
-          );
-          return Row(
-            children: [
-              Lottie.network(
-                height: 80,
-                fit: BoxFit.cover,
-                giftInfo.animation,
-                controller: _lottieController,
-                onLoaded: (composition) {
-                  // 設置Lottie動畫的總時長，並開始播放
-                  _lottieController!
-                    ..duration = composition.duration
-                    ..forward();
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Text('動畫載入失敗');
-                },
-              )
-            ],
-          );
-        } else {
-          // 如果沒有資料，可以顯示一個佔位符或返回Container
-          return Container();
-        }
-      }),
-    );
   }
 }
