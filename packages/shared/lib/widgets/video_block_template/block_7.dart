@@ -41,14 +41,18 @@ class Block7WidgetState extends State<Block7Widget> {
   void initState() {
     super.initState();
     List<Vod> videos = widget.block.videos?.data ?? [];
-    setState(() {
-      backgroundPhotoSid = videos[2].coverVertical;
-    });
+
+    if (videos.isNotEmpty) {
+      setState(() {
+        backgroundPhotoSid = videos[0].coverVertical;
+      });
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     List<Vod> videos = widget.block.videos?.data ?? [];
+
     return SliverToBoxAdapter(
       child: Container(
         height: 310,
