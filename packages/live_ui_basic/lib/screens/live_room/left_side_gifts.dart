@@ -1,12 +1,18 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/models/gift.dart';
 import 'package:lottie/lottie.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
+
+import '../../widgets/group_x_count_widget.dart';
+import '../../widgets/x_count.dart';
+import 'left_side_gift_animation.dart';
 
 class GiftAnimationData {
   int quantity;
@@ -33,74 +39,103 @@ class LeftSideGifts extends StatefulWidget {
 
 class _LeftSideGiftsState extends State<LeftSideGifts>
     with SingleTickerProviderStateMixin {
-  AnimationController? _lottieController;
+  late AnimationController _lottieController;
   final GiftsController giftsController = Get.find<GiftsController>();
   final ChatResultController chatResultController =
       Get.find<ChatResultController>();
   GiftAnimationData? giftAnimationData;
+  bool isAnimating = false;
+  late Timer timer;
 
   @override
   void initState() {
-    super.initState();
     _lottieController = AnimationController(vsync: this);
-    chatResultController.giftLeftSideMessagesQueue
-        .listen((_) => playAnimation());
+    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      if (isAnimating == true) return;
+      var giftLeftSideMessagesQueue =
+          chatResultController.giftLeftSideMessagesQueue;
+      if (giftLeftSideMessagesQueue.isNotEmpty && !isAnimating) {
+        var giftMessage =
+            chatResultController.removeGiftLeftSideMessagesQueueByIndex(0);
+        if (giftMessage != null) {
+          playAnimation(giftMessage);
+        }
+      } else if (giftLeftSideMessagesQueue.isEmpty) {
+        setState(() {
+          isAnimating = false;
+          giftAnimationData = null;
+        });
+      }
+    });
+    super.initState();
   }
 
-  void playAnimation() {
-    if (chatResultController.giftLeftSideMessagesQueue.isEmpty ||
-        _lottieController!.isAnimating) return;
-
-    var giftData = chatResultController.giftLeftSideMessagesQueue.first;
+  void playAnimation(ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
+    print("playAnimation");
+    isAnimating = true;
     Gift giftInfo = giftsController.gifts.value
-        .firstWhere((element) => element.id == giftData.objChat.data.gid);
+        .firstWhere((element) => element.id == giftMessage.objChat.data.gid);
 
     setState(() {
       giftAnimationData = GiftAnimationData(
-        quantity: giftData.objChat.data.quantity,
-        userName: giftData.objChat.name,
-        userAvatar: giftData.objChat.avatar,
+        quantity: giftMessage.objChat.data.quantity,
+        userName: giftMessage.objChat.name,
+        userAvatar: giftMessage.objChat.avatar,
         giftName: giftInfo.name,
         giftLottiePath: giftInfo.animation,
       );
     });
-
-    _lottieController!
-      ..reset()
-      ..addListener(() {
-        if (_lottieController!.isCompleted) {
-          chatResultController.giftLeftSideMessagesQueue.removeAt(0);
-          // 检查队列是否为空，如果为空，则将 giftAnimationData 设置为 null
-          if (chatResultController.giftLeftSideMessagesQueue.isEmpty) {
-            setState(() {
-              giftAnimationData = null;
-            });
-          } else {
-            // 如果队列不为空，尝试播放下一个动画
-            playAnimation();
-          }
-          _lottieController!.reset();
-        }
-      })
-      ..forward();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.white,
+    return SizedBox(
       height: 80,
       child: giftAnimationData == null
           ? Container()
-          : Lottie.network(
-              giftAnimationData!.giftLottiePath,
-              controller: _lottieController,
-              onLoaded: (composition) {
-                _lottieController!.duration = composition.duration;
-              },
-              height: 80,
-              fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Text('動畫載入失敗'),
+          : Row(
+              children: [
+                ClipOval(
+                    child: Container(
+                        width: 25.0,
+                        height: 25.0,
+                        color: Colors.black,
+                        child: giftAnimationData?.userAvatar.isEmpty == true
+                            ? SvgPicture.asset(
+                                'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+                                fit: BoxFit.cover,
+                              )
+                            : // message.objChat.avatar use Image remote
+                            Image.network(
+                                giftAnimationData!.userAvatar,
+                                fit: BoxFit.cover,
+                              ))),
+                const SizedBox(width: 6),
+                Column(
+                  children: [
+                    Text(
+                      giftAnimationData?.userName ?? "某位使用者",
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      '贈送禮物 ${giftAnimationData?.giftName}',
+                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 6),
+                LeftSideGiftAnimation(
+                  key: UniqueKey(),
+                  quantity: giftAnimationData?.quantity ?? 1,
+                  jsonPath: giftAnimationData?.giftLottiePath ?? "",
+                  onFinish: () {
+                    print("playAnimation end");
+                    isAnimating = false;
+                  },
+                ),
+                GroupXCountWidget(totalCount: giftAnimationData?.quantity ?? 1),
+              ],
             ),
     );
   }
@@ -108,6 +143,7 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
   @override
   void dispose() {
     _lottieController?.dispose();
+    timer.cancel();
     super.dispose();
   }
 }
