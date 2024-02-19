@@ -32,7 +32,11 @@ class RankNumber extends StatelessWidget {
                 width: width, height: height),
           Center(
             child: Text(
-              number < 4 ? number.toString() : "0${number.toString()}",
+              number > 9
+                  ? number.toString()
+                  : number < 4
+                      ? number.toString()
+                      : "0${number.toString()}",
               style: const TextStyle(
                   fontSize: 8,
                   fontWeight: FontWeight.bold,
