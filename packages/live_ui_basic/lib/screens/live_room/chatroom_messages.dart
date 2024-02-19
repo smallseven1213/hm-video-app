@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
@@ -27,60 +28,23 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     with SingleTickerProviderStateMixin {
   final GiftsController giftsController = Get.find<GiftsController>();
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
-  List<ChatMessage> messages = [];
+  final ChatResultController chatResultController =
+      Get.find<ChatResultController>();
   LottieData? lottieData;
   bool isLottieDialogOpen = false;
   Timer? timer;
 
-  // 用於type2與3的queue
-  Queue<ChatMessage<ChatGiftMessageObjChatData>> centerGiftAnimationQueue =
-      Queue<ChatMessage<ChatGiftMessageObjChatData>>();
-
   @override
   void initState() {
     super.initState();
-    socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
-
     timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
+      var centerGiftAnimationQueue =
+          chatResultController.giftCenterMessagesQueue;
       if (centerGiftAnimationQueue.isNotEmpty && !isLottieDialogOpen) {
-        var giftMessage = centerGiftAnimationQueue.removeFirst();
+        var giftMessage = centerGiftAnimationQueue.removeAt(0);
         setLottieAnimation(giftMessage.objChat.data.gid);
       }
     });
-  }
-
-  void handleChatResult(dynamic data) {
-    var decodedData = jsonDecode(data);
-    List<ChatMessage> newMessages = (decodedData as List).map((item) {
-      if (item['objChat']['ntype'] == 3) {
-        return ChatMessage<ChatGiftMessageObjChatData>.fromJson(item);
-      } else {
-        return ChatMessage<String>.fromJson(item);
-      }
-    }).toList();
-
-    setState(() {
-      messages.addAll(newMessages);
-    });
-
-    for (var message in newMessages) {
-      if (message.objChat.ntype == MessageType.gift) {
-        var giftMesssage = message as ChatMessage<ChatGiftMessageObjChatData>;
-        if (giftMesssage.objChat.data.animationLayout == 2 ||
-            giftMesssage.objChat.data.animationLayout == 3) {
-          updateCenterGiftQueue(
-              giftMesssage, giftMesssage.objChat.data.animationLayout);
-        }
-      }
-    }
-  }
-
-  // 大圖用
-  void updateCenterGiftQueue(
-      ChatMessage<ChatGiftMessageObjChatData> message, int animationLayout) {
-    for (var i = 0; i < message.objChat.data.quantity; i++) {
-      centerGiftAnimationQueue.add(message);
-    }
   }
 
   void setLottieAnimation(int gid) {
@@ -125,7 +89,6 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
   // dispose
   @override
   void dispose() {
-    socketManager.socket!.off('chatresult');
     timer?.cancel();
     super.dispose();
   }
@@ -135,16 +98,19 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
     return Column(
       children: [
         Expanded(
-          child: ListView.builder(
-            reverse: true,
-            // padding 0
-            padding: EdgeInsets.zero,
-            itemCount: messages.length,
-            itemBuilder: (context, index) {
-              int reversedIndex = messages.length - 1 - index;
-              return MessageItem(message: messages[reversedIndex]);
-            },
-          ),
+          child: Obx(() => ListView.builder(
+                reverse: true,
+                // padding 0
+                padding: EdgeInsets.zero,
+                itemCount: chatResultController.commonMessages.length,
+                itemBuilder: (context, index) {
+                  int reversedIndex =
+                      chatResultController.commonMessages.length - 1 - index;
+                  return MessageItem(
+                      message: chatResultController
+                          .commonMessages.value[reversedIndex]);
+                },
+              )),
         ),
       ],
     );

@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import 'chatroom_messages.dart';
+import 'left_side_gifts.dart';
 
 class ChatroomLayout extends StatefulWidget {
   final String token;
@@ -75,9 +77,6 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
   void initState() {
     super.initState();
     var keyboardVisibilityController = KeyboardVisibilityController();
-    // Query
-    print(
-        'Keyboard visibility direct query: ${keyboardVisibilityController.isVisible}');
 
     // Subscribe
     keyboardSubscription =
@@ -99,27 +98,27 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
   @override
   Widget build(BuildContext context) {
     return ChatroomProvider(
-      chatToken: widget.token,
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height / 2,
-        width: MediaQuery.of(context).size.width - 100,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Expanded(child: ChatroomMessages()),
-            const SizedBox(height: 25),
-            InkWell(
-              onTap: _showBottomSheet,
-              child: Image.asset(
-                  'packages/live_ui_basic/assets/images/talk_button.webp',
-                  width: 33,
-                  height: 33),
-            ),
-            const SizedBox(height: 25),
-          ],
-        ),
-      ),
-    );
+        chatToken: widget.token,
+        child: SizedBox(
+          height: MediaQuery.of(context).size.height / 2,
+          width: MediaQuery.of(context).size.width - 100,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const LeftSideGifts(),
+              const Expanded(child: ChatroomMessages()),
+              const SizedBox(height: 25),
+              InkWell(
+                onTap: _showBottomSheet,
+                child: Image.asset(
+                    'packages/live_ui_basic/assets/images/talk_button.webp',
+                    width: 33,
+                    height: 33),
+              ),
+              const SizedBox(height: 25),
+            ],
+          ),
+        ));
   }
 }
 
