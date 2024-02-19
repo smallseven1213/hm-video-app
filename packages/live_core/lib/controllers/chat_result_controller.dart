@@ -37,19 +37,27 @@ class ChatResultController extends GetxController {
         var giftMesssage = message as ChatMessage<ChatGiftMessageObjChatData>;
         if (giftMesssage.objChat.data.animationLayout == 2 ||
             giftMesssage.objChat.data.animationLayout == 3) {
-          for (var i = 0; i < message.objChat.data.quantity; i++) {
-            giftCenterMessagesQueue.value = [
-              ...giftCenterMessagesQueue.value,
-              giftMesssage
-            ];
-          }
+          giftCenterMessagesQueue.value = [
+            ...giftCenterMessagesQueue.value,
+            giftMesssage
+          ];
+          // for (var i = 0; i < message.objChat.data.quantity; i++) {
+          //   giftCenterMessagesQueue.value = [
+          //     ...giftCenterMessagesQueue.value,
+          //     giftMesssage..objChat.data.currentQuantity = i + 1
+          //   ];
+          // }
         } else if (giftMesssage.objChat.data.animationLayout == 1) {
-          for (var i = 0; i < message.objChat.data.quantity; i++) {
-            giftLeftSideMessagesQueue.value = [
-              ...giftLeftSideMessagesQueue.value,
-              giftMesssage
-            ];
-          }
+          giftLeftSideMessagesQueue.value = [
+            ...giftLeftSideMessagesQueue.value,
+            giftMesssage
+          ];
+          // for (var i = 0; i < message.objChat.data.quantity; i++) {
+          //   giftLeftSideMessagesQueue.value = [
+          //     ...giftLeftSideMessagesQueue.value,
+          //     giftMesssage..objChat.data.currentQuantity = i + 1
+          //   ];
+          // }
         }
       } else {
         commonMessages.value = [
@@ -64,5 +72,16 @@ class ChatResultController extends GetxController {
   void onClose() {
     socketManager.socket!.off('chatresult');
     super.onClose();
+  }
+
+  ChatMessage<ChatGiftMessageObjChatData>?
+      removeGiftLeftSideMessagesQueueByIndex(int index) {
+    try {
+      var giftMessage = giftLeftSideMessagesQueue.value.removeAt(index);
+      giftLeftSideMessagesQueue.refresh();
+      return giftMessage;
+    } catch (e) {
+      return null;
+    }
   }
 }

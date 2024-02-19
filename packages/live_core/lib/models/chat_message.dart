@@ -82,6 +82,7 @@ class ChatGiftMessageObjChatData {
   final int gid;
   final int animationLayout;
   final int quantity;
+  int? currentQuantity;
 
   ChatGiftMessageObjChatData({
     required this.gid,
