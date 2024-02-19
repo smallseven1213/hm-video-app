@@ -1,7 +1,7 @@
 class HMApiResponsePaginationData<T> {
-  String? current;
+  int? current;
   T? data;
-  String? limit;
+  int? limit;
   int? total;
 
   HMApiResponsePaginationData(
