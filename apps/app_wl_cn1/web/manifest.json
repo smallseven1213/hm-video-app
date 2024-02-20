@@ -1,11 +1,11 @@
 {
-    "name": "AV传媒",
-    "short_name": "AV传媒",
+    "name": "SV传媒",
+    "short_name": "SV传媒",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "AV传媒",
+    "description": "SV传媒",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
