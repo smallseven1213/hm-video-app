@@ -177,6 +177,9 @@ class _MessageInputWidgetState extends State<MessageInputWidget> {
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.all(10),
                 ),
+                onSubmitted: (_) {
+                  widget.onSend(); // 當按下Enter鍵時調用
+                },
               ),
             ),
           ),
