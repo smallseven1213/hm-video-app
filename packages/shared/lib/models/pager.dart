@@ -1,7 +1,7 @@
 class Pager<T> {
   final int total;
-  final String current;
-  final String limit;
+  final int current;
+  final int limit;
   final List<T> data;
 
   Pager({

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class SearchButton extends StatelessWidget {
   const SearchButton({Key? key}) : super(key: key);
@@ -7,7 +9,8 @@ class SearchButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        print("clicked!");
+        MyRouteDelegate.of(context).push(AppRoutes.search,
+            args: {'inputDefaultValue': '', 'autoSearch': false});
       },
       child: Container(
         width: 31,

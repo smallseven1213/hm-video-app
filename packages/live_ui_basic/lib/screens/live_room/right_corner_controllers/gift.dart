@@ -14,6 +14,7 @@ import 'package:live_ui_basic/widgets/live_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../../libs/showLiveDialog.dart';
+import '../../../widgets/x_count.dart';
 import 'user_diamonds.dart';
 
 final liveApi = LiveApi();
@@ -246,8 +247,8 @@ class _GiftItemState extends State<GiftItem>
           // If insufficient funds, show dialog and reset count
           showInsufficientFundsDialog(context);
         } else {
-          LiveApiResponseBase<bool> response = await liveApi.sendGift(
-              widget.gift.id, price, clickCount);
+          LiveApiResponseBase<bool> response =
+              await liveApi.sendGift(widget.gift.id, price, clickCount);
           if (response.code == 200) {
             Get.find<LiveUserController>().getUserDetail();
           } else {
@@ -308,37 +309,37 @@ class _GiftItemState extends State<GiftItem>
             ],
           ),
         ),
-        if (clickCount > 1) // Display click count if greater than 1
-          ScaleTransition(
-            scale: _scaleAnimation,
-            child: Container(
-              height: 50,
-              padding: const EdgeInsets.all(2),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'x$clickCount',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontStyle: FontStyle.italic,
-                    fontWeight: FontWeight.bold,
-                    fontSize: clickCount > 5
-                        ? clickCount > 10
-                            ? 22
-                            : 20
-                        : 18,
-                    shadows: const [
-                      Shadow(
-                        color: Colors.black,
-                        blurRadius: 2,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
+        if (clickCount > 1) XCountWidget(count: clickCount),
+        // ScaleTransition(
+        //   scale: _scaleAnimation,
+        //   child: Container(
+        //     height: 50,
+        //     padding: const EdgeInsets.all(2),
+        //     child: Align(
+        //       alignment: Alignment.center,
+        //       child: Text(
+        //         'x$clickCount',
+        //         textAlign: TextAlign.center,
+        //         style: TextStyle(
+        //           color: Colors.white,
+        //           fontStyle: FontStyle.italic,
+        //           fontWeight: FontWeight.bold,
+        //           fontSize: clickCount > 5
+        //               ? clickCount > 10
+        //                   ? 22
+        //                   : 20
+        //               : 18,
+        //           shadows: const [
+        //             Shadow(
+        //               color: Colors.black,
+        //               blurRadius: 2,
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

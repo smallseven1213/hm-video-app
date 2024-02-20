@@ -12,6 +12,7 @@ import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/user_setting/user_setting_more_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/utils/handle_url.dart';
 
 import 'package:app_wl_cn1/config/colors.dart';
 import 'package:app_wl_cn1/screens/user_screen/scan_qrcode.dart';
@@ -164,7 +165,12 @@ class ListMenuState extends State<ListMenu> {
             name: item.name ?? '',
             icon: item.photoSid ?? '',
             onTap: () {
-              MyRouteDelegate.of(context).push(item.path ?? '');
+              if (item.path!.startsWith('http://') ||
+                  item.path!.startsWith('https://')) {
+                handleHttpUrl(item.path!);
+              } else {
+                MyRouteDelegate.of(context).push(item.path ?? '');
+              }
             },
           );
         });
