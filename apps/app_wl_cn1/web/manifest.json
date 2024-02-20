@@ -1,11 +1,11 @@
 {
-    "name": "app_wl_cn1",
-    "short_name": "app_wl_cn1",
+    "name": "AV传媒",
+    "short_name": "AV传媒",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "AV传媒",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
