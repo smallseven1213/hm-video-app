@@ -1,11 +1,11 @@
 {
-    "name": "色色視頻",
-    "short_name": "色色視頻",
+    "name": "K9视频",
+    "short_name": "K9视频",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "色色視頻 打開你的 AV 新世界",
+    "description": "K9视频",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
