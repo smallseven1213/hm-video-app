@@ -1,11 +1,8 @@
 import 'package:get/get.dart';
 
-import '../apis/live_api.dart';
 import '../models/live_room.dart';
 import '../models/room.dart';
 import 'live_user_controller.dart';
-
-final liveApi = LiveApi();
 
 class LiveRoomController extends GetxController {
   int pid;
@@ -14,6 +11,7 @@ class LiveRoomController extends GetxController {
   Rx<double> displayAmount = 0.0.obs; // 金額
   var displayUserCount = 0.obs; // 人數
   var hasError = false.obs;
+
   LiveRoomController(this.pid);
 
   // initState
