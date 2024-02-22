@@ -204,10 +204,9 @@ class GiftItem extends StatefulWidget {
 
 class _GiftItemState extends State<GiftItem>
     with SingleTickerProviderStateMixin {
-  int clickCount = 0; // To keep track of clicks
+  ValueNotifier<int> clickCount = ValueNotifier(0);
   Timer? debounceTimer;
   late AnimationController _animationController;
-  late Animation<double> _scaleAnimation;
 
   @override
   void initState() {
@@ -215,9 +214,6 @@ class _GiftItemState extends State<GiftItem>
     _animationController = AnimationController(
       duration: const Duration(milliseconds: 150), // 动画持续时间
       vsync: this,
-    );
-    _scaleAnimation = Tween<double>(begin: 0.8, end: 1).animate(
-      CurvedAnimation(parent: _animationController, curve: Curves.easeOut),
     );
   }
 
@@ -231,7 +227,7 @@ class _GiftItemState extends State<GiftItem>
     _animationController
       ..reset() // 重置动画
       ..forward();
-    clickCount += 1; // Increment click count on every tap
+    clickCount.value += 1; // Increment click count on every tap
 
     if (debounceTimer?.isActive ?? false) {
       debounceTimer!.cancel(); // Cancel existing timer if it's active
@@ -241,14 +237,14 @@ class _GiftItemState extends State<GiftItem>
     debounceTimer = Timer(const Duration(milliseconds: 300), () async {
       try {
         var price = double.parse(widget.gift.price);
-        var totalPrice = price * clickCount;
+        var totalPrice = price * clickCount.value;
         var userAmount = Get.find<LiveUserController>().getAmount;
         if (userAmount < totalPrice) {
           // If insufficient funds, show dialog and reset count
           showInsufficientFundsDialog(context);
         } else {
           LiveApiResponseBase<bool> response =
-              await liveApi.sendGift(widget.gift.id, price, clickCount);
+              await liveApi.sendGift(widget.gift.id, price, clickCount.value);
           if (response.code == 200) {
             Get.find<LiveUserController>().getUserDetail();
           } else {
@@ -259,14 +255,9 @@ class _GiftItemState extends State<GiftItem>
         print(e);
         // Optionally show error dialog
       } finally {
-        setState(() {
-          clickCount =
-              0; // Reset click count after sending data to server or on error
-        });
+        clickCount.value = 0; // Reset click count
       }
     });
-
-    setState(() {}); // Update UI to reflect the new click count immediately
   }
 
   @override
@@ -309,37 +300,16 @@ class _GiftItemState extends State<GiftItem>
             ],
           ),
         ),
-        if (clickCount > 1) XCountWidget(count: clickCount),
-        // ScaleTransition(
-        //   scale: _scaleAnimation,
-        //   child: Container(
-        //     height: 50,
-        //     padding: const EdgeInsets.all(2),
-        //     child: Align(
-        //       alignment: Alignment.center,
-        //       child: Text(
-        //         'x$clickCount',
-        //         textAlign: TextAlign.center,
-        //         style: TextStyle(
-        //           color: Colors.white,
-        //           fontStyle: FontStyle.italic,
-        //           fontWeight: FontWeight.bold,
-        //           fontSize: clickCount > 5
-        //               ? clickCount > 10
-        //                   ? 22
-        //                   : 20
-        //               : 18,
-        //           shadows: const [
-        //             Shadow(
-        //               color: Colors.black,
-        //               blurRadius: 2,
-        //             ),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        ValueListenableBuilder<int>(
+          valueListenable: clickCount,
+          builder: (context, value, child) {
+            if (value > 1) {
+              return XCountWidget(count: value);
+            } else {
+              return const SizedBox.shrink(); // 当clickCount <= 1时不显示任何内容
+            }
+          },
+        ),
       ],
     );
   }
