@@ -121,12 +121,12 @@ class Blocks {
 }
 
 class Videos {
-  num? total;
-  String? current;
-  num? limit;
+  int? total;
+  int? current;
+  int? limit;
   List<Vod>? data;
 
-  Videos({total, current, limit, data});
+  Videos({this.total, this.current, this.limit, this.data});
 
   Videos.fromJson(Map<String, dynamic> json) {
     total = json['total'];
@@ -145,8 +145,15 @@ class Videos {
     data['total'] = total;
     data['current'] = current;
     data['limit'] = limit;
-    if (data['data'].isNotEmpty) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    if (this.data != null && this.data!.isNotEmpty) {
+      data['data'] = this.data!.map((Vod v) {
+        try {
+          return v.toJson();
+        } catch (e) {
+          print('### toJson error: $e');
+          return Vod(0, '');
+        }
+      }).toList();
     }
     return data;
   }
