@@ -10,7 +10,8 @@ class PlayerLayout extends StatefulWidget {
   _PlayerLayoutState createState() => _PlayerLayoutState();
 }
 
-class _PlayerLayoutState extends State<PlayerLayout> {
+class _PlayerLayoutState extends State<PlayerLayout>
+    with WidgetsBindingObserver {
   late VideoPlayerController videoController;
   bool hasError = false;
 
@@ -62,6 +63,18 @@ class _PlayerLayoutState extends State<PlayerLayout> {
   void dispose() {
     videoController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    if (state == AppLifecycleState.paused) {
+      // 應用進入背景，暫停視頻
+      videoController.pause();
+    } else if (state == AppLifecycleState.resumed) {
+      // 應用返回前台，重新初始化視頻播放器
+      initializeVideoPlayer();
+    }
   }
 
   @override
