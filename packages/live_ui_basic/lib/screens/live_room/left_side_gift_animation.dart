@@ -17,17 +17,25 @@ class LeftSideGiftAnimation extends StatefulWidget {
 class _LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _lottieController;
+  int _currentRepeatCount = 0;
 
   @override
   void initState() {
     super.initState();
-    print('leftsidegiftanimation init');
     _lottieController = AnimationController(vsync: this)
       ..addStatusListener((status) {
-        print('leftsidegiftanimation listender');
-        if (status == AnimationStatus.completed && mounted) {
-          print('leftsidegiftanimation finish');
-          widget.onFinish?.call();
+        if (status == AnimationStatus.completed) {
+          if (_currentRepeatCount < widget.quantity - 1) {
+            // 检查是否达到重复次数
+            // 未达到，重置并重新启动动画
+            _currentRepeatCount++;
+            _lottieController
+              ..reset()
+              ..forward();
+          } else {
+            // 达到重复次数，调用完成回调
+            widget.onFinish?.call();
+          }
         }
       });
   }
@@ -45,16 +53,13 @@ class _LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
       controller: _lottieController,
       onLoaded: (composition) {
         var duration = composition.duration;
-        if (duration < const Duration(milliseconds: 1000)) {
-          duration = const Duration(milliseconds: 1000);
-        }
-        duration = duration * widget.quantity;
+        // if (duration < const Duration(milliseconds: 1000)) {
+        //   duration = const Duration(milliseconds: 1000);
+        // }
+        // duration = duration * widget.quantity;
         print("duration $duration");
         _lottieController
           ..duration = duration
-          ..repeat(
-            max: widget.quantity.toDouble(),
-          )
           ..forward();
       },
       height: 80,
@@ -65,15 +70,15 @@ class _LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
           controller: _lottieController,
           onLoaded: (composition) {
             var duration = composition.duration;
-            if (duration < const Duration(milliseconds: 1000)) {
-              duration = const Duration(milliseconds: 1000);
-            }
-            duration = duration * widget.quantity;
+            // if (duration < const Duration(milliseconds: 1000)) {
+            //   duration = const Duration(milliseconds: 1000);
+            // }
+            // duration = duration * widget.quantity;
             _lottieController
               ..duration = duration
-              ..repeat(
-                max: widget.quantity.toDouble(),
-              )
+              // ..repeat(
+              //   max: widget.quantity.toDouble(),
+              // )
               ..forward();
           },
         );

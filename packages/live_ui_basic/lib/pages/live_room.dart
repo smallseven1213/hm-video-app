@@ -6,6 +6,7 @@ import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
+import 'package:live_ui_basic/screens/live_room/center_gift_screen.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
 import 'package:live_ui_basic/screens/live_room/player_layout.dart';
 import 'package:live_ui_basic/screens/live_room/right_corner_controllers.dart';
@@ -172,6 +173,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                     key: ValueKey(widget.pid),
                     pid: widget.pid,
                   )),
+              const CenterGiftScreen()
             ],
           ),
         );
