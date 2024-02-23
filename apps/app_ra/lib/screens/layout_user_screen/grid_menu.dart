@@ -33,7 +33,7 @@ class GridMenuState extends State<GridMenu> {
     return UserSettingQuickLinkConsumer(
       child: (List<Navigation> quickLinks) {
         var menuItems = quickLinks.map((Navigation item) {
-          if (item.name == '身份卡') {
+          if (item.path == '/id') {
             return GridMenuItem(
               name: item.name ?? '',
               icon: item.photoSid ?? '',
