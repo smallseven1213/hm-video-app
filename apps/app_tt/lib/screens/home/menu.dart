@@ -32,7 +32,7 @@ class UserMenuWidget extends StatelessWidget {
                 : Container(),
             text: item.name ?? '',
             onTap: () {
-              if (item.name == '身份卡') {
+              if (item.path == '/id') {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
