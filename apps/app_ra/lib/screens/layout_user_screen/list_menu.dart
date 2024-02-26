@@ -47,13 +47,14 @@ class ListMenuState extends State<ListMenu> {
             children: <Widget>[
               ListTile(
                   leading: const Icon(Icons.photo_library),
-                  title: const Text('相簿選擇'),
+                  title:
+                      const Text('相簿選擇', style: TextStyle(color: Colors.white)),
                   onTap: () {
                     imgFromGallery(context);
                   }),
               ListTile(
                 leading: const Icon(Icons.photo_camera),
-                title: const Text('拍照'),
+                title: const Text('拍照', style: TextStyle(color: Colors.white)),
                 onTap: () async {
                   Navigator.of(context).pop();
                   Permission.camera.request().then((PermissionStatus status) {
@@ -63,7 +64,7 @@ class ListMenuState extends State<ListMenu> {
               ),
               ListTile(
                 leading: const Icon(Icons.cancel),
-                title: const Text('取消'),
+                title: const Text('取消', style: TextStyle(color: Colors.white)),
                 onTap: () {
                   Navigator.of(context).pop();
                 },
@@ -86,14 +87,15 @@ class ListMenuState extends State<ListMenu> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('權限不足'),
-            content: const Text('請允許訪問相機'),
+            title: const Text('權限不足', style: TextStyle(color: Colors.white)),
+            content:
+                const Text('請允許訪問相機', style: TextStyle(color: Colors.white)),
             actions: [
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('確定'),
+                child: const Text('確定', style: TextStyle(color: Colors.white)),
               ),
             ],
           );

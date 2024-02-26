@@ -28,9 +28,9 @@ void main() async {
     allRoutes.keys.first,
     // [必填]DlJSON来源
     [
-      'https://dl.dlaabb.com/$env/dl.json',
-      'https://dl.dlaabb.info/$env/dl.json',
-      'https://dl.dlaabb.net/$env/dl.json',
+      'https://dl.dl-aabb.com/$env/dl.json',
+      'https://dl.dl-aabb.info/$env/dl.json',
+      'https://dl.dl-aabb.net/$env/dl.json',
     ],
     allRoutes,
     AppColors.colors,
