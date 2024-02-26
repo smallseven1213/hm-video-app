@@ -143,7 +143,7 @@ class ListMenuState extends State<ListMenu> {
     return UserSettingMoreLinkConsumer(
       child: (quickLinks) {
         final items = quickLinks.map((Navigation item) {
-          if (item.name == '找回帐号') {
+          if (item.path == '/recover_account') {
             return ListMenuItem(
               name: item.name ?? '',
               icon: item.photoSid ?? '',
