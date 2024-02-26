@@ -168,7 +168,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               Positioned(
                   top: MediaQuery.of(context).padding.top + 110,
                   right: 10,
-                  child: const CommandController()),
+                  child: CommandController(pid: widget.pid)),
               RoomPaymentCheck(
                   pid: widget.pid,
                   child: (bool hasPermission) {
