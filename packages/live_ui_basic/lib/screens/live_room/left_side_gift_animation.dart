@@ -76,15 +76,8 @@ class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
               controller: _lottieController,
               onLoaded: (composition) {
                 var duration = composition.duration;
-                // if (duration < const Duration(milliseconds: 1000)) {
-                //   duration = const Duration(milliseconds: 1000);
-                // }
-                // duration = duration * widget.quantity;
                 _lottieController
                   ..duration = duration
-                  // ..repeat(
-                  //   max: widget.quantity.toDouble(),
-                  // )
                   ..forward();
               },
             );
