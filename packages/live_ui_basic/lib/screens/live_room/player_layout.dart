@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -94,7 +96,28 @@ class _PlayerLayoutState extends State<PlayerLayout>
       color: Colors.black,
       alignment: Alignment.center,
       child: videoController.value.isInitialized
-          ? VideoPlayer(videoController)
+          ? Stack(
+              children: [
+                VideoPlayer(videoController),
+                Center(
+                  child: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                      child: Container(
+                        width: 200.0,
+                        height: 200.0,
+                        decoration: BoxDecoration(
+                            color: Colors.grey.shade200.withOpacity(0.5)),
+                        child: Center(
+                          child: Text('毛玻璃',
+                              style: Theme.of(context).textTheme.headline2),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
           : const CircularProgressIndicator(),
     );
   }
