@@ -41,12 +41,6 @@ class ChatResultController extends GetxController {
             ...giftCenterMessagesQueue.value,
             giftMesssage
           ];
-          // for (var i = 0; i < message.objChat.data.quantity; i++) {
-          //   giftCenterMessagesQueue.value = [
-          //     ...giftCenterMessagesQueue.value,
-          //     giftMesssage..objChat.data.currentQuantity = i + 1
-          //   ];
-          // }
         } else if (giftMesssage.objChat.data.animationLayout == 1) {
           giftLeftSideMessagesQueue.value = [
             ...giftLeftSideMessagesQueue.value,
@@ -59,12 +53,12 @@ class ChatResultController extends GetxController {
           //   ];
           // }
         }
-      } else {
-        commonMessages.value = [
-          ...commonMessages.value,
-          message as ChatMessage<String>
-        ];
       }
+
+      commonMessages.value = [
+        ...commonMessages.value,
+        message as ChatMessage<String>
+      ];
     }
   }
 
