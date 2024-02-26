@@ -1,12 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:video_player/video_player.dart';
 
 class PlayerLayout extends StatefulWidget {
   final Uri uri;
+  final int pid;
 
-  const PlayerLayout({Key? key, required this.uri}) : super(key: key);
+  const PlayerLayout({Key? key, required this.uri, required this.pid})
+      : super(key: key);
 
   @override
   _PlayerLayoutState createState() => _PlayerLayoutState();
@@ -92,12 +95,34 @@ class _PlayerLayoutState extends State<PlayerLayout>
       );
     }
 
-    return Container(
-      color: Colors.black,
-      alignment: Alignment.center,
-      child: videoController.value.isInitialized
-          ? VideoPlayer(videoController)
-          : const CircularProgressIndicator(),
+    return Stack(
+      children: [
+        Container(
+          color: Colors.black,
+          alignment: Alignment.center,
+          child: videoController.value.isInitialized
+              ? VideoPlayer(videoController)
+              : const CircularProgressIndicator(),
+        ),
+        RoomPaymentCheck(
+            pid: widget.pid,
+            child: (bool hasPermission) {
+              return hasPermission
+                  ? const SizedBox()
+                  : Positioned.fill(
+                      child: Center(
+                      child: ClipRect(
+                        child: BackdropFilter(
+                          filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.grey.shade200.withOpacity(0.5)),
+                          ),
+                        ),
+                      ),
+                    ));
+            }),
+      ],
     );
   }
 }

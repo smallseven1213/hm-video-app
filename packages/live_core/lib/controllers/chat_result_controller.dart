@@ -12,7 +12,7 @@ class ChatResultController extends GetxController {
   var giftCenterMessagesQueue = <ChatMessage<ChatGiftMessageObjChatData>>[].obs;
   var giftLeftSideMessagesQueue =
       <ChatMessage<ChatGiftMessageObjChatData>>[].obs;
-  var commonMessages = <ChatMessage<String>>[].obs;
+  var commonMessages = <ChatMessage>[].obs;
   Queue<ChatMessage<ChatGiftMessageObjChatData>> centerGiftAnimationQueue =
       Queue();
 
@@ -55,10 +55,7 @@ class ChatResultController extends GetxController {
         }
       }
 
-      commonMessages.value = [
-        ...commonMessages.value,
-        message as ChatMessage<String>
-      ];
+      commonMessages.value = [...commonMessages, message];
     }
   }
 

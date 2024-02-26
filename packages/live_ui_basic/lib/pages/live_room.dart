@@ -138,6 +138,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               if (controller.displayAmount.value <= 0 &&
                   controller.liveRoom.value!.pullUrlDecode != null)
                 PlayerLayout(
+                    pid: widget.pid,
                     uri: Uri.parse(
                         '${controller.liveRoom.value!.pullUrlDecode!}&token=${GetStorage().read('live-token')}')),
               Positioned(
@@ -156,7 +157,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               Positioned(
                   bottom: MediaQuery.of(context).padding.bottom + 25,
                   right: 10,
-                  child: const RightCornerControllers()),
+                  child: RightCornerControllers(pid: widget.pid)),
               Positioned(
                   bottom: MediaQuery.of(context).padding.bottom,
                   left: 7,
@@ -170,28 +171,20 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   child: const CommandController()),
               RoomPaymentCheck(
                   pid: widget.pid,
-                  child: Positioned.fill(
-                      child: Center(
-                    child: ClipRect(
-                      child: BackdropFilter(
-                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade200.withOpacity(0.5)),
-                        ),
-                      ),
-                    ),
-                  ))),
-              RoomPaymentCheck(
-                  pid: widget.pid,
-                  child: Positioned(
-                      bottom: MediaQuery.of(context).padding.bottom + 20,
-                      left: 40,
-                      right: 40,
-                      child: RoomPaymentButton(
-                        key: ValueKey(widget.pid),
-                        pid: widget.pid,
-                      ))),
+                  child: (bool hasPermission) {
+                    if (!hasPermission) {
+                      return Positioned(
+                          bottom: MediaQuery.of(context).padding.bottom + 20,
+                          left: 40,
+                          right: 40,
+                          child: RoomPaymentButton(
+                            key: ValueKey(widget.pid),
+                            pid: widget.pid,
+                          ));
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }),
               const CenterGiftScreen()
             ],
           ),
