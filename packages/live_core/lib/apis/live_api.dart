@@ -8,6 +8,7 @@ import '../controllers/live_list_controller.dart';
 import '../libs/decryptAES256ECB.dart';
 import '../models/gift.dart';
 import '../models/live_api_response_base.dart';
+import '../models/live_api_response_list.dart';
 import '../models/live_room.dart';
 import '../models/live_user_detail.dart';
 import '../models/room.dart';
@@ -24,44 +25,34 @@ class LiveApi {
   }
 
   // 主播排行榜
-  Future<List<Room>> getRooms({
-    status = 0,
-    chargeType = 0,
-    ranking =
-        SortType.defaultSort, // default / watch / income / newcomer / fans
-    followType = 0,
+  Future<LiveApiResponseList<Room>> getRooms({
+    int page = 1,
+    int perPage = 20,
+    int status = 0,
+    int chargeType = 0,
+    SortType ranking = SortType.defaultSort,
+    int followType = 0,
   }) async {
-    var _ranking = ranking;
-    switch (ranking) {
-      case SortType.defaultSort:
-        _ranking = "default";
-      case SortType.watch:
-        _ranking = "watch";
-      case SortType.income:
-        _ranking = "income";
-      case SortType.newcomer:
-        _ranking = "newcomer";
-      case SortType.fans:
-        _ranking = "fans";
-      default:
-        _ranking = "default";
-    }
+    var _ranking = ranking.toString().split('.').last; // 更简洁的转换枚举到字符串
 
     const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
     var response = await liveFetcher(
       url:
-          '$userApiHost/room/list?page=1&per_page=20&status=$status&charge_type=$chargeType&ranking=$_ranking&follow=$followType',
+          '$userApiHost/room/list?page=$page&per_page=$perPage&status=$status&charge_type=$chargeType&ranking=$_ranking&follow=$followType',
     );
 
     if (response.data['data'].isEmpty) {
-      return [];
+      return LiveApiResponseList<Room>(
+        items: [],
+        pagination:
+            Pagination(currentPage: 0, lastPage: 0, perPage: 0, total: 0),
+      );
     }
 
-    List<Room> data = (response.data["data"]["list"]["items"] as List)
-        .map((item) => Room.fromJson(item))
-        .toList();
-
-    return data;
+    return LiveApiResponseList<Room>.fromJson(
+      response.data,
+      (itemJson) => Room.fromJson(itemJson), 
+    );
   }
 
   Future<LiveApiResponseBase<LiveRoom?>> enterRoom(int pid) async {
