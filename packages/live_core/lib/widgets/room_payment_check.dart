@@ -15,11 +15,11 @@ class RoomPaymentCheck extends StatelessWidget {
     LiveRoomController liveroomController = Get.find(tag: pid.toString());
 
     return Obx(() {
-      var noPermission = liveroomController.liveRoom.value == null ||
+      var hasPermission = liveroomController.liveRoom.value == null ||
           liveroomController.liveRoomInfo.value?.chargeType == 1 ||
           liveroomController.displayAmount.value <= 0;
 
-      return child(!noPermission);
+      return child(hasPermission);
     });
   }
 }

@@ -5,6 +5,7 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/command.dart';
+import 'package:live_core/widgets/room_payment_check.dart';
 
 import '../../libs/showLiveDialog.dart';
 import '../../widgets/live_button.dart';
@@ -13,21 +14,32 @@ import 'right_corner_controllers/user_diamonds.dart';
 final liveApi = LiveApi();
 
 class CommandController extends StatelessWidget {
-  const CommandController({Key? key}) : super(key: key);
+  final int pid;
+  const CommandController({Key? key, required this.pid}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (BuildContext context) {
-            return Commands();
-          },
-        );
-      },
-      child: Image.asset('packages/live_ui_basic/assets/images/ic_list_c.webp',
-          width: 33, height: 33),
-    );
+    return RoomPaymentCheck(
+        pid: pid,
+        child: (bool hasPermission) {
+          if (hasPermission) {
+            return InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return Commands();
+                  },
+                );
+              },
+              child: Image.asset(
+                  'packages/live_ui_basic/assets/images/ic_list_c.webp',
+                  width: 33,
+                  height: 33),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        });
   }
 }
 
