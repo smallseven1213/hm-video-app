@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
@@ -5,6 +7,7 @@ import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
+import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
 import 'package:live_ui_basic/screens/live_room/center_gift_screen.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
@@ -135,6 +138,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               if (controller.displayAmount.value <= 0 &&
                   controller.liveRoom.value!.pullUrlDecode != null)
                 PlayerLayout(
+                    pid: widget.pid,
                     uri: Uri.parse(
                         '${controller.liveRoom.value!.pullUrlDecode!}&token=${GetStorage().read('live-token')}')),
               Positioned(
@@ -153,7 +157,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               Positioned(
                   bottom: MediaQuery.of(context).padding.bottom + 25,
                   right: 10,
-                  child: const RightCornerControllers()),
+                  child: RightCornerControllers(pid: widget.pid)),
               Positioned(
                   bottom: MediaQuery.of(context).padding.bottom,
                   left: 7,
@@ -164,15 +168,23 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
               Positioned(
                   top: MediaQuery.of(context).padding.top + 110,
                   right: 10,
-                  child: const CommandController()),
-              Positioned(
-                  bottom: MediaQuery.of(context).padding.bottom + 20,
-                  left: 40,
-                  right: 40,
-                  child: RoomPaymentButton(
-                    key: ValueKey(widget.pid),
-                    pid: widget.pid,
-                  )),
+                  child: CommandController(pid: widget.pid)),
+              RoomPaymentCheck(
+                  pid: widget.pid,
+                  child: (bool hasPermission) {
+                    if (!hasPermission) {
+                      return Positioned(
+                          bottom: MediaQuery.of(context).padding.bottom + 20,
+                          left: 40,
+                          right: 40,
+                          child: RoomPaymentButton(
+                            key: ValueKey(widget.pid),
+                            pid: widget.pid,
+                          ));
+                    } else {
+                      return const SizedBox.shrink();
+                    }
+                  }),
               const CenterGiftScreen()
             ],
           ),

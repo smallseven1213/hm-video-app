@@ -40,6 +40,7 @@ class MessageItem<T> extends StatelessWidget {
     }
     return Container(
       margin: const EdgeInsets.only(top: 10),
+      width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         // vertical top
@@ -61,40 +62,33 @@ class MessageItem<T> extends StatelessWidget {
                           fit: BoxFit.cover,
                         ))),
           const SizedBox(width: 6),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width - 120,
+          Expanded(
+              child: Container(
+            decoration: BoxDecoration(
+              color: const Color(0x65242a3d),
+              borderRadius: BorderRadius.circular(5),
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0x65242a3d),
-                borderRadius: BorderRadius.circular(5),
-              ),
-              padding: const EdgeInsets.all(5),
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: messageText,
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                    ),
-                    WidgetSpan(
-                      child: SizedBox(width: 10), // 提供固定的 10 單位空間
-                    ),
-                    TextSpan(
-                      text: formatTimestamp(message.timestamp),
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
-                    ),
-                  ],
-                ),
+            padding: const EdgeInsets.all(5),
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: messageText,
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  WidgetSpan(
+                    child: SizedBox(width: 10), // 提供固定的 10 單位空間
+                  ),
+                  TextSpan(
+                    text: formatTimestamp(message.timestamp),
+                    style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                ],
               ),
             ),
-          ),
+          )),
         ],
       ),
     );
   }
 }
-
-
-// 截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截截

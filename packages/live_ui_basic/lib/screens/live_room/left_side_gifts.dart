@@ -5,13 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/models/gift.dart';
-import 'package:lottie/lottie.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
-import 'package:live_core/socket/live_web_socket_manager.dart';
-
-import '../../widgets/group_x_count_widget.dart';
-import '../../widgets/x_count.dart';
 import 'left_side_gift_animation.dart';
 
 class GiftAnimationData {
@@ -134,7 +129,6 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
                     isAnimating = false;
                   },
                 ),
-                GroupXCountWidget(totalCount: giftAnimationData?.quantity ?? 1),
               ],
             ),
     );

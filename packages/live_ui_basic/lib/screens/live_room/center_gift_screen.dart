@@ -6,6 +6,8 @@ import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../widgets/x_count.dart';
+
 class CenterGiftScreen extends StatefulWidget {
   const CenterGiftScreen({
     Key? key,
@@ -24,6 +26,9 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
       Get.find<ChatResultController>();
   String? lottiePath;
   Timer? timer;
+  ValueNotifier<int> xCount = ValueNotifier<int>(1);
+  int currentRepeatCount = 0;
+  int targetRepeatCount = 0;
 
   @override
   void initState() {
@@ -33,6 +38,9 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
           chatResultController.giftCenterMessagesQueue;
       if (centerGiftAnimationQueue.isNotEmpty && !isAnimating) {
         var giftMessage = centerGiftAnimationQueue.removeAt(0);
+        targetRepeatCount = giftMessage.objChat.data.quantity; // 设置目标重复次数
+        currentRepeatCount = 0; // 重置当前重复次数
+        xCount.value = 1; // 重置xCount
         setLottieAnimation(giftMessage.objChat.data.gid);
       }
     });
@@ -40,11 +48,19 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
     _lottieController = AnimationController(vsync: this)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed && mounted) {
-          isAnimating = false;
-          finishAnimation();
+          if (currentRepeatCount < targetRepeatCount - 1) {
+            currentRepeatCount++;
+            xCount.value = currentRepeatCount + 1;
+            _lottieController.forward(from: 0.0); // 从头开始动画
+          } else {
+            isAnimating = false;
+            finishAnimation();
+          }
         }
       });
   }
+
+  // 其他方法保持不变
 
   @override
   void dispose() {
@@ -86,22 +102,16 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
     return Positioned.fill(
       child: Align(
         alignment: Alignment.center,
-        child: GestureDetector(
-          // onTap: finishAnimation,
-          onTap: () {},
-          child: Center(
-              child: Lottie.network(
-            lottiePath ?? "",
-            controller: _lottieController,
-            onLoaded: (composition) {
-              var duration = composition.duration;
-              _lottieController
-                ..duration = duration
-                ..forward();
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return Lottie.asset(
-                'packages/live_ui_basic/assets/lotties/present.json',
+        child: Column(
+          // horizaontal center
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            GestureDetector(
+              // onTap: finishAnimation,
+              onTap: () {},
+              child: Center(
+                  child: Lottie.network(
+                lottiePath ?? "",
                 controller: _lottieController,
                 onLoaded: (composition) {
                   var duration = composition.duration;
@@ -109,9 +119,27 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
                     ..duration = duration
                     ..forward();
                 },
-              );
-            },
-          )),
+                errorBuilder: (context, error, stackTrace) {
+                  return Lottie.asset(
+                    'packages/live_ui_basic/assets/lotties/present.json',
+                    controller: _lottieController,
+                    onLoaded: (composition) {
+                      var duration = composition.duration;
+                      _lottieController
+                        ..duration = duration
+                        ..forward();
+                    },
+                  );
+                },
+              )),
+            ),
+            ValueListenableBuilder<int>(
+              valueListenable: xCount,
+              builder: (context, value, child) {
+                return XCountWidget(count: value);
+              },
+            )
+          ],
         ),
       ),
     );
