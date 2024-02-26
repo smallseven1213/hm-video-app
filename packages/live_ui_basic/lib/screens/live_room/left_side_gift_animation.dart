@@ -19,7 +19,8 @@ class LeftSideGiftAnimation extends StatefulWidget {
 class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _lottieController;
-  ValueNotifier<int> currentRepeatCount = ValueNotifier<int>(0);
+  int currentRepeatCount = 0;
+  ValueNotifier<int> xCount = ValueNotifier<int>(1);
 
   @override
   void initState() {
@@ -27,10 +28,11 @@ class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
     _lottieController = AnimationController(vsync: this)
       ..addStatusListener((status) {
         if (status == AnimationStatus.completed) {
-          if (currentRepeatCount.value < widget.quantity - 1) {
+          if (currentRepeatCount < widget.quantity - 1) {
             // 检查是否达到重复次数
             // 未达到，重置并重新启动动画
-            currentRepeatCount.value++;
+            currentRepeatCount++;
+            xCount.value = currentRepeatCount + 1;
             _lottieController
               ..reset()
               ..forward();
@@ -89,7 +91,7 @@ class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
           },
         ),
         ValueListenableBuilder<int>(
-          valueListenable: currentRepeatCount,
+          valueListenable: xCount,
           builder: (context, value, child) {
             return XCountWidget(count: value);
           },

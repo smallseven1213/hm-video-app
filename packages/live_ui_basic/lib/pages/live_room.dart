@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
@@ -5,6 +7,7 @@ import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
+import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
 import 'package:live_ui_basic/screens/live_room/center_gift_screen.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
@@ -165,14 +168,30 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   top: MediaQuery.of(context).padding.top + 110,
                   right: 10,
                   child: const CommandController()),
-              Positioned(
-                  bottom: MediaQuery.of(context).padding.bottom + 20,
-                  left: 40,
-                  right: 40,
-                  child: RoomPaymentButton(
-                    key: ValueKey(widget.pid),
-                    pid: widget.pid,
-                  )),
+              RoomPaymentCheck(
+                  pid: widget.pid,
+                  child: Positioned.fill(
+                      child: Center(
+                    child: ClipRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade200.withOpacity(0.5)),
+                        ),
+                      ),
+                    ),
+                  ))),
+              RoomPaymentCheck(
+                  pid: widget.pid,
+                  child: Positioned(
+                      bottom: MediaQuery.of(context).padding.bottom + 20,
+                      left: 40,
+                      right: 40,
+                      child: RoomPaymentButton(
+                        key: ValueKey(widget.pid),
+                        pid: widget.pid,
+                      ))),
               const CenterGiftScreen()
             ],
           ),
