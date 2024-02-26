@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -27,7 +28,7 @@ class LiveListController extends GetxController {
   var roomsWithoutFilter = <Room>[].obs;
   var rooms = <Room>[].obs;
   int currentPage = 1;
-  final int perPage = 1;
+  final int perPage = 20;
   bool hasMore = true; // 是否還有更多資料
 
   Rx<int?> tagId = Rx<int?>(null);
@@ -52,8 +53,28 @@ class LiveListController extends GetxController {
     LiveSocketIOManager socketManager = LiveSocketIOManager();
 
     socketManager.messages.listen((message) {
-      if (message.contains('refresh:room:list')) {
-        fetchData();
+      var decodedMessage = jsonDecode(message);
+      String event = decodedMessage['event'];
+
+      if (event == 'broadcast:onAir') {
+        print('###broadcast:onAir: $message');
+
+        List<dynamic> dataList = decodedMessage['data']['list'];
+        List<Room> newRooms =
+            dataList.map<Room>((roomJson) => Room.fromJson(roomJson)).toList();
+        roomsWithoutFilter.addAll(newRooms);
+        // filterRoomsByTagId();
+      } else if (event == 'broadcast:offAir') {
+        print('###broadcast:offAir: $message');
+        // 处理 'broadcast:offAir' 事件
+        List<dynamic> dataList = decodedMessage['data']['list'];
+        for (var data in dataList) {
+          int idToRemove = data['id'];
+          roomsWithoutFilter.removeWhere((room) => room.id == idToRemove);
+        }
+        // filterRoomsByTagId();
+      } else {
+        print('Received an unknown event: $event');
       }
     });
   }
@@ -68,7 +89,7 @@ class LiveListController extends GetxController {
 
   fetchData({bool isLoadMore = false}) async {
     if (isLoadMore) {
-      currentPage++; 
+      currentPage++;
     } else {
       currentPage = 1; // 如果是刷新或首次加载，重置页码为1
       hasMore = true; // 重置有更多数据的标志
