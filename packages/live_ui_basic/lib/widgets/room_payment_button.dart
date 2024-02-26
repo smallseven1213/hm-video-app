@@ -85,13 +85,12 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                       if (result.code == 200) {
                         await liveroomController.fetchData();
                         Get.find<CommandsController>().fetchGifts();
-                        Get.find<LiveUserController>().getUserDetail();
                       } else {
                         // show alert
                       }
                     } on Exception catch (e) {
-                      print(e);
                     } finally {
+                      Get.find<LiveUserController>().getUserDetail();
                       setState(() {
                         isPurchasing = false;
                       });
