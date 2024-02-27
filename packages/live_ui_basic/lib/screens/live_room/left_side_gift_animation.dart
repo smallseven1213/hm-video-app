@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../widgets/x_count.dart';
+import '../../widgets/left_gift_x_count.dart';
 
 class LeftSideGiftAnimation extends StatefulWidget {
   final int quantity;
@@ -53,6 +53,8 @@ class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Lottie.network(
           widget.jsonPath,
@@ -68,7 +70,7 @@ class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
               ..duration = duration
               ..forward();
           },
-          height: 80,
+          width: 40,
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) {
             return Lottie.asset(
@@ -86,7 +88,7 @@ class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
         ValueListenableBuilder<int>(
           valueListenable: xCount,
           builder: (context, value, child) {
-            return XCountWidget(count: value);
+            return LeftGiftXCountWidget(count: value);
           },
         )
       ],
