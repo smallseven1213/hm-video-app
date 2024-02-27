@@ -41,7 +41,6 @@ class _RoomListProviderState extends State<RoomListProvider> {
 
   @override
   Widget build(BuildContext context) {
-    print('### latestMessage: ${socketIOManager.messages}');
     return MessageProvider(
       message: latestMessage,
       child: widget.child,

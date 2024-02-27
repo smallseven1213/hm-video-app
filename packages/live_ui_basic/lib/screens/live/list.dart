@@ -14,8 +14,6 @@ class LiveList extends StatefulWidget {
 class _LiveListState extends State<LiveList> {
   final LiveListController _controller = Get.find<LiveListController>();
 
- 
-
   @override
   void dispose() {
     _controller.reset();
