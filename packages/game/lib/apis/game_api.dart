@@ -52,7 +52,7 @@ class GameLobbyApi {
   Future<void> register() =>
       fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
 
-  Future enterGame(String tpCode, int gameId, int gameType) async {
+  Future enterGame(String tpCode, String gameId, int gameType) async {
     var value =
         await fetcher(url: '$apiPrefix/enter-game', method: 'POST', body: {
       'tpCode': tpCode,
