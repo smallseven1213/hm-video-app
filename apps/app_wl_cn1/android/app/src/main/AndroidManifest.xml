@@ -29,5 +29,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data
+            android:name="flutterPreviewText"
+            android:value="SV传媒 打开你的影音新世界" />
     </application>
 </manifest>
