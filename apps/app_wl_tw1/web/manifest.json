@@ -1,11 +1,11 @@
 {
-    "name": "K9 VIDEO",
-    "short_name": "K9 VIDEO",
+    "name": "K9 AV",
+    "short_name": "K9 AV",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "K9 VIDEO 打開你的 AV 新世界",
+    "description": "K9 AV 打開你的 AV 新世界",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
