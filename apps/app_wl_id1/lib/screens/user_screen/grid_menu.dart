@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/handle_url.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class GridMenuItem {
@@ -55,7 +56,12 @@ class GridMenuState extends State<GridMenu> {
             name: item.name ?? '',
             icon: item.photoSid ?? '',
             onTap: () {
-              MyRouteDelegate.of(context).push(item.path ?? '');
+              if (item.path!.startsWith('http://') ||
+                  item.path!.startsWith('https://')) {
+                handleHttpUrl(item.path!);
+              } else {
+                MyRouteDelegate.of(context).push(item.path ?? '');
+              }
             },
           );
         }).toList();
