@@ -12,8 +12,8 @@ import '../localization/game_localization_delegate.dart';
 
 String gameUrl = '';
 
-getGameUrl(String tpCode, int gameId, int gameType) async {
-  var res = await GameLobbyApi().enterGame(tpCode, gameId, gameType);
+getGameUrl(String tpCode, String gameId, int gameType) async {
+  var res = await GameLobbyApi().enterGame(tpCode, int.parse(gameId), gameType);
 
   if (res == null) {
     gameUrl = '';
