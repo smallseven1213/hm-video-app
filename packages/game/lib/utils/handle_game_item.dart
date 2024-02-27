@@ -13,7 +13,7 @@ import '../localization/game_localization_delegate.dart';
 String gameUrl = '';
 
 getGameUrl(String tpCode, String gameId, int gameType) async {
-  var res = await GameLobbyApi().enterGame(tpCode, int.parse(gameId), gameType);
+  var res = await GameLobbyApi().enterGame(tpCode, gameId, gameType);
 
   if (res == null) {
     gameUrl = '';
@@ -43,7 +43,8 @@ _saveGameHistory({gameId}) async {
 void handleGameItem(BuildContext context,
     {gameId, updateGameHistory, tpCode, direction, gameType}) async {
   final GameLocalizations localizations = GameLocalizations.of(context)!;
-
+  logger.i(
+      'game info ======>: ,"gameId:"$gameId, "tpCode:"$tpCode, "gameType:"$gameType');
   try {
     onLoading(context, status: true);
     await getGameUrl(tpCode, gameId, gameType);
