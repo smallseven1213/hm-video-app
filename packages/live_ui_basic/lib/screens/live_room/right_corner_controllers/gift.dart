@@ -10,6 +10,7 @@ import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/gift.dart';
 import 'package:live_core/models/live_api_response_base.dart';
 import 'package:live_core/widgets/live_image.dart';
+import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/widgets/live_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
@@ -20,24 +21,33 @@ import 'user_diamonds.dart';
 final liveApi = LiveApi();
 
 class GiftWidget extends StatelessWidget {
-  const GiftWidget({Key? key}) : super(key: key);
+  final int pid;
+  const GiftWidget({Key? key, required this.pid}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {
-        showModalBottomSheet(
-          context: context,
-          builder: (BuildContext context) {
-            return Gifts();
-          },
-        );
-      },
-      child: Image.asset(
-          'packages/live_ui_basic/assets/images/gift_button.webp',
-          width: 33,
-          height: 33),
-    );
+    return RoomPaymentCheck(
+        pid: pid,
+        child: (bool hasPermission) {
+          if (hasPermission) {
+            return InkWell(
+              onTap: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const Gifts();
+                  },
+                );
+              },
+              child: Image.asset(
+                  'packages/live_ui_basic/assets/images/gift_button.webp',
+                  width: 33,
+                  height: 33),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        });
   }
 }
 
@@ -165,9 +175,8 @@ class _GiftsState extends State<Gifts> {
             ),
           ),
           AnimatedBuilder(
-            animation: _currentIndexNotifier, // 監聽ValueNotifier
+            animation: _currentIndexNotifier,
             builder: (context, child) {
-              // 這個builder只會重建以下小部件，當_currentIndexNotifier發生變化時
               return Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(totalPageCount, (index) {

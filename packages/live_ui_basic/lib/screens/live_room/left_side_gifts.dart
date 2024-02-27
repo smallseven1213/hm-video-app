@@ -5,13 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/models/gift.dart';
-import 'package:lottie/lottie.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
-import 'package:live_core/socket/live_web_socket_manager.dart';
-
-import '../../widgets/group_x_count_widget.dart';
-import '../../widgets/x_count.dart';
 import 'left_side_gift_animation.dart';
 
 class GiftAnimationData {
@@ -90,54 +85,124 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
-      child: giftAnimationData == null
-          ? Container()
-          : Row(
-              children: [
-                ClipOval(
-                    child: Container(
-                        width: 25.0,
-                        height: 25.0,
-                        color: Colors.black,
-                        child: giftAnimationData?.userAvatar.isEmpty == true
-                            ? SvgPicture.asset(
-                                'packages/live_ui_basic/assets/svgs/default_avatar.svg',
-                                fit: BoxFit.cover,
+        height: 80,
+        child: giftAnimationData == null
+            ? Container()
+            : Stack(
+                children: [
+                  IntrinsicWidth(
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: const Color(0x65ae57ff),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: Row(
+                            children: [
+                              ClipOval(
+                                  child: Container(
+                                      width: 40.0,
+                                      height: 40.0,
+                                      color: Colors.black,
+                                      child: giftAnimationData
+                                                  ?.userAvatar.isEmpty ==
+                                              true
+                                          ? SvgPicture.asset(
+                                              'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.network(
+                                              giftAnimationData!.userAvatar,
+                                              fit: BoxFit.cover,
+                                            ))),
+                              const SizedBox(width: 6.7),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    giftAnimationData?.userName ?? "某位使用者",
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                  Text(
+                                    '贈送禮物 ${giftAnimationData?.giftName}',
+                                    style: const TextStyle(
+                                        color: Colors.white, fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                width: 40,
                               )
-                            : // message.objChat.avatar use Image remote
-                            Image.network(
-                                giftAnimationData!.userAvatar,
-                                fit: BoxFit.cover,
-                              ))),
-                const SizedBox(width: 6),
-                Column(
-                  children: [
-                    Text(
-                      giftAnimationData?.userName ?? "某位使用者",
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 40),
+                      ],
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '贈送禮物 ${giftAnimationData?.giftName}',
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                  ),
+                  // 在此stack的左邊加入禮物動畫
+                  Positioned(
+                    right: 10,
+                    bottom: 40,
+                    child: LeftSideGiftAnimation(
+                      key: UniqueKey(),
+                      quantity: giftAnimationData?.quantity ?? 1,
+                      jsonPath: giftAnimationData?.giftLottiePath ?? "",
+                      onFinish: () {
+                        print("playAnimation end");
+                        isAnimating = false;
+                      },
                     ),
-                  ],
-                ),
-                const SizedBox(width: 6),
-                LeftSideGiftAnimation(
-                  key: UniqueKey(),
-                  quantity: giftAnimationData?.quantity ?? 1,
-                  jsonPath: giftAnimationData?.giftLottiePath ?? "",
-                  onFinish: () {
-                    print("playAnimation end");
-                    isAnimating = false;
-                  },
-                ),
-                GroupXCountWidget(totalCount: giftAnimationData?.quantity ?? 1),
-              ],
-            ),
-    );
+                  ),
+                ],
+              )
+        // : Row(
+        //     children: [
+        // ClipOval(
+        //     child: Container(
+        //         width: 40.0,
+        //         height: 40.0,
+        //         color: Colors.black,
+        //         child: giftAnimationData?.userAvatar.isEmpty == true
+        //             ? SvgPicture.asset(
+        //                 'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+        //                 fit: BoxFit.cover,
+        //               )
+        //             : Image.network(
+        //                 giftAnimationData!.userAvatar,
+        //                 fit: BoxFit.cover,
+        //               ))),
+        //       const SizedBox(width: 6),
+        //       Column(
+        //         children: [
+        // Text(
+        //   giftAnimationData?.userName ?? "某位使用者",
+        //   style: const TextStyle(color: Colors.white, fontSize: 12),
+        // ),
+        // const SizedBox(height: 4),
+        // Text(
+        //   '贈送禮物 ${giftAnimationData?.giftName}',
+        //   style: const TextStyle(color: Colors.white, fontSize: 12),
+        // ),
+        //         ],
+        //       ),
+        //       const SizedBox(width: 6),
+        // LeftSideGiftAnimation(
+        //   key: UniqueKey(),
+        //   quantity: giftAnimationData?.quantity ?? 1,
+        //   jsonPath: giftAnimationData?.giftLottiePath ?? "",
+        //   onFinish: () {
+        //     print("playAnimation end");
+        //     isAnimating = false;
+        //   },
+        // ),
+        //     ],
+        //   ),
+        );
   }
 
   @override
