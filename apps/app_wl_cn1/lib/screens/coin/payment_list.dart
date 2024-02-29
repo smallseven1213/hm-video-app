@@ -93,22 +93,31 @@ class PaymentListState extends State<PaymentList> {
       child: (payments) {
         return Container(
             padding: const EdgeInsets.all(16),
-            height: payments.isEmpty ? 250 : 420,
             child: Stack(
               children: [
                 Column(
                   children: [
-                    Text('請選擇支付方式',
-                        style: Theme.of(context).textTheme.headlineLarge),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 20),
-                      child: Text(
-                        '已選擇 ${widget.name} \$${widget.amount}',
-                        textAlign: TextAlign.left,
-                        style:
-                            const TextStyle(fontSize: 12, color: Colors.white),
-                      ),
+                    const Text('請選擇支付方式',
+                        style: TextStyle(color: Colors.black, fontSize: 14)),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          '已選擇 ${widget.name}',
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                              fontSize: 12, color: Colors.black),
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          widget.amount.toString(),
+                          textAlign: TextAlign.left,
+                          style: const TextStyle(
+                              fontSize: 16, color: Color(0xFFc91e1e)),
+                        )
+                      ],
                     ),
+                    const SizedBox(height: 10),
                     payments.isEmpty
                         ? const Expanded(
                             child: Padding(
@@ -139,68 +148,44 @@ class PaymentListState extends State<PaymentList> {
                                     decoration: BoxDecoration(
                                       border: Border.all(
                                           color: isSelected
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                              : Colors.white),
+                                              ? const Color(0xFFb5925c)
+                                              : const Color(0xFFd8d6de)),
                                       borderRadius: BorderRadius.circular(8),
-                                      color: isSelected
-                                          ? const Color(0xFF273262)
-                                          : null,
+                                      color: Colors.white,
                                     ),
                                     margin: const EdgeInsets.only(bottom: 8),
                                     child: Text(
                                       payment.type.toString(),
-                                      style: TextStyle(
-                                          color: isSelected
-                                              ? Theme.of(context)
-                                                  .colorScheme
-                                                  .primary
-                                              : Colors.white),
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 14),
                                     ),
                                   ),
                                 );
                               },
                             ),
                           ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 80,
-                          child: Button(
-                            text: '取消',
-                            type: isLoading ? 'disabled' : 'cancel',
-                            onPressed: () {
-                              if (isLoading) return;
-                              setState(() {
-                                selectedId = null;
-                                selectedType = null;
-                              });
-                              Navigator.pop(context);
-                            },
-                          ),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                      style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                          selectedId == null || isLoading
+                              ? const Color(0xFFd8d6de)
+                              : const Color(0xFFb5925c),
                         ),
-                        const SizedBox(width: 16),
-                        SizedBox(
-                          width: 80,
-                          child: Button(
-                            text: '確認',
-                            type: selectedId == null || isLoading
-                                ? 'disabled'
-                                : 'primary',
-                            onPressed: () {
-                              if (selectedId == null || isLoading) return;
-                              sendOrder(
-                                context,
-                                paymentChannelId: selectedId ?? 0,
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                        // 移除 fixedSize，使用 minimumSize 來設置最小高度，寬度將自動擴展
+                        minimumSize: MaterialStateProperty.all(
+                            const Size(double.infinity, 40)),
+                      ),
+                      onPressed: () {
+                        if (selectedId == null || isLoading) return;
+                        sendOrder(
+                          context,
+                          paymentChannelId: selectedId ?? 0,
+                        );
+                      },
+                      child: const Text('確認支付',
+                          style: TextStyle(color: Colors.white)),
                     ),
-                    if (!kIsWeb) const SizedBox(height: 40),
                   ],
                 ),
                 if (isLoading) const Center(child: CircularProgressIndicator()),
