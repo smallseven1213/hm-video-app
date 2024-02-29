@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:get/get.dart';
@@ -31,6 +32,7 @@ class LiveListController extends GetxController {
   final int perPage = 20;
   var isLoading = false.obs;
   var hasMore = true.obs;
+  late StreamSubscription _messageSubscription; // 添加这个属性
 
   Rx<int?> tagId = Rx<int?>(null);
   Rx<RoomStatus> status = Rx<RoomStatus>(RoomStatus.none);
@@ -51,27 +53,6 @@ class LiveListController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    LiveSocketIOManager socketManager = LiveSocketIOManager();
-
-    socketManager.messages.listen((message) {
-      var decodedMessage = jsonDecode(message);
-      String event = decodedMessage['event'];
-
-      if (event == 'broadcast:onAir') {
-        List<dynamic> dataList = decodedMessage['data']['list'];
-        List<Room> newRooms =
-            dataList.map<Room>((roomJson) => Room.fromJson(roomJson)).toList();
-        roomsWithoutFilter.addAll(newRooms);
-      } else if (event == 'broadcast:offAir') {
-        List<dynamic> dataList = decodedMessage['data']['list'];
-        for (var data in dataList) {
-          int idToRemove = data['id'];
-          roomsWithoutFilter.removeWhere((room) => room.id == idToRemove);
-        }
-      } else {
-        print('Received an unknown event: $event');
-      }
-    });
   }
 
   void setStatus(RoomStatus newStatus) => status.value = newStatus;
@@ -132,6 +113,38 @@ class LiveListController extends GetxController {
   Room? getRoomByStreamerId(int streamerId) =>
       rooms.firstWhereOrNull((room) => room.streamerId == streamerId);
 
+  connectWs() {
+    LiveSocketIOManager socketManager = LiveSocketIOManager();
+
+    _messageSubscription = socketManager.messages.listen((message) {
+      var decodedMessage = jsonDecode(message);
+      handleWebSocketMessage(decodedMessage);
+    });
+  }
+
+  void handleWebSocketMessage(Map<String, dynamic> decodedMessage) {
+    String event = decodedMessage['event'];
+    switch (event) {
+      case 'broadcast:onAir':
+        List<dynamic> dataList = decodedMessage['data']['list'];
+        List<Room> newRooms =
+            dataList.map<Room>((roomJson) => Room.fromJson(roomJson)).toList();
+        roomsWithoutFilter.addAll(newRooms);
+        filterRoomsByTagId();
+        break;
+      case 'broadcast:offAir':
+        List<dynamic> dataList = decodedMessage['data']['list'];
+        for (var data in dataList) {
+          int idToRemove = data['id'];
+          roomsWithoutFilter.removeWhere((room) => room.id == idToRemove);
+          filterRoomsByTagId();
+        }
+        break;
+      default:
+        print('Received an unknown event: $event');
+    }
+  }
+
   void reset() {
     tagId.value = null;
     status.value = RoomStatus.none;
@@ -140,5 +153,6 @@ class LiveListController extends GetxController {
     followType.value = FollowType.none;
 
     // Cancel any ongoing timer for auto-refresh
+    _messageSubscription.cancel();
   }
 }
