@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:game/screens/lobby.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
+import 'package:live_ui_basic/pages/live.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
@@ -39,7 +40,8 @@ final screens = {
       ),
   HomeNavigatorPathes.game: () => const GameLobby(),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
-  HomeNavigatorPathes.user: () => const UserScreen()
+  HomeNavigatorPathes.user: () => const UserScreen(),
+  HomeNavigatorPathes.live: () => const LivePage(),
 };
 
 class HomePage extends StatefulWidget {
