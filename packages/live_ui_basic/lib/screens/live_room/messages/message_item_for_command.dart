@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:live_core/controllers/commands_controller.dart';
+import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 
 class MessageItemForCommand extends StatelessWidget {
+  final int pid;
   final ChatMessage<String> message;
 
-  const MessageItemForCommand({Key? key, required this.message})
+  const MessageItemForCommand(
+      {Key? key, required this.pid, required this.message})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     try {
-      final commandsController = Get.find<CommandsController>();
-      final commands = commandsController.commands.value;
+      final liveRoomController =
+          Get.find<LiveRoomController>(tag: pid.toString());
+      final commands = liveRoomController.liveRoom.value?.commands ?? [];
       if (commands.isNotEmpty) {
         var commandText = commands
             .firstWhere(

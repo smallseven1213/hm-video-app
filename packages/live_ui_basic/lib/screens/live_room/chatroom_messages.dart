@@ -9,7 +9,8 @@ import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'messages/message_item.dart';
 
 class ChatroomMessages extends StatefulWidget {
-  const ChatroomMessages({Key? key}) : super(key: key);
+  final int pid;
+  const ChatroomMessages({Key? key, required this.pid}) : super(key: key);
   @override
   _ChatroomMessagesState createState() => _ChatroomMessagesState();
 }
@@ -35,6 +36,7 @@ class _ChatroomMessagesState extends State<ChatroomMessages>
                   int reversedIndex =
                       chatResultController.commonMessages.length - 1 - index;
                   return MessageItem(
+                      pid: widget.pid,
                       message: chatResultController
                           .commonMessages.value[reversedIndex]);
                 },
