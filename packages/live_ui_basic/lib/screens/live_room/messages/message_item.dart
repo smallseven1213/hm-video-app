@@ -13,9 +13,11 @@ const Map<String, String> translations = {
 };
 
 class MessageItem<T> extends StatelessWidget {
+  final int pid;
   final ChatMessage<T> message;
 
-  const MessageItem({Key? key, required this.message}) : super(key: key);
+  const MessageItem({Key? key, required this.pid, required this.message})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +38,7 @@ class MessageItem<T> extends StatelessWidget {
       return MessageItemForGift(message: messageForGIft);
     } else if (message.objChat.ntype == MessageType.command) {
       final messageForCommand = message as ChatMessage<String>;
-      return MessageItemForCommand(message: messageForCommand);
+      return MessageItemForCommand(pid: pid, message: messageForCommand);
     }
     return Container(
       margin: const EdgeInsets.only(top: 10),

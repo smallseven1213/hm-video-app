@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
-import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
@@ -35,7 +34,6 @@ class LiveRoomPage extends StatefulWidget {
 class _LiveRoomPageState extends State<LiveRoomPage> {
   bool _isControllerInitialized = false;
   late final LiveRoomController controller;
-  late final CommandsController commandsController;
 
   @override
   void initState() {
@@ -49,8 +47,6 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
       await liveRoomController.fetchData();
       return liveRoomController;
     }, tag: widget.pid.toString());
-
-    Get.delete<CommandsController>();
 
     if (controller.hasError.value) {
       showLiveDialog(
@@ -71,8 +67,6 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
         ],
       );
     }
-
-    commandsController = Get.put(CommandsController());
 
     // 用pid去LiveListController撈資料並傳入LiveRoomController
     final liveListController = Get.find<LiveListController>();
@@ -114,7 +108,6 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
   @override
   void dispose() {
     controller.dispose();
-    commandsController.dispose();
     Get.delete<LiveRoomController>(tag: widget.pid.toString());
 
     super.dispose();
@@ -163,6 +156,7 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   left: 7,
                   child: ChatroomLayout(
                     key: ValueKey(controller.liveRoomInfo.value?.streamerId),
+                    pid: widget.pid,
                     token: controller.liveRoom.value!.chattoken,
                   )),
               Positioned(

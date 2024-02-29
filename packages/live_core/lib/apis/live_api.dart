@@ -51,7 +51,7 @@ class LiveApi {
 
     return LiveApiResponseList<Room>.fromJson(
       response.data,
-      (itemJson) => Room.fromJson(itemJson), 
+      (itemJson) => Room.fromJson(itemJson),
     );
   }
 
@@ -92,6 +92,7 @@ class LiveApi {
           pullUrlDecode: decryptedData.trim().trimRight(),
           amount: apiResponse.data.amount,
           follow: apiResponse.data.follow,
+          commands: apiResponse.data.commands,
         ),
         // 下面測試用
         // pullUrlDecode:

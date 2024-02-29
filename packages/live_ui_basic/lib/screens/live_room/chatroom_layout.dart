@@ -12,8 +12,10 @@ import 'chatroom_messages.dart';
 import 'left_side_gifts.dart';
 
 class ChatroomLayout extends StatefulWidget {
+  final int pid;
   final String token;
-  const ChatroomLayout({Key? key, required this.token}) : super(key: key);
+  const ChatroomLayout({Key? key, required this.pid, required this.token})
+      : super(key: key);
   @override
   _ChatroomLayoutState createState() => _ChatroomLayoutState();
 }
@@ -106,7 +108,10 @@ class _ChatroomLayoutState extends State<ChatroomLayout> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const LeftSideGifts(),
-              const Expanded(child: ChatroomMessages()),
+              Expanded(
+                  child: ChatroomMessages(
+                pid: widget.pid,
+              )),
               const SizedBox(height: 25),
               InkWell(
                 onTap: _showBottomSheet,

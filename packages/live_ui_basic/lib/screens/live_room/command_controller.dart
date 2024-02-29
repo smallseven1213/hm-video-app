@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
-import 'package:live_core/controllers/commands_controller.dart';
+import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/command.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
@@ -27,7 +27,7 @@ class CommandController extends StatelessWidget {
                 showModalBottomSheet(
                   context: context,
                   builder: (BuildContext context) {
-                    return Commands();
+                    return Commands(pid: pid);
                   },
                 );
               },
@@ -44,10 +44,14 @@ class CommandController extends StatelessWidget {
 }
 
 class Commands extends StatelessWidget {
-  const Commands({Key? key}) : super(key: key);
+  final int pid;
+  const Commands({Key? key, required this.pid}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    final commandsController = Get.find<CommandsController>();
+    final LiveRoomController liveroomController = Get.find(tag: pid.toString());
+    ;
+
     return Container(
       height: 366,
       padding: const EdgeInsets.all(18),
@@ -83,40 +87,43 @@ class Commands extends StatelessWidget {
           const SizedBox(height: 15),
           Expanded(
             child: Obx(
-              () => ListView.builder(
-                itemCount:
-                    (commandsController.commands.value.length + 1) ~/ 2, // 修改这里
-                itemBuilder: (context, index) {
-                  var startIndex = index * 2;
-                  var itemsCount = commandsController.commands.value.length;
-                  var endIndex = startIndex + 1 < itemsCount
-                      ? startIndex + 1
-                      : startIndex; // 处理最后一个元素
-                  return Padding(
-                    padding: const EdgeInsets.only(bottom: 15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Expanded(
-                          child: CommandItem(
-                            command:
-                                commandsController.commands.value[startIndex],
+              () {
+                var commands = liveroomController.liveRoom.value?.commands;
+                if (commands == null) {
+                  return Container();
+                }
+                return ListView.builder(
+                  itemCount: (commands.length + 1) ~/ 2, // 修改这里
+                  itemBuilder: (context, index) {
+                    var startIndex = index * 2;
+                    var itemsCount = commands.length;
+                    var endIndex = startIndex + 1 < itemsCount
+                        ? startIndex + 1
+                        : startIndex; // 处理最后一个元素
+                    return Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Expanded(
+                            child: CommandItem(
+                              command: commands[startIndex],
+                            ),
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: endIndex > startIndex // 检查是否有第二个元素
-                              ? CommandItem(
-                                  command: commandsController
-                                      .commands.value[endIndex],
-                                )
-                              : Container(), // 如果没有第二个元素，则展示空容器
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: endIndex > startIndex // 检查是否有第二个元素
+                                ? CommandItem(
+                                    command: commands[endIndex],
+                                  )
+                                : Container(), // 如果没有第二个元素，则展示空容器
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+              },
             ),
           )
         ],
