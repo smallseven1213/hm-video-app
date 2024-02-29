@@ -109,6 +109,7 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                     } on Exception catch (e) {
                       print(e);
                     } finally {
+                      Get.find<LiveUserController>().getUserDetail();
                       setState(() {
                         isPurchasing = false;
                       });
