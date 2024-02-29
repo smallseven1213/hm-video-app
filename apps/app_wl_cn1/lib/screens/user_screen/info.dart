@@ -34,7 +34,6 @@ class UserInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 145,
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       color: AppColors.colors[ColorKeys.primary],
       child: Stack(
