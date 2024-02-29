@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:shared/models/hm_api_response_with_data.dart';
 
 import '../apis/auth_api.dart';
-import '../controllers/commands_controller.dart';
 import '../controllers/gifts_controller.dart';
 import '../controllers/live_list_controller.dart';
 import '../controllers/live_search_controller.dart';
