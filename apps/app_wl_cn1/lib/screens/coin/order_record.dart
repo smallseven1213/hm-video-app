@@ -127,55 +127,67 @@ class _OrderRecordState extends State<OrderRecord> {
                         itemCount: records.length,
                         itemBuilder: (context, index) {
                           final record = records[index];
-                          return Container(
-                            padding: const EdgeInsets.all(20),
-                            margin: const EdgeInsets.only(bottom: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              border: Border.all(
-                                  color: Theme.of(context).colorScheme.primary),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
+                          return Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.all(20),
+                                margin: const EdgeInsets.only(bottom: 8),
+                                child: Row(
+                                  // vertical align top
                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      record.product!.name ?? '',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          record.product!.name ?? '',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          '金額 : ${record.orderAmount}',
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 8),
+                                        Text(
+                                          '訂單時間 ${record.createdAt}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                        const SizedBox(height: 4),
+                                        Text(
+                                          '訂單編號 ${record.id}',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      '\$ ${record.orderAmount}',
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                    Text(
-                                      '訂單時間 ${record.createdAt}',
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
-                                    ),
-                                    Text(
-                                      '訂單編號 ${record.id}',
-                                      style:
-                                          Theme.of(context).textTheme.bodySmall,
+                                    StatusLabel(
+                                      status: record.paymentStatus ?? 0,
                                     ),
                                   ],
                                 ),
-                                Text(
-                                  record.paymentStatus == 0 ? '成功' : '失敗',
-                                  style:
-                                      Theme.of(context).textTheme.headlineLarge,
-                                ),
-                              ],
-                            ),
+                              ),
+                              const Divider(
+                                height: 1,
+                                color: Color(0xFFd8d6de),
+                              ),
+                            ],
                           );
                         },
                       );
@@ -197,6 +209,54 @@ class _OrderRecordState extends State<OrderRecord> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class StatusLabel extends StatelessWidget {
+  final int status;
+
+  const StatusLabel({super.key, required this.status});
+
+  @override
+  Widget build(BuildContext context) {
+    Color backgroundColor;
+    String text;
+    Color fontColor;
+
+    switch (status) {
+      case 1:
+        backgroundColor = const Color(0xFFf8f8f8);
+        fontColor = Colors.black;
+        text = '確認中';
+        break;
+      case 2:
+        backgroundColor = const Color(0xFF3ca948);
+        fontColor = Colors.white;
+        text = '已完成';
+        break;
+      default:
+        backgroundColor = const Color(0xFFc91e1e);
+        fontColor = Colors.white;
+        text = '失敗';
+        break;
+    }
+
+    return Container(
+      width: 60,
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(4),
+      ),
+      padding: const EdgeInsets.all(4),
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          fontSize: 12,
+          color: fontColor,
+        ),
+      ),
     );
   }
 }
