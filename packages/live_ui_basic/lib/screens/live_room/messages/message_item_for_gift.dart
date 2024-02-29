@@ -20,7 +20,8 @@ class MessageItemForGift extends StatelessWidget {
     var giftName = giftsController.gifts.value
         .firstWhere((element) => element.id == message.objChat.data.gid)
         .name;
-    var messageText = "${message.objChat.name} 贈送禮物 $giftName";
+    var messageText =
+        "${message.objChat.name} 贈送禮物 $giftName x${message.objChat.data.quantity}";
 
     return Container(
       margin: const EdgeInsets.only(top: 10),
@@ -62,7 +63,7 @@ class MessageItemForGift extends StatelessWidget {
                       text: messageText,
                       style: const TextStyle(color: Colors.white, fontSize: 12),
                     ),
-                    WidgetSpan(
+                    const WidgetSpan(
                       child: SizedBox(width: 10), // 提供固定的 10 單位空間
                     ),
                     TextSpan(
