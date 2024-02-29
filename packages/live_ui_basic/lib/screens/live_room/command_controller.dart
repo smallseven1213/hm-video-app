@@ -79,38 +79,46 @@ class Commands extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 15),
-          UserDiamonds(),
+          const UserDiamonds(),
           const SizedBox(height: 15),
           Expanded(
-              child: Obx(
-            () => ListView.builder(
-              itemCount: commandsController.commands.value.length ~/ 2,
-              itemBuilder: (context, index) {
-                var startIndex = index * 2;
-                var endIndex = startIndex + 1;
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 15),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Expanded(
-                        child: CommandItem(
-                          command:
-                              commandsController.commands.value[startIndex],
+            child: Obx(
+              () => ListView.builder(
+                itemCount:
+                    (commandsController.commands.value.length + 1) ~/ 2, // 修改这里
+                itemBuilder: (context, index) {
+                  var startIndex = index * 2;
+                  var itemsCount = commandsController.commands.value.length;
+                  var endIndex = startIndex + 1 < itemsCount
+                      ? startIndex + 1
+                      : startIndex; // 处理最后一个元素
+                  return Padding(
+                    padding: const EdgeInsets.only(bottom: 15),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          child: CommandItem(
+                            command:
+                                commandsController.commands.value[startIndex],
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: CommandItem(
-                          command: commandsController.commands.value[endIndex],
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: endIndex > startIndex // 检查是否有第二个元素
+                              ? CommandItem(
+                                  command: commandsController
+                                      .commands.value[endIndex],
+                                )
+                              : Container(), // 如果没有第二个元素，则展示空容器
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
+                      ],
+                    ),
+                  );
+                },
+              ),
             ),
-          ))
+          )
         ],
       ),
     );
