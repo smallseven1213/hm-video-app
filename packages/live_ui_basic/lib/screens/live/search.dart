@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -54,15 +55,15 @@ class SearchWidget extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         InkWell(
-          onTap: () => launch(
-              "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2",
-              webOnlyWindowName: '_blank'),
-          child: const Icon(
-            Icons.support_agent_rounded,
-            size: 25,
-            color: Color(0xFF5a6077),
-          ),
-        )
+            onTap: () => launch(
+                "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2",
+                webOnlyWindowName: '_blank'),
+            child: SvgPicture.asset(
+              'packages/live_ui_basic/assets/svgs/ic_service.svg',
+              fit: BoxFit.cover,
+              width: 30,
+              height: 30,
+            ))
       ],
     );
   }

@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:live_core/apis/streamer_api.dart';
-import 'package:live_core/controllers/streamer_rank_controller.dart';
 import 'package:live_core/controllers/user_follows_controller.dart';
 import 'package:live_core/widgets/streamer_rank_provider.dart';
 

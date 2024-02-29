@@ -1,22 +1,24 @@
 class GameItem {
-  final int gameId;
+  final int id;
+  final int tagId;
+  final String gameId;
   final String gameName;
   final int gameType;
-  final int hotOrderIndex;
   final String imgUrl;
   final int orderIndex;
   final String tpCode;
   final int direction;
 
-  GameItem(this.gameId, this.gameName, this.gameType, this.hotOrderIndex,
+  GameItem(this.id, this.tagId, this.gameId, this.gameName, this.gameType,
       this.imgUrl, this.orderIndex, this.tpCode, this.direction);
 
   factory GameItem.fromJson(Map<String, dynamic> json) {
     return GameItem(
+      json['id'],
+      json['tagId'],
       json['gameId'],
       json['gameName'],
       json['gameType'],
-      json['hotOrderIndex'],
       json['imgUrl'],
       json['orderIndex'],
       json['tpCode'],
