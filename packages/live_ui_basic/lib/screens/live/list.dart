@@ -14,11 +14,18 @@ class LiveList extends StatefulWidget {
 class _LiveListState extends State<LiveList> {
   final LiveListController _controller = Get.find<LiveListController>();
 
- 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _controller.connectWs();
+    print('@@@@ initState');
+  }
 
   @override
   void dispose() {
     _controller.reset();
+
     super.dispose();
   }
 

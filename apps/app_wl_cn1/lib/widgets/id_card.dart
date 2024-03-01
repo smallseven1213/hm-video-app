@@ -121,7 +121,7 @@ class IDCardContentState extends State<IDCardContent> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Text(
-                    '官方地址：ab.me',
+                    '官方地址：svav.app',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.buttonBgPrimary],
                       fontSize: 12,

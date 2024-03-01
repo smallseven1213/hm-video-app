@@ -5,6 +5,7 @@ import 'package:game/routes/game_routes.dart';
 import 'package:game/widgets/game_provider.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/running_main.dart';
+import 'package:live_ui_basic/routes/live_routes.dart';
 import 'config/colors.dart';
 
 // import './routes/app_routes.dart'
@@ -18,6 +19,7 @@ void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
     ...gameRoutes,
+    ...liveRoutes,
   };
 
   runningMain(

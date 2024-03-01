@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="K9视频"
+        android:label="K9 AV"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -29,7 +29,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
+        <meta-data
+            android:name="flutterPreviewText"
+            android:value="K9 AV 打开你的 AV 新世界" />
+           
         </application>
         <!-- Permissions options for the `storage` group -->
         <uses-permission android:name="android.permission.CAMERA" />

@@ -1,10 +1,19 @@
-import 'package:app_wl_cn1/widgets/custom_app_bar.dart';
-import 'package:app_wl_cn1/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/id_card.dart';
+import '../screens/coin/order_record.dart';
+import '../screens/coin/products.dart';
+import '../screens/coin/purchase_record.dart';
+import '../screens/coin/privilege_record.dart';
+import '../screens/user_screen/info.dart';
+import '../widgets/custom_app_bar.dart';
+import '../widgets/tab_bar.dart';
+import '../widgets/user/balance.dart';
+
+final logger = Logger();
 
 class CoinPage extends StatefulWidget {
   const CoinPage({Key? key}) : super(key: key);
@@ -20,7 +29,7 @@ class CoinPageState extends State<CoinPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 4);
+    _tabController = TabController(vsync: this, length: 3);
   }
 
   @override
@@ -37,7 +46,7 @@ class CoinPageState extends State<CoinPage>
         showConfirmDialog(
           context: context,
           title: '提示',
-          message: '为保持您的帐号，请先注册防止丢失',
+          message: '為保持您的帳號，請先註冊防止丟失',
           showCancelButton: false,
           onConfirm: () => {},
         );
@@ -56,30 +65,45 @@ class CoinPageState extends State<CoinPage>
       },
       child: Scaffold(
         appBar: const CustomAppBar(
-          title: '金币钱包',
+          title: '金幣錢包',
         ),
         body: Column(
           children: [
-            // const UserInfo(),
-            // const UserBalance(),
-            TabBarWidget(
-              controller: _tabController,
-              tabs: const ['金币', '购买记录', '特权纪录', '存款记录'],
-            ),
+            const UserInfo(),
+            const UserBalance(),
+            const SizedBox(height: 25),
             Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: TabBarView(
-                  controller: _tabController,
-                  children: const [
-                    // CoinProducts(),
-                    // PurchaseRecord(),
-                    // PrivilegeRecord(),
-                    // OrderRecord(),
-                  ],
+                child: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
                 ),
               ),
-            ),
+              child: Column(
+                children: [
+                  TabBarWidget(
+                    controller: _tabController,
+                    backgroundColor: Colors.transparent,
+                    tabs: const ['金幣', '購買記錄', '存款記錄'],
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: TabBarView(
+                        controller: _tabController,
+                        children: const [
+                          CoinProducts(),
+                          PurchaseRecord(),
+                          OrderRecord(),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            )),
           ],
         ),
       ),

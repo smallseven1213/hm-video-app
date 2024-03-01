@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
-import 'package:live_core/controllers/commands_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/controllers/room_rank_controller.dart';

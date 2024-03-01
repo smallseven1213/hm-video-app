@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
@@ -9,9 +7,11 @@ import 'package:live_core/widgets/room_list_provider.dart';
 import '../screens/live/banners.dart';
 import '../screens/live/filter.dart';
 import '../screens/live/list.dart';
+import '../screens/live/loading_text.dart';
 import '../screens/live/navigation.dart';
 import '../screens/live/search.dart';
 import '../screens/live/sort.dart';
+import '../screens/live/no_more.dart';
 
 class LivePage extends StatefulWidget {
   const LivePage({Key? key}) : super(key: key);
@@ -21,7 +21,7 @@ class LivePage extends StatefulWidget {
 
 class _LivePageState extends State<LivePage> {
   final ScrollController _scrollController = ScrollController();
-
+  bool noMore = false;
   @override
   void initState() {
     super.initState();
@@ -29,14 +29,29 @@ class _LivePageState extends State<LivePage> {
   }
 
   void _scrollListener() {
-    if (_scrollController.position.pixels ==
-        _scrollController.position.maxScrollExtent) {
+    const threshold = 30;
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - threshold) {
       _loadMoreData();
     }
   }
 
   void _loadMoreData() {
     final LiveListController controller = Get.find<LiveListController>();
+    if (!controller.hasMore.value) {
+      setState(() {
+        noMore = true;
+      });
+      // delay 3 seconds to show no more widget
+      Future.delayed(const Duration(seconds: 3), () {
+        setState(() {
+          noMore = false;
+        });
+      });
+      return;
+    } else if (controller.isLoading.value) {
+      return;
+    }
     controller.fetchData(isLoadMore: true);
   }
 
@@ -55,38 +70,38 @@ class _LivePageState extends State<LivePage> {
       body: RoomListProvider(
         child: CustomScrollView(
           controller: _scrollController,
-          slivers: const [
-            SliverToBoxAdapter(
+          slivers: [
+            const SliverToBoxAdapter(
               child: SizedBox(height: 50),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: SearchWidget(),
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: BannersWidget(), // 確保 BannersWidget 支持這種布局
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: NavigationWidget(),
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
                 child: Padding(
               padding: EdgeInsets.only(right: 10),
               child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
@@ -95,16 +110,15 @@ class _LivePageState extends State<LivePage> {
                 SortWidget(),
               ]),
             )),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
-            SliverPadding(
+            const SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 10),
               sliver: LiveList(),
             ),
-            SliverToBoxAdapter(
-              child: SizedBox(height: 10),
-            ),
+            const LoadingTextWidget(),
+            if (noMore) const SliverToBoxAdapter(child: NoMoreWidget()),
           ],
         ),
       ),
