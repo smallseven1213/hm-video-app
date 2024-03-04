@@ -39,8 +39,7 @@ dependencies:
   pin_code_fields: ^7.4.0
   fluttertoast: ^8.2.4
   sentry_dio: ^7.8.0
-  easy_localization: ^3.0.3
-  easy_localization_loader: ^1.0.1+1
+  easy_localization: ^3.0.2
   easy_localization_generator: ^0.3.1
 
 dev_dependencies:

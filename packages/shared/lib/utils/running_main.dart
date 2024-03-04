@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_web_plugins/url_strategy.dart' as url_strategy;
@@ -12,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/utils/setup_dependencies.dart';
 
+import '../helpers/csv_asset_loader.dart';
 import '../models/color_keys.dart';
 import '../widgets/root.dart' as root;
 
@@ -53,7 +53,7 @@ void realMain(Widget widget,
           ? EasyLocalization(
               path: i18nPath,
               supportedLocales: supportedLocales,
-              assetLoader: CsvAssetLoader() as AssetLoader,
+              assetLoader: CsvAssetLoader(),
               child: widget,
             )
           : widget,
