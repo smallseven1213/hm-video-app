@@ -1,18 +1,20 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+import 'package:pointer_interceptor/pointer_interceptor.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:game/controllers/game_banner_controller.dart';
-import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/game_startup.dart';
-import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
+
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -36,7 +38,7 @@ class GameWebviewToggleButtonWidget extends StatefulWidget {
 class _GameWebviewToggleButtonWidget
     extends State<GameWebviewToggleButtonWidget> {
   final systemConfig = GameSystemConfig();
-  final gameConfigController = Get.put(GameConfigController());
+  final gameConfigController = Get.find<GamePlatformConfigController>();
   final gameBannerController = Get.put(GameBannerController());
 
   @override

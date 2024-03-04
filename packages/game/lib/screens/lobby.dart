@@ -10,10 +10,10 @@ import 'package:game/widgets/maintenance.dart';
 import 'package:game/models/game_list.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
@@ -65,8 +65,8 @@ class _GameLobbyState extends State<GameLobby>
   GameWalletController gameWalletController = Get.find<GameWalletController>();
   GameParamConfigController gameParamConfigController =
       Get.find<GameParamConfigController>();
-  GameConfigController gameConfigController = Get.find<GameConfigController>();
-
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
   @override
   void initState() {
     super.initState();
@@ -89,7 +89,6 @@ class _GameLobbyState extends State<GameLobby>
       GameLobbyApi().registerGame(),
     ]).then((value) {
       GameBannerController();
-      GameConfigController();
       GameParamConfigController();
     });
   }
