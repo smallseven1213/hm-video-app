@@ -1,7 +1,7 @@
+import 'package:game/controllers/game_config_controller.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/game_platform_config_controller.dart';
 
 final logger = Logger();
 
@@ -19,7 +19,7 @@ class GameAuthController extends GetxController {
       token.value = storedToken;
     }
 
-    Get.find<GamePlatformConfigController>();
+    Get.find<GameConfigController>();
   }
 
   void setToken(String? newToken) {

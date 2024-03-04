@@ -4,7 +4,7 @@ import 'package:app_ab/screens/home/home_apps.dart';
 import 'package:app_ab/screens/video/video_player_area/flash_loading.dart';
 
 import 'package:flutter/material.dart';
-import 'package:game/screens/enter_game_screen/index.dart';
+import 'package:game/screens/lobby.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 
@@ -24,21 +24,21 @@ import '../widgets/custom_bottom_bar_item.dart';
 final logger = Logger();
 UserApi userApi = UserApi();
 final screens = {
-  HomeNavigatorPathes.layout1: () => const MainLayoutBuilder(
-        key: Key('layout1'),
+  HomeNavigatorPathes.layout1: () => MainLayoutBuilder(
+        key: const Key('layout1'),
         layoutId: 1,
         child: HomeMainScreen(
           layoutId: 1,
         ),
       ),
-  HomeNavigatorPathes.layout2: () => const MainLayoutBuilder(
-        key: Key('layout2'),
+  HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
+        key: const Key('layout2'),
         layoutId: 2,
         child: HomeMainScreen(
           layoutId: 2,
         ),
       ),
-  HomeNavigatorPathes.game: () => const EnterGame(),
+  HomeNavigatorPathes.game: () => const GameLobby(),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
 };

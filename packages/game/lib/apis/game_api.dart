@@ -227,7 +227,7 @@ class GameLobbyApi {
   }
 
   // 取得遊戲設置config
-  Future<GameConfig> getGamePlatformConfig() => fetcher(
+  Future<GameConfig> getGameConfig() => fetcher(
               url:
                   '${systemConfig.apiHost}/public/game-platform-config/game-platform-config')
           .then(
