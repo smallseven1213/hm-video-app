@@ -46,14 +46,14 @@ class ActorHeaderInfo extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: fontSize,
-                    color: Colors.black),
+                    color: Colors.white),
               ),
               if (aliasName != null)
                 Text(
                   '$aliasName',
                   style: TextStyle(
                     fontSize: fontSize2,
-                    color: Colors.black,
+                    color: Colors.white,
                   ),
                 ),
             ],
