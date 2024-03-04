@@ -20,6 +20,7 @@ class StatisticsItem extends StatelessWidget {
           style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 17,
+            color: Colors.white,
           ),
         ),
         const SizedBox(width: 3),
