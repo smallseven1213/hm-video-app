@@ -53,7 +53,7 @@ void realMain(Widget widget,
           ? EasyLocalization(
               path: i18nPath,
               supportedLocales: supportedLocales,
-              assetLoader: CsvAssetLoader(),
+              assetLoader: CsvAssetLoader() as AssetLoader,
               child: widget,
             )
           : widget,
