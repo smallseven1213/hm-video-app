@@ -65,6 +65,7 @@ class HomeState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('sv HomePage build');
     final UIController uiController = Get.find<UIController>();
 
     return MainNavigationScaffold(
