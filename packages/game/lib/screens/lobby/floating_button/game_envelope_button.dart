@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:game/controllers/game_config_controller.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -17,7 +17,8 @@ class GameEnvelopeButton extends StatefulWidget {
 }
 
 class GameEnvelopeButtonState extends State<GameEnvelopeButton> {
-  GameConfigController gameConfigController = Get.find<GameConfigController>();
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
 
   @override
   Widget build(BuildContext context) {

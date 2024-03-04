@@ -2,7 +2,7 @@ import 'package:app_gs/screens/home/home_apps.dart';
 import 'package:app_gs/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/screens/lobby.dart';
+import 'package:game/screens/enter_game_screen/index.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -37,7 +37,7 @@ final screens = {
           layoutId: layouts[1],
         ),
       ),
-  HomeNavigatorPathes.game: () => const GameLobby(),
+  HomeNavigatorPathes.game: () => const EnterGame(),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen()
 };
