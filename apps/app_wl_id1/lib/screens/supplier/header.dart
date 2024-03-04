@@ -71,7 +71,7 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
                 ),
               ),
               centerTitle: false,
-              actions: const <Widget>[SearchButton()],
+              // actions: const <Widget>[SearchButton()],
             ),
           )
         : SizedBox(
@@ -91,7 +91,7 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
                         imageSize: imageSize,
                       ),
                       // const FloatPageBackButton(),
-                      const FloatPageSearchButton()
+                      // const FloatPageSearchButton()
                     ],
                   )),
             ),
