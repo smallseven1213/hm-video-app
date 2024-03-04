@@ -133,18 +133,29 @@ class LiveApi {
     }
   }
 
-  Future<LiveApiResponseBase<RoomRank>> getRank(int pid) async {
-    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
-    var response = await liveFetcher(
-      url: '$liveApiHost/rank',
-    );
+  Future<LiveApiResponseBase<RoomRank?>> getRank(int pid) async {
+    try {
+      final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+      var response = await liveFetcher(
+        url: '$liveApiHost/rank',
+      );
 
-    LiveApiResponseBase<RoomRank> parsedResponse = LiveApiResponseBase.fromJson(
-      response.data,
-      (data) => RoomRank.fromJson(data as Map<String, dynamic>),
-    );
+      LiveApiResponseBase<RoomRank> parsedResponse =
+          LiveApiResponseBase.fromJson(
+        response.data,
+        (data) => RoomRank.fromJson(data as Map<String, dynamic>),
+      );
 
-    return parsedResponse;
+      return parsedResponse;
+    } catch (e) {
+      // Handle the exception
+      print(e);
+      return LiveApiResponseBase<RoomRank?>(
+        code: 0,
+        data: null,
+        msg: 'Error occurred while fetching room rank',
+      );
+    }
   }
 
   Future<LiveApiResponseBase<List<Gift>>> getGifts() async {

@@ -30,6 +30,7 @@ class _PlayerLayoutState extends State<PlayerLayout>
     videoController =
         VideoPlayerController.networkUrl(Uri.parse(widget.uri.toString()))
           ..initialize().then((_) {
+            print('[V]initialize video');
             if (mounted) {
               setState(() {
                 hasError = false;
@@ -37,6 +38,7 @@ class _PlayerLayoutState extends State<PlayerLayout>
               videoController.play();
             }
           }).catchError((error) {
+            print('[V]video catch error: $error');
             if (mounted) {
               setState(() {
                 hasError = true;
@@ -47,6 +49,7 @@ class _PlayerLayoutState extends State<PlayerLayout>
 
     videoController.addListener(() {
       if (videoController.value.hasError) {
+        print('[V]video display error');
         setState(() {
           hasError = true;
         });
@@ -59,6 +62,7 @@ class _PlayerLayoutState extends State<PlayerLayout>
     Future.delayed(const Duration(seconds: 3), () {
       if (mounted) {
         // 重新初始化視頻播放器
+        print('[V]try to initial video');
         initializeVideoPlayer();
       }
     });

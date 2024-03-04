@@ -129,7 +129,8 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
                   controller.liveRoom.value!.pullUrlDecode == null)
                 Container(color: Colors.black),
               if (controller.displayAmount.value <= 0 &&
-                  controller.liveRoom.value!.pullUrlDecode != null)
+                  controller.liveRoom.value!.pullUrlDecode != null &&
+                  controller.liveRoom.value!.pullUrlDecode!.isNotEmpty)
                 PlayerLayout(
                     pid: widget.pid,
                     uri: Uri.parse(
