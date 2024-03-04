@@ -72,7 +72,6 @@ class _GameLobbyState extends State<GameLobby>
     super.initState();
     _fetchDataInit();
 
-    // Put controllers into Get dependency container here
     Get.put(GameBannerController());
     Get.put(GamesListController());
 
