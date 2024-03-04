@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/controllers/user_navigator_controller.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
+
 import '../controllers/actor_region_controller.dart';
 import '../controllers/apps_controller.dart';
 import '../controllers/auth_controller.dart';
@@ -91,4 +93,6 @@ void setupDependencies() async {
   Get.lazyPut<SearchTempShortController>(() => SearchTempShortController());
   Get.lazyPut<RedemptionController>(() => RedemptionController());
   Get.lazyPut<EventController>(() => EventController());
+  Get.lazyPut<GamePlatformConfigController>(
+      () => GamePlatformConfigController());
 }

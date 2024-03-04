@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 
 final themeMode = {
   1: 'dark',
   2: 'light',
 };
 
-final localStorage = GetStorage();
-int themeNumber =
-    localStorage.hasData('pageColor') ? localStorage.read('pageColor') : 1;
-final theme = themeMode[themeNumber].toString();
+GamePlatformConfigController gameConfigController =
+    Get.find<GamePlatformConfigController>();
+int themeNumber = gameConfigController.gamePageColor.value;
+final theme = themeMode[themeNumber];
 
 // theme - game lobby page
 final gameLobbyBgColor =
