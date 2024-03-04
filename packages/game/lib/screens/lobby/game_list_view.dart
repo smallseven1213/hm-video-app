@@ -316,7 +316,7 @@ class GameListViewState extends State<GameListView>
                   crossAxisCount: 2,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 600 / 400,
+                  childAspectRatio: 180 / 108, // 遊戲圖片的寬高比
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
