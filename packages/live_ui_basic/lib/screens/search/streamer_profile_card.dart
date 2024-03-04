@@ -99,7 +99,7 @@ class StreamerProfileCard extends StatelessWidget {
                         return Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: isFollowed
+                              backgroundColor: isFollowed
                                   ? const Color(0xff7b7b7b)
                                   : const Color(0xffae57ff),
                               shape: RoundedRectangleBorder(
