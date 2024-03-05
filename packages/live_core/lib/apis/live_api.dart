@@ -140,15 +140,23 @@ class LiveApi {
         url: '$liveApiHost/rank',
       );
       print("[R] rank response before: $response");
+      if (response != null) {
+        print("[R] rank response parse before: $response");
+        LiveApiResponseBase<RoomRank> parsedResponse =
+            LiveApiResponseBase.fromJson(
+          response.data,
+          (data) => RoomRank.fromJson(data as Map<String, dynamic>),
+        );
+        print("[R] rank response parse after: $parsedResponse");
 
-      LiveApiResponseBase<RoomRank> parsedResponse =
-          LiveApiResponseBase.fromJson(
-        response.data,
-        (data) => RoomRank.fromJson(data as Map<String, dynamic>),
+        return parsedResponse;
+      }
+
+      return LiveApiResponseBase<RoomRank?>(
+        code: 0,
+        data: null,
+        msg: 'Error occurred while fetching room rank',
       );
-      print("[R] rank response after: $parsedResponse");
-
-      return parsedResponse;
     } catch (e) {
       // Handle the exception
       print(e);
