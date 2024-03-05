@@ -16,16 +16,13 @@ class _LiveListState extends State<LiveList> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller.connectWs();
-    print('@@@@ initState');
   }
 
   @override
   void dispose() {
     _controller.reset();
-
     super.dispose();
   }
 

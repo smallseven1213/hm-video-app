@@ -35,7 +35,7 @@ class StreamerProfileCard extends StatelessWidget {
           MyRouteDelegate.of(context).push(
             AppRoutes.supplier,
             args: {
-              'id': profile.id,
+              'id': profile.supplierId,
             },
           );
         } else {
@@ -86,7 +86,7 @@ class StreamerProfileCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '@${profile.nickname} ${profile.id}',
+                      '@${profile.nickname}',
                       style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     if (showFansCount == true)

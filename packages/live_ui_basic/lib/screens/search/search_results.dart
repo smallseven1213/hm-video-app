@@ -56,7 +56,7 @@ class SearchResults extends StatelessWidget {
                 MyRouteDelegate.of(context).push(
                   AppRoutes.supplier,
                   args: {
-                    'id': steamer[index].id,
+                    'id': steamer[index].supplierId,
                   },
                 );
               } else {

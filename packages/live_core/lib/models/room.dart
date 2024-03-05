@@ -24,7 +24,7 @@ class Room {
   final String? reserveAt; // 預約開播時間
   final int status; // 1: 未開始 2: 直播中 3: 已結束
   final int streamerId; // 主播id
-  final int? providerId; // 供應商id
+  final int? supplierId; // 供應商id
 
   final List<Tag> tags;
   final String title;
@@ -41,7 +41,7 @@ class Room {
     this.reserveAt,
     required this.status,
     required this.streamerId,
-    this.providerId,
+    this.supplierId,
     required this.tags,
     required this.title,
     required this.userCost,
@@ -67,7 +67,7 @@ class Room {
         reserveAt: getField<String>(json, 'reserve_at', defaultValue: ''),
         status: getField<int>(json, 'status', defaultValue: 0),
         streamerId: getField<int>(json['streamer'], 'id', defaultValue: 0),
-        providerId:
+        supplierId:
             getField<int>(json['streamer'], 'supplier_id', defaultValue: 0),
         tags: tags,
         title: getField<String>(json, 'title', defaultValue: ''),
@@ -88,7 +88,7 @@ class Room {
         chargeAmount: '0',
         reserveAt: '',
         streamerId: 0,
-        providerId: null,
+        supplierId: null,
         hostEnter: '',
         nickname: '',
         userLive: 0,
