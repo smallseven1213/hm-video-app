@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../localization/live_localization_delegate.dart';
+
 class NoResult extends StatelessWidget {
   const NoResult({
     Key? key,
@@ -7,18 +9,20 @@ class NoResult extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
+    return Column(
       children: [
-        SizedBox(height: 100),
-        Image(
+        const SizedBox(height: 100),
+        const Image(
           image: AssetImage('assets/images/ic_noresult.webp'),
           width: 48,
           height: 48,
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
-          '這裡什麼都沒有',
-          style: TextStyle(color: Color(0xff6f6f79)),
+          localizations.translate('there_is_nothing_here'),
+          style: const TextStyle(color: Color(0xff6f6f79)),
         ),
       ],
     );

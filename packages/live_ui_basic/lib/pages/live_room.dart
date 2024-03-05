@@ -8,6 +8,7 @@ import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
+import 'package:live_ui_basic/localization/live_localization_delegate.dart';
 import 'package:live_ui_basic/screens/live_room/center_gift_screen.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';
 import 'package:live_ui_basic/screens/live_room/player_layout.dart';
@@ -34,10 +35,12 @@ class LiveRoomPage extends StatefulWidget {
 class _LiveRoomPageState extends State<LiveRoomPage> {
   bool _isControllerInitialized = false;
   late final LiveRoomController controller;
+  late final LiveLocalizations localizations; // 延后初始化
 
   @override
   void initState() {
     super.initState();
+    localizations = LiveLocalizations.of(context)!; // 在这里初始化
     initializeController();
   }
 
@@ -48,17 +51,17 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
       return liveRoomController;
     }, tag: widget.pid.toString());
 
-    if (controller.hasError.value) {
+    if (controller.hasError.value && mounted) {
       showLiveDialog(
         context,
-        title: '直播間沒開',
-        content: const Center(
-          child: Text('直播間沒開',
-              style: TextStyle(color: Colors.white, fontSize: 11)),
+        title: localizations.translate('live_room_is_not_open'),
+        content: Center(
+          child: Text(localizations.translate('live_room_is_not_open'),
+              style: const TextStyle(color: Colors.white, fontSize: 11)),
         ),
         actions: [
           LiveButton(
-              text: '確定',
+              text: localizations.translate('confirm'),
               type: ButtonType.primary,
               onTap: () async {
                 Navigator.of(context).pop();
@@ -83,15 +86,15 @@ class _LiveRoomPageState extends State<LiveRoomPage> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('錯誤'),
-              content: const Text('沒有此聊天室'),
+              title: Text(localizations.translate('error')),
+              content: Text(localizations.translate('no_such_chat_room')),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop(); // 關閉對話框
                     Navigator.of(context).pop(); // 返回上一頁
                   },
-                  child: const Text('確定'),
+                  child: Text(localizations.translate('confirm')),
                 ),
               ],
             );

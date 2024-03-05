@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:live_core/models/chat_message.dart';
 
 import '../../../libs/format_timestamp.dart';
+import '../../../localization/live_localization_delegate.dart';
 import 'message_item_for_command.dart';
 import 'message_item_for_gift.dart';
 
@@ -21,11 +22,13 @@ class MessageItem<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     var messageText = "";
     if (message.objChat.ntype == MessageType.text) {
       messageText = '${message.objChat.name} : ${message.objChat.data}';
     } else if (message.objChat.ntype == MessageType.auction) {
-      messageText = "出價 ${message.objChat.data}";
+      messageText = "${localizations.translate('bid')} ${message.objChat.data}";
     } else if (message.objChat.ntype == MessageType.system) {
       messageText =
           "${message.objChat.name} ${translations[message.objChat.data] ?? message.objChat.data}";

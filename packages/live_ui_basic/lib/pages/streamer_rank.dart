@@ -8,6 +8,8 @@ import 'package:live_core/models/streamer.dart';
 import 'package:live_core/models/streamer_rank.dart';
 import 'package:live_ui_basic/widgets/rank_number.dart';
 
+import '../localization/live_localization_delegate.dart';
+
 class StreamerRankPage extends StatefulWidget {
   const StreamerRankPage({Key? key}) : super(key: key);
 
@@ -18,18 +20,21 @@ class StreamerRankPage extends StatefulWidget {
 class _StreamerRankPageState extends State<StreamerRankPage> {
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF242a3d),
-          title: const Text('主播排行', style: TextStyle(fontSize: 14)),
-          bottom: const TabBar(
+          title: Text(localizations.translate('host_ranking'),
+              style: const TextStyle(fontSize: 14)),
+          bottom: TabBar(
             tabAlignment: TabAlignment.center,
             tabs: [
-              Tab(text: '綜合'),
-              Tab(text: '人氣'),
-              Tab(text: '新人'),
+              Tab(text: localizations.translate('comprehensive')),
+              Tab(text: localizations.translate('popularity')),
+              Tab(text: localizations.translate('newcomer')),
             ],
           ),
         ),
@@ -72,6 +77,8 @@ class _RankingScreenState extends State<RankingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Container(
       color: const Color(0xFF242a3d),
       child: StreamerRankProvider(
@@ -143,15 +150,18 @@ class _RankingScreenState extends State<RankingScreen> {
                                   userFollowsController.follow(streamer);
                                 }
                               },
-                              child: Text(isFollowed ? '已關注' : '關注',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12)),
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
                                     isFollowed
                                         ? const Color(0xff7b7b7b)
                                         : const Color(0xffae57ff)),
                               ),
+                              child: Text(
+                                  isFollowed
+                                      ? localizations.translate('followed')
+                                      : localizations.translate('follow'),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 12)),
                             );
                           }),
                         ],
@@ -196,34 +206,36 @@ class _TimeFilterBarState extends State<TimeFilterBar> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           buildButton(
-            title: '日榜',
+            title: localizations.translate('daily_ranking'),
             timeType: TimeType.today,
             updateRankList: () =>
                 widget.updateCallback(widget.rankType, TimeType.today),
           ),
           buildButton(
-            title: '週榜',
+            title: localizations.translate('weekly_ranking'),
             timeType: TimeType.thisWeek,
             updateRankList: () =>
                 widget.updateCallback(widget.rankType, TimeType.thisWeek),
           ),
           buildButton(
-            title: '月榜',
+            title: localizations.translate('monthly_ranking'),
             timeType: TimeType.thisMonth,
             updateRankList: () =>
                 widget.updateCallback(widget.rankType, TimeType.thisMonth),
           ),
-          const Expanded(
+          Expanded(
               child: Text(
-            '數據每小時更新',
+            localizations.translate('data_updates_every_hour'),
             textAlign: TextAlign.right,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xff7b7b7b),
               fontSize: 10,
             ),

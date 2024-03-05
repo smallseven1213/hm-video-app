@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 
+import '../../../localization/live_localization_delegate.dart';
+
 class MessageItemForCommand extends StatelessWidget {
   final int pid;
   final ChatMessage<String> message;
@@ -14,6 +16,8 @@ class MessageItemForCommand extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     try {
       final liveRoomController =
           Get.find<LiveRoomController>(tag: pid.toString());
@@ -23,7 +27,8 @@ class MessageItemForCommand extends StatelessWidget {
             .firstWhere(
                 (element) => element.id == int.parse(message.objChat.data))
             .name;
-        var messageText = "${message.objChat.name} 發送指令 : $commandText";
+        var messageText =
+            "${message.objChat.name} ${localizations.translate('send_command')} : $commandText";
 
         return ConstrainedBox(
             constraints: BoxConstraints(

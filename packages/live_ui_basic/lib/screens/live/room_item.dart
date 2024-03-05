@@ -8,6 +8,7 @@ import 'package:live_ui_basic/libs/showLiveDialog.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/live_localization_delegate.dart';
 import 'countdown_timer.dart';
 
 final liveApi = LiveApi();
@@ -53,16 +54,18 @@ class RoomItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return InkWell(
       onTap: () async {
         bool updateRoomList = false;
         if (room.status == RoomStatus.ended.index) {
           showLiveDialog(
             context,
-            title: '直播已結束',
-            content: const Center(
-              child: Text('直播已結束',
-                  style: TextStyle(color: Colors.white, fontSize: 11)),
+            title: localizations.translate('live_broadcast_has_ended'),
+            content: Center(
+              child: Text(localizations.translate('live_broadcast_has_ended'),
+                  style: const TextStyle(color: Colors.white, fontSize: 11)),
             ),
           );
           return;
@@ -122,13 +125,13 @@ class RoomItem extends StatelessWidget {
                           ? const Color(0xffe6845fcf)
                           : const Color(0xffe65fcf95),
                       text: room.chargeType == RoomChargeType.free.index
-                          ? '免費'
-                          : '付費',
+                          ? localizations.translate('free')
+                          : localizations.translate('paid'),
                     )
                   : room.status == RoomStatus.ended.index
                       ? _buildLabel(
                           color: const Color(0xffe6cf795f),
-                          text: '已結束',
+                          text: localizations.translate('ended'),
                           icon: const Icon(Icons.access_time,
                               size: 12, color: Colors.white),
                         )

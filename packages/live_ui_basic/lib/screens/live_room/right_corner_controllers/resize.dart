@@ -3,6 +3,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:clipboard/clipboard.dart';
 
+import '../../../localization/live_localization_delegate.dart';
+
 class Resize extends StatelessWidget {
   const Resize({Key? key}) : super(key: key);
 
@@ -31,6 +33,8 @@ class ShareView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Container(
       height: MediaQuery.of(context).padding.bottom + 200,
       width: double.infinity,
@@ -48,8 +52,8 @@ class ShareView extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text("分享到",
-                    style: TextStyle(color: Colors.white, fontSize: 14)),
+                Text(localizations.translate('share_to'),
+                    style: const TextStyle(color: Colors.white, fontSize: 14)),
                 const SizedBox(height: 17),
                 _createButton(
                     context,
@@ -57,10 +61,10 @@ class ShareView extends StatelessWidget {
                         'packages/live_ui_basic/assets/images/share_link_button.webp',
                         width: 33,
                         height: 33),
-                    '複製連結', onPressed: () {
+                    localizations.translate('copy_link'), onPressed: () {
                   FlutterClipboard.copy('hello flutter friends').then((value) {
                     Fluttertoast.showToast(
-                      msg: "複製成功",
+                      msg: localizations.translate('copy_successfully'),
                       gravity: ToastGravity.BOTTOM,
                     );
                   });
@@ -90,7 +94,7 @@ class ShareView extends StatelessWidget {
               ),
               height: 43,
               child: Center(
-                child: Text("取消",
+                child: Text(localizations.translate('cancel'),
                     style: TextStyle(color: Colors.white, fontSize: 14)),
               ),
             ),

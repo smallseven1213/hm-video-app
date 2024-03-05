@@ -6,6 +6,7 @@ import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/controllers/room_rank_controller.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
 
+import '../../localization/live_localization_delegate.dart';
 import '../../widgets/live_button.dart';
 
 final liveApi = LiveApi();
@@ -23,6 +24,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
   bool isPurchasing = false;
   late LiveRoomController liveroomController;
   late RoomRankController _rankController;
+  late LiveLocalizations localizations;
 
   // initState
   @override
@@ -30,7 +32,7 @@ class _PaymentDialogState extends State<PaymentDialog> {
     super.initState();
     liveroomController = Get.find(tag: widget.pid.toString());
     _rankController = Get.find(tag: widget.pid.toString());
-
+    localizations = LiveLocalizations.of(context)!;
     ever(_rankController.shouldShowPaymentPrompt,
         _handleShouldShowPaymentPrompt);
   }
@@ -39,21 +41,23 @@ class _PaymentDialogState extends State<PaymentDialog> {
     if (shouldShowPaymentPrompt && !_rankController.userClosedDialog) {
       showLiveDialog(
         context,
-        title: '計時付費',
-        content: const Center(
-          child: Text('付費時間已到，是否續費',
-              style: TextStyle(color: Colors.white, fontSize: 11)),
+        title: localizations.translate('timed_payment'),
+        content: Center(
+          child: Text(
+              localizations
+                  .translate('whether_to_continue_after_paid_time_expires'),
+              style: const TextStyle(color: Colors.white, fontSize: 11)),
         ),
         actions: [
           LiveButton(
-              text: '取消',
+              text: localizations.translate('cancel'),
               type: ButtonType.secondary,
               onTap: () {
                 _rankController.setUserClosedDialog();
                 Navigator.of(context).pop();
               }),
           LiveButton(
-              text: '確定',
+              text: localizations.translate('confirm'),
               type: ButtonType.primary,
               onTap: () async {
                 var price = liveroomController.displayAmount.value;
@@ -62,20 +66,23 @@ class _PaymentDialogState extends State<PaymentDialog> {
                   Navigator.of(context).pop();
                   showLiveDialog(
                     context,
-                    title: '鑽石不足',
-                    content: const Center(
-                      child: Text('鑽石不足，請前往充值',
-                          style: TextStyle(color: Colors.white, fontSize: 11)),
+                    title: localizations.translate('not_enough_diamonds'),
+                    content: Center(
+                      child: Text(
+                          localizations.translate(
+                              'insufficient_diamonds_please_recharge'),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 11)),
                     ),
                     actions: [
                       LiveButton(
-                          text: '取消',
+                          text: localizations.translate('cancel'),
                           type: ButtonType.secondary,
                           onTap: () {
                             Navigator.of(context).pop();
                           }),
                       LiveButton(
-                          text: '確定',
+                          text: localizations.translate('confirm'),
                           type: ButtonType.primary,
                           onTap: () {
                             Navigator.of(context).pop();

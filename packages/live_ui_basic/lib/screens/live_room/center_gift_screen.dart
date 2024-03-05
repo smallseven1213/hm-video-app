@@ -8,6 +8,8 @@ import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class GiftUserData {
   String userName;
   String userAvatar;
@@ -118,6 +120,8 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     if (lottiePath == null) {
       return const SizedBox();
     }
@@ -208,13 +212,14 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
                                       children: [
                                         Text(
                                           giftUserData.value?.userName ??
-                                              "某位使用者",
+                                              localizations
+                                                  .translate('a_certain_user'),
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12),
                                         ),
                                         Text(
-                                          '贈送禮物 ${giftUserData.value?.giftName}',
+                                          '${localizations.translate('send_gift')} ${giftUserData.value?.giftName}',
                                           style: const TextStyle(
                                               color: Colors.white,
                                               fontSize: 12),

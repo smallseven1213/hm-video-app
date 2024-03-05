@@ -7,6 +7,7 @@ import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/models/gift.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
+import '../../localization/live_localization_delegate.dart';
 import 'left_side_gift_animation.dart';
 
 class GiftAnimationData {
@@ -84,6 +85,8 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return SizedBox(
         height: 80,
         child: giftAnimationData == null
@@ -123,12 +126,14 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    giftAnimationData?.userName ?? "某位使用者",
+                                    giftAnimationData?.userName ??
+                                        localizations
+                                            .translate('a_certain_user'),
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 12),
                                   ),
                                   Text(
-                                    '贈送禮物 ${giftAnimationData?.giftName}',
+                                    '${localizations.translate('send_gift')} ${giftAnimationData?.giftName}',
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 12),
                                   ),
