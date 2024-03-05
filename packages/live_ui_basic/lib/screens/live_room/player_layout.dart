@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'dart:ui';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:video_player/video_player.dart';
@@ -18,12 +19,39 @@ class PlayerLayout extends StatefulWidget {
 class _PlayerLayoutState extends State<PlayerLayout>
     with WidgetsBindingObserver {
   late VideoPlayerController videoController;
+  late final Connectivity _connectivity;
+  late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool hasError = false;
 
   @override
   void initState() {
     super.initState();
+    _connectivity = Connectivity();
+    _initializeConnectivityListener();
     initializeVideoPlayer();
+  }
+
+  void _initializeConnectivityListener() async {
+    _connectivitySubscription =
+        _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      // 检查网络是否断开
+      if (result == ConnectivityResult.none) {
+        // 网络断开时的逻辑
+        if (!hasError) {
+          setState(() {
+            hasError = true;
+          });
+        }
+      } else {
+        // 网络连接时的逻辑
+        if (hasError) {
+          setState(() {
+            hasError = false;
+          });
+          initializeVideoPlayer();
+        }
+      }
+    });
   }
 
   void initializeVideoPlayer() {
@@ -42,23 +70,23 @@ class _PlayerLayoutState extends State<PlayerLayout>
       // }).catchError((error) {
       //   print('[V]video catch error: $error');
       //   if (mounted) {
+      // setState(() {
+      //   hasError = true;
+      // });
+      // handleVideoError();
+      //   }
+      // });
+
+      // videoController.addListener(() {
+      //   print('[V]video display listener, hasError: ${videoController.value}');
+      //   if (videoController.value.hasError) {
+      //     print('[V]video display error');
       //     setState(() {
       //       hasError = true;
       //     });
       //     handleVideoError();
       //   }
       // });
-
-      videoController.addListener(() {
-        print('[V]video display listener, hasError: ${videoController.value}');
-        if (videoController.value.hasError) {
-          print('[V]video display error');
-          setState(() {
-            hasError = true;
-          });
-          handleVideoError();
-        }
-      });
     } catch (e) {
       // setState(() {
       //   hasError = true;
@@ -67,19 +95,10 @@ class _PlayerLayoutState extends State<PlayerLayout>
     }
   }
 
-  void handleVideoError() {
-    Future.delayed(const Duration(seconds: 3), () {
-      if (mounted) {
-        // 重新初始化視頻播放器
-        print('[V]try to initial video');
-        initializeVideoPlayer();
-      }
-    });
-  }
-
   @override
   void dispose() {
     videoController.dispose();
+    _connectivitySubscription.cancel();
     super.dispose();
   }
 
