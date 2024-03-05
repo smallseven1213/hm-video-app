@@ -105,18 +105,22 @@ class FilterGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(title, style: const TextStyle(color: Colors.white)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: options.map((option) {
-            return Container(
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal, // 設置滾動方向為水平
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: options.map((option) {
+              return Container(
                 margin: const EdgeInsets.only(right: 10, top: 10),
                 child: FilterButton(
                   text: option.name,
                   isActive: option == activeOption,
                   onTap: () => filter(option),
-                ));
-          }).toList(),
-        ),
+                ),
+              );
+            }).toList(),
+          ),
+        )
       ],
     );
   }

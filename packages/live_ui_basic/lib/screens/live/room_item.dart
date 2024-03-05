@@ -72,7 +72,7 @@ class RoomItem extends StatelessWidget {
         } else if (room.status == RoomStatus.notStarted.index) {
           updateRoomList = await MyRouteDelegate.of(context).push(
             AppRoutes.supplier,
-            args: {'id': room.streamerId},
+            args: {'id': room.providerId},
           );
         } else {
           updateRoomList = await MyRouteDelegate.of(context).push(

@@ -145,7 +145,7 @@ class RecommendScreen extends StatelessWidget {
         SliverToBoxAdapter(child: RecentSearches(onSearch: onSearch)),
         SliverToBoxAdapter(
             child: SectionTitle(
-                title: localizations.translate('fan_recommendation'))),
+                title: localizations.translate('fan_recommendations'))),
         const SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 4.0),
           sliver: FanRecommendationWidget(),

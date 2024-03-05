@@ -4,6 +4,7 @@ import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/controllers/suppliers_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
+import '../../localization/i18n.dart';
 import 'profile_cards.dart';
 
 class FollowWithRecommendations extends StatefulWidget {
@@ -82,7 +83,7 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      isLiked ? '已關注' : '+ 關注',
+                      isLiked ? I18n.followed : '+ ${I18n.follow}',
                       style: TextStyle(
                         fontSize: 13,
                         color: isLiked ? const Color(0xff161823) : Colors.white,
@@ -119,8 +120,8 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  '你可能感興趣',
+                Text(
+                  I18n.youMightBeInterested,
                   textAlign: TextAlign.left,
                   style: TextStyle(color: Color(0xff73747b), fontSize: 13),
                 ),

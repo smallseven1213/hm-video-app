@@ -5,6 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import '../../localization/i18n.dart';
 import '../../widgets/actor_avatar.dart';
 import '../../widgets/follow_button.dart';
 
@@ -30,7 +31,7 @@ class ProfileCards extends StatelessWidget {
         width: double.infinity,
         height: suppliers.isEmpty ? 30 : 200,
         child: suppliers.isEmpty
-            ? const Text('暫時沒有更多了', textAlign: TextAlign.center)
+            ? Text(I18n.noMoreForNow, textAlign: TextAlign.center)
             : ListView.builder(
                 scrollDirection: Axis.horizontal,
                 itemCount: suppliers.length,

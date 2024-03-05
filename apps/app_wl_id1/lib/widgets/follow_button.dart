@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../localization/i18n.dart';
+
 class FollowButton extends StatelessWidget {
   final bool isLiked;
 
@@ -15,7 +17,7 @@ class FollowButton extends StatelessWidget {
       ),
       alignment: Alignment.center,
       child: Text(
-        isLiked ? '已關注' : '+ 關注',
+        isLiked ? I18n.followed : '+ ${I18n.follow}',
         style: TextStyle(
           fontSize: 13,
           color: isLiked ? const Color(0xff161823) : Colors.white,

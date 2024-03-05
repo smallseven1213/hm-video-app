@@ -129,7 +129,8 @@ use_mobile_app_to_recover_account,Please use the mobile app to recover your acco
 download_file,Download,下載,下載,Tải Xuống,ダウンロード,Unduh
 like_button,Like,點讚,點讚,Thích,いいね,Translation: Menyukai
 more_options,More >,更多 >,更多 >,Thêm >,もっと見る >,Lebih banyak >
-follow_status,Follow,關注,關注,Theo Dõi,注目,Perhatian
+follow,Follow,關注,關注,Theo Dõi,注目,Perhatian
+followed,Followed,已關注,,,,Telah diikuti
 account_credentials,Account Credentials,帳號憑證,帳號憑證,Chứng Nhận Tài Khoản,アカウント認証,Kredensial akun
 edit_translation,Edit,編輯,編輯,Chỉnh Sửa,編集,Sunting
 input_name,Input Name,輸入名稱,輸入名稱,Nhập Tên,名称を入力してください。,Masukkan nama
@@ -186,3 +187,5 @@ coin,Coins,金幣,,,,Koin
 vip,VIP,VIP,,,,VIP
 guest,Guest,訪客,,,,Tamu
 content_updated,Content Updated,內容已更新,,,,Konten Diperbarui
+no_more_for_now,No more for now,暫時沒有更多了,,,,Tidak ada lagi untuk saat ini.
+you_might_be_interested,You might be interested.,你可能感興趣,,,,Anda mungkin tertarik.

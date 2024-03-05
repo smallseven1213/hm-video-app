@@ -35,7 +35,7 @@ class SearchWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      localizations.translate('search_hint'),
+                      localizations.translate('search'),
                       style: const TextStyle(
                         color: Color(0xFF5a6077),
                       ),

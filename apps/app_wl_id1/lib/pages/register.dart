@@ -120,8 +120,8 @@ class RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: '註冊',
+      appBar: CustomAppBar(
+        title: I18n.register,
       ),
       body: SingleChildScrollView(
         child: Form(

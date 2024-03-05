@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../localization/i18n.dart';
 import 'actor_avatar.dart';
 
 class HeaderFollowButton extends StatelessWidget {
@@ -34,7 +35,7 @@ class HeaderFollowButton extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              isLiked ? '已關注' : '+ 關注',
+              isLiked ? I18n.followed : '+ ${I18n.follow}',
               style: TextStyle(
                 fontSize: 12,
                 color:

@@ -24,6 +24,8 @@ class Room {
   final String? reserveAt; // 預約開播時間
   final int status; // 1: 未開始 2: 直播中 3: 已結束
   final int streamerId; // 主播id
+  final int? providerId; // 供應商id
+
   final List<Tag> tags;
   final String title;
   final String userCost; // 當前場次收益
@@ -39,6 +41,7 @@ class Room {
     this.reserveAt,
     required this.status,
     required this.streamerId,
+    this.providerId,
     required this.tags,
     required this.title,
     required this.userCost,
@@ -50,8 +53,10 @@ class Room {
       var tagsList = json['tags'] as List;
       List<Tag> tags = tagsList.map((i) => Tag.fromJson(i)).toList();
       return Room(
-        chargeAmount: getField<String>(json, 'charge_amount', defaultValue: ''),
-        chargeType: getField<int>(json, 'charge_type', defaultValue: 0),
+        chargeAmount:
+            getField<String>(json, 'charge_amount', defaultValue: ''), // 金額
+        chargeType: getField<int>(json, 'charge_type',
+            defaultValue: 0), // 1: 免費 2: 一次性 3: 每n分鐘
         hostEnter:
             getField<String>(json['streamer'], 'created_at', defaultValue: ''),
         id: getField<int>(json, 'id', defaultValue: 0),
@@ -62,6 +67,8 @@ class Room {
         reserveAt: getField<String>(json, 'reserve_at', defaultValue: ''),
         status: getField<int>(json, 'status', defaultValue: 0),
         streamerId: getField<int>(json['streamer'], 'id', defaultValue: 0),
+        providerId:
+            getField<int>(json['streamer'], 'supplier_id', defaultValue: 0),
         tags: tags,
         title: getField<String>(json, 'title', defaultValue: ''),
         userCost: getField<String>(json['statistic'], 'total_income',
@@ -81,6 +88,7 @@ class Room {
         chargeAmount: '0',
         reserveAt: '',
         streamerId: 0,
+        providerId: null,
         hostEnter: '',
         nickname: '',
         userLive: 0,

@@ -177,7 +177,7 @@ class ChannelStyle6Suppliers extends StatelessWidget {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              I18n.followStatus,
+                                              I18n.follow,
                                               style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 16,

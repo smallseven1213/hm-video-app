@@ -213,23 +213,29 @@ class _TimeFilterBarState extends State<TimeFilterBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          buildButton(
-            title: localizations.translate('daily_ranking'),
-            timeType: TimeType.today,
-            updateRankList: () =>
-                widget.updateCallback(widget.rankType, TimeType.today),
+          Flexible(
+            child: buildButton(
+              title: localizations.translate('daily_ranking'),
+              timeType: TimeType.today,
+              updateRankList: () =>
+                  widget.updateCallback(widget.rankType, TimeType.today),
+            ),
           ),
-          buildButton(
-            title: localizations.translate('weekly_ranking'),
-            timeType: TimeType.thisWeek,
-            updateRankList: () =>
-                widget.updateCallback(widget.rankType, TimeType.thisWeek),
+          Flexible(
+            child: buildButton(
+              title: localizations.translate('weekly_ranking'),
+              timeType: TimeType.thisWeek,
+              updateRankList: () =>
+                  widget.updateCallback(widget.rankType, TimeType.thisWeek),
+            ),
           ),
-          buildButton(
-            title: localizations.translate('monthly_ranking'),
-            timeType: TimeType.thisMonth,
-            updateRankList: () =>
-                widget.updateCallback(widget.rankType, TimeType.thisMonth),
+          Flexible(
+            child: buildButton(
+              title: localizations.translate('monthly_ranking'),
+              timeType: TimeType.thisMonth,
+              updateRankList: () =>
+                  widget.updateCallback(widget.rankType, TimeType.thisMonth),
+            ),
           ),
           Expanded(
               child: Text(
