@@ -48,6 +48,7 @@ class _PlayerLayoutState extends State<PlayerLayout>
           });
 
     videoController.addListener(() {
+      print('[V]video display listener, hasError: ${videoController.value}');
       if (videoController.value.hasError) {
         print('[V]video display error');
         setState(() {
