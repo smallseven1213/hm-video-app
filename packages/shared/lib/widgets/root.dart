@@ -1,14 +1,15 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:game/localization/en.dart';
 import 'package:game/localization/game_localization_delegate.dart';
+import 'package:game/localization/en.dart';
 import 'package:game/localization/id.dart';
 import 'package:game/localization/vi.dart';
 import 'package:game/localization/zh.dart';
 import 'package:game/localization/zn.dart';
 
-import 'package:live_ui_basic/localization/en.dart';
 import 'package:live_ui_basic/localization/live_localization_delegate.dart';
+import 'package:live_ui_basic/localization/en.dart';
+import 'package:live_ui_basic/localization/jp.dart';
 import 'package:live_ui_basic/localization/id.dart';
 import 'package:live_ui_basic/localization/vi.dart';
 import 'package:live_ui_basic/localization/zh.dart';
@@ -90,6 +91,7 @@ class RootWidget extends StatelessWidget {
           'zh-CN': liveZhCnStrings,
           'vi-VN': liveViVnStrings,
           'id-ID': liveIdIdStrings,
+          'ja_JP': liveJaJpStrings,
         }),
         ...context.localizationDelegates,
       ],
