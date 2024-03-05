@@ -27,36 +27,44 @@ class _PlayerLayoutState extends State<PlayerLayout>
   }
 
   void initializeVideoPlayer() {
-    videoController =
-        VideoPlayerController.networkUrl(Uri.parse(widget.uri.toString()))
-          ..initialize().then((_) {
-            print('[V]initialize video');
-            if (mounted) {
-              setState(() {
-                hasError = false;
-              });
-              videoController.play();
-            }
-          }).catchError((error) {
-            print('[V]video catch error: $error');
-            if (mounted) {
-              setState(() {
-                hasError = true;
-              });
-              handleVideoError();
-            }
-          });
+    try {
+      videoController =
+          VideoPlayerController.networkUrl(Uri.parse(widget.uri.toString()))
+            ..initialize().then((_) {
+              print('[V]initialize video');
+              if (mounted) {
+                setState(() {
+                  hasError = false;
+                });
+                videoController.play();
+              }
+            });
+      // }).catchError((error) {
+      //   print('[V]video catch error: $error');
+      //   if (mounted) {
+      //     setState(() {
+      //       hasError = true;
+      //     });
+      //     handleVideoError();
+      //   }
+      // });
 
-    videoController.addListener(() {
-      print('[V]video display listener, hasError: ${videoController.value}');
-      if (videoController.value.hasError) {
-        print('[V]video display error');
-        setState(() {
-          hasError = true;
-        });
-        handleVideoError();
-      }
-    });
+      videoController.addListener(() {
+        print('[V]video display listener, hasError: ${videoController.value}');
+        if (videoController.value.hasError) {
+          print('[V]video display error');
+          setState(() {
+            hasError = true;
+          });
+          handleVideoError();
+        }
+      });
+    } catch (e) {
+      // setState(() {
+      //   hasError = true;
+      // });
+      // handleVideoError();
+    }
   }
 
   void handleVideoError() {
