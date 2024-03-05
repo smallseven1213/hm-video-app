@@ -61,7 +61,7 @@ class _GameLobbyState extends State<GameLobby>
   bool isShowFab = false;
   bool isShowDownload = true;
 
-  UserController get userController => Get.find<UserController>();
+  UserController userController = Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
   GameParamConfigController gameParamConfigController =
       Get.find<GameParamConfigController>();
@@ -72,14 +72,13 @@ class _GameLobbyState extends State<GameLobby>
     super.initState();
     _fetchDataInit();
 
-    // Put controllers into Get dependency container here
+    gameWalletController.fetchWalletsInitFromThirdLogin();
     Get.put(GameBannerController());
     Get.put(GamesListController());
 
     Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
-      userController.fetchUserInfo();
-      gameWalletController.fetchWallets();
+      // userController.fetchUserInfo();
       logger.i('token changed');
     });
   }
@@ -123,7 +122,7 @@ class _GameLobbyState extends State<GameLobby>
                             content: GameLobbyLoginTabs(
                               type: Type.login,
                               onSuccess: () {
-                                userController.fetchUserInfo();
+                                // userController.fetchUserInfo();
                                 gameWalletController.mutate();
                                 Navigator.pop(context);
                               },
