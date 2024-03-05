@@ -24,7 +24,6 @@ class _PaymentDialogState extends State<PaymentDialog> {
   bool isPurchasing = false;
   late LiveRoomController liveroomController;
   late RoomRankController _rankController;
-  late LiveLocalizations localizations;
 
   // initState
   @override
@@ -32,12 +31,17 @@ class _PaymentDialogState extends State<PaymentDialog> {
     super.initState();
     liveroomController = Get.find(tag: widget.pid.toString());
     _rankController = Get.find(tag: widget.pid.toString());
-    localizations = LiveLocalizations.of(context)!;
     ever(_rankController.shouldShowPaymentPrompt,
         _handleShouldShowPaymentPrompt);
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
   void _handleShouldShowPaymentPrompt(bool shouldShowPaymentPrompt) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
     if (shouldShowPaymentPrompt && !_rankController.userClosedDialog) {
       showLiveDialog(
         context,

@@ -35,13 +35,18 @@ class LiveRoomPage extends StatefulWidget {
 class _LiveRoomPageState extends State<LiveRoomPage> {
   bool _isControllerInitialized = false;
   late final LiveRoomController controller;
-  late final LiveLocalizations localizations; // 延后初始化
+  late final LiveLocalizations localizations;
 
   @override
   void initState() {
     super.initState();
-    localizations = LiveLocalizations.of(context)!; // 在这里初始化
     initializeController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    localizations = LiveLocalizations.of(context)!;
   }
 
   Future<void> initializeController() async {
