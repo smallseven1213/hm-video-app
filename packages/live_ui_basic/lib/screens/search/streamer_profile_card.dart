@@ -8,6 +8,8 @@ import 'package:live_core/models/streamer_profile.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class StreamerProfileCard extends StatelessWidget {
   final StreamerProfile profile;
   final bool? showFansCount;
@@ -24,6 +26,8 @@ class StreamerProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LiveListController controller = Get.find();
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return InkWell(
       onTap: () {
         final room = controller.getRoomByStreamerId(profile.id);
@@ -115,7 +119,10 @@ class StreamerProfileCard extends StatelessWidget {
                                 userFollowsController.follow(streamer);
                               }
                             },
-                            child: Text(isFollowed ? '已關注' : '關注',
+                            child: Text(
+                                isFollowed
+                                    ? localizations.translate('followed')
+                                    : localizations.translate('follow'),
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 12)),
                           ),

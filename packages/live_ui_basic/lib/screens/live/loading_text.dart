@@ -4,15 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 
-final List<String> loadingTextList = [
-  '檔案很大，你忍一下',
-  '還沒準備好，你先悠著來',
-  '精彩即將呈現',
-  '努力加載中',
-  '讓檔案載一會兒',
-  '美好事物，值得等待',
-  '拼命搬磚中',
-];
+import '../../localization/live_localization_delegate.dart';
 
 class LoadingText extends StatefulWidget {
   const LoadingText({Key? key}) : super(key: key);
@@ -28,7 +20,6 @@ class LoadingTextState extends State<LoadingText> {
   @override
   void initState() {
     super.initState();
-    _updateLoadingText();
   }
 
   @override
@@ -38,6 +29,16 @@ class LoadingTextState extends State<LoadingText> {
   }
 
   void _updateLoadingText() {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+    final List<String> loadingTextList = [
+      localizations.translate('the_file_is_large_please_wait'),
+      localizations.translate('its_not_ready_yet_please_take_your_time'),
+      localizations.translate('exciting_moments_are_coming_soon'),
+      localizations.translate('loading'),
+      localizations.translate('let_the_file_load_for_a_while'),
+      localizations.translate('good_things_are_worth_the_wait'),
+      localizations.translate('working_hard'),
+    ];
     setState(() {
       text = loadingTextList[rng.nextInt(loadingTextList.length)];
     });
@@ -48,7 +49,7 @@ class LoadingTextState extends State<LoadingText> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 15.0,
           width: 15.0,
           child: Center(
@@ -59,10 +60,10 @@ class LoadingTextState extends State<LoadingText> {
           ),
         ),
         const SizedBox(
-            width: 8), // Add some space between the icon and the text
+            height: 8), // Add some space between the icon and the text
         Text(
           text,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 13,
             color: Colors.white,
           ),

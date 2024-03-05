@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_search_history_controller.dart';
 
+import '../../localization/live_localization_delegate.dart';
 import '../../pages/search.dart';
 
 class RecentSearches extends StatelessWidget {
@@ -15,12 +16,14 @@ class RecentSearches extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Obx(
       () => searchHistoryController.searchHistory.isNotEmpty
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SectionTitle(title: '最近搜尋'),
+                SectionTitle(title: localizations.translate('recent_searches')),
                 Wrap(
                   direction: Axis.horizontal, // 標籤的排列方向
                   spacing: 8, // 標籤之間的水平間距

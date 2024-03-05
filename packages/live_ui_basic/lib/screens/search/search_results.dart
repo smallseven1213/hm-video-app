@@ -6,6 +6,7 @@ import 'package:live_core/controllers/live_search_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/live_localization_delegate.dart';
 import '../../widgets/no_result.dart';
 
 class SearchResults extends StatelessWidget {
@@ -18,6 +19,8 @@ class SearchResults extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Obx(() {
       var steamer = controller.searchResult;
       if (steamer.isEmpty) {
@@ -42,7 +45,7 @@ class SearchResults extends StatelessWidget {
               style: const TextStyle(color: Colors.white),
             ),
             subtitle: Text(
-              '關注人數: ${steamer[index].fansCount}',
+              '${localizations.translate('number_of_followers')}: ${steamer[index].fansCount}',
               style: const TextStyle(color: Colors.white70),
             ),
             trailing: const Icon(Icons.chevron_right, color: Colors.white),

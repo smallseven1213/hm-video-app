@@ -5,6 +5,7 @@ import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 
 import '../libs/showLiveDialog.dart';
+import '../localization/live_localization_delegate.dart';
 import 'live_button.dart';
 import 'payment_check_box.dart';
 
@@ -31,6 +32,8 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Obx(() {
       if (liveroomController.liveRoom.value == null ||
           liveroomController.liveRoomInfo.value?.chargeType == 1 ||
@@ -50,20 +53,23 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                 if (userAmount < price) {
                   showLiveDialog(
                     context,
-                    title: '鑽石不足',
-                    content: const Center(
-                      child: Text('鑽石不足，請前往充值',
-                          style: TextStyle(color: Colors.white, fontSize: 11)),
+                    title: localizations.translate('not_enough_diamonds'),
+                    content: Center(
+                      child: Text(
+                          localizations.translate(
+                              'insufficient_diamonds_please_recharge'),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 11)),
                     ),
                     actions: [
                       LiveButton(
-                          text: '取消',
+                          text: localizations.translate('cancel'),
                           type: ButtonType.secondary,
                           onTap: () {
                             Navigator.of(context).pop();
                           }),
                       LiveButton(
-                          text: '確定',
+                          text: localizations.translate('confirm'),
                           type: ButtonType.primary,
                           onTap: () {
                             Navigator.of(context).pop();
@@ -138,9 +144,9 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                           ),
                         )
                       else ...[
-                        const Text(
-                          "進入付費直播",
-                          style: TextStyle(color: Colors.white),
+                        Text(
+                          localizations.translate('enter_paid_live'),
+                          style: const TextStyle(color: Colors.white),
                         ),
                         const SizedBox(width: 14),
                         Image.asset(
@@ -156,8 +162,8 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                                   color: Colors.white, fontSize: 12)),
                         if (liveroomController.liveRoomInfo.value?.chargeType ==
                             3)
-                          const Text(' /10分',
-                              style: TextStyle(
+                          Text(' /10${localizations.translate('point')}',
+                              style: const TextStyle(
                                   color: Color(0xFFc8c8c8), fontSize: 12)),
                       ],
                     ],

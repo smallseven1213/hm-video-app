@@ -15,6 +15,7 @@ import 'package:live_ui_basic/widgets/live_button.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../../libs/showLiveDialog.dart';
+import '../../../localization/live_localization_delegate.dart';
 import '../../../widgets/x_count.dart';
 import 'user_diamonds.dart';
 
@@ -71,6 +72,8 @@ class _GiftsState extends State<Gifts> {
   @override
   Widget build(BuildContext context) {
     final giftsController = Get.find<GiftsController>();
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     int totalPageCount = (giftsController.gifts.value.length / 8).ceil();
     return Container(
       height: 366,
@@ -83,9 +86,9 @@ class _GiftsState extends State<Gifts> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '禮物清單',
-                style: TextStyle(
+              Text(
+                localizations.translate('gift_list'),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -324,22 +327,25 @@ class _GiftItemState extends State<GiftItem>
   }
 
   void showInsufficientFundsDialog(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     showLiveDialog(
       context,
-      title: '鑽石不足',
-      content: const Center(
-        child: Text('鑽石不足，請前往充值',
-            style: TextStyle(color: Colors.white, fontSize: 11)),
+      title: localizations.translate('not_enough_diamonds'),
+      content: Center(
+        child: Text(
+            localizations.translate('insufficient_diamonds_please_recharge'),
+            style: const TextStyle(color: Colors.white, fontSize: 11)),
       ),
       actions: [
         LiveButton(
-            text: '取消',
+            text: localizations.translate('cancel'),
             type: ButtonType.secondary,
             onTap: () {
               Navigator.of(context).pop();
             }),
         LiveButton(
-            text: '確定',
+            text: localizations.translate('confirm'),
             type: ButtonType.primary,
             onTap: () {
               Navigator.of(context).pop();

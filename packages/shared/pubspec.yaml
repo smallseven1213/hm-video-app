@@ -11,6 +11,8 @@ environment:
 dependencies:
   game:
     path: ../../packages/game
+  live_ui_basic:
+    path: ../../packages/live_ui_basic
   android_id: ^0.2.0
   build_runner: ^2.3.3
   device_info_plus: ^8.1.0

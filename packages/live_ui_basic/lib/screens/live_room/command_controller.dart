@@ -8,6 +8,7 @@ import 'package:live_core/models/command.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 
 import '../../libs/showLiveDialog.dart';
+import '../../localization/live_localization_delegate.dart';
 import '../../widgets/live_button.dart';
 import 'right_corner_controllers/user_diamonds.dart';
 
@@ -50,7 +51,7 @@ class Commands extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LiveRoomController liveroomController = Get.find(tag: pid.toString());
-    ;
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     return Container(
       height: 366,
@@ -63,8 +64,8 @@ class Commands extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '指令清單',
-                style: TextStyle(
+                localizations.translate('command_list'),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -140,6 +141,7 @@ class CommandItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool arrowSend = true;
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     void showToast() {
       FToast fToast = FToast();
@@ -152,10 +154,10 @@ class CommandItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(6.7),
           color: Colors.black,
         ),
-        child: const Center(
+        child: Center(
           child: Text(
-            "發送成功",
-            style: TextStyle(color: Colors.white, fontSize: 12.7),
+            localizations.translate('send_successfully'),
+            style: const TextStyle(color: Colors.white, fontSize: 12.7),
           ),
         ),
       );
@@ -178,20 +180,23 @@ class CommandItem extends StatelessWidget {
             if (userAmount < price) {
               showLiveDialog(
                 context,
-                title: '鑽石不足',
+                title: localizations.translate('not_enough_diamonds'),
                 content: Center(
-                  child: Text('鑽石不足，請前往充值',
-                      style: TextStyle(color: Colors.white, fontSize: 11)),
+                  child: Text(
+                      localizations
+                          .translate('insufficient_diamonds_please_recharge'),
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 11)),
                 ),
                 actions: [
                   LiveButton(
-                      text: '取消',
+                      text: localizations.translate('cancel'),
                       type: ButtonType.secondary,
                       onTap: () {
                         Navigator.of(context).pop();
                       }),
                   LiveButton(
-                      text: '確定',
+                      text: localizations.translate('confirm'),
                       type: ButtonType.primary,
                       onTap: () {
                         Navigator.of(context).pop();

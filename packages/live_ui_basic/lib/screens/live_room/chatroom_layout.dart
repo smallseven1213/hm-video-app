@@ -8,6 +8,7 @@ import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
+import '../../localization/live_localization_delegate.dart';
 import 'chatroom_messages.dart';
 import 'left_side_gifts.dart';
 
@@ -154,6 +155,8 @@ class _MessageInputWidgetState extends State<MessageInputWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Container(
       height: 54,
       padding: EdgeInsets.only(
@@ -176,11 +179,13 @@ class _MessageInputWidgetState extends State<MessageInputWidget> {
                 autofocus: true,
                 controller: widget.controller,
                 style: const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
-                decoration: const InputDecoration(
-                  hintText: '和主播說些什麼吧...',
-                  hintStyle: TextStyle(fontSize: 14, color: Color(0xFF7b7b7b)),
+                decoration: InputDecoration(
+                  hintText:
+                      localizations.translate('say_something_to_the_host'),
+                  hintStyle:
+                      const TextStyle(fontSize: 14, color: Color(0xFF7b7b7b)),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(10),
+                  contentPadding: const EdgeInsets.all(10),
                 ),
                 onSubmitted: (_) {
                   widget.onSend(); // 當按下Enter鍵時調用
@@ -192,12 +197,12 @@ class _MessageInputWidgetState extends State<MessageInputWidget> {
             onTap: () {
               widget.onSend();
             },
-            child: const SizedBox(
+            child: SizedBox(
               width: 60,
               child: Center(
                 child: Text(
-                  '送出',
-                  style: TextStyle(fontSize: 12, color: Colors.white),
+                  localizations.translate('send'),
+                  style: const TextStyle(fontSize: 12, color: Colors.white),
                   textAlign: TextAlign.center,
                 ),
               ),
