@@ -1,6 +1,8 @@
+import 'package:game/apis/game_auth_api.dart';
 import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 final logger = Logger();
 
@@ -8,13 +10,32 @@ class GameWalletController extends GetxController {
   var wallet = 0.00.obs;
   var isLoading = false.obs;
 
-  @override
-  void onInit() {
-    super.onInit();
-    logger.i("WalletState init");
+  AuthController authController = Get.find<AuthController>();
+  GameAuthApi gameAuthApi = GameAuthApi();
+
+  void fetchWalletsInitFromThirdLogin() async {
+    if (authController.token.value.isNotEmpty) {
+      try {
+        final res = await gameAuthApi.login(authController.token.value);
+        if (res.code == 200) {
+          wallet.value = double.parse(res.data?['balance'] ?? '0');
+          logger.i('Game third login success: ${res.data?['balance']}');
+        } else {
+          logger.i('Game third login failed: ${res.code}');
+        }
+      } catch (e) {
+        logger.i('Error fetching wallet from third login: $e');
+      }
+    }
+
+    ever(authController.token, (token) {
+      if (token.isNotEmpty) {
+        gameAuthApi.login(token);
+      }
+    });
   }
 
-  void fetchWallets() async {
+  void fetchWalletsFromPoints() async {
     isLoading.value = true;
     try {
       var res = await GameLobbyApi().getPoints();
@@ -27,6 +48,6 @@ class GameWalletController extends GetxController {
   }
 
   void mutate() {
-    fetchWallets();
+    fetchWalletsFromPoints();
   }
 }

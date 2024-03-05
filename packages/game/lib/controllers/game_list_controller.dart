@@ -1,7 +1,5 @@
 import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
-import 'package:game/controllers/game_auth_controller.dart';
-
 import '../models/game_list.dart';
 
 class GamesListController extends GetxController {
@@ -11,7 +9,6 @@ class GamesListController extends GetxController {
   var isMaintenance = false.obs;
 
   Future<void> fetchGames() async {
-    logger.i('loading game states');
     var res = await GameLobbyApi().getGames(); // [{}]
     games.assignAll(res);
   }

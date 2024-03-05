@@ -6,10 +6,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../localization/game_localization_delegate.dart';
+
+final logger = Logger();
 
 class GameUserInfo extends StatefulWidget {
   final String? type;
@@ -24,7 +27,7 @@ class GameUserInfo extends StatefulWidget {
 
 class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
   late AnimationController animationController;
-  UserController get userController => Get.find<UserController>();
+  UserController userController = Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
 
   final theme = themeMode[GetStorage().hasData('pageColor')
@@ -40,8 +43,8 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
           milliseconds: 1000,
         ));
     super.initState();
-    userController.fetchUserInfo();
-    gameWalletController.fetchWallets();
+    // userController.fetchUserInfo();
+    gameWalletController.fetchWalletsFromPoints();
   }
 
   @override
@@ -53,7 +56,6 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
-    final gameWalletController = Get.find<GameWalletController>();
 
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6),
