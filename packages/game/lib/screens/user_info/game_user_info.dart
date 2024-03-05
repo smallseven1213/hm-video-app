@@ -43,8 +43,6 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
           milliseconds: 1000,
         ));
     super.initState();
-    // userController.fetchUserInfo();
-    gameWalletController.fetchWalletsFromPoints();
   }
 
   @override
