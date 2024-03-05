@@ -19,7 +19,7 @@ class GameAuthApi {
         url: '${systemController.apiHost.value}/api/v1/third/login',
         method: 'POST',
         body: {
-          'apiId': 2, // gp=1, 直播=2
+          'apiId': 1, // gp=1, 直播=2
         });
 
     return ThirdLoginApiResponseBaseWithData.fromJson(response.data);
