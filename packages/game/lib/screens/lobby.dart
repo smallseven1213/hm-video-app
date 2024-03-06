@@ -123,7 +123,8 @@ class _GameLobbyState extends State<GameLobby>
                               type: Type.login,
                               onSuccess: () {
                                 // userController.fetchUserInfo();
-                                gameWalletController.mutate();
+                                gameWalletController
+                                    .fetchWalletsInitFromThirdLogin();
                                 Navigator.pop(context);
                               },
                             ),

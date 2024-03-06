@@ -28,11 +28,11 @@ class GameWalletController extends GetxController {
       }
     }
 
-    ever(authController.token, (token) {
-      if (token.isNotEmpty) {
-        gameAuthApi.login(token);
-      }
-    });
+    // ever(authController.token, (token) {
+    //   if (token.isNotEmpty) {
+    //     gameAuthApi.login(token);
+    //   }
+    // });
   }
 
   void fetchWalletsFromPoints() async {
