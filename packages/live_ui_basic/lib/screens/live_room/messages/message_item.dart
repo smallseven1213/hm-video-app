@@ -81,7 +81,7 @@ class MessageItem<T> extends StatelessWidget {
                     text: messageText,
                     style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
-                  WidgetSpan(
+                  const WidgetSpan(
                     child: SizedBox(width: 10), // 提供固定的 10 單位空間
                   ),
                   TextSpan(

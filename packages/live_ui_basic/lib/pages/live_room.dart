@@ -1,11 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
-import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/libs/showLiveDialog.dart';
 import 'package:live_ui_basic/localization/live_localization_delegate.dart';
@@ -29,10 +26,10 @@ class LiveRoomPage extends StatefulWidget {
   const LiveRoomPage({Key? key, required this.pid}) : super(key: key);
 
   @override
-  _LiveRoomPageState createState() => _LiveRoomPageState();
+  LiveRoomPageState createState() => LiveRoomPageState();
 }
 
-class _LiveRoomPageState extends State<LiveRoomPage> {
+class LiveRoomPageState extends State<LiveRoomPage> {
   bool _isControllerInitialized = false;
   late final LiveRoomController controller;
   late final LiveLocalizations localizations;

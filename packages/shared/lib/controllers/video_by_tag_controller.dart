@@ -16,7 +16,6 @@ class VideoByTagController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    print('VideoByTagController onInit');
     fetchData();
   }
 

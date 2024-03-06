@@ -70,7 +70,6 @@ class _PaymentListState extends State<PaymentList> {
         );
       }
     } catch (error) {
-      print(error);
       setState(() {
         isLoading = false;
       });

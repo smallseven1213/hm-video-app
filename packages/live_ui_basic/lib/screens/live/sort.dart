@@ -37,10 +37,10 @@ class SelectionScreen extends StatefulWidget {
   const SelectionScreen({Key? key}) : super(key: key);
 
   @override
-  _SelectionScreenState createState() => _SelectionScreenState();
+  SelectionScreenState createState() => SelectionScreenState();
 }
 
-class _SelectionScreenState extends State<SelectionScreen> {
+class SelectionScreenState extends State<SelectionScreen> {
   int? selectedOption;
   final LiveListController liveListController = Get.find<LiveListController>();
 

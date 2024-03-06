@@ -26,7 +26,6 @@ class LiveRoomController extends GetxController {
     try {
       hasError.value = false;
       var res = await liveApi.enterRoom(pid);
-      print(res);
       liveRoom.value = res.data;
       displayAmount.value = res.data?.amount ?? 0;
     } catch (e) {
@@ -55,7 +54,7 @@ class LiveRoomController extends GetxController {
       await liveApi.exitRoom();
       liveRoom.value = null;
     } catch (e) {
-      print(e);
+      return;
     }
   }
 }

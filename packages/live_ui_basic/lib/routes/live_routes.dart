@@ -13,7 +13,7 @@ final Map<String, RouteWidgetBuilder> liveRoutes = {
         pid: args['pid'] as int,
       ),
   "/streamer_rank": (context, args) => const StreamerRankPage(),
-  "/live_search": (context, args) => SearchPage(
+  "/live_search": (context, args) => const SearchPage(
       // query: args['query'] as String,
       ),
 };

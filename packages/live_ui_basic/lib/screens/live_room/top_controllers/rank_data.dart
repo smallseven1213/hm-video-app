@@ -7,12 +7,12 @@ import 'rank_data_dialog.dart';
 class RankData extends StatefulWidget {
   final RoomRank? roomRank;
 
-  RankData({Key? key, this.roomRank}) : super(key: key);
+  const RankData({Key? key, this.roomRank}) : super(key: key);
   @override
-  _RankDataState createState() => _RankDataState();
+  RankDataState createState() => RankDataState();
 }
 
-class _RankDataState extends State<RankData> {
+class RankDataState extends State<RankData> {
   GlobalKey containerKey = GlobalKey();
 
   OverlayEntry? overlayEntry;

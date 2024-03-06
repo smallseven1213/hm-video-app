@@ -1,9 +1,6 @@
-import 'package:app_tt/config/colors.dart';
-import 'package:app_tt/widgets/actor_avatar.dart';
 import 'package:app_tt/widgets/shortcard/video_title.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -15,13 +12,14 @@ class ShortsPlayingAd extends StatefulWidget {
   final BannerPhoto ad;
   final Vod? nextShortData;
 
-  ShortsPlayingAd({required this.ad, required this.nextShortData});
+  const ShortsPlayingAd(
+      {super.key, required this.ad, required this.nextShortData});
 
   @override
-  _ShortPlayingAdState createState() => _ShortPlayingAdState();
+  ShortPlayingAdState createState() => ShortPlayingAdState();
 }
 
-class _ShortPlayingAdState extends State<ShortsPlayingAd> {
+class ShortPlayingAdState extends State<ShortsPlayingAd> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
@@ -89,7 +87,8 @@ class _ShortPlayingAdState extends State<ShortsPlayingAd> {
 class SupplierNameWidget extends StatelessWidget {
   final BannerPhoto data;
 
-  SupplierNameWidget({
+  const SupplierNameWidget({
+    super.key,
     required this.data,
   });
 

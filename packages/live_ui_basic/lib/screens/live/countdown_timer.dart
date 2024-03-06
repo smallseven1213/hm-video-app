@@ -38,17 +38,17 @@ class CountdownTimer extends StatefulWidget {
   final String reserveAt;
   final int chargeType;
 
-  CountdownTimer({
+  const CountdownTimer({
     Key? key,
     required this.reserveAt,
     required this.chargeType,
   }) : super(key: key);
 
   @override
-  _CountdownTimerState createState() => _CountdownTimerState();
+  CountdownTimerState createState() => CountdownTimerState();
 }
 
-class _CountdownTimerState extends State<CountdownTimer> {
+class CountdownTimerState extends State<CountdownTimer> {
   Timer? _timer;
   Duration _timeLeft = Duration.zero;
 

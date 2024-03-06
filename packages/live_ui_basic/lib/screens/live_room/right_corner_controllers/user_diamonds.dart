@@ -17,7 +17,7 @@ class UserDiamonds extends StatelessWidget {
             constraints: const BoxConstraints(minWidth: 100),
             padding: const EdgeInsets.symmetric(horizontal: 8),
             decoration: BoxDecoration(
-              color: Color(0xbdf771b5),
+              color: const Color(0xbdf771b5),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Row(
@@ -35,7 +35,7 @@ class UserDiamonds extends StatelessWidget {
                         liveUserDetailController.userDetail.value?.wallet
                                 .toString() ??
                             '0',
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 12,
                         ),

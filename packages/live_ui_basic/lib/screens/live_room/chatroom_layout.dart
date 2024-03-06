@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -18,10 +16,10 @@ class ChatroomLayout extends StatefulWidget {
   const ChatroomLayout({Key? key, required this.pid, required this.token})
       : super(key: key);
   @override
-  _ChatroomLayoutState createState() => _ChatroomLayoutState();
+  ChatroomLayoutState createState() => ChatroomLayoutState();
 }
 
-class _ChatroomLayoutState extends State<ChatroomLayout> {
+class ChatroomLayoutState extends State<ChatroomLayout> {
   final TextEditingController _messageController = TextEditingController();
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
   late StreamSubscription<bool> keyboardSubscription;
@@ -139,10 +137,10 @@ class MessageInputWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _MessageInputWidgetState createState() => _MessageInputWidgetState();
+  MessageInputWidgetState createState() => MessageInputWidgetState();
 }
 
-class _MessageInputWidgetState extends State<MessageInputWidget> {
+class MessageInputWidgetState extends State<MessageInputWidget> {
   @override
   void initState() {
     super.initState();

@@ -12,7 +12,6 @@ import 'package:live_core/models/live_api_response_base.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/widgets/live_button.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 import '../../../libs/showLiveDialog.dart';
 import '../../../localization/live_localization_delegate.dart';
@@ -56,10 +55,10 @@ class Gifts extends StatefulWidget {
   const Gifts({Key? key}) : super(key: key);
 
   @override
-  _GiftsState createState() => _GiftsState();
+  GiftsState createState() => GiftsState();
 }
 
-class _GiftsState extends State<Gifts> {
+class GiftsState extends State<Gifts> {
   final giftsController = Get.find<GiftsController>();
   ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
 

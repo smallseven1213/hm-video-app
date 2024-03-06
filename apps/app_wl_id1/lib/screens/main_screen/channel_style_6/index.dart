@@ -25,10 +25,10 @@ class ChannelStyle6 extends StatefulWidget {
   const ChannelStyle6({Key? key}) : super(key: key);
 
   @override
-  _ChannelStyle6State createState() => _ChannelStyle6State();
+  ChannelStyle6State createState() => ChannelStyle6State();
 }
 
-class _ChannelStyle6State extends State<ChannelStyle6> {
+class ChannelStyle6State extends State<ChannelStyle6> {
   late final VideoShortByChannelStyle6Controller controller;
 
   @override

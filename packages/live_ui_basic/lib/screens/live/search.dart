@@ -58,8 +58,9 @@ class SearchWidget extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         InkWell(
-            onTap: () => launch(
-                "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2",
+            onTap: () => launchUrl(
+                Uri.parse(
+                    "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2"),
                 webOnlyWindowName: '_blank'),
             child: SvgPicture.asset(
               'packages/live_ui_basic/assets/svgs/ic_service.svg',

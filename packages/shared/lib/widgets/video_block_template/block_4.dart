@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
 
-import '../video_block_grid_view.dart';
 import '../video_block_grid_view_row.dart';
 
 final logger = Logger();

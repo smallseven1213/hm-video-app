@@ -40,7 +40,7 @@ class CSVParser {
     this.fieldDelimiter,
     this.eol,
     this.useAutodetect = true,
-  }) : lines = CsvToListConverter().convert(
+  }) : lines = const CsvToListConverter().convert(
           csvString,
           fieldDelimiter: fieldDelimiter,
           eol: eol,

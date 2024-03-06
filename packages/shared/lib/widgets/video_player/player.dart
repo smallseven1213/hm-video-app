@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/ui_controller.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../controllers/video_player_controller.dart';
@@ -17,7 +16,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
   final Function toggleFullscreen;
   final bool? allowFullsreen;
 
-  VideoPlayerDisplayWidget({
+  const VideoPlayerDisplayWidget({
     super.key,
     required this.controller,
     required this.video,

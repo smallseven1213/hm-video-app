@@ -78,7 +78,7 @@ class MessageItemForCommand extends StatelessWidget {
             )); // Placeholder for actual UI
       }
       return Container();
-    } on Exception catch (e) {
+    } on Exception {
       return Container();
     }
   }

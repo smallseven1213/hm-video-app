@@ -26,7 +26,6 @@ class _LoadingAnimationState extends State<LoadingAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _translation;
-  late Animation<double> _scale;
 
   @override
   void initState() {
@@ -40,12 +39,6 @@ class _LoadingAnimationState extends State<LoadingAnimation>
       TweenSequenceItem(tween: Tween(begin: 6, end: 0.0), weight: 15.0),
       TweenSequenceItem(tween: Tween(begin: 0.0, end: -5), weight: 15.0),
       TweenSequenceItem(tween: Tween(begin: -5, end: -2.5), weight: 15.0),
-    ]).animate(_controller);
-    _scale = TweenSequence<double>([
-      TweenSequenceItem(tween: Tween(begin: 1.0, end: 0.75), weight: 15.0),
-      TweenSequenceItem(tween: Tween(begin: 0.75, end: 0.5), weight: 15.0),
-      TweenSequenceItem(tween: Tween(begin: 0.5, end: 0.75), weight: 15.0),
-      TweenSequenceItem(tween: Tween(begin: 0.75, end: 1.0), weight: 15.0),
     ]).animate(_controller);
   }
 

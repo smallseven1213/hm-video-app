@@ -14,8 +14,8 @@ class AppsPage extends StatelessWidget {
   const AppsPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
           appBar: MyAppBar(
             title: I18n.appCenter,

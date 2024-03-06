@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_web_plugins/url_strategy.dart' as url_strategy;
 import 'package:flutter/foundation.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:game/utils/setup_game_dependencies.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/utils/setup_dependencies.dart';
 
 import '../helpers/csv_asset_loader.dart';

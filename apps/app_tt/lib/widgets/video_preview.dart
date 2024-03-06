@@ -1,4 +1,3 @@
-import 'package:app_tt/localization/i18n.dart';
 import 'package:app_tt/widgets/video_embedded_ad.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -79,7 +78,7 @@ class ViewInfo extends StatelessWidget {
 }
 
 class VideoPreviewWidget extends BaseVideoPreviewWidget {
-  VideoPreviewWidget({
+  const VideoPreviewWidget({
     Key? key,
     required int id,
     required String coverVertical,

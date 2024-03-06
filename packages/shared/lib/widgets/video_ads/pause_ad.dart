@@ -10,7 +10,7 @@ import 'package:shared/widgets/sid_image.dart';
 class PauseAd extends StatefulWidget {
   final VideoPlayerInfo videoPlayerInfo;
 
-  PauseAd({
+  const PauseAd({
     Key? key,
     required this.videoPlayerInfo,
   }) : super(key: key);

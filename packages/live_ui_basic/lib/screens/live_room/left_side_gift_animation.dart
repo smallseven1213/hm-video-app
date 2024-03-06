@@ -65,7 +65,6 @@ class LeftSideGiftAnimationState extends State<LeftSideGiftAnimation>
             //   duration = const Duration(milliseconds: 1000);
             // }
             // duration = duration * widget.quantity;
-            print("duration $duration");
             _lottieController
               ..duration = duration
               ..forward();

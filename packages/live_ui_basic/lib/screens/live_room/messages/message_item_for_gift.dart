@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
-import 'package:shared/models/gift_message_data.dart';
 
 import '../../../libs/format_timestamp.dart';
 import '../../../localization/live_localization_delegate.dart';

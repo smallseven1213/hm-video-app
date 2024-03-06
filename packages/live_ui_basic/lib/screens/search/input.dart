@@ -21,10 +21,10 @@ class SearchInputWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SearchInputWidgetState createState() => _SearchInputWidgetState();
+  SearchInputWidgetState createState() => SearchInputWidgetState();
 }
 
-class _SearchInputWidgetState extends State<SearchInputWidget> {
+class SearchInputWidgetState extends State<SearchInputWidget> {
   final TextEditingController _controller = TextEditingController();
   final LiveSearchController liveSearchController = Get.find();
   late final RxString keyword;

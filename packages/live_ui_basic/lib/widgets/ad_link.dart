@@ -36,7 +36,7 @@ class AdLink extends StatelessWidget {
             handlePathWithId(context, url);
           }
         } catch (e) {
-          print(e);
+          rethrow;
         }
       },
       child: child,

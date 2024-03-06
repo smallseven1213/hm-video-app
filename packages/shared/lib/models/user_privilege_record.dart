@@ -33,7 +33,6 @@ class UserPrivilegeRecord {
         isAvailable: isAvailable,
       );
     } catch (e) {
-      print(e);
       return UserPrivilegeRecord(
         createdAt: '',
         name: '',

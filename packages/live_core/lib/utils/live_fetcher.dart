@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:get/get.dart' as getx;
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/auth_controller.dart';
-import 'package:shared/controllers/response_controller.dart';
 
 // create a dio instance
 final logger = Logger();

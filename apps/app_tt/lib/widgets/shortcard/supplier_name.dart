@@ -12,7 +12,8 @@ class SupplierNameWidget extends StatelessWidget {
   final bool displayActorAvatar;
   final VideoPlayerInfo videoPlayerInfo;
 
-  SupplierNameWidget({
+  const SupplierNameWidget({
+    super.key,
     required this.data,
     required this.displayActorAvatar,
     required this.videoPlayerInfo,

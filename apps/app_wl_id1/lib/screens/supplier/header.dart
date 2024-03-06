@@ -7,13 +7,10 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/supplier/supplier_consumer.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 
 import '../../config/colors.dart';
-import '../../widgets/float_page_search_button.dart';
 import '../../widgets/header_follow_button.dart';
 import '../../widgets/header_info.dart';
-import '../../widgets/search_button.dart';
 
 class SupplierHeader extends SliverPersistentHeaderDelegate {
   final BuildContext context;

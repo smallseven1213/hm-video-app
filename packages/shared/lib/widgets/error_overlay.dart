@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/navigator/delegate.dart';
 import 'package:restart_app/restart_app.dart';
 import '../controllers/response_controller.dart';
-import '../enums/app_routes.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

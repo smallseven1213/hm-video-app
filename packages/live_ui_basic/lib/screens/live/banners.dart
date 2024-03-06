@@ -39,10 +39,10 @@ class BannersView extends StatefulWidget {
   const BannersView({Key? key, required this.ads}) : super(key: key);
 
   @override
-  _BannersViewState createState() => _BannersViewState();
+  BannersViewState createState() => BannersViewState();
 }
 
-class _BannersViewState extends State<BannersView> {
+class BannersViewState extends State<BannersView> {
   int _current = 0;
   List<Widget> bannerSliders = [];
   final CarouselController _carouselController = CarouselController();
@@ -100,7 +100,8 @@ class _BannersViewState extends State<BannersView> {
               return Container(
                 width: 8.0,
                 height: 8.0,
-                margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+                margin:
+                    const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: _current == index ? Colors.white : Colors.grey,
@@ -125,10 +126,10 @@ class BannerDotsIndicator extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _BannerDotsIndicatorState createState() => _BannerDotsIndicatorState();
+  BannerDotsIndicatorState createState() => BannerDotsIndicatorState();
 }
 
-class _BannerDotsIndicatorState extends State<BannerDotsIndicator> {
+class BannerDotsIndicatorState extends State<BannerDotsIndicator> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -136,7 +137,7 @@ class _BannerDotsIndicatorState extends State<BannerDotsIndicator> {
         return Container(
           width: 8.0,
           height: 8.0,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: widget.current == index ? Colors.white : Colors.grey,

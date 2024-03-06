@@ -72,7 +72,7 @@ class ViewInfo extends StatelessWidget {
 }
 
 class VideoPreviewWidget extends BaseVideoPreviewWidget {
-  VideoPreviewWidget({
+  const VideoPreviewWidget({
     Key? key,
     required int id,
     required String coverVertical,

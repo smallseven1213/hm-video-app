@@ -23,8 +23,8 @@ class SharePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false, // HC: 烦死，勿动!!
+    return PopScope(
+      canPop: false, // HC: 烦死，勿动!!
       child: Scaffold(
         appBar: CustomAppBar(
           title: '推广分享',

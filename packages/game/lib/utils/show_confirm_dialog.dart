@@ -21,8 +21,8 @@ void showConfirmDialog({
     builder: (context) {
       final GameLocalizations localizations = GameLocalizations.of(context)!;
 
-      return WillPopScope(
-        onWillPop: () async => false,
+      return PopScope(
+        canPop: false,
         child: PointerInterceptor(
           child: RotatedBox(
             quarterTurns: rotate == true ? 1 : 0,
