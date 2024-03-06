@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:get/get.dart';
 import 'package:clipboard/clipboard.dart';
 
 import '../../../localization/live_localization_delegate.dart';
@@ -16,7 +15,7 @@ class Resize extends StatelessWidget {
           context: context,
           backgroundColor: Colors.transparent,
           builder: (BuildContext context) {
-            return ShareView();
+            return const ShareView();
           },
         );
       },
@@ -95,7 +94,7 @@ class ShareView extends StatelessWidget {
               height: 43,
               child: Center(
                 child: Text(localizations.translate('cancel'),
-                    style: TextStyle(color: Colors.white, fontSize: 14)),
+                    style: const TextStyle(color: Colors.white, fontSize: 14)),
               ),
             ),
           )

@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/redemption_api.dart';
-import 'package:shared/controllers/event_controller.dart';
 import 'package:shared/controllers/redemption_controller.dart';
 import 'package:shared/models/color_keys.dart';
-import 'package:shared/modules/user/user_redemption_consumer.dart';
 import '../config/colors.dart';
 import '../screens/coin/no_data.dart';
 import '../widgets/auth_text_field.dart';
@@ -20,10 +17,10 @@ class RedemptionPage extends StatefulWidget {
   const RedemptionPage({super.key});
 
   @override
-  _RedemptionPageState createState() => _RedemptionPageState();
+  RedemptionPageState createState() => RedemptionPageState();
 }
 
-class _RedemptionPageState extends State<RedemptionPage> {
+class RedemptionPageState extends State<RedemptionPage> {
   bool isSwitched = false;
   TextEditingController? _controller;
   late RedemptionController redemptionController;
@@ -73,7 +70,7 @@ class _RedemptionPageState extends State<RedemptionPage> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             behavior: SnackBarBehavior.floating,
-                            margin: EdgeInsets.fromLTRB(50, 0, 50, 200),
+                            margin: const EdgeInsets.fromLTRB(50, 0, 50, 200),
                             content: Text(
                               result,
                               textAlign: TextAlign.center,

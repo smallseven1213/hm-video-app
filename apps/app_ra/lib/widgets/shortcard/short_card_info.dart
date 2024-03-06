@@ -4,7 +4,6 @@ import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
-import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 

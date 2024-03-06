@@ -15,7 +15,6 @@ import '../../../widgets/channel_area_banner.dart';
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/sliver_video_preview_skelton_list.dart';
 import '../../../widgets/video_list_loading_text.dart';
-import '../videoblock.dart';
 
 final logger = Logger();
 

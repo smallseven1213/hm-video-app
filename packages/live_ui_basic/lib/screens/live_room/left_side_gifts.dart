@@ -30,10 +30,10 @@ class LeftSideGifts extends StatefulWidget {
   const LeftSideGifts({Key? key}) : super(key: key);
 
   @override
-  _LeftSideGiftsState createState() => _LeftSideGiftsState();
+  LeftSideGiftsState createState() => LeftSideGiftsState();
 }
 
-class _LeftSideGiftsState extends State<LeftSideGifts>
+class LeftSideGiftsState extends State<LeftSideGifts>
     with SingleTickerProviderStateMixin {
   late AnimationController _lottieController;
   final GiftsController giftsController = Get.find<GiftsController>();
@@ -210,7 +210,7 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
 
   @override
   void dispose() {
-    _lottieController?.dispose();
+    _lottieController.dispose();
     timer.cancel();
     super.dispose();
   }

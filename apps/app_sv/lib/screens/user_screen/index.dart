@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 
 import 'package:shared/models/color_keys.dart';

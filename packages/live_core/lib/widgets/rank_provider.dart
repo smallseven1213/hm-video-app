@@ -11,19 +11,10 @@ class RankProvider extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RankProviderState createState() => _RankProviderState();
+  RankProviderState createState() => RankProviderState();
 }
 
-class _RankProviderState extends State<RankProvider> {
-  late RoomRankController _rankController;
-
-  @override
-  void initState() {
-    super.initState();
-    _rankController =
-        Get.put(RoomRankController(widget.pid), tag: widget.pid.toString());
-  }
-
+class RankProviderState extends State<RankProvider> {
   @override
   void dispose() {
     // 删除控制器

@@ -5,7 +5,6 @@ import 'package:live_core/widgets/ad_provider.dart';
 import 'package:live_core/widgets/live_image.dart';
 
 import '../../widgets/ad_link.dart';
-import '../../widgets/network_image.dart';
 
 class BannersWidget extends StatefulWidget {
   static const double aspectRatioValue = 341 / 143;
@@ -13,10 +12,10 @@ class BannersWidget extends StatefulWidget {
   const BannersWidget({Key? key}) : super(key: key);
 
   @override
-  _BannersWidgetState createState() => _BannersWidgetState();
+  BannersWidgetState createState() => BannersWidgetState();
 }
 
-class _BannersWidgetState extends State<BannersWidget> {
+class BannersWidgetState extends State<BannersWidget> {
   @override
   Widget build(BuildContext context) {
     return AspectRatio(

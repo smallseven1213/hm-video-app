@@ -3,11 +3,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/login/login_scaffold.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../config/colors.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';

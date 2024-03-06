@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:get/get.dart';
-import 'package:shared/models/hm_api_response_with_data.dart';
 
 import '../apis/auth_api.dart';
 import '../controllers/gifts_controller.dart';
@@ -28,10 +27,10 @@ class LiveScaffold extends StatefulWidget {
   });
 
   @override
-  _LiveScaffoldState createState() => _LiveScaffoldState();
+  LiveScaffoldState createState() => LiveScaffoldState();
 }
 
-class _LiveScaffoldState extends State<LiveScaffold> {
+class LiveScaffoldState extends State<LiveScaffold> {
   // 是否已經由登入伺服器驗證?的變數
   bool isLoading = true;
   bool isLogin = false;

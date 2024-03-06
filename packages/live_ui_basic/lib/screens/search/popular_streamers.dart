@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:live_core/models/streamer.dart';
 import 'package:live_core/models/streamer_profile.dart';
 import 'package:live_core/widgets/popular_streamers_provider.dart';
 import 'streamer_profile_card.dart';

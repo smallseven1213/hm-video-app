@@ -2,7 +2,6 @@ import 'package:app_tt/screens/layout_user_screen/collection.dart';
 import 'package:app_tt/screens/layout_user_screen/favorites.dart';
 import 'package:app_tt/screens/layout_user_screen/playrecord.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/modules/user/user_favorites_actor_consumer.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 

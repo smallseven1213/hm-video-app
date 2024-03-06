@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class Sound extends StatelessWidget {
   const Sound({Key? key}) : super(key: key);

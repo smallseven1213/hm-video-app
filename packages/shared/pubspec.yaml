@@ -2,7 +2,6 @@ name: shared
 description: A new Flutter plugin project.
 version: 0.0.2
 publish_to: none
-homepage:
 
 environment:
   sdk: ">=2.19.2 <3.0.0"

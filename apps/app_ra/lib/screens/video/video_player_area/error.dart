@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 final logger = Logger();
 

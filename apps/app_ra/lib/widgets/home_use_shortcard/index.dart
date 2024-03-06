@@ -3,12 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
-import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
 import '../wave_loading.dart';
-import 'side_info.dart';
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;

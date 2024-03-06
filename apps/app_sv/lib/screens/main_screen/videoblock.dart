@@ -1,9 +1,7 @@
-import 'package:app_sv/config/colors.dart';
 import 'package:app_sv/widgets/channel_area_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/widgets/base_video_block.dart';
 import 'package:shared/widgets/base_video_preview.dart';
