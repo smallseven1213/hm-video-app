@@ -208,41 +208,53 @@ class TimeFilterBarState extends State<TimeFilterBar> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Flexible(
-            child: buildButton(
-              title: localizations.translate('daily_ranking'),
-              timeType: TimeType.today,
-              updateRankList: () =>
-                  widget.updateCallback(widget.rankType, TimeType.today),
+            child: Row(
+              children: [
+                Flexible(
+                  child: buildButton(
+                    title: localizations.translate('daily_ranking'),
+                    timeType: TimeType.today,
+                    updateRankList: () =>
+                        widget.updateCallback(widget.rankType, TimeType.today),
+                  ),
+                ),
+                Flexible(
+                  child: buildButton(
+                    title: localizations.translate('weekly_ranking'),
+                    timeType: TimeType.thisWeek,
+                    updateRankList: () => widget.updateCallback(
+                        widget.rankType, TimeType.thisWeek),
+                  ),
+                ),
+                Flexible(
+                  child: buildButton(
+                    title: localizations.translate('monthly_ranking'),
+                    timeType: TimeType.thisMonth,
+                    updateRankList: () => widget.updateCallback(
+                        widget.rankType, TimeType.thisMonth),
+                  ),
+                ),
+              ],
             ),
           ),
-          Flexible(
-            child: buildButton(
-              title: localizations.translate('weekly_ranking'),
-              timeType: TimeType.thisWeek,
-              updateRankList: () =>
-                  widget.updateCallback(widget.rankType, TimeType.thisWeek),
+          Container(
+            constraints: const BoxConstraints(
+                maxWidth: 120), // Set a max width for the text
+            child: Text(
+              localizations.translate('data_updates_every_hour'),
+              overflow:
+                  TextOverflow.ellipsis, // Use ellipsis to handle overflow
+              maxLines: 2, // Allow up to two lines
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Color(0xff7b7b7b),
+                fontSize: 9,
+              ),
             ),
           ),
-          Flexible(
-            child: buildButton(
-              title: localizations.translate('monthly_ranking'),
-              timeType: TimeType.thisMonth,
-              updateRankList: () =>
-                  widget.updateCallback(widget.rankType, TimeType.thisMonth),
-            ),
-          ),
-          Expanded(
-              child: Text(
-            localizations.translate('data_updates_every_hour'),
-            textAlign: TextAlign.right,
-            style: const TextStyle(
-              color: Color(0xff7b7b7b),
-              fontSize: 10,
-            ),
-          ))
         ],
       ),
     );
@@ -261,7 +273,7 @@ class TimeFilterBarState extends State<TimeFilterBar> {
         updateRankList();
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 8),
         padding: const EdgeInsets.only(bottom: 2, left: 5, right: 5),
         decoration: BoxDecoration(
           border: Border(
