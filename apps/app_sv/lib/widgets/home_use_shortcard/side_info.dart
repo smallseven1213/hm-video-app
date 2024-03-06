@@ -28,10 +28,10 @@ class SideInfo extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SideInfoState createState() => _SideInfoState();
+  SideInfoState createState() => SideInfoState();
 }
 
-class _SideInfoState extends State<SideInfo> {
+class SideInfoState extends State<SideInfo> {
   @override
   Widget build(BuildContext context) {
     final userShortCollectionController =

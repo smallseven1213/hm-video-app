@@ -53,7 +53,7 @@ class ChannelStyle6State extends State<ChannelStyle6> {
         );
       } else {
         if (controller.data.isEmpty) {
-          return Center(
+          return const Center(
             child: ChannelStyle6Suppliers(),
           );
         }

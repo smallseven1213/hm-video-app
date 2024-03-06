@@ -91,7 +91,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
         final channelSharedData =
             channelSharedDataController!.channelSharedData.value;
         if (channelSharedDataController!.isLoading.value) {
-          return Center(child: LoadingAnimation());
+          return const Center(child: LoadingAnimation());
         } else if (channelSharedDataController!.isError.value) {
           return Center(
             child: ReloadButton(

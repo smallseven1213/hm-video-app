@@ -23,7 +23,7 @@ class LiveSearchController extends GetxController {
       fansRecommend.value = res;
       popularStreamers.value = res2;
     } catch (e) {
-      print(e);
+      return;
     }
   }
 
@@ -36,7 +36,7 @@ class LiveSearchController extends GetxController {
       List<String> res = await _searchApi.getRecommendKeywords(text);
       recommendKeywords.value = res;
     } catch (e) {
-      print(e);
+      return;
     }
   }
 
@@ -47,7 +47,7 @@ class LiveSearchController extends GetxController {
       searchResult.value = res;
       keyword.value = text;
     } catch (e) {
-      print(e);
+      return;
     }
   }
 

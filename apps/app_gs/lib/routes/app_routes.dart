@@ -35,7 +35,7 @@ import '../screens/demo.dart' as demo_screen;
 import '../pages/suppliers.dart' as suppliers_screen;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
-  AppRoutes.demo: (context, args) => demo_screen.Demo(),
+  AppRoutes.demo: (context, args) => const demo_screen.Demo(),
   AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),

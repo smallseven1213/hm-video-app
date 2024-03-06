@@ -4,7 +4,7 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/models/room.dart';
 import 'package:live_core/widgets/live_image.dart';
-import 'package:live_ui_basic/libs/showLiveDialog.dart';
+import 'package:live_ui_basic/libs/show_live_dialog.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -28,7 +28,7 @@ class RoomItem extends StatelessWidget {
     Icon? icon,
   }) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(5),
@@ -36,7 +36,7 @@ class RoomItem extends StatelessWidget {
       child: icon == null
           ? Text(
               text,
-              style: TextStyle(color: Colors.white, fontSize: 9),
+              style: const TextStyle(color: Colors.white, fontSize: 9),
             )
           : RichText(
               text: TextSpan(
@@ -44,7 +44,7 @@ class RoomItem extends StatelessWidget {
                   WidgetSpan(child: icon),
                   TextSpan(
                     text: text,
-                    style: TextStyle(color: Colors.white, fontSize: 9),
+                    style: const TextStyle(color: Colors.white, fontSize: 9),
                   ),
                 ],
               ),

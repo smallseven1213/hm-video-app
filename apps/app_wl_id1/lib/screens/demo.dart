@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class Demo extends StatefulWidget {
+  const Demo({super.key});
+
   @override
-  _DemoState createState() => _DemoState();
+  DemoState createState() => DemoState();
 }
 
-class _DemoState extends State<Demo> {
+class DemoState extends State<Demo> {
   double _value = 0;
   Duration _duration = const Duration(seconds: 0);
 

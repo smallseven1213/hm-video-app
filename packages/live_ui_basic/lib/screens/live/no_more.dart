@@ -5,10 +5,10 @@ class NoMoreWidget extends StatefulWidget {
   const NoMoreWidget({Key? key}) : super(key: key);
 
   @override
-  _NoMoreWidgetState createState() => _NoMoreWidgetState();
+  NoMoreWidgetState createState() => NoMoreWidgetState();
 }
 
-class _NoMoreWidgetState extends State<NoMoreWidget> {
+class NoMoreWidgetState extends State<NoMoreWidget> {
   double _height = 60.0;
 
   @override

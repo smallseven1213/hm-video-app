@@ -13,7 +13,7 @@ import 'package:live_core/widgets/live_image.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/widgets/live_button.dart';
 
-import '../../../libs/showLiveDialog.dart';
+import '../../../libs/show_live_dialog.dart';
 import '../../../localization/live_localization_delegate.dart';
 import '../../../widgets/x_count.dart';
 import 'user_diamonds.dart';
@@ -210,10 +210,10 @@ class GiftItem extends StatefulWidget {
   const GiftItem({Key? key, required this.gift}) : super(key: key);
 
   @override
-  _GiftItemState createState() => _GiftItemState();
+  GiftItemState createState() => GiftItemState();
 }
 
-class _GiftItemState extends State<GiftItem>
+class GiftItemState extends State<GiftItem>
     with SingleTickerProviderStateMixin {
   ValueNotifier<int> clickCount = ValueNotifier(0);
   Timer? debounceTimer;
@@ -262,9 +262,6 @@ class _GiftItemState extends State<GiftItem>
             throw Exception(response.data);
           }
         }
-      } catch (e) {
-        print(e);
-        // Optionally show error dialog
       } finally {
         clickCount.value = 0; // Reset click count
       }
@@ -296,14 +293,14 @@ class _GiftItemState extends State<GiftItem>
               const SizedBox(height: 5),
               Text(
                 widget.gift.name,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                 ),
               ),
               Text(
                 widget.gift.price,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                 ),

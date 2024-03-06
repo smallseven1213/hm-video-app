@@ -77,10 +77,10 @@ class LoadingTextWidget extends StatefulWidget {
   const LoadingTextWidget({Key? key}) : super(key: key);
 
   @override
-  _LoadingTextWidgetState createState() => _LoadingTextWidgetState();
+  LoadingTextWidgetState createState() => LoadingTextWidgetState();
 }
 
-class _LoadingTextWidgetState extends State<LoadingTextWidget> {
+class LoadingTextWidgetState extends State<LoadingTextWidget> {
   // 修改這裡
   final LiveListController _controller = Get.find<LiveListController>();
 

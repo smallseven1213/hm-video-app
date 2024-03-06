@@ -17,11 +17,11 @@ class FollowWithRecommendations extends StatefulWidget {
   });
 
   @override
-  _FollowWithRecommendationsState createState() =>
-      _FollowWithRecommendationsState();
+  FollowWithRecommendationsState createState() =>
+      FollowWithRecommendationsState();
 }
 
-class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
+class FollowWithRecommendationsState extends State<FollowWithRecommendations> {
   late SuppliersController suppliersController;
   bool _isExpanded = false;
 

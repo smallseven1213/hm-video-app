@@ -139,15 +139,12 @@ class LiveApi {
       var response = await liveFetcher(
         url: '$liveApiHost/rank',
       );
-      print("[R] rank response before: $response");
       if (response != null) {
-        print("[R] rank response parse before: $response");
         LiveApiResponseBase<RoomRank> parsedResponse =
             LiveApiResponseBase.fromJson(
           response.data,
           (data) => RoomRank.fromJson(data as Map<String, dynamic>),
         );
-        print("[R] rank response parse after: $parsedResponse");
 
         return parsedResponse;
       }

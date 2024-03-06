@@ -70,7 +70,7 @@ class NotificationItemState extends State<NotificationItem>
               ),
               Text(
                 widget.startedAt ?? '',
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(color: Colors.white, fontSize: 12),
               ),
             ],
           ),

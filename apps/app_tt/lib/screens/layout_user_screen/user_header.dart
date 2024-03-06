@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

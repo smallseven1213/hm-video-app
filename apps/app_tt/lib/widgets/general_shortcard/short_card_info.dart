@@ -32,10 +32,10 @@ class ShortCardInfo extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _ShortCardInfoState createState() => _ShortCardInfoState();
+  ShortCardInfoState createState() => ShortCardInfoState();
 }
 
-class _ShortCardInfoState extends State<ShortCardInfo> {
+class ShortCardInfoState extends State<ShortCardInfo> {
   Vod? nextVideo;
   int currentVideoIndex = 0;
 

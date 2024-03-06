@@ -17,7 +17,7 @@ class LiveSocketIOManager {
   }
 
   LiveSocketIOManager._internal() {
-    print("LiveSocketIOManager singleton instance created");
+    // print("LiveSocketIOManager singleton instance created");
     // 初始化操作
   }
 
@@ -28,7 +28,6 @@ class LiveSocketIOManager {
     });
 
     _socket!.onConnect((_) {
-      print('connected');
       _login(chatToken); // 调用登录方法
     });
 
@@ -42,11 +41,11 @@ class LiveSocketIOManager {
       var decodedData = jsonDecode(data);
 
       // 提取 'code' 和 'token' 值
-      var code = decodedData['code'];
+      // var code = decodedData['code'];
       var token = decodedData['token'];
       this.chatToken = token;
 
-      print('Code: $code, Token: $token');
+      // print('Code: $code, Token: $token');
     });
 
     _socket!.onError((data) {
@@ -68,18 +67,18 @@ class LiveSocketIOManager {
 
   void _onMessageReceived(data) {
     // 处理接收到的消息
-    print('IO-Message received: $data');
+    // print('IO-Message received: $data');
     _messageController.add(data); // Broadcast the message
   }
 
   void _onError(data) {
     // 处理错误
-    print('IO-Error: $data');
+    // print('IO-Error: $data');
   }
 
   void _onDone() {
     // 处理连接关闭
-    print('IO-Connection closed');
+    // print('IO-Connection closed');
   }
 
   void send(String key, dynamic message) {

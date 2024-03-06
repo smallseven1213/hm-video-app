@@ -23,10 +23,10 @@ class CustomSwitch extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CustomSwitchState createState() => _CustomSwitchState();
+  CustomSwitchState createState() => CustomSwitchState();
 }
 
-class _CustomSwitchState extends State<CustomSwitch>
+class CustomSwitchState extends State<CustomSwitch>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 

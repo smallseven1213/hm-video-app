@@ -62,10 +62,10 @@ class SubTabBar extends StatelessWidget {
                   if (!isEditing) {
                     return ListEditorToggleEditingButton(
                       tag: editorTag,
-                      child: Container(
+                      child: const SizedBox(
                         width: 44,
                         height: 24,
-                        child: const Align(
+                        child: Align(
                           alignment: Alignment.center,
                           child: SizedBox(
                             width: 14,

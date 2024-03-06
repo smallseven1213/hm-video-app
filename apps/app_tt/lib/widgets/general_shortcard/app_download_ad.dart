@@ -11,15 +11,15 @@ import '../../config/colors.dart';
 class AppDownloadAdWidget extends StatefulWidget {
   final int videoIndex;
   const AppDownloadAdWidget({
-    Key? key,
+    super.key,
     required this.videoIndex,
   });
 
   @override
-  _AppDownloadAdWidgetState createState() => _AppDownloadAdWidgetState();
+  AppDownloadAdWidgetState createState() => AppDownloadAdWidgetState();
 }
 
-class _AppDownloadAdWidgetState extends State<AppDownloadAdWidget>
+class AppDownloadAdWidgetState extends State<AppDownloadAdWidget>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;

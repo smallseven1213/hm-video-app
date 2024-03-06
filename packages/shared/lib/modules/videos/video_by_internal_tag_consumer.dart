@@ -19,11 +19,11 @@ class VideoByInternalTagConsumer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VideoByInternalTagConsumerState createState() =>
-      _VideoByInternalTagConsumerState();
+  VideoByInternalTagConsumerState createState() =>
+      VideoByInternalTagConsumerState();
 }
 
-class _VideoByInternalTagConsumerState
+class VideoByInternalTagConsumerState
     extends State<VideoByInternalTagConsumer> {
   late VideoByInternalTagController videoByInternalTagController;
 

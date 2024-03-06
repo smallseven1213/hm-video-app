@@ -87,7 +87,7 @@ Widget _buildProductCard(context, Product product) {
                     ),
                     Text(
                       product.name!,
-                      style: TextStyle(color: Color(0xFF632903), fontSize: 15),
+                      style: const TextStyle(color: Color(0xFF632903), fontSize: 15),
                     )
                   ],
                 ),

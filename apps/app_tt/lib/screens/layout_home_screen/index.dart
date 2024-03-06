@@ -27,7 +27,7 @@ class LayoutHomeScreen extends StatelessWidget {
           layoutId: layoutId,
           child: (isLoading) {
             if (isLoading) {
-              return Scaffold(
+              return const Scaffold(
                 body: Center(
                   child: LoadingAnimation(),
                 ),

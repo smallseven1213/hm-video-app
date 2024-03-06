@@ -25,10 +25,10 @@ class PaymentList extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PaymentListState createState() => _PaymentListState();
+  PaymentListState createState() => PaymentListState();
 }
 
-class _PaymentListState extends State<PaymentList> {
+class PaymentListState extends State<PaymentList> {
   int? selectedId;
   String? selectedType;
   bool isLoading = false;
@@ -41,7 +41,6 @@ class _PaymentListState extends State<PaymentList> {
         paymentChannelId: paymentChannelId,
       );
 
-      print('res: $res');
       if (!mounted) return;
       var paymentLink = res['data']['paymentLink'];
       if (res.isNotEmpty && paymentLink.startsWith('http')) {
@@ -49,10 +48,10 @@ class _PaymentListState extends State<PaymentList> {
           await Future.delayed(const Duration(milliseconds: 500));
           setState(() => isLoading = false);
           Navigator.pop(context);
-          launch(paymentLink, webOnlyWindowName: '_blank');
+          launchUrl(Uri.parse(paymentLink), webOnlyWindowName: '_blank');
           MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
         } else {
-          await launch(paymentLink, webOnlyWindowName: '_blank');
+          await launchUrl(Uri.parse(paymentLink), webOnlyWindowName: '_blank');
           setState(() => isLoading = false);
           Navigator.pop(context);
           MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);

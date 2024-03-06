@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/orders_api.dart';
@@ -40,7 +39,6 @@ class PaymentListState extends State<PaymentList> {
         paymentChannelId: paymentChannelId,
       );
 
-      print('res: $res');
       if (!mounted) return;
       var paymentLink = res['data']['paymentLink'];
       if (res.isNotEmpty && paymentLink.startsWith('http')) {
@@ -48,10 +46,10 @@ class PaymentListState extends State<PaymentList> {
           await Future.delayed(const Duration(milliseconds: 500));
           setState(() => isLoading = false);
           Navigator.pop(context);
-          launch(paymentLink, webOnlyWindowName: '_blank');
+          launchUrl(Uri.parse(paymentLink), webOnlyWindowName: '_blank');
           MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
         } else {
-          await launch(paymentLink, webOnlyWindowName: '_blank');
+          await launchUrl(Uri.parse(paymentLink), webOnlyWindowName: '_blank');
           setState(() => isLoading = false);
           Navigator.pop(context);
           MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
@@ -69,7 +67,6 @@ class PaymentListState extends State<PaymentList> {
         );
       }
     } catch (error) {
-      print(error);
       setState(() {
         isLoading = false;
       });

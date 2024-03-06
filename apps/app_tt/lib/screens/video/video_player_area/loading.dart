@@ -41,7 +41,7 @@ class VideoLoading extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        Center(child: LoadingAnimation()),
+        const Center(child: LoadingAnimation()),
         const FloatPageBackButton(),
       ],
     );

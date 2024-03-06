@@ -57,6 +57,7 @@ void handleGameItem(BuildContext context,
       // ignore: use_build_context_synchronously
       onLoading(context, status: false);
       // ignore: use_build_context_synchronously
+
       showConfirmDialog(
         context: context,
         title: localizations.translate('game_maintenance_in_progress'),

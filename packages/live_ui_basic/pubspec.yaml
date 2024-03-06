@@ -26,6 +26,9 @@ dependencies:
   flutter_svg: ^2.0.9
   shimmer: ^3.0.0
   connectivity_plus: ^5.0.2
+  get_storage: ^2.0.3
+  logger: ^1.2.2
+  url_launcher: ^6.1.10
 
 dev_dependencies:
   flutter_test:

@@ -32,6 +32,25 @@ class RedemptionPageState extends State<RedemptionPage> {
     redemptionController = Get.find<RedemptionController>();
   }
 
+  //兌換function
+  void redeem() async {
+    var result = await redemptionApi.redeem(_controller!.text);
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: const EdgeInsets.fromLTRB(50, 0, 50, 200),
+          content: Text(
+            result,
+            textAlign: TextAlign.center,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
+      );
+      redemptionController.fetchData();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,24 +82,7 @@ class RedemptionPageState extends State<RedemptionPage> {
                 SizedBox(
                   width: 80,
                   child: Button(
-                    onPressed: () async {
-                      var result =
-                          await redemptionApi.redeem(_controller!.text);
-                      if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            behavior: SnackBarBehavior.floating,
-                            margin: const EdgeInsets.fromLTRB(50, 0, 50, 200),
-                            content: Text(
-                              result,
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ),
-                        );
-                        redemptionController.fetchData();
-                      }
-                    },
+                    onPressed: redeem,
                     text: '兌換',
                     size: 'small',
                   ),

@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';

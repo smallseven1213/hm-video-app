@@ -139,7 +139,7 @@ class IDCardContentState extends State<IDCardContent> {
 
                   // 2. Platform title
                   Padding(
-                    padding: EdgeInsets.only(bottom: 10),
+                    padding: const EdgeInsets.only(bottom: 10),
                     child: Text(
                       I18n.gPointVideo,
                       style: const TextStyle(

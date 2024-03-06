@@ -32,13 +32,13 @@ class UserCard extends StatelessWidget {
           //   ),
           // ),
           // DrawerButton
-          Positioned(
+          const Positioned(
             top: 50,
             right: 16,
             child: Row(
               children: [
                 SearchButton(),
-                const SizedBox(width: 10),
+                SizedBox(width: 10),
                 OpenDrawerButton()
               ],
             ),

@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -116,7 +115,8 @@ class _GameWebviewToggleButtonWidget
                 width: 58,
                 child: InkWell(
                   onTap: () {
-                    launch(gameBannerController.customerServiceUrl.value);
+                    launchUrl(Uri.parse(
+                        gameBannerController.customerServiceUrl.value));
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
