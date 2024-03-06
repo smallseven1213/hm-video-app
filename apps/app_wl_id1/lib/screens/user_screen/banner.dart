@@ -1,7 +1,7 @@
 import 'package:app_wl_id1/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/modules/banner/banner_consumer..dart';
+import 'package:shared/modules/banner/banner_consumer.dart';
 
 class UserSreenBanner extends StatefulWidget {
   const UserSreenBanner({Key? key}) : super(key: key);

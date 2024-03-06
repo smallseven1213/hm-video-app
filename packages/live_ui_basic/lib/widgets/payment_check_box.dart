@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 
+import '../localization/live_localization_delegate.dart';
+
 class PaymentCheckbox extends StatelessWidget {
   const PaymentCheckbox({
     Key? key,
@@ -10,6 +12,8 @@ class PaymentCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final liveUserController = Get.find<LiveUserController>();
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return InkWell(
       onTap: () {
         liveUserController.setAutoRenew(!liveUserController.isAutoRenew.value);
@@ -31,9 +35,9 @@ class PaymentCheckbox extends StatelessWidget {
                 ),
               )),
           const SizedBox(width: 8), // Spacing between the icon and the text
-          const Text(
-            "自動續費",
-            style: TextStyle(
+          Text(
+            localizations.translate('auto_renewal'),
+            style: const TextStyle(
               fontSize: 12,
               color: Colors.white, // Change the color to match your design
             ),

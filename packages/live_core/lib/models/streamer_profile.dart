@@ -1,4 +1,4 @@
-import 'package:shared/helpers/getField.dart';
+import 'package:shared/helpers/get_field.dart';
 
 class StreamerProfile {
   final int id;
@@ -8,10 +8,12 @@ class StreamerProfile {
   final int? fansCount;
   final String? account;
   final bool? isLive;
+  final int? supplierId;
 
   StreamerProfile({
     required this.id,
     required this.nickname,
+    this.supplierId,
     this.avatar,
     this.createdAt,
     this.fansCount,
@@ -22,6 +24,7 @@ class StreamerProfile {
   factory StreamerProfile.fromJson(Map<String, dynamic> json) {
     return StreamerProfile(
       id: getField<int>(json, 'streamer_id', defaultValue: 0),
+      supplierId: getField<int>(json, 'supplier_id', defaultValue: 0),
       nickname: getField<String>(json, 'nickname', defaultValue: ''),
       avatar: getField<String>(json, 'avatar', defaultValue: ''),
       createdAt: getField<String>(json, 'created_at', defaultValue: ''),
@@ -35,6 +38,7 @@ class StreamerProfile {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
+      'supplier_id': supplierId,
       'account': account,
       'nickname': nickname,
       'avatar': avatar,

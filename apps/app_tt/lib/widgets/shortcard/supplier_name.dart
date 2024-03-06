@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/short_video_detail.dart';
@@ -12,7 +11,8 @@ class SupplierNameWidget extends StatelessWidget {
   final bool displayActorAvatar;
   final VideoPlayerInfo videoPlayerInfo;
 
-  SupplierNameWidget({
+  const SupplierNameWidget({
+    super.key,
     required this.data,
     required this.displayActorAvatar,
     required this.videoPlayerInfo,

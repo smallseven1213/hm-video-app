@@ -25,10 +25,10 @@ class ChannelStyle6 extends StatefulWidget {
   const ChannelStyle6({Key? key}) : super(key: key);
 
   @override
-  _ChannelStyle6State createState() => _ChannelStyle6State();
+  ChannelStyle6State createState() => ChannelStyle6State();
 }
 
-class _ChannelStyle6State extends State<ChannelStyle6> {
+class ChannelStyle6State extends State<ChannelStyle6> {
   late final VideoShortByChannelStyle6Controller controller;
 
   @override
@@ -47,14 +47,14 @@ class _ChannelStyle6State extends State<ChannelStyle6> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isInit.value == false) {
-        return Center(child: LoadingAnimation());
+        return const Center(child: LoadingAnimation());
       } else {
         if (controller.data.isEmpty) {
           return Container(
             width: double.infinity,
             height: double.infinity,
             color: Colors.black,
-            child: Center(
+            child: const Center(
               child: ChannelStyle6Suppliers(),
             ),
           );

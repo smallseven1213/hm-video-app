@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:live_core/widgets/live_scaffold.dart';
 import 'package:live_core/controllers/live_search_controller.dart';
 import 'package:live_core/controllers/live_search_history_controller.dart';
+import '../localization/live_localization_delegate.dart';
 import '../screens/search/input.dart';
 import '../screens/search/keyword_list.dart';
 import '../screens/search/popular_streamers.dart';
@@ -13,13 +14,13 @@ import '../screens/search/search_results.dart';
 class SearchPage extends StatefulWidget {
   final String? query;
 
-  SearchPage({Key? key, this.query}) : super(key: key);
+  const SearchPage({Key? key, this.query}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  SearchPageState createState() => SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class SearchPageState extends State<SearchPage> {
   List<String> searchResults = [];
   String keyword = '';
   bool displayKeywordResult = false;
@@ -58,6 +59,8 @@ class _SearchPageState extends State<SearchPage> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return LiveScaffold(
       backgroundColor: const Color(0xFF242a3d),
       body: Padding(
@@ -87,9 +90,9 @@ class _SearchPageState extends State<SearchPage> {
                   ),
                   TextButton(
                     onPressed: () => onSearch(keyword),
-                    child: const Text(
-                      '搜尋',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                    child: Text(
+                      localizations.translate('search'),
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   )
                 ],
@@ -135,15 +138,21 @@ class RecommendScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return CustomScrollView(
       slivers: [
         SliverToBoxAdapter(child: RecentSearches(onSearch: onSearch)),
-        const SliverToBoxAdapter(child: SectionTitle(title: '粉絲推薦')),
+        SliverToBoxAdapter(
+            child: SectionTitle(
+                title: localizations.translate('fan_recommendations'))),
         const SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 4.0),
           sliver: FanRecommendationWidget(),
         ),
-        const SliverToBoxAdapter(child: SectionTitle(title: '熱門推薦')),
+        SliverToBoxAdapter(
+            child: SectionTitle(
+                title: localizations.translate('hot_recommendations'))),
         const SliverPadding(
           padding: EdgeInsets.symmetric(horizontal: 4.0),
           sliver: PopularStreamersWidget(),

@@ -159,7 +159,8 @@ class PaymentLinkResState extends State<PaymentLinkRes> {
                     onPressed: () => {
                       onLoading(context, status: false),
                       Navigator.pop(context),
-                      launch(redirectUrl, webOnlyWindowName: '_blank'),
+                      launchUrl(Uri.parse(redirectUrl),
+                          webOnlyWindowName: '_blank'),
                       MyRouteDelegate.of(context)
                           .push(GameAppRoutes.paymentResult),
                     },

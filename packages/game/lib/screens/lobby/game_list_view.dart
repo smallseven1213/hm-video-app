@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/models/game_list.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';
@@ -316,7 +315,7 @@ class GameListViewState extends State<GameListView>
                   crossAxisCount: 2,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 600 / 400,
+                  childAspectRatio: 180 / 108, // 遊戲圖片的寬高比
                 ),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {

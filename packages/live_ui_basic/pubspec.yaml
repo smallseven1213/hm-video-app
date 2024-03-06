@@ -2,7 +2,6 @@ name: live_ui_basic
 description: A new Flutter package project.
 version: 0.0.1
 publish_to: "none"
-homepage:
 
 environment:
   sdk: ">=3.1.5 <4.0.0"
@@ -26,6 +25,11 @@ dependencies:
   lottie: ^2.7.0
   flutter_svg: ^2.0.9
   shimmer: ^3.0.0
+  connectivity_plus: ^5.0.2
+  get_storage: ^2.0.3
+  logger: ^1.2.2
+  url_launcher: ^6.1.10
+  wakelock: ^0.6.2
 
 dev_dependencies:
   flutter_test:

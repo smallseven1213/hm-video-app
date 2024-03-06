@@ -2,15 +2,16 @@ name: shared
 description: A new Flutter plugin project.
 version: 0.0.2
 publish_to: none
-homepage:
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
-  flutter: '>=2.5.0'
+  sdk: ">=2.19.2 <3.0.0"
+  flutter: ">=2.5.0"
 
 dependencies:
   game:
     path: ../../packages/game
+  live_ui_basic:
+    path: ../../packages/live_ui_basic
   android_id: ^0.2.0
   build_runner: ^2.3.3
   device_info_plus: ^8.1.0
@@ -47,9 +48,9 @@ dependencies:
   permission_handler: ^10.2.0
   restart_app: ^1.2.1
   marquee: ^2.2.3
-  easy_localization: ^3.0.3
-  easy_localization_loader: ^1.0.1+1
+  easy_localization: ^3.0.2
   cross_file: ^0.3.3+6
+  csv: ^5.1.1
 
 dev_dependencies:
   flutter_test:

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_search_controller.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class SearchInputWidget extends StatefulWidget {
   final String? query;
   final Function(String)? onSearch;
@@ -19,10 +21,10 @@ class SearchInputWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SearchInputWidgetState createState() => _SearchInputWidgetState();
+  SearchInputWidgetState createState() => SearchInputWidgetState();
 }
 
-class _SearchInputWidgetState extends State<SearchInputWidget> {
+class SearchInputWidgetState extends State<SearchInputWidget> {
   final TextEditingController _controller = TextEditingController();
   final LiveSearchController liveSearchController = Get.find();
   late final RxString keyword;
@@ -42,6 +44,8 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Container(
       height: 30,
       decoration: BoxDecoration(
@@ -57,9 +61,10 @@ class _SearchInputWidgetState extends State<SearchInputWidget> {
             child: TextField(
               controller: _controller,
               style: const TextStyle(color: Colors.white, fontSize: 14),
-              decoration: const InputDecoration(
-                hintText: '搜尋主播ID暱稱',
-                hintStyle: TextStyle(color: Color(0xff5a6077), fontSize: 14),
+              decoration: InputDecoration(
+                hintText: localizations.translate('search_host_id_or_nickname'),
+                hintStyle:
+                    const TextStyle(color: Color(0xff5a6077), fontSize: 14),
                 border: InputBorder.none,
               ),
               onChanged: (value) {

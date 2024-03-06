@@ -17,8 +17,7 @@ class NavigationController extends GetxController {
       List<Navigation> response = await NavigationApi().getNavigation();
       navigation.value = response;
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 }
-

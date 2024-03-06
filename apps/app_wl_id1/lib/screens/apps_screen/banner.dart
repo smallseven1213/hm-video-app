@@ -2,7 +2,7 @@ import 'package:app_wl_id1/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/modules/banner/banner_consumer..dart';
+import 'package:shared/modules/banner/banner_consumer.dart';
 
 final logger = Logger();
 

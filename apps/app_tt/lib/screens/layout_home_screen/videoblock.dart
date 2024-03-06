@@ -1,5 +1,4 @@
 import 'package:app_tt/config/colors.dart';
-import 'package:app_tt/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';

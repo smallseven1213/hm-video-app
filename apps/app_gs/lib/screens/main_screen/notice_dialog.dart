@@ -38,7 +38,7 @@ class NoticeDialogState extends State<NoticeDialog> {
     if (url != null && url != '-1') {
       if (url.startsWith('http://') || url.startsWith('https://')) {
         // Launch external URL
-        launch(url, webOnlyWindowName: '_blank');
+        launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
       } else {
         // Navigate to internal route
         List<String> parts = url.split('/');
@@ -160,7 +160,8 @@ class NoticeDialogState extends State<NoticeDialog> {
                                   ? SizedBox(
                                       width: 105,
                                       child: Button(
-                                        text: notice.rightButton ?? I18n.confirm,
+                                        text:
+                                            notice.rightButton ?? I18n.confirm,
                                         type: 'primary',
                                         onPressed: () => handleUrl(
                                             notice.rightButtonUrl, context),

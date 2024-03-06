@@ -11,7 +11,6 @@ class Loading extends StatefulWidget {
 
 class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
-  late Animation<double> _animation;
 
   @override
   void initState() {
@@ -21,17 +20,6 @@ class LoadingState extends State<Loading> with SingleTickerProviderStateMixin {
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     );
-
-    _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.linear,
-      ),
-    )..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          _animationController.repeat();
-        }
-      });
 
     _animationController.forward();
   }

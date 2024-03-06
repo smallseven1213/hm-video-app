@@ -1,11 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:game/localization/en.dart';
 import 'package:game/localization/game_localization_delegate.dart';
+import 'package:game/localization/en.dart';
 import 'package:game/localization/id.dart';
 import 'package:game/localization/vi.dart';
 import 'package:game/localization/zh.dart';
 import 'package:game/localization/zn.dart';
+
+import 'package:live_ui_basic/localization/live_localization_delegate.dart';
+import 'package:live_ui_basic/localization/en.dart';
+import 'package:live_ui_basic/localization/jp.dart';
+import 'package:live_ui_basic/localization/id.dart';
+import 'package:live_ui_basic/localization/vi.dart';
+import 'package:live_ui_basic/localization/zh.dart';
+import 'package:live_ui_basic/localization/zn.dart';
 import 'package:get/get.dart';
 import 'package:shared/models/color_keys.dart';
 import '../controllers/system_config_controller.dart';
@@ -77,6 +85,14 @@ class RootWidget extends StatelessWidget {
           'id-ID': idIdStrings,
           // 'ja-JP': jpStrings,
         }),
+        LiveLocalizationsDelegate({
+          'en-US': liveEnUsStrings,
+          'zh-TW': liveZhTwStrings,
+          'zh-CN': liveZhCnStrings,
+          'vi-VN': liveViVnStrings,
+          'id-ID': liveIdIdStrings,
+          'ja_JP': liveJaJpStrings,
+        }),
         ...context.localizationDelegates,
       ],
       supportedLocales: context.supportedLocales,
@@ -86,31 +102,5 @@ class RootWidget extends StatelessWidget {
       routeInformationParser: parser,
       theme: theme,
     );
-
-    // if (i18nSupport == null || i18nSupport == false) {
-    //   return MaterialApp.router(
-    //     debugShowCheckedModeBanner: false,
-    //     routerDelegate: delegate,
-    //     routeInformationParser: parser,
-    //     theme: theme,
-    //   );
-    // }
-
-    // return MaterialApp.router(
-    //   localizationsDelegates: [
-    //     ...context.localizationDelegates,
-    //     GameLocalizationsDelegate(
-    //       Localizations.localeOf(context).languageCode == 'en'
-    //           ? enStrings
-    //           : enStrings,
-    //     )
-    //   ],
-    //   supportedLocales: context.supportedLocales,
-    //   locale: context.locale,
-    //   debugShowCheckedModeBanner: false,
-    //   routerDelegate: delegate,
-    //   routeInformationParser: parser,
-    //   theme: theme,
-    // );
   }
 }

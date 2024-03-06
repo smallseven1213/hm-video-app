@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 
-import '../models/streamer.dart';
 import '../models/streamer_profile.dart';
 
 const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';

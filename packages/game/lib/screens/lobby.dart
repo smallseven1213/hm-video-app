@@ -10,10 +10,10 @@ import 'package:game/widgets/maintenance.dart';
 import 'package:game/models/game_list.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import 'package:game/controllers/game_config_controller.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
@@ -61,25 +61,24 @@ class _GameLobbyState extends State<GameLobby>
   bool isShowFab = false;
   bool isShowDownload = true;
 
-  UserController get userController => Get.find<UserController>();
+  UserController userController = Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
   GameParamConfigController gameParamConfigController =
       Get.find<GameParamConfigController>();
-  GameConfigController gameConfigController = Get.find<GameConfigController>();
-
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
   @override
   void initState() {
     super.initState();
     _fetchDataInit();
 
-    // Put controllers into Get dependency container here
+    gameWalletController.fetchWalletsInitFromThirdLogin();
     Get.put(GameBannerController());
     Get.put(GamesListController());
 
     Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
-      userController.fetchUserInfo();
-      gameWalletController.fetchWallets();
+      // userController.fetchUserInfo();
       logger.i('token changed');
     });
   }
@@ -89,7 +88,6 @@ class _GameLobbyState extends State<GameLobby>
       GameLobbyApi().registerGame(),
     ]).then((value) {
       GameBannerController();
-      GameConfigController();
       GameParamConfigController();
     });
   }
@@ -124,8 +122,9 @@ class _GameLobbyState extends State<GameLobby>
                             content: GameLobbyLoginTabs(
                               type: Type.login,
                               onSuccess: () {
-                                userController.fetchUserInfo();
-                                gameWalletController.mutate();
+                                // userController.fetchUserInfo();
+                                gameWalletController
+                                    .fetchWalletsInitFromThirdLogin();
                                 Navigator.pop(context);
                               },
                             ),

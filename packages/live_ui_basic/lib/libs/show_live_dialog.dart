@@ -11,7 +11,7 @@ void showLiveDialog(BuildContext context,
           borderRadius: BorderRadius.all(Radius.circular(6.7)),
         ),
         child: ConstrainedBox(
-          constraints: BoxConstraints(maxHeight: 200.0),
+          constraints: const BoxConstraints(maxHeight: 200.0),
           child: Padding(
             padding: const EdgeInsets.all(23.0),
             child: Column(
@@ -33,7 +33,7 @@ void showLiveDialog(BuildContext context,
                 if (actions != null)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: actions!
+                    children: actions
                         .asMap()
                         .entries
                         .map((entry) => [
@@ -41,7 +41,7 @@ void showLiveDialog(BuildContext context,
                                 child: entry.value,
                               ),
                               if (entry.key != actions.length - 1)
-                                SizedBox(width: 16)
+                                const SizedBox(width: 16)
                             ])
                         .expand((element) => element)
                         .toList(),

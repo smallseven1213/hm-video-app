@@ -91,7 +91,6 @@ class VodsState extends State<Vods> {
   }
 
   void _onRefresh() async {
-    print('onRefresh');
     setState(() {
       isRefreshing = true;
     });

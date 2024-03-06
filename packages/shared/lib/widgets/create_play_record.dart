@@ -40,7 +40,7 @@ class CreatePlayRecord extends StatelessWidget {
         );
         playRecordController.addPlayRecord(playRecord);
       } catch (e) {
-        print(e);
+        rethrow;
       }
     }
     return child;

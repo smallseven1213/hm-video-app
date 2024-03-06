@@ -11,17 +11,15 @@ class RankProvider extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RankProviderState createState() => _RankProviderState();
+  RankProviderState createState() => RankProviderState();
 }
 
-class _RankProviderState extends State<RankProvider> {
-  late RoomRankController _rankController;
-
+class RankProviderState extends State<RankProvider> {
   @override
   void initState() {
     super.initState();
-    _rankController =
-        Get.put(RoomRankController(widget.pid), tag: widget.pid.toString());
+    Get.put<RoomRankController>(RoomRankController(widget.pid),
+        tag: widget.pid.toString());
   }
 
   @override

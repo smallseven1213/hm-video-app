@@ -23,9 +23,12 @@ Widget _buildProductCard(context, Product product) {
           Container(
             decoration: const BoxDecoration(
               gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xFFF4D4B4), Color(0xFFDAB385)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFF9DBBE),
+                  Color(0xFFD8B182),
+                ],
               ),
             ),
           ),
@@ -87,13 +90,43 @@ Widget _buildProductCard(context, Product product) {
                     ),
                     Text(
                       product.name!,
-                      style: TextStyle(color: Color(0xFF632903), fontSize: 15),
+                      style: const TextStyle(
+                          color: Color(0xFF632903), fontSize: 15),
                     )
                   ],
                 ),
               ),
             ],
           ),
+          product.isPromotion == true
+              ? Positioned(
+                  top: 0,
+                  left: 0,
+                  child: Container(
+                    height: 18,
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(20),
+                      ),
+                      gradient: LinearGradient(
+                        colors: [Color(0xFFFCD1B0), Color(0xFFe88c68)],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "限時特價",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Color(0xFF2a2b2f),
+                        ),
+                      ),
+                    ),
+                  ),
+                )
+              : Container()
         ],
       ),
     ),

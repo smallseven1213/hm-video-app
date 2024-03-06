@@ -13,10 +13,10 @@ class RoomListProvider extends StatefulWidget {
   });
 
   @override
-  _RoomListProviderState createState() => _RoomListProviderState();
+  RoomListProviderState createState() => RoomListProviderState();
 }
 
-class _RoomListProviderState extends State<RoomListProvider> {
+class RoomListProviderState extends State<RoomListProvider> {
   late LiveSocketIOManager socketIOManager;
   String? latestMessage;
   late StreamSubscription _messageSubscription;

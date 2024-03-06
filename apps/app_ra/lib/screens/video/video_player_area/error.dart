@@ -1,10 +1,7 @@
-// VideoPlayerArea stateful widget
 import 'package:app_ra/screens/video/video_player_area/video_cover.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 final logger = Logger();
 

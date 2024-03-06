@@ -103,6 +103,7 @@ class FilterShortScreenController extends GetxController {
       // print()
       menuData.refresh();
     } catch (e) {
+      return null;
     }
   }
 

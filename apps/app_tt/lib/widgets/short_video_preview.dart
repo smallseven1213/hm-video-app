@@ -1,11 +1,7 @@
-import 'package:app_tt/localization/i18n.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/base_video_preview.dart';
 import 'package:shared/widgets/sid_image.dart';
-import 'package:shared/widgets/video_collection_times.dart';
-import 'package:shared/widgets/video/view_times.dart';
 import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 

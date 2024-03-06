@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import '../apis/vod_api.dart';
 import '../models/infinity_vod.dart';
 import 'base_vod_infinity_scroll_controller.dart';

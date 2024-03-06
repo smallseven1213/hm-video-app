@@ -8,7 +8,6 @@ import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 
 import '../../config/colors.dart';
-import '../../widgets/wave_loading.dart';
 import 'nested_tab_bar_view/index.dart';
 import 'video_player_area/flash_loading.dart';
 import 'video_player_area/index.dart';

@@ -7,6 +7,7 @@ import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/models/gift.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
+import '../../localization/live_localization_delegate.dart';
 import 'left_side_gift_animation.dart';
 
 class GiftAnimationData {
@@ -29,10 +30,10 @@ class LeftSideGifts extends StatefulWidget {
   const LeftSideGifts({Key? key}) : super(key: key);
 
   @override
-  _LeftSideGiftsState createState() => _LeftSideGiftsState();
+  LeftSideGiftsState createState() => LeftSideGiftsState();
 }
 
-class _LeftSideGiftsState extends State<LeftSideGifts>
+class LeftSideGiftsState extends State<LeftSideGifts>
     with SingleTickerProviderStateMixin {
   late AnimationController _lottieController;
   final GiftsController giftsController = Get.find<GiftsController>();
@@ -66,7 +67,6 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
   }
 
   void playAnimation(ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
-    print("playAnimation");
     isAnimating = true;
     Gift giftInfo = giftsController.gifts.value
         .firstWhere((element) => element.id == giftMessage.objChat.data.gid);
@@ -84,6 +84,8 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return SizedBox(
         height: 80,
         child: giftAnimationData == null
@@ -123,12 +125,14 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    giftAnimationData?.userName ?? "某位使用者",
+                                    giftAnimationData?.userName ??
+                                        localizations
+                                            .translate('a_certain_user'),
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 12),
                                   ),
                                   Text(
-                                    '贈送禮物 ${giftAnimationData?.giftName}',
+                                    '${localizations.translate('send_gift')} ${giftAnimationData?.giftName}',
                                     style: const TextStyle(
                                         color: Colors.white, fontSize: 12),
                                   ),
@@ -153,7 +157,6 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
                       quantity: giftAnimationData?.quantity ?? 1,
                       jsonPath: giftAnimationData?.giftLottiePath ?? "",
                       onFinish: () {
-                        print("playAnimation end");
                         isAnimating = false;
                       },
                     ),
@@ -207,7 +210,7 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
 
   @override
   void dispose() {
-    _lottieController?.dispose();
+    _lottieController.dispose();
     timer.cancel();
     super.dispose();
   }

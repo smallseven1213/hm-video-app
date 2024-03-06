@@ -103,10 +103,10 @@ class OrderRecord extends StatefulWidget {
   const OrderRecord({super.key});
 
   @override
-  _OrderRecordState createState() => _OrderRecordState();
+  OrderRecordState createState() => OrderRecordState();
 }
 
-class _OrderRecordState extends State<OrderRecord> {
+class OrderRecordState extends State<OrderRecord> {
   String chargeType = option.first['value'];
   @override
   Widget build(BuildContext context) {
@@ -143,7 +143,7 @@ class _OrderRecordState extends State<OrderRecord> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          record.product!.name ?? '',
+                                          "${record.product!.name} / ${record.paymentType}",
                                           style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.bold,

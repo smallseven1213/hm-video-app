@@ -2,13 +2,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:live_core/models/room.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 Widget _buildLabel({
   required Color color,
   required String text,
   Icon? icon,
 }) {
   return Container(
-    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
     decoration: BoxDecoration(
       color: color,
       borderRadius: BorderRadius.circular(5),
@@ -16,7 +18,7 @@ Widget _buildLabel({
     child: icon == null
         ? Text(
             text,
-            style: TextStyle(color: Colors.white, fontSize: 9),
+            style: const TextStyle(color: Colors.white, fontSize: 9),
           )
         : RichText(
             text: TextSpan(
@@ -24,7 +26,7 @@ Widget _buildLabel({
                 WidgetSpan(child: icon),
                 TextSpan(
                   text: text,
-                  style: TextStyle(color: Colors.white, fontSize: 9),
+                  style: const TextStyle(color: Colors.white, fontSize: 9),
                 ),
               ],
             ),
@@ -36,17 +38,17 @@ class CountdownTimer extends StatefulWidget {
   final String reserveAt;
   final int chargeType;
 
-  CountdownTimer({
+  const CountdownTimer({
     Key? key,
     required this.reserveAt,
     required this.chargeType,
   }) : super(key: key);
 
   @override
-  _CountdownTimerState createState() => _CountdownTimerState();
+  CountdownTimerState createState() => CountdownTimerState();
 }
 
-class _CountdownTimerState extends State<CountdownTimer> {
+class CountdownTimerState extends State<CountdownTimer> {
   Timer? _timer;
   Duration _timeLeft = Duration.zero;
 
@@ -93,17 +95,21 @@ class _CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return _timeLeft.isNegative
         ? _buildLabel(
             color: widget.chargeType == RoomChargeType.free.index
                 ? const Color(0xffe65fcf95)
                 : const Color(0xffe6845fcf),
-            text: widget.chargeType == RoomChargeType.free.index ? '免費' : '付費',
+            text: widget.chargeType == RoomChargeType.free.index
+                ? localizations.translate('free')
+                : localizations.translate('paid'),
           )
         : _buildLabel(
             color: const Color(0xffe6cf795f),
             text: formatTime(_timeLeft),
-            icon: Icon(Icons.access_time, size: 12, color: Colors.white),
+            icon: const Icon(Icons.access_time, size: 12, color: Colors.white),
           );
   }
 }

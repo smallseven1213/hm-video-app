@@ -37,8 +37,6 @@ const gridRatio = 128 / 227;
 final vodApi = VodApi();
 
 class VideoState extends State<Video> {
-  final ScrollController _controller = ScrollController();
-
   @override
   void initState() {
     super.initState();

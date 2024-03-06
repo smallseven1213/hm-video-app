@@ -14,8 +14,8 @@ class AppsPage extends StatelessWidget {
   const AppsPage({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: Scaffold(
           appBar: MyAppBar(
             title: I18n.appCenter,
@@ -34,9 +34,9 @@ class AppsPage extends StatelessWidget {
                       ),
                     ),
                     if (isLoading)
-                      SliverToBoxAdapter(
+                      const SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 150),
+                          padding: EdgeInsets.only(top: 150),
                           child: LoadingAnimation(),
                         ),
                       )

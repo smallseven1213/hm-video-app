@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/marquee.dart';
-import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 final logger = Logger();

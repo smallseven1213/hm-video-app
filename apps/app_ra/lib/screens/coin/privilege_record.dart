@@ -6,7 +6,7 @@ import 'package:shared/models/user_privilege_record.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/user/user_privilege_record_consumer.dart';
 
-import '../../widgets/customSwitch.dart';
+import '../../widgets/custom_switch.dart';
 
 final logger = Logger();
 
@@ -14,10 +14,10 @@ class PrivilegeRecord extends StatefulWidget {
   const PrivilegeRecord({super.key});
 
   @override
-  _PrivilegeRecordState createState() => _PrivilegeRecordState();
+  PrivilegeRecordState createState() => PrivilegeRecordState();
 }
 
-class _PrivilegeRecordState extends State<PrivilegeRecord> {
+class PrivilegeRecordState extends State<PrivilegeRecord> {
   bool isSwitched = false;
 
   @override

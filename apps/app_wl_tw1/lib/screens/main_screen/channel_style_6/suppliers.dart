@@ -9,14 +9,13 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 class ChannelStyle6Suppliers extends StatelessWidget {
-  ChannelStyle6Suppliers({Key? key}) : super(key: key);
-
-  final controller = Get.put(SupplierRecommendsController());
-  var userFavoritesSupplierController =
-      Get.find<UserFavoritesSupplierController>();
+  const ChannelStyle6Suppliers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final userFavoritesSupplierController =
+        Get.find<UserFavoritesSupplierController>();
+    final controller = Get.put(SupplierRecommendsController());
     return Obx(() => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // 垂直居中

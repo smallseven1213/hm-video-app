@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:live_core/apis/streamer_api.dart';
 import 'package:live_core/controllers/user_follows_controller.dart';
 import 'package:live_core/widgets/streamer_rank_provider.dart';
 
@@ -8,28 +7,33 @@ import 'package:live_core/models/streamer.dart';
 import 'package:live_core/models/streamer_rank.dart';
 import 'package:live_ui_basic/widgets/rank_number.dart';
 
+import '../localization/live_localization_delegate.dart';
+
 class StreamerRankPage extends StatefulWidget {
   const StreamerRankPage({Key? key}) : super(key: key);
 
   @override
-  _StreamerRankPageState createState() => _StreamerRankPageState();
+  StreamerRankPageState createState() => StreamerRankPageState();
 }
 
-class _StreamerRankPageState extends State<StreamerRankPage> {
+class StreamerRankPageState extends State<StreamerRankPage> {
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xFF242a3d),
-          title: const Text('主播排行', style: TextStyle(fontSize: 14)),
-          bottom: const TabBar(
+          title: Text(localizations.translate('host_ranking'),
+              style: const TextStyle(fontSize: 14)),
+          bottom: TabBar(
             tabAlignment: TabAlignment.center,
             tabs: [
-              Tab(text: '綜合'),
-              Tab(text: '人氣'),
-              Tab(text: '新人'),
+              Tab(text: localizations.translate('comprehensive')),
+              Tab(text: localizations.translate('popularity')),
+              Tab(text: localizations.translate('newcomer')),
             ],
           ),
         ),
@@ -47,8 +51,6 @@ class _StreamerRankPageState extends State<StreamerRankPage> {
   }
 }
 
-final _streamerApi = StreamerApi();
-
 class RankingScreen extends StatefulWidget {
   final RankType rankType;
   final TimeType timeType;
@@ -59,10 +61,10 @@ class RankingScreen extends StatefulWidget {
     required this.timeType,
   }) : super(key: key);
   @override
-  _RankingScreenState createState() => _RankingScreenState();
+  RankingScreenState createState() => RankingScreenState();
 }
 
-class _RankingScreenState extends State<RankingScreen> {
+class RankingScreenState extends State<RankingScreen> {
   final userFollowsController = Get.find<UserFollowsController>();
 
   @override
@@ -72,6 +74,8 @@ class _RankingScreenState extends State<RankingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Container(
       color: const Color(0xFF242a3d),
       child: StreamerRankProvider(
@@ -143,15 +147,18 @@ class _RankingScreenState extends State<RankingScreen> {
                                   userFollowsController.follow(streamer);
                                 }
                               },
-                              child: Text(isFollowed ? '已關注' : '關注',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 12)),
                               style: ButtonStyle(
                                 backgroundColor: MaterialStateProperty.all(
                                     isFollowed
                                         ? const Color(0xff7b7b7b)
                                         : const Color(0xffae57ff)),
                               ),
+                              child: Text(
+                                  isFollowed
+                                      ? localizations.translate('followed')
+                                      : localizations.translate('follow'),
+                                  style: const TextStyle(
+                                      color: Colors.white, fontSize: 12)),
                             );
                           }),
                         ],
@@ -188,46 +195,66 @@ class TimeFilterBar extends StatefulWidget {
   });
 
   @override
-  _TimeFilterBarState createState() => _TimeFilterBarState();
+  TimeFilterBarState createState() => TimeFilterBarState();
 }
 
-class _TimeFilterBarState extends State<TimeFilterBar> {
+class TimeFilterBarState extends State<TimeFilterBar> {
   int _selectedIndex = 1; // Initial index of the selected item
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          buildButton(
-            title: '日榜',
-            timeType: TimeType.today,
-            updateRankList: () =>
-                widget.updateCallback(widget.rankType, TimeType.today),
-          ),
-          buildButton(
-            title: '週榜',
-            timeType: TimeType.thisWeek,
-            updateRankList: () =>
-                widget.updateCallback(widget.rankType, TimeType.thisWeek),
-          ),
-          buildButton(
-            title: '月榜',
-            timeType: TimeType.thisMonth,
-            updateRankList: () =>
-                widget.updateCallback(widget.rankType, TimeType.thisMonth),
-          ),
-          const Expanded(
-              child: Text(
-            '數據每小時更新',
-            textAlign: TextAlign.right,
-            style: TextStyle(
-              color: Color(0xff7b7b7b),
-              fontSize: 10,
+          Flexible(
+            child: Row(
+              children: [
+                Flexible(
+                  child: buildButton(
+                    title: localizations.translate('daily_ranking'),
+                    timeType: TimeType.today,
+                    updateRankList: () =>
+                        widget.updateCallback(widget.rankType, TimeType.today),
+                  ),
+                ),
+                Flexible(
+                  child: buildButton(
+                    title: localizations.translate('weekly_ranking'),
+                    timeType: TimeType.thisWeek,
+                    updateRankList: () => widget.updateCallback(
+                        widget.rankType, TimeType.thisWeek),
+                  ),
+                ),
+                Flexible(
+                  child: buildButton(
+                    title: localizations.translate('monthly_ranking'),
+                    timeType: TimeType.thisMonth,
+                    updateRankList: () => widget.updateCallback(
+                        widget.rankType, TimeType.thisMonth),
+                  ),
+                ),
+              ],
             ),
-          ))
+          ),
+          Container(
+            constraints: const BoxConstraints(
+                maxWidth: 120), // Set a max width for the text
+            child: Text(
+              localizations.translate('data_updates_every_hour'),
+              overflow:
+                  TextOverflow.ellipsis, // Use ellipsis to handle overflow
+              maxLines: 2, // Allow up to two lines
+              textAlign: TextAlign.right,
+              style: const TextStyle(
+                color: Color(0xff7b7b7b),
+                fontSize: 9,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -246,7 +273,7 @@ class _TimeFilterBarState extends State<TimeFilterBar> {
         updateRankList();
       },
       child: Container(
-        margin: const EdgeInsets.only(right: 10),
+        margin: const EdgeInsets.only(right: 8),
         padding: const EdgeInsets.only(bottom: 2, left: 5, right: 5),
         decoration: BoxDecoration(
           border: Border(

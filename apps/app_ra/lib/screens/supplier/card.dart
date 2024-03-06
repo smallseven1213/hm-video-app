@@ -6,7 +6,6 @@ import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/controllers/user_favorites_supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/utils/video_info_formatter.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 import '../../widgets/actor_avatar.dart';
 

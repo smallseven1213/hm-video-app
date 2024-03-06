@@ -26,7 +26,8 @@ class GameDownloadButtonState extends State<GameDownloadButton> {
   Future<void> onGetApkPath() async {
     var resApkPath = await Get.find<GameLobbyApi>().getApkPath();
     if (resApkPath.startsWith('http://') || resApkPath.startsWith('https://')) {
-      await launch(resApkPath.toString(), webOnlyWindowName: '_blank');
+      await launchUrl(Uri.parse(resApkPath.toString()),
+          webOnlyWindowName: '_blank');
     } else {
       throw 'Could not launch $resApkPath';
     }

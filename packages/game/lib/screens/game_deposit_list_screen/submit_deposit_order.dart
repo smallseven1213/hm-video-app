@@ -32,7 +32,7 @@ submitDepositOrder(
         await Future.delayed(const Duration(milliseconds: 500));
         onLoading(context, status: false);
         Navigator.pop(context);
-        launch(value, webOnlyWindowName: '_blank');
+        launchUrl(Uri.parse(value), webOnlyWindowName: '_blank');
         MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult);
       } else {
         // ignore: deprecated_member_use

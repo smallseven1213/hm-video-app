@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:live_core/models/room_rank.dart';
 
+import '../../../localization/live_localization_delegate.dart';
 import 'rank_data_dialog.dart';
 
 class RankData extends StatefulWidget {
   final RoomRank? roomRank;
 
-  RankData({Key? key, this.roomRank}) : super(key: key);
+  const RankData({Key? key, this.roomRank}) : super(key: key);
   @override
-  _RankDataState createState() => _RankDataState();
+  RankDataState createState() => RankDataState();
 }
 
-class _RankDataState extends State<RankData> {
+class RankDataState extends State<RankData> {
   GlobalKey containerKey = GlobalKey();
 
   OverlayEntry? overlayEntry;
@@ -66,6 +67,8 @@ class _RankDataState extends State<RankData> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return GestureDetector(
       onTap: () {
         if (overlayEntry != null) {
@@ -91,7 +94,8 @@ class _RankDataState extends State<RankData> {
                 width: 12,
                 height: 12),
             const SizedBox(width: 3),
-            Text("${widget.roomRank?.trank ?? "0"} 排行榜",
+            Text(
+                "${widget.roomRank?.trank ?? "0"} ${localizations.translate('leaderboard')}",
                 style: const TextStyle(fontSize: 12, color: Colors.white)),
             const SizedBox(width: 3),
             Image.asset(

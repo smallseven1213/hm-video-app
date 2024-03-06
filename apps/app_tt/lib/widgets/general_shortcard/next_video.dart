@@ -8,10 +8,10 @@ class NextVideoWidget extends StatefulWidget {
   const NextVideoWidget({super.key, this.video});
 
   @override
-  _NextVideoWidgetState createState() => _NextVideoWidgetState();
+  NextVideoWidgetState createState() => NextVideoWidgetState();
 }
 
-class _NextVideoWidgetState extends State<NextVideoWidget>
+class NextVideoWidgetState extends State<NextVideoWidget>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;

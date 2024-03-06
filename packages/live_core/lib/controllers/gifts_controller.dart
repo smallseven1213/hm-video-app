@@ -18,7 +18,7 @@ class GiftsController extends GetxController {
       var response = await liveApi.getGifts();
       gifts.value = response.data;
     } catch (e) {
-      print(e);
+      return;
     }
   }
 }

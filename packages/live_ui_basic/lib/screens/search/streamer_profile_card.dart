@@ -8,6 +8,8 @@ import 'package:live_core/models/streamer_profile.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class StreamerProfileCard extends StatelessWidget {
   final StreamerProfile profile;
   final bool? showFansCount;
@@ -24,6 +26,8 @@ class StreamerProfileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LiveListController controller = Get.find();
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return InkWell(
       onTap: () {
         final room = controller.getRoomByStreamerId(profile.id);
@@ -31,7 +35,7 @@ class StreamerProfileCard extends StatelessWidget {
           MyRouteDelegate.of(context).push(
             AppRoutes.supplier,
             args: {
-              'id': profile.id,
+              'id': profile.supplierId,
             },
           );
         } else {
@@ -61,7 +65,8 @@ class StreamerProfileCard extends StatelessWidget {
                 top: 8,
                 right: 8,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
                     color: Colors.pink,
                     borderRadius: BorderRadius.circular(15),
@@ -77,12 +82,12 @@ class StreamerProfileCard extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '@${profile.nickname} ${profile.id}',
+                      '@${profile.nickname}',
                       style: const TextStyle(color: Colors.white, fontSize: 16),
                     ),
                     if (showFansCount == true)
@@ -99,7 +104,7 @@ class StreamerProfileCard extends StatelessWidget {
                         return Center(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: isFollowed
+                              backgroundColor: isFollowed
                                   ? const Color(0xff7b7b7b)
                                   : const Color(0xffae57ff),
                               shape: RoundedRectangleBorder(
@@ -115,7 +120,10 @@ class StreamerProfileCard extends StatelessWidget {
                                 userFollowsController.follow(streamer);
                               }
                             },
-                            child: Text(isFollowed ? '已關注' : '關注',
+                            child: Text(
+                                isFollowed
+                                    ? localizations.translate('followed')
+                                    : localizations.translate('follow'),
                                 style: const TextStyle(
                                     color: Colors.white, fontSize: 12)),
                           ),

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/channel_shared_data_controller.dart';
 
 import '../../../widgets/tab_bar.dart';
-import '../../../widgets/wave_loading.dart';
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
 import '../channel_jingang_area_title.dart';

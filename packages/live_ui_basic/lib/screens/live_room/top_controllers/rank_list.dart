@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:live_core/models/room_rank.dart';
-import 'package:live_core/widgets/live_image.dart';
 
 class RankList extends StatelessWidget {
   final RoomRank? roomRank;

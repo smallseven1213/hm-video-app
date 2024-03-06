@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 
-Map<int, String> chargeTypeTexts = {
-  1: '免費',
-  2: '付費',
-  3: '付費',
-};
+import '../../localization/live_localization_delegate.dart';
 
 Map<int, int> chargeTypeBGColors = {
   1: 0xe6845fcf,
@@ -22,6 +18,13 @@ class RoomChargeType extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LiveRoomController controller = Get.find(tag: pid.toString());
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
+    Map<int, String> chargeTypeTexts = {
+      1: localizations.translate('free'),
+      2: localizations.translate('paid'),
+      3: localizations.translate('paid'),
+    };
 
     return Obx(() => Container(
           height: 20,
@@ -36,7 +39,7 @@ class RoomChargeType extends StatelessWidget {
           child: Center(
             child: Text(
                 chargeTypeTexts[controller.liveRoomInfo.value?.chargeType] ??
-                    '免費',
+                    localizations.translate('free'),
                 style: const TextStyle(color: Colors.white, fontSize: 11)),
           ),
         ));

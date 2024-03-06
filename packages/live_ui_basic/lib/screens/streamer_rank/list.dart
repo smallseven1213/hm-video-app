@@ -8,19 +8,24 @@
 
 import 'package:flutter/material.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class StreamerRankPage extends StatefulWidget {
   const StreamerRankPage({Key? key}) : super(key: key);
 
   @override
-  _StreamerRankPageState createState() => _StreamerRankPageState();
+  StreamerRankPageState createState() => StreamerRankPageState();
 }
 
-class _StreamerRankPageState extends State<StreamerRankPage> {
+class StreamerRankPageState extends State<StreamerRankPage> {
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('主播排行'),
+        title: Text(localizations.translate('host_ranking'),
+            style: const TextStyle(fontSize: 14)),
         centerTitle: true,
       ),
       body: DefaultTabController(
@@ -28,19 +33,19 @@ class _StreamerRankPageState extends State<StreamerRankPage> {
         child: Scaffold(
           appBar: AppBar(
             backgroundColor: const Color(0xFF242a3d),
-            bottom: const TabBar(
+            bottom: TabBar(
               tabs: [
-                Tab(text: '綜合'),
-                Tab(text: '人氣'),
-                Tab(text: '新人'),
+                Tab(text: localizations.translate('comprehensive')),
+                Tab(text: localizations.translate('popularity')),
+                Tab(text: localizations.translate('newcomer')),
               ],
             ),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              Center(child: Text('綜合')),
-              Center(child: Text('人氣')),
-              Center(child: Text('新人')),
+              Center(child: Text(localizations.translate('comprehensive'))),
+              Center(child: Text(localizations.translate('popularity'))),
+              Center(child: Text(localizations.translate('newcomer'))),
             ],
           ),
         ),

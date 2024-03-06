@@ -53,8 +53,8 @@ class UserSettingScaffoldState extends State<UserSettingScaffold> {
   @override
   Widget build(BuildContext context) {
     if (widget.preventBackNavigation) {
-      return WillPopScope(
-        onWillPop: () async => false,
+      return PopScope(
+        canPop: false,
         child: widget.child,
       );
     } else {

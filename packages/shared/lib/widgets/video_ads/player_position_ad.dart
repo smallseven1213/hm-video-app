@@ -16,10 +16,10 @@ class PlayerPositionAd extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PlayerPositionAdState createState() => _PlayerPositionAdState();
+  PlayerPositionAdState createState() => PlayerPositionAdState();
 }
 
-class _PlayerPositionAdState extends State<PlayerPositionAd> {
+class PlayerPositionAdState extends State<PlayerPositionAd> {
   late int seconds;
   final VideoAdsController controller = Get.find<VideoAdsController>();
   double opacity = 1.0;
@@ -36,7 +36,7 @@ class _PlayerPositionAdState extends State<PlayerPositionAd> {
   void startCountdown() {
     if (_timer != null) return; // 防止重复启动定时器
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (seconds == 0) {
         timer.cancel();
         _closeAd();

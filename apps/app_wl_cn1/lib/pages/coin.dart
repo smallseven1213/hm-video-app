@@ -7,8 +7,8 @@ import '../../widgets/id_card.dart';
 import '../screens/coin/order_record.dart';
 import '../screens/coin/products.dart';
 import '../screens/coin/purchase_record.dart';
-import '../screens/coin/privilege_record.dart';
 import '../screens/user_screen/info.dart';
+import '../widgets/coin_tab_bar.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/tab_bar.dart';
 import '../widgets/user/balance.dart';
@@ -83,14 +83,14 @@ class CoinPageState extends State<CoinPage>
               ),
               child: Column(
                 children: [
-                  TabBarWidget(
+                  CoinTabBarWidget(
                     controller: _tabController,
                     backgroundColor: Colors.transparent,
                     tabs: const ['金幣', '購買記錄', '存款記錄'],
                   ),
                   Expanded(
                     child: Padding(
-                      padding: const EdgeInsets.all(8),
+                      padding: const EdgeInsets.symmetric(horizontal: 18),
                       child: TabBarView(
                         controller: _tabController,
                         children: const [

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_utils/src/platform/platform.dart';
 import 'package:shared/apis/orders_api.dart';
@@ -8,7 +7,6 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/show_confirm_dialog.dart';
-import '../../widgets/button.dart';
 
 final orderApi = OrderApi();
 
@@ -41,7 +39,6 @@ class PaymentListState extends State<PaymentList> {
         paymentChannelId: paymentChannelId,
       );
 
-      print('res: $res');
       if (!mounted) return;
       var paymentLink = res['data']['paymentLink'];
       if (res.isNotEmpty && paymentLink.startsWith('http')) {
@@ -49,10 +46,10 @@ class PaymentListState extends State<PaymentList> {
           await Future.delayed(const Duration(milliseconds: 500));
           setState(() => isLoading = false);
           Navigator.pop(context);
-          launch(paymentLink, webOnlyWindowName: '_blank');
+          launchUrl(Uri.parse(paymentLink), webOnlyWindowName: '_blank');
           MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
         } else {
-          await launch(paymentLink, webOnlyWindowName: '_blank');
+          await launchUrl(Uri.parse(paymentLink), webOnlyWindowName: '_blank');
           setState(() => isLoading = false);
           Navigator.pop(context);
           MyRouteDelegate.of(context).push(AppRoutes.orderConfirm);
@@ -70,7 +67,6 @@ class PaymentListState extends State<PaymentList> {
         );
       }
     } catch (error) {
-      print(error);
       setState(() {
         isLoading = false;
       });
@@ -154,10 +150,41 @@ class PaymentListState extends State<PaymentList> {
                                       color: Colors.white,
                                     ),
                                     margin: const EdgeInsets.only(bottom: 8),
-                                    child: Text(
-                                      payment.type.toString(),
-                                      style: const TextStyle(
-                                          color: Colors.black, fontSize: 14),
+                                    child: Row(
+                                      children: [
+                                        // 未來的icon
+                                        Expanded(
+                                            child: Text(
+                                          payment.type.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14),
+                                        )),
+                                        if (isSelected)
+                                          Container(
+                                            width: 16,
+                                            height: 16,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFFb5925c),
+                                              shape: BoxShape.circle,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 5,
+                                                  spreadRadius: 2,
+                                                  offset: Offset(0, 0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                                size: 12,
+                                              ),
+                                            ),
+                                          )
+                                      ],
                                     ),
                                   ),
                                 );

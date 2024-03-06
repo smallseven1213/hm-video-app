@@ -10,10 +10,10 @@ class VideoProgressWidget extends StatefulWidget {
   });
 
   @override
-  _VideoProgressWidgetState createState() => _VideoProgressWidgetState();
+  VideoProgressWidgetState createState() => VideoProgressWidgetState();
 }
 
-class _VideoProgressWidgetState extends State<VideoProgressWidget> {
+class VideoProgressWidgetState extends State<VideoProgressWidget> {
   bool isDragging = false;
 
   @override

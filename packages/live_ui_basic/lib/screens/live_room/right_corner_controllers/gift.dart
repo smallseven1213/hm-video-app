@@ -12,9 +12,9 @@ import 'package:live_core/models/live_api_response_base.dart';
 import 'package:live_core/widgets/live_image.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/widgets/live_button.dart';
-import 'package:shared/widgets/sid_image.dart';
 
-import '../../../libs/showLiveDialog.dart';
+import '../../../libs/show_live_dialog.dart';
+import '../../../localization/live_localization_delegate.dart';
 import '../../../widgets/x_count.dart';
 import 'user_diamonds.dart';
 
@@ -55,10 +55,10 @@ class Gifts extends StatefulWidget {
   const Gifts({Key? key}) : super(key: key);
 
   @override
-  _GiftsState createState() => _GiftsState();
+  GiftsState createState() => GiftsState();
 }
 
-class _GiftsState extends State<Gifts> {
+class GiftsState extends State<Gifts> {
   final giftsController = Get.find<GiftsController>();
   ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
 
@@ -71,6 +71,8 @@ class _GiftsState extends State<Gifts> {
   @override
   Widget build(BuildContext context) {
     final giftsController = Get.find<GiftsController>();
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     int totalPageCount = (giftsController.gifts.value.length / 8).ceil();
     return Container(
       height: 366,
@@ -83,9 +85,9 @@ class _GiftsState extends State<Gifts> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                '禮物清單',
-                style: TextStyle(
+              Text(
+                localizations.translate('gift_list'),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -208,10 +210,10 @@ class GiftItem extends StatefulWidget {
   const GiftItem({Key? key, required this.gift}) : super(key: key);
 
   @override
-  _GiftItemState createState() => _GiftItemState();
+  GiftItemState createState() => GiftItemState();
 }
 
-class _GiftItemState extends State<GiftItem>
+class GiftItemState extends State<GiftItem>
     with SingleTickerProviderStateMixin {
   ValueNotifier<int> clickCount = ValueNotifier(0);
   Timer? debounceTimer;
@@ -260,9 +262,6 @@ class _GiftItemState extends State<GiftItem>
             throw Exception(response.data);
           }
         }
-      } catch (e) {
-        print(e);
-        // Optionally show error dialog
       } finally {
         clickCount.value = 0; // Reset click count
       }
@@ -294,14 +293,14 @@ class _GiftItemState extends State<GiftItem>
               const SizedBox(height: 5),
               Text(
                 widget.gift.name,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                 ),
               ),
               Text(
                 widget.gift.price,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                 ),
@@ -324,22 +323,25 @@ class _GiftItemState extends State<GiftItem>
   }
 
   void showInsufficientFundsDialog(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     showLiveDialog(
       context,
-      title: '鑽石不足',
-      content: const Center(
-        child: Text('鑽石不足，請前往充值',
-            style: TextStyle(color: Colors.white, fontSize: 11)),
+      title: localizations.translate('not_enough_diamonds'),
+      content: Center(
+        child: Text(
+            localizations.translate('insufficient_diamonds_please_recharge'),
+            style: const TextStyle(color: Colors.white, fontSize: 11)),
       ),
       actions: [
         LiveButton(
-            text: '取消',
+            text: localizations.translate('cancel'),
             type: ButtonType.secondary,
             onTap: () {
               Navigator.of(context).pop();
             }),
         LiveButton(
-            text: '確定',
+            text: localizations.translate('confirm'),
             type: ButtonType.primary,
             onTap: () {
               Navigator.of(context).pop();

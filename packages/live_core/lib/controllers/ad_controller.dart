@@ -20,7 +20,7 @@ class AdController extends GetxController {
       List<Ad> response = await AdApi().getBanners();
       ads.value = response;
     } catch (e) {
-      print(e);
+      return;
     }
   }
 
@@ -28,7 +28,7 @@ class AdController extends GetxController {
     try {
       await AdApi().recordAdClick(id);
     } catch (e) {
-      print(e);
+      return;
     }
   }
 }

@@ -3,10 +3,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class SearchWidget extends StatelessWidget {
   const SearchWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
     return Row(
       children: [
         Expanded(
@@ -18,10 +21,10 @@ class SearchWidget extends StatelessWidget {
                 color: const Color(0xFF323d5c),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: const Row(
+              child: Row(
                 children: [
                   // padding l 10, child is Icon
-                  Padding(
+                  const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Icon(
                       Icons.search,
@@ -29,11 +32,11 @@ class SearchWidget extends StatelessWidget {
                     ),
                   ),
                   // padding l 10, child is Text
-                  const Padding(
-                    padding: EdgeInsets.only(left: 10),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      'Search',
-                      style: TextStyle(
+                      localizations.translate('search'),
+                      style: const TextStyle(
                         color: Color(0xFF5a6077),
                       ),
                     ),
@@ -55,8 +58,9 @@ class SearchWidget extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         InkWell(
-            onTap: () => launch(
-                "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2",
+            onTap: () => launchUrl(
+                Uri.parse(
+                    "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2"),
                 webOnlyWindowName: '_blank'),
             child: SvgPicture.asset(
               'packages/live_ui_basic/assets/svgs/ic_service.svg',

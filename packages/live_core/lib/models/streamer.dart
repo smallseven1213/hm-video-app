@@ -1,4 +1,4 @@
-import 'package:shared/helpers/getField.dart';
+import 'package:shared/helpers/get_field.dart';
 
 class Streamer {
   final int id;

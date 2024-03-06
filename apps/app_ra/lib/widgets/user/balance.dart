@@ -22,7 +22,7 @@ class UserBalance extends StatelessWidget {
                   style: const TextStyle(color: Colors.white, fontSize: 16)),
             ),
             UserInfoReloadButton(
-                child: Container(
+                child: const SizedBox(
               width: 24,
               // refresh icon from flutter Icon
               child: Icon(

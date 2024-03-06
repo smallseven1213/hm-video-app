@@ -259,7 +259,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 // 下方控制區塊
                 Positioned(
                   bottom: 0,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       children: [

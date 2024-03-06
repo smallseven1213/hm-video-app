@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import '../../home/controllers/home_page_controller.dart';
 
 class OpenDrawerButton extends StatelessWidget {
+  const OpenDrawerButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(

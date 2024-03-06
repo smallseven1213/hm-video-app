@@ -16,10 +16,10 @@ class VideoByActorConsumer extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VideoByActorConsumerState createState() => _VideoByActorConsumerState();
+  VideoByActorConsumerState createState() => VideoByActorConsumerState();
 }
 
-class _VideoByActorConsumerState extends State<VideoByActorConsumer> {
+class VideoByActorConsumerState extends State<VideoByActorConsumer> {
   late VideoByActorController videoByActorController;
 
   @override

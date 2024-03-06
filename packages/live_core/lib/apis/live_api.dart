@@ -33,12 +33,12 @@ class LiveApi {
     SortType ranking = SortType.defaultSort,
     int followType = 0,
   }) async {
-    var _ranking = ranking.toString().split('.').last; // 更简洁的转换枚举到字符串
+    var ranking0 = ranking.toString().split('.').last; // 更简洁的转换枚举到字符串
 
     const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
     var response = await liveFetcher(
       url:
-          '$userApiHost/room/list?page=$page&per_page=$perPage&status=$status&charge_type=$chargeType&ranking=$_ranking&follow=$followType',
+          '$userApiHost/room/list?page=$page&per_page=$perPage&status=$status&charge_type=$chargeType&ranking=$ranking0&follow=$followType',
     );
 
     if (response.data['data'].isEmpty) {
@@ -101,7 +101,7 @@ class LiveApi {
       );
     } catch (e) {
       // Handle the exception
-      throw e;
+      rethrow;
     }
   }
 
@@ -129,22 +129,39 @@ class LiveApi {
       );
     } catch (e) {
       // Handle the exception
-      throw e;
+      rethrow;
     }
   }
 
-  Future<LiveApiResponseBase<RoomRank>> getRank(int pid) async {
-    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
-    var response = await liveFetcher(
-      url: '$liveApiHost/rank',
-    );
+  Future<LiveApiResponseBase<RoomRank?>> getRank(int pid) async {
+    try {
+      final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+      var response = await liveFetcher(
+        url: '$liveApiHost/rank',
+      );
+      if (response != null) {
+        LiveApiResponseBase<RoomRank> parsedResponse =
+            LiveApiResponseBase.fromJson(
+          response.data,
+          (data) => RoomRank.fromJson(data as Map<String, dynamic>),
+        );
 
-    LiveApiResponseBase<RoomRank> parsedResponse = LiveApiResponseBase.fromJson(
-      response.data,
-      (data) => RoomRank.fromJson(data as Map<String, dynamic>),
-    );
+        return parsedResponse;
+      }
 
-    return parsedResponse;
+      return LiveApiResponseBase<RoomRank?>(
+        code: 0,
+        data: null,
+        msg: 'Error occurred while fetching room rank',
+      );
+    } catch (e) {
+      // Handle the exception
+      return LiveApiResponseBase<RoomRank?>(
+        code: 0,
+        data: null,
+        msg: 'Error occurred while fetching room rank',
+      );
+    }
   }
 
   Future<LiveApiResponseBase<List<Gift>>> getGifts() async {

@@ -85,8 +85,8 @@ class AdState extends State<Ad> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () async => false, // HC: 煩死，勿動!!
+    return PopScope(
+      canPop: false, // HC: 煩死，勿動!!
       child: Scaffold(
         body: Stack(
           children: [

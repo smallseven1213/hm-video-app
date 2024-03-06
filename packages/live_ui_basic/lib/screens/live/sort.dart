@@ -2,26 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class SortWidget extends StatelessWidget {
   const SortWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return InkWell(
       onTap: () => _showSortBottomSheet(context),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Image(
+          const Image(
             image:
                 AssetImage('packages/live_ui_basic/assets/images/ic_sort.webp'),
             width: 30,
             height: 30,
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 4),
           Text(
-            "排序",
-            style: TextStyle(color: Color(0xff9a9ba1), fontSize: 10),
+            localizations.translate('sort'),
+            style: const TextStyle(color: Color(0xff9a9ba1), fontSize: 10),
           ),
         ],
       ),
@@ -33,10 +37,10 @@ class SelectionScreen extends StatefulWidget {
   const SelectionScreen({Key? key}) : super(key: key);
 
   @override
-  _SelectionScreenState createState() => _SelectionScreenState();
+  SelectionScreenState createState() => SelectionScreenState();
 }
 
-class _SelectionScreenState extends State<SelectionScreen> {
+class SelectionScreenState extends State<SelectionScreen> {
   int? selectedOption;
   final LiveListController liveListController = Get.find<LiveListController>();
 
@@ -78,21 +82,25 @@ class _SelectionScreenState extends State<SelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return ListView(
       children: <Widget>[
-        optionTile('預設排序', 0),
+        optionTile(localizations.translate('default_sorting'), 0),
         const Divider(color: Colors.white),
-        optionTile('最多觀看', 1),
+        optionTile(localizations.translate('most_viewed'), 1),
         const Divider(color: Colors.white),
-        optionTile('最多追蹤', 2),
+        optionTile(localizations.translate('most_followed'), 2),
         const Divider(color: Colors.white),
-        optionTile('新進主播', 3),
+        optionTile(localizations.translate('new_hosts'), 3),
       ],
     );
   }
 }
 
 void _showSortBottomSheet(BuildContext context) {
+  final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
@@ -110,9 +118,9 @@ void _showSortBottomSheet(BuildContext context) {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Text(
-                      '排序條件',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    Text(
+                      localizations.translate('sorting_condition'),
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     IconButton(
                       icon: const Icon(Icons.close, color: Colors.white),

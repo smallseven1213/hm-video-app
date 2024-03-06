@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
-import 'package:shared/utils/video_info_formatter.dart';
 
 import '../../config/colors.dart';
 import '../button.dart';

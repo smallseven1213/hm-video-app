@@ -12,10 +12,10 @@ class ChatroomProvider extends StatefulWidget {
       {super.key, required this.chatToken, required this.child});
 
   @override
-  _ChatroomProviderState createState() => _ChatroomProviderState();
+  ChatroomProviderState createState() => ChatroomProviderState();
 }
 
-class _ChatroomProviderState extends State<ChatroomProvider> {
+class ChatroomProviderState extends State<ChatroomProvider> {
   late LiveSocketIOManager socketIOManager;
 
   @override
@@ -46,7 +46,8 @@ class _ChatroomProviderState extends State<ChatroomProvider> {
 class ChatroomSocketIOProvider extends InheritedWidget {
   final LiveSocketIOManager manager;
 
-  ChatroomSocketIOProvider({required this.manager, required Widget child})
+  const ChatroomSocketIOProvider(
+      {super.key, required this.manager, required Widget child})
       : super(child: child);
 
   static ChatroomSocketIOProvider? of(BuildContext context) {

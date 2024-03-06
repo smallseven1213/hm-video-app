@@ -58,7 +58,7 @@ class PlayRecordShortScreen extends StatelessWidget {
                         children: insertSeparators(
                             videosInRow.map((video) {
                               if (video == null) {
-                                return Expanded(child: const SizedBox());
+                                return const Expanded(child: SizedBox());
                               }
                               return Expanded(
                                   child: _buildVideoWidget(video, gridRatio,

@@ -3,7 +3,6 @@ library app_routes;
 import 'package:flutter/material.dart';
 import 'package:app_wl_id1/pages/actor.dart' as actor_page;
 import 'package:app_wl_id1/pages/configs.dart' as configs_page;
-import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -36,7 +35,7 @@ import '../screens/demo.dart' as demo_screen;
 import '../pages/suppliers.dart' as suppliers_screen;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
-  AppRoutes.demo: (context, args) => demo_screen.Demo(),
+  AppRoutes.demo: (context, args) => const demo_screen.Demo(),
   AppRoutes.home: (context, args) => home_page.HomePage(
         defaultScreenKey: args['defaultScreenKey'] as String?,
       ),

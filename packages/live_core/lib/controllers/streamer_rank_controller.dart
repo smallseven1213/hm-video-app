@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import '../models/live_api_response_base.dart';
 import '../apis/streamer_api.dart';
 import '../models/streamer_rank.dart';
 
@@ -25,7 +24,7 @@ class StreamerRankController extends GetxController {
       streamerRanks.value = res;
       streamerRanks.refresh();
     } catch (e) {
-      print(e);
+      // print(e);
     }
   }
 

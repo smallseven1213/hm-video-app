@@ -58,7 +58,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
   @override
   Widget build(BuildContext context) {
     if (widget.videoUrl.isEmpty) {
-      return LoadingAnimation();
+      return const LoadingAnimation();
     }
     return Container(
       color: Colors.black,
@@ -79,7 +79,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               tags: widget.shortData.tags!,
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
-            loadingWidget: Center(child: LoadingAnimation()),
+            loadingWidget: const Center(child: LoadingAnimation()),
             child: (isReady) => ShortCard(
               key: Key(widget.tag),
               index: widget.index,

@@ -10,14 +10,13 @@ import 'package:shared/widgets/sid_image.dart';
 import '../../../widgets/actor_avatar.dart';
 
 class ChannelStyle6Suppliers extends StatelessWidget {
-  ChannelStyle6Suppliers({Key? key}) : super(key: key);
-
-  final controller = Get.put(SupplierRecommendsController());
-  var userFavoritesSupplierController =
-      Get.find<UserFavoritesSupplierController>();
+  const ChannelStyle6Suppliers({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SupplierRecommendsController());
+    final userFavoritesSupplierController =
+        Get.find<UserFavoritesSupplierController>();
     return Obx(() => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center, // 垂直居中

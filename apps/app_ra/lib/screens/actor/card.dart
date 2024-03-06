@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/actor_controller.dart';
 import 'package:shared/controllers/user_favorites_actor_controller.dart';
 import 'package:shared/models/actor.dart';
-import 'package:shared/widgets/sid_image.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../widgets/actor_avatar.dart';

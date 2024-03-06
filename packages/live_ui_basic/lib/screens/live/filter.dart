@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/models/room.dart';
 
+import '../../localization/live_localization_delegate.dart';
+
 class Option {
   final String name;
   dynamic value;
@@ -15,21 +17,23 @@ class FilterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return InkWell(
       onTap: () => _showFilterBottomSheet(context),
-      child: const Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Image(
+          const Image(
             image: AssetImage(
                 'packages/live_ui_basic/assets/images/ic_select.webp'),
             width: 30,
             height: 30,
           ),
-          SizedBox(width: 4),
+          const SizedBox(width: 4),
           Text(
-            "篩選",
-            style: TextStyle(color: Color(0xff9a9ba1), fontSize: 10),
+            localizations.translate('filter'),
+            style: const TextStyle(color: Color(0xff9a9ba1), fontSize: 10),
           ),
         ],
       ),
@@ -57,7 +61,7 @@ class FilterButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
-            color: isActive ? const Color(0xffae57ff) : Color(0xff565656),
+            color: isActive ? const Color(0xffae57ff) : const Color(0xff565656),
           ),
           child: Text(text, style: const TextStyle(color: Colors.white)),
         ));
@@ -101,18 +105,22 @@ class FilterGroup extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Text(title, style: const TextStyle(color: Colors.white)),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: options.map((option) {
-            return Container(
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal, // 設置滾動方向為水平
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: options.map((option) {
+              return Container(
                 margin: const EdgeInsets.only(right: 10, top: 10),
                 child: FilterButton(
                   text: option.name,
                   isActive: option == activeOption,
                   onTap: () => filter(option),
-                ));
-          }).toList(),
-        ),
+                ),
+              );
+            }).toList(),
+          ),
+        )
       ],
     );
   }
@@ -120,6 +128,7 @@ class FilterGroup extends StatelessWidget {
 
 void _showFilterBottomSheet(BuildContext context) {
   LiveListController liveListController = Get.find<LiveListController>();
+  final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
   showModalBottomSheet(
     context: context,
@@ -138,9 +147,9 @@ void _showFilterBottomSheet(BuildContext context) {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
-                    const Text(
-                      '篩選',
-                      style: TextStyle(color: Colors.white, fontSize: 18),
+                    Text(
+                      localizations.translate('filter'),
+                      style: const TextStyle(color: Colors.white, fontSize: 18),
                     ),
                     IconButton(
                       icon: const Icon(Icons.close, color: Colors.white),
@@ -151,11 +160,15 @@ void _showFilterBottomSheet(BuildContext context) {
                 const SizedBox(height: 20),
                 Obx(() {
                   return FilterGroup(
-                    title: '追蹤的主播',
+                    title: localizations.translate('followed_host'),
                     name: 'follow',
                     options: [
-                      Option(name: '不限', value: FollowType.none),
-                      Option(name: '已追蹤的主播', value: FollowType.followed),
+                      Option(
+                          name: localizations.translate('unlimited'),
+                          value: FollowType.none),
+                      Option(
+                          name: localizations.translate('followed_hosts'),
+                          value: FollowType.followed),
                     ],
                     defaultValue: liveListController.followType.value,
                   );
@@ -163,12 +176,18 @@ void _showFilterBottomSheet(BuildContext context) {
                 const SizedBox(height: 20),
                 Obx(() {
                   return FilterGroup(
-                    title: '付費類型',
+                    title: localizations.translate('type_of_payment'),
                     name: 'chargeType',
                     options: [
-                      Option(name: '不限', value: RoomChargeType.none),
-                      Option(name: '免費直播', value: RoomChargeType.free),
-                      Option(name: '付費直播', value: RoomChargeType.oneTime),
+                      Option(
+                          name: localizations.translate('unlimited'),
+                          value: RoomChargeType.none),
+                      Option(
+                          name: localizations.translate('free_live'),
+                          value: RoomChargeType.free),
+                      Option(
+                          name: localizations.translate('paid_live'),
+                          value: RoomChargeType.oneTime),
                     ],
                     defaultValue: liveListController.chargeType.value,
                   );
@@ -176,12 +195,18 @@ void _showFilterBottomSheet(BuildContext context) {
                 const SizedBox(height: 20),
                 Obx(() {
                   return FilterGroup(
-                    title: '直播類型',
+                    title: localizations.translate('type_of_live_broadcast'),
                     name: 'status',
                     options: [
-                      Option(name: '不限', value: RoomStatus.none),
-                      Option(name: '正在直播', value: RoomStatus.live),
-                      Option(name: '直播預告', value: RoomStatus.notStarted),
+                      Option(
+                          name: localizations.translate('unlimited'),
+                          value: RoomStatus.none),
+                      Option(
+                          name: localizations.translate('live_broadcasting'),
+                          value: RoomStatus.live),
+                      Option(
+                          name: localizations.translate('live_preview'),
+                          value: RoomStatus.notStarted),
                     ],
                     defaultValue: liveListController.status.value,
                   );

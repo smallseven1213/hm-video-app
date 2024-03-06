@@ -322,7 +322,8 @@ class _GameActivityState extends State<GameActivity> {
                                           if (activityList[index].buttonStyle ==
                                               activityButtonType['CS'])
                                             {
-                                              launch(customerServiceUrl,
+                                              launchUrl(
+                                                  Uri.parse(customerServiceUrl),
                                                   webOnlyWindowName: '_blank')
                                             }
                                           else

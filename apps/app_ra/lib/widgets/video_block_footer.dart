@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
@@ -28,12 +27,12 @@ class MyButton extends StatelessWidget {
 
     switch (type) {
       case ButtonType.primary:
-        backgroundColor = Color(0xFFFE2C55);
+        backgroundColor = const Color(0xFFFE2C55);
         textColor = Colors.white;
         break;
       case ButtonType.secondary:
-        backgroundColor = Color(0xFFDEDEDE);
-        textColor = Color(0xFF50525A);
+        backgroundColor = const Color(0xFFDEDEDE);
+        textColor = const Color(0xFF50525A);
         break;
     }
 

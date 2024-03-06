@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:live_core/models/room_rank.dart';
-import 'package:live_core/widgets/live_image.dart';
 import 'package:live_ui_basic/widgets/rank_number.dart';
+
+import '../../../localization/live_localization_delegate.dart';
 
 class RankDataDialog extends StatefulWidget {
   final RoomRank? roomRank;
@@ -13,10 +14,10 @@ class RankDataDialog extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RankDataDialogState createState() => _RankDataDialogState();
+  RankDataDialogState createState() => RankDataDialogState();
 }
 
-class _RankDataDialogState extends State<RankDataDialog>
+class RankDataDialogState extends State<RankDataDialog>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
 
@@ -71,7 +72,7 @@ class _RankDataDialogState extends State<RankDataDialog>
               Expanded(
                 flex: 1,
                 child: Text(rankItems[index].nickname,
-                    style: TextStyle(fontSize: 11, color: Colors.white)),
+                    style: const TextStyle(fontSize: 11, color: Colors.white)),
               ),
               const SizedBox(width: 3),
               Expanded(
@@ -79,7 +80,8 @@ class _RankDataDialogState extends State<RankDataDialog>
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Text(rankItems[index].amount.toString(),
-                      style: TextStyle(fontSize: 11, color: Colors.white)),
+                      style:
+                          const TextStyle(fontSize: 11, color: Colors.white)),
                 ),
               )
             ],
@@ -92,6 +94,7 @@ class _RankDataDialogState extends State<RankDataDialog>
   @override
   Widget build(BuildContext context) {
     final roomRank = widget.roomRank;
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     return Material(
       type: MaterialType.transparency,
@@ -110,9 +113,9 @@ class _RankDataDialogState extends State<RankDataDialog>
                       width: 12,
                       height: 12),
                   const SizedBox(width: 10),
-                  const Text(
-                    "鑽石排行榜",
-                    style: TextStyle(
+                  Text(
+                    localizations.translate('diamond_leaderboard'),
+                    style: const TextStyle(
                         fontSize: 11,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
@@ -139,17 +142,17 @@ class _RankDataDialogState extends State<RankDataDialog>
                 controller: _tabController,
                 labelColor: Colors.white,
                 unselectedLabelColor: Colors.white60,
-                labelStyle: TextStyle(fontSize: 9), // 设置 Tab 文字大小
-                indicator: UnderlineTabIndicator(
+                labelStyle: const TextStyle(fontSize: 9), // 设置 Tab 文字大小
+                indicator: const UnderlineTabIndicator(
                   borderSide: BorderSide(width: 1.0, color: Colors.grey),
                   insets: EdgeInsets.symmetric(horizontal: 16.0),
                 ),
                 isScrollable: true,
                 tabs: [
-                  Tab(text: '本場直播'),
-                  Tab(text: '今日'),
-                  Tab(text: '7日'),
-                  Tab(text: '30日'),
+                  Tab(text: localizations.translate('this_live_session')),
+                  Tab(text: localizations.translate('today')),
+                  Tab(text: '7${localizations.translate('day')}'),
+                  Tab(text: '30${localizations.translate('day')}'),
                 ],
               ),
             ),

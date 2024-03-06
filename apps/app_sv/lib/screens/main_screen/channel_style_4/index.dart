@@ -82,8 +82,6 @@ class ChannelStyle4 extends StatelessWidget {
                         child: SizedBox(height: 12),
                       ),
                       Obx(() {
-                        var data = actorPopularController.actors;
-                        print(data);
                         if (actorPopularController.isError.value) {
                           return SliverFillRemaining(
                             child: ReloadButton(

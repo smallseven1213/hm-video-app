@@ -7,7 +7,8 @@ import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/command.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 
-import '../../libs/showLiveDialog.dart';
+import '../../libs/show_live_dialog.dart';
+import '../../localization/live_localization_delegate.dart';
 import '../../widgets/live_button.dart';
 import 'right_corner_controllers/user_diamonds.dart';
 
@@ -50,7 +51,7 @@ class Commands extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LiveRoomController liveroomController = Get.find(tag: pid.toString());
-    ;
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     return Container(
       height: 366,
@@ -63,8 +64,8 @@ class Commands extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '指令清單',
-                style: TextStyle(
+                localizations.translate('command_list'),
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -140,6 +141,7 @@ class CommandItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool arrowSend = true;
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     void showToast() {
       FToast fToast = FToast();
@@ -152,10 +154,10 @@ class CommandItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(6.7),
           color: Colors.black,
         ),
-        child: const Center(
+        child: Center(
           child: Text(
-            "發送成功",
-            style: TextStyle(color: Colors.white, fontSize: 12.7),
+            localizations.translate('send_successfully'),
+            style: const TextStyle(color: Colors.white, fontSize: 12.7),
           ),
         ),
       );
@@ -163,7 +165,7 @@ class CommandItem extends StatelessWidget {
       fToast.showToast(
         child: toast,
         gravity: ToastGravity.CENTER,
-        toastDuration: Duration(seconds: 2),
+        toastDuration: const Duration(seconds: 2),
       );
     }
 
@@ -178,20 +180,23 @@ class CommandItem extends StatelessWidget {
             if (userAmount < price) {
               showLiveDialog(
                 context,
-                title: '鑽石不足',
+                title: localizations.translate('not_enough_diamonds'),
                 content: Center(
-                  child: Text('鑽石不足，請前往充值',
-                      style: TextStyle(color: Colors.white, fontSize: 11)),
+                  child: Text(
+                      localizations
+                          .translate('insufficient_diamonds_please_recharge'),
+                      style:
+                          const TextStyle(color: Colors.white, fontSize: 11)),
                 ),
                 actions: [
                   LiveButton(
-                      text: '取消',
+                      text: localizations.translate('cancel'),
                       type: ButtonType.secondary,
                       onTap: () {
                         Navigator.of(context).pop();
                       }),
                   LiveButton(
-                      text: '確定',
+                      text: localizations.translate('confirm'),
                       type: ButtonType.primary,
                       onTap: () {
                         Navigator.of(context).pop();
@@ -210,20 +215,19 @@ class CommandItem extends StatelessWidget {
               }
             }
           } catch (e) {
-            print(e);
             // show dialog for error
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Error'),
-                  content: Text('Something went wrong'),
+                  title: const Text('Error'),
+                  content: const Text('Something went wrong'),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 );
@@ -246,7 +250,7 @@ class CommandItem extends StatelessWidget {
           children: [
             Text(
               command.name,
-              style: TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
             const SizedBox(width: 2),
             Image.asset(
@@ -257,7 +261,7 @@ class CommandItem extends StatelessWidget {
             const SizedBox(width: 2),
             Text(
               command.price.toString(),
-              style: TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
           ],
         ),

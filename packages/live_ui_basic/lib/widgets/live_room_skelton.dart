@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
-import 'package:shared/navigator/delegate.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LiveRoomSkeleton extends StatelessWidget {
@@ -21,7 +20,7 @@ class LiveRoomSkeleton extends StatelessWidget {
               // align left
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
+                SizedBox(
                   height: 30,
                   width: MediaQuery.of(context).size.width,
                   child: Row(

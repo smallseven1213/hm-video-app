@@ -70,7 +70,6 @@ class VideoScreenProviderState extends State<VideoScreenProvider> {
       // 一旦三個值都有值，則執行相應的操作
       if (isReady) {
         isReadySubject.add(isReady);
-        var videoUrl = controller.videoUrl.value;
         var videoDetail = controller.videoDetail.value;
 
         if (mounted) {

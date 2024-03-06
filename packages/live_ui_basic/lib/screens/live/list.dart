@@ -8,24 +8,21 @@ class LiveList extends StatefulWidget {
   const LiveList({Key? key}) : super(key: key);
 
   @override
-  _LiveListState createState() => _LiveListState();
+  LiveListState createState() => LiveListState();
 }
 
-class _LiveListState extends State<LiveList> {
+class LiveListState extends State<LiveList> {
   final LiveListController _controller = Get.find<LiveListController>();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller.connectWs();
-    print('@@@@ initState');
   }
 
   @override
   void dispose() {
     _controller.reset();
-
     super.dispose();
   }
 

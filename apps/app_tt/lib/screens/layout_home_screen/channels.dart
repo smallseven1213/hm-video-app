@@ -46,10 +46,10 @@ class Channels extends StatefulWidget {
   const Channels({Key? key, required this.layoutId}) : super(key: key);
 
   @override
-  _ChannelsState createState() => _ChannelsState();
+  ChannelsState createState() => ChannelsState();
 }
 
-class _ChannelsState extends State<Channels> {
+class ChannelsState extends State<Channels> {
   final TTUIController ttUiController = Get.find<TTUIController>();
   late LayoutController layoutController;
 
