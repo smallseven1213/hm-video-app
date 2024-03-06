@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:app_ra/screens/video/video_player_area/enums.dart';
 import 'package:app_ra/widgets/purchase_promotion/vip_part.dart';
 import 'package:flutter/material.dart';

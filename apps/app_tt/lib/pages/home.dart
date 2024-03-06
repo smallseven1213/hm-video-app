@@ -1,7 +1,6 @@
 import 'package:app_tt/pages/apps.dart';
 import 'package:app_tt/widgets/loading_animation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:live_ui_basic/pages/live.dart';
 import 'package:shared/apis/user_api.dart';
@@ -11,7 +10,6 @@ import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../config/layouts.dart';
 import '../controllers/tt_ui_controller.dart';
@@ -43,7 +41,7 @@ final screens = {
   HomeNavigatorPathes.game: () => const LayoutGameScreen(),
   HomeNavigatorPathes.apps: () => const AppsPage(),
   HomeNavigatorPathes.user: () => const LayoutUserScreen(),
-  HomeNavigatorPathes.live: () => LivePage(),
+  HomeNavigatorPathes.live: () => const LivePage(),
 };
 
 class HomePage extends StatefulWidget {
@@ -131,6 +129,6 @@ class HomeState extends State<HomePage> {
                 ],
               );
             }),
-        endDrawer: UserMenuWidget());
+        endDrawer: const UserMenuWidget());
   }
 }

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/models/navigation.dart';
 
-import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/handle_url.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';

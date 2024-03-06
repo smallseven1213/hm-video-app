@@ -2,7 +2,6 @@ import 'package:app_ra/screens/layout_home_screen/block_header.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/modules/user_setting/user_setting_scaffold.dart';
 

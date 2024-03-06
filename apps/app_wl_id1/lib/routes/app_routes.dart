@@ -3,7 +3,6 @@ library app_routes;
 import 'package:flutter/material.dart';
 import 'package:app_wl_id1/pages/actor.dart' as actor_page;
 import 'package:app_wl_id1/pages/configs.dart' as configs_page;
-import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';

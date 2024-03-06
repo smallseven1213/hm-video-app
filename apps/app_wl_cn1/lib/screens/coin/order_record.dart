@@ -103,10 +103,10 @@ class OrderRecord extends StatefulWidget {
   const OrderRecord({super.key});
 
   @override
-  _OrderRecordState createState() => _OrderRecordState();
+  OrderRecordState createState() => OrderRecordState();
 }
 
-class _OrderRecordState extends State<OrderRecord> {
+class OrderRecordState extends State<OrderRecord> {
   String chargeType = option.first['value'];
   @override
   Widget build(BuildContext context) {

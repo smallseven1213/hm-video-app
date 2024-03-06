@@ -33,7 +33,7 @@ void showLiveDialog(BuildContext context,
                 if (actions != null)
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: actions!
+                    children: actions
                         .asMap()
                         .entries
                         .map((entry) => [

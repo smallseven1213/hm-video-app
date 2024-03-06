@@ -1,5 +1,4 @@
 import 'package:app_ra/screens/video/video_player_area/purchase_promotion.dart';
-import 'package:app_ra/screens/video/video_player_area/video_cover.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';

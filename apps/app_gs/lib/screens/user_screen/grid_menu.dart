@@ -1,4 +1,3 @@
-import 'package:app_gs/localization/i18n.dart';
 import 'package:app_gs/widgets/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/navigation.dart';

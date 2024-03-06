@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class More extends StatelessWidget {
   const More({Key? key}) : super(key: key);

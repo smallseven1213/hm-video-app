@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/models/game_list.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';

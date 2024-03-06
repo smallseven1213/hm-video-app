@@ -11,10 +11,7 @@ import 'package:shared/modules/short_video/short_video_detail.dart';
 import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/video_info_formatter.dart';
-
-import '../../config/colors.dart';
 
 final logger = Logger();
 
@@ -31,10 +28,10 @@ class SideInfo extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _SideInfoState createState() => _SideInfoState();
+  SideInfoState createState() => SideInfoState();
 }
 
-class _SideInfoState extends State<SideInfo> {
+class SideInfoState extends State<SideInfo> {
   @override
   Widget build(BuildContext context) {
     final userShortCollectionController =

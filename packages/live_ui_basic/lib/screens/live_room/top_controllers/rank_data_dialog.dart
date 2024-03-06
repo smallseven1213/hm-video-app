@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:live_core/models/room_rank.dart';
-import 'package:live_core/widgets/live_image.dart';
 import 'package:live_ui_basic/widgets/rank_number.dart';
 
 import '../../../localization/live_localization_delegate.dart';
@@ -15,10 +14,10 @@ class RankDataDialog extends StatefulWidget {
       : super(key: key);
 
   @override
-  _RankDataDialogState createState() => _RankDataDialogState();
+  RankDataDialogState createState() => RankDataDialogState();
 }
 
-class _RankDataDialogState extends State<RankDataDialog>
+class RankDataDialogState extends State<RankDataDialog>
     with SingleTickerProviderStateMixin {
   TabController? _tabController;
 
