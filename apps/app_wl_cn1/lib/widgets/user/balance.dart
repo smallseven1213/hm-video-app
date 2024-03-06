@@ -22,23 +22,34 @@ class UserBalance extends StatelessWidget {
               Expanded(
                 flex: 1,
                 child: Container(
+                  height: 32,
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.24),
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  child: Text('\$${info.points}',
-                      style:
-                          const TextStyle(color: Colors.white, fontSize: 15)),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text('\$  ${info.points}',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 15)),
+                  ),
                 ),
               ),
               const SizedBox(width: 8),
               UserInfoReloadButton(
-                  child: const SizedBox(
-                width: 24,
-                // refresh icon from flutter Icon
-                child: Icon(
-                  Icons.refresh,
-                  color: Colors.white,
+                  child: Container(
+                height: 32,
+                width: 32,
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.24),
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Center(
+                  child: Icon(
+                    Icons.refresh,
+                    color: Colors.white,
+                  ),
                 ),
               ))
             ],

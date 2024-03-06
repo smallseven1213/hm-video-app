@@ -25,6 +25,7 @@ class Product {
   final bool? enabled;
   final String? updatedAt;
   final String? balanceFiatMoneyPrice;
+  final bool? isPromotion;
 
   Product({
     this.id,
@@ -44,6 +45,7 @@ class Product {
     this.enabled,
     this.updatedAt,
     this.balanceFiatMoneyPrice,
+    this.isPromotion,
   });
   getProductImageUrl() =>
       // "${AppController.cc.endpoint.getPhotoSidPreviewPrefix()}$photoSid";
@@ -74,6 +76,7 @@ class Product {
       enabled: json['enabled'],
       updatedAt: json['updatedAt'],
       balanceFiatMoneyPrice: json['balanceFiatMoneyPrice'], // 實際售價
+      isPromotion: json['isPromotion'],
     );
   }
 }
