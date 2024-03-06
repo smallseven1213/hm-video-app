@@ -5,7 +5,7 @@ import 'package:shared/models/user_privilege_record.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/user/user_privilege_record_consumer.dart';
 
-import '../../widgets/customSwitch.dart';
+import '../../widgets/custom_switch.dart';
 import 'no_data.dart';
 
 final logger = Logger();

@@ -4,7 +4,7 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
-import 'package:live_ui_basic/libs/showLiveDialog.dart';
+import 'package:live_ui_basic/libs/show_live_dialog.dart';
 import 'package:live_ui_basic/localization/live_localization_delegate.dart';
 import 'package:live_ui_basic/screens/live_room/center_gift_screen.dart';
 import 'package:live_ui_basic/screens/live_room/chatroom_layout.dart';

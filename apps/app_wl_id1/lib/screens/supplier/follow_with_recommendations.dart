@@ -18,11 +18,11 @@ class FollowWithRecommendations extends StatefulWidget {
   });
 
   @override
-  _FollowWithRecommendationsState createState() =>
-      _FollowWithRecommendationsState();
+  FollowWithRecommendationsState createState() =>
+      FollowWithRecommendationsState();
 }
 
-class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
+class FollowWithRecommendationsState extends State<FollowWithRecommendations> {
   late SuppliersController suppliersController;
   bool _isExpanded = false;
 
@@ -123,7 +123,8 @@ class _FollowWithRecommendationsState extends State<FollowWithRecommendations> {
                 Text(
                   I18n.youMightBeInterested,
                   textAlign: TextAlign.left,
-                  style: TextStyle(color: Color(0xff73747b), fontSize: 13),
+                  style:
+                      const TextStyle(color: Color(0xff73747b), fontSize: 13),
                 ),
                 const SizedBox(height: 10),
                 ProfileCards(id: widget.id)

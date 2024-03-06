@@ -26,10 +26,10 @@ class RefreshIndicatorWidget extends StatefulWidget {
   const RefreshIndicatorWidget({Key? key}) : super(key: key);
 
   @override
-  _RefreshIndicatorWidgetState createState() => _RefreshIndicatorWidgetState();
+  RefreshIndicatorWidgetState createState() => RefreshIndicatorWidgetState();
 }
 
-class _RefreshIndicatorWidgetState extends State<RefreshIndicatorWidget> {
+class RefreshIndicatorWidgetState extends State<RefreshIndicatorWidget> {
   late String loadingText;
 
   @override
@@ -49,24 +49,12 @@ class _RefreshIndicatorWidgetState extends State<RefreshIndicatorWidget> {
     return SizedBox(
       height: 80,
       child: Center(
-        child: Container(
-          // decoration: BoxDecoration(
-          //   gradient: LinearGradient(
-          //     begin: Alignment.topCenter,
-          //     end: Alignment.bottomCenter,
-          //     colors: [
-          //       Colors.black.withOpacity(0.5),
-          //       Colors.transparent,
-          //     ],
-          //   ),
-          // ),
-          child: Text(
-            loadingText,
-            style: const TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
+        child: Text(
+          loadingText,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: Colors.white,
           ),
         ),
       ),

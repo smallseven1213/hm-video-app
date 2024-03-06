@@ -61,7 +61,7 @@ class FilterButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8.0),
-            color: isActive ? const Color(0xffae57ff) : Color(0xff565656),
+            color: isActive ? const Color(0xffae57ff) : const Color(0xff565656),
           ),
           child: Text(text, style: const TextStyle(color: Colors.white)),
         ));

@@ -25,11 +25,10 @@ class FollowLiveCheckProvider extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FollowLiveCheckProviderState createState() =>
-      _FollowLiveCheckProviderState();
+  FollowLiveCheckProviderState createState() => FollowLiveCheckProviderState();
 }
 
-class _FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
+class FollowLiveCheckProviderState extends State<FollowLiveCheckProvider> {
   final userFollowsController = Get.find<UserFollowsController>();
   late LiveRoomController liveRoomController;
 

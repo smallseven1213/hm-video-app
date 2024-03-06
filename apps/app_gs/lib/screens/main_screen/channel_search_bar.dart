@@ -52,11 +52,11 @@ class ChannelSearchBar extends StatelessWidget {
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
-            child: SizedBox(
+            child: const SizedBox(
                 width: 40,
                 height: 60,
                 // color: AppColors.colors[ColorKeys.background],
-                child: const Center(
+                child: Center(
                   child: SizedBox(
                     width: 24,
                     height: 24,

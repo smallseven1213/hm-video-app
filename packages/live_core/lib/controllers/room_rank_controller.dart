@@ -56,9 +56,7 @@ class RoomRankController extends GetxController {
   void _fetchData() async {
     try {
       var getRoomRank = await LiveApi().getRank(pid);
-      print("[R] fetchData");
       if (getRoomRank.data != null) {
-        print("[R] set data");
         liveRoomController.setAmount(getRoomRank.data!.amount);
         liveRoomController.setUserCount(getRoomRank.data!.users);
         roomRank.value = getRoomRank.data;
@@ -66,9 +64,7 @@ class RoomRankController extends GetxController {
         // 處理UI要不要顯示付費提示 Dialog
         if (liveRoomController.liveRoomInfo.value?.chargeType == 3 &&
             getRoomRank.data!.amount > 0) {
-          print("[R] set data 1");
           if (!userClosedDialog) {
-            print("[R] set data 2");
             shouldShowPaymentPrompt.value = true;
           }
         } else {
@@ -77,7 +73,7 @@ class RoomRankController extends GetxController {
         }
       }
     } catch (e) {
-      print("[R] set data error");
+      return;
     }
   }
 

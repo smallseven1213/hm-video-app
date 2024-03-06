@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/modules/banner/banner_consumer..dart';
+import 'package:shared/modules/banner/banner_consumer.dart';
 
 import '../../../widgets/carousel.dart';
 

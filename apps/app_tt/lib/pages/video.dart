@@ -86,7 +86,7 @@ class VideoState extends State<Video> {
         required Vod? videoDetail,
       }) {
         if (videoUrl == null) {
-          return Center(child: LoadingAnimation());
+          return const Center(child: LoadingAnimation());
         }
 
         return SafeArea(

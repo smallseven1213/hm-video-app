@@ -99,14 +99,16 @@ class _GameWithdrawState extends State<GameWithdraw> {
     } catch (error) {
       logger.i('_getUserWithdrawalData error $error');
 
-      showConfirmDialog(
-        context: context,
-        title: '',
-        content: error.toString(),
-        onConfirm: () {
-          Navigator.pop(context);
-        },
-      );
+      if (mounted) {
+        showConfirmDialog(
+          context: context,
+          title: '',
+          content: error.toString(),
+          onConfirm: () {
+            Navigator.pop(context);
+          },
+        );
+      }
     }
     gameWithdrawController.setLoadingStatus(false);
   }

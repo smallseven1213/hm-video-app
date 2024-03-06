@@ -30,7 +30,6 @@ class ChannelBlockVodController extends BaseVodInfinityScrollController {
 
   @override
   Future<InfinityVod> fetchData(int page) async {
-    print('fetchData page: $page');
     try {
       var res = await vodApi.getVideoByAreaId(areaId, page: page, limit: limit);
       if (res != null && res.videos != null) {
@@ -39,7 +38,6 @@ class ChannelBlockVodController extends BaseVodInfinityScrollController {
         isError.value = false;
         return InfinityVod(res.videos!.vods, res.videos!.total, hasMoreData);
       } else {
-        print('fetchData res is null');
         return InfinityVod([], 0, false);
       }
     } catch (e) {

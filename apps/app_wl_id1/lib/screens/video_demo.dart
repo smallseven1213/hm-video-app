@@ -28,7 +28,7 @@ class VideoDemoPageState extends State<VideoDemoPage> {
     var random = Random();
     int index = random.nextInt(testUrls.length);
     _controller = null;
-    _controller = VideoPlayerController.network(testUrls[index]);
+    _controller = VideoPlayerController.networkUrl(Uri.parse(testUrls[index]));
     // _controller = VideoPlayerController.network(
     //     'https://cdn.ztznzz.com/a4f7a79e51614154953a6a98abb64ad6/a4f7a79e51614154953a6a98abb64ad6.m3u8');
 

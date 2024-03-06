@@ -8,10 +8,10 @@ class LiveList extends StatefulWidget {
   const LiveList({Key? key}) : super(key: key);
 
   @override
-  _LiveListState createState() => _LiveListState();
+  LiveListState createState() => LiveListState();
 }
 
-class _LiveListState extends State<LiveList> {
+class LiveListState extends State<LiveList> {
   final LiveListController _controller = Get.find<LiveListController>();
 
   @override

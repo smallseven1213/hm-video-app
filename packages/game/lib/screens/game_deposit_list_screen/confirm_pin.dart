@@ -250,7 +250,8 @@ class ConfirmPinState extends State<ConfirmPin> {
                 if (submitDepositSuccess) {
                   onLoading(context, status: false);
                   Navigator.pop(context);
-                  launch(redirectUrl, webOnlyWindowName: '_blank');
+                  launchUrl(Uri.parse(redirectUrl),
+                      webOnlyWindowName: '_blank');
                   MyRouteDelegate.of(context).push(GameAppRoutes.paymentResult);
                 } else {
                   Navigator.pop(context);

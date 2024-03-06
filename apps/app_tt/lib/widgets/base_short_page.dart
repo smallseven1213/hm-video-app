@@ -46,7 +46,7 @@ class BaseShortPage extends StatelessWidget {
         videoId: videoId,
         itemId: itemId,
         onScrollBeyondFirst: onScrollBeyondFirst,
-        loadingWidget: Center(child: LoadingAnimation()),
+        loadingWidget: const Center(child: LoadingAnimation()),
         playingAdBuilder: ({
           required BannerPhoto ad,
           required Vod? nextShortData,

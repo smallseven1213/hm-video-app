@@ -43,7 +43,7 @@ class ActorHeader extends SliverPersistentHeaderDelegate {
     final double imageSize = lerpDouble(80, kToolbarHeight - 20, percentage)!;
 
     ActorController actorController =
-        Get.find<ActorController>(tag: 'actor-${id}');
+        Get.find<ActorController>(tag: 'actor-$id');
 
     return shouldShowAppBar
         ? ActorConsumer(

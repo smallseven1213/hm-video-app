@@ -31,7 +31,6 @@ class FloatPageSearchButton extends StatelessWidget {
                 'assets/svgs/ic-search.svg',
                 width: 17,
                 height: 17,
-                color: Colors.white,
                 colorFilter:
                     const ColorFilter.mode(Colors.white, BlendMode.srcIn),
               ),

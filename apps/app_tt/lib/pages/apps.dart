@@ -34,9 +34,9 @@ class AppsPage extends StatelessWidget {
                       ),
                     ),
                     if (isLoading)
-                      SliverToBoxAdapter(
+                      const SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 150),
+                          padding: EdgeInsets.only(top: 150),
                           child: LoadingAnimation(),
                         ),
                       )

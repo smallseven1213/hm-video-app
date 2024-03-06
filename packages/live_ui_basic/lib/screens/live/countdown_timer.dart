@@ -109,7 +109,7 @@ class CountdownTimerState extends State<CountdownTimer> {
         : _buildLabel(
             color: const Color(0xffe6cf795f),
             text: formatTime(_timeLeft),
-            icon: Icon(Icons.access_time, size: 12, color: Colors.white),
+            icon: const Icon(Icons.access_time, size: 12, color: Colors.white),
           );
   }
 }

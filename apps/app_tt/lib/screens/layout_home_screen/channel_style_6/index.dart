@@ -47,14 +47,14 @@ class ChannelStyle6State extends State<ChannelStyle6> {
   Widget build(BuildContext context) {
     return Obx(() {
       if (controller.isInit.value == false) {
-        return Center(child: LoadingAnimation());
+        return const Center(child: LoadingAnimation());
       } else {
         if (controller.data.isEmpty) {
           return Container(
             width: double.infinity,
             height: double.infinity,
             color: Colors.black,
-            child: Center(
+            child: const Center(
               child: ChannelStyle6Suppliers(),
             ),
           );

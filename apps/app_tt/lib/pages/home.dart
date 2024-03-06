@@ -85,7 +85,7 @@ class HomeState extends State<HomePage> {
         backgroundColor: const Color(0xFFf0f0f0),
         body: MainNavigationScaffold(
             screens: screens,
-            screenNotFoundWidget: Center(child: LoadingAnimation()),
+            screenNotFoundWidget: const Center(child: LoadingAnimation()),
             bottomNavigationBarWidget: (
                 {required String activeKey,
                 required List<Navigation> navigatorItems,

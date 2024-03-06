@@ -32,7 +32,7 @@ class _UserInfoService extends State<UserInfoService> {
       height: 60,
       child: InkWell(
         onTap: () {
-          launch(gameBannerController.customerServiceUrl.value);
+          launchUrl(Uri.parse(gameBannerController.customerServiceUrl.value));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

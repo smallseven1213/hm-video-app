@@ -1,4 +1,4 @@
-import 'package:shared/helpers/getField.dart';
+import 'package:shared/helpers/get_field.dart';
 
 enum RoomStatus {
   none,
@@ -77,7 +77,6 @@ class Room {
             getField<int>(json['statistic'], 'watch_count', defaultValue: 0),
       );
     } catch (e) {
-      print(e);
       return Room(
         id: 0,
         title: '',

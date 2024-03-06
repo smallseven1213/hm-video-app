@@ -8,10 +8,10 @@ class NavigationWidget extends StatefulWidget {
   const NavigationWidget({Key? key}) : super(key: key);
 
   @override
-  _NavigationWidgetState createState() => _NavigationWidgetState();
+  NavigationWidgetState createState() => NavigationWidgetState();
 }
 
-class _NavigationWidgetState extends State<NavigationWidget> {
+class NavigationWidgetState extends State<NavigationWidget> {
   LiveListController liveListController = Get.find<LiveListController>();
   int _selectedIndex = 0;
 

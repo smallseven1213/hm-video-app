@@ -4,7 +4,7 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 
-import '../libs/showLiveDialog.dart';
+import '../libs/show_live_dialog.dart';
 import '../localization/live_localization_delegate.dart';
 import 'live_button.dart';
 import 'payment_check_box.dart';

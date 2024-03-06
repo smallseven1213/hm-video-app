@@ -30,7 +30,8 @@ void main() async {
       useMaterial3: false,
     ),
     defaultLocale: const Locale('zh', 'TW'),
-    globalLoadingWidget: ({String? text}) => Center(child: LoadingAnimation()),
+    globalLoadingWidget: ({String? text}) =>
+        const Center(child: LoadingAnimation()),
     countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
     i18nSupport: true,

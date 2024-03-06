@@ -10,7 +10,6 @@ import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
 
-
 class ControlsOverlay extends StatefulWidget {
   final String videoUrl;
   final String? name;
@@ -105,12 +104,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
               VolumeControl.setVolume(volume);
               videoPlayerInfo.videoPlayerController?.setVolume(volume);
-            
             } else {
               brightness = verticalDragPosition;
               brightness = brightness.clamp(0.0, 1.0);
               ScreenBrightness().setScreenBrightness(brightness);
-         
             }
 
             // 更新lastDragPosition以便于下次計算
@@ -257,7 +254,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 // 下方控制區塊
                 Positioned(
                   bottom: 0,
-                  child: Container(
+                  child: SizedBox(
                     width: MediaQuery.of(context).size.width,
                     child: Row(
                       children: [

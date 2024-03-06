@@ -18,11 +18,13 @@ class DelayTween extends Tween<double> {
 enum LoadingAnimationType { start, end, center }
 
 class LoadingAnimation extends StatefulWidget {
+  const LoadingAnimation({super.key});
+
   @override
-  _LoadingAnimationState createState() => _LoadingAnimationState();
+  LoadingAnimationState createState() => LoadingAnimationState();
 }
 
-class _LoadingAnimationState extends State<LoadingAnimation>
+class LoadingAnimationState extends State<LoadingAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _translation;
@@ -63,7 +65,8 @@ class _LoadingAnimationState extends State<LoadingAnimation>
                 scale: 1,
 
                 child: Ball(
-                    color: Color.fromARGB(255, 2, 247, 247).withOpacity(0.8)),
+                    color: const Color.fromARGB(255, 2, 247, 247)
+                        .withOpacity(0.8)),
               ),
             ),
             Transform.translate(
@@ -71,7 +74,7 @@ class _LoadingAnimationState extends State<LoadingAnimation>
               child: Transform.scale(
                 // scale: 2 - _scale.value,
                 scale: 1,
-                child: Ball(color: Color(0xffFF004E).withOpacity(0.8)),
+                child: Ball(color: const Color(0xffFF004E).withOpacity(0.8)),
               ),
             ),
           ],
@@ -84,7 +87,7 @@ class _LoadingAnimationState extends State<LoadingAnimation>
 class Ball extends StatelessWidget {
   final Color color;
 
-  Ball({required this.color});
+  const Ball({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {

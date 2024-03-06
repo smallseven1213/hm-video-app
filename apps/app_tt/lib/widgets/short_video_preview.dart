@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/widgets/base_video_preview.dart';
