@@ -4,6 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
 
 class PlayerLayout extends StatefulWidget {
   final Uri uri;
@@ -29,6 +30,7 @@ class PlayerLayoutState extends State<PlayerLayout>
     _connectivity = Connectivity();
     _initializeConnectivityListener();
     initializeVideoPlayer();
+    Wakelock.enable(); // Prevent the device from sleeping
   }
 
   void _initializeConnectivityListener() async {
@@ -98,6 +100,7 @@ class PlayerLayoutState extends State<PlayerLayout>
   void dispose() {
     videoController.dispose();
     _connectivitySubscription.cancel();
+    Wakelock.disable(); // Allow the device to sleep again
     super.dispose();
   }
 
