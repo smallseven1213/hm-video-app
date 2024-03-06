@@ -150,10 +150,41 @@ class PaymentListState extends State<PaymentList> {
                                       color: Colors.white,
                                     ),
                                     margin: const EdgeInsets.only(bottom: 8),
-                                    child: Text(
-                                      payment.type.toString(),
-                                      style: const TextStyle(
-                                          color: Colors.black, fontSize: 14),
+                                    child: Row(
+                                      children: [
+                                        // 未來的icon
+                                        Expanded(
+                                            child: Text(
+                                          payment.type.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 14),
+                                        )),
+                                        if (isSelected)
+                                          Container(
+                                            width: 16,
+                                            height: 16,
+                                            decoration: const BoxDecoration(
+                                              color: Color(0xFFb5925c),
+                                              shape: BoxShape.circle,
+                                              boxShadow: [
+                                                BoxShadow(
+                                                  color: Colors.black,
+                                                  blurRadius: 5,
+                                                  spreadRadius: 2,
+                                                  offset: Offset(0, 0),
+                                                ),
+                                              ],
+                                            ),
+                                            child: const Center(
+                                              child: Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                                size: 12,
+                                              ),
+                                            ),
+                                          )
+                                      ],
                                     ),
                                   ),
                                 );
