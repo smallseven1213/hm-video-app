@@ -16,6 +16,13 @@ class RankProvider extends StatefulWidget {
 
 class RankProviderState extends State<RankProvider> {
   @override
+  void initState() {
+    super.initState();
+    Get.put<RoomRankController>(RoomRankController(widget.pid),
+        tag: widget.pid.toString());
+  }
+
+  @override
   void dispose() {
     // 删除控制器
     Get.delete<RoomRankController>(tag: widget.pid.toString());
