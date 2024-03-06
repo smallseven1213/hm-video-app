@@ -18,7 +18,6 @@ class UserPurchaseRecord {
         usedPoints: json['usedPoints'],
       );
     } catch (e) {
-      print(e);
       return UserPurchaseRecord();
     }
   }

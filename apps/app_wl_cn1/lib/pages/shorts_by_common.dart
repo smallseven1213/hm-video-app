@@ -3,9 +3,6 @@ import 'package:shared/controllers/video_shorts_controller.dart';
 import 'package:shared/enums/shorts_type.dart';
 import '../widgets/base_short_page.dart';
 
-/**
- * 支援supplier, tag
- */
 class ShortsByCommonPage extends BaseShortPage {
   ShortsByCommonPage(
       {super.key,

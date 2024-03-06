@@ -28,12 +28,12 @@ class MyButton extends StatelessWidget {
 
     switch (type) {
       case ButtonType.primary:
-        backgroundColor = Color(0xFFFE2C55);
+        backgroundColor = const Color(0xFFFE2C55);
         textColor = Colors.white;
         break;
       case ButtonType.secondary:
-        backgroundColor = Color(0xFFDEDEDE);
-        textColor = Color(0xFF50525A);
+        backgroundColor = const Color(0xFFDEDEDE);
+        textColor = const Color(0xFF50525A);
         break;
     }
 

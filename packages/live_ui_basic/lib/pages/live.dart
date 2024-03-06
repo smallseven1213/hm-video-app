@@ -16,10 +16,10 @@ import '../screens/live/no_more.dart';
 class LivePage extends StatefulWidget {
   const LivePage({Key? key}) : super(key: key);
   @override
-  _LivePageState createState() => _LivePageState();
+  LivePageState createState() => LivePageState();
 }
 
-class _LivePageState extends State<LivePage> {
+class LivePageState extends State<LivePage> {
   final ScrollController _scrollController = ScrollController();
   bool noMore = false;
   @override

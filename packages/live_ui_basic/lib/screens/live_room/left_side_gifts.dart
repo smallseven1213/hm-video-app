@@ -67,7 +67,6 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
   }
 
   void playAnimation(ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
-    print("playAnimation");
     isAnimating = true;
     Gift giftInfo = giftsController.gifts.value
         .firstWhere((element) => element.id == giftMessage.objChat.data.gid);
@@ -158,7 +157,6 @@ class _LeftSideGiftsState extends State<LeftSideGifts>
                       quantity: giftAnimationData?.quantity ?? 1,
                       jsonPath: giftAnimationData?.giftLottiePath ?? "",
                       onFinish: () {
-                        print("playAnimation end");
                         isAnimating = false;
                       },
                     ),

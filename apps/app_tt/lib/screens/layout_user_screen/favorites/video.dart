@@ -73,19 +73,18 @@ class FavoritesVideoScreen extends StatelessWidget {
                                           listEditorController.isEditing.value,
                                       isSelected: listEditorController
                                           .selectedIds
-                                          .contains(video2!.id),
+                                          .contains(video2.id),
                                       onEditingTap: () {
                                         listEditorController
                                             .toggleSelected(video2!.id);
                                       },
-                                      coverVertical:
-                                          video2!.coverVertical ?? '',
+                                      coverVertical: video2.coverVertical ?? '',
                                       coverHorizontal:
-                                          video2!.coverHorizontal ?? '',
-                                      timeLength: video2!.timeLength ?? 0,
-                                      tags: video2!.tags ?? [],
-                                      title: video2!.title,
-                                      videoViewTimes: video2!.videoViewTimes!,
+                                          video2.coverHorizontal ?? '',
+                                      timeLength: video2.timeLength ?? 0,
+                                      tags: video2.tags ?? [],
+                                      title: video2.title,
+                                      videoViewTimes: video2.videoViewTimes!,
                                       displayVideoCollectTimes: false,
                                     ))
                                 : const SizedBox(),

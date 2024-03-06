@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/models/vod.dart';
-import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/videos/video_by_actor_consumer.dart';
 import 'package:shared/modules/videos/video_by_internal_tag_consumer.dart';
 import 'package:shared/modules/videos/video_by_tag_consumer.dart';

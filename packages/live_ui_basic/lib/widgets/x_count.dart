@@ -6,10 +6,10 @@ class XCountWidget extends StatefulWidget {
   const XCountWidget({Key? key, required this.count}) : super(key: key);
 
   @override
-  _XCountWidgetState createState() => _XCountWidgetState();
+  XCountWidgetState createState() => XCountWidgetState();
 }
 
-class _XCountWidgetState extends State<XCountWidget>
+class XCountWidgetState extends State<XCountWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _scaleAnimation;

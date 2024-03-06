@@ -7,15 +7,16 @@ class GameNavigator extends StatefulWidget {
   final List<String> initialPath;
   final Map<String, dynamic> arguments;
 
-  GameNavigator(
-      {required this.initialPath,
+  const GameNavigator(
+      {super.key,
+      required this.initialPath,
       this.arguments = const {}}); // Use 'required' instead of '@required'
 
   @override
-  _GameNavigatorState createState() => _GameNavigatorState();
+  GameNavigatorState createState() => GameNavigatorState();
 }
 
-class _GameNavigatorState extends State<GameNavigator> {
+class GameNavigatorState extends State<GameNavigator> {
   late List<String> path; // Use 'late' here
 
   @override

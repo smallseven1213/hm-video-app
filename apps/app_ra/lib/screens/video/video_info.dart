@@ -196,9 +196,9 @@ class VideoInfo extends StatelessWidget {
                         times: viewTimes,
                         color: const Color(0xff939393),
                       ),
-                      Favorite(
+                      const Favorite(
                         times: 12345, //videoCollectTimes
-                        color: const Color(0xff939393),
+                        color: Color(0xff939393),
                       ),
                       Collect(
                         times: videoCollectTimes, //videoCollectTimes

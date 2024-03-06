@@ -14,13 +14,13 @@ import '../screens/search/search_results.dart';
 class SearchPage extends StatefulWidget {
   final String? query;
 
-  SearchPage({Key? key, this.query}) : super(key: key);
+  const SearchPage({Key? key, this.query}) : super(key: key);
 
   @override
-  _SearchPageState createState() => _SearchPageState();
+  SearchPageState createState() => SearchPageState();
 }
 
-class _SearchPageState extends State<SearchPage> {
+class SearchPageState extends State<SearchPage> {
   List<String> searchResults = [];
   String keyword = '';
   bool displayKeywordResult = false;
@@ -92,7 +92,7 @@ class _SearchPageState extends State<SearchPage> {
                     onPressed: () => onSearch(keyword),
                     child: Text(
                       localizations.translate('search'),
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: const TextStyle(color: Colors.white, fontSize: 14),
                     ),
                   )
                 ],

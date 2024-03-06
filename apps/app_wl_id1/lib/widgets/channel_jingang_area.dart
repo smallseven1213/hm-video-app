@@ -52,13 +52,11 @@ class ChannelJingangArea extends StatelessWidget {
           sliver: SliverAlignedGrid.count(
             crossAxisCount: jingang.quantity ?? 4,
             itemCount: jingang.jingangDetail?.length ?? 0,
-            itemBuilder: (BuildContext context, int index) => Container(
-              child: JingangButton(
-                item: jingang.jingangDetail![index],
-                outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
-                outerFrameStyle:
-                    jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
-              ),
+            itemBuilder: (BuildContext context, int index) => JingangButton(
+              item: jingang.jingangDetail![index],
+              outerFrame: jingang.outerFrame ?? OuterFrame.border.value,
+              outerFrameStyle:
+                  jingang.outerFrameStyle ?? OuterFrameStyle.circle.index,
             ),
             mainAxisSpacing: 12.0,
             crossAxisSpacing: 8.0,

@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:live_core/apis/streamer_api.dart';
 import 'package:live_core/controllers/user_follows_controller.dart';
 import 'package:live_core/widgets/streamer_rank_provider.dart';
 
@@ -14,10 +13,10 @@ class StreamerRankPage extends StatefulWidget {
   const StreamerRankPage({Key? key}) : super(key: key);
 
   @override
-  _StreamerRankPageState createState() => _StreamerRankPageState();
+  StreamerRankPageState createState() => StreamerRankPageState();
 }
 
-class _StreamerRankPageState extends State<StreamerRankPage> {
+class StreamerRankPageState extends State<StreamerRankPage> {
   @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
@@ -52,8 +51,6 @@ class _StreamerRankPageState extends State<StreamerRankPage> {
   }
 }
 
-final _streamerApi = StreamerApi();
-
 class RankingScreen extends StatefulWidget {
   final RankType rankType;
   final TimeType timeType;
@@ -64,10 +61,10 @@ class RankingScreen extends StatefulWidget {
     required this.timeType,
   }) : super(key: key);
   @override
-  _RankingScreenState createState() => _RankingScreenState();
+  RankingScreenState createState() => RankingScreenState();
 }
 
-class _RankingScreenState extends State<RankingScreen> {
+class RankingScreenState extends State<RankingScreen> {
   final userFollowsController = Get.find<UserFollowsController>();
 
   @override
@@ -198,10 +195,10 @@ class TimeFilterBar extends StatefulWidget {
   });
 
   @override
-  _TimeFilterBarState createState() => _TimeFilterBarState();
+  TimeFilterBarState createState() => TimeFilterBarState();
 }
 
-class _TimeFilterBarState extends State<TimeFilterBar> {
+class TimeFilterBarState extends State<TimeFilterBar> {
   int _selectedIndex = 1; // Initial index of the selected item
 
   @override

@@ -14,7 +14,7 @@ class PurchaseWidget extends StatelessWidget {
   final int vodId;
   final String tag;
 
-  PurchaseWidget({required this.vodId, required this.tag});
+  const PurchaseWidget({super.key, required this.vodId, required this.tag});
 
   @override
   Widget build(BuildContext context) {

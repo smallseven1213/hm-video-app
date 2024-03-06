@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
@@ -12,10 +10,10 @@ class ChatroomMessages extends StatefulWidget {
   final int pid;
   const ChatroomMessages({Key? key, required this.pid}) : super(key: key);
   @override
-  _ChatroomMessagesState createState() => _ChatroomMessagesState();
+  ChatroomMessagesState createState() => ChatroomMessagesState();
 }
 
-class _ChatroomMessagesState extends State<ChatroomMessages>
+class ChatroomMessagesState extends State<ChatroomMessages>
     with SingleTickerProviderStateMixin {
   final GiftsController giftsController = Get.find<GiftsController>();
   final LiveSocketIOManager socketManager = LiveSocketIOManager();

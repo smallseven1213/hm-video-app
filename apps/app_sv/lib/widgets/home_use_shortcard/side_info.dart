@@ -2,22 +2,16 @@ import 'package:app_sv/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
-import 'package:shared/controllers/video_player_controller.dart';
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_collect_count_consumer.dart';
 import 'package:shared/modules/short_video/short_video_detail.dart';
 import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/video_info_formatter.dart';
-
-import '../../config/colors.dart';
 
 final logger = Logger();
 

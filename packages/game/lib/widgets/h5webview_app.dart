@@ -22,8 +22,8 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
   @override
   Widget build(BuildContext context) {
     logger.i('initialUrl in H5WebviewShared: ${widget.initialUrl}');
-    return WillPopScope(
-      onWillPop: () async => false,
+    return PopScope(
+      canPop: false,
       child: WebView(
         initialUrl: widget.initialUrl,
         javascriptMode: JavascriptMode.unrestricted,

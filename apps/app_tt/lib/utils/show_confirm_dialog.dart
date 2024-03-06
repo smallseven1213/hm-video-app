@@ -1,4 +1,3 @@
-import 'package:app_tt/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/models/color_keys.dart';

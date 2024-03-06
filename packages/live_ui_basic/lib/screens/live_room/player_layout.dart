@@ -13,10 +13,10 @@ class PlayerLayout extends StatefulWidget {
       : super(key: key);
 
   @override
-  _PlayerLayoutState createState() => _PlayerLayoutState();
+  PlayerLayoutState createState() => PlayerLayoutState();
 }
 
-class _PlayerLayoutState extends State<PlayerLayout>
+class PlayerLayoutState extends State<PlayerLayout>
     with WidgetsBindingObserver {
   late VideoPlayerController videoController;
   late final Connectivity _connectivity;
@@ -59,7 +59,6 @@ class _PlayerLayoutState extends State<PlayerLayout>
       videoController =
           VideoPlayerController.networkUrl(Uri.parse(widget.uri.toString()))
             ..initialize().then((_) {
-              print('[V]initialize video');
               if (mounted) {
                 setState(() {
                   hasError = false;

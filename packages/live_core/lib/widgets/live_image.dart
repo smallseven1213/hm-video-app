@@ -47,13 +47,13 @@ class LiveImage extends StatelessWidget {
       builder: (BuildContext context,
           AsyncSnapshot<ImageProvider<Object>?> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator();
+          return const CircularProgressIndicator();
         } else if (snapshot.hasError) {
           return Container(
             color: Colors.grey,
             child: Text(
               'Error: ${snapshot.error}',
-              style: TextStyle(color: Colors.red),
+              style: const TextStyle(color: Colors.red),
             ),
           );
         } else if (snapshot.hasData) {
@@ -67,7 +67,7 @@ class LiveImage extends StatelessWidget {
                     .center, // Provide a default value if alignment is null
           );
         } else {
-          return Text('No image data');
+          return const Text('No image data');
         }
       },
     );

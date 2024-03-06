@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-
 class VideoTitleWidget extends StatelessWidget {
   final String title;
 
-  VideoTitleWidget({required this.title});
+  const VideoTitleWidget({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {

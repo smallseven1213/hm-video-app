@@ -33,12 +33,12 @@ class LiveApi {
     SortType ranking = SortType.defaultSort,
     int followType = 0,
   }) async {
-    var _ranking = ranking.toString().split('.').last; // 更简洁的转换枚举到字符串
+    var ranking0 = ranking.toString().split('.').last; // 更简洁的转换枚举到字符串
 
     const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
     var response = await liveFetcher(
       url:
-          '$userApiHost/room/list?page=$page&per_page=$perPage&status=$status&charge_type=$chargeType&ranking=$_ranking&follow=$followType',
+          '$userApiHost/room/list?page=$page&per_page=$perPage&status=$status&charge_type=$chargeType&ranking=$ranking0&follow=$followType',
     );
 
     if (response.data['data'].isEmpty) {
@@ -101,7 +101,7 @@ class LiveApi {
       );
     } catch (e) {
       // Handle the exception
-      throw e;
+      rethrow;
     }
   }
 
@@ -129,7 +129,7 @@ class LiveApi {
       );
     } catch (e) {
       // Handle the exception
-      throw e;
+      rethrow;
     }
   }
 
@@ -159,7 +159,6 @@ class LiveApi {
       );
     } catch (e) {
       // Handle the exception
-      print(e);
       return LiveApiResponseBase<RoomRank?>(
         code: 0,
         data: null,

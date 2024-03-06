@@ -6,7 +6,6 @@ import 'package:shared/controllers/supplier_controller.dart';
 import 'package:shared/models/supplier.dart';
 import 'package:shared/modules/supplier/supplier_consumer.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../../widgets/actor/header_follow_button.dart';
 import '../../widgets/actor/search_button.dart';

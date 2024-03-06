@@ -50,11 +50,6 @@ class LiveListController extends GetxController {
     fetchData();
   }
 
-  @override
-  void onInit() {
-    super.onInit();
-  }
-
   void setStatus(RoomStatus newStatus) => status.value = newStatus;
   void setSortType(SortType newSortType) => sortType.value = newSortType;
   void setChargeType(RoomChargeType newChargeType) =>
@@ -141,7 +136,7 @@ class LiveListController extends GetxController {
         }
         break;
       default:
-        print('Received an unknown event: $event');
+        return;
     }
   }
 

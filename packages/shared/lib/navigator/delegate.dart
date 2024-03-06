@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/main.dart';
 import 'package:get/get.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared/utils/navigation_helper.dart';
@@ -164,7 +163,6 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   @override
   Widget build(BuildContext context) {
-    print("MyRouteDelegate _stack $homePath > $_stack");
     return Stack(
       children: [
         Navigator(
@@ -217,9 +215,7 @@ class MyRouteDelegate extends RouterDelegate<String>
                 name: '/',
                 child: routes['/']!(context, {}),
               );
-            } catch (e, stackTrace) {
-              print('MyRouteDelegate build error: $e');
-              print('MyRouteDelegate build error: $stackTrace');
+            } catch (e) {
               return CupertinoPage(
                 key: const ValueKey('/'),
                 name: '/',

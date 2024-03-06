@@ -17,10 +17,10 @@ class RoomPaymentButton extends StatefulWidget {
   const RoomPaymentButton({Key? key, required this.pid}) : super(key: key);
 
   @override
-  _RoomPaymentButtonState createState() => _RoomPaymentButtonState();
+  RoomPaymentButtonState createState() => RoomPaymentButtonState();
 }
 
-class _RoomPaymentButtonState extends State<RoomPaymentButton> {
+class RoomPaymentButtonState extends State<RoomPaymentButton> {
   late LiveRoomController liveroomController;
   bool isPurchasing = false;
 
@@ -91,7 +91,6 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                       } else {
                         // show alert
                       }
-                    } on Exception catch (e) {
                     } finally {
                       Get.find<LiveUserController>().getUserDetail();
                       setState(() {
@@ -112,8 +111,6 @@ class _RoomPaymentButtonState extends State<RoomPaymentButton> {
                       } else {
                         // show alert
                       }
-                    } on Exception catch (e) {
-                      print(e);
                     } finally {
                       Get.find<LiveUserController>().getUserDetail();
                       setState(() {

@@ -165,7 +165,7 @@ class CommandItem extends StatelessWidget {
       fToast.showToast(
         child: toast,
         gravity: ToastGravity.CENTER,
-        toastDuration: Duration(seconds: 2),
+        toastDuration: const Duration(seconds: 2),
       );
     }
 
@@ -215,20 +215,19 @@ class CommandItem extends StatelessWidget {
               }
             }
           } catch (e) {
-            print(e);
             // show dialog for error
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text('Error'),
-                  content: Text('Something went wrong'),
+                  title: const Text('Error'),
+                  content: const Text('Something went wrong'),
                   actions: [
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('OK'),
+                      child: const Text('OK'),
                     ),
                   ],
                 );
@@ -251,7 +250,7 @@ class CommandItem extends StatelessWidget {
           children: [
             Text(
               command.name,
-              style: TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
             const SizedBox(width: 2),
             Image.asset(
@@ -262,7 +261,7 @@ class CommandItem extends StatelessWidget {
             const SizedBox(width: 2),
             Text(
               command.price.toString(),
-              style: TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
           ],
         ),

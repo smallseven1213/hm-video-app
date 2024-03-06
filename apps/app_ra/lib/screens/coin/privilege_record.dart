@@ -14,10 +14,10 @@ class PrivilegeRecord extends StatefulWidget {
   const PrivilegeRecord({super.key});
 
   @override
-  _PrivilegeRecordState createState() => _PrivilegeRecordState();
+  PrivilegeRecordState createState() => PrivilegeRecordState();
 }
 
-class _PrivilegeRecordState extends State<PrivilegeRecord> {
+class PrivilegeRecordState extends State<PrivilegeRecord> {
   bool isSwitched = false;
 
   @override

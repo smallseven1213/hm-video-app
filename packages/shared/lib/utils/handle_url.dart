@@ -14,7 +14,7 @@ Map<int, String> gameDepositPage = {
 
 // 狀況1: 如果item?.url為http://或https://開頭，則直接打開網頁
 void handleHttpUrl(String url) {
-  launch(url, webOnlyWindowName: '_blank');
+  launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
 }
 
 // 狀況2: 如果item?.url有 defaultScreenKey這個query string

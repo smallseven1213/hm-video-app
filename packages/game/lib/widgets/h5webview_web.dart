@@ -3,7 +3,6 @@ import 'dart:html' if (dart.library.html) 'dart:html' as html;
 import 'dart:ui_web' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import 'package:game/models/game_list.dart';

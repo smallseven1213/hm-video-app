@@ -8,7 +8,6 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/show_confirm_dialog.dart';
-import '../../widgets/button.dart';
 
 final orderApi = OrderApi();
 

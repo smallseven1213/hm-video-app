@@ -66,7 +66,6 @@ class ObservableVideoPlayerController extends GetxController {
         play();
       }
     }).catchError((error) {
-      print(error);
       if (videoPlayerController?.value.hasError == true) {
         videoAction.value = 'error';
         errorMessage.value = videoPlayerController!.value.errorDescription!;

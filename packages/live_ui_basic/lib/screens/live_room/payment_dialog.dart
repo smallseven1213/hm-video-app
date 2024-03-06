@@ -17,10 +17,10 @@ class PaymentDialog extends StatefulWidget {
   const PaymentDialog({super.key, required this.pid});
 
   @override
-  _PaymentDialogState createState() => _PaymentDialogState();
+  PaymentDialogState createState() => PaymentDialogState();
 }
 
-class _PaymentDialogState extends State<PaymentDialog> {
+class PaymentDialogState extends State<PaymentDialog> {
   bool isPurchasing = false;
   late LiveRoomController liveroomController;
   late RoomRankController _rankController;
@@ -107,8 +107,6 @@ class _PaymentDialogState extends State<PaymentDialog> {
                         await liveroomController.fetchData();
                         Navigator.of(context).pop();
                       } else {}
-                    } on Exception catch (e) {
-                      print(e);
                     } finally {
                       Get.find<LiveUserController>().getUserDetail();
                       setState(() {

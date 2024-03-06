@@ -88,7 +88,6 @@ class StreamerInfo extends StatelessWidget {
                 hid: hid,
                 streamerNickname: roomInfo?.nickname ?? "",
                 child: (isFollowed) {
-                  print('isFollowed: $isFollowed');
                   return SizedBox(
                     width: 30,
                     height: 30,

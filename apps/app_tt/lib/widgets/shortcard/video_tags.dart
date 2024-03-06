@@ -6,12 +6,12 @@ import 'package:shared/navigator/delegate.dart';
 
 import '../short/short_card_info_tag.dart';
 
-
 class VideoTagsWidget extends StatelessWidget {
   final ShortVideoDetail data;
   final VideoPlayerInfo videoPlayerInfo;
 
-  VideoTagsWidget({
+  const VideoTagsWidget({
+    super.key,
     required this.data,
     required this.videoPlayerInfo,
   });

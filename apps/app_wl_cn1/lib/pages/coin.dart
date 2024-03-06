@@ -7,7 +7,6 @@ import '../../widgets/id_card.dart';
 import '../screens/coin/order_record.dart';
 import '../screens/coin/products.dart';
 import '../screens/coin/purchase_record.dart';
-import '../screens/coin/privilege_record.dart';
 import '../screens/user_screen/info.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/tab_bar.dart';

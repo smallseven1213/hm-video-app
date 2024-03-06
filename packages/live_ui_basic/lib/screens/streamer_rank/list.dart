@@ -14,10 +14,10 @@ class StreamerRankPage extends StatefulWidget {
   const StreamerRankPage({Key? key}) : super(key: key);
 
   @override
-  _StreamerRankPageState createState() => _StreamerRankPageState();
+  StreamerRankPageState createState() => StreamerRankPageState();
 }
 
-class _StreamerRankPageState extends State<StreamerRankPage> {
+class StreamerRankPageState extends State<StreamerRankPage> {
   @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;

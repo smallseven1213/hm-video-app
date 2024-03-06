@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:live_core/models/streamer.dart';
 import 'package:live_core/models/streamer_profile.dart';
-import '../../pages/search.dart';
 import 'package:live_core/widgets/fans_recommend_provider.dart';
 
 import 'streamer_profile_card.dart';

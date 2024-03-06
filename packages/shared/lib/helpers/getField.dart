@@ -7,7 +7,6 @@ T getField<T>(Map<String, dynamic> json, String key,
     }
     return value ?? defaultValue;
   } catch (e) {
-    print("Error parsing field $key: $e");
     return defaultValue;
   }
 }

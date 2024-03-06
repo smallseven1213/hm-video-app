@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
 import '../../controllers/short_video_detail_controller.dart';
-import '../../models/short_video_detail.dart';
-import '../../utils/controller_tag_genarator.dart';
 
 final logger = Logger();
 
