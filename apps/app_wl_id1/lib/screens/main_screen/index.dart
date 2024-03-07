@@ -17,11 +17,13 @@ class HomeMainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('id1 - HomeMainScreen build');
     return PopScope(
         canPop: false,
         child: MainLayoutLoadingStatusConsumer(
           layoutId: layoutId,
           child: (isLoading) {
+            print('id1 - HomeMainScreen build: isLoading: $isLoading');
             if (isLoading) {
               return const Scaffold(
                 body: Center(
