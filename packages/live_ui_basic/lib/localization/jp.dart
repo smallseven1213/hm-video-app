@@ -75,4 +75,5 @@ const Map<String, String> liveJaJpStrings = {
   "weekly_ranking": "週間ランキング",
   "whether_to_continue_after_paid_time_expires": "有料時間が終了後に継続するかどうか",
   "working_hard": "一生懸命働いています",
+  "fans": "ファン",
 };

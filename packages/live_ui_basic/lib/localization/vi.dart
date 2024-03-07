@@ -79,4 +79,5 @@ const Map<String, String> liveViVnStrings = {
   "whether_to_continue_after_paid_time_expires":
       "Có tiếp tục sau khi thời gian trả phí kết thúc không",
   "working_hard": "Đang làm việc chăm chỉ",
+  "fans": "cái quạt",
 };

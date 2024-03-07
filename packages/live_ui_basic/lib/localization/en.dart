@@ -78,4 +78,5 @@ const Map<String, String> liveEnUsStrings = {
   "whether_to_continue_after_paid_time_expires":
       "Whether to continue after paid time expires",
   "working_hard": "Working hard",
+  "fans": "fans",
 };

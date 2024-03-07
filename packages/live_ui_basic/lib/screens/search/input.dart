@@ -47,47 +47,63 @@ class SearchInputWidgetState extends State<SearchInputWidget> {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     return Container(
-      height: 30,
       decoration: BoxDecoration(
         color: const Color(0xFF323d5c),
         borderRadius: BorderRadius.circular(20),
       ),
       child: Row(
         children: [
-          const SizedBox(width: 10),
-          const Icon(Icons.search, color: Colors.white, size: 18),
-          const SizedBox(width: 10),
+          const Padding(
+            padding: EdgeInsets.only(left: 10, right: 5),
+            child: Icon(Icons.search, color: Colors.white54),
+          ),
           Expanded(
-            child: TextField(
-              controller: _controller,
-              style: const TextStyle(color: Colors.white, fontSize: 14),
-              decoration: InputDecoration(
-                hintText: localizations.translate('search_host_id_or_nickname'),
-                hintStyle:
-                    const TextStyle(color: Color(0xff5a6077), fontSize: 14),
-                border: InputBorder.none,
+            child: Container(
+              height: 35.0, // 設定容器高度為 30
+              alignment: Alignment.center, // 確保內部元素垂直居中
+              child: TextField(
+                textAlignVertical:
+                    TextAlignVertical.center, // 確保文字在TextField內垂直居中
+                style: const TextStyle(fontSize: 14.0, color: Colors.white),
+                decoration: InputDecoration(
+                  isDense: true, // 減少TextField的總高度和內部空間
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 0), // 最小化垂直內距
+                  border: InputBorder.none, // 可選，根據需要移除邊框
+                  hintText:
+                      localizations.translate('search_host_id_or_nickname'),
+                  hintStyle:
+                      const TextStyle(color: Color(0xff5a6077), fontSize: 14),
+                ),
+                onChanged: (value) {
+                  if (widget.onChanged != null) {
+                    widget.onChanged!(value);
+                  }
+                },
+                onSubmitted: (value) {
+                  if (widget.onSearch != null) {
+                    widget.onSearch!(value);
+                  }
+                },
               ),
-              onChanged: (value) {
-                if (widget.onChanged != null) {
-                  widget.onChanged!(value);
-                }
-              },
-              onSubmitted: (value) {
-                if (widget.onSearch != null) {
-                  widget.onSearch!(value);
-                }
-              },
             ),
           ),
           if (widget.showCancel)
-            IconButton(
-              onPressed: () {
+            InkWell(
+              onTap: () {
                 _controller.clear();
                 if (widget.onCancel != null) {
                   widget.onCancel!();
                 }
               },
-              icon: const Icon(Icons.close, color: Colors.white, size: 14),
+              child: const Padding(
+                padding: EdgeInsets.only(left: 5, right: 10),
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 14,
+                ),
+              ),
             ),
         ],
       ),

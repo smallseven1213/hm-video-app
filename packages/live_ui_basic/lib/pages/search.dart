@@ -97,6 +97,7 @@ class SearchPageState extends State<SearchPage> {
                   )
                 ],
               ),
+              const SizedBox(height: 8),
               Expanded(
                 child: displayKeywordResult
                     ? KeywordList(onSearch: (value) => onSearch(value))
@@ -124,7 +125,7 @@ class SectionTitle extends StatelessWidget {
         title,
         style: const TextStyle(
           color: Color(0xff6f6f79),
-          fontSize: 14,
+          fontSize: 16,
         ),
       ),
     );

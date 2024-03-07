@@ -80,4 +80,5 @@ const Map<String, String> liveIdIdStrings = {
   "whether_to_continue_after_paid_time_expires":
       "Apakah akan melanjutkan setelah waktu berbayar berakhir",
   "working_hard": "Bekerja keras",
+  "fans": "penggemar",
 };
