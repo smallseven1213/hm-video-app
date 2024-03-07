@@ -75,4 +75,5 @@ const Map<String, String> liveZhTwStrings = {
   "weekly_ranking": "週榜",
   "whether_to_continue_after_paid_time_expires": "付費時間已到，是否續費",
   "working_hard": "拼命搬磚中",
+  "fans": "粉絲",
 };

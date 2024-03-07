@@ -75,4 +75,5 @@ const Map<String, String> liveZhCnStrings = {
   "weekly_ranking": "周榜",
   "whether_to_continue_after_paid_time_expires": "付费时间已到，是否续费",
   "working_hard": "拼命搬砖中",
+  "fans": "粉丝",
 };

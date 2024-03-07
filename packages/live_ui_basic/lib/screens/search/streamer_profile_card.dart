@@ -92,9 +92,9 @@ class StreamerProfileCard extends StatelessWidget {
                     ),
                     if (showFansCount == true)
                       Text(
-                        profile.fansCount.toString(),
+                        '${profile.fansCount.toString()} ${localizations.translate('fans')}',
                         style:
-                            const TextStyle(color: Colors.white, fontSize: 12),
+                            const TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     if (showFollowButton == true)
                       Obx(() {

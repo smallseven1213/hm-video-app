@@ -23,7 +23,6 @@ class SearchWidget extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  // padding l 10, child is Icon
                   const Padding(
                     padding: EdgeInsets.only(left: 10),
                     child: Icon(
@@ -31,7 +30,6 @@ class SearchWidget extends StatelessWidget {
                       color: Colors.white54,
                     ),
                   ),
-                  // padding l 10, child is Text
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
