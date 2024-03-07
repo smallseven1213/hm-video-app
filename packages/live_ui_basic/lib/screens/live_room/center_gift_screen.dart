@@ -50,34 +50,35 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 500), (timer) {
-      var centerGiftAnimationQueue =
-          chatResultController.giftCenterMessagesQueue;
-      if (centerGiftAnimationQueue.isNotEmpty && !isAnimating) {
-        var giftMessage = centerGiftAnimationQueue.removeAt(0);
-        targetRepeatCount = giftMessage.objChat.data.quantity; // 设置目标重复次数
-        currentRepeatCount = 0; // 重置当前重复次数
-        xCount.value = 1; // 重置xCount
-        setLottieAnimation(giftMessage);
+    chatResultController.giftCenterMessagesQueue.listen((gifts) {
+      if (gifts.isNotEmpty && !isAnimating) {
+        var getGift = gifts.first;
+        setLottieAnimation(getGift);
+        // 開始播放動畫，但過了2000 * quantity毫秒後，要移除目前的gift from queue，並將isAnimating設為false
+        timer = Timer(
+            Duration(milliseconds: 2000 * getGift.objChat.data.quantity), () {
+          finishAnimation();
+          isAnimating = false;
+          chatResultController.giftCenterMessagesQueue.remove(getGift);
+        });
+
+        // 如果quantity > 1，則要重複播放動畫
+        if (getGift.objChat.data.quantity > 1) {
+          currentRepeatCount = 0;
+          targetRepeatCount = getGift.objChat.data.quantity;
+          _lottieController.addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              currentRepeatCount++;
+              if (currentRepeatCount < targetRepeatCount) {
+                _lottieController.reset();
+                _lottieController.forward();
+              }
+            }
+          });
+        }
       }
     });
-
-    _lottieController = AnimationController(vsync: this)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed && mounted) {
-          if (currentRepeatCount < targetRepeatCount - 1) {
-            currentRepeatCount++;
-            xCount.value = currentRepeatCount + 1;
-            _lottieController.forward(from: 0.0); // 从头开始动画
-          } else {
-            isAnimating = false;
-            finishAnimation();
-          }
-        }
-      });
   }
-
-  // 其他方法保持不变
 
   @override
   void dispose() {
