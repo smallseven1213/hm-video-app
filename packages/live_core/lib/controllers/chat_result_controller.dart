@@ -74,4 +74,12 @@ class ChatResultController extends GetxController {
       return null;
     }
   }
+
+  // removeGiftCenterMessagesQueue by index
+  void removeGiftCenterMessagesQueueByIndex(int index) {
+    try {
+      giftCenterMessagesQueue.value.removeAt(index);
+      giftCenterMessagesQueue.refresh();
+    } catch (e) {}
+  }
 }

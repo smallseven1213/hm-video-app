@@ -259,7 +259,8 @@ class GiftItemState extends State<GiftItem>
           if (response.code == 200) {
             Get.find<LiveUserController>().getUserDetail();
           } else {
-            throw Exception(response.data);
+            return;
+            // throw Exception(response.data);
           }
         }
       } finally {

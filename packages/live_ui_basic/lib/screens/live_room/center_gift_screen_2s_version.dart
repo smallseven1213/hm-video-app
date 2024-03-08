@@ -44,23 +44,38 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   ValueNotifier<GiftUserData?> giftUserData =
       ValueNotifier<GiftUserData?>(null);
   int animationLayout = 2;
-  int currentRepeatCount = 1;
-  int targetRepeatCount = 1;
-  AnimationStatusListener? lottielistener;
-  StreamSubscription<List<ChatMessage<ChatGiftMessageObjChatData>>>?
-      giftCenterMessagesQueueSubscription;
+  int currentRepeatCount = 0;
+  int targetRepeatCount = 0;
 
   @override
   void initState() {
     super.initState();
-    _lottieController = AnimationController(vsync: this);
-    giftCenterMessagesQueueSubscription?.cancel();
-    giftCenterMessagesQueueSubscription =
-        chatResultController.giftCenterMessagesQueue.listen((gifts) {
-      print('[A] gifts: ${gifts.length}, isAnimating: $isAnimating');
+    chatResultController.giftCenterMessagesQueue.listen((gifts) {
       if (gifts.isNotEmpty && !isAnimating) {
         var getGift = gifts.first;
         setLottieAnimation(getGift);
+        // 開始播放動畫，但過了2000 * quantity毫秒後，要移除目前的gift from queue，並將isAnimating設為false
+        timer = Timer(
+            Duration(milliseconds: 2000 * getGift.objChat.data.quantity), () {
+          finishAnimation();
+          isAnimating = false;
+          chatResultController.giftCenterMessagesQueue.remove(getGift);
+        });
+
+        // 如果quantity > 1，則要重複播放動畫
+        if (getGift.objChat.data.quantity > 1) {
+          currentRepeatCount = 0;
+          targetRepeatCount = getGift.objChat.data.quantity;
+          _lottieController.addStatusListener((status) {
+            if (status == AnimationStatus.completed) {
+              currentRepeatCount++;
+              if (currentRepeatCount < targetRepeatCount) {
+                _lottieController.reset();
+                _lottieController.forward();
+              }
+            }
+          });
+        }
       }
     });
   }
@@ -69,14 +84,11 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   void dispose() {
     timer?.cancel();
     _lottieController.dispose();
-    giftCenterMessagesQueueSubscription?.cancel();
-    giftCenterMessagesQueueSubscription = null;
     super.dispose();
   }
 
   void setLottieAnimation(ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
     try {
-      print('[A] setLottieAnimation');
       isAnimating = true;
       var gid = giftMessage.objChat.data.gid;
       var gift = giftsController.gifts.value
@@ -92,37 +104,16 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
         userAvatar: giftMessage.objChat.avatar,
         giftName: gift.name,
       );
-      targetRepeatCount = giftMessage.objChat.data.quantity;
-      void lottielistener(AnimationStatus status) {
-        if (status == AnimationStatus.completed) {
-          print(
-              '[A] currentRepeatCount: $currentRepeatCount, targetRepeatCount: $targetRepeatCount');
-          if (currentRepeatCount < targetRepeatCount) {
-            _lottieController.reset();
-            _lottieController.forward();
-            currentRepeatCount++;
-          } else {
-            targetRepeatCount = 1;
-            currentRepeatCount = 1;
-            finishAnimation();
-            chatResultController.removeGiftCenterMessagesQueueByIndex(0);
-          }
-        }
-      }
-
-      // _lottieController.removeStatusListener(lottielistener);
-      _lottieController.clearStatusListeners();
-      _lottieController.addStatusListener(lottielistener);
     } catch (e) {
-      print('[A] setLottieAnimation error');
-      finishAnimation();
+      isAnimating = false;
+      setState(() {
+        lottiePath = null;
+      });
     }
   }
 
   void finishAnimation() {
-    print('[A] finishAnimation');
     _lottieController.reset();
-    isAnimating = false;
     setState(() {
       lottiePath = null;
     });
