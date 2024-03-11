@@ -3,11 +3,10 @@ name: hm_video_app_workspace
 environment:
   sdk: '>=2.18.0 <3.0.0'
   
-dev_dependencies:
-  melos: ^3.2.0
 dependencies:
   flutter:
     sdk: flutter
+  melos: ^4.1.0
   path: ^1.8.3
   path_provider: ^2.0.12
 
