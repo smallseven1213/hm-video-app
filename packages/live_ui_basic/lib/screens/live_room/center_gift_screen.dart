@@ -39,7 +39,6 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   final ChatResultController chatResultController =
       Get.find<ChatResultController>();
   String? lottiePath;
-  Timer? timer;
   ValueNotifier<int> xCount = ValueNotifier<int>(1);
   ValueNotifier<GiftUserData?> giftUserData =
       ValueNotifier<GiftUserData?>(null);
@@ -53,6 +52,7 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   @override
   void initState() {
     super.initState();
+    print('[A] CENTER GIFT SCREEN INIT');
     _lottieController = AnimationController(vsync: this);
     giftCenterMessagesQueueSubscription?.cancel();
     giftCenterMessagesQueueSubscription =
@@ -67,7 +67,6 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
 
   @override
   void dispose() {
-    timer?.cancel();
     _lottieController.dispose();
     giftCenterMessagesQueueSubscription?.cancel();
     giftCenterMessagesQueueSubscription = null;
