@@ -2,13 +2,13 @@ import 'package:get/get.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 
+import '../controllers/live_system_controller.dart';
 import '../models/streamer_profile.dart';
-
-const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
 
 class SearchApi {
   static final SearchApi _instance = SearchApi._internal();
   SystemConfigController systemController = Get.find<SystemConfigController>();
+  LiveSystemController liveSystemController = Get.find<LiveSystemController>();
 
   SearchApi._internal();
 
@@ -18,8 +18,9 @@ class SearchApi {
 
   // 熱門推薦
   Future<List<StreamerProfile>> getPopularStreamers() async {
+    var userApiHost = liveSystemController.liveApiHost.value;
     var response = await liveFetcher(
-      url: '$userApiHost/popular/streamers',
+      url: '$userApiHost/user/v1/popular/streamers',
     );
 
     List<StreamerProfile> data = (response.data['data']['list'] as List)
@@ -31,8 +32,9 @@ class SearchApi {
 
   // 粉絲推薦
   Future<List<StreamerProfile>> getFansRecommend() async {
+    var userApiHost = liveSystemController.liveApiHost.value;
     var response = await liveFetcher(
-      url: '$userApiHost/fans/recommend',
+      url: '$userApiHost/user/v1/fans/recommend',
     );
 
     List<StreamerProfile> data = (response.data['data']['list'] as List)
@@ -44,8 +46,9 @@ class SearchApi {
 
   // 取得關鍵字列表
   Future<List<String>> getRecommendKeywords(keyword) async {
+    var userApiHost = liveSystemController.liveApiHost.value;
     var response = await liveFetcher(
-      url: '$userApiHost/search/recommend?keyword=$keyword',
+      url: '$userApiHost/user/v1/search/recommend?keyword=$keyword',
     );
 
     List<String> data = (response.data['data']['keywords'] as List)
@@ -61,6 +64,7 @@ class SearchApi {
     int page = 1,
     int perPage = 20,
   }) async {
+    var userApiHost = liveSystemController.liveApiHost.value;
     var response = await liveFetcher(
       url:
           '$userApiHost/search/streamers?keyword=$keyword&page=$page&per_page=$perPage',
