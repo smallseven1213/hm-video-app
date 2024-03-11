@@ -1,6 +1,7 @@
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:get/get.dart';
 
+import '../controllers/live_system_controller.dart';
 import '../models/ad.dart';
 import '../utils/live_fetcher.dart';
 
@@ -15,8 +16,9 @@ class AdApi {
   }
 
   Future<List<Ad>> getBanners() async {
+    final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: 'https://live-api.hmtech-dev.com/user/v1/ad/slots',
+      url: '$liveApiHost/user/v1/ad/slots',
     );
 
     List<Ad> ads = (response.data['data'][0]['ads'] as List)
