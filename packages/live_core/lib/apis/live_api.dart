@@ -111,7 +111,7 @@ class LiveApi {
     try {
       final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
       var response = await liveFetcher(
-        url: '$liveApiHost/user/v1/exitroom',
+        url: '$liveApiHost/exitroom',
         method: 'GET',
       );
 
