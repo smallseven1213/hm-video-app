@@ -8,8 +8,6 @@ import '../models/live_api_response_base.dart';
 import '../models/room.dart';
 import '../models/streamer.dart';
 
-const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
-
 class UserApi {
   static final UserApi _instance = UserApi._internal();
   SystemConfigController systemController = Get.find<SystemConfigController>();
@@ -33,20 +31,6 @@ class UserApi {
         LiveApiResponseBase.fromJson(
       response.data,
       (data) => (data as List).map((item) => Room.fromJson(item)).toList(),
-    );
-
-    return parsedResponse;
-  }
-
-  // get /room/detail?id=253
-  Future<LiveApiResponseBase<Room>> getRoomDetail(int roomId) async {
-    var response = await liveFetcher(
-      url: 'https://dev-live-ext.hmtech-dev.com/room/detail?id=$roomId',
-    );
-
-    LiveApiResponseBase<Room> parsedResponse = LiveApiResponseBase.fromJson(
-      response.data,
-      (data) => Room.fromJson(data as Map<String, dynamic>),
     );
 
     return parsedResponse;

@@ -17,6 +17,7 @@ import '../models/command.dart';
 class LiveApi {
   static final LiveApi _instance = LiveApi._internal();
   SystemConfigController systemController = Get.find<SystemConfigController>();
+  LiveSystemController liveSystemController = Get.find<LiveSystemController>();
 
   LiveApi._internal();
 
@@ -35,10 +36,11 @@ class LiveApi {
   }) async {
     var ranking0 = ranking.toString().split('.').last; // 更简洁的转换枚举到字符串
 
-    const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
+    var userApiHost = liveSystemController.liveApiHost.value;
+    // const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
     var response = await liveFetcher(
       url:
-          '$userApiHost/room/list?page=$page&per_page=$perPage&status=$status&charge_type=$chargeType&ranking=$ranking0&follow=$followType',
+          '$userApiHost/user/v1/room/list?page=$page&per_page=$perPage&status=$status&charge_type=$chargeType&ranking=$ranking0&follow=$followType',
     );
 
     if (response.data['data'].isEmpty) {
@@ -109,7 +111,7 @@ class LiveApi {
     try {
       final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
       var response = await liveFetcher(
-        url: '$liveApiHost/exitroom',
+        url: '$liveApiHost/user/v1/exitroom',
         method: 'GET',
       );
 
@@ -201,7 +203,7 @@ class LiveApi {
   Future<LiveApiResponseBase<List<Command>>> getCommands() async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: '$liveApiHost/cmdlist',
+      url: '$liveApiHost/user/v1/cmdlist',
     );
 
     LiveApiResponseBase<List<Command>> parsedResponse =
@@ -268,7 +270,7 @@ class LiveApi {
       int pid, bool userIsAutoRenew) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: '$liveApiHost/buywatch?pid=$pid&autobuy=$userIsAutoRenew',
+      url: '$liveApiHost/user/v1/buywatch?pid=$pid&autobuy=$userIsAutoRenew',
       method: 'GET',
     );
 
@@ -283,7 +285,7 @@ class LiveApi {
   Future<LiveApiResponseBase<bool>> follow(int hid) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: '$liveApiHost/follow?hid=$hid',
+      url: '$liveApiHost/user/v1/follow?hid=$hid',
       method: 'GET',
     );
 
@@ -298,7 +300,7 @@ class LiveApi {
   Future<LiveApiResponseBase<bool>> unfollow(int hid) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: '$liveApiHost/unfollow?hid=$hid',
+      url: '$liveApiHost/user/v1/unfollow?hid=$hid',
       method: 'GET',
     );
 
