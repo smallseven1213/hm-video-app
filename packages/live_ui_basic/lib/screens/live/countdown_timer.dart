@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:live_core/models/room.dart';
 
 import '../../localization/live_localization_delegate.dart';
 
@@ -96,20 +95,12 @@ class CountdownTimerState extends State<CountdownTimer> {
   @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
-
-    return _timeLeft.isNegative
-        ? _buildLabel(
-            color: widget.chargeType == RoomChargeType.free.index
-                ? const Color(0xffe65fcf95)
-                : const Color(0xffe6845fcf),
-            text: widget.chargeType == RoomChargeType.free.index
-                ? localizations.translate('free')
-                : localizations.translate('paid'),
-          )
-        : _buildLabel(
-            color: const Color(0xffe6cf795f),
-            text: formatTime(_timeLeft),
-            icon: const Icon(Icons.access_time, size: 12, color: Colors.white),
-          );
+    return _buildLabel(
+      color: const Color(0xffe6cf795f),
+      text: _timeLeft.isNegative
+          ? localizations.translate('preview')
+          : formatTime(_timeLeft),
+      icon: const Icon(Icons.access_time, size: 12, color: Colors.white),
+    );
   }
 }
