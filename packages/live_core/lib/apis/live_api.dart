@@ -270,7 +270,7 @@ class LiveApi {
       int pid, bool userIsAutoRenew) async {
     final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
     var response = await liveFetcher(
-      url: '$liveApiHost/user/v1/buywatch?pid=$pid&autobuy=$userIsAutoRenew',
+      url: '$liveApiHost/buywatch?pid=$pid&autobuy=$userIsAutoRenew',
       method: 'GET',
     );
 
