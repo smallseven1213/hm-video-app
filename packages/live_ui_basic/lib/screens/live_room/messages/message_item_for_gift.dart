@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
+import 'package:live_core/models/gift.dart';
 
 import '../../../libs/format_timestamp.dart';
 import '../../../localization/live_localization_delegate.dart';
@@ -17,9 +18,14 @@ class MessageItemForGift extends StatelessWidget {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     final giftsController = Get.find<GiftsController>();
-    var giftName = giftsController.gifts.value
-        .firstWhere((element) => element.id == message.objChat.data.gid)
-        .name;
+    var gifts = giftsController.gifts.value
+        .where((element) => element.id == message.objChat.data.gid)
+        .toList();
+
+    if (gifts.isEmpty) {
+      return Container();
+    }
+    var giftName = gifts.first.name;
     var messageText =
         "${message.objChat.name} ${localizations.translate('send_gift')} $giftName x${message.objChat.data.quantity}";
 

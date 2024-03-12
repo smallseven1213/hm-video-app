@@ -4,6 +4,7 @@ import 'package:shared/apis/orders_api.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/modules/user/user_payment_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/widgets/sid_image.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utils/show_confirm_dialog.dart';
@@ -152,7 +153,16 @@ class PaymentListState extends State<PaymentList> {
                                     margin: const EdgeInsets.only(bottom: 8),
                                     child: Row(
                                       children: [
-                                        // 未來的icon
+                                        const SizedBox(width: 5),
+                                        SizedBox(
+                                          width: 16,
+                                          height: 16,
+                                          child: payment.iconSid != null
+                                              ? SidImage(sid: payment.iconSid!)
+                                              : Container(),
+                                        ),
+                                        // width 10
+                                        const SizedBox(width: 10),
                                         Expanded(
                                             child: Text(
                                           payment.type.toString(),

@@ -2,14 +2,14 @@ import 'package:get/get.dart';
 import 'package:live_core/utils/live_fetcher.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 
+import '../controllers/live_system_controller.dart';
 import '../models/live_api_response_base.dart';
 import '../models/streamer_rank.dart';
-
-const userApiHost = 'https://live-api.hmtech-dev.com/user/v1';
 
 class StreamerApi {
   static final StreamerApi _instance = StreamerApi._internal();
   SystemConfigController systemController = Get.find<SystemConfigController>();
+  LiveSystemController liveSystemController = Get.find<LiveSystemController>();
 
   StreamerApi._internal();
 
@@ -22,9 +22,10 @@ class StreamerApi {
     RankType rankType = RankType.income,
     TimeType timeType = TimeType.today,
   }) async {
+    var userApiHost = liveSystemController.liveApiHost.value;
     var response = await liveFetcher(
       url:
-          '$userApiHost/streamer/ranking?rank_type=${rankType.index}&time_type=${timeType.index}',
+          '$userApiHost/user/v1/streamer/ranking?rank_type=${rankType.index}&time_type=${timeType.index}',
     );
 
     if (response.data['data'].isEmpty) {
@@ -40,8 +41,9 @@ class StreamerApi {
 
   // 關注
   Future<LiveApiResponseBase> follow(int streamerId) async {
+    var userApiHost = liveSystemController.liveApiHost.value;
     var response = await liveFetcher(
-      url: '$userApiHost/streamer/follow',
+      url: '$userApiHost/user/v1/streamer/follow',
       method: 'POST',
       body: {
         'streamer_id': streamerId,
@@ -58,8 +60,9 @@ class StreamerApi {
 
   // 取消關注
   Future<LiveApiResponseBase> unfollow(int streamerId) async {
+    var userApiHost = liveSystemController.liveApiHost.value;
     var response = await liveFetcher(
-      url: '$userApiHost/streamer/unfollow',
+      url: '$userApiHost/user/v1/streamer/unfollow',
       method: 'POST',
       body: {
         'streamer_id': streamerId,

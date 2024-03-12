@@ -64,14 +64,20 @@ class ChatResultController extends GetxController {
     super.onClose();
   }
 
-  ChatMessage<ChatGiftMessageObjChatData>?
-      removeGiftLeftSideMessagesQueueByIndex(int index) {
+  void removeGiftLeftSideMessagesQueueByIndex(int index) {
     try {
-      var giftMessage = giftLeftSideMessagesQueue.value.removeAt(index);
+      giftLeftSideMessagesQueue.value.removeAt(index);
       giftLeftSideMessagesQueue.refresh();
-      return giftMessage;
     } catch (e) {
-      return null;
+      return;
     }
+  }
+
+  // removeGiftCenterMessagesQueue by index
+  void removeGiftCenterMessagesQueueByIndex(int index) {
+    try {
+      giftCenterMessagesQueue.value.removeAt(index);
+      giftCenterMessagesQueue.refresh();
+    } catch (e) {}
   }
 }
