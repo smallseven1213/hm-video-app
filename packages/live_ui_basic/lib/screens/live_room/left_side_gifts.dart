@@ -37,7 +37,7 @@ class LeftSideGifts extends StatefulWidget {
 class LeftSideGiftsState extends State<LeftSideGifts>
     with SingleTickerProviderStateMixin {
   late AnimationController _lottieController;
-  int currentRepeatCount = 0;
+  int currentRepeatCount = 1;
   int targetRepeatCount = 1;
   GiftAnimationData? giftAnimationData;
   ValueNotifier<int> xCount = ValueNotifier<int>(1);
@@ -85,7 +85,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
               giftLottiePath: gift.animation,
             );
             targetRepeatCount = giftMessage.objChat.data.quantity;
-            currentRepeatCount = 0;
+            currentRepeatCount = 1;
           });
           // _lottieController
           //   ..reset()
@@ -99,7 +99,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
 
   void _animationStatusListener(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
-      if (++currentRepeatCount < targetRepeatCount) {
+      if (currentRepeatCount < targetRepeatCount) {
         _lottieController.forward(from: 0.0);
         currentRepeatCount++;
         xCount.value = currentRepeatCount;
@@ -113,6 +113,8 @@ class LeftSideGiftsState extends State<LeftSideGifts>
   void finishAnimation() {
     if (!mounted) return;
     setState(() {
+      currentRepeatCount = 1;
+      targetRepeatCount = 1;
       giftAnimationData = null;
       xCount.value = 1;
     });
