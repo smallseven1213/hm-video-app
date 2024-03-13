@@ -100,6 +100,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
   }
 
   void _animationStatusListener(AnimationStatus status) {
+    print('[AL] listener status: $status');
     if (status == AnimationStatus.completed) {
       print('[AL] completed');
       if (currentRepeatCount < targetRepeatCount) {
@@ -126,7 +127,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
       xCount.value = 1;
     });
     print('[AL] finishAnimation 3');
-    _lottieController.reset();
+    // _lottieController.reset();
     print('[AL] finishAnimation 5');
   }
 
@@ -226,6 +227,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
                         var duration = composition.duration;
                         _lottieController
                           ..duration = duration
+                          ..reset()
                           ..forward();
                       },
                       width: 40,
