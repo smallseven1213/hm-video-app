@@ -59,7 +59,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
     giftMessagesQueueSubscription?.cancel();
     giftMessagesQueueSubscription =
         chatResultController.giftLeftSideMessagesQueue.listen((gifts) {
-      if (gifts.isNotEmpty) {
+      if (gifts.isNotEmpty && giftAnimationData == null) {
         prepareAndStartAnimation(gifts.first);
       }
     });
@@ -76,6 +76,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
       var gift = getGiftById.first;
       if (gift.animation.isNotEmpty) {
         if (mounted) {
+          print('[AL] prepareAndStartAnimation 1');
           setState(() {
             giftAnimationData = GiftAnimationData(
               quantity: giftMessage.objChat.data.quantity,
@@ -93,17 +94,21 @@ class LeftSideGiftsState extends State<LeftSideGifts>
         }
       }
     } catch (e) {
+      print('[AL] error: $e');
       finishAnimation();
     }
   }
 
   void _animationStatusListener(AnimationStatus status) {
     if (status == AnimationStatus.completed) {
+      print('[AL] completed');
       if (currentRepeatCount < targetRepeatCount) {
+        print('[AL] completed A1');
         _lottieController.forward(from: 0.0);
         currentRepeatCount++;
         xCount.value = currentRepeatCount;
       } else {
+        print('[AL] completed A2');
         finishAnimation();
         chatResultController.removeGiftLeftSideMessagesQueueByIndex(0);
       }
@@ -111,14 +116,18 @@ class LeftSideGiftsState extends State<LeftSideGifts>
   }
 
   void finishAnimation() {
+    print('[AL] finishAnimation 1');
     if (!mounted) return;
+    print('[AL] finishAnimation 2');
     setState(() {
       currentRepeatCount = 1;
       targetRepeatCount = 1;
       giftAnimationData = null;
       xCount.value = 1;
     });
+    print('[AL] finishAnimation 3');
     _lottieController.reset();
+    print('[AL] finishAnimation 5');
   }
 
   @override
@@ -131,6 +140,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
   @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+    print('[AL] build LeftSideGifts giftAnimationData: $giftAnimationData');
     return giftAnimationData == null
         ? Container()
         : Stack(
