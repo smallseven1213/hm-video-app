@@ -39,7 +39,6 @@ class LeftSideGiftsState extends State<LeftSideGifts>
   late AnimationController _lottieController;
   int currentRepeatCount = 0;
   int targetRepeatCount = 1;
-  var isAnimating = false;
   GiftAnimationData? giftAnimationData;
   ValueNotifier<int> xCount = ValueNotifier<int>(1);
   final ChatResultController chatResultController =
@@ -52,83 +51,79 @@ class LeftSideGiftsState extends State<LeftSideGifts>
   void initState() {
     super.initState();
     _lottieController = AnimationController(vsync: this);
+    _lottieController.addStatusListener(_animationStatusListener);
+    subscribeToGiftMessages();
+  }
+
+  void subscribeToGiftMessages() {
     giftMessagesQueueSubscription?.cancel();
     giftMessagesQueueSubscription =
         chatResultController.giftLeftSideMessagesQueue.listen((gifts) {
-      print('[AL] gifts: ${gifts.length}, isAnimating: $isAnimating');
-      if (gifts.isNotEmpty && !isAnimating) {
-        var getGift = gifts.first;
-        setLottieAnimation(getGift);
+      if (gifts.isNotEmpty) {
+        prepareAndStartAnimation(gifts.first);
       }
     });
+  }
+
+  void prepareAndStartAnimation(
+      ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
+    try {
+      var getGiftById = giftsController.gifts.value
+          .where((element) => element.id == giftMessage.objChat.data.gid);
+      if (getGiftById.isEmpty) {
+        return;
+      }
+      var gift = getGiftById.first;
+      if (gift.animation.isNotEmpty) {
+        if (mounted) {
+          setState(() {
+            giftAnimationData = GiftAnimationData(
+              quantity: giftMessage.objChat.data.quantity,
+              userName: giftMessage.objChat.name,
+              userAvatar: giftMessage.objChat.avatar,
+              giftName: gift.name,
+              giftLottiePath: gift.animation,
+            );
+            targetRepeatCount = giftMessage.objChat.data.quantity;
+            currentRepeatCount = 0;
+          });
+          // _lottieController
+          //   ..reset()
+          //   ..forward();
+        }
+      }
+    } catch (e) {
+      finishAnimation();
+    }
+  }
+
+  void _animationStatusListener(AnimationStatus status) {
+    if (status == AnimationStatus.completed) {
+      if (++currentRepeatCount < targetRepeatCount) {
+        _lottieController.forward(from: 0.0);
+        currentRepeatCount++;
+        xCount.value = currentRepeatCount;
+      } else {
+        finishAnimation();
+        chatResultController.removeGiftLeftSideMessagesQueueByIndex(0);
+      }
+    }
+  }
+
+  void finishAnimation() {
+    if (!mounted) return;
+    setState(() {
+      giftAnimationData = null;
+      xCount.value = 1;
+    });
+    _lottieController.reset();
   }
 
   @override
   void dispose() {
     _lottieController.dispose();
+    giftMessagesQueueSubscription?.cancel();
     super.dispose();
-  }
-
-  void setLottieAnimation(ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
-    try {
-      print(
-          '[AL] setLottieAnimation: ${giftMessage.objChat.data.gid}, quantity: ${giftMessage.objChat.data.quantity}');
-      isAnimating = true;
-      var gid = giftMessage.objChat.data.gid;
-      var gift = giftsController.gifts.value
-          .firstWhere((element) => element.id == gid);
-      if (gift.animation.isNotEmpty) {
-        setState(() {
-          giftAnimationData = GiftAnimationData(
-            quantity: giftMessage.objChat.data.quantity,
-            userName: giftMessage.objChat.name,
-            userAvatar: giftMessage.objChat.avatar,
-            giftName: gift.name,
-            giftLottiePath: gift.animation,
-          );
-        });
-      }
-      // giftUserData.value = GiftUserData(
-      //   userName: giftMessage.objChat.name,
-      //   userAvatar: giftMessage.objChat.avatar,
-      //   giftName: gift.name,
-      // );
-      targetRepeatCount = giftMessage.objChat.data.quantity;
-      void lottielistener(AnimationStatus status) {
-        if (status == AnimationStatus.completed) {
-          print(
-              '[AL] currentRepeatCount: $currentRepeatCount, targetRepeatCount: $targetRepeatCount');
-          if (currentRepeatCount < targetRepeatCount) {
-            _lottieController.reset();
-            _lottieController.forward();
-            currentRepeatCount++;
-            xCount.value = currentRepeatCount;
-          } else {
-            targetRepeatCount = 1;
-            currentRepeatCount = 1;
-            xCount.value = 1;
-            finishAnimation();
-            chatResultController.removeGiftLeftSideMessagesQueueByIndex(0);
-          }
-        }
-      }
-
-      // _lottieController.removeStatusListener(lottielistener);
-      _lottieController.clearStatusListeners();
-      _lottieController.addStatusListener(lottielistener);
-    } catch (e) {
-      print('[AL] setLottieAnimation error');
-      finishAnimation();
-    }
-  }
-
-  void finishAnimation() {
-    print('[AL] finishAnimation');
-    _lottieController.reset();
-    isAnimating = false;
-    setState(() {
-      giftAnimationData = null;
-    });
   }
 
   @override
