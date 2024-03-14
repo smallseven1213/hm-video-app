@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
+import 'package:live_core/widgets/loading.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
@@ -156,7 +157,7 @@ class PlayerLayoutState extends State<PlayerLayout>
           alignment: Alignment.center,
           child: videoController.value.isInitialized
               ? VideoPlayer(videoController)
-              : const CircularProgressIndicator(),
+              : const LoadingWidget(),
         ),
         RoomPaymentCheck(
             pid: widget.pid,

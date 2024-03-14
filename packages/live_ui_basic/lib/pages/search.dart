@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:live_core/widgets/live_scaffold.dart';
 import 'package:live_core/controllers/live_search_controller.dart';
 import 'package:live_core/controllers/live_search_history_controller.dart';
 import '../localization/live_localization_delegate.dart';
@@ -61,9 +60,9 @@ class SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
-    return LiveScaffold(
-      backgroundColor: const Color(0xFF242a3d),
-      body: Padding(
+    return Container(
+      color: const Color(0xFF242a3d),
+      child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: Column(
             children: [

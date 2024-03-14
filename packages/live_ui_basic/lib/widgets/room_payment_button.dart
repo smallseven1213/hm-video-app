@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
+import 'package:live_core/widgets/loading.dart';
 
 import '../libs/show_live_dialog.dart';
 import '../localization/live_localization_delegate.dart';
@@ -134,11 +135,7 @@ class RoomPaymentButtonState extends State<RoomPaymentButton> {
                         const SizedBox(
                           width: 16,
                           height: 16,
-                          child: CircularProgressIndicator(
-                            strokeWidth: 2,
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
-                          ),
+                          child: LoadingWidget(),
                         )
                       else ...[
                         Text(

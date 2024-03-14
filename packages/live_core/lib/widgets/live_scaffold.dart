@@ -11,6 +11,7 @@ import '../controllers/live_search_history_controller.dart';
 import '../controllers/live_system_controller.dart';
 import '../controllers/live_user_controller.dart';
 import '../controllers/user_follows_controller.dart';
+import 'loading.dart';
 
 class LiveScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
@@ -76,16 +77,14 @@ class LiveScaffoldState extends State<LiveScaffold> {
   @override
   Widget build(BuildContext context) {
     if (isLoading == true) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
+      return Scaffold(
+        backgroundColor: widget.backgroundColor,
+        body: const LoadingWidget(),
       );
     } else if (isLogin == false) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
+      return Scaffold(
+        backgroundColor: widget.backgroundColor,
+        body: const LoadingWidget(),
       );
     }
     return Scaffold(

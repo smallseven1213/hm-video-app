@@ -72,7 +72,7 @@ class RankingScreenState extends State<RankingScreen> {
     super.initState();
   }
 
-  @override
+  @override  
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 

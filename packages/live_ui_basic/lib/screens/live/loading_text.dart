@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
+import 'package:live_core/widgets/loading.dart';
 
 import '../../localization/live_localization_delegate.dart';
 
@@ -52,12 +53,7 @@ class LoadingTextState extends State<LoadingText> {
         const SizedBox(
           height: 15.0,
           width: 15.0,
-          child: Center(
-            child: CircularProgressIndicator(
-              strokeWidth: 2,
-              color: Colors.white,
-            ),
-          ),
+          child: LoadingWidget(),
         ),
         const SizedBox(
             height: 8), // Add some space between the icon and the text
