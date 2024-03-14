@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ui';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:live_core/models/chat_message.dart';
+import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
@@ -19,6 +22,7 @@ class PlayerLayout extends StatefulWidget {
 
 class PlayerLayoutState extends State<PlayerLayout>
     with WidgetsBindingObserver {
+  final LiveSocketIOManager socketManager = LiveSocketIOManager();
   late VideoPlayerController videoController;
   late final Connectivity _connectivity;
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
@@ -30,7 +34,22 @@ class PlayerLayoutState extends State<PlayerLayout>
     _connectivity = Connectivity();
     _initializeConnectivityListener();
     initializeVideoPlayer();
+    socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
     Wakelock.enable(); // Prevent the device from sleeping
+  }
+
+  void handleChatResult(dynamic data) {
+    var decodedData = jsonDecode(data);
+    for (var item in decodedData) {
+      if (item['objChat']['ntype'] == 0) {
+        if (item['objChat']['data'] == 'hostconnect' && hasError == true) {
+          setState(() {
+            hasError = false;
+          });
+          initializeVideoPlayer();
+        }
+      }
+    }
   }
 
   void _initializeConnectivityListener() async {
@@ -101,6 +120,7 @@ class PlayerLayoutState extends State<PlayerLayout>
     videoController.dispose();
     _connectivitySubscription.cancel();
     Wakelock.disable(); // Allow the device to sleep again
+    socketManager.socket!.off('chatresult');
     super.dispose();
   }
 

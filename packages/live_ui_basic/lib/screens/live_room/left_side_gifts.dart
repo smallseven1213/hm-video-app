@@ -59,8 +59,12 @@ class LeftSideGiftsState extends State<LeftSideGifts>
     giftMessagesQueueSubscription?.cancel();
     giftMessagesQueueSubscription =
         chatResultController.giftLeftSideMessagesQueue.listen((gifts) {
+      print(
+          '[AL] giftMessagesQueueSubscription giftAnimationData: $giftAnimationData');
       if (gifts.isNotEmpty && giftAnimationData == null) {
-        prepareAndStartAnimation(gifts.first);
+        Future.delayed(Duration(milliseconds: 200), () {
+          prepareAndStartAnimation(gifts.first);
+        });
       }
     });
   }
@@ -140,8 +144,9 @@ class LeftSideGiftsState extends State<LeftSideGifts>
 
   @override
   Widget build(BuildContext context) {
-    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
     print('[AL] build LeftSideGifts giftAnimationData: $giftAnimationData');
+    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+
     return giftAnimationData == null
         ? Container()
         : Stack(
@@ -197,7 +202,7 @@ class LeftSideGiftsState extends State<LeftSideGifts>
                         ],
                       ),
                     ),
-                    const SizedBox(width: 40),
+                    const SizedBox(width: 60),
                   ],
                 ),
               ),
@@ -224,11 +229,15 @@ class LeftSideGiftsState extends State<LeftSideGifts>
                       onLoaded: (composition) {
                         print(
                             '[AL] composition.duration: ${composition.duration}');
-                        var duration = composition.duration;
-                        _lottieController
-                          ..duration = duration
-                          ..reset()
-                          ..forward();
+                        try {
+                          var duration = composition.duration;
+                          _lottieController
+                            ..duration = duration
+                            ..reset()
+                            ..forward();
+                        } catch (e) {
+                          print('[AL] onLoaded error: $e');
+                        }
                       },
                       width: 40,
                       fit: BoxFit.cover,
