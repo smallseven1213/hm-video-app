@@ -76,21 +76,12 @@ class LiveScaffoldState extends State<LiveScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading == true) {
-      return Scaffold(
-        backgroundColor: widget.backgroundColor,
-        body: const LoadingWidget(),
-      );
-    } else if (isLogin == false) {
-      return Scaffold(
-        backgroundColor: widget.backgroundColor,
-        body: const LoadingWidget(),
-      );
-    }
     return Scaffold(
       appBar: widget.appBar,
       body: SafeArea(
-        child: widget.body ?? const SizedBox(),
+        child: (isLoading || !isLogin)
+            ? const SizedBox()
+            : widget.body ?? const SizedBox(),
       ),
       backgroundColor: widget.backgroundColor,
       floatingActionButton: widget.floatingActionButton,
