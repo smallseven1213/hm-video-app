@@ -81,4 +81,5 @@ const Map<String, String> liveViVnStrings = {
   "working_hard": "Đang làm việc chăm chỉ",
   "fans": "cái quạt",
   "preview": "Xem trước",
+  "recommend": "khuyến nghị",
 };

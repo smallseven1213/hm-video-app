@@ -22,10 +22,10 @@ class NavigationApi {
       url: '$userApiHost/user/v1/navigation',
     );
 
-    List<Navigation> ads = (response.data['data'] as List)
+    List<Navigation> items = (response.data['data'] as List)
         .map((item) => Navigation.fromJson(item))
         .toList();
 
-    return ads;
+    return items;
   }
 }

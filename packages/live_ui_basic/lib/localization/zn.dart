@@ -77,4 +77,5 @@ const Map<String, String> liveZhCnStrings = {
   "working_hard": "拼命搬砖中",
   "fans": "粉丝",
   "preview": "预告",
+  "recommend": "推荐",
 };

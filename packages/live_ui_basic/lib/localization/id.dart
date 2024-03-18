@@ -82,4 +82,5 @@ const Map<String, String> liveIdIdStrings = {
   "working_hard": "Bekerja keras",
   "fans": "penggemar",
   "preview": "Pratinjau",
+  "recommend": "Merekomendasikan",
 };

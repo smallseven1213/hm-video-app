@@ -77,4 +77,5 @@ const Map<String, String> liveJaJpStrings = {
   "working_hard": "一生懸命働いています",
   "fans": "ファン",
   "preview": "プレビュー",
+  "recommend": "お勧め",
 };

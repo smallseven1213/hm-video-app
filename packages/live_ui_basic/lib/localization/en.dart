@@ -80,4 +80,5 @@ const Map<String, String> liveEnUsStrings = {
   "working_hard": "Working hard",
   "fans": "fans",
   "preview": "Preview",
+  "recommend": "Recommend",
 };
