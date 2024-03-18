@@ -36,23 +36,28 @@ class LiveUserDetail {
   });
 
   factory LiveUserDetail.fromJson(Map<String, dynamic> json) {
-    return LiveUserDetail(
-      account: json['account'],
-      avatar: json['avatar'] ?? '',
-      createdAt: DateTime.parse(json['created_at']),
-      device: json['device'],
-      id: json['id'],
-      isActive: json['is_active'] == 1,
-      loggedAt: DateTime.parse(json['logged_at']),
-      loggedIp: json['logged_ip'],
-      nickname: json['nickname'],
-      registerIp: json['register_ip'],
-      remark: json['remark'] ?? '',
-      siteId: json['site_id'],
-      tradingAmount: double.parse(json['trading_amount']),
-      tradingCount: json['trading_count'],
-      viewingTimes: json['viewing_times'],
-      wallet: double.parse(json['wallet']),
-    );
+    try {
+      return LiveUserDetail(
+        account: json['account'],
+        avatar: json['avatar'] ?? '',
+        createdAt: DateTime.parse(json['created_at']),
+        device: json['device'],
+        id: json['id'],
+        isActive: json['is_active'] == 1,
+        loggedAt: DateTime.parse(json['logged_at']),
+        loggedIp: json['logged_ip'],
+        nickname: json['nickname'],
+        registerIp: json['register_ip'],
+        remark: json['remark'] ?? '',
+        siteId: json['site_id'],
+        tradingAmount: double.parse(json['trading_amount']),
+        tradingCount: json['trading_count'],
+        viewingTimes: json['viewing_times'],
+        wallet: double.parse(json['wallet']),
+      );
+    } catch (e) {
+      print('LiveUserDetail.fromJson: $e');
+      rethrow;
+    }
   }
 }

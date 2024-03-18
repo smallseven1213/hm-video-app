@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'dart:ui';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:live_core/controllers/chat_result_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
@@ -22,11 +24,13 @@ class PlayerLayout extends StatefulWidget {
 
 class PlayerLayoutState extends State<PlayerLayout>
     with WidgetsBindingObserver {
-  final LiveSocketIOManager socketManager = LiveSocketIOManager();
+  final ChatResultController chatResultController =
+      Get.find<ChatResultController>();
   late VideoPlayerController videoController;
   late final Connectivity _connectivity;
   late StreamSubscription<ConnectivityResult> _connectivitySubscription;
   bool hasError = false;
+  late StreamSubscription<List<ChatMessage<String>>> chatResultSubscription;
 
   @override
   void initState() {
@@ -34,22 +38,45 @@ class PlayerLayoutState extends State<PlayerLayout>
     _connectivity = Connectivity();
     _initializeConnectivityListener();
     initializeVideoPlayer();
-    socketManager.socket!.on('chatresult', (data) => handleChatResult(data));
+    handleChatResult();
+
     Wakelock.enable(); // Prevent the device from sleeping
   }
 
-  void handleChatResult(dynamic data) {
-    var decodedData = jsonDecode(data);
-    for (var item in decodedData) {
-      if (item['objChat']['ntype'] == 0) {
-        if (item['objChat']['data'] == 'hostconnect' && hasError == true) {
-          setState(() {
-            hasError = false;
-          });
-          initializeVideoPlayer();
+  void handleChatResult() {
+    chatResultController.commonMessages.listen((messages) {
+      for (var message in messages) {
+        if (message.objChat.ntype == MessageType.system) {
+          if (message.objChat.data == 'hostconnect' && hasError == true) {
+            setState(() {
+              hasError = false;
+            });
+            initializeVideoPlayer();
+          } else if (message.objChat.data == 'hostdisconnect') {
+            setState(() {
+              hasError = true;
+            });
+          }
         }
       }
-    }
+    });
+    // var decodedData = jsonDecode(data);
+    // print('[V] video chat result: $decodedData');
+    // for (var item in decodedData) {
+    //   if (item['objChat']['ntype'] == 0) {
+    //     print('[V] video chat result: ${item['objChat']['data']}');
+    //     if (item['objChat']['data'] == 'hostconnect' && hasError == true) {
+    //       setState(() {
+    //         hasError = false;
+    //       });
+    //       initializeVideoPlayer();
+    //     } else if (item['objChat']['data'] == 'hostdisconnect') {
+    //       setState(() {
+    //         hasError = true;
+    //       });
+    //     }
+    //   }
+    // }
   }
 
   void _initializeConnectivityListener() async {
@@ -86,6 +113,8 @@ class PlayerLayoutState extends State<PlayerLayout>
                 });
                 videoController.play();
               }
+            }).catchError((error) {
+              print('[V] video catch error: $error');
             });
       // }).catchError((error) {
       //   print('[V]video catch error: $error');
@@ -119,8 +148,7 @@ class PlayerLayoutState extends State<PlayerLayout>
   void dispose() {
     videoController.dispose();
     _connectivitySubscription.cancel();
-    Wakelock.disable(); // Allow the device to sleep again
-    socketManager.socket!.off('chatresult');
+    Wakelock.disable();
     super.dispose();
   }
 
