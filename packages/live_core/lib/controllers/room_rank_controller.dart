@@ -23,16 +23,22 @@ class RoomRankController extends GetxController {
 
   @override
   void onInit() {
+    try {
+      liveRoomController = Get.find<LiveRoomController>(tag: pid.toString());
+
+      _fetchData();
+
+      // 设置定时器
+      _startRankTimer();
+
+      // 监听 liveRoomController 的变化
+      _worker = ever(liveRoomController.liveRoom, _handleLiveRoomChange);
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
+
     super.onInit();
-    liveRoomController = Get.find<LiveRoomController>(tag: pid.toString());
-
-    _fetchData();
-
-    // 设置定时器
-    _startRankTimer();
-
-    // 监听 liveRoomController 的变化
-    _worker = ever(liveRoomController.liveRoom, _handleLiveRoomChange);
   }
 
   void _handleLiveRoomChange(LiveRoom? liveRoom) {
@@ -58,22 +64,23 @@ class RoomRankController extends GetxController {
       var getRoomRank = await LiveApi().getRank(pid);
       if (getRoomRank.data != null) {
         liveRoomController.setAmount(getRoomRank.data!.amount);
-        liveRoomController.setUserCount(getRoomRank.data!.users);
-        roomRank.value = getRoomRank.data;
+        // liveRoomController.setUserCount(getRoomRank.data!.users);
+        // roomRank.value = getRoomRank.data;
 
-        // 處理UI要不要顯示付費提示 Dialog
-        if (liveRoomController.liveRoomInfo.value?.chargeType == 3 &&
-            getRoomRank.data!.amount > 0) {
-          if (!userClosedDialog) {
-            shouldShowPaymentPrompt.value = true;
-          }
-        } else {
-          shouldShowPaymentPrompt.value = false;
-          userClosedDialog = false;
-        }
+        // // 處理UI要不要顯示付費提示 Dialog
+        // if (liveRoomController.liveRoomInfo.value?.chargeType == 3 &&
+        //     getRoomRank.data!.amount > 0) {
+        //   if (!userClosedDialog) {
+        //     shouldShowPaymentPrompt.value = true;
+        //   }
+        // } else {
+        //   shouldShowPaymentPrompt.value = false;
+        //   userClosedDialog = false;
+        // }
       }
     } catch (e) {
-      return;
+      print(e);
+      rethrow;
     }
   }
 

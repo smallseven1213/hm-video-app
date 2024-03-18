@@ -98,31 +98,29 @@ class ChatroomLayoutState extends State<ChatroomLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return ChatroomProvider(
-        chatToken: widget.token,
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height / 2,
-          width: MediaQuery.of(context).size.width - 100,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const LeftSideGifts(),
-              Expanded(
-                  child: ChatroomMessages(
-                pid: widget.pid,
-              )),
-              const SizedBox(height: 25),
-              InkWell(
-                onTap: _showBottomSheet,
-                child: Image.asset(
-                    'packages/live_ui_basic/assets/images/talk_button.webp',
-                    width: 33,
-                    height: 33),
-              ),
-              const SizedBox(height: 25),
-            ],
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 3,
+      width: MediaQuery.of(context).size.width - 100,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const LeftSideGifts(),
+          Expanded(
+              child: ChatroomMessages(
+            pid: widget.pid,
+          )),
+          const SizedBox(height: 25),
+          InkWell(
+            onTap: _showBottomSheet,
+            child: Image.asset(
+                'packages/live_ui_basic/assets/images/talk_button.webp',
+                width: 33,
+                height: 33),
           ),
-        ));
+          const SizedBox(height: 25),
+        ],
+      ),
+    );
   }
 }
 
