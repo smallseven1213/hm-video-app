@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
@@ -21,10 +22,12 @@ Future<dynamic> liveFetcher({
   bool? shouldValidate = true,
 }) async {
   final token = GetStorage().read('live-token');
+  Locale locale = WidgetsBinding.instance.platformDispatcher.locale;
 
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
     'authorization': 'Bearer $token',
+    'language': locale.toString(),
   };
 
   final options = Options(
