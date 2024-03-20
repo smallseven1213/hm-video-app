@@ -61,7 +61,7 @@ class LiveScaffoldState extends State<LiveScaffold> {
       GetStorage().write('live-token', response.data["token"]);
       liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;
-      Get.put(LiveListController());
+      Get.replace<LiveListController>(LiveListController());
       Get.put(LiveUserController());
       Get.put(UserFollowsController());
       Get.put(GiftsController());

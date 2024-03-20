@@ -142,9 +142,20 @@ class RoomItem extends StatelessWidget {
             ),
             Positioned(
               left: 10,
-              bottom: 30,
+              bottom: 56,
               child: Text(
                 '@${room.nickname}',
+                style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+            ),
+            Positioned(
+              left: 10,
+              bottom: 33,
+              child: Text(
+                room.title,
                 style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
