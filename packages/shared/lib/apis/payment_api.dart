@@ -33,7 +33,7 @@ class PaymentApi {
   Future<Payment> getPaymentById(int id) async {
     var res = await fetcher(url: '$apiPrefix/payment?id=$id');
     if (res.data['code'] != '00') {
-      return Payment(0, '');
+      return Payment(0, '', '');
     }
     return Payment.fromJson(res.data['data']);
   }

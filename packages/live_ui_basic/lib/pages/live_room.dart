@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/libs/show_live_dialog.dart';
 import 'package:live_ui_basic/localization/live_localization_delegate.dart';
@@ -128,27 +129,27 @@ class LiveRoomPageState extends State<LiveRoomPage> {
     return Obx(() {
       if (controller.liveRoom.value != null) {
         return Scaffold(
-          body: Stack(
+            body: ChatroomProvider(
+          chatToken: controller.liveRoom.value!.chattoken,
+          child: Stack(
             children: [
-              if (controller.displayAmount.value > 0 ||
-                  controller.liveRoom.value!.pullUrlDecode == null)
-                Container(color: Colors.black),
-              if (controller.displayAmount.value <= 0 &&
-                  controller.liveRoom.value!.pullUrlDecode != null &&
+              Container(color: Colors.black),
+              if (controller.liveRoom.value!.pullUrlDecode != null &&
                   controller.liveRoom.value!.pullUrlDecode!.isNotEmpty)
                 PlayerLayout(
                     pid: widget.pid,
                     uri: Uri.parse(
                         '${controller.liveRoom.value!.pullUrlDecode!}&token=${GetStorage().read('live-token')}')),
-              Positioned(
-                top: MediaQuery.of(context).padding.top + 50,
-                left: 0,
-                child: TopControllers(
-                  key: ValueKey(controller.liveRoomInfo.value?.streamerId),
-                  hid: controller.liveRoomInfo.value?.streamerId ?? 0,
-                  pid: widget.pid,
+              if (controller.liveRoomInfo.value?.streamerId != null)
+                Positioned(
+                  top: MediaQuery.of(context).padding.top + 50,
+                  left: 0,
+                  child: TopControllers(
+                    key: ValueKey(controller.liveRoomInfo.value?.streamerId),
+                    hid: controller.liveRoomInfo.value?.streamerId ?? 0,
+                    pid: widget.pid,
+                  ),
                 ),
-              ),
               Positioned(
                   top: MediaQuery.of(context).padding.top + 80,
                   right: 10,
@@ -188,7 +189,7 @@ class LiveRoomPageState extends State<LiveRoomPage> {
               const CenterGiftScreen()
             ],
           ),
-        );
+        ));
       } else {
         return LiveRoomSkeleton(
           pid: widget.pid,

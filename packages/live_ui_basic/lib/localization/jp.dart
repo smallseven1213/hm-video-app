@@ -76,4 +76,6 @@ const Map<String, String> liveJaJpStrings = {
   "whether_to_continue_after_paid_time_expires": "有料時間が終了後に継続するかどうか",
   "working_hard": "一生懸命働いています",
   "fans": "ファン",
+  "preview": "プレビュー",
+  "recommend": "お勧め",
 };

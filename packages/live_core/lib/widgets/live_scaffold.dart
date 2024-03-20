@@ -11,6 +11,7 @@ import '../controllers/live_search_history_controller.dart';
 import '../controllers/live_system_controller.dart';
 import '../controllers/live_user_controller.dart';
 import '../controllers/user_follows_controller.dart';
+import 'loading.dart';
 
 class LiveScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
@@ -60,7 +61,7 @@ class LiveScaffoldState extends State<LiveScaffold> {
       GetStorage().write('live-token', response.data["token"]);
       liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;
-      Get.put(LiveListController());
+      Get.replace<LiveListController>(LiveListController());
       Get.put(LiveUserController());
       Get.put(UserFollowsController());
       Get.put(GiftsController());
@@ -75,23 +76,12 @@ class LiveScaffoldState extends State<LiveScaffold> {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading == true) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    } else if (isLogin == false) {
-      return const Scaffold(
-        body: Center(
-          child: CircularProgressIndicator(),
-        ),
-      );
-    }
     return Scaffold(
       appBar: widget.appBar,
       body: SafeArea(
-        child: widget.body ?? const SizedBox(),
+        child: (isLoading || !isLogin)
+            ? const SizedBox()
+            : widget.body ?? const SizedBox(),
       ),
       backgroundColor: widget.backgroundColor,
       floatingActionButton: widget.floatingActionButton,

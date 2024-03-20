@@ -66,9 +66,10 @@ class LiveSocketIOManager {
   }
 
   void _onMessageReceived(data) {
-    // 处理接收到的消息
-    // print('IO-Message received: $data');
-    _messageController.add(data); // Broadcast the message
+    // 检查流是否已关闭
+    if (!_messageController.isClosed) {
+      _messageController.add(data); // 如果没有关闭，继续广播消息
+    }
   }
 
   void _onError(data) {

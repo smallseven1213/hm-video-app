@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:live_core/widgets/live_scaffold.dart';
 import 'package:live_core/controllers/live_search_controller.dart';
 import 'package:live_core/controllers/live_search_history_controller.dart';
 import '../localization/live_localization_delegate.dart';
@@ -61,53 +60,61 @@ class SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
-    return LiveScaffold(
-      backgroundColor: const Color(0xFF242a3d),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF242a3d),
+        flexibleSpace: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          child: Row(
             children: [
-              const SizedBox(height: 50),
-              Row(
-                children: [
-                  TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Icon(Icons.arrow_back_ios,
-                          color: Colors.white, size: 16)),
-                  Expanded(
-                    child: SearchInputWidget(
-                      showCancel: displayKeywordResult || displaySearchResult,
-                      onChanged: (value) {
-                        setState(() {
-                          keyword = value;
-                          displayKeywordResult = true;
-                        });
-                        Get.find<LiveSearchController>().getKeywords(keyword);
-                      },
-                      onSearch: onSearch,
-                      onCancel: onCancel,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => onSearch(keyword),
-                    child: Text(
-                      localizations.translate('search'),
-                      style: const TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  )
-                ],
+              SizedBox(
+                width: 40,
               ),
-              const SizedBox(height: 8),
               Expanded(
-                child: displayKeywordResult
-                    ? KeywordList(onSearch: (value) => onSearch(value))
-                    : displaySearchResult
-                        ? SearchResults()
-                        : RecommendScreen(onSearch: (value) => onSearch(value)),
+                child: SearchInputWidget(
+                  showCancel: displayKeywordResult || displaySearchResult,
+                  onChanged: (value) {
+                    setState(() {
+                      keyword = value;
+                      displayKeywordResult = true;
+                    });
+                    Get.find<LiveSearchController>().getKeywords(keyword);
+                  },
+                  onSearch: onSearch,
+                  onCancel: onCancel,
+                ),
               ),
-              const SizedBox(height: 8),
+              TextButton(
+                onPressed: () => onSearch(keyword),
+                child: Text(
+                  localizations.translate('search'),
+                  style: const TextStyle(color: Colors.white, fontSize: 14),
+                ),
+              )
             ],
-          )),
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Container(
+          color: const Color(0xFF242a3d),
+          child: Padding(
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: displayKeywordResult
+                        ? KeywordList(onSearch: (value) => onSearch(value))
+                        : displaySearchResult
+                            ? SearchResults()
+                            : RecommendScreen(
+                                onSearch: (value) => onSearch(value)),
+                  ),
+                ],
+              )),
+        ),
+      ),
+      backgroundColor: const Color(0xFF242a3d),
     );
   }
 }

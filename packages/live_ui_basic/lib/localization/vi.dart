@@ -80,4 +80,6 @@ const Map<String, String> liveViVnStrings = {
       "Có tiếp tục sau khi thời gian trả phí kết thúc không",
   "working_hard": "Đang làm việc chăm chỉ",
   "fans": "cái quạt",
+  "preview": "Xem trước",
+  "recommend": "khuyến nghị",
 };

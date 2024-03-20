@@ -81,4 +81,6 @@ const Map<String, String> liveIdIdStrings = {
       "Apakah akan melanjutkan setelah waktu berbayar berakhir",
   "working_hard": "Bekerja keras",
   "fans": "penggemar",
+  "preview": "Pratinjau",
+  "recommend": "Merekomendasikan",
 };

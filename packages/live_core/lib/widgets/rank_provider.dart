@@ -26,6 +26,7 @@ class RankProviderState extends State<RankProvider> {
   void dispose() {
     // 删除控制器
     Get.delete<RoomRankController>(tag: widget.pid.toString());
+
     super.dispose();
   }
 

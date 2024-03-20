@@ -66,20 +66,18 @@ class LivePageState extends State<LivePage> {
   @override
   Widget build(BuildContext context) {
     return LiveScaffold(
+      appBar: AppBar(
+        backgroundColor: const Color(0xFF242a3d),
+        flexibleSpace: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          child: SearchWidget(),
+        ),
+      ),
       backgroundColor: const Color(0xFF242a3d),
       body: RoomListProvider(
         child: CustomScrollView(
           controller: _scrollController,
           slivers: [
-            const SliverToBoxAdapter(
-              child: SizedBox(height: 50),
-            ),
-            const SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: SearchWidget(),
-              ),
-            ),
             const SliverToBoxAdapter(
               child: SizedBox(height: 10),
             ),
