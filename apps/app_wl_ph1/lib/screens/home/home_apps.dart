@@ -1,4 +1,4 @@
-import 'package:app_gs/localization/i18n.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
 // HomeAppsScreen is a staltess widget which has no any containt.
 
 import 'package:flutter/material.dart';

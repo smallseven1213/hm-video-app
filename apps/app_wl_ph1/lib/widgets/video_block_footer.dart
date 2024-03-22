@@ -1,7 +1,7 @@
-import 'package:app_gs/localization/i18n.dart';
-import 'package:app_gs/config/colors.dart';
-import 'package:app_gs/widgets/channel_area_banner.dart';
-import 'package:app_gs/widgets/glowing_icon.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
+import 'package:app_wl_ph1/config/colors.dart';
+import 'package:app_wl_ph1/widgets/channel_area_banner.dart';
+import 'package:app_wl_ph1/widgets/glowing_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';

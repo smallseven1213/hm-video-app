@@ -1,5 +1,5 @@
-import 'package:app_gs/widgets/video_embedded_ad.dart';
-import 'package:app_gs/widgets/video_preview.dart';
+import 'package:app_wl_ph1/widgets/video_embedded_ad.dart';
+import 'package:app_wl_ph1/widgets/video_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';

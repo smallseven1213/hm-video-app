@@ -1,7 +1,7 @@
-import 'package:app_gs/localization/i18n.dart';
-import 'package:app_gs/widgets/custom_app_bar.dart';
-import 'package:app_gs/widgets/no_data.dart';
-import 'package:app_gs/widgets/search_input.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
+import 'package:app_wl_ph1/widgets/custom_app_bar.dart';
+import 'package:app_wl_ph1/widgets/no_data.dart';
+import 'package:app_wl_ph1/widgets/search_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';

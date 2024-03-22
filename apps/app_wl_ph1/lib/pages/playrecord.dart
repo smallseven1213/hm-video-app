@@ -1,4 +1,4 @@
-import 'package:app_gs/localization/i18n.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -95,7 +95,9 @@ class PlayRecordPageState extends State<PlayRecordPage>
                 listEditorController.toggleEditing();
               },
               child: Text(
-                listEditorController.isEditing.value ? I18n.cancel : I18n.editTranslation,
+                listEditorController.isEditing.value
+                    ? I18n.cancel
+                    : I18n.editTranslation,
                 style: const TextStyle(color: Color(0xff00B0D4)),
               )))
         ],

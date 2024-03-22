@@ -1,4 +1,4 @@
-import 'package:app_gs/widgets/actor_avatar.dart';
+import 'package:app_wl_ph1/widgets/actor_avatar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

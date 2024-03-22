@@ -1,4 +1,4 @@
-import 'package:app_gs/localization/i18n.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/ads_api.dart';
 import 'package:shared/models/index.dart';

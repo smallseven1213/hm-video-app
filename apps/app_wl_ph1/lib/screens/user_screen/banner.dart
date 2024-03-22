@@ -1,4 +1,4 @@
-import 'package:app_gs/widgets/carousel.dart';
+import 'package:app_wl_ph1/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/modules/banner/banner_consumer.dart';

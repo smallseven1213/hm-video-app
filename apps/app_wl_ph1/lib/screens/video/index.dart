@@ -1,4 +1,4 @@
-import 'package:app_gs/screens/video/video_player_area/index.dart';
+import 'package:app_wl_ph1/screens/video/video_player_area/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

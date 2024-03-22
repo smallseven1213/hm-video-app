@@ -1,4 +1,4 @@
-import 'package:app_gs/widgets/video_preview.dart';
+import 'package:app_wl_ph1/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/enums/app_routes.dart';

@@ -1,7 +1,7 @@
 // ChannelStyle2 is a stateless widget, return Text 'STYLE 2
-import 'package:app_gs/widgets/header.dart';
-import 'package:app_gs/widgets/reload_button.dart';
-import 'package:app_gs/widgets/video_preview.dart';
+import 'package:app_wl_ph1/widgets/header.dart';
+import 'package:app_wl_ph1/widgets/reload_button.dart';
+import 'package:app_wl_ph1/widgets/video_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/supplier_popular_controller.dart';
