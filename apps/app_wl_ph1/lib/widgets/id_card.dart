@@ -1,8 +1,8 @@
-import 'package:app_gs/localization/i18n.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
 import 'dart:ui';
 import 'dart:io';
 
-import 'package:app_gs/widgets/button.dart';
+import 'package:app_wl_ph1/widgets/button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

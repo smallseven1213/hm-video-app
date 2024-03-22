@@ -1,9 +1,9 @@
-import 'package:app_gs/localization/i18n.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
 // LoginPage , has button , click push to '/register'
 
-import 'package:app_gs/widgets/button.dart';
-import 'package:app_gs/widgets/custom_app_bar.dart';
-import 'package:app_gs/widgets/login/forgot_password_button.dart';
+import 'package:app_wl_ph1/widgets/button.dart';
+import 'package:app_wl_ph1/widgets/custom_app_bar.dart';
+import 'package:app_wl_ph1/widgets/login/forgot_password_button.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/modules/login/login_scaffold.dart';

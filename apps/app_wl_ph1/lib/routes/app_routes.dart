@@ -1,8 +1,8 @@
 library app_routes;
 
 import 'package:flutter/material.dart';
-import 'package:app_gs/pages/actor.dart' as actor_page;
-import 'package:app_gs/pages/configs.dart' as configs_page;
+import 'package:app_wl_ph1/pages/actor.dart' as actor_page;
+import 'package:app_wl_ph1/pages/configs.dart' as configs_page;
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';

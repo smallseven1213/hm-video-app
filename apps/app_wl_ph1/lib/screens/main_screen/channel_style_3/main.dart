@@ -1,7 +1,7 @@
-import 'package:app_gs/screens/main_screen/channel_style_3/tags.dart';
-import 'package:app_gs/screens/main_screen/channel_style_3/vods.dart';
-import 'package:app_gs/widgets/reload_button.dart';
-import 'package:app_gs/widgets/wave_loading.dart';
+import 'package:app_wl_ph1/screens/main_screen/channel_style_3/tags.dart';
+import 'package:app_wl_ph1/screens/main_screen/channel_style_3/vods.dart';
+import 'package:app_wl_ph1/widgets/reload_button.dart';
+import 'package:app_wl_ph1/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';

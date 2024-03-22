@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:app_gs/widgets/carousel.dart';
+import 'package:app_wl_ph1/widgets/carousel.dart';
 import 'package:shared/modules/channel/channel_banners_consumer.dart';
 
 class ChannelBanners extends StatelessWidget {

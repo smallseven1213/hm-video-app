@@ -1,6 +1,6 @@
-import 'package:app_gs/localization/i18n.dart';
-import 'package:app_gs/widgets/custom_app_bar.dart';
-import 'package:app_gs/widgets/tab_bar.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
+import 'package:app_wl_ph1/widgets/custom_app_bar.dart';
+import 'package:app_wl_ph1/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';
@@ -94,7 +94,9 @@ class FavoritesPageState extends State<FavoritesPage>
                   listEditorController.toggleEditing();
                 },
                 child: Text(
-                  listEditorController.isEditing.value ? I18n.cancel : I18n.editTranslation,
+                  listEditorController.isEditing.value
+                      ? I18n.cancel
+                      : I18n.editTranslation,
                   style: const TextStyle(color: Color(0xff00B0D4)),
                 )))
           ],

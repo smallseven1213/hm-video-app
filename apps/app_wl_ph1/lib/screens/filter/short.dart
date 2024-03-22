@@ -1,4 +1,4 @@
-import 'package:app_gs/screens/filter/filter_bar.dart';
+import 'package:app_wl_ph1/screens/filter/filter_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';

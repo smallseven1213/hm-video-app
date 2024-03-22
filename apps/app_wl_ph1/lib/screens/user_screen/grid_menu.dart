@@ -1,4 +1,4 @@
-import 'package:app_gs/widgets/id_card.dart';
+import 'package:app_wl_ph1/widgets/id_card.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/user_setting/user_setting_quick_link_consumer.dart';

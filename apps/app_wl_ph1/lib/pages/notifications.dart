@@ -1,8 +1,8 @@
-import 'package:app_gs/localization/i18n.dart';
-import 'package:app_gs/screens/notifications/notification.dart';
-import 'package:app_gs/screens/notifications/system.dart';
-import 'package:app_gs/widgets/custom_app_bar.dart';
-import 'package:app_gs/widgets/tab_bar.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
+import 'package:app_wl_ph1/screens/notifications/notification.dart';
+import 'package:app_wl_ph1/screens/notifications/system.dart';
+import 'package:app_wl_ph1/widgets/custom_app_bar.dart';
+import 'package:app_wl_ph1/widgets/tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/list_editor_controller.dart';

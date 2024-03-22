@@ -1,4 +1,4 @@
-import 'package:app_gs/widgets/button.dart';
+import 'package:app_wl_ph1/widgets/button.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 

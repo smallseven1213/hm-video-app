@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:app_gs/widgets/no_data.dart';
-import 'package:app_gs/widgets/video_preview.dart';
+import 'package:app_wl_ph1/widgets/no_data.dart';
+import 'package:app_wl_ph1/widgets/video_preview.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/widgets/refresh_list.dart';
-import 'package:app_gs/widgets/reload_button.dart';
+import 'package:app_wl_ph1/widgets/reload_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';

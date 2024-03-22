@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:app_gs/localization/i18n.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:app_gs/config/colors.dart';
+import 'package:app_wl_ph1/config/colors.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:shared/apis/auth_api.dart';
 import 'package:shared/controllers/auth_controller.dart';

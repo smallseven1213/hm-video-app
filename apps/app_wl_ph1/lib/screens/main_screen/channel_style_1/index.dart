@@ -1,9 +1,9 @@
-import 'package:app_gs/localization/i18n.dart';
-import 'package:app_gs/widgets/button.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
+import 'package:app_wl_ph1/widgets/button.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/widgets/refresh_list.dart';
-import 'package:app_gs/widgets/reload_button.dart';
+import 'package:app_wl_ph1/widgets/reload_button.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +12,7 @@ import 'package:shared/controllers/channel_data_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/channel_info.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:app_gs/widgets/video_list_loading_text.dart';
+import 'package:app_wl_ph1/widgets/video_list_loading_text.dart';
 
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
@@ -127,7 +127,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                                           )
                                         }
                                     },
-                                child:  Text(
+                                child: Text(
                                   '${I18n.more} >',
                                   style: const TextStyle(
                                     color: Colors.grey,

@@ -1,4 +1,4 @@
-import 'package:app_gs/screens/video/nested_tab_bar_view/video_list.dart';
+import 'package:app_wl_ph1/screens/video/nested_tab_bar_view/video_list.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/videos/video_by_actor_consumer.dart';

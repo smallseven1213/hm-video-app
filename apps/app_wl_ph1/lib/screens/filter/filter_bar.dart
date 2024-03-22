@@ -1,4 +1,4 @@
-import 'package:app_gs/localization/i18n.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
 // FilterBar is a statefull widget that is used to display the filter bar
 
 import 'package:flutter/material.dart';
@@ -70,7 +70,9 @@ class FilterBarState extends State<FilterBar> {
 
   Widget _buildClosed() {
     List<Widget> childrenWithSpacing = [
-      OptionButton(isSelected: true, name: widget.film == 1 ? I18n.longVideo : I18n.shortVideo),
+      OptionButton(
+          isSelected: true,
+          name: widget.film == 1 ? I18n.longVideo : I18n.shortVideo),
       const SizedBox(width: 10),
     ];
     List<Widget> children = widget.selectedOptions.entries

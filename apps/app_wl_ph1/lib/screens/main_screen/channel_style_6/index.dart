@@ -1,4 +1,4 @@
-import 'package:app_gs/widgets/wave_loading.dart';
+import 'package:app_wl_ph1/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_short_by_channel_style6.dart';

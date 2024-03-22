@@ -1,7 +1,7 @@
 // NicknamePage , has button , click push to '/info'
-import 'package:app_gs/localization/i18n.dart';
-import 'package:app_gs/widgets/button.dart';
-import 'package:app_gs/widgets/custom_app_bar.dart';
+import 'package:app_wl_ph1/localization/i18n.dart';
+import 'package:app_wl_ph1/widgets/button.dart';
+import 'package:app_wl_ph1/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -60,7 +60,7 @@ class NicknamePageState extends State<NicknamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:  CustomAppBar(
+      appBar: CustomAppBar(
         title: I18n.modifyNickname,
       ),
       body: SingleChildScrollView(

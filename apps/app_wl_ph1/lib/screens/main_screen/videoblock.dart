@@ -1,5 +1,5 @@
-import 'package:app_gs/config/colors.dart';
-import 'package:app_gs/widgets/channel_area_banner.dart';
+import 'package:app_wl_ph1/config/colors.dart';
+import 'package:app_wl_ph1/widgets/channel_area_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/channel_info.dart';
