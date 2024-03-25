@@ -95,6 +95,7 @@ class LiveApi {
           amount: apiResponse.data.amount,
           follow: apiResponse.data.follow,
           commands: apiResponse.data.commands,
+          languages: apiResponse.data.languages,
         ),
         // 下面測試用
         // pullUrlDecode:
