@@ -27,7 +27,14 @@ class MessageItemForGift extends StatelessWidget {
     }
     var giftName = gifts.first.name;
     var messageText =
-        "${message.objChat.name} ${localizations.translate('send_gift')} $giftName x${message.objChat.data.quantity}";
+        "${localizations.translate('send_gift')} $giftName x${message.objChat.data.quantity}";
+    var animationLayout = message.objChat.data.animationLayout;
+    var textColor = animationLayout == 3
+        ? const Color(0xFFffa900)
+        : const Color(0xFFcc706a);
+    var containerBackgroundColor = animationLayout == 3
+        ? const Color(0x4dffa700)
+        : const Color(0x65242a3d);
 
     return Container(
       margin: const EdgeInsets.only(top: 10),
@@ -58,7 +65,7 @@ class MessageItemForGift extends StatelessWidget {
             ),
             child: Container(
               decoration: BoxDecoration(
-                color: const Color(0x65242a3d),
+                color: containerBackgroundColor,
                 borderRadius: BorderRadius.circular(5),
               ),
               padding: const EdgeInsets.all(5),
@@ -66,15 +73,22 @@ class MessageItemForGift extends StatelessWidget {
                 text: TextSpan(
                   children: [
                     TextSpan(
+                        text: message.objChat.name!,
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 12)),
+                    const WidgetSpan(
+                      child: SizedBox(width: 10), // 提供固定的 10 單位空間
+                    ),
+                    TextSpan(
                       text: messageText,
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(color: textColor, fontSize: 12),
                     ),
                     const WidgetSpan(
                       child: SizedBox(width: 10), // 提供固定的 10 單位空間
                     ),
                     TextSpan(
                       text: formatTimestamp(message.timestamp),
-                      style: const TextStyle(color: Colors.white, fontSize: 12),
+                      style: TextStyle(color: textColor, fontSize: 12),
                     ),
                   ],
                 ),
