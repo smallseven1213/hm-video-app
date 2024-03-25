@@ -129,6 +129,19 @@ build-wl-cn1-job:       # This job runs in the build stage, which runs first.
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_cn1:dev
 
+build-wl-ph1-job:       # This job runs in the build stage, which runs first.
+  stage: build
+  tags:
+    - gitlab-shared-runner
+  only:
+    refs:
+      - develop
+  allow_failure: true
+  script:
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_ph1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_ph1:dev .
+    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_ph1:dev
+
 deploy-tt-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   tags:
