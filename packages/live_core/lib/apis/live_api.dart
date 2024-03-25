@@ -95,11 +95,55 @@ class LiveApi {
           amount: apiResponse.data.amount,
           follow: apiResponse.data.follow,
           commands: apiResponse.data.commands,
-          languages: apiResponse.data.languages,
+          trans: apiResponse.data.trans,
         ),
         // 下面測試用
         // pullUrlDecode:
         //     'rtmp://dev-live-ext.aizepin.com/live/yuki?txSecret=a0c69febcb0ce2d27c9c5696224f886b&txTime=6566B37B'),
+        msg: apiResponse.msg,
+      );
+    } catch (e) {
+      // Handle the exception
+      rethrow;
+    }
+  }
+
+  // /getTrans?trans=ja_JP
+  /*method:get
+req:
+{
+    "trans":字幕ID , 進入直播間API回傳的trans的KEY值
+}
+
+resp:
+{
+    "code": 200,
+    "data": {
+        "pullurl": "f83b842c2dd2e4aff11e9fec04857056ae143068093917b892a822e8769c1f7120303ead2636b30f9fcbb6f02e972d7ca092206377f319269404206e34ca4ff71272a35158fe1bccc2c627ecfa5344af959326b9b1a672093066cfa99eb8ce76f9f21a67bc399f79a7f18004bf9e5737b1f9cc9ceb433f9622c9e4edf92e485ce193f95cf0a4e83e683687dba4d03172c"
+    },
+    "msg": "success"
+}
+*/
+  Future<LiveApiResponseBase<dynamic>> getTrans(String trans) async {
+    try {
+      final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
+      var response = await liveFetcher(
+        url: '$liveApiHost/getTrans?trans=$trans',
+        method: 'GET',
+      );
+
+      if (response.data["code"] != 200) {
+        throw Exception('No response from server');
+      }
+
+      LiveApiResponseBase<dynamic> apiResponse = LiveApiResponseBase.fromJson(
+        response.data,
+        (data) => data,
+      );
+
+      return LiveApiResponseBase<dynamic>(
+        code: apiResponse.code,
+        data: apiResponse.data,
         msg: apiResponse.msg,
       );
     } catch (e) {

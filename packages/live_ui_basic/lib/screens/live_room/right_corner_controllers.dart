@@ -15,7 +15,7 @@ class RightCornerControllers extends StatelessWidget {
       children: [
         const More(),
         const SizedBox(height: 15),
-        const Languages(),
+        Languages(pid: pid),
         const SizedBox(height: 15),
         const Resize(),
         const SizedBox(height: 15),

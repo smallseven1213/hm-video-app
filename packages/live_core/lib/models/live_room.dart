@@ -25,7 +25,7 @@ class LiveRoom {
   double amount;
   List<Command> commands;
   String? pullUrlDecode;
-  List<Language> languages = [];
+  List<Language> trans = [];
 
   LiveRoom(
       {required this.chattoken,
@@ -33,7 +33,7 @@ class LiveRoom {
       required this.hid,
       required this.pullurl,
       required this.commands,
-      required this.languages,
+      required this.trans,
       this.follow = false,
       this.amount = 0,
       this.pullUrlDecode});
@@ -46,7 +46,7 @@ class LiveRoom {
         hid: getField(json, 'hid', defaultValue: 0),
         pullurl: getField(json, 'pullurl', defaultValue: ''),
         amount: getField(json, 'amount', defaultValue: 0),
-        languages: getField(json, 'languages', defaultValue: [])
+        trans: getField(json, 'trans', defaultValue: [])
             .map<Language>((e) => Language.fromJson(e))
             .toList(),
         commands: getField(json, 'commands', defaultValue: [])
@@ -64,7 +64,7 @@ class LiveRoom {
       'follow': follow,
       'hid': hid,
       'commands': commands.map((e) => e.toJson()).toList(),
-      'languages': languages.toList(),
+      'trans': trans.toList(),
     };
   }
 }

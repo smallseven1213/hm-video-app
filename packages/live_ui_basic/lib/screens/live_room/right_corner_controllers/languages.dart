@@ -7,7 +7,8 @@ import 'package:live_core/controllers/live_room_controller.dart';
 import '../../../localization/live_localization_delegate.dart';
 
 class Languages extends StatelessWidget {
-  const Languages({Key? key}) : super(key: key);
+  final int pid;
+  const Languages({super.key, required this.pid});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class Languages extends StatelessWidget {
           context: context,
           backgroundColor: Colors.transparent,
           builder: (BuildContext context) {
-            return const LanguagesView();
+            return LanguagesView(pid: pid);
           },
         );
       },
@@ -30,33 +31,35 @@ class Languages extends StatelessWidget {
 }
 
 class LanguagesView extends StatelessWidget {
-  const LanguagesView({Key? key}) : super(key: key);
+  final int pid;
+  const LanguagesView({super.key, required this.pid});
 
   @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
     final LiveRoomController liveRoomController =
-        Get.find<LiveRoomController>();
+        Get.find<LiveRoomController>(tag: pid.toString());
 
     return Container(
         height: MediaQuery.of(context).padding.bottom + 200,
         width: double.infinity,
+        color: Colors.black,
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 20),
         // child is listview, from liveRoomController.liveRoom.trans
         child: Obx(() {
-          if (liveRoomController.liveRoom.value?.languages == null) {
+          if (liveRoomController.liveRoom.value?.trans == null) {
             return const SizedBox();
           }
 
-          var lanauges = liveRoomController.liveRoom.value!.languages;
+          var trans = liveRoomController.liveRoom.value!.trans;
 
           // list from languages
           return ListView.builder(
-            itemCount: lanauges.length,
+            itemCount: trans.length,
             itemBuilder: (BuildContext context, int index) {
               return InkWell(
                 onTap: () {
-                  FlutterClipboard.copy(lanauges[index].code).then((value) {
+                  FlutterClipboard.copy(trans[index].code).then((value) {
                     Fluttertoast.showToast(
                       msg: "ok",
                       toastLength: Toast.LENGTH_SHORT,
@@ -71,9 +74,9 @@ class LanguagesView extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   height: 40,
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Text(
-                    lanauges[index].name,
+                    trans[index].name,
                     style: const TextStyle(color: Colors.white),
                   ),
                 ),
