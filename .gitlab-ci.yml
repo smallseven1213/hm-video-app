@@ -214,6 +214,18 @@ deploy-wl-cn1-job:      # This job runs in the deploy stage.
     - echo "Deploying application..."
     - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-cn1" -f /home/gitlab-runner/hm-helm/helm-charts/wl-cn1/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-cn1/${CI_PROJECT_NAME} -n video-dev
     - echo "Application successfully deployed."
+
+deploy-wl-ph1-job:      # This job runs in the deploy stage.
+  stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
+  tags:
+    - gitlab-shared-runner
+  only:
+    refs:
+      - develop
+  script:
+    - echo "Deploying application..."
+    - helm upgrade --kubeconfig /home/gitlab-runner/.kube/config-list/dev --install "${CI_PROJECT_NAME}-wl-ph1" -f /home/gitlab-runner/hm-helm/helm-charts/wl-ph1/${CI_PROJECT_NAME}/values.yaml.dev --set global.release=$(echo "dev-`date +%F-%T`") /home/gitlab-runner/hm-helm/helm-charts/wl-ph1/${CI_PROJECT_NAME} -n video-dev
+    - echo "Application successfully deployed."
 ################### --- ####################
 
 build-prod-job: 
