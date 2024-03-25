@@ -62,21 +62,18 @@ class StreamerProfileCard extends StatelessWidget {
             ),
             if (profile.isLive == true)
               Positioned(
-                top: 8,
-                right: 8,
-                child: Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.pink,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: const Text(
-                    'LIVE',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
+                  top: 8,
+                  right: 8,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2.0),
+                      color: const Color(0xffe6cf5fb0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 4.0, vertical: 2.0),
+                    child: const Text('LIVE',
+                        style: TextStyle(color: Colors.white, fontSize: 10)),
+                  )),
             Positioned(
               bottom: 0,
               left: 0,
@@ -108,7 +105,7 @@ class StreamerProfileCard extends StatelessWidget {
                                   ? const Color(0xff7b7b7b)
                                   : const Color(0xffae57ff),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18),
+                                borderRadius: BorderRadius.circular(4),
                               ),
                             ),
                             onPressed: () {
