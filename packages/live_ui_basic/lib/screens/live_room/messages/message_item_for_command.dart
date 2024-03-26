@@ -35,7 +35,7 @@ class MessageItemForCommand extends StatelessWidget {
               maxWidth: MediaQuery.of(context).size.width - 120,
             ),
             child: Container(
-              margin: const EdgeInsets.only(top: 10),
+              margin: const EdgeInsets.only(top: 5),
               height: 25,
               // radius 12.5
               decoration: BoxDecoration(
