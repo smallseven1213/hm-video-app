@@ -124,7 +124,8 @@ resp:
     "msg": "success"
 }
 */
-  Future<LiveApiResponseBase<dynamic>> getTrans(String trans) async {
+  Future<LiveApiResponseBase<dynamic>> getStreamPullUrlByTran(
+      String trans) async {
     try {
       final liveApiHost = Get.find<LiveSystemController>().liveApiHostValue;
       var response = await liveFetcher(
@@ -141,9 +142,13 @@ resp:
         (data) => data,
       );
 
+      String decryptedData = apiResponse.data.pullurl.isNotEmpty
+          ? decryptAES256ECB(apiResponse.data.pullurl)
+          : "";
+
       return LiveApiResponseBase<dynamic>(
         code: apiResponse.code,
-        data: apiResponse.data,
+        data: decryptedData,
         msg: apiResponse.msg,
       );
     } catch (e) {

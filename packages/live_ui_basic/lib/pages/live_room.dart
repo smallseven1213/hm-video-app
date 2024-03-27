@@ -139,7 +139,7 @@ class LiveRoomPageState extends State<LiveRoomPage> {
                 PlayerLayout(
                     pid: widget.pid,
                     uri: Uri.parse(
-                        '${controller.liveRoom.value!.pullUrlDecode!}&token=${GetStorage().read('live-token')}')),
+                        '${controller.currentVideoPullUrl.value}&token=${GetStorage().read('live-token')}')),
               if (controller.liveRoomInfo.value?.streamerId != null)
                 Positioned(
                   top: MediaQuery.of(context).padding.top + 50,
