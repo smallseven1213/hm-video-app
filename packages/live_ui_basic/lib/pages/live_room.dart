@@ -134,12 +134,13 @@ class LiveRoomPageState extends State<LiveRoomPage> {
           child: Stack(
             children: [
               Container(color: Colors.black),
-              if (controller.liveRoom.value!.pullUrlDecode != null &&
-                  controller.liveRoom.value!.pullUrlDecode!.isNotEmpty)
+              if (controller.currentVideoPullUrl.value != "" &&
+                  controller.currentVideoPullUrl.value.isNotEmpty)
                 PlayerLayout(
+                    key: ValueKey(controller.currentVideoPullUrl.value),
                     pid: widget.pid,
                     uri: Uri.parse(
-                        '${controller.liveRoom.value!.pullUrlDecode!}&token=${GetStorage().read('live-token')}')),
+                        '${controller.currentVideoPullUrl.value}&token=${GetStorage().read('live-token')}')),
               if (controller.liveRoomInfo.value?.streamerId != null)
                 Positioned(
                   top: MediaQuery.of(context).padding.top + 50,

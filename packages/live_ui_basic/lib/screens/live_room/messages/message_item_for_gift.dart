@@ -37,28 +37,28 @@ class MessageItemForGift extends StatelessWidget {
         : const Color(0x65242a3d);
 
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 5),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         // vertical top
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ClipOval(
-              child: Container(
-                  width: 25.0,
-                  height: 25.0,
-                  color: Colors.black,
-                  child: message.objChat.avatar == ""
-                      ? SvgPicture.asset(
-                          'packages/live_ui_basic/assets/svgs/default_avatar.svg',
-                          fit: BoxFit.cover,
-                        )
-                      : // message.objChat.avatar use Image remote
-                      Image.network(
-                          message.objChat.avatar,
-                          fit: BoxFit.cover,
-                        ))),
-          const SizedBox(width: 6),
+          // ClipOval(
+          //     child: Container(
+          //         width: 25.0,
+          //         height: 25.0,
+          //         color: Colors.black,
+          //         child: message.objChat.avatar == ""
+          //             ? SvgPicture.asset(
+          //                 'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+          //                 fit: BoxFit.cover,
+          //               )
+          //             : // message.objChat.avatar use Image remote
+          //             Image.network(
+          //                 message.objChat.avatar,
+          //                 fit: BoxFit.cover,
+          //               ))),
+          // const SizedBox(width: 6),
           ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width - 120,
