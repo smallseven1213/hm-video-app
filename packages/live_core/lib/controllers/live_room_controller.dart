@@ -11,6 +11,8 @@ class LiveRoomController extends GetxController {
   Rx<double> displayAmount = 0.0.obs; // 金額
   var displayUserCount = 0.obs; // 人數
   var hasError = false.obs;
+  var currentVideoPullUrl = ''.obs;
+  Rx<Language?> currentTranslate = Rx<Language?>(null);
 
   LiveRoomController(this.pid);
 
@@ -19,6 +21,20 @@ class LiveRoomController extends GetxController {
   void onInit() {
     super.onInit();
     Get.find<LiveUserController>().getUserDetail();
+
+    // 如果currentTranslate改變了，要print('currentTranslate changed')
+    ever(currentTranslate, (tran) async {
+      if (tran == null) {
+        currentVideoPullUrl.value = liveRoom.value?.pullurl ?? '';
+      } else {
+        try {
+          var req = await liveApi.getStreamPullUrlByTran(tran.code);
+          currentVideoPullUrl.value = req.data;
+        } catch (e) {
+          currentVideoPullUrl.value = liveRoom.value?.pullurl ?? '';
+        }
+      }
+    });
   }
 
   // fetch from "liveApi.getList"
@@ -28,6 +44,7 @@ class LiveRoomController extends GetxController {
       var res = await liveApi.enterRoom(pid);
       liveRoom.value = res.data;
       displayAmount.value = res.data?.amount ?? 0;
+      currentVideoPullUrl.value = res.data?.pullurl ?? '';
     } catch (e) {
       hasError.value = true;
     }
@@ -41,6 +58,11 @@ class LiveRoomController extends GetxController {
     // liveRoom.update((val) {
     //   val!.amount = amount;
     // });
+  }
+
+  // setCurrentTranslate
+  void setCurrentTranslate(Language? language) {
+    currentTranslate.value = language;
   }
 
   // setUserCount
