@@ -6,6 +6,7 @@ import 'package:game/localization/id.dart';
 import 'package:game/localization/vi.dart';
 import 'package:game/localization/zh.dart';
 import 'package:game/localization/zn.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'package:live_ui_basic/localization/live_localization_delegate.dart';
 import 'package:live_ui_basic/localization/en.dart';
@@ -69,10 +70,16 @@ class RootWidget extends StatelessWidget {
     );
 
     final parser = MyRouteParser();
+    GetStorage box = GetStorage();
 
     // if defaultLocale not null, then use it
     if (defaultLocale != null) {
       context.setLocale(defaultLocale!);
+      box.write('locale',
+          '${defaultLocale!.languageCode}_${defaultLocale!.countryCode}');
+    } else {
+      context.setLocale(const Locale('zh_TW'));
+      box.write('locale', 'zh_TW');
     }
 
     return MaterialApp.router(
