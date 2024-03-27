@@ -27,8 +27,12 @@ class LiveRoomController extends GetxController {
       if (tran == null) {
         currentVideoPullUrl.value = liveRoom.value?.pullurl ?? '';
       } else {
-        var req = await liveApi.getStreamPullUrlByTran(tran.code);
-        currentVideoPullUrl.value = req.data;
+        try {
+          var req = await liveApi.getStreamPullUrlByTran(tran.code);
+          currentVideoPullUrl.value = req.data;
+        } catch (e) {
+          currentVideoPullUrl.value = liveRoom.value?.pullurl ?? '';
+        }
       }
     });
   }

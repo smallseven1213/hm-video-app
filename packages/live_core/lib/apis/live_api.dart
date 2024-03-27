@@ -142,9 +142,10 @@ resp:
         (data) => data,
       );
 
-      String decryptedData = apiResponse.data.pullurl.isNotEmpty
-          ? decryptAES256ECB(apiResponse.data.pullurl)
-          : "";
+      final pullurl = apiResponse.data['pullurl'];
+
+      String decryptedData =
+          pullurl != null && pullurl != "" ? decryptAES256ECB(pullurl) : "";
 
       return LiveApiResponseBase<dynamic>(
         code: apiResponse.code,

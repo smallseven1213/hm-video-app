@@ -52,32 +52,59 @@ class LanguagesView extends StatelessWidget {
           }
 
           var trans = liveRoomController.liveRoom.value!.trans;
+          var currentTranslate = liveRoomController.currentTranslate.value;
 
-          // list from languages
-          return ListView.builder(
-            itemCount: trans.length,
+          return ListView.separated(
+            itemCount: trans.length + 1,
+            separatorBuilder: (BuildContext context, int index) {
+              return const Divider(
+                height: 1,
+                color: Colors.white,
+              );
+            },
             itemBuilder: (BuildContext context, int index) {
+              var tran = index > 0 ? trans[index - 1] : null;
+              var isSelected = false;
+              if (index == 0) {
+                isSelected = currentTranslate == null;
+              } else {
+                isSelected = currentTranslate?.code == tran?.code;
+              }
               return InkWell(
                 onTap: () {
-                  FlutterClipboard.copy(trans[index].code).then((value) {
-                    Fluttertoast.showToast(
-                      msg: "ok",
-                      toastLength: Toast.LENGTH_SHORT,
-                      gravity: ToastGravity.BOTTOM,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black.withOpacity(0.8),
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  });
+                  if (index == 0) {
+                    liveRoomController.setCurrentTranslate(null);
+                    return;
+                  }
+                  liveRoomController.setCurrentTranslate(tran);
+                  Navigator.of(context).pop();
                 },
                 child: Container(
                   padding: const EdgeInsets.only(left: 10, right: 10),
                   height: 40,
                   alignment: Alignment.center,
-                  child: Text(
-                    trans[index].name,
-                    style: const TextStyle(color: Colors.white),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        index == 0
+                            ? localizations.translate('close')
+                            : tran!.name,
+                        style: TextStyle(
+                          color: isSelected ? Colors.purple : Colors.white,
+                        ),
+                      ),
+                      isSelected
+                          ? const Padding(
+                              padding: EdgeInsets.only(left: 10),
+                              child: Image(
+                                  image: AssetImage(
+                                      "packages/live_ui_basic/assets/images/room_is_followed_icon.webp"),
+                                  width: 12,
+                                  height: 12),
+                            )
+                          : const SizedBox(),
+                    ],
                   ),
                 ),
               );
