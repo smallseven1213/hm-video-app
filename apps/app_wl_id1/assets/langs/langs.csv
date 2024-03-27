@@ -89,25 +89,25 @@ for_account_retrieval,"For account retrieval, please keep it in a safe place and
 identity_card_has_been_successfully_saved,Identity card has been successfully saved,已成功保存身份卡,已成功保存身份卡,Đã lưu thẻ nhận dạng thành công,証明書が正常に保存されました。,Kartu identitas berhasil disimpan
 please_save_the_screenshot,Please save the screenshot,請截圖保存,請截圖保存,Vui lòng chụp ảnh màn hình và lưu lại,スクリーンショットを保存してください。,Silakan screenshot dan simpan
 official_website,official website,官方地址,官方地址,Địa chỉ chính thức,公式ウェブサイト,Alamat resmi
-the_top_is_down,The top is down,頂到底了,頂到底了,Đạt đến đáy rồi,トップは下がっています。,Sudah mencapai batas atas
-its_too_deep_maam,"It's too deep, ma'am",太深了客倌,太深了客倌,Quá sâu rồi khách ơi,奥が深すぎます、奥様。,"Terlalu dalam, Tuan"
-take_your_time_dont_be_so_picky,"Take your time, don't be so picky",慢慢看，別這麼挑,慢慢看，別這麼挑,"Hãy nhìn chậm, đừng chọn lựa quá kỹ",ゆっくり時間をかけて、そんなに好き嫌いしないでください。,"Lihatlah dengan perlahan, jangan terlalu pilih-pilih"
-ive_reached_the_center_of_my_heart,I've reached the center of my heart,花心已抵達,花心已抵達,Hoa đã đến,私の心の中心に達しました。,Hati bunga telah tiba
-im_sure_your_are_the_same_kind_of_me,I'm sure you're the same kind of me,確認過眼神，您是同道中人,確認過眼神，您是同道中人,"Xác nhận qua ánh mắt, bạn là người cùng chí hướng",私はあなたも私と同じ種類の人間だと確信しています。,"Konfirmasi lewat tatapan mata, Anda seorang teman sejati"
+the_top_is_down,You've scrolled all the way down,頂到底了,頂到底了,Đạt đến đáy rồi,トップは下がっています。,Anda telah menggulir hingga ke bawah sepenuhnya
+its_too_deep_maam,You've scrolled all the way down,太深了客倌,太深了客倌,Quá sâu rồi khách ơi,奥が深すぎます、奥様。,Anda telah menggulir hingga ke bawah sepenuhnya
+take_your_time_dont_be_so_picky,You've scrolled all the way down,慢慢看，別這麼挑,慢慢看，別這麼挑,"Hãy nhìn chậm, đừng chọn lựa quá kỹ",ゆっくり時間をかけて、そんなに好き嫌いしないでください。,Anda telah menggulir hingga ke bawah sepenuhnya
+ive_reached_the_center_of_my_heart,You've scrolled all the way down,花心已抵達,花心已抵達,Hoa đã đến,私の心の中心に達しました。,Anda telah menggulir hingga ke bawah sepenuhnya
+im_sure_your_are_the_same_kind_of_me,You've scrolled all the way down,確認過眼神，您是同道中人,確認過眼神，您是同道中人,"Xác nhận qua ánh mắt, bạn là người cùng chí hướng",私はあなたも私と同じ種類の人間だと確信しています。,Anda telah menggulir hingga ke bawah sepenuhnya
 select_all,Select All,全選,全選,Chọn tất cả,全て選択,Pilih Semua
 delete,Delete,刪除,刪除,Xóa bỏ,削除,Hapus
 there_is_nothing_here,There is nothing here,這裡什麼都沒有,這裡什麼都沒有,Ở đây không có gì cả,ここには何もありません。,Tidak ada apa-apa di sini
 loading,Loading,讀取中,讀取中,Đang tải,Translation: ローディング,Sedang memuat
-entry_window,Entry window,進入櫥窗,進入櫥窗,Vào cửa hàng,エントリーウィンドウ,Masuk ke etalase
+entry_window,Enter,進入櫥窗,進入櫥窗,Vào cửa hàng,エントリーウィンドウ,Masuk
 username,Username,用戶名稱,用戶名稱,Tên người dùng,ユーザー名,Nama pengguna
-its_a_big_file,"It's a big file, so bear with me.",檔案很大，你忍一下,檔案很大，你忍一下,"Tệp tin rất lớn, bạn hãy kiên nhẫn chút",ファイルが大きいので、しばらくお待ちください。,"File-nya besar, sabar ya"
-its_not_ready_yet,It's not ready yet. Take it easy.,還沒準備好，你先悠著來,還沒準備好，你先悠著來,"Chưa sẵn sàng, bạn hãy đến thong thả trước",まだ準備ができていません。ゆっくりしてください。,"Belum siap, kamu santai dulu"
-its_about_to_happen,It's about to happen.,精彩即將呈現,精彩即將呈現,Sắp tới sẽ có những điều thú vị,それが起ころうとしています。,Keseruan akan segera hadir
-we_are_trying_to_load_t,We're trying to load it.,努力加載中,努力加載中,Đang cố gắng tải,私たちはそれを読み込もうとしています。,Sedang berusaha memuat
-let_the_file_load_for_a_while,Let the file load for a while,讓檔案載一會兒,讓檔案載一會兒,Hãy để tệp tải một chút,ファイルがしばらく読み込まれるのを待ってください。,Biarkan file tersebut diunduh sebentar
-its_worth_wating_for_the_good_stuff,It's worth waiting for the good stuff.,美好事物，值得等待,美好事物，值得等待,"Những điều tuyệt vời, đáng đợi đến",良いものを待つ価値がある。,Hal-hal indah itu layak untuk ditunggu
-trying_to_move_bricks,Trying to move bricks,拼命搬磚中,拼命搬磚中,Đang cố gắng chuyển đá,レンガを動かそうとしています。,Sedang bekerja keras
-loading_now,Loading now,正在加載,正在加载,Đang tải,読み込み中です。,Sedang memuat
+its_a_big_file,Loading,檔案很大，你忍一下,檔案很大，你忍一下,"Tệp tin rất lớn, bạn hãy kiên nhẫn chút",ファイルが大きいので、しばらくお待ちください。,Sedang memuat
+its_not_ready_yet,Loading,還沒準備好，你先悠著來,還沒準備好，你先悠著來,"Chưa sẵn sàng, bạn hãy đến thong thả trước",まだ準備ができていません。ゆっくりしてください。,Sedang memuat
+its_about_to_happen,Loading,精彩即將呈現,精彩即將呈現,Sắp tới sẽ có những điều thú vị,それが起ころうとしています。,Sedang memuat
+we_are_trying_to_load_t,Loading,努力加載中,努力加載中,Đang cố gắng tải,私たちはそれを読み込もうとしています。,Sedang memuat
+let_the_file_load_for_a_while,Loading,讓檔案載一會兒,讓檔案載一會兒,Hãy để tệp tải một chút,ファイルがしばらく読み込まれるのを待ってください。,Sedang memuat
+its_worth_wating_for_the_good_stuff,Loading,美好事物，值得等待,美好事物，值得等待,"Những điều tuyệt vời, đáng đợi đến",良いものを待つ価値がある。,Sedang memuat
+trying_to_move_bricks,Loading,拼命搬磚中,拼命搬磚中,Đang cố gắng chuyển đá,レンガを動かそうとしています。,Sedang memuat
+loading_now,Loading,正在加載,正在加载,Đang tải,読み込み中です。,Sedang memuat
 all_female_actors,All girls,全部女優,全部女優,Tất cả nữ diễn viên,全ての女優リスト,Semua aktris
 login,Login,登入,登入,Đăng nhập,ログイン,Masuk
 confirm_action,Confirm,確定,確定,Xác nhận,確認,Pastikan
