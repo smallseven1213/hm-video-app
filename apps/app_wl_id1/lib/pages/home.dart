@@ -2,7 +2,6 @@ import 'package:app_wl_id1/screens/home/home_apps.dart';
 import 'package:app_wl_id1/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/screens/enter_game_screen/index.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:live_ui_basic/pages/live.dart';
@@ -16,6 +15,7 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../config/layouts.dart';
+import '../screens/enter_game_screen/index.dart';
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';

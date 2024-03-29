@@ -36,8 +36,9 @@ import '../localization/game_localization_delegate.dart';
 final logger = Logger();
 
 class GameLobby extends StatefulWidget {
+  final bool? hideAppBar;
   final String? bottom;
-  const GameLobby({Key? key, this.bottom}) : super(key: key);
+  const GameLobby({Key? key, this.hideAppBar, this.bottom}) : super(key: key);
 
   @override
   State<GameLobby> createState() => _GameLobbyState();
@@ -101,61 +102,63 @@ class _GameLobbyState extends State<GameLobby>
     return Obx(() => gamesListController.isMaintenance.value == true
         ? const GameMaintenance()
         : Scaffold(
-            appBar: AppBar(
-              backgroundColor: gameLobbyBgColor,
-              centerTitle: true,
-              title: Text(
-                localizations.translate('game_lobby'),
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: gameLobbyAppBarTextColor,
-                ),
-              ),
-              // 如果roles是'guest'，就顯示登入按鈕
-              actions: userController.info.value.roles.contains('guest')
-                  ? [
-                      InkWell(
-                        onTap: () {
-                          showModel(
-                            context,
-                            content: GameLobbyLoginTabs(
-                              type: Type.login,
-                              onSuccess: () {
-                                // userController.fetchUserInfo();
-                                gameWalletController
-                                    .fetchWalletsInitFromThirdLogin();
-                                Navigator.pop(context);
+            appBar: widget.hideAppBar == true
+                ? null
+                : AppBar(
+                    backgroundColor: gameLobbyBgColor,
+                    centerTitle: true,
+                    title: Text(
+                      localizations.translate('game_lobby'),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: gameLobbyAppBarTextColor,
+                      ),
+                    ),
+                    // 如果roles是'guest'，就顯示登入按鈕
+                    actions: userController.info.value.roles.contains('guest')
+                        ? [
+                            InkWell(
+                              onTap: () {
+                                showModel(
+                                  context,
+                                  content: GameLobbyLoginTabs(
+                                    type: Type.login,
+                                    onSuccess: () {
+                                      // userController.fetchUserInfo();
+                                      gameWalletController
+                                          .fetchWalletsInitFromThirdLogin();
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  onClosed: () => Navigator.pop(context),
+                                );
                               },
-                            ),
-                            onClosed: () => Navigator.pop(context),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Container(
-                            width: 85,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
-                              color: gamePrimaryButtonColor,
-                            ),
-                            child: Center(
-                              child: Text(
-                                localizations.translate('register_login'),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: gamePrimaryButtonTextColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Container(
+                                  width: 85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24),
+                                    color: gamePrimaryButtonColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      localizations.translate('register_login'),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: gamePrimaryButtonTextColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ]
-                  : null,
-            ),
+                          ]
+                        : null,
+                  ),
             body: OrientationBuilder(
               builder: (BuildContext context, Orientation orientation) {
                 return Obx(
