@@ -1,6 +1,7 @@
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:game/models/third_login_api_response_with_data.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
@@ -34,6 +35,9 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
           ? GetStorage().read('pageColor')
           : 1]
       .toString();
+
+  late final String currencyToLocale =
+      currencyMapper[gameWalletController.wallet.value] ?? 'zh-TW';
 
   @override
   void initState() {
@@ -72,34 +76,6 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
               children: [
                 Row(
                   children: [
-                    Obx(
-                      () => userController.info.value.avatar != null
-                          ? ClipOval(
-                              clipBehavior: Clip.antiAlias,
-                              child: SizedBox(
-                                width: 32,
-                                height: 32,
-                                child: SidImage(
-                                  sid: userController.info.value.avatar ?? '',
-                                  width: 32,
-                                  height: 32,
-                                ),
-                              ),
-                            )
-                          : CircleAvatar(
-                              backgroundColor: gameLobbyBgColor,
-                              radius: 16,
-                              child: Image(
-                                image: AssetImage(
-                                    'packages/game/assets/images/game_lobby/avatar-$theme.webp'),
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                    ),
-                    const SizedBox(
-                      width: 8,
-                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,15 +86,16 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                                 color: gameLobbyPrimaryTextColor)),
                         Row(children: [
                           Obx(() => Text(
-                                gameWalletController.wallet > 0
-                                    ? NumberFormat.currency(symbol: '').format(
-                                        DecimalIntl(
-                                          Decimal.parse(gameWalletController
-                                              .wallet.value
-                                              .toString()),
-                                        ),
-                                      )
-                                    : '0.00',
+                                '${gameWalletController.wallet > 0 ? NumberFormat.currency(
+                                    locale: currencyToLocale,
+                                    symbol: '',
+                                  ).format(
+                                    DecimalIntl(
+                                      Decimal.parse(gameWalletController
+                                          .wallet.value
+                                          .toString()),
+                                    ),
+                                  ) : '0.00'} ${currencyToLocale == 'id-ID' ? 'K' : ''}',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
