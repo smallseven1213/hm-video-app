@@ -37,7 +37,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
       .toString();
 
   late final String currencyToLocale =
-      currencyMapper[gameWalletController.wallet.value] ?? 'zh-TW';
+      currencyMapper[gameWalletController.currency.value] ?? 'zh-TW';
 
   @override
   void initState() {

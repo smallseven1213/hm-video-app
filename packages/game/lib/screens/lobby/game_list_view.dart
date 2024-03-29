@@ -150,7 +150,7 @@ class GameListViewState extends State<GameListView>
       {
         'name': localizations.translate('hot'),
         'gameType': -2,
-        'icon': 'packages/game/assets/images/game_lobby/menu-story@3x.webp',
+        'icon': 'packages/game/assets/images/game_lobby/menu-hot@3x.webp',
       },
       {
         'name': localizations.translate('fish'),
