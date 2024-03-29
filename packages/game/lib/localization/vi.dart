@@ -202,6 +202,7 @@ const Map<String, String> viVnStrings = {
   "live": "Trực tiếp",
   "sports": "Thể thao",
   "lottery": "Xổ số",
+  "hot": "Nổi bật",
   "alipay": "Alipay",
   "wechat": "WeChat",
   "bank": "Ngân hàng",

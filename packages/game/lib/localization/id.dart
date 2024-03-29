@@ -106,7 +106,7 @@ const Map<String, String> idIdStrings = {
   "setting_failed": "Pengaturan gagal",
   "successful": "Berhasil",
   "return_to_the_lobby": "Kembali ke lobi",
-  "customer_service": "Layanan Pelanggan",
+  "customer_service": "Bantuan",
   "recharge": "Isi Ulang",
   "quit_the_game": "Keluar dari permainan",
   "do_you_really_want_to_quit_the_game":
@@ -201,6 +201,7 @@ const Map<String, String> idIdStrings = {
   "live": "Langsung",
   "sports": "Olahraga",
   "lottery": "Undian",
+  "hot": "Panas",
   "alipay": "Alipay",
   "wechat": "WeChat",
   "bank": "Bank",

@@ -9,6 +9,7 @@ final logger = Logger();
 class GameWalletController extends GetxController {
   var wallet = 0.00.obs;
   var isLoading = false.obs;
+  var currency = 'TWD';
 
   AuthController authController = Get.find<AuthController>();
   GameAuthApi gameAuthApi = GameAuthApi();
@@ -18,8 +19,10 @@ class GameWalletController extends GetxController {
       try {
         final res = await gameAuthApi.login(authController.token.value);
         if (res.code == 200) {
-          wallet.value = double.parse(res.data?['balance'] ?? '0');
-          logger.i('Game third login success: ${res.data?['balance']}');
+          wallet.value = double.parse(res.data?.balance ?? '0');
+          currency = res.data?.currency ?? 'TWD';
+          logger.i(
+              'Game third login success ====> balance:${res.data?.balance}, currency:${res.data?.currency}');
         } else {
           logger.i('Game third login failed: ${res.code}');
         }

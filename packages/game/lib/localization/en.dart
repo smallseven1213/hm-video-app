@@ -198,6 +198,7 @@ const Map<String, String> enUsStrings = {
   "live": "Live",
   "sports": "Sports",
   "lottery": "Lottery",
+  "hot": "Hot",
   "alipay": "Alipay",
   "wechat": "Wechat",
   "bank": "Bank",
