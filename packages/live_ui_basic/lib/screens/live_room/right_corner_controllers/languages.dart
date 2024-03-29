@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/models/live_room.dart';
 
 import '../../../localization/live_localization_delegate.dart';
 
@@ -31,24 +32,42 @@ class Languages extends StatelessWidget {
   }
 }
 
-class LanguagesView extends StatelessWidget {
+class LanguagesView extends StatefulWidget {
   final int pid;
-  const LanguagesView({super.key, required this.pid});
+
+  const LanguagesView({Key? key, required this.pid}) : super(key: key);
+
+  @override
+  _LanguagesViewState createState() => _LanguagesViewState();
+}
+
+class _LanguagesViewState extends State<LanguagesView> {
+  Language? selectedLanguage;
+
+  @override
+  void initState() {
+    super.initState();
+    final LiveRoomController liveRoomController =
+        Get.find<LiveRoomController>(tag: widget.pid.toString());
+    selectedLanguage = liveRoomController
+        .currentTranslate.value; // 假设currentTranslate是Language类型
+  }
 
   @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
     final LiveRoomController liveRoomController =
-        Get.find<LiveRoomController>(tag: pid.toString());
+        Get.find<LiveRoomController>(tag: widget.pid.toString());
 
     return Container(
         height: MediaQuery.of(context).padding.bottom + 500,
         width: double.infinity,
         color: Colors.black,
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 20),
-        // child is listview, from liveRoomController.liveRoom.trans
         child: Column(
           children: [
+            // height 20
+            const SizedBox(height: 20),
             Row(
               children: [
                 const SizedBox(width: 18),
@@ -56,12 +75,13 @@ class LanguagesView extends StatelessWidget {
                   localizations.translate('language'),
                   style: const TextStyle(color: Colors.white),
                 ),
-                // close button
                 Expanded(
                   child: Align(
                     alignment: Alignment.centerRight,
                     child: InkWell(
                       onTap: () {
+                        liveRoomController
+                            .setCurrentTranslate(selectedLanguage);
                         Navigator.of(context).pop();
                       },
                       child: const Image(
@@ -83,34 +103,26 @@ class LanguagesView extends StatelessWidget {
                 }
 
                 var trans = liveRoomController.liveRoom.value!.trans;
-                var currentTranslate =
-                    liveRoomController.currentTranslate.value;
-
                 return ListView.separated(
                   itemCount: trans.length + 1,
                   separatorBuilder: (BuildContext context, int index) {
-                    return const Divider(
-                      height: 1,
-                      color: Colors.white,
-                    );
+                    return const Divider(height: 1, color: Colors.white);
                   },
                   padding: const EdgeInsets.only(left: 23, right: 23),
                   itemBuilder: (BuildContext context, int index) {
                     var tran = index > 0 ? trans[index - 1] : null;
-                    var isSelected = false;
-                    if (index == 0) {
-                      isSelected = currentTranslate == null;
-                    } else {
-                      isSelected = currentTranslate?.code == tran?.code;
-                    }
+                    var isSelected = (index == 0 && selectedLanguage == null) ||
+                        (tran != null && selectedLanguage?.code == tran.code);
+
                     return InkWell(
                       onTap: () {
-                        if (index == 0) {
-                          liveRoomController.setCurrentTranslate(null);
-                          return;
-                        }
-                        liveRoomController.setCurrentTranslate(tran);
-                        Navigator.of(context).pop();
+                        setState(() {
+                          if (index == 0) {
+                            selectedLanguage = null;
+                          } else {
+                            selectedLanguage = tran;
+                          }
+                        });
                       },
                       child: Container(
                         padding: const EdgeInsets.only(
@@ -145,7 +157,7 @@ class LanguagesView extends StatelessWidget {
                   },
                 );
               }),
-            )
+            ),
           ],
         ));
   }

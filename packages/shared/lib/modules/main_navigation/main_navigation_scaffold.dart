@@ -43,6 +43,12 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
           currentScreen = const SizedBox.shrink();
         }
         return Scaffold(
+          // appBar: PreferredSize(
+          //   preferredSize: Size.fromHeight(100),
+          //   child: Container(
+          //     color: Colors.white,
+          //   ),
+          // ),
           body: currentScreen,
           bottomNavigationBar: widget.bottomNavigationBarWidget(
               activeKey: activeKey,

@@ -25,13 +25,13 @@ class LiveRoomController extends GetxController {
     // 如果currentTranslate改變了，要print('currentTranslate changed')
     ever(currentTranslate, (tran) async {
       if (tran == null) {
-        currentVideoPullUrl.value = liveRoom.value?.pullurl ?? '';
+        currentVideoPullUrl.value = liveRoom.value?.pullUrlDecode ?? '';
       } else {
         try {
           var req = await liveApi.getStreamPullUrlByTran(tran.code);
           currentVideoPullUrl.value = req.data;
         } catch (e) {
-          currentVideoPullUrl.value = liveRoom.value?.pullurl ?? '';
+          currentVideoPullUrl.value = liveRoom.value?.pullUrlDecode ?? '';
         }
       }
     });
