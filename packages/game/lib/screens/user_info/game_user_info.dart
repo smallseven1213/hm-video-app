@@ -36,9 +36,6 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
           : 1]
       .toString();
 
-  late final String currencyToLocale =
-      currencyMapper[gameWalletController.currency.value] ?? 'zh-TW';
-
   @override
   void initState() {
     animationController = AnimationController(
@@ -87,7 +84,9 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                         Row(children: [
                           Obx(() => Text(
                                 '${gameWalletController.wallet > 0 ? NumberFormat.currency(
-                                    locale: currencyToLocale,
+                                    locale: currencyMapper[gameWalletController
+                                            .currency.value] ??
+                                        'zh-TW',
                                     symbol: '',
                                   ).format(
                                     DecimalIntl(
@@ -95,7 +94,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                                           .wallet.value
                                           .toString()),
                                     ),
-                                  ) : '0.00'} ${currencyToLocale == 'id-ID' ? 'K' : ''}',
+                                  ) : '0.00'} ${currencyMapper[gameWalletController.currency.value] == 'id-ID' ? 'K' : ''}',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,
