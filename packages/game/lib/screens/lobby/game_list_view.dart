@@ -33,14 +33,6 @@ class GameListItem extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        // boxShadow: const [
-        //   BoxShadow(
-        //     color: Color.fromRGBO(0, 0, 0, .10),
-        //     offset: Offset(0.5, 0.5),
-        //     spreadRadius: 1.5,
-        //     blurRadius: 5.0,
-        //   ),
-        // ],
       ),
       child: AnimatedOpacity(
         opacity: 1.0,
@@ -73,14 +65,6 @@ class GameListItem extends StatelessWidget {
                           )
                   ],
                 )
-              // CacheImage(
-              //     url: imageUrl,
-              //     width: double.infinity,
-              //     height: (Get.width - 110) / 3,
-              //     fit: BoxFit.cover,
-              //     emptyImageUrl:
-              //         'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-              //   )
               : SizedBox(
                   child: Image.asset(
                     'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
@@ -164,6 +148,11 @@ class GameListViewState extends State<GameListView>
         'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
       },
       {
+        'name': localizations.translate('hot'),
+        'gameType': -2,
+        'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
+      },
+      {
         'name': localizations.translate('fish'),
         'gameType': 1,
         'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
@@ -207,7 +196,8 @@ class GameListViewState extends State<GameListView>
         .where((category) =>
             gameTypes.contains(category['gameType']) ||
             category['gameType'] == 0 ||
-            category['gameType'] == -1)
+            category['gameType'] == -1 ||
+            category['gameType'] == -2)
         .toList();
 
     // 將過濾後的遊戲類別列表分配給filteredGameCategories
@@ -294,18 +284,22 @@ class GameListViewState extends State<GameListView>
 
   Widget _buildGameList(int gameType) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
+    var hotGames = [...gamesListController.games]
+        .where((game) => game.tagId == '2')
+        .toList()
+        .obs
+      ..sort((a, b) => b.hotOrderIndex.compareTo(a.hotOrderIndex));
 
     final gameListResult = gameType == 0
         ? gamesListController.games
-        : gameHistoryList.isNotEmpty && gameType == -1
-            ? gameHistoryList
-            : gamesListController.games
-                .where((game) => game.gameType == gameType)
-                .toList()
-                .obs;
-    // final totalItemCount = gameListResult.length.isOdd
-    //     ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
-    //     : gameListResult.length ~/ 2;
+        : gameType == -2
+            ? hotGames
+            : gameHistoryList.isNotEmpty && gameType == -1
+                ? gameHistoryList
+                : gamesListController.games
+                    .where((game) => game.gameType == gameType)
+                    .toList()
+                    .obs;
 
     return gameListResult.isNotEmpty
         ? CustomScrollView(
