@@ -60,20 +60,20 @@ class StreamerProfileCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            if (profile.isLive == true)
-              Positioned(
-                  top: 8,
-                  right: 8,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(2.0),
-                      color: const Color(0xffe6cf5fb0),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 4.0, vertical: 2.0),
-                    child: const Text('LIVE',
-                        style: TextStyle(color: Colors.white, fontSize: 10)),
-                  )),
+            // if (profile.isLive == true)
+            Positioned(
+                top: 8,
+                right: 8,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(2.0),
+                    color: const Color(0xffe6cf5fb0),
+                  ),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 4.0, vertical: 2.0),
+                  child: const Text('LIVE',
+                      style: TextStyle(color: Colors.white, fontSize: 10)),
+                )),
             Positioned(
               bottom: 0,
               left: 0,
