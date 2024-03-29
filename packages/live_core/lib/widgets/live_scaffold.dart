@@ -65,8 +65,6 @@ class LiveScaffoldState extends State<LiveScaffold> {
       Get.put(LiveUserController());
       Get.put(UserFollowsController());
       Get.put(GiftsController());
-      Get.put(LiveSearchController());
-      Get.lazyPut(() => LiveSearchHistoryController());
     } else {
       isLogin = false;
     }

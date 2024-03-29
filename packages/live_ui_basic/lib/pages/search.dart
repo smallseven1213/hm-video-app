@@ -24,12 +24,14 @@ class SearchPageState extends State<SearchPage> {
   String keyword = '';
   bool displayKeywordResult = false;
   bool displaySearchResult = false;
-  final LiveSearchController liveSearchController = Get.find();
-  final LiveSearchHistoryController liveSearchHistoryController = Get.find();
+  late LiveSearchController liveSearchController;
+  late LiveSearchHistoryController liveSearchHistoryController;
 
   @override
   void initState() {
     super.initState();
+    liveSearchController = Get.put(LiveSearchController());
+    liveSearchHistoryController = Get.put(LiveSearchHistoryController());
   }
 
   onSearch(String value) {
@@ -67,9 +69,7 @@ class SearchPageState extends State<SearchPage> {
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 14),
           child: Row(
             children: [
-              SizedBox(
-                width: 40,
-              ),
+              const SizedBox(width: 40),
               Expanded(
                 child: SearchInputWidget(
                   showCancel: displayKeywordResult || displaySearchResult,
