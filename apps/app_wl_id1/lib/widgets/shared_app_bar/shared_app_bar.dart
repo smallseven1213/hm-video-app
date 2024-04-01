@@ -3,13 +3,10 @@ import 'package:flutter/material.dart';
 import 'user_area.dart';
 
 class SharedAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool isLoggedIn;
-  final int coins;
-
-  const SharedAppBar({super.key, this.isLoggedIn = false, this.coins = 0});
+  const SharedAppBar({super.key});
 
   @override
-  Size get preferredSize => Size.fromHeight(56);
+  Size get preferredSize => const Size.fromHeight(56);
 
   @override
   Widget build(BuildContext context) {

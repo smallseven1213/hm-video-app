@@ -7,12 +7,14 @@ import 'package:shared/widgets/popular_search_title_builder.dart';
 import '../../widgets/static_search_input.dart';
 
 class ChannelSearchBar extends StatelessWidget {
-  const ChannelSearchBar({Key? key}) : super(key: key);
+  final bool isWhiteTheme;
+  const ChannelSearchBar({Key? key, this.isWhiteTheme = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
+      color: isWhiteTheme ? Colors.white : Colors.transparent,
       height: 30,
       width: double.infinity,
       child: Row(
@@ -22,6 +24,7 @@ class ChannelSearchBar extends StatelessWidget {
           Expanded(
             child: PopularSearchTitleBuilder(
               child: (({required String searchKeyword}) => StaticSearchInput(
+                    isWhiteTheme: isWhiteTheme,
                     defaultValue: searchKeyword,
                     onSearchButtonClick: () {
                       MyRouteDelegate.of(context).push(AppRoutes.search, args: {
