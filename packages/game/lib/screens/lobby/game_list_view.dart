@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../localization/game_localization_delegate.dart';
@@ -94,6 +95,8 @@ class GameListViewState extends State<GameListView>
   List gameHistoryList = [];
   final ScrollController _scrollController = ScrollController();
   int _currentIndex = 0;
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
 
   @override
   void initState() {
@@ -101,6 +104,10 @@ class GameListViewState extends State<GameListView>
     gamesListController.fetchGames().then((value) {
       _filterGameCategories();
       _getGameHistory();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _handleOpenThirdPartyGame();
+      });
     });
   }
 
@@ -108,6 +115,26 @@ class GameListViewState extends State<GameListView>
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  _handleOpenThirdPartyGame() {
+    logger.i(
+        ' ===> OpenThirdPartyGame: ${gameConfigController.thirdPartyGameId.value}');
+    if (gameConfigController.isOpenThirdPartyGame.value == true) {
+      // 從 gamesListController.games中找到對應gameConfigController.gameId的game
+      final openGame = gamesListController.games.firstWhere((element) =>
+          element.gameId == gameConfigController.thirdPartyGameId.value);
+
+      if (openGame.gameId != '') {
+        handleGameItem(context,
+            gameId: openGame.gameId,
+            updateGameHistory: _getGameHistory,
+            tpCode: openGame.tpCode,
+            direction: openGame.direction,
+            gameType: openGame.gameType);
+      }
+      gameConfigController.setThirdPartyGame(false, '');
+    }
   }
 
   _getGameHistory() async {

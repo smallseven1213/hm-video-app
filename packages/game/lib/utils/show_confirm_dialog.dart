@@ -1,3 +1,5 @@
+// ignore: unnecessary_import
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
