@@ -42,7 +42,17 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       ..src = widget.initialUrl
       ..style.border = 'none'
       ..width = '100%'
-      ..height = '100%';
+      ..height = '100%'
+      ..allowFullscreen = true;
+
+    // 在iframe中加入fullScreenApi.js的script標籤
+    html.ScriptElement scriptElement = html.ScriptElement()
+      ..type = 'text/javascript'
+      ..src =
+          'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js'; // 將路徑替換為實際的fullScreenApi.js路徑
+
+    // append the script element to the head of the document
+    html.document.head?.append(scriptElement);
 
 // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
