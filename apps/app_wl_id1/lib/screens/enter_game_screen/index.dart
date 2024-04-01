@@ -5,6 +5,8 @@ import 'package:logger/logger.dart';
 import 'package:game/screens/lobby.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 
+import '../main_screen/channel_search_bar.dart';
+
 final logger = Logger();
 
 class EnterGame extends StatefulWidget {
@@ -29,7 +31,18 @@ class _EnterGame extends State<EnterGame> {
   @override
   Widget build(BuildContext context) {
     return Obx(() => gameConfigController.gamePageColor.value != 0
-        ? const GameLobby(hideAppBar: true)
+        ? const Scaffold(
+            backgroundColor: Colors.white,
+            body: Column(
+              children: [
+                // height 5
+                const SizedBox(height: 5),
+                ChannelSearchBar(
+                  isWhiteTheme: true,
+                ),
+                Expanded(child: GameLobby(hideAppBar: true))
+              ],
+            ))
         : const CircularProgressIndicator());
   }
 }

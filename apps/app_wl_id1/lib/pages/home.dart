@@ -28,9 +28,15 @@ final screens = {
   HomeNavigatorPathes.layout1: () => MainLayoutBuilder(
         key: Key('layout${layouts[0]}'),
         layoutId: layouts[0],
-        child: HomeMainScreen(
-          layoutId: layouts[0],
+        child: Scaffold(
+          appBar: const SharedAppBar(),
+          body: HomeMainScreen(
+            layoutId: layouts[0],
+          ),
         ),
+        // child: HomeMainScreen(
+        //   layoutId: layouts[0],
+        // ),
       ),
   HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
         key: Key('layout${layouts[1]}'),
@@ -39,7 +45,10 @@ final screens = {
           layoutId: layouts[1],
         ),
       ),
-  HomeNavigatorPathes.game: () => const EnterGame(),
+  HomeNavigatorPathes.game: () => const Scaffold(
+        appBar: SharedAppBar(),
+        body: EnterGame(),
+      ),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
   HomeNavigatorPathes.live: () => const LivePage(),
@@ -69,7 +78,7 @@ class HomeState extends State<HomePage> {
     final UIController uiController = Get.find<UIController>();
 
     return MainNavigationScaffold(
-        appBar: SharedAppBar(),
+        // appBar: SharedAppBar(),
         screens: screens,
         screenNotFoundWidget: const Center(
           child: WaveLoading(

@@ -1,15 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared/models/color_keys.dart';
 
 import '../config/colors.dart';
 
 class StaticSearchInput extends StatelessWidget {
+  final bool isWhiteTheme;
   final String defaultValue;
   final VoidCallback onSearchButtonClick;
   final VoidCallback onInputClick;
   const StaticSearchInput({
     Key? key,
+    this.isWhiteTheme = false,
     required this.defaultValue,
     required this.onSearchButtonClick,
     required this.onInputClick,
@@ -32,7 +35,9 @@ class StaticSearchInput extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(20)),
-                color: AppColors.colors[ColorKeys.background]),
+                color: isWhiteTheme
+                    ? Colors.white
+                    : AppColors.colors[ColorKeys.background]),
             child: Row(
               children: [
                 const SizedBox(width: 10),
