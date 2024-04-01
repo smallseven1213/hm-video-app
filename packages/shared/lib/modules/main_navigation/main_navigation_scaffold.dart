@@ -9,6 +9,7 @@ class MainNavigationScaffold extends StatefulWidget {
   final String? defaultScreenKey;
   final Map<String, Widget Function()> screens;
   final Widget? screenNotFoundWidget;
+  final PreferredSizeWidget? appBar;
   final Function(
       {required String activeKey,
       required List<Navigation> navigatorItems,
@@ -19,6 +20,7 @@ class MainNavigationScaffold extends StatefulWidget {
       required this.screens,
       this.defaultScreenKey,
       this.screenNotFoundWidget,
+      this.appBar,
       required this.bottomNavigationBarWidget})
       : super(key: key);
 
@@ -43,12 +45,7 @@ class MainNavigationScaffoldState extends State<MainNavigationScaffold> {
           currentScreen = const SizedBox.shrink();
         }
         return Scaffold(
-          // appBar: PreferredSize(
-          //   preferredSize: Size.fromHeight(100),
-          //   child: Container(
-          //     color: Colors.white,
-          //   ),
-          // ),
+          appBar: widget.appBar,
           body: currentScreen,
           bottomNavigationBar: widget.bottomNavigationBarWidget(
               activeKey: activeKey,

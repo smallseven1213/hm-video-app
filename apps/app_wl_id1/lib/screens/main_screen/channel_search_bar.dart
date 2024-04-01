@@ -18,15 +18,7 @@ class ChannelSearchBar extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 13),
-            child: Image(
-              image: AssetImage('assets/images/home_search_bar_logo.png'),
-              width: 24.0,
-              height: 27.0,
-            ),
-          ),
-          // input
+          const SizedBox(width: 10),
           Expanded(
             child: PopularSearchTitleBuilder(
               child: (({required String searchKeyword}) => StaticSearchInput(
@@ -48,25 +40,19 @@ class ChannelSearchBar extends StatelessWidget {
                   )),
             ),
           ),
+          // width 10
+          const SizedBox(width: 10),
           GestureDetector(
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
-            child: const SizedBox(
-                width: 40,
-                height: 60,
-                // color: AppColors.colors[ColorKeys.background],
-                child: Center(
-                  child: SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: Image(
-                      image: AssetImage(
-                          'assets/images/home_search_bar_filter.png'),
-                    ),
-                  ),
-                )),
+            child: const Image(
+              image: AssetImage('assets/images/search_filters.png'),
+              fit: BoxFit.contain,
+              height: 24,
+            ),
           ),
+          const SizedBox(width: 10),
         ],
       ),
     );

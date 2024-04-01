@@ -20,6 +20,7 @@ import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
+import '../widgets/shared_app_bar/shared_app_bar.dart';
 
 final logger = Logger();
 UserApi userApi = UserApi();
@@ -68,6 +69,7 @@ class HomeState extends State<HomePage> {
     final UIController uiController = Get.find<UIController>();
 
     return MainNavigationScaffold(
+        appBar: SharedAppBar(),
         screens: screens,
         screenNotFoundWidget: const Center(
           child: WaveLoading(
