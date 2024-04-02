@@ -23,8 +23,8 @@ class ChannelStyle6Suppliers extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center, // 垂直居中
             crossAxisAlignment: CrossAxisAlignment.center, // 水平居中
             children: [
-              const Text("精選UP主",
-                  style: TextStyle(
+              Text(I18n.selectedUp,
+                  style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   )),
