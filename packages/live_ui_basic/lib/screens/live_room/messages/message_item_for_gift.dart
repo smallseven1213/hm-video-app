@@ -83,13 +83,13 @@ class MessageItemForGift extends StatelessWidget {
                       text: messageText,
                       style: TextStyle(color: textColor, fontSize: 12),
                     ),
-                    const WidgetSpan(
-                      child: SizedBox(width: 10), // 提供固定的 10 單位空間
-                    ),
-                    TextSpan(
-                      text: formatTimestamp(message.timestamp),
-                      style: TextStyle(color: textColor, fontSize: 12),
-                    ),
+                    // const WidgetSpan(
+                    //   child: SizedBox(width: 10), // 提供固定的 10 單位空間
+                    // ),
+                    // TextSpan(
+                    //   text: formatTimestamp(message.timestamp),
+                    //   style: TextStyle(color: textColor, fontSize: 12),
+                    // ),
                   ],
                 ),
               ),
