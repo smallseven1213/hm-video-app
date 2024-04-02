@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 import '../models/live_room.dart';
 import '../models/room.dart';
+import '../socket/live_web_socket_manager.dart';
 import 'live_user_controller.dart';
 
 class LiveRoomController extends GetxController {
@@ -13,6 +14,7 @@ class LiveRoomController extends GetxController {
   var hasError = false.obs;
   var currentVideoPullUrl = ''.obs;
   Rx<Language?> currentTranslate = Rx<Language?>(null);
+  final LiveSocketIOManager socketManager = LiveSocketIOManager();
 
   LiveRoomController(this.pid);
 
@@ -70,6 +72,10 @@ class LiveRoomController extends GetxController {
   // setCurrentTranslate
   void setCurrentTranslate(Language? language) {
     currentTranslate.value = language;
+    dynamic jsonData = {
+      'locale': language?.code ?? "",
+    };
+    socketManager.send('change-locale', jsonData);
   }
 
   // setUserCount
