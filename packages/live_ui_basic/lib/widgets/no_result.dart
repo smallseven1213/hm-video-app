@@ -15,7 +15,8 @@ class NoResult extends StatelessWidget {
       children: [
         const SizedBox(height: 100),
         const Image(
-          image: AssetImage('assets/images/ic_noresult.webp'),
+          image: AssetImage(
+              'packages/live_ui_basic/assets/images/ic_noresult.webp'),
           width: 48,
           height: 48,
         ),
