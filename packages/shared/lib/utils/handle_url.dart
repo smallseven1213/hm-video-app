@@ -25,11 +25,12 @@ void handleDefaultScreenKey(BuildContext context, String url) {
   final defaultScreenKey = Uri.parse(url).queryParameters['defaultScreenKey'];
   final routePath = url.substring(0, url.indexOf('?'));
   final String gameId = Uri.parse(url).queryParameters['gameId'].toString();
+  final String tpCode = Uri.parse(url).queryParameters['tpCode'].toString();
 
-  if (gameId.isNotEmpty && gameId != '') {
+  if (gameId.isNotEmpty && gameId != '' && tpCode.isNotEmpty && tpCode != '') {
     GamePlatformConfigController gamePlatformConfigController =
         Get.find<GamePlatformConfigController>();
-    gamePlatformConfigController.setThirdPartyGame(true, gameId);
+    gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
     MyRouteDelegate.of(context).push(
       '/home',
       args: {'defaultScreenKey': '/game'},

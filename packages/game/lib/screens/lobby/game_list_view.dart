@@ -123,7 +123,8 @@ class GameListViewState extends State<GameListView>
     if (gameConfigController.isOpenThirdPartyGame.value == true) {
       // 從 gamesListController.games中找到對應gameConfigController.gameId的game
       final openGame = gamesListController.games.firstWhere((element) =>
-          element.gameId == gameConfigController.thirdPartyGameId.value);
+          element.gameId == gameConfigController.thirdPartyGameId.value &&
+          element.tpCode == gameConfigController.thirdPartyGameTpCode.value);
 
       if (openGame.gameId != '') {
         handleGameItem(context,
@@ -133,7 +134,7 @@ class GameListViewState extends State<GameListView>
             direction: openGame.direction,
             gameType: openGame.gameType);
       }
-      gameConfigController.setThirdPartyGame(false, '');
+      gameConfigController.setThirdPartyGame(false, '', '');
     }
   }
 
