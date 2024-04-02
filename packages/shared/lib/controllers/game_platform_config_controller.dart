@@ -24,7 +24,7 @@ class GamePlatformConfigController extends GetxController {
   void setThirdPartyGame(bool status, String gameId, String tpCode) {
     isOpenThirdPartyGame.value = status;
     thirdPartyGameId.value = gameId.toString();
-    thirdPartyGameTpCode.value = gameId.toString();
+    thirdPartyGameTpCode.value = tpCode.toString();
   }
 }
 
