@@ -15,6 +15,7 @@ class LiveRoomController extends GetxController {
   var currentVideoPullUrl = ''.obs;
   Rx<Language?> currentTranslate = Rx<Language?>(null);
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
+  var hideAllUI = false.obs;
 
   LiveRoomController(this.pid);
 
@@ -57,6 +58,11 @@ class LiveRoomController extends GetxController {
     } catch (e) {
       hasError.value = true;
     }
+  }
+
+  // toggleHideAllUI
+  void toggleHideAllUI() {
+    hideAllUI.value = !hideAllUI.value;
   }
 
   // setAmount
