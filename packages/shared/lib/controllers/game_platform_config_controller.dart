@@ -7,6 +7,7 @@ class GamePlatformConfigController extends GetxController {
   var isShowEnvelope = false.obs;
   var isOpenThirdPartyGame = false.obs;
   var thirdPartyGameId = ''.obs;
+  var thirdPartyGameTpCode = ''.obs;
 
   Future<void> fetchData() async {
     GameLobbyApi gameLobbyApi = GameLobbyApi();
@@ -20,9 +21,10 @@ class GamePlatformConfigController extends GetxController {
     isShowEnvelope.value = status;
   }
 
-  void setThirdPartyGame(bool status, String? gameId) {
+  void setThirdPartyGame(bool status, String gameId, String tpCode) {
     isOpenThirdPartyGame.value = status;
     thirdPartyGameId.value = gameId.toString();
+    thirdPartyGameTpCode.value = gameId.toString();
   }
 }
 
