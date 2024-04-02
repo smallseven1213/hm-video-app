@@ -36,12 +36,13 @@ void main() async {
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent),
     globalLoadingWidget: ({String? text}) =>
-        Loading(loadingText: text ?? '正在加载...'),
+        Loading(loadingText: text ?? 'Loading...'),
     countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
     i18nSupport: true,
     supportedLocales: I18n.supportedLocales,
     i18nPath: 'assets/langs/langs.csv',
     expandedWidget: (child) => GameProvider(child: child),
+    defaultLocale: const Locale('en', 'US'),
   );
 }
