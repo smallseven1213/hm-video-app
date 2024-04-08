@@ -10,7 +10,6 @@ class GameWalletController extends GetxController {
   var wallet = 0.00.obs;
   var isLoading = false.obs;
   var currency = 'TWD'.obs;
-  var isLogin = false.obs;
 
   AuthController authController = Get.find<AuthController>();
   GameAuthApi gameAuthApi = GameAuthApi();

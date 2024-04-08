@@ -30,6 +30,7 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
+import 'package:shared/utils/event_bus.dart';
 
 import '../enums/game_app_routes.dart';
 import '../localization/game_localization_delegate.dart';
@@ -77,17 +78,27 @@ class _GameLobbyState extends State<GameLobby>
     _fetchWalletsInitFromThirdLogin();
     Get.put(GameBannerController());
     Get.put(GamesListController());
-    gameWalletController.isLogin.value = true;
 
     Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
       // userController.fetchUserInfo();
       logger.i('token changed');
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchEvent();
+    });
   }
 
   void _fetchWalletsInitFromThirdLogin() async {
     await gameWalletController.fetchWalletsInitFromThirdLogin();
+  }
+
+  void _fetchEvent() async {
+    String? event = eventBus.getLatestEvent();
+    if (event == "gotoDepositAfterLogin" && mounted) {
+      MyRouteDelegate.of(context).push(GameAppRoutes.depositList);
+    }
   }
 
   _fetchDataInit() {
