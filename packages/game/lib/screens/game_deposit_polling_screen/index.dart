@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_deposit_polling_screen/amount_items.dart';
 import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
+import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+import 'package:game/screens/user_info/game_user_info_withdraw.dart';
+import 'package:game/widgets/pay_switch_button.dart';
+
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../localization/game_localization_delegate.dart';
@@ -17,6 +24,9 @@ class GameDepositPolling extends StatefulWidget {
 }
 
 class GameDepositPollingState extends State<GameDepositPolling> {
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
+
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
@@ -64,20 +74,41 @@ class GameDepositPollingState extends State<GameDepositPolling> {
           child: SingleChildScrollView(
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: const Stack(
+              child: Stack(
                 children: [
                   Column(
                     children: [
-                      Padding(
+                      PaySwitchButton(
+                        // 存款
+                        leftChild: UserInfoDeposit(
+                          onTap: () {
+                            MyRouteDelegate.of(context).push(
+                                gameConfigController.switchPaymentPage.value ==
+                                        switchPaymentPageType['list']
+                                    ? GameAppRoutes.depositList
+                                    : GameAppRoutes.depositPolling,
+                                removeSamePath: true);
+                          },
+                        ),
+                        // 提現
+                        rightChild: UserInfoWithdraw(
+                          onTap: () {
+                            MyRouteDelegate.of(context).push(
+                                GameAppRoutes.withdraw,
+                                removeSamePath: true);
+                          },
+                        ),
+                      ),
+                      const Padding(
                         padding:
                             EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                         child: GameUserInfo(
                           child: UserInfoService(),
                         ),
                       ),
-                      AmountItems(),
-                      SizedBox(height: 36),
-                      Tips(),
+                      const AmountItems(),
+                      const SizedBox(height: 36),
+                      const Tips(),
                     ],
                   ),
                 ],

@@ -1,6 +1,8 @@
 // paymentPage:2 列表
-
+import 'package:logger/logger.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+
 import 'package:game/apis/game_api.dart';
 import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_deposit_list_screen/channel_empty.dart';
@@ -8,9 +10,13 @@ import 'package:game/screens/game_deposit_list_screen/payment_items.dart';
 import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
+import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
-import 'package:logger/logger.dart';
+import 'package:game/widgets/pay_switch_button.dart';
+
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../localization/game_localization_delegate.dart';
@@ -26,6 +32,8 @@ class GameDepositList extends StatefulWidget {
 
 class GameDepositListState extends State<GameDepositList> {
   dynamic depositData;
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
 
   @override
   void initState() {
@@ -110,6 +118,26 @@ class GameDepositListState extends State<GameDepositList> {
               width: MediaQuery.of(context).size.width,
               child: Stack(
                 children: [
+                  PaySwitchButton(
+                    // 存款
+                    leftChild: UserInfoDeposit(
+                      onTap: () {
+                        MyRouteDelegate.of(context).push(
+                            gameConfigController.switchPaymentPage.value ==
+                                    switchPaymentPageType['list']
+                                ? GameAppRoutes.depositList
+                                : GameAppRoutes.depositPolling,
+                            removeSamePath: true);
+                      },
+                    ),
+                    // 提現
+                    rightChild: UserInfoWithdraw(
+                      onTap: () {
+                        MyRouteDelegate.of(context)
+                            .push(GameAppRoutes.withdraw, removeSamePath: true);
+                      },
+                    ),
+                  ),
                   Column(
                     children: [
                       const Padding(
