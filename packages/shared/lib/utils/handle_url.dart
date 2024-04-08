@@ -1,11 +1,13 @@
+import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:game/utils/handle_game_item.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/bottom_navigator_controller.dart';
 import '../navigator/delegate.dart';
+
+final logger = Logger();
 
 final bottomNavigatorController = Get.find<BottomNavigatorController>();
 
