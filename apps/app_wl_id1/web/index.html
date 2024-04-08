@@ -38,7 +38,7 @@
     <link rel="manifest" href="manifest.json" />
     <script>
       // The value below is injected by flutter build, do not touch.
-      var serviceWorkerVersion = null
+      var serviceWorkerVersion = null;
     </script>
     <!-- This script adds the flutter initialization JS code -->
     <script src="flutter.js" defer></script>
@@ -76,7 +76,7 @@
   </head>
   <body>
     <script>
-      window.addEventListener('load', function (ev) {
+      window.addEventListener("load", function (ev) {
         // Download main.dart.js
         _flutter.loader.loadEntrypoint({
           serviceWorker: {
@@ -85,36 +85,30 @@
           onEntrypointLoaded: function (engineInitializer) {
             engineInitializer
               .initializeEngine({
-                renderer: 'canvaskit',
+                renderer: "canvaskit",
               })
               .then(function (appRunner) {
-                appRunner.runApp()
+                appRunner.runApp();
                 setTimeout(function () {
                   //  隐藏 SplashScreen
-                  document.querySelector('.splash-screen img').style.display =
-                    'none'
-                  document.querySelector('.splash-screen').style.zIndex = -1
-                }, 500)
-              })
+                  document.querySelector(".splash-screen img").style.display =
+                    "none";
+                  document.querySelector(".splash-screen").style.zIndex = -1;
+                }, 500);
+              });
           },
-        })
-      })
+        });
+      });
     </script>
     <!-- Flutter WebGL 2.0 fix (https://github.com/flutter/flutter/issues/89655) -->
     <script type="text/javascript">
       HTMLCanvasElement.prototype.getContext = (function (orig) {
         return function (type) {
-          return type !== 'webgl2' ? orig.apply(this, arguments) : null
-        }
-      })(HTMLCanvasElement.prototype.getContext)
+          return type !== "webgl2" ? orig.apply(this, arguments) : null;
+        };
+      })(HTMLCanvasElement.prototype.getContext);
     </script>
     <!-- SplashScreen -->
-    <!-- for game webview fullscreen -->
-    <script
-      type="text/javascript"
-      src="https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js"
-    ></script>
-    <!-- for game webview fullscreen -->
     <div class="splash-screen">
       <img src="/assets/assets/images/splash.png" alt="Splash Screen" />
     </div>

@@ -49,7 +49,7 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
     html.ScriptElement scriptElement = html.ScriptElement()
       ..type = 'text/javascript'
       ..src =
-          'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js'; // 將路徑替換為實際的fullScreenApi.js路徑
+          'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi'; // 將路徑替換為實際的fullScreenApi.js路徑
 
     // append the script element to the head of the document
     html.document.head?.append(scriptElement);
