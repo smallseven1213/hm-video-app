@@ -114,8 +114,17 @@ class GameLobbyApi {
             return [];
           }
 
-          List<GameItem> record = List.from(
-              (res['data'] as List<dynamic>).map((e) => GameItem.fromJson(e)));
+          List<GameItem> record =
+              List.from((res['data'] as List<dynamic>).map((d) {
+            try {
+              return GameItem.fromJson(d);
+            } catch (e) {
+              logger.e('GameItem.fromJson error: $e');
+              // print出這筆response的資料
+              logger.i('e: $d');
+              return GameItem(0, '', '', '', 0, '', 0, '', 0, 0);
+            }
+          }));
 
           return record;
         },
