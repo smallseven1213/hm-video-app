@@ -162,75 +162,77 @@ class GameListViewState extends State<GameListView>
 
   // 寫一個篩選遊戲類別的方法
   _filterGameCategories() {
-    final GameLocalizations localizations = GameLocalizations.of(context)!;
+    if (mounted) {
+      final GameLocalizations localizations = GameLocalizations.of(context)!;
 
-    List gameCategoriesMapper = [
-      {
-        'name': localizations.translate('all'),
-        'gameType': 0,
-        'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
-      },
-      {
-        'name': localizations.translate('recent'),
-        'gameType': -1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
-      },
-      {
-        'name': localizations.translate('hot'),
-        'gameType': -2,
-        'icon': 'packages/game/assets/images/game_lobby/menu-hot@3x.webp',
-      },
-      {
-        'name': localizations.translate('fish'),
-        'gameType': 1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
-      },
-      {
-        'name': localizations.translate('live'),
-        'gameType': 2,
-        'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
-      },
-      {
-        'name': localizations.translate('card'),
-        'gameType': 3,
-        'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
-      },
-      {
-        'name': localizations.translate('slots'),
-        'gameType': 4,
-        'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
-      },
-      {
-        'name': localizations.translate('sports'),
-        'gameType': 5,
-        'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
-      },
-      {
-        'name': localizations.translate('lottery'),
-        'gameType': 6,
-        'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
+      List gameCategoriesMapper = [
+        {
+          'name': localizations.translate('all'),
+          'gameType': 0,
+          'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
+        },
+        {
+          'name': localizations.translate('recent'),
+          'gameType': -1,
+          'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
+        },
+        {
+          'name': localizations.translate('hot'),
+          'gameType': -2,
+          'icon': 'packages/game/assets/images/game_lobby/menu-hot@3x.webp',
+        },
+        {
+          'name': localizations.translate('fish'),
+          'gameType': 1,
+          'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
+        },
+        {
+          'name': localizations.translate('live'),
+          'gameType': 2,
+          'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
+        },
+        {
+          'name': localizations.translate('card'),
+          'gameType': 3,
+          'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
+        },
+        {
+          'name': localizations.translate('slots'),
+          'gameType': 4,
+          'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
+        },
+        {
+          'name': localizations.translate('sports'),
+          'gameType': 5,
+          'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
+        },
+        {
+          'name': localizations.translate('lottery'),
+          'gameType': 6,
+          'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
+        }
+      ];
+
+      Set<int> gameTypes = <int>{};
+
+      for (var game in gamesListController.games) {
+        gameTypes.add(game.gameType);
       }
-    ];
 
-    Set<int> gameTypes = <int>{};
+      // 將gameTypes轉換為Set<int>型態，以便使用contains方法進行比較
 
-    for (var game in gamesListController.games) {
-      gameTypes.add(game.gameType);
+      var filteredCategories = gameCategoriesMapper
+          .where((category) =>
+              gameTypes.contains(category['gameType']) ||
+              category['gameType'] == 0 ||
+              category['gameType'] == -1 ||
+              category['gameType'] == -2)
+          .toList();
+
+      // 將過濾後的遊戲類別列表分配給filteredGameCategories
+
+      filteredGameCategories.assignAll(filteredCategories);
     }
-
-    // 將gameTypes轉換為Set<int>型態，以便使用contains方法進行比較
-
-    var filteredCategories = gameCategoriesMapper
-        .where((category) =>
-            gameTypes.contains(category['gameType']) ||
-            category['gameType'] == 0 ||
-            category['gameType'] == -1 ||
-            category['gameType'] == -2)
-        .toList();
-
-    // 將過濾後的遊戲類別列表分配給filteredGameCategories
-
-    filteredGameCategories.assignAll(filteredCategories);
   }
 
   void _scrollToItem(int index) {
