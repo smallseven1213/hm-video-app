@@ -61,23 +61,6 @@ class PlayerLayoutState extends State<PlayerLayout>
         }
       }
     });
-    // var decodedData = jsonDecode(data);
-    // print('[V] video chat result: $decodedData');
-    // for (var item in decodedData) {
-    //   if (item['objChat']['ntype'] == 0) {
-    //     print('[V] video chat result: ${item['objChat']['data']}');
-    //     if (item['objChat']['data'] == 'hostconnect' && hasError == true) {
-    //       setState(() {
-    //         hasError = false;
-    //       });
-    //       initializeVideoPlayer();
-    //     } else if (item['objChat']['data'] == 'hostdisconnect') {
-    //       setState(() {
-    //         hasError = true;
-    //       });
-    //     }
-    //   }
-    // }
   }
 
   void _initializeConnectivityListener() async {

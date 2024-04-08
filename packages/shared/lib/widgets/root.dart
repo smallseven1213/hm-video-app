@@ -70,7 +70,7 @@ class RootWidget extends StatelessWidget {
     );
 
     final parser = MyRouteParser();
-    GetStorage box = GetStorage();
+    GetStorage box = GetStorage('locale');
 
     // if defaultLocale not null, then use it
     if (defaultLocale != null) {

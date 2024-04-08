@@ -14,13 +14,14 @@ class GameWalletController extends GetxController {
   AuthController authController = Get.find<AuthController>();
   GameAuthApi gameAuthApi = GameAuthApi();
 
-  void fetchWalletsInitFromThirdLogin() async {
+  Future<void> fetchWalletsInitFromThirdLogin() async {
     if (authController.token.value.isNotEmpty) {
       try {
         final res = await gameAuthApi.login(authController.token.value);
         if (res.code == 200) {
           wallet.value = double.parse(res.data?.balance ?? '0');
           currency.value = res.data?.currency ?? 'TWD';
+
           logger.i(
               'Game third login success ====> balance:${res.data?.balance}, currency:${res.data?.currency}');
         } else {

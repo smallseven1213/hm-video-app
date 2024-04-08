@@ -84,6 +84,7 @@ class HomeState extends State<HomePage> {
         key: _scaffoldKey,
         backgroundColor: const Color(0xFFf0f0f0),
         body: MainNavigationScaffold(
+            defaultScreenKey: widget.defaultScreenKey,
             screens: screens,
             screenNotFoundWidget: const Center(child: LoadingAnimation()),
             bottomNavigationBarWidget: (
