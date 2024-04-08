@@ -6,7 +6,7 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Fri, 26 Jan 2024 16:05:28 +08:00
+// Generated at: Wed, 03 Apr 2024 11:45:01 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
