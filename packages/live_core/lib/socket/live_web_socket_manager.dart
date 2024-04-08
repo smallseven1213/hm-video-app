@@ -42,8 +42,11 @@ class LiveSocketIOManager {
 
       // 提取 'code' 和 'token' 值
       // var code = decodedData['code'];
-      var token = decodedData['token'];
-      this.chatToken = token;
+      var code = decodedData['code'];
+      if (code != -1) {
+        var token = decodedData['token'];
+        this.chatToken = token;
+      }
 
       // print('Code: $code, Token: $token');
     });

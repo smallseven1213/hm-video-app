@@ -7,6 +7,7 @@ import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/models/command.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 
+import '../../libs/goto_deposit.dart';
 import '../../libs/show_live_dialog.dart';
 import '../../localization/live_localization_delegate.dart';
 import '../../widgets/live_button.dart';
@@ -200,6 +201,9 @@ class CommandItem extends StatelessWidget {
                       type: ButtonType.primary,
                       onTap: () {
                         Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pop();
+                        gotoDeposit();
                       })
                 ],
               );

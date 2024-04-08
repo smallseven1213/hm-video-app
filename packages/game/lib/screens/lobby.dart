@@ -11,6 +11,7 @@ import 'package:game/models/game_list.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -73,7 +74,7 @@ class _GameLobbyState extends State<GameLobby>
     super.initState();
     _fetchDataInit();
 
-    gameWalletController.fetchWalletsInitFromThirdLogin();
+    _fetchWalletsInitFromThirdLogin();
     Get.put(GameBannerController());
     Get.put(GamesListController());
 
@@ -82,6 +83,10 @@ class _GameLobbyState extends State<GameLobby>
       // userController.fetchUserInfo();
       logger.i('token changed');
     });
+  }
+
+  void _fetchWalletsInitFromThirdLogin() async {
+    await gameWalletController.fetchWalletsInitFromThirdLogin();
   }
 
   _fetchDataInit() {
@@ -128,6 +133,7 @@ class _GameLobbyState extends State<GameLobby>
                                       // userController.fetchUserInfo();
                                       gameWalletController
                                           .fetchWalletsInitFromThirdLogin();
+
                                       Navigator.pop(context);
                                     },
                                   ),

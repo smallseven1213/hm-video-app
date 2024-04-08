@@ -52,42 +52,74 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   void initState() {
     super.initState();
     print('[A] CENTER GIFT SCREEN INIT');
-    _lottieController = AnimationController(vsync: this)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          handleAnimationCompleted();
-        }
-      });
+    _lottieController = AnimationController(vsync: this);
+    _lottieController.addStatusListener(_animationStatusListener);
     subscribeToGiftMessages();
-    // _lottieController = AnimationController(vsync: this);
-    // giftCenterMessagesQueueSubscription?.cancel();
-    // giftCenterMessagesQueueSubscription =
-    //     chatResultController.giftCenterMessagesQueue.listen((gifts) {
-    //   print('[A] gifts: ${gifts.length}, isAnimating: $isAnimating');
-    //   if (gifts.isNotEmpty && !isAnimating) {
-    //     var getGift = gifts.first;
-    //     setLottieAnimation(getGift);
-    //   }
-    // });
+  }
+
+  void _animationStatusListener(AnimationStatus status) {
+    print('[AL] listener status: $status');
+    if (status == AnimationStatus.completed) {
+      print('[AL] completed');
+      if (currentRepeatCount < targetRepeatCount) {
+        print('[AL] completed A1');
+        _lottieController.forward(from: 0.0);
+        currentRepeatCount++;
+        xCount.value = currentRepeatCount;
+      } else {
+        print('[AL] completed A2');
+        finishAnimation();
+        chatResultController.removeGiftLeftSideMessagesQueueByIndex(0);
+      }
+    }
   }
 
   void subscribeToGiftMessages() {
-    chatResultController.giftCenterMessagesQueue.listen((gifts) {
-      if (gifts.isNotEmpty) {
-        startAnimationWithGift(gifts.first);
+    giftCenterMessagesQueueSubscription?.cancel();
+    giftCenterMessagesQueueSubscription =
+        chatResultController.giftCenterMessagesQueue.listen((gifts) {
+      if (gifts.isNotEmpty && lottiePath == null) {
+        Future.delayed(const Duration(milliseconds: 200), () {
+          prepareAndStartAnimation(gifts.first);
+        });
       }
     });
+  }
+
+  void prepareAndStartAnimation(
+      ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
+    try {
+      var getGiftById = giftsController.gifts.value
+          .where((element) => element.id == giftMessage.objChat.data.gid);
+      if (getGiftById.isEmpty) {
+        return;
+      }
+      var gift = getGiftById.first;
+      if (gift.animation.isNotEmpty) {
+        if (mounted) {
+          print('[AL] prepareAndStartAnimation 1');
+          setState(() {
+            lottiePath = gift.animation;
+            targetRepeatCount = giftMessage.objChat.data.quantity;
+            currentRepeatCount = 1;
+          });
+          // _lottieController
+          //   ..reset()
+          //   ..forward();
+        }
+      }
+    } catch (e) {
+      print('[AL] error: $e');
+      finishAnimation();
+    }
   }
 
   void startAnimationWithGift(
       ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
     var gid = giftMessage.objChat.data.gid;
     var gifts = giftsController.gifts.value;
-    print(gid);
     if (lottiePath == null) {
-      var getGiftsByGid = giftsController.gifts.value
-          .where((element) => element.id == giftMessage.objChat.data.gid)
-          .toList();
+      var getGiftsByGid = gifts.where((element) => element.id == gid).toList();
       if (getGiftsByGid.isEmpty) {
         return;
       }
@@ -113,22 +145,9 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
     super.dispose();
   }
 
-  void handleAnimationCompleted() {
-    if (currentRepeatCount < targetRepeatCount) {
-      currentRepeatCount++;
-      _lottieController.forward(from: 0.0);
-    } else {
-      finishAnimation();
-      chatResultController.removeGiftCenterMessagesQueueByIndex(0);
-      // 检查是否还有更多的礼物需要展示
-      // if (chatResultController.giftCenterMessagesQueue.isNotEmpty) {
-      //   startAnimationWithGift(
-      //       chatResultController.giftCenterMessagesQueue.first);
-      // }
-    }
-  }
-
   void finishAnimation() {
+    logger.d('[AL] finishAnimation 1');
+    if (!mounted) return;
     setState(() {
       lottiePath = null;
       currentRepeatCount = 1;

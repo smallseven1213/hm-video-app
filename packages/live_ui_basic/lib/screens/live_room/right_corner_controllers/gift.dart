@@ -13,6 +13,7 @@ import 'package:live_core/widgets/live_image.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:live_ui_basic/widgets/live_button.dart';
 
+import '../../../libs/goto_deposit.dart';
 import '../../../libs/show_live_dialog.dart';
 import '../../../localization/live_localization_delegate.dart';
 import '../../../widgets/x_count.dart';
@@ -346,6 +347,9 @@ class GiftItemState extends State<GiftItem>
             type: ButtonType.primary,
             onTap: () {
               Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              gotoDeposit();
             })
       ],
     );
