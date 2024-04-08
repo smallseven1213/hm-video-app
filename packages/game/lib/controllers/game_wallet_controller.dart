@@ -10,6 +10,7 @@ class GameWalletController extends GetxController {
   var wallet = 0.00.obs;
   var isLoading = false.obs;
   var currency = 'TWD'.obs;
+  var isLogin = false.obs;
 
   AuthController authController = Get.find<AuthController>();
   GameAuthApi gameAuthApi = GameAuthApi();
@@ -31,12 +32,6 @@ class GameWalletController extends GetxController {
         logger.i('Error fetching wallet from third login: $e');
       }
     }
-
-    // ever(authController.token, (token) {
-    //   if (token.isNotEmpty) {
-    //     gameAuthApi.login(token);
-    //   }
-    // });
   }
 
   void fetchWalletsFromPoints() async {

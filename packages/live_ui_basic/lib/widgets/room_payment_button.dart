@@ -4,8 +4,8 @@ import 'package:live_core/apis/live_api.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/controllers/live_user_controller.dart';
 import 'package:live_core/widgets/loading.dart';
+import 'package:shared/utils/goto_deposit.dart';
 
-import '../libs/goto_deposit.dart';
 import '../libs/show_live_dialog.dart';
 import '../localization/live_localization_delegate.dart';
 import 'live_button.dart';
@@ -75,9 +75,7 @@ class RoomPaymentButtonState extends State<RoomPaymentButton> {
                           type: ButtonType.primary,
                           onTap: () {
                             Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            Navigator.of(context).pop();
-                            gotoDeposit();
+                            gotoDeposit(context);
                           })
                     ],
                   );

@@ -77,6 +77,7 @@ class _GameLobbyState extends State<GameLobby>
     _fetchWalletsInitFromThirdLogin();
     Get.put(GameBannerController());
     Get.put(GamesListController());
+    gameWalletController.isLogin.value = true;
 
     Get.find<AuthController>().token.listen((event) {
       _fetchDataInit();
