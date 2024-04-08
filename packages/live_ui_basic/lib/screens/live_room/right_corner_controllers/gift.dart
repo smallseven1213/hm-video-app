@@ -347,6 +347,8 @@ class GiftItemState extends State<GiftItem>
             type: ButtonType.primary,
             onTap: () {
               Navigator.of(context).pop();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
               gotoDeposit(context);
             })
       ],
