@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:game/enums/game_app_routes.dart';
+
 import 'package:game/screens/game_deposit_polling_screen/amount_items.dart';
 import 'package:game/screens/game_deposit_list_screen/tips.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -9,8 +10,9 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
-import 'package:game/widgets/pay_switch_button.dart';
+import 'package:game/screens/user_info/game_user_info_deposit_history.dart';
 
+import 'package:game/widgets/pay_switch_button.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -51,21 +53,6 @@ class GameDepositPollingState extends State<GameDepositPolling> {
             icon: Icon(Icons.arrow_back_ios, color: gameLobbyAppBarIconColor),
             onPressed: () => Navigator.pop(context, true),
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                MyRouteDelegate.of(context).push(GameAppRoutes.depositRecord);
-              },
-              child: Text(
-                localizations.translate('deposit_history'),
-                style: TextStyle(
-                  color: gameLobbyAppBarTextColor,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
         ),
         body: Container(
           width: double.infinity,
@@ -103,7 +90,13 @@ class GameDepositPollingState extends State<GameDepositPolling> {
                         padding:
                             EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                         child: GameUserInfo(
-                          child: UserInfoService(),
+                          child: Wrap(
+                            spacing: 20,
+                            children: [
+                              UserInfoDepositHistory(),
+                              UserInfoService(),
+                            ],
+                          ),
                         ),
                       ),
                       const AmountItems(),
