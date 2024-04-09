@@ -26,6 +26,8 @@ class ChatResultController extends GetxController {
     List<ChatMessage> newMessages = (decodedData as List).map((item) {
       if (item['objChat']['ntype'] == 3) {
         return ChatMessage<ChatGiftMessageObjChatData>.fromJson(item);
+      } else if (item['objChat']['ntype'] == 1) {
+        return ChatMessage<ChatMessageObjChatData>.fromJson(item);
       } else {
         return ChatMessage<String>.fromJson(item);
       }

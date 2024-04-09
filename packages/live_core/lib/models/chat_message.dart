@@ -63,6 +63,9 @@ class ChatMessageObjChat<T> {
       // data是String要轉成json
       var jsonData = data is String ? jsonDecode(data) : data;
       return ChatGiftMessageObjChatData.fromJson(jsonData) as T;
+    } else if (T == ChatMessageObjChatData) {
+      var jsonData = data is String ? jsonDecode(data) : data;
+      return ChatMessageObjChatData.fromJson(jsonData) as T;
     } else {
       return data as T;
     }
