@@ -321,10 +321,10 @@ class GameLobbyApi {
   }
 
   // 取得存款渠道v2
-  Future<Map<String, dynamic>> getDepositChannel(String paymentTypeCode) async {
+  Future<Map<String, dynamic>> getDepositChannel() async {
     var value = await fetcher(
         url:
-            '$apiPrefix/deposit-channel-v2?paymentTypeCode=$paymentTypeCode&deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
+            '$apiPrefix/deposit-channel-v2?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -360,7 +360,7 @@ class GameLobbyApi {
     };
   }
 
-  // 取得支付類型列表
+  // 取得存款支付類型列表
   Future<List<DepositPaymentTypeList>> getPaymentList() async {
     var value = await fetcher(url: '$apiPrefix/payment/payment-type/list');
     var res = (value.data as Map<String, dynamic>);
