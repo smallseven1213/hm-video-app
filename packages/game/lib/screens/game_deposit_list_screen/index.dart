@@ -34,14 +34,14 @@ class GameDepositList extends StatefulWidget {
 }
 
 class GameDepositListState extends State<GameDepositList> {
-  dynamic depositData;
+  Map<String, dynamic> depositData = {};
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
 
   @override
   void initState() {
     super.initState();
-    _getDepositChannel();
+    _getDepositChannel('alipay');
   }
 
   void showConfirmDialogWrapper() {
@@ -57,19 +57,20 @@ class GameDepositListState extends State<GameDepositList> {
     );
   }
 
-  void _getDepositChannel() async {
+  void _getDepositChannel(String paymentTypeCode) async {
     try {
-      var res = await GameLobbyApi().getDepositChannel();
+      var res = await GameLobbyApi().getDepositChannel('alipay');
       if (res['code'] != '00') {
         showConfirmDialogWrapper();
         return;
       } else {
+        logger.i('_getDepositChannel = 00 ${res['data']}');
         setState(() {
           depositData = res['data'];
         });
       }
     } catch (error) {
-      logger.i('_getDepositChannel $error');
+      logger.i('_getDepositChannel error $error');
     }
   }
 
@@ -142,7 +143,8 @@ class GameDepositListState extends State<GameDepositList> {
                           ),
                         ),
                       ),
-                      (depositData != null && depositData.isNotEmpty)
+                      // const DepositChannelEmpty(),
+                      (depositData.isNotEmpty)
                           ? DepositPaymentItems(
                               depositData: depositData,
                               initialIndex: depositData.keys.first.toString(),
