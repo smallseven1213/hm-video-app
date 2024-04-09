@@ -98,3 +98,20 @@ class ChatGiftMessageObjChatData {
     );
   }
 }
+
+class ChatMessageObjChatData {
+  final String src;
+  final String trans;
+
+  ChatMessageObjChatData({
+    required this.src,
+    required this.trans,
+  });
+
+  factory ChatMessageObjChatData.fromJson(Map<String, dynamic> json) {
+    return ChatMessageObjChatData(
+      src: json['src'] ?? "",
+      trans: json['trans'] ?? "",
+    );
+  }
+}
