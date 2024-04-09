@@ -3,9 +3,6 @@ import 'package:logger/logger.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
-import 'package:game/apis/game_api.dart';
-import 'package:game/enums/game_app_routes.dart';
-
 import 'package:game/screens/game_deposit_list_screen/channel_empty.dart';
 import 'package:game/screens/game_deposit_list_screen/payment_items.dart';
 import 'package:game/screens/game_deposit_list_screen/tips.dart';
@@ -16,8 +13,11 @@ import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 import 'package:game/screens/user_info/game_user_info_deposit_history.dart';
 
+import 'package:game/apis/game_api.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/pay_switch_button.dart';
+import 'package:game/models/game_deposit_payment_type_list.dart';
 
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -35,13 +35,16 @@ class GameDepositList extends StatefulWidget {
 
 class GameDepositListState extends State<GameDepositList> {
   Map<String, dynamic> depositData = {};
+  List<DepositPaymentTypeList> paymentTypeList = [];
+
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
 
   @override
   void initState() {
     super.initState();
-    _getDepositChannel('alipay');
+    _getPaymentList();
+    _getDepositChannel();
   }
 
   void showConfirmDialogWrapper() {
@@ -57,9 +60,23 @@ class GameDepositListState extends State<GameDepositList> {
     );
   }
 
-  void _getDepositChannel(String paymentTypeCode) async {
+// 取得支付類型列表 getPaymentList
+  void _getPaymentList() async {
     try {
-      var res = await GameLobbyApi().getDepositChannel('alipay');
+      var res = await GameLobbyApi().getPaymentList();
+      if (res.isNotEmpty) {
+        setState(() {
+          paymentTypeList = res;
+        });
+      }
+    } catch (error) {
+      logger.i('_getPaymentList error $error');
+    }
+  }
+
+  void _getDepositChannel() async {
+    try {
+      var res = await GameLobbyApi().getDepositChannel();
       if (res['code'] != '00') {
         showConfirmDialogWrapper();
         return;
@@ -146,8 +163,9 @@ class GameDepositListState extends State<GameDepositList> {
                       // const DepositChannelEmpty(),
                       (depositData.isNotEmpty)
                           ? DepositPaymentItems(
+                              paymentList: paymentTypeList,
                               depositData: depositData,
-                              initialIndex: depositData.keys.first.toString(),
+                              initialIndex: paymentTypeList[0].code,
                             )
                           : const DepositChannelEmpty(),
                       const SizedBox(height: 36),
