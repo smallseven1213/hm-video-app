@@ -12,7 +12,9 @@ import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';
 import 'package:game/screens/game_deposit_list_screen/show_user_name.dart';
 import 'package:game/screens/game_deposit_list_screen/title.dart';
+import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
 import 'package:game/screens/game_theme_config.dart';
+
 import 'package:game/utils/show_model.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
@@ -132,12 +134,12 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             : 1]
         .toString();
 
-    List paymentItem = widget.paymentList.where((element) {
+    List<DepositPaymentTypeList> paymentListItem =
+        widget.paymentList.where((element) {
       final depositDataKeys = widget.depositData.keys.toList();
       return depositDataKeys.contains(element.code);
     }).toList();
 
-    int paymentLength = paymentItem.isNotEmpty ? paymentItem.length.toInt() : 0;
     List channels = List.from(widget.depositData[_paymentActiveIndex]);
     int channelLength = channels.isNotEmpty ? channels.length.toInt() : 0;
     num channelHeight =
@@ -148,7 +150,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
         : 0;
     num amountHeight = amountLength > 4 ? (amountLength / 4).ceil() * 80 : 80;
 
-    logger.i("active 支付類型: $_paymentActiveIndex");
     logger.i("active 支付渠道: ${channels[_channelActiveIndex].name}");
 
     handleAmount(index) {
@@ -231,90 +232,10 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
         child: Column(
           children: [
             // ======支付方式======
-            SingleChildScrollView(
-              key: scrollKey,
-              controller: scrollController,
-              scrollDirection: Axis.horizontal,
-              child: Wrap(
-                spacing: 5,
-                children: List.generate(
-                  paymentItem.length,
-                  (index) => GestureDetector(
-                      onTap: () {
-                        paymentIndexChanged(paymentItem[index].code);
-                        final double scrollOffset = index * 45 -
-                            MediaQuery.of(context).size.width / 2 +
-                            MediaQuery.of(context).size.width / 4;
-                        scrollController.animateTo(
-                          index >= 4 ? scrollOffset : 0,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 1),
-                            child: Container(
-                              width: paymentLength <= 4
-                                  ? MediaQuery.of(context).size.width / 4 - 22
-                                  : MediaQuery.of(context).size.width / 4 - 32,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                color: _paymentActiveIndex ==
-                                        paymentItem[index].code
-                                    ? gameLobbyDepositActiveColor
-                                    : gameItemMainColor,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color: _paymentActiveIndex ==
-                                          paymentItem[index].code
-                                      ? gamePrimaryButtonColor
-                                      : gameItemMainColor,
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  paymentItem[index] != null
-                                      ? Image.network(
-                                          paymentItem[index].icon,
-                                          width: 24,
-                                          height: 24,
-                                        )
-                                      : Image.asset(
-                                          'packages/game/assets/images/game_deposit/payment_empty-$theme.webp',
-                                          width: 24,
-                                          height: 24,
-                                          fit: BoxFit.cover,
-                                        ),
-                                  const SizedBox(height: 6),
-                                  Text(
-                                    paymentItem[index].name.toString(),
-                                    style: TextStyle(
-                                      color: gameLobbyPrimaryTextColor,
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          if (paymentItem[index].label.length > 0)
-                            Positioned(
-                              top: 0,
-                              right: 0,
-                              child: OliveShape(
-                                width: 40.0,
-                                type: 'right',
-                                text: localizations.translate('send_offer'),
-                              ),
-                            )
-                        ],
-                      )),
-                ),
-              ),
+            DepositPaymentTypeListWidget(
+              paymentActiveIndex: _paymentActiveIndex,
+              paymentListItem: paymentListItem,
+              handlePaymentIndexChanged: paymentIndexChanged,
             ),
             SizedBox(
               height: 40,
