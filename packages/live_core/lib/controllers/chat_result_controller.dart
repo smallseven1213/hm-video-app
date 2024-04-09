@@ -78,6 +78,8 @@ class ChatResultController extends GetxController {
     try {
       giftCenterMessagesQueue.value.removeAt(index);
       giftCenterMessagesQueue.refresh();
-    } catch (e) {}
+    } catch (e) {
+      return;
+    }
   }
 }
