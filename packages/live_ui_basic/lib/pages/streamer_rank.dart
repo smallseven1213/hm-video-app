@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:live_core/controllers/user_follows_controller.dart';
+import 'package:live_core/widgets/live_image.dart';
 import 'package:live_core/widgets/streamer_rank_provider.dart';
 
 import 'package:live_core/models/streamer.dart';
@@ -72,7 +73,7 @@ class RankingScreenState extends State<RankingScreen> {
     super.initState();
   }
 
-  @override  
+  @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
@@ -107,12 +108,12 @@ class RankingScreenState extends State<RankingScreen> {
                           Container(
                             width: 40,
                             height: 40,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: NetworkImage(rankItems[index].avatar),
-                                fit: BoxFit.cover,
-                              ),
+                            clipBehavior: Clip.antiAlias,
+                            decoration:
+                                const BoxDecoration(shape: BoxShape.circle),
+                            child: LiveImage(
+                              base64Url: rankItems[index].avatar,
+                              fit: BoxFit.cover,
                             ),
                           ),
                           const SizedBox(width: 8.0),
