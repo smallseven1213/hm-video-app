@@ -9,8 +9,8 @@ class RankNumber extends StatelessWidget {
   const RankNumber({
     super.key,
     required this.number,
-    this.width = 13,
-    this.height = 8,
+    this.width = 20,
+    this.height = 13,
   });
 
   @override
