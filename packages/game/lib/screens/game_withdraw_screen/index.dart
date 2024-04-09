@@ -1,31 +1,38 @@
+import 'package:logger/logger.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:game/screens/user_info/game_user_info_withdraw_history.dart';
-import 'package:get/get.dart';
-import 'package:logger/logger.dart';
 
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options.dart';
 import 'package:game/screens/game_withdraw_screen/label_with_status.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
+import 'package:game/screens/user_info/game_user_info_deposit.dart';
+import 'package:game/screens/user_info/game_user_info_withdraw.dart';
+import 'package:game/screens/user_info/game_user_info_withdraw_history.dart';
 
 import 'package:game/widgets/input.dart';
+import 'package:game/widgets/pay_switch_button.dart';
+
 import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/utils/show_funding_password_bottom_sheet.dart';
-import 'package:game/models/user_withdrawal_data.dart';
-import 'package:game/apis/game_api.dart';
+
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
+
+import 'package:game/models/user_withdrawal_data.dart';
+import 'package:game/apis/game_api.dart';
 
 import '../../enums/game_app_routes.dart';
 import '../../localization/game_localization_delegate.dart';
@@ -51,6 +58,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
   final userController = Get.put(UserController());
   final gameWalletController = Get.put(GameWalletController());
   final responseController = Get.find<GameApiResponseErrorCatchController>();
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
 
   bool reachable = false;
   String stakeLimit = '0.00';
@@ -283,6 +292,26 @@ class _GameWithdrawState extends State<GameWithdraw> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              PaySwitchButton(
+                // 存款
+                leftChild: UserInfoDeposit(
+                  onTap: () {
+                    MyRouteDelegate.of(context).push(
+                        gameConfigController.switchPaymentPage.value ==
+                                switchPaymentPageType['list']
+                            ? GameAppRoutes.depositList
+                            : GameAppRoutes.depositPolling,
+                        removeSamePath: true);
+                  },
+                ),
+                // 提現
+                rightChild: UserInfoWithdraw(
+                  onTap: () {
+                    MyRouteDelegate.of(context)
+                        .push(GameAppRoutes.withdraw, removeSamePath: true);
+                  },
+                ),
+              ),
               const Padding(
                 padding: EdgeInsets.all(8),
                 child: GameUserInfo(

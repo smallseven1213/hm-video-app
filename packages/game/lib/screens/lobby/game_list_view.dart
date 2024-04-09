@@ -7,6 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../localization/game_localization_delegate.dart';
@@ -33,14 +34,6 @@ class GameListItem extends StatelessWidget {
       padding: const EdgeInsets.all(1),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
-        // boxShadow: const [
-        //   BoxShadow(
-        //     color: Color.fromRGBO(0, 0, 0, .10),
-        //     offset: Offset(0.5, 0.5),
-        //     spreadRadius: 1.5,
-        //     blurRadius: 5.0,
-        //   ),
-        // ],
       ),
       child: AnimatedOpacity(
         opacity: 1.0,
@@ -73,14 +66,6 @@ class GameListItem extends StatelessWidget {
                           )
                   ],
                 )
-              // CacheImage(
-              //     url: imageUrl,
-              //     width: double.infinity,
-              //     height: (Get.width - 110) / 3,
-              //     fit: BoxFit.cover,
-              //     emptyImageUrl:
-              //         'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-              //   )
               : SizedBox(
                   child: Image.asset(
                     'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
@@ -110,6 +95,8 @@ class GameListViewState extends State<GameListView>
   List gameHistoryList = [];
   final ScrollController _scrollController = ScrollController();
   int _currentIndex = 0;
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
 
   @override
   void initState() {
@@ -117,6 +104,10 @@ class GameListViewState extends State<GameListView>
     gamesListController.fetchGames().then((value) {
       _filterGameCategories();
       _getGameHistory();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _handleOpenThirdPartyGame();
+      });
     });
   }
 
@@ -124,6 +115,27 @@ class GameListViewState extends State<GameListView>
   void dispose() {
     _scrollController.dispose();
     super.dispose();
+  }
+
+  _handleOpenThirdPartyGame() {
+    logger.i(
+        ' ===> OpenThirdPartyGame: ${gameConfigController.thirdPartyGameId.value}');
+    if (gameConfigController.isOpenThirdPartyGame.value == true) {
+      // 從 gamesListController.games中找到對應gameConfigController.gameId的game
+      final openGame = gamesListController.games.firstWhere((element) =>
+          element.gameId == gameConfigController.thirdPartyGameId.value &&
+          element.tpCode == gameConfigController.thirdPartyGameTpCode.value);
+
+      if (openGame.gameId != '') {
+        handleGameItem(context,
+            gameId: openGame.gameId,
+            updateGameHistory: _getGameHistory,
+            tpCode: openGame.tpCode,
+            direction: openGame.direction,
+            gameType: openGame.gameType);
+      }
+      gameConfigController.setThirdPartyGame(false, '', '');
+    }
   }
 
   _getGameHistory() async {
@@ -150,69 +162,77 @@ class GameListViewState extends State<GameListView>
 
   // 寫一個篩選遊戲類別的方法
   _filterGameCategories() {
-    final GameLocalizations localizations = GameLocalizations.of(context)!;
+    if (mounted) {
+      final GameLocalizations localizations = GameLocalizations.of(context)!;
 
-    List gameCategoriesMapper = [
-      {
-        'name': localizations.translate('all'),
-        'gameType': 0,
-        'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
-      },
-      {
-        'name': localizations.translate('recent'),
-        'gameType': -1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
-      },
-      {
-        'name': localizations.translate('fish'),
-        'gameType': 1,
-        'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
-      },
-      {
-        'name': localizations.translate('live'),
-        'gameType': 2,
-        'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
-      },
-      {
-        'name': localizations.translate('card'),
-        'gameType': 3,
-        'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
-      },
-      {
-        'name': localizations.translate('slots'),
-        'gameType': 4,
-        'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
-      },
-      {
-        'name': localizations.translate('sports'),
-        'gameType': 5,
-        'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
-      },
-      {
-        'name': localizations.translate('lottery'),
-        'gameType': 6,
-        'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
+      List gameCategoriesMapper = [
+        {
+          'name': localizations.translate('all'),
+          'gameType': 0,
+          'icon': 'packages/game/assets/images/game_lobby/menu-all@3x.webp',
+        },
+        {
+          'name': localizations.translate('recent'),
+          'gameType': -1,
+          'icon': 'packages/game/assets/images/game_lobby/menu-new@3x.webp',
+        },
+        {
+          'name': localizations.translate('hot'),
+          'gameType': -2,
+          'icon': 'packages/game/assets/images/game_lobby/menu-hot@3x.webp',
+        },
+        {
+          'name': localizations.translate('fish'),
+          'gameType': 1,
+          'icon': 'packages/game/assets/images/game_lobby/menu-fish@3x.webp',
+        },
+        {
+          'name': localizations.translate('live'),
+          'gameType': 2,
+          'icon': 'packages/game/assets/images/game_lobby/menu-live@3x.webp',
+        },
+        {
+          'name': localizations.translate('card'),
+          'gameType': 3,
+          'icon': 'packages/game/assets/images/game_lobby/menu-poker@3x.webp',
+        },
+        {
+          'name': localizations.translate('slots'),
+          'gameType': 4,
+          'icon': 'packages/game/assets/images/game_lobby/menu-slot@3x.webp',
+        },
+        {
+          'name': localizations.translate('sports'),
+          'gameType': 5,
+          'icon': 'packages/game/assets/images/game_lobby/menu-sport@3x.webp',
+        },
+        {
+          'name': localizations.translate('lottery'),
+          'gameType': 6,
+          'icon': 'packages/game/assets/images/game_lobby/menu-lottery@3x.webp',
+        }
+      ];
+
+      Set<int> gameTypes = <int>{};
+
+      for (var game in gamesListController.games) {
+        gameTypes.add(game.gameType);
       }
-    ];
 
-    Set<int> gameTypes = <int>{};
+      // 將gameTypes轉換為Set<int>型態，以便使用contains方法進行比較
 
-    for (var game in gamesListController.games) {
-      gameTypes.add(game.gameType);
+      var filteredCategories = gameCategoriesMapper
+          .where((category) =>
+              gameTypes.contains(category['gameType']) ||
+              category['gameType'] == 0 ||
+              category['gameType'] == -1 ||
+              category['gameType'] == -2)
+          .toList();
+
+      // 將過濾後的遊戲類別列表分配給filteredGameCategories
+
+      filteredGameCategories.assignAll(filteredCategories);
     }
-
-    // 將gameTypes轉換為Set<int>型態，以便使用contains方法進行比較
-
-    var filteredCategories = gameCategoriesMapper
-        .where((category) =>
-            gameTypes.contains(category['gameType']) ||
-            category['gameType'] == 0 ||
-            category['gameType'] == -1)
-        .toList();
-
-    // 將過濾後的遊戲類別列表分配給filteredGameCategories
-
-    filteredGameCategories.assignAll(filteredCategories);
   }
 
   void _scrollToItem(int index) {
@@ -294,18 +314,22 @@ class GameListViewState extends State<GameListView>
 
   Widget _buildGameList(int gameType) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
+    var hotGames = [...gamesListController.games]
+        .where((game) => game.tagId == '2')
+        .toList()
+        .obs
+      ..sort((a, b) => b.hotOrderIndex.compareTo(a.hotOrderIndex));
 
     final gameListResult = gameType == 0
         ? gamesListController.games
-        : gameHistoryList.isNotEmpty && gameType == -1
-            ? gameHistoryList
-            : gamesListController.games
-                .where((game) => game.gameType == gameType)
-                .toList()
-                .obs;
-    // final totalItemCount = gameListResult.length.isOdd
-    //     ? (gameListResult.length ~/ 2) + 1 // 如果是奇數就加1
-    //     : gameListResult.length ~/ 2;
+        : gameType == -2
+            ? hotGames
+            : gameHistoryList.isNotEmpty && gameType == -1
+                ? gameHistoryList
+                : gamesListController.games
+                    .where((game) => game.gameType == gameType)
+                    .toList()
+                    .obs;
 
     return gameListResult.isNotEmpty
         ? CustomScrollView(

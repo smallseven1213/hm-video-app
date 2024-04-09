@@ -1,8 +1,11 @@
+import 'package:app_ab/widgets/sliver_video_preview_skelton_list.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/models/banner_photo.dart';
+import 'package:shared/widgets/banner_link.dart';
+import 'package:shared/widgets/sid_image.dart';
 
 import 'no_data.dart';
-import 'sliver_video_preview_skelton_list.dart';
 import 'video_preview.dart';
 
 class SliverVodGrid extends StatefulWidget {
@@ -20,15 +23,18 @@ class SliverVodGrid extends StatefulWidget {
   final bool? displayCoverVertical;
   final ScrollController? customScrollController;
   final Function(int id)? onOverrideRedirectTap;
+  final double? padding;
+  final bool displayAds; // 是否顯示廣告
+  final List<BannerPhoto>? adsList; // 廣告列表
+  final int adsInterval; // 每隔多少個影片顯示一則廣告
 
   const SliverVodGrid({
     Key? key,
-    this.film = 1,
+    this.film,
     required this.videos,
     required this.displayNoMoreData,
     required this.isListEmpty,
     required this.displayLoading,
-    this.onOverrideRedirectTap,
     this.noMoreWidget,
     this.headerExtends,
     this.onScrollEnd,
@@ -37,6 +43,11 @@ class SliverVodGrid extends StatefulWidget {
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.customScrollController,
+    this.padding,
+    this.displayAds = false,
+    this.adsList,
+    this.adsInterval = 8,
+    this.onOverrideRedirectTap,
   }) : super(key: key);
 
   @override
@@ -46,8 +57,6 @@ class SliverVodGrid extends StatefulWidget {
 class SliverVodGridState extends State<SliverVodGrid> {
   @override
   Widget build(BuildContext context) {
-    int totalRows = (widget.videos.length / 2).ceil();
-
     return CustomScrollView(
       physics: kIsWeb ? null : const BouncingScrollPhysics(),
       controller: widget.customScrollController,
@@ -55,97 +64,116 @@ class SliverVodGridState extends State<SliverVodGrid> {
           ScrollConfiguration.of(context).copyWith(scrollbars: false),
       slivers: [
         ...?widget.headerExtends,
-        if (widget.isListEmpty)
-          const SliverToBoxAdapter(
-            child: NoDataWidget(),
-          ),
-        if (totalRows > 0)
-          SliverPadding(
-            padding: const EdgeInsets.all(8.0),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  int firstVideoIndex = index * 2;
-                  int secondVideoIndex = firstVideoIndex + 1;
-
-                  var firstVideo = widget.videos[firstVideoIndex];
-                  var secondVideo = secondVideoIndex < widget.videos.length
-                      ? widget.videos[secondVideoIndex]
-                      : null;
-
-                  // logger.i('RENDER SLIVER VOD GRID');
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: VideoPreviewWidget(
-                              id: firstVideo.id,
-                              film: widget.film,
-                              displayCoverVertical:
-                                  widget.displayCoverVertical ?? false,
-                              coverVertical: firstVideo.coverVertical!,
-                              coverHorizontal: firstVideo.coverHorizontal!,
-                              timeLength: firstVideo.timeLength!,
-                              tags: firstVideo.tags!,
-                              title: firstVideo.title,
-                              videoViewTimes: firstVideo.videoViewTimes!,
-                              videoCollectTimes: firstVideo.videoCollectTimes!,
-                              displayVideoCollectTimes:
-                                  widget.displayVideoCollectTimes,
-                              displayVideoTimes: widget.displayVideoTimes,
-                              displayViewTimes: widget.displayViewTimes,
-                              onOverrideRedirectTap:
-                                  widget.onOverrideRedirectTap,
-                            ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
-                              child: secondVideo != null
-                                  ? VideoPreviewWidget(
-                                      id: secondVideo.id,
-                                      film: widget.film,
-                                      displayCoverVertical:
-                                          widget.displayCoverVertical ?? false,
-                                      coverVertical: secondVideo.coverVertical!,
-                                      coverHorizontal:
-                                          secondVideo.coverHorizontal!,
-                                      timeLength: secondVideo.timeLength!,
-                                      tags: secondVideo.tags!,
-                                      title: secondVideo.title,
-                                      videoViewTimes:
-                                          secondVideo.videoViewTimes!,
-                                      videoCollectTimes:
-                                          secondVideo.videoCollectTimes!,
-                                      displayVideoCollectTimes:
-                                          widget.displayVideoCollectTimes,
-                                      displayVideoTimes:
-                                          widget.displayVideoTimes,
-                                      displayViewTimes: widget.displayViewTimes,
-                                      onOverrideRedirectTap:
-                                          widget.onOverrideRedirectTap,
-                                    )
-                                  : const SizedBox.shrink()),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                  );
-                },
-                childCount: totalRows,
-              ),
-            ),
-          ),
-        // ignore: prefer_const_constructors
-        if (widget.displayLoading) SliverVideoPreviewSkeletonList(),
+        if (widget.isListEmpty) const SliverToBoxAdapter(child: NoDataWidget()),
+        _buildVideoGrid(),
+        if (widget.displayLoading) const SliverVideoPreviewSkeletonList(),
         if (widget.displayNoMoreData)
-          SliverToBoxAdapter(
-            child: widget.noMoreWidget,
-          ),
+          SliverToBoxAdapter(child: widget.noMoreWidget),
       ],
+    );
+  }
+
+  Widget _buildVideoGrid() {
+    List<Widget> rowsAndAds = [];
+    for (int i = 0; i < widget.videos.length; i++) {
+      if (widget.displayAds && shouldInsertAd(i)) {
+        _addAdWidget(rowsAndAds);
+      }
+      _addVideoRow(rowsAndAds, i);
+      i++; // Skip next video as it's already added in the row.
+    }
+    // Add a final ad if ads are being displayed and list is not empty
+    if (widget.displayAds && widget.videos.isNotEmpty) {
+      _addAdWidget(rowsAndAds);
+    }
+    return SliverPadding(
+      padding: EdgeInsets.all(widget.padding ?? 8.0),
+      sliver: SliverList(delegate: SliverChildListDelegate(rowsAndAds)),
+    );
+  }
+
+  void _addVideoRow(List<Widget> rowsAndAds, int index) {
+    var firstVideo = widget.videos[index];
+    Widget firstVideoWidget = VideoPreviewWidget(
+      id: firstVideo.id,
+      film: widget.film,
+      displayCoverVertical: widget.displayCoverVertical ?? false,
+      coverVertical: firstVideo.coverVertical!,
+      coverHorizontal: firstVideo.coverHorizontal!,
+      timeLength: firstVideo.timeLength!,
+      tags: firstVideo.tags!,
+      title: firstVideo.title,
+      videoViewTimes: firstVideo.videoViewTimes!,
+      videoCollectTimes: firstVideo.videoCollectTimes!,
+      displayVideoCollectTimes: widget.displayVideoCollectTimes,
+      displayVideoTimes: widget.displayVideoTimes,
+      displayViewTimes: widget.displayViewTimes,
+      onOverrideRedirectTap: widget.onOverrideRedirectTap,
+    );
+
+    // Check if there is a second video to display in the row
+    Widget? secondVideoWidget;
+    if (index + 1 < widget.videos.length) {
+      var secondVideo = widget.videos[index + 1];
+      secondVideoWidget = VideoPreviewWidget(
+        id: secondVideo.id,
+        film: widget.film,
+        displayCoverVertical: widget.displayCoverVertical ?? false,
+        coverVertical: secondVideo.coverVertical!,
+        coverHorizontal: secondVideo.coverHorizontal!,
+        timeLength: secondVideo.timeLength!,
+        tags: secondVideo.tags!,
+        title: secondVideo.title,
+        videoViewTimes: secondVideo.videoViewTimes!,
+        videoCollectTimes: secondVideo.videoCollectTimes!,
+        displayVideoCollectTimes: widget.displayVideoCollectTimes,
+        displayVideoTimes: widget.displayVideoTimes,
+        displayViewTimes: widget.displayViewTimes,
+        onOverrideRedirectTap: widget.onOverrideRedirectTap,
+      );
+    }
+
+    rowsAndAds.add(
+      Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(child: firstVideoWidget),
+            if (secondVideoWidget != null) SizedBox(width: widget.padding ?? 8),
+            if (secondVideoWidget != null) Expanded(child: secondVideoWidget),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _addAdWidget(List<Widget> rowsAndAds) {
+    if (widget.adsList != null && widget.adsList!.isNotEmpty) {
+      var ad = widget.adsList![rowsAndAds.length % widget.adsList!.length];
+      rowsAndAds.add(AdWidget(ad: ad));
+    }
+  }
+
+  bool shouldInsertAd(int index) =>
+      index > 0 && index % widget.adsInterval == 0;
+}
+
+class AdWidget extends StatelessWidget {
+  final BannerPhoto ad;
+  const AdWidget({Key? key, required this.ad}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return BannerLink(
+      id: ad.id,
+      url: ad.url ?? '',
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        height: 120,
+        child: SidImage(sid: ad.photoSid),
+      ),
     );
   }
 }

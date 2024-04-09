@@ -1,9 +1,13 @@
+import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/bottom_navigator_controller.dart';
 import '../navigator/delegate.dart';
+
+final logger = Logger();
 
 final bottomNavigatorController = Get.find<BottomNavigatorController>();
 
@@ -22,12 +26,27 @@ void handleHttpUrl(String url) {
 void handleDefaultScreenKey(BuildContext context, String url) {
   final defaultScreenKey = Uri.parse(url).queryParameters['defaultScreenKey'];
   final routePath = url.substring(0, url.indexOf('?'));
+  final String gameId = Uri.parse(url).queryParameters['gameId'].toString();
+  final String tpCode = Uri.parse(url).queryParameters['tpCode'].toString();
 
-  MyRouteDelegate.of(context).push(
-    routePath,
-    args: {'defaultScreenKey': '/$defaultScreenKey'},
-    removeSamePath: true,
-  );
+  if (gameId.isNotEmpty && gameId != '' && tpCode.isNotEmpty && tpCode != '') {
+    GamePlatformConfigController gamePlatformConfigController =
+        Get.find<GamePlatformConfigController>();
+    gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
+    MyRouteDelegate.of(context).push(
+      '/home',
+      args: {'defaultScreenKey': '/game'},
+      removeSamePath: true,
+    );
+  } else {
+    logger.i('url without gameId: $url');
+    MyRouteDelegate.of(context).push(
+      routePath,
+      args: {'defaultScreenKey': '/$defaultScreenKey'},
+      removeSamePath: true,
+    );
+  }
+
   bottomNavigatorController.changeKey('/$defaultScreenKey');
 }
 

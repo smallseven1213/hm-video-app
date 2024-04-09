@@ -46,6 +46,13 @@ class LoginPageState extends State<LoginPage> {
                   margin: const EdgeInsets.symmetric(horizontal: 50),
                   child: Column(
                     children: [
+                      const Image(
+                        image: AssetImage('assets/images/asia_bet_logo.png'),
+                        fit: BoxFit.contain,
+                        height: 35,
+                      ),
+                      // height 50
+                      const SizedBox(height: 50),
                       AuthTextField(
                         label: I18n.account,
                         controller: accountController,

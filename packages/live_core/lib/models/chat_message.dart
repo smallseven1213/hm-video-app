@@ -63,6 +63,9 @@ class ChatMessageObjChat<T> {
       // data是String要轉成json
       var jsonData = data is String ? jsonDecode(data) : data;
       return ChatGiftMessageObjChatData.fromJson(jsonData) as T;
+    } else if (T == ChatMessageObjChatData) {
+      var jsonData = data is String ? jsonDecode(data) : data;
+      return ChatMessageObjChatData.fromJson(jsonData) as T;
     } else {
       return data as T;
     }
@@ -95,6 +98,23 @@ class ChatGiftMessageObjChatData {
       gid: json['gid'] ?? 0,
       animationLayout: json['animation_layout'] ?? 2,
       quantity: json['quantity'] ?? 0,
+    );
+  }
+}
+
+class ChatMessageObjChatData {
+  final String src;
+  final String trans;
+
+  ChatMessageObjChatData({
+    required this.src,
+    required this.trans,
+  });
+
+  factory ChatMessageObjChatData.fromJson(Map<String, dynamic> json) {
+    return ChatMessageObjChatData(
+      src: json['src'] ?? "",
+      trans: json['trans'] ?? "",
     );
   }
 }

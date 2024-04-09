@@ -5,6 +5,8 @@ import 'package:game/routes/game_routes.dart';
 import 'package:game/widgets/game_provider.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/utils/running_main.dart';
+import 'package:live_ui_basic/routes/live_routes.dart';
+
 import 'config/colors.dart';
 
 // import './routes/app_routes.dart'
@@ -18,6 +20,7 @@ void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
     ...gameRoutes,
+    ...liveRoutes,
   };
 
   runningMain(
@@ -36,12 +39,13 @@ void main() async {
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent),
     globalLoadingWidget: ({String? text}) =>
-        Loading(loadingText: text ?? '正在加载...'),
+        Loading(loadingText: text ?? 'Loading...'),
     countdown: ({int countdownSeconds = 5}) =>
         Countdown(countdownSeconds: countdownSeconds),
     i18nSupport: true,
     supportedLocales: I18n.supportedLocales,
     i18nPath: 'assets/langs/langs.csv',
     expandedWidget: (child) => GameProvider(child: child),
+    defaultLocale: const Locale('en', 'US'),
   );
 }

@@ -40,9 +40,13 @@ Widget getChipWidgets(List strings) {
 
 class PlayingAd extends StatefulWidget {
   final VideoPlayerInfo videoPlayerInfo;
+  final Color? backgroundColor;
+  final Color? buttonColor;
   const PlayingAd({
     Key? key,
     required this.videoPlayerInfo,
+    this.backgroundColor,
+    this.buttonColor,
   }) : super(key: key);
 
   @override
@@ -131,6 +135,13 @@ class _PlayingAdState extends State<PlayingAd> {
     super.dispose();
   }
 
+  bool isColorDark(Color color) {
+    // 計算顏色的亮度
+    double luminance = color.computeLuminance();
+    // 如果亮度小於或等於0.5，則認為是深色，否則是淺色
+    return luminance <= 0.5;
+  }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -138,6 +149,7 @@ class _PlayingAdState extends State<PlayingAd> {
         false) {
       return const SizedBox.shrink();
     }
+
     return Obx(() {
       var playingAd = controller.videoAds.value.playingAds ?? [];
       if (playingAd.isEmpty || !adShow || playingAd.length <= adIndex) {
@@ -157,17 +169,19 @@ class _PlayingAdState extends State<PlayingAd> {
           child: Center(
             child: Container(
               padding: const EdgeInsets.all(5),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
-                  end: Alignment(0.8, 1),
+                  end: const Alignment(0.8, 1),
                   colors: <Color>[
-                    Colors.white,
-                    Color.fromRGBO(255, 255, 255, 0.8),
+                    widget.backgroundColor ?? Colors.white,
+                    widget.backgroundColor != null
+                        ? widget.backgroundColor!.withOpacity(0.8)
+                        : const Color.fromRGBO(255, 255, 255, 0.8),
                   ], // Gradient from https://learnui.design/tools/gradient-generator.html
                   tileMode: TileMode.mirror,
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
               ),
               child: Column(
                 children: [
@@ -183,10 +197,14 @@ class _PlayingAdState extends State<PlayingAd> {
                       IconButton(
                         padding: const EdgeInsets.only(left: 5, bottom: 5),
                         constraints: const BoxConstraints(),
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.close,
                           size: 14,
-                          color: Colors.black,
+                          color: widget.backgroundColor != null
+                              ? isColorDark(widget.buttonColor!)
+                                  ? Colors.white
+                                  : Colors.black
+                              : Colors.black,
                         ),
                         onPressed: closeAd,
                       ),
@@ -215,9 +233,14 @@ class _PlayingAdState extends State<PlayingAd> {
                     child: Center(
                       child: Text(
                         currentAd.name ?? '',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
+                          color: widget.backgroundColor != null
+                              ? isColorDark(widget.buttonColor!)
+                                  ? Colors.white
+                                  : Colors.black
+                              : Colors.black,
                         ),
                       ),
                     ),
@@ -227,9 +250,14 @@ class _PlayingAdState extends State<PlayingAd> {
                     child: Center(
                       child: Text(
                         currentAd.title ?? '',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 8,
                           overflow: TextOverflow.ellipsis,
+                          color: widget.backgroundColor != null
+                              ? isColorDark(widget.buttonColor!)
+                                  ? Colors.white
+                                  : Colors.black
+                              : Colors.black,
                         ),
                       ),
                     ),
@@ -238,18 +266,24 @@ class _PlayingAdState extends State<PlayingAd> {
                   Container(
                     height: 20,
                     width: double.infinity,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                      color: Color.fromRGBO(254, 44, 85, 1),
+                    decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(4.0)),
+                      color: widget.buttonColor ??
+                          const Color.fromRGBO(254, 44, 85, 1),
                     ),
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Center(
                       child: Text(
                         currentAd.button ?? '立即下載',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,
-                          color: Colors.white,
+                          color: widget.buttonColor != null
+                              ? isColorDark(widget.buttonColor!)
+                                  ? Colors.white
+                                  : Colors.black
+                              : Colors.white,
                         ),
                       ),
                     ),

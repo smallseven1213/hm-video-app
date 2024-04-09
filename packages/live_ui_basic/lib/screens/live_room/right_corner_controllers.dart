@@ -4,6 +4,7 @@ import 'package:live_ui_basic/screens/live_room/right_corner_controllers/resize.
 import 'package:live_ui_basic/screens/live_room/right_corner_controllers/sound.dart';
 
 import 'right_corner_controllers/gift.dart';
+import 'right_corner_controllers/languages.dart';
 
 class RightCornerControllers extends StatelessWidget {
   final int pid;
@@ -13,6 +14,8 @@ class RightCornerControllers extends StatelessWidget {
     return Column(
       children: [
         const More(),
+        const SizedBox(height: 15),
+        Languages(pid: pid),
         const SizedBox(height: 15),
         const Resize(),
         const SizedBox(height: 15),

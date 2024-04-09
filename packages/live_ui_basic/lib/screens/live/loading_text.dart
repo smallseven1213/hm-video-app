@@ -32,13 +32,13 @@ class LoadingTextState extends State<LoadingText> {
   void _updateLoadingText() {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
     final List<String> loadingTextList = [
-      localizations.translate('the_file_is_large_please_wait'),
-      localizations.translate('its_not_ready_yet_please_take_your_time'),
-      localizations.translate('exciting_moments_are_coming_soon'),
-      localizations.translate('loading'),
+      localizations.translate('its_a_big_file'),
+      localizations.translate('its_not_ready_yet'),
+      localizations.translate('its_about_to_happen'),
+      localizations.translate('we_are_trying_to_load_t'),
       localizations.translate('let_the_file_load_for_a_while'),
-      localizations.translate('good_things_are_worth_the_wait'),
-      localizations.translate('working_hard'),
+      localizations.translate('its_worth_wating_for_the_good_stuff'),
+      localizations.translate('trying_to_move_bricks'),
     ];
     setState(() {
       text = loadingTextList[rng.nextInt(loadingTextList.length)];

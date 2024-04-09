@@ -29,7 +29,6 @@ void main() async {
     ThemeData(
       useMaterial3: false,
     ),
-    defaultLocale: const Locale('zh', 'TW'),
     globalLoadingWidget: ({String? text}) =>
         const Center(child: LoadingAnimation()),
     countdown: ({int countdownSeconds = 5}) =>
@@ -38,5 +37,6 @@ void main() async {
     supportedLocales: I18n.supportedLocales,
     i18nPath: 'assets/langs/langs.csv',
     expandedWidget: (child) => GameProvider(child: child),
+    defaultLocale: const Locale('zh', 'TW'),
   );
 }

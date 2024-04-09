@@ -24,7 +24,7 @@ class SearchResults extends StatelessWidget {
     return Obx(() {
       var steamer = controller.searchResult;
       if (steamer.isEmpty) {
-        return const NoResult();
+        return const Center(child: NoResult());
       }
       return ListView.builder(
         itemCount: steamer.length,

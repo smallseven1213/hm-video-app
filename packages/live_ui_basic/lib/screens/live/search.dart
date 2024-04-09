@@ -60,12 +60,12 @@ class SearchWidget extends StatelessWidget {
                 Uri.parse(
                     "https://tawk.to/chat/65bf6f540ff6374032c9276f/1hlpslpb2"),
                 webOnlyWindowName: '_blank'),
-            child: SvgPicture.asset(
-              'packages/live_ui_basic/assets/svgs/ic_service.svg',
-              fit: BoxFit.cover,
-              width: 30,
-              height: 30,
-            ))
+            child: const Image(
+            image:
+                AssetImage('packages/live_ui_basic/assets/images/ic_service.webp'),
+            width: 30,
+            height: 30,
+          ),)
       ],
     );
   }

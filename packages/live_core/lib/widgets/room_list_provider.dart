@@ -25,10 +25,10 @@ class RoomListProviderState extends State<RoomListProvider> {
   void initState() {
     super.initState();
     final token = GetStorage().read('live-token');
+    final locale = GetStorage('locale').read('locale');
     socketIOManager = LiveSocketIOManager();
-
     socketIOManager.connect(
-      'wss://dev-live-ext-ws.hmtech-dev.com:443/user?token=$token',
+      'wss://dev-live-ext-ws.hmtech-dev.com:443/user?token=$token&locale=$locale',
       token,
     );
 

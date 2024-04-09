@@ -72,7 +72,7 @@ class RankDataDialogState extends State<RankDataDialog>
               Expanded(
                 flex: 1,
                 child: Text(rankItems[index].nickname,
-                    style: const TextStyle(fontSize: 11, color: Colors.white)),
+                    style: const TextStyle(fontSize: 14, color: Colors.white)),
               ),
               const SizedBox(width: 3),
               Expanded(
@@ -81,7 +81,7 @@ class RankDataDialogState extends State<RankDataDialog>
                   alignment: Alignment.centerRight,
                   child: Text(rankItems[index].amount.toString(),
                       style:
-                          const TextStyle(fontSize: 11, color: Colors.white)),
+                          const TextStyle(fontSize: 14, color: Colors.white)),
                 ),
               )
             ],
@@ -103,20 +103,20 @@ class RankDataDialogState extends State<RankDataDialog>
         child: Column(
           children: [
             SizedBox(
-              height: 15,
+              height: 20,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Image.asset(
                       'packages/live_ui_basic/assets/images/rank_diamondlist.webp',
-                      width: 12,
-                      height: 12),
+                      width: 16.7,
+                      height: 16.7),
                   const SizedBox(width: 10),
                   Text(
                     localizations.translate('diamond_leaderboard'),
                     style: const TextStyle(
-                        fontSize: 11,
+                        fontSize: 14.7,
                         fontWeight: FontWeight.bold,
                         color: Colors.white),
                   ),
@@ -127,8 +127,8 @@ class RankDataDialogState extends State<RankDataDialog>
                       onTap: widget.onClose,
                       child: Image.asset(
                           'packages/live_ui_basic/assets/images/room_close.webp',
-                          width: 12,
-                          height: 12),
+                          width: 16,
+                          height: 16),
                     ),
                   ))
                 ],
@@ -136,24 +136,27 @@ class RankDataDialogState extends State<RankDataDialog>
             ),
             // height 10
             const SizedBox(height: 10),
-            SizedBox(
-              height: 20, // 设置 TabBar 的高度为 15px
-              child: TabBar(
-                controller: _tabController,
-                labelColor: Colors.white,
-                unselectedLabelColor: Colors.white60,
-                labelStyle: const TextStyle(fontSize: 9), // 设置 Tab 文字大小
-                indicator: const UnderlineTabIndicator(
-                  borderSide: BorderSide(width: 1.0, color: Colors.grey),
-                  insets: EdgeInsets.symmetric(horizontal: 16.0),
+            Container(
+              alignment: Alignment.centerLeft,
+              child: SizedBox(
+                height: 20,
+                child: TabBar(
+                  controller: _tabController,
+                  labelColor: Colors.white,
+                  unselectedLabelColor: Colors.white60,
+                  labelStyle: const TextStyle(fontSize: 12.7),
+                  indicator: const UnderlineTabIndicator(
+                    borderSide: BorderSide(width: 1.0, color: Colors.grey),
+                    insets: EdgeInsets.symmetric(horizontal: 16.0),
+                  ),
+                  isScrollable: true,
+                  tabs: [
+                    Tab(text: localizations.translate('this_live_session')),
+                    Tab(text: localizations.translate('today')),
+                    Tab(text: '7${localizations.translate('day')}'),
+                    Tab(text: '30${localizations.translate('day')}'),
+                  ],
                 ),
-                isScrollable: true,
-                tabs: [
-                  Tab(text: localizations.translate('this_live_session')),
-                  Tab(text: localizations.translate('today')),
-                  Tab(text: '7${localizations.translate('day')}'),
-                  Tab(text: '30${localizations.translate('day')}'),
-                ],
               ),
             ),
             // height 10

@@ -49,6 +49,14 @@ class HomeMainScreen extends StatelessWidget {
                     SizedBox(
                       height: MediaQuery.of(context).padding.top,
                     ),
+                    DisplayLayoutTabSearchConsumer(
+                        layoutId: layoutId,
+                        child: (({required bool displaySearchBar}) =>
+                            displaySearchBar
+                                ? ChannelSearchBar(
+                                    key: Key('channel-search-bar-$layoutId'),
+                                  )
+                                : Container())),
                     SizedBox(
                       height: 55,
                       child: Row(
@@ -105,14 +113,6 @@ class HomeMainScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    DisplayLayoutTabSearchConsumer(
-                        layoutId: layoutId,
-                        child: (({required bool displaySearchBar}) =>
-                            displaySearchBar
-                                ? ChannelSearchBar(
-                                    key: Key('channel-search-bar-$layoutId'),
-                                  )
-                                : Container()))
                   ],
                 )),
               ],

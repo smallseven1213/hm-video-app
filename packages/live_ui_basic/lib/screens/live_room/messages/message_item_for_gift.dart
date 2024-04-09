@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/gifts_controller.dart';
 import 'package:live_core/models/chat_message.dart';
-import 'package:live_core/models/gift.dart';
-
-import '../../../libs/format_timestamp.dart';
 import '../../../localization/live_localization_delegate.dart';
 
 class MessageItemForGift extends StatelessWidget {
@@ -37,28 +33,28 @@ class MessageItemForGift extends StatelessWidget {
         : const Color(0x65242a3d);
 
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 5),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         // vertical top
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ClipOval(
-              child: Container(
-                  width: 25.0,
-                  height: 25.0,
-                  color: Colors.black,
-                  child: message.objChat.avatar == ""
-                      ? SvgPicture.asset(
-                          'packages/live_ui_basic/assets/svgs/default_avatar.svg',
-                          fit: BoxFit.cover,
-                        )
-                      : // message.objChat.avatar use Image remote
-                      Image.network(
-                          message.objChat.avatar,
-                          fit: BoxFit.cover,
-                        ))),
-          const SizedBox(width: 6),
+          // ClipOval(
+          //     child: Container(
+          //         width: 25.0,
+          //         height: 25.0,
+          //         color: Colors.black,
+          //         child: message.objChat.avatar == ""
+          //             ? SvgPicture.asset(
+          //                 'packages/live_ui_basic/assets/svgs/default_avatar.svg',
+          //                 fit: BoxFit.cover,
+          //               )
+          //             : // message.objChat.avatar use Image remote
+          //             Image.network(
+          //                 message.objChat.avatar,
+          //                 fit: BoxFit.cover,
+          //               ))),
+          // const SizedBox(width: 6),
           ConstrainedBox(
             constraints: BoxConstraints(
               maxWidth: MediaQuery.of(context).size.width - 120,
@@ -83,13 +79,13 @@ class MessageItemForGift extends StatelessWidget {
                       text: messageText,
                       style: TextStyle(color: textColor, fontSize: 12),
                     ),
-                    const WidgetSpan(
-                      child: SizedBox(width: 10), // 提供固定的 10 單位空間
-                    ),
-                    TextSpan(
-                      text: formatTimestamp(message.timestamp),
-                      style: TextStyle(color: textColor, fontSize: 12),
-                    ),
+                    // const WidgetSpan(
+                    //   child: SizedBox(width: 10), // 提供固定的 10 單位空間
+                    // ),
+                    // TextSpan(
+                    //   text: formatTimestamp(message.timestamp),
+                    //   style: TextStyle(color: textColor, fontSize: 12),
+                    // ),
                   ],
                 ),
               ),

@@ -38,7 +38,7 @@ class RankNumber extends StatelessWidget {
                       ? number.toString()
                       : "0${number.toString()}",
               style: const TextStyle(
-                  fontSize: 8,
+                  fontSize: 12,
                   fontWeight: FontWeight.bold,
                   color: Colors.white),
             ),

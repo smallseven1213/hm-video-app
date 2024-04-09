@@ -15,6 +15,7 @@ import 'package:live_ui_basic/screens/live_room/top_controllers.dart';
 import 'package:get_storage/get_storage.dart';
 
 import '../screens/live_room/command_controller.dart';
+import '../screens/live_room/toggle_hide_ui_layout.dart';
 import '../widgets/live_button.dart';
 import '../screens/live_room/room_charge_type.dart';
 import '../widgets/live_room_skelton.dart';
@@ -134,59 +135,63 @@ class LiveRoomPageState extends State<LiveRoomPage> {
           child: Stack(
             children: [
               Container(color: Colors.black),
-              if (controller.liveRoom.value!.pullUrlDecode != null &&
-                  controller.liveRoom.value!.pullUrlDecode!.isNotEmpty)
+              if (controller.currentVideoPullUrl.value != "" &&
+                  controller.currentVideoPullUrl.value.isNotEmpty)
                 PlayerLayout(
+                    key: ValueKey(controller.currentVideoPullUrl.value),
                     pid: widget.pid,
                     uri: Uri.parse(
-                        '${controller.liveRoom.value!.pullUrlDecode!}&token=${GetStorage().read('live-token')}')),
-              if (controller.liveRoomInfo.value?.streamerId != null)
-                Positioned(
-                  top: MediaQuery.of(context).padding.top + 50,
-                  left: 0,
-                  child: TopControllers(
-                    key: ValueKey(controller.liveRoomInfo.value?.streamerId),
-                    hid: controller.liveRoomInfo.value?.streamerId ?? 0,
-                    pid: widget.pid,
+                        '${controller.currentVideoPullUrl.value}&token=${GetStorage().read('live-token')}')),
+              ToggleHideUILayout(pid: widget.pid),
+              if (controller.hideAllUI.value == false) ...[
+                if (controller.liveRoomInfo.value?.streamerId != null)
+                  Positioned(
+                    top: MediaQuery.of(context).padding.top + 50,
+                    left: 0,
+                    child: TopControllers(
+                      key: ValueKey(controller.liveRoomInfo.value?.streamerId),
+                      hid: controller.liveRoomInfo.value?.streamerId ?? 0,
+                      pid: widget.pid,
+                    ),
                   ),
-                ),
-              Positioned(
-                  top: MediaQuery.of(context).padding.top + 80,
-                  right: 10,
-                  child: RoomChargeType(pid: widget.pid)),
-              Positioned(
-                  bottom: MediaQuery.of(context).padding.bottom + 25,
-                  right: 10,
-                  child: RightCornerControllers(pid: widget.pid)),
-              Positioned(
-                  bottom: MediaQuery.of(context).padding.bottom,
-                  left: 7,
-                  child: ChatroomLayout(
-                    key: ValueKey(controller.liveRoomInfo.value?.streamerId),
+                Positioned(
+                    top: MediaQuery.of(context).padding.top + 80,
+                    right: 10,
+                    child: RoomChargeType(pid: widget.pid)),
+                Positioned(
+                    bottom: MediaQuery.of(context).padding.bottom + 25,
+                    right: 10,
+                    child: RightCornerControllers(pid: widget.pid)),
+                Positioned(
+                    bottom: MediaQuery.of(context).padding.bottom,
+                    left: 7,
+                    child: ChatroomLayout(
+                      key: ValueKey(controller.liveRoomInfo.value?.streamerId),
+                      pid: widget.pid,
+                      token: controller.liveRoom.value!.chattoken,
+                    )),
+                Positioned(
+                    top: MediaQuery.of(context).padding.top + 110,
+                    right: 10,
+                    child: CommandController(pid: widget.pid)),
+                RoomPaymentCheck(
                     pid: widget.pid,
-                    token: controller.liveRoom.value!.chattoken,
-                  )),
-              Positioned(
-                  top: MediaQuery.of(context).padding.top + 110,
-                  right: 10,
-                  child: CommandController(pid: widget.pid)),
-              RoomPaymentCheck(
-                  pid: widget.pid,
-                  child: (bool hasPermission) {
-                    if (!hasPermission) {
-                      return Positioned(
-                          bottom: MediaQuery.of(context).padding.bottom + 20,
-                          left: 40,
-                          right: 40,
-                          child: RoomPaymentButton(
-                            key: ValueKey(widget.pid),
-                            pid: widget.pid,
-                          ));
-                    } else {
-                      return const SizedBox.shrink();
-                    }
-                  }),
-              const CenterGiftScreen()
+                    child: (bool hasPermission) {
+                      if (!hasPermission) {
+                        return Positioned(
+                            bottom: MediaQuery.of(context).padding.bottom + 20,
+                            left: 40,
+                            right: 40,
+                            child: RoomPaymentButton(
+                              key: ValueKey(widget.pid),
+                              pid: widget.pid,
+                            ));
+                      } else {
+                        return const SizedBox.shrink();
+                      }
+                    }),
+                const CenterGiftScreen()
+              ]
             ],
           ),
         ));

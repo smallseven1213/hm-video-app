@@ -2,7 +2,6 @@ import 'package:app_wl_id1/screens/home/home_apps.dart';
 import 'package:app_wl_id1/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/screens/enter_game_screen/index.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 import 'package:live_ui_basic/pages/live.dart';
@@ -16,10 +15,12 @@ import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 
 import '../config/layouts.dart';
+import '../screens/enter_game_screen/index.dart';
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
+import '../widgets/shared_app_bar/shared_app_bar.dart';
 
 final logger = Logger();
 UserApi userApi = UserApi();
@@ -27,9 +28,15 @@ final screens = {
   HomeNavigatorPathes.layout1: () => MainLayoutBuilder(
         key: Key('layout${layouts[0]}'),
         layoutId: layouts[0],
-        child: HomeMainScreen(
-          layoutId: layouts[0],
+        child: Scaffold(
+          appBar: const SharedAppBar(),
+          body: HomeMainScreen(
+            layoutId: layouts[0],
+          ),
         ),
+        // child: HomeMainScreen(
+        //   layoutId: layouts[0],
+        // ),
       ),
   HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
         key: Key('layout${layouts[1]}'),
@@ -38,7 +45,10 @@ final screens = {
           layoutId: layouts[1],
         ),
       ),
-  HomeNavigatorPathes.game: () => const EnterGame(),
+  HomeNavigatorPathes.game: () => const Scaffold(
+        appBar: SharedAppBar(),
+        body: EnterGame(),
+      ),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
   HomeNavigatorPathes.live: () => const LivePage(),
@@ -68,6 +78,7 @@ class HomeState extends State<HomePage> {
     final UIController uiController = Get.find<UIController>();
 
     return MainNavigationScaffold(
+        // appBar: SharedAppBar(),
         screens: screens,
         screenNotFoundWidget: const Center(
           child: WaveLoading(

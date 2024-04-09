@@ -11,6 +11,7 @@ import 'package:game/models/game_list.dart';
 
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 
@@ -29,6 +30,7 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
+import 'package:shared/utils/event_bus.dart';
 
 import '../enums/game_app_routes.dart';
 import '../localization/game_localization_delegate.dart';
@@ -36,8 +38,9 @@ import '../localization/game_localization_delegate.dart';
 final logger = Logger();
 
 class GameLobby extends StatefulWidget {
+  final bool? hideAppBar;
   final String? bottom;
-  const GameLobby({Key? key, this.bottom}) : super(key: key);
+  const GameLobby({Key? key, this.hideAppBar, this.bottom}) : super(key: key);
 
   @override
   State<GameLobby> createState() => _GameLobbyState();
@@ -72,7 +75,7 @@ class _GameLobbyState extends State<GameLobby>
     super.initState();
     _fetchDataInit();
 
-    gameWalletController.fetchWalletsInitFromThirdLogin();
+    _fetchWalletsInitFromThirdLogin();
     Get.put(GameBannerController());
     Get.put(GamesListController());
 
@@ -81,6 +84,21 @@ class _GameLobbyState extends State<GameLobby>
       // userController.fetchUserInfo();
       logger.i('token changed');
     });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _fetchEvent();
+    });
+  }
+
+  void _fetchWalletsInitFromThirdLogin() async {
+    await gameWalletController.fetchWalletsInitFromThirdLogin();
+  }
+
+  void _fetchEvent() async {
+    String? event = eventBus.getLatestEvent();
+    if (event == "gotoDepositAfterLogin" && mounted) {
+      MyRouteDelegate.of(context).push(GameAppRoutes.depositList);
+    }
   }
 
   _fetchDataInit() {
@@ -101,61 +119,64 @@ class _GameLobbyState extends State<GameLobby>
     return Obx(() => gamesListController.isMaintenance.value == true
         ? const GameMaintenance()
         : Scaffold(
-            appBar: AppBar(
-              backgroundColor: gameLobbyBgColor,
-              centerTitle: true,
-              title: Text(
-                localizations.translate('game_lobby'),
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: gameLobbyAppBarTextColor,
-                ),
-              ),
-              // 如果roles是'guest'，就顯示登入按鈕
-              actions: userController.info.value.roles.contains('guest')
-                  ? [
-                      InkWell(
-                        onTap: () {
-                          showModel(
-                            context,
-                            content: GameLobbyLoginTabs(
-                              type: Type.login,
-                              onSuccess: () {
-                                // userController.fetchUserInfo();
-                                gameWalletController
-                                    .fetchWalletsInitFromThirdLogin();
-                                Navigator.pop(context);
+            appBar: widget.hideAppBar == true
+                ? null
+                : AppBar(
+                    backgroundColor: gameLobbyBgColor,
+                    centerTitle: true,
+                    title: Text(
+                      localizations.translate('game_lobby'),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: gameLobbyAppBarTextColor,
+                      ),
+                    ),
+                    // 如果roles是'guest'，就顯示登入按鈕
+                    actions: userController.info.value.roles.contains('guest')
+                        ? [
+                            InkWell(
+                              onTap: () {
+                                showModel(
+                                  context,
+                                  content: GameLobbyLoginTabs(
+                                    type: Type.login,
+                                    onSuccess: () {
+                                      // userController.fetchUserInfo();
+                                      gameWalletController
+                                          .fetchWalletsInitFromThirdLogin();
+
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  onClosed: () => Navigator.pop(context),
+                                );
                               },
-                            ),
-                            onClosed: () => Navigator.pop(context),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child: Container(
-                            width: 85,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(24),
-                              color: gamePrimaryButtonColor,
-                            ),
-                            child: Center(
-                              child: Text(
-                                localizations.translate('register_login'),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: gamePrimaryButtonTextColor,
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8),
+                                child: Container(
+                                  width: 85,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(24),
+                                    color: gamePrimaryButtonColor,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      localizations.translate('register_login'),
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        color: gamePrimaryButtonTextColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ]
-                  : null,
-            ),
+                          ]
+                        : null,
+                  ),
             body: OrientationBuilder(
               builder: (BuildContext context, Orientation orientation) {
                 return Obx(

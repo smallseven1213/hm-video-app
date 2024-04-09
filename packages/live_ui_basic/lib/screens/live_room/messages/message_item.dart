@@ -4,6 +4,7 @@ import 'package:live_core/models/chat_message.dart';
 
 import '../../../libs/format_timestamp.dart';
 import '../../../localization/live_localization_delegate.dart';
+import 'message_item_for_chat.dart';
 import 'message_item_for_command.dart';
 import 'message_item_for_gift.dart';
 
@@ -25,9 +26,7 @@ class MessageItem<T> extends StatelessWidget {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     var messageText = "";
-    if (message.objChat.ntype == MessageType.text) {
-      messageText = '${message.objChat.name} : ${message.objChat.data}';
-    } else if (message.objChat.ntype == MessageType.auction) {
+    if (message.objChat.ntype == MessageType.auction) {
       messageText = "${localizations.translate('bid')} ${message.objChat.data}";
     } else if (message.objChat.ntype == MessageType.system) {
       messageText =
@@ -42,31 +41,18 @@ class MessageItem<T> extends StatelessWidget {
     } else if (message.objChat.ntype == MessageType.command) {
       final messageForCommand = message as ChatMessage<String>;
       return MessageItemForCommand(pid: pid, message: messageForCommand);
+    } else if (message.objChat.ntype == MessageType.text) {
+      final messageForCommand = message as ChatMessage<ChatMessageObjChatData>;
+      return MessageItemForChat(pid: pid, message: messageForCommand);
     }
     return Container(
-      margin: const EdgeInsets.only(top: 10),
+      margin: const EdgeInsets.only(top: 5),
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         // vertical top
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          ClipOval(
-              child: Container(
-                  width: 25.0,
-                  height: 25.0,
-                  color: Colors.black,
-                  child: message.objChat.avatar == ""
-                      ? SvgPicture.asset(
-                          'packages/live_ui_basic/assets/svgs/default_avatar.svg',
-                          fit: BoxFit.cover,
-                        )
-                      : // message.objChat.avatar use Image remote
-                      Image.network(
-                          message.objChat.avatar,
-                          fit: BoxFit.cover,
-                        ))),
-          const SizedBox(width: 6),
           Expanded(
               child: Container(
             decoration: BoxDecoration(
@@ -79,13 +65,6 @@ class MessageItem<T> extends StatelessWidget {
                 children: [
                   TextSpan(
                     text: messageText,
-                    style: const TextStyle(color: Colors.white, fontSize: 12),
-                  ),
-                  const WidgetSpan(
-                    child: SizedBox(width: 10), // 提供固定的 10 單位空間
-                  ),
-                  TextSpan(
-                    text: formatTimestamp(message.timestamp),
                     style: const TextStyle(color: Colors.white, fontSize: 12),
                   ),
                 ],

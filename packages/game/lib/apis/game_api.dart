@@ -16,6 +16,8 @@ import 'package:game/models/game_withdraw_record.dart';
 import 'package:game/models/game_withdraw_stack_limit.dart';
 import 'package:game/models/game_activity.dart';
 import 'package:game/models/game_payment_channel_detail.dart';
+import 'package:game/models/game_deposit_payment_channel.dart';
+import 'package:game/models/game_deposit_payment_type_list.dart';
 
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/fetcher.dart';
@@ -114,8 +116,17 @@ class GameLobbyApi {
             return [];
           }
 
-          List<GameItem> record = List.from(
-              (res['data'] as List<dynamic>).map((e) => GameItem.fromJson(e)));
+          List<GameItem> record =
+              List.from((res['data'] as List<dynamic>).map((d) {
+            try {
+              return GameItem.fromJson(d);
+            } catch (e) {
+              logger.e('GameItem.fromJson error: $e');
+              // print出這筆response的資料
+              logger.i('e: $d');
+              return GameItem(0, '', '', '', 0, '', 0, '', 0, 0);
+            }
+          }));
 
           return record;
         },
@@ -309,21 +320,57 @@ class GameLobbyApi {
     });
   }
 
-  // new version 遊戲大廳 取得支付渠道
-  Future<Map> getDepositChannel() async {
+  // 取得存款渠道v2
+  Future<Map<String, dynamic>> getDepositChannel(String paymentTypeCode) async {
     var value = await fetcher(
         url:
-            '$apiPrefix/deposit-channel-v2?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
+            '$apiPrefix/deposit-channel-v2?paymentTypeCode=$paymentTypeCode&deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
     if (res['code'] != '00') {
-      return res;
+      return {
+        'code': res['code'],
+        'message': res['message'],
+      };
     }
+
+    final Map<String, dynamic> data = res['data'] as Map<String, dynamic>;
+    final Map<String, dynamic> depositChannels = {};
+
+    data.forEach((key, value) {
+      final List<dynamic>? paymentChannelsData = value['paymentChannel'];
+      if (paymentChannelsData != null) {
+        List<DepositPaymentChannel> paymentChannels =
+            paymentChannelsData.map((channelData) {
+          List<String>? specificAmounts =
+              channelData['specificAmounts']?.cast<String>();
+          specificAmounts ??= [];
+          return DepositPaymentChannel.fromJson(channelData);
+        }).toList();
+        depositChannels[key] = paymentChannels;
+      } else {
+        depositChannels[key] = []; // 如果 paymentChannel 是 null，則設置為空列表
+      }
+    });
+
     return {
-      "code": "00",
-      "data": res['data'],
+      'code': res['code'],
+      'data': depositChannels,
     };
+  }
+
+  // 取得支付類型列表
+  Future<List<DepositPaymentTypeList>> getPaymentList() async {
+    var value = await fetcher(url: '$apiPrefix/payment/payment-type/list');
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    if (res['code'] != '00') {
+      return [];
+    }
+    return List.from((res['data'] as List<dynamic>)
+        .map((e) => DepositPaymentTypeList.fromJson(e)));
   }
 
   // 遊戲大廳 取得渠道詳情

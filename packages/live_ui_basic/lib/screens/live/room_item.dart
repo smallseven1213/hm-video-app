@@ -9,7 +9,9 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../../localization/live_localization_delegate.dart';
+
 import 'countdown_timer.dart';
+import 'locale_emoji_flags.dart';
 
 final liveApi = LiveApi();
 
@@ -55,7 +57,6 @@ class RoomItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
-
     return InkWell(
       onTap: () async {
         bool updateRoomList = false;
@@ -119,26 +120,40 @@ class RoomItem extends StatelessWidget {
             Positioned(
               right: 8,
               top: 8,
-              child: room.status == RoomStatus.live.index
-                  ? _buildLabel(
-                      color: room.chargeType == RoomChargeType.free.index
-                          ? const Color(0xffe6845fcf)
-                          : const Color(0xffe65fcf95),
-                      text: room.chargeType == RoomChargeType.free.index
-                          ? localizations.translate('free')
-                          : localizations.translate('paid'),
-                    )
-                  : room.status == RoomStatus.ended.index
+              child: Row(
+                children: [
+                  // add country flag
+                  room.locale != null &&
+                          localeEmojiFlags.containsKey(room.locale!)
+                      ? Container(
+                          margin: const EdgeInsets.only(right: 5),
+                          child: Image.asset(
+                            'packages/live_ui_basic/assets/images/${localeEmojiFlags[room.locale!]}',
+                            width: 18,
+                          ))
+                      : const SizedBox(), // 或者提供一個其他的默認Widget
+                  room.status == RoomStatus.live.index
                       ? _buildLabel(
-                          color: const Color(0xffe6cf795f),
-                          text: localizations.translate('ended'),
-                          icon: const Icon(Icons.access_time,
-                              size: 12, color: Colors.white),
+                          color: room.chargeType == RoomChargeType.free.index
+                              ? Color.fromARGB(230, 158, 131, 211)
+                              : const Color(0xffe65fcf95),
+                          text: room.chargeType == RoomChargeType.free.index
+                              ? localizations.translate('free')
+                              : localizations.translate('paid'),
                         )
-                      : CountdownTimer(
-                          reserveAt: room.reserveAt ?? '',
-                          chargeType: room.chargeType,
-                        ),
+                      : room.status == RoomStatus.ended.index
+                          ? _buildLabel(
+                              color: const Color(0xffe6cf795f),
+                              text: localizations.translate('ended'),
+                              icon: const Icon(Icons.access_time,
+                                  size: 12, color: Colors.white),
+                            )
+                          : CountdownTimer(
+                              reserveAt: room.reserveAt ?? '',
+                              chargeType: room.chargeType,
+                            )
+                ],
+              ),
             ),
             Positioned(
               left: 10,

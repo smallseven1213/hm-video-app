@@ -73,9 +73,12 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                             child: (({required bool needTabBgColor}) =>
                                 Container(
                                   color: needTabBgColor
-                                      ? AppColors.colors[ColorKeys.primary]
+                                      ? AppColors.colors[ColorKeys.background]
                                       : Colors.transparent,
-                                  height: MediaQuery.of(context).padding.top,
+                                  height:
+                                      MediaQuery.of(context).padding.top == 0
+                                          ? 8
+                                          : MediaQuery.of(context).padding.top,
                                 )),
                           ),
                           DisplayLayoutTabSearchConsumer(
@@ -95,7 +98,7 @@ class _HomeMainScreenState extends State<HomeMainScreen> {
                                       Container(
                                         color: needTabBgColor
                                             ? AppColors
-                                                .colors[ColorKeys.primary]
+                                                .colors[ColorKeys.background]
                                             : Colors.transparent,
                                         height: 45,
                                         child: LayoutTabBar(

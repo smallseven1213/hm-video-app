@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
 import 'package:shared/controllers/filter_video_result_controller.dart';
 import 'package:shared/controllers/filter_video_screen_controller.dart';
+import 'package:shared/models/banner.dart';
 
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/sliver_vod_grid.dart';
@@ -24,6 +26,7 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
   final FilterVideoScreenController filterVideoScreenController =
       Get.find<FilterVideoScreenController>();
   final ScrollController scrollController = ScrollController();
+  final BannerController bannerController = Get.find<BannerController>();
   late Worker everWorker;
 
   @override
@@ -46,6 +49,8 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
       vodController.reset();
       vodController.loadMoreData();
     });
+
+    bannerController.fetchBanner(BannerPosition.filterResultBanner);
   }
 
   @override
@@ -57,14 +62,16 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => SliverVodGrid(
+    return Obx(() {
+      final landingBanners =
+          bannerController.banners[BannerPosition.filterResultBanner];
+      return SliverVodGrid(
         headerExtends: [
           SliverPersistentHeader(
             pinned: true,
             delegate: CustomHeaderDelegate(
-              minHeight: 80.0, // 这是FilterBar的高度
-              maxHeight: 140.0, // 这是FilterOptions的高度
+              minHeight: 55.0, // 這是FilterBar的高度
+              maxHeight: 160.0, // 這是FilterOptions的高度
               menuData: filterVideoScreenController.menuData,
               selectedOptions: filterVideoScreenController.selectedOptions,
               handleOptionChange:
@@ -82,11 +89,13 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
         isListEmpty: vodController.isListEmpty.value,
         displayNoMoreData: vodController.displayNoMoreData.value,
         displayLoading: vodController.displayLoading.value,
+        displayAds: true,
+        adsList: landingBanners,
         displayVideoCollectTimes: false,
         noMoreWidget: ListNoMore(),
         customScrollController: vodController.scrollController,
-      ),
-    );
+      );
+    });
   }
 }
 

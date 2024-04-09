@@ -59,14 +59,14 @@ class LiveScaffoldState extends State<LiveScaffold> {
     var response = await authApi.login(token);
     if (response.code == 200) {
       GetStorage().write('live-token', response.data["token"]);
+      GetStorage()
+          .write('recharge_platform', response.data["recharge_platform"]);
       liveSystemController.liveApiHost.value = response.data["apiHost"];
       isLogin = true;
       Get.replace<LiveListController>(LiveListController());
       Get.put(LiveUserController());
       Get.put(UserFollowsController());
       Get.put(GiftsController());
-      Get.put(LiveSearchController());
-      Get.lazyPut(() => LiveSearchHistoryController());
     } else {
       isLogin = false;
     }

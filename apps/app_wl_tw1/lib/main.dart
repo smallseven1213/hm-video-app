@@ -47,5 +47,6 @@ void main() async {
     supportedLocales: I18n.supportedLocales,
     i18nPath: 'assets/langs/langs.csv',
     expandedWidget: (child) => GameProvider(child: child),
+    defaultLocale: const Locale('zh', 'TW'),
   );
 }

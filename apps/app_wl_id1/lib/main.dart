@@ -1,9 +1,11 @@
 import 'package:app_wl_id1/widgets/countdown.dart';
 import 'package:app_wl_id1/widgets/loading.dart';
 import 'package:flutter/material.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/routes/game_routes.dart';
 import 'package:game/widgets/game_provider.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/running_main.dart';
 import 'package:live_ui_basic/routes/live_routes.dart';
 import 'config/colors.dart';
@@ -16,6 +18,13 @@ import 'localization/i18n.dart';
 const env = String.fromEnvironment('ENV', defaultValue: 'dev');
 
 void main() async {
+  // clone gameRoutes 並修改GameAppRoutes.lobby的值
+  // final Map<String, RouteWidgetBuilder> overrideGameRoutes = {
+  //   ...gameRoutes,
+  //   GameAppRoutes.lobby: (context, args) => Container(),
+  // };
+  gameRoutes[GameAppRoutes.lobby] = (context, args) => Container();
+
   final allRoutes = {
     ...app_routes.appRoutes,
     ...gameRoutes,
@@ -33,10 +42,11 @@ void main() async {
       allRoutes,
       AppColors.colors,
       ThemeData(
-          useMaterial3: false,
-          scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
-          highlightColor: Colors.transparent,
-          splashColor: Colors.transparent),
+        useMaterial3: false,
+        scaffoldBackgroundColor: AppColors.colors[ColorKeys.background],
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
+      ),
       globalLoadingWidget: ({String? text}) =>
           Loading(loadingText: text ?? '正在加载...'),
       countdown: ({int countdownSeconds = 5}) =>

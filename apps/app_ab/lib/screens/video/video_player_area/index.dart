@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
+import 'package:shared/widgets/video_ads/index.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../config/colors.dart';
 import 'controls_overlay.dart';
 import 'error.dart';
 import 'loading.dart';
@@ -17,15 +20,15 @@ final logger = Logger();
 class VideoPlayerArea extends StatefulWidget {
   final String? name;
   final String videoUrl;
-  final Vod video;
   final String tag;
+  final Vod video;
 
   const VideoPlayerArea({
     Key? key,
     required this.videoUrl,
     required this.video,
-    this.name,
     required this.tag,
+    this.name,
   }) : super(key: key);
 
   @override
@@ -170,7 +173,14 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 toggleFullscreen: (status) {
                   toggleFullscreen(fullScreen: status);
                 },
-              )
+              ),
+              PlayerPositionAd(videoPlayerInfo: videoPlayerInfo),
+              PauseAd(videoPlayerInfo: videoPlayerInfo),
+              PlayingAd(
+                videoPlayerInfo: videoPlayerInfo,
+                backgroundColor: AppColors.colors[ColorKeys.primary],
+                buttonColor: AppColors.colors[ColorKeys.buttonBgPrimary],
+              ),
             ],
           );
         },

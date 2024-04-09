@@ -7,29 +7,24 @@ import 'package:shared/widgets/popular_search_title_builder.dart';
 import '../../widgets/static_search_input.dart';
 
 class ChannelSearchBar extends StatelessWidget {
-  const ChannelSearchBar({Key? key}) : super(key: key);
+  final bool isWhiteTheme;
+  const ChannelSearchBar({Key? key, this.isWhiteTheme = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.transparent,
+      color: isWhiteTheme ? Colors.white : Colors.transparent,
       height: 30,
       width: double.infinity,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 13),
-            child: Image(
-              image: AssetImage('assets/images/home_search_bar_logo.png'),
-              width: 24.0,
-              height: 27.0,
-            ),
-          ),
-          // input
+          const SizedBox(width: 10),
           Expanded(
             child: PopularSearchTitleBuilder(
               child: (({required String searchKeyword}) => StaticSearchInput(
+                    isWhiteTheme: isWhiteTheme,
                     defaultValue: searchKeyword,
                     onSearchButtonClick: () {
                       MyRouteDelegate.of(context).push(AppRoutes.search, args: {
@@ -48,25 +43,19 @@ class ChannelSearchBar extends StatelessWidget {
                   )),
             ),
           ),
+          // width 10
+          const SizedBox(width: 10),
           GestureDetector(
             onTap: () {
               MyRouteDelegate.of(context).push(AppRoutes.filter);
             },
-            child: const SizedBox(
-                width: 40,
-                height: 60,
-                // color: AppColors.colors[ColorKeys.background],
-                child: Center(
-                  child: SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: Image(
-                      image: AssetImage(
-                          'assets/images/home_search_bar_filter.png'),
-                    ),
-                  ),
-                )),
+            child: const Image(
+              image: AssetImage('assets/images/search_filters.png'),
+              fit: BoxFit.contain,
+              height: 24,
+            ),
           ),
+          const SizedBox(width: 10),
         ],
       ),
     );

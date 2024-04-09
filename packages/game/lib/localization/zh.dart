@@ -185,6 +185,7 @@ const Map<String, String> zhTwStrings = {
   "live": "真人",
   "sports": "體育",
   "lottery": "彩票",
+  "hot": "熱門",
   "alipay": "支付寶",
   "wechat": "微信",
   "bank": "網銀入款",

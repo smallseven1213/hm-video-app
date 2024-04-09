@@ -25,6 +25,7 @@ class Room {
   final int status; // 1: 未開始 2: 直播中 3: 已結束
   final int streamerId; // 主播id
   final int? supplierId; // 供應商id
+  final String? locale; // 直播主語系
 
   final List<Tag> tags;
   final String title;
@@ -46,6 +47,7 @@ class Room {
     required this.title,
     required this.userCost,
     required this.userLive,
+    this.locale,
   });
 
   factory Room.fromJson(Map<String, dynamic> json) {
@@ -75,6 +77,7 @@ class Room {
             defaultValue: ''),
         userLive:
             getField<int>(json['statistic'], 'watch_count', defaultValue: 0),
+        locale: getField<String>(json['streamer'], 'locale', defaultValue: ''),
       );
     } catch (e) {
       return Room(
@@ -92,21 +95,22 @@ class Room {
         nickname: '',
         userLive: 0,
         userCost: '',
+        locale: '',
       );
     }
   }
 }
 
 class Tag {
-  final String id;
+  final int id;
   final String name;
 
   Tag({required this.id, required this.name});
 
   factory Tag.fromJson(Map<String, dynamic> json) {
     return Tag(
-      id: json['id'],
-      name: json['name'],
+      id: getField<int>(json, 'id', defaultValue: 0),
+      name: getField<String>(json, 'name', defaultValue: ''),
     );
   }
 }

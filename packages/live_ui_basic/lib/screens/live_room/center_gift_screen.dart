@@ -44,6 +44,7 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   int animationLayout = 2;
   int currentRepeatCount = 1;
   int targetRepeatCount = 1;
+  bool isAnimationReady = false;
   AnimationStatusListener? lottielistener;
   StreamSubscription<List<ChatMessage<ChatGiftMessageObjChatData>>>?
       giftCenterMessagesQueueSubscription;
@@ -51,56 +52,66 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
   @override
   void initState() {
     super.initState();
-    print('[A] CENTER GIFT SCREEN INIT');
-    _lottieController = AnimationController(vsync: this)
-      ..addStatusListener((status) {
-        if (status == AnimationStatus.completed) {
-          handleAnimationCompleted();
-        }
-      });
+    print('[AC] CENTER GIFT SCREEN INIT');
+    _lottieController = AnimationController(vsync: this);
+    _lottieController.addStatusListener(_animationStatusListener);
     subscribeToGiftMessages();
-    // _lottieController = AnimationController(vsync: this);
-    // giftCenterMessagesQueueSubscription?.cancel();
-    // giftCenterMessagesQueueSubscription =
-    //     chatResultController.giftCenterMessagesQueue.listen((gifts) {
-    //   print('[A] gifts: ${gifts.length}, isAnimating: $isAnimating');
-    //   if (gifts.isNotEmpty && !isAnimating) {
-    //     var getGift = gifts.first;
-    //     setLottieAnimation(getGift);
-    //   }
-    // });
+  }
+
+  void _animationStatusListener(AnimationStatus status) {
+    print('[AC] listener status: $status');
+    if (status == AnimationStatus.completed) {
+      print('[AC] completed');
+      if (currentRepeatCount < targetRepeatCount) {
+        print('[AC] completed A1');
+        _lottieController.forward(from: 0.0);
+        currentRepeatCount++;
+        xCount.value = currentRepeatCount;
+      } else {
+        print('[AC] completed A2');
+        finishAnimation();
+        chatResultController.removeGiftCenterMessagesQueueByIndex(0);
+      }
+    }
   }
 
   void subscribeToGiftMessages() {
-    chatResultController.giftCenterMessagesQueue.listen((gifts) {
-      if (gifts.isNotEmpty) {
-        startAnimationWithGift(gifts.first);
+    giftCenterMessagesQueueSubscription?.cancel();
+    giftCenterMessagesQueueSubscription =
+        chatResultController.giftCenterMessagesQueue.listen((gifts) {
+      if (gifts.isNotEmpty && lottiePath == null) {
+        Future.delayed(const Duration(milliseconds: 200), () {
+          prepareAndStartAnimation(gifts.first);
+        });
       }
     });
   }
 
-  void startAnimationWithGift(
+  void prepareAndStartAnimation(
       ChatMessage<ChatGiftMessageObjChatData> giftMessage) {
-    var gid = giftMessage.objChat.data.gid;
-    var gifts = giftsController.gifts.value;
-    print(gid);
-    if (lottiePath == null) {
-      var getGiftsByGid = giftsController.gifts.value
-          .where((element) => element.id == giftMessage.objChat.data.gid)
-          .toList();
-      if (getGiftsByGid.isEmpty) {
+    try {
+      var getGiftById = giftsController.gifts.value
+          .where((element) => element.id == giftMessage.objChat.data.gid);
+      if (getGiftById.isEmpty) {
         return;
       }
-      final gift = getGiftsByGid.first;
-      setState(() {
-        animationLayout = giftMessage.objChat.data.animationLayout;
-        lottiePath = gift.animation;
-      });
-      _lottieController
-        ..reset()
-        ..forward();
-    } else {
-      // 如果没有有效的路径，可能需要处理错误情况
+      var gift = getGiftById.first;
+      if (gift.animation.isNotEmpty) {
+        if (mounted) {
+          print('[AC] prepareAndStartAnimation 1');
+          setState(() {
+            lottiePath = gift.animation;
+            animationLayout = giftMessage.objChat.data.animationLayout;
+            targetRepeatCount = giftMessage.objChat.data.quantity;
+            currentRepeatCount = 1;
+          });
+          // _lottieController
+          //   ..reset()
+          //   ..forward();
+        }
+      }
+    } catch (e) {
+      print('[AC] error: $e');
       finishAnimation();
     }
   }
@@ -113,24 +124,12 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
     super.dispose();
   }
 
-  void handleAnimationCompleted() {
-    if (currentRepeatCount < targetRepeatCount) {
-      currentRepeatCount++;
-      _lottieController.forward(from: 0.0);
-    } else {
-      finishAnimation();
-      chatResultController.removeGiftCenterMessagesQueueByIndex(0);
-      // 检查是否还有更多的礼物需要展示
-      // if (chatResultController.giftCenterMessagesQueue.isNotEmpty) {
-      //   startAnimationWithGift(
-      //       chatResultController.giftCenterMessagesQueue.first);
-      // }
-    }
-  }
-
   void finishAnimation() {
+    logger.d('[AC] finishAnimation 1');
+    if (!mounted) return;
     setState(() {
       lottiePath = null;
+      isAnimationReady = false;
       currentRepeatCount = 1;
       targetRepeatCount = 1;
     });
@@ -154,32 +153,40 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
               // onTap: finishAnimation,
               onTap: () {},
               child: Center(
-                  child: Lottie.network(
-                height: animationLayout == 2 ? 250 : null,
-                width: animationLayout == 3 ? double.infinity : null,
-                lottiePath ?? "",
-                controller: _lottieController,
-                onLoaded: (composition) {
-                  var duration = composition.duration;
-                  _lottieController
-                    ..duration = duration
-                    ..forward();
-                },
-                errorBuilder: (context, error, stackTrace) {
-                  return Lottie.asset(
-                    'packages/live_ui_basic/assets/lotties/present.json',
-                    height: animationLayout == 2 ? 250 : null,
-                    width: animationLayout == 3 ? double.infinity : null,
-                    controller: _lottieController,
-                    onLoaded: (composition) {
-                      var duration = composition.duration;
-                      _lottieController
-                        ..duration = duration
-                        ..forward();
-                    },
-                  );
-                },
-              )),
+                  child: AnimatedOpacity(
+                      opacity: isAnimationReady ? 1 : 0,
+                      duration: const Duration(milliseconds: 500),
+                      child: Lottie.network(
+                        height: animationLayout == 2 ? 250 : null,
+                        width: animationLayout == 3 ? double.infinity : null,
+                        lottiePath ?? "",
+                        controller: _lottieController,
+                        onLoaded: (composition) {
+                          setState(() {
+                            isAnimationReady = true;
+                          });
+                          var duration = composition.duration;
+                          _lottieController
+                            ..duration = duration
+                            ..reset()
+                            ..forward();
+                        },
+                        errorBuilder: (context, error, stackTrace) {
+                          return Lottie.asset(
+                            'packages/live_ui_basic/assets/lotties/present.json',
+                            height: animationLayout == 2 ? 250 : null,
+                            width:
+                                animationLayout == 3 ? double.infinity : null,
+                            controller: _lottieController,
+                            onLoaded: (composition) {
+                              var duration = composition.duration;
+                              _lottieController
+                                ..duration = duration
+                                ..forward();
+                            },
+                          );
+                        },
+                      ))),
             ),
             animationLayout == 2
                 ? SizedBox(
