@@ -101,6 +101,7 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
           print('[AC] prepareAndStartAnimation 1');
           setState(() {
             lottiePath = gift.animation;
+            animationLayout = giftMessage.objChat.data.animationLayout;
             targetRepeatCount = giftMessage.objChat.data.quantity;
             currentRepeatCount = 1;
           });
@@ -154,7 +155,7 @@ class CenterGiftScreenState extends State<CenterGiftScreen>
               child: Center(
                   child: AnimatedOpacity(
                       opacity: isAnimationReady ? 1 : 0,
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       child: Lottie.network(
                         height: animationLayout == 2 ? 250 : null,
                         width: animationLayout == 3 ? double.infinity : null,
