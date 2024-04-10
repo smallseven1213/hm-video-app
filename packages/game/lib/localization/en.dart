@@ -44,7 +44,7 @@ const Map<String, String> enUsStrings = {
   "please_write_the_required_information_in_the_remittance_remarks_to_speed_up_the_recharge_process":
       "2. Please write the required information in the Remittance Remarks to speed up the recharge process.",
   "no_payment_channel": "No Payment Channel",
-  "dollar": "Dollar",
+  "dollar": "",
   "send_offer": "Send Offer",
   "payment_channel": "Payment Channel",
   "order_confirmation": "Order Confirmation",

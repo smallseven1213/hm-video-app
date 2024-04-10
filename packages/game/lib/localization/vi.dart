@@ -45,7 +45,7 @@ const Map<String, String> viVnStrings = {
   "please_write_the_required_information_in_the_remittance_remarks_to_speed_up_the_recharge_process":
       "2. Vui lòng viết thông tin yêu cầu vào Ghi chú Chuyển khoản để tăng tốc độ nạp tiền.",
   "no_payment_channel": "Không có Kênh Thanh toán",
-  "dollar": "Đô la",
+  "dollar": "",
   "send_offer": "Gửi Ưu đãi",
   "payment_channel": "Kênh thanh toán",
   "order_confirmation": "Xác nhận đơn hàng",

@@ -44,7 +44,7 @@ const Map<String, String> idIdStrings = {
   "please_write_the_required_information_in_the_remittance_remarks_to_speed_up_the_recharge_process":
       "Harap tulis informasi yang diperlukan dalam Catatan Remitansi untuk mempercepat proses isi ulang.",
   "no_payment_channel": "Tidak ada Saluran Pembayaran",
-  "dollar": "Dolar",
+  "dollar": "K",
   "send_offer": "Kirim Penawaran",
   "payment_channel": "Saluran Pembayaran",
   "order_confirmation": "Konfirmasi Pesanan",

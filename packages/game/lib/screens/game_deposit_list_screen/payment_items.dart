@@ -71,8 +71,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           : 1]
       .toString();
   final gameWithdrawController = Get.put(GameWithdrawController());
-  ScrollController scrollController = ScrollController();
-  GlobalKey scrollKey = GlobalKey();
   FocusNode focusNode = FocusNode();
 
   @override
@@ -89,7 +87,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   @override
   void dispose() {
     amountController.dispose();
-    scrollController.dispose();
     focusNode.dispose();
     super.dispose();
   }

@@ -103,7 +103,7 @@ class ConfirmNameState extends State<ConfirmName> {
           ),
         ),
         Text(
-          '${localizations.translate('deposit_amount')}：${widget.amount}',
+          '${localizations.translate('deposit_amount')}：${widget.amount}${localizations.translate('dollar')}',
           style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
