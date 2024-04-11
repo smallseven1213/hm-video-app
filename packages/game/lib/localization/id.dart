@@ -141,7 +141,7 @@ const Map<String, String> idIdStrings = {
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Jumlah masukan tidak boleh lebih dari saldo yang tersisa",
   "input_amount_is_in_wrong_format": "Format jumlah masukan salah",
-  "minimum_withdrawal_amount_is": "Minimal penarikan: {amount} IDR",
+  "minimum_withdrawal_amount_is": "Minimal penarikan:",
   "application_completed": "Aplikasi Selesai",
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":
       "Pengajuan penarikan telah selesai, Anda dapat memeriksa status pengajuan saat ini di log penarikan.",
