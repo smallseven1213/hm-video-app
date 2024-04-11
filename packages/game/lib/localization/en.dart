@@ -129,7 +129,7 @@ const Map<String, String> enUsStrings = {
       "If you have not reached the stake limit \n need to pay the withdrawal fee of {fee} (estimated)\n Click to confirm to send out the withdrawal order.",
   "please_set_the_password_first": "Please set the password first",
   'go_to_settings': 'Go to Settings',
-  "game_withdraw": "Game Withdraw",
+  "game_withdrawal": "Game Withdraw",
   "limit": "Stake Limit",
   "achieved": "Achieved",
   "not_reached": "Not reached",
