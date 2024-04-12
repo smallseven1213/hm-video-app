@@ -18,7 +18,7 @@ class RankDataState extends State<RankData> {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          height: 510,
+          height: 310,
           color: const Color(0xff242a3d),
           child: Padding(
             padding: const EdgeInsets.all(10.0),

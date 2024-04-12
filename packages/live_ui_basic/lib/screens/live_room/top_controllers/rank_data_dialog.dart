@@ -139,15 +139,15 @@ class RankDataDialogState extends State<RankDataDialog>
             Container(
               alignment: Alignment.centerLeft,
               child: SizedBox(
-                height: 20,
+                height: 25,
                 child: TabBar(
                   controller: _tabController,
                   labelColor: Colors.white,
                   unselectedLabelColor: Colors.white60,
-                  labelStyle: const TextStyle(fontSize: 12.7),
+                  labelStyle: const TextStyle(fontSize: 14.7),
                   indicator: const UnderlineTabIndicator(
                     borderSide: BorderSide(width: 1.0, color: Colors.grey),
-                    insets: EdgeInsets.symmetric(horizontal: 16.0),
+                    insets: EdgeInsets.symmetric(horizontal: 12.0),
                   ),
                   isScrollable: true,
                   tabs: [
