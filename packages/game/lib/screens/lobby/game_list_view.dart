@@ -94,7 +94,6 @@ class GameListViewState extends State<GameListView>
   var filteredGameCategories = [];
   List gameHistoryList = [];
   final ScrollController _scrollController = ScrollController();
-  int _currentIndex = 0;
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
 
@@ -278,14 +277,17 @@ class GameListViewState extends State<GameListView>
                           return GestureDetector(
                             onTap: () {
                               setState(() {
-                                _currentIndex = index;
+                                gameConfigController.gameTypeIndex.value =
+                                    index;
                               });
                               _scrollToItem(index);
                             },
                             child: GameScrollViewTabs(
                               text: category['name'].toString(),
                               icon: category['icon'].toString(),
-                              isActive: _currentIndex == index,
+                              isActive:
+                                  gameConfigController.gameTypeIndex.value ==
+                                      index,
                             ),
                           );
                         },
@@ -295,7 +297,7 @@ class GameListViewState extends State<GameListView>
                         thickness: 1, width: 10, color: Colors.transparent),
                     Expanded(
                       child: IndexedStack(
-                        index: _currentIndex,
+                        index: gameConfigController.gameTypeIndex.value,
                         children: filteredGameCategories.map((category) {
                           final gameType = category['gameType'] as int;
                           return gamesListController.games.isNotEmpty
