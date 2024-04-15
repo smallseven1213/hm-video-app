@@ -80,8 +80,10 @@ class GameListItem extends StatelessWidget {
 }
 
 class GameListView extends StatefulWidget {
+  final int activeIndex;
   const GameListView({
     Key? key,
+    required this.activeIndex,
   }) : super(key: key);
   @override
   GameListViewState createState() => GameListViewState();
@@ -276,18 +278,13 @@ class GameListViewState extends State<GameListView>
                           final category = filteredGameCategories[index];
                           return GestureDetector(
                             onTap: () {
-                              setState(() {
-                                gameConfigController.gameTypeIndex.value =
-                                    index;
-                              });
+                              gameConfigController.setGameTypeIndex(index);
                               _scrollToItem(index);
                             },
                             child: GameScrollViewTabs(
                               text: category['name'].toString(),
                               icon: category['icon'].toString(),
-                              isActive:
-                                  gameConfigController.gameTypeIndex.value ==
-                                      index,
+                              isActive: widget.activeIndex == index,
                             ),
                           );
                         },
@@ -297,7 +294,7 @@ class GameListViewState extends State<GameListView>
                         thickness: 1, width: 10, color: Colors.transparent),
                     Expanded(
                       child: IndexedStack(
-                        index: gameConfigController.gameTypeIndex.value,
+                        index: widget.activeIndex,
                         children: filteredGameCategories.map((category) {
                           final gameType = category['gameType'] as int;
                           return gamesListController.games.isNotEmpty

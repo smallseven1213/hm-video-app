@@ -225,7 +225,9 @@ class _GameLobbyState extends State<GameLobby>
                                   ],
                                 ),
                               ),
-                              const GameListView(),
+                              GameListView(
+                                  activeIndex:
+                                      gameConfigController.gameTypeIndex.value),
                             ],
                           ),
                         ),
