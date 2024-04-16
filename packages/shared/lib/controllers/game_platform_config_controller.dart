@@ -9,6 +9,7 @@ class GamePlatformConfigController extends GetxController {
   var thirdPartyGameId = ''.obs;
   var thirdPartyGameTpCode = ''.obs;
   var gameTypeIndex = 0.obs;
+  var videoToGameRoute = ''.obs;
 
   Future<void> fetchData() async {
     GameLobbyApi gameLobbyApi = GameLobbyApi();
@@ -34,6 +35,10 @@ class GamePlatformConfigController extends GetxController {
 
   void setSwitchPaymentPage(int type) {
     switchPaymentPage.value = type;
+  }
+
+  void setVideoToGameRoute(String route) {
+    videoToGameRoute.value = route;
   }
 }
 
