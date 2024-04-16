@@ -12,6 +12,8 @@ import '../navigator/delegate.dart';
 final logger = Logger();
 
 final bottomNavigatorController = Get.find<BottomNavigatorController>();
+GamePlatformConfigController gamePlatformConfigController =
+    Get.find<GamePlatformConfigController>();
 
 Map<int, String> gameDepositPage = {
   1: '/game/deposit_page_polling',
@@ -48,8 +50,6 @@ void handleDefaultScreenKey(BuildContext context, String url) {
       removeSamePath: true,
     );
   } else if (gameType != null && gameType != '') {
-    GamePlatformConfigController gamePlatformConfigController =
-        Get.find<GamePlatformConfigController>();
     gamePlatformConfigController.setGameTypeIndex(int.parse(gameType));
     MyRouteDelegate.of(context).push(
       '/home',
@@ -85,14 +85,8 @@ void handlePathWithId(BuildContext context, String url) {
 void handleGameDepositType(BuildContext context, String url) {
   logger.i('url: $url');
   final bottomNavigatorController = Get.find<BottomNavigatorController>();
+  final depositType = Uri.parse(url).queryParameters['depositType'].toString();
+  gamePlatformConfigController.setSwitchPaymentPage(int.parse(depositType));
   eventBus.fireEvent("gotoDepositAfterLogin");
-  // final depositType = Uri.parse(url).queryParameters['depositType'];
-  MyRouteDelegate.of(context).push(GameAppRoutes.depositList);
-
-// MyRouteDelegate.of(context).push(
-//     gameDepositPage[int.parse(depositType!)].toString(),
-//     args: {'defaultScreenKey': '/game'},
-//     removeSamePath: true,
-//   );
   bottomNavigatorController.changeKey('/game');
 }

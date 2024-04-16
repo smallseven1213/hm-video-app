@@ -31,6 +31,10 @@ class GamePlatformConfigController extends GetxController {
   void setGameTypeIndex(int index) {
     gameTypeIndex.value = index;
   }
+
+  void setSwitchPaymentPage(int type) {
+    switchPaymentPage.value = type;
+  }
 }
 
 Map<String, int> switchPaymentPageType = {

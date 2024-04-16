@@ -97,7 +97,11 @@ class _GameLobbyState extends State<GameLobby>
   void _fetchEvent() async {
     String? event = eventBus.getLatestEvent();
     if (event == "gotoDepositAfterLogin" && mounted) {
-      MyRouteDelegate.of(context).push(GameAppRoutes.depositList);
+      final route = gameConfigController.switchPaymentPage.value ==
+              switchPaymentPageType['list']
+          ? GameAppRoutes.depositList
+          : GameAppRoutes.depositPolling;
+      MyRouteDelegate.of(context).push(route);
     }
   }
 
