@@ -1,7 +1,9 @@
+import 'package:game/enums/game_app_routes.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/utils/event_bus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/bottom_navigator_controller.dart';
@@ -82,11 +84,15 @@ void handlePathWithId(BuildContext context, String url) {
 // 狀況5: 如果包含depositType
 void handleGameDepositType(BuildContext context, String url) {
   logger.i('url: $url');
-  final depositType = Uri.parse(url).queryParameters['depositType'];
-  MyRouteDelegate.of(context).push(
-    gameDepositPage[int.parse(depositType!)].toString(),
-    args: {'defaultScreenKey': '/game'},
-    removeSamePath: true,
-  );
+  final bottomNavigatorController = Get.find<BottomNavigatorController>();
+  eventBus.fireEvent("gotoDepositAfterLogin");
+  // final depositType = Uri.parse(url).queryParameters['depositType'];
+  MyRouteDelegate.of(context).push(GameAppRoutes.depositList);
+
+// MyRouteDelegate.of(context).push(
+//     gameDepositPage[int.parse(depositType!)].toString(),
+//     args: {'defaultScreenKey': '/game'},
+//     removeSamePath: true,
+//   );
   bottomNavigatorController.changeKey('/game');
 }
