@@ -1,7 +1,9 @@
+import 'package:game/enums/game_app_routes.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/utils/event_bus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/bottom_navigator_controller.dart';
@@ -10,6 +12,8 @@ import '../navigator/delegate.dart';
 final logger = Logger();
 
 final bottomNavigatorController = Get.find<BottomNavigatorController>();
+GamePlatformConfigController gamePlatformConfigController =
+    Get.find<GamePlatformConfigController>();
 
 Map<int, String> gameDepositPage = {
   1: '/game/deposit_page_polling',
@@ -46,8 +50,6 @@ void handleDefaultScreenKey(BuildContext context, String url) {
       removeSamePath: true,
     );
   } else if (gameType != null && gameType != '') {
-    GamePlatformConfigController gamePlatformConfigController =
-        Get.find<GamePlatformConfigController>();
     gamePlatformConfigController.setGameTypeIndex(int.parse(gameType));
     MyRouteDelegate.of(context).push(
       '/home',
@@ -82,11 +84,9 @@ void handlePathWithId(BuildContext context, String url) {
 // 狀況5: 如果包含depositType
 void handleGameDepositType(BuildContext context, String url) {
   logger.i('url: $url');
-  final depositType = Uri.parse(url).queryParameters['depositType'];
-  MyRouteDelegate.of(context).push(
-    gameDepositPage[int.parse(depositType!)].toString(),
-    args: {'defaultScreenKey': '/game'},
-    removeSamePath: true,
-  );
+  final bottomNavigatorController = Get.find<BottomNavigatorController>();
+  final depositType = Uri.parse(url).queryParameters['depositType'].toString();
+  gamePlatformConfigController.setSwitchPaymentPage(int.parse(depositType));
+  eventBus.fireEvent("gotoDepositAfterLogin");
   bottomNavigatorController.changeKey('/game');
 }
