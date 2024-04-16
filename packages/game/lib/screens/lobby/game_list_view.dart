@@ -80,8 +80,10 @@ class GameListItem extends StatelessWidget {
 }
 
 class GameListView extends StatefulWidget {
+  final int activeIndex;
   const GameListView({
     Key? key,
+    required this.activeIndex,
   }) : super(key: key);
   @override
   GameListViewState createState() => GameListViewState();
@@ -94,7 +96,6 @@ class GameListViewState extends State<GameListView>
   var filteredGameCategories = [];
   List gameHistoryList = [];
   final ScrollController _scrollController = ScrollController();
-  int _currentIndex = 0;
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
 
@@ -277,15 +278,13 @@ class GameListViewState extends State<GameListView>
                           final category = filteredGameCategories[index];
                           return GestureDetector(
                             onTap: () {
-                              setState(() {
-                                _currentIndex = index;
-                              });
+                              gameConfigController.setGameTypeIndex(index);
                               _scrollToItem(index);
                             },
                             child: GameScrollViewTabs(
                               text: category['name'].toString(),
                               icon: category['icon'].toString(),
-                              isActive: _currentIndex == index,
+                              isActive: widget.activeIndex == index,
                             ),
                           );
                         },
@@ -295,7 +294,7 @@ class GameListViewState extends State<GameListView>
                         thickness: 1, width: 10, color: Colors.transparent),
                     Expanded(
                       child: IndexedStack(
-                        index: _currentIndex,
+                        index: widget.activeIndex,
                         children: filteredGameCategories.map((category) {
                           final gameType = category['gameType'] as int;
                           return gamesListController.games.isNotEmpty

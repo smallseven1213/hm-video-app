@@ -26,13 +26,29 @@ void handleHttpUrl(String url) {
 void handleDefaultScreenKey(BuildContext context, String url) {
   final defaultScreenKey = Uri.parse(url).queryParameters['defaultScreenKey'];
   final routePath = url.substring(0, url.indexOf('?'));
-  final String gameId = Uri.parse(url).queryParameters['gameId'].toString();
-  final String tpCode = Uri.parse(url).queryParameters['tpCode'].toString();
+  final String? gameId = url.contains('gameId')
+      ? Uri.parse(url).queryParameters['gameId'].toString()
+      : null;
+  final String? tpCode = url.contains('tpCode')
+      ? Uri.parse(url).queryParameters['tpCode'].toString()
+      : null;
+  final String? gameType = url.contains('gameType')
+      ? Uri.parse(url).queryParameters['gameType'].toString()
+      : null;
 
-  if (gameId.isNotEmpty && gameId != '' && tpCode.isNotEmpty && tpCode != '') {
+  if (gameId != '' && tpCode != '' && gameId != null && tpCode != null) {
     GamePlatformConfigController gamePlatformConfigController =
         Get.find<GamePlatformConfigController>();
     gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
+    MyRouteDelegate.of(context).push(
+      '/home',
+      args: {'defaultScreenKey': '/game'},
+      removeSamePath: true,
+    );
+  } else if (gameType != null && gameType != '') {
+    GamePlatformConfigController gamePlatformConfigController =
+        Get.find<GamePlatformConfigController>();
+    gamePlatformConfigController.setGameTypeIndex(int.parse(gameType));
     MyRouteDelegate.of(context).push(
       '/home',
       args: {'defaultScreenKey': '/game'},
