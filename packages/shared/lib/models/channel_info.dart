@@ -1,4 +1,3 @@
-import 'package:shared/models/game.dart';
 import 'package:shared/models/vod.dart';
 
 import 'banner_photo.dart';
