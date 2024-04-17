@@ -30,7 +30,7 @@ class SliverVodGrid extends StatefulWidget {
 
   const SliverVodGrid({
     Key? key,
-    this.film,
+    this.film = 1,
     required this.videos,
     required this.displayNoMoreData,
     required this.isListEmpty,
