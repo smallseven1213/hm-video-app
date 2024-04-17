@@ -28,13 +28,10 @@ void handleGameUrlMethods(BuildContext context, String url, String routePath) {
       ? Uri.parse(url).queryParameters['gameType'].toString()
       : null;
 
-  if (gameId != '' && tpCode != '' && gameId != null && tpCode != null) {
+  if (routePath == '/home') {
+    logger.i('前往遊戲大廳');
+  } else if (gameId != '' && tpCode != '' && gameId != null && tpCode != null) {
     gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
-    MyRouteDelegate.of(context).push(
-      '/home',
-      args: {'defaultScreenKey': '/game'},
-      removeSamePath: true,
-    );
   } else if (gameType != null && gameType != '') {
     gamePlatformConfigController.setGameTypeIndex(int.parse(gameType));
     MyRouteDelegate.of(context).push(
