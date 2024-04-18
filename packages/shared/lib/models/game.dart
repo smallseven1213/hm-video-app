@@ -31,7 +31,7 @@ class GameDetail {
   final String verticalLogo;
   final String horizontalLogo;
   final String jackpot;
-  final String multiple;
+  final int multiple;
   final String name;
   final List<dynamic>? tags;
 
