@@ -23,7 +23,10 @@ class ChannelInfo {
       blocks = <Blocks>[];
       json['blocks'].forEach((v) {
         print('>>> blockType: ${v['blockType']}');
-        if (v['blockType'] == 1) {
+        if (v['blockType'] != null && v['blockType'] == 1) {
+          blocks!.add(Blocks.fromJson(v));
+          return;
+        } else {
           blocks!.add(Blocks.fromJson(v));
           return;
         }
