@@ -58,16 +58,29 @@ Widget _buildProductCard(context, Product product) {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        product.fiatMoneyPrice != null &&
-                                product.fiatMoneyPrice!.isNotEmpty
-                            ? Text("售價 : ${product.fiatMoneyPrice}",
-                                style: const TextStyle(
-                                    color: Color(0xFF979698), fontSize: 12))
-                            : Container(),
-                        const SizedBox(width: 13),
-                        const Text("特價 : ",
+                        const Text("售價 : ",
                             style: TextStyle(
-                                color: Color(0xFF979698), fontSize: 12)),
+                              color: Color(0xFF979698),
+                              fontSize: 12,
+                            )),
+                        if (product.fiatMoneyPrice != null &&
+                            product.fiatMoneyPrice!.isNotEmpty &&
+                            product.isPromotion == true)
+                          Text(product.fiatMoneyPrice ?? "",
+                              style: const TextStyle(
+                                color: Color(0xFF979698),
+                                fontSize: 14,
+                                decoration: TextDecoration.lineThrough,
+                              )),
+                        if (product.isPromotion == true)
+                          const Padding(
+                            padding: EdgeInsets.only(left: 10),
+                            child: Text("特價 : ",
+                                style: TextStyle(
+                                  color: Color(0xFF979698),
+                                  fontSize: 12,
+                                )),
+                          ),
                         Text(product.balanceFiatMoneyPrice ?? "",
                             style: const TextStyle(
                                 color: Colors.white,
