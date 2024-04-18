@@ -1,13 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../models/tag.dart';
+
 const kTagColor = Color(0xff21488E);
 const kTagTextColor = Color(0xff21AFFF);
 
 class TagWidget extends StatelessWidget {
-  final String name;
+  final Tag tag;
 
-  TagWidget({required this.name});
+  TagWidget({required this.tag});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class TagWidget extends StatelessWidget {
               borderRadius:
                   kIsWeb ? BorderRadius.zero : BorderRadius.circular(10)),
           child: Text(
-            name,
+            tag.name,
             style: const TextStyle(
               color: kTagTextColor,
               fontSize: 10,

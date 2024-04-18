@@ -142,7 +142,7 @@ class GameCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         children: game.tags!
             .map((tag) => TagWidget(
-                  name: tag,
+                  tag: tag,
                 ))
             .toList(),
       ),

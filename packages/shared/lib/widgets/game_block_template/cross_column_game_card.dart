@@ -125,7 +125,7 @@ class GameCard extends StatelessWidget {
               runSpacing: 4.0,
               children: game.tags!
                   .map((tag) => TagWidget(
-                        name: tag,
+                        tag: tag,
                       ))
                   .toList(),
             ),
