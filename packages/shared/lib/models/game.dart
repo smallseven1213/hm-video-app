@@ -3,8 +3,6 @@ class Game {
   final String name;
   final int template;
   final int gameType;
-  final bool isRecommend;
-  final bool isJackpot;
   final List<GameDetail> games;
 
   Game({
@@ -12,8 +10,6 @@ class Game {
     required this.name,
     required this.template,
     required this.gameType,
-    required this.isRecommend,
-    required this.isJackpot,
     required this.games,
   });
 
@@ -23,8 +19,6 @@ class Game {
       name: json['name'],
       template: json['template'],
       gameType: json['gameType'],
-      isRecommend: json['isRecommend'],
-      isJackpot: json['isJackpot'],
       games: List<GameDetail>.from(
           json['games'].map((x) => GameDetail.fromJson(x))),
     );
