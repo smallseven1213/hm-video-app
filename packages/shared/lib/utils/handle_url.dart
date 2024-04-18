@@ -1,8 +1,11 @@
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/handle_game_url_methods.dart';
 
 import '../controllers/bottom_navigator_controller.dart';
 import '../navigator/delegate.dart';
@@ -10,6 +13,8 @@ import '../navigator/delegate.dart';
 final logger = Logger();
 
 final bottomNavigatorController = Get.find<BottomNavigatorController>();
+GamePlatformConfigController gamePlatformConfigController =
+    Get.find<GamePlatformConfigController>();
 
 Map<int, String> gameDepositPage = {
   1: '/game/deposit_page_polling',
@@ -21,33 +26,25 @@ void handleHttpUrl(String url) {
   launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
 }
 
-// 狀況2: 如果item?.url有 defaultScreenKey這個query string
-// 拿到?之前的url，帶入route，再將defaultScreenKey帶入args
+// 狀況2:
+// 先區分defaultScreenKey是否為game，如果是則執行handleGameUrlMethods
+// url = /home?defaultScreenKey=game執行MyRouteDelegate前往遊戲大廳
+// 其餘情況執行MyRouteDelegate
 void handleDefaultScreenKey(BuildContext context, String url) {
   final defaultScreenKey = Uri.parse(url).queryParameters['defaultScreenKey'];
   final routePath = url.substring(0, url.indexOf('?'));
-  final String gameId = Uri.parse(url).queryParameters['gameId'].toString();
-  final String tpCode = Uri.parse(url).queryParameters['tpCode'].toString();
 
-  if (gameId.isNotEmpty && gameId != '' && tpCode.isNotEmpty && tpCode != '') {
-    GamePlatformConfigController gamePlatformConfigController =
-        Get.find<GamePlatformConfigController>();
-    gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
-    MyRouteDelegate.of(context).push(
-      '/home',
-      args: {'defaultScreenKey': '/game'},
-      removeSamePath: true,
-    );
+  if (defaultScreenKey == 'game') {
+    handleGameUrlMethods(context, url, routePath);
   } else {
-    logger.i('url without gameId: $url');
     MyRouteDelegate.of(context).push(
       routePath,
       args: {'defaultScreenKey': '/$defaultScreenKey'},
       removeSamePath: true,
     );
-  }
 
-  bottomNavigatorController.changeKey('/$defaultScreenKey');
+    bottomNavigatorController.changeKey('/$defaultScreenKey');
+  }
 }
 
 // 狀況3: 如果item?.url為 /{path}/{id}，則跳轉到該頁面並帶上id
@@ -66,11 +63,8 @@ void handlePathWithId(BuildContext context, String url) {
 // 狀況5: 如果包含depositType
 void handleGameDepositType(BuildContext context, String url) {
   logger.i('url: $url');
-  final depositType = Uri.parse(url).queryParameters['depositType'];
-  MyRouteDelegate.of(context).push(
-    gameDepositPage[int.parse(depositType!)].toString(),
-    args: {'defaultScreenKey': '/game'},
-    removeSamePath: true,
-  );
+  final depositType = Uri.parse(url).queryParameters['depositType'].toString();
+  gamePlatformConfigController.setSwitchPaymentPage(int.parse(depositType));
+  eventBus.fireEvent("gotoDepositAfterLogin");
   bottomNavigatorController.changeKey('/game');
 }

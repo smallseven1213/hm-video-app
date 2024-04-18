@@ -20,14 +20,16 @@ Future<dynamic> liveFetcher({
   Map<String, dynamic>? body = const {},
   FormData? form,
   bool? shouldValidate = true,
+  Locale? language,
 }) async {
   final token = GetStorage().read('live-token');
-  Locale locale = WidgetsBinding.instance.platformDispatcher.locale;
+  // Locale locale = WidgetsBinding.instance.platformDispatcher.locale;
+  String locale = GetStorage('locale').read('locale');
 
   final headerConfig = {
     'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
     'authorization': 'Bearer $token',
-    'language': locale.toString(),
+    'language': locale,
   };
 
   final options = Options(

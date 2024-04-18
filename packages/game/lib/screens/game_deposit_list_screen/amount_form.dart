@@ -191,6 +191,13 @@ class _AmountFormState extends State<AmountForm> {
                         widget.controller.clear();
                       },
                     ),
+                    suffix: Text(
+                      localizations.translate('dollar'),
+                      style: TextStyle(
+                        fontSize: 12.0,
+                        color: gameLobbyPrimaryTextColor,
+                      ),
+                    ),
                   ),
                   keyboardType: TextInputType.number,
                   inputFormatters: [

@@ -94,7 +94,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
                                           .wallet.value
                                           .toString()),
                                     ),
-                                  ) : '0.00'} ${currencyMapper[gameWalletController.currency.value] == 'id-ID' ? 'K' : ''}',
+                                  ) : '0.00'} ${localizations.translate('dollar')}',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.w600,

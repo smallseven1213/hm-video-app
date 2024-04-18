@@ -41,7 +41,7 @@ const Map<String, String> zhCnStrings = {
   'please_write_the_required_information_in_the_remittance_remarks_to_speed_up_the_recharge_process':
       '2. 请在汇款备注写入要求资讯，加速充值流程。',
   'no_payment_channel': '没有支付通道',
-  'dollar': '元',
+  'dollar': '',
   'send_offer': '送优惠',
   'payment_channel': '支付渠道',
   'order_confirmation': '订单确认',

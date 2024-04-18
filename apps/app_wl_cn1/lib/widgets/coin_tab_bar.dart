@@ -75,7 +75,7 @@ class CoinTabBarWidgetState extends State<CoinTabBarWidget> {
             controller: widget.controller,
             labelColor: AppColors.colors[ColorKeys.tabBarTextActiveColor],
             labelStyle: const TextStyle(fontSize: 14),
-            labelPadding: const EdgeInsets.symmetric(horizontal: 10),
+            labelPadding: const EdgeInsets.symmetric(horizontal: 15),
             unselectedLabelColor: AppColors.colors[ColorKeys.textTertiary],
             indicatorSize: TabBarIndicatorSize.label,
             indicator: const UnderlineTabIndicator(

@@ -1,7 +1,10 @@
+import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/enums/game_app_routes.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+
+import 'package:game/models/game_deposit_payment_type_list.dart';
 import 'package:game/models/game_payment_channel_detail.dart';
 import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
 import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
@@ -9,11 +12,13 @@ import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
 import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';
 import 'package:game/screens/game_deposit_list_screen/show_user_name.dart';
 import 'package:game/screens/game_deposit_list_screen/title.dart';
+import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
 import 'package:game/screens/game_theme_config.dart';
+
 import 'package:game/utils/show_model.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:logger/logger.dart';
+import 'package:game/controllers/game_withdraw_controller.dart';
+import 'package:game/enums/game_app_routes.dart';
+
 import 'package:shared/navigator/delegate.dart';
 
 import '../../localization/game_localization_delegate.dart';
@@ -37,10 +42,14 @@ class CustomTriangleClipper extends CustomClipper<Path> {
 }
 
 class DepositPaymentItems extends StatefulWidget {
+  final List<DepositPaymentTypeList> paymentList;
   final Map depositData;
   final String initialIndex;
   const DepositPaymentItems(
-      {Key? key, required this.depositData, required this.initialIndex})
+      {Key? key,
+      required this.paymentList,
+      required this.depositData,
+      required this.initialIndex})
       : super(key: key);
 
   @override
@@ -55,7 +64,6 @@ var depositAmountType = {
 class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   String _paymentActiveIndex = '';
   int _channelActiveIndex = 0;
-  int _amountActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
   final theme = themeMode[GetStorage().hasData('pageColor')
@@ -63,14 +71,15 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           : 1]
       .toString();
   final gameWithdrawController = Get.put(GameWithdrawController());
-  ScrollController scrollController = ScrollController();
-  GlobalKey scrollKey = GlobalKey();
   FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _paymentActiveIndex = widget.initialIndex;
+    _paymentActiveIndex = widget.depositData.containsKey(widget.initialIndex)
+        ? widget.initialIndex
+        : widget.depositData.keys.first;
+
     setInitFormValue();
   }
 
@@ -78,7 +87,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   @override
   void dispose() {
     amountController.dispose();
-    scrollController.dispose();
     focusNode.dispose();
     super.dispose();
   }
@@ -98,7 +106,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
     setState(() {
       _paymentActiveIndex = idx;
       _channelActiveIndex = 0;
-      _amountActiveIndex = 0;
 
       Future.delayed(const Duration(milliseconds: 100)).then((value) {
         setInitFormValue();
@@ -109,17 +116,10 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   void channelIndexChanged(idx) {
     setState(() {
       _channelActiveIndex = idx;
-      _amountActiveIndex = 0;
 
       Future.delayed(const Duration(milliseconds: 100)).then((value) {
         setInitFormValue();
       });
-    });
-  }
-
-  void amountIndexChanged(idx) {
-    setState(() {
-      _amountActiveIndex = idx;
     });
   }
 
@@ -130,32 +130,34 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             ? GetStorage().read('pageColor')
             : 1]
         .toString();
-    List paymentItem = widget.depositData.keys.toList();
-    int paymentLength = paymentItem.isNotEmpty ? paymentItem.length.toInt() : 0;
+
+    List<DepositPaymentTypeList> paymentListItem =
+        widget.paymentList.where((element) {
+      final depositDataKeys = widget.depositData.keys.toList();
+      return depositDataKeys.contains(element.code);
+    }).toList();
 
     List channels = List.from(widget.depositData[_paymentActiveIndex]);
     int channelLength = channels.isNotEmpty ? channels.length.toInt() : 0;
     num channelHeight =
         (channelLength > 3 ? (channelLength / 3).ceil() * 54 : 60);
-
     int amountLength = channels.isNotEmpty &&
             channels[_channelActiveIndex].specificAmounts != null
         ? channels[_channelActiveIndex].specificAmounts.length
         : 0;
-
     num amountHeight = amountLength > 4 ? (amountLength / 4).ceil() * 80 : 80;
 
-    logger.i(
-        '======indexssss======: $_paymentActiveIndex, $_channelActiveIndex, $_amountActiveIndex');
+    logger.i("active 支付渠道: ${channels[_channelActiveIndex].name}");
 
     handleAmount(index) {
       gameWithdrawController.setDepositAmount(
           channels[_channelActiveIndex].specificAmounts[index]);
-      amountIndexChanged(index);
       if (channels[_channelActiveIndex].amountType ==
           depositAmountType['noInput']) {
-        if (_paymentActiveIndex == 'debit') {
-          logger.i('銀行卡');
+        if (widget.depositData[_paymentActiveIndex][_channelActiveIndex]
+                .requireName ==
+            0) {
+          logger.i('確認真實姓名');
           showUserName(
             context,
             onSuccess: (userName) {
@@ -183,9 +185,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
               'paymentChannelId': paymentChannelId,
             },
           );
-          // gto('/game/deposit/detail/$_paymentActiveIndex/$paymentChannelId');
         } else {
-          logger.i('no input && no bank card');
+          logger.i('確認pin');
           showModel(
             context,
             title: localizations.translate('order_confirmation'),
@@ -228,89 +229,10 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
         child: Column(
           children: [
             // ======支付方式======
-            SingleChildScrollView(
-              key: scrollKey,
-              controller: scrollController,
-              scrollDirection: Axis.horizontal,
-              child: Wrap(
-                spacing: 5,
-                children: List.generate(
-                  paymentItem.length,
-                  (index) => GestureDetector(
-                      onTap: () {
-                        paymentIndexChanged(paymentItem[index]);
-                        final double scrollOffset = index * 45 -
-                            MediaQuery.of(context).size.width / 2 +
-                            MediaQuery.of(context).size.width / 4;
-                        scrollController.animateTo(
-                          index >= 4 ? scrollOffset : 0,
-                          duration: const Duration(milliseconds: 200),
-                          curve: Curves.easeInOut,
-                        );
-                      },
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 1),
-                            child: Container(
-                              width: paymentLength <= 4
-                                  ? MediaQuery.of(context).size.width / 4 - 22
-                                  : MediaQuery.of(context).size.width / 4 - 32,
-                              padding: const EdgeInsets.symmetric(vertical: 10),
-                              decoration: BoxDecoration(
-                                color: _paymentActiveIndex == paymentItem[index]
-                                    ? gameLobbyDepositActiveColor
-                                    : gameItemMainColor,
-                                borderRadius: BorderRadius.circular(12),
-                                border: Border.all(
-                                  color:
-                                      _paymentActiveIndex == paymentItem[index]
-                                          ? gamePrimaryButtonColor
-                                          : gameItemMainColor,
-                                  width: 1.0,
-                                ),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    paymentsMapper[paymentItem[index]] != null
-                                        ? paymentsMapper[paymentItem[index]]![
-                                                'icon']
-                                            .toString()
-                                        : 'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-                                    width: 24,
-                                    height: 24,
-                                  ),
-                                  const SizedBox(height: 6),
-                                  // Text(
-                                  //   widget.depositData[paymentItem[index]]
-                                  //           ['paymentTypeName']
-                                  //       .toString(),
-                                  //   style: TextStyle(
-                                  //     color: gameLobbyPrimaryTextColor,
-                                  //     fontSize: 12,
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          // if (widget.depositData[paymentItem[index]]['label'][0]
-                          //     .isNotEmpty)
-                          //   Positioned(
-                          //     top: 0,
-                          //     right: 0,
-                          //     child: OliveShape(
-                          //       width: 40.0,
-                          //       type: 'right',
-                          //       text: localizations.translate('send_offer'),
-                          //     ),
-                          //   )
-                        ],
-                      )),
-                ),
-              ),
+            DepositPaymentTypeListWidget(
+              paymentActiveIndex: _paymentActiveIndex,
+              paymentListItem: paymentListItem,
+              handlePaymentIndexChanged: paymentIndexChanged,
             ),
             SizedBox(
               height: 40,

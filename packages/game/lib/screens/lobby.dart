@@ -34,6 +34,7 @@ import 'package:shared/utils/event_bus.dart';
 
 import '../enums/game_app_routes.dart';
 import '../localization/game_localization_delegate.dart';
+import 'package:shared/controllers/bottom_navigator_controller.dart';
 
 final logger = Logger();
 
@@ -70,6 +71,8 @@ class _GameLobbyState extends State<GameLobby>
       Get.find<GameParamConfigController>();
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
+  final bottomNavigatorController = Get.find<BottomNavigatorController>();
+
   @override
   void initState() {
     super.initState();
@@ -97,7 +100,22 @@ class _GameLobbyState extends State<GameLobby>
   void _fetchEvent() async {
     String? event = eventBus.getLatestEvent();
     if (event == "gotoDepositAfterLogin" && mounted) {
-      MyRouteDelegate.of(context).push(GameAppRoutes.depositList);
+      if (gameConfigController.videoToGameRoute.value != '') {
+        // 進入遊戲大廳之外的遊戲頁面
+        logger.i(
+            'videoToGameRoute: ${gameConfigController.videoToGameRoute.value}');
+        MyRouteDelegate.of(context).push(
+          gameConfigController.videoToGameRoute.value,
+          removeSamePath: true,
+        );
+      } else {
+        // 進入存款頁
+        final route = gameConfigController.switchPaymentPage.value ==
+                switchPaymentPageType['list']
+            ? GameAppRoutes.depositList
+            : GameAppRoutes.depositPolling;
+        MyRouteDelegate.of(context).push(route);
+      }
     }
   }
 
@@ -225,7 +243,9 @@ class _GameLobbyState extends State<GameLobby>
                                   ],
                                 ),
                               ),
-                              const GameListView(),
+                              GameListView(
+                                  activeIndex:
+                                      gameConfigController.gameTypeIndex.value),
                             ],
                           ),
                         ),

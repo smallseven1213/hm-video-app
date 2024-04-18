@@ -45,7 +45,7 @@ const Map<String, String> viVnStrings = {
   "please_write_the_required_information_in_the_remittance_remarks_to_speed_up_the_recharge_process":
       "2. Vui lòng viết thông tin yêu cầu vào Ghi chú Chuyển khoản để tăng tốc độ nạp tiền.",
   "no_payment_channel": "Không có Kênh Thanh toán",
-  "dollar": "Đô la",
+  "dollar": "",
   "send_offer": "Gửi Ưu đãi",
   "payment_channel": "Kênh thanh toán",
   "order_confirmation": "Xác nhận đơn hàng",
@@ -142,7 +142,7 @@ const Map<String, String> viVnStrings = {
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Số tiền nhập vào không được nhiều hơn số dư còn lại",
   "input_amount_is_in_wrong_format": "Định dạng số tiền nhập vào không đúng",
-  "minimum_withdrawal_amount_is": "Số tiền rút tối thiểu là {amount}",
+  "minimum_withdrawal_amount_is": "Số tiền rút tối thiểu là",
   "application_completed": "Ứng dụng đã Hoàn thành",
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":
       "Ứng dụng rút tiền đã hoàn thành, bạn có thể kiểm tra trạng thái ứng dụng hiện tại trong nhật ký rút tiền.",

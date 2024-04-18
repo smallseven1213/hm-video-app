@@ -22,7 +22,17 @@ class ChannelInfo {
     if (json['blocks'] != null) {
       blocks = <Blocks>[];
       json['blocks'].forEach((v) {
-        blocks!.add(Blocks.fromJson(v));
+        print('>>> blockType: ${v['blockType']}');
+        if (v['blockType'] != null && v['blockType'] == 1) {
+          blocks!.add(Blocks.fromJson(v));
+          return;
+        } else {
+          blocks!.add(Blocks.fromJson(v));
+          return;
+        }
+        // else if (v['blockType'] == 2) {
+        //   blocks!.add(Game.fromJson(v));
+        // }
       });
     }
   }
@@ -58,23 +68,26 @@ class Blocks {
   bool? isEmbeddedAds;
   BannerPhoto? banner;
   Videos? videos;
+  int? blockType;
 
-  Blocks(
-      {id,
-      name,
-      template,
-      film,
-      quantity,
-      orderIndex,
-      isMore,
-      isCheckMore,
-      isChange,
-      isAreaAds,
-      isTitle,
-      isLoading,
-      isEmbeddedAds,
-      banner,
-      videos});
+  Blocks({
+    id,
+    name,
+    template,
+    film,
+    quantity,
+    orderIndex,
+    isMore,
+    isCheckMore,
+    isChange,
+    isAreaAds,
+    isTitle,
+    isLoading,
+    isEmbeddedAds,
+    banner,
+    videos,
+    blockType,
+  });
 
   Blocks.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -93,6 +106,7 @@ class Blocks {
     banner =
         json['banner'] != null ? BannerPhoto.fromJson(json['banner']) : null;
     videos = json['videos'] != null ? Videos.fromJson(json['videos']) : null;
+    blockType = json['blockType'];
   }
 
   Map<String, dynamic> toJson() {
@@ -110,6 +124,7 @@ class Blocks {
     data['isTitle'] = isTitle;
     data['isLoading'] = isLoading;
     data['isEmbeddedAds'] = isEmbeddedAds;
+    data['blockType'] = blockType;
     if (banner != null) {
       data['banner'] = banner!.toJson();
     }
