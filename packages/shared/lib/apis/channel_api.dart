@@ -49,8 +49,8 @@ class ChannelApi {
         tags: Tags.fromJson(res.data['data']['tagAreas']),
         blocks: List.from((res.data['data']['blocks'] as List<dynamic>)
             .map((e) => Blocks.fromJson(e))),
-        gameBlocks: List.from((res.data['data']['gameBlocks'] as List<dynamic>)
-            .map((e) => Game.fromJson(e))),
+        gameBlocks: res.data['data']['gameBlocks'] != null ? List.from((res.data['data']['gameBlocks'] as List<dynamic>)
+            .map((e) => Game.fromJson(e))) : [],
       );
       return channelSharedData;
     } catch (e) {

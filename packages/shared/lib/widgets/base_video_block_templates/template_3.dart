@@ -4,7 +4,6 @@ import 'package:shared/models/vod.dart';
 
 import '../../models/game.dart';
 import '../base_video_preview.dart';
-import '../game_block_template/vertical_game_card.dart';
 import '../video_block_grid_view_row.dart';
 
 List<List<Vod>> organizeRowData(List videos) {
@@ -36,16 +35,13 @@ SliverChildBuilderDelegate baseVideoBlockTemplate3({
   required int areaId,
   required BaseVideoPreviewWidget Function(Vod video) buildVideoPreview,
   required Widget Function(Vod video) buildBanner,
-  List<Game>? gameBlocks,
   int? film = 1,
+  List<Game>? gameBlocks,
 }) {
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {
-      print('>>> baseVideoBlockTemplate3 2個小封面');
       // 每2個vods組成一個videos
       List<List<Vod>> result = organizeRowData(vods);
-      // return const VerticalGameCard();
-
       return Padding(
         // padding bottom 8
         padding: const EdgeInsets.only(bottom: 8.0),
