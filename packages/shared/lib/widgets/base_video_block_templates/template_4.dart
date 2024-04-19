@@ -47,8 +47,8 @@ SliverChildBuilderDelegate baseVideoBlockTemplate4({
           gameBlocks.isNotEmpty;
 
       if (isGameArea) {
-        Game currentGame = gameBlocks[gameAreaCounter % gameBlocks.length];
-        gameAreaCounter++;
+        int counter = ((index) / 3).floor();
+        Game currentGame = gameBlocks[counter % gameBlocks.length];
         return GameCardWidget(game: currentGame);
       } else {
         int adjustedIndex = index - numberOfGameAreasInserted;
