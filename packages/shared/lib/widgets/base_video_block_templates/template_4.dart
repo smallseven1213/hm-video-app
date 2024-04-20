@@ -6,18 +6,20 @@ import '../base_video_preview.dart';
 import '../game_block_template/game_cards.dart';
 import '../video_block_grid_view_row.dart';
 
-List<List<Vod>> organizeRowData(List<Vod> videos) {
+// Constants to define behavior
+const int videosPerRow = 3;
+const int rowsBetweenGames = 1;
+
+// Helper function to organize VODs into rows based on certain conditions.
+List<List<Vod>> organizeRowData(List<Vod> videos, int maxVideosPerRow) {
   List<List<Vod>> resultArray = [];
   List<Vod> tempArray = [];
-  for (int i = 0; i < videos.length; i++) {
-    tempArray.add(videos[i]);
-    bool hasAreaAd = videos[i].dataType == VideoType.areaAd.index;
-    if (hasAreaAd) {
-      resultArray.add(tempArray);
-      tempArray = [];
-    } else if (tempArray.length == 3) {
-      resultArray.add(tempArray);
-      tempArray = [];
+  for (var video in videos) {
+    tempArray.add(video);
+    if (video.dataType == VideoType.areaAd.index ||
+        tempArray.length == maxVideosPerRow) {
+      resultArray.add(List.from(tempArray));
+      tempArray.clear();
     }
   }
   if (tempArray.isNotEmpty) {
@@ -34,24 +36,24 @@ SliverChildBuilderDelegate baseVideoBlockTemplate4({
   required int areaId,
   List<Game>? gameBlocks,
 }) {
-  List<List<Vod>> organizedData = organizeRowData(vods);
-  int rowsBetweenGames = 2; // Every 6 rows, insert a GameArea
-  int gameAreaCounter = 0; // Counter to keep track of gameBlocks insertion
+  List<List<Vod>> organizedData = organizeRowData(vods, videosPerRow);
+  int totalRows = organizedData.length;
+  int gameBlockInsertions = (totalRows / rowsBetweenGames).floor();
+  int childCount = totalRows + gameBlockInsertions;
 
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {
-      int numberOfGameAreasInserted = (index / (rowsBetweenGames + 1)).floor();
-      bool isGameArea = (index % (rowsBetweenGames + 1) == rowsBetweenGames) &&
-          index != 0 &&
+      int gameAreasBeforeIndex = (index / (rowsBetweenGames + 1)).floor();
+      bool isGameArea = index % (rowsBetweenGames + 1) == rowsBetweenGames &&
           gameBlocks != null &&
           gameBlocks.isNotEmpty;
 
       if (isGameArea) {
-        int counter = ((index) / 3).floor();
-        Game currentGame = gameBlocks[counter % gameBlocks.length];
-        return GameCardWidget(game: currentGame);
+        int gameIndex =
+            (index / (rowsBetweenGames + 1)).floor() % gameBlocks.length;
+        return GameCardWidget(game: gameBlocks[gameIndex]);
       } else {
-        int adjustedIndex = index - numberOfGameAreasInserted;
+        int adjustedIndex = index - gameAreasBeforeIndex;
         if (adjustedIndex < organizedData.length) {
           List<Vod> rowData = organizedData[adjustedIndex];
           return Padding(
@@ -76,8 +78,6 @@ SliverChildBuilderDelegate baseVideoBlockTemplate4({
       return const SizedBox
           .shrink(); // Fallback to an empty widget for edge cases
     },
-    childCount: organizedData.length +
-        ((organizedData.length / rowsBetweenGames).floor() *
-            (gameBlocks != null && gameBlocks.isNotEmpty ? 1 : 0)),
+    childCount: childCount,
   );
 }
