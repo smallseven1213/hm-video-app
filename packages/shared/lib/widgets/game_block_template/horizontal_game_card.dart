@@ -14,6 +14,8 @@ const kTagTextColor = Color(0xff21AFFF);
 
 final logger = Logger();
 
+const kSpacingUnit = 8.0;
+
 class HorizontalGameCard extends StatelessWidget {
   final Game gameBlocks;
   const HorizontalGameCard({
@@ -26,41 +28,48 @@ class HorizontalGameCard extends StatelessWidget {
     print('@@@@ HorizontalGameCard');
     print(gameBlocks);
 
-    return ConstrainedBox(
-      constraints: const BoxConstraints(
-        minHeight: 300,
-        maxHeight: 450, // 根据需求调整最大高度
-      ),
+    return AspectRatio(
+      aspectRatio: 360 / 444,
       child: Column(
         children: [
           HeaderWidget(name: gameBlocks.name),
-          _buildGameGrid(context),
+          _buildGameGrid(),
         ],
       ),
     );
   }
 
-  Widget _buildGameGrid(BuildContext context) {
+  Widget _buildGameGrid() {
     if (gameBlocks.games.isEmpty) {
       return const SizedBox.shrink();
     }
-    int maxGames = min(gameBlocks.games.length, 4);
-    List<Widget> rows = [];
-    for (var i = 0; i < maxGames; i += 2) {
-      rows.add(_buildGameRow(i));
+
+    List<Widget> rows = List<Widget>.generate(
+      min(gameBlocks.games.length, 4) ~/ 2,
+      (index) => _buildGameRow(index * 2),
+    );
+
+    // Insert spacing between rows
+    for (int i = 1; i < rows.length; i += 2) {
+      rows.insert(i, const SizedBox(height: kSpacingUnit));
     }
 
-    return Expanded(
-      child: Column(children: rows),
-    );
+    return Expanded(child: Column(children: rows));
   }
 
   Widget _buildGameRow(int startIndex) {
-    List<Widget> rowChildren = [];
-    for (int i = startIndex;
-        i < startIndex + 2 && i < gameBlocks.games.length;
-        i++) {
-      rowChildren.add(Expanded(child: GameCard(game: gameBlocks.games[i])));
+    List<Widget> rowChildren = List<Widget>.generate(
+      min(2, gameBlocks.games.length - startIndex),
+      (index) {
+        return Expanded(
+          child: GameCard(game: gameBlocks.games[startIndex + index]),
+        );
+      },
+    );
+
+    // Add spacing between game cards in a row
+    if (rowChildren.length > 1) {
+      rowChildren.insert(1, const SizedBox(width: kSpacingUnit));
     }
 
     return Row(children: rowChildren);
@@ -79,8 +88,8 @@ class GameCard extends StatelessWidget {
         Container(
           width: double.infinity,
           color: kCardBgColor,
-          margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-          padding: const EdgeInsets.all(0),
+          // margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -107,7 +116,7 @@ class GameCard extends StatelessWidget {
         AspectRatio(
           aspectRatio: 168 / 120,
           child: Container(
-            margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
+            // margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
             child: Image.network(
               'https://5b0988e595225.cdn.sohucs.com/images/20170820/726480d5869049e29698e0d472715406.jpeg',
               fit: BoxFit.cover,
@@ -132,7 +141,7 @@ class GameCard extends StatelessWidget {
   Widget _buildGameTags() {
     return Container(
       width: double.infinity,
-      height: 36,
+      height: 16,
       color: kCardBgColor,
       padding: const EdgeInsets.all(8),
       child: Wrap(

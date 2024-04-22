@@ -8,7 +8,7 @@ import '../video_block_grid_view_row.dart';
 
 // Constants to define behavior
 const int videosPerRow = 3;
-const int rowsBetweenGames = 1;
+const int defaultRowsBetweenGames = 4;
 
 // Helper function to organize VODs into rows based on certain conditions.
 List<List<Vod>> organizeRowData(List<Vod> videos, int maxVideosPerRow) {
@@ -36,6 +36,13 @@ SliverChildBuilderDelegate baseVideoBlockTemplate4({
   required int areaId,
   List<Game>? gameBlocks,
 }) {
+
+  bool containsAd =
+      vods.any((video) => video.dataType == VideoType.areaAd.index);
+  int rowsBetweenGames = containsAd
+      ? defaultRowsBetweenGames + 1
+      : defaultRowsBetweenGames; // Dynamically adjust based on ad presence
+
   List<List<Vod>> organizedData = organizeRowData(vods, videosPerRow);
   int totalRows = organizedData.length;
   int gameBlockInsertions = (totalRows / rowsBetweenGames).floor();
@@ -62,7 +69,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate4({
                 ? buildBanner(rowData[0])
                 : VideoBlockGridViewRow(
                     videoData: rowData,
-                    gridLength: 3,
+                    gridLength: videosPerRow,
                     imageRatio: BlockImageRatio.block4.ratio,
                     isEmbeddedAds: true,
                     displayCoverVertical: true,

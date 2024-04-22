@@ -19,8 +19,6 @@ class VerticalGameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('VerticalGameCard build called for: ${gameBlocks.name}');
-
     return AspectRatio(
       aspectRatio: 360 / 560,
       child: Column(

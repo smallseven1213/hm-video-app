@@ -18,10 +18,10 @@ final Map<
       List<Game>? gameBlocks,
       int? film,
     })> templateMap = {
-  2: baseVideoBlockTemplate2,
-  3: baseVideoBlockTemplate3,
-  4: baseVideoBlockTemplate4,
-  10: baseVideoBlockTemplate10,
+  2: baseVideoBlockTemplate2, // 單個影片
+  3: baseVideoBlockTemplate3, // 橫板 2
+  4: baseVideoBlockTemplate4, // 豎版 3
+  10: baseVideoBlockTemplate10, // 豎版 2
 };
 
 class BaseVideoBlockTemplate extends StatelessWidget {

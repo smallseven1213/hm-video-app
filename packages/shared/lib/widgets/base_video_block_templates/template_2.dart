@@ -5,7 +5,7 @@ import '../base_video_preview.dart';
 import '../game_block_template/game_cards.dart';
 
 // Configurable to adjust the game block frequency.
-const int rowsBetweenGames = 8;
+const int defaultRowsBetweenGames = 8;
 
 SliverChildBuilderDelegate baseVideoBlockTemplate2({
   required List<Vod> vods,
@@ -17,11 +17,11 @@ SliverChildBuilderDelegate baseVideoBlockTemplate2({
 }) {
   int totalVideoRows = vods.length;
   int totalGameInsertions = gameBlocks != null && gameBlocks.isNotEmpty
-      ? (totalVideoRows / rowsBetweenGames).floor()
+      ? (totalVideoRows / defaultRowsBetweenGames).floor()
       : 0;
 
   bool isGameArea(int index) {
-    return index % (rowsBetweenGames + 1) == rowsBetweenGames &&
+    return index % (defaultRowsBetweenGames + 1) == defaultRowsBetweenGames &&
         gameBlocks != null &&
         gameBlocks.isNotEmpty;
   }
@@ -29,7 +29,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate2({
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {
       if (isGameArea(index)) {
-        int gameBlockIndex = (index ~/ (rowsBetweenGames + 1));
+        int gameBlockIndex = (index ~/ (defaultRowsBetweenGames + 1));
         Game currentGame = gameBlocks![gameBlockIndex % gameBlocks.length];
         return GameCardWidget(game: currentGame);
       } else {
