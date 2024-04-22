@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -9,6 +11,14 @@ final logger = Logger();
 class GameAreaController extends GetxController {
   final games = <Game>[].obs;
 
+  Game? get randomGame {
+    if (games.isEmpty) {
+      return null;
+    }
+    final randomIndex = Random().nextInt(games.length);
+    return games[randomIndex];
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -17,6 +27,6 @@ class GameAreaController extends GetxController {
 
   fetchData() async {
     var res = await GameApi().getGameArea();
-    games.assignAll(res);
+    games.value = res;
   }
 }
