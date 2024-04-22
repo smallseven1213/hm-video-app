@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/handle_url.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class GameTemplateLink extends StatelessWidget {
@@ -10,16 +13,12 @@ class GameTemplateLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => _launchURL(),
+      onTap: () => _launchURL(context),
       child: child,
     );
   }
 
-  void _launchURL() async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
+  void _launchURL(BuildContext context) async {
+    handleDefaultScreenKey(context, url);
   }
 }

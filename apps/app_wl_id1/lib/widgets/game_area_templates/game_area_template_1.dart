@@ -32,8 +32,12 @@ class GameAreaTemplate1Data extends StatelessWidget {
   Widget build(BuildContext context) {
     return GameTemplateLink(
       url: gameDetail.gameUrl,
-      child: SizedBox(
+      child: Container(
         height: 96,
+        decoration: const BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(4)),
+            color: Color(0xFF02275C)),
+        clipBehavior: Clip.antiAlias,
         child: Row(
           children: [
             // left image, right column
