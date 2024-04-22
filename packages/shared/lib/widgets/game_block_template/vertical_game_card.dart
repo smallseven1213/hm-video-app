@@ -1,99 +1,78 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import '../../models/game.dart';
+import 'header.dart';
 import 'tag.dart';
 
 const kPrimaryColor = Color(0xff00669F);
 const kCardBgColor = Color(0xff02275C);
+const kSpacingUnit = 8.0;
 
-class VerticalGameCard extends StatefulWidget {
-  const VerticalGameCard({super.key});
+class VerticalGameCard extends StatelessWidget {
+  final Game gameBlocks;
 
-  @override
-  _VerticalGameCardState createState() => _VerticalGameCardState();
-}
+  const VerticalGameCard({
+    super.key,
+    required this.gameBlocks,
+  });
 
-class _VerticalGameCardState extends State<VerticalGameCard> {
   @override
   Widget build(BuildContext context) {
+    debugPrint('VerticalGameCard build called for: ${gameBlocks.name}');
+
     return AspectRatio(
       aspectRatio: 360 / 560,
       child: Column(
         children: [
-          _buildHeader(context),
-          _buildGameGrid(context),
+          HeaderWidget(name: gameBlocks.name),
+          _buildGameGrid(),
         ],
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Sexy Live Dealers',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-          TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              side: const BorderSide(color: kPrimaryColor),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-            child: const Text(
-              'See All',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 10,
-              ),
-            ),
-          ),
-        ],
-      ),
+  Widget _buildGameGrid() {
+    if (gameBlocks.games.isEmpty) {
+      return const SizedBox.shrink();
+    }
+
+    List<Widget> rows = List<Widget>.generate(
+      min(gameBlocks.games.length, 4) ~/ 2,
+      (index) => _buildGameRow(index * 2),
     );
+
+    // Insert spacing between rows
+    for (int i = 1; i < rows.length; i += 2) {
+      rows.insert(i, const SizedBox(height: kSpacingUnit));
+    }
+
+    return Expanded(child: Column(children: rows));
   }
 
-  Widget _buildGameGrid(BuildContext context) {
-    return Expanded(
-      // 使用Expanded确保Column占满剩余空间
-      child: Column(
-        children: [
-          Expanded(
-            // 每个Row也使用Expanded确保平均分配空间
-            child: Row(
-              children: [
-                Expanded(child: GameCard()), // 每个GameCard使用Expanded确保填满可用空间
-                SizedBox(width: 8),
-                Expanded(child: GameCard()),
-              ],
-            ),
-          ),
-          SizedBox(height: 8),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(child: GameCard()),
-                SizedBox(width: 8),
-                Expanded(child: GameCard()),
-              ],
-            ),
-          ),
-        ],
-      ),
+  Widget _buildGameRow(int startIndex) {
+    List<Widget> rowChildren = List<Widget>.generate(
+      min(2, gameBlocks.games.length - startIndex),
+      (index) {
+        return Expanded(
+          child: GameCard(game: gameBlocks.games[startIndex + index]),
+        );
+      },
     );
+
+    // Add spacing between game cards in a row
+    if (rowChildren.length > 1) {
+      rowChildren.insert(1, const SizedBox(width: kSpacingUnit));
+    }
+
+    return Row(children: rowChildren);
   }
 }
 
 class GameCard extends StatelessWidget {
-  const GameCard({
-    super.key,
-  });
+  final GameDetail game;
+
+  const GameCard({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
@@ -111,39 +90,42 @@ class GameCard extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
+            // game.verticalLogo,
             'https://5b0988e595225.cdn.sohucs.com/images/20170820/726480d5869049e29698e0d472715406.jpeg',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
-                ),
-              ),
-              child: const Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    'Game Name',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
+          _buildGradientTextOverlay(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGradientTextOverlay() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: double.infinity,
+        height: 60,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            game.name,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -151,16 +133,13 @@ class GameCard extends StatelessWidget {
   Widget _buildGameTags() {
     return Container(
       width: double.infinity,
+      height: 36,
       color: kCardBgColor,
       padding: const EdgeInsets.all(8),
       child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.start,
         spacing: 5.0,
         runSpacing: 5.0,
-        clipBehavior: Clip.antiAlias,
-        children: [
-          TagWidget(name: 'Baccarat'),
-        ],
+        children: game.tags?.map((tag) => TagWidget(tag: tag)).toList() ?? [],
       ),
     );
   }

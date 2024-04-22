@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:app_wl_id1/widgets/no_data.dart';
 import 'package:app_wl_id1/widgets/video_preview.dart';
 import 'package:shared/models/banner_photo.dart';
+import 'package:shared/models/game.dart';
+import 'package:shared/widgets/game_block_template/cross_column_game_card.dart';
 import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_wl_id1/widgets/reload_button.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +24,14 @@ class Vods extends StatefulWidget {
   final int areaId;
   final int? templateId;
   final bool isActive;
+  final List<Game>? gameBlocks;
 
   const Vods({
     Key? key,
     required this.areaId,
     this.templateId = 3,
     this.isActive = false,
+    this.gameBlocks,
   }) : super(key: key);
 
   @override
@@ -126,6 +130,7 @@ class VodsState extends State<Vods> {
                   areaId: widget.areaId,
                   // ignore: invalid_use_of_protected_member
                   vods: vodController!.vodList.value,
+                  gameBlocks: widget.gameBlocks,
                   buildBanner: (video) => ChannelAreaBanner(
                     image: BannerPhoto.fromJson({
                       'id': video.id,

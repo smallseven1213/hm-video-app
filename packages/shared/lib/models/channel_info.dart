@@ -1,3 +1,4 @@
+import 'package:shared/models/game.dart';
 import 'package:shared/models/vod.dart';
 
 import 'banner_photo.dart';
@@ -22,17 +23,15 @@ class ChannelInfo {
     if (json['blocks'] != null) {
       blocks = <Blocks>[];
       json['blocks'].forEach((v) {
-        print('>>> blockType: ${v['blockType']}');
         if (v['blockType'] != null && v['blockType'] == 1) {
           blocks!.add(Blocks.fromJson(v));
           return;
+        } else if (v['blockType'] == 2) {
+          // blocks!.add(Game.fromJson(v));
         } else {
           blocks!.add(Blocks.fromJson(v));
           return;
         }
-        // else if (v['blockType'] == 2) {
-        //   blocks!.add(Game.fromJson(v));
-        // }
       });
     }
   }

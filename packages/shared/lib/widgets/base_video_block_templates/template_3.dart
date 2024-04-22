@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/block_image_ratio.dart';
 import 'package:shared/models/vod.dart';
 
+import '../../models/game.dart';
 import '../base_video_preview.dart';
 import '../video_block_grid_view_row.dart';
 
@@ -35,6 +36,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate3({
   required BaseVideoPreviewWidget Function(Vod video) buildVideoPreview,
   required Widget Function(Vod video) buildBanner,
   int? film = 1,
+  List<Game>? gameBlocks,
 }) {
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {

@@ -157,6 +157,7 @@ class ChannelStyle3MainState extends State<ChannelStyle3Main>
                           areaId: e.value.id ?? 0,
                           templateId: e.value.template,
                           isActive: e.key == _tabController!.index,
+                          gameBlocks: channelSharedData.gameBlocks,
                         ))
                     .toList() ??
                 [],
