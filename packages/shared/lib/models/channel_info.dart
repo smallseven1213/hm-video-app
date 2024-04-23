@@ -4,12 +4,26 @@ import 'package:shared/models/vod.dart';
 import 'banner_photo.dart';
 import 'jingang.dart';
 
+abstract class ContentBlock {
+  Map<String, dynamic> toJson();
+
+  factory ContentBlock.fromJson(Map<String, dynamic> json) {
+    switch (json['blockType']) {
+      case 1:
+        return Blocks.fromJson(json);
+      case 2:
+        return Game.fromJson(json);
+      default:
+        return Blocks.fromJson(json);
+    }
+  }
+}
+
 class ChannelInfo {
   List<BannerPhoto>? banner;
   Jingang? jingang;
-  List<Blocks>? blocks;
-
-  ChannelInfo({banner, jingang, blocks});
+  List<ContentBlock>? blocks;
+  ChannelInfo({this.banner, this.jingang, this.blocks});
 
   ChannelInfo.fromJson(Map<String, dynamic> json) {
     if (json['banner'] != null) {
@@ -21,17 +35,9 @@ class ChannelInfo {
     jingang =
         json['jingang'] != null ? Jingang.fromJson(json['jingang']) : null;
     if (json['blocks'] != null) {
-      blocks = <Blocks>[];
+      blocks = <ContentBlock>[];
       json['blocks'].forEach((v) {
-        if (v['blockType'] != null && v['blockType'] == 1) {
-          blocks!.add(Blocks.fromJson(v));
-          return;
-        } else if (v['blockType'] == 2) {
-          // blocks!.add(Game.fromJson(v));
-        } else {
-          blocks!.add(Blocks.fromJson(v));
-          return;
-        }
+        blocks!.add(ContentBlock.fromJson(v));
       });
     }
   }
@@ -51,7 +57,7 @@ class ChannelInfo {
   }
 }
 
-class Blocks {
+class Blocks implements ContentBlock {
   int? id;
   String? name;
   int? template; // block 1 ~ 6
@@ -70,22 +76,22 @@ class Blocks {
   int? blockType;
 
   Blocks({
-    id,
-    name,
-    template,
-    film,
-    quantity,
-    orderIndex,
-    isMore,
-    isCheckMore,
-    isChange,
-    isAreaAds,
-    isTitle,
-    isLoading,
-    isEmbeddedAds,
-    banner,
-    videos,
-    blockType,
+    this.id,
+    this.name,
+    this.template,
+    this.film,
+    this.quantity,
+    this.orderIndex,
+    this.isMore,
+    this.isCheckMore,
+    this.isChange,
+    this.isAreaAds,
+    this.isTitle,
+    this.isLoading,
+    this.isEmbeddedAds,
+    this.banner,
+    this.videos,
+    this.blockType,
   });
 
   Blocks.fromJson(Map<String, dynamic> json) {
@@ -108,6 +114,7 @@ class Blocks {
     blockType = json['blockType'];
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;

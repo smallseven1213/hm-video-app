@@ -1,6 +1,7 @@
-import 'tag.dart';
+import 'channel_info.dart';
+import 'tag.dart'; // Assuming Tag class is defined elsewhere appropriately.
 
-class Game {
+class Game implements ContentBlock {
   final int id;
   final String name;
   final int template;
@@ -25,6 +26,21 @@ class Game {
           json['games'].map((x) => GameDetail.fromJson(x))),
     );
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'template': template,
+      'gameType': gameType,
+      'games': games.map((game) => game.toJson()).toList(),
+    };
+  }
+  
+  @override
+  // TODO: implement blockType
+  int get blockType => throw UnimplementedError();
 }
 
 class GameDetail {
@@ -35,7 +51,7 @@ class GameDetail {
   final String jackpot;
   final int multiple;
   final String name;
-  final List<Tag>? tags;
+  List<Tag>? tags;
 
   GameDetail({
     required this.gameId,
@@ -57,7 +73,9 @@ class GameDetail {
       jackpot: json['jackpot'],
       multiple: json['multiple'],
       name: json['name'],
-      tags: List<Tag>.from(json['tags'].map((x) => Tag.fromJson(x))),
+      tags: json['tags'] != null
+          ? List<Tag>.from(json['tags'].map((x) => Tag.fromJson(x)))
+          : null,
     );
   }
 
@@ -70,7 +88,7 @@ class GameDetail {
       'jackpot': jackpot,
       'multiple': multiple,
       'name': name,
-      'tags': tags,
+      'tags': tags?.map((tag) => tag.toJson()).toList(),
     };
   }
 }
