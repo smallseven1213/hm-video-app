@@ -41,8 +41,11 @@ final screens = {
   HomeNavigatorPathes.layout2: () => MainLayoutBuilder(
         key: Key('layout${layouts[1]}'),
         layoutId: layouts[1],
-        child: HomeMainScreen(
-          layoutId: layouts[1],
+        child: Scaffold(
+          appBar: const SharedAppBar(),
+          body: HomeMainScreen(
+            layoutId: layouts[1],
+          ),
         ),
       ),
   HomeNavigatorPathes.game: () => const Scaffold(
