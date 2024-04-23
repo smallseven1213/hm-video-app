@@ -45,14 +45,17 @@ class ChannelSearchBar extends StatelessWidget {
           ),
           // width 10
           const SizedBox(width: 10),
-          GestureDetector(
-            onTap: () {
-              MyRouteDelegate.of(context).push(AppRoutes.filter);
-            },
-            child: const Image(
-              image: AssetImage('assets/images/search_filters.png'),
-              fit: BoxFit.contain,
-              height: 24,
+          SizedBox(
+            width: 24,
+            child: GestureDetector(
+              onTap: () {
+                MyRouteDelegate.of(context).push(AppRoutes.filter);
+              },
+              child: const Image(
+                image: AssetImage('assets/images/search_filters.png'),
+                fit: BoxFit.contain,
+                height: 24,
+              ),
             ),
           ),
           const SizedBox(width: 10),
