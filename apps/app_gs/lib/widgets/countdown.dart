@@ -14,7 +14,6 @@ class CountdownState extends State<Countdown>
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 90,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
         color: const Color.fromRGBO(0, 0, 0, .5),

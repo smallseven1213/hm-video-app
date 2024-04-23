@@ -107,7 +107,6 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
                 // 下載按鈕
                 const SizedBox(width: 8),
                 Container(
-                  width: 60,
                   decoration: BoxDecoration(
                     color: const Color(0xffFFC700),
                     borderRadius: BorderRadius.circular(60),
