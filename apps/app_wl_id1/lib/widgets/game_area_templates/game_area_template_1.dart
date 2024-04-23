@@ -65,7 +65,7 @@ class GameAreaTemplate1Data extends StatelessWidget {
                               color: Color(0xFFD4D4D4))),
                       // width 5
                       const SizedBox(width: 5),
-                      Text(gameDetail.multiple.toString(),
+                      Text('${gameDetail.multiple.toString()}x',
                           style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
