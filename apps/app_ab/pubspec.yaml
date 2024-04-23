@@ -38,6 +38,10 @@ dependencies:
     path: ../../packages/shared
   game:
     path: ../../packages/game
+  live_core:
+    path: ../../packages/live_core
+  live_ui_basic:
+    path: ../../packages/live_ui_basic
 
   carousel_slider: ^4.2.1
   qr_flutter: ^4.1.0

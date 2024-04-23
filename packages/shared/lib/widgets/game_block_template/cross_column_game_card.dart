@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/widgets/game_block_template/header.dart';
 
+import '../../models/game.dart';
+import 'game_template_link.dart';
 import 'tag.dart';
 
-const kPrimaryColor = Color(0xff00669F);
 const kCardBgColor = Color(0xff02275C);
 const kTagColor = Color(0xff21488E);
 const kTagTextColor = Color(0xff21AFFF);
@@ -11,122 +13,99 @@ const kTagTextColor = Color(0xff21AFFF);
 final logger = Logger();
 
 class CrossColumnGameCard extends StatelessWidget {
-  const CrossColumnGameCard({super.key});
+  final Game gameBlocks;
+  const CrossColumnGameCard({
+    super.key,
+    required this.gameBlocks,
+  });
 
   @override
   Widget build(BuildContext context) {
+    print(gameBlocks);
     return AspectRatio(
-      aspectRatio: 360 / 392,
+      aspectRatio: 360 / 332,
       child: Column(
         children: [
-          _buildHeader(context),
+          HeaderWidget(name: gameBlocks.name),
           _buildGameGrid(context),
         ],
       ),
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Jackpot games',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
-          ),
-          TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              side: const BorderSide(color: kPrimaryColor),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-            child: const Text(
-              'See All',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 10,
-              ),
-            ),
-          ),
-        ],
+  Widget _buildGameGrid(BuildContext context) {
+    if (gameBlocks.games.isEmpty) {
+      return const SizedBox.shrink(); // 當games沒有資料時，返回一個空的widget
+    }
+    List<Widget> gameCards = [];
+    for (var i = 0; i < gameBlocks.games.length && i < 3; i++) {
+      gameCards.add(GameCard(game: gameBlocks.games[i]));
+    }
+    return Expanded(
+      child: Column(
+        children: gameCards,
       ),
     );
-  }
-
-  Widget _buildGameGrid(BuildContext context) {
-    return Expanded(
-        child: Column(
-      children: [
-        const GameCard(),
-        const GameCard(),
-        const GameCard(),
-      ],
-    ));
   }
 }
 
 class GameCard extends StatelessWidget {
-  const GameCard({super.key});
+  final GameDetail game;
+  const GameCard({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-              flex: 2,
-              child: _buildLeftSide(),
-            ),
-            Expanded(
-              flex: 3,
-              child: _buildRightSide(),
-            ),
-          ],
+    return GameTemplateLink(
+      url: game.gameUrl,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _buildLeftSide(),
+              Expanded(
+                child: _buildRightSide(),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget _buildLeftSide() {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(
-              'https://5b0988e595225.cdn.sohucs.com/images/20170820/726480d5869049e29698e0d472715406.jpeg'),
-          fit: BoxFit.cover,
+    return AspectRatio(
+      aspectRatio: 134 / 96,
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(game.horizontalLogo),
+            fit: BoxFit.cover,
+          ),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(8.0),
+            bottomLeft: Radius.circular(8.0),
+          ),
         ),
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(8.0),
-          bottomLeft: Radius.circular(8.0),
-        ),
+        alignment: Alignment.bottomLeft,
       ),
-      alignment: Alignment.bottomLeft,
     );
   }
 
   Widget _buildRightSide() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            'MULTIPLIER 2500x',
-            style: TextStyle(
+            'MULTIPLIER ${game.multiple}x',
+            style: const TextStyle(
               color: Color(0xffD4D4D4),
               fontWeight: FontWeight.w500,
               fontSize: 10,
@@ -134,36 +113,27 @@ class GameCard extends StatelessWidget {
           ),
           const SizedBox(height: 6),
           Text(
-            'Playboy Gold Jackpots',
-            style: TextStyle(
+            game.name,
+            style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.w500,
               fontSize: 14,
             ),
           ),
           const SizedBox(height: 6),
-          Wrap(
-            spacing: 8.0,
-            children: <Widget>[
-              _buildButton('Jackpot'),
-              _buildButton('Game'),
-              _buildButton('23,477.32 USD'),
-            ],
+          SizedBox(
+            height: 16,
+            child: Wrap(
+              spacing: 4.0,
+              runSpacing: 4.0,
+              children: game.tags!
+                  .map((tag) => TagWidget(
+                        tag: tag,
+                      ))
+                  .toList(),
+            ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildButton(String text) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Color(0xff21488E),
-      ),
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      child: Text(
-        text,
-        style: TextStyle(color: Color(0xff21A8F8), fontSize: 8),
       ),
     );
   }

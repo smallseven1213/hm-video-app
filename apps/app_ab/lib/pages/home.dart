@@ -6,6 +6,7 @@ import 'package:app_ab/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:game/screens/enter_game_screen/index.dart';
 import 'package:game/widgets/game_startup.dart';
+import 'package:live_ui_basic/pages/live.dart';
 import 'package:get/get.dart';
 
 import 'package:shared/apis/user_api.dart';
@@ -41,6 +42,7 @@ final screens = {
   HomeNavigatorPathes.game: () => const EnterGame(),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
+  HomeNavigatorPathes.live: () => const LivePage(),
 };
 
 class HomePage extends StatefulWidget {

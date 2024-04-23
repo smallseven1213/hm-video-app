@@ -19,13 +19,15 @@ class GameApi {
 
   Future<List<Game>> getGameArea() async {
     try {
-      var res =
-          await fetcher(url: '$apiHost/gameArea?page=1&limit=20&sortBy=random');
+      var res = await fetcher(
+          url: '$apiHost/api/v1/gameArea?page=1&limit=20&sortBy=random');
       if (res.data['code'] != '00') {
         return [];
       }
-      return List.from(
-          (res.data['data'] as List<dynamic>).map((e) => Game.fromJson(e)));
+      return List.from((res.data['data']['data'] as List<dynamic>).map((e) {
+        print(e);
+        return Game.fromJson(e);
+      }));
     } catch (e) {
       return [];
     }

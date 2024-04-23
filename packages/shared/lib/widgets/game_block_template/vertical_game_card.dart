@@ -1,88 +1,63 @@
 import 'package:flutter/material.dart';
+import '../../models/game.dart';
+import 'game_template_link.dart';
+import 'header.dart';
 import 'tag.dart';
 
 const kPrimaryColor = Color(0xff00669F);
 const kCardBgColor = Color(0xff02275C);
+const kSpacingUnit = 8.0;
 
-class VerticalGameCard extends StatefulWidget {
-  const VerticalGameCard({super.key});
+class VerticalGameCard extends StatelessWidget {
+  final Game gameBlocks;
 
-  @override
-  _VerticalGameCardState createState() => _VerticalGameCardState();
-}
+  const VerticalGameCard({
+    super.key,
+    required this.gameBlocks,
+  });
 
-class _VerticalGameCardState extends State<VerticalGameCard> {
   @override
   Widget build(BuildContext context) {
+    var games = gameBlocks.games.take(4).toList();
+
     return AspectRatio(
       aspectRatio: 360 / 560,
       child: Column(
         children: [
-          _buildHeader(context),
-          _buildGameGrid(context),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildHeader(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Text(
-            'Sexy Live Dealers',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-              color: Colors.white,
-            ),
+          HeaderWidget(name: gameBlocks.name),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(
+                  child: games.isNotEmpty
+                      ? GameCard(gameDetail: games[0])
+                      : Container() // Empty container if no game available
+                  ),
+              const SizedBox(width: 10),
+              Expanded(
+                  child: games.length > 1
+                      ? GameCard(gameDetail: games[1])
+                      : Container() // Empty container if no game available
+                  ),
+            ],
           ),
-          TextButton(
-            onPressed: () {},
-            style: TextButton.styleFrom(
-              side: const BorderSide(color: kPrimaryColor),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-            child: const Text(
-              'See All',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 10,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGameGrid(BuildContext context) {
-    return Expanded(
-      // 使用Expanded确保Column占满剩余空间
-      child: Column(
-        children: [
-          Expanded(
-            // 每个Row也使用Expanded确保平均分配空间
-            child: Row(
-              children: [
-                Expanded(child: GameCard()), // 每个GameCard使用Expanded确保填满可用空间
-                SizedBox(width: 8),
-                Expanded(child: GameCard()),
-              ],
-            ),
-          ),
-          SizedBox(height: 8),
-          Expanded(
-            child: Row(
-              children: [
-                Expanded(child: GameCard()),
-                SizedBox(width: 8),
-                Expanded(child: GameCard()),
-              ],
-            ),
+          const SizedBox(height: 10),
+          // Second row with the third and potentially fourth games, checks if the games exist
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(
+                  child: games.length > 2
+                      ? GameCard(gameDetail: games[2])
+                      : Container() // Empty container if no game available
+                  ),
+              const SizedBox(width: 10),
+              Expanded(
+                  child: games.length > 3
+                      ? GameCard(gameDetail: games[3])
+                      : Container() // Empty container if no game available, ensures placeholder
+                  ),
+            ],
           ),
         ],
       ),
@@ -91,17 +66,22 @@ class _VerticalGameCardState extends State<VerticalGameCard> {
 }
 
 class GameCard extends StatelessWidget {
-  const GameCard({
-    super.key,
-  });
+  final GameDetail gameDetail;
+
+  const GameCard({super.key, required this.gameDetail});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildGameImage(),
-        _buildGameTags(),
-      ],
+    return Expanded(
+      child: GameTemplateLink(
+        url: gameDetail.gameUrl,
+        child: Column(
+          children: [
+            _buildGameImage(),
+            _buildGameTags(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -111,39 +91,41 @@ class GameCard extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            'https://5b0988e595225.cdn.sohucs.com/images/20170820/726480d5869049e29698e0d472715406.jpeg',
+            gameDetail.verticalLogo,
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 60,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  colors: [Colors.black.withOpacity(0.8), Colors.transparent],
-                ),
-              ),
-              child: const Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
-                    'Game Name',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ),
-              ),
+          _buildGradientTextOverlay(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildGradientTextOverlay() {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Container(
+        width: double.infinity,
+        height: 60,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [Colors.black.withOpacity(0.8), Colors.transparent],
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Text(
+            gameDetail.name,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -151,16 +133,14 @@ class GameCard extends StatelessWidget {
   Widget _buildGameTags() {
     return Container(
       width: double.infinity,
+      height: 36,
       color: kCardBgColor,
       padding: const EdgeInsets.all(8),
       child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.start,
         spacing: 5.0,
         runSpacing: 5.0,
-        clipBehavior: Clip.antiAlias,
-        children: [
-          TagWidget(name: 'Baccarat'),
-        ],
+        children:
+            gameDetail.tags?.map((tag) => TagWidget(tag: tag)).toList() ?? [],
       ),
     );
   }

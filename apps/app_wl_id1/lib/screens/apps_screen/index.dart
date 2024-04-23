@@ -2,11 +2,14 @@ import 'package:app_wl_id1/localization/i18n.dart';
 import 'package:app_wl_id1/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/game_area_controller.dart';
 import 'package:shared/models/ad.dart';
 import 'package:shared/modules/apps/apps_provider.dart';
 
 import '../../widgets/header.dart';
+import '../../widgets/random_game_area.dart';
 import 'banner.dart';
 import 'hot.dart';
 import 'popular.dart';
@@ -67,7 +70,8 @@ class _AppsScreenState extends State<AppsScreen> {
                 PopularWidget(items: popularAds),
                 const SliverToBoxAdapter(
                   child: SizedBox(height: 90),
-                )
+                ),
+                const RandomGameArea()
               ],
             ],
           )),
