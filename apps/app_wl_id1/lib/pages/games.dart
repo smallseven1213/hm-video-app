@@ -5,8 +5,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/games_controller.dart';
 
 import '../widgets/custom_app_bar.dart';
-import '../widgets/list_no_more.dart';
-import '../widgets/sliver_vod_grid.dart';
+import '../widgets/game_area_templates/game_area_template_2.dart';
 
 class GamesPage extends StatefulWidget {
   final int gameAreaId;
@@ -85,12 +84,14 @@ class GamesPageState extends State<GamesPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: Container(),
+                                child: GameAreaTemplate2Data(
+                                    gameDetail: firstGame),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
                                   child: secondGame != null
-                                      ? Container()
+                                      ? GameAreaTemplate2Data(
+                                          gameDetail: secondGame)
                                       : const SizedBox.shrink()),
                             ],
                           ),
