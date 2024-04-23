@@ -6,6 +6,7 @@ import 'package:game/widgets/game_provider.dart';
 import 'package:shared/models/color_keys.dart'; // 如果需要管理色码的话，使用这个
 import 'package:shared/utils/running_main.dart'; // 启动专案必须要引用shared的runningMain
 import 'config/colors.dart';
+import 'package:live_ui_basic/routes/live_routes.dart';
 
 // 以下自行决定App要什么路由，路由的key管理则是统一放在shared中
 // 如果此App没有游戏，那就不需要写入game_routes
@@ -19,6 +20,7 @@ void main() async {
   final allRoutes = {
     ...app_routes.appRoutes,
     ...gameRoutes,
+    ...liveRoutes,
   };
 
   runningMain(
