@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 import '../../models/game.dart';
+import 'game_template_link.dart';
 import 'header.dart';
 import 'tag.dart';
 
@@ -25,88 +24,88 @@ class HorizontalGameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('@@@@ HorizontalGameCard');
-    print(gameBlocks);
+    var games = gameBlocks.games.take(4).toList();
 
     return AspectRatio(
       aspectRatio: 360 / 444,
       child: Column(
         children: [
           HeaderWidget(name: gameBlocks.name),
-          _buildGameGrid(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(
+                  child: games.isNotEmpty
+                      ? GameCard(gameDetail: games[0])
+                      : Container() // Empty container if no game available
+                  ),
+              const SizedBox(width: 10),
+              Expanded(
+                  child: games.length > 1
+                      ? GameCard(gameDetail: games[1])
+                      : Container() // Empty container if no game available
+                  ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          // Second row with the third and potentially fourth games, checks if the games exist
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              Expanded(
+                  child: games.length > 2
+                      ? GameCard(gameDetail: games[2])
+                      : Container() // Empty container if no game available
+                  ),
+              const SizedBox(width: 10),
+              Expanded(
+                  child: games.length > 3
+                      ? GameCard(gameDetail: games[3])
+                      : Container() // Empty container if no game available, ensures placeholder
+                  ),
+            ],
+          ),
         ],
       ),
     );
   }
-
-  Widget _buildGameGrid() {
-    if (gameBlocks.games.isEmpty) {
-      return const SizedBox.shrink();
-    }
-
-    List<Widget> rows = List<Widget>.generate(
-      min(gameBlocks.games.length, 4) ~/ 2,
-      (index) => _buildGameRow(index * 2),
-    );
-
-    // Insert spacing between rows
-    for (int i = 1; i < rows.length; i += 2) {
-      rows.insert(i, const SizedBox(height: kSpacingUnit));
-    }
-
-    return Expanded(child: Column(children: rows));
-  }
-
-  Widget _buildGameRow(int startIndex) {
-    List<Widget> rowChildren = List<Widget>.generate(
-      min(2, gameBlocks.games.length - startIndex),
-      (index) {
-        return Expanded(
-          child: GameCard(game: gameBlocks.games[startIndex + index]),
-        );
-      },
-    );
-
-    // Add spacing between game cards in a row
-    if (rowChildren.length > 1) {
-      rowChildren.insert(1, const SizedBox(width: kSpacingUnit));
-    }
-
-    return Row(children: rowChildren);
-  }
 }
 
 class GameCard extends StatelessWidget {
-  final GameDetail game;
-  const GameCard({super.key, required this.game});
+  final GameDetail gameDetail;
+  const GameCard({super.key, required this.gameDetail});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _buildGameImage(),
-        Container(
-          width: double.infinity,
-          color: kCardBgColor,
-          // margin: const EdgeInsets.only(left: 8, right: 8, bottom: 8),
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                game.name,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                ),
+    return Expanded(
+      child: GameTemplateLink(
+        url: gameDetail.gameUrl,
+        child: Column(
+          children: [
+            _buildGameImage(),
+            Container(
+              width: double.infinity,
+              color: kCardBgColor,
+              padding: const EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    gameDetail.name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 5),
+                  _buildGameTags(),
+                ],
               ),
-              const SizedBox(height: 5),
-              _buildGameTags(),
-            ],
-          ),
+            ),
+          ],
         ),
-      ],
+      ),
     );
   }
 
@@ -115,14 +114,11 @@ class GameCard extends StatelessWidget {
       children: [
         AspectRatio(
           aspectRatio: 168 / 120,
-          child: Container(
-            // margin: const EdgeInsets.only(left: 8, right: 8, top: 8),
-            child: Image.network(
-              'https://5b0988e595225.cdn.sohucs.com/images/20170820/726480d5869049e29698e0d472715406.jpeg',
-              fit: BoxFit.cover,
-              width: double.infinity,
-              height: double.infinity,
-            ),
+          child: Image.network(
+            gameDetail.horizontalLogo,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
           ),
         ),
         const Positioned(
@@ -149,7 +145,7 @@ class GameCard extends StatelessWidget {
         spacing: 5.0,
         runSpacing: 5.0,
         clipBehavior: Clip.antiAlias,
-        children: game.tags!
+        children: gameDetail.tags!
             .map((tag) => TagWidget(
                   tag: tag,
                 ))

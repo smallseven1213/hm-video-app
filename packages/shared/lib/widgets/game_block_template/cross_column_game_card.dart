@@ -3,6 +3,7 @@ import 'package:logger/logger.dart';
 import 'package:shared/widgets/game_block_template/header.dart';
 
 import '../../models/game.dart';
+import 'game_template_link.dart';
 import 'tag.dart';
 
 const kCardBgColor = Color(0xff02275C);
@@ -54,20 +55,23 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: IntrinsicHeight(
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            _buildLeftSide(),
-            Expanded(
-              child: _buildRightSide(),
-            ),
-          ],
+    return GameTemplateLink(
+      url: game.gameUrl,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8.0),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: IntrinsicHeight(
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              _buildLeftSide(),
+              Expanded(
+                child: _buildRightSide(),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -77,13 +81,12 @@ class GameCard extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 134 / 96,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(
-                'https://5b0988e595225.cdn.sohucs.com/images/20170820/726480d5869049e29698e0d472715406.jpeg'),
+            image: NetworkImage(game.horizontalLogo),
             fit: BoxFit.cover,
           ),
-          borderRadius: BorderRadius.only(
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(8.0),
             bottomLeft: Radius.circular(8.0),
           ),
@@ -95,7 +98,7 @@ class GameCard extends StatelessWidget {
 
   Widget _buildRightSide() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 12.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
