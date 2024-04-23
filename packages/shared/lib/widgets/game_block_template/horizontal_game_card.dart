@@ -77,34 +77,32 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GameTemplateLink(
-        url: gameDetail.gameUrl,
-        child: Column(
-          children: [
-            _buildGameImage(),
-            Container(
-              width: double.infinity,
-              color: kCardBgColor,
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    gameDetail.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w500,
-                    ),
+    return GameTemplateLink(
+      url: gameDetail.gameUrl,
+      child: Column(
+        children: [
+          _buildGameImage(),
+          Container(
+            width: double.infinity,
+            color: kCardBgColor,
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  gameDetail.name,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
                   ),
-                  const SizedBox(height: 5),
-                  _buildGameTags(),
-                ],
-              ),
+                ),
+                const SizedBox(height: 5),
+                _buildGameTags(),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

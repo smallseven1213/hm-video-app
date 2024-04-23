@@ -12,12 +12,11 @@ class GameCardWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('@@@@ game: $game');
     if (game.template == 1) {
       return VerticalGameCard(gameBlocks: game);
     } else if (game.template == 2) {
       return HorizontalGameCard(gameBlocks: game);
-    } else {}
+    }
     return CrossColumnGameCard(gameBlocks: game);
   }
 }

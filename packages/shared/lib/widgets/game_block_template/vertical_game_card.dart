@@ -72,15 +72,13 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GameTemplateLink(
-        url: gameDetail.gameUrl,
-        child: Column(
-          children: [
-            _buildGameImage(),
-            _buildGameTags(),
-          ],
-        ),
+    return GameTemplateLink(
+      url: gameDetail.gameUrl,
+      child: Column(
+        children: [
+          _buildGameImage(),
+          _buildGameTags(),
+        ],
       ),
     );
   }

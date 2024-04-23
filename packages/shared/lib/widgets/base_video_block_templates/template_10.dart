@@ -38,27 +38,26 @@ SliverChildBuilderDelegate baseVideoBlockTemplate10({
 }) {
   bool containsAd =
       vods.any((video) => video.dataType == VideoType.areaAd.index);
-  int rowsBetweenGames = containsAd
-      ? defaultRowsBetweenGames + 1
-      : defaultRowsBetweenGames; // Dynamically adjust based on ad presence
+  bool containsGame = gameBlocks != null && gameBlocks.isNotEmpty;
+  int rowsBetweenGames =
+      containsAd ? defaultRowsBetweenGames + 1 : defaultRowsBetweenGames;
 
   List<List<Vod>> organizedData = organizeRowData(vods, videosPerRow);
   int totalRows = organizedData.length;
-  int gameBlockInsertions = (totalRows / rowsBetweenGames).floor();
+
+  int gameBlockInsertions =
+      containsGame ? (totalRows / rowsBetweenGames).floor() : 0;
   int childCount = totalRows + gameBlockInsertions;
 
   return SliverChildBuilderDelegate(
     (BuildContext context, int index) {
-      // 每2個vods組成一個videos
-
-      int gameAreasBeforeIndex = (index / (rowsBetweenGames + 1)).floor();
-      bool isGameArea = index % (rowsBetweenGames + 1) == rowsBetweenGames &&
-          gameBlocks != null &&
-          gameBlocks.isNotEmpty;
+      int gameAreasBeforeIndex =
+          containsGame ? (index / (rowsBetweenGames + 1)).floor() : 0;
+      bool isGameArea =
+          containsGame && index % (rowsBetweenGames + 1) == rowsBetweenGames;
 
       if (isGameArea) {
-        int gameIndex =
-            (index / (rowsBetweenGames + 1)).floor() % gameBlocks.length;
+        int gameIndex = gameAreasBeforeIndex % gameBlocks.length;
         return GameCardWidget(game: gameBlocks[gameIndex]);
       } else {
         int adjustedIndex = index - gameAreasBeforeIndex;
