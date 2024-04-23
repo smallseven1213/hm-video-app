@@ -34,6 +34,7 @@ class GameAreaTemplate1Data extends StatelessWidget {
       url: gameDetail.gameUrl,
       child: Container(
         height: 96,
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: const BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(4)),
             color: Color(0xFF02275C)),
@@ -45,7 +46,8 @@ class GameAreaTemplate1Data extends StatelessWidget {
               width: 134,
               height: 96,
               // child is a network image from "gameDetail.horizontalLogo"
-              child: Image.network(gameDetail.horizontalLogo),
+              child:
+                  Image.network(gameDetail.horizontalLogo, fit: BoxFit.cover),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -74,8 +76,11 @@ class GameAreaTemplate1Data extends StatelessWidget {
                   Text(gameDetail.name,
                       style: const TextStyle(
                           fontSize: 14,
+                          overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.bold,
                           color: Colors.white)),
+                  // height 5
+                  const SizedBox(height: 5),
                   // tags
                   if (gameDetail.tags?.isNotEmpty == true)
                     Row(

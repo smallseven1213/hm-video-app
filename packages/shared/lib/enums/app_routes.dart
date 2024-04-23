@@ -24,6 +24,7 @@ class AppRoutes {
   static const String supplier = '/supplier';
   static const String supplierTag = '/supplier_tag';
   static const String shorts = '/shorts';
+  static const String games = '/games';
   // static const String shortsByTag = '/shorts_by_tag';
   // static const String shortsByBlock = '/shorts_by_block';
   // static const String shortsBySupplier = '/shorts_by_supplier';

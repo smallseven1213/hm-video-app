@@ -107,6 +107,7 @@ class GameAreaTemplate3Data extends StatelessWidget {
                         child: Text(gameDetail.name,
                             style: const TextStyle(
                                 fontSize: 14,
+                                overflow: TextOverflow.ellipsis,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white)),
                       ),

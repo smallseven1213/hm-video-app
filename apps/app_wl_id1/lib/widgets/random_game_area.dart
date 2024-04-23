@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/game_area_controller.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import 'game_area_templates/game_area_template_1.dart';
 import 'game_area_templates/game_area_template_2.dart';
@@ -57,7 +59,12 @@ class RandomGameAreaState extends State<RandomGameArea> {
                       child: GestureDetector(
                         onTap: () {
                           // navigate to game area
-                          // Get.toNamed('/game_area/${gameArea.id}');
+                          MyRouteDelegate.of(context).push(
+                            AppRoutes.games,
+                            args: {
+                              'gameAreaId': gameArea.id,
+                            },
+                          );
                         },
                         child: const Align(
                           alignment: Alignment.center,

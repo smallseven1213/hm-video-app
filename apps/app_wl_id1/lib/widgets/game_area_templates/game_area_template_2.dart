@@ -89,12 +89,17 @@ class GameAreaTemplate2Data extends StatelessWidget {
                     // title
                     Align(
                       alignment: Alignment.centerLeft,
-                      child: Text(gameDetail.name,
-                          style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white)),
+                      child: Text(
+                        gameDetail.name,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
+                    const SizedBox(height: 5),
                     // tags
                     if (gameDetail.tags?.isNotEmpty == true)
                       Row(
