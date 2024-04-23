@@ -10,8 +10,9 @@ class SharedAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: preferredSize.height,
+      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
