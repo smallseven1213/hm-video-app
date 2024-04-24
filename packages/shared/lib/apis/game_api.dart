@@ -34,12 +34,18 @@ class GameApi {
     }
   }
 
-  Future<InfinityGames> getGames(int gameAreaId,
-      {int page = 1, int limit = 20}) async {
+  Future<InfinityGames> getGames(
+      {int? gameAreaId, String? name, int page = 1, int limit = 20}) async {
     try {
-      var res = await fetcher(
-          url:
-              '$apiHost/api/v1/game?page=$page&limit=$limit&gameAreaId=$gameAreaId');
+      String queryString = 'page=$page&limit=$limit';
+      if (gameAreaId != null) {
+        queryString += '&gameAreaId=$gameAreaId';
+      }
+      if (name != null && name.isNotEmpty) {
+        queryString += '&name=$name';
+      }
+      var url = '$apiHost/api/v1/game?$queryString';
+      var res = await fetcher(url: url);
       if (res.data['code'] != '00') {
         return InfinityGames(
           [],
@@ -52,10 +58,10 @@ class GameApi {
         return GameDetail.fromJson(e);
       }));
       int total = res.data['data']['total'];
-      int retrievedLimit =
-          res.data['data']['limit']; // Rename the inner 'limit' variable
+      int retrievedLimit = res.data['data']
+          ['limit']; // Use the original 'limit' variable from the response
       bool hasMoreData =
-          total > retrievedLimit * page; // Use the renamed variable here
+          total > retrievedLimit * page; // Use the retrieved variable here
       return InfinityGames(games, total, hasMoreData);
     } catch (e) {
       return InfinityGames(

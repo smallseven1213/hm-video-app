@@ -19,11 +19,14 @@ class GameTag extends StatelessWidget {
       decoration: const BoxDecoration(
         color: Color(0xFF21488E),
       ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: textColor,
-          fontSize: 8,
+      child: Align(
+        alignment: Alignment.center,
+        child: Text(
+          text,
+          style: TextStyle(
+            color: textColor,
+            fontSize: 8,
+          ),
         ),
       ),
     );

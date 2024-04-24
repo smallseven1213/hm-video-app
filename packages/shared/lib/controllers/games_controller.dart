@@ -7,10 +7,12 @@ final gameApi = GameApi();
 const limit = 20;
 
 class GamesController extends BaseGamesInfinityScrollController {
-  final int gameAreaId;
+  final String? name;
+  final int? gameAreaId;
 
   GamesController(
-      {required this.gameAreaId,
+      {this.gameAreaId,
+      this.name,
       ScrollController? scrollController,
       bool loadDataOnInit = true})
       : super(
@@ -19,7 +21,8 @@ class GamesController extends BaseGamesInfinityScrollController {
 
   @override
   Future<InfinityGames> fetchData(int page) async {
-    var res = await gameApi.getGames(gameAreaId, page: page, limit: limit);
+    var res = await gameApi.getGames(
+        name: name, gameAreaId: gameAreaId, page: page, limit: limit);
 
     return res;
   }
