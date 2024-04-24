@@ -20,74 +20,71 @@ class RandomGameAreaState extends State<RandomGameArea> {
 
   @override
   Widget build(BuildContext context) {
-    return SliverToBoxAdapter(
-      child: Obx(() {
-        var gameAreas = gameAreaController.games;
+    return Obx(() {
+      var gameAreas = gameAreaController.games;
 
-        if (gameAreas.isNotEmpty) {
-          var gameArea = gameAreaController.randomGame;
-          dynamic templateWidget = GameAreaTemplate1(gameArea: gameArea!);
-          if (gameArea.template == 2) {
-            templateWidget = GameAreaTemplate2(gameArea: gameArea);
-          } else if (gameArea.template == 3) {
-            templateWidget = GameAreaTemplate3(gameArea: gameArea);
-          }
+      if (gameAreas.isNotEmpty) {
+        var gameArea = gameAreaController.randomGame;
+        dynamic templateWidget = GameAreaTemplate1(gameArea: gameArea!);
+        if (gameArea.template == 2) {
+          templateWidget = GameAreaTemplate2(gameArea: gameArea);
+        } else if (gameArea.template == 3) {
+          templateWidget = GameAreaTemplate3(gameArea: gameArea);
+        }
 
-          return Padding(
-            // padding x 10
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(gameArea.name,
-                        style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white)),
-                    // see all
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      height: 24,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: const Color(0xFF00669F), width: 1),
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(4)),
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          // navigate to game area
-                          MyRouteDelegate.of(context).push(
-                            AppRoutes.games,
-                            args: {
-                              'gameAreaId': gameArea.id,
-                            },
-                          );
-                        },
-                        child: const Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            'See All',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
-                            ),
+        return Padding(
+          // padding x 10
+          padding: const EdgeInsets.symmetric(horizontal: 10),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(gameArea.name,
+                      style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white)),
+                  // see all
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    height: 24,
+                    decoration: BoxDecoration(
+                      border:
+                          Border.all(color: const Color(0xFF00669F), width: 1),
+                      borderRadius: const BorderRadius.all(Radius.circular(4)),
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        // navigate to game area
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.games,
+                          args: {
+                            'gameAreaId': gameArea.id,
+                          },
+                        );
+                      },
+                      child: const Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          'See All',
+                          style: TextStyle(
+                            fontSize: 10,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    )
-                  ],
-                ),
-                const SizedBox(height: 10),
-                templateWidget
-              ],
-            ),
-          );
-        }
-        return Container();
-      }),
-    );
+                    ),
+                  )
+                ],
+              ),
+              const SizedBox(height: 10),
+              templateWidget
+            ],
+          ),
+        );
+      }
+      return Container();
+    });
   }
 }
