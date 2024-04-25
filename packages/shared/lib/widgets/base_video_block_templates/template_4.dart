@@ -3,7 +3,7 @@ import 'package:shared/models/block_image_ratio.dart';
 import 'package:shared/models/vod.dart';
 import '../../models/game.dart';
 import '../base_video_preview.dart';
-import '../game_block_template/game_cards.dart';
+import '../game_block_template/game_area.dart';
 import '../video_block_grid_view_row.dart';
 
 // Constants to define behavior
@@ -58,7 +58,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate4({
 
       if (isGameArea) {
         int gameIndex = gameAreasBeforeIndex % gameBlocks.length;
-        return GameCardWidget(game: gameBlocks[gameIndex]);
+        return GameArea(game: gameBlocks[gameIndex]);
       } else {
         int adjustedIndex = index - gameAreasBeforeIndex;
         if (adjustedIndex < organizedData.length) {

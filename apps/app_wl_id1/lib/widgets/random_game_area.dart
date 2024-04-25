@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/game_area_controller.dart';
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
-
-import 'game_area_templates/game_area_template_1.dart';
-import 'game_area_templates/game_area_template_2.dart';
-import 'game_area_templates/game_area_template_3.dart';
+import 'package:shared/widgets/game_block_template/game_area.dart';
 
 class RandomGameArea extends StatefulWidget {
   const RandomGameArea({super.key});
@@ -25,63 +20,16 @@ class RandomGameAreaState extends State<RandomGameArea> {
 
       if (gameAreas.isNotEmpty) {
         var gameArea = gameAreaController.randomGame;
-        dynamic templateWidget = GameAreaTemplate1(gameArea: gameArea!);
+        dynamic templateWidget = GameArea(game: gameArea!);
         if (gameArea.template == 2) {
-          templateWidget = GameAreaTemplate2(gameArea: gameArea);
+          templateWidget = GameArea(game: gameArea);
         } else if (gameArea.template == 3) {
-          templateWidget = GameAreaTemplate3(gameArea: gameArea);
+          templateWidget = GameArea(game: gameArea);
         }
 
         return Padding(
-          // padding x 10
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(gameArea.name,
-                      style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white)),
-                  // see all
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    height: 24,
-                    decoration: BoxDecoration(
-                      border:
-                          Border.all(color: const Color(0xFF00669F), width: 1),
-                      borderRadius: const BorderRadius.all(Radius.circular(4)),
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        // navigate to game area
-                        MyRouteDelegate.of(context).push(
-                          AppRoutes.games,
-                          args: {
-                            'gameAreaId': gameArea.id,
-                          },
-                        );
-                      },
-                      child: const Align(
-                        alignment: Alignment.center,
-                        child: Text(
-                          'See All',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-              const SizedBox(height: 10),
-              templateWidget
-            ],
-          ),
+          child: templateWidget,
         );
       }
       return Container();

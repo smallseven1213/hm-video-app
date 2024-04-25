@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import '../../models/game.dart';
 import '../base_video_preview.dart';
-import '../game_block_template/game_cards.dart';
+import '../game_block_template/game_area.dart';
 
 // Configurable to adjust the game block frequency.
 const int defaultRowsBetweenGames = 8;
@@ -31,7 +31,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate2({
       if (isGameArea(index)) {
         int gameBlockIndex = (index ~/ (defaultRowsBetweenGames + 1));
         Game currentGame = gameBlocks![gameBlockIndex % gameBlocks.length];
-        return GameCardWidget(game: currentGame);
+        return GameArea(game: currentGame);
       } else {
         if (index < totalVideoRows) {
           Vod video = vods[index];
