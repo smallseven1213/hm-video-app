@@ -37,7 +37,7 @@ class Game implements ContentBlock {
       'games': games.map((game) => game.toJson()).toList(),
     };
   }
-  
+
   @override
   // TODO: implement blockType
   int get blockType => throw UnimplementedError();
@@ -46,21 +46,22 @@ class Game implements ContentBlock {
 class GameDetail {
   final String gameId;
   final String gameUrl;
-  final String verticalLogo;
-  final String horizontalLogo;
   final String jackpot;
   final int multiple;
   final String name;
+  String? verticalLogo;
+  String? horizontalLogo;
+
   List<Tag>? tags;
 
   GameDetail({
     required this.gameId,
     required this.gameUrl,
-    required this.verticalLogo,
-    required this.horizontalLogo,
     required this.jackpot,
     required this.multiple,
     required this.name,
+    this.verticalLogo,
+    this.horizontalLogo,
     this.tags,
   });
 

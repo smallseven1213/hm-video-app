@@ -89,7 +89,7 @@ class GameCard extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            gameDetail.verticalLogo,
+            gameDetail.verticalLogo ?? '',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
