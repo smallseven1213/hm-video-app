@@ -7,11 +7,10 @@ final logger = Logger();
 class AuthController extends GetxController {
   var token = ''.obs;
 
-  GetStorage box = GetStorage();
-
   @override
   void onReady() {
     super.onReady();
+    final box = GetStorage();
     String? storedToken = box.read('auth-token');
     logger.i('TRACE TOKEN ===, storedToken: $storedToken');
     if (storedToken != null) {
@@ -22,6 +21,7 @@ class AuthController extends GetxController {
   void setToken(String? newToken) {
     logger.i('TRACE TOKEN ===, token: $newToken');
     token.value = newToken ?? '';
+    final box = GetStorage();
     box.write('auth-token', newToken);
   }
 }

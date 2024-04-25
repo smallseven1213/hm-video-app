@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:flutter_web_plugins/url_strategy.dart' as url_strategy;
 import 'package:flutter/foundation.dart';
@@ -19,6 +20,7 @@ void realMain(Widget widget,
     {bool? i18nSupport,
     List<Locale>? supportedLocales,
     String? i18nPath}) async {
+  await GetStorage.init();
   await Hive.initFlutter();
   if (!kIsWeb) {
     var dir = await getApplicationDocumentsDirectory();
