@@ -30,7 +30,7 @@ class HorizontalGameCard extends StatelessWidget {
       aspectRatio: 360 / 444,
       child: Column(
         children: [
-          HeaderWidget(name: gameBlocks.name),
+          HeaderWidget(gameBlocks: gameBlocks),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[

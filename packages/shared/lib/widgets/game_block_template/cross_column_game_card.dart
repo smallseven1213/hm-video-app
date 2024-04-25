@@ -26,7 +26,7 @@ class CrossColumnGameCard extends StatelessWidget {
       aspectRatio: 360 / 332,
       child: Column(
         children: [
-          HeaderWidget(name: gameBlocks.name),
+          HeaderWidget(gameBlocks: gameBlocks),
           _buildGameGrid(context),
         ],
       ),
