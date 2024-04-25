@@ -121,21 +121,26 @@ class GameListViewState extends State<GameListView>
   _handleOpenThirdPartyGame() {
     logger.i(
         ' ===> OpenThirdPartyGame: ${gameConfigController.thirdPartyGameId.value}');
-    if (gameConfigController.isOpenThirdPartyGame.value == true) {
-      // 從 gamesListController.games中找到對應gameConfigController.gameId的game
-      final openGame = gamesListController.games.firstWhere((element) =>
-          element.gameId == gameConfigController.thirdPartyGameId.value &&
-          element.tpCode == gameConfigController.thirdPartyGameTpCode.value);
+    try {
+      if (gameConfigController.isOpenThirdPartyGame.value == true) {
+        // 從 gamesListController.games中找到對應gameConfigController.gameId的game
+        final openGame = gamesListController.games.firstWhere((element) =>
+            element.gameId == gameConfigController.thirdPartyGameId.value &&
+            element.tpCode == gameConfigController.thirdPartyGameTpCode.value);
 
-      if (openGame.gameId != '') {
-        handleGameItem(context,
-            gameId: openGame.gameId,
-            updateGameHistory: _getGameHistory,
-            tpCode: openGame.tpCode,
-            direction: openGame.direction,
-            gameType: openGame.gameType);
+        if (openGame.gameId != '') {
+          handleGameItem(context,
+              gameId: openGame.gameId,
+              updateGameHistory: _getGameHistory,
+              tpCode: openGame.tpCode,
+              direction: openGame.direction,
+              gameType: openGame.gameType);
+        }
+        gameConfigController.setThirdPartyGame(false, '', '');
       }
-      gameConfigController.setThirdPartyGame(false, '', '');
+    } catch (e) {
+      // 打印發生異常的訊息
+      logger.e('Exception occurred while trying to open third party game: $e');
     }
   }
 
