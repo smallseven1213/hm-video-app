@@ -83,8 +83,20 @@ class GameCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(game.horizontalLogo ?? ''),
-            fit: BoxFit.cover,
+            image: Image.network(
+              game.horizontalLogo ?? '',
+              fit: BoxFit.cover,
+              errorBuilder: (BuildContext context, Object exception,
+                  StackTrace? stackTrace) {
+                return Center(
+                  child: Icon(
+                    Icons.image_not_supported,
+                    color: Colors.grey.shade700,
+                    size: 30,
+                  ),
+                );
+              },
+            ).image,
           ),
           borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(8.0),
