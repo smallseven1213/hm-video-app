@@ -24,7 +24,7 @@ class VerticalGameCard extends StatelessWidget {
       aspectRatio: 360 / 560,
       child: Column(
         children: [
-          HeaderWidget(name: gameBlocks.name),
+          HeaderWidget(gameBlocks: gameBlocks),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -117,6 +117,7 @@ class GameCard extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Text(
             gameDetail.name,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -134,11 +135,14 @@ class GameCard extends StatelessWidget {
       height: 36,
       color: kCardBgColor,
       padding: const EdgeInsets.all(8),
-      child: Wrap(
-        spacing: 5.0,
-        runSpacing: 5.0,
-        children:
-            gameDetail.tags?.map((tag) => TagWidget(tag: tag)).toList() ?? [],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal, // 水平滚动
+        child: Wrap(
+          spacing: 5.0,
+          runSpacing: 5.0,
+          children:
+              gameDetail.tags?.map((tag) => TagWidget(tag: tag)).toList() ?? [],
+        ),
       ),
     );
   }

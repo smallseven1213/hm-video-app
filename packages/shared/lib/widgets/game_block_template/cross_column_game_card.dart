@@ -26,7 +26,7 @@ class CrossColumnGameCard extends StatelessWidget {
       aspectRatio: 360 / 332,
       child: Column(
         children: [
-          HeaderWidget(name: gameBlocks.name),
+          HeaderWidget(gameBlocks: gameBlocks),
           _buildGameGrid(context),
         ],
       ),
@@ -103,13 +103,21 @@ class GameCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
-            'MULTIPLIER ${game.multiple}x',
-            style: const TextStyle(
-              color: Color(0xffD4D4D4),
-              fontWeight: FontWeight.w500,
-              fontSize: 10,
-            ),
+          Row(
+            children: [
+              const Text('MULTIPLIER',
+                  style: TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFD4D4D4))),
+              // width 5
+              const SizedBox(width: 5),
+              Text('${game.multiple.toString()}x',
+                  style: const TextStyle(
+                      fontSize: 10,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFFFFD527))),
+            ],
           ),
           const SizedBox(height: 6),
           Text(
@@ -123,16 +131,19 @@ class GameCard extends StatelessWidget {
           const SizedBox(height: 6),
           SizedBox(
             height: 16,
-            child: Wrap(
-              spacing: 4.0,
-              runSpacing: 4.0,
-              children: game.tags!
-                  .map((tag) => TagWidget(
-                        tag: tag,
-                      ))
-                  .toList(),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal, // 水平滚动
+              child: Wrap(
+                spacing: 4.0,
+                runSpacing: 4.0,
+                children: game.tags!
+                    .map((tag) => TagWidget(
+                          tag: tag,
+                        ))
+                    .toList(),
+              ),
             ),
-          ),
+          )
         ],
       ),
     );

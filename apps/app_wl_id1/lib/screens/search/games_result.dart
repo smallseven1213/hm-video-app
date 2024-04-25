@@ -1,12 +1,10 @@
 import 'package:app_wl_id1/widgets/no_data.dart';
-import 'package:app_wl_id1/widgets/sliver_video_preview_skelton_list.dart';
-import 'package:app_wl_id1/widgets/video_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/games_controller.dart';
+import 'package:shared/widgets/game_block_template/horizontal_game_card.dart';
 
-import '../../widgets/game_area_templates/game_area_template_2.dart';
 
 class GamesResult extends StatefulWidget {
   final GamesController gamesController;
@@ -60,14 +58,12 @@ class GamesResultState extends State<GamesResult> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
-                              child:
-                                  GameAreaTemplate2Data(gameDetail: firstGame),
+                              child: GameCard(gameDetail: firstGame),
                             ),
                             const SizedBox(width: 8),
                             Expanded(
                                 child: secondGame != null
-                                    ? GameAreaTemplate2Data(
-                                        gameDetail: secondGame)
+                                    ? GameCard(gameDetail: secondGame)
                                     : const SizedBox.shrink()),
                           ],
                         ),

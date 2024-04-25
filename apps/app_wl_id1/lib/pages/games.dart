@@ -3,9 +3,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/games_controller.dart';
+import 'package:shared/widgets/game_block_template/horizontal_game_card.dart';
 
 import '../widgets/custom_app_bar.dart';
-import '../widgets/game_area_templates/game_area_template_2.dart';
 
 class GamesPage extends StatefulWidget {
   final int gameAreaId;
@@ -84,14 +84,12 @@ class GamesPageState extends State<GamesPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: GameAreaTemplate2Data(
-                                    gameDetail: firstGame),
+                                child: GameCard(gameDetail: firstGame),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
                                   child: secondGame != null
-                                      ? GameAreaTemplate2Data(
-                                          gameDetail: secondGame)
+                                      ? GameCard(gameDetail: secondGame)
                                       : const SizedBox.shrink()),
                             ],
                           ),
