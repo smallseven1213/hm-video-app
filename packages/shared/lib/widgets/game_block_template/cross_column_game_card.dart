@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/game_block_template/header.dart';
@@ -6,9 +7,8 @@ import '../../models/game.dart';
 import 'game_template_link.dart';
 import 'tag.dart';
 
-const kCardBgColor = Color(0xff02275C);
 const kTagColor = Color(0xff21488E);
-const kTagTextColor = Color(0xff21AFFF);
+const kTagTextColor = Color(0xffFFD527);
 
 final logger = Logger();
 
@@ -136,11 +136,30 @@ class GameCard extends StatelessWidget {
               child: Wrap(
                 spacing: 4.0,
                 runSpacing: 4.0,
-                children: game.tags!
-                    .map((tag) => TagWidget(
-                          tag: tag,
-                        ))
-                    .toList(),
+                children: [
+                  ...game.tags!
+                      .map((tag) => TagWidget(
+                            tag: tag,
+                          ))
+                      .toList(),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    decoration: BoxDecoration(
+                        color: kTagColor,
+                        borderRadius: kIsWeb
+                            ? BorderRadius.zero
+                            : BorderRadius.circular(10)),
+                    child: Text(
+                      '${game.jackpot} USD',
+                      style: const TextStyle(
+                        color: kTagTextColor,
+                        fontSize: 10,
+                        height: 1.4,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           )
