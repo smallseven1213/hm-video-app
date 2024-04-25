@@ -50,7 +50,7 @@ class UserInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  info.depositedAmount ?? "0",
+                  info.points ?? "0",
                   style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
