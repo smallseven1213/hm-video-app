@@ -91,6 +91,7 @@ class GameCard extends StatelessWidget {
               children: [
                 Text(
                   gameDetail.name,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 14,
@@ -138,16 +139,19 @@ class GameCard extends StatelessWidget {
       height: 16,
       color: kCardBgColor,
       padding: const EdgeInsets.all(8),
-      child: Wrap(
-        crossAxisAlignment: WrapCrossAlignment.start,
-        spacing: 5.0,
-        runSpacing: 5.0,
-        clipBehavior: Clip.antiAlias,
-        children: gameDetail.tags!
-            .map((tag) => TagWidget(
-                  tag: tag,
-                ))
-            .toList(),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal, // 水平滚动
+        child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.start,
+          spacing: 5.0,
+          runSpacing: 5.0,
+          clipBehavior: Clip.antiAlias,
+          children: gameDetail.tags!
+              .map((tag) => TagWidget(
+                    tag: tag,
+                  ))
+              .toList(),
+        ),
       ),
     );
   }

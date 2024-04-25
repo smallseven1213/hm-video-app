@@ -11,6 +11,7 @@ enum VideoType {
   video,
   embeddedAd,
   areaAd,
+  game,
 }
 
 class Vod {
@@ -58,6 +59,14 @@ class Vod {
   String? appIcon;
   String? adUrl;
   int? dataType;
+// 遊戲
+  final String gameId;
+  final String gameUrl;
+  final String verticalLogo;
+  final String horizontalLogo;
+  final String jackpot;
+  final int multiple;
+  final String name;
 
   Vod(
     this.id,
@@ -102,6 +111,13 @@ class Vod {
     this.appIcon,
     this.adUrl = '',
     this.dataType,
+    this.gameId = '', // 默认值
+    this.gameUrl = '', // 默认值
+    this.verticalLogo = '', // 默认值
+    this.horizontalLogo = '', // 默认值
+    this.jackpot = '', // 默认值
+    this.multiple = 0, // 默认值
+    this.name = '', // 默认值
   });
 
   Map<String, dynamic> toJson() {
@@ -148,6 +164,13 @@ class Vod {
       'appIcon': appIcon,
       'adUrl': adUrl,
       'dataType': dataType,
+      'gameId': gameId,
+      'gameUrl': gameUrl, // 默认值
+      'verticalLogo': verticalLogo, // 默认值
+      'horizontalLogo': horizontalLogo, // 默认值
+      'jackpot': jackpot, // 默认值
+      'multiple': multiple, // 默认值
+      'name': name,
     };
   }
 
@@ -223,6 +246,18 @@ class Vod {
         appIcon: json['appIcon'],
         adUrl: json['adUrl'],
         dataType: json['dataType'],
+        isAd: json['isAd'],
+        videoAdUrl: json['videoAdUrl'],
+        adCover: json['adCover'],
+        adTitle: json['adTitle'],
+        // 遊戲
+        gameId: json['gameId'] ?? '', // 默认值
+        gameUrl: json['gameUrl'] ?? '', // 默认值
+        verticalLogo: json['verticalLogo'] ?? '', // 默认值
+        horizontalLogo: json['horizontalLogo'] ?? '', // 默认值
+        jackpot: json['jackpot'] ?? '', // 默认值
+        multiple: json['multiple'] ?? 0, // 默认值
+        name: json['name'] ?? '', // 默认值
       );
     } catch (e) {
       logger.i('json: $e');
