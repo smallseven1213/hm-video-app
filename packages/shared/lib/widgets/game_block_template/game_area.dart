@@ -5,10 +5,10 @@ import 'cross_column_game_card.dart';
 import 'horizontal_game_card.dart';
 import 'vertical_game_card.dart';
 
-class GameCardWidget extends StatelessWidget {
+class GameArea extends StatelessWidget {
   final Game game;
 
-  const GameCardWidget({super.key, required this.game});
+  const GameArea({super.key, required this.game});
 
   @override
   Widget build(BuildContext context) {

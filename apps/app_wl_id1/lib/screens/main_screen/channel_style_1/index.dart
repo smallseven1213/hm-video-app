@@ -3,7 +3,7 @@ import 'package:app_wl_id1/widgets/button.dart';
 import 'package:shared/models/game.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
-import 'package:shared/widgets/game_block_template/game_cards.dart';
+import 'package:shared/widgets/game_block_template/game_area.dart';
 import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_wl_id1/widgets/reload_button.dart';
 import 'package:flutter/foundation.dart';
@@ -89,7 +89,7 @@ class ChannelStyle1State extends State<ChannelStyle1>
                     sliverBlocks.add(SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: GameCardWidget(game: block),
+                        child: GameArea(game: block),
                       ),
                     ));
                   } else if (block is Blocks) {
