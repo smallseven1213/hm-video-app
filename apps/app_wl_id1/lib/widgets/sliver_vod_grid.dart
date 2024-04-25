@@ -19,24 +19,28 @@ class SliverVodGrid extends StatefulWidget {
   final bool? displayCoverVertical;
   final ScrollController? customScrollController;
   final Function(int id)? onOverrideRedirectTap;
+  final int? insertWidgetInterval;
+  final Widget? insertWidget;
 
-  const SliverVodGrid({
-    Key? key,
-    this.film = 1,
-    required this.videos,
-    required this.displayNoMoreData,
-    required this.isListEmpty,
-    required this.displayLoading,
-    this.onOverrideRedirectTap,
-    this.noMoreWidget,
-    this.headerExtends,
-    this.onScrollEnd,
-    this.displayCoverVertical = false,
-    this.displayVideoCollectTimes = true,
-    this.displayVideoTimes = true,
-    this.displayViewTimes = true,
-    this.customScrollController,
-  }) : super(key: key);
+  const SliverVodGrid(
+      {Key? key,
+      this.film = 1,
+      required this.videos,
+      required this.displayNoMoreData,
+      required this.isListEmpty,
+      required this.displayLoading,
+      this.insertWidgetInterval = 0,
+      this.insertWidget,
+      this.onOverrideRedirectTap,
+      this.noMoreWidget,
+      this.headerExtends,
+      this.onScrollEnd,
+      this.displayCoverVertical = false,
+      this.displayVideoCollectTimes = true,
+      this.displayVideoTimes = true,
+      this.displayViewTimes = true,
+      this.customScrollController})
+      : super(key: key);
 
   @override
   SliverVodGridState createState() => SliverVodGridState();
@@ -64,7 +68,18 @@ class SliverVodGridState extends State<SliverVodGrid> {
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
-                  int firstVideoIndex = index * 2;
+                  // Check if the current index is the position to insert a white Container
+                  if (widget.insertWidgetInterval != null &&
+                      widget.insertWidgetInterval! > 0 &&
+                      index % (widget.insertWidgetInterval! + 1) ==
+                          widget.insertWidgetInterval) {
+                    return widget.insertWidget ?? const SizedBox.shrink();
+                  }
+
+                  // Adjust index to account for the insertion of white Containers
+                  int actualIndex = index - (index ~/ 9);
+
+                  int firstVideoIndex = actualIndex * 2;
                   int secondVideoIndex = firstVideoIndex + 1;
 
                   var firstVideo = widget.videos[firstVideoIndex];
@@ -72,7 +87,6 @@ class SliverVodGridState extends State<SliverVodGrid> {
                       ? widget.videos[secondVideoIndex]
                       : null;
 
-                  // logger.i('RENDER SLIVER VOD GRID');
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -103,38 +117,39 @@ class SliverVodGridState extends State<SliverVodGrid> {
                           ),
                           const SizedBox(width: 8),
                           Expanded(
-                              child: secondVideo != null
-                                  ? VideoPreviewWidget(
-                                      id: secondVideo.id,
-                                      film: widget.film,
-                                      displayCoverVertical:
-                                          widget.displayCoverVertical ?? false,
-                                      coverVertical: secondVideo.coverVertical!,
-                                      coverHorizontal:
-                                          secondVideo.coverHorizontal!,
-                                      timeLength: secondVideo.timeLength!,
-                                      tags: secondVideo.tags!,
-                                      title: secondVideo.title,
-                                      videoViewTimes:
-                                          secondVideo.videoViewTimes!,
-                                      videoCollectTimes:
-                                          secondVideo.videoCollectTimes!,
-                                      displayVideoCollectTimes:
-                                          widget.displayVideoCollectTimes,
-                                      displayVideoTimes:
-                                          widget.displayVideoTimes,
-                                      displayViewTimes: widget.displayViewTimes,
-                                      onOverrideRedirectTap:
-                                          widget.onOverrideRedirectTap,
-                                    )
-                                  : const SizedBox.shrink()),
+                            child: secondVideo != null
+                                ? VideoPreviewWidget(
+                                    id: secondVideo.id,
+                                    film: widget.film,
+                                    displayCoverVertical:
+                                        widget.displayCoverVertical ?? false,
+                                    coverVertical: secondVideo.coverVertical!,
+                                    coverHorizontal:
+                                        secondVideo.coverHorizontal!,
+                                    timeLength: secondVideo.timeLength!,
+                                    tags: secondVideo.tags!,
+                                    title: secondVideo.title,
+                                    videoViewTimes: secondVideo.videoViewTimes!,
+                                    videoCollectTimes:
+                                        secondVideo.videoCollectTimes!,
+                                    displayVideoCollectTimes:
+                                        widget.displayVideoCollectTimes,
+                                    displayVideoTimes: widget.displayVideoTimes,
+                                    displayViewTimes: widget.displayViewTimes,
+                                    onOverrideRedirectTap:
+                                        widget.onOverrideRedirectTap,
+                                  )
+                                : const SizedBox.shrink(),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8),
                     ],
                   );
                 },
-                childCount: totalRows,
+                childCount: ((widget.videos.length + 1) / 2 +
+                        ((widget.videos.length + 1) / 2) ~/ 8)
+                    .ceil(),
               ),
             ),
           ),
