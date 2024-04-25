@@ -83,7 +83,7 @@ class GameCard extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(game.horizontalLogo),
+            image: NetworkImage(game.horizontalLogo ?? ''),
             fit: BoxFit.cover,
           ),
           borderRadius: const BorderRadius.only(

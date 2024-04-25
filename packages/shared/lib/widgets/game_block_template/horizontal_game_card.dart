@@ -114,7 +114,7 @@ class GameCard extends StatelessWidget {
         AspectRatio(
           aspectRatio: 168 / 120,
           child: Image.network(
-            gameDetail.horizontalLogo,
+            gameDetail.horizontalLogo ?? '',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
