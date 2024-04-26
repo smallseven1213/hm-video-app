@@ -47,7 +47,11 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       ..height = '100%'
       ..allowFullscreen = true;
 
-    iframeElement?.setAttribute('cache-control', cacheControl);
+    // 設置 cache-control 標頭
+    var request = html.HttpRequest();
+    request.open('GET', widget.initialUrl);
+    request.setRequestHeader('cache-control', cacheControl);
+    request.send();
 
     // 在iframe中加入fullScreenApi.js的script標籤
     html.ScriptElement scriptElement = html.ScriptElement()
