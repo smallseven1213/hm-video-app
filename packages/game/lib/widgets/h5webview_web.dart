@@ -38,16 +38,12 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
   }
 
   void registerViewFactory() {
-    var cacheControl = 'no-store';
-
     iframeElement = html.IFrameElement()
       ..src = widget.initialUrl
       ..style.border = 'none'
       ..width = '100%'
       ..height = '100%'
-      ..allowFullscreen = true
-      ..setAttribute('http-equiv', 'Cache-Control')
-      ..setAttribute('content', cacheControl);
+      ..allowFullscreen = true;
 
     // 在iframe中加入fullScreenApi.js的script標籤
     html.ScriptElement scriptElement = html.ScriptElement()
@@ -55,8 +51,13 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       ..src =
           'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js'; // 將路徑替換為實際的fullScreenApi.js路徑
 
-    // append the script element to the head of the document
     html.document.head?.append(scriptElement);
+
+// 設置 HttpHeaders 中的 cache-control 標頭
+    var cacheControl = 'no-cache, no-store, must-revalidate';
+    html.HttpRequest.request(widget.initialUrl, method: 'GET').then((request) {
+      request.setRequestHeader('cache-control', cacheControl);
+    });
 
 // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
