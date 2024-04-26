@@ -74,6 +74,7 @@ class LabelWithStatusState extends State<LabelWithStatus> {
               width: widget.leftIcon != null ? 70 : 100,
               child: Text(
                 widget.label,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   color: Color(0xff979797),
                   fontSize: 14,

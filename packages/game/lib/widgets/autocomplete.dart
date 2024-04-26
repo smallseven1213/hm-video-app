@@ -53,9 +53,10 @@ class _AutoCompleteState extends State<AutoComplete> {
             Row(
               children: [
                 SizedBox(
-                  width: 100,
+                  width: 110,
                   child: Text(
                     widget.label,
+                    textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: Color(0xff979797),
                       fontSize: 14,
