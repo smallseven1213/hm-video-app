@@ -44,7 +44,7 @@ input_abnormal,Input Abnormal,輸入異常,輸入異常,Lỗi nhập,入力異�
 please_reload,Please reload,請重新加載,請重新加載,Vui lòng tải lại,リロードしてください。,Silakan muat ulang
 actor,Actor,演員,演員,Diễn viên,俳優,Aktor
 browse_history,History,我的足跡,我的足跡,Lịch sử,歴史,Sejarah
-like_playlist,Favorites,我的喜歡,我的喜歡,yêu thích,お気に入り,favorit
+like_playlist,Favorites,我的喜歡,我的喜歡,yêu thích,お気に入り,Favorit
 collect_playlist,Collection,我的收藏,我的收藏,Bộ sưu tập,コレクション,Koleksi
 count_likes,Likes,個讚數,個讚數,Số lượt thích,Translation: いいね,Jumlah suka
 member_id,Member ID,用戶ID,用戶ID,ID người dùng,メンバーID,ID Pengguna
@@ -131,7 +131,7 @@ like_button,Like,點讚,点赞,Thích,いいね,Translation: Menyukai
 more_options,More >,更多 >,更多 >,Nhiều hơn >,もっと見る >,Lebih banyak >
 follow_status,Follow,關注,关注,Theo dõi,注目,Perhatian
 account_credentials,Account credentials,帳號憑證,帐号凭证,Thông tin tài khoản,アカウント認証,Kredensial akun
-edit_translation,Edit,Edit,Edit,Chỉnh sửa,編集,Edit: Sunting
+edit_translation,Edit,Edit,Edit,Chỉnh sửa,編集,Sunting
 input_name,Enter name,輸入名稱,输入名称,Nhập tên,名称を入力してください。,Masukkan nama
 please_enter_nickname,Please enter a nickname,請輸入暱稱,请输入暱称,Vui lòng nhập biệt danh,ニックネームを入力してください。,Silakan masukkan nama panggilan
 edit_error,Edit error,修改錯誤,修改错误,Lỗi khi chỉnh sửa,誤りを修正する,Translation: Mengedit kesalahan
