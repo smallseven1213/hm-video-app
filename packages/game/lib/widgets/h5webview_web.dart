@@ -53,10 +53,12 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
 
     html.document.head?.append(scriptElement);
 
-// 設置 HttpHeaders 中的 cache-control 標頭
-    var cacheControl = 'no-cache, no-store, must-revalidate';
-    html.HttpRequest.request(widget.initialUrl, method: 'GET').then((request) {
-      request.setRequestHeader('cache-control', cacheControl);
+    // 在 iframe 加載完成後動態添加 cache-control 標頭
+    iframeElement!.onLoad.listen((_) {
+      var meta = html.MetaElement(); // 創建 MetaElement
+      meta.httpEquiv = 'Cache-Control'; // 設置 httpEquiv
+      meta.content = 'no-cache, no-store, must-revalidate'; // 設置 content
+      html.document.head?.append(meta);
     });
 
 // ignore: undefined_prefixed_name
