@@ -38,8 +38,6 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
   }
 
   void registerViewFactory() {
-    var cacheControl = 'no-cache, must-revalidate';
-
     iframeElement = html.IFrameElement()
       ..src = widget.initialUrl
       ..style.border = 'none'
@@ -47,16 +45,9 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       ..height = '100%'
       ..allowFullscreen = true;
 
-    // 設置 cache-control 標頭
-    var request = html.HttpRequest();
-    request.open('GET', widget.initialUrl);
-    request.setRequestHeader('cache-control', cacheControl);
-    request.send();
-
     // 在iframe中加入fullScreenApi.js的script標籤
     html.ScriptElement scriptElement = html.ScriptElement()
       ..type = 'text/javascript'
-      //加入cacheControl，避免iframe的src被cache
       ..src =
           'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js'; // 將路徑替換為實際的fullScreenApi.js路徑
 
@@ -71,6 +62,17 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
         return iframeElement!;
       },
     );
+
+    // 等待iframe載入後，執行JavaScript以添加cache-control標頭
+    iframeElement?.onLoad.listen((event) {
+      var cacheControlScript = '''
+      var meta = document.createElement('meta');
+      meta.httpEquiv = 'Cache-Control';
+      meta.content = 'no-cache, no-store, must-revalidate';
+      document.head.appendChild(meta);
+    ''';
+      iframeElement?.contentWindow?.postMessage(cacheControlScript, '*');
+    });
   }
 
   void unregisterViewFactory() {
