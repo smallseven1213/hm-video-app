@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:game/controllers/game_list_controller.dart';
@@ -121,13 +122,13 @@ class GameListViewState extends State<GameListView>
   _handleOpenThirdPartyGame() {
     logger.i(
         ' ===> OpenThirdPartyGame: ${gameConfigController.thirdPartyGameId.value}');
+    GameLocalizations localizations = GameLocalizations.of(context)!;
     try {
       if (gameConfigController.isOpenThirdPartyGame.value == true) {
         // 從 gamesListController.games中找到對應gameConfigController.gameId的game
         final openGame = gamesListController.games.firstWhere((element) =>
             element.gameId == gameConfigController.thirdPartyGameId.value &&
             element.tpCode == gameConfigController.thirdPartyGameTpCode.value);
-
         if (openGame.gameId != '') {
           handleGameItem(context,
               gameId: openGame.gameId,
@@ -141,6 +142,16 @@ class GameListViewState extends State<GameListView>
     } catch (e) {
       // 打印發生異常的訊息
       logger.e('Exception occurred while trying to open third party game: $e');
+
+      showConfirmDialog(
+        context: context,
+        title: '',
+        content: localizations.translate('game_maintenance_in_progress'),
+        onConfirm: () async {
+          Navigator.pop(context);
+        },
+      );
+      gameConfigController.setThirdPartyGame(false, '', '');
     }
   }
 
