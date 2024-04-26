@@ -47,11 +47,12 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       ..height = '100%'
       ..allowFullscreen = true;
 
+    iframeElement?.setAttribute('cache-control', cacheControl);
+
     // 在iframe中加入fullScreenApi.js的script標籤
     html.ScriptElement scriptElement = html.ScriptElement()
       ..type = 'text/javascript'
       //加入cacheControl，避免iframe的src被cache
-      ..setAttribute('cache-control', cacheControl)
       ..src =
           'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js'; // 將路徑替換為實際的fullScreenApi.js路徑
 
