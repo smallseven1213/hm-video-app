@@ -156,7 +156,7 @@ class SupplierSlider extends StatelessWidget {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        I18n.follow,
+                                        I18n.followStatus,
                                         style: const TextStyle(
                                             color: Colors.white,
                                             fontSize: 16,

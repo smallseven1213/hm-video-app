@@ -35,7 +35,7 @@ class HeaderFollowButton extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             Text(
-              isLiked ? I18n.followed : '+ ${I18n.follow}',
+              isLiked ? I18n.followed : '+ ${I18n.followStatus}',
               style: TextStyle(
                 fontSize: 12,
                 color:

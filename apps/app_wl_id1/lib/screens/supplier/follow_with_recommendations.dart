@@ -83,7 +83,7 @@ class FollowWithRecommendationsState extends State<FollowWithRecommendations> {
                     ),
                     alignment: Alignment.center,
                     child: Text(
-                      isLiked ? I18n.followed : '+ ${I18n.follow}',
+                      isLiked ? I18n.followed : '+ ${I18n.followStatus}',
                       style: TextStyle(
                         fontSize: 13,
                         color: isLiked ? const Color(0xff161823) : Colors.white,

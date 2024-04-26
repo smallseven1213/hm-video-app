@@ -118,7 +118,7 @@ class _SupplierPageState extends State<SupplierPage>
                                   ),
                                   StatisticsItem(
                                     count: supplier.followTotal ?? 0,
-                                    label: I18n.follow,
+                                    label: I18n.followStatus,
                                   ),
                                   StatisticsItem(
                                     count: supplier.shortVideoTotal ?? 0,
