@@ -38,12 +38,16 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
   }
 
   void registerViewFactory() {
+    var cacheControl = 'no-store';
+
     iframeElement = html.IFrameElement()
       ..src = widget.initialUrl
       ..style.border = 'none'
       ..width = '100%'
       ..height = '100%'
-      ..allowFullscreen = true;
+      ..allowFullscreen = true
+      ..setAttribute('http-equiv', 'Cache-Control')
+      ..setAttribute('content', cacheControl);
 
     // 在iframe中加入fullScreenApi.js的script標籤
     html.ScriptElement scriptElement = html.ScriptElement()

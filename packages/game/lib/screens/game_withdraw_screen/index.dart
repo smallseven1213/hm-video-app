@@ -49,8 +49,8 @@ class GameWithdraw extends StatefulWidget {
 enum Type { bankcard, crypto }
 
 class _GameWithdrawState extends State<GameWithdraw> {
-  final gameWithdrawController = Get.put(GameWithdrawController());
-  GameWithdrawController? userWithdrawalData;
+  GameWithdrawController gameWithdrawController =
+      Get.find<GameWithdrawController>();
   String callbackPin = '';
   TextEditingController amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
@@ -93,15 +93,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
 
   void _getUserWithdrawalData() async {
     try {
-      var res = await Get.put(GameWithdrawController()).getWithDrawalData();
-      logger.i('res: $res');
+      gameWithdrawController.getWithDrawalData();
 
-      // if (res['code'] == '00' && res['data'].paymentPin == false) {
-      //   showFundPassword();
-      // } else
-      if (res['code'] == '00' &&
-          res['data'].paymentPin &&
-          res['data'].userPaymentSecurity != null) {
+      if (gameWithdrawController.paymentPin.value &&
+          gameWithdrawController.hasBankPaymentData.value) {
         // ignore: use_build_context_synchronously
         _transferInit(context);
       }
@@ -122,40 +117,11 @@ class _GameWithdrawState extends State<GameWithdraw> {
     gameWithdrawController.setLoadingStatus(false);
   }
 
-  showFundPassword() {
-    showConfirmDialog(
-      context: context,
-      title: "",
-      content: GameLocalizations.of(context)!
-          .translate('please_set_the_password_first'),
-      barrierDismissible: false,
-      confirmText: GameLocalizations.of(context)!.translate('go_to_settings'),
-      onConfirm: () {
-        gameWithdrawController.setLoadingStatus(false);
-        Navigator.of(context).pop();
-        MyRouteDelegate.of(context).push(GameAppRoutes.setFundPassword);
-      },
-    );
-  }
-
   void _transferInit(context) async {
     try {
       var res = await GameLobbyApi().transfer();
       if (res['code'] == '00') {
-        // var points = res['data']['points'];
-        // var balance = res['data']['balance'].toString();
-
-        // if (double.parse(balance) > 0) {
-        //   showConfirmDialog(
-        //     context: context,
-        //     title: "仍有遊戲進行中",
-        //     content: "仍有遊戲進行中，可提現額度為$points",
-        //     confirmText: "確認",
-        //     onConfirm: () {
-        //       Navigator.pop(context);
-        //     },
-        //   );
-        // }
+        logger.i('transferInit success, ${res['code']}');
       } else {
         showConfirmDialog(
           context: context,
@@ -353,10 +319,11 @@ class _GameWithdrawState extends State<GameWithdraw> {
                           key: _formKey,
                           child: Column(
                             children: [
-                              // ignore: unrelated_type_equality_checks
-                              if (gameWithdrawController.paymentPin == true &&
-                                  // ignore: unrelated_type_equality_checks
-                                  gameWithdrawController.hasPaymentData == true)
+                              if (gameWithdrawController.paymentPin.value ==
+                                      true &&
+                                  gameWithdrawController
+                                          .hasBankPaymentData.value ==
+                                      true)
                                 LabelWithStatus(
                                   label: localizations.translate('limit'),
                                   reachable: reachable,
@@ -429,25 +396,30 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                   )),
                               const SizedBox(height: 10),
                               GameWithDrawOptions(
-                                controller: amountController,
-                                onConfirm: (type) =>
-                                    _onConfirm(Type.bankcard, context),
-                                enableSubmit: _enableSubmit,
-                                hasPaymentData:
-                                    gameWithdrawController.hasPaymentData.value,
-                                reachable: reachable,
-                                withdrawalMode: withdrawalMode,
-                                withdrawalFee: withdrawalFee,
-                                applyAmount: amountController.text,
-                                bankData: gameWithdrawController
-                                        .userPaymentSecurity
-                                        .firstWhere(
-                                            (element) =>
-                                                element.remittanceType == 1,
-                                            orElse: () =>
-                                                UserPaymentSecurity()) ??
-                                    [],
-                              )
+                                  controller: amountController,
+                                  onConfirm: (type) =>
+                                      _onConfirm(Type.bankcard, context),
+                                  enableSubmit: _enableSubmit,
+                                  hasPaymentData: gameWithdrawController
+                                      .hasBankPaymentData.value,
+                                  reachable: reachable,
+                                  withdrawalMode: withdrawalMode,
+                                  withdrawalFee: withdrawalFee,
+                                  applyAmount: amountController.text,
+                                  paymentPin:
+                                      gameWithdrawController.paymentPin.value,
+                                  bankData: gameWithdrawController
+                                          .userPaymentSecurity
+                                          .firstWhere(
+                                              (element) =>
+                                                  element.remittanceType == 1,
+                                              orElse: () => UserPaymentSecurity(
+                                                  remittanceType: 1,
+                                                  isBound:
+                                                      gameWithdrawController
+                                                          .bankIsBound
+                                                          .value)) ??
+                                      [])
                             ],
                           ),
                         ),
