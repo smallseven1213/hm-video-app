@@ -71,7 +71,7 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       meta.content = 'no-cache, no-store, must-revalidate';
       document.head.appendChild(meta);
     ''';
-      iframeElement?.contentWindow?.postMessage(cacheControlScript, '*');
+      html.document.head?.appendHtml(cacheControlScript);
     });
   }
 
