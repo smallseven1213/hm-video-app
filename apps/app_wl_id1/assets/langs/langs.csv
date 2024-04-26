@@ -67,7 +67,7 @@ go_to_top_up_now_for_full_exp,Go to Top Up now to get the full experience!,請�
 go_to_top_up,Go to Top Up,前往充值,前往充值,Đi đến nạp tiền,チャージに行く,Pergi untuk isi ulang
 confirm,Confirm,確認,確認,Xác nhận,確認してください。,Konfirmasi
 cancel,Cancel,取消,取消,Hủy bỏ,キャンセル,Batal
-press_like_it_if_you_like_it,Favorites,喜歡就點讚,喜歡就點讚,yêu thích,お気に入り,favorit
+press_like_it_if_you_like_it,Favorites,喜歡就點讚,喜歡就點讚,yêu thích,お気に入り,Favorit
 add_to_favorites,Collection,添加到收藏,添加到收藏,Bộ sưu tập,コレクション,Koleksi
 this_movie_is_available_for_purchase,This movie is available for purchase.,試看結束，此影片需付費購買,試看結束，此影片需付費購買,"Sau khi xem xong, bạn cần phải mua để xem tiếp video này",試用期間終了。この映画は購入可能です。,Video ini memerlukan pembelian untuk diakses
 price,Price,價格,價格,Giá cả,価格,Harga
@@ -94,7 +94,7 @@ its_too_deep_maam,You've scrolled all the way down,太深了客倌,太深了客�
 take_your_time_dont_be_so_picky,You've scrolled all the way down,慢慢看，別這麼挑,慢慢看，別這麼挑,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
 ive_reached_the_center_of_my_heart,You've scrolled all the way down,花心已抵達,花心已抵達,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
 im_sure_your_are_the_same_kind_of_me,You've scrolled all the way down,確認過眼神，您是同道中人,確認過眼神，您是同道中人,Bạn đã cuộn xuống hết,最下部までスクロールしました,Anda telah menggulir sampai ke bawah
-select_all,Select All,全選,全選,Chọn tất cả,全て選択,Translation: Pilih Semua
+select_all,Select All,全選,全選,Chọn tất cả,全て選択,Pilih Semua
 delete,Delete,刪除,刪除,Xóa bỏ,削除,Hapus
 there_is_nothing_here,There is nothing here,這裡什麼都沒有,這裡什麼都沒有,Ở đây không có gì cả,ここには何もありません。,Tidak ada apa-apa di sini
 loading,Loading,讀取中,讀取中,Đang tải,Translation: ローディング,Sedang memuat
@@ -163,7 +163,7 @@ not_set,Not set,未設置,未设置,Chưa thiết lập,未設定,Belum diatur
 update_check,Update check,更新檢查,更新检查,Kiểm tra cập nhật,更新チェック,Pemeriksaan pembaruan
 setting_translation_key,Settings,設置,设置,Cài đặt,設置: 設置,Pengaturan
 promotion_person,people promote,人推廣,人推广,Người dùng quảng cáo,人のプロモーション, Promosi oleh orang
-refresh_batch,Switching batch,換一批,换一批,Chuyển đổi batch,交換一組,Ganti satu kelompok
+refresh_batch,Switching batch,換一批,换一批,Chuyển đổi batch,交換一組,Terjemahan
 more_videos_loading,More videos loading...,更多影片讀取中...,更多影片读取中...,Đang tải thêm video...,さらに動画を読み込み中…,Memuat lebih banyak video
 countdown_timer,Countdown,倒數,倒数,Đếm ngược,カウントダウン,Translation: Hitung mundur
 g_point_video,G Video,G 點視頻,G 点视频,Video G,G点视频,Video G-spot
