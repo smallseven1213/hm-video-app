@@ -51,8 +51,13 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       ..src =
           'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js'; // 將路徑替換為實際的fullScreenApi.js路徑
 
-    // append the script element to the head of the document
     html.document.head?.append(scriptElement);
+
+// 設置 HttpHeaders 中的 cache-control 標頭
+    var cacheControl = 'no-cache, no-store, must-revalidate';
+    html.HttpRequest.request(widget.initialUrl, method: 'GET').then((request) {
+      request.setRequestHeader('cache-control', cacheControl);
+    });
 
 // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
@@ -62,17 +67,6 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
         return iframeElement!;
       },
     );
-
-    // 等待iframe載入後，執行JavaScript以添加cache-control標頭
-    iframeElement?.onLoad.listen((event) {
-      var cacheControlScript = '''
-      var meta = document.createElement('meta');
-      meta.httpEquiv = 'Cache-Control';
-      meta.content = 'no-cache, no-store, must-revalidate';
-      document.head.appendChild(meta);
-    ''';
-      html.document.head?.appendHtml(cacheControlScript);
-    });
   }
 
   void unregisterViewFactory() {
