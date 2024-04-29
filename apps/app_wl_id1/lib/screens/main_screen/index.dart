@@ -6,6 +6,7 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
 import 'package:shared/modules/main_layout/main_layout_loading_status_consumer.dart';
 
+import '../../widgets/shared_app_bar/shared_app_bar.dart';
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
 
@@ -53,64 +54,32 @@ class HomeMainScreen extends StatelessWidget {
                         layoutId: layoutId,
                         child: (({required bool displaySearchBar}) =>
                             displaySearchBar
-                                ? ChannelSearchBar(
-                                    key: Key('channel-search-bar-$layoutId'),
+                                ? Column(
+                                    children: [
+                                      SharedAppBar(
+                                        key: Key(
+                                            'channel-search-bar-$layoutId-app-bar'),
+                                      ),
+                                      ChannelSearchBar(
+                                        key: Key(
+                                            'channel-search-bar-$layoutId-search-bar'),
+                                      ),
+                                    ],
                                   )
                                 : Container())),
-                    SizedBox(
-                      height: 55,
-                      child: Row(
-                        children: [
-                          Expanded(
-                              child: SizedBox(
-                            height: 45,
-                            child: Obx(() {
-                              return uiController.displayHomeNavigationBar.value
-                                  ? LayoutTabBar(
-                                      layoutId: layoutId,
-                                    )
-                                  : const SizedBox.shrink();
-                            }),
-                          )),
-                          // DisplayLayoutTabSearch(
-                          //   layoutId: layoutId,
-                          //   child: ({required bool displaySearchBar}) =>
-                          //       displaySearchBar
-                          //           ? Container()
-                          //           : PopularSearchTitleBuilder(
-                          //               child:
-                          //                   ({required String searchKeyword}) =>
-                          //                       SizedBox(
-                          //                 width: 46,
-                          //                 height: 55,
-                          //                 child: Center(
-                          //                     child: Padding(
-                          //                   // padding top 5
-                          //                   padding:
-                          //                       const EdgeInsets.only(top: 6),
-                          //                   child: IconButton(
-                          //                     icon: const Image(
-                          //                       width: 28,
-                          //                       height: 28,
-                          //                       fit: BoxFit.cover,
-                          //                       image: AssetImage(
-                          //                           'assets/images/layout_tabbar_search.png'),
-                          //                     ),
-                          //                     onPressed: () {
-                          //                       MyRouteDelegate.of(context)
-                          //                           .push(AppRoutes.search,
-                          //                               args: {
-                          //                             'inputDefaultValue':
-                          //                                 searchKeyword,
-                          //                             'autoSearch': false
-                          //                           });
-                          //                     },
-                          //                   ),
-                          //                 )),
-                          //               ),
-                          //             ),
-                          // )
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        bottom: 0,
+                      ),
+                      child: SizedBox(
+                        height: 45,
+                        child: Obx(() {
+                          return uiController.displayHomeNavigationBar.value
+                              ? LayoutTabBar(
+                                  layoutId: layoutId,
+                                )
+                              : const SizedBox.shrink();
+                        }),
                       ),
                     ),
                   ],
