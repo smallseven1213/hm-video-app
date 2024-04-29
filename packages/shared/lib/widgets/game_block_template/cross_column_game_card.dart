@@ -22,9 +22,8 @@ class CrossColumnGameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 370,
-      color: Colors.white,
       child: Column(
         children: [
           HeaderWidget(gameBlocks: gameBlocks),
