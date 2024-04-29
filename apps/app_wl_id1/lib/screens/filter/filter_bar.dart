@@ -68,6 +68,14 @@ class FilterBarState extends State<FilterBar> {
     return name;
   }
 
+  dynamic findOption(String key, int value) {
+    // find name from menuData by key and value, return name
+    var options =
+        widget.menuData.firstWhere((item) => item['key'] == key)['options'];
+    var option = options.firstWhere((item) => item['value'] == value);
+    return option;
+  }
+
   Widget _buildClosed() {
     List<Widget> childrenWithSpacing = [
       OptionButton(
@@ -76,11 +84,18 @@ class FilterBarState extends State<FilterBar> {
       const SizedBox(width: 10),
     ];
     List<Widget> children = widget.selectedOptions.entries
-        .map((entry) => entry.value
-            .where((element) => element != null)
-            .map((value) => OptionButton(
-                isSelected: true, name: findName(entry.key, value)))
-            .toList())
+        .map((entry) =>
+            entry.value.where((element) => element != null).map((value) {
+              var option = findOption(entry.key, value);
+              // String name =
+              //     i18nKeyMapping[entry.key] ?? option['name'] ?? 'N/A';
+              return OptionButton(
+                isSelected: true,
+                name: i18nKeyMapping[option['i18nKey']] ??
+                    option['name'] ??
+                    'N/A',
+              );
+            }).toList())
         .expand((element) => element)
         .toList();
 
