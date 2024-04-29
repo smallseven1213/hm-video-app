@@ -3,6 +3,7 @@ import 'dart:html' if (dart.library.html) 'dart:html' as html;
 import 'dart:ui_web' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:game/utils/loading.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import 'package:game/models/game_list.dart';
@@ -87,9 +88,9 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
 
     return Stack(
       children: [
-        HtmlElementView(
-          viewType: viewType,
-        ),
+        // 加入loading
+        const Center(child: GameLoading()),
+        HtmlElementView(viewType: viewType),
         if (toggleButton)
           Center(
             child: PointerInterceptor(
