@@ -50,10 +50,17 @@ class SliverVodGridState extends State<SliverVodGrid> {
   @override
   Widget build(BuildContext context) {
     try {
-      int totalRows = (widget.videos.length / 2).ceil();
-      int childCount = widget.insertWidgetInterval! >= totalRows
-          ? totalRows + (widget.insertWidgetInterval! / totalRows).ceil()
-          : totalRows;
+      int totalRows = 0;
+      int childCount;
+      try {
+        totalRows = (widget.videos.length / 2).ceil();
+        childCount = widget.insertWidgetInterval! >= totalRows
+            ? totalRows + (widget.insertWidgetInterval! / totalRows).ceil()
+            : totalRows;
+      } catch (e) {
+        totalRows = 0;
+        childCount = 0;
+      }
       return CustomScrollView(
         physics: kIsWeb ? null : const BouncingScrollPhysics(),
         controller: widget.customScrollController,
@@ -166,6 +173,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
         ],
       );
     } catch (e) {
+      print(e);
       return const SizedBox.shrink();
     }
   }
