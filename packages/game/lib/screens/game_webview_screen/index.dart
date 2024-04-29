@@ -63,6 +63,13 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
         return Stack(
           key: _parentKey,
           children: [
+            // 全白container full screen
+            // 這裡加Loading 取代Color white
+            Container(
+              color: Colors.white,
+              width: constraints.maxWidth,
+              height: constraints.maxHeight,
+            ),
             H5Webview(
               initialUrl: widget.gameUrl,
               direction: widget.direction,

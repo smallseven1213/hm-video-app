@@ -74,11 +74,18 @@ class GameCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GameTemplateLink(
       url: gameDetail.gameUrl,
-      child: Column(
-        children: [
-          _buildGameImage(),
-          _buildGameTags(),
-        ],
+      child: Container(
+        decoration: BoxDecoration(
+          color: kCardBgColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        clipBehavior: Clip.antiAlias,
+        child: Column(
+          children: [
+            _buildGameImage(),
+            _buildGameTags(),
+          ],
+        ),
       ),
     );
   }
