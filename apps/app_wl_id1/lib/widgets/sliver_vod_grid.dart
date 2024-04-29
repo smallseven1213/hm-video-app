@@ -54,7 +54,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
       int childCount;
       try {
         totalRows = (widget.videos.length / 2).ceil();
-        childCount = widget.insertWidgetInterval! >= totalRows
+        childCount = totalRows >= widget.insertWidgetInterval!
             ? totalRows + (widget.insertWidgetInterval! / totalRows).ceil()
             : totalRows;
       } catch (e) {
