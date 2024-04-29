@@ -9,10 +9,12 @@ import '../widgets/custom_app_bar.dart';
 
 class GamesPage extends StatefulWidget {
   final int gameAreaId;
+  final String? gameAreaName;
 
   const GamesPage({
     Key? key,
     required this.gameAreaId,
+    this.gameAreaName,
   }) : super(key: key);
 
   @override
@@ -45,8 +47,8 @@ class GamesPageState extends State<GamesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: 'HOT GAMES',
+      appBar: CustomAppBar(
+        title: widget.gameAreaName ?? 'HOT GAMES',
       ),
       body: Obx(() {
         var games = gamesController.gameList.value;

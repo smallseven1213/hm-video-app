@@ -31,6 +31,7 @@ class HeaderWidget extends StatelessWidget {
                 AppRoutes.games,
                 args: {
                   'gameAreaId': gameBlocks.id,
+                  'gameAreaName': gameBlocks.name,
                 },
               );
             },
