@@ -9,6 +9,7 @@ import 'tag.dart';
 
 const kTagColor = Color(0xff21488E);
 const kTagTextColor = Color(0xffFFD527);
+const kCardBgColor = Color(0xff02275C);
 
 final logger = Logger();
 
@@ -21,9 +22,9 @@ class CrossColumnGameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(gameBlocks);
-    return AspectRatio(
-      aspectRatio: 360 / 332,
+    return Container(
+      height: 370,
+      color: Colors.white,
       child: Column(
         children: [
           HeaderWidget(gameBlocks: gameBlocks),
@@ -58,53 +59,41 @@ class GameCard extends StatelessWidget {
     return GameTemplateLink(
       url: game.gameUrl,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8.0),
+        height: 96,
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.0),
+          color: kCardBgColor,
         ),
-        child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              _buildLeftSide(),
-              Expanded(
-                child: _buildRightSide(),
-              ),
-            ],
-          ),
+        clipBehavior: Clip.antiAlias,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            _buildLeftSide(),
+            const SizedBox(width: 10),
+            Expanded(
+              child: _buildRightSide(),
+            ),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildLeftSide() {
-    return AspectRatio(
-      aspectRatio: 134 / 96,
-      child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: Image.network(
-              game.horizontalLogo ?? '',
-              fit: BoxFit.cover,
-              errorBuilder: (BuildContext context, Object exception,
-                  StackTrace? stackTrace) {
-                return Center(
-                  child: Icon(
-                    Icons.image_not_supported,
-                    color: Colors.grey.shade700,
-                    size: 30,
-                  ),
-                );
-              },
-            ).image,
+    return Image.network(
+      game.horizontalLogo ?? '',
+      fit: BoxFit.cover,
+      errorBuilder:
+          (BuildContext context, Object exception, StackTrace? stackTrace) {
+        return Center(
+          child: Icon(
+            Icons.image_not_supported,
+            color: Colors.grey.shade700,
+            size: 30,
           ),
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(8.0),
-            bottomLeft: Radius.circular(8.0),
-          ),
-        ),
-        alignment: Alignment.bottomLeft,
-      ),
+        );
+      },
     );
   }
 
