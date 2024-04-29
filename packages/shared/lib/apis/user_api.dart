@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/models/user_v2.dart';
 import 'package:uuid/uuid.dart';
 import 'package:http_parser/http_parser.dart' as http_parser;
 import '../controllers/system_config_controller.dart';
@@ -351,6 +352,24 @@ class UserApi {
           return User('', 0, ['guest']);
         }
         return User.fromJson(res['data'] as Map<String, dynamic>);
+      });
+
+  Future<UserV2> getCurrentUserV2() => fetcher(
+              url:
+                  '$apiHost/public/users/user/v2/info?ts=${DateTime.now().millisecondsSinceEpoch}')
+          .then((value) {
+        var res = (value.data as Map<String, dynamic>);
+        // logger.i(res['data']);
+        if (res['code'] != '00') {
+          return UserV2(
+            uid: 0,
+            roles: ['guest'],
+            nickname: '',
+            points: 0,
+            isFree: false,
+          );
+        }
+        return UserV2.fromJson(res['data'] as Map<String, dynamic>);
       });
 
   Future<User> getCurrentUserWithdraw() =>

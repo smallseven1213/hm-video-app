@@ -31,7 +31,7 @@ class SharedAppBar extends StatelessWidget implements PreferredSizeWidget {
             // ),
           ),
           // Spacer(),
-          UserArea()
+          const UserArea()
         ],
       ),
     );

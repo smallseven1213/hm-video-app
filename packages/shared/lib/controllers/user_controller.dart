@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 import '../apis/user_api.dart';
 import '../apis/auth_api.dart';
 import '../models/index.dart';
+import '../models/user_v2.dart';
 import 'auth_controller.dart';
 
 final logger = Logger();
@@ -14,6 +15,13 @@ class UserController extends GetxController {
     '',
     0,
     [],
+  ).obs;
+  var infoV2 = UserV2(
+    uid: 0,
+    roles: [],
+    nickname: '',
+    points: 0,
+    isFree: false,
   ).obs;
   var wallets = <WalletItem>[].obs;
   var isLoading = false.obs;
@@ -33,6 +41,7 @@ class UserController extends GetxController {
     logger.i('TRACE TOKEN =====, INITIAL');
     if (authController.token.value.isNotEmpty) {
       fetchUserInfo();
+      fetchUserInfoV2();
     }
 
     ever(
@@ -41,6 +50,7 @@ class UserController extends GetxController {
         logger.i('TRACE TOKEN =====, user controller token: $token');
         if (authController.token.value.isNotEmpty) {
           fetchUserInfo();
+          fetchUserInfoV2();
         }
       },
     );
@@ -52,6 +62,19 @@ class UserController extends GetxController {
       var userApi = UserApi();
       var res = await userApi.getCurrentUser();
       info.value = res;
+    } catch (error) {
+      logger.i('fetchUserInfo error: $error');
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  fetchUserInfoV2() async {
+    isLoading.value = true;
+    try {
+      var userApi = UserApi();
+      var res = await userApi.getCurrentUserV2();
+      infoV2.value = res;
     } catch (error) {
       logger.i('fetchUserInfo error: $error');
     } finally {
