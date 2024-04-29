@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:game/enums/game_app_routes.dart';
+import 'package:game/models/third_login_api_response_with_data.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
@@ -9,6 +10,9 @@ import 'package:shared/models/index.dart';
 import 'package:shared/models/user_v2.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/intl_amount.dart';
+
+import '../../localization/i18n.dart';
 
 class UserInfo extends StatelessWidget {
   final UserV2 info;
@@ -54,7 +58,7 @@ class UserInfo extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${info.points}K',
+                  intlAmount(info.points, I18n.dollar),
                   style: const TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.w700,
