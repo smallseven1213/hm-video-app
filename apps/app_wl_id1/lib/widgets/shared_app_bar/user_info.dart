@@ -43,6 +43,8 @@ class UserInfo extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 const Text(
                   'Total Balance:',
@@ -60,6 +62,7 @@ class UserInfo extends StatelessWidget {
                 ),
               ],
             ),
+            const SizedBox(width: 10),
             const Image(
               image: AssetImage('assets/images/user_balance.png'),
               fit: BoxFit.contain,
