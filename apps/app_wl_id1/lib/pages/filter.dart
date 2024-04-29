@@ -49,7 +49,7 @@ class FilterScrollViewState extends State<FilterPage>
     return Obx(() {
       return Scaffold(
         appBar: CustomAppBar(
-          title: "I18n.filter",
+          title: I18n.filter,
           bottom: filterScreenController.showTabBar.value
               ? GSTabBar(
                   tabs: [I18n.longVideo, I18n.shortVideo],

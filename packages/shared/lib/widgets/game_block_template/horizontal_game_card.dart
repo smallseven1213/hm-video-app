@@ -27,7 +27,7 @@ class HorizontalGameCard extends StatelessWidget {
     var games = gameBlocks.games.take(4).toList();
 
     return AspectRatio(
-      aspectRatio: 360 / 444,
+      aspectRatio: 360 / 460,
       child: Column(
         children: [
           HeaderWidget(gameBlocks: gameBlocks),
@@ -145,7 +145,7 @@ class GameCard extends StatelessWidget {
   Widget _buildGameTags() {
     return Container(
       width: double.infinity,
-      height: 16,
+      height: 24,
       color: kCardBgColor,
       padding: const EdgeInsets.all(8),
       child: SingleChildScrollView(
