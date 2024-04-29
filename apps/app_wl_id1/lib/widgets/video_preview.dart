@@ -12,6 +12,7 @@ import 'package:shared/widgets/video/video_time.dart';
 import 'package:shared/widgets/visibility_detector.dart';
 
 import '../config/colors.dart';
+import 'game_preview.dart';
 import 'video_embedded_ad.dart';
 
 class ViewInfo extends StatelessWidget {
@@ -147,6 +148,14 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
         displayCoverVertical: displayCoverVertical,
       );
     }
+    if (detail?.dataType == VideoType.game.index) {
+      return GamePreviewWidget(
+        detail: detail!,
+        displayCoverVertical: displayCoverVertical,
+        hasRadius: hasRadius,
+        imageRatio: imageRatio,
+      );
+    }
 
     return Column(
       children: [
@@ -262,7 +271,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                 children: tags
                     .take(3)
                     .map(
-                      (tag) => GestureDetector(
+                      (Tag tag) => GestureDetector(
                         onTap: () {
                           if (film == 1) {
                             MyRouteDelegate.of(context).push(
@@ -299,8 +308,6 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
             ),
           )
         ]
-        // The rest of your UI logic
-        // ...
       ],
     );
   }

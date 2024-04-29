@@ -33,6 +33,7 @@ import '../pages/video.dart' as video_page;
 import '../pages/apps.dart' as apps_page;
 import '../screens/demo.dart' as demo_screen;
 import '../pages/suppliers.dart' as suppliers_screen;
+import '../pages/games.dart' as games_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.demo: (context, args) => const demo_screen.Demo(),
@@ -92,6 +93,10 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         videoId: args['videoId'] as int,
         id: args['id'] as int,
         type: args['type'] as ShortsType,
+      ),
+  AppRoutes.games: (context, args) => games_page.GamesPage(
+        gameAreaId: args['gameAreaId'] as int,
+        gameAreaName: args['gameAreaName'] as String,
       ),
   AppRoutes.shortsByLocal: (context, args) =>
       shorts_by_local_page.ShortsByLocalPage(

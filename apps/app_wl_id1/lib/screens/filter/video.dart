@@ -1,4 +1,5 @@
 import 'package:app_wl_id1/screens/filter/filter_bar.dart';
+import 'package:app_wl_id1/widgets/random_game_area.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/filter_screen_controller.dart';
@@ -85,6 +86,8 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
         displayVideoCollectTimes: false,
         noMoreWidget: ListNoMore(),
         customScrollController: vodController.scrollController,
+        insertWidget: const RandomGameArea(),
+        insertWidgetInterval: 4,
       ),
     );
   }

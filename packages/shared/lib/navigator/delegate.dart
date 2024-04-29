@@ -66,6 +66,8 @@ class MyRouteDelegate extends RouterDelegate<String>
 
   List<String> get stack => List.unmodifiable(_stack);
 
+  String get currentPath => _stack.last.path;
+
   Future<dynamic> push(String routeName,
       {bool hasTransition = true,
       int deletePreviousCount = 0,

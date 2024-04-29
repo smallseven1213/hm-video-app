@@ -85,7 +85,9 @@ class ChannelStyle1State extends State<ChannelStyle1>
               } else {
                 List<Widget> sliverBlocks = [];
                 for (var block in channelData.blocks!) {
-                  if (block.quantity != 0 && block.videos!.data!.isNotEmpty) {
+                  if (block is Blocks &&
+                      block.quantity != 0 &&
+                      block.videos!.data!.isNotEmpty) {
                     sliverBlocks.add(SliverToBoxAdapter(
                       key: Key(
                           'block${block.id}_${widget.channelId}_${channelDataController.offset}'),

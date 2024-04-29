@@ -3,14 +3,14 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/models/infinity_games.dart';
 
-import '../models/infinity_vod.dart';
-import '../models/vod.dart';
+import '../models/game.dart';
 
 final logger = Logger();
 
-abstract class BaseVodInfinityScrollController extends GetxController {
-  var vodList = <Vod>[].obs;
+abstract class BaseGamesInfinityScrollController extends GetxController {
+  var gameList = <GameDetail>[].obs;
   var isLoading = false.obs;
   var isListEmpty = false.obs;
   var hasMoreData = false.obs;
@@ -25,7 +25,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
   late bool _hasLoadMoreEventWithScroller = true;
   Timer? _debounceTimer;
 
-  BaseVodInfinityScrollController(
+  BaseGamesInfinityScrollController(
       {bool loadDataOnInit = true,
       bool autoDisposeScrollController = true,
       bool hasLoadMoreEventWithScroller = true,
@@ -41,17 +41,17 @@ abstract class BaseVodInfinityScrollController extends GetxController {
     }
   }
 
-  Future<InfinityVod> fetchData(int page);
+  Future<InfinityGames> fetchData(int page);
 
   void reset() {
-    vodList.clear();
+    gameList.clear();
     page.value = 0;
     totalCount.value = 0;
     hasMoreData.value = false;
   }
 
   Future<void> _fetchData({bool refresh = false}) async {
-    if (!hasMoreData.value && vodList.isNotEmpty) return;
+    if (!hasMoreData.value && gameList.isNotEmpty) return;
     isLoading.value = true;
 
     int nextPage;
@@ -62,23 +62,23 @@ abstract class BaseVodInfinityScrollController extends GetxController {
       nextPage = page.value + 1;
     }
 
-    InfinityVod newData = await fetchData(nextPage);
-    List<Vod> newVods = newData.vods;
+    InfinityGames newData = await fetchData(nextPage);
+    List<GameDetail> newGames = newData.games;
 
-    if (newVods.isNotEmpty) {
+    if (newGames.isNotEmpty) {
       if (refresh) {
-        vodList.value = newVods; // 替換現有的列表
+        gameList.value = newGames; // 替換現有的列表
       } else {
-        vodList.addAll(newVods); // 加入到現有的列表
+        gameList.addAll(newGames); // 加入到現有的列表
       }
       page.value = nextPage;
-      totalCount.value = vodList.length;
+      totalCount.value = gameList.length;
       hasMoreData.value = newData.hasMoreData;
     } else {
       hasMoreData.value = false;
     }
 
-    isListEmpty.value = newData.totalCount == 0;
+    isListEmpty.value = gameList.isEmpty;
     isLoading.value = false;
     displayNoMoreData.value =
         !isLoading.value && !hasMoreData.value && !isListEmpty.value;

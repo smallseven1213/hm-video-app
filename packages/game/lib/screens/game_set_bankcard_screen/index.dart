@@ -91,7 +91,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
           gravity: ToastGravity.CENTER,
         );
         gameWithdrawController.setLoadingStatus(false);
-        gameWithdrawController.mutate();
+        // gameWithdrawController.mutate();
         Navigator.of(context).pop();
         MyRouteDelegate.of(context).popRoute();
       } else {

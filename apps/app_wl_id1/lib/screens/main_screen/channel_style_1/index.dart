@@ -1,7 +1,9 @@
 import 'package:app_wl_id1/localization/i18n.dart';
 import 'package:app_wl_id1/widgets/button.dart';
+import 'package:shared/models/game.dart';
 import 'package:shared/modules/channel/channe_provider.dart';
 import 'package:shared/modules/main_layout/display_layout_tab_search_consumer.dart';
+import 'package:shared/widgets/game_block_template/game_area.dart';
 import 'package:shared/widgets/refresh_list.dart';
 import 'package:app_wl_id1/widgets/reload_button.dart';
 import 'package:flutter/foundation.dart';
@@ -60,13 +62,14 @@ class ChannelStyle1State extends State<ChannelStyle1>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    const baseTopHeight = 140;
     return DisplayLayoutTabSearchConsumer(
         layoutId: widget.layoutId,
         child: (({required bool displaySearchBar}) {
           return Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top +
-                    (displaySearchBar ? 90 : 50)),
+                    (displaySearchBar ? baseTopHeight : baseTopHeight - 40)),
             child: Obx(() {
               ChannelInfo? channelData =
                   channelDataController.channelData.value;
@@ -83,68 +86,77 @@ class ChannelStyle1State extends State<ChannelStyle1>
               } else {
                 List<Widget> sliverBlocks = [];
                 for (var block in channelData.blocks!) {
-                  if (block.quantity != 0 && block.videos!.data!.isNotEmpty) {
+                  if (block is Game) {
                     sliverBlocks.add(SliverToBoxAdapter(
-                      key: Key(
-                          'block${block.id}_${widget.channelId}_${channelDataController.offset}'),
-                      child: Header(
-                        text: block.name ?? '',
-                        moreButton: block.isMore!
-                            ? InkWell(
-                                onTap: () => {
-                                      if (block.film == 1)
-                                        {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.videoByBlock,
-                                            args: {
-                                              'blockId': block.id,
-                                              'title': block.name,
-                                              'channelId': widget.channelId,
-                                            },
-                                          )
-                                        }
-                                      else if (block.film == 2)
-                                        {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.videoByBlock,
-                                            args: {
-                                              'blockId': block.id,
-                                              'title': block.name,
-                                              'channelId': widget.channelId,
-                                              'film': 2,
-                                            },
-                                          )
-                                        }
-                                      else if (block.film == 3)
-                                        {
-                                          MyRouteDelegate.of(context).push(
-                                            AppRoutes.videoByBlock,
-                                            args: {
-                                              'id': block.id,
-                                              'title': block.name,
-                                              'channelId': widget.channelId,
-                                            },
-                                          )
-                                        }
-                                    },
-                                child: Text(
-                                  '${I18n.more} >',
-                                  style: const TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: 14,
-                                  ),
-                                ))
-                            : null,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: GameArea(game: block),
                       ),
                     ));
-                    sliverBlocks.add(const SliverToBoxAdapter(
-                      child: SizedBox(height: 5),
-                    ));
-                    sliverBlocks.add(
-                        VideoBlock(block: block, channelId: widget.channelId));
-                    sliverBlocks.add(const SliverToBoxAdapter(
-                      child: SizedBox(height: 10),
-                    ));
+                  } else if (block is Blocks) {
+                    if (block.quantity != 0 && block.videos!.data!.isNotEmpty) {
+                      sliverBlocks.add(SliverToBoxAdapter(
+                        key: Key(
+                            'block${block.id}_${widget.channelId}_${channelDataController.offset}'),
+                        child: Header(
+                          text: block.name ?? '',
+                          moreButton: block.isMore!
+                              ? InkWell(
+                                  onTap: () => {
+                                        if (block.film == 1)
+                                          {
+                                            MyRouteDelegate.of(context).push(
+                                              AppRoutes.videoByBlock,
+                                              args: {
+                                                'blockId': block.id,
+                                                'title': block.name,
+                                                'channelId': widget.channelId,
+                                              },
+                                            )
+                                          }
+                                        else if (block.film == 2)
+                                          {
+                                            MyRouteDelegate.of(context).push(
+                                              AppRoutes.videoByBlock,
+                                              args: {
+                                                'blockId': block.id,
+                                                'title': block.name,
+                                                'channelId': widget.channelId,
+                                                'film': 2,
+                                              },
+                                            )
+                                          }
+                                        else if (block.film == 3)
+                                          {
+                                            MyRouteDelegate.of(context).push(
+                                              AppRoutes.videoByBlock,
+                                              args: {
+                                                'id': block.id,
+                                                'title': block.name,
+                                                'channelId': widget.channelId,
+                                              },
+                                            )
+                                          }
+                                      },
+                                  child: Text(
+                                    '${I18n.more} >',
+                                    style: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 14,
+                                    ),
+                                  ))
+                              : null,
+                        ),
+                      ));
+                      sliverBlocks.add(const SliverToBoxAdapter(
+                        child: SizedBox(height: 5),
+                      ));
+                      sliverBlocks.add(VideoBlock(
+                          block: block, channelId: widget.channelId));
+                      sliverBlocks.add(const SliverToBoxAdapter(
+                        child: SizedBox(height: 10),
+                      ));
+                    }
                   }
                 }
                 return ChannelProvider(

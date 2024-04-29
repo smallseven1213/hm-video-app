@@ -24,7 +24,7 @@ class VerticalGameCard extends StatelessWidget {
       aspectRatio: 360 / 560,
       child: Column(
         children: [
-          HeaderWidget(name: gameBlocks.name),
+          HeaderWidget(gameBlocks: gameBlocks),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
@@ -72,9 +72,14 @@ class GameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GameTemplateLink(
-        url: gameDetail.gameUrl,
+    return GameTemplateLink(
+      url: gameDetail.gameUrl,
+      child: Container(
+        decoration: BoxDecoration(
+          color: kCardBgColor,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        clipBehavior: Clip.antiAlias,
         child: Column(
           children: [
             _buildGameImage(),
@@ -91,10 +96,19 @@ class GameCard extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            gameDetail.verticalLogo,
+            gameDetail.verticalLogo ?? '',
             fit: BoxFit.cover,
             width: double.infinity,
             height: double.infinity,
+            errorBuilder: (context, error, stackTrace) {
+              return Center(
+                child: Icon(
+                  Icons.image_not_supported,
+                  color: Colors.grey.shade700,
+                  size: 30,
+                ),
+              );
+            },
           ),
           _buildGradientTextOverlay(),
         ],
@@ -119,6 +133,7 @@ class GameCard extends StatelessWidget {
           padding: const EdgeInsets.all(10.0),
           child: Text(
             gameDetail.name,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
@@ -136,11 +151,14 @@ class GameCard extends StatelessWidget {
       height: 36,
       color: kCardBgColor,
       padding: const EdgeInsets.all(8),
-      child: Wrap(
-        spacing: 5.0,
-        runSpacing: 5.0,
-        children:
-            gameDetail.tags?.map((tag) => TagWidget(tag: tag)).toList() ?? [],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal, // 水平滚动
+        child: Wrap(
+          spacing: 5.0,
+          runSpacing: 5.0,
+          children:
+              gameDetail.tags?.map((tag) => TagWidget(tag: tag)).toList() ?? [],
+        ),
       ),
     );
   }

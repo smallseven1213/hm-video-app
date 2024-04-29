@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:shared/navigator/delegate.dart';
+import '../../models/game.dart';
+import '../../enums/app_routes.dart';
 
 const kPrimaryColor = Color(0xff00669F);
 
 class HeaderWidget extends StatelessWidget {
-  final String name;
+  final Game gameBlocks;
 
-  const HeaderWidget({super.key, required this.name});
+  const HeaderWidget({super.key, required this.gameBlocks});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            name,
+            gameBlocks.name,
             style: const TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -23,7 +26,15 @@ class HeaderWidget extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              MyRouteDelegate.of(context).push(
+                AppRoutes.games,
+                args: {
+                  'gameAreaId': gameBlocks.id,
+                  'gameAreaName': gameBlocks.name,
+                },
+              );
+            },
             style: TextButton.styleFrom(
               side: const BorderSide(color: kPrimaryColor),
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

@@ -30,33 +30,51 @@ class UserWithdrawalData {
 
 class UserPaymentSecurity {
   String? account;
-  int? remittanceType;
+  int remittanceType;
+  String? remittanceTypeName;
   String? legalName;
   String? bankName;
   String? branchName;
+  bool isBound;
 
   UserPaymentSecurity(
       {this.account,
-      this.remittanceType,
+      required this.remittanceType,
+      this.remittanceTypeName,
       this.legalName,
       this.bankName,
-      this.branchName});
+      this.branchName,
+      required this.isBound});
 
-  UserPaymentSecurity.fromJson(Map<String, dynamic> json) {
-    account = json['account'];
-    remittanceType = json['remittanceType'];
-    legalName = json['legalName'];
-    bankName = json['bankName'];
-    branchName = json['branchName'];
+  factory UserPaymentSecurity.fromJson(Map<String, dynamic> json) {
+    return UserPaymentSecurity(
+      account: json['account'],
+      remittanceType: json['remittanceType'],
+      remittanceTypeName: json['remittanceTypeName'],
+      legalName: json['legalName'],
+      bankName: json['bankName'],
+      branchName: json['branchName'],
+      isBound: json['isBound'],
+    );
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['account'] = account;
     data['remittanceType'] = remittanceType;
+    data['remittanceTypeName'] = remittanceTypeName;
     data['legalName'] = legalName;
     data['bankName'] = bankName;
     data['branchName'] = branchName;
+    data['isBound'] = isBound;
     return data;
   }
 }
+
+Map<String, int> remittanceTypeMapper = {
+  'BANK_CARD_CNY': 1,
+  'USDT': 2,
+  // 'BANK_CARD_INR': 3,
+  // 'BANK_CARD_TWD': 4,
+  // 'BANK_CARD_PHP': 5,
+};

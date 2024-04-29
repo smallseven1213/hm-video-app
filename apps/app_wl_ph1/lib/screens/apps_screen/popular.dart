@@ -79,9 +79,9 @@ class PopularWidget extends StatelessWidget {
                       ),
                       // 按鈕
                       Container(
-                        width: 52,
                         height: 23,
                         margin: const EdgeInsets.only(top: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: const BoxDecoration(
                           color: Color(0xffFFC700),
                           // 左右邊都是圓角15

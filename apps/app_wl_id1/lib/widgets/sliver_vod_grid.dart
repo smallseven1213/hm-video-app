@@ -19,24 +19,28 @@ class SliverVodGrid extends StatefulWidget {
   final bool? displayCoverVertical;
   final ScrollController? customScrollController;
   final Function(int id)? onOverrideRedirectTap;
+  final int? insertWidgetInterval; // 每幾個column插入一個widget
+  final Widget? insertWidget;
 
-  const SliverVodGrid({
-    Key? key,
-    this.film = 1,
-    required this.videos,
-    required this.displayNoMoreData,
-    required this.isListEmpty,
-    required this.displayLoading,
-    this.onOverrideRedirectTap,
-    this.noMoreWidget,
-    this.headerExtends,
-    this.onScrollEnd,
-    this.displayCoverVertical = false,
-    this.displayVideoCollectTimes = true,
-    this.displayVideoTimes = true,
-    this.displayViewTimes = true,
-    this.customScrollController,
-  }) : super(key: key);
+  const SliverVodGrid(
+      {Key? key,
+      this.film = 1,
+      required this.videos,
+      required this.displayNoMoreData,
+      required this.isListEmpty,
+      required this.displayLoading,
+      this.insertWidgetInterval = 0,
+      this.insertWidget,
+      this.onOverrideRedirectTap,
+      this.noMoreWidget,
+      this.headerExtends,
+      this.onScrollEnd,
+      this.displayCoverVertical = false,
+      this.displayVideoCollectTimes = true,
+      this.displayVideoTimes = true,
+      this.displayViewTimes = true,
+      this.customScrollController})
+      : super(key: key);
 
   @override
   SliverVodGridState createState() => SliverVodGridState();
@@ -45,64 +49,85 @@ class SliverVodGrid extends StatefulWidget {
 class SliverVodGridState extends State<SliverVodGrid> {
   @override
   Widget build(BuildContext context) {
-    int totalRows = (widget.videos.length / 2).ceil();
+    try {
+      int totalRows = 0;
+      int childCount;
+      try {
+        totalRows = (widget.videos.length / 2).ceil();
+        childCount = totalRows >= widget.insertWidgetInterval!
+            ? totalRows + (widget.insertWidgetInterval! / totalRows).ceil()
+            : totalRows;
+      } catch (e) {
+        totalRows = 0;
+        childCount = 0;
+      }
+      return CustomScrollView(
+        physics: kIsWeb ? null : const BouncingScrollPhysics(),
+        controller: widget.customScrollController,
+        scrollBehavior:
+            ScrollConfiguration.of(context).copyWith(scrollbars: false),
+        slivers: [
+          ...?widget.headerExtends,
+          if (widget.isListEmpty)
+            const SliverToBoxAdapter(
+              child: NoDataWidget(),
+            ),
+          if (totalRows > 0)
+            SliverPadding(
+              padding: const EdgeInsets.all(8.0),
+              sliver: SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    // Check if the current index is the position to insert a white Container
+                    if (widget.insertWidgetInterval != null &&
+                        widget.insertWidgetInterval! >= childCount &&
+                        index % (widget.insertWidgetInterval! + 1) ==
+                            widget.insertWidgetInterval) {
+                      return widget.insertWidget ?? const SizedBox.shrink();
+                    }
 
-    return CustomScrollView(
-      physics: kIsWeb ? null : const BouncingScrollPhysics(),
-      controller: widget.customScrollController,
-      scrollBehavior:
-          ScrollConfiguration.of(context).copyWith(scrollbars: false),
-      slivers: [
-        ...?widget.headerExtends,
-        if (widget.isListEmpty)
-          const SliverToBoxAdapter(
-            child: NoDataWidget(),
-          ),
-        if (totalRows > 0)
-          SliverPadding(
-            padding: const EdgeInsets.all(8.0),
-            sliver: SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (BuildContext context, int index) {
-                  int firstVideoIndex = index * 2;
-                  int secondVideoIndex = firstVideoIndex + 1;
+                    // Adjust index to account for the insertion of white Containers
+                    int actualIndex = index - (index ~/ 9);
 
-                  var firstVideo = widget.videos[firstVideoIndex];
-                  var secondVideo = secondVideoIndex < widget.videos.length
-                      ? widget.videos[secondVideoIndex]
-                      : null;
+                    int firstVideoIndex = actualIndex * 2;
+                    int secondVideoIndex = firstVideoIndex + 1;
 
-                  // logger.i('RENDER SLIVER VOD GRID');
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: VideoPreviewWidget(
-                              id: firstVideo.id,
-                              film: widget.film,
-                              displayCoverVertical:
-                                  widget.displayCoverVertical ?? false,
-                              coverVertical: firstVideo.coverVertical!,
-                              coverHorizontal: firstVideo.coverHorizontal!,
-                              timeLength: firstVideo.timeLength!,
-                              tags: firstVideo.tags!,
-                              title: firstVideo.title,
-                              videoViewTimes: firstVideo.videoViewTimes!,
-                              videoCollectTimes: firstVideo.videoCollectTimes!,
-                              displayVideoCollectTimes:
-                                  widget.displayVideoCollectTimes,
-                              displayVideoTimes: widget.displayVideoTimes,
-                              displayViewTimes: widget.displayViewTimes,
-                              onOverrideRedirectTap:
-                                  widget.onOverrideRedirectTap,
+                    var firstVideo = widget.videos[firstVideoIndex];
+                    var secondVideo = secondVideoIndex < widget.videos.length
+                        ? widget.videos[secondVideoIndex]
+                        : null;
+
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: VideoPreviewWidget(
+                                id: firstVideo.id,
+                                film: widget.film,
+                                displayCoverVertical:
+                                    widget.displayCoverVertical ?? false,
+                                coverVertical: firstVideo.coverVertical!,
+                                coverHorizontal: firstVideo.coverHorizontal!,
+                                timeLength: firstVideo.timeLength!,
+                                tags: firstVideo.tags!,
+                                title: firstVideo.title,
+                                videoViewTimes: firstVideo.videoViewTimes!,
+                                videoCollectTimes:
+                                    firstVideo.videoCollectTimes!,
+                                displayVideoCollectTimes:
+                                    widget.displayVideoCollectTimes,
+                                displayVideoTimes: widget.displayVideoTimes,
+                                displayViewTimes: widget.displayViewTimes,
+                                onOverrideRedirectTap:
+                                    widget.onOverrideRedirectTap,
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 8),
-                          Expanded(
+                            const SizedBox(width: 8),
+                            Expanded(
                               child: secondVideo != null
                                   ? VideoPreviewWidget(
                                       id: secondVideo.id,
@@ -127,24 +152,29 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                       onOverrideRedirectTap:
                                           widget.onOverrideRedirectTap,
                                     )
-                                  : const SizedBox.shrink()),
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                    ],
-                  );
-                },
-                childCount: totalRows,
+                                  : const SizedBox.shrink(),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    );
+                  },
+                  childCount: childCount,
+                ),
               ),
             ),
-          ),
-        // ignore: prefer_const_constructors
-        if (widget.displayLoading) SliverVideoPreviewSkeletonList(),
-        if (widget.displayNoMoreData)
-          SliverToBoxAdapter(
-            child: widget.noMoreWidget,
-          ),
-      ],
-    );
+          // ignore: prefer_const_constructors
+          if (widget.displayLoading) SliverVideoPreviewSkeletonList(),
+          if (widget.displayNoMoreData)
+            SliverToBoxAdapter(
+              child: widget.noMoreWidget,
+            ),
+        ],
+      );
+    } catch (e) {
+      print(e);
+      return const SizedBox.shrink();
+    }
   }
 }

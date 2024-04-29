@@ -3,6 +3,7 @@ import 'dart:html' if (dart.library.html) 'dart:html' as html;
 import 'dart:ui_web' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:game/utils/loading.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
 
 import 'package:game/models/game_list.dart';
@@ -51,8 +52,15 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
       ..src =
           'https://client.pragmaticplaylive.net/desktop/assets/api/fullscreenApi.js'; // 將路徑替換為實際的fullScreenApi.js路徑
 
-    // append the script element to the head of the document
     html.document.head?.append(scriptElement);
+
+    // 在 iframe 加載完成後動態添加 cache-control 標頭
+    iframeElement!.onLoad.listen((_) {
+      var meta = html.MetaElement(); // 創建 MetaElement
+      meta.httpEquiv = 'Cache-Control'; // 設置 httpEquiv
+      meta.content = 'no-cache, no-store, must-revalidate'; // 設置 content
+      html.document.head?.append(meta);
+    });
 
 // ignore: undefined_prefixed_name
     ui.platformViewRegistry.registerViewFactory(
@@ -80,9 +88,9 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
 
     return Stack(
       children: [
-        HtmlElementView(
-          viewType: viewType,
-        ),
+        // 加入loading
+        const Center(child: GameLoading()),
+        HtmlElementView(viewType: viewType),
         if (toggleButton)
           Center(
             child: PointerInterceptor(

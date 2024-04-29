@@ -69,9 +69,8 @@ class _AppsScreenState extends State<AppsScreen> {
                 ),
                 PopularWidget(items: popularAds),
                 const SliverToBoxAdapter(
-                  child: SizedBox(height: 90),
+                  child: RandomGameArea(),
                 ),
-                const RandomGameArea()
               ],
             ],
           )),

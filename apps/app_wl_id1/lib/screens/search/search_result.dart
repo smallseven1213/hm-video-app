@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/controllers/games_controller.dart';
 import 'package:shared/controllers/search_temp_controller.dart';
 import 'package:shared/controllers/search_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -10,6 +11,7 @@ import 'package:shared/navigator/delegate.dart';
 import '../../widgets/list_no_more.dart';
 import '../../widgets/sliver_vod_grid.dart';
 import '../../widgets/tab_bar.dart';
+import 'games_result.dart';
 
 final vodApi = VodApi();
 
@@ -29,14 +31,19 @@ class SearchResultPageState extends State<SearchResultPage>
   final searchTempShortController = Get.find<SearchTempShortController>();
   late final SearchVodController searchVodController;
   late final SearchVodController searchShortController;
+  late final GamesController gamesController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     searchVodController = SearchVodController(keyword: widget.keyword, film: 1);
     searchShortController =
         SearchVodController(keyword: widget.keyword, film: 2);
+    gamesController = GamesController(
+      name: widget.keyword,
+      scrollController: scrollController,
+    );
 
     searchShortController.vodList.listen((p0) {
       searchTempShortController.replaceVideos(p0);
@@ -58,7 +65,7 @@ class SearchResultPageState extends State<SearchResultPage>
         // GSTabBar
         GSTabBar(
           controller: _tabController,
-          tabs: [I18n.longVideo, I18n.shortVideo],
+          tabs: [I18n.longVideo, I18n.shortVideo, I18n.game],
         ),
         // SliverVodGrid
         Expanded(
@@ -110,6 +117,21 @@ class SearchResultPageState extends State<SearchResultPage>
                       MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
                           args: {'itemId': 3, 'videoId': id});
                     })),
+              ),
+              NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (_tabController.index == 1 &&
+                      scrollInfo is ScrollEndNotification &&
+                      scrollInfo.metrics.pixels ==
+                          scrollInfo.metrics.maxScrollExtent) {
+                    gamesController.loadMoreData();
+                  }
+                  return false;
+                },
+                child: GamesResult(
+                  scrollController: scrollController,
+                  gamesController: gamesController,
+                ),
               ),
             ],
           ),

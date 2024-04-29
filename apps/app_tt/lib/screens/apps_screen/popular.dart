@@ -70,8 +70,8 @@ class PopularWidget extends StatelessWidget {
                       ),
                       // 按鈕
                       Container(
-                        width: 70,
                         height: 30,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: const BoxDecoration(
                             color: Color(0xFFfe2c55),
                             borderRadius: BorderRadius.all(Radius.circular(4))),

@@ -198,7 +198,7 @@ const Map<String, String> idIdStrings = {
   "fish": "Ikan",
   "card": "Kartu",
   "slots": "Slot",
-  "live": "Langsung",
+  "live": "kasino",
   "sports": "Olahraga",
   "lottery": "Undian",
   "hot": "Panas",
