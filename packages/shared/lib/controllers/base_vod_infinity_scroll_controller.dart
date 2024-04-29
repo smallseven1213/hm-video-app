@@ -78,7 +78,7 @@ abstract class BaseVodInfinityScrollController extends GetxController {
       hasMoreData.value = false;
     }
 
-    isListEmpty.value = vodList.isEmpty;
+    isListEmpty.value = newData.totalCount == 0;
     isLoading.value = false;
     displayNoMoreData.value =
         !isLoading.value && !hasMoreData.value && !isListEmpty.value;

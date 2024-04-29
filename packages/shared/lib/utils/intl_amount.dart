@@ -11,5 +11,5 @@ String intlAmount(int amount, String currency) {
       DecimalIntl(
         Decimal.parse(amount.toString()),
       ),
-    ) : '0.00'} $currency}';
+    ) : '0.00'} $currency';
 }
