@@ -96,6 +96,7 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
       ),
   AppRoutes.games: (context, args) => games_page.GamesPage(
         gameAreaId: args['gameAreaId'] as int,
+        gameAreaName: args['gameAreaName'] as String,
       ),
   AppRoutes.shortsByLocal: (context, args) =>
       shorts_by_local_page.ShortsByLocalPage(
