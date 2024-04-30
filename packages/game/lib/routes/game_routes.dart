@@ -30,7 +30,9 @@ final Map<String, RouteWidgetBuilder> gameRoutes = {
       ),
   GameAppRoutes.withdraw: (context, args) => const GameWithdraw(),
   GameAppRoutes.setFundPassword: (context, args) => const GameSetFundPassword(),
-  GameAppRoutes.setBankcard: (context, args) => const GameSetBankCard(),
+  GameAppRoutes.setBankcard: (context, args) => GameSetBankCard(
+        remittanceType: args['remittanceType'] as int,
+      ),
   GameAppRoutes.paymentResult: (context, args) => const GamePaymentResult(),
   GameAppRoutes.depositRecord: (context, args) => const GameDepositRecord(),
   GameAppRoutes.withdrawRecord: (context, args) => const GameWithdrawRecord(),

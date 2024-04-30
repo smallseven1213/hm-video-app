@@ -52,6 +52,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
   Type type = Type.bankcard;
   double exchangeRate = 0.00;
   double amount = 0.00;
+  int currentRemittanceType = 1;
   GameWithdrawController gameWithdrawalController =
       Get.find<GameWithdrawController>();
 
@@ -117,6 +118,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                                           remittanceTypeMapper['USDT'])
                                       ? Type.usdt
                                       : Type.bankcard;
+                                  currentRemittanceType = item.remittanceType;
                                 });
                               },
                               isActive: item.remittanceType ==
@@ -171,7 +173,12 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
               if (widget.paymentPin == false) {
                 showFundPassword();
               } else {
-                MyRouteDelegate.of(context).push(GameAppRoutes.setBankcard);
+                MyRouteDelegate.of(context).push(
+                  GameAppRoutes.setBankcard,
+                  args: {
+                    'remittanceType': currentRemittanceType,
+                  },
+                );
               }
             },
           )
