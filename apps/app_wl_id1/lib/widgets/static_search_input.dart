@@ -47,7 +47,10 @@ class StaticSearchInput extends StatelessWidget {
                     onTap: onInputClick,
                     child: Text(
                       defaultValue,
-                      style: const TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: isWhiteTheme
+                              ? const Color(0xFF21A8F8)
+                              : Colors.white),
                       overflow: TextOverflow.clip, // 使用 clip，當文字超出邊界時將其裁剪
                       maxLines: 1, // 限制最大行數為 1，這樣文字就不會換行
                     ),

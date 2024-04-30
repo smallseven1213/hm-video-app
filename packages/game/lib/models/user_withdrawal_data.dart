@@ -74,7 +74,7 @@ class UserPaymentSecurity {
 Map<String, int> remittanceTypeMapper = {
   'BANK_CARD_CNY': 1,
   'USDT': 2,
-  // 'BANK_CARD_INR': 3,
-  // 'BANK_CARD_TWD': 4,
-  // 'BANK_CARD_PHP': 5,
+  'BANK_CARD_IDR': 3,
+  'BANK_CARD_TWD': 4,
+  'BANK_CARD_PHP': 5,
 };

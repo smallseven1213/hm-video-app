@@ -22,6 +22,7 @@ import 'package:game/models/game_deposit_payment_type_list.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/fetcher.dart';
 
+import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/services/platform_service.app.dart'
     if (dart.library.html) 'package:shared/services/platform_service.web.dart'
     as app_platform_service;
@@ -29,6 +30,7 @@ import 'package:shared/services/platform_service.app.dart'
 final systemConfig = GameSystemConfig();
 String apiPrefix =
     '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform';
+SystemConfigController systemController = Get.find<SystemConfigController>();
 
 final responseController = Get.find<GameApiResponseErrorCatchController>();
 
@@ -161,7 +163,10 @@ class GameLobbyApi {
       );
 
   // 銀行卡設置 > 取得銀行列表
-  Future<List<BankItem>> getBanks() => fetcher(url: '$apiPrefix/bank').then(
+  Future<List<BankItem>> getBanks(int remittanceType) => fetcher(
+              url:
+                  '${systemController.apiHost.value}/api/v1/third/bank/cards?type=$remittanceType')
+          .then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
           _checkMaintenance(res['code']);

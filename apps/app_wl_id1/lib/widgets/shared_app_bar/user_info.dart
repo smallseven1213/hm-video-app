@@ -67,10 +67,13 @@ class UserInfo extends StatelessWidget {
               ],
             ),
             const SizedBox(width: 10),
-            const Image(
-              image: AssetImage('assets/images/user_balance.png'),
-              fit: BoxFit.contain,
-              height: 35,
+            const SizedBox(
+              width: 40,
+              child: Image(
+                image: AssetImage('assets/images/user_balance.png'),
+                fit: BoxFit.contain,
+                height: 35,
+              ),
             )
           ],
         ),

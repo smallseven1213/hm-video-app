@@ -21,7 +21,9 @@ import '../../localization/game_localization_delegate.dart';
 final logger = Logger();
 
 class GameSetBankCard extends StatefulWidget {
-  const GameSetBankCard({Key? key}) : super(key: key);
+  final int remittanceType;
+  const GameSetBankCard({Key? key, required this.remittanceType})
+      : super(key: key);
 
   @override
   GameSetBankCardState createState() => GameSetBankCardState();
@@ -52,7 +54,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
           onSuccess: (pin) {},
           onClose: () => MyRouteDelegate.of(context).popRoute());
     });
-    _getBanks();
+    _getBanks(widget.remittanceType);
   }
 
   @override
@@ -67,7 +69,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
   Map<String, dynamic> getFormData() {
     return {
       'account': accountController.text,
-      'remittanceType': 1,
+      'remittanceType': widget.remittanceType,
       'bankName': bankNameController.text,
       'legalName': legalNameController.text,
       'branchName': branchNameController.text,
@@ -109,8 +111,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
 // 寫一個打getBanks的api, 並且把api的結果塞到下拉選單的選項裡
 // 先取得銀行列表
-  Future<void> _getBanks() async {
-    var res = await Get.put(GameLobbyApi()).getBanks();
+  Future<void> _getBanks(int remittanceType) async {
+    var res = await Get.put(GameLobbyApi()).getBanks(widget.remittanceType);
     // ignore: unnecessary_null_comparison
     if (res != null) {
       setState(() {
@@ -177,6 +179,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
+
+    logger.i('remittanceType: ${widget.remittanceType}');
 
     return Scaffold(
       appBar: AppBar(
