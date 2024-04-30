@@ -6,12 +6,11 @@ class SharedAppBar extends StatelessWidget implements PreferredSizeWidget {
   const SharedAppBar({super.key});
 
   @override
-  Size get preferredSize => const Size.fromHeight(56);
+  Size get preferredSize => const Size.fromHeight(60);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 60,
       padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

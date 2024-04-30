@@ -47,9 +47,6 @@ class HomeMainScreen extends StatelessWidget {
                 Positioned(
                     child: Column(
                   children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).padding.top,
-                    ),
                     DisplayLayoutTabSearchConsumer(
                         layoutId: layoutId,
                         child: (({required bool displaySearchBar}) =>
@@ -66,7 +63,9 @@ class HomeMainScreen extends StatelessWidget {
                                       ),
                                     ],
                                   )
-                                : Container())),
+                                : SizedBox(
+                                    height: MediaQuery.of(context).padding.top,
+                                  ))),
                     Padding(
                       padding: const EdgeInsets.only(
                         bottom: 0,

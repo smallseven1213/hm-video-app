@@ -15,8 +15,8 @@ class AuthButtons extends StatelessWidget {
             MyRouteDelegate.of(context).push(AppRoutes.login);
           },
           child: Container(
-            width: 80,
-            height: 35,
+            width: 70,
+            height: 24,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: const Color(0xFF00669F), width: 1),
@@ -25,19 +25,19 @@ class AuthButtons extends StatelessWidget {
             child: const Center(
               child: Text(
                 'Login',
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: TextStyle(color: Colors.white, fontSize: 10),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 12),
         InkWell(
           onTap: () {
             MyRouteDelegate.of(context).push(AppRoutes.register);
           },
           child: Container(
-            width: 80,
-            height: 35,
+            width: 70,
+            height: 24,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
               border: Border.all(color: const Color(0xFF00669F), width: 1),
@@ -46,7 +46,7 @@ class AuthButtons extends StatelessWidget {
             child: const Center(
               child: Text(
                 'Register',
-                style: TextStyle(color: Colors.white, fontSize: 12),
+                style: TextStyle(color: Colors.white, fontSize: 10),
               ),
             ),
           ),
