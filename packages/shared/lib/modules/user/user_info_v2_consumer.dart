@@ -14,8 +14,8 @@ class UserInfoV2Consumer extends StatelessWidget {
 
     // ignore: invalid_use_of_protected_member
     return Obx(() {
-      var isVIP = userController.info.value.roles.contains('vip');
-      var isGuest = userController.info.value.roles.contains('guest');
+      var isVIP = userController.infoV2.value.roles.contains('vip');
+      var isGuest = userController.infoV2.value.roles.contains('guest');
 
       return child(userController.infoV2.value, isVIP, isGuest);
     });
