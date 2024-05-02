@@ -46,20 +46,15 @@ class GameWithDrawOptions extends StatefulWidget {
   GameWithDrawOptionsState createState() => GameWithDrawOptionsState();
 }
 
-enum Type { bankcard, usdt }
+enum Type { usdt, bankcard }
 
 class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
-  Type type = Type.bankcard;
+  Type type = Type.usdt;
   double exchangeRate = 0.00;
   double amount = 0.00;
   int currentRemittanceType = 1;
   GameWithdrawController gameWithdrawalController =
       Get.find<GameWithdrawController>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   showFundPassword() {
     showConfirmDialog(
