@@ -84,12 +84,17 @@ class TagGamesPageState extends State<TagGamesPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: GameCard(gameDetail: firstGame),
+                                child: GameCard(
+                                  gameDetail: firstGame,
+                                  hideTags: true,
+                                ),
                               ),
                               const SizedBox(width: 8),
                               Expanded(
                                   child: secondGame != null
-                                      ? GameCard(gameDetail: secondGame)
+                                      ? GameCard(
+                                          gameDetail: secondGame,
+                                          hideTags: true)
                                       : const SizedBox.shrink()),
                             ],
                           ),
