@@ -183,7 +183,7 @@ class GameSetFundPasswordState extends State<GameSetFundPassword> {
                       ),
                       const SizedBox(height: 40),
                       GameButton(
-                        text: '確認送出',
+                        text: localizations.translate('confirm'),
                         onPressed: () => updateFundPassword(),
                         disabled: !isConfirmButtonEnabled,
                       ),

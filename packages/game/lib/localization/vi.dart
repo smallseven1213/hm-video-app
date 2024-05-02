@@ -89,6 +89,7 @@ const Map<String, String> viVnStrings = {
   "please_make_sure_you_fill_in_the_correct_information_to_avoid_affecting_the_payment":
       "Vui lòng chắc chắn bạn điền đúng thông tin để tránh ảnh hưởng đến việc thanh toán.",
   "please_enter_your_bank_name": "Vui lòng nhập tên ngân hàng của bạn",
+  'please_enter_the_correct_bank_name': 'Please enter the correct bank name',
   "please_enter_the_name_of_the_branch_optional":
       "Vui lòng nhập tên chi nhánh (tùy chọn)",
   "card_number": "Số thẻ",

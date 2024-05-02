@@ -29,19 +29,25 @@ class AutoComplete extends StatefulWidget {
 }
 
 class _AutoCompleteState extends State<AutoComplete> {
+  List<BankItem> filteredList = [];
+
   @override
   Widget build(BuildContext context) {
+    filteredList = widget.listContent;
+
     return Autocomplete<BankItem>(
       optionsBuilder: (TextEditingValue textEditingValue) {
-        if (textEditingValue.text == '') {
-          return const Iterable<BankItem>.empty();
-        }
+        // if (textEditingValue.text == '') {
+        //   return const Iterable<BankItem>.empty();
+        // }
 
-        return widget.listContent
-            .where((BankItem option) => option.bankName
+        filteredList = widget.listContent
+            .where((item) => item.bankName
                 .toLowerCase()
-                .startsWith(textEditingValue.text.toLowerCase()))
+                .contains(textEditingValue.text.toLowerCase()))
             .toList();
+
+        return filteredList;
       },
       displayStringForOption: (BankItem option) => option.bankName,
       fieldViewBuilder: (BuildContext context,
@@ -75,7 +81,11 @@ class _AutoCompleteState extends State<AutoComplete> {
                     controller: fieldTextEditingController,
                     onChanged: (value) => {
                       widget.onChanged!(value),
-                      widget.controller.text = value
+                      widget.controller.text = value,
+                      filteredList = widget.listContent
+                          .where((item) =>
+                              item.bankName.toLowerCase().contains(value))
+                          .toList(),
                     },
                     focusNode: fieldFocusNode,
                     style: TextStyle(
@@ -91,6 +101,7 @@ class _AutoCompleteState extends State<AutoComplete> {
                       fieldTextEditingController.clear();
                       widget.controller.clear();
                       widget.onClear!();
+                      widget.onChanged!('');
                     },
                     child: Icon(
                       Icons.cancel,
@@ -120,6 +131,7 @@ class _AutoCompleteState extends State<AutoComplete> {
       },
       onSelected: (BankItem selection) {
         logger.i('Selected: ${selection.bankName}');
+        widget.onChanged!(selection.bankName);
         widget.controller.text = selection.bankName;
       },
       optionsViewBuilder: (BuildContext context,
@@ -142,7 +154,8 @@ class _AutoCompleteState extends State<AutoComplete> {
                   ),
                 ],
               ),
-              width: 230,
+              width: 240,
+              constraints: const BoxConstraints(maxHeight: 400),
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),
                 child: SingleChildScrollView(

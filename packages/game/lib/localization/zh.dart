@@ -82,6 +82,7 @@ const Map<String, String> zhTwStrings = {
   'please_make_sure_you_fill_in_the_correct_information_to_avoid_affecting_the_payment':
       '綁定後不可更改，請確認資料填寫正確，避免影響到帳。',
   'please_enter_your_bank_name': '請輸入銀行名稱',
+  'please_enter_the_correct_bank_name': '請輸入正確的銀行名稱',
   'please_enter_the_name_of_the_branch_optional': '請輸入支行名稱(選填)',
   'card_number': '銀行卡號',
   'please_enter_your_bank_card_number': '請輸入您的銀行卡號',
