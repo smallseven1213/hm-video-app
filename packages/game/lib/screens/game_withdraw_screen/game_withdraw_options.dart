@@ -46,8 +46,6 @@ class GameWithDrawOptions extends StatefulWidget {
   GameWithDrawOptionsState createState() => GameWithDrawOptionsState();
 }
 
-enum Type { usdt, bankcard }
-
 class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
   Type type = Type.usdt;
   double exchangeRate = 0.00;
@@ -55,6 +53,22 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
   int currentRemittanceType = 1;
   GameWithdrawController gameWithdrawalController =
       Get.find<GameWithdrawController>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(const Duration(milliseconds: 1000)).then((value) {
+      setState(() {
+        type = remittanceTypeMapper[
+            gameWithdrawalController.initRemittanceType.value] as Type;
+        currentRemittanceType =
+            gameWithdrawalController.initRemittanceType.value;
+      });
+    });
+
+    logger.i('currentRemittanceType: $currentRemittanceType');
+  }
 
   showFundPassword() {
     showConfirmDialog(
@@ -109,15 +123,15 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                                   as String,
                               onPressed: () {
                                 setState(() {
-                                  type = (item.remittanceType ==
-                                          remittanceTypeMapper['USDT'])
+                                  type = item.remittanceType ==
+                                          remittanceTypeEnum['USDT']
                                       ? Type.usdt
                                       : Type.bankcard;
                                   currentRemittanceType = item.remittanceType;
                                 });
                               },
                               isActive: item.remittanceType ==
-                                      remittanceTypeMapper['USDT']
+                                      remittanceTypeEnum['USDT']
                                   ? type == Type.usdt
                                   : type == Type.bankcard,
                             )))
