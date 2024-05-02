@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/models/index.dart';
 import 'package:shared/models/user_v2.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -57,12 +58,27 @@ class UserInfo extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                Text(
-                  intlAmount(info.points, I18n.dollar),
-                  style: const TextStyle(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.white),
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Get.find<UserController>().fetchUserInfoV2();
+                      },
+                      child: const Image(
+                        image: AssetImage('assets/images/reload_balance.png'),
+                        fit: BoxFit.contain,
+                        height: 13,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    Text(
+                      intlAmount(info.points, I18n.dollar),
+                      style: const TextStyle(
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.white),
+                    )
+                  ],
                 ),
               ],
             ),
