@@ -17,9 +17,11 @@ const kSpacingUnit = 8.0;
 
 class HorizontalGameCard extends StatelessWidget {
   final Game gameBlocks;
+  final bool? hideTags;
   const HorizontalGameCard({
     super.key,
     required this.gameBlocks,
+    this.hideTags = false,
   });
 
   @override
@@ -52,13 +54,13 @@ class HorizontalGameCard extends StatelessWidget {
           children: <Widget>[
             Expanded(
                 child: games.length > 2
-                    ? GameCard(gameDetail: games[2])
+                    ? GameCard(gameDetail: games[2], hideTags: hideTags)
                     : Container() // Empty container if no game available
                 ),
             const SizedBox(width: 10),
             Expanded(
                 child: games.length > 3
-                    ? GameCard(gameDetail: games[3])
+                    ? GameCard(gameDetail: games[3], hideTags: hideTags)
                     : Container() // Empty container if no game available, ensures placeholder
                 ),
           ],
@@ -70,7 +72,8 @@ class HorizontalGameCard extends StatelessWidget {
 
 class GameCard extends StatelessWidget {
   final GameDetail gameDetail;
-  const GameCard({super.key, required this.gameDetail});
+  final bool? hideTags;
+  const GameCard({super.key, required this.gameDetail, this.hideTags = false});
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +106,7 @@ class GameCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                  _buildGameTags(),
+                  if (hideTags == false) _buildGameTags(),
                 ],
               ),
             ),

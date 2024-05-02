@@ -7,8 +7,9 @@ import 'vertical_game_card.dart';
 
 class GameArea extends StatelessWidget {
   final Game game;
+  final bool? hideTags;
 
-  const GameArea({super.key, required this.game});
+  const GameArea({super.key, required this.game, this.hideTags = false});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class GameArea extends StatelessWidget {
     if (game.template == 1) {
       widget = VerticalGameCard(gameBlocks: game);
     } else if (game.template == 2) {
-      widget = HorizontalGameCard(gameBlocks: game);
+      widget = HorizontalGameCard(gameBlocks: game, hideTags: hideTags);
     }
     return Padding(
       padding: const EdgeInsets.only(bottom: 8),
