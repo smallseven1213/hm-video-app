@@ -20,13 +20,13 @@ class HeaderWidget extends StatelessWidget {
           Text(
             gameBlocks.name,
             style: const TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
               color: Colors.white,
             ),
           ),
-          TextButton(
-            onPressed: () {
+          InkWell(
+            onTap: () {
               MyRouteDelegate.of(context).push(
                 AppRoutes.games,
                 args: {
@@ -35,19 +35,16 @@ class HeaderWidget extends StatelessWidget {
                 },
               );
             },
-            style: TextButton.styleFrom(
-              side: const BorderSide(color: kPrimaryColor),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            ),
-            child: const Text(
-              'See All',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 10,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.blue),
               ),
+              child:
+                  const Text('See All', style: TextStyle(color: Colors.white)),
             ),
-          ),
+          )
         ],
       ),
     );
