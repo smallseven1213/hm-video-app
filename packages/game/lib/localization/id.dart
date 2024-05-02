@@ -88,6 +88,7 @@ const Map<String, String> idIdStrings = {
   "please_make_sure_you_fill_in_the_correct_information_to_avoid_affecting_the_payment":
       "Pastikan Anda mengisi informasi yang benar untuk menghindari pengaruh pada pembayaran.",
   "please_enter_your_bank_name": "Silakan masukkan nama bank Anda",
+  'please_enter_the_correct_bank_name': 'Please enter the correct bank name',
   "please_enter_the_name_of_the_branch_optional":
       "Silakan masukkan nama cabang (opsional)",
   "card_number": "Nomor Kartu",

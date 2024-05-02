@@ -198,7 +198,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             widget.reachable == false &&
             withdrawalModeMapper[widget.withdrawalMode] == 'enable')
           GameButton(
-            text: "確認送出",
+            text: localizations.translate('confirm'),
             onPressed: () {
               logger.i('widget.applyAmount: ${widget.applyAmount}');
               logger.i('widget.withdrawalFee: ${widget.withdrawalFee}');

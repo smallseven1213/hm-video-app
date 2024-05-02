@@ -160,7 +160,7 @@ void showFundingPasswordBottomSheet(BuildContext context,
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   height: 44,
                   child: GameButton(
-                    text: "確認送出",
+                    text: GameLocalizations.of(context)!.translate('confirm'),
                     onPressed: () => onSubmit(context),
                     disabled: gameWithdrawController.enableSubmit.value,
                   ),

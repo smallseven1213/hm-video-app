@@ -116,7 +116,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
     // ignore: unnecessary_null_comparison
     if (res != null) {
       setState(() {
-        bankList = res;
+        bankList = res..sort((a, b) => b.orderIndex.compareTo(a.orderIndex));
       });
     }
   }
@@ -158,9 +158,19 @@ class GameSetBankCardState extends State<GameSetBankCard> {
             .translate('please_enter_your_bank_name');
       });
     } else if (value.isNotEmpty) {
-      setState(() {
-        _bankNameError = null;
-      });
+      // 檢查輸入的value是否在銀行列表中
+      var isBankNameExit = bankList.any((item) => item.bankName == value);
+
+      if (!isBankNameExit) {
+        setState(() {
+          _bankNameError = GameLocalizations.of(context)!
+              .translate('please_enter_the_correct_bank_name');
+        });
+      } else {
+        setState(() {
+          _bankNameError = null;
+        });
+      }
     }
     _checkFormValidity();
   }
@@ -253,9 +263,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                                   .translate('please_enter_your_bank_name'),
                               controller: bankNameController,
                               listContent: bankList,
-                              onChanged: (value) => {
-                                _validateBankName(value),
-                              },
+                              onChanged: (value) => _validateBankName(value),
                               errorMessage: _bankNameError,
                               onClear: () => {
                                 setState(() {
