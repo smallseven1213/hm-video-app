@@ -35,7 +35,11 @@ class GameApi {
   }
 
   Future<InfinityGames> getGames(
-      {int? gameAreaId, String? name, int page = 1, int limit = 20}) async {
+      {int? gameAreaId,
+      String? name,
+      int page = 1,
+      String? tag,
+      int limit = 20}) async {
     try {
       String queryString = 'page=$page&limit=$limit';
       if (gameAreaId != null) {
@@ -43,6 +47,9 @@ class GameApi {
       }
       if (name != null && name.isNotEmpty) {
         queryString += '&name=$name';
+      }
+      if (tag != null && tag.isNotEmpty) {
+        queryString += '&tag=$tag';
       }
       var url = '$apiHost/api/v1/game?$queryString';
       var res = await fetcher(url: url);
