@@ -89,9 +89,9 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
     Map<int, String> remittanceTypeLocale = {
       1: localizations.translate('bank_card'),
       2: 'USDT',
-      // 3: 'BANK_CARD_INR',
-      // 4: 'BANK_CARD_TWD',
-      // 5: 'BANK_CARD_PHP',
+      3: localizations.translate('bank_card_idr'),
+      4: localizations.translate('bank_card_twd'),
+      5: localizations.translate('bank_card_php'),
     };
 
     return Column(
