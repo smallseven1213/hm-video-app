@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/utils/handle_game_item.dart';
@@ -9,6 +11,7 @@ import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/utils/event_bus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../localization/game_localization_delegate.dart';
@@ -99,6 +102,7 @@ class GameListViewState extends State<GameListView>
   final ScrollController _scrollController = ScrollController();
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
+  StreamSubscription<String>? eventBusSubscription;
 
   @override
   void initState() {
@@ -111,11 +115,18 @@ class GameListViewState extends State<GameListView>
         _handleOpenThirdPartyGame();
       });
     });
+
+    eventBusSubscription = eventBus.onEvent.listen((event) {
+      if (event == 'openGame') {
+        _handleOpenThirdPartyGame();
+      }
+    });
   }
 
   @override
   void dispose() {
     _scrollController.dispose();
+    eventBusSubscription?.cancel();
     super.dispose();
   }
 

@@ -32,6 +32,8 @@ void handleGameUrlMethods(BuildContext context, String url, String routePath) {
     logger.i('前往遊戲大廳');
   } else if (gameId != '' && tpCode != '' && gameId != null && tpCode != null) {
     gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
+    var currentPath = MyRouteDelegate.of(context).currentPath;
+    eventBus.fireEvent("openGame");
   } else if (gameType != null && gameType != '') {
     gamePlatformConfigController.setGameTypeIndex(int.parse(gameType));
     MyRouteDelegate.of(context).push(
