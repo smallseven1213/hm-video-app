@@ -22,29 +22,15 @@ class CrossColumnGameCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 370,
-      child: Column(
-        children: [
-          HeaderWidget(gameBlocks: gameBlocks),
-          _buildGameGrid(context),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildGameGrid(BuildContext context) {
-    if (gameBlocks.games.isEmpty) {
-      return const SizedBox.shrink(); // 當games沒有資料時，返回一個空的widget
-    }
     List<Widget> gameCards = [];
     for (var i = 0; i < gameBlocks.games.length && i < 3; i++) {
       gameCards.add(GameCard(game: gameBlocks.games[i]));
     }
-    return Expanded(
-      child: Column(
-        children: gameCards,
-      ),
+    return Column(
+      children: [
+        HeaderWidget(gameBlocks: gameBlocks),
+        ...gameCards,
+      ],
     );
   }
 }
