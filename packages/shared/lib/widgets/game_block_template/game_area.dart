@@ -12,11 +12,15 @@ class GameArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    dynamic widget = CrossColumnGameCard(gameBlocks: game);
     if (game.template == 1) {
-      return VerticalGameCard(gameBlocks: game);
+      widget = VerticalGameCard(gameBlocks: game);
     } else if (game.template == 2) {
-      return HorizontalGameCard(gameBlocks: game);
+      widget = HorizontalGameCard(gameBlocks: game);
     }
-    return CrossColumnGameCard(gameBlocks: game);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: widget,
+    );
   }
 }
