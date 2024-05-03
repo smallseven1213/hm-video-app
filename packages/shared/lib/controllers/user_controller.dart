@@ -25,6 +25,8 @@ class UserController extends GetxController {
   ).obs;
   var wallets = <WalletItem>[].obs;
   var isLoading = false.obs;
+  var isInfoV2Init = false.obs;
+  var isInfoV2Loading = false.obs;
   var totalAmount = 0.0.obs;
   var loginCode = ''.obs;
 
@@ -70,15 +72,19 @@ class UserController extends GetxController {
   }
 
   fetchUserInfoV2() async {
-    isLoading.value = true;
+    isInfoV2Loading.value = true;
+
     try {
       var userApi = UserApi();
       var res = await userApi.getCurrentUserV2();
+      if (isInfoV2Init.value == false) {
+        isInfoV2Init.value = true;
+      }
       infoV2.value = res;
     } catch (error) {
       logger.i('fetchUserInfo error: $error');
     } finally {
-      isLoading.value = false;
+      isInfoV2Loading.value = false;
     }
   }
 
