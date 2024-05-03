@@ -82,6 +82,7 @@ const Map<String, String> zhCnStrings = {
   'please_make_sure_you_fill_in_the_correct_information_to_avoid_affecting_the_payment':
       '绑定后不可更改，请确认资料填写正确，避免影响到帐。',
   'please_enter_your_bank_name': '请输入银行名称',
+  'please_enter_the_correct_bank_name': '请输入正确的银行名称',
   'please_enter_the_name_of_the_branch_optional': '请输入支行名称(选填)',
   'card_number': '银行卡号',
   'please_enter_your_bank_card_number': '请输入您的银行卡号',
@@ -109,6 +110,9 @@ const Map<String, String> zhCnStrings = {
   'update_time': '更新时间',
   'reviewing': '审核中',
   'bank_card': '银行卡',
+  'bank_card_idr': '银行卡',
+  'bank_card_twd': '银行卡',
+  'bank_card_php': '银行卡',
   'type': '类型',
   'account': '帐户',
   'withdrawal_method': '提现方式',

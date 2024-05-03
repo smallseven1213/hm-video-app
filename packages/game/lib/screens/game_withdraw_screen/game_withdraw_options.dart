@@ -46,10 +46,8 @@ class GameWithDrawOptions extends StatefulWidget {
   GameWithDrawOptionsState createState() => GameWithDrawOptionsState();
 }
 
-enum Type { bankcard, usdt }
-
 class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
-  Type type = Type.bankcard;
+  Type type = Type.usdt;
   double exchangeRate = 0.00;
   double amount = 0.00;
   int currentRemittanceType = 1;
@@ -59,6 +57,17 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(const Duration(milliseconds: 1000)).then((value) {
+      setState(() {
+        type = remittanceTypeMapper[
+            gameWithdrawalController.initRemittanceType.value] as Type;
+        currentRemittanceType =
+            gameWithdrawalController.initRemittanceType.value;
+      });
+    });
+
+    logger.i('currentRemittanceType: $currentRemittanceType');
   }
 
   showFundPassword() {
@@ -89,9 +98,9 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
     Map<int, String> remittanceTypeLocale = {
       1: localizations.translate('bank_card'),
       2: 'USDT',
-      // 3: 'BANK_CARD_INR',
-      // 4: 'BANK_CARD_TWD',
-      // 5: 'BANK_CARD_PHP',
+      3: localizations.translate('bank_card_idr'),
+      4: localizations.translate('bank_card_twd'),
+      5: localizations.translate('bank_card_php'),
     };
 
     return Column(
@@ -114,15 +123,15 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                                   as String,
                               onPressed: () {
                                 setState(() {
-                                  type = (item.remittanceType ==
-                                          remittanceTypeMapper['USDT'])
+                                  type = item.remittanceType ==
+                                          remittanceTypeEnum['USDT']
                                       ? Type.usdt
                                       : Type.bankcard;
                                   currentRemittanceType = item.remittanceType;
                                 });
                               },
                               isActive: item.remittanceType ==
-                                      remittanceTypeMapper['USDT']
+                                      remittanceTypeEnum['USDT']
                                   ? type == Type.usdt
                                   : type == Type.bankcard,
                             )))
@@ -198,7 +207,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             widget.reachable == false &&
             withdrawalModeMapper[widget.withdrawalMode] == 'enable')
           GameButton(
-            text: "確認送出",
+            text: localizations.translate('confirm'),
             onPressed: () {
               logger.i('widget.applyAmount: ${widget.applyAmount}');
               logger.i('widget.withdrawalFee: ${widget.withdrawalFee}');

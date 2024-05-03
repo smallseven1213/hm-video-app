@@ -71,10 +71,20 @@ class UserPaymentSecurity {
   }
 }
 
-Map<String, int> remittanceTypeMapper = {
+Map<String, int> remittanceTypeEnum = {
   'BANK_CARD_CNY': 1,
   'USDT': 2,
   'BANK_CARD_IDR': 3,
   'BANK_CARD_TWD': 4,
   'BANK_CARD_PHP': 5,
+};
+
+enum Type { usdt, bankcard }
+
+Map<int, Type> remittanceTypeMapper = {
+  1: Type.bankcard,
+  2: Type.usdt,
+  3: Type.bankcard,
+  4: Type.bankcard,
+  5: Type.bankcard,
 };

@@ -4,7 +4,7 @@ class UserV2 {
   final String nickname;
   final String? avatar;
   final DateTime? vipExpiredAt;
-  final int points;
+  final double points;
   final bool isFree;
 
   UserV2({
@@ -26,7 +26,7 @@ class UserV2 {
       vipExpiredAt: json['vipExpiredAt'] != null
           ? DateTime.parse(json['vipExpiredAt'])
           : null,
-      points: int.parse(json['points']),
+      points: double.parse(json['points']),
       isFree: json['isFree'],
     );
   }
