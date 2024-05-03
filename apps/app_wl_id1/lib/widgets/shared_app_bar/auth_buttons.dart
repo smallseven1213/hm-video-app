@@ -31,9 +31,9 @@ class AuthButtons extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: Colors.blue),
-            ),
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.blue),
+                color: const Color(0xFF082C68)),
             child:
                 const Text('Register', style: TextStyle(color: Colors.white)),
           ),
