@@ -14,12 +14,14 @@ class UserArea extends StatelessWidget {
       height: 60,
       child: UserInfoV2Consumer(
         child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
-          if (isLoading && isInfoV2Init == false) {
+          if (isInfoV2Init == false) {
             return const SizedBox.shrink();
-          } else if (isGuest == false) {
-            return UserInfo(info: info, isLoading: isLoading);
           } else {
-            return const AuthButtons();
+            if (isGuest == false) {
+              return UserInfo(info: info, isLoading: isLoading);
+            } else {
+              return const AuthButtons();
+            }
           }
         },
       ),
