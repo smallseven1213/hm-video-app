@@ -4,7 +4,7 @@ class UserV2 {
   final String nickname;
   final String? avatar;
   final DateTime? vipExpiredAt;
-  final double points;
+  late final double points;
   final bool isFree;
 
   UserV2({
