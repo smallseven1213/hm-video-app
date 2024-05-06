@@ -17,6 +17,7 @@ class SliverVodGrid extends StatefulWidget {
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final bool? displayCoverVertical;
+  final bool? hasTags;
   final ScrollController? customScrollController;
   final Function(int id)? onOverrideRedirectTap;
   final int? insertWidgetInterval; // 每幾個column插入一個widget
@@ -35,6 +36,7 @@ class SliverVodGrid extends StatefulWidget {
       this.noMoreWidget,
       this.headerExtends,
       this.onScrollEnd,
+      this.hasTags = true,
       this.displayCoverVertical = false,
       this.displayVideoCollectTimes = true,
       this.displayVideoTimes = true,
@@ -108,6 +110,7 @@ class SliverVodGridState extends State<SliverVodGrid> {
                               child: VideoPreviewWidget(
                                 id: firstVideo.id,
                                 film: widget.film,
+                                hasTags: widget.hasTags,
                                 displayCoverVertical:
                                     widget.displayCoverVertical ?? false,
                                 coverVertical: firstVideo.coverVertical!,
