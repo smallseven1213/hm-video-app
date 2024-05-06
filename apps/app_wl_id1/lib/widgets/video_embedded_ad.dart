@@ -29,8 +29,9 @@ class VideoEmbeddedAdWidget extends StatelessWidget {
             aspectRatio: imageRatio,
             child: Container(
               decoration: const BoxDecoration(
-                borderRadius:
-                    kIsWeb ? null : BorderRadius.all(Radius.circular(10)),
+                // borderRadius:
+                //     kIsWeb ? null : BorderRadius.all(Radius.circular(8)),
+                borderRadius: BorderRadius.all(Radius.circular(8)),
                 color: Colors.white,
               ),
               foregroundDecoration: BoxDecoration(

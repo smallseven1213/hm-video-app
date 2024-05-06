@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import '../../enums/app_routes.dart';
 import '../../models/tag.dart';
+import '../../navigator/delegate.dart';
 
 const kTagColor = Color(0xff21488E);
 const kTagTextColor = Color(0xff21AFFF);
@@ -9,12 +11,19 @@ const kTagTextColor = Color(0xff21AFFF);
 class TagWidget extends StatelessWidget {
   final Tag tag;
 
-  TagWidget({required this.tag});
+  const TagWidget({super.key, required this.tag});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        MyRouteDelegate.of(context).push(
+          AppRoutes.tagGames,
+          args: {
+            'tag': tag.name,
+          },
+        );
+      },
       child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
           decoration: BoxDecoration(

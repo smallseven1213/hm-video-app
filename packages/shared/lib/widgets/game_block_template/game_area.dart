@@ -7,16 +7,21 @@ import 'vertical_game_card.dart';
 
 class GameArea extends StatelessWidget {
   final Game game;
+  final bool? hideTags;
 
-  const GameArea({super.key, required this.game});
+  const GameArea({super.key, required this.game, this.hideTags = false});
 
   @override
   Widget build(BuildContext context) {
+    dynamic widget = CrossColumnGameCard(gameBlocks: game);
     if (game.template == 1) {
-      return VerticalGameCard(gameBlocks: game);
+      widget = VerticalGameCard(gameBlocks: game);
     } else if (game.template == 2) {
-      return HorizontalGameCard(gameBlocks: game);
+      widget = HorizontalGameCard(gameBlocks: game, hideTags: hideTags);
     }
-    return CrossColumnGameCard(gameBlocks: game);
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8),
+      child: widget,
+    );
   }
 }

@@ -21,7 +21,9 @@ import '../../localization/game_localization_delegate.dart';
 final logger = Logger();
 
 class GameSetBankCard extends StatefulWidget {
-  const GameSetBankCard({Key? key}) : super(key: key);
+  final int remittanceType;
+  const GameSetBankCard({Key? key, required this.remittanceType})
+      : super(key: key);
 
   @override
   GameSetBankCardState createState() => GameSetBankCardState();
@@ -52,7 +54,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
           onSuccess: (pin) {},
           onClose: () => MyRouteDelegate.of(context).popRoute());
     });
-    _getBanks();
+    _getBanks(widget.remittanceType);
   }
 
   @override
@@ -67,7 +69,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
   Map<String, dynamic> getFormData() {
     return {
       'account': accountController.text,
-      'remittanceType': 1,
+      'remittanceType': widget.remittanceType,
       'bankName': bankNameController.text,
       'legalName': legalNameController.text,
       'branchName': branchNameController.text,
@@ -109,12 +111,12 @@ class GameSetBankCardState extends State<GameSetBankCard> {
 
 // 寫一個打getBanks的api, 並且把api的結果塞到下拉選單的選項裡
 // 先取得銀行列表
-  Future<void> _getBanks() async {
-    var res = await Get.put(GameLobbyApi()).getBanks();
+  Future<void> _getBanks(int remittanceType) async {
+    var res = await Get.put(GameLobbyApi()).getBanks(widget.remittanceType);
     // ignore: unnecessary_null_comparison
     if (res != null) {
       setState(() {
-        bankList = res;
+        bankList = res..sort((a, b) => b.orderIndex.compareTo(a.orderIndex));
       });
     }
   }
@@ -156,9 +158,19 @@ class GameSetBankCardState extends State<GameSetBankCard> {
             .translate('please_enter_your_bank_name');
       });
     } else if (value.isNotEmpty) {
-      setState(() {
-        _bankNameError = null;
-      });
+      // 檢查輸入的value是否在銀行列表中
+      var isBankNameExit = bankList.any((item) => item.bankName == value);
+
+      if (!isBankNameExit) {
+        setState(() {
+          _bankNameError = GameLocalizations.of(context)!
+              .translate('please_enter_the_correct_bank_name');
+        });
+      } else {
+        setState(() {
+          _bankNameError = null;
+        });
+      }
     }
     _checkFormValidity();
   }
@@ -177,6 +189,8 @@ class GameSetBankCardState extends State<GameSetBankCard> {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
+
+    logger.i('remittanceType: ${widget.remittanceType}');
 
     return Scaffold(
       appBar: AppBar(
@@ -249,9 +263,7 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                                   .translate('please_enter_your_bank_name'),
                               controller: bankNameController,
                               listContent: bankList,
-                              onChanged: (value) => {
-                                _validateBankName(value),
-                              },
+                              onChanged: (value) => _validateBankName(value),
                               errorMessage: _bankNameError,
                               onClear: () => {
                                 setState(() {

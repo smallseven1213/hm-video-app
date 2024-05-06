@@ -18,11 +18,9 @@ class GameWithdrawController extends GetxController {
   var hasUsdtPaymentData = false.obs;
   var bankIsBound = false.obs;
   var usdtIsBound = false.obs;
+  var initRemittanceType = 1.obs;
 
   getWithDrawalData() async {
-    int remittanceTypeCny = remittanceTypeMapper['BANK_CARD_CNY'] ?? 1;
-    int remittanceTypeUsdt = remittanceTypeMapper['USDT'] ?? 2;
-
     try {
       var res = await GameLobbyApi().getUserGameWithdrawalData();
 
@@ -32,16 +30,24 @@ class GameWithdrawController extends GetxController {
         paymentPin.value = res['data'].paymentPin ?? false;
         points.value = res['data'].points ?? 0.00;
         userPaymentSecurity.value = res['data'].userPaymentSecurity;
+        initRemittanceType.value =
+            res['data'].userPaymentSecurity.first.remittanceType;
 
         // <!--- userPaymentSecurity{} --->
         for (UserPaymentSecurity paymentSecurity
             in res['data'].userPaymentSecurity) {
-          if (paymentSecurity.remittanceType == remittanceTypeCny) {
-            bankIsBound.value = paymentSecurity.isBound;
-            hasBankPaymentData.value = true;
-          } else if (paymentSecurity.remittanceType == remittanceTypeUsdt) {
+          if (paymentSecurity.remittanceType == remittanceTypeEnum['USDT']) {
             usdtIsBound.value = paymentSecurity.isBound;
             hasUsdtPaymentData.value = true;
+          } else {
+            // paymentSecurity底下remittanceType不等於USDT的項目中，只要有一個isBound為false，就不會顯示銀行卡選項
+            if (paymentSecurity.remittanceType != remittanceTypeEnum['USDT'] &&
+                paymentSecurity.isBound == false) {
+              hasBankPaymentData.value = false;
+            } else {
+              bankIsBound.value = paymentSecurity.isBound;
+              hasBankPaymentData.value = true;
+            }
           }
         }
 

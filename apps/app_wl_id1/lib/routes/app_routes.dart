@@ -34,6 +34,7 @@ import '../pages/apps.dart' as apps_page;
 import '../screens/demo.dart' as demo_screen;
 import '../pages/suppliers.dart' as suppliers_screen;
 import '../pages/games.dart' as games_page;
+import '../pages/tag_games.dart' as tag_games_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.demo: (context, args) => const demo_screen.Demo(),
@@ -56,6 +57,9 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
         id: args['id'] as int,
         title: args['title'] as String,
         film: args['film'] == null ? 1 : args['film'] as int,
+      ),
+  AppRoutes.tagGames: (context, args) => tag_games_page.TagGamesPage(
+        tag: args['tag'] as String,
       ),
   AppRoutes.actor: (context, args) => actor_page.ActorPage(
         id: args['id'] as int,

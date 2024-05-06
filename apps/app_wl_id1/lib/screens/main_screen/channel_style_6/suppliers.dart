@@ -10,12 +10,13 @@ class ChannelStyle6Suppliers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var safeAreaTop = MediaQuery.of(context).padding.top;
     return CustomScrollView(
       slivers: [
         // height 60
-        const SliverToBoxAdapter(
+        SliverToBoxAdapter(
           child: SizedBox(
-            height: 60,
+            height: 60 + safeAreaTop,
           ),
         ),
         SliverToBoxAdapter(

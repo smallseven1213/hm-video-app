@@ -88,6 +88,7 @@ const Map<String, String> enUsStrings = {
   "please_make_sure_you_fill_in_the_correct_information_to_avoid_affecting_the_payment":
       "Please make sure you fill in the correct information to avoid affecting the payment.",
   "please_enter_your_bank_name": "Please enter your bank name",
+  'please_enter_the_correct_bank_name': 'Please enter the correct bank name',
   "please_enter_the_name_of_the_branch_optional":
       "Please enter the name of the branch (optional)",
   "card_number": "Card Number",
@@ -117,6 +118,9 @@ const Map<String, String> enUsStrings = {
   "update_time": "Update Time",
   "reviewing": "Reviewing",
   "bank_card": "Bank Card",
+  'bank_card_idr': 'Bank Card',
+  'bank_card_twd': 'Bank Card',
+  'bank_card_php': 'Bank Card',
   "type": "Type",
   "account": "Account",
   "withdrawal_method": "Withdrawal Method",
