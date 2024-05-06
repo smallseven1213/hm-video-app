@@ -18,7 +18,7 @@ class ErrorMessageProps {
 
 class LoginPageScaffold extends StatefulWidget {
   final Function(String? title, String? message)? onError;
-  final ErrorMessageProps errorMessage;
+  final ErrorMessageProps? errorMessage;
   final Widget Function(
     TextEditingController accountController,
     TextEditingController passwordController,
@@ -29,7 +29,7 @@ class LoginPageScaffold extends StatefulWidget {
   const LoginPageScaffold({
     Key? key,
     this.onError,
-    required this.errorMessage,
+    this.errorMessage,
     required this.child,
   }) : super(key: key);
 
@@ -44,14 +44,14 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
 
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return widget.errorMessage.account;
+      return widget.errorMessage?.account ?? "請輸入帳號";
     }
     return null;
   }
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return widget.errorMessage.password;
+      return widget.errorMessage?.password ?? "請輸入密碼";
     }
     return null;
   }
