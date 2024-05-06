@@ -93,18 +93,22 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     _pageController?.addListener(() {
       pageviewIndexController.setPageIndex(
           keyuuid, _pageController?.page!.round() ?? 0);
-      setState(() {
-        currentPage = _pageController?.page!.round() ?? 0;
-      });
+      if (mounted) {
+        setState(() {
+          currentPage = _pageController?.page!.round() ?? 0;
+        });
+      }
     });
 
     cachedVods = controller.data;
 
     if (widget.useCachedList == false) {
       ever(controller.data, (d) {
-        setState(() {
-          cachedVods = d as List<Vod>;
-        });
+        if (mounted) {
+          setState(() {
+            cachedVods = d as List<Vod>;
+          });
+        }
         updateAds();
       });
     }
@@ -175,9 +179,11 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
       controller: _pageController,
       itemCount: cachedVods.length,
       onPageChanged: (int index) {
-        setState(() {
-          currentPage = index;
-        });
+        if (mounted) {
+          setState(() {
+            currentPage = index;
+          });
+        }
       },
       itemBuilder: (BuildContext context, int index) {
         if (cachedVods[index] is BannerPhoto &&
