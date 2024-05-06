@@ -63,24 +63,24 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
 
   void _onRegister() async {
     try {
-      await authApi
-          .register(
-            username: userNameController.text,
-            password: passwordController.text,
-            uid: userController.info.value.uid,
-          )
-          .then(
-            (value) => {
-              Fluttertoast.showToast(
-                msg: GameLocalizations.of(context)!
-                    .translate('registration_successful'),
-                gravity: ToastGravity.CENTER,
-              ),
-              widget.onSuccess(),
-            },
-          );
+      var res = await authApi.register(
+        username: userNameController.text,
+        password: passwordController.text,
+        uid: userController.info.value.uid,
+      );
+
+      if (res.code == '00') {
+        Fluttertoast.showToast(
+          msg: GameLocalizations.of(context)!
+              .translate('registration_successful'),
+          gravity: ToastGravity.CENTER,
+        );
+        widget.onSuccess();
+      } else {
+        showRegisterFailDialog();
+      }
     } catch (e) {
-      logger.i(e.toString());
+      logger.i('catch error: , ${e.toString()}');
       showRegisterFailDialog();
       return;
     }

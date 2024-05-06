@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/login_tabs_form_login.dart';
 import 'package:game/screens/lobby/login_tabs_form_register.dart';
+import 'package:shared/controllers/user_controller.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -27,6 +31,9 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
   final passwordController = TextEditingController();
   bool enableUsername = false;
   bool enablePassword = false;
+
+  UserController userController = Get.find<UserController>();
+  GameWalletController gameWalletController = Get.find<GameWalletController>();
 
   @override
   void initState() {
@@ -147,7 +154,11 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                   })
               // register form
               : GameLobbyRegisterForm(
-                  onSuccess: widget.onSuccess,
+                  onSuccess: () => {
+                    userController.fetchUserInfo(),
+                    gameWalletController.fetchWalletsInitFromThirdLogin(),
+                    Navigator.pop(context),
+                  },
                 ),
         ],
       ),
