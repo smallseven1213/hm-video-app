@@ -25,6 +25,7 @@ class ActorsController extends GetxController {
     bool? initialIsRecommend,
     int? initialSortBy,
     int? initialLimit,
+    bool? fetchWhenInit = true,
   }) {
     if (initialRegion != null) {
       region.value = initialRegion;
@@ -47,7 +48,10 @@ class ActorsController extends GetxController {
     if (initialLimit != null) {
       limit.value = initialLimit;
     }
-    _fetchData();
+
+    if (fetchWhenInit == true) {
+      _fetchData();
+    }
   }
 
   // 提供给外部的方法，以改变region并重新获取数据
