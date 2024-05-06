@@ -5,6 +5,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
+import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/models/chat_message.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/loading.dart';
@@ -41,7 +42,17 @@ class PlayerLayoutState extends State<PlayerLayout>
     initializeVideoPlayer();
     handleChatResult();
 
-    Wakelock.enable(); // Prevent the device from sleeping
+    Wakelock.enable();
+
+    // listen liveRoomController.isMute
+    ever(Get.find<LiveRoomController>(tag: widget.pid.toString()).isMute,
+        (isMute) {
+      if (isMute) {
+        videoController.setVolume(0);
+      } else {
+        videoController.setVolume(1);
+      }
+    });
   }
 
   void handleChatResult() {
