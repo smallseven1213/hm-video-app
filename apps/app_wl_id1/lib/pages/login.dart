@@ -25,6 +25,9 @@ class LoginPageState extends State<LoginPage> {
     return Scaffold(
         appBar: CustomAppBar(title: I18n.login),
         body: LoginPageScaffold(
+          errorMessage: ErrorMessageProps(
+              account: I18n.pleaseEnterYourAccountNumber,
+              password: I18n.pleaseEnterYourPassword),
           onError: (title, message) {
             showConfirmDialog(
               context: context,
