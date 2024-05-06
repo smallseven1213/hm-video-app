@@ -48,7 +48,6 @@ class FavoritesVideoScreen extends StatelessWidget {
                       onEditingTap: () {
                         listEditorController.toggleSelected(video1.id);
                       },
-                      hasTags: false,
                       coverVertical: video1.coverVertical ?? '',
                       coverHorizontal: video1.coverHorizontal ?? '',
                       timeLength: video1.timeLength ?? 0,
