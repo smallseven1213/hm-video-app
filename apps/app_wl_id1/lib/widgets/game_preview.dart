@@ -96,96 +96,100 @@ class GamePreviewWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GameTemplateLink(
-      url: detail.gameUrl,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: hasRadius == true
-              ? const BorderRadius.all(Radius.circular(10))
-              : null,
-          color: kCardBgColor,
-          // color: Colors.white,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              children: [
-                AspectRatio(
-                  aspectRatio: imageRatio ??
-                      (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-                  child: const Center(
+    return LayoutBuilder(
+      builder: (context, constraints) => GameTemplateLink(
+        url: detail.gameUrl,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: hasRadius == true
+                ? const BorderRadius.all(Radius.circular(10))
+                : null,
+            color: kCardBgColor,
+            // color: Colors.white,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                children: [
+                  AspectRatio(
+                    aspectRatio: imageRatio ??
+                        (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+                    child: const Center(
+                      child: Image(
+                        image: AssetImage(
+                            'assets/images/video_preview_loading.png'),
+                        width: 102,
+                        height: 70,
+                      ),
+                    ),
+                  ),
+                  // 主體
+                  AspectRatio(
+                    aspectRatio: imageRatio ??
+                        (displayCoverVertical == true ? 119 / 179 : 374 / 198),
+                    child: Image.network(
+                      displayCoverVertical == true
+                          ? detail.verticalLogo
+                          : detail.horizontalLogo,
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const Positioned(
+                    left: 8,
+                    bottom: 8,
                     child: Image(
-                      image:
-                          AssetImage('assets/images/video_preview_loading.png'),
-                      width: 102,
-                      height: 70,
+                      width: 15,
+                      height: 17,
+                      image: AssetImage('assets/images/play_count.webp'),
                     ),
                   ),
-                ),
-                // 主體
-                AspectRatio(
-                  aspectRatio: imageRatio ??
-                      (displayCoverVertical == true ? 119 / 179 : 374 / 198),
-                  child: Image.network(
-                    displayCoverVertical == true
-                        ? detail.verticalLogo
-                        : detail.horizontalLogo,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                const Positioned(
-                  left: 8,
-                  bottom: 8,
-                  child: Image(
-                    width: 15,
-                    height: 17,
-                    image: AssetImage('assets/images/play_count.webp'),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-                padding: const EdgeInsets.all(8),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            detail.name,
-                            textAlign: TextAlign.left,
-                            overflow: TextOverflow.ellipsis,
-                            softWrap: false,
-                            style: TextStyle(
-                              color: AppColors.colors[ColorKeys.videoTitle]!,
-                              fontSize: 12,
+                ],
+              ),
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              detail.name,
+                              textAlign: TextAlign.left,
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
+                              style: TextStyle(
+                                color: AppColors.colors[ColorKeys.videoTitle]!,
+                                fontSize: 12,
+                              ),
                             ),
+                            if (detail.tags!.isNotEmpty) ...[
+                              const SizedBox(height: 5),
+                              _buildGameTags()
+                            ]
+                          ],
+                        ),
+                      ),
+                      // add button with text 'Play Now'
+                      if (constraints.maxWidth >=
+                          MediaQuery.of(context).size.width / 2)
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.blue),
                           ),
-                          if (detail.tags!.isNotEmpty) ...[
-                            const SizedBox(height: 5),
-                            _buildGameTags()
-                          ]
-                        ],
-                      ),
-                    ),
-                    // add button with text 'Play Now'
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(5),
-                        border: Border.all(color: Colors.blue),
-                      ),
-                      child: Text('Play Now',
-                          style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
-                )),
-          ],
+                          child: const Text('Play Now',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                    ],
+                  )),
+            ],
+          ),
         ),
       ),
     );
