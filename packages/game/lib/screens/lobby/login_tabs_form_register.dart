@@ -49,12 +49,13 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
     super.initState();
   }
 
-  void showRegisterFailDialog() {
+  void showRegisterFailDialog([String? message]) {
     showConfirmDialog(
       context: context,
       title: GameLocalizations.of(context)!.translate('registration_error'),
-      content: GameLocalizations.of(context)!
-          .translate('incorrect_username_or_password'),
+      content: message ??
+          GameLocalizations.of(context)!
+              .translate('incorrect_username_or_password'),
       onConfirm: () {
         Navigator.of(context).pop();
       },
@@ -63,25 +64,25 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
 
   void _onRegister() async {
     try {
-      await authApi
-          .register(
-            username: userNameController.text,
-            password: passwordController.text,
-            uid: userController.info.value.uid,
-          )
-          .then(
-            (value) => {
-              Fluttertoast.showToast(
-                msg: GameLocalizations.of(context)!
-                    .translate('registration_successful'),
-                gravity: ToastGravity.CENTER,
-              ),
-              widget.onSuccess(),
-            },
-          );
+      var res = await authApi.register(
+        username: userNameController.text,
+        password: passwordController.text,
+        uid: userController.info.value.uid,
+      );
+
+      if (res.code == '00') {
+        Fluttertoast.showToast(
+          msg: GameLocalizations.of(context)!
+              .translate('registration_successful'),
+          gravity: ToastGravity.CENTER,
+        );
+        widget.onSuccess();
+      } else {
+        logger.i('res.code: ${res.code}');
+        showRegisterFailDialog(res.message);
+      }
     } catch (e) {
-      logger.i(e.toString());
-      showRegisterFailDialog();
+      showRegisterFailDialog(e.toString());
       return;
     }
   }

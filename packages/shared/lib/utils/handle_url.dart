@@ -34,7 +34,12 @@ void handleDefaultScreenKey(BuildContext context, String url) {
   final defaultScreenKey = Uri.parse(url).queryParameters['defaultScreenKey'];
   final routePath = url.substring(0, url.indexOf('?'));
 
-  if (defaultScreenKey == 'game') {
+  // get current path
+  final currentPath = MyRouteDelegate.of(context).currentPath;
+
+  if (currentPath == routePath && currentPath == "/home") {
+    bottomNavigatorController.changeKey('/$defaultScreenKey');
+  } else if (defaultScreenKey == 'game') {
     handleGameUrlMethods(context, url, routePath);
   } else {
     MyRouteDelegate.of(context).push(

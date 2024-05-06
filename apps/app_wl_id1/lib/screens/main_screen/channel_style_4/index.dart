@@ -34,13 +34,14 @@ class ChannelStyle4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const baseTopHeight = 140;
     return DisplayLayoutTabSearchConsumer(
         layoutId: layoutId,
         child: (({required bool displaySearchBar}) {
           return Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top +
-                    (displaySearchBar ? 90 : 50)),
+                    (displaySearchBar ? baseTopHeight : baseTopHeight - 40)),
             child: ChannelProvider(
                 channelId: channelId,
                 widget: Scaffold(
@@ -250,6 +251,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                               VideoPreviewWidget(
                                                             id: vod.id,
                                                             title: vod.title,
+                                                            hasTags: false,
                                                             displayCoverVertical:
                                                                 true,
                                                             coverHorizontal: vod

@@ -412,7 +412,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                           .userPaymentSecurity
                                           .firstWhere(
                                               (element) =>
-                                                  element.remittanceType == 1,
+                                                  element.remittanceType !=
+                                                  remittanceTypeEnum['USDT'],
                                               orElse: () => UserPaymentSecurity(
                                                   remittanceType: 1,
                                                   isBound:

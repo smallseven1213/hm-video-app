@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:live_core/controllers/live_room_controller.dart';
 
 class Sound extends StatelessWidget {
-  const Sound({Key? key}) : super(key: key);
+  final int pid;
+  const Sound({
+    super.key,
+    required this.pid,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final LiveRoomController liveRoomController =
+        Get.find<LiveRoomController>(tag: pid.toString());
     return InkWell(
       onTap: () {
-        // showModalBottomSheet(
-        //   context: context,
-        //   builder: (BuildContext context) {
-        //     return Container(
-        //       padding: EdgeInsets.only(left: 10, right: 10, bottom: 0),
-        //       child: Sounds(),
-        //     );
-        //   },
-        // );
+        if (liveRoomController.isMute.value) {
+          liveRoomController.isMute.value = false;
+        } else {
+          liveRoomController.isMute.value = true;
+        }
       },
       child: Image.asset(
           'packages/live_ui_basic/assets/images/sound_button.webp',

@@ -35,13 +35,14 @@ class ChannelStyle5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const baseTopHeight = 140;
     return DisplayLayoutTabSearchConsumer(
       layoutId: layoutId,
       child: (({required bool displaySearchBar}) {
         return Padding(
             padding: EdgeInsets.only(
                 top: MediaQuery.of(context).padding.top +
-                    (displaySearchBar ? 90 : 50)),
+                    (displaySearchBar ? baseTopHeight : baseTopHeight - 40)),
             child: ChannelProvider(
                 channelId: channelId,
                 widget: Scaffold(
@@ -192,19 +193,23 @@ class ChannelStyle5 extends StatelessWidget {
                                                                   .supplier
                                                                   .description!
                                                                   .isNotEmpty)
-                                                            Text(
-                                                              data.supplier
-                                                                      .description ??
-                                                                  '',
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .white
-                                                                      .withOpacity(
-                                                                          0.75),
-                                                                  fontSize: 11),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
+                                                            SizedBox(
+                                                              height: 20,
+                                                              child: Text(
+                                                                data.supplier
+                                                                        .description ??
+                                                                    '',
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .white
+                                                                        .withOpacity(
+                                                                            0.75),
+                                                                    fontSize:
+                                                                        11),
+                                                                overflow:
+                                                                    TextOverflow
+                                                                        .ellipsis,
+                                                              ),
                                                             ),
                                                           Text(
                                                               '${I18n.popularity}:${data.supplier.followTimes}',
@@ -273,6 +278,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                             id: vod.id,
                                                             title: vod.title,
                                                             film: 2,
+                                                            hasTags: false,
                                                             onOverrideRedirectTap:
                                                                 (id) {
                                                               MyRouteDelegate.of(

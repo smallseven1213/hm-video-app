@@ -35,125 +35,131 @@ class AppDownloadAdState extends State<AppDownloadAd> {
       final index = controller.videoViews % appDownloadAds.length;
       final appDownloadAd = appDownloadAds[index];
 
-      return Column(
-        children: [
-          if (appDownloadAd.title != null)
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
-                appDownloadAd.title ?? '',
-                style: const TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+      return LayoutBuilder(
+        builder: (context, constraints) => Column(
+          children: [
+            if (appDownloadAd.title != null)
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(top: 8),
+                child: Text(
+                  appDownloadAd.title ?? '',
+                  style: const TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
               ),
-            ),
-          const SizedBox(height: 8),
-          BannerLink(
-            id: appDownloadAd.id,
-            url: appDownloadAd.url ?? '',
-            child: SizedBox(
-              width: double.infinity,
-              height: 120,
-              child: Flex(
-                direction: Axis.horizontal,
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(8.0),
-                        bottomLeft: Radius.circular(8.0),
+            const SizedBox(height: 8),
+            BannerLink(
+              id: appDownloadAd.id,
+              url: appDownloadAd.url ?? '',
+              child: SizedBox(
+                width: double.infinity,
+                height: 120,
+                child: Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(8.0),
+                          bottomLeft: Radius.circular(8.0),
+                        ),
+                        child: SidImage(sid: appDownloadAd.photoSid),
                       ),
-                      child: SidImage(sid: appDownloadAd.photoSid),
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Stack(
-                      children: [
-                        Opacity(
-                          opacity: 0.5,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              gradient: RadialGradient(
-                                colors: [
-                                  const Color(0xff4277dc).withOpacity(0.5),
-                                  const Color(0xff4277dc).withOpacity(0.7),
-                                ],
-                                center: const AlignmentDirectional(0.0, 0.0),
-                                focal: const AlignmentDirectional(0.0, 0.0),
-                                radius: 0.90,
-                                focalRadius: 0.001,
-                                stops: const [0.75, 1.0],
-                              ),
-                              borderRadius: const BorderRadius.only(
-                                topRight: Radius.circular(8.0),
-                                bottomRight: Radius.circular(8.0),
+                    Expanded(
+                      flex: 1,
+                      child: Stack(
+                        children: [
+                          Opacity(
+                            opacity: 0.5,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  colors: [
+                                    const Color(0xff4277dc).withOpacity(0.5),
+                                    const Color(0xff4277dc).withOpacity(0.7),
+                                  ],
+                                  center: const AlignmentDirectional(0.0, 0.0),
+                                  focal: const AlignmentDirectional(0.0, 0.0),
+                                  radius: 0.90,
+                                  focalRadius: 0.001,
+                                  stops: const [0.75, 1.0],
+                                ),
+                                borderRadius: const BorderRadius.only(
+                                  topRight: Radius.circular(8.0),
+                                  bottomRight: Radius.circular(8.0),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            AppIcon(logoSid: appDownloadAd.logoSid ?? ''),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4, bottom: 5),
-                              child: Center(
-                                child: Text(
-                                  appDownloadAd.name ?? '',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Container(
-                              height: 25,
-                              decoration: const BoxDecoration(
-                                color: Color(0xff21478d),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0)),
-                              ),
-                              child: Padding(
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              AppIcon(logoSid: appDownloadAd.logoSid ?? ''),
+                              Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: IntrinsicWidth(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      const Icon(
-                                        Icons.download,
-                                        color: Color(0xffffffff),
-                                        size: 16,
-                                      ),
-                                      Text(
-                                        I18n.immediateDownload,
-                                        style: const TextStyle(
-                                          fontSize: 12,
-                                          color: Color(0xffffffff),
-                                        ),
-                                      ),
-                                    ],
+                                    const EdgeInsets.only(top: 4, bottom: 5),
+                                child: Center(
+                                  child: Text(
+                                    appDownloadAd.name ?? '',
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
+                              if (constraints.maxWidth >=
+                                  MediaQuery.of(context).size.width / 2)
+                                Container(
+                                  height: 25,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xff21478d),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0)),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8.0),
+                                    child: IntrinsicWidth(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          const Icon(
+                                            Icons.download,
+                                            color: Color(0xffffffff),
+                                            size: 16,
+                                          ),
+                                          Text(
+                                            I18n.immediateDownload,
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Color(0xffffffff),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
+        ),
       );
     });
   }
