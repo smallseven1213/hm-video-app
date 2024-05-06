@@ -49,12 +49,13 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
     super.initState();
   }
 
-  void showRegisterFailDialog() {
+  void showRegisterFailDialog([String? message]) {
     showConfirmDialog(
       context: context,
       title: GameLocalizations.of(context)!.translate('registration_error'),
-      content: GameLocalizations.of(context)!
-          .translate('incorrect_username_or_password'),
+      content: message ??
+          GameLocalizations.of(context)!
+              .translate('incorrect_username_or_password'),
       onConfirm: () {
         Navigator.of(context).pop();
       },
@@ -77,11 +78,11 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
         );
         widget.onSuccess();
       } else {
-        showRegisterFailDialog();
+        logger.i('res.code: ${res.code}');
+        showRegisterFailDialog(res.message);
       }
     } catch (e) {
-      logger.i('catch error: , ${e.toString()}');
-      showRegisterFailDialog();
+      showRegisterFailDialog(e.toString());
       return;
     }
   }
