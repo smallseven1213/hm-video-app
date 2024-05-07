@@ -8,7 +8,7 @@ import '../video_block_grid_view_row.dart';
 
 // Constants to define behavior
 const int videosPerRow = 2;
-const int defaultRowsBetweenGames = 7;
+const int defaultRowsBetweenGames = 6;
 
 // Helper function to organize VODs into rows based on certain conditions.
 List<List<Vod>> organizeRowData(List<Vod> videos, int maxVideosPerRow) {
