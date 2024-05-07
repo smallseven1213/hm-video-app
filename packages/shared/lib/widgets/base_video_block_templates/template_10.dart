@@ -8,7 +8,7 @@ import '../video_block_grid_view_row.dart';
 
 // Constants to define behavior
 const int videosPerRow = 2;
-const int defaultRowsBetweenGames = 6;
+const int defaultRowsBetweenGames = 7;
 
 // Helper function to organize VODs into rows based on certain conditions.
 List<List<Vod>> organizeRowData(List<Vod> videos, int maxVideosPerRow) {
@@ -83,8 +83,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate10({
           );
         }
       }
-      return const SizedBox
-          .shrink(); // Fallback to an empty widget for edge cases
+      return const SizedBox.shrink();
     },
     childCount: childCount,
   );
