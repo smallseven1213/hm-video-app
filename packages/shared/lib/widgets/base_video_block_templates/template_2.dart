@@ -29,6 +29,14 @@ SliverChildBuilderDelegate baseVideoBlockTemplate2({
   return SliverChildBuilderDelegate((BuildContext context, int index) {
     Vod video = vods[index];
     int gameBlockIndex = (index ~/ 10);
+    if (gameBlocks == null || gameBlocks.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: video.dataType == VideoType.areaAd.index
+            ? buildBanner(video)
+            : buildVideoPreview(video),
+      );
+    }
     Game currentGame = gameBlocks![gameBlockIndex % gameBlocks.length];
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0),
