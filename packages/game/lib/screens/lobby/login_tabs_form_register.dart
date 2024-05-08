@@ -1,13 +1,18 @@
+import 'package:logger/logger.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/show_confirm_dialog.dart';
-import 'package:game/widgets/input.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:logger/logger.dart';
+
+import 'package:game/enums/game_app_routes.dart';
+import 'package:game/screens/game_theme_config.dart';
+import 'package:game/screens/lobby/show_register_fail_dialog.dart';
+import 'package:game/widgets/input.dart';
+
 import 'package:shared/apis/auth_api.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/navigator/delegate.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -33,6 +38,8 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
   Type tabsType = Type.register;
   final authApi = AuthApi();
   final UserController userController = Get.find<UserController>();
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
   final userNameController = TextEditingController();
   final passwordController = TextEditingController();
   final passwordCheckController = TextEditingController();
@@ -49,19 +56,6 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
     super.initState();
   }
 
-  void showRegisterFailDialog([String? message]) {
-    showConfirmDialog(
-      context: context,
-      title: GameLocalizations.of(context)!.translate('registration_error'),
-      content: message ??
-          GameLocalizations.of(context)!
-              .translate('incorrect_username_or_password'),
-      onConfirm: () {
-        Navigator.of(context).pop();
-      },
-    );
-  }
-
   void _onRegister() async {
     try {
       var res = await authApi.register(
@@ -70,19 +64,39 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
         uid: userController.info.value.uid,
       );
 
-      if (res.code == '00') {
+      if (res.code != '00' && mounted) {
+        showRegisterFailDialog(context, res.message);
+        return;
+      }
+
+      logger.i('countryCode: ${gameConfigController.countryCode.value}');
+
+      // isPhoneVerification ???
+      if (mounted &&
+          gameConfigController.needsPhoneVerification.value &&
+          gameConfigController.countryCode.value!.isNotEmpty) {
+        // 前往手機綁定頁面
+        Navigator.pop(context);
+        widget.onSuccess();
+        MyRouteDelegate.of(context).push(GameAppRoutes.registerMobileBinding);
+      } else if (mounted &&
+          gameConfigController.needsPhoneVerification.value == false) {
         Fluttertoast.showToast(
           msg: GameLocalizations.of(context)!
               .translate('registration_successful'),
           gravity: ToastGravity.CENTER,
         );
         widget.onSuccess();
+        Navigator.pop(context);
       } else {
-        logger.i('res.code: ${res.code}');
-        showRegisterFailDialog(res.message);
+        if (mounted) {
+          showRegisterFailDialog(context);
+        }
       }
     } catch (e) {
-      showRegisterFailDialog(e.toString());
+      if (mounted) {
+        showRegisterFailDialog(context, e.toString());
+      }
       return;
     }
   }

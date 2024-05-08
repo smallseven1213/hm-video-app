@@ -132,7 +132,7 @@ class GameListViewState extends State<GameListView>
 
   _handleOpenThirdPartyGame() {
     logger.i(
-        ' ===> OpenThirdPartyGame: ${gameConfigController.thirdPartyGameId.value}');
+        ' ===> OpenThirdPartyGame: ${gameConfigController.thirdPartyGameId.value.isNotEmpty}');
     GameLocalizations localizations = GameLocalizations.of(context)!;
     try {
       if (gameConfigController.isOpenThirdPartyGame.value == true) {

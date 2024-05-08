@@ -39,19 +39,30 @@ class GameItem {
 }
 
 class GameConfig {
-  final bool enabled;
-  final bool distributed;
-  final int paymentPage;
-  final int pageColor;
+  final bool? enabled;
+  final bool? distributed;
+  final int? paymentPage;
+  final int? pageColor;
+  final bool? needsPhoneVerification;
+  final String? countryCode;
 
-  GameConfig(this.enabled, this.distributed, this.paymentPage, this.pageColor);
+  GameConfig({
+    this.enabled,
+    this.distributed,
+    this.paymentPage,
+    this.pageColor,
+    this.needsPhoneVerification,
+    this.countryCode,
+  });
 
   factory GameConfig.fromJson(Map<String, dynamic> json) {
     return GameConfig(
-      json['enabled'],
-      json['distributed'],
-      json['paymentPage'],
-      json['pageColor'],
+      enabled: json['enabled'],
+      distributed: json['distributed'],
+      paymentPage: json['paymentPage'],
+      pageColor: json['pageColor'],
+      needsPhoneVerification: json['isPhoneVerification'],
+      countryCode: json['countryCode'],
     );
   }
 }

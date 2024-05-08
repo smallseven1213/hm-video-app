@@ -1,9 +1,11 @@
 library game_routes;
 
 import 'package:game/enums/game_app_routes.dart';
-import 'package:game/screens/game_activity_screen/index.dart';
 import 'package:shared/navigator/delegate.dart';
 
+import '../screens/game_register_mobile_confirm_screen/index.dart';
+import '../screens/game_register_mobile_binding_screen/index.dart';
+import '../screens/game_activity_screen/index.dart';
 import '../screens/game_deposit_detail_screen/index.dart';
 import '../screens/game_deposit_list_screen/index.dart';
 import '../screens/game_deposit_polling_screen/index.dart';
@@ -38,5 +40,11 @@ final Map<String, RouteWidgetBuilder> gameRoutes = {
   GameAppRoutes.withdrawRecord: (context, args) => const GameWithdrawRecord(),
   GameAppRoutes.activity: (context, args) => GameActivity(
         id: args['id'] as int?,
+      ),
+  GameAppRoutes.registerMobileBinding: (context, args) =>
+      const GameRegisterMobileBinding(),
+  GameAppRoutes.registerMobileConfirm: (context, args) =>
+      GameRegisterMobileConfirm(
+        parsePhoneNumber: args['parsePhoneNumber'] as String,
       ),
 };

@@ -80,7 +80,8 @@ Future<dynamic> fetcher({
       }
     } else {
       // 其他錯誤處理
-      responseController.emitEvent(e.response?.statusCode ?? 0, 'Other error');
+      responseController.emitEvent(e.response?.statusCode ?? 0,
+          e.response?.data['message'] ?? 'Other Error');
     }
     rethrow;
   }

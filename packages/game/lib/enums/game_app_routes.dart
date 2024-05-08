@@ -11,4 +11,6 @@ class GameAppRoutes {
   static const String depositRecord = '/game/deposit/record';
   static const String withdrawRecord = '/game/withdraw/record';
   static const String activity = '/game-activity';
+  static const String registerMobileBinding = '/game/register-mobile-binding';
+  static const String registerMobileConfirm = '/game/register-mobile-confirm';
 }
