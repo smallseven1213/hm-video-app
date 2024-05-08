@@ -60,7 +60,7 @@ class _LanguagesViewState extends State<LanguagesView> {
         Get.find<LiveRoomController>(tag: widget.pid.toString());
 
     return Container(
-        height: MediaQuery.of(context).padding.bottom + 500,
+        height: MediaQuery.of(context).padding.bottom + 309.3,
         width: double.infinity,
         color: Colors.black,
         padding: const EdgeInsets.only(left: 8, right: 8, bottom: 20),
@@ -84,11 +84,21 @@ class _LanguagesViewState extends State<LanguagesView> {
                             .setCurrentTranslate(selectedLanguage);
                         Navigator.of(context).pop();
                       },
-                      child: const Image(
-                        image: AssetImage(
-                            "packages/live_ui_basic/assets/images/room_close.webp"),
-                        width: 12,
-                        height: 12,
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        child: const Center(
+                          child: SizedBox(
+                            width: 12,
+                            height: 12,
+                            child: Image(
+                              image: AssetImage(
+                                  "packages/live_ui_basic/assets/images/room_close.webp"),
+                              width: 12,
+                              height: 12,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
