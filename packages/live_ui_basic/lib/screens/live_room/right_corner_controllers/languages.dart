@@ -84,10 +84,10 @@ class _LanguagesViewState extends State<LanguagesView> {
                             .setCurrentTranslate(selectedLanguage);
                         Navigator.of(context).pop();
                       },
-                      child: Container(
+                      child: const SizedBox(
                         width: 30,
                         height: 30,
-                        child: const Center(
+                        child: Center(
                           child: SizedBox(
                             width: 12,
                             height: 12,
