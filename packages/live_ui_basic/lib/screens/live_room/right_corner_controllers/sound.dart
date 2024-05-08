@@ -21,10 +21,12 @@ class Sound extends StatelessWidget {
           liveRoomController.isMute.value = true;
         }
       },
-      child: Image.asset(
-          'packages/live_ui_basic/assets/images/sound_button.webp',
+      child: Obx(() => Image.asset(
+          liveRoomController.isMute.value
+              ? 'packages/live_ui_basic/assets/images/sound_button.webp'
+              : 'packages/live_ui_basic/assets/images/sound_muting_button.webp',
           width: 33,
-          height: 33),
+          height: 33)),
     );
   }
 }
