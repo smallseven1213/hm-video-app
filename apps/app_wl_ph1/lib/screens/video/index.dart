@@ -72,7 +72,7 @@ class VideoScreenState extends State<VideoScreen> {
                         coverHorizontal: videoDetail.coverHorizontal ?? ''),
                   ),
                 ),
-                child: (isReady) {
+                child: (isReady, controller) {
                   return VideoPlayerArea(
                     name: widget.name,
                     videoUrl: videoUrl,

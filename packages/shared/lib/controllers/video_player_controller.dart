@@ -20,6 +20,7 @@ class ObservableVideoPlayerController extends GetxController {
   final String videoUrl;
   final String tag;
   final RxBool isFullscreen = false.obs;
+  final RxBool isMuted = kIsWeb ? true.obs : false.obs;
 
   var errorMessage = ''.obs;
 
@@ -62,9 +63,10 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) {
       isReady.value = true;
-      if (autoPlay) {
-        play();
-      }
+      // if (autoPlay) {
+      //   play();
+      // }
+      play();
     }).catchError((error) {
       if (videoPlayerController?.value.hasError == true) {
         videoAction.value = 'error';
@@ -144,6 +146,13 @@ class ObservableVideoPlayerController extends GetxController {
         DeviceOrientation.portraitDown,
       ]);
     }
+    update();
+  }
+
+  // toggleMute
+  void toggleMute() {
+    isMuted.value = !isMuted.value;
+    videoPlayerController?.setVolume(isMuted.value ? 0 : 1);
     update();
   }
 }

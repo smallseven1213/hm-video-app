@@ -80,7 +80,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const WaveLoading(),
-            child: (isReady) => Stack(
+            child: (isReady, controller) => Stack(
               children: [
                 ShortCard(
                   index: widget.index,
@@ -141,6 +141,27 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                           ]),
                         ),
                 ),
+                Obx(
+                  () => Positioned(
+                    bottom: 60,
+                    right: 20,
+                    child: InkWell(
+                      onTap: () {
+                        controller.toggleMute();
+                      },
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Image(
+                          image: AssetImage(controller.isMuted.value
+                              ? 'assets/images/short-unmute.webp'
+                              : 'assets/images/short-mute.webp'),
+                          fit: BoxFit.fill,
+                        ),
+                      ),
+                    ),
+                  ),
+                )
               ],
             ),
           ),

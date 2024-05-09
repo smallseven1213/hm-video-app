@@ -133,7 +133,7 @@ class VideoState extends State<Video> {
                           coverHorizontal: videoDetail.coverHorizontal ?? ''),
                     ),
                   ),
-                  child: (isReady) {
+                  child: (isReady, controller) {
                     return VideoPlayerArea(
                       name: name,
                       videoUrl: videoUrl,

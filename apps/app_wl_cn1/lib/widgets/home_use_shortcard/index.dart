@@ -68,7 +68,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
           VideoPlayerProvider(
             key: Key(widget.videoUrl),
             tag: widget.videoUrl,
-            autoPlay: kIsWeb ? false : true,
+            autoPlay: true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
             videoDetail: Vod(
@@ -81,7 +81,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const Center(child: FlashLoading()),
-            child: (isReady) => ShortCard(
+            child: (isReady, controller) => ShortCard(
               key: Key(widget.tag),
               index: widget.index,
               tag: widget.tag,

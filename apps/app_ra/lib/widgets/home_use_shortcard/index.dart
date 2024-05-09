@@ -74,7 +74,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const WaveLoading(),
-            child: (isReady) => Container(),
+            child: (isReady, controller) => Container(),
           ),
         ],
       ),
