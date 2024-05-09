@@ -252,7 +252,14 @@ class GameLobbyApi {
           _checkMaintenance(res['code']);
 
           if (res['code'] != '00') {
-            return GameConfig(false, false, 1, 1);
+            return GameConfig(
+              enabled: false,
+              distributed: false,
+              paymentPage: 1,
+              pageColor: 1,
+              needsPhoneVerification: false,
+              countryCode: null,
+            );
           }
 
           return GameConfig.fromJson(res['data'] as Map<String, dynamic>);
@@ -641,5 +648,43 @@ class GameLobbyApi {
     if (res['code'] == '00' && res['data'] != null) {
       return res['data'];
     }
+  }
+
+  // 註冊綁定手機號 - 請求綁定
+  Future<HMApiResponse> registerMobileBinding({
+    required String countryCode,
+    required String phoneNumber,
+  }) async {
+    var value = await fetcher(
+        url: '${systemController.apiHost.value}/api/v1/mobile/binding',
+        method: 'POST',
+        body: {
+          'countryCode': countryCode,
+          'phoneNumber': phoneNumber,
+        });
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    return HMApiResponse.fromJson(res);
+  }
+
+  // 註冊綁定手機號 - 綁定驗證
+  Future<HMApiResponse> registerMobileConfirm({
+    required String countryCode,
+    required String phoneNumber,
+    required String otp,
+  }) async {
+    var value = await fetcher(
+        url: '${systemController.apiHost.value}/api/v1/mobile/confirm',
+        method: 'POST',
+        body: {
+          'countryCode': countryCode,
+          'phoneNumber': phoneNumber,
+          'otp': otp,
+        });
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    return HMApiResponse.fromJson(res);
   }
 }

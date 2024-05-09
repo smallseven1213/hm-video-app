@@ -157,7 +157,6 @@ class GameLobbyLoginTabsState extends State<GameLobbyLoginTabs> {
                   onSuccess: () => {
                     userController.fetchUserInfo(),
                     gameWalletController.fetchWalletsInitFromThirdLogin(),
-                    Navigator.pop(context),
                   },
                 ),
         ],

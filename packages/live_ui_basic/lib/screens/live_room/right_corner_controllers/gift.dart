@@ -61,7 +61,7 @@ class Gifts extends StatefulWidget {
 
 class GiftsState extends State<Gifts> {
   final giftsController = Get.find<GiftsController>();
-  ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<int> _currentIndexNotifier = ValueNotifier<int>(0);
 
   @override
   void dispose() {
@@ -98,10 +98,21 @@ class GiftsState extends State<Gifts> {
                 onTap: () {
                   Navigator.of(context).pop();
                 },
-                child: Image.asset(
-                  'packages/live_ui_basic/assets/images/close_gifts.webp',
-                  width: 8,
-                  height: 8,
+                child: const SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Center(
+                    child: SizedBox(
+                      width: 12,
+                      height: 12,
+                      child: Image(
+                        image: AssetImage(
+                            "packages/live_ui_basic/assets/images/room_close.webp"),
+                        width: 12,
+                        height: 12,
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],

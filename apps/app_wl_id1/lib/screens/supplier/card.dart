@@ -1,4 +1,3 @@
-import 'package:app_wl_id1/localization/i18n.dart';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -9,6 +8,7 @@ import 'package:shared/models/supplier.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../localization/i18n.dart';
 import '../../widgets/actor_avatar.dart';
 
 class SupplierCard extends StatefulWidget {
@@ -277,7 +277,7 @@ class SupplierHeaderDelegate extends SliverPersistentHeaderDelegate {
                   ))),
           Positioned(
             top: lerpDouble(
-                114, (kToolbarHeight - 12) / 2 + fontSize, percentage),
+                104, (kToolbarHeight - 12) / 2 + fontSize, percentage),
             right: 8,
             child: Obx(() {
               var isLiked = userFavoritesSupplierController.suppliers
