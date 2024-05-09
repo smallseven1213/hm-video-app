@@ -80,7 +80,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const Center(child: FlashLoading()),
-            child: (isReady) => Stack(
+            child: (isReady, controller) => Stack(
               children: [
                 ShortCard(
                   index: widget.index,
