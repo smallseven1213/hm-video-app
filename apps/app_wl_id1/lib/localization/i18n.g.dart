@@ -6,7 +6,7 @@ part of 'i18n.dart';
 // LocalizationGenerator
 // **************************************************************************
 
-// Generated at: Mon, 29 Apr 2024 11:47:41 +08:00
+// Generated at: Mon, 13 May 2024 15:40:06 +08:00
 class I18n {
   static const supportedLocales = [
     Locale('en', 'US'),
@@ -600,4 +600,24 @@ class I18n {
 
   // dollar
   static String get dollar => 'dollar'.tr();
+
+  // login
+  static String get loginError => 'login_error'.tr();
+
+  // Incorrect
+  static String get incorrectAccountOrPassword =>
+      'Incorrect_account_or_password'.tr();
+
+  // duplicate
+  static String get duplicateLoginAccount => 'duplicate_login_account'.tr();
+
+  // you
+  static String get youHaveBeenLoggedOutPleaseLogInAgain =>
+      'you_have_been_logged_out_please_log_in_again'.tr();
+
+  // user
+  static String get userLogin => 'user_login'.tr();
+
+  // get
+  static String get getTheLatestResources => 'get_the_latest_resources'.tr();
 }
