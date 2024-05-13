@@ -11,16 +11,18 @@ class BottomSheetMessageInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-        padding: EdgeInsets.only(
-            bottom: kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
-        child: SizedBox(
-          height: 64,
-          child: MessageInputWidget(
-            controller: textEditingController,
-            onSend: onSend,
-          ),
-        ));
+    return SingleChildScrollView(
+      child: Padding(
+          padding: EdgeInsets.only(
+              bottom: kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
+          child: SizedBox(
+            height: 64,
+            child: MessageInputWidget(
+              controller: textEditingController,
+              onSend: onSend,
+            ),
+          )),
+    );
     // return SingleChildScrollView(
     //   child: Padding(
     //       padding: EdgeInsets.only(
