@@ -63,10 +63,9 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) {
       isReady.value = true;
-      // if (autoPlay) {
-      //   play();
-      // }
-      play();
+      if (autoPlay) {
+        play();
+      }
     }).catchError((error) {
       if (videoPlayerController?.value.hasError == true) {
         videoAction.value = 'error';
