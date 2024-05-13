@@ -16,7 +16,7 @@ class BottomSheetMessageInput extends StatelessWidget {
           padding: EdgeInsets.only(
               bottom: kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
           child: SizedBox(
-            height: 64 + MediaQuery.of(context).padding.bottom,
+            height: 64,
             child: MessageInputWidget(
               controller: textEditingController,
               onSend: onSend,
@@ -41,19 +41,13 @@ class MessageInputWidget extends StatefulWidget {
 }
 
 class MessageInputWidgetState extends State<MessageInputWidget> {
-  final FocusNode focusNode = FocusNode();
-
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      focusNode.requestFocus();
-    });
   }
 
   @override
   void dispose() {
-    focusNode.dispose();
     super.dispose();
   }
 
@@ -80,7 +74,6 @@ class MessageInputWidgetState extends State<MessageInputWidget> {
                 borderRadius: BorderRadius.circular(5),
               ),
               child: TextField(
-                focusNode: focusNode,
                 autofocus: true,
                 controller: widget.controller,
                 style: const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
