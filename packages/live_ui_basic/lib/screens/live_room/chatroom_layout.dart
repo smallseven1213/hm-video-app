@@ -33,26 +33,19 @@ class ChatroomLayoutState extends State<ChatroomLayout> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Padding(
-            padding: EdgeInsets.only(
-                bottom: kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
-            child: SizedBox(
-              height: 64 + MediaQuery.of(context).padding.bottom,
-              child: MessageInputWidget(
-                controller: _messageController,
-                onSend: sendMessage,
-              ),
-            )
-            // child: Column(
-            //   mainAxisSize: MainAxisSize.min,
-            //   children: [
-            // MessageInputWidget(
-            //   controller: _messageController,
-            //   onSend: sendMessage,
-            // )
-            //   ],
-            // ),
-            );
+        return SingleChildScrollView(
+          child: Padding(
+              padding: EdgeInsets.only(
+                  bottom:
+                      kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
+              child: SizedBox(
+                height: 64 + MediaQuery.of(context).padding.bottom,
+                child: MessageInputWidget(
+                  controller: _messageController,
+                  onSend: sendMessage,
+                ),
+              )),
+        );
       },
     ).whenComplete(() {
       isBottomSheetDisplayed = false;
