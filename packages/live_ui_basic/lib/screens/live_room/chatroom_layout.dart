@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/chatroom_provider.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
 import '../../localization/live_localization_delegate.dart';
+import 'bottom_sheet_message_input.dart';
 import 'chatroom_messages.dart';
 import 'left_side_gifts.dart';
 
@@ -33,19 +35,23 @@ class ChatroomLayoutState extends State<ChatroomLayout> {
       context: context,
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return SingleChildScrollView(
-          child: Padding(
-              padding: EdgeInsets.only(
-                  bottom:
-                      kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
-              child: SizedBox(
-                height: 64 + MediaQuery.of(context).padding.bottom,
-                child: MessageInputWidget(
-                  controller: _messageController,
-                  onSend: sendMessage,
-                ),
-              )),
+        return BottomSheetMessageInput(
+          textEditingController: _messageController,
+          onSend: sendMessage,
         );
+        // return SingleChildScrollView(
+        //   child: Padding(
+        //       padding: EdgeInsets.only(
+        //           bottom:
+        //               kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
+        //       child: SizedBox(
+        //         height: 64 + MediaQuery.of(context).padding.bottom,
+        //         child: MessageInputWidget(
+        // controller: _messageController,
+        // onSend: sendMessage,
+        //         ),
+        //       )),
+        // );
       },
     ).whenComplete(() {
       isBottomSheetDisplayed = false;
@@ -69,7 +75,6 @@ class ChatroomLayoutState extends State<ChatroomLayout> {
 
   @override
   void initState() {
-    super.initState();
     var keyboardVisibilityController = KeyboardVisibilityController();
 
     // Subscribe
@@ -79,6 +84,7 @@ class ChatroomLayoutState extends State<ChatroomLayout> {
         Navigator.of(context).pop();
       }
     });
+    super.initState();
   }
 
   @override
@@ -111,92 +117,6 @@ class ChatroomLayoutState extends State<ChatroomLayout> {
                 height: 33),
           ),
           const SizedBox(height: 25),
-        ],
-      ),
-    );
-  }
-}
-
-class MessageInputWidget extends StatefulWidget {
-  final TextEditingController controller;
-  final VoidCallback onSend;
-
-  const MessageInputWidget({
-    Key? key,
-    required this.controller,
-    required this.onSend,
-  }) : super(key: key);
-
-  @override
-  MessageInputWidgetState createState() => MessageInputWidgetState();
-}
-
-class MessageInputWidgetState extends State<MessageInputWidget> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final LiveLocalizations localizations = LiveLocalizations.of(context)!;
-
-    return Container(
-      height: 54,
-      padding: EdgeInsets.only(
-        left: 5,
-        right: 5,
-        top: 5,
-        bottom: 5 + MediaQuery.of(context).padding.bottom,
-      ),
-      color: const Color(0xFF242a3d),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: TextField(
-                autofocus: true,
-                controller: widget.controller,
-                style: const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
-                decoration: InputDecoration(
-                  hintText:
-                      localizations.translate('say_something_to_the_host'),
-                  hintStyle:
-                      const TextStyle(fontSize: 14, color: Color(0xFF7b7b7b)),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(10),
-                ),
-                onSubmitted: (_) {
-                  widget.onSend(); // 當按下Enter鍵時調用
-                },
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              widget.onSend();
-            },
-            child: SizedBox(
-              width: 60,
-              child: Center(
-                child: Text(
-                  localizations.translate('send'),
-                  style: const TextStyle(fontSize: 12, color: Colors.white),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

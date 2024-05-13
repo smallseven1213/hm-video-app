@@ -146,7 +146,7 @@ class LiveRoomPageState extends State<LiveRoomPage> {
               if (controller.hideAllUI.value == false) ...[
                 if (controller.liveRoomInfo.value?.streamerId != null)
                   Positioned(
-                    top: MediaQuery.of(context).padding.top + 50,
+                    top: MediaQuery.of(context).padding.top + 20,
                     left: 0,
                     child: TopControllers(
                       key: ValueKey(controller.liveRoomInfo.value?.streamerId),
