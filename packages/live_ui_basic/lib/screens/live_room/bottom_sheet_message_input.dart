@@ -77,6 +77,8 @@ class MessageInputWidgetState extends State<MessageInputWidget> {
       ),
       color: const Color(0xFF242a3d),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Expanded(
             child: Container(
