@@ -2,6 +2,7 @@ import 'package:app_wl_id1/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
@@ -26,6 +27,7 @@ class ShortBottomArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final uiController = Get.find<UIController>();
     final paddingBottom = MediaQuery.of(context).padding.bottom;
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
@@ -33,8 +35,9 @@ class ShortBottomArea extends StatelessWidget {
         Get.find<UserFavoritesShortController>();
 
     return Container(
-      height: 76 + paddingBottom,
-      padding: EdgeInsets.only(bottom: paddingBottom),
+      height: 76 + paddingBottom + (uiController.isIphoneSafari.value ? 20 : 0),
+      padding: EdgeInsets.only(
+          bottom: paddingBottom + (uiController.isIphoneSafari.value ? 20 : 0)),
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
