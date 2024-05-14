@@ -14,6 +14,7 @@ import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw_history.dart';
+import 'package:game/screens/game_withdraw_screen/check_kyc_data.dart';
 
 import 'package:game/widgets/input.dart';
 import 'package:game/widgets/pay_switch_button.dart';
@@ -26,13 +27,13 @@ import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
 
+import 'package:game/models/user_withdrawal_data.dart';
+import 'package:game/apis/game_api.dart';
+
 import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
-
-import 'package:game/models/user_withdrawal_data.dart';
-import 'package:game/apis/game_api.dart';
 
 import '../../enums/game_app_routes.dart';
 import '../../localization/game_localization_delegate.dart';
@@ -45,8 +46,6 @@ class GameWithdraw extends StatefulWidget {
   @override
   State<GameWithdraw> createState() => _GameWithdrawState();
 }
-
-enum Type { bankcard, crypto }
 
 class _GameWithdrawState extends State<GameWithdraw> {
   GameWithdrawController gameWithdrawController =
@@ -72,6 +71,12 @@ class _GameWithdrawState extends State<GameWithdraw> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkKycData(
+        context: context,
+        handleUserWithdrawalData: _getUserWithdrawalData,
+      );
+    });
     _fetchDataInit();
 
     Get.find<AuthController>().token.listen((event) {
@@ -80,7 +85,6 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   _fetchDataInit() {
-    _getUserWithdrawalData();
     _getStackLimit();
     _getParamConfig();
   }
@@ -93,11 +97,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
 
   void _getUserWithdrawalData() async {
     try {
-      gameWithdrawController.getWithDrawalData();
+      // gameWithdrawController.getWithDrawalData();
 
       if (gameWithdrawController.paymentPin.value &&
           gameWithdrawController.hasBankPaymentData.value) {
-        // ignore: use_build_context_synchronously
         _transferInit(context);
       }
     } catch (error) {
@@ -398,7 +401,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                               GameWithDrawOptions(
                                   controller: amountController,
                                   onConfirm: (type) =>
-                                      _onConfirm(Type.bankcard, context),
+                                      _onConfirm(type, context),
                                   enableSubmit: _enableSubmit,
                                   hasPaymentData: gameWithdrawController
                                       .hasBankPaymentData.value,

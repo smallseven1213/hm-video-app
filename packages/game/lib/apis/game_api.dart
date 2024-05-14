@@ -687,4 +687,22 @@ class GameLobbyApi {
 
     return HMApiResponse.fromJson(res);
   }
+
+  // 註冊綁定身分證 - 用戶KYC申請 / 送出KYC身分證正反面
+  Future<HMApiResponse> registerKycApply({
+    required String idFront,
+    required String idBack,
+  }) async {
+    var value = await fetcher(
+        url: '${systemController.apiHost.value}/api/v1/third/user/kyc-apply',
+        method: 'POST',
+        body: {
+          'idFront': idFront,
+          'idBack': idBack,
+        });
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    return HMApiResponse.fromJson(res);
+  }
 }

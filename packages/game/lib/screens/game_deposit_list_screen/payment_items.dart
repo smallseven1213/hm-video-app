@@ -25,6 +25,11 @@ import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
+Map<String, int> requireNameEnum = {
+  'NO': 0,
+  'YES': 1,
+};
+
 class CustomTriangleClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
@@ -156,7 +161,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           depositAmountType['noInput']) {
         if (widget.depositData[_paymentActiveIndex][_channelActiveIndex]
                 .requireName ==
-            1) {
+            requireNameEnum['YES']) {
           logger.i('確認真實姓名');
           showUserName(
             context,

@@ -9,8 +9,8 @@ void showConfirmDialog({
   required BuildContext context,
   required String title,
   required String content,
-  String confirmText = "確定",
-  String cancelText = "取消",
+  String? confirmText,
+  String? cancelText,
   bool barrierDismissible = false,
   required void Function() onConfirm,
   void Function()? onCancel,
@@ -20,8 +20,6 @@ void showConfirmDialog({
     context: context,
     barrierDismissible: barrierDismissible,
     builder: (context) {
-      final GameLocalizations localizations = GameLocalizations.of(context)!;
-
       return PopScope(
         canPop: false,
         child: PointerInterceptor(
@@ -106,7 +104,9 @@ void showConfirmDialog({
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Center(
                                 child: Text(
-                                  localizations.translate('cancel'),
+                                  cancelText ??
+                                      GameLocalizations.of(context)!
+                                          .translate('cancel'),
                                   style: TextStyle(
                                       color: gameSecondButtonTextColor,
                                       fontSize: 16),
@@ -137,7 +137,9 @@ void showConfirmDialog({
                             padding: const EdgeInsets.symmetric(vertical: 16),
                             child: Center(
                               child: Text(
-                                localizations.translate('confirm'),
+                                confirmText ??
+                                    GameLocalizations.of(context)!
+                                        .translate('confirm'),
                                 style: TextStyle(
                                     color: gamePrimaryButtonTextColor,
                                     fontSize: 16),
