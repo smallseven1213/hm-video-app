@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
+import 'package:shared/controllers/ui_controller.dart';
 
 import '../../localization/live_localization_delegate.dart';
 
@@ -84,15 +85,18 @@ class MessageInputWidgetState extends State<MessageInputWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final uiController = Get.find<UIController>();
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     return Container(
-      height: 54,
+      height: 54 + (uiController.isIphoneSafari.value ? 20 : 0),
       padding: EdgeInsets.only(
         left: 5,
         right: 5,
         top: 5,
-        bottom: 5 + MediaQuery.of(context).padding.bottom,
+        bottom: 5 +
+            MediaQuery.of(context).padding.bottom +
+            (uiController.isIphoneSafari.value ? 20 : 0),
       ),
       color: const Color(0xFF242a3d),
       child: Row(
