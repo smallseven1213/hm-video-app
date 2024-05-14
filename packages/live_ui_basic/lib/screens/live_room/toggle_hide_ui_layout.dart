@@ -12,7 +12,9 @@ class ToggleHideUILayout extends StatelessWidget {
         Get.find<LiveRoomController>(tag: pid.toString());
     return GestureDetector(
       onTap: () {
-        liveRoomController.toggleHideAllUI();
+        if (liveRoomController.displayChatInput.value == false) {
+          liveRoomController.toggleHideAllUI();
+        }
       },
       child: Container(
         color: Colors.transparent, // Replace with your desired background color

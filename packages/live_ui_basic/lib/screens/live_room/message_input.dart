@@ -1,66 +1,85 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
+import 'package:live_core/controllers/live_room_controller.dart';
+import 'package:live_core/socket/live_web_socket_manager.dart';
 
 import '../../localization/live_localization_delegate.dart';
 
-class BottomSheetMessageInput extends StatelessWidget {
-  final TextEditingController textEditingController;
-  final Function() onSend;
-  const BottomSheetMessageInput(
-      {super.key, required this.textEditingController, required this.onSend});
+class MessageInput extends StatelessWidget {
+  final int pid;
+
+  const MessageInput({super.key, required this.pid});
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-          padding: EdgeInsets.only(
-              bottom: kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
-          child: SizedBox(
-            height: 64,
-            child: MessageInputWidget(
-              controller: textEditingController,
-              onSend: onSend,
-            ),
-          )),
-    );
-    // return SingleChildScrollView(
-    //   child: Padding(
-    //       padding: EdgeInsets.only(
-    //           bottom: kIsWeb ? 0 : MediaQuery.of(context).viewInsets.bottom),
-    //       child: SizedBox(
-    //         height: 64,
-    //         child: MessageInputWidget(
-    //           controller: textEditingController,
-    //           onSend: onSend,
-    //         ),
-    //       )),
-    // );
+    final liveRoomController =
+        Get.find<LiveRoomController>(tag: pid.toString());
+    return Obx(() {
+      if (!liveRoomController.displayChatInput.value) {
+        return const SizedBox();
+      }
+      return Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: GestureDetector(
+              onTap: () {},
+              child: Container(
+                  height: 64,
+                  width: double.infinity,
+                  padding: EdgeInsets.only(
+                      bottom: kIsWeb
+                          ? 0
+                          : MediaQuery.of(context).viewInsets.bottom),
+                  child: MessageInputWidget(pid: pid))));
+    });
   }
 }
 
 class MessageInputWidget extends StatefulWidget {
-  final TextEditingController controller;
-  final VoidCallback onSend;
-
+  final int pid;
   const MessageInputWidget({
-    Key? key,
-    required this.controller,
-    required this.onSend,
-  }) : super(key: key);
+    super.key,
+    required this.pid,
+  });
 
   @override
   MessageInputWidgetState createState() => MessageInputWidgetState();
 }
 
 class MessageInputWidgetState extends State<MessageInputWidget> {
+  late LiveSocketIOManager socketManager;
+  final TextEditingController _messageController = TextEditingController();
+
   @override
   void initState() {
+    socketManager = LiveSocketIOManager();
     super.initState();
   }
 
   @override
   void dispose() {
+    _messageController.dispose();
+    // keyboardSubscription.cancel();
     super.dispose();
+  }
+
+  void sendMessage() {
+    final liveRoomController =
+        Get.find<LiveRoomController>(tag: widget.pid.toString());
+    String message = _messageController.text.trim();
+    if (message.isNotEmpty) {
+      dynamic jsonData = {
+        'msg': message,
+        'ntype': 1,
+      };
+
+      socketManager.send('chat', jsonData);
+      _messageController.clear();
+      // liveRoomController.displayChatInput.value = false;
+    }
   }
 
   @override
@@ -89,7 +108,7 @@ class MessageInputWidgetState extends State<MessageInputWidget> {
               ),
               child: TextField(
                 autofocus: true,
-                controller: widget.controller,
+                controller: _messageController,
                 style: const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
                 decoration: InputDecoration(
                   hintText:
@@ -100,14 +119,14 @@ class MessageInputWidgetState extends State<MessageInputWidget> {
                   contentPadding: const EdgeInsets.all(10),
                 ),
                 onSubmitted: (_) {
-                  widget.onSend(); // 當按下Enter鍵時調用
+                  sendMessage(); // 當按下Enter鍵時調用
                 },
               ),
             ),
           ),
           InkWell(
             onTap: () {
-              widget.onSend();
+              sendMessage();
             },
             child: SizedBox(
               width: 60,

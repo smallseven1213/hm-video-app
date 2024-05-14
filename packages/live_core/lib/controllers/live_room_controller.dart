@@ -18,6 +18,7 @@ class LiveRoomController extends GetxController {
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
   var hideAllUI = false.obs;
   var isMute = kIsWeb ? true.obs : false.obs;
+  var displayChatInput = false.obs;
 
   LiveRoomController(this.pid);
 
@@ -99,5 +100,9 @@ class LiveRoomController extends GetxController {
     } catch (e) {
       return;
     }
+  }
+
+  void toggleDisplayChatInput() {
+    displayChatInput.value = !displayChatInput.value;
   }
 }
