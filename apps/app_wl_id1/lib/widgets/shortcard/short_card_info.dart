@@ -32,7 +32,7 @@ class ShortCardInfo extends StatelessWidget {
           return Container(
             width: MediaQuery.of(context).size.width,
             padding:
-                const EdgeInsets.only(top: 10, left: 10, right: 10, bottom: 0),
+                const EdgeInsets.only(top: 10, left: 20, right: 60, bottom: 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
