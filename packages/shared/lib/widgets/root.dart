@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:game/localization/game_localization_delegate.dart';
 import 'package:game/localization/en.dart';
@@ -16,6 +17,7 @@ import 'package:live_ui_basic/localization/vi.dart';
 import 'package:live_ui_basic/localization/zh.dart';
 import 'package:live_ui_basic/localization/zn.dart';
 import 'package:get/get.dart';
+import 'package:safe_area_insets/safe_area_insets.dart';
 import 'package:shared/models/color_keys.dart';
 import '../controllers/system_config_controller.dart';
 import '../navigator/delegate.dart';
@@ -82,7 +84,7 @@ class RootWidget extends StatelessWidget {
       box.write('locale', 'zh_TW');
     }
 
-    return MaterialApp.router(
+    var rootWidget = MaterialApp.router(
       localizationsDelegates: [
         GameLocalizationsDelegate({
           'en-US': enUsStrings,
@@ -109,5 +111,11 @@ class RootWidget extends StatelessWidget {
       routeInformationParser: parser,
       theme: theme,
     );
+
+    return kIsWeb
+        ? WebSafeAreaInsets(
+            child: rootWidget,
+          )
+        : rootWidget;
   }
 }
