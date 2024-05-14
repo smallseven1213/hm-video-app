@@ -96,7 +96,9 @@ class HomeState extends State<HomePage> {
               Obx(() {
                 return uiController.displayHomeNavigationBar.value
                     ? Container(
-                        padding: EdgeInsets.only(bottom: paddingBottom),
+                        padding: EdgeInsets.only(
+                            bottom: paddingBottom +
+                                (uiController.isIphoneSafari.value ? 20 : 0)),
                         height: 76 + paddingBottom,
                         decoration: const BoxDecoration(
                           borderRadius: kIsWeb
