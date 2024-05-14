@@ -99,7 +99,9 @@ class HomeState extends State<HomePage> {
                         padding: EdgeInsets.only(
                             bottom: paddingBottom +
                                 (uiController.isIphoneSafari.value ? 20 : 0)),
-                        height: 76 + paddingBottom,
+                        height: 76 +
+                            paddingBottom +
+                            (uiController.isIphoneSafari.value ? 20 : 0),
                         decoration: const BoxDecoration(
                           borderRadius: kIsWeb
                               ? null
