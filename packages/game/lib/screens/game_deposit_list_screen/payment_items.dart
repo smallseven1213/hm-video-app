@@ -156,7 +156,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           depositAmountType['noInput']) {
         if (widget.depositData[_paymentActiveIndex][_channelActiveIndex]
                 .requireName ==
-            0) {
+            1) {
           logger.i('確認真實姓名');
           showUserName(
             context,
