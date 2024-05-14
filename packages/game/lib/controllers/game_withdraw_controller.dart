@@ -7,18 +7,24 @@ final logger = Logger();
 
 class GameWithdrawController extends GetxController {
   RxDouble points = 0.00.obs;
-  var userPaymentSecurity = [].obs;
   var paymentPin = false.obs;
   var loadingStatus = true.obs;
   var enableSubmit = true.obs;
   var paymentAmount = '0.00'.obs;
 
   // <!--- userPaymentSecurity{} --->
+  var userPaymentSecurity = [].obs;
   var hasBankPaymentData = false.obs;
   var hasUsdtPaymentData = false.obs;
   var bankIsBound = false.obs;
   var usdtIsBound = false.obs;
   var initRemittanceType = 1.obs;
+
+  // <!--- userKyc{} --->
+  var userKyc = [].obs;
+  var cellPhoneIsBound = false.obs;
+  var idCardIsBound = false.obs;
+  var idCardStatus = Rx<int?>(null);
 
   getWithDrawalData() async {
     try {
@@ -48,6 +54,15 @@ class GameWithdrawController extends GetxController {
               bankIsBound.value = paymentSecurity.isBound;
               hasBankPaymentData.value = true;
             }
+          }
+        }
+
+        for (UserKyc kycData in res['data'].userKyc) {
+          if (kycData.kycType == kycTypeEnum['CELL_PHONE']) {
+            cellPhoneIsBound.value = kycData.isBound;
+          } else if (kycData.kycType == kycTypeEnum['ID_CARD']) {
+            idCardIsBound.value = kycData.isBound;
+            idCardStatus.value = kycData.status;
           }
         }
 

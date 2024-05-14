@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
@@ -30,6 +31,6 @@ class _EnterGame extends State<EnterGame> {
   Widget build(BuildContext context) {
     return Obx(() => gameConfigController.gamePageColor.value != 0
         ? const GameLobby()
-        : const CircularProgressIndicator());
+        : const Center(child: GameLoading()));
   }
 }
