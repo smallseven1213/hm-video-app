@@ -44,6 +44,11 @@ checkKycData({
           MyRouteDelegate.of(context).push(GameAppRoutes.registerMobileBinding);
           Navigator.pop(context);
         },
+        cancelText: '回上一頁',
+        onCancel: () {
+          Navigator.pop(context);
+          Navigator.pop(context);
+        },
       );
     }
     // 前往绑定身份证
@@ -57,6 +62,11 @@ checkKycData({
         content: '請先完成身分證驗證',
         onConfirm: () {
           MyRouteDelegate.of(context).push(GameAppRoutes.registerIdCardBinding);
+          Navigator.pop(context);
+        },
+        cancelText: '回上一頁',
+        onCancel: () {
+          Navigator.pop(context);
           Navigator.pop(context);
         },
       );
