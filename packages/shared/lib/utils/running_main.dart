@@ -85,6 +85,11 @@ Future<void> runningMain(
     }
   }
 
+  String locale = defaultLocale != null
+      ? '${defaultLocale.languageCode}_${defaultLocale.countryCode}'
+      : 'zh_TW';
+  GetStorage('locale').write('locale', locale);
+
   SentryFlutter.init((options) {
     options.dsn = sentryDSN;
     options.tracesSampleRate = kDebugMode ? 0 : 0.1;
