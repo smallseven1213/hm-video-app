@@ -71,10 +71,10 @@ class GameLobbyRegisterFormState extends State<GameLobbyRegisterForm> {
 
       logger.i('countryCode: ${gameConfigController.countryCode.value}');
 
-      // isPhoneVerification ???
       if (mounted &&
           gameConfigController.needsPhoneVerification.value &&
-          gameConfigController.countryCode.value!.isNotEmpty) {
+          gameConfigController.countryCode.value!.isNotEmpty &&
+          userController.info.value.phoneNumber == null) {
         // 前往手機綁定頁面
         Navigator.pop(context);
         widget.onSuccess();
