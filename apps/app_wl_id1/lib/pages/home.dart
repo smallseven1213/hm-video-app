@@ -1,3 +1,5 @@
+import 'package:app_wl_id1/pages/coin.dart';
+import 'package:app_wl_id1/pages/vip.dart';
 import 'package:app_wl_id1/screens/home/home_apps.dart';
 import 'package:app_wl_id1/widgets/wave_loading.dart';
 import 'package:flutter/foundation.dart';
@@ -49,6 +51,8 @@ final screens = {
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
   HomeNavigatorPathes.live: () => const LivePage(),
+  HomeNavigatorPathes.coin: () => const CoinPage(),
+  HomeNavigatorPathes.vip: () => const VipPage(),
 };
 
 class HomePage extends StatefulWidget {
