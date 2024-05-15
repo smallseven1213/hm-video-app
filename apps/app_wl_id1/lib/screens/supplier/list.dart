@@ -57,7 +57,6 @@ class SupplierVods extends StatelessWidget {
                     var vod = videos[index];
                     return VideoPreviewWidget(
                         id: id,
-                        hasTags: false,
                         onOverrideRedirectTap: (id) {
                           MyRouteDelegate.of(context).push(
                             AppRoutes.shorts,
@@ -71,6 +70,7 @@ class SupplierVods extends StatelessWidget {
                         film: 2,
                         hasRadius: false,
                         hasTitle: false,
+                        hasTags: false,
                         imageRatio: gridRatio,
                         displayVideoTimes: false,
                         displayViewTimes: false,

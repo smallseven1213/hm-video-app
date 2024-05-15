@@ -70,6 +70,7 @@ class SupplierVods extends StatelessWidget {
                         film: 2,
                         hasRadius: false,
                         hasTitle: false,
+                        hasTags: false,
                         imageRatio: gridRatio,
                         displayVideoTimes: true,
                         displayViewTimes: true,
