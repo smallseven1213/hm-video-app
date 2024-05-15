@@ -8,9 +8,10 @@ import 'package:http_parser/http_parser.dart' as http_parser;
 import 'package:uuid/uuid.dart';
 
 import 'package:game/apis/game_api.dart';
+import 'package:game/widgets/button.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/show_register_fail_dialog.dart';
-import 'package:game/widgets/button.dart';
 
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/utils/fetcher.dart';
@@ -34,6 +35,23 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
   String? backImageSid;
 
   void uploadKycImage(XFile file, String type) async {
+    // 讀取文件內容
+    List<int> bytes = await file.readAsBytes();
+    int fileSizeInBytes = bytes.length;
+    int maxSizeInBytes = 5 * 1024 * 1024; // 5MB
+
+    // 檢查文件大小是否超過5MB
+    if (fileSizeInBytes > maxSizeInBytes && mounted) {
+      // 如果文件大小超過5MB，顯示提示信息
+      showConfirmDialog(
+        context: context,
+        title: '圖片大小超過5MB',
+        content: '請重新選擇圖片，圖片大小不能超過5MB',
+        onConfirm: () => Navigator.pop(context),
+      );
+      return; // 中止上傳操作
+    }
+
     var sid = const Uuid().v4();
 
     try {
@@ -145,7 +163,6 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                 XFile? image =
                     await ImagePicker().pickImage(source: ImageSource.gallery);
                 if (image != null) {
-                  logger.i('front image: $image');
                   uploadKycImage(image, type);
                 }
 
@@ -170,7 +187,6 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                 final image =
                     await ImagePicker().pickImage(source: ImageSource.camera);
                 if (image != null) {
-                  logger.i('back image: $image');
                   uploadKycImage(image, type);
                 }
 
