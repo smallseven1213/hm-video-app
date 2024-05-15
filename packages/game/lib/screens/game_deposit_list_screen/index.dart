@@ -81,7 +81,6 @@ class GameDepositListState extends State<GameDepositList> {
         showConfirmDialogWrapper();
         return;
       } else {
-        logger.i('_getDepositChannel = 00 ${res['data']}');
         setState(() {
           depositData = res['data'];
         });

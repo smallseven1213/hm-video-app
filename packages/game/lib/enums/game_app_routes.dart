@@ -13,4 +13,5 @@ class GameAppRoutes {
   static const String activity = '/game-activity';
   static const String registerMobileBinding = '/game/register-mobile-binding';
   static const String registerMobileConfirm = '/game/register-mobile-confirm';
+  static const String registerIdCardBinding = '/game/register-id-card-binding';
 }
