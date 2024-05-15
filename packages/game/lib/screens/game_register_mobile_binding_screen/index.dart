@@ -95,10 +95,7 @@ class GameRegisterMobileBindingState extends State<GameRegisterMobileBinding> {
           ),
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: gameLobbyAppBarIconColor),
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.pop(context),
           ),
         ),
         body: SafeArea(
