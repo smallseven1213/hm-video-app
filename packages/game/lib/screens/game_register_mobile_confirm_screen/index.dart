@@ -1,18 +1,19 @@
 import 'dart:async';
-
-import 'package:game/controllers/game_banner_controller.dart';
-import 'package:game/screens/game_register_mobile_confirm_screen/count_down_timer.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter/material.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:game/controllers/game_banner_controller.dart';
+import 'package:game/screens/game_register_mobile_confirm_screen/count_down_timer.dart';
+import 'package:game/widgets/game_startup.dart';
+
 import 'package:shared/controllers/game_platform_config_controller.dart';
 
-import 'package:url_launcher/url_launcher.dart';
 import '../../localization/game_localization_delegate.dart';
 import 'confirm_pin.dart';
 
@@ -61,8 +62,7 @@ class GameRegisterMobileConfirmState extends State<GameRegisterMobileConfirm> {
           gravity: ToastGravity.CENTER,
         );
 
-        Navigator.pop(context);
-        Navigator.pop(context);
+        Get.find<GameStartupController>().goBackToAppHome(context);
       }
     } catch (e) {
       logger.e('submitMobileConfirmOtp error: $e');
