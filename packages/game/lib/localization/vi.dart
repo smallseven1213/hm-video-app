@@ -213,4 +213,33 @@ const Map<String, String> viVnStrings = {
   "set_a_funds_pin": "Thiết lập mã PIN Quỹ",
   "funds_pin": "Mã PIN Quỹ",
   "tips": "Mẹo",
+  "otp_verification_enter_code": "OTP Verification - Enter Code",
+  "otp_verification_enter_phone_number":
+      "OTP Verification - Enter Phone Number",
+  "otp_verification_prompt": "Please enter the system sent to +",
+  "otp_verification_code_suffix": "Six-digit verification code",
+  "otp_code": "OTP Code",
+  "otp_unable_to_get_code": "Unable to get code",
+  "otp_code_resent": "OTP Code Resent",
+  "otp_valid_duration": "Valid Duration",
+  "otp_resend": "Resend",
+  "plz_enter_phone_number": "Please enter phone number",
+  "phone_number_format_error": "Phone number format error",
+  "otp_code_sent": "OTP Code Sent",
+  "phone_binding_prompt":
+      "After binding the phone number, the verification code will be sent. Please verify within five minutes.",
+  "phone_number": "Phone Number",
+  "next": "Next",
+  "image_size_exceeds_limit": "Image size exceeds 5MB",
+  "image_size_exceeds_limit_prompt": "Image size exceeds 5MB, please reselect",
+  "submission_success": "Submission success, please wait for staff review",
+  "upload_img": "Upload Image",
+  "use_camera": "Use Camera",
+  "id_verification": "ID Verification",
+  "upload_front_id": "Upload ID Front",
+  "upload_back_id": "Upload ID Back",
+  "edit": "Edit",
+  "file_size_limit":
+      "File limit 5MB or less, only jpg, jpeg files are accepted",
+  "submit": "Submit"
 };

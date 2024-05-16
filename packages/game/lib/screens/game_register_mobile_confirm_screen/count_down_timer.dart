@@ -1,11 +1,13 @@
+import 'package:logger/logger.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:game/apis/game_api.dart';
 
+import 'package:game/apis/game_api.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/show_register_fail_dialog.dart';
-import 'package:logger/logger.dart';
+
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -68,7 +70,7 @@ class CountdownTimerState extends State<CountdownTimer> {
 
       if (res.code == '00' && mounted) {
         Fluttertoast.showToast(
-          msg: '驗證碼已重新發送',
+          msg: GameLocalizations.of(context)!.translate('otp_code_resent'),
           gravity: ToastGravity.CENTER,
         );
       }
@@ -89,6 +91,7 @@ class CountdownTimerState extends State<CountdownTimer> {
 
   @override
   Widget build(BuildContext context) {
+    GameLocalizations localizations = GameLocalizations.of(context)!;
     int minutes = _secondsRemaining ~/ 60;
     int seconds = _secondsRemaining % 60;
 
@@ -96,7 +99,7 @@ class CountdownTimerState extends State<CountdownTimer> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          '有效時間: ${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
+          '${localizations.translate('otp_valid_duration')}: ${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
           style: const TextStyle(
             fontSize: 14,
             color: Colors.black,
@@ -109,7 +112,7 @@ class CountdownTimerState extends State<CountdownTimer> {
             mutateMobileBinding(); // 调用父组件传递的方法
           },
           child: Text(
-            '重寄$_buttonCountdown s',
+            '${localizations.translate('otp_resend')}$_buttonCountdown s',
             style: TextStyle(
               fontSize: 12,
               color: _isButtonDisabled ? Colors.grey : gamePrimaryButtonColor,
