@@ -104,9 +104,8 @@ class SideInfoState extends State<SideInfo> {
                                       update(-1);
                                     }
                                   } else {
-                                    var vod =
-                                        Vod.fromJson(widget.shortData.toJson());
-                                    userFavoritesShortController.addVideo(vod);
+                                    userFavoritesShortController
+                                        .addVideo(widget.shortData);
                                     update(1);
                                   }
                                 },
@@ -150,9 +149,8 @@ class SideInfoState extends State<SideInfo> {
                                       update(-1);
                                     }
                                   } else {
-                                    var vod =
-                                        Vod.fromJson(widget.shortData.toJson());
-                                    userShortCollectionController.addVideo(vod);
+                                    userShortCollectionController
+                                        .addVideo(widget.shortData);
                                     update(1);
                                   }
                                 },

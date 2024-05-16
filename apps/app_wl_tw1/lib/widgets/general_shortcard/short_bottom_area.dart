@@ -36,7 +36,7 @@ class ShortBottomArea extends StatelessWidget {
     return SafeArea(
       bottom: true,
       child: Container(
-        height: 76 + paddingBottom,
+        height: 76,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -73,8 +73,7 @@ class ShortBottomArea extends StatelessWidget {
                               update(-1);
                             }
                           } else {
-                            var vod = Vod.fromJson(shortData.toJson());
-                            userFavoritesShortController.addVideo(vod);
+                            userFavoritesShortController.addVideo(shortData);
                             update(1);
                           }
                         },
@@ -104,8 +103,7 @@ class ShortBottomArea extends StatelessWidget {
                               update(-1);
                             }
                           } else {
-                            var vod = Vod.fromJson(shortData.toJson());
-                            userShortCollectionController.addVideo(vod);
+                            userShortCollectionController.addVideo(shortData);
                             update(1);
                           }
                         },

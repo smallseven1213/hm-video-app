@@ -13,7 +13,6 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-
 final logger = Logger();
 
 class SideInfo extends StatefulWidget {
@@ -102,9 +101,8 @@ class SideInfoState extends State<SideInfo> {
                                       update(-1);
                                     }
                                   } else {
-                                    var vod =
-                                        Vod.fromJson(widget.shortData.toJson());
-                                    userFavoritesShortController.addVideo(vod);
+                                    userFavoritesShortController
+                                        .addVideo(widget.shortData);
                                     update(1);
                                   }
                                 },
@@ -148,9 +146,8 @@ class SideInfoState extends State<SideInfo> {
                                       update(-1);
                                     }
                                   } else {
-                                    var vod =
-                                        Vod.fromJson(widget.shortData.toJson());
-                                    userShortCollectionController.addVideo(vod);
+                                    userShortCollectionController
+                                        .addVideo(widget.shortData);
                                     update(1);
                                   }
                                 },

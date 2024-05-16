@@ -174,14 +174,14 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   // onConfirm function
-  void _onConfirm(Type type, context) {
+  void _onConfirm(int remittanceType, context) {
+    logger.i('submit Confirm remittanceType: $remittanceType');
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
-    int intType = type == Type.bankcard ? 1 : 2;
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
       try {
         var res = await GameLobbyApi().applyWithdrawalV2(
-            intType,
+            remittanceType,
             amountController.text,
             pin.toString(),
             stakeLimit.toString(),
@@ -204,14 +204,14 @@ class _GameWithdrawState extends State<GameWithdraw> {
               });
         } else {
           Fluttertoast.showToast(
-            msg: res.message.toString(),
+            msg: localizations.translate('failed'),
             gravity: ToastGravity.CENTER,
           );
         }
       } catch (error) {
         logger.i('_onConfirm applyWithdrawalV2 error: $error');
         Fluttertoast.showToast(
-          msg: responseController.responseMessage.value.toString(),
+          msg: localizations.translate('failed'),
           gravity: ToastGravity.CENTER,
         );
       }
@@ -400,8 +400,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                               const SizedBox(height: 10),
                               GameWithDrawOptions(
                                   controller: amountController,
-                                  onConfirm: (type) =>
-                                      _onConfirm(type, context),
+                                  onConfirm: (remittanceType) =>
+                                      _onConfirm(remittanceType, context),
                                   enableSubmit: _enableSubmit,
                                   hasPaymentData: gameWithdrawController
                                       .hasBankPaymentData.value,
@@ -418,11 +418,12 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                                   element.remittanceType !=
                                                   remittanceTypeEnum['USDT'],
                                               orElse: () => UserPaymentSecurity(
-                                                  remittanceType: 1,
-                                                  isBound:
+                                                  remittanceType:
                                                       gameWithdrawController
-                                                          .bankIsBound
-                                                          .value)) ??
+                                                          .initRemittanceType
+                                                          .value,
+                                                  isBound: gameWithdrawController
+                                                      .bankIsBound.value)) ??
                                       [])
                             ],
                           ),

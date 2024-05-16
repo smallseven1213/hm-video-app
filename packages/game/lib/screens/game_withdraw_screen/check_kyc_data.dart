@@ -9,6 +9,7 @@ import 'package:game/enums/game_app_routes.dart';
 import 'package:game/localization/game_localization_delegate.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
+import 'package:game/widgets/game_startup.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
@@ -37,18 +38,16 @@ checkKycData({
           'cellPhoneIsBound: ${gameWithdrawController.cellPhoneIsBound.value}');
       showConfirmDialog(
         context: context,
-        title: '綁定手機號',
-        content: '請先完成手機號碼驗證',
-        confirmText: '前往',
+        title: localizations.translate('binding_mobile'),
+        content: localizations.translate('complete_phone_verification_first'),
+        confirmText: localizations.translate('go_to_binding'),
         onConfirm: () {
           MyRouteDelegate.of(context).push(GameAppRoutes.registerMobileBinding);
           Navigator.pop(context);
         },
-        cancelText: '回上一頁',
-        onCancel: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
+        cancelText: localizations.translate('back'),
+        onCancel: () =>
+            Get.find<GameStartupController>().goBackToAppHome(context),
       );
     }
     // 前往绑定身份证
@@ -58,17 +57,15 @@ checkKycData({
       logger.i('idCardIsBound: ${gameWithdrawController.idCardStatus.value}');
       showConfirmDialog(
         context: context,
-        title: '綁定身分證',
-        content: '請先完成身分證驗證',
+        title: localizations.translate('bind_id_card'),
+        content: localizations.translate('complete_id_verification_first'),
         onConfirm: () {
           MyRouteDelegate.of(context).push(GameAppRoutes.registerIdCardBinding);
           Navigator.pop(context);
         },
-        cancelText: '回上一頁',
-        onCancel: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
+        cancelText: localizations.translate('back'),
+        onCancel: () =>
+            Get.find<GameStartupController>().goBackToAppHome(context),
       );
     }
     // 身份证審核中
@@ -77,17 +74,16 @@ checkKycData({
         gameWithdrawController.idCardStatus.value ==
             idCardStatusEnum['REVIEWING']) {
       showConfirmDialog(
-          context: context,
-          title: '綁定身分證',
-          content: '身分證審核中，請稍候。',
-          confirmText: '聯繫客服',
-          onConfirm: () => launchUrl(
-              Uri.parse(gameBannerController.customerServiceUrl.value)),
-          cancelText: localizations.translate('cancel'),
-          onCancel: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        title: localizations.translate('bind_id_card'),
+        content: localizations.translate('id_verification_pending'),
+        confirmText: localizations.translate('contact_customer_service'),
+        onConfirm: () =>
+            launchUrl(Uri.parse(gameBannerController.customerServiceUrl.value)),
+        cancelText: localizations.translate('cancel'),
+        onCancel: () =>
+            Get.find<GameStartupController>().goBackToAppHome(context),
+      );
     }
     // 身份证審核已拒絕
     else if (gameWithdrawController.cellPhoneIsBound.value &&
@@ -96,14 +92,14 @@ checkKycData({
             idCardStatusEnum['REJECTED']) {
       showConfirmDialog(
         context: context,
-        title: '綁定身分證',
-        content: '身分證審核失敗，請重新綁定或聯繫客服。',
-        confirmText: '重新綁定',
+        title: localizations.translate('bind_id_card'),
+        content: localizations.translate('id_verification_failed'),
+        confirmText: localizations.translate('rebind'),
         onConfirm: () {
           MyRouteDelegate.of(context).push(GameAppRoutes.registerIdCardBinding);
           Navigator.pop(context);
         },
-        cancelText: '聯繫客服',
+        cancelText: localizations.translate('contact_customer_service'),
         onCancel: () =>
             launchUrl(Uri.parse(gameBannerController.customerServiceUrl.value)),
       );

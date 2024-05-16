@@ -73,8 +73,7 @@ class ShortBottomArea extends StatelessWidget {
                             update(-1);
                           }
                         } else {
-                          var vod = Vod.fromJson(shortData.toJson());
-                          userFavoritesShortController.addVideo(vod);
+                          userFavoritesShortController.addVideo(shortData);
                           update(1);
                         }
                       },
@@ -103,9 +102,8 @@ class ShortBottomArea extends StatelessWidget {
                           if (collectCount > 0) {
                             update(-1);
                           }
-                        } else {
-                          var vod = Vod.fromJson(shortData.toJson());
-                          userShortCollectionController.addVideo(vod);
+                        } else {                           
+                          userShortCollectionController.addVideo(shortData);
                           update(1);
                         }
                       },

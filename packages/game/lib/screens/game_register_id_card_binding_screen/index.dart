@@ -9,12 +9,16 @@ import 'package:uuid/uuid.dart';
 
 import 'package:game/apis/game_api.dart';
 import 'package:game/widgets/button.dart';
+import 'package:game/widgets/game_startup.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
+import 'package:game/utils/loading.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/show_register_fail_dialog.dart';
 
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/utils/fetcher.dart';
+
+import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -33,8 +37,24 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
   String? backImagePath;
   String? frontImageSid;
   String? backImageSid;
+  bool isFrontLoading = false;
+  bool isBackLoading = false;
+
+  void setLoading(bool value, String type) {
+    if (type == 'front') {
+      setState(() {
+        isFrontLoading = value;
+      });
+    } else if (type == 'back') {
+      setState(() {
+        isBackLoading = value;
+      });
+    }
+  }
 
   void uploadKycImage(XFile file, String type) async {
+    GameLocalizations localizations = GameLocalizations.of(context)!;
+    setLoading(true, type);
     // 讀取文件內容
     List<int> bytes = await file.readAsBytes();
     int fileSizeInBytes = bytes.length;
@@ -45,8 +65,8 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
       // 如果文件大小超過5MB，顯示提示信息
       showConfirmDialog(
         context: context,
-        title: '圖片大小超過5MB',
-        content: '請重新選擇圖片，圖片大小不能超過5MB',
+        title: localizations.translate('image_size_exceeds_limit'),
+        content: localizations.translate('image_size_exceeds_limit_prompt'),
         onConfirm: () => Navigator.pop(context),
       );
       return; // 中止上傳操作
@@ -91,10 +111,19 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
 
         logger.i('frontImageSid: $frontImageSid');
         logger.i('backImageSid: $backImageSid');
+      } else {
+        logger.i('upload-kyc error: $sidRes');
+        if (mounted) {
+          showRegisterFailDialog(context,
+              sidRes['message'] ?? localizations.translate('upload_fail'));
+        }
       }
+
+      setLoading(false, type);
     } catch (e) {
       // Handle error
       logger.i('uploadKycImage error: $e');
+      setLoading(false, type);
       if (mounted) {
         showRegisterFailDialog(
             context, responseController.responseMessage.value);
@@ -103,6 +132,8 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
   }
 
   onSubmit() async {
+    GameLocalizations localizations = GameLocalizations.of(context)!;
+
     try {
       if (frontImageSid != null && backImageSid != null) {
         // Call API to bind id card
@@ -114,11 +145,10 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
 
         if (res.code == '00' && mounted) {
           Fluttertoast.showToast(
-            msg: '提交成功，請等待人員審核',
+            msg: localizations.translate('submission_success'),
             gravity: ToastGravity.CENTER,
           );
-          Navigator.pop(context);
-          Navigator.pop(context);
+          Get.find<GameStartupController>().goBackToAppHome(context);
         }
       }
     } catch (e) {
@@ -131,6 +161,7 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
   }
 
   void _openBottomSheet(BuildContext context, String type) {
+    GameLocalizations localizations = GameLocalizations.of(context)!;
     final currentContext = context; // 將 BuildContext 存儲在一個變量中
 
     showModalBottomSheet(
@@ -152,7 +183,7 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                 color: gameLobbyPrimaryTextColor,
               ),
               title: Text(
-                '上傳圖片',
+                localizations.translate('upload_img'),
                 style: TextStyle(
                   fontSize: 14,
                   color: gameLobbyPrimaryTextColor,
@@ -176,7 +207,7 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                 color: gameLobbyPrimaryTextColor,
               ),
               title: Text(
-                '使用相機',
+                localizations.translate('use_camera'),
                 style: TextStyle(
                   fontSize: 14,
                   color: gameLobbyPrimaryTextColor,
@@ -202,12 +233,14 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
 
   @override
   Widget build(BuildContext context) {
+    GameLocalizations localizations = GameLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: gameLobbyBgColor,
         centerTitle: true,
         title: Text(
-          '身分證驗證',
+          localizations.translate('id_verification'),
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w500,
@@ -260,7 +293,7 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    '上傳身分證正面',
+                                    localizations.translate('upload_front_id'),
                                     style: TextStyle(
                                       color: gameLobbyPrimaryTextColor,
                                       fontSize: 14,
@@ -271,6 +304,15 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                       ),
                     ),
                   ),
+                  if (isFrontLoading)
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withOpacity(0.5),
+                        child: const Center(
+                          child: GameLoading(),
+                        ),
+                      ),
+                    ),
                   if (frontImagePath != null)
                     Positioned(
                       right: 15,
@@ -287,10 +329,10 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                             border: Border.all(color: gamePrimaryButtonColor),
                             color: const Color(0xFF2E3136).withOpacity(0.8),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              '編輯',
-                              style: TextStyle(
+                              localizations.translate('edit'),
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
                               ),
@@ -336,7 +378,7 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                                   ),
                                   const SizedBox(height: 8),
                                   Text(
-                                    '上傳身分證反面',
+                                    localizations.translate('upload_back_id'),
                                     style: TextStyle(
                                       color: gameLobbyPrimaryTextColor,
                                       fontSize: 14,
@@ -347,6 +389,15 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                       ),
                     ),
                   ),
+                  if (isBackLoading)
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withOpacity(0.5),
+                        child: const Center(
+                          child: GameLoading(),
+                        ),
+                      ),
+                    ),
                   if (backImagePath != null)
                     Positioned(
                       right: 15,
@@ -363,10 +414,10 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                             border: Border.all(color: gamePrimaryButtonColor),
                             color: const Color(0xFF2E3136).withOpacity(0.8),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              '編輯',
-                              style: TextStyle(
+                              localizations.translate('edit'),
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 14,
                               ),
@@ -377,12 +428,19 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                     ),
                 ],
               ),
-              const SizedBox(height: 30),
-              GameButton(
-                text: '提交',
-                disabled: frontImageSid == null || backImageSid == null,
-                onPressed: () => onSubmit(),
+              const SizedBox(height: 20),
+              Text(
+                localizations.translate('file_size_limit'),
+                style: TextStyle(
+                  color: gameLobbyPrimaryTextColor,
+                  fontSize: 14,
+                ),
               ),
+              const SizedBox(height: 20),
+              GameButton(
+                  text: localizations.translate('submit'),
+                  disabled: frontImageSid == null || backImageSid == null,
+                  onPressed: () => onSubmit()),
             ],
           ),
         ),

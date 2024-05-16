@@ -40,7 +40,7 @@ class MobileNumberFormFieldState extends State<MobileNumberFormField> {
             : widget.handleButtonEnable(false),
       },
       decoration: InputDecoration(
-        hintText: '請輸入手機號碼',
+        hintText: localizations.translate('plz_enter_phone_number'),
         hintStyle: TextStyle(color: gameLobbyLoginPlaceholderColor),
         suffixIcon: IconButton(
           icon: Icon(
@@ -71,7 +71,7 @@ class MobileNumberFormFieldState extends State<MobileNumberFormField> {
             color: gameLobbyLoginFormBorderColor,
           ),
         ),
-        fillColor: const Color(0xFFE5F6F2), // 背景色
+        fillColor: gameTextFormFieldWithBorderBgColor, // 背景色
         filled: true,
         prefixIcon: Padding(
           padding: const EdgeInsets.all(12),
@@ -91,11 +91,11 @@ class MobileNumberFormFieldState extends State<MobileNumberFormField> {
       keyboardType: TextInputType.number,
       validator: FormBuilderValidators.compose([
         FormBuilderValidators.required(
-          errorText: '請輸入手機號碼',
+          errorText: localizations.translate('plz_enter_phone_number'),
         ),
         FormBuilderValidators.match(
           phoneRegExp,
-          errorText: '手機號碼格式錯誤',
+          errorText: localizations.translate('phone_number_format_error'),
         ),
       ]),
     );

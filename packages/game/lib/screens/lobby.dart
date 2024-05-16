@@ -71,7 +71,6 @@ class _GameLobbyState extends State<GameLobby>
       Get.find<GameParamConfigController>();
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
-  final bottomNavigatorController = Get.find<BottomNavigatorController>();
 
   @override
   void initState() {

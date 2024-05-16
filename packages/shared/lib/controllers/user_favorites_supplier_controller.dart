@@ -57,7 +57,7 @@ class UserFavoritesSupplierController extends GetxController {
   void removeSupplier(List<int> ids) async {
     suppliers.removeWhere((v) => ids.contains(v.id));
     await _updateHive();
-    userApi.deleteActorFavorite(ids);
+    userApi.deleteSupplierFavorite(ids);
   }
 
   Future<void> _updateHive() async {

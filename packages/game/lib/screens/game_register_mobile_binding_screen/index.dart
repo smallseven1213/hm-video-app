@@ -56,7 +56,7 @@ class GameRegisterMobileBindingState extends State<GameRegisterMobileBinding> {
         if (res.code == '00' && mounted) {
           logger.i('parsePhoneNumber: $parsePhoneNumber');
           Fluttertoast.showToast(
-            msg: '驗證碼已發送',
+            msg: GameLocalizations.of(context)!.translate('otp_code_sent'),
             gravity: ToastGravity.CENTER,
           );
           // 等待一秒後跳轉到手機驗證碼輸入頁面
@@ -86,7 +86,7 @@ class GameRegisterMobileBindingState extends State<GameRegisterMobileBinding> {
           backgroundColor: gameLobbyBgColor,
           centerTitle: true,
           title: Text(
-            '手機驗證 - 輸入手機號碼',
+            localizations.translate('otp_verification_enter_phone_number'),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
@@ -130,7 +130,7 @@ class GameRegisterMobileBindingState extends State<GameRegisterMobileBinding> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '綁定手機號後將會寄送驗證碼，請於五分鐘內進行驗證。',
+                              localizations.translate('phone_binding_prompt'),
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -139,7 +139,7 @@ class GameRegisterMobileBindingState extends State<GameRegisterMobileBinding> {
                             ),
                             const SizedBox(height: 30),
                             Text(
-                              '手機號',
+                              localizations.translate('phone_number'),
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -158,7 +158,7 @@ class GameRegisterMobileBindingState extends State<GameRegisterMobileBinding> {
                             ),
                             const SizedBox(height: 30),
                             GameButton(
-                              text: '下一步',
+                              text: localizations.translate('next'),
                               disabled: !enableSubmit,
                               onPressed: () => handleNextStep(),
                             ),
