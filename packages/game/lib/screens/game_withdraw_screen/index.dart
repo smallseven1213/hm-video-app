@@ -177,11 +177,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
   void _onConfirm(Type type, context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
-    int intType = type == Type.bankcard ? 1 : 2;
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
       try {
         var res = await GameLobbyApi().applyWithdrawalV2(
-            intType,
+            gameWithdrawController.initRemittanceType.value,
             amountController.text,
             pin.toString(),
             stakeLimit.toString(),
@@ -204,14 +203,14 @@ class _GameWithdrawState extends State<GameWithdraw> {
               });
         } else {
           Fluttertoast.showToast(
-            msg: res.message.toString(),
+            msg: localizations.translate('failed'),
             gravity: ToastGravity.CENTER,
           );
         }
       } catch (error) {
         logger.i('_onConfirm applyWithdrawalV2 error: $error');
         Fluttertoast.showToast(
-          msg: responseController.responseMessage.value.toString(),
+          msg: localizations.translate('failed'),
           gravity: ToastGravity.CENTER,
         );
       }
@@ -418,7 +417,10 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                                   element.remittanceType !=
                                                   remittanceTypeEnum['USDT'],
                                               orElse: () => UserPaymentSecurity(
-                                                  remittanceType: 1,
+                                                  remittanceType:
+                                                      gameWithdrawController
+                                                          .initRemittanceType
+                                                          .value,
                                                   isBound:
                                                       gameWithdrawController
                                                           .bankIsBound
