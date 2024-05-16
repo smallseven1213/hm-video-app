@@ -100,9 +100,9 @@ class CountdownTimerState extends State<CountdownTimer> {
       children: [
         Text(
           '${localizations.translate('otp_valid_duration')}: ${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')}',
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 14,
-            color: Colors.black,
+            color: gameLobbyPrimaryTextColor,
           ),
         ),
         InkWell(
