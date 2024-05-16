@@ -87,7 +87,7 @@ class GameRegisterMobileConfirmState extends State<GameRegisterMobileConfirm> {
           backgroundColor: gameLobbyBgColor,
           centerTitle: true,
           title: Text(
-            '手機驗證 - 輸入驗證碼',
+            localizations.translate('otp_verification_enter_code'),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
@@ -115,7 +115,7 @@ class GameRegisterMobileConfirmState extends State<GameRegisterMobileConfirm> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '請輸入系統發送至+${gameConfigController.countryCode.value}${widget.parsePhoneNumber}的六位驗證碼',
+                      '${localizations.translate('otp_verification_prompt')}${gameConfigController.countryCode.value}${widget.parsePhoneNumber}${localizations.translate('otp_verification_code_suffix')}',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -124,7 +124,7 @@ class GameRegisterMobileConfirmState extends State<GameRegisterMobileConfirm> {
                     ),
                     const SizedBox(height: 30),
                     Text(
-                      '驗證碼',
+                      localizations.translate('otp_code'),
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -146,9 +146,9 @@ class GameRegisterMobileConfirmState extends State<GameRegisterMobileConfirm> {
                           launchUrl(Uri.parse(
                               gameBannerController.customerServiceUrl.value));
                         },
-                        child: const Text(
-                          '無法取得驗證碼',
-                          style: TextStyle(
+                        child: Text(
+                          localizations.translate('otp_unable_to_get_code'),
+                          style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
                             color: Color(0xFF3d73ff),
