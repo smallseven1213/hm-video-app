@@ -92,30 +92,31 @@ class ShortCardInfo extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (data.tag.isNotEmpty) ...[
-                  Wrap(
-                    direction: Axis.horizontal,
-                    spacing: 4,
-                    runSpacing: 4,
-                    children: data.tag
-                        .map((e) => GestureDetector(
-                            onTap: () async {
-                              videoPlayerInfo.observableVideoPlayerController
-                                  .videoPlayerController
-                                  ?.pause();
-                              await MyRouteDelegate.of(context).push(
-                                AppRoutes.supplierTag,
-                                args: {'tagId': e.id, 'tagName': e.name},
-                              );
-                              videoPlayerInfo.observableVideoPlayerController
-                                  .videoPlayerController
-                                  ?.play();
-                            },
-                            child: ShortCardInfoTag(name: '#${e.name}')))
-                        .toList(),
+                if (data.tag.isNotEmpty)
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 10),
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      spacing: 4,
+                      runSpacing: 4,
+                      children: data.tag
+                          .map((e) => GestureDetector(
+                              onTap: () async {
+                                videoPlayerInfo.observableVideoPlayerController
+                                    .videoPlayerController
+                                    ?.pause();
+                                await MyRouteDelegate.of(context).push(
+                                  AppRoutes.supplierTag,
+                                  args: {'tagId': e.id, 'tagName': e.name},
+                                );
+                                videoPlayerInfo.observableVideoPlayerController
+                                    .videoPlayerController
+                                    ?.play();
+                              },
+                              child: ShortCardInfoTag(name: '#${e.name}')))
+                          .toList(),
+                    ),
                   ),
-                  const SizedBox(height: 10)
-                ],
                 ShortVideoConsumer(
                     vodId: data.id,
                     tag: tag,
