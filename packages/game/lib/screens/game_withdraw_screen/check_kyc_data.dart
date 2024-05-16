@@ -9,6 +9,7 @@ import 'package:game/enums/game_app_routes.dart';
 import 'package:game/localization/game_localization_delegate.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
+import 'package:game/widgets/game_startup.dart';
 
 import 'package:shared/navigator/delegate.dart';
 
@@ -45,10 +46,8 @@ checkKycData({
           Navigator.pop(context);
         },
         cancelText: localizations.translate('back'),
-        onCancel: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
+        onCancel: () =>
+            Get.find<GameStartupController>().goBackToAppHome(context),
       );
     }
     // 前往绑定身份证
@@ -65,10 +64,8 @@ checkKycData({
           Navigator.pop(context);
         },
         cancelText: localizations.translate('back'),
-        onCancel: () {
-          Navigator.pop(context);
-          Navigator.pop(context);
-        },
+        onCancel: () =>
+            Get.find<GameStartupController>().goBackToAppHome(context),
       );
     }
     // 身份证審核中
@@ -77,17 +74,16 @@ checkKycData({
         gameWithdrawController.idCardStatus.value ==
             idCardStatusEnum['REVIEWING']) {
       showConfirmDialog(
-          context: context,
-          title: localizations.translate('bind_id_card'),
-          content: localizations.translate('id_verification_pending'),
-          confirmText: localizations.translate('contact_customer_service'),
-          onConfirm: () => launchUrl(
-              Uri.parse(gameBannerController.customerServiceUrl.value)),
-          cancelText: localizations.translate('cancel'),
-          onCancel: () {
-            Navigator.pop(context);
-            Navigator.pop(context);
-          });
+        context: context,
+        title: localizations.translate('bind_id_card'),
+        content: localizations.translate('id_verification_pending'),
+        confirmText: localizations.translate('contact_customer_service'),
+        onConfirm: () =>
+            launchUrl(Uri.parse(gameBannerController.customerServiceUrl.value)),
+        cancelText: localizations.translate('cancel'),
+        onCancel: () =>
+            Get.find<GameStartupController>().goBackToAppHome(context),
+      );
     }
     // 身份证審核已拒絕
     else if (gameWithdrawController.cellPhoneIsBound.value &&
