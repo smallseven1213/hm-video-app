@@ -87,7 +87,7 @@ const Map<String, String> zhCnStrings = {
   'card_number': '银行卡号',
   'please_enter_your_bank_card_number': '请输入您的银行卡号',
   'real_name': '真实姓名',
-  'account_length': '帐户长度为16~19',
+  'account_length': '帐户长度为',
   'setup_successful': '设置成功',
   'password_length_should_be_digits': '密码长度应为6位数',
   'input_funds_pin': '输入资金密码',

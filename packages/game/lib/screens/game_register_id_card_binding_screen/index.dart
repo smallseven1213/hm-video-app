@@ -1,3 +1,4 @@
+import 'package:game/utils/loading.dart';
 import 'package:logger/logger.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -33,8 +34,23 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
   String? backImagePath;
   String? frontImageSid;
   String? backImageSid;
+  bool isFrontLoading = false;
+  bool isBackLoading = false;
+
+  void setLoading(bool value, String type) {
+    if (type == 'front') {
+      setState(() {
+        isFrontLoading = value;
+      });
+    } else if (type == 'back') {
+      setState(() {
+        isBackLoading = value;
+      });
+    }
+  }
 
   void uploadKycImage(XFile file, String type) async {
+    setLoading(true, type);
     // 讀取文件內容
     List<int> bytes = await file.readAsBytes();
     int fileSizeInBytes = bytes.length;
@@ -92,9 +108,12 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
         logger.i('frontImageSid: $frontImageSid');
         logger.i('backImageSid: $backImageSid');
       }
+
+      setLoading(false, type);
     } catch (e) {
       // Handle error
       logger.i('uploadKycImage error: $e');
+      setLoading(false, type);
       if (mounted) {
         showRegisterFailDialog(
             context, responseController.responseMessage.value);
@@ -271,6 +290,15 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                       ),
                     ),
                   ),
+                  if (isFrontLoading)
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withOpacity(0.5),
+                        child: const Center(
+                          child: GameLoading(),
+                        ),
+                      ),
+                    ),
                   if (frontImagePath != null)
                     Positioned(
                       right: 15,
@@ -347,6 +375,15 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                       ),
                     ),
                   ),
+                  if (isBackLoading)
+                    Positioned.fill(
+                      child: Container(
+                        color: Colors.black.withOpacity(0.5),
+                        child: const Center(
+                          child: GameLoading(),
+                        ),
+                      ),
+                    ),
                   if (backImagePath != null)
                     Positioned(
                       right: 15,
@@ -377,7 +414,15 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
                     ),
                 ],
               ),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
+              Text(
+                '檔案限制 5MB 以下、僅接受 jpg、jpeg 檔案格式',
+                style: TextStyle(
+                  color: gameLobbyPrimaryTextColor,
+                  fontSize: 14,
+                ),
+              ),
+              const SizedBox(height: 20),
               GameButton(
                 text: '提交',
                 disabled: frontImageSid == null || backImageSid == null,
