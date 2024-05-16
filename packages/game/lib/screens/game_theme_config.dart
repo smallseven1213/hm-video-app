@@ -99,6 +99,9 @@ final gameActivityIconColor =
     gameTheme[theme]!['gameActivityIconColor'] ?? Colors.transparent;
 final gameActivityContentTextColor =
     gameTheme[theme]!['gameActivityContentTextColor'] ?? Colors.transparent;
+final gameTextFormFieldWithBorderBgColor =
+    gameTheme[theme]!['gameTextFormFieldWithBorderBgColor'] ??
+        Colors.transparent;
 
 class DarkThemeColors {
   static const gameLobbyBgColor = Color(0xff1E2123);
@@ -144,6 +147,7 @@ class DarkThemeColors {
   static const gameLobbyTabActiveBgColor = Color(0xff3f454d);
   static const gameActivityIconColor = Colors.white;
   static const gameActivityContentTextColor = Colors.white;
+  static const gameTextFormFieldWithBorderBgColor = Color(0xff2e3136);
 }
 
 class LightThemeColors {
@@ -190,6 +194,7 @@ class LightThemeColors {
   static const gameLobbyTabActiveBgColor = Color(0xffe6f9f2);
   static const gameActivityIconColor = Color(0xffeeeeee);
   static const gameActivityContentTextColor = Color(0xff43474a);
+  static const gameTextFormFieldWithBorderBgColor = Color(0xffe5f6f2);
 }
 
 Map<String, Map<String, Color>> gameTheme = {
@@ -241,6 +246,8 @@ Map<String, Map<String, Color>> gameTheme = {
     'gameActivityIconColor': LightThemeColors.gameActivityIconColor,
     'gameActivityContentTextColor':
         LightThemeColors.gameActivityContentTextColor,
+    'gameTextFormFieldWithBorderBgColor':
+        LightThemeColors.gameTextFormFieldWithBorderBgColor,
   },
   'dark': {
     'gameLobbyBgColor': DarkThemeColors.gameLobbyBgColor,
@@ -290,5 +297,7 @@ Map<String, Map<String, Color>> gameTheme = {
     'gameActivityIconColor': DarkThemeColors.gameActivityIconColor,
     'gameActivityContentTextColor':
         DarkThemeColors.gameActivityContentTextColor,
+    'gameTextFormFieldWithBorderBgColor':
+        DarkThemeColors.gameTextFormFieldWithBorderBgColor,
   }
 };

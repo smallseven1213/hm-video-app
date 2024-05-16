@@ -71,7 +71,7 @@ class MobileNumberFormFieldState extends State<MobileNumberFormField> {
             color: gameLobbyLoginFormBorderColor,
           ),
         ),
-        fillColor: const Color(0xFFE5F6F2), // 背景色
+        fillColor: gameTextFormFieldWithBorderBgColor, // 背景色
         filled: true,
         prefixIcon: Padding(
           padding: const EdgeInsets.all(12),
