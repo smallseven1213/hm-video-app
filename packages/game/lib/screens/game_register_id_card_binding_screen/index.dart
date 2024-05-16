@@ -1,4 +1,3 @@
-import 'package:game/utils/loading.dart';
 import 'package:logger/logger.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -10,7 +9,9 @@ import 'package:uuid/uuid.dart';
 
 import 'package:game/apis/game_api.dart';
 import 'package:game/widgets/button.dart';
+import 'package:game/widgets/game_startup.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
+import 'package:game/utils/loading.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/show_register_fail_dialog.dart';
 
@@ -136,8 +137,7 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
             msg: '提交成功，請等待人員審核',
             gravity: ToastGravity.CENTER,
           );
-          Navigator.pop(context);
-          Navigator.pop(context);
+          Get.find<GameStartupController>().goBackToAppHome(context);
         }
       }
     } catch (e) {
@@ -424,10 +424,9 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
               ),
               const SizedBox(height: 20),
               GameButton(
-                text: '提交',
-                disabled: frontImageSid == null || backImageSid == null,
-                onPressed: () => onSubmit(),
-              ),
+                  text: '提交',
+                  disabled: frontImageSid == null || backImageSid == null,
+                  onPressed: () => onSubmit()),
             ],
           ),
         ),
