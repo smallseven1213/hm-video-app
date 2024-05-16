@@ -55,6 +55,7 @@ class FavoritesShortScreen extends StatelessWidget {
               },
               hasRadius: false,
               hasTitle: false,
+              hasTags: false,
               imageRatio: gridRatio,
               displayCoverVertical: true,
               coverVertical: vod.coverVertical ?? '',

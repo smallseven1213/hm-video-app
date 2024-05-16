@@ -36,7 +36,7 @@ class ShortBottomArea extends StatelessWidget {
     return SafeArea(
       bottom: true,
       child: Container(
-        height: 76 + paddingBottom,
+        height: 76,
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
