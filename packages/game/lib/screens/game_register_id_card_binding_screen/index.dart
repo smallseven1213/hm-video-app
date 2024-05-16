@@ -111,6 +111,12 @@ class GameRegisterIdCardBindingState extends State<GameRegisterIdCardBinding> {
 
         logger.i('frontImageSid: $frontImageSid');
         logger.i('backImageSid: $backImageSid');
+      } else {
+        logger.i('upload-kyc error: $sidRes');
+        if (mounted) {
+          showRegisterFailDialog(context,
+              sidRes['message'] ?? localizations.translate('upload_fail'));
+        }
       }
 
       setLoading(false, type);
