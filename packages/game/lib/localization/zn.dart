@@ -221,5 +221,14 @@ const Map<String, String> zhCnStrings = {
   "upload_back_id": "上传身分证反面",
   "edit": "编辑",
   "file_size_limit": "档案限制 5MB 以下、仅接受 jpg、jpeg 档案格式",
-  "submit": "提交"
+  "submit": "提交",
+  "binding_mobile": "绑定手机号",
+  "bind_id_card": "绑定身分证",
+  "complete_phone_verification_first": "请先完成手机号码验证",
+  "complete_id_verification_first": "请先完成身分证验证",
+  "back": "返回",
+  "id_verification_pending": "身分证审核中，请稍候。",
+  "contact_customer_service": "联系客服",
+  "id_verification_failed": "身分证审核失败，请重新绑定或联系客服。",
+  "rebind": "重新绑定"
 };
