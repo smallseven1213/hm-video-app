@@ -240,5 +240,16 @@ const Map<String, String> idIdStrings = {
   "edit": "Edit",
   "file_size_limit":
       "File limit 5MB or less, only jpg, jpeg files are accepted",
-  "submit": "Submit"
+  "submit": "Submit",
+  "binding_mobile": "Bind Phone Number",
+  "bind_id_card": "Bind ID Card",
+  "complete_phone_verification_first":
+      "Please complete phone verification first",
+  "complete_id_verification_first": "Please complete ID verification first",
+  "back": "Back",
+  "id_verification_pending": "ID verification pending, please wait.",
+  "contact_customer_service": "Contact Customer Service",
+  "id_verification_failed":
+      "ID verification failed, please rebind or contact customer service.",
+  "rebind": "Rebind",
 };
