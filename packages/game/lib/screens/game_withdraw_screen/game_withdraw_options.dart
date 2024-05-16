@@ -1,16 +1,17 @@
+import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
 import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/models/game_withdraw_stack_limit.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options_bankcard.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options_button.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/button.dart';
-import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:shared/navigator/delegate.dart';
+import 'package:game/models/game_withdraw_stack_limit.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 
+import 'package:shared/navigator/delegate.dart';
 import '../../enums/game_app_routes.dart';
 import '../../localization/game_localization_delegate.dart';
 
@@ -31,7 +32,7 @@ class GameWithDrawOptions extends StatefulWidget {
       this.controller})
       : super(key: key);
 
-  final void Function(Type) onConfirm;
+  final void Function(int type) onConfirm;
   final bool enableSubmit;
   final TextEditingController? controller;
   final bool hasPaymentData;
@@ -47,10 +48,10 @@ class GameWithDrawOptions extends StatefulWidget {
 }
 
 class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
-  Type type = Type.usdt;
+  Type optionType = Type.usdt; // usdt or bankcard
   double exchangeRate = 0.00;
   double amount = 0.00;
-  int currentRemittanceType = 1;
+  int currentRemittanceType = 1; // remittanceTypeEnum
   GameWithdrawController gameWithdrawalController =
       Get.find<GameWithdrawController>();
 
@@ -60,14 +61,12 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
 
     Future.delayed(const Duration(milliseconds: 1000)).then((value) {
       setState(() {
-        type = remittanceTypeMapper[
+        optionType = remittanceTypeMapper[
             gameWithdrawalController.initRemittanceType.value] as Type;
         currentRemittanceType =
             gameWithdrawalController.initRemittanceType.value;
       });
     });
-
-    logger.i('currentRemittanceType: $currentRemittanceType');
   }
 
   showFundPassword() {
@@ -93,6 +92,8 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
 
   @override
   Widget build(BuildContext context) {
+    logger.i('option type: $optionType');
+    logger.i('currentRemittanceType: $currentRemittanceType');
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
     Map<int, String> remittanceTypeLocale = {
@@ -123,7 +124,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                                   as String,
                               onPressed: () {
                                 setState(() {
-                                  type = item.remittanceType ==
+                                  optionType = item.remittanceType ==
                                           remittanceTypeEnum['USDT']
                                       ? Type.usdt
                                       : Type.bankcard;
@@ -132,8 +133,8 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                               },
                               isActive: item.remittanceType ==
                                       remittanceTypeEnum['USDT']
-                                  ? type == Type.usdt
-                                  : type == Type.bankcard,
+                                  ? optionType == Type.usdt
+                                  : optionType == Type.bankcard,
                             )))
                         .toList())),
           ],
@@ -145,14 +146,15 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
         ),
         const SizedBox(height: 10),
         // ============^^^銀行卡資訊^^^============
-        if (type == Type.bankcard && widget.bankData.isBound)
+        if (optionType == Type.bankcard && widget.bankData.isBound)
           GameWithDrawOptionsBankCard(
             data: widget.bankData,
             onClick: () {
-              widget.onConfirm(Type.bankcard);
+              widget.onConfirm(currentRemittanceType);
             },
           )
-        else if (type == Type.bankcard && widget.bankData.isBound == false)
+        else if (optionType == Type.bankcard &&
+            widget.bankData.isBound == false)
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -164,21 +166,21 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
 
         const SizedBox(height: 20),
         // ======已達流水條件 widget.reachable:true 的按鈕======
-        if (type == Type.bankcard &&
+        if (optionType == Type.bankcard &&
             widget.bankData.isBound &&
             widget.reachable)
           GameButton(
             text: localizations.translate('confirm'),
             onPressed: () {
-              widget.onConfirm(Type.bankcard);
+              widget.onConfirm(currentRemittanceType);
             },
             disabled: !widget.enableSubmit,
           )
-        else if (type == Type.bankcard && widget.bankData.isBound == false)
+        else if (optionType == Type.bankcard &&
+            widget.bankData.isBound == false)
           GameButton(
             text: localizations.translate('go_to_binding'),
             onPressed: () {
-              logger.i('has paymentPin?: ${widget.paymentPin}');
               if (widget.paymentPin == false) {
                 showFundPassword();
               } else {
@@ -192,7 +194,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             },
           )
         // ======未達流水條件 widget.reachable:false 的兩顆按鈕======
-        else if (type == Type.bankcard &&
+        else if (optionType == Type.bankcard &&
             widget.bankData.isBound &&
             widget.reachable == false &&
             withdrawalModeMapper[widget.withdrawalMode] == 'disable')
@@ -202,7 +204,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             onPressed: () async {},
             disabled: true,
           )
-        else if (type == Type.bankcard &&
+        else if (optionType == Type.bankcard &&
             widget.bankData.isBound &&
             widget.reachable == false &&
             withdrawalModeMapper[widget.withdrawalMode] == 'enable')
@@ -227,7 +229,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
                 confirmText: localizations.translate('confirm'),
                 onConfirm: () {
                   Navigator.of(context).pop();
-                  widget.onConfirm(Type.bankcard);
+                  widget.onConfirm(currentRemittanceType);
                 },
                 onCancel: () {
                   Navigator.of(context).pop();
