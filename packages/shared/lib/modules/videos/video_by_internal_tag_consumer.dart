@@ -42,7 +42,6 @@ class VideoByInternalTagConsumerState
 
   @override
   void dispose() {
-    videoByInternalTagController.dispose();
     super.dispose();
   }
 

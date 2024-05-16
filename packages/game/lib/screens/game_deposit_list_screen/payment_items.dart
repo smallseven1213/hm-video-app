@@ -4,22 +4,15 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'package:game/models/game_deposit_payment_type_list.dart';
-import 'package:game/models/game_payment_channel_detail.dart';
+import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
 import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
-import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
-import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';
-import 'package:game/screens/game_deposit_list_screen/show_user_name.dart';
 import 'package:game/screens/game_deposit_list_screen/title.dart';
 import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
-import 'package:game/screens/game_theme_config.dart';
-
-import 'package:game/utils/show_model.dart';
+import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
+import 'package:game/models/game_deposit_payment_type_list.dart';
+import 'package:game/models/game_payment_channel_detail.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/enums/game_app_routes.dart';
-
-import 'package:shared/navigator/delegate.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -146,66 +139,14 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
         ? channels[_channelActiveIndex].specificAmounts.length
         : 0;
     num amountHeight = amountLength > 4 ? (amountLength / 4).ceil() * 80 : 80;
-
-    logger.i("active 支付渠道: ${channels[_channelActiveIndex].name}");
-
-    handleAmount(index) {
-      gameWithdrawController.setDepositAmount(
-          channels[_channelActiveIndex].specificAmounts[index]);
-      if (channels[_channelActiveIndex].amountType ==
-          depositAmountType['noInput']) {
-        if (widget.depositData[_paymentActiveIndex][_channelActiveIndex]
-                .requireName ==
-            0) {
-          logger.i('確認真實姓名');
-          showUserName(
-            context,
-            onSuccess: (userName) {
-              showModel(
-                context,
-                title: localizations.translate('order_confirmation'),
-                content: ConfirmName(
-                  amount: channels[_channelActiveIndex]
-                      .specificAmounts[index]
-                      .toString(),
-                  paymentChannelId: channels[_channelActiveIndex].id.toString(),
-                  activePayment: _paymentActiveIndex,
-                ),
-                onClosed: () => Navigator.pop(context),
-              );
-            },
-          );
-        } else if (_paymentActiveIndex == 'selfdebit' ||
-            _paymentActiveIndex == 'selfusdt') {
-          var paymentChannelId = channels[_channelActiveIndex].id;
-          MyRouteDelegate.of(context).push(
-            GameAppRoutes.depositDetail,
-            args: {
-              'payment': _paymentActiveIndex,
-              'paymentChannelId': paymentChannelId,
-            },
-          );
-        } else {
-          logger.i('確認pin');
-          showModel(
-            context,
-            title: localizations.translate('order_confirmation'),
-            content: ConfirmPin(
-              amount: channels[_channelActiveIndex]
-                  .specificAmounts[index]
-                  .toString(),
-              paymentChannelId: channels[_channelActiveIndex].id.toString(),
-              activePayment: _paymentActiveIndex.toString(),
-            ),
-            onClosed: () => Navigator.pop(context),
-          );
-        }
-      } else {
-        // 將金額帶入amountController
-        amountController.text =
-            channels[_channelActiveIndex].specificAmounts[index].toString();
-      }
-    }
+    bool requireName = paymentListItem
+            .firstWhere((element) => element.code == _paymentActiveIndex)
+            .requireName
+            // 將requireName轉換成bool
+            .toString()
+            .contains('0')
+        ? false // NO
+        : true; // YES
 
     return GestureDetector(
       onTap: () {
@@ -434,9 +375,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                   DepositTitle(
                     title: localizations.translate('deposit_amount'),
                   ),
-                  if (channels[_channelActiveIndex].amountType ==
-                          depositAmountType['showInput'] &&
-                      channels[_channelActiveIndex].maxAmount != null &&
+                  if (channels[_channelActiveIndex].maxAmount != null &&
                       channels[_channelActiveIndex].minAmount != null)
                     AmountForm(
                       formKey: _formKey,
@@ -447,6 +386,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                       activePayment: _paymentActiveIndex,
                       paymentChannelId:
                           channels[_channelActiveIndex].id.toString(),
+                      requireName: requireName,
                     ),
 
                   if (channels[_channelActiveIndex].specificAmounts != null)
@@ -468,7 +408,29 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                           itemBuilder: (context, index) {
                             return GestureDetector(
                               onTap: () {
-                                handleAmount(index);
+                                gameWithdrawController.setDepositAmount(
+                                    channels[_channelActiveIndex]
+                                        .specificAmounts[index]);
+                                if (channels[_channelActiveIndex].amountType ==
+                                    depositAmountType['noInput']) {
+                                  handleSubmitAmount(
+                                    context,
+                                    enableSubmit: true,
+                                    controller: amountController,
+                                    activePayment: _paymentActiveIndex,
+                                    paymentChannelId:
+                                        channels[_channelActiveIndex]
+                                            .id
+                                            .toString(),
+                                    requireName: requireName,
+                                    focusNode: focusNode,
+                                  );
+                                } else {
+                                  amountController.text =
+                                      channels[_channelActiveIndex]
+                                          .specificAmounts[index]
+                                          .toString();
+                                }
                               },
                               child: Container(
                                 height: 55,

@@ -199,15 +199,16 @@ class ChannelStyle5 extends StatelessWidget {
                                                               data.supplier
                                                                       .description ??
                                                                   '',
+                                                              maxLines: 2,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: TextStyle(
                                                                   color: AppColors
                                                                           .colors[
                                                                       ColorKeys
                                                                           .textPrimary],
                                                                   fontSize: 11),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
                                                             ),
                                                           Text(
                                                               '人氣:${data.supplier.followTimes}',
@@ -305,6 +306,7 @@ class ChannelStyle5 extends StatelessWidget {
                                                             timeLength:
                                                                 vod.timeLength!,
                                                             tags: vod.tags!,
+                                                            hasTags: false,
                                                             videoViewTimes: vod
                                                                 .videoViewTimes!,
                                                             videoCollectTimes: vod

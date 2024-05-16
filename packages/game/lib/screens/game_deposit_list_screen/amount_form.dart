@@ -1,17 +1,14 @@
+import 'package:logger/logger.dart';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+
 import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/enums/game_app_routes.dart';
-import 'package:game/screens/game_deposit_list_screen/confirm_name.dart';
-import 'package:game/screens/game_deposit_list_screen/confirm_pin.dart';
+import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
 import 'package:game/screens/game_theme_config.dart';
-import 'package:game/utils/show_model.dart';
 import 'package:game/widgets/button.dart';
-import 'package:get/get.dart';
-import 'package:logger/logger.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -26,6 +23,7 @@ class AmountForm extends StatefulWidget {
   final String activePayment;
   final String paymentChannelId;
   final FocusNode focusNode;
+  final bool requireName;
 
   const AmountForm(
       {Key? key,
@@ -36,6 +34,7 @@ class AmountForm extends StatefulWidget {
       required this.activePayment,
       required this.paymentChannelId,
       required this.focusNode,
+      required this.requireName,
       this.onChanged})
       : super(key: key);
 
@@ -72,57 +71,6 @@ class _AmountFormState extends State<AmountForm> {
     var parseMinText = widget.min?.toStringAsFixed(0);
 
     logger.i('max: ${widget.max.toString()}, min: ${widget.min.toString()}');
-
-    handleAmount() {
-      gameWithdrawController.setDepositAmount(widget.controller.text);
-      if (widget.formKey.currentState?.validate() == true) {
-        if (widget.activePayment == 'debit') {
-          logger.i('銀行卡');
-          showModel(
-            context,
-            title:
-                GameLocalizations.of(context)!.translate('order_confirmation'),
-            content: ConfirmName(
-              amount: widget.controller.text,
-              paymentChannelId: widget.paymentChannelId,
-              activePayment: widget.activePayment,
-            ),
-            onClosed: () => Navigator.pop(context),
-          );
-          setState(() {
-            _enableSubmit = false;
-          });
-        } else if (widget.activePayment == 'selfdebit' ||
-            widget.activePayment == 'selfusdt') {
-          setState(() {
-            _enableSubmit = true;
-          });
-          MyRouteDelegate.of(context).push(
-            GameAppRoutes.depositDetail,
-            args: {
-              'payment': widget.activePayment,
-              'paymentChannelId': int.parse(widget.paymentChannelId),
-            },
-          );
-        } else {
-          showModel(
-            context,
-            title:
-                GameLocalizations.of(context)!.translate('order_confirmation'),
-            content: ConfirmPin(
-              amount: widget.controller.text,
-              paymentChannelId: widget.paymentChannelId,
-              activePayment: widget.activePayment,
-            ),
-            onClosed: () => Navigator.pop(context),
-          );
-          setState(() {
-            _enableSubmit = false;
-          });
-        }
-      }
-      FocusScope.of(context).unfocus();
-    }
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -207,10 +155,7 @@ class _AmountFormState extends State<AmountForm> {
                     fontSize: 12.0,
                     color: gameLobbyPrimaryTextColor,
                   ),
-                  onChanged: (val) => {
-                    logger.i('val: $val'),
-                    logger.i(val.toString()),
-                  },
+                  onChanged: (val) => logger.i(val.toString()),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(
                       errorText: '請輸入存款金額',
@@ -239,7 +184,22 @@ class _AmountFormState extends State<AmountForm> {
                 height: 40,
                 child: GameButton(
                   text: localizations.translate('confirm'),
-                  onPressed: () => handleAmount(),
+                  onPressed: () {
+                    gameWithdrawController
+                        .setDepositAmount(widget.controller.text);
+
+                    if (widget.formKey.currentState?.validate() == true) {
+                      handleSubmitAmount(
+                        context,
+                        enableSubmit: _enableSubmit,
+                        controller: widget.controller,
+                        activePayment: widget.activePayment,
+                        paymentChannelId: widget.paymentChannelId,
+                        requireName: widget.requireName,
+                        focusNode: widget.focusNode,
+                      );
+                    }
+                  },
                   disabled: !_enableSubmit,
                 ),
               ),

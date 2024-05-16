@@ -1,3 +1,5 @@
+import 'package:app_wl_tw1/pages/coin.dart';
+import 'package:app_wl_tw1/pages/vip.dart';
 import 'package:logger/logger.dart';
 
 import 'package:app_wl_tw1/screens/home/home_apps.dart';
@@ -15,6 +17,8 @@ import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
+import 'package:live_ui_basic/pages/live.dart';
+
 
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
@@ -41,6 +45,11 @@ final screens = {
   HomeNavigatorPathes.game: () => const EnterGame(),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
+  HomeNavigatorPathes.live: () => const LivePage(),
+  HomeNavigatorPathes.coin: () => const CoinPage(),
+  HomeNavigatorPathes.vip: () => const VipPage(),
+
+
 };
 
 class HomePage extends StatefulWidget {

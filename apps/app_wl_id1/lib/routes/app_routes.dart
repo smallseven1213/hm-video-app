@@ -35,6 +35,8 @@ import '../screens/demo.dart' as demo_screen;
 import '../pages/suppliers.dart' as suppliers_screen;
 import '../pages/games.dart' as games_page;
 import '../pages/tag_games.dart' as tag_games_page;
+import '../pages/vip.dart' as vip_page;
+import '../pages/coin.dart' as coin_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.demo: (context, args) => const demo_screen.Demo(),
@@ -114,4 +116,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.idCard: (context, args) => const id_page.IDCardPage(),
   AppRoutes.suppliers: (context, args) =>
       const suppliers_screen.SuppliersPage(),
+  AppRoutes.vip: (context, args) => const vip_page.VipPage(),
+  AppRoutes.coin: (context, args) => const coin_page.CoinPage(),
 };

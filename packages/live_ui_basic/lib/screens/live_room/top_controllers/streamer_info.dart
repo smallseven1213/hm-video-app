@@ -20,7 +20,7 @@ class StreamerInfo extends StatelessWidget {
       return Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
-          color: Colors.black,
+          color: const Color(0x4d000000),
         ),
         width: 135,
         child: Row(

@@ -263,6 +263,7 @@ class ChannelStyle4 extends StatelessWidget {
                                                             timeLength:
                                                                 vod.timeLength!,
                                                             tags: vod.tags!,
+                                                            hasTags: false,
                                                             videoViewTimes: vod
                                                                 .videoViewTimes!,
                                                             videoCollectTimes: vod
