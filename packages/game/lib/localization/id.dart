@@ -95,7 +95,7 @@ const Map<String, String> idIdStrings = {
   "please_enter_your_bank_card_number":
       "Silakan masukkan nomor kartu bank Anda",
   "real_name": "Nama Asli",
-  "account_length": "Panjang Akun 16~19",
+  "account_length": "Panjang Akun",
   "setup_successful": "Pengaturan Berhasil",
   "password_length_should_be_digits": "Panjang kata sandi harus 6 digit",
   "input_funds_pin": "Masukkan PIN Dana",

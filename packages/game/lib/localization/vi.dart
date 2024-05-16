@@ -96,7 +96,7 @@ const Map<String, String> viVnStrings = {
   "please_enter_your_bank_card_number":
       "Vui lòng nhập số thẻ ngân hàng của bạn",
   "real_name": "Tên thật",
-  "account_length": "Độ dài Tài khoản 16~19",
+  "account_length": "Độ dài Tài khoản",
   "setup_successful": "Thiết lập Thành công",
   "password_length_should_be_digits": "Độ dài mật khẩu phải là 6 chữ số",
   "input_funds_pin": "Nhập Mã PIN Quỹ",

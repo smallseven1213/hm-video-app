@@ -94,7 +94,7 @@ const Map<String, String> enUsStrings = {
   "card_number": "Card Number",
   "please_enter_your_bank_card_number": "Please enter your bank card number",
   "real_name": "Real Name",
-  "account_length": "Account Length 16~19",
+  "account_length": "Account Length",
   "setup_successful": "Setup Successful",
   "password_length_should_be_digits": "Password length should be 6 digits",
   "input_funds_pin": "Input Funds PIN",

@@ -87,7 +87,7 @@ const Map<String, String> zhTwStrings = {
   'card_number': '銀行卡號',
   'please_enter_your_bank_card_number': '請輸入您的銀行卡號',
   'real_name': '真實姓名',
-  'account_length': '帳戶長度為16~19',
+  'account_length': '帳戶長度為',
   'setup_successful': '設置成功',
   'password_length_should_be_digits': '密碼長度應為6位數',
   'input_funds_pin': '輸入資金密碼',

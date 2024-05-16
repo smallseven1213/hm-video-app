@@ -129,25 +129,48 @@ class GameSetBankCardState extends State<GameSetBankCard> {
     });
   }
 
-  void _validateAccount(String? value) {
+  void _validateAccount(String? value, int remittanceType) {
+    int minLength;
+    int maxLength;
+
+    switch (remittanceType) {
+      case 1:
+        minLength = 16;
+        maxLength = 19;
+        break;
+      case 3:
+        minLength = 8;
+        maxLength = 16;
+        break;
+      case 4:
+        minLength = 10;
+        maxLength = 14;
+        break;
+      case 5:
+        minLength = 13;
+        maxLength = 19;
+        break;
+      default:
+        minLength = 0;
+        maxLength = 0;
+    }
+
     if (value!.isEmpty) {
       setState(() {
         _accountError = GameLocalizations.of(context)!
             .translate('please_enter_your_bank_card_number');
       });
-    } else if (value.isNotEmpty) {
-      if (value.length >= 16 && value.length <= 19) {
-        logger.i('account length: ${value.length}');
-        setState(() {
-          _accountError = null;
-        });
-      } else if (value.length < 16 || value.length > 19) {
-        setState(() {
-          _accountError =
-              GameLocalizations.of(context)!.translate('account_length');
-        });
-      }
+    } else if (value.length >= minLength && value.length <= maxLength) {
+      setState(() {
+        _accountError = null;
+      });
+    } else {
+      setState(() {
+        _accountError =
+            '${GameLocalizations.of(context)!.translate('account_length')} $minLength ~ $maxLength';
+      });
     }
+
     _checkFormValidity();
   }
 
@@ -300,9 +323,10 @@ class GameSetBankCardState extends State<GameSetBankCard> {
                               hint: localizations.translate(
                                   'please_enter_your_bank_card_number'),
                               controller: accountController,
-                              onChanged: (value) => {
-                                _validateAccount(value),
-                              },
+                              onChanged: (value) => _validateAccount(
+                                value,
+                                widget.remittanceType,
+                              ),
                               onClear: () {
                                 accountController.clear();
                                 setState(() {
