@@ -174,13 +174,14 @@ class _GameWithdrawState extends State<GameWithdraw> {
   }
 
   // onConfirm function
-  void _onConfirm(Type type, context) {
+  void _onConfirm(int remittanceType, context) {
+    logger.i('submit Confirm remittanceType: $remittanceType');
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
     showFundingPasswordBottomSheet(context, onSuccess: (pin) async {
       try {
         var res = await GameLobbyApi().applyWithdrawalV2(
-            gameWithdrawController.initRemittanceType.value,
+            remittanceType,
             amountController.text,
             pin.toString(),
             stakeLimit.toString(),
@@ -399,8 +400,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                               const SizedBox(height: 10),
                               GameWithDrawOptions(
                                   controller: amountController,
-                                  onConfirm: (type) =>
-                                      _onConfirm(type, context),
+                                  onConfirm: (remittanceType) =>
+                                      _onConfirm(remittanceType, context),
                                   enableSubmit: _enableSubmit,
                                   hasPaymentData: gameWithdrawController
                                       .hasBankPaymentData.value,
@@ -421,10 +422,8 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                                       gameWithdrawController
                                                           .initRemittanceType
                                                           .value,
-                                                  isBound:
-                                                      gameWithdrawController
-                                                          .bankIsBound
-                                                          .value)) ??
+                                                  isBound: gameWithdrawController
+                                                      .bankIsBound.value)) ??
                                       [])
                             ],
                           ),
