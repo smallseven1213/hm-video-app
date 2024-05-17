@@ -100,7 +100,7 @@ class FavoritesShortScreen extends StatelessWidget {
           onOverrideRedirectTap: (id) {
             MyRouteDelegate.of(context).push(
               AppRoutes.shortsByLocal,
-              args: {'videoId': video.id, 'itemId': 1},
+              args: {'videoId': video.id, 'itemId': 2},
             );
           },
           displayVideoCollectTimes: false,

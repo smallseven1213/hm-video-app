@@ -17,6 +17,7 @@ class ShortsScaffold extends StatefulWidget {
   final bool? useCachedList;
   final bool? displayFavoriteAndCollectCount;
   final Widget? loadingWidget;
+  final Widget? noDataWidget;
   final Widget Function(String refreshkey)? refreshIndicatorWidget;
   final Function()? onScrollBeyondFirst;
   final Function(
@@ -41,6 +42,7 @@ class ShortsScaffold extends StatefulWidget {
     this.refreshIndicatorWidget,
     this.playingAdBuilder,
     required this.shortCardBuilder,
+    this.noDataWidget,
     Key? key,
   }) : super(key: key);
 
@@ -49,20 +51,16 @@ class ShortsScaffold extends StatefulWidget {
 }
 
 class ShortsScaffoldState extends State<ShortsScaffold> {
-  // final RefreshController _refreshController =
-  //     RefreshController(initialRefresh: false);
-
-  bool isLoading = false;
   PageController? _pageController;
   int currentPage = 0;
   List<dynamic> cachedVods = [];
   final PageViewIndexController pageviewIndexController =
       Get.find<PageViewIndexController>();
   final UIController uiController = Get.find<UIController>();
-  String refreshIndicatorWidgetKey = '';
   final ShortVideoAdsController shortVideoAdsController =
       Get.find<ShortVideoAdsController>();
   List<BannerPhoto> shortVideoAds = [];
+  bool hasLoadedVideos = false; // 添加一個標誌來追踪是否曾經有過影片
 
   @override
   void initState() {
@@ -75,21 +73,13 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
     final controller = widget.createController();
     int initialPageIndex =
         controller.data.indexWhere((data) => data.id == widget.videoId);
-    if (initialPageIndex == -1) {
-      initialPageIndex = 0;
-    }
-
-    // 如果getx有值，就用getx的值
+    initialPageIndex = initialPageIndex == -1 ? 0 : initialPageIndex;
     var keyuuid = widget.uuid;
-
     if (pageviewIndexController.pageIndexes[keyuuid] != null) {
       initialPageIndex = pageviewIndexController.pageIndexes[keyuuid]!;
     }
-
     _pageController?.dispose();
-    // _pageController = PreloadPageController(initialPage: initialPageIndex);
     _pageController = PageController(initialPage: initialPageIndex);
-
     _pageController?.addListener(() {
       pageviewIndexController.setPageIndex(
           keyuuid, _pageController?.page!.round() ?? 0);
@@ -99,20 +89,23 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
         });
       }
     });
-
     cachedVods = controller.data;
-
-    if (widget.useCachedList == false) {
+    if (cachedVods.isNotEmpty) {
+      hasLoadedVideos = true; // 更新標誌
+    }
+    if (!widget.useCachedList!) {
       ever(controller.data, (d) {
         if (mounted) {
           setState(() {
             cachedVods = d as List<Vod>;
+            if (cachedVods.isNotEmpty) {
+              hasLoadedVideos = true;
+            }
           });
         }
         updateAds();
       });
     }
-
     currentPage = initialPageIndex;
   }
 
@@ -122,7 +115,6 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
 
   void updateAds() {
     if (widget.playingAdBuilder == null) return;
-    // 獲取最新的廣告數據
     List<BannerPhoto> newAds =
         shortVideoAdsController.videoAds.value.shortPlayingAds ?? [];
     if (newAds.isNotEmpty) {
@@ -130,7 +122,6 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
       List<dynamic> newCachedVods = [];
       int adIndex = 0;
       int videoCount = 5;
-
       for (int i = 0; i < cachedVods.length; i++) {
         newCachedVods.add(cachedVods[i]);
         if ((i + 1) % videoCount == 0 && i != cachedVods.length - 1) {
@@ -138,7 +129,6 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
           adIndex = (adIndex + 1) % shortVideoAds.length;
         }
       }
-
       setState(() {
         cachedVods = newCachedVods;
       });
@@ -164,17 +154,45 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
       SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: [
         SystemUiOverlay.bottom,
       ]);
-
       uiController.setDisplay(true);
     }
   }
 
-  double accumulatedScroll = 0.0;
-  bool hasTriggered = false;
-
   @override
   Widget build(BuildContext context) {
-    // 创建一个通用的 PageView.builder
+    // 检查是否有视频数据
+    if (cachedVods.isEmpty && hasLoadedVideos) {
+      if(widget.noDataWidget != null) {
+        return widget.noDataWidget!;
+      }
+      // 暫時放個
+      return Scaffold(
+        backgroundColor: Colors.black,
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '没有更多视频',
+                style: TextStyle(color: Colors.white, fontSize: 18),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context); // 返回上一页
+                },
+                child: Text('返回'),
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  backgroundColor: Colors.yellow, // 文本色
+                ),
+              )
+            ],
+          ),
+        ),
+      );
+    }
+
     Widget pageView = PageView.builder(
       controller: _pageController,
       itemCount: cachedVods.length,
@@ -212,11 +230,6 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
           ? RefreshIndicator(
               onRefresh: () async {
                 widget.onScrollBeyondFirst?.call();
-                // 您可以添加一个延时或其他异步操作来模拟数据刷新
-                // await Future.delayed(Duration(milliseconds: 800));
-                // setState(() {
-                //   refreshIndicatorWidgetKey = Uuid().v4();
-                // });
               },
               child: pageView,
             )
