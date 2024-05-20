@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:get/get.dart';
 
 import '../models/live_room.dart';
@@ -17,8 +18,8 @@ class LiveRoomController extends GetxController {
   Rx<Language?> currentTranslate = Rx<Language?>(null);
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
   var hideAllUI = false.obs;
-  var isMute = kIsWeb ? true.obs : false.obs;
   var displayChatInput = false.obs;
+  var isMute = false.obs;
 
   LiveRoomController(this.pid);
 
@@ -41,6 +42,23 @@ class LiveRoomController extends GetxController {
         }
       }
     });
+
+    FlutterVolumeController.addListener(
+      (volume) {
+        if (volume == 0.0) {
+          isMute.value = true;
+        } else {
+          isMute.value = false;
+        }
+      },
+    );
+  }
+
+  // dipose
+  @override
+  void onClose() {
+    FlutterVolumeController.removeListener();
+    super.onClose();
   }
 
   // fetch from "liveApi.getList"
