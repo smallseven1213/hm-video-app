@@ -154,8 +154,8 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                         height: 24,
                         child: Image(
                           image: AssetImage(controller.isMuted.value
-                              ? 'assets/images/short-unmute.webp'
-                              : 'assets/images/short-mute.webp'),
+                              ? 'assets/images/short-mute.webp'
+                              : 'assets/images/short-unmute.webp'),
                           fit: BoxFit.fill,
                         ),
                       ),
