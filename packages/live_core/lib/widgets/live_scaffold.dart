@@ -16,6 +16,7 @@ import 'loading.dart';
 class LiveScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
   final Widget? body;
+  final Widget? loadingWidget;
   final Widget? floatingActionButton;
   final Color? backgroundColor;
 
@@ -23,6 +24,7 @@ class LiveScaffold extends StatefulWidget {
     super.key,
     this.body,
     this.appBar,
+    this.loadingWidget,
     this.floatingActionButton,
     this.backgroundColor,
   });
@@ -80,7 +82,7 @@ class LiveScaffoldState extends State<LiveScaffold> {
       appBar: widget.appBar,
       body: SafeArea(
         child: (isLoading || !isLogin)
-            ? const SizedBox()
+            ? widget.loadingWidget ?? const SizedBox()
             : widget.body ?? const SizedBox(),
       ),
       backgroundColor: widget.backgroundColor,

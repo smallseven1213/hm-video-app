@@ -3,14 +3,11 @@ import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/widgets/live_scaffold.dart';
 import 'package:live_core/widgets/room_list_provider.dart';
-import 'package:shared/controllers/bottom_navigator_controller.dart';
-import 'package:shared/controllers/ui_controller.dart';
-import 'package:shared/enums/app_routes.dart';
-import 'package:shared/navigator/delegate.dart';
 
 import '../screens/live/banners.dart';
 import '../screens/live/filter.dart';
 import '../screens/live/list.dart';
+import '../screens/live/live_skelton.dart';
 import '../screens/live/loading_text.dart';
 import '../screens/live/navigation.dart';
 import '../screens/live/search.dart';
@@ -77,6 +74,7 @@ class LivePageState extends State<LivePage> {
           child: SearchWidget(),
         ),
       ),
+      loadingWidget: const LiveSkeleton(),
       backgroundColor: const Color(0xFF242a3d),
       body: RoomListProvider(
         child: CustomScrollView(
