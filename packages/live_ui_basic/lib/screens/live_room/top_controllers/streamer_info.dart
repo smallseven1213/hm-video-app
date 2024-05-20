@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/widgets/follow_live_check_provider.dart';
 import 'package:live_core/widgets/live_image.dart';
+import 'package:shared/enums/app_routes.dart';
+import 'package:shared/navigator/delegate.dart';
 
 class StreamerInfo extends StatelessWidget {
   final int pid;
@@ -26,22 +28,50 @@ class StreamerInfo extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              width: 30,
-              height: 30,
-              decoration: const BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.pink,
+            InkWell(
+              onTap: () {
+                if (roomInfo?.supplierId != null) {
+                  MyRouteDelegate.of(context).push(AppRoutes.supplier, args: {
+                    'id': roomInfo?.supplierId,
+                  });
+                } else {
+                  // showdialog error
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text('Error'),
+                        content: const Text('SupplierId is null'),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              child: Container(
+                width: 30,
+                height: 30,
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.pink,
+                ),
+                child: roomInfo?.playerCover != null
+                    ? ClipOval(
+                        child: LiveImage(
+                          base64Url: roomInfo!.playerCover!,
+                          width: 30,
+                          height: 30,
+                        ),
+                      )
+                    : Container(),
               ),
-              child: roomInfo?.playerCover != null
-                  ? ClipOval(
-                      child: LiveImage(
-                        base64Url: roomInfo!.playerCover!,
-                        width: 30,
-                        height: 30,
-                      ),
-                    )
-                  : Container(),
             ),
             const SizedBox(width: 4),
             Expanded(
