@@ -7,6 +7,7 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import 'package:shared/widgets/volume_listener.dart';
 import '../shortcard/index.dart';
 import '../wave_loading.dart';
 import 'side_info.dart';
@@ -149,16 +150,17 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                       onTap: () {
                         controller.toggleMute();
                       },
-                      child: SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: Image(
-                          image: AssetImage(controller.isMuted.value
-                              ? 'assets/images/short-mute.webp'
-                              : 'assets/images/short-unmute.webp'),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                      child: VolumeListener(
+                          child: ({required isMute}) => SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: Image(
+                                  image: AssetImage(isMute
+                                      ? 'assets/images/short-mute.webp'
+                                      : 'assets/images/short-unmute.webp'),
+                                  fit: BoxFit.fill,
+                                ),
+                              )),
                     ),
                   ),
                 )
