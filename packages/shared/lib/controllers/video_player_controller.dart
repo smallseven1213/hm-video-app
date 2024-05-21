@@ -2,13 +2,17 @@ import 'dart:async';
 // import 'dart:html' if (dart.library.html) 'dart:html' as ui;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
 import '../utils/screen_control.dart';
 
 bool isFirstTimeForIOSSafari = true;
+
+final logger = Logger();
 
 class ObservableVideoPlayerController extends GetxController {
   final isReady = false.obs;
@@ -20,7 +24,7 @@ class ObservableVideoPlayerController extends GetxController {
   final String videoUrl;
   final String tag;
   final RxBool isFullscreen = false.obs;
-  final RxBool isMuted = kIsWeb ? true.obs : false.obs;
+  var isMuted = false.obs;
 
   var errorMessage = ''.obs;
 
@@ -28,6 +32,17 @@ class ObservableVideoPlayerController extends GetxController {
 
   @override
   void onInit() {
+    FlutterVolumeController.addListener(
+      (volume) {
+        logger.i('volume: $volume');
+        if (volume == 0) {
+          isMuted.value = true;
+        } else {
+          isMuted.value = false;
+        }
+        videoPlayerController?.setVolume(volume);
+      },
+    );
     // _checkHlsJs();
     _initializePlayer();
 
@@ -37,32 +52,18 @@ class ObservableVideoPlayerController extends GetxController {
   @override
   void dispose() {
     _disposePlayer();
+    // FlutterVolumeController.removeListener();
     super.dispose();
   }
-
-  // void _checkHlsJs() {
-  //   if (kIsWeb) {
-  //     bool hlsJsExists =
-  //         ui.document.getElementsByTagName('script').any((element) {
-  //       if (element is ui.Element &&
-  //           element.tagName.toLowerCase() == 'script') {
-  //         return element.attributes['src']?.contains('hls.js') ?? false;
-  //       }
-  //       return false;
-  //     });
-
-  //     if (!hlsJsExists) {
-  //       print('Error: hls.js is not included in index.html');
-  //     }
-  //   }
-  // }
 
   Future<void> _initializePlayer() async {
     videoPlayerController =
         VideoPlayerController.networkUrl(Uri.parse(videoUrl));
     videoPlayerController?.addListener(_onControllerValueChanged);
-    videoPlayerController?.initialize().then((value) {
+    videoPlayerController?.initialize().then((value) async {
       isReady.value = true;
+      final volume = await FlutterVolumeController.getVolume();
+      videoPlayerController?.setVolume(volume ?? 0);
       if (autoPlay) {
         play();
       }
@@ -72,12 +73,6 @@ class ObservableVideoPlayerController extends GetxController {
         errorMessage.value = videoPlayerController!.value.errorDescription!;
       }
     });
-  }
-
-  void changeVolumeToFull() {
-    if (!kIsWeb) {
-      videoPlayerController?.setVolume(1);
-    }
   }
 
   void _disposePlayer() {
@@ -149,9 +144,10 @@ class ObservableVideoPlayerController extends GetxController {
   }
 
   // toggleMute
-  void toggleMute() {
-    isMuted.value = !isMuted.value;
-    videoPlayerController?.setVolume(isMuted.value ? 0 : 1);
+  void toggleMute() async {
+    logger.i('toggleMute');
+    final isMuted = await FlutterVolumeController.getMute();
+    await FlutterVolumeController.setMute(isMuted == true ? false : true);
     update();
   }
 }

@@ -42,16 +42,6 @@ class LiveRoomController extends GetxController {
         }
       }
     });
-
-    FlutterVolumeController.addListener(
-      (volume) {
-        if (volume == 0.0) {
-          isMute.value = true;
-        } else {
-          isMute.value = false;
-        }
-      },
-    );
   }
 
   // dipose
