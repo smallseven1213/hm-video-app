@@ -28,11 +28,13 @@ final logger = Logger();
 class Splash extends StatefulWidget {
   final String backgroundAssetPath;
   final Function? loading;
+  final bool skipNavigation;
 
   const Splash({
     Key? key,
     required this.backgroundAssetPath,
     this.loading,
+    this.skipNavigation = false,
   }) : super(key: key);
 
   @override
@@ -279,7 +281,8 @@ class _SplashState extends State<Splash> {
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
     // check if 401
-    if (responseController.apiResponse.value.status == 401) {
+    if (responseController.apiResponse.value.status == 401 ||
+        widget.skipNavigation) {
       return;
     }
     if (landingBanners.isEmpty && mounted) {
