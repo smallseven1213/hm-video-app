@@ -55,13 +55,8 @@ class RootWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.find<SystemConfigController>().setDlJsonHosts(dlJsonHosts);
     final RouteObject baseRoutes = {
-      '/': (context, args) => Splash(
-            backgroundAssetPath: splashImage,
-            loading: loading,
-            skipNavigation: args['skipNavigation'] == null
-                ? false
-                : args['skipNavigation'] as bool,
-          ),
+      '/': (context, args) =>
+          Splash(backgroundAssetPath: splashImage, loading: loading),
       '/ad': (context, args) => Ad(
             backgroundAssetPath: splashImage,
             loading: loading,
