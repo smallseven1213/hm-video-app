@@ -67,7 +67,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
         children: [
           VideoPlayerProvider(
             tag: widget.tag,
-            autoPlay: true,
+            autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
             videoDetail: Vod(
