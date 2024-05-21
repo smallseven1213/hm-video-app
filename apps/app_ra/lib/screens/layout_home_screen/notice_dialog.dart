@@ -49,12 +49,6 @@ class NoticeDialogState extends State<NoticeDialog> {
           int id = int.parse(parts[2]);
           var args = {'id': id};
           MyRouteDelegate.of(context).push(path, args: args);
-        } else if (path == '/splash') {
-          MyRouteDelegate.of(context).push(
-            '/',
-            args: {'skipNavigation': true},
-            removeSamePath: true,
-          );
         } else {
           MyRouteDelegate.of(context).push(path);
         }

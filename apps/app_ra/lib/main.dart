@@ -55,26 +55,6 @@ void main() async {
           color: AppColors.colors[ColorKeys.textPrimary]!,
         ),
       ),
-      checkboxTheme: CheckboxThemeData(
-        fillColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.selected)) {
-            return AppColors.colors[ColorKeys.primary]!; // 選中時的背景顏色
-          }
-          return Colors.transparent; // 默認為透明，不影響未選中狀態
-        }),
-        checkColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-          if (states.contains(MaterialState.selected)) {
-            return AppColors.colors[ColorKeys.background]!; // 選中時的勾勾顏色
-          }
-          return Colors.transparent; // 默認為透明，不影響未選中狀態
-        }),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4), // 圓角
-        ),
-        side: BorderSide(color: AppColors.colors[ColorKeys.primary]!), // 設置邊框顏色
-      ),
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: AppColors.colors[ColorKeys.background],
         shadowColor: AppColors.colors[ColorKeys.textPrimary]!,
