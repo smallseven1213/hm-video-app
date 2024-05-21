@@ -24,7 +24,7 @@ class ObservableVideoPlayerController extends GetxController {
   final String videoUrl;
   final String tag;
   final RxBool isFullscreen = false.obs;
-  var isMuted = false.obs;
+  var isMuted = kIsWeb ? true.obs : false.obs;
 
   var errorMessage = ''.obs;
 
@@ -32,17 +32,20 @@ class ObservableVideoPlayerController extends GetxController {
 
   @override
   void onInit() {
-    FlutterVolumeController.addListener(
-      (volume) {
-        logger.i('volume: $volume');
-        if (volume == 0) {
-          isMuted.value = true;
-        } else {
-          isMuted.value = false;
-        }
-        videoPlayerController?.setVolume(volume);
-      },
-    );
+    if (!kIsWeb) {
+      FlutterVolumeController.addListener(
+        (volume) {
+          logger.i('volume: $volume');
+          if (volume == 0) {
+            isMuted.value = true;
+          } else {
+            isMuted.value = false;
+          }
+          videoPlayerController?.setVolume(volume);
+        },
+      );
+    }
+
     // _checkHlsJs();
     _initializePlayer();
 
@@ -62,11 +65,13 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) async {
       isReady.value = true;
-      final volume = await FlutterVolumeController.getVolume();
-      videoPlayerController?.setVolume(volume ?? 0);
-      if (autoPlay) {
-        play();
+      if (!kIsWeb) {
+        final isMuted = await FlutterVolumeController.getMute();
+        videoPlayerController?.setVolume(isMuted == true ? 0 : 1);
+      } else {
+        videoPlayerController?.setVolume(0);
       }
+      play();
     }).catchError((error) {
       if (videoPlayerController?.value.hasError == true) {
         videoAction.value = 'error';
@@ -145,9 +150,13 @@ class ObservableVideoPlayerController extends GetxController {
 
   // toggleMute
   void toggleMute() async {
-    logger.i('toggleMute');
-    final isMuted = await FlutterVolumeController.getMute();
-    await FlutterVolumeController.setMute(isMuted == true ? false : true);
-    update();
+    if (!kIsWeb) {
+      final isMuted = await FlutterVolumeController.getMute();
+      await FlutterVolumeController.setMute(isMuted == true ? false : true);
+      update();
+    } else {
+      videoPlayerController?.setVolume(isMuted.value ? 1 : 0);
+      isMuted.value = !isMuted.value;
+    }
   }
 }

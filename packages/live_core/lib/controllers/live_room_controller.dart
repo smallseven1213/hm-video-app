@@ -1,5 +1,3 @@
-import 'package:flutter/foundation.dart';
-import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:get/get.dart';
 
 import '../models/live_room.dart';
@@ -42,13 +40,6 @@ class LiveRoomController extends GetxController {
         }
       }
     });
-  }
-
-  // dipose
-  @override
-  void onClose() {
-    FlutterVolumeController.removeListener();
-    super.onClose();
   }
 
   // fetch from "liveApi.getList"
