@@ -7,7 +7,7 @@ import 'package:shared/widgets/sid_image.dart';
 import '../config/colors.dart';
 import '../screens/coin/payment_list.dart';
 import '../utils/show_modal_bottom_sheet.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 Widget _buildProductCard(context, Product product) {
   return Container(
@@ -94,7 +94,7 @@ class VipPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: const CustomAppBar(
         title: 'VIP',
       ),
       body: Container(

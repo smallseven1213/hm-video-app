@@ -108,7 +108,7 @@ class PlayRecordShortScreen extends StatelessWidget {
               args: {'videoId': video.id, 'itemId': 1},
             );
           },
-          displayVideoCollectTimes: false,
+          displayVideoFavoriteTimes: false,
           hasRadius: false,
           hasTitle: false,
           hasTags: false,
@@ -120,7 +120,7 @@ class PlayRecordShortScreen extends StatelessWidget {
           tags: video.tags ?? [],
           title: video.title,
           videoViewTimes: video.videoViewTimes ?? 0,
-          videoCollectTimes: video.videoCollectTimes ?? 0,
+          videoFavoriteTimes: video.videoFavoriteTimes ?? 0,
           displayVideoTimes: false,
           displayViewTimes: false,
         ));

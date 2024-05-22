@@ -10,7 +10,7 @@ import 'package:shared/navigator/delegate.dart';
 
 import '../screens/actors/tabbar.dart';
 import '../widgets/circle_sidimage_text_item.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/no_data.dart';
 
 final logger = Logger();
@@ -102,7 +102,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: const CustomAppBar(
         title: '全部女優',
       ),
       body: Column(

@@ -8,7 +8,7 @@ import 'package:shared/enums/list_editor_category.dart';
 import '../screens/collection/short.dart';
 import '../screens/collection/video.dart';
 import '../widgets/list_page_panel.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 
 class CollectionPage extends StatefulWidget {
@@ -74,7 +74,7 @@ class CollectionPageState extends State<CollectionPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         title: '我的收藏',
         actions: [
           Obx(() => TextButton(

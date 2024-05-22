@@ -82,7 +82,7 @@ class Block10Widget extends StatelessWidget {
                           displayCoverVertical: true,
                           blockId: block.id ?? 0,
                           film: film,
-                          displayVideoCollectTimes: false,
+                          displayVideoFavoriteTimes: false,
                           displayVideoTimes: true,
                           displayViewTimes: true,
                           buildVideoPreview: buildVideoPreview,

@@ -9,13 +9,13 @@ import '../../widgets/sliver_vod_grid.dart';
 class VendorVideoList extends StatefulWidget {
   final String type;
   final int publisherId;
-  final bool displayVideoCollectTimes;
+  final bool displayVideoFavoriteTimes;
 
   const VendorVideoList({
     Key? key,
     required this.type,
     required this.publisherId,
-    required this.displayVideoCollectTimes,
+    required this.displayVideoFavoriteTimes,
   }) : super(key: key);
 
   @override
@@ -42,7 +42,7 @@ class VendorVideoListState extends State<VendorVideoList> {
           displayLoading: publisherVodController.displayLoading.value,
           noMoreWidget: ListNoMore(),
           customScrollController: publisherVodController.scrollController,
-          displayVideoCollectTimes: widget.displayVideoCollectTimes,
+          displayVideoFavoriteTimes: widget.displayVideoFavoriteTimes,
         ));
   }
 

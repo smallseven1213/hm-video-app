@@ -60,7 +60,7 @@ class PlayRecordVideoScreen extends StatelessWidget {
                                   timeLength: video1.timeLength ?? 0,
                                   tags: video1.tags ?? [],
                                   title: video1.title,
-                                  displayVideoCollectTimes: false,
+                                  displayVideoFavoriteTimes: false,
                                   videoViewTimes: video1.videoViewTimes!,
                                 )),
                           ),
@@ -85,7 +85,7 @@ class PlayRecordVideoScreen extends StatelessWidget {
                                           video2.coverHorizontal ?? '',
                                       coverVertical: video2.coverVertical ?? '',
                                       videoViewTimes: video2.videoViewTimes!,
-                                      displayVideoCollectTimes: false,
+                                      displayVideoFavoriteTimes: false,
                                     ))
                                 : const SizedBox(),
                           ),

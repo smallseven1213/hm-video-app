@@ -5,11 +5,11 @@ class ShortVideoDetail {
   final int id;
   final List<VideoTag> tag;
   final Supplier? supplier;
-  final int? videoCollectTimes;
+  final int? videoFavoriteTimes;
   final int? collects;
   final int favorites;
 
-  ShortVideoDetail(this.id, this.tag, this.supplier, this.videoCollectTimes,
+  ShortVideoDetail(this.id, this.tag, this.supplier, this.videoFavoriteTimes,
       this.collects, this.favorites);
 
   factory ShortVideoDetail.fromJson(Map<String, dynamic> json) {
@@ -18,7 +18,7 @@ class ShortVideoDetail {
         List.from(
             (json['tag'] as List<dynamic>).map((e) => VideoTag.fromJson(e))),
         json['supplier'] != null ? Supplier.fromJson(json['supplier']) : null,
-        json['videoCollectTimes'] as int?,
+        json['videoFavoriteTimes'] as int?,
         json['collects'] as int?,
         json['favorites']);
   }
@@ -33,7 +33,7 @@ class ShortVideoDetail {
     if (supplier != null) {
       data['supplier'] = supplier!.toJson();
     }
-    data['videoCollectTimes'] = videoCollectTimes ?? '';
+    data['videoFavoriteTimes'] = videoFavoriteTimes ?? '';
     data['collects'] = collects ?? '';
     data['favorites'] = favorites;
     return data;

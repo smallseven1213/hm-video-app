@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/tag/tag_for_shorts.dart';
 import '../screens/tag/tag_for_videos.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 
 class TagPage extends StatefulWidget {
@@ -44,7 +44,7 @@ class TagPageState extends State<TagPage> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         titleWidget: Text(
           '#${widget.title}',
           style: const TextStyle(

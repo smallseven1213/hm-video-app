@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 
 import '../models/live_room.dart';
@@ -17,8 +16,8 @@ class LiveRoomController extends GetxController {
   Rx<Language?> currentTranslate = Rx<Language?>(null);
   final LiveSocketIOManager socketManager = LiveSocketIOManager();
   var hideAllUI = false.obs;
-  var isMute = kIsWeb ? true.obs : false.obs;
   var displayChatInput = false.obs;
+  var isMute = false.obs;
 
   LiveRoomController(this.pid);
 

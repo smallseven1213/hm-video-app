@@ -10,7 +10,7 @@ import '../screens/favorites/actor.dart';
 import '../screens/favorites/short.dart';
 import '../screens/favorites/video.dart';
 import '../widgets/list_page_panel.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 
 const tabs = ['長片', '短片', '演員'];
@@ -86,7 +86,7 @@ class FavoritesPageState extends State<FavoritesPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(
+        appBar: CustomAppBar(
           title: '我的喜歡',
           actions: [
             Obx(() => TextButton(

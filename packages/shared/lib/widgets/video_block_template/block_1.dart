@@ -98,7 +98,7 @@ class Block1Widget extends StatelessWidget {
                       isEmbeddedAds: block.isEmbeddedAds ?? false,
                       displayVideoTimes: film == 1,
                       displayViewTimes: film == 1,
-                      displayVideoCollectTimes: film == 2,
+                      displayVideoFavoriteTimes: film == 2,
                       buildVideoPreview: buildVideoPreview,
                     );
                   }()),

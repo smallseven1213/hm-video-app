@@ -1,4 +1,4 @@
-import 'package:app_tt/widgets/my_app_bar.dart';
+import 'package:app_tt/widgets/custom_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,7 +53,7 @@ class VideoByBlockPageState extends State<VideoByBlockPage> {
         areaId: widget.blockId, scrollController: scrollController);
 
     return Scaffold(
-        appBar: MyAppBar(
+        appBar: CustomAppBar(
           title: widget.title,
         ),
         body: Obx(() {
@@ -139,7 +139,7 @@ class SliverBlockWidget extends StatelessWidget {
                         displayVideoTimes: film == 1,
                         displayViewTimes: film == 1,
                         displayCoverVertical: film == 2,
-                        videoCollectTimes: vods[index * 2].videoCollectTimes!,
+                        videoFavoriteTimes: vods[index * 2].videoFavoriteTimes!,
                       ),
                     ),
                     const SizedBox(
@@ -162,8 +162,8 @@ class SliverBlockWidget extends StatelessWidget {
                               displayVideoTimes: film == 1,
                               displayViewTimes: film == 1,
                               displayCoverVertical: film == 2,
-                              videoCollectTimes:
-                                  vods[index * 2 + 1].videoCollectTimes!,
+                              videoFavoriteTimes:
+                                  vods[index * 2 + 1].videoFavoriteTimes!,
                             ),
                           )
                         : const Expanded(

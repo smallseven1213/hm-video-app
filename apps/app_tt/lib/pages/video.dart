@@ -152,8 +152,8 @@ class VideoState extends State<Video> {
                             viewTimes: videoDetail.videoViewTimes ?? 0,
                             actor: videoDetail.actors,
                             publisher: videoDetail.publisher,
-                            videoCollectTimes:
-                                videoDetail.videoCollectTimes ?? 0,
+                            videoFavoriteTimes:
+                                videoDetail.videoFavoriteTimes ?? 0,
                             videoDetail: videoDetail,
                           ),
                         ),

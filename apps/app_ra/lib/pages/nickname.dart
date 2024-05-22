@@ -9,7 +9,7 @@ import 'package:shared/navigator/delegate.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 final logger = Logger();
 final authApi = AuthApi();
@@ -58,7 +58,7 @@ class NicknamePageState extends State<NicknamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: const CustomAppBar(
         title: '修改暱稱',
       ),
       body: SingleChildScrollView(

@@ -8,6 +8,7 @@ import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_collect_count_consumer.dart';
 import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../../screens/short/button.dart';
 
@@ -34,10 +35,9 @@ class ShortBottomArea extends StatelessWidget {
     final userFavoritesShortController =
         Get.find<UserFavoritesShortController>();
 
-    return Container(
-      height: 76 + paddingBottom + (uiController.isIphoneSafari.value ? 20 : 0),
-      padding: EdgeInsets.only(
-          bottom: paddingBottom + (uiController.isIphoneSafari.value ? 20 : 0)),
+    return UIBottomSafeArea(
+        child: Container(
+      height: 76,
       decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
@@ -102,7 +102,7 @@ class ShortBottomArea extends StatelessWidget {
                           if (collectCount > 0) {
                             update(-1);
                           }
-                        } else {                           
+                        } else {
                           userShortCollectionController.addVideo(shortData);
                           update(1);
                         }
@@ -111,6 +111,6 @@ class ShortBottomArea extends StatelessWidget {
                   }))),
         ],
       ),
-    );
+    ));
   }
 }

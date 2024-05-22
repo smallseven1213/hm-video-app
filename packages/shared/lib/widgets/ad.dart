@@ -116,7 +116,7 @@ class AdState extends State<Ad> {
             if (imageLoaded)
               Positioned(
                 top: 20,
-                right: 20,
+                right: 8,
                 child: TextButton(
                     onPressed: () => {
                           if (countdownSeconds == 0)

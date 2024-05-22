@@ -8,7 +8,7 @@ import '../screens/coin/order_record.dart';
 import '../screens/coin/products.dart';
 import '../screens/coin/purchase_record.dart';
 import '../screens/coin/privilege_record.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 import '../widgets/user/balance.dart';
 import '../widgets/user/info.dart';
@@ -64,7 +64,7 @@ class CoinPageState extends State<CoinPage>
         );
       },
       child: Scaffold(
-        appBar: const MyAppBar(
+        appBar: const CustomAppBar(
           title: '金幣錢包',
         ),
         body: Column(

@@ -1,4 +1,4 @@
-import 'package:app_ra/widgets/my_app_bar.dart';
+import 'package:app_ra/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/id_card.dart';
@@ -9,7 +9,7 @@ class IDCardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         title: '帳號憑證',
       ),
       extendBodyBehindAppBar: true,

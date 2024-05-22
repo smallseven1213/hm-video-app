@@ -5,7 +5,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/list_no_more.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/sliver_vod_grid.dart';
 
 class TagPage extends StatefulWidget {
@@ -50,14 +50,14 @@ class TagPageState extends State<TagPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         title: '#${widget.title}',
       ),
       body: Obx(() {
         if (widget.film == 2) {
           return SliverVodGrid(
               isListEmpty: vodController.isListEmpty.value,
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
               videos: vodController.vodList.value,
               displayNoMoreData: vodController.displayNoMoreData.value,
               displayLoading: vodController.displayLoading.value,
@@ -70,7 +70,7 @@ class TagPageState extends State<TagPage> {
         }
         return SliverVodGrid(
           isListEmpty: vodController.isListEmpty.value,
-          displayVideoCollectTimes: false,
+          displayVideoFavoriteTimes: false,
           videos: vodController.vodList.value,
           displayNoMoreData: vodController.displayNoMoreData.value,
           displayLoading: vodController.displayLoading.value,

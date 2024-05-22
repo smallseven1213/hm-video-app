@@ -14,7 +14,7 @@ class SliverVodList extends StatefulWidget {
   final Widget? noMoreWidget;
   final List<Widget>? headerExtends;
   final Function? onScrollEnd;
-  final bool? displayVideoCollectTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final bool? displayCoverVertical;
@@ -33,7 +33,7 @@ class SliverVodList extends StatefulWidget {
     this.headerExtends,
     this.onScrollEnd,
     this.displayCoverVertical = false,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoFavoriteTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.customScrollController,
@@ -78,9 +78,10 @@ class SliverVodListState extends State<SliverVodList> {
                       tags: widget.videos[index].tags!,
                       title: widget.videos[index].title,
                       videoViewTimes: widget.videos[index].videoViewTimes!,
-                      videoCollectTimes:
-                          widget.videos[index].videoCollectTimes!,
-                      displayVideoCollectTimes: widget.displayVideoCollectTimes,
+                      videoFavoriteTimes:
+                          widget.videos[index].videoFavoriteTimes!,
+                      displayVideoFavoriteTimes:
+                          widget.displayVideoFavoriteTimes,
                       displayVideoTimes: widget.displayVideoTimes,
                       displayViewTimes: widget.displayViewTimes,
                       onOverrideRedirectTap: widget.onOverrideRedirectTap,

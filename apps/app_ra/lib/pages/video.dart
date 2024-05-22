@@ -19,7 +19,7 @@ import '../screens/video/nested_tab_bar_view/index.dart';
 import '../screens/video/video_player_area/enums.dart';
 import '../screens/video/video_player_area/index.dart';
 import '../screens/video/video_player_area/loading.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/wave_loading.dart';
 
 final userApi = UserApi();
@@ -69,7 +69,7 @@ class VideoState extends State<Video> {
         }
 
         return Scaffold(
-          appBar: MyAppBar(
+          appBar: CustomAppBar(
             titleWidget: !videoDetail!.isAvailable
                 ? videoDetail.chargeType == ChargeType.vip.index
                     ? Align(

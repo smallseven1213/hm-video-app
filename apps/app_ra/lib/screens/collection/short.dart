@@ -20,18 +20,19 @@ class CollectionShortScreen extends StatelessWidget {
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(
           tag: ListEditorCategory.collection.toString());
-  final shortPlayRecordController = Get.find<UserShortCollectionController>();
+  final userShortCollectionController =
+      Get.find<UserShortCollectionController>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var videos = shortPlayRecordController.data;
+      var videos = userShortCollectionController.data;
       logger.i('TESTING PLAY RECORD SHORT SCREEN - $videos');
       if (videos.isEmpty) {
         return const NoDataWidget();
       }
       return GridView.builder(
-        itemCount: shortPlayRecordController.data.length,
+        itemCount: userShortCollectionController.data.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
           childAspectRatio: gridRatio,
@@ -39,14 +40,14 @@ class CollectionShortScreen extends StatelessWidget {
           mainAxisSpacing: 1,
         ),
         itemBuilder: (BuildContext context, int index) {
-          var vod = shortPlayRecordController.data[index];
+          var vod = userShortCollectionController.data[index];
           logger.i('TESTING PLAY RECORD SHORT SCREEN - $vod');
           return Obx(() => VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
               displayVideoTimes: false,
               displayViewTimes: false,
               onEditingTap: () {

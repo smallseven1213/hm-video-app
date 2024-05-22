@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/publisher_controller.dart';
 import '../screens/publisher/videos.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 
 class PublisherPage extends StatefulWidget {
@@ -36,7 +36,7 @@ class VendorVideosPageState extends State<PublisherPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         titleWidget: Obx(() => Text(
               publisherController.publisher.value.name,
               style: const TextStyle(

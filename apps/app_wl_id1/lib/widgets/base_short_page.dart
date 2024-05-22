@@ -1,4 +1,5 @@
 import 'package:app_wl_id1/localization/i18n.dart';
+import 'package:app_wl_id1/widgets/no_data.dart';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -94,6 +95,7 @@ class BaseShortPage extends StatelessWidget {
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
+        noDataWidget: const NoDataWidget(showBackButton: true),
         onScrollBeyondFirst: onScrollBeyondFirst,
         loadingWidget: const Center(
           child: WaveLoading(

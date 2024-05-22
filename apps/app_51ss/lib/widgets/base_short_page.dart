@@ -9,6 +9,7 @@ import 'package:uuid/uuid.dart';
 import '../screens/video/video_player_area/flash_loading.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
+import 'no_data.dart';
 
 final List<String> loadingTextList = [
   '檔案很大，你忍一下',
@@ -96,6 +97,7 @@ class BaseShortPage extends StatelessWidget {
         itemId: itemId,
         onScrollBeyondFirst: onScrollBeyondFirst,
         loadingWidget: const Center(child: FlashLoading()),
+        noDataWidget: const NoDataWidget(showBackButton: true),
         refreshIndicatorWidget: (refreshKey) => RefreshIndicatorWidget(
               key: Key(refreshKey),
             ),
