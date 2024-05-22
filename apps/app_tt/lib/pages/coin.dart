@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 class CoinPage extends StatelessWidget {
   const CoinPage({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class CoinPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         title: 'Coin',
       ),
       body: Text('CoinPage', style: TextStyle(color: Colors.white)),

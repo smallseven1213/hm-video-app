@@ -4,7 +4,7 @@ import 'package:shared/controllers/filter_screen_controller.dart';
 
 import '../screens/filter/short.dart';
 import '../screens/filter/video.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 
 class FilterPage extends StatefulWidget {
@@ -45,7 +45,7 @@ class FilterScrollViewState extends State<FilterPage>
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: MyAppBar(
+        appBar: CustomAppBar(
           title: '篩選',
           bottom: filterScreenController.showTabBar.value
               ? RATabBar(tabs: const ['長片', '短片'], controller: _tabController)

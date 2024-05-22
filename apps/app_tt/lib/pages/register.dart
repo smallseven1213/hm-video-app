@@ -1,7 +1,7 @@
 // RegisterPage , has button , click push to '/register'
 
 import 'package:app_tt/config/colors.dart';
-import 'package:app_tt/widgets/my_app_bar.dart';
+import 'package:app_tt/widgets/custom_app_bar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
@@ -20,7 +20,7 @@ class RegisterPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: const CustomAppBar(
         title: '會員註冊',
       ),
       body: Padding(

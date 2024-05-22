@@ -8,7 +8,7 @@ import 'package:shared/models/vod.dart';
 
 import '../screens/layout_home_screen/channel_area_banner.dart';
 import '../widgets/list_no_more.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/no_data.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
@@ -53,7 +53,7 @@ class VideoByBlockPageState extends State<VideoByBlockPage> {
         areaId: widget.blockId, scrollController: scrollController);
 
     return Scaffold(
-        appBar: MyAppBar(
+        appBar: CustomAppBar(
           title: widget.title,
         ),
         body: Obx(() {

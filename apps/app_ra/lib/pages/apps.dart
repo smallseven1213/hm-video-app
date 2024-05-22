@@ -5,7 +5,7 @@ import 'package:shared/modules/apps/apps_provider.dart';
 import '../screens/apps_screen/banner.dart';
 import '../screens/apps_screen/hot.dart';
 import '../screens/apps_screen/popular.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/title_header.dart';
 import '../widgets/wave_loading.dart';
 
@@ -16,7 +16,7 @@ class AppsPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Scaffold(
-          appBar: const MyAppBar(
+          appBar: const CustomAppBar(
             title: '應用中心',
           ),
           body: AppsProvider(

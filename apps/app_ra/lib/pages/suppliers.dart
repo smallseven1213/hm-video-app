@@ -6,7 +6,7 @@ import 'package:shared/controllers/suppliers_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import '../widgets/circle_sidimage_text_item.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/no_data.dart';
 import '../widgets/search_input.dart';
 
@@ -96,7 +96,7 @@ class SuppliersPageState extends State<SuppliersPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: const CustomAppBar(
         title: '全部UP主',
       ),
       body: Column(

@@ -5,7 +5,7 @@ import 'package:shared/models/color_keys.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     Key? key,
-    this.title,
+    this.title = '',
     this.titleWidget,
     this.backgroundColor,
     this.bottom,

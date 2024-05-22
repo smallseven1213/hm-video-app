@@ -1,4 +1,4 @@
-import 'package:app_ra/widgets/my_app_bar.dart';
+import 'package:app_ra/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_controller.dart';
@@ -179,7 +179,7 @@ class ConfigsPage extends StatelessWidget {
       // ),
     ];
     return Scaffold(
-      appBar: const MyAppBar(title: '設置'),
+      appBar: const CustomAppBar(title: '設置'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
         child: Obx(() {

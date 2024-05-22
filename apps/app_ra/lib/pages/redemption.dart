@@ -8,7 +8,7 @@ import '../config/colors.dart';
 import '../screens/coin/no_data.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 final logger = Logger();
 final redemptionApi = RedemptionApi();
@@ -54,7 +54,7 @@ class RedemptionPageState extends State<RedemptionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const MyAppBar(
+        appBar: const CustomAppBar(
           title: '序號兌換',
         ),
         body: Column(

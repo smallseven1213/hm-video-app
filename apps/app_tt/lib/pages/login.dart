@@ -9,7 +9,7 @@ import 'package:shared/modules/login/login_scaffold.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import 'package:app_tt/config/colors.dart';
-import 'package:app_tt/widgets/my_app_bar.dart';
+import 'package:app_tt/widgets/custom_app_bar.dart';
 import 'package:app_tt/widgets/forgot_password_button.dart';
 
 import '../utils/show_confirm_dialog.dart';
@@ -22,7 +22,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         title: I18n.memberLogin,
       ),
       body: Padding(

@@ -8,7 +8,7 @@ import 'package:shared/navigator/delegate.dart';
 
 import '../config/colors.dart';
 import '../widgets/button.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 class OrderConfirmPage extends StatelessWidget {
   const OrderConfirmPage({super.key});
@@ -18,7 +18,7 @@ class OrderConfirmPage extends StatelessWidget {
     final bottomNavigatorController = Get.find<BottomNavigatorController>();
 
     return Scaffold(
-      appBar: const MyAppBar(title: '付款確認中'),
+      appBar: const CustomAppBar(title: '付款確認中'),
       body: Column(
         children: [
           Padding(

@@ -39,6 +39,7 @@ class FavoritesShortScreen extends StatelessWidget {
           return Obx(() => VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,
+              hasTags: false,
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
               displayVideoCollectTimes: false,

@@ -14,7 +14,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 import 'package:shared/modules/user/user_promo_consumer.dart';
 
 import '../widgets/button.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 final GlobalKey _globalKey = GlobalKey();
 final logger = Logger();
@@ -75,7 +75,7 @@ class SharePage extends StatelessWidget {
               image: AssetImage('assets/images/share_page_bg.webp'),
             ),
           ),
-          MyAppBar(
+          CustomAppBar(
             title: I18n.promotionalShare,
             backgroundColor: Colors.transparent,
             actions: [

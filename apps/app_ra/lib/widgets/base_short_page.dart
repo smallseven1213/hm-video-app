@@ -1,3 +1,4 @@
+import 'package:app_ra/widgets/no_data.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
@@ -41,6 +42,7 @@ class BaseShortPage extends StatelessWidget {
         uuid: uuid ?? const Uuid().v4(),
         videoId: videoId,
         itemId: itemId,
+        noDataWidget: const NoDataWidget(showBackButton: true),
         onScrollBeyondFirst: () {
           onScrollBeyondFirst?.call();
         },

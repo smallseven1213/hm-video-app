@@ -7,7 +7,7 @@ import 'package:shared/enums/shorts_type.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/list_no_more.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/no_data.dart';
 import '../widgets/sliver_video_preview_skelton_list.dart';
 import '../widgets/video_preview.dart';
@@ -39,7 +39,7 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
         tagId: widget.tagId, scrollController: scrollController);
 
     return Scaffold(
-      appBar: MyAppBar(title: '#${widget.tagName}'),
+      appBar: CustomAppBar(title: '#${widget.tagName}'),
       body: Obx(() => CustomScrollView(
             controller: vodController.scrollController,
             slivers: [
