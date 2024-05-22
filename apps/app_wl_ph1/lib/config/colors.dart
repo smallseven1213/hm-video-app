@@ -20,5 +20,6 @@ class AppColors {
     ColorKeys.gradientBgBottomColor: Color.fromRGBO(20, 49, 104, 0.7),
     // video
     ColorKeys.videoTitle: Color(0xffffffff),
+    ColorKeys.menuColor: Color(0xffffffff),
   };
 }

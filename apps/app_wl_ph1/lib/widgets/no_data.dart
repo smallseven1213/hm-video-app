@@ -32,8 +32,9 @@ class NoDataWidget extends StatelessWidget {
             Text(I18n.thereIsNothingHere,
                 style: TextStyle(color: AppColors.colors[ColorKeys.menuColor])),
             if (showBackButton)
-              Padding(
-                padding: const EdgeInsets.only(top: 20),
+              Container(
+                width: 130,
+                padding: const EdgeInsets.only(top: 30),
                 child: Button(
                   onPressed: () => Navigator.of(context).pop(),
                   text: I18n.back,
