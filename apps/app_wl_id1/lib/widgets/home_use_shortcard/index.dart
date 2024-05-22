@@ -143,23 +143,28 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                 ),
                 Obx(
                   () => Positioned(
-                    bottom: 60,
-                    right: 20,
+                    bottom: 78,
+                    right: 0,
                     child: InkWell(
-                      onTap: () {
-                        controller.toggleMute();
-                      },
-                      child: SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: Image(
-                          image: AssetImage(controller.isMuted.value
-                              ? 'assets/images/short-mute.webp'
-                              : 'assets/images/short-unmute.webp'),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
-                    ),
+                        onTap: () {
+                          controller.toggleMute();
+                        },
+                        child: SizedBox(
+                          width: 60,
+                          height: 60,
+                          child: Center(
+                            child: SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: Image(
+                                image: AssetImage(controller.isMuted.value
+                                    ? 'assets/images/short-mute.webp'
+                                    : 'assets/images/short-unmute.webp'),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                        )),
                   ),
                 )
               ],
