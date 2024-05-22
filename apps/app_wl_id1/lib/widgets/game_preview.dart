@@ -16,8 +16,8 @@ class ViewInfo extends StatelessWidget {
   final int viewCount;
   final int duration;
   final bool hasRadius;
-  final int? videoCollectTimes;
-  final bool? displayVideoCollectTimes;
+  final int? videoFavoriteTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
 
@@ -26,10 +26,10 @@ class ViewInfo extends StatelessWidget {
     required this.viewCount,
     required this.duration,
     required this.hasRadius,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoFavoriteTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
-    this.videoCollectTimes,
+    this.videoFavoriteTimes,
   }) : super(key: key);
 
   @override
@@ -44,8 +44,8 @@ class ViewInfo extends StatelessWidget {
       infoItems.add(VideoTime(time: duration));
     }
 
-    if (displayVideoCollectTimes == true) {
-      infoItems.add(VideoCollectionTimes(times: videoCollectTimes ?? 0));
+    if (displayVideoFavoriteTimes == true) {
+      infoItems.add(VideoCollectionTimes(times: videoFavoriteTimes ?? 0));
     }
 
     if (infoItems.isEmpty) {

@@ -57,7 +57,7 @@ class TagPageState extends State<TagPage> {
         if (widget.film == 2) {
           return SliverVodGrid(
               isListEmpty: vodController.isListEmpty.value,
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
               videos: vodController.vodList.value,
               displayNoMoreData: vodController.displayNoMoreData.value,
               displayLoading: vodController.displayLoading.value,
@@ -70,7 +70,7 @@ class TagPageState extends State<TagPage> {
         }
         return SliverVodGrid(
           isListEmpty: vodController.isListEmpty.value,
-          displayVideoCollectTimes: false,
+          displayVideoFavoriteTimes: false,
           videos: vodController.vodList.value,
           displayNoMoreData: vodController.displayNoMoreData.value,
           displayLoading: vodController.displayLoading.value,

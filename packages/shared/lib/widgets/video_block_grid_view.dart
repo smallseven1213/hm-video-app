@@ -13,7 +13,7 @@ class VideoBlockGridView extends StatelessWidget {
   final int? blockId;
   final bool? hasInfoView;
   final int? film;
-  final bool? displayVideoCollectTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
@@ -28,7 +28,7 @@ class VideoBlockGridView extends StatelessWidget {
     this.blockId,
     this.hasInfoView = true,
     this.film = 1,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoFavoriteTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     required this.buildVideoPreview,
@@ -58,7 +58,7 @@ class VideoBlockGridView extends StatelessWidget {
               blockId: blockId,
               hasInfoView: hasInfoView,
               film: film,
-              displayVideoCollectTimes: displayVideoCollectTimes,
+              displayVideoFavoriteTimes: displayVideoFavoriteTimes,
               displayVideoTimes: displayVideoTimes,
               displayViewTimes: displayViewTimes,
               buildVideoPreview: (video) => buildVideoPreview(video),

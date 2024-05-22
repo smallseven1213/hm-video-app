@@ -72,9 +72,9 @@ class SupplierTagVideoPageState extends State<SupplierTagVideoPage> {
                       title: vod.title,
                       displayVideoTimes: false,
                       displayViewTimes: false,
-                      displayVideoCollectTimes: true,
+                      displayVideoFavoriteTimes: true,
                       videoViewTimes: vod.videoViewTimes!,
-                      videoCollectTimes: vod.videoCollectTimes!,
+                      videoFavoriteTimes: vod.videoFavoriteTimes!,
                     );
                   },
                   childCount: vodController.vodList.length,

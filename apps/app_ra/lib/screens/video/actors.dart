@@ -29,7 +29,7 @@ class Actors extends StatelessWidget {
         displayNoMoreData: displayNoMoreData,
         isListEmpty: isListEmpty,
         noMoreWidget: ListNoMore(),
-        displayVideoCollectTimes: false,
+        displayVideoFavoriteTimes: false,
       ),
     );
   }

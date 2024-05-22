@@ -104,7 +104,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
               displayNoMoreData: false,
               displayLoading: false,
               noMoreWidget: ListNoMore(),
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
             );
           },
         ),

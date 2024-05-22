@@ -56,7 +56,7 @@ class ActorPageState extends State<ActorPage>
         displayNoMoreData: displayNoMoreData,
         isListEmpty: isListEmpty,
         noMoreWidget: ListNoMore(),
-        displayVideoCollectTimes: false,
+        displayVideoFavoriteTimes: false,
       ),
     );
   }

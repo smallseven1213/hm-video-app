@@ -15,7 +15,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
   final List<Tag> tags;
   final String title;
   final int? videoViewTimes;
-  final int? videoCollectTimes;
+  final int? videoFavoriteTimes;
   final double? imageRatio;
   final Vod? detail;
   final bool isEmbeddedAds;
@@ -26,7 +26,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
   final bool? hasRadius; // 要不要圓角
   final bool? hasTitle; // 要不要標題
   final bool? hasTapEvent; // 要不要點擊事件
-  final bool? displayVideoCollectTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final bool? displaySupplier;
@@ -45,7 +45,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
     required this.tags,
     required this.title,
     this.videoViewTimes = 0,
-    this.videoCollectTimes = 0,
+    this.videoFavoriteTimes = 0,
     this.isEmbeddedAds = false,
     this.detail,
     this.imageRatio,
@@ -58,7 +58,7 @@ abstract class BaseVideoPreviewWidget extends StatelessWidget {
     this.onTap,
     this.hasTapEvent = true,
     this.onOverrideRedirectTap,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoFavoriteTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.displaySupplier = true,

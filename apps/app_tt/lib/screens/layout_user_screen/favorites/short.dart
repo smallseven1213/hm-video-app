@@ -42,7 +42,7 @@ class FavoritesShortScreen extends StatelessWidget {
               hasTags: false,
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
               displayVideoTimes: false,
               displayViewTimes: false,
               onEditingTap: () {

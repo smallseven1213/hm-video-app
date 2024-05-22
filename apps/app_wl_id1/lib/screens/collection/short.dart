@@ -20,7 +20,8 @@ class CollectionShortScreen extends StatelessWidget {
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(
           tag: ListEditorCategory.collection.toString());
-  final userShortCollectionController = Get.find<UserShortCollectionController>();
+  final userShortCollectionController =
+      Get.find<UserShortCollectionController>();
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class CollectionShortScreen extends StatelessWidget {
               film: 2,
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
               displayVideoTimes: false,
               displayViewTimes: false,
               onEditingTap: () {
