@@ -29,10 +29,10 @@ class CircleTextItem extends StatelessWidget {
         height: imageHeight,
         margin: const EdgeInsets.only(bottom: 5),
         decoration: BoxDecoration(
-            borderRadius: isRounded
-                ? BorderRadius.circular(40)
-                : BorderRadius.circular(5),
-            color: const Color(0xFFFDDCEF)),
+          borderRadius:
+              isRounded ? BorderRadius.circular(40) : BorderRadius.circular(5),
+          color: hasBorder ? const Color(0xFFFDDCEF) : null,
+        ),
         child: Container(
             margin: isRounded ? const EdgeInsets.all(1) : null,
             decoration: BoxDecoration(
