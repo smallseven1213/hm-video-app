@@ -7,6 +7,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
+import '../short_video_mute_button.dart';
 import '../shortcard/index.dart';
 import '../shortcard/short_card_info.dart';
 import 'short_bottom_area.dart';
@@ -129,7 +130,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             () => uiController.isFullscreen.value != true
                 ? const FloatPageBackButton()
                 : const SizedBox.shrink(),
-          )
+          ),
         ],
       ),
     );
