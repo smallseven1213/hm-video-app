@@ -1,5 +1,7 @@
+import 'package:game/services/game_system_config.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:logger/logger.dart';
 
 import '../apis/user_api.dart';
@@ -29,7 +31,7 @@ class UserController extends GetxController {
   var isInfoV2Loading = false.obs;
   var totalAmount = 0.0.obs;
   var loginCode = ''.obs;
-
+  IO.Socket? socket;
   bool get isGuest => info.value.roles.contains('guest');
   GetStorage box = GetStorage();
 
@@ -44,6 +46,7 @@ class UserController extends GetxController {
     if (authController.token.value.isNotEmpty) {
       fetchUserInfo();
       fetchUserInfoV2();
+      connectWebSocket(authController.token.value);
     }
 
     ever(
@@ -56,6 +59,36 @@ class UserController extends GetxController {
         }
       },
     );
+  }
+
+  void connectWebSocket(String token) {
+    final systemConfig = GameSystemConfig();
+    var websocketUrl = systemConfig.apiHost?.replaceAll("https://api.", "");
+    final url = 'wss://ws.$websocketUrl:443/user?token=$token';
+
+    socket = IO.io(url, <String, dynamic>{
+      'transports': ['websocket'],
+    });
+
+    socket?.on('connect', (_) {
+      logger.i('WebSocket connected');
+    });
+
+    socket?.on('event', (data) {
+      logger.i('WebSocket event received: $data');
+      handleEvent(data);
+    });
+
+    socket?.on('disconnect', (_) {
+      logger.i('WebSocket disconnected');
+    });
+  }
+
+  void handleEvent(dynamic data) {
+    if (data['event'] == 'update.wallet') {
+      totalAmount.value = double.parse(data['data']['wallet']);
+      logger.i('Wallet updated: ${totalAmount.value}');
+    }
   }
 
   fetchUserInfo() async {
