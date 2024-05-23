@@ -64,6 +64,8 @@ class LiveScaffoldState extends State<LiveScaffold> {
       GetStorage()
           .write('recharge_platform', response.data["recharge_platform"]);
       liveSystemController.liveApiHost.value = response.data["apiHost"];
+      liveSystemController.liveWsHost.value = response.data["wsHost"];
+
       isLogin = true;
       Get.replace<LiveListController>(LiveListController());
       Get.put(LiveUserController());
