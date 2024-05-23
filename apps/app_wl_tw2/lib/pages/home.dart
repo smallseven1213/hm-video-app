@@ -18,6 +18,7 @@ import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 import 'package:live_ui_basic/pages/live.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
@@ -80,36 +81,37 @@ class HomeState extends State<HomePage> {
             {required String activeKey,
             required List<Navigation> navigatorItems,
             required Function(String tabKey) changeTabKey}) {
-          final paddingBottom = MediaQuery.paddingOf(context).bottom;
           return Stack(
             children: [
               Obx(() {
                 return uiController.displayHomeNavigationBar.value
-                    ? Container(
-                        padding: EdgeInsets.only(bottom: paddingBottom),
-                        height: 76 + paddingBottom,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          child: Row(
-                            children: navigatorItems
-                                .asMap()
-                                .entries
-                                .map(
-                                  (entry) => Expanded(
-                                    child: CustomBottomBarItem(
-                                        isActive:
-                                            entry.value.path! == activeKey,
-                                        iconSid: entry.value.photoSid!,
-                                        activeIconSid: entry.value.clickEffect!,
-                                        label: entry.value.name!,
-                                        onTap: () =>
-                                            changeTabKey(entry.value.path!)),
-                                  ),
-                                )
-                                .toList(),
+                    ? UIBottomSafeArea(
+                        child: SizedBox(
+                          height: 76,
+                          child: ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                              topLeft: Radius.circular(10),
+                              topRight: Radius.circular(10),
+                            ),
+                            child: Row(
+                              children: navigatorItems
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (entry) => Expanded(
+                                      child: CustomBottomBarItem(
+                                          isActive:
+                                              entry.value.path! == activeKey,
+                                          iconSid: entry.value.photoSid!,
+                                          activeIconSid:
+                                              entry.value.clickEffect!,
+                                          label: entry.value.name!,
+                                          onTap: () =>
+                                              changeTabKey(entry.value.path!)),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                           ),
                         ),
                       )
