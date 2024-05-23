@@ -9,6 +9,7 @@ import 'package:shared/widgets/video_player/error.dart';
 import 'package:shared/widgets/video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
+import '../short_video_mute_button.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
@@ -72,6 +73,7 @@ class ShortCardState extends State<ShortCard> {
                 videoPlayerInfo: videoPlayerInfo,
                 toggleFullScreen: widget.toggleFullScreen,
               ),
+
               // error
 
               if (videoPlayerInfo
@@ -176,6 +178,13 @@ class ShortCardState extends State<ShortCard> {
                       ),
                     ),
                   ),
+                ),
+              ),
+              Positioned(
+                bottom: 78,
+                right: 0,
+                child: ShortVideoMuteButton(
+                  controller: videoPlayerInfo.observableVideoPlayerController,
                 ),
               ),
               // const FloatPageBackButton()

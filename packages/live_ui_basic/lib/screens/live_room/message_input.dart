@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:live_core/controllers/live_room_controller.dart';
 import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:shared/controllers/ui_controller.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../../localization/live_localization_delegate.dart';
 
@@ -89,7 +90,6 @@ class MessageInputWidgetState extends State<MessageInputWidget> {
     final LiveLocalizations localizations = LiveLocalizations.of(context)!;
 
     return Container(
-      height: 54 + (uiController.isIphoneSafari.value ? 20 : 0),
       padding: EdgeInsets.only(
         left: 5,
         right: 5,
@@ -99,51 +99,57 @@ class MessageInputWidgetState extends State<MessageInputWidget> {
             (uiController.isIphoneSafari.value ? 20 : 0),
       ),
       color: const Color(0xFF242a3d),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: TextField(
-                autofocus: true,
-                controller: _messageController,
-                style: const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
-                decoration: InputDecoration(
-                  hintText:
-                      localizations.translate('say_something_to_the_host'),
-                  hintStyle:
-                      const TextStyle(fontSize: 14, color: Color(0xFF7b7b7b)),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(10),
+      child: UIBottomSafeArea(
+        child: SizedBox(
+          height: 54,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: TextField(
+                    autofocus: true,
+                    controller: _messageController,
+                    style:
+                        const TextStyle(fontSize: 14, color: Color(0xFF242A3D)),
+                    decoration: InputDecoration(
+                      hintText:
+                          localizations.translate('say_something_to_the_host'),
+                      hintStyle: const TextStyle(
+                          fontSize: 14, color: Color(0xFF7b7b7b)),
+                      border: InputBorder.none,
+                      contentPadding: const EdgeInsets.all(10),
+                    ),
+                    onSubmitted: (_) {
+                      sendMessage(); // 當按下Enter鍵時調用
+                    },
+                  ),
                 ),
-                onSubmitted: (_) {
-                  sendMessage(); // 當按下Enter鍵時調用
+              ),
+              InkWell(
+                onTap: () {
+                  sendMessage();
                 },
-              ),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              sendMessage();
-            },
-            child: SizedBox(
-              width: 60,
-              child: Center(
-                child: Text(
-                  localizations.translate('send'),
-                  style: const TextStyle(fontSize: 12, color: Colors.white),
-                  textAlign: TextAlign.center,
+                child: SizedBox(
+                  width: 60,
+                  child: Center(
+                    child: Text(
+                      localizations.translate('send'),
+                      style: const TextStyle(fontSize: 12, color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
