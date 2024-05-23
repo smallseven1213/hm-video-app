@@ -27,34 +27,37 @@ class CustomBottomBarItem extends StatelessWidget {
         child: Container(
           color: AppColors.colors[ColorKeys.menuBgColor],
           child: UIBottomSafeArea(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                isActive
-                    ? SidImage(
-                        key: const Key('activeIcon'),
-                        sid: activeIconSid,
-                        width: 30,
-                        height: 30,
-                        noFadeIn: true,
-                      )
-                    : SidImage(
-                        key: const Key('unactiveIcon'),
-                        sid: iconSid,
-                        width: 30,
-                        height: 30,
-                        noFadeIn: true,
-                      ),
-                const SizedBox(height: 4),
-                Text(
-                  label,
-                  style: TextStyle(
-                    color: isActive
-                        ? AppColors.colors[ColorKeys.menuActiveColor]
-                        : AppColors.colors[ColorKeys.menuColor],
+            child: SizedBox(
+              height: 76,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  isActive
+                      ? SidImage(
+                          key: const Key('activeIcon'),
+                          sid: activeIconSid,
+                          width: 30,
+                          height: 30,
+                          noFadeIn: true,
+                        )
+                      : SidImage(
+                          key: const Key('unactiveIcon'),
+                          sid: iconSid,
+                          width: 30,
+                          height: 30,
+                          noFadeIn: true,
+                        ),
+                  const SizedBox(height: 4),
+                  Text(
+                    label,
+                    style: TextStyle(
+                      color: isActive
+                          ? AppColors.colors[ColorKeys.menuActiveColor]
+                          : AppColors.colors[ColorKeys.menuColor],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ));

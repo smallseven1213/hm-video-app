@@ -85,31 +85,27 @@ class HomeState extends State<HomePage> {
             children: [
               Obx(() {
                 return uiController.displayHomeNavigationBar.value
-                    ? SizedBox(
-                        height: 76,
-                        child: ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            topRight: Radius.circular(10),
-                          ),
-                          child: Row(
-                            children: navigatorItems
-                                .asMap()
-                                .entries
-                                .map(
-                                  (entry) => Expanded(
-                                    child: CustomBottomBarItem(
-                                        isActive:
-                                            entry.value.path! == activeKey,
-                                        iconSid: entry.value.photoSid!,
-                                        activeIconSid: entry.value.clickEffect!,
-                                        label: entry.value.name!,
-                                        onTap: () =>
-                                            changeTabKey(entry.value.path!)),
-                                  ),
-                                )
-                                .toList(),
-                          ),
+                    ? ClipRRect(
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                        ),
+                        child: Row(
+                          children: navigatorItems
+                              .asMap()
+                              .entries
+                              .map(
+                                (entry) => Expanded(
+                                  child: CustomBottomBarItem(
+                                      isActive: entry.value.path! == activeKey,
+                                      iconSid: entry.value.photoSid!,
+                                      activeIconSid: entry.value.clickEffect!,
+                                      label: entry.value.name!,
+                                      onTap: () =>
+                                          changeTabKey(entry.value.path!)),
+                                ),
+                              )
+                              .toList(),
                         ),
                       )
                     : const SizedBox.shrink();
