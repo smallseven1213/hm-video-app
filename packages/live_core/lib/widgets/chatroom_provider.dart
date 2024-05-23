@@ -23,9 +23,10 @@ class ChatroomProviderState extends State<ChatroomProvider> {
   void initState() {
     super.initState();
     final liveWsHostValue = Get.find<LiveSystemController>().liveWsHostValue;
-
     socketIOManager = LiveSocketIOManager();
-    socketIOManager.connect('$liveWsHostValue/chat', widget.chatToken);
+    String chatUrl = liveWsHostValue.replaceAll(RegExp(r'-ws.'), '-chat.');
+    socketIOManager.connect('$chatUrl:443', widget.chatToken);
+
     Get.put(ChatResultController());
   }
 
