@@ -12,6 +12,7 @@ import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/navigation.dart';
 import 'package:shared/modules/main_layout/main_layout_builder.dart';
 import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../screens/home/home_apps.dart';
 import '../screens/main_screen/index.dart';
@@ -78,9 +79,9 @@ class HomeState extends State<HomePage> {
             children: [
               Obx(() {
                 return uiController.displayHomeNavigationBar.value
-                    ? Container(
-                        padding: EdgeInsets.only(bottom: paddingBottom),
-                        height: 76 + paddingBottom,
+                    ? UIBottomSafeArea(
+                        child: SizedBox(
+                        height: 76,
                         child: ClipRRect(
                           borderRadius: const BorderRadius.only(
                             topLeft: Radius.circular(10),
@@ -105,7 +106,7 @@ class HomeState extends State<HomePage> {
                                 .toList(),
                           ),
                         ),
-                      )
+                      ))
                     : const SizedBox.shrink();
               }),
               if (widget.defaultScreenKey == null) const NoticeDialog()
