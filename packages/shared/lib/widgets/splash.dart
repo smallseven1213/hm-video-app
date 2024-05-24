@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -74,7 +73,7 @@ void alertDialog(
 }
 
 class _SplashState extends State<Splash> {
-  late final SharedLocalizations localizations; // 延后初始化
+  late SharedLocalizations localizations; // 延后初始化
 
   final SystemConfigController systemConfigController =
       Get.find<SystemConfigController>();
@@ -139,7 +138,10 @@ class _SplashState extends State<Splash> {
   checkIsMaintenance() async {
     logger.i('step4: 檢查是否維護中${systemConfigController.isMaintenance}');
     if (systemConfigController.isMaintenance.value) {
-      alertDialog(context, content: '系統維護中，請稍後再試。', actions: []);
+      alertDialog(context,
+          content: localizations
+              .translate('system_under_maintenance_please_try_again_later'),
+          actions: []);
     }
     return systemConfigController.isMaintenance.value;
   }
@@ -149,7 +151,7 @@ class _SplashState extends State<Splash> {
     if (GetPlatform.isWeb) return true;
     if (mounted) {
       setState(() => loadingText =
-          localizations.translate('check_for_updates')); //檢查更新....
+          localizations.translate('checking_for_updates')); //檢查更新....
     }
     logger.i('step5: 檢查是否有更新');
     ApkUpdate apkUpdate = await apkApi.checkVersion(
@@ -162,14 +164,15 @@ class _SplashState extends State<Splash> {
       if (mounted) {
         alertDialog(
           context,
-          title: localizations.translate('已有新版本'),
-          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
+          title: localizations.translate('new_version_available'),
+          content: localizations.translate(
+              'a_new_version_has_been_released_for_a_smoother_experience_please_update'),
           actions: [
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child:  Text(localizations.translate('更新版本')),
+              child: Text(localizations.translate('update_now')),
               // ignore: deprecated_member_use
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
@@ -180,14 +183,15 @@ class _SplashState extends State<Splash> {
       if (mounted) {
         alertDialog(
           context,
-          title: localizations.translate('已有新版本'),
-          content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
+          title: localizations.translate('new_version_available'),
+          content: localizations.translate(
+              'a_new_version_has_been_released_for_a_smoother_experience_please_update'),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: Text(localizations.translate('立即體驗')),
+              child: Text(localizations.translate('experience_now')),
               // ignore: deprecated_member_use
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
@@ -195,7 +199,7 @@ class _SplashState extends State<Splash> {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: Text(localizations.translate('暫不升級')),
+              child: Text(localizations.translate('do_not_upgrade')),
               onPressed: () {
                 Navigator.of(context).pop();
                 userLogin();
@@ -211,7 +215,7 @@ class _SplashState extends State<Splash> {
   // Step6: 檢查是否登入 - key: 'auth-token'
   userLogin() async {
     if (mounted) {
-      setState(() => loadingText = '用戶登入...');
+      setState(() => loadingText = localizations.translate('user_login'));
     }
     logger.i('step6: 檢查是否有token (是否登入 ${authController.token.value != ''})');
     logger.i('userApi: ${authController.token.value}');
@@ -235,18 +239,20 @@ class _SplashState extends State<Splash> {
         } else {
           var message = '';
           if (res.code == '51633') {
-            message = '帳號建立失敗，裝置停用。';
+            message = localizations
+                .translate('account_creation_failed_device_disabled');
           } else {
             final String code = res.code ?? '';
             final String data = res.data.toString();
             final String response = 'code: $code, data: $data';
-            message = '帳號建立失敗。$response';
+            message = localizations.translate('account_creation_failed') +
+                '.$response';
             await Clipboard.setData(ClipboardData(text: response));
           }
           if (mounted) {
             alertDialog(
               context,
-              title: localizations.translate('失敗'),
+              title: localizations.translate('failure'),
               content: message,
             );
           }
@@ -255,38 +261,40 @@ class _SplashState extends State<Splash> {
         logger.i('err: $err');
         alertDialog(
           context,
-          title: localizations.translate('失敗'),
-          content: '帳號建立失敗。($err)',
+          title: localizations.translate('failure'),
+          content: 'account_creation_failed.($err)',
         );
       }
     }
   }
 
-  // Step7.1: 取得nav bar內容
+// Step7.1: 取得nav bar內容
   getNavBar() {
     if (mounted) {
-      setState(() => loadingText = '取得最新資源...');
+      setState(() =>
+          loadingText = localizations.translate('getting_latest_resources'));
     }
     logger.i('step7.1: 取得nav bar內容');
-    // final NavBarController navBarController = Get.put(NavBarController());
-    //  navBarController.fetchNavBar();
+// final NavBarController navBarController = Get.put(NavBarController());
+//  navBarController.fetchNavBar();
   }
 
-  // Step7: 在首頁前要取得的資料
-  // Step7.1: 取得nav bar內容
-  // Step7.2: 取得入站廣告 > 有廣告 > 廣告頁
-  // DI一些登入後才能用的資料(Controllers)
+// Step7: 在首頁前要取得的資料
+// Step7.1: 取得nav bar內容
+// Step7.2: 取得入站廣告 > 有廣告 > 廣告頁
+// DI一些登入後才能用的資料(Controllers)
   fetchInitialDataAndNavigate() async {
     userApi.writeUserLoginRecord();
     if (mounted) {
-      setState(() => loadingText = '取得最新資源...');
+      setState(() =>
+          loadingText = localizations.translate('getting_latest_resources'));
     }
     Get.put(VideoPopularController());
     Get.put(TagPopularController());
     logger.i('step7.2: 取得入站廣告 > 有廣告 > 廣告頁');
     List landingBanners =
         await bannerController.fetchBanner(BannerPosition.landing);
-    // check if 401
+// check if 401
     if (responseController.apiResponse.value.status == 401 ||
         widget.skipNavigation) {
       return;
@@ -304,20 +312,24 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
-    localizations = SharedLocalizations.of(context)!;
+    super.initState();
     Future.microtask(() async {
       WidgetsFlutterBinding.ensureInitialized();
       final dlJson = await fetchDlJson();
       bool isMaintenance = await checkIsMaintenance();
       if (dlJson == null || isMaintenance) return;
-      // ---- init end ----
+// –– init end ––
       bool enterable = await checkApkUpdate();
       if (enterable) {
         userLogin();
       }
     });
+  }
 
-    super.initState();
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    localizations = SharedLocalizations.of(context)!;
   }
 
   @override
@@ -347,7 +359,7 @@ class _SplashState extends State<Splash> {
               bottom: kIsWeb ? 20 : 70,
               right: 20,
               child: Text(
-                '版本 ${systemConfigController.version.value}',
+                '${localizations.translate('version')} ${systemConfigController.version.value}',
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
