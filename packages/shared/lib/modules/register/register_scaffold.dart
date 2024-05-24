@@ -82,12 +82,14 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
           userController.fetchUserInfo();
           // ignore: use_build_context_synchronously
           MyRouteDelegate.of(context).popRoute();
+        } else if (res.code == '40000') {
+          widget.onError!('註冊錯誤', '帳號已存在，請重新輸入帳號。');
         } else {
           widget.onError!('註冊錯誤', '帳號或密碼不正確');
         }
       } on DioException catch (error) {
         if (error.response?.data['code'] == '40000') {
-          widget.onError!('註冊錯誤', '帳號已存在');
+          widget.onError!('註冊錯誤', '帳號已存在，請重新輸入帳號。');
         } else {
           widget.onError!('註冊錯誤', '帳號或密碼不正確');
         }
