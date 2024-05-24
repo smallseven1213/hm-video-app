@@ -86,8 +86,11 @@ class UserController extends GetxController {
 
   void handleEvent(dynamic data) {
     if (data['event'] == 'update.wallet') {
-      totalAmount.value = double.parse(data['data']['wallet']);
-      logger.i('Wallet updated: ${totalAmount.value}');
+      var point = double.parse(data['data']['wallet']);
+      // 修改至V2的points
+      infoV2.update((val) {
+        val!.points = point;
+      });
     }
   }
 
