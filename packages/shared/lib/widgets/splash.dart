@@ -20,6 +20,7 @@ import '../controllers/system_config_controller.dart';
 import '../controllers/tag_popular_controller.dart';
 import '../controllers/video_popular_controller.dart';
 import '../enums/app_routes.dart';
+import '../localization/shared_localization_delegate.dart';
 import '../models/index.dart';
 import '../navigator/delegate.dart';
 
@@ -47,6 +48,8 @@ void alertDialog(
   String? content,
   List<Widget>? actions,
 }) {
+  final SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
   showDialog<int>(
     context: context,
     barrierDismissible: false,
@@ -59,7 +62,7 @@ void alertDialog(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('確認'),
+              child: Text(localizations.translate('confirm')),
               onPressed: () {
                 Navigator.of(context).pop();
                 return;
@@ -71,6 +74,8 @@ void alertDialog(
 }
 
 class _SplashState extends State<Splash> {
+  late final SharedLocalizations localizations; // 延后初始化
+
   final SystemConfigController systemConfigController =
       Get.find<SystemConfigController>();
   // SystemConfig systemConfig = SystemConfig();
@@ -84,7 +89,7 @@ class _SplashState extends State<Splash> {
   AuthController authController = Get.find<AuthController>();
   ApiResponseErrorCatchController responseController =
       Get.find<ApiResponseErrorCatchController>();
-  String loadingText = '線路檢查中...';
+  String loadingText = 'loading...';
 
   GameApiResponseErrorCatchController gameResponseController =
       Get.find<GameApiResponseErrorCatchController>();
@@ -143,7 +148,8 @@ class _SplashState extends State<Splash> {
   checkApkUpdate() async {
     if (GetPlatform.isWeb) return true;
     if (mounted) {
-      setState(() => loadingText = '檢查更新...');
+      setState(() => loadingText =
+          localizations.translate('check_for_updates')); //檢查更新....
     }
     logger.i('step5: 檢查是否有更新');
     ApkUpdate apkUpdate = await apkApi.checkVersion(
@@ -156,14 +162,14 @@ class _SplashState extends State<Splash> {
       if (mounted) {
         alertDialog(
           context,
-          title: '已有新版本',
+          title: localizations.translate('已有新版本'),
           content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
           actions: [
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('更新版本'),
+              child:  Text(localizations.translate('更新版本')),
               // ignore: deprecated_member_use
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
@@ -174,14 +180,14 @@ class _SplashState extends State<Splash> {
       if (mounted) {
         alertDialog(
           context,
-          title: '已有新版本',
+          title: localizations.translate('已有新版本'),
           content: '已發布新版本，為了更流暢的觀影體驗，請更新版本。',
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('立即體驗'),
+              child: Text(localizations.translate('立即體驗')),
               // ignore: deprecated_member_use
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
@@ -189,7 +195,7 @@ class _SplashState extends State<Splash> {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: const Text('暫不升級'),
+              child: Text(localizations.translate('暫不升級')),
               onPressed: () {
                 Navigator.of(context).pop();
                 userLogin();
@@ -240,7 +246,7 @@ class _SplashState extends State<Splash> {
           if (mounted) {
             alertDialog(
               context,
-              title: '失敗',
+              title: localizations.translate('失敗'),
               content: message,
             );
           }
@@ -249,7 +255,7 @@ class _SplashState extends State<Splash> {
         logger.i('err: $err');
         alertDialog(
           context,
-          title: '失敗',
+          title: localizations.translate('失敗'),
           content: '帳號建立失敗。($err)',
         );
       }
@@ -298,6 +304,7 @@ class _SplashState extends State<Splash> {
 
   @override
   void initState() {
+    localizations = SharedLocalizations.of(context)!;
     Future.microtask(() async {
       WidgetsFlutterBinding.ensureInitialized();
       final dlJson = await fetchDlJson();
