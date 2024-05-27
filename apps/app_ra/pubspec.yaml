@@ -45,7 +45,7 @@ dependencies:
   go_router: ^6.2.0
   cached_network_image: ^3.3.0
   logger: ^1.2.2
-  sentry_flutter: ^7.6.3
+  sentry_flutter: ^8.2.0
   flutter_widget_from_html_core: ^0.14.7
   carousel_slider: ^4.2.1
   visibility_detector: ^0.4.0+2
@@ -58,7 +58,7 @@ dependencies:
   image_gallery_saver: ^2.0.3
   permission_handler: ^10.2.0
   shimmer: ^3.0.0
-  wakelock: ^0.6.2
+  wakelock_plus: ^1.2.5
   android_id: ^0.2.0
   image_picker: ^0.8.7+5
   qr_code_scanner: ^1.0.1
@@ -66,7 +66,10 @@ dependencies:
   uuid: ^3.0.7
   pull_to_refresh: ^2.0.0
   easy_localization: ^3.0.2
-  easy_localization_generator: ^0.3.1
+  easy_localization_generator:
+    git:
+      url: https://github.com/smallseven1213/easy_localization_generator.git
+      ref: main
 
 dev_dependencies:
   flutter_test:

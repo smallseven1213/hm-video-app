@@ -44,11 +44,12 @@ class ShortBottomArea extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: UIBottomSafeArea(
-            child: SizedBox(
+        child: SizedBox(
           height: 76,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
+            // vertical center
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ShortVideoFavoriteCountConsumer(
                   videoId: shortData.id,
@@ -111,6 +112,6 @@ class ShortBottomArea extends StatelessWidget {
                       }))),
             ],
           ),
-        )));
+        ));
   }
 }
