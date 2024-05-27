@@ -6,6 +6,7 @@ import 'package:shared/models/vod.dart';
 
 import '../../controllers/ui_controller.dart';
 import '../../controllers/video_short_ads_controller.dart';
+import '../../localization/shared_localization_delegate.dart';
 import '../../models/banner_photo.dart';
 import '../../utils/screen_control.dart';
 
@@ -61,6 +62,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
       Get.find<ShortVideoAdsController>();
   List<BannerPhoto> shortVideoAds = [];
   bool hasLoadedVideos = false; // 添加一個標誌來追踪是否曾經有過影片
+  final SharedLocalizations localizations = Get.find<SharedLocalizations>();
 
   @override
   void initState() {
@@ -162,7 +164,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
   Widget build(BuildContext context) {
     // 检查是否有视频数据
     if (cachedVods.isEmpty && hasLoadedVideos) {
-      if(widget.noDataWidget != null) {
+      if (widget.noDataWidget != null) {
         return widget.noDataWidget!;
       }
       // 暫時放個
@@ -173,7 +175,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                '没有更多视频',
+                localizations.translate('no_more_video'),
                 style: TextStyle(color: Colors.white, fontSize: 18),
               ),
               SizedBox(height: 20),
@@ -181,7 +183,7 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
                 onPressed: () {
                   Navigator.pop(context); // 返回上一页
                 },
-                child: Text('返回'),
+                child: Text(localizations.translate('back')),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.white,
                   backgroundColor: Colors.yellow, // 文本色

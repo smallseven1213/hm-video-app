@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../controllers/video_player_controller.dart';
+import '../../localization/shared_localization_delegate.dart';
 import '../../models/vod.dart';
 import 'error.dart';
 
@@ -16,7 +17,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
   final Function toggleFullscreen;
   final bool? allowFullsreen;
 
-  const VideoPlayerDisplayWidget({
+  VideoPlayerDisplayWidget({
     super.key,
     required this.controller,
     required this.video,
@@ -26,6 +27,7 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     if (controller.videoPlayerController == null) {
       return Container();
     }
@@ -128,9 +130,9 @@ class VideoPlayerDisplayWidget extends StatelessWidget {
                       Icons.screen_rotation_rounded,
                       size: 15.0, // 圖示大小
                     ),
-                    label: const Text(
-                      '全屏觀看',
-                      style: TextStyle(
+                    label: Text(
+                      localizations.translate('fullscreen_view'),
+                      style: const TextStyle(
                         fontSize: 12, // 字體大小
                         color: Color(0xFFE7E7E7), // 字體顏色
                       ),

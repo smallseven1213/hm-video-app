@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:restart_app/restart_app.dart';
 import '../controllers/response_controller.dart';
+import '../localization/shared_localization_delegate.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -14,6 +15,7 @@ class ErrorOverlayWidget extends StatefulWidget {
 
 class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
   final responseController = Get.find<ApiResponseErrorCatchController>();
+
   bool showErrorMessage = false;
 
   @override
@@ -35,11 +37,14 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return Scaffold(
       body: showErrorMessage
           ? AlertDialog(
-              title: const Text('帳號重複登入'),
-              content: const Text('你已被登出，請重新登入'),
+              title: Text(localizations.translate('duplicate_account_login')),
+              content: Text(localizations
+                  .translate('you_have_been_logged_out_please_log_in_again')),
               actions: [
                 TextButton(
                   onPressed: () {
@@ -52,7 +57,7 @@ class ErrorOverlayWidgetState extends State<ErrorOverlayWidget> {
 
                     Restart.restartApp();
                   },
-                  child: const Text('確認'),
+                  child: Text(localizations.translate('confirm')),
                 ),
               ],
             )

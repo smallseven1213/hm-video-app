@@ -5,6 +5,8 @@ import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/apis/auth_api.dart';
 
+import '../../localization/shared_localization_delegate.dart';
+
 final authApi = AuthApi();
 
 class RegisterPageScaffold extends StatefulWidget {
@@ -35,14 +37,22 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
   final UserController userController = Get.find<UserController>();
+  late SharedLocalizations localizations;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    localizations = SharedLocalizations.of(context)!;
+  }
 
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入帳號';
+      return localizations.translate('please_enter_your_account');
     }
 
     if (!RegExp(r'^[a-zA-Z0-9]{6,12}$').hasMatch(value)) {
-      return '帳號為6-12位字母及數字';
+      return localizations
+          .translate('account_must_be_6-12_alphanumeric_characters');
     }
 
     return null;
@@ -50,10 +60,11 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入密碼';
+      return localizations.translate('please_enter_your_password');
     }
     if (!RegExp(r'^[a-zA-Z0-9]{8,20}$').hasMatch(value)) {
-      return '密碼為8-20位字母及數字';
+      return localizations
+          .translate('password_must_be_8-20_alphanumeric_characters');
     }
 
     return null;
@@ -61,10 +72,10 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
 
   String? validateConfirmPassword(String? value) {
     if (value == null || value.isEmpty) {
-      return '請輸入驗證密碼';
+      return localizations.translate('please_enter_verification_password');
     }
     if (value != passwordController.text) {
-      return '驗證密碼不一致';
+      return localizations.translate('verification_password_does_not_match');
     }
 
     return null;
@@ -83,15 +94,19 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
           // ignore: use_build_context_synchronously
           MyRouteDelegate.of(context).popRoute();
         } else if (res.code == '40000') {
-          widget.onError!('註冊錯誤', '帳號已存在，請重新輸入帳號。');
+          widget.onError!(localizations.translate('registration_error'),
+              localizations.translate('account_already_exists_pls_reenter'));
         } else {
-          widget.onError!('註冊錯誤', '帳號或密碼不正確');
+          widget.onError!(localizations.translate('registration_error'),
+              localizations.translate('incorrect_account_or_password'));
         }
       } on DioException catch (error) {
         if (error.response?.data['code'] == '40000') {
-          widget.onError!('註冊錯誤', '帳號已存在，請重新輸入帳號。');
+          widget.onError!(localizations.translate('registration_error'),
+              localizations.translate('account_already_exists_pls_reenter'));
         } else {
-          widget.onError!('註冊錯誤', '帳號或密碼不正確');
+          widget.onError!(localizations.translate('registration_error'),
+              localizations.translate('incorrect_account_or_password'));
         }
       }
     }
