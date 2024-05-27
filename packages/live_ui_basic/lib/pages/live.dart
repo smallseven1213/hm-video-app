@@ -70,7 +70,7 @@ class LivePageState extends State<LivePage> {
       appBar: AppBar(
         backgroundColor: const Color(0xFF242a3d),
         flexibleSpace: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 14),
+          padding: EdgeInsets.only(left: 10, right: 10, top: 10),
           child: SearchWidget(),
         ),
       ),
