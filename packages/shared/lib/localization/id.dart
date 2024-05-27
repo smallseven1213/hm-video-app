@@ -1,0 +1,67 @@
+const Map<String, String> sharedIdIdStrings = {
+  "fullscreen_view": "Tampilan Layar Penuh",
+  "please_enter_your_account": "Silakan masukkan akun Anda",
+  "please_enter_your_password": "Silakan masukkan kata sandi Anda",
+  "login_error": "Masalah masuk",
+  "incorrect_account_or_password": "Akun atau kata sandi salah",
+  "account_must_be_6-12_alphanumeric_characters":
+      "Akun harus terdiri dari 6-12 karakter alfanumerik",
+  "password_must_be_8-20_alphanumeric_characters":
+      "Kata sandi harus terdiri dari 8-20 karakter alfanumerik",
+  "please_enter_verification_password":
+      "Silakan masukkan kata sandi verifikasi",
+  "verification_password_does_not_match": "Kata sandi verifikasi tidak cocok",
+  "registration_error": "Kesalahan registrasi",
+  "account_already_exists": "Akun sudah ada",
+  "million": "Juta",
+  "duplicate_account_login": "Login akun yang sama ganda",
+  "you_have_been_logged_out,_please_log_in_again":
+      "Anda telah keluar, silakan masuk kembali",
+  "confirm": "Konfirmasi",
+  "content_updated": "Konten diperbarui",
+  "play": "Putar",
+  "download": "Unduh",
+  "latest": "Terbaru",
+  "hottest": "Paling populer",
+  "all_regions": "Semua wilayah",
+  "all_companies": "Semua perusahaan",
+  "all_content_creators": "Semua pembuat konten",
+  "all_payment_types": "Semua jenis pembayaran",
+  "free": "Gratis",
+  "coins": "Koin",
+  "fetching_latest_resources...": "Mengambil sumber daya terbaru...",
+  "version": "Versi",
+  "checking_connection...": "Memeriksa koneksi...",
+  "system_maintenance,_please_try_again_later.":
+      "Pemeliharaan sistem, silakan coba lagi nanti.",
+  "check_for_updates": "Memeriksa pembaruan...",
+  "new_version_available": "Versi baru tersedia",
+  "new_version_released,_please_update_for_smoother_viewing_experience.":
+      "Versi baru telah dirilis, harap perbarui untuk pengalaman menonton yang lebih lancar.",
+  "update_version": "Perbarui versi",
+  "experience_now": "Pengalaman sekarang",
+  "not_upgrading_now": "Tidak ditingkatkan saat ini",
+  "login...": "masuk",
+  "account_creation_failed,_device_disabled.":
+      "Pembuatan akun gagal, perangkat dinonaktifkan.",
+  "account_creation_failed.": "Pembuatan akun gagal.",
+  "failed": "Gagal",
+  "actors": "Pemain",
+  "publishers": "Penerbit",
+  "redemption_successful": "Penebusan berhasil",
+  "tags": "Tag",
+  "games": "Permainan",
+  "loading": "memuat...",
+  "system_under_maintenance_please_try_again_later":
+      "sistem sedang dalam pemeliharaan, silakan coba lagi nanti.",
+  "a_new_version_has_been_released_for_a_smoother_experience_please_update":
+      "versi baru telah dirilis, untuk pengalaman yang lebih lancar, harap perbarui.",
+  "update_now": "perbarui sekarang",
+  "do_not_upgrade": "jangan perbarui",
+  "user_login": "login pengguna...",
+  "account_creation_failed_device_disabled":
+      "gagal membuat akun, perangkat dinonaktifkan.",
+  "failure": "kegagalan",
+  "account_creation_failed": "gagal membuat akun.",
+  "getting_latest_resources": "mengambil sumber daya terbaru...",
+};
