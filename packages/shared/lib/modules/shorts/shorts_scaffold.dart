@@ -62,7 +62,6 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
       Get.find<ShortVideoAdsController>();
   List<BannerPhoto> shortVideoAds = [];
   bool hasLoadedVideos = false; // 添加一個標誌來追踪是否曾經有過影片
-  final SharedLocalizations localizations = Get.find<SharedLocalizations>();
 
   @override
   void initState() {
@@ -162,6 +161,8 @@ class ShortsScaffoldState extends State<ShortsScaffold> {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     // 检查是否有视频数据
     if (cachedVods.isEmpty && hasLoadedVideos) {
       if (widget.noDataWidget != null) {
