@@ -311,9 +311,8 @@ class _GameActivityState extends State<GameActivity> {
                                         activityButtonType['NONE'] ||
                                     activityList[index].buttonName != null)
                                   GameBannerAndMarqueeConsumer(
-                                    child:
-                                        (banner, marquee, customerServiceUrl) =>
-                                            SizedBox(
+                                    child: (banner, customerServiceUrl) =>
+                                        SizedBox(
                                       width: 220,
                                       child: GameButton(
                                         disabled: buttonDisable,
