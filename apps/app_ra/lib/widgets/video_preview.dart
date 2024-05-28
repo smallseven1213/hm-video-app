@@ -18,8 +18,8 @@ import 'video_embedded_ad.dart';
 class ViewInfo extends StatelessWidget {
   final int viewCount;
   final int duration;
-  final int? videoCollectTimes;
-  final bool? displayVideoCollectTimes;
+  final int? videoFavoriteTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
 
@@ -27,10 +27,10 @@ class ViewInfo extends StatelessWidget {
     Key? key,
     required this.viewCount,
     required this.duration,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoFavoriteTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
-    this.videoCollectTimes,
+    this.videoFavoriteTimes,
   }) : super(key: key);
 
   @override
@@ -45,8 +45,8 @@ class ViewInfo extends StatelessWidget {
       infoItems.add(VideoTime(time: duration));
     }
 
-    if (displayVideoCollectTimes == true) {
-      infoItems.add(VideoCollectionTimes(times: videoCollectTimes ?? 0));
+    if (displayVideoFavoriteTimes == true) {
+      infoItems.add(VideoCollectionTimes(times: videoFavoriteTimes ?? 0));
     }
 
     if (infoItems.isEmpty) {
@@ -82,7 +82,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     required List<Tag> tags,
     required String title,
     int? videoViewTimes = 0,
-    int? videoCollectTimes = 0,
+    int? videoFavoriteTimes = 0,
     bool isEmbeddedAds = false,
     Vod? detail,
     double? imageRatio,
@@ -95,7 +95,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
     Function()? onTap,
     bool? hasTapEvent = true,
     Function(int id)? onOverrideRedirectTap,
-    bool? displayVideoCollectTimes = false,
+    bool? displayVideoFavoriteTimes = false,
     bool? displayVideoTimes = true,
     bool? displayViewTimes = true,
     bool? displaySupplier = true,
@@ -109,7 +109,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
           tags: tags,
           title: title,
           videoViewTimes: videoViewTimes,
-          videoCollectTimes: videoCollectTimes,
+          videoFavoriteTimes: videoFavoriteTimes,
           isEmbeddedAds: isEmbeddedAds,
           detail: detail,
           imageRatio: imageRatio,
@@ -122,7 +122,7 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
           onTap: onTap,
           hasTapEvent: hasTapEvent,
           onOverrideRedirectTap: onOverrideRedirectTap,
-          displayVideoCollectTimes: displayVideoCollectTimes,
+          displayVideoFavoriteTimes: displayVideoFavoriteTimes,
           displayVideoTimes: displayVideoTimes,
           displayViewTimes: displayViewTimes,
           displaySupplier: displaySupplier,
@@ -191,12 +191,12 @@ class VideoPreviewWidget extends BaseVideoPreviewWidget {
                     right: 0,
                     bottom: 0,
                     child: ViewInfo(
-                      videoCollectTimes: videoCollectTimes,
+                      videoFavoriteTimes: videoFavoriteTimes,
                       viewCount: videoViewTimes ?? 0,
                       duration: timeLength,
                       displayVideoTimes: displayVideoTimes,
                       displayViewTimes: displayViewTimes,
-                      displayVideoCollectTimes: displayVideoCollectTimes,
+                      displayVideoFavoriteTimes: displayVideoFavoriteTimes,
                     ),
                   ),
               ],

@@ -7,6 +7,8 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../localization/shared_localization_delegate.dart';
+
 class PlayerPositionAd extends StatefulWidget {
   final VideoPlayerInfo? videoPlayerInfo;
 
@@ -22,6 +24,7 @@ class PlayerPositionAd extends StatefulWidget {
 class PlayerPositionAdState extends State<PlayerPositionAd> {
   late int seconds;
   final VideoAdsController controller = Get.find<VideoAdsController>();
+
   double opacity = 1.0;
   bool isVisible = true;
   Timer? _timer;
@@ -66,6 +69,8 @@ class PlayerPositionAdState extends State<PlayerPositionAd> {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     if (!isVisible) return const SizedBox.shrink();
 
     return Obx(() {
@@ -122,7 +127,7 @@ class PlayerPositionAdState extends State<PlayerPositionAd> {
                   borderRadius: BorderRadius.circular(60),
                 ),
                 child: Text(
-                  seconds > 0 ? '${seconds}S' : '播放',
+                  seconds > 0 ? '${seconds}S' : localizations.translate('play'),
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,

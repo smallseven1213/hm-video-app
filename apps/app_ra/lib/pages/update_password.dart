@@ -7,7 +7,7 @@ import 'package:shared/controllers/user_controller.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 final logger = Logger();
 
@@ -98,7 +98,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: const CustomAppBar(
         title: '修改密碼',
       ),
       body: SingleChildScrollView(

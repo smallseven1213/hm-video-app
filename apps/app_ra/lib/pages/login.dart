@@ -10,7 +10,7 @@ import '../utils/show_confirm_dialog.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/button.dart';
 import '../widgets/forgot_password_button.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -18,7 +18,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(
+      appBar: const CustomAppBar(
         title: '會員登入',
       ),
       body: Padding(

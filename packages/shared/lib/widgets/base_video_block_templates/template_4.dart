@@ -75,7 +75,7 @@ SliverChildBuilderDelegate baseVideoBlockTemplate4({
                     displayCoverVertical: true,
                     film: film,
                     blockId: areaId,
-                    displayVideoCollectTimes: false,
+                    displayVideoFavoriteTimes: false,
                     displayVideoTimes: false,
                     displayViewTimes: false,
                     buildVideoPreview: buildVideoPreview),

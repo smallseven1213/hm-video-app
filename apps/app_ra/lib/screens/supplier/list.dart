@@ -81,7 +81,7 @@ class SupplierVods extends StatelessWidget {
                         tags: vod.tags!,
                         title: vod.title,
                         videoViewTimes: vod.videoViewTimes!,
-                        videoCollectTimes: vod.videoCollectTimes!);
+                        videoFavoriteTimes: vod.videoFavoriteTimes!);
                   },
                   childCount: videos.length,
                 ),

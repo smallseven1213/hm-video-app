@@ -121,7 +121,7 @@ class IDCardContentState extends State<IDCardContent> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Text(
-                    '官方地址：k9av.app',
+                    '官方地址：avday.live',
                     style: TextStyle(
                       color: AppColors.colors[ColorKeys.buttonBgPrimary],
                       fontSize: 12,
@@ -166,7 +166,7 @@ class IDCardContentState extends State<IDCardContent> {
                           '請截圖保存',
                           style: TextStyle(
                               color: AppColors
-                                      .colors[ColorKeys.buttonTextSecondary]
+                                      .colors[ColorKeys.textSecondary]
                                   as Color),
                         ),
                       ),

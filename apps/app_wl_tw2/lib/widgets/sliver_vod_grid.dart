@@ -14,7 +14,7 @@ class SliverVodGrid extends StatefulWidget {
   final Widget? noMoreWidget;
   final List<Widget>? headerExtends;
   final Function? onScrollEnd;
-  final bool? displayVideoCollectTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final bool? displayCoverVertical;
@@ -33,7 +33,7 @@ class SliverVodGrid extends StatefulWidget {
     this.headerExtends,
     this.onScrollEnd,
     this.displayCoverVertical = false,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoFavoriteTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.customScrollController,
@@ -93,9 +93,10 @@ class SliverVodGridState extends State<SliverVodGrid> {
                               tags: firstVideo.tags!,
                               title: firstVideo.title,
                               videoViewTimes: firstVideo.videoViewTimes!,
-                              videoCollectTimes: firstVideo.videoCollectTimes!,
-                              displayVideoCollectTimes:
-                                  widget.displayVideoCollectTimes,
+                              videoFavoriteTimes:
+                                  firstVideo.videoFavoriteTimes!,
+                              displayVideoFavoriteTimes:
+                                  widget.displayVideoFavoriteTimes,
                               displayVideoTimes: widget.displayVideoTimes,
                               displayViewTimes: widget.displayViewTimes,
                               onOverrideRedirectTap:
@@ -118,10 +119,10 @@ class SliverVodGridState extends State<SliverVodGrid> {
                                       title: secondVideo.title,
                                       videoViewTimes:
                                           secondVideo.videoViewTimes!,
-                                      videoCollectTimes:
-                                          secondVideo.videoCollectTimes!,
-                                      displayVideoCollectTimes:
-                                          widget.displayVideoCollectTimes,
+                                      videoFavoriteTimes:
+                                          secondVideo.videoFavoriteTimes!,
+                                      displayVideoFavoriteTimes:
+                                          widget.displayVideoFavoriteTimes,
                                       displayVideoTimes:
                                           widget.displayVideoTimes,
                                       displayViewTimes: widget.displayViewTimes,

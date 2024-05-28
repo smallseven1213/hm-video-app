@@ -24,7 +24,7 @@ class VideoDetailAdapter extends TypeAdapter<Vod> {
       coverHorizontal: reader.readString(),
       tags: reader.readList().cast<Tag>(),
       videoViewTimes: reader.readInt(),
-      videoCollectTimes: reader.readInt(),
+      videoFavoriteTimes: reader.readInt(),
       appIcon: reader.readString(),
       adUrl: reader.readString(),
     );
@@ -45,7 +45,7 @@ class VideoDetailAdapter extends TypeAdapter<Vod> {
     writer.writeString(obj.coverHorizontal!);
     writer.writeList(obj.tags!);
     writer.writeInt(obj.videoViewTimes!);
-    writer.writeInt(obj.videoCollectTimes!);
+    writer.writeInt(obj.videoFavoriteTimes!);
     writer.writeString(obj.appIcon!);
     writer.writeString(obj.adUrl!);
   }

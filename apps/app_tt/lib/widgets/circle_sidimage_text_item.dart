@@ -34,7 +34,8 @@ class CircleTextItem extends StatelessWidget {
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)
                     : BorderRadius.circular(5),
-                color: const Color(0xFF6b6b6b))
+                color: hasBorder ? const Color(0xFF6b6b6b) : null,
+              )
             : BoxDecoration(
                 borderRadius: isRounded
                     ? BorderRadius.circular(40)

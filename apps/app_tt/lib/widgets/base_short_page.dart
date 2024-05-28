@@ -10,6 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 import 'loading_animation.dart';
+import 'no_data.dart';
 
 class BaseShortPage extends StatelessWidget {
   final Function() createController;
@@ -47,6 +48,7 @@ class BaseShortPage extends StatelessWidget {
         itemId: itemId,
         onScrollBeyondFirst: onScrollBeyondFirst,
         loadingWidget: const Center(child: LoadingAnimation()),
+        noDataWidget: const NoDataWidget(showBackButton: true),
         playingAdBuilder: ({
           required BannerPhoto ad,
           required Vod? nextShortData,

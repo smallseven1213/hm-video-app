@@ -1,5 +1,5 @@
 import 'package:app_tt/localization/i18n.dart';
-import 'package:app_tt/widgets/my_app_bar.dart';
+import 'package:app_tt/widgets/custom_app_bar.dart';
 import 'package:app_tt/widgets/tt_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,7 +46,7 @@ class FilterScrollViewState extends State<FilterPage>
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: MyAppBar(
+        appBar: CustomAppBar(
           title: I18n.filter,
           bottom: filterScreenController.showTabBar.value
               ? TTTabBar(

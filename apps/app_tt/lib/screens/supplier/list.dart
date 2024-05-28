@@ -75,14 +75,14 @@ class SupplierVods extends StatelessWidget {
                         displayVideoTimes: true,
                         displayViewTimes: true,
                         displayCoverVertical: true,
-                        displayVideoCollectTimes: false,
+                        displayVideoFavoriteTimes: false,
                         coverVertical: vod.coverVertical!,
                         coverHorizontal: vod.coverHorizontal!,
                         timeLength: vod.timeLength!,
                         tags: vod.tags!,
                         title: vod.title,
                         videoViewTimes: vod.videoViewTimes!,
-                        videoCollectTimes: vod.videoCollectTimes!);
+                        videoFavoriteTimes: vod.videoFavoriteTimes!);
                   },
                   childCount: videos.length,
                 ),

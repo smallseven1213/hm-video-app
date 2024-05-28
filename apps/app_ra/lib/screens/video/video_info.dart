@@ -120,7 +120,7 @@ class VideoInfo extends StatelessWidget {
   final int viewTimes;
   final List<Actor>? actor;
   final Publisher? publisher;
-  final int videoCollectTimes;
+  final int videoFavoriteTimes;
 
   const VideoInfo({
     super.key,
@@ -129,7 +129,7 @@ class VideoInfo extends StatelessWidget {
     required this.tags,
     required this.timeLength,
     required this.viewTimes,
-    required this.videoCollectTimes,
+    required this.videoFavoriteTimes,
     this.actor,
     this.externalId,
     this.publisher,
@@ -197,11 +197,11 @@ class VideoInfo extends StatelessWidget {
                         color: const Color(0xff939393),
                       ),
                       const Favorite(
-                        times: 12345, //videoCollectTimes
+                        times: 12345, //videoFavoriteTimes
                         color: Color(0xff939393),
                       ),
                       Collect(
-                        times: videoCollectTimes, //videoCollectTimes
+                        times: videoFavoriteTimes, //videoFavoriteTimes
                         color: const Color(0xff939393),
                       )
                     ],

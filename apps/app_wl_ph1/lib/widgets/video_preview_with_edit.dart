@@ -60,7 +60,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final List<Tag> tags;
   final String title;
   final int videoViewTimes;
-  final int videoCollectTimes;
+  final int videoFavoriteTimes;
   final double? imageRatio;
   final Vod? detail;
   final bool isEmbeddedAds;
@@ -75,7 +75,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
   final bool? hasRadius; // 要不要圓角
   final bool? hasTitle; // 要不要標題
   final bool? hasTags;
-  final bool? displayVideoCollectTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final Function(int id)? onOverrideRedirectTap; // 自定義路由轉址
@@ -90,7 +90,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       required this.tags,
       required this.title,
       required this.videoViewTimes,
-      this.videoCollectTimes = 0,
+      this.videoFavoriteTimes = 0,
       this.isEmbeddedAds = false,
       this.detail,
       this.isEditing = false,
@@ -105,7 +105,7 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
       this.hasRadius = true,
       this.hasTitle = true,
       this.hasTags = true,
-      this.displayVideoCollectTimes = true,
+      this.displayVideoFavoriteTimes = true,
       this.displayVideoTimes = true,
       this.displayViewTimes = true,
       this.onOverrideRedirectTap})
@@ -135,11 +135,11 @@ class VideoPreviewWithEditWidget extends StatelessWidget {
             title: title,
             hasRadius: hasRadius,
             videoViewTimes: videoViewTimes,
-            videoCollectTimes: videoCollectTimes,
+            videoFavoriteTimes: videoFavoriteTimes,
             hasTapEvent: !isEditing,
             displayVideoTimes: displayVideoTimes,
             displayViewTimes: displayViewTimes,
-            displayVideoCollectTimes: displayVideoCollectTimes,
+            displayVideoFavoriteTimes: displayVideoFavoriteTimes,
             onOverrideRedirectTap: onOverrideRedirectTap),
         if (isEditing)
           Positioned.fill(

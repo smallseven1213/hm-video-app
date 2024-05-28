@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:app_ra/widgets/my_app_bar.dart';
+import 'package:app_ra/widgets/custom_app_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -73,7 +73,7 @@ class SharePage extends StatelessWidget {
               image: AssetImage('assets/images/share_bg.webp'),
             ),
           ),
-          MyAppBar(
+          CustomAppBar(
             title: '推廣分享',
             backgroundColor: Colors.transparent,
             actions: [

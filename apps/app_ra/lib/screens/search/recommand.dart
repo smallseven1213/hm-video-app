@@ -158,7 +158,8 @@ class RecommandScreenState extends State<RecommandScreen> {
                               displayVideoTimes: true,
                               displayViewTimes: true,
                               videoViewTimes: firstVideo.videoViewTimes!,
-                              videoCollectTimes: firstVideo.videoCollectTimes!,
+                              videoFavoriteTimes:
+                                  firstVideo.videoFavoriteTimes!,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -173,8 +174,8 @@ class RecommandScreenState extends State<RecommandScreen> {
                                     tags: secondVideo.tags!,
                                     title: secondVideo.title,
                                     videoViewTimes: secondVideo.videoViewTimes!,
-                                    videoCollectTimes:
-                                        secondVideo.videoCollectTimes!,
+                                    videoFavoriteTimes:
+                                        secondVideo.videoFavoriteTimes!,
                                   )
                                 : const SizedBox(),
                           ),

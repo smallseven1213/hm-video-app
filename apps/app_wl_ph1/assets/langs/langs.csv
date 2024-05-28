@@ -200,3 +200,4 @@ duplicate_login_account,Duplicate login account,帳號重複登入,重复登录�
 you_have_been_logged_out_please_log_in_again,"You have been logged out, please log in again",你已被登出，請重新登入,您已被登出，请重新登录,"Bạn đã bị đăng xuất, vui lòng đăng nhập lại",ログアウトされました。再度ログインしてください。,"Anda telah keluar, silakan login kembali"
 user_login,User login,用戶登入,用户登录,Đăng nhập người dùng,ユーザーログイン,Login pengguna
 get_the_latest_resources,Get the latest resources,取得最新資源,获取最新资源,Nhận thông tin tài nguyên mới nhất,最新のリソースを入手,Dapatkan sumber daya terbaru
+back,back,返回,返回,quay lại,戻る ,kembali

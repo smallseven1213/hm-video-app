@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/button.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 
 class DemoPage extends StatefulWidget {
   const DemoPage({Key? key}) : super(key: key);
@@ -26,7 +26,7 @@ class _DemoPageState extends State<DemoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         title: I18n.appCenter,
       ),
       body: Center(

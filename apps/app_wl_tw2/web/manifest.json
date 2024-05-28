@@ -1,11 +1,11 @@
 {
-    "name": "K9 AV",
-    "short_name": "K9 AV",
+    "name": "色天天",
+    "short_name": "色天天",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "K9 AV 打開你的 AV 新世界",
+    "description": "色天天 打開你的 AV 新世界",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

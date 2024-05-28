@@ -126,7 +126,7 @@ class VideoInfo extends StatelessWidget {
   final int viewTimes;
   final List<Actor>? actor;
   final Publisher? publisher;
-  final int videoCollectTimes;
+  final int videoFavoriteTimes;
   final Vod videoDetail;
 
   VideoInfo({
@@ -136,7 +136,7 @@ class VideoInfo extends StatelessWidget {
     required this.tags,
     required this.timeLength,
     required this.viewTimes,
-    required this.videoCollectTimes,
+    required this.videoFavoriteTimes,
     required this.videoDetail,
     this.actor,
     this.externalId,

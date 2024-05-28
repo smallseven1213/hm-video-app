@@ -10,6 +10,7 @@ import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 import '../controllers/system_config_controller.dart';
 import '../enums/app_routes.dart';
+import '../localization/shared_localization_delegate.dart';
 import '../models/banner_photo.dart';
 import '../navigator/delegate.dart';
 import '../controllers/banner_controller.dart';
@@ -36,6 +37,7 @@ class AdState extends State<Ad> {
   BannerController bannerController = Get.find<BannerController>();
   final systemConfigController = Get.find<SystemConfigController>();
   late BannerPhoto currentBanner;
+
   GetStorage box = GetStorage();
 
   int countdownSeconds = 5;
@@ -84,6 +86,8 @@ class AdState extends State<Ad> {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     final Size size = MediaQuery.of(context).size;
     return PopScope(
       canPop: false, // HC: 煩死，勿動!!
@@ -116,7 +120,7 @@ class AdState extends State<Ad> {
             if (imageLoaded)
               Positioned(
                 top: 20,
-                right: 20,
+                right: 8,
                 child: TextButton(
                     onPressed: () => {
                           if (countdownSeconds == 0)
@@ -139,14 +143,16 @@ class AdState extends State<Ad> {
                 ),
               ),
               Center(
-                child: widget.loading!(text: '取得最新資源...') ??
+                child: widget.loading!(
+                        text: localizations
+                            .translate('fetching_latest_resources')) ??
                     const CircularProgressIndicator(),
               ),
               Positioned(
                 bottom: kIsWeb ? 20 : 70,
                 right: 20,
                 child: Text(
-                  '版本 ${systemConfigController.version.value}',
+                  '${localizations.translate('version')} ${systemConfigController.version.value}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 12,

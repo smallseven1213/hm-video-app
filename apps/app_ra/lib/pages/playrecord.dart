@@ -9,7 +9,7 @@ import 'package:shared/enums/play_record_type.dart';
 import '../screens/playrecord/short.dart';
 import '../screens/playrecord/video.dart';
 import '../widgets/list_page_panel.dart';
-import '../widgets/my_app_bar.dart';
+import '../widgets/custom_app_bar.dart';
 import '../widgets/ra_tab_bar.dart';
 
 final logger = Logger();
@@ -86,7 +86,7 @@ class PlayRecordPageState extends State<PlayRecordPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
+      appBar: CustomAppBar(
         title: '我的足跡',
         actions: [
           Obx(() => TextButton(

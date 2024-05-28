@@ -1,7 +1,9 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import '../controllers/live_system_controller.dart';
 import '../socket/live_web_socket_manager.dart';
 
 class RoomListProvider extends StatefulWidget {
@@ -26,9 +28,11 @@ class RoomListProviderState extends State<RoomListProvider> {
     super.initState();
     final token = GetStorage().read('live-token');
     final locale = GetStorage('locale').read('locale');
+    final liveWsHostValue = Get.find<LiveSystemController>().liveWsHostValue;
+
     socketIOManager = LiveSocketIOManager();
     socketIOManager.connect(
-      'wss://dev-live-ext-ws.hmtech-dev.com:443/user?token=$token&locale=$locale',
+      '$liveWsHostValue:443/user?token=$token&locale=$locale',
       token,
     );
 

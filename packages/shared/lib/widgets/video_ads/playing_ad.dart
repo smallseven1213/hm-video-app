@@ -7,6 +7,8 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/banner_link.dart';
 import 'package:shared/widgets/sid_image.dart';
 
+import '../../localization/shared_localization_delegate.dart';
+
 Widget getChipWidgets(List strings) {
   // filter 掉空的字串
   final filteredStrings = strings.where((element) => element != '').toList();
@@ -55,6 +57,7 @@ class PlayingAd extends StatefulWidget {
 
 class _PlayingAdState extends State<PlayingAd> {
   final VideoAdsController controller = Get.find<VideoAdsController>();
+
   int adIndex = 0;
   bool adShow = false;
   Timer? _timer;
@@ -78,9 +81,9 @@ class _PlayingAdState extends State<PlayingAd> {
       });
       autoCloseAd();
       _timer2 = Timer(Duration(seconds: stopConfig[1]), () {
-        updateAdIndex('${stopConfig[1]}秒后更换广告');
+        updateAdIndex();
         _timer3 = Timer.periodic(Duration(seconds: stopConfig[2]), (timer) {
-          updateAdIndex('${stopConfig[2]}秒后更换广告，之后每180秒更换广告');
+          updateAdIndex();
         });
       });
     });
@@ -89,8 +92,7 @@ class _PlayingAdState extends State<PlayingAd> {
     });
   }
 
-  void updateAdIndex(String text) {
-    logger.i(text);
+  void updateAdIndex() {
     setState(() {
       adIndex = (adIndex + 1) % controller.videoAds.value.playingAds!.length;
       adShow = true;
@@ -144,6 +146,7 @@ class _PlayingAdState extends State<PlayingAd> {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     final size = MediaQuery.of(context).size;
     if (widget.videoPlayerInfo.videoPlayerController?.value.isPlaying ==
         false) {
@@ -275,7 +278,7 @@ class _PlayingAdState extends State<PlayingAd> {
                     padding: const EdgeInsets.only(bottom: 4),
                     child: Center(
                       child: Text(
-                        currentAd.button ?? '立即下載',
+                        currentAd.button ?? localizations.translate('download'),
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w600,

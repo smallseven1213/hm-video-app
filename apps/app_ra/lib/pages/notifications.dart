@@ -1,4 +1,4 @@
-import 'package:app_ra/widgets/my_app_bar.dart';
+import 'package:app_ra/widgets/custom_app_bar.dart';
 import 'package:app_ra/widgets/ra_tab_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -51,7 +51,7 @@ class NotificationsPageState extends State<NotificationsPage>
   Widget build(BuildContext context) {
     return Obx(() {
       return Scaffold(
-        appBar: MyAppBar(
+        appBar: CustomAppBar(
           title: '消息中心',
           bottom: RATabBar(
             tabs: const ['公告', '系統通知'],

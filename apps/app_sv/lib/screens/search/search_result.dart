@@ -85,7 +85,7 @@ class SearchResultPageState extends State<SearchResultPage>
                           searchVodController.displayNoMoreData.value,
                       isListEmpty: searchVodController.isListEmpty.value,
                       noMoreWidget: ListNoMore(),
-                      displayVideoCollectTimes: false,
+                      displayVideoFavoriteTimes: false,
                     )),
               ),
               NotificationListener<ScrollNotification>(
@@ -101,7 +101,7 @@ class SearchResultPageState extends State<SearchResultPage>
                 child: Obx(() => SliverVodGrid(
                     film: 2,
                     isListEmpty: searchShortController.isListEmpty.value,
-                    displayVideoCollectTimes: false,
+                    displayVideoFavoriteTimes: false,
                     videos: searchShortController.vodList.value,
                     displayNoMoreData:
                         searchShortController.displayNoMoreData.value,

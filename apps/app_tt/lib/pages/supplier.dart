@@ -205,7 +205,7 @@ class SupplierPageState extends State<SupplierPage>
                             isListEmpty:
                                 supplierVideoController.isListEmpty.value,
                             noMoreWidget: ListNoMore(),
-                            displayVideoCollectTimes: false,
+                            displayVideoFavoriteTimes: false,
                             onScrollEnd: () {
                               supplierVideoController.loadMoreData();
                             }),

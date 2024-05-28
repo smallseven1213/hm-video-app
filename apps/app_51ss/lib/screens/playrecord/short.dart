@@ -57,7 +57,7 @@ class PlayRecordShortScreen extends StatelessWidget {
                   args: {'videoId': vod.id, 'itemId': 1},
                 );
               },
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
               hasRadius: false,
               hasTitle: false,
               hasTags: false,
@@ -69,7 +69,6 @@ class PlayRecordShortScreen extends StatelessWidget {
               tags: vod.tags ?? [],
               title: vod.title,
               videoViewTimes: vod.videoViewTimes ?? 0,
-              videoCollectTimes: vod.videoCollectTimes ?? 0,
               displayVideoTimes: false,
               displayViewTimes: false,
             );

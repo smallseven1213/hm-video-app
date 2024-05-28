@@ -11,7 +11,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
   final int? blockId;
   final bool? hasInfoView;
   final int? film;
-  final bool? displayVideoCollectTimes;
+  final bool? displayVideoFavoriteTimes;
   final bool? displayVideoTimes;
   final bool? displayViewTimes;
   final BaseVideoPreviewWidget Function(Vod video) buildVideoPreview;
@@ -25,7 +25,7 @@ class VideoBlockGridViewRow extends StatelessWidget {
     this.blockId,
     this.displayCoverVertical = false,
     this.hasInfoView = true,
-    this.displayVideoCollectTimes = true,
+    this.displayVideoFavoriteTimes = true,
     this.displayVideoTimes = true,
     this.displayViewTimes = true,
     this.film = 1,
@@ -42,14 +42,14 @@ class VideoBlockGridViewRow extends StatelessWidget {
         //   coverHorizontal: video.coverHorizontal ?? '',
         //   coverVertical: video.coverVertical ?? '',
         //   videoViewTimes: video.videoViewTimes ?? 0,
-        //   videoCollectTimes: video.videoCollectTimes ?? 0,
+        //   videoFavoriteTimes: video.videoFavoriteTimes ?? 0,
         //   imageRatio: imageRatio,
         //   detail: video,
         //   isEmbeddedAds: isEmbeddedAds,
         //   displayCoverVertical: displayCoverVertical ?? false,
         //   blockId: blockId,
         //   film: film,
-        //   displayVideoCollectTimes: displayVideoCollectTimes,
+        //   displayVideoFavoriteTimes: displayVideoFavoriteTimes,
         //   displayVideoTimes: displayVideoTimes,
         //   displayViewTimes: displayViewTimes,
         // ),
@@ -98,14 +98,14 @@ class VideoBlockGridViewRow extends StatelessWidget {
                         //   coverHorizontal: e.coverHorizontal ?? '',
                         //   coverVertical: e.coverVertical ?? '',
                         //   videoViewTimes: e.videoViewTimes ?? 0,
-                        //   videoCollectTimes: e.videoCollectTimes ?? 0,
+                        //   videoFavoriteTimes: e.videoFavoriteTimes ?? 0,
                         //   imageRatio: imageRatio,
                         //   detail: e,
                         //   isEmbeddedAds: isEmbeddedAds,
                         //   displayCoverVertical: displayCoverVertical ?? false,
                         //   blockId: blockId,
                         //   film: film,
-                        //   displayVideoCollectTimes: displayVideoCollectTimes,
+                        //   displayVideoFavoriteTimes: displayVideoFavoriteTimes,
                         //   displayVideoTimes: displayVideoTimes,
                         //   displayViewTimes: displayViewTimes,
                         // ),
@@ -157,14 +157,14 @@ class VideoBlockGridViewRow extends StatelessWidget {
                 //   coverHorizontal: e.coverHorizontal ?? '',
                 //   coverVertical: e.coverVertical ?? '',
                 //   videoViewTimes: e.videoViewTimes ?? 0,
-                //   videoCollectTimes: e.videoCollectTimes ?? 0,
+                //   videoFavoriteTimes: e.videoFavoriteTimes ?? 0,
                 //   imageRatio: imageRatio,
                 //   detail: e,
                 //   isEmbeddedAds: isEmbeddedAds,
                 //   displayCoverVertical: displayCoverVertical ?? false,
                 //   blockId: blockId,
                 //   film: film,
-                //   displayVideoCollectTimes: displayVideoCollectTimes,
+                //   displayVideoFavoriteTimes: displayVideoFavoriteTimes,
                 //   displayVideoTimes: displayVideoTimes,
                 //   displayViewTimes: displayViewTimes,
                 // ),

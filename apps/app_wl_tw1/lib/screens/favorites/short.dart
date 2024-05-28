@@ -39,9 +39,10 @@ class FavoritesShortScreen extends StatelessWidget {
           return Obx(() => VideoPreviewWithEditWidget(
               id: vod.id,
               film: 2,
+              hasTags: false,
               isEditing: listEditorController.isEditing.value,
               isSelected: listEditorController.selectedIds.contains(vod.id),
-              displayVideoCollectTimes: false,
+              displayVideoFavoriteTimes: false,
               displayVideoTimes: false,
               displayViewTimes: false,
               onEditingTap: () {
@@ -55,7 +56,6 @@ class FavoritesShortScreen extends StatelessWidget {
               },
               hasRadius: false,
               hasTitle: false,
-              hasTags: false,
               imageRatio: gridRatio,
               displayCoverVertical: true,
               coverVertical: vod.coverVertical ?? '',

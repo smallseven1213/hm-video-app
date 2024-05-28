@@ -82,7 +82,7 @@ class VideoFilterScrollViewState extends State<VideoFilterPage> {
         isListEmpty: vodController.isListEmpty.value,
         displayNoMoreData: vodController.displayNoMoreData.value,
         displayLoading: vodController.displayLoading.value,
-        displayVideoCollectTimes: false,
+        displayVideoFavoriteTimes: false,
         noMoreWidget: ListNoMore(),
         customScrollController: vodController.scrollController,
       ),

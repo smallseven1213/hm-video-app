@@ -1,6 +1,3 @@
-#
-#
-#
 variables: 
   test_tag: '2023.01.01.009.ra.tt.n51.ab'
 
@@ -41,8 +38,8 @@ build-sv-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_sv -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_sv -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-sv:dev
 
 build-tt-job:       # This job runs in the build stage, which runs first.
@@ -54,8 +51,8 @@ build-tt-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_tt -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_tt -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-tt:dev
     - echo "Compile complete."
 
@@ -70,8 +67,8 @@ build-ra-job:       # This job runs in the build stage, which runs first.
     #  - $youda =~ /^$/ || $youda =~ /ra/ || $test_tag =~/ra/
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ra -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ra:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ra -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ra:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ra:dev
     - echo "Compile complete."
 
@@ -84,8 +81,8 @@ build-ab-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ab -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_ab -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-ab:dev
     - echo "Compile complete."
   
@@ -98,8 +95,8 @@ build-wl-id1-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_id1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_id1:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_id1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_id1:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_id1:dev
 
 build-wl-ph1-job:       # This job runs in the build stage, which runs first.
@@ -111,8 +108,8 @@ build-wl-ph1-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_ph1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_ph1:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_ph1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_ph1:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_ph1:dev
 
 build-wl-tw1-job:       # This job runs in the build stage, which runs first.
@@ -124,8 +121,8 @@ build-wl-tw1-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw1:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw1:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw1:dev
 
 build-wl-tw2-job:       # This job runs in the build stage, which runs first.
@@ -137,8 +134,8 @@ build-wl-tw2-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw2 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw2:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_tw2 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw2:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_tw2:dev
 
 build-wl-cn1-job:       # This job runs in the build stage, which runs first.
@@ -150,8 +147,8 @@ build-wl-cn1-job:       # This job runs in the build stage, which runs first.
       - develop
   allow_failure: true
   script:
-    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_cn1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_cn1:dev .
     - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
+    - docker build -f Dockerfile --build-arg env=dev --build-arg scope=app_wl_cn1 -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_cn1:dev .
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-wl_cn1:dev
 
 deploy-sv-job:      # This job runs in the deploy stage.
@@ -273,10 +270,10 @@ build-prod-job:
     refs: 
       - tags
   script: 
+    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - PROJECT=$(echo $CI_COMMIT_REF_NAME | awk -F '.' '{print $NF}')
     - echo $PROJECT
     - docker build -f Dockerfile --build-arg env=prod --build-arg scope=app_$PROJECT -t asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-$PROJECT:${CI_COMMIT_TAG} .
-    - gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin asia-east2-docker.pkg.dev
     - docker push asia-east2-docker.pkg.dev/wgp-project-337610/wgp-video/${CI_PROJECT_NAME}-$PROJECT:${CI_COMMIT_TAG}
 
 

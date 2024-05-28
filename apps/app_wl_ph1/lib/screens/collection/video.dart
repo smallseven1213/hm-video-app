@@ -49,7 +49,7 @@ class CollectionVideo extends StatelessWidget {
                       onEditingTap: () {
                         listEditorController.toggleSelected(video1.id);
                       },
-                      displayVideoCollectTimes: false,
+                      displayVideoFavoriteTimes: false,
                       coverVertical: video1.coverVertical ?? '',
                       coverHorizontal: video1.coverHorizontal ?? '',
                       timeLength: video1.timeLength ?? 0,
@@ -62,7 +62,7 @@ class CollectionVideo extends StatelessWidget {
                   child: video2 != null
                       ? Obx(() => VideoPreviewWithEditWidget(
                           id: video2!.id,
-                          displayVideoCollectTimes: false,
+                          displayVideoFavoriteTimes: false,
                           isEditing: listEditorController.isEditing.value,
                           isSelected: listEditorController.selectedIds
                               .contains(video2.id),
