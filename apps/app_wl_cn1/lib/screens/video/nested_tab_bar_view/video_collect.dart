@@ -56,9 +56,9 @@ class _VideoCollectState extends State<VideoCollect> {
                     alignment: Alignment.center,
                     child: Text(
                       isCollected
-                          ? (widget.videoDetail.videoFavoriteTimes! + 1)
+                          ? (widget.videoDetail.videoCollectTimes! + 1)
                               .toString()
-                          : widget.videoDetail.videoFavoriteTimes.toString(),
+                          : widget.videoDetail.videoCollectTimes.toString(),
                       style: TextStyle(
                         color: AppColors.colors[ColorKeys.textVideoInfoDetail],
                         letterSpacing: 0.1,
