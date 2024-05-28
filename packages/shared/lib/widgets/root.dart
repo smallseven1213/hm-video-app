@@ -15,6 +15,15 @@ import 'package:live_ui_basic/localization/id.dart';
 import 'package:live_ui_basic/localization/vi.dart';
 import 'package:live_ui_basic/localization/zh.dart';
 import 'package:live_ui_basic/localization/zn.dart';
+
+import 'package:shared/localization/shared_localization_delegate.dart';
+import 'package:shared/localization/en.dart';
+import 'package:shared/localization/jp.dart';
+import 'package:shared/localization/id.dart';
+import 'package:shared/localization/vi.dart';
+import 'package:shared/localization/zh.dart';
+import 'package:shared/localization/zn.dart';
+
 import 'package:get/get.dart';
 import 'package:shared/models/color_keys.dart';
 import '../controllers/system_config_controller.dart';
@@ -104,6 +113,14 @@ class RootWidget extends StatelessWidget {
           'vi-VN': liveViVnStrings,
           'id-ID': liveIdIdStrings,
           'ja_JP': liveJaJpStrings,
+        }),
+        SharedLocalizationsDelegate({
+          'en-US': sharedEnUsStrings,
+          'zh-TW': sharedZhTwStrings,
+          'zh-CN': sharedZhCnStrings,
+          'vi-VN': sharedViVnStrings,
+          'id-ID': sharedIdIdStrings,
+          'ja_JP': sharedJaJpStrings,
         }),
         ...context.localizationDelegates,
       ],

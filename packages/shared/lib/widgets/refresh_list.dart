@@ -1,6 +1,9 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+import '../localization/shared_localization_delegate.dart';
 
 class RefreshList extends StatefulWidget {
   final Function? onRefresh;
@@ -27,6 +30,7 @@ class RefreshList extends StatefulWidget {
 class RefreshListState extends State<RefreshList> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: false);
+
   var rng = Random();
 
   void _onLoading() async {
@@ -52,6 +56,8 @@ class RefreshListState extends State<RefreshList> {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return RefreshConfiguration(
       headerTriggerDistance: 40.0,
       child: SmartRefresher(
@@ -70,8 +76,8 @@ class RefreshListState extends State<RefreshList> {
                   children: [
                     if (mode == RefreshStatus.completed)
                       widget.loadingText ??
-                          const Text('內容已更新',
-                              style: TextStyle(
+                          Text(localizations.translate('content_updated'),
+                              style: const TextStyle(
                                 fontSize: 13,
                                 color: Color(0xFF486a89),
                               )),

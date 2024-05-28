@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:live_core/controllers/chat_result_controller.dart';
 
+import '../controllers/live_system_controller.dart';
 import '../socket/live_web_socket_manager.dart';
 
 class ChatroomProvider extends StatefulWidget {
@@ -21,9 +22,11 @@ class ChatroomProviderState extends State<ChatroomProvider> {
   @override
   void initState() {
     super.initState();
+    final liveWsHostValue = Get.find<LiveSystemController>().liveWsHostValue;
     socketIOManager = LiveSocketIOManager();
-    socketIOManager.connect(
-        'wss://dev-live-chat.hmtech-dev.com:443/', widget.chatToken);
+    String chatUrl = liveWsHostValue.replaceAll(RegExp(r'-ws.'), '-chat.');
+    socketIOManager.connect('$chatUrl:443', widget.chatToken);
+
     Get.put(ChatResultController());
   }
 

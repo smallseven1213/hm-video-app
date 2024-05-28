@@ -26,9 +26,10 @@ class ConfigsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<CellData> cellDataList = [
       CellData(
-        image: const Icon(
+        image: Icon(
           Icons.lock_open_outlined,
           size: 20,
+          color: AppColors.colors[ColorKeys.textPrimary],
         ),
         text: '修改密碼',
         onTap: () {

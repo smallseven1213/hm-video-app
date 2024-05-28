@@ -4,6 +4,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/apis/auth_api.dart';
 
 import '../../controllers/auth_controller.dart';
+import '../../localization/shared_localization_delegate.dart';
 
 final authApi = AuthApi();
 
@@ -41,17 +42,26 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController accountController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  late SharedLocalizations localizations;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    localizations = SharedLocalizations.of(context)!;
+  }
 
   String? validateUsername(String? value) {
     if (value == null || value.isEmpty) {
-      return widget.errorMessage?.account ?? "請輸入帳號";
+      return widget.errorMessage?.account ??
+          localizations.translate('please_enter_your_account');
     }
     return null;
   }
 
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) {
-      return widget.errorMessage?.password ?? "請輸入密碼";
+      return widget.errorMessage?.password ??
+          localizations.translate('please_enter_your_password');
     }
     return null;
   }
@@ -64,7 +74,8 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
             password: passwordController.text);
         if (token == null) {
           if (widget.onError != null) {
-            widget.onError!('登入錯誤', '帳號或密碼不正確');
+            widget.onError!(localizations.translate('login_error'),
+                localizations.translate('incorrect_account_or_password'));
           }
         } else {
           Get.find<AuthController>().setToken(token);
@@ -72,7 +83,8 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
         }
       } catch (error) {
         if (widget.onError != null) {
-          widget.onError!('登入錯誤', '帳號或密碼不正確');
+          widget.onError!(localizations.translate('login_error'),
+              localizations.translate('incorrect_account_or_password'));
         }
       }
     }

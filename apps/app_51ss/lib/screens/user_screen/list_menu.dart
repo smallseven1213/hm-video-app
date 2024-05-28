@@ -16,6 +16,7 @@ import 'package:shared/widgets/sid_image.dart';
 
 import '../../config/colors.dart';
 import '../../utils/show_confirm_dialog.dart';
+import '../../widgets/id_card.dart';
 import 'scan_qrcode.dart';
 
 final logger = Logger();
@@ -143,6 +144,24 @@ class ListMenuState extends State<ListMenu> {
     return UserSettingMoreLinkConsumer(
       child: (quickLinks) {
         final items = quickLinks.map((Navigation item) {
+          if (item.path == '/id') {
+            return ListMenuItem(
+              name: item.name ?? '',
+              icon: item.photoSid ?? '',
+              onTap: () {
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return const Dialog(
+                      backgroundColor: Colors.transparent,
+                      elevation: 0,
+                      child: IDCard(),
+                    );
+                  },
+                );
+              },
+            );
+          }
           if (item.path == '/recover_account') {
             return ListMenuItem(
               name: item.name ?? '',

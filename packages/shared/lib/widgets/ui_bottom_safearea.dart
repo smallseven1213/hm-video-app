@@ -15,10 +15,12 @@ class UIBottomSafeArea extends StatelessWidget {
     final paddingBottom = MediaQuery.of(context).padding.bottom;
 
     return SafeArea(
-      bottom: true,
+      bottom: uiController.isIphoneSafari.value ? false : true,
       child: Padding(
         padding: EdgeInsets.only(
-          bottom: paddingBottom + (uiController.isIphoneSafari.value ? 20 : 0),
+          bottom: uiController.isIphoneSafari.value
+              ? paddingBottom + (uiController.isIphoneSafari.value ? 20 : 0)
+              : 0,
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
