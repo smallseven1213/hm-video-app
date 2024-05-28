@@ -38,11 +38,11 @@ const Map<String, String> sharedIdIdStrings = {
   "update_version": "Perbarui versi",
   "experience_now": "Pengalaman sekarang",
   "not_upgrading_now": "Tidak ditingkatkan saat ini",
-  "login": "masuk",
+  "user_login": "masuk",
   "account_creation_failed_device_disabled":
       "Pembuatan akun gagal, perangkat dinonaktifkan.",
   "account_creation_failed": "Pembuatan akun gagal.",
-  "failed": "Gagal",
+  "failure": "Gagal",
   "actors": "Pemain",
   "publishers": "Penerbit",
   "redemption_successful": "Penebusan berhasil",

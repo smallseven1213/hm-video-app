@@ -37,11 +37,11 @@ const Map<String, String> sharedViVnStrings = {
   "update_version": "Cập nhật phiên bản",
   "experience_now": "Trải nghiệm ngay",
   "not_upgrading_now": "Tạm thời không nâng cấp",
-  "login": "đăng nhập",
+  "user_login": "đăng nhập",
   "account_creation_failed_device_disabled":
       "Tạo tài khoản không thành công, thiết bị đã bị vô hiệu hóa.",
   "account_creation_failed": "Tạo tài khoản không thành công.",
-  "failed": "Thất bại",
+  "failure": "Thất bại",
   "actors": "Diễn viên",
   "publishers": "Nhà xuất bản",
   "redemption_successful": "Quy đổi thành công",

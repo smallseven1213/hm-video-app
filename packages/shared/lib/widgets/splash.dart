@@ -139,9 +139,7 @@ class _SplashState extends State<Splash> {
     logger.i('step4: 檢查是否維護中${systemConfigController.isMaintenance}');
     if (systemConfigController.isMaintenance.value) {
       alertDialog(context,
-          content: localizations
-              .translate('system_under_maintenance_please_try_again_later'),
-          actions: []);
+          content: localizations.translate('system_maintenance'), actions: []);
     }
     return systemConfigController.isMaintenance.value;
   }
@@ -165,14 +163,14 @@ class _SplashState extends State<Splash> {
         alertDialog(
           context,
           title: localizations.translate('new_version_available'),
-          content: localizations.translate(
-              'a_new_version_has_been_released_for_a_smoother_experience_please_update'),
+          content:
+              localizations.translate('new_version_released_please_update'),
           actions: [
             TextButton(
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: Text(localizations.translate('update_now')),
+              child: Text(localizations.translate('update_version')),
               // ignore: deprecated_member_use
               onPressed: () => launch('https://${apkUpdate.url ?? ''}'),
             ),
@@ -184,8 +182,8 @@ class _SplashState extends State<Splash> {
         alertDialog(
           context,
           title: localizations.translate('new_version_available'),
-          content: localizations.translate(
-              'a_new_version_has_been_released_for_a_smoother_experience_please_update'),
+          content:
+              localizations.translate('new_version_released_please_update'),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(
@@ -199,7 +197,7 @@ class _SplashState extends State<Splash> {
               style: TextButton.styleFrom(
                 textStyle: Theme.of(context).textTheme.labelLarge,
               ),
-              child: Text(localizations.translate('do_not_upgrade')),
+              child: Text(localizations.translate('not_upgrading_now')),
               onPressed: () {
                 Navigator.of(context).pop();
                 userLogin();
