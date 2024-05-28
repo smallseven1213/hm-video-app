@@ -15,8 +15,6 @@ const Map<String, String> sharedEnUsStrings = {
   "account_already_exists": "Account already exists",
   "million": "Million",
   "duplicate_account_login": "Duplicate account login",
-  "you_have_been_logged_out_please_log_in_again":
-      "You have been logged out, please log in again",
   "confirm": "Confirm",
   "content_updated": "Content updated",
   "play": "Play",
@@ -29,9 +27,9 @@ const Map<String, String> sharedEnUsStrings = {
   "all_payment_types": "All payment types",
   "free": "Free",
   "coins": "Coins",
-  "fetching_latest_resources": "Fetching latest resources...",
+  "fetching_latest_resources": "Loading...",
   "version": "Version",
-  "checking_connection": "Checking connection...",
+  "checking_connection": "Connection...",
   "system_maintenance": "System maintenance, please try again later.",
   "check_for_updates": "Checking for updates...",
   "new_version_available": "New version available",
@@ -50,14 +48,10 @@ const Map<String, String> sharedEnUsStrings = {
   "redemption_successful": "Redemption successful",
   "tags": "Tags",
   "games": "Games",
-  "loading": "Loading...",
-  "system_under_maintenance_please_try_again_later":
-      "System under maintenance, please try again later.",
-  "a_new_version_has_been_released_for_a_smoother_experience_please_update":
-      "A new version has been released, for a smoother experience, please update.",
-  "update_now": "Update now",
-  "do_not_upgrade": "Do not upgrade",
-  "user_login": "User login...",
-  "failure": "Failure",
-  "getting_latest_resources": "Getting latest resources...",
+  "no_more_video": "no more videos",
+  "back": "back",
+  "account_already_exists_pls_reenter":
+      "Account already exists, please re-enter the account.",
+  "you_have_been_logged_out_please_log_in_again":
+      "You have been logged out, please log in again.",
 };

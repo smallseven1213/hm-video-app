@@ -272,7 +272,7 @@ class _SplashState extends State<Splash> {
   getNavBar() {
     if (mounted) {
       setState(() =>
-          loadingText = localizations.translate('getting_latest_resources'));
+          loadingText = localizations.translate('fetching_latest_resources'));
     }
     logger.i('step7.1: 取得nav bar內容');
 // final NavBarController navBarController = Get.put(NavBarController());
@@ -287,7 +287,7 @@ class _SplashState extends State<Splash> {
     userApi.writeUserLoginRecord();
     if (mounted) {
       setState(() =>
-          loadingText = localizations.translate('getting_latest_resources'));
+          loadingText = localizations.translate('fetching_latest_resources'));
     }
     Get.put(VideoPopularController());
     Get.put(TagPopularController());

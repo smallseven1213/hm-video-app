@@ -14,8 +14,6 @@ const Map<String, String> sharedViVnStrings = {
   "account_already_exists": "Tài khoản đã tồn tại",
   "million": "Triệu",
   "duplicate_account_login": "Tài khoản đã đăng nhập trùng lặp",
-  "you_have_been_logged_out_please_log_in_again":
-      "Bạn đã bị đăng xuất, vui lòng đăng nhập lại",
   "confirm": "Xác nhận",
   "content_updated": "Nội dung đã được cập nhật",
   "play": "Phát",
@@ -28,9 +26,9 @@ const Map<String, String> sharedViVnStrings = {
   "all_payment_types": "Tất cả các loại thanh toán",
   "free": "Miễn phí",
   "coins": "Đồng xu",
-  "fetching_latest_resources": "Đang lấy tài nguyên mới nhất...",
+  "fetching_latest_resources": "Đang tải...",
   "version": "Phiên bản",
-  "checking_connection": "Đang kiểm tra kết nối...",
+  "checking_connection": "Kết nối...",
   "system_maintenance": "Hệ thống đang bảo trì, vui lòng thử lại sau.",
   "check_for_updates": "Kiểm tra cập nhật...",
   "new_version_available": "Đã có phiên bản mới",
@@ -49,14 +47,10 @@ const Map<String, String> sharedViVnStrings = {
   "redemption_successful": "Quy đổi thành công",
   "tags": "Thẻ",
   "games": "Trò chơi",
-  "loading": "Đang tải...",
-  "system_under_maintenance_please_try_again_later":
-      "Hệ thống đang bảo trì, vui lòng thử lại sau.",
-  "a_new_version_has_been_released_for_a_smoother_experience_please_update":
-      "Một phiên bản mới đã được phát hành, để có trải nghiệm mượt mà hơn, vui lòng cập nhật.",
-  "update_now": "Cập nhật ngay",
-  "do_not_upgrade": "Không nâng cấp",
-  "user_login": "Đăng nhập người dùng...",
-  "failure": "Thất bại",
-  "getting_latest_resources": "Đang lấy tài nguyên mới nhất...",
+  "no_more_video": "Không còn video nào nữa",
+  "back": "Quay lại",
+  "account_already_exists_pls_reenter":
+      "Tài khoản đã tồn tại, vui lòng nhập lại tài khoản.",
+  "you_have_been_logged_out_please_log_in_again":
+      "Bạn đã bị đăng xuất, vui lòng đăng nhập lại.",
 };
