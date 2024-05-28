@@ -165,8 +165,7 @@ class IDCardContentState extends State<IDCardContent> {
                         child: Text(
                           '請截圖保存',
                           style: TextStyle(
-                              color: AppColors
-                                      .colors[ColorKeys.buttonTextSecondary]
+                              color: AppColors.colors[ColorKeys.textSecondary]
                                   as Color),
                         ),
                       ),

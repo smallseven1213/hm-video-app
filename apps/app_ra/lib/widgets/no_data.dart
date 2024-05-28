@@ -1,44 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/color_keys.dart';
+
 import '../config/colors.dart';
-import 'button.dart';
-import 'custom_app_bar.dart';
 
 class NoDataWidget extends StatelessWidget {
-  final bool showBackButton;
-  final String? title;
-
-  const NoDataWidget({
-    Key? key,
-    this.showBackButton = false,
-    this.title = '',
-  }) : super(key: key);
-
+  const NoDataWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: showBackButton ? CustomAppBar(title: title) : null,
-      body: Center(
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30),
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const Image(
               image: AssetImage('assets/images/list_no_more.webp'),
               width: 48,
               height: 48,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 18),
             Text('這裡什麼都沒有',
-                style: TextStyle(color: AppColors.colors[ColorKeys.menuColor])),
-            if (showBackButton)
-              Container(
-                width: 130,
-                padding: const EdgeInsets.only(top: 30),
-                child: Button(
-                  onPressed: () => Navigator.of(context).pop(),
-                  text: '返回',
-                ),
-              ),
+                style: TextStyle(color: AppColors.colors[ColorKeys.menuColor]))
           ],
         ),
       ),
