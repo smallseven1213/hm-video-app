@@ -22,7 +22,6 @@ import 'package:game/controllers/game_param_config_controller.dart';
 
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_list_view.dart';
-import 'package:game/screens/lobby/game_marquee.dart';
 import 'package:game/screens/lobby/login_tabs.dart';
 import 'package:game/screens/lobby/floating_button/game_envelope_button.dart';
 import 'package:game/screens/game_theme_config.dart';
@@ -209,8 +208,6 @@ class _GameLobbyState extends State<GameLobby>
                             children: [
                               GameCarousel(
                                   data: gameBannerController.gameBanner),
-                              GameMarquee(
-                                  data: gameBannerController.gameMarquee),
                               GameUserInfo(
                                 type: 'lobby',
                                 child: Row(

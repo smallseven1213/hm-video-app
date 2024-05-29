@@ -38,11 +38,11 @@ const Map<String, String> sharedEnUsStrings = {
   "update_version": "Update version",
   "experience_now": "Experience now",
   "not_upgrading_now": "Not upgrading now",
-  "login": "login...",
+  "user_login": "login...",
   "account_creation_failed_device_disabled":
       "Account creation failed, device disabled.",
   "account_creation_failed": "Account creation failed.",
-  "failed": "Failed",
+  "failure": "Failed",
   "actors": "Actors",
   "publishers": "Publishers",
   "redemption_successful": "Redemption successful",

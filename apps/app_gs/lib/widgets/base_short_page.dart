@@ -8,9 +8,9 @@ import 'package:shared/modules/short_video/short_video_provider.dart';
 import 'package:shared/modules/shorts/shorts_scaffold.dart';
 import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
+import '../screens/nodata/index.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
-import 'no_data.dart';
 import 'wave_loading.dart';
 
 final List<String> loadingTextList = [
@@ -96,7 +96,7 @@ class BaseShortPage extends StatelessWidget {
         videoId: videoId,
         itemId: itemId,
         onScrollBeyondFirst: onScrollBeyondFirst,
-        noDataWidget: const NoDataWidget(showBackButton: true),
+        noDataWidget: const NoDataScreen(),
         loadingWidget: const Center(
           child: WaveLoading(
             color: Color.fromRGBO(255, 255, 255, 0.3),
