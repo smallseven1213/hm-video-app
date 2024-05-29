@@ -28,13 +28,15 @@ class ShortBottomArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final paddingBottom = MediaQuery.of(context).padding.bottom;
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
         Get.find<UserFavoritesShortController>();
 
     return Container(
-        height: 76,
+        height: 76 + paddingBottom,
+        padding: EdgeInsets.only(bottom: paddingBottom),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
