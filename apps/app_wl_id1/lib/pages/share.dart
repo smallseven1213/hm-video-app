@@ -138,8 +138,8 @@ class ContentAndButton extends StatefulWidget {
 class ContentAndButtonState extends State<ContentAndButton> {
   @override
   Widget build(BuildContext context) {
-    return UserPromoConsumer(
-      child: (promoteData) => Column(
+    return UserPromoConsumer(child: (promoteData) {
+      return Column(
         children: [
           Expanded(
             flex: 1,
@@ -202,7 +202,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: QrImageView(
-                      data: promoteData.promoteLink,
+                      data: 'https://${promoteData.promoteLink}',
                       version: QrVersions.auto,
                       size: 90.0,
                       backgroundColor: Colors.white,
@@ -252,7 +252,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
             ),
           ),
         ],
-      ),
-    );
+      );
+    });
   }
 }

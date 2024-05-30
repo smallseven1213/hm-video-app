@@ -78,7 +78,7 @@ class RegisterPageState extends State<RegisterPage> {
         logger.i('register success $res');
 
         if (res.code == '00') {
-          userController.fetchUserInfo();
+          userController.fetchUserInfoV2();
           MyRouteDelegate.of(context).popRoute();
         } else {
           showConfirmDialog(
