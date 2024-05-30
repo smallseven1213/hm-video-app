@@ -60,7 +60,7 @@ class UpdatePasswordPageState extends State<UpdatePasswordPage> {
         logger.i('register success $res, ${res['code']}');
 
         if (res['code'] == '00') {
-          userController.fetchUserInfo();
+          userController.fetchUserInfoV2();
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(
