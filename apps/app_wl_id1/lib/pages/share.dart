@@ -139,7 +139,6 @@ class ContentAndButtonState extends State<ContentAndButton> {
   @override
   Widget build(BuildContext context) {
     return UserPromoConsumer(child: (promoteData) {
-      print('promoteData.promoteLink ${promoteData.promoteLink}');
       return Column(
         children: [
           Expanded(
