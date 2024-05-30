@@ -45,7 +45,7 @@ build-sv-job:       # This job runs in the build stage, which runs first.
 build-tt-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
@@ -59,7 +59,7 @@ build-tt-job:       # This job runs in the build stage, which runs first.
 build-ra-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
@@ -89,7 +89,7 @@ build-ab-job:       # This job runs in the build stage, which runs first.
 build-wl-id1-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
@@ -102,7 +102,7 @@ build-wl-id1-job:       # This job runs in the build stage, which runs first.
 build-wl-ph1-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
@@ -115,7 +115,7 @@ build-wl-ph1-job:       # This job runs in the build stage, which runs first.
 build-wl-tw1-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
@@ -128,7 +128,7 @@ build-wl-tw1-job:       # This job runs in the build stage, which runs first.
 build-wl-tw2-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
@@ -141,7 +141,7 @@ build-wl-tw2-job:       # This job runs in the build stage, which runs first.
 build-wl-cn1-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
