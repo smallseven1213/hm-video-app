@@ -32,7 +32,7 @@ testProd:
 build-sv-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
@@ -75,7 +75,7 @@ build-ra-job:       # This job runs in the build stage, which runs first.
 build-ab-job:       # This job runs in the build stage, which runs first.
   stage: build
   tags:
-    - gitlab-shared-runner
+    - gke-gitlab-runner
   only:
     refs:
       - develop
