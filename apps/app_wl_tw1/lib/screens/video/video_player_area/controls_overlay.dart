@@ -260,7 +260,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
                 // 下方控制區塊
                 Positioned(
-                  bottom: 0,
+                  bottom: widget.isFullscreen ? 30 : 0,
                   child: SizedBox(
                     width: MediaQuery.sizeOf(context).width,
                     child: Row(
