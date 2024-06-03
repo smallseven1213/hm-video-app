@@ -21,7 +21,7 @@ ENV PATH="/root/.pub-cache/bin:$PATH"
 # RUN rm -rf /sdks/flutter/.pub-cache
 
 # Install sentry-cli
-RUN curl -sL https://sentry.io/get-cli/ | bash
+RUN curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_NO_SUDO=true bash
 
 RUN echo "TESTING is: $PWD"
 RUN echo $(ls -1 /app/apps/)
