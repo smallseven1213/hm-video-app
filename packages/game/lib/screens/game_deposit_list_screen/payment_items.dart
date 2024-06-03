@@ -1,18 +1,17 @@
-import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-
-import 'package:game/screens/game_theme_config.dart';
-import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
-import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
-import 'package:game/screens/game_deposit_list_screen/title.dart';
-import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
-import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
+import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/models/game_deposit_payment_type_list.dart';
 import 'package:game/models/game_payment_channel_detail.dart';
-import 'package:game/controllers/game_withdraw_controller.dart';
+import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
+import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
+import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
+import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
+import 'package:game/screens/game_deposit_list_screen/title.dart';
+import 'package:game/screens/game_theme_config.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -127,7 +126,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
     List<DepositPaymentTypeList> paymentListItem =
         widget.paymentList.where((element) {
       final depositDataKeys = widget.depositData.keys.toList();
-      return depositDataKeys.contains(element.code);
+      return depositDataKeys.contains(element.code.toLowerCase());
     }).toList();
 
     List channels = List.from(widget.depositData[_paymentActiveIndex]);
