@@ -112,8 +112,7 @@ class LiveListController extends GetxController {
     LiveSocketIOManager socketManager = LiveSocketIOManager();
 
     _messageSubscription = socketManager.messages.listen((message) {
-      var decodedMessage = jsonDecode(message);
-      handleWebSocketMessage(decodedMessage);
+      handleWebSocketMessage(message);
     });
   }
 
