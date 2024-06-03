@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -9,7 +10,6 @@ import 'package:shared/modules/short_video/short_video_collect_count_consumer.da
 import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
 
-import '../../localization/i18n.dart';
 import '../../screens/short/button.dart';
 
 final logger = Logger();
@@ -33,6 +33,7 @@ class ShortBottomArea extends StatelessWidget {
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
         Get.find<UserFavoritesShortController>();
+    final paddingBottom = MediaQuery.of(context).padding.bottom;
 
     return Container(
         height: 76 + paddingBottom,

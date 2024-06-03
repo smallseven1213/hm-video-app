@@ -49,7 +49,10 @@ dependencies:
   flutter_svg: ^2.0.7
   qr_flutter: ^4.1.0
   easy_localization: ^3.0.2
-  easy_localization_generator: ^0.3.1
+  easy_localization_generator:
+    git:
+      url: https://github.com/smallseven1213/easy_localization_generator.git
+      ref: main
   image_picker: ^0.8.7+5
   mime: ^1.0.4
   http_parser: ^4.0.2

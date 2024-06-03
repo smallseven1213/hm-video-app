@@ -11,7 +11,7 @@ import 'package:live_core/socket/live_web_socket_manager.dart';
 import 'package:live_core/widgets/loading.dart';
 import 'package:live_core/widgets/room_payment_check.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 class PlayerLayout extends StatefulWidget {
   final Uri uri;
@@ -42,7 +42,7 @@ class PlayerLayoutState extends State<PlayerLayout>
     initializeVideoPlayer();
     handleChatResult();
 
-    Wakelock.enable();
+    WakelockPlus.enable();
 
     // listen liveRoomController.isMute
     ever(Get.find<LiveRoomController>(tag: widget.pid.toString()).isMute,
@@ -143,7 +143,7 @@ class PlayerLayoutState extends State<PlayerLayout>
   void dispose() {
     videoController.dispose();
     _connectivitySubscription.cancel();
-    Wakelock.disable();
+    WakelockPlus.disable();
     super.dispose();
   }
 

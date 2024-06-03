@@ -50,7 +50,7 @@ class ShortMenuButton extends StatelessWidget {
             const SizedBox(width: 10),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 if (displayFavoriteAndCollectCount == true)
                   Text(
