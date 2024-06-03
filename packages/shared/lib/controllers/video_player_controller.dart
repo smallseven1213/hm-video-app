@@ -6,7 +6,7 @@ import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../utils/screen_control.dart';
 
@@ -101,9 +101,9 @@ class ObservableVideoPlayerController extends GetxController {
 
     // TODO: 有待分析
     if (!kIsWeb && videoPlayerController?.value.isPlaying == true) {
-      Wakelock.enable();
+      WakelockPlus.enable();
     } else {
-      Wakelock.disable();
+      WakelockPlus.disable();
     }
   }
 

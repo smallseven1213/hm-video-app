@@ -33,6 +33,7 @@ class ShortBottomArea extends StatelessWidget {
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
         Get.find<UserFavoritesShortController>();
+    final paddingBottom = MediaQuery.of(context).padding.bottom;
 
     return Container(
         height: 76 + paddingBottom,
