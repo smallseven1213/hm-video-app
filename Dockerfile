@@ -1,6 +1,6 @@
 # Builder stage
 # FROM cirrusci/flutter:3.7.5 AS builder
-FROM growerp/flutter-sdk-image:3.22.1 AS builder
+FROM asia-east2-docker.pkg.dev/wgp-project-337610/base-images/flutter:3.19.0 AS builder
 ARG env
 ENV ENV=${env}
 ARG scope
@@ -15,13 +15,13 @@ RUN flutter pub global activate melos 3.1.1
 ENV PATH="/root/.pub-cache/bin:$PATH"
 
 # Clear .pub-cache temp directory
-# RUN rm -rf /root/.pub-cache/_temp/*
+RUN rm -rf /root/.pub-cache/_temp/*
 
 # Clear Flutter cache
-# RUN rm -rf /sdks/flutter/.pub-cache
+RUN rm -rf /sdks/flutter/.pub-cache
 
 # Install sentry-cli
-RUN curl -sL https://sentry.io/get-cli/ | SENTRY_CLI_NO_SUDO=true bash
+RUN curl -sL https://sentry.io/get-cli/ | bash
 
 RUN echo "TESTING is: $PWD"
 RUN echo $(ls -1 /app/apps/)
