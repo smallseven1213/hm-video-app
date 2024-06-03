@@ -5,8 +5,9 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/widgets/video_player/error.dart';
-import 'package:shared/widgets/video_player/player.dart';
+import 'package:shared/widgets/short_video_player/draggable_video_progress_bar.dart';
+import 'package:shared/widgets/short_video_player/error.dart';
+import 'package:shared/widgets/short_video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import '../../screens/short/fullscreen_controls.dart';
 
@@ -130,52 +131,9 @@ class ShortCardState extends State<ShortCard> {
                 bottom: -16,
                 left: 0,
                 right: 0,
-                child: Listener(
-                  onPointerDown: (details) {
-                    setState(() {
-                      isDragging = true;
-                    });
-                  },
-                  onPointerUp: (details) {
-                    setState(() {
-                      isDragging = false;
-                    });
-                  },
-                  child: RawGestureDetector(
-                    gestures: <Type, GestureRecognizerFactory>{
-                      HorizontalDragGestureRecognizer:
-                          GestureRecognizerFactoryWithHandlers<
-                              HorizontalDragGestureRecognizer>(
-                        () => HorizontalDragGestureRecognizer(),
-                        (HorizontalDragGestureRecognizer instance) {
-                          instance
-                            ..onStart = (DragStartDetails details) {
-                              // 可以处理拖动开始的事件
-                            }
-                            ..onUpdate = (DragUpdateDetails details) {
-                              // 可以处理拖动更新的事件
-                            }
-                            ..onEnd = (DragEndDetails details) {
-                              // 可以处理拖动结束的事件
-                            };
-                        },
-                      ),
-                    },
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 300),
-                      height: isDragging ? 40 : 35,
-                      child: VideoProgressIndicator(
-                        videoPlayerInfo.videoPlayerController!,
-                        allowScrubbing: true,
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        colors: VideoProgressColors(
-                          playedColor: const Color(0xffFFC700),
-                          bufferedColor: Colors.grey,
-                          backgroundColor: Colors.white.withOpacity(0.3),
-                        ),
-                      ),
-                    ),
-                  ),
+                child: DraggableVideoProgressBar(
+                  videoPlayerController: videoPlayerInfo
+                      .observableVideoPlayerController.videoPlayerController!,
                 ),
               ),
               // const FloatPageBackButton()

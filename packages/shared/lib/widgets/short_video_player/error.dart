@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/widgets/video_player/video_cover.dart';
+import 'package:shared/widgets/short_video_player/video_cover.dart';
 
 import '../float_page_back_button.dart';
 

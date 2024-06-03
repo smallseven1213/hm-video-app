@@ -202,7 +202,7 @@ class ContentAndButtonState extends State<ContentAndButton> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: QrImageView(
-                      data: promoteData.promoteLink,
+                      data: 'https://${promoteData.promoteLink}',
                       version: QrVersions.auto,
                       size: 90.0,
                       backgroundColor: Colors.white,

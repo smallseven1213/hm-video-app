@@ -258,9 +258,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     isScreenLocked: widget.isScreenLocked,
                     onScreenLock: widget.onScreenLock),
               if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
-                // 下方控制区块
+                // 下方控制區塊
                 Positioned(
-                  bottom: 0,
+                  bottom: widget.isFullscreen ? 30 : 0,
                   child: SizedBox(
                     width: MediaQuery.sizeOf(context).width,
                     child: Row(
