@@ -96,7 +96,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
   void paymentIndexChanged(idx) async {
     setState(() {
-      _paymentActiveIndex = idx;
+      _paymentActiveIndex = idx.toLowerCase();
       _channelActiveIndex = 0;
 
       Future.delayed(const Duration(milliseconds: 100)).then((value) {
@@ -129,7 +129,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
       return depositDataKeys.contains(element.code.toLowerCase());
     }).toList();
 
-    List channels = List.from(widget.depositData[_paymentActiveIndex]);
+    List channels =
+        List.from(widget.depositData[_paymentActiveIndex.toLowerCase()]);
     int channelLength = channels.isNotEmpty ? channels.length.toInt() : 0;
     num channelHeight =
         (channelLength > 3 ? (channelLength / 3).ceil() * 54 : 60);
@@ -139,7 +140,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
         : 0;
     num amountHeight = amountLength > 4 ? (amountLength / 4).ceil() * 80 : 80;
     bool requireName = paymentListItem
-            .firstWhere((element) => element.code == _paymentActiveIndex)
+            .firstWhere((element) =>
+                element.code.toLowerCase() == _paymentActiveIndex.toLowerCase())
             .requireName
             // 將requireName轉換成bool
             .toString()
@@ -170,7 +172,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           children: [
             // ======支付方式======
             DepositPaymentTypeListWidget(
-              paymentActiveIndex: _paymentActiveIndex,
+              paymentActiveIndex: _paymentActiveIndex.toLowerCase(),
               paymentListItem: paymentListItem,
               handlePaymentIndexChanged: paymentIndexChanged,
             ),
@@ -382,7 +384,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                       focusNode: focusNode,
                       max: channels[_channelActiveIndex].maxAmount.toDouble(),
                       min: channels[_channelActiveIndex].minAmount.toDouble(),
-                      activePayment: _paymentActiveIndex,
+                      activePayment: _paymentActiveIndex.toLowerCase(),
                       paymentChannelId:
                           channels[_channelActiveIndex].id.toString(),
                       requireName: requireName,
@@ -416,7 +418,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                     context,
                                     enableSubmit: true,
                                     controller: amountController,
-                                    activePayment: _paymentActiveIndex,
+                                    activePayment:
+                                        _paymentActiveIndex.toLowerCase(),
                                     paymentChannelId:
                                         channels[_channelActiveIndex]
                                             .id

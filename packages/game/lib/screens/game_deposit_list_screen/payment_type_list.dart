@@ -1,10 +1,9 @@
-import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get_storage/get_storage.dart';
-
 import 'package:game/models/game_deposit_payment_type_list.dart';
 import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -70,80 +69,82 @@ class _DepositPaymentTypeListWidgetState
           children: List.generate(
             widget.paymentListItem.length,
             (index) => GestureDetector(
-                onTap: () {
-                  widget.handlePaymentIndexChanged(
-                      widget.paymentListItem[index].code);
-                  final double scrollOffset = index * 45 -
-                      MediaQuery.of(context).size.width / 2 +
-                      MediaQuery.of(context).size.width / 4;
-                  scrollController.animateTo(
-                    index >= 4 ? scrollOffset : 0,
-                    duration: const Duration(milliseconds: 200),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                child: Stack(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 1),
-                      child: Container(
-                        width: paymentLength <= 4
-                            ? MediaQuery.of(context).size.width / 4 - 22
-                            : MediaQuery.of(context).size.width / 4 - 32,
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        decoration: BoxDecoration(
+              onTap: () {
+                widget.handlePaymentIndexChanged(
+                    widget.paymentListItem[index].code);
+                final double scrollOffset = index * 45 -
+                    MediaQuery.of(context).size.width / 2 +
+                    MediaQuery.of(context).size.width / 4;
+                scrollController.animateTo(
+                  index >= 4 ? scrollOffset : 0,
+                  duration: const Duration(milliseconds: 200),
+                  curve: Curves.easeInOut,
+                );
+              },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 1),
+                    child: Container(
+                      width: paymentLength <= 4
+                          ? MediaQuery.of(context).size.width / 4 - 22
+                          : MediaQuery.of(context).size.width / 4 - 32,
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      decoration: BoxDecoration(
+                        color: widget.paymentActiveIndex ==
+                                widget.paymentListItem[index].code.toLowerCase()
+                            ? gameLobbyDepositActiveColor
+                            : gameItemMainColor,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
                           color: widget.paymentActiveIndex ==
                                   widget.paymentListItem[index].code
-                              ? gameLobbyDepositActiveColor
+                                      .toLowerCase()
+                              ? gamePrimaryButtonColor
                               : gameItemMainColor,
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(
-                            color: widget.paymentActiveIndex ==
-                                    widget.paymentListItem[index].code
-                                ? gamePrimaryButtonColor
-                                : gameItemMainColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            widget.paymentListItem[index] != null
-                                ? Image.network(
-                                    widget.paymentListItem[index].icon,
-                                    width: 24,
-                                    height: 24,
-                                  )
-                                : Image.asset(
-                                    'packages/game/assets/images/game_deposit/payment_empty-$theme.webp',
-                                    width: 24,
-                                    height: 24,
-                                    fit: BoxFit.cover,
-                                  ),
-                            const SizedBox(height: 6),
-                            Text(
-                              widget.paymentListItem[index].name.toString(),
-                              style: TextStyle(
-                                color: gameLobbyPrimaryTextColor,
-                                fontSize: 12,
-                              ),
-                            ),
-                          ],
+                          width: 1.0,
                         ),
                       ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          widget.paymentListItem[index] != null
+                              ? Image.network(
+                                  widget.paymentListItem[index].icon,
+                                  width: 24,
+                                  height: 24,
+                                )
+                              : Image.asset(
+                                  'packages/game/assets/images/game_deposit/payment_empty-$theme.webp',
+                                  width: 24,
+                                  height: 24,
+                                  fit: BoxFit.cover,
+                                ),
+                          const SizedBox(height: 6),
+                          Text(
+                            widget.paymentListItem[index].name.toString(),
+                            style: TextStyle(
+                              color: gameLobbyPrimaryTextColor,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    if (widget.paymentListItem[index].label.isNotEmpty)
-                      Positioned(
-                        top: 0,
-                        right: 0,
-                        child: OliveShape(
-                          width: 40.0,
-                          type: 'right',
-                          text: localizations.translate('send_offer'),
-                        ),
-                      )
-                  ],
-                )),
+                  ),
+                  if (widget.paymentListItem[index].label.isNotEmpty)
+                    Positioned(
+                      top: 0,
+                      right: 0,
+                      child: OliveShape(
+                        width: 40.0,
+                        type: 'right',
+                        text: localizations.translate('send_offer'),
+                      ),
+                    )
+                ],
+              ),
+            ),
           ),
         ),
       ),
