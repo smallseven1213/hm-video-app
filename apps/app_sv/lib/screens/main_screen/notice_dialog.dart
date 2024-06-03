@@ -47,10 +47,16 @@ class NoticeDialogState extends State<NoticeDialog> {
         // 從列表中獲取所需的字串和數字
         String path = '/${parts[1]}';
 
-        if (parts.length == 3) {
+       if (parts.length == 3) {
           int id = int.parse(parts[2]);
           var args = {'id': id};
           MyRouteDelegate.of(context).push(path, args: args);
+        } else if (path == '/splash') {
+          MyRouteDelegate.of(context).push(
+            '/',
+            args: {'skipNavigation': true},
+            removeSamePath: true,
+          );
         } else {
           MyRouteDelegate.of(context).push(path);
         }
