@@ -1,14 +1,13 @@
-import 'package:logger/logger.dart';
-import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/widgets/button.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -24,6 +23,7 @@ class AmountForm extends StatefulWidget {
   final String paymentChannelId;
   final FocusNode focusNode;
   final bool requireName;
+  final bool requirePhone;
 
   const AmountForm(
       {Key? key,
@@ -35,6 +35,7 @@ class AmountForm extends StatefulWidget {
       required this.paymentChannelId,
       required this.focusNode,
       required this.requireName,
+      required this.requirePhone,
       this.onChanged})
       : super(key: key);
 
@@ -197,6 +198,7 @@ class _AmountFormState extends State<AmountForm> {
                         paymentChannelId: widget.paymentChannelId,
                         requireName: widget.requireName,
                         focusNode: widget.focusNode,
+                        requirePhone: widget.requirePhone,
                       );
                     }
                   },

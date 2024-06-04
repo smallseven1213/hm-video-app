@@ -143,11 +143,18 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
             .firstWhere((element) =>
                 element.code.toLowerCase() == _paymentActiveIndex.toLowerCase())
             .requireName
-            // 將requireName轉換成bool
             .toString()
             .contains('0')
         ? false // NO
         : true; // YES
+    bool requirePhone = paymentListItem
+            .firstWhere((element) =>
+                element.code.toLowerCase() == _paymentActiveIndex.toLowerCase())
+            .requirePhone
+            .toString()
+            .contains('0')
+        ? false
+        : true;
 
     return GestureDetector(
       onTap: () {
@@ -388,6 +395,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                       paymentChannelId:
                           channels[_channelActiveIndex].id.toString(),
                       requireName: requireName,
+                      requirePhone: requirePhone,
                     ),
 
                   if (channels[_channelActiveIndex].specificAmounts != null)
@@ -425,6 +433,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                             .id
                                             .toString(),
                                     requireName: requireName,
+                                    requirePhone: requirePhone,
                                     focusNode: focusNode,
                                   );
                                 } else {

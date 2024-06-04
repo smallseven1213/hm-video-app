@@ -5,6 +5,7 @@ class DepositPaymentTypeList {
   final List<dynamic> label;
   final String icon;
   final int requireName;
+  final int requirePhone;
 
   DepositPaymentTypeList(
     this.id,
@@ -13,6 +14,7 @@ class DepositPaymentTypeList {
     this.label,
     this.icon,
     this.requireName,
+    this.requirePhone,
   );
 
   factory DepositPaymentTypeList.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class DepositPaymentTypeList {
       json['label'],
       json['icon'],
       json['requireName'],
+      json['requirePhone'],
     );
   }
 }
