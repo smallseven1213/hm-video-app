@@ -1,14 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:volume_control/volume_control.dart';
 
 import 'enums.dart';
+import 'mute_volume_button.dart';
 import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
+
+final logger = Logger();
 
 class ControlsOverlay extends StatefulWidget {
   final String videoUrl;
@@ -39,6 +43,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   double? initialVolume;
   double? initialBrightness;
   double? lastDragPosition; // 添加这一行
+  bool isMuted = kIsWeb ? true : false; // 音量静音状态跟踪
   double brightness = 0.5; // 初始值，表示亮度，範圍在 0.0 到 1.0 之間
   double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
   SideControlsType sideControlsType = SideControlsType.none; // 初始值
@@ -53,7 +58,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
       tag: widget.videoUrl,
-      child: (videoPlayerInfo) =>
+      child: (VideoPlayerInfo videoPlayerInfo) =>
           LayoutBuilder(builder: (context, constraints) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
@@ -104,10 +109,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
 
               VolumeControl.setVolume(volume);
               videoPlayerInfo.videoPlayerController?.setVolume(volume);
+              logger.i('volume: $volume');
             } else {
               brightness = verticalDragPosition;
               brightness = brightness.clamp(0.0, 1.0);
               ScreenBrightness().setScreenBrightness(brightness);
+              logger.i('brightness: $brightness');
             }
 
             // 更新lastDragPosition以便于下次計算
@@ -169,6 +176,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   isFullscreen: widget.isFullscreen,
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
+                ),
+
+              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+                Positioned(
+                  top: 50,
+                  left: 20,
+                  child: MuteVolumeButton(videoPlayerInfo: videoPlayerInfo),
                 ),
               if (videoPlayerInfo.inBuffering && !videoPlayerInfo.isScrolling)
                 const Center(
@@ -315,14 +329,26 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                         ),
                         IconButton(
                           onPressed: () =>
-                              widget.toggleFullscreen(!widget.isFullscreen),
+                              videoPlayerInfo.toggleMuteAndUpdateVolume(),
                           icon: Icon(
-                            widget.isFullscreen
-                                ? Icons.close_fullscreen_rounded
-                                : Icons.fullscreen,
+                            videoPlayerInfo.isMuted
+                                ? Icons.volume_off
+                                : Icons.volume_up,
                             color: Colors.white,
                           ),
                         ),
+                        kIsWeb && widget.isFullscreen
+                            ? const SizedBox(width: 8.0)
+                            : IconButton(
+                                onPressed: () => widget
+                                    .toggleFullscreen(!widget.isFullscreen),
+                                icon: Icon(
+                                  widget.isFullscreen
+                                      ? Icons.close_fullscreen_rounded
+                                      : Icons.fullscreen,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ],
                     ),
                   ),

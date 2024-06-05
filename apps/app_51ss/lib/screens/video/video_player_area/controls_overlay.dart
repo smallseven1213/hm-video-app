@@ -9,6 +9,7 @@ import 'package:volume_control/volume_control.dart';
 
 import '../../../config/colors.dart';
 import 'enums.dart';
+import 'mute_volume_button.dart';
 import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
@@ -44,6 +45,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   double? initialVolume;
   double? initialBrightness;
   double? lastDragPosition; // 添加这一行
+  bool isMuted = kIsWeb ? true : false; // 音量静音状态跟踪
   double brightness = 0.5; // 初始值，表示亮度，範圍在 0.0 到 1.0 之間
   double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
   SideControlsType sideControlsType = SideControlsType.none; // 初始值
@@ -58,7 +60,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
       tag: widget.videoUrl,
-      child: (videoPlayerInfo) =>
+      child: (VideoPlayerInfo videoPlayerInfo) =>
           LayoutBuilder(builder: (context, constraints) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
@@ -176,6 +178,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   isFullscreen: widget.isFullscreen,
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
+                ),
+
+              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+                Positioned(
+                  top: 50,
+                  left: 20,
+                  child: MuteVolumeButton(videoPlayerInfo: videoPlayerInfo),
                 ),
               if (videoPlayerInfo.inBuffering && !videoPlayerInfo.isScrolling)
                 const Center(
@@ -320,6 +329,16 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                         Text(
                           videoPlayerInfo.videoDurationString,
                           style: const TextStyle(color: Colors.white),
+                        ),
+                        IconButton(
+                          onPressed: () =>
+                              videoPlayerInfo.toggleMuteAndUpdateVolume(),
+                          icon: Icon(
+                            videoPlayerInfo.isMuted
+                                ? Icons.volume_off
+                                : Icons.volume_up,
+                            color: Colors.white,
+                          ),
                         ),
                         kIsWeb && widget.isFullscreen
                             ? const SizedBox(width: 8.0)

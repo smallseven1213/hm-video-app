@@ -101,9 +101,7 @@ class VideoState extends State<Video> {
                           videoAdsController
                               .videoAds.value.playerPositions!.isNotEmpty
                       ? false
-                      : kIsWeb
-                          ? false
-                          : true,
+                      : true,
                   videoUrl: videoUrl,
                   videoDetail: videoDetail!,
                   loadingWidget: AspectRatio(

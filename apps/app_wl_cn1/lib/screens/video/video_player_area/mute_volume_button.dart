@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 
-import '../../../localization/i18n.dart';
 
 class MuteVolumeButton extends StatelessWidget {
   final VideoPlayerInfo videoPlayerInfo;
@@ -22,7 +21,7 @@ class MuteVolumeButton extends StatelessWidget {
           size: 14,
         ),
         label: Text(
-          videoPlayerInfo.isMuted ? I18n.unmute : I18n.mute,
+          videoPlayerInfo.isMuted ? '取消静音' : '静音',
           style: const TextStyle(
             color: Colors.black,
             fontSize: 14.0,
