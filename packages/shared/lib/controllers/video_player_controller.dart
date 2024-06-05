@@ -16,7 +16,7 @@ final logger = Logger();
 
 class ObservableVideoPlayerController extends GetxController {
   final isReady = false.obs;
-  bool autoPlay;
+  bool autoPlay; //
   // final RxString videoAction = kIsWeb ? 'pause'.obs : 'play'.obs;
   final RxString videoAction = 'pause'.obs;
   late VideoPlayerController? videoPlayerController;
@@ -66,12 +66,15 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) async {
       isReady.value = true;
-      if (!kIsWeb) {
+      if (kIsWeb) {
+        videoPlayerController?.setVolume(autoPlay ? 0 : 1);
+        if (autoPlay) {
+          play();
+        }
+      } else {
         final isMuted = await FlutterVolumeController.getMute();
         videoPlayerController?.setVolume(isMuted == true ? 0 : 1);
         play();
-      } else {
-        // videoPlayerController?.setVolume(0);
       }
     }).catchError((error) {
       if (videoPlayerController?.value.hasError == true) {
