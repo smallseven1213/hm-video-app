@@ -13,26 +13,23 @@ class MuteVolumeButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: videoPlayerInfo.isMuted ? 110 : 80,
-      child: TextButton.icon(
-        onPressed: () => videoPlayerInfo.toggleMuteAndUpdateVolume(),
-        icon: Icon(
-          videoPlayerInfo.isMuted ? Icons.volume_off : Icons.volume_up,
-          size: 14,
-        ),
-        label: Text(
-          videoPlayerInfo.isMuted ? I18n.unmute : I18n.mute,
-          style: const TextStyle(
-            color: Colors.black,
-            fontSize: 14.0,
+    if (videoPlayerInfo.isMuted) {
+      return SizedBox(
+        width: 110,
+        child: TextButton.icon(
+          onPressed: () => videoPlayerInfo.toggleMuteAndUpdateVolume(),
+          icon: const Icon(Icons.volume_off, size: 14),
+          label: Text(
+            I18n.unmute,
+            style: const TextStyle(color: Colors.black, fontSize: 14.0),
+          ), // Text
+          style: TextButton.styleFrom(
+            iconColor: Colors.black,
+            backgroundColor: Colors.white,
           ),
-        ), // Text
-        style: TextButton.styleFrom(
-          iconColor: Colors.black,
-          backgroundColor: Colors.white,
         ),
-      ),
-    );
+      );
+    }
+    return const SizedBox.shrink();
   }
 }
