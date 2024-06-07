@@ -26,7 +26,8 @@ Map<int, String> gameDepositPage = {
 
 // 狀況1: 如果item?.url為http://或https://開頭，則直接打開網頁
 void handleHttpUrl(String url) {
-  url = url.replaceAll('*', app_platform_ervice.AppPlatformService().getHost());
+  url = url.replaceAll(
+      '*', 'https://${app_platform_ervice.AppPlatformService().getHost()}');
   launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
 }
 
