@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/utils/handle_url.dart';
-import 'package:shared/services/platform_service.app.dart'
-    if (dart.library.html) 'package:shared/services/platform_service.web.dart'
-    as app_platform_ervice;
 
 import '../apis/jingang_api.dart';
 import '../controllers/system_config_controller.dart';
@@ -22,20 +19,16 @@ class JingangLinkButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(
-        '>>> systemConfigController.agentCode.value: ${app_platform_ervice.AppPlatformService().getHost()}');
     return GestureDetector(
       onTap: () async {
         jingangApi.recordJingangClick(item?.id ?? 0);
         var url = item?.url;
         if (url == null) return;
-        // 替換 * 為代理碼
-        url = url.replaceAll(
-            '*', app_platform_ervice.AppPlatformService().getHost());
-        print('>>> url: $url');
         final Uri parsedUrl = Uri.parse(url);
 
-        if (url.startsWith('http://') || url.startsWith('https://')) {
+        if (url.startsWith('http://') ||
+            url.startsWith('https://') ||
+            url.startsWith('*')) {
           handleHttpUrl(url);
         } else if (parsedUrl.queryParameters.containsKey('depositType')) {
           handleGameDepositType(context, url);
