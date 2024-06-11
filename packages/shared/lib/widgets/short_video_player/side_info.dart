@@ -1,11 +1,9 @@
-import 'package:app_wl_id1/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_collect_count_consumer.dart';
 import 'package:shared/modules/short_video/short_video_detail.dart';
@@ -14,7 +12,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../../config/colors.dart';
+import '../avatar.dart';
 
 final logger = Logger();
 
@@ -69,7 +67,7 @@ class SideInfoState extends State<SideInfo> {
                                 .videoPlayerController
                                 ?.play();
                           },
-                          child: ActorAvatar(
+                          child: AvatarWidget(
                             photoSid: videoDetail?.supplier!.photoSid,
                             width: 45,
                             height: 45,
@@ -158,7 +156,7 @@ class SideInfoState extends State<SideInfo> {
                                   Icons.star_rounded,
                                   size: 36,
                                   color: isLike
-                                      ? AppColors.colors[ColorKeys.primary]
+                                      ? const Color.fromARGB(255, 251, 199, 41)
                                       : Colors.white,
                                 ),
                               ),
