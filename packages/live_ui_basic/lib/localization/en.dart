@@ -82,4 +82,7 @@ const Map<String, String> liveEnUsStrings = {
   "fans": "fans",
   "preview": "Preview",
   "recommend": "Recommend",
+  "account_or_password_error": "Account or password error",
+  "please_login_first": "Please log in first",
+  "conflict": "You are already using this account on another device"
 };

@@ -82,4 +82,7 @@ const Map<String, String> liveIdIdStrings = {
   "fans": "penggemar",
   "preview": "Pratinjau",
   "recommend": "merekomendasikan",
+  "account_or_password_error": "Kesalahan akun atau kata sandi",
+  "please_login_first": "Silakan masuk terlebih dahulu",
+  "conflict": "Anda sudah menggunakan akun ini di perangkat lain"
 };
