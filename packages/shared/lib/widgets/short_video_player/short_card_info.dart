@@ -1,4 +1,3 @@
-import 'package:app_wl_id1/widgets/actor_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -6,7 +5,9 @@ import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../../screens/short/short_card_info_tag.dart';
+import '../avatar.dart';
+import 'short_card_info_tag.dart';
+
 
 final logger = Logger();
 
@@ -57,7 +58,7 @@ class ShortCardInfo extends StatelessWidget {
                             ? Padding(
                                 padding:
                                     const EdgeInsets.only(right: 8, bottom: 8),
-                                child: ActorAvatar(
+                                child: AvatarWidget(
                                   photoSid: data.supplier!.photoSid,
                                   width: 40,
                                   height: 40,

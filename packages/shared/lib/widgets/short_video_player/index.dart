@@ -7,9 +7,10 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/widgets/short_video_player/error.dart';
 import 'package:shared/widgets/short_video_player/player.dart';
 import 'package:shared/widgets/short_video_player/draggable_video_progress_bar.dart';
+import 'package:shared/widgets/short_video_player/short_video_mute_button.dart';
+import 'package:shared/widgets/short_video_player/fullscreen_controls.dart';
+
 import 'package:video_player/video_player.dart';
-import '../../screens/short/fullscreen_controls.dart';
-import '../short_video_mute_button.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
