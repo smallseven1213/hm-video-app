@@ -134,7 +134,7 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     if (toggleControlsTimer != null) {
       toggleControlsTimer!.cancel();
     }
-    toggleControlsTimer = Timer(const Duration(seconds: 2), () {
+    toggleControlsTimer = Timer(const Duration(seconds: 5), () {
       if (displayControls) {
         toggleDisplayControls();
       }
