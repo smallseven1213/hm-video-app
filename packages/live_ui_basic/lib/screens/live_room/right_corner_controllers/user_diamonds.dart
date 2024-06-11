@@ -11,9 +11,6 @@ class UserDiamonds extends StatelessWidget {
     final liveUserDetailController = Get.find<LiveUserController>();
     return InkWell(
       onTap: () {
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
-        Navigator.of(context).pop();
         gotoDeposit(context);
       },
       child: Wrap(
