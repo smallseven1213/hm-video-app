@@ -78,4 +78,7 @@ const Map<String, String> liveJaJpStrings = {
   "fans": "ファン",
   "preview": "プレビュー",
   "recommend": "お勧め",
+  "account_or_password_error": "アカウントまたはパスワードが間違っています",
+  "please_login_first": "まずアカウントにログインしてください",
+  "conflict": "他のデバイスでこのアカウントを使用しています"
 };

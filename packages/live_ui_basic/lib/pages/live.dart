@@ -3,7 +3,10 @@ import 'package:get/get.dart';
 import 'package:live_core/controllers/live_list_controller.dart';
 import 'package:live_core/widgets/live_scaffold.dart';
 import 'package:live_core/widgets/room_list_provider.dart';
+import 'package:shared/controllers/bottom_navigator_controller.dart';
 
+import '../libs/show_live_dialog.dart';
+import '../localization/live_localization_delegate.dart';
 import '../screens/live/banners.dart';
 import '../screens/live/filter.dart';
 import '../screens/live/list.dart';
@@ -13,6 +16,7 @@ import '../screens/live/navigation.dart';
 import '../screens/live/search.dart';
 import '../screens/live/sort.dart';
 import '../screens/live/no_more.dart';
+import '../widgets/live_button.dart';
 
 class LivePage extends StatefulWidget {
   const LivePage({Key? key}) : super(key: key);
@@ -21,6 +25,7 @@ class LivePage extends StatefulWidget {
 }
 
 class LivePageState extends State<LivePage> {
+  final bottomNavigatorController = Get.find<BottomNavigatorController>();
   final ScrollController _scrollController = ScrollController();
   bool noMore = false;
   @override
@@ -74,6 +79,31 @@ class LivePageState extends State<LivePage> {
           child: SearchWidget(),
         ),
       ),
+      onError: ({errorMessage}) {
+        final LiveLocalizations localizations = LiveLocalizations.of(context)!;
+        showLiveDialog(
+          context,
+          title: localizations.translate('error'),
+          content: Center(
+            child: Text(localizations.translate(errorMessage ?? "error"),
+                style: const TextStyle(color: Colors.white, fontSize: 11)),
+          ),
+          actions: [
+            LiveButton(
+                text: localizations.translate('cancel'),
+                type: ButtonType.secondary,
+                onTap: () {
+                  Navigator.of(context).pop();
+                }),
+            LiveButton(
+                text: localizations.translate('confirm'),
+                type: ButtonType.primary,
+                onTap: () {
+                  bottomNavigatorController.changeKey('/home');
+                })
+          ],
+        );
+      },
       loadingWidget: const LiveSkeleton(),
       backgroundColor: const Color(0xFF242a3d),
       body: RoomListProvider(
