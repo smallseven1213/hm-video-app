@@ -23,8 +23,8 @@ class ShortVideoMuteButton extends StatelessWidget {
             height: 24,
             child: Obx(() => Image(
                   image: AssetImage(controller.isMuted.value
-                      ? 'assets/images/short-mute.webp'
-                      : 'assets/images/short-unmute.webp'),
+                      ? 'packages/shared/assets/images/short-mute.webp'
+                      : 'packages/shared/assets/images/short-unmute.webp'),
                   fit: BoxFit.fill,
                 )),
           ),
