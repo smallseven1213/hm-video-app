@@ -15,12 +15,12 @@ class ChannelSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: AppColors.colors[ColorKeys.primary],
-      height: 40,
+      height: 30,
       width: double.infinity,
-      padding: const EdgeInsets.only(left: 15, right: 15, top: 10),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(width: 10),
           Expanded(
             child: PopularSearchTitleBuilder(
               child: (({required String searchKeyword}) => StaticSearchInput(
@@ -55,6 +55,7 @@ class ChannelSearchBar extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(width: 10),
         ],
       ),
     );
