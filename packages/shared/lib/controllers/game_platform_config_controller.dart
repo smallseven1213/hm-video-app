@@ -15,6 +15,7 @@ class GamePlatformConfigController extends GetxController {
   var videoToGameRoute = ''.obs; // 影音站跳轉至遊戲頁面路由
   var needsPhoneVerification = false.obs; // 註冊是否前往手機驗證
   var countryCode = Rx<String?>(null); // 註冊手機驗證國碼
+  var isGameLobbyBalanceShow = true.obs; // 是否顯示遊戲大廳餘額
 
   Future<void> fetchData() async {
     GameLobbyApi gameLobbyApi = GameLobbyApi();
@@ -27,6 +28,7 @@ class GamePlatformConfigController extends GetxController {
       gamePageColor.value = result.pageColor!;
       needsPhoneVerification.value = result.needsPhoneVerification!;
       countryCode.value = result.countryCode;
+      isGameLobbyBalanceShow.value = result.isGameLobbyBalanceShow!;
     } catch (e) {
       logger.e('fetchData platform config error: $e');
     }

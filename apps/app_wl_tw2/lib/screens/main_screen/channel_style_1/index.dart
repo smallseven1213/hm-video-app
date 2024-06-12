@@ -63,13 +63,14 @@ class ChannelStyle1State extends State<ChannelStyle1>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    const baseTopHeight = 140;
     return DisplayLayoutTabSearchConsumer(
         layoutId: widget.layoutId,
         child: (({required bool displaySearchBar}) {
           return Padding(
             padding: EdgeInsets.only(
-                top: MediaQuery.paddingOf(context).top +
-                    (displaySearchBar ? 90 : 50)),
+                top: MediaQuery.of(context).padding.top +
+                    (displaySearchBar ? baseTopHeight : baseTopHeight - 40)),
             child: Obx(() {
               ChannelInfo? channelData =
                   channelDataController.channelData.value;
