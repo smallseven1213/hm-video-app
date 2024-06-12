@@ -42,7 +42,10 @@ final screens = {
           layoutId: 2,
         ),
       ),
-  HomeNavigatorPathes.game: () => const EnterGame(),
+  HomeNavigatorPathes.game: () => const Scaffold(
+        appBar: SharedAppBar(),
+        body: EnterGame(),
+      ),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
   HomeNavigatorPathes.live: () => const LivePage(),

@@ -54,8 +54,17 @@ class HomeMainScreen extends StatelessWidget {
                       layoutId: layoutId,
                       child: (({required bool displaySearchBar}) =>
                           displaySearchBar
-                              ? ChannelSearchBar(
-                                  key: Key('channel-search-bar-$layoutId'),
+                              ? Column(
+                                  children: [
+                                    SharedAppBar(
+                                      key: Key(
+                                          'channel-search-bar-$layoutId-app-bar'),
+                                    ),
+                                    ChannelSearchBar(
+                                      key: Key(
+                                          'channel-search-bar-$layoutId-search-bar'),
+                                    ),
+                                  ],
                                 )
                               : Container()),
                     ),
