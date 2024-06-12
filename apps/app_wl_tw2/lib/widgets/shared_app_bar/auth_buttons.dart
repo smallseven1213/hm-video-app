@@ -17,10 +17,11 @@ class AuthButtons extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: Colors.blue),
+              borderRadius: BorderRadius.circular(4),
+              color: const Color(0xFF082C68),
             ),
-            child: const Text('Login', style: TextStyle(color: Colors.white)),
+            child: const Text('登入',
+                style: TextStyle(color: Color(0xffb2bac5), fontSize: 12)),
           ),
         ),
         const SizedBox(width: 8),
@@ -31,11 +32,10 @@ class AuthButtons extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.blue),
-                color: const Color(0xFF082C68)),
-            child:
-                const Text('Register', style: TextStyle(color: Colors.white)),
+                borderRadius: BorderRadius.circular(4),
+                color: const Color(0xFF6874b6)),
+            child: const Text('註冊',
+                style: TextStyle(color: Colors.white, fontSize: 12)),
           ),
         ),
         const SizedBox(width: 10),

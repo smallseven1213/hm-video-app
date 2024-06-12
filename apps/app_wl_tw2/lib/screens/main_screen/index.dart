@@ -10,6 +10,7 @@ import 'package:app_wl_tw2/config/colors.dart';
 import 'package:app_wl_tw2/screens/main_screen/channels.dart';
 import 'package:app_wl_tw2/screens/video/video_player_area/flash_loading.dart';
 
+import '../../widgets/shared_app_bar/shared_app_bar.dart';
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';
 
@@ -66,7 +67,9 @@ class HomeMainScreen extends StatelessWidget {
                                     ),
                                   ],
                                 )
-                              : Container()),
+                              : SizedBox(
+                                  height: MediaQuery.of(context).padding.top,
+                                )),
                     ),
                     Obx(() => uiController.displayHomeNavigationBar.value
                         ? LayoutStyleTabBgColorConsumer(

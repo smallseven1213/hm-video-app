@@ -75,10 +75,10 @@ class _UserInfoState extends State<UserInfo>
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 const Text(
-                  'Total Balance:',
+                  '當前餘額',
                   style: TextStyle(
                     fontSize: 10,
-                    color: Colors.white,
+                    color: Color(0xffb2bac5),
                   ),
                 ),
                 Row(

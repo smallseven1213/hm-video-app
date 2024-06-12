@@ -6,7 +6,6 @@ import 'package:app_wl_tw2/screens/home/home_apps.dart';
 import 'package:app_wl_tw2/screens/video/video_player_area/flash_loading.dart';
 
 import 'package:flutter/material.dart';
-import 'package:game/screens/enter_game_screen/index.dart';
 import 'package:game/widgets/game_startup.dart';
 import 'package:get/get.dart';
 
@@ -20,10 +19,12 @@ import 'package:shared/modules/main_navigation/main_navigation_scaffold.dart';
 import 'package:live_ui_basic/pages/live.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
 
+import '../screens/enter_game_screen/index.dart';
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
 import '../widgets/custom_bottom_bar_item.dart';
+import '../widgets/shared_app_bar/shared_app_bar.dart';
 
 final logger = Logger();
 UserApi userApi = UserApi();
@@ -43,7 +44,7 @@ final screens = {
         ),
       ),
   HomeNavigatorPathes.game: () => const Scaffold(
-        appBar: SharedAppBar(),
+        appBar: SharedAppBar(backgroundColor: Color(0xff1F2123)),
         body: EnterGame(),
       ),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
