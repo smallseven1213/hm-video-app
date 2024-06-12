@@ -1,27 +1,24 @@
 import 'dart:io';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_response_controller.dart';
-
 import 'package:game/models/bank.dart';
+import 'package:game/models/game_activity.dart';
+import 'package:game/models/game_deposit_payment_channel.dart';
+import 'package:game/models/game_deposit_payment_type_list.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/models/game_order.dart';
 import 'package:game/models/game_payment.dart';
+import 'package:game/models/game_payment_channel_detail.dart';
+import 'package:game/models/game_withdraw_record.dart';
+import 'package:game/models/game_withdraw_stack_limit.dart';
 import 'package:game/models/hm_api_response.dart';
 import 'package:game/models/hm_api_response_with_data.dart';
 import 'package:game/models/user_withdrawal_data.dart';
-import 'package:game/models/game_withdraw_record.dart';
-import 'package:game/models/game_withdraw_stack_limit.dart';
-import 'package:game/models/game_activity.dart';
-import 'package:game/models/game_payment_channel_detail.dart';
-import 'package:game/models/game_deposit_payment_channel.dart';
-import 'package:game/models/game_deposit_payment_type_list.dart';
-
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/fetcher.dart';
-
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/services/platform_service.app.dart'
     if (dart.library.html) 'package:shared/services/platform_service.web.dart'
@@ -259,6 +256,7 @@ class GameLobbyApi {
               pageColor: 1,
               needsPhoneVerification: false,
               countryCode: null,
+              isGameLobbyBalanceShow: true,
             );
           }
 

@@ -1,15 +1,15 @@
 import 'package:decimal/decimal.dart';
 import 'package:decimal/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/models/third_login_api_response_with_data.dart';
+import 'package:game/screens/game_theme_config.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:intl/intl.dart';
-import 'package:game/controllers/game_wallet_controller.dart';
-import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
-import 'package:shared/widgets/sid_image.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -30,6 +30,8 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
   late AnimationController animationController;
   UserController userController = Get.find<UserController>();
   GameWalletController gameWalletController = Get.find<GameWalletController>();
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
 
   final theme = themeMode[GetStorage().hasData('pageColor')
           ? GetStorage().read('pageColor')
@@ -71,66 +73,69 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(localizations.translate('balance'),
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: gameLobbyPrimaryTextColor)),
-                        Row(children: [
-                          Obx(() => Text(
-                                '${gameWalletController.wallet > 0 ? NumberFormat.currency(
-                                    locale: currencyMapper[gameWalletController
-                                            .currency.value] ??
-                                        'zh-TW',
-                                    symbol: '',
-                                  ).format(
-                                    DecimalIntl(
-                                      Decimal.parse(gameWalletController
-                                          .wallet.value
-                                          .toString()),
-                                    ),
-                                  ) : '0.00'} ${localizations.translate('dollar')}',
-                                style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600,
-                                    color: gameLobbyPrimaryTextColor),
-                                textAlign: TextAlign.left,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              )),
-                          const SizedBox(
-                            width: 6,
-                          ),
-                          InkWell(
-                            onTap: () async {
-                              animationController.forward();
-                              setState(() {});
-                              Future.delayed(const Duration(milliseconds: 1000))
-                                  .then((value) {
-                                animationController.reset();
-                              });
-                              gameWalletController.mutate();
-                            },
-                            child: RotationTransition(
-                              turns: Tween(begin: 0.0, end: -1.0)
-                                  .animate(animationController),
-                              child: Icon(
-                                Icons.cached,
-                                color: gameLobbyAppBarIconColor,
-                                size: 16,
+                if (gameConfigController.isGameLobbyBalanceShow.value)
+                  Row(
+                    children: [
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(localizations.translate('balance'),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: gameLobbyPrimaryTextColor)),
+                          Row(children: [
+                            Obx(() => Text(
+                                  '${gameWalletController.wallet > 0 ? NumberFormat.currency(
+                                      locale: currencyMapper[
+                                              gameWalletController
+                                                  .currency.value] ??
+                                          'zh-TW',
+                                      symbol: '',
+                                    ).format(
+                                      DecimalIntl(
+                                        Decimal.parse(gameWalletController
+                                            .wallet.value
+                                            .toString()),
+                                      ),
+                                    ) : '0.00'} ${localizations.translate('dollar')}',
+                                  style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                      color: gameLobbyPrimaryTextColor),
+                                  textAlign: TextAlign.left,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                )),
+                            const SizedBox(
+                              width: 6,
+                            ),
+                            InkWell(
+                              onTap: () async {
+                                animationController.forward();
+                                setState(() {});
+                                Future.delayed(
+                                        const Duration(milliseconds: 1000))
+                                    .then((value) {
+                                  animationController.reset();
+                                });
+                                gameWalletController.mutate();
+                              },
+                              child: RotationTransition(
+                                turns: Tween(begin: 0.0, end: -1.0)
+                                    .animate(animationController),
+                                child: Icon(
+                                  Icons.cached,
+                                  color: gameLobbyAppBarIconColor,
+                                  size: 16,
+                                ),
                               ),
                             ),
-                          ),
-                        ]),
-                      ],
-                    ),
-                  ],
-                ),
+                          ]),
+                        ],
+                      ),
+                    ],
+                  ),
                 Obx(() => userController.info.value.uid != 0
                     ? Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4),
