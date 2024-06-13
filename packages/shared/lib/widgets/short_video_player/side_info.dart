@@ -12,7 +12,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../actor_avatar.dart';
+import '../avatar.dart';
 
 final logger = Logger();
 
@@ -67,7 +67,7 @@ class SideInfoState extends State<SideInfo> {
                                 .videoPlayerController
                                 ?.play();
                           },
-                          child: ActorAvatar(
+                          child: AvatarWidget(
                             photoSid: videoDetail?.supplier!.photoSid,
                             width: 45,
                             height: 45,
@@ -156,7 +156,7 @@ class SideInfoState extends State<SideInfo> {
                                   Icons.star_rounded,
                                   size: 36,
                                   color: isLike
-                                      ? Colors.yellow.shade700
+                                      ? const Color.fromARGB(255, 251, 199, 41)
                                       : Colors.white,
                                 ),
                               ),

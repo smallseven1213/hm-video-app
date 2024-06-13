@@ -2,13 +2,11 @@ import 'package:app_wl_id1/localization/i18n.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_collect_count_consumer.dart';
 import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
-import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../../screens/short/button.dart';
 

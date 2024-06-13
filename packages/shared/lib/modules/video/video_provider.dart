@@ -46,7 +46,7 @@ class VideoScreenProviderState extends State<VideoScreenProvider> {
     super.initState();
 
     // record user play recrod
-    userApi.addPlayHistory(widget.id);
+    // userApi.addPlayHistory(widget.id);
 
     controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
 

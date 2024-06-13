@@ -81,4 +81,7 @@ const Map<String, String> liveViVnStrings = {
   "fans": "cái quạt",
   "preview": "Xem trước",
   "recommend": "khuyến nghị",
+  "account_or_password_error": "Lỗi tài khoản hoặc mật khẩu",
+  "please_login_first": "Vui lòng đăng nhập trước",
+  "conflict": "Bạn đang sử dụng tài khoản này trên thiết bị khác"
 };

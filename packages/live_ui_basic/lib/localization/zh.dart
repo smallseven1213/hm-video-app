@@ -80,4 +80,7 @@ const Map<String, String> liveZhTwStrings = {
   "fans": "粉丝",
   "preview": "预吿",
   "recommend": "推荐",
+  "account_or_password_error": "账号或密码错误",
+  "please_login_first": "请先登录账号",
+  "conflict": "您已经在其他设备上使用本账号"
 };

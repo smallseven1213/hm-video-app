@@ -201,3 +201,5 @@ you_have_been_logged_out_please_log_in_again,"You have been logged out, please l
 user_login,User login,用戶登入,用户登录,Đăng nhập người dùng,ユーザーログイン,Login pengguna
 get_the_latest_resources,Get the latest resources,取得最新資源,获取最新资源,Nhận thông tin tài nguyên mới nhất,最新のリソースを入手,Dapatkan sumber daya terbaru
 back,back,返回,返回,quay lại,戻る ,kembali
+mute,Mute,靜音,静音,Tắt tiếng,ミュート,Diam
+unmute,Unmute,取消靜音,取消静音,Bật tiếng,ミュート解除,Bunyikan

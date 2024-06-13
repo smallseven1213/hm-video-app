@@ -7,8 +7,8 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
+import 'package:shared/widgets/short_video_player/short_card_info.dart';
+import 'package:shared/widgets/short_video_player/index.dart';
 import 'short_bottom_area.dart';
 
 class GeneralShortCard extends StatefulWidget {

@@ -29,8 +29,14 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    actorsController = Get.put(ActorsController());
     actorRegionController = Get.find<ActorRegionController>();
+    actorsController = Get.put(ActorsController(fetchWhenInit: false));
+
+    actorRegionController.regions.listen((regions) {
+      if (regions.isNotEmpty) {
+        actorsController.setRegion(regions[0].id);
+      }
+    });
   }
 
   Widget _buildCustomRadioButton(int value, String label) {

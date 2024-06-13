@@ -1,18 +1,17 @@
-import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-
-import 'package:game/screens/game_theme_config.dart';
-import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
-import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
-import 'package:game/screens/game_deposit_list_screen/title.dart';
-import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
-import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
+import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/models/game_deposit_payment_type_list.dart';
 import 'package:game/models/game_payment_channel_detail.dart';
-import 'package:game/controllers/game_withdraw_controller.dart';
+import 'package:game/screens/game_deposit_list_screen/amount_form.dart';
+import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
+import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
+import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
+import 'package:game/screens/game_deposit_list_screen/title.dart';
+import 'package:game/screens/game_theme_config.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -97,7 +96,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
   void paymentIndexChanged(idx) async {
     setState(() {
-      _paymentActiveIndex = idx;
+      _paymentActiveIndex = idx.toLowerCase();
       _channelActiveIndex = 0;
 
       Future.delayed(const Duration(milliseconds: 100)).then((value) {
@@ -127,10 +126,11 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
     List<DepositPaymentTypeList> paymentListItem =
         widget.paymentList.where((element) {
       final depositDataKeys = widget.depositData.keys.toList();
-      return depositDataKeys.contains(element.code);
+      return depositDataKeys.contains(element.code.toLowerCase());
     }).toList();
 
-    List channels = List.from(widget.depositData[_paymentActiveIndex]);
+    List channels =
+        List.from(widget.depositData[_paymentActiveIndex.toLowerCase()]);
     int channelLength = channels.isNotEmpty ? channels.length.toInt() : 0;
     num channelHeight =
         (channelLength > 3 ? (channelLength / 3).ceil() * 54 : 60);
@@ -140,13 +140,21 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
         : 0;
     num amountHeight = amountLength > 4 ? (amountLength / 4).ceil() * 80 : 80;
     bool requireName = paymentListItem
-            .firstWhere((element) => element.code == _paymentActiveIndex)
+            .firstWhere((element) =>
+                element.code.toLowerCase() == _paymentActiveIndex.toLowerCase())
             .requireName
-            // 將requireName轉換成bool
             .toString()
             .contains('0')
         ? false // NO
         : true; // YES
+    bool requirePhone = paymentListItem
+            .firstWhere((element) =>
+                element.code.toLowerCase() == _paymentActiveIndex.toLowerCase())
+            .requirePhone
+            .toString()
+            .contains('0')
+        ? false
+        : true;
 
     return GestureDetector(
       onTap: () {
@@ -171,7 +179,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
           children: [
             // ======支付方式======
             DepositPaymentTypeListWidget(
-              paymentActiveIndex: _paymentActiveIndex,
+              paymentActiveIndex: _paymentActiveIndex.toLowerCase(),
               paymentListItem: paymentListItem,
               handlePaymentIndexChanged: paymentIndexChanged,
             ),
@@ -383,10 +391,11 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                       focusNode: focusNode,
                       max: channels[_channelActiveIndex].maxAmount.toDouble(),
                       min: channels[_channelActiveIndex].minAmount.toDouble(),
-                      activePayment: _paymentActiveIndex,
+                      activePayment: _paymentActiveIndex.toLowerCase(),
                       paymentChannelId:
                           channels[_channelActiveIndex].id.toString(),
                       requireName: requireName,
+                      requirePhone: requirePhone,
                     ),
 
                   if (channels[_channelActiveIndex].specificAmounts != null)
@@ -417,12 +426,14 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                     context,
                                     enableSubmit: true,
                                     controller: amountController,
-                                    activePayment: _paymentActiveIndex,
+                                    activePayment:
+                                        _paymentActiveIndex.toLowerCase(),
                                     paymentChannelId:
                                         channels[_channelActiveIndex]
                                             .id
                                             .toString(),
                                     requireName: requireName,
+                                    requirePhone: requirePhone,
                                     focusNode: focusNode,
                                   );
                                 } else {

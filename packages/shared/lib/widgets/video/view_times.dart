@@ -20,7 +20,8 @@ class ViewTimes extends StatelessWidget {
               child: Image(
                 width: 15,
                 height: 17,
-                image: AssetImage('assets/images/play_count.webp'),
+                image:
+                    AssetImage('packages/shared/assets/images/play_count.webp'),
               ),
             ),
           ),

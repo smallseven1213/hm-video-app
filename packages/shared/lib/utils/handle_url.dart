@@ -6,6 +6,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/handle_game_url_methods.dart';
+import 'package:shared/services/platform_service.app.dart'
+    if (dart.library.html) 'package:shared/services/platform_service.web.dart'
+    as app_platform_ervice;
 
 import '../controllers/bottom_navigator_controller.dart';
 import '../navigator/delegate.dart';
@@ -23,6 +26,8 @@ Map<int, String> gameDepositPage = {
 
 // 狀況1: 如果item?.url為http://或https://開頭，則直接打開網頁
 void handleHttpUrl(String url) {
+  url = url.replaceAll(
+      '*', 'https://${app_platform_ervice.AppPlatformService().getHost()}');
   launchUrl(Uri.parse(url), webOnlyWindowName: '_blank');
 }
 

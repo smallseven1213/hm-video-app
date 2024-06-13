@@ -9,6 +9,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:volume_control/volume_control.dart';
 
 import 'enums.dart';
+import 'mute_volume_button.dart';
 import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
@@ -40,12 +41,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   bool hasH5FirstPlay = kIsWeb ? false : true;
   bool isForward = false;
 
-  // vertical drag的东西
+  // vertical drag的東西
   double? initialVolume;
   double? initialBrightness;
   double? lastDragPosition; // 添加这一行
-  double brightness = 0.5; // 初始值，表示亮度，范围在 0.0 到 1.0 之间
-  double volume = 0.5; // 初始值，表示音量，范围在 0.0 到 1.0 之间
+  bool isMuted = kIsWeb ? true : false; // 音量静音状态跟踪
+  double brightness = 0.5; // 初始值，表示亮度，範圍在 0.0 到 1.0 之間
+  double volume = 0.5; // 初始值，表示音量，範圍在 0.0 到 1.0 之間
   SideControlsType sideControlsType = SideControlsType.none; // 初始值
   double verticalDragPosition = 0.0; // 初始值
 
@@ -58,7 +60,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
       tag: widget.videoUrl,
-      child: (videoPlayerInfo) =>
+      child: (VideoPlayerInfo videoPlayerInfo) =>
           LayoutBuilder(builder: (context, constraints) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
@@ -80,12 +82,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               return;
             }
             setState(() {
-              // 根据滑动的开始位置来决定我们将要修改哪一个值
+              // 根據滑動的開始位置來決定我們將要修改哪一個值
               if (details.localPosition.dx < constraints.maxWidth / 2) {
-                // 如果用户在画面的左半边开始滑动，那么我们将会更新亮度的值
+                // 如果用戶在畫面的左半邊開始滑動，那麼我們將會更新亮度的值
                 sideControlsType = SideControlsType.brightness;
               } else {
-                // 如果用户在画面的右半边开始滑动，那么我们将会更新音量的值
+                // 如果用戶在畫面的右半邊開始滑動，那麼我們將會更新音量的值
                 sideControlsType = SideControlsType.sound;
               }
             });
@@ -95,12 +97,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               return;
             }
             lastDragPosition ??= details.globalPosition.dy;
-            // 计算滑动距离并将其正规化到0到1之间
+            // 計算滑動距離並將其正規化到0到1之間
             double deltaY = details.globalPosition.dy - lastDragPosition!;
             verticalDragPosition -= deltaY / (constraints.maxHeight * 0.3);
             verticalDragPosition = verticalDragPosition.clamp(0.0, 1.0);
 
-            // 检查滑动是发生在画面的左半边还是右半边
+            // 檢查滑動是發生在畫面的左半邊還是右半邊
             bool isVolume = details.globalPosition.dx >
                 MediaQuery.of(context).size.width / 2;
             if (isVolume) {
@@ -117,7 +119,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               logger.i('brightness: $brightness');
             }
 
-            // 更新lastDragPosition以便于下次计算
+            // 更新lastDragPosition以便于下次計算
             lastDragPosition = details.globalPosition.dy;
             setState(() {});
           },
@@ -125,7 +127,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
             lastDragPosition = null;
             if (mounted && !kIsWeb) {
               setState(() {
-                // 当用户的手指离开萤幕时，我们需要将 sideControlsType 设回 SideControlsType.none
+                // 當用戶的手指離開螢幕時，我們需要將 sideControlsType 設回 SideControlsType.none
                 sideControlsType = SideControlsType.none;
               });
             }
@@ -177,6 +179,13 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
+
+              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+                Positioned(
+                  top: 50,
+                  left: 20,
+                  child: MuteVolumeButton(videoPlayerInfo: videoPlayerInfo),
+                ),
               if (videoPlayerInfo.inBuffering && !videoPlayerInfo.isScrolling)
                 const Center(
                   child: CircularProgressIndicator(
@@ -223,7 +232,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   ),
                 ),
               if (kIsWeb && !hasH5FirstPlay && !videoPlayerInfo.isPlaying)
-                // 中间播放按钮
+                // 中間播放按鈕
                 GestureDetector(
                   onTap: () {
                     videoPlayerInfo.videoPlayerController?.play();
@@ -321,6 +330,16 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                           videoPlayerInfo.videoDurationString,
                           style: const TextStyle(color: Colors.white),
                         ),
+                        IconButton(
+                          onPressed: () =>
+                              videoPlayerInfo.toggleMuteAndUpdateVolume(),
+                          icon: Icon(
+                            videoPlayerInfo.isMuted
+                                ? Icons.volume_off
+                                : Icons.volume_up,
+                            color: Colors.white,
+                          ),
+                        ),
                         kIsWeb && widget.isFullscreen
                             ? const SizedBox(width: 8.0)
                             : IconButton(
@@ -338,7 +357,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                   ),
                 ),
 
-              //  垂直拖拉：显示音量或亮度，并显示音量或亮度的数值，拖拉位置在右边时左边显示音量，拖拉位置在左边时右边显示亮度
+              //  垂直拖拉：顯示音量或亮度，並顯示音量或亮度的數值，拖拉位置在右邊時左邊顯示音量，拖拉位置在左邊時右邊顯示亮度
               if (!GetPlatform.isWeb &&
                       sideControlsType == SideControlsType.brightness ||
                   sideControlsType == SideControlsType.sound)

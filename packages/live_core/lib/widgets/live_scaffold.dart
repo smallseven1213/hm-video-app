@@ -6,12 +6,16 @@ import 'package:get/get.dart';
 import '../apis/auth_api.dart';
 import '../controllers/gifts_controller.dart';
 import '../controllers/live_list_controller.dart';
-import '../controllers/live_search_controller.dart';
-import '../controllers/live_search_history_controller.dart';
 import '../controllers/live_system_controller.dart';
 import '../controllers/live_user_controller.dart';
 import '../controllers/user_follows_controller.dart';
-import 'loading.dart';
+
+// create a response.code map to error message Map<String, String>
+const Map<int, String> errorMap = {
+  400: 'account_or_password_error',
+  401: 'please_login_first',
+  409: 'conflict',
+};
 
 class LiveScaffold extends StatefulWidget {
   final PreferredSizeWidget? appBar;
@@ -19,6 +23,7 @@ class LiveScaffold extends StatefulWidget {
   final Widget? loadingWidget;
   final Widget? floatingActionButton;
   final Color? backgroundColor;
+  final Function({String? errorMessage})? onError;
 
   const LiveScaffold({
     super.key,
@@ -27,6 +32,7 @@ class LiveScaffold extends StatefulWidget {
     this.loadingWidget,
     this.floatingActionButton,
     this.backgroundColor,
+    this.onError,
   });
 
   @override
@@ -73,6 +79,44 @@ class LiveScaffoldState extends State<LiveScaffold> {
       Get.put(GiftsController());
     } else {
       isLogin = false;
+      if (response.code == 401 ||
+          response.code == 409 ||
+          response.code == 400) {
+        if (context.mounted) {
+          widget.onError?.call(
+            errorMessage: errorMap[response.code],
+          );
+        }
+
+        // Dialog
+        // showLiveDialog(
+        //   context,
+        //   title: localizations.translate('not_enough_diamonds'),
+        //   content: Center(
+        //     child: Text(
+        //         localizations
+        //             .translate('insufficient_diamonds_please_recharge'),
+        //         style: const TextStyle(color: Colors.white, fontSize: 11)),
+        //   ),
+        //   actions: [
+        //     LiveButton(
+        //         text: localizations.translate('cancel'),
+        //         type: ButtonType.secondary,
+        //         onTap: () {
+        //           Navigator.of(context).pop();
+        //         }),
+        //     LiveButton(
+        //         text: localizations.translate('confirm'),
+        //         type: ButtonType.primary,
+        //         onTap: () {
+        //           Navigator.of(context).pop();
+        //           Navigator.of(context).pop();
+        //           Navigator.of(context).pop();
+        //           gotoDeposit(context);
+        //         })
+        //   ],
+        // );
+      }
     }
     isLoading = false;
     setState(() {});

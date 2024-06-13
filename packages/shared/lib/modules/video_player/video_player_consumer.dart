@@ -1,10 +1,12 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:video_player/video_player.dart';
+import 'package:volume_control/volume_control.dart';
 
 final logger = Logger();
 
@@ -26,6 +28,9 @@ class VideoPlayerInfo {
   final Function() startToggleControlsTimer;
   final Function() startScrolling;
   final Function() stopScrolling;
+  final Function() toggleMuteAndUpdateVolume;
+  final double volume;
+  final bool isMuted;
 
   VideoPlayerInfo({
     required this.videoAction,
@@ -45,6 +50,9 @@ class VideoPlayerInfo {
     required this.startToggleControlsTimer,
     required this.startScrolling,
     required this.stopScrolling,
+    required this.toggleMuteAndUpdateVolume,
+    this.volume = 1.0,
+    this.isMuted = false,
   });
 }
 
@@ -77,12 +85,13 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
   bool displayControls = false;
   bool isScrolling = false;
   Size videoSize = const Size(0, 0);
+  double volume = 1.0;
+  bool isMuted = kIsWeb ? true : false;
 
   @override
   void initState() {
     startToggleControlsTimer();
     ovpController = Get.find<ObservableVideoPlayerController>(tag: widget.tag);
-
     ovpController.videoPlayerController?.addListener(() {
       if (mounted && ovpController.videoPlayerController!.value.isInitialized) {
         setState(() {
@@ -107,6 +116,7 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
               .videoPlayerController!.value.position.inSeconds
               .toInt();
           videoSize = ovpController.videoPlayerController!.value.size;
+          volume = ovpController.videoPlayerController!.value.volume;
         });
 
         if (ovpController.videoPlayerController!.value.duration ==
@@ -124,7 +134,7 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     if (toggleControlsTimer != null) {
       toggleControlsTimer!.cancel();
     }
-    toggleControlsTimer = Timer(const Duration(seconds: 2), () {
+    toggleControlsTimer = Timer(const Duration(seconds: 5), () {
       if (displayControls) {
         toggleDisplayControls();
       }
@@ -164,6 +174,20 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     }
   }
 
+  void toggleMuteAndUpdateVolume() {
+    setState(() {
+      isMuted = !isMuted;
+      double targetVolume = isMuted ? 0.0 : 1.0;
+      volume = targetVolume;
+      if (kIsWeb) {
+        ovpController.videoPlayerController?.setVolume(volume);
+      } else {
+        VolumeControl.setVolume(volume);
+        ovpController.videoPlayerController?.setVolume(volume);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return widget.child(
@@ -181,10 +205,13 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
         displayControls: displayControls,
         isScrolling: isScrolling,
         videoSize: videoSize,
+        volume: volume,
+        isMuted: isMuted,
         showControls: showControls,
         startToggleControlsTimer: startToggleControlsTimer,
         startScrolling: startScrolling,
         stopScrolling: stopScrolling,
+        toggleMuteAndUpdateVolume: toggleMuteAndUpdateVolume,
       ),
     );
   }

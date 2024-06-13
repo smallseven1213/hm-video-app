@@ -1,4 +1,3 @@
-import 'package:app_wl_id1/widgets/shortcard/short_card_info.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,10 +6,10 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
-import '../short_video_mute_button.dart';
-import '../shortcard/index.dart';
+import 'package:shared/widgets/short_video_player/short_card_info.dart';
+import 'package:shared/widgets/short_video_player/side_info.dart';
+import 'package:shared/widgets/short_video_player/index.dart';
 import '../wave_loading.dart';
-import 'side_info.dart';
 
 final logger = Logger();
 
@@ -142,13 +141,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                           ]),
                         ),
                 ),
-                // Positioned(
-                //   bottom: 78,
-                //   right: 0,
-                //   child: ShortVideoMuteButton(
-                //     controller: controller,
-                //   ),
-                // )
               ],
             ),
           ),

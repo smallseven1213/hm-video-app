@@ -6,7 +6,7 @@ import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:video_player/video_player.dart';
-import 'package:wakelock/wakelock.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../utils/screen_control.dart';
 
@@ -16,7 +16,7 @@ final logger = Logger();
 
 class ObservableVideoPlayerController extends GetxController {
   final isReady = false.obs;
-  bool autoPlay;
+  bool autoPlay; //
   // final RxString videoAction = kIsWeb ? 'pause'.obs : 'play'.obs;
   final RxString videoAction = 'pause'.obs;
   late VideoPlayerController? videoPlayerController;
@@ -66,12 +66,15 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) async {
       isReady.value = true;
-      if (!kIsWeb) {
+      if (kIsWeb) {
+        videoPlayerController?.setVolume(autoPlay ? 0 : 1);
+        if (autoPlay) {
+          play();
+        }
+      } else {
         final isMuted = await FlutterVolumeController.getMute();
         videoPlayerController?.setVolume(isMuted == true ? 0 : 1);
         play();
-      } else {
-        // videoPlayerController?.setVolume(0);
       }
     }).catchError((error) {
       if (videoPlayerController?.value.hasError == true) {
@@ -101,9 +104,9 @@ class ObservableVideoPlayerController extends GetxController {
 
     // TODO: 有待分析
     if (!kIsWeb && videoPlayerController?.value.isPlaying == true) {
-      Wakelock.enable();
+      WakelockPlus.enable();
     } else {
-      Wakelock.disable();
+      WakelockPlus.disable();
     }
   }
 
