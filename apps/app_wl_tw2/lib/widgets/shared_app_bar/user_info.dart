@@ -71,8 +71,8 @@ class _UserInfoState extends State<UserInfo>
               Get.find<UserController>().fetchUserInfoV2();
             },
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
                   '當前餘額',
@@ -81,6 +81,7 @@ class _UserInfoState extends State<UserInfo>
                     color: Color(0xffb2bac5),
                   ),
                 ),
+                const SizedBox(height: 3),
                 Row(
                   children: [
                     if (widget.isLoading)
@@ -106,43 +107,48 @@ class _UserInfoState extends State<UserInfo>
                           fontSize: 13,
                           fontWeight: FontWeight.w700,
                           color: Colors.white),
-                    )
+                    ),
+                    const SizedBox(width: 10),
+                    InkWell(
+                        onTap: () {
+                          final currentPath =
+                              MyRouteDelegate.of(context).currentPath;
+                          final bottomNavigatorController =
+                              Get.find<BottomNavigatorController>();
+                          final currentTabActiveKey =
+                              bottomNavigatorController.activeKey;
+                          final isGameUesr = GetStorage().read('isGameUser');
+                          if ((currentTabActiveKey.value == "/game" &&
+                                  currentPath == "/home") ||
+                              isGameUesr == true) {
+                            GamePlatformConfigController gameConfigController =
+                                Get.find<GamePlatformConfigController>();
+                            final route =
+                                gameConfigController.switchPaymentPage.value ==
+                                        switchPaymentPageType['list']
+                                    ? GameAppRoutes.depositList
+                                    : GameAppRoutes.depositPolling;
+                            MyRouteDelegate.of(context).push(route);
+                          } else {
+                            bottomNavigatorController.changeKey('/game');
+                            eventBus.fireEvent("gotoDepositAfterLogin");
+                          }
+                        },
+                        child: const SizedBox(
+                          width: 15,
+                          height: 15,
+                          child: Image(
+                            image: AssetImage('assets/images/user_balance.png'),
+                            fit: BoxFit.contain,
+                            height: 15,
+                            width: 15,
+                          ),
+                        ))
                   ],
                 ),
               ],
             ),
           ),
-          const SizedBox(width: 10),
-          InkWell(
-              onTap: () {
-                final currentPath = MyRouteDelegate.of(context).currentPath;
-                final bottomNavigatorController =
-                    Get.find<BottomNavigatorController>();
-                final currentTabActiveKey = bottomNavigatorController.activeKey;
-                final isGameUesr = GetStorage().read('isGameUser');
-                if ((currentTabActiveKey.value == "/game" &&
-                        currentPath == "/home") ||
-                    isGameUesr == true) {
-                  GamePlatformConfigController gameConfigController =
-                      Get.find<GamePlatformConfigController>();
-                  final route = gameConfigController.switchPaymentPage.value ==
-                          switchPaymentPageType['list']
-                      ? GameAppRoutes.depositList
-                      : GameAppRoutes.depositPolling;
-                  MyRouteDelegate.of(context).push(route);
-                } else {
-                  bottomNavigatorController.changeKey('/game');
-                  eventBus.fireEvent("gotoDepositAfterLogin");
-                }
-              },
-              child: const SizedBox(
-                width: 40,
-                child: Image(
-                  image: AssetImage('assets/images/user_balance.png'),
-                  fit: BoxFit.contain,
-                  height: 35,
-                ),
-              ))
         ],
       ),
     );
