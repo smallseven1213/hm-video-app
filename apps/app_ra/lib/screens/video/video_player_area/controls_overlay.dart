@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:volume_control/volume_control.dart';
+import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 
 import 'enums.dart';
 import 'mute_volume_button.dart';
@@ -106,7 +106,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
               volume = verticalDragPosition;
               volume = volume.clamp(0.0, 1.0);
 
-              VolumeControl.setVolume(volume);
+              FlutterVolumeController.setVolume(volume);
               videoPlayerInfo.videoPlayerController?.setVolume(volume);
               logger.i('volume: $volume');
             } else {
