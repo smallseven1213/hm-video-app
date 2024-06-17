@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 import 'package:video_player/video_player.dart';
-import 'package:volume_control/volume_control.dart';
+import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 
 final logger = Logger();
 
@@ -182,7 +182,7 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
       if (kIsWeb) {
         ovpController.videoPlayerController?.setVolume(volume);
       } else {
-        VolumeControl.setVolume(volume);
+        FlutterVolumeController.setVolume(volume);
         ovpController.videoPlayerController?.setVolume(volume);
       }
     });
