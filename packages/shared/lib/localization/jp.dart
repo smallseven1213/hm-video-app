@@ -48,4 +48,11 @@ const Map<String, String> sharedJaJpStrings = {
   "back": "戻る",
   "account_already_exists_pls_reenter": "アカウントは既に存在しますので、もう一度入力してください。",
   "you_have_been_logged_out_please_log_in_again": "ログアウトされましたので、再度ログインしてください。",
+  "purchase_failed": "残高不足",
+  "insufficient_gold_balance": "フル体験を楽しむためにチャージしてください",
+  "go_to_top_up_now_for_full_exp": "完全な体験のために今すぐトップアップに移動してください",
+  "go_to_top_up": "今すぐトップアップ",
+  "cancel": "キャンセル",
+  "count_gold_coins_to_unlock": "コインでロック解除",
+  "upgrade_to_full_version": "フルバージョンにアップグレード",
 };

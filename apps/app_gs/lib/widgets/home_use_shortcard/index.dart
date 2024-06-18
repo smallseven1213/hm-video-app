@@ -8,6 +8,7 @@ import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
+import '../../utils/show_confirm_dialog.dart';
 import '../wave_loading.dart';
 import 'side_info.dart';
 
@@ -134,6 +135,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                                           data: videoDetail,
                                           title: widget.title,
                                           displayActorAvatar: false,
+                                          showConfirmDialog: showConfirmDialog,
                                         )
                                       : const SizedBox.shrink(),
                             ),
