@@ -12,12 +12,16 @@ class UserArea extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 60,
-      child: UserInfoConsumer(
-        child: (info, isVIP, isGuest) {
-          if (isGuest == false) {
-            return UserInfo(info: info);
+      child: UserInfoV2Consumer(
+        child: (info, isVIP, isGuest, isLoading, isInfoV2Init) {
+          if (isInfoV2Init == false) {
+            return const SizedBox.shrink();
           } else {
-            return const AuthButtons();
+            if (isGuest == false) {
+              return UserInfo(info: info, isLoading: isLoading);
+            } else {
+              return const AuthButtons();
+            }
           }
         },
       ),
