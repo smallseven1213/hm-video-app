@@ -54,11 +54,4 @@ const Map<String, String> sharedEnUsStrings = {
       "Account already exists, please re-enter the account.",
   "you_have_been_logged_out_please_log_in_again":
       "You have been logged out, please log in again.",
-  "purchase_failed": "Purchase failed",
-  "insufficient_gold_balance": "Insufficient balance",
-  "go_to_top_up_now_for_full_exp": "Top up to enjoy the full experience",
-  "go_to_top_up": "Top up now",
-  "cancel": "Cancel",
-  "count_gold_coins_to_unlock": "Coins to unlock",
-  "upgrade_to_full_version": "Upgrade to full version",
 };

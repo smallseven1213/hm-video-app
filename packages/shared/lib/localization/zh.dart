@@ -47,11 +47,4 @@ const Map<String, String> sharedZhTwStrings = {
   "back": "返回",
   "account_already_exists_pls_reenter": "帳號已存在，請重新輸入帳號。",
   "you_have_been_logged_out_please_log_in_again": "你已被登出，請重新登入",
-  "purchase_failed": "購買失敗",
-  "insufficient_gold_balance": "金幣餘額不足",
-  "go_to_top_up_now_for_full_exp": "请立即前往充值已获得最完整的体验",
-  "go_to_top_up": "前往充值",
-  "cancel": "取消",
-  "count_gold_coins_to_unlock": "金幣購買完整版",
-  "upgrade_to_full_version": "升级到完整版本",
 };

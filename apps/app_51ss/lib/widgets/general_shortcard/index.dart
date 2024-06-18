@@ -9,7 +9,6 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import '../../screens/video/video_player_area/flash_loading.dart';
-import '../../utils/show_confirm_dialog.dart';
 import 'short_bottom_area.dart';
 
 class GeneralShortCard extends StatefulWidget {
@@ -112,7 +111,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
-                                  showConfirmDialog: showConfirmDialog,
                                 )
                               : const SizedBox.shrink(),
                           const SizedBox(height: 16),
