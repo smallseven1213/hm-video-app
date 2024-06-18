@@ -45,6 +45,7 @@ class GameConfig {
   final int? pageColor;
   final bool? needsPhoneVerification;
   final String? countryCode;
+  final bool? isGameLobbyBalanceShow;
 
   GameConfig({
     this.enabled,
@@ -53,6 +54,7 @@ class GameConfig {
     this.pageColor,
     this.needsPhoneVerification,
     this.countryCode,
+    this.isGameLobbyBalanceShow,
   });
 
   factory GameConfig.fromJson(Map<String, dynamic> json) {
@@ -63,6 +65,7 @@ class GameConfig {
       pageColor: json['pageColor'],
       needsPhoneVerification: json['isPhoneVerification'],
       countryCode: json['countryCode'],
+      isGameLobbyBalanceShow: json['isGameLobbyBalance'],
     );
   }
 }

@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:game/screens/game_webview_screen/game_webview_toggle_button.dart';
 import 'package:game/widgets/draggable_button.dart';
+import 'package:game/widgets/h5webview.dart';
 import 'package:get/get.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
-
-import 'package:game/widgets/h5webview.dart';
 
 class GameLobbyWebview extends StatefulWidget {
   final String gameUrl;
@@ -74,37 +73,35 @@ class _GameLobbyWebview extends State<GameLobbyWebview> {
               initialUrl: widget.gameUrl,
               direction: widget.direction,
             ),
-            if (!GetPlatform.isWeb)
-              Center(
-                child: toggleButton
-                    ? PointerInterceptor(
-                        child: GameWebviewToggleButtonWidget(
-                        toggleButtonRow: () => toggleButtonRow(),
-                        direction: widget.direction,
-                      ))
-                    : Container(),
-              ),
-            if (!GetPlatform.isWeb)
-              DraggableFloatingActionButton(
-                initialOffset: Offset(
-                    constraints.maxWidth - 70, constraints.maxHeight - 70),
-                child: PointerInterceptor(
-                  child: InkWell(
-                    onTap: () => toggleButtonRow(),
-                    child: GestureDetector(
-                      child: SizedBox(
-                        width: 55,
-                        height: 55,
-                        child: Image.asset(
-                          'packages/game/assets/images/game_lobby/icons-menu.webp',
-                          width: 40,
-                          height: 40,
-                        ),
+            Center(
+              child: toggleButton
+                  ? PointerInterceptor(
+                      child: GameWebviewToggleButtonWidget(
+                      toggleButtonRow: () => toggleButtonRow(),
+                      direction: widget.direction,
+                    ))
+                  : Container(),
+            ),
+            DraggableFloatingActionButton(
+              initialOffset:
+                  Offset(constraints.maxWidth - 70, constraints.maxHeight - 70),
+              child: PointerInterceptor(
+                child: InkWell(
+                  onTap: () => toggleButtonRow(),
+                  child: GestureDetector(
+                    child: SizedBox(
+                      width: 55,
+                      height: 55,
+                      child: Image.asset(
+                        'packages/game/assets/images/game_lobby/icons-menu.webp',
+                        width: 40,
+                        height: 40,
                       ),
                     ),
                   ),
                 ),
               ),
+            ),
           ],
         );
       });

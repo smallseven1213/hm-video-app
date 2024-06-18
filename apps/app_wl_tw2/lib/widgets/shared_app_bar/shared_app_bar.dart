@@ -12,7 +12,7 @@ class SharedAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+      // padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
       color: backgroundColor ?? Colors.transparent,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

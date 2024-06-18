@@ -6,10 +6,10 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import 'package:shared/widgets/short_video_player/index.dart';
+import 'package:shared/widgets/short_video_player/short_card_info.dart';
+import 'package:shared/widgets/short_video_player/side_info.dart';
 import '../../screens/video/video_player_area/flash_loading.dart';
-import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
-import 'side_info.dart';
 
 final logger = Logger();
 
