@@ -53,4 +53,12 @@ const Map<String, String> sharedViVnStrings = {
       "Tài khoản đã tồn tại, vui lòng nhập lại tài khoản.",
   "you_have_been_logged_out_please_log_in_again":
       "Bạn đã bị đăng xuất, vui lòng đăng nhập lại.",
+  "purchase_failed": "Mua hàng không thành công",
+  "insufficient_gold_balance": "Số dư đồng vàng không đủ",
+  "go_to_top_up_now_for_full_exp":
+      "Số dư đồng vàng không đủ, vui lòng nạp ngay",
+  "go_to_top_up": "Nạp ngay",
+  "cancel": "Hủy",
+  "count_gold_coins_to_unlock": "Đếm đồng vàng để mở khóa",
+  "upgrade_to_full_version": "Nâng cấp lên phiên bản đầy đủ",
 };
