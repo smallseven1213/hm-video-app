@@ -1,4 +1,3 @@
-import 'package:app_wl_ph1/utils/show_confirm_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -135,7 +134,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                                           data: videoDetail,
                                           title: widget.title,
                                           displayActorAvatar: false,
-                                          showConfirmDialog: showConfirmDialog,
                                         )
                                       : const SizedBox.shrink(),
                             ),
