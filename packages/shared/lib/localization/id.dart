@@ -55,11 +55,11 @@ const Map<String, String> sharedIdIdStrings = {
   "you_have_been_logged_out_please_log_in_again":
       "Anda telah keluar, silakan masuk kembali.",
   "purchase_failed": "Pembelian gagal",
-  "insufficient_gold_balance": "Saldo koin emas tidak cukup",
+  "insufficient_gold_balance": "Saldo tidak mencukupi",
   "go_to_top_up_now_for_full_exp":
-      "Saldo koin emas tidak cukup, silakan segera isi ulang",
+      "Isi ulang untuk menikmati pengalaman penuh",
   "go_to_top_up": "Muat sekarang",
   "cancel": "Batal",
-  "count_gold_coins_to_unlock": "Hitung koin emas untuk membuka kunci",
+  "count_gold_coins_to_unlock": "Koin untuk membuka kunci",
   "upgrade_to_full_version": "Tingkatkan ke versi lengkap",
 };
