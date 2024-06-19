@@ -87,6 +87,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
+              showConfirmDialog: showConfirmDialog,
             ),
           ),
           Obx(
