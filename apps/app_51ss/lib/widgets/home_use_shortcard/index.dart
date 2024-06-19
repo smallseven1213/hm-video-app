@@ -92,6 +92,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   shortData: widget.shortData,
                   toggleFullScreen: widget.toggleFullScreen,
                   allowFullsreen: false,
+                  showConfirmDialog: showConfirmDialog,
                 ),
                 Obx(
                   () => uiController.isFullscreen.value == true
