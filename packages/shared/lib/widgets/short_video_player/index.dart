@@ -4,12 +4,14 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/widgets/short_video_player/purchase/coin_part.dart';
 import 'package:shared/widgets/short_video_player/draggable_video_progress_bar.dart';
 import 'package:shared/widgets/short_video_player/error.dart';
 import 'package:shared/widgets/short_video_player/fullscreen_controls.dart';
 import 'package:shared/widgets/short_video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import 'purchase_promotion.dart';
+import 'purchase/vip_part.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
@@ -29,6 +31,7 @@ class ShortCard extends StatefulWidget {
     required int timeLength,
     required Function() onSuccess,
   })? coinPartBuilder;
+  final Function showConfirmDialog;
 
   const ShortCard({
     Key? key,
@@ -39,6 +42,7 @@ class ShortCard extends StatefulWidget {
     required this.shortData,
     required this.toggleFullScreen,
     required this.allowFullsreen,
+    required this.showConfirmDialog,
     // required this.isFullscreen,
     this.isActive = true,
     this.displayFavoriteAndCollectCount = true,
@@ -57,6 +61,8 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+
+    print('@@@ showConfirmDialog> ${widget.showConfirmDialog}');
 
     return VideoPlayerConsumer(
       tag: widget.tag,
@@ -160,7 +166,7 @@ class ShortCardState extends State<ShortCard> {
                               left: 0,
                               right: 0,
                               child: Container(
-                                color: Colors.black.withOpacity(0.3),
+                                color: Colors.black.withOpacity(0.4),
                                 child: PurchasePromotion(
                                   tag: widget.tag,
                                   buyPoints: video!.buyPoint.toString(),
@@ -169,7 +175,8 @@ class ShortCardState extends State<ShortCard> {
                                   videoId: video.id,
                                   videoPlayerInfo: videoPlayerInfo,
                                   vipPartBuilder: widget.vipPartBuilder ??
-                                      (int timeLength) => const SizedBox(),
+                                      (int timeLength) =>
+                                          VipPart(timeLength: timeLength),
                                   coinPartBuilder: widget.coinPartBuilder ??
                                       ({
                                         required String buyPoints,
@@ -178,26 +185,17 @@ class ShortCardState extends State<ShortCard> {
                                             videoPlayerInfo,
                                         required int timeLength,
                                         required Function() onSuccess,
+                                        userPoints,
                                       }) =>
-                                          const SizedBox(),
-                                  // vipPartBuilder: (int timeLength) {
-                                  //   return VipPart(timeLength: timeLength);
-                                  // },
-                                  // coinPartBuilder: ({
-                                  //   required String buyPoints,
-                                  //   required int videoId,
-                                  //   required VideoPlayerInfo videoPlayerInfo,
-                                  //   required int timeLength,
-                                  //   required Function() onSuccess,
-                                  // }) {
-                                  //   return CoinPart(
-                                  //     buyPoints: buyPoints,
-                                  //     videoId: videoId,
-                                  //     videoPlayerInfo: videoPlayerInfo,
-                                  //     timeLength: timeLength,
-                                  //     onSuccess: onSuccess,
-                                  //   );
-                                  // },
+                                          CoinPart(
+                                            tag: widget.tag,
+                                            buyPoints: buyPoints,
+                                            videoId: videoId,
+                                            videoPlayerInfo: videoPlayerInfo,
+                                            timeLength: timeLength,
+                                            showConfirmDialog:
+                                                widget.showConfirmDialog,
+                                          ),
                                 ),
                               ),
                             )

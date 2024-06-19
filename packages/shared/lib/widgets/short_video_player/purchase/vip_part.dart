@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../../config/colors.dart';
-import '../button.dart';
+import '../../../localization/shared_localization_delegate.dart';
+import 'purchase_button.dart';
 
 class VipPart extends StatelessWidget {
   final int timeLength;
@@ -16,6 +15,8 @@ class VipPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -26,16 +27,16 @@ class VipPart extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             // todo : 标题：试看结束，升级观看完整版
-            const Text(
-              '试看结束，升级观看完整版',
-              style: TextStyle(
+            Text(
+              localizations.translate('try_watching_ends'),
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 16,
                 fontWeight: FontWeight.w500,
               ),
             ),
             Text(
-              '片长：${getTimeString(timeLength)}',
+              '${localizations.translate('duration')}${getTimeString(timeLength)}',
               style: const TextStyle(
                 color: Colors.white,
                 fontSize: 12,
@@ -44,24 +45,16 @@ class VipPart extends StatelessWidget {
             ),
             // todo : 内容：解锁后可完整播放
             Text(
-              '解锁后可完整播放',
-              style: TextStyle(
-                color: AppColors.colors[ColorKeys.secondary],
-                fontSize: 12,
-              ),
+              localizations.translate('unlock_for_full_playback'),
+              style: const TextStyle(fontSize: 12, color: Colors.yellow),
             ),
           ],
         ),
         const SizedBox(width: 15),
         // 开通VIP按钮
-        SizedBox(
-          width: 87,
-          height: 35,
-          child: Button(
-            text: '开通VIP',
-            size: 'small',
-            onPressed: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
-          ),
+        PurchaseButton(
+          text: localizations.translate('become_vip'),
+          onPressed: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
         ),
       ],
     );

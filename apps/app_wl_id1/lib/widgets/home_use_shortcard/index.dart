@@ -5,14 +5,11 @@ import 'package:logger/logger.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
-import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import 'package:shared/widgets/short_video_player/side_info.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import '../../utils/show_confirm_dialog.dart';
-import '../purchase_promotion/coin_part.dart';
-import '../purchase_promotion/vip_part.dart';
 import '../wave_loading.dart';
 
 final logger = Logger();
@@ -95,24 +92,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   shortData: widget.shortData,
                   toggleFullScreen: widget.toggleFullScreen,
                   allowFullsreen: false,
-                  vipPartBuilder: (int timeLength) {
-                    return VipPart(timeLength: timeLength);
-                  },
-                  coinPartBuilder: ({
-                    required String buyPoints,
-                    required int videoId,
-                    required VideoPlayerInfo videoPlayerInfo,
-                    required int timeLength,
-                    required Function() onSuccess,
-                  }) {
-                    return CoinPart(
-                      buyPoints: buyPoints,
-                      videoId: videoId,
-                      videoPlayerInfo: videoPlayerInfo,
-                      timeLength: timeLength,
-                      onSuccess: onSuccess,
-                    );
-                  },
+                  showConfirmDialog: showConfirmDialog,
                 ),
                 Obx(
                   () => uiController.isFullscreen.value == true

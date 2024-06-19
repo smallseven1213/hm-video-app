@@ -40,42 +40,44 @@ class Coin extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                '試看結束，此影片需付費購買',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  '試看結束，此影片需付費購買',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              Text(
-                '片長：${getTimeString(timeLength)}',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
-                  fontWeight: FontWeight.w500,
+                Text(
+                  '片長：${getTimeString(timeLength)}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
-              ),
-              Text(
-                '價格：$buyPoints金幣',
-                style: TextStyle(
-                  color: AppColors.colors[ColorKeys.secondary],
-                  fontSize: 10,
+                Text(
+                  '價格：$buyPoints金幣',
+                  style: TextStyle(
+                    color: AppColors.colors[ColorKeys.secondary],
+                    fontSize: 10,
+                  ),
                 ),
-              ),
-              Text(
-                '您目前擁有的金幣：$userPoints金幣',
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 12,
+                Text(
+                  '您目前擁有的金幣：$userPoints金幣',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           const SizedBox(width: 15),
           SizedBox(

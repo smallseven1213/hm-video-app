@@ -61,4 +61,18 @@ const Map<String, String> sharedEnUsStrings = {
   "cancel": "Cancel",
   "count_gold_coins_to_unlock": "Coins to unlock",
   "upgrade_to_full_version": "Upgrade to full version",
+  "try_watching_ends": "Upgrade to full version",
+  "unlock_for_full_playback": "Upgrade to full version",
+  "duration": "Video length",
+  "become_vip": "Become VIP",
+  "this_movie_is_available_for_purchase":
+      "This movie is available for purchase.",
+  "price": "Price",
+  "your_current_coins": "Your current coins",
+  "pay_to_watch": "Pay to watch",
+  "end_of_Trial_upgrade_to_full_version":
+      "End of Trial, Upgrade to Full Version",
+  "length_of_film": "Length",
+  "unlocked_for_full_playback": "Unlocked for full playback",
+  "upgrade_now_for_unlock": "Upgrade Now For Unlock",
 };

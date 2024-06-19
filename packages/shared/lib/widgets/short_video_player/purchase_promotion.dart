@@ -40,7 +40,8 @@ class PurchasePromotion extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: chargeType == ChargeType.vip.index
           ? vipPartBuilder(timeLength)
           : coinPartBuilder(
