@@ -45,10 +45,12 @@ class ShortCardInfoState extends State<ShortCardInfo> {
     final int index = videoShortsController.data
         .indexWhere((element) => element.id == widget.data.id);
 
-    setState(() {
-      nextVideo = videoShortsController.data[index + 1];
-      currentVideoIndex = index;
-    });
+    if (videoShortsController.data.length - 1 >= index + 1) {
+      setState(() {
+        nextVideo = videoShortsController.data[index + 1];
+        currentVideoIndex = index;
+      });
+    }
   }
 
   @override
