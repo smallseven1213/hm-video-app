@@ -45,7 +45,7 @@ final screens = {
       ),
   HomeNavigatorPathes.game: () => const SafeArea(
         child: Scaffold(
-          appBar: SharedAppBar(backgroundColor: Color(0xff1F2123)),
+          appBar: SharedAppBar(),
           body: EnterGame(),
         ),
       ),
