@@ -62,8 +62,6 @@ class ShortCardState extends State<ShortCard> {
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
 
-    print('@@@ showConfirmDialog> ${widget.showConfirmDialog}');
-
     return VideoPlayerConsumer(
       tag: widget.tag,
       child: (VideoPlayerInfo videoPlayerInfo) {
