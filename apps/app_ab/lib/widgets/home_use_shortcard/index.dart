@@ -4,15 +4,12 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
-import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import '../../screens/video/video_player_area/flash_loading.dart';
 import '../../utils/show_confirm_dialog.dart';
-import '../purchase_promotion/coin_part.dart';
-import '../purchase_promotion/vip_part.dart';
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;
@@ -71,7 +68,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
         children: [
           VideoPlayerProvider(
             key: Key(widget.videoUrl),
-            tag: widget.videoUrl,
+            tag: widget.tag,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -95,24 +92,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
-              vipPartBuilder: (int timeLength) {
-                return VipPart(timeLength: timeLength);
-              },
-              coinPartBuilder: ({
-                required String buyPoints,
-                required int videoId,
-                required VideoPlayerInfo videoPlayerInfo,
-                required int timeLength,
-                required Function() onSuccess,
-              }) {
-                return CoinPart(
-                  buyPoints: buyPoints,
-                  videoId: videoId,
-                  videoPlayerInfo: videoPlayerInfo,
-                  timeLength: timeLength,
-                  onSuccess: onSuccess,
-                );
-              },
+              showConfirmDialog: showConfirmDialog,
             ),
           ),
           Obx(
