@@ -11,6 +11,7 @@ import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/short_video_player/purchase_promotion.dart';
 import 'package:shared/widgets/short_video_player/short_card_info_tag.dart';
+import 'package:shared/widgets/short_video_player/short_video_mute_button.dart';
 
 import '../../apis/vod_api.dart';
 import '../../localization/shared_localization_delegate.dart';
@@ -30,6 +31,7 @@ class ShortCardInfo extends StatelessWidget {
   final String tag;
   final bool displayActorAvatar;
   final Function showConfirmDialog;
+  final bool? showMuteButton;
 
   ShortCardInfo({
     Key? key,
@@ -38,6 +40,7 @@ class ShortCardInfo extends StatelessWidget {
     required this.tag,
     required this.showConfirmDialog,
     this.displayActorAvatar = true,
+    this.showMuteButton = true,
   }) : super(key: key);
 
   final vodApi = VodApi();
@@ -228,82 +231,102 @@ class ShortCardInfo extends StatelessWidget {
       tag: tag,
       child: (VideoPlayerInfo videoPlayerInfo) {
         return Container(
-          width: MediaQuery.sizeOf(context).width,
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (data.supplier != null)
-                _buildSupplierInfo(context, videoPlayerInfo),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.white,
+            width: MediaQuery.sizeOf(context).width,
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // 供應師
+                      if (data.supplier != null)
+                        _buildSupplierInfo(context, videoPlayerInfo),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      // 標籤
+                      if (data.tag.isNotEmpty)
+                        _buildTags(context, videoPlayerInfo, data.tag),
+                      ShortVideoConsumer(
+                        vodId: data.id,
+                        tag: tag,
+                        child: ({
+                          required isLoading,
+                          required video,
+                          required videoDetail,
+                          required videoUrl,
+                        }) =>
+                            !video!.isAvailable
+                                ? Padding(
+                                    padding: const EdgeInsets.only(bottom: 10),
+                                    child: video.chargeType ==
+                                            ChargeType.vip.index
+                                        ? _buildPurchaseButton(
+                                            context: context,
+                                            onTap: () =>
+                                                MyRouteDelegate.of(context)
+                                                    .push(AppRoutes.vip),
+                                            borderColor: const Color(0xffcecece)
+                                                .withOpacity(0.7),
+                                            textColor: Colors.white,
+                                            text:
+                                                '${localizations.translate('upgrade_to_full_version')} ${getTimeString(video.timeLength)}',
+                                            icon: const Image(
+                                              image: AssetImage(
+                                                  'assets/images/purchase/icon-short-vip.webp'),
+                                              width: 25,
+                                            ))
+                                        : _buildPurchaseButton(
+                                            context: context,
+                                            onTap: () => purchase(
+                                              context,
+                                              id: video.id,
+                                              onSuccess: () {
+                                                final ShortVideoDetailController
+                                                    shortVideoDetailController =
+                                                    Get.find<
+                                                            ShortVideoDetailController>(
+                                                        tag: tag);
+                                                shortVideoDetailController
+                                                    .mutateAll();
+                                              },
+                                            ),
+                                            borderColor:
+                                                const Color(0xffe7b400),
+                                            textColor: Colors.white,
+                                            text:
+                                                '${video.buyPoint} ${localizations.translate('count_gold_coins_to_unlock')} ${getTimeString(video.timeLength)}',
+                                            icon: const Image(
+                                              image: AssetImage(
+                                                  'assets/images/purchase/icon-short-coin.webp'),
+                                              width: 30,
+                                            ),
+                                          ),
+                                  )
+                                : const SizedBox(),
+                      ),
+                    ],
                   ),
                 ),
-              ),
-              if (data.tag.isNotEmpty)
-                _buildTags(context, videoPlayerInfo, data.tag),
-              ShortVideoConsumer(
-                vodId: data.id,
-                tag: tag,
-                child: ({
-                  required isLoading,
-                  required video,
-                  required videoDetail,
-                  required videoUrl,
-                }) =>
-                    !video!.isAvailable
-                        ? Padding(
-                            padding: const EdgeInsets.only(bottom: 10),
-                            child: video.chargeType == ChargeType.vip.index
-                                ? _buildPurchaseButton(
-                                    context: context,
-                                    onTap: () => MyRouteDelegate.of(context)
-                                        .push(AppRoutes.vip),
-                                    borderColor: const Color(0xffcecece)
-                                        .withOpacity(0.7),
-                                    textColor: Colors.white,
-                                    text:
-                                        '${localizations.translate('upgrade_to_full_version')} ${getTimeString(video.timeLength)}',
-                                    icon: const Image(
-                                      image: AssetImage(
-                                          'assets/images/purchase/icon-short-vip.webp'),
-                                      width: 25,
-                                    ))
-                                : _buildPurchaseButton(
-                                    context: context,
-                                    onTap: () => purchase(
-                                      context,
-                                      id: video.id,
-                                      onSuccess: () {
-                                        final ShortVideoDetailController
-                                            shortVideoDetailController =
-                                            Get.find<
-                                                    ShortVideoDetailController>(
-                                                tag: tag);
-                                        shortVideoDetailController.mutateAll();
-                                      },
-                                    ),
-                                    borderColor: const Color(0xffe7b400),
-                                    textColor: Colors.white,
-                                    text:
-                                        '${video.buyPoint} ${localizations.translate('count_gold_coins_to_unlock')} ${getTimeString(video.timeLength)}',
-                                    icon: const Image(
-                                      image: AssetImage(
-                                          'assets/images/purchase/icon-short-coin.webp'),
-                                      width: 30,
-                                    ),
-                                  ),
-                          )
-                        : const SizedBox(),
-              ),
-            ],
-          ),
-        );
+                if (showMuteButton == true)
+                  Positioned(
+                    bottom: 78,
+                    right: 0,
+                    child: ShortVideoMuteButton(
+                      controller:
+                          videoPlayerInfo.observableVideoPlayerController,
+                    ),
+                  ),
+              ],
+            ));
       },
     );
   }

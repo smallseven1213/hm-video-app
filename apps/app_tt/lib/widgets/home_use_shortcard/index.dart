@@ -125,11 +125,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               ),
             ),
           ),
-          SideInfo(
-            videoId: widget.id,
-            shortData: widget.shortData,
-            tag: widget.tag,
-          ),
           const FloatPageBackButton()
         ],
       ),

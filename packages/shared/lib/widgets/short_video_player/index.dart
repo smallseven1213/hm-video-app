@@ -12,6 +12,8 @@ import 'package:shared/widgets/short_video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import 'purchase_promotion.dart';
 import 'purchase/vip_part.dart';
+import 'short_video_mute_button.dart';
+import 'side_info.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
@@ -151,56 +153,75 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ShortVideoConsumer(
-                  vodId: widget.id,
-                  tag: widget.tag,
-                  child: ({
-                    required isLoading,
-                    required video,
-                    required videoDetail,
-                    required videoUrl,
-                  }) =>
-                      video?.isAvailable == false &&
-                              videoPlayerInfo.videoAction == 'end'
-                          ? Positioned.fill(
-                              top: 0,
-                              bottom: 0,
-                              left: 0,
-                              right: 0,
-                              child: Container(
-                                color: Colors.black.withOpacity(0.4),
-                                child: PurchasePromotion(
-                                  tag: widget.tag,
-                                  buyPoints: video!.buyPoint.toString(),
-                                  timeLength: video.timeLength ?? 0,
-                                  chargeType: video.chargeType ?? 0,
-                                  videoId: video.id,
-                                  videoPlayerInfo: videoPlayerInfo,
-                                  vipPartBuilder: widget.vipPartBuilder ??
-                                      (int timeLength) =>
-                                          VipPart(timeLength: timeLength),
-                                  coinPartBuilder: widget.coinPartBuilder ??
-                                      ({
-                                        required String buyPoints,
-                                        required int videoId,
-                                        required VideoPlayerInfo
-                                            videoPlayerInfo,
-                                        required int timeLength,
-                                        required Function() onSuccess,
-                                        userPoints,
-                                      }) =>
-                                          CoinPart(
-                                            tag: widget.tag,
-                                            buyPoints: buyPoints,
-                                            videoId: videoId,
-                                            videoPlayerInfo: videoPlayerInfo,
-                                            timeLength: timeLength,
-                                            showConfirmDialog:
-                                                widget.showConfirmDialog,
-                                          ),
-                                ),
+                vodId: widget.id,
+                tag: widget.tag,
+                child: ({
+                  required isLoading,
+                  required video,
+                  required videoDetail,
+                  required videoUrl,
+                }) =>
+                    video?.isAvailable == false &&
+                            videoPlayerInfo.videoAction == 'end'
+                        ? Positioned.fill(
+                            top: 0,
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              color: Colors.black.withOpacity(0.4),
+                              child: PurchasePromotion(
+                                tag: widget.tag,
+                                buyPoints: video!.buyPoint.toString(),
+                                timeLength: video.timeLength ?? 0,
+                                chargeType: video.chargeType ?? 0,
+                                videoId: video.id,
+                                videoPlayerInfo: videoPlayerInfo,
+                                vipPartBuilder: widget.vipPartBuilder ??
+                                    (int timeLength) =>
+                                        VipPart(timeLength: timeLength),
+                                coinPartBuilder: widget.coinPartBuilder ??
+                                    ({
+                                      required String buyPoints,
+                                      required int videoId,
+                                      required VideoPlayerInfo videoPlayerInfo,
+                                      required int timeLength,
+                                      required Function() onSuccess,
+                                      userPoints,
+                                    }) =>
+                                        CoinPart(
+                                          tag: widget.tag,
+                                          buyPoints: buyPoints,
+                                          videoId: videoId,
+                                          videoPlayerInfo: videoPlayerInfo,
+                                          timeLength: timeLength,
+                                          showConfirmDialog:
+                                              widget.showConfirmDialog,
+                                        ),
                               ),
-                            )
-                          : const SizedBox.shrink()),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+              ),
+              Obx(
+                () => uiController.isFullscreen.value == true
+                    ? const SizedBox.shrink()
+                    : ShortVideoConsumer(
+                        vodId: widget.id,
+                        tag: widget.tag,
+                        child: ({
+                          required isLoading,
+                          required video,
+                          required videoDetail,
+                          required videoUrl,
+                        }) =>
+                            SideInfo(
+                          tag: widget.tag,
+                          videoId: widget.shortData.id,
+                          shortData: widget.shortData,
+                        ),
+                      ),
+              ),
             ],
           ),
         );

@@ -157,11 +157,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               ),
             ),
           ),
-          SideInfo(
-            videoId: widget.id,
-            shortData: widget.shortData,
-            tag: widget.tag,
-          ),
+         
           Obx(
             () => uiController.isFullscreen.value != true
                 ? const FloatPageBackButton()

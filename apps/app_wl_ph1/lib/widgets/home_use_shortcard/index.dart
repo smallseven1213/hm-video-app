@@ -10,7 +10,6 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import '../wave_loading.dart';
-import 'side_info.dart';
 
 final logger = Logger();
 
@@ -93,25 +92,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   toggleFullScreen: widget.toggleFullScreen,
                   allowFullsreen: false,
                   showConfirmDialog: showConfirmDialog,
-                ),
-                Obx(
-                  () => uiController.isFullscreen.value == true
-                      ? const SizedBox.shrink()
-                      : ShortVideoConsumer(
-                          vodId: widget.id,
-                          tag: widget.tag,
-                          child: ({
-                            required isLoading,
-                            required video,
-                            required videoDetail,
-                            required videoUrl,
-                          }) =>
-                              SideInfo(
-                            tag: widget.tag,
-                            videoId: widget.shortData.id,
-                            shortData: widget.shortData,
-                          ),
-                        ),
                 ),
                 Obx(
                   () => uiController.isFullscreen.value == true

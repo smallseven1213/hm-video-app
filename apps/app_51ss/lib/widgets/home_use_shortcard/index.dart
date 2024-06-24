@@ -97,25 +97,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                 Obx(
                   () => uiController.isFullscreen.value == true
                       ? const SizedBox.shrink()
-                      : ShortVideoConsumer(
-                          vodId: widget.id,
-                          tag: widget.tag,
-                          child: ({
-                            required isLoading,
-                            required video,
-                            required videoDetail,
-                            required videoUrl,
-                          }) =>
-                              SideInfo(
-                            tag: widget.tag,
-                            videoId: widget.shortData.id,
-                            shortData: widget.shortData,
-                          ),
-                        ),
-                ),
-                Obx(
-                  () => uiController.isFullscreen.value == true
-                      ? const SizedBox.shrink()
                       : Positioned(
                           bottom: 0,
                           left: 0,
