@@ -156,7 +156,13 @@ class ObservableVideoPlayerController extends GetxController {
   void toggleMute() async {
     if (!kIsWeb) {
       final isMuted = await FlutterVolumeController.getMute();
-      await FlutterVolumeController.setMute(isMuted == true ? false : true);
+      final currentVolume = await FlutterVolumeController.getVolume();
+      if (isMuted == true && currentVolume == 0) {
+        await FlutterVolumeController.setVolume(0.1);
+      } else {
+        await FlutterVolumeController.setMute(isMuted == true ? false : true);
+      }
+
       update();
     } else {
       videoPlayerController?.setVolume(isMuted.value ? 1 : 0);
