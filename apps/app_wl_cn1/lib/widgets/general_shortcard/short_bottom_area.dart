@@ -1,4 +1,5 @@
 import 'package:app_wl_cn1/config/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -47,7 +48,7 @@ class ShortBottomArea extends StatelessWidget {
         ),
         child: UIBottomSafeArea(
             child: SizedBox(
-          height: 76,
+          height: kIsWeb ? 0 : 76,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

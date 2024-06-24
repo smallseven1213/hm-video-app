@@ -1,4 +1,5 @@
 import 'package:app_tt/localization/i18n.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
@@ -42,7 +43,7 @@ class ShortBottomArea extends StatelessWidget {
       ),
       child: UIBottomSafeArea(
         child: SizedBox(
-          height: 76,
+          height: kIsWeb ? 0 : 76,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
