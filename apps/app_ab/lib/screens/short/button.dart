@@ -33,41 +33,44 @@ class ShortMenuButton extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           onTap?.call();
-        },
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              size: iconSize ?? 24,
-              color: isLike ? const Color(0xffFFC700) : Colors.white,
-            ),
-            const SizedBox(width: 10),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (displayFavoriteAndCollectCount == true)
+        }, //
+        child: Container(
+          height: 76,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Icon(
+                icon,
+                size: iconSize ?? 24,
+                color: isLike ? const Color(0xffFFC700) : Colors.white,
+              ),
+              const SizedBox(width: 10),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (displayFavoriteAndCollectCount == true)
+                    Text(
+                      formatNumberToUnit(count ?? 0,
+                          shouldCalculateThousands: false),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.white,
+                      ),
+                    ),
                   Text(
-                    formatNumberToUnit(count ?? 0,
-                        shouldCalculateThousands: false),
+                    subscribe,
                     style: const TextStyle(
                       fontSize: 13,
                       color: Colors.white,
                     ),
                   ),
-                Text(
-                  subscribe,
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
