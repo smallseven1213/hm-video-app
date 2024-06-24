@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
 import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
@@ -27,12 +28,15 @@ class ShortBottomArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final paddingBottom = MediaQuery.of(context).padding.bottom;
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
         Get.find<UserFavoritesShortController>();
 
     return Container(
+        height: 76 + paddingBottom,
+        padding: EdgeInsets.only(bottom: paddingBottom),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -43,8 +47,7 @@ class ShortBottomArea extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: UIBottomSafeArea(
-            child: Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             ShortVideoFavoriteCountConsumer(
@@ -107,6 +110,6 @@ class ShortBottomArea extends StatelessWidget {
                       );
                     }))),
           ],
-        )));
+        ));
   }
 }
