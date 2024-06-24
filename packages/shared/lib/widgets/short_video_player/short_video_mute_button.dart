@@ -14,15 +14,18 @@ class ShortVideoMuteButton extends StatelessWidget {
       onTap: () {
         controller.toggleMute();
       },
-      child: SizedBox(
-        width: 24,
-        height: 24,
-        child: Obx(() => Image(
-              image: AssetImage(controller.isMuted.value
-                  ? 'packages/shared/assets/images/short-mute.webp'
-                  : 'packages/shared/assets/images/short-unmute.webp'),
-              fit: BoxFit.fill,
-            )),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+        child: SizedBox(
+          width: 24,
+          height: 24,
+          child: Obx(() => Image(
+                image: AssetImage(controller.isMuted.value
+                    ? 'packages/shared/assets/images/short-mute.webp'
+                    : 'packages/shared/assets/images/short-unmute.webp'),
+                fit: BoxFit.fill,
+              )),
+        ),
       ),
     );
   }

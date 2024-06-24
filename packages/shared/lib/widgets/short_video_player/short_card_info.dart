@@ -317,14 +317,15 @@ class ShortCardInfo extends StatelessWidget {
                   ),
                 ),
                 if (showMuteButton == true)
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        right: 8.0, bottom: 78.0, left: 8.0),
+                  Align(
+                    alignment: Alignment.bottomRight,
                     child: ShortVideoMuteButton(
                       controller:
                           videoPlayerInfo.observableVideoPlayerController,
                     ),
                   ),
+
+                   
               ],
             ));
       },
