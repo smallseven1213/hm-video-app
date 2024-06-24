@@ -14,7 +14,6 @@ import 'next_video.dart';
 import '../shortcard/purchase.dart';
 
 class ShortCardInfo extends StatefulWidget {
-  final String videoUrl;
   final ShortVideoDetail data;
   final String title;
   final String tag;
@@ -23,7 +22,6 @@ class ShortCardInfo extends StatefulWidget {
 
   const ShortCardInfo({
     Key? key,
-    required this.videoUrl,
     required this.data,
     required this.title,
     required this.tag,
@@ -62,7 +60,7 @@ class ShortCardInfoState extends State<ShortCardInfo> {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: widget.videoUrl,
+        tag: widget.tag,
         child: (VideoPlayerInfo videoPlayerInfo) {
           if (videoPlayerInfo.videoPlayerController == null) {
             return Container();

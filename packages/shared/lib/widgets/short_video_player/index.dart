@@ -32,6 +32,7 @@ class ShortCard extends StatefulWidget {
     required Function() onSuccess,
   })? coinPartBuilder;
   final Function showConfirmDialog;
+  final bool? showProgressBar;
 
   const ShortCard({
     Key? key,
@@ -48,6 +49,7 @@ class ShortCard extends StatefulWidget {
     this.displayFavoriteAndCollectCount = true,
     this.vipPartBuilder,
     this.coinPartBuilder,
+    this.showProgressBar = true,
   }) : super(key: key);
 
   @override
@@ -138,15 +140,16 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: -16,
-                left: 0,
-                right: 0,
-                child: DraggableVideoProgressBar(
-                  videoPlayerController: videoPlayerInfo
-                      .observableVideoPlayerController.videoPlayerController!,
+              if (widget.showProgressBar == true)
+                Positioned(
+                  bottom: -16,
+                  left: 0,
+                  right: 0,
+                  child: DraggableVideoProgressBar(
+                    videoPlayerController: videoPlayerInfo
+                        .observableVideoPlayerController.videoPlayerController!,
+                  ),
                 ),
-              ),
               ShortVideoConsumer(
                   vodId: widget.id,
                   tag: widget.tag,
