@@ -69,7 +69,7 @@ const Map<String, String> sharedViVnStrings = {
   "price": "Giá cả",
   "your_current_coins": "Số tiền xu bạn hiện đang sở hữu",
   "pay_to_watch": "Xem trả phí",
-  "end_of_Trial_upgrade_to_full_version":
+  "end_of_trial_upgrade_to_full_version":
       "Khi kết thúc thử nghiệm, hãy nâng cấp để xem phiên bản đầy đủ",
   "length_of_film": "Thời lượng phim",
   "unlocked_for_full_playback":

@@ -6,57 +6,70 @@ import 'package:shared/utils/video_info_formatter.dart';
 import '../../../localization/shared_localization_delegate.dart';
 import 'purchase_button.dart';
 
+enum Direction {
+  horizontal,
+  vertical,
+}
+
 class VipPart extends StatelessWidget {
   final int timeLength;
+  final Direction direction;
+
   const VipPart({
-    super.key,
+    Key? key,
     required this.timeLength,
-  });
+    this.direction = Direction.vertical,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // todo : 标题：试看结束，升级观看完整版
-            Text(
-              localizations.translate('try_watching_ends'),
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              '${localizations.translate('duration')}${getTimeString(timeLength)}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            // todo : 内容：解锁后可完整播放
-            Text(
-              localizations.translate('unlock_for_full_playback'),
-              style: const TextStyle(fontSize: 12, color: Colors.yellow),
-            ),
-          ],
+    if (direction == Direction.horizontal) {
+      return Row(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: _buildContent(context, localizations),
+      );
+    } else {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: _buildContent(context, localizations),
+      );
+    }
+  }
+
+  List<Widget> _buildContent(context, SharedLocalizations localizations) {
+    return [
+      Text(
+        localizations.translate('try_watching_ends'),
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
         ),
-        const SizedBox(width: 15),
-        // 开通VIP按钮
-        PurchaseButton(
-          text: localizations.translate('become_vip'),
-          onPressed: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
+      ),
+      const SizedBox(height: 8),
+      Text(
+        '${localizations.translate('duration')}${getTimeString(timeLength)}',
+        style: const TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.w500,
         ),
-      ],
-    );
+      ),
+      const SizedBox(height: 8),
+      Text(
+        localizations.translate('unlock_for_full_playback'),
+        style: const TextStyle(fontSize: 12, color: Colors.yellow),
+      ),
+      const SizedBox(height: 15),
+      PurchaseButton(
+        text: localizations.translate('become_vip'),
+        onPressed: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
+      ),
+    ];
   }
 }

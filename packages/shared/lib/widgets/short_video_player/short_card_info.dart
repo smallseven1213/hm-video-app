@@ -234,6 +234,7 @@ class ShortCardInfo extends StatelessWidget {
             width: MediaQuery.sizeOf(context).width,
             padding: const EdgeInsets.all(10),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
                   child: Column(
@@ -317,15 +318,9 @@ class ShortCardInfo extends StatelessWidget {
                   ),
                 ),
                 if (showMuteButton == true)
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: ShortVideoMuteButton(
-                      controller:
-                          videoPlayerInfo.observableVideoPlayerController,
-                    ),
+                  ShortVideoMuteButton(
+                    controller: videoPlayerInfo.observableVideoPlayerController,
                   ),
-
-                   
               ],
             ));
       },

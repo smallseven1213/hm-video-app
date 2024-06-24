@@ -18,7 +18,7 @@ class PurchaseButton extends StatelessWidget {
         backgroundColor: const Color.fromRGBO(19, 69, 165, 0.4),
         side: const BorderSide(color: Colors.blue),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-        padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         maximumSize: const Size(120, 50),
       ),
       child: Text(

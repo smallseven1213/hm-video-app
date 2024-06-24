@@ -15,7 +15,7 @@ class ShortVideoMuteButton extends StatelessWidget {
         controller.toggleMute();
       },
       child: Padding(
-        padding: const EdgeInsets.only(right: 8.0, left: 8.0),
+        padding: const EdgeInsets.only(right: 8.0, left: 8.0, bottom: 8.0),
         child: SizedBox(
           width: 24,
           height: 24,

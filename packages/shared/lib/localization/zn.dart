@@ -62,7 +62,7 @@ const Map<String, String> sharedZhCnStrings = {
   "price": "價格",
   "your_current_coins": "您目前擁有的金幣",
   "pay_to_watch": "付費觀看",
-  "end_of_Trial_upgrade_to_full_version": "試看結束，升級觀看完整版",
+  "end_of_trial_upgrade_to_full_version": "試看結束，升級觀看完整版",
   "length_of_film": "片長",
   "unlocked_for_full_playback": "解鎖後可完整播放",
 };

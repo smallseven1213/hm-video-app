@@ -40,7 +40,7 @@ class Coin extends StatelessWidget {
     required this.timeLength,
     required this.showConfirmDialog,
     required this.tag,
-    this.direction = Direction.horizontal,
+    this.direction = Direction.vertical,
     this.onSuccess,
   });
 
@@ -94,6 +94,8 @@ class Coin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
+    print('##direction: ${localizations.translate('pay_to_watch')}');
 
     if (direction == Direction.horizontal) {
       return Row(
@@ -192,8 +194,6 @@ class Coin extends StatelessWidget {
         ),
         const SizedBox(height: 10),
         SizedBox(
-          width: 100,
-          height: 35,
           child: PurchaseButton(
             text: localizations.translate('pay_to_watch'),
             onPressed: () => purchase(
@@ -231,7 +231,7 @@ class CoinPart extends StatelessWidget {
     required this.showConfirmDialog,
     required this.tag,
     this.onSuccess,
-    this.direction = Direction.horizontal,
+    this.direction = Direction.vertical,
   }) : super(key: key);
 
   @override

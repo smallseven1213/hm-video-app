@@ -70,7 +70,7 @@ const Map<String, String> sharedIdIdStrings = {
   "price": "Harga",
   "your_current_coins": "Anda saat ini memiliki koin emas",
   "pay_to_watch": "Berbayar untuk menonton",
-  "end_of_Trial_upgrade_to_full_version":
+  "end_of_trial_upgrade_to_full_version":
       "Tingkatkan untuk menonton versi lengkap",
   "length_of_film": "Durasi film",
   "unlocked_for_full_playback":

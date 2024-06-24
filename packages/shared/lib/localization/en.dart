@@ -70,7 +70,7 @@ const Map<String, String> sharedEnUsStrings = {
   "price": "Price",
   "your_current_coins": "Your current coins",
   "pay_to_watch": "Pay to watch",
-  "end_of_Trial_upgrade_to_full_version":
+  "end_of_trial_upgrade_to_full_version":
       "End of Trial, Upgrade to Full Version",
   "length_of_film": "Length",
   "unlocked_for_full_playback": "Unlocked for full playback",

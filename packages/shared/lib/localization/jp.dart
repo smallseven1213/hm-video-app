@@ -63,7 +63,7 @@ const Map<String, String> sharedJaJpStrings = {
   "price": "価格",
   "your_current_coins": "あなたの現在のコイン。",
   "pay_to_watch": "支払って視聴する",
-  "end_of_Trial_upgrade_to_full_version": "試用期間の終了、完全版へのアップグレード。",
+  "end_of_trial_upgrade_to_full_version": "試用期間の終了、完全版へのアップグレード。",
   "length_of_film": "長さ",
   "unlocked_for_full_playback": "フル再生のためにアンロックされました。",
 };
