@@ -6,9 +6,10 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
+import 'package:shared/widgets/short_video_player/index.dart';
+import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import '../../screens/video/video_player_area/flash_loading.dart';
-import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
+import '../../utils/show_confirm_dialog.dart';
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;
@@ -67,7 +68,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
         children: [
           VideoPlayerProvider(
             key: Key(widget.videoUrl),
-            tag: widget.videoUrl,
+            tag: widget.tag,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -85,13 +86,13 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               key: Key(widget.tag),
               index: widget.index,
               tag: widget.tag,
-              videoUrl: widget.videoUrl,
               isActive: widget.isActive,
               id: widget.shortData.id,
               title: widget.shortData.title,
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
+              showConfirmDialog: showConfirmDialog,
             ),
           ),
           Obx(
@@ -112,11 +113,11 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                       }) =>
                           videoDetail != null
                               ? ShortCardInfo(
-                                  videoUrl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
                                   displayActorAvatar: false,
+                                  showConfirmDialog: showConfirmDialog,
                                 )
                               : const SizedBox.shrink(),
                     ),
