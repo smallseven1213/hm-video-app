@@ -28,7 +28,6 @@ class ShortBottomArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingBottom = MediaQuery.paddingOf(context).bottom;
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
@@ -47,7 +46,6 @@ class ShortBottomArea extends StatelessWidget {
       ),
       child: UIBottomSafeArea(
         child: SizedBox(
-          height: 76,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

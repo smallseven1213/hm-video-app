@@ -4,13 +4,14 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/widgets/short_video_player/error.dart';
-import 'package:shared/widgets/short_video_player/player.dart';
+import 'package:shared/widgets/short_video_player/purchase/coin_part.dart';
 import 'package:shared/widgets/short_video_player/draggable_video_progress_bar.dart';
-import 'package:shared/widgets/short_video_player/short_video_mute_button.dart';
+import 'package:shared/widgets/short_video_player/error.dart';
 import 'package:shared/widgets/short_video_player/fullscreen_controls.dart';
-
+import 'package:shared/widgets/short_video_player/player.dart';
 import 'package:video_player/video_player.dart';
+import 'purchase_promotion.dart';
+import 'purchase/vip_part.dart';
 
 class ShortCard extends StatefulWidget {
   final String tag;
@@ -22,6 +23,16 @@ class ShortCard extends StatefulWidget {
   final bool? isActive;
   final Function toggleFullScreen;
   final bool allowFullsreen;
+  final Widget Function(int timeLength)? vipPartBuilder;
+  final Widget Function({
+    required String buyPoints,
+    required int videoId,
+    required VideoPlayerInfo videoPlayerInfo,
+    required int timeLength,
+    required Function() onSuccess,
+  })? coinPartBuilder;
+  final Function showConfirmDialog;
+  final bool? showProgressBar;
 
   const ShortCard({
     Key? key,
@@ -32,9 +43,13 @@ class ShortCard extends StatefulWidget {
     required this.shortData,
     required this.toggleFullScreen,
     required this.allowFullsreen,
+    required this.showConfirmDialog,
     // required this.isFullscreen,
     this.isActive = true,
     this.displayFavoriteAndCollectCount = true,
+    this.vipPartBuilder,
+    this.coinPartBuilder,
+    this.showProgressBar = true,
   }) : super(key: key);
 
   @override
@@ -55,7 +70,6 @@ class ShortCardState extends State<ShortCard> {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
         }
-
         if (uiController.isFullscreen.value == true) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
           var aspectRatio = videoSize.width /
@@ -74,9 +88,6 @@ class ShortCardState extends State<ShortCard> {
                 videoPlayerInfo: videoPlayerInfo,
                 toggleFullScreen: widget.toggleFullScreen,
               ),
-
-              // error
-
               if (videoPlayerInfo
                       .observableVideoPlayerController.videoAction.value ==
                   'error')
@@ -129,23 +140,67 @@ class ShortCardState extends State<ShortCard> {
                   ),
                 ),
               ),
-              Positioned(
-                bottom: -16,
-                left: 0,
-                right: 0,
-                child: DraggableVideoProgressBar(
-                  videoPlayerController: videoPlayerInfo
-                      .observableVideoPlayerController.videoPlayerController!,
+              if (widget.showProgressBar == true)
+                Positioned(
+                  bottom: -16,
+                  left: 0,
+                  right: 0,
+                  child: DraggableVideoProgressBar(
+                    videoPlayerController: videoPlayerInfo
+                        .observableVideoPlayerController.videoPlayerController!,
+                  ),
                 ),
-              ),
-              Positioned(
-                bottom: 78,
-                right: 0,
-                child: ShortVideoMuteButton(
-                  controller: videoPlayerInfo.observableVideoPlayerController,
-                ),
-              ),
-              // const FloatPageBackButton()
+              ShortVideoConsumer(
+                  vodId: widget.id,
+                  tag: widget.tag,
+                  child: ({
+                    required isLoading,
+                    required video,
+                    required videoDetail,
+                    required videoUrl,
+                  }) =>
+                      video?.isAvailable == false &&
+                              videoPlayerInfo.videoAction == 'end'
+                          ? Positioned.fill(
+                              top: 0,
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              child: Container(
+                                color: Colors.black.withOpacity(0.4),
+                                child: PurchasePromotion(
+                                  tag: widget.tag,
+                                  buyPoints: video!.buyPoint.toString(),
+                                  timeLength: video.timeLength ?? 0,
+                                  chargeType: video.chargeType ?? 0,
+                                  videoId: video.id,
+                                  videoPlayerInfo: videoPlayerInfo,
+                                  vipPartBuilder: widget.vipPartBuilder ??
+                                      (int timeLength) =>
+                                          VipPart(timeLength: timeLength),
+                                  coinPartBuilder: widget.coinPartBuilder ??
+                                      ({
+                                        required String buyPoints,
+                                        required int videoId,
+                                        required VideoPlayerInfo
+                                            videoPlayerInfo,
+                                        required int timeLength,
+                                        required Function() onSuccess,
+                                        userPoints,
+                                      }) =>
+                                          CoinPart(
+                                            tag: widget.tag,
+                                            buyPoints: buyPoints,
+                                            videoId: videoId,
+                                            videoPlayerInfo: videoPlayerInfo,
+                                            timeLength: timeLength,
+                                            showConfirmDialog:
+                                                widget.showConfirmDialog,
+                                          ),
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink()),
             ],
           ),
         );

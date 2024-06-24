@@ -10,6 +10,7 @@ import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import 'package:shared/widgets/short_video_player/side_info.dart';
 import '../../screens/video/video_player_area/flash_loading.dart';
+import '../../utils/show_confirm_dialog.dart';
 
 final logger = Logger();
 
@@ -91,6 +92,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   shortData: widget.shortData,
                   toggleFullScreen: widget.toggleFullScreen,
                   allowFullsreen: false,
+                  showConfirmDialog: showConfirmDialog,
                 ),
                 Obx(
                   () => uiController.isFullscreen.value == true
@@ -134,6 +136,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                                           data: videoDetail,
                                           title: widget.title,
                                           displayActorAvatar: false,
+                                          showConfirmDialog: showConfirmDialog,
                                         )
                                       : const SizedBox.shrink(),
                             ),

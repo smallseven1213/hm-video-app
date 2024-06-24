@@ -6,7 +6,8 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import '../shortcard/index.dart';
+import 'package:shared/widgets/short_video_player/index.dart';
+import '../../utils/show_confirm_dialog.dart';
 import '../shortcard/short_card_info.dart';
 import '../wave_loading.dart';
 import 'short_bottom_area.dart';
@@ -64,7 +65,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
         children: [
           VideoPlayerProvider(
             key: Key(widget.videoUrl),
-            tag: widget.videoUrl,
+            tag: widget.tag,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -82,13 +83,13 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               key: Key(widget.tag),
               index: widget.index,
               tag: widget.tag,
-              videoUrl: widget.videoUrl,
               isActive: widget.isActive,
               id: widget.shortData.id,
               title: widget.shortData.title,
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
+              showConfirmDialog: showConfirmDialog,
             ),
           ),
           Obx(
@@ -111,7 +112,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
-                                  videourl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
