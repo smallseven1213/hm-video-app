@@ -12,6 +12,7 @@ import 'package:shared/models/index.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/ad_banner.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:shared/apis/user_api.dart';
 
 final logger = Logger();
 
@@ -23,6 +24,7 @@ class NoticeDialog extends StatefulWidget {
 }
 
 class NoticeDialogState extends State<NoticeDialog> {
+  UserApi userApi = UserApi();
   NoticeApi noticeApi = NoticeApi();
   BannerController bannerController = Get.find<BannerController>();
   Map? bounceData = {'notice': null, 'banner': null};
@@ -34,6 +36,7 @@ class NoticeDialogState extends State<NoticeDialog> {
   }
 
   void handleUrl(String? url, BuildContext context) {
+    userApi.writeUserEnterHallRecord();
     Navigator.pop(context);
     if (url != null && url != '-1') {
       if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -74,6 +77,7 @@ class NoticeDialogState extends State<NoticeDialog> {
     if (notice != null && mounted) {
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
