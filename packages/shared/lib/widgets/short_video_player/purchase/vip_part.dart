@@ -51,21 +51,19 @@ class VipPart extends StatelessWidget {
           fontWeight: FontWeight.w500,
         ),
       ),
-      const SizedBox(height: 8),
       Text(
-        '${localizations.translate('duration')}${getTimeString(timeLength)}',
+        '${localizations.translate('duration')} ${getTimeString(timeLength)}',
         style: const TextStyle(
           color: Colors.white,
           fontSize: 12,
           fontWeight: FontWeight.w500,
         ),
       ),
-      const SizedBox(height: 8),
       Text(
         localizations.translate('unlock_for_full_playback'),
         style: const TextStyle(fontSize: 12, color: Colors.yellow),
       ),
-      const SizedBox(height: 15),
+      const SizedBox(height: 10),
       PurchaseButton(
         text: localizations.translate('become_vip'),
         onPressed: () => MyRouteDelegate.of(context).push(AppRoutes.vip),

@@ -118,7 +118,7 @@ class Coin extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${localizations.translate('duration')}: ${getTimeString(timeLength)}',
+                  '${localizations.translate('duration')} ${getTimeString(timeLength)}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 13,
@@ -126,14 +126,14 @@ class Coin extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '${localizations.translate('price')}： $buyPoints${localizations.translate('coins')}',
+                  '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
                   style: const TextStyle(
                     color: Color(0xffffd900),
                     fontSize: 13,
                   ),
                 ),
                 Text(
-                  '${localizations.translate('your_current_coins')}： $userPoints${localizations.translate('coins')}',
+                  '${localizations.translate('your_current_coins')} $userPoints${localizations.translate('coins')}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 13,
@@ -172,7 +172,7 @@ class Coin extends StatelessWidget {
           ),
         ),
         Text(
-          '${localizations.translate('duration')}: ${getTimeString(timeLength)}',
+          '${localizations.translate('duration')} ${getTimeString(timeLength)}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 13,
@@ -180,13 +180,13 @@ class Coin extends StatelessWidget {
           ),
         ),
         Text(
-            '${localizations.translate('price')}: $buyPoints${localizations.translate('coins')}',
+            '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
             style: const TextStyle(
               color: Color(0xffffd900),
               fontSize: 13,
             )),
         Text(
-          '${localizations.translate('your_current_coins')}: $userPoints${localizations.translate('coins')}',
+          '${localizations.translate('your_current_coins')} $userPoints${localizations.translate('coins')}',
           style: const TextStyle(
             color: Colors.white,
             fontSize: 13,

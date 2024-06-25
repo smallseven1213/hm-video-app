@@ -62,16 +62,15 @@ const Map<String, String> sharedViVnStrings = {
   "upgrade_to_full_version": "Mở khóa để phát lại đầy đủ",
   "try_watching_ends": "Mở khóa để phát lại đầy đủ",
   "unlock_for_full_playback": "Mở khóa để phát lại đầy đủ",
-  "duration": "Độ dài video",
+  "duration": "Thời lượng phim:",
   "become_vip": "Trở thành VIP",
   "this_movie_is_available_for_purchase":
       "Sau khi xem xong, bạn cần phải mua để xem tiếp video này",
-  "price": "Giá cả",
-  "your_current_coins": "Số tiền xu bạn hiện đang sở hữu",
-  "pay_to_watch": "Xem trả phí",
-  "end_of_trial_upgrade_to_full_version":
-      "Khi kết thúc thử nghiệm, hãy nâng cấp để xem phiên bản đầy đủ",
-  "length_of_film": "Thời lượng phim",
-  "unlocked_for_full_playback":
-      "Sau khi mở khóa, bạn có thể phát lại hoàn toàn",
+  "price": "Giá cả:",
+  "your_current_coins": "Đồng xu của bạn:",
+  "pay_to_watch": "Thanh toán",
+  "end_of_trial_upgrade_to_full_version": "Nâng cấp lên phiên bản đầy đủ",
+  "length_of_film": "Thời lượng phim:",
+  "unlocked_for_full_playback": "Đã mở khóa ngay",
+  "upgrade_now_for_unlock": "Nâng cấp ngay",
 };

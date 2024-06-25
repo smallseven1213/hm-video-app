@@ -63,17 +63,15 @@ const Map<String, String> sharedIdIdStrings = {
   "upgrade_to_full_version": "Tingkatkan ke versi lengkap",
   "try_watching_ends": "Tingkatkan ke versi lengkap",
   "unlock_for_full_playback": "Tingkatkan ke versi lengkap",
-  "duration": "Panjang video",
+  "duration": "Durasi film:",
   "become_vip": "Menjadi VIP",
   "this_movie_is_available_for_purchase":
       "Video ini memerlukan pembelian untuk diakses",
-  "price": "Harga",
-  "your_current_coins": "Anda saat ini memiliki koin emas",
-  "pay_to_watch": "Berbayar untuk menonton",
-  "end_of_trial_upgrade_to_full_version":
-      "Tingkatkan untuk menonton versi lengkap",
-  "length_of_film": "Durasi film",
-  "unlocked_for_full_playback":
-      "Setelah membuka kunci, dapat diputar secara penuh",
-  "upgrade_now_for_unlock": "Tingkatkan sekarang untuk membuka kunci",
+  "price": "Harga:",
+  "your_current_coins": "Koin Anda:",
+  "pay_to_watch": "Pembayaran",
+  "end_of_trial_upgrade_to_full_version": "Tingkatkan ke Versi Penuh",
+  "length_of_film": "Durasi film:",
+  "unlocked_for_full_playback": "Sudah Dibuka Sekarang",
+  "upgrade_now_for_unlock": "Tingkatkan Sekarang",
 };
