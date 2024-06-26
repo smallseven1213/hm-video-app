@@ -12,14 +12,14 @@ class ShortCardInfo extends StatelessWidget {
   final ShortVideoDetail data;
   final String title;
   final String tag;
-  final bool displayActorAvatar;
+  final bool showAvatar;
 
   const ShortCardInfo({
     Key? key,
     required this.data,
     required this.title,
     required this.tag,
-    this.displayActorAvatar = true,
+    this.showAvatar = true,
   }) : super(key: key);
 
   @override
@@ -47,7 +47,7 @@ class ShortCardInfo extends StatelessWidget {
                     children: [
                       SupplierNameWidget(
                         data: data,
-                        displayActorAvatar: displayActorAvatar,
+                        showAvatar: showAvatar,
                         videoPlayerInfo: videoPlayerInfo,
                       ),
                       VideoTitleWidget(title: title),

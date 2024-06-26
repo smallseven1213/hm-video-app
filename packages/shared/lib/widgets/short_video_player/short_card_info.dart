@@ -29,7 +29,7 @@ class ShortCardInfo extends StatelessWidget {
   final ShortVideoDetail data;
   final String title;
   final String tag;
-  final bool displayActorAvatar;
+  final bool showAvatar;
   final Function showConfirmDialog;
   final bool? showMuteButton;
 
@@ -39,7 +39,7 @@ class ShortCardInfo extends StatelessWidget {
     required this.title,
     required this.tag,
     required this.showConfirmDialog,
-    this.displayActorAvatar = true,
+    this.showAvatar = false,
     this.showMuteButton = true,
   }) : super(key: key);
 
@@ -155,7 +155,7 @@ class ShortCardInfo extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (displayActorAvatar)
+          if (showAvatar)
             Padding(
               padding: const EdgeInsets.only(right: 8, bottom: 8),
               child: AvatarWidget(
@@ -165,9 +165,9 @@ class ShortCardInfo extends StatelessWidget {
               ),
             ),
           Text(
-            '${displayActorAvatar ? '' : '@'}${data.supplier!.aliasName}',
+            '${showAvatar ? '' : '@'}${data.supplier!.aliasName}',
             style: TextStyle(
-              fontSize: displayActorAvatar ? 13 : 15,
+              fontSize: showAvatar ? 13 : 15,
               color: Colors.white,
             ),
           ),

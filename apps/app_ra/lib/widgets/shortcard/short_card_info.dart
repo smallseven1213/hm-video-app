@@ -17,14 +17,14 @@ class ShortCardInfo extends StatelessWidget {
   final ShortVideoDetail data;
   final String title;
   final String tag;
-  final bool displayActorAvatar;
+  final bool showAvatar;
 
   const ShortCardInfo({
     Key? key,
     required this.data,
     required this.title,
     required this.tag,
-    this.displayActorAvatar = true,
+    this.showAvatar = true,
   }) : super(key: key);
 
   @override
@@ -69,7 +69,7 @@ class ShortCardInfo extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        displayActorAvatar == true
+                        showAvatar == true
                             ? Padding(
                                 padding:
                                     const EdgeInsets.only(right: 8, bottom: 8),
@@ -80,7 +80,7 @@ class ShortCardInfo extends StatelessWidget {
                                 ))
                             : const SizedBox(),
                         Text(
-                            '${displayActorAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
+                            '${showAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
                             style: const TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFFFDDCEF),

@@ -118,7 +118,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                           tag: widget.tag,
                           data: videoDetail,
                           title: widget.title,
-                          displayActorAvatar: false,
                         )
                       : const SizedBox.shrink(),
                 ],

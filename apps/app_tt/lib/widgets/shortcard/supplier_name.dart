@@ -8,13 +8,13 @@ import '../actor_avatar.dart';
 
 class SupplierNameWidget extends StatelessWidget {
   final ShortVideoDetail data;
-  final bool displayActorAvatar;
+  final bool showAvatar;
   final VideoPlayerInfo videoPlayerInfo;
 
   const SupplierNameWidget({
     super.key,
     required this.data,
-    required this.displayActorAvatar,
+    required this.showAvatar,
     required this.videoPlayerInfo,
   });
 
@@ -38,7 +38,7 @@ class SupplierNameWidget extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            displayActorAvatar == true
+            showAvatar == true
                 ? Padding(
                     padding: const EdgeInsets.only(right: 8, bottom: 8),
                     child: ActorAvatar(
@@ -48,7 +48,7 @@ class SupplierNameWidget extends StatelessWidget {
                     ))
                 : const SizedBox(),
             Text(
-              '${displayActorAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
+              '${showAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
               style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,

@@ -119,7 +119,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
-                                  displayActorAvatar: false,
                                   controllerTag: widget.controllerTag ?? "",
                                 )
                               : const SizedBox.shrink(),
@@ -149,7 +148,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                           tag: widget.tag,
                           data: videoDetail,
                           title: widget.title,
-                          displayActorAvatar: false,
                           controllerTag: widget.controllerTag ?? "",
                         )
                       : const SizedBox.shrink(),
@@ -157,7 +155,6 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               ),
             ),
           ),
-         
           Obx(
             () => uiController.isFullscreen.value != true
                 ? const FloatPageBackButton()

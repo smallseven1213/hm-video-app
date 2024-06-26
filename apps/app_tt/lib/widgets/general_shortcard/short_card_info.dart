@@ -17,7 +17,7 @@ class ShortCardInfo extends StatefulWidget {
   final ShortVideoDetail data;
   final String title;
   final String tag;
-  final bool displayActorAvatar;
+  final bool showAvatar;
   final String? controllerTag;
 
   const ShortCardInfo({
@@ -25,7 +25,7 @@ class ShortCardInfo extends StatefulWidget {
     required this.data,
     required this.title,
     required this.tag,
-    this.displayActorAvatar = true,
+    this.showAvatar = true,
     this.controllerTag,
   }) : super(key: key);
 
@@ -87,7 +87,7 @@ class ShortCardInfoState extends State<ShortCardInfo> {
               children: [
                 SupplierNameWidget(
                   data: widget.data,
-                  displayActorAvatar: widget.displayActorAvatar,
+                  showAvatar: widget.showAvatar,
                   videoPlayerInfo: videoPlayerInfo,
                 ),
                 VideoTitleWidget(title: widget.title),
