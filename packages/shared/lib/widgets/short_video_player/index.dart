@@ -65,6 +65,8 @@ class ShortCardState extends State<ShortCard> {
   @override
   Widget build(BuildContext context) {
     final screen = MediaQuery.of(context);
+    var paddingBottom =
+        uiController.isIphoneSafari.value ? 20 : screen.padding.bottom;
 
     return VideoPlayerConsumer(
       tag: widget.tag,
@@ -116,12 +118,13 @@ class ShortCardState extends State<ShortCard> {
             ],
           );
         }
+
         return Container(
           color: Colors.black,
           child: Stack(
             children: [
               SizedBox(
-                height: screen.size.height - 76 - screen.padding.bottom,
+                height: screen.size.height - 76 - paddingBottom,
                 width: double.infinity,
                 child: ShortVideoConsumer(
                   vodId: widget.id,
