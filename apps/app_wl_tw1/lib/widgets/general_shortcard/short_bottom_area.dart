@@ -46,7 +46,7 @@ class ShortBottomArea extends StatelessWidget {
         ),
         child: UIBottomSafeArea(
             child: SizedBox(
-                height: kIsWeb ? 0 : 76,
+                height: 76,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
