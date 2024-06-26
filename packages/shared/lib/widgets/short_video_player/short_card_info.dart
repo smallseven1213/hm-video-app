@@ -45,6 +45,19 @@ class ShortCardInfo extends StatelessWidget {
 
   final vodApi = VodApi();
 
+  Future<void> navigateToRoute(
+    BuildContext context,
+    VideoPlayerInfo videoPlayerInfo, {
+    required String route,
+    Map<String, dynamic>? args,
+  }) async {
+    videoPlayerInfo.observableVideoPlayerController.videoPlayerController
+        ?.pause();
+    await MyRouteDelegate.of(context).push(route, args: args);
+    videoPlayerInfo.observableVideoPlayerController.videoPlayerController
+        ?.play();
+  }
+
   // 提取的方法，用於處理購買操作的結果
   void handlePurchaseResult(
     BuildContext context,
@@ -121,18 +134,9 @@ class ShortCardInfo extends StatelessWidget {
         children: tags
             .map(
               (tag) => GestureDetector(
-                onTap: () async {
-                  videoPlayerInfo
-                      .observableVideoPlayerController.videoPlayerController
-                      ?.pause();
-                  await MyRouteDelegate.of(context).push(
-                    AppRoutes.supplierTag,
-                    args: {'tagId': tag.id, 'tagName': tag.name},
-                  );
-                  videoPlayerInfo
-                      .observableVideoPlayerController.videoPlayerController
-                      ?.play();
-                },
+                onTap: () => navigateToRoute(context, videoPlayerInfo,
+                    route: AppRoutes.supplierTag,
+                    args: {'tagId': tag.id, 'tagName': tag.name}),
                 child: ShortCardInfoTag(name: '#${tag.name}'),
               ),
             )
@@ -146,16 +150,8 @@ class ShortCardInfo extends StatelessWidget {
     VideoPlayerInfo videoPlayerInfo,
   ) {
     return GestureDetector(
-      onTap: () async {
-        videoPlayerInfo.observableVideoPlayerController.videoPlayerController
-            ?.pause();
-        await MyRouteDelegate.of(context).push(
-          AppRoutes.supplier,
-          args: {'id': data.supplier!.id},
-        );
-        videoPlayerInfo.observableVideoPlayerController.videoPlayerController
-            ?.play();
-      },
+      onTap: () => navigateToRoute(context, videoPlayerInfo,
+          route: AppRoutes.supplier, args: {'id': data.supplier!.id}),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -268,13 +264,13 @@ class ShortCardInfo extends StatelessWidget {
                             !video!.isAvailable
                                 ? Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: video.chargeType ==
+                                    child: video.chargeType !=
                                             ChargeType.vip.index
                                         ? _buildPurchaseButton(
                                             context: context,
-                                            onTap: () =>
-                                                MyRouteDelegate.of(context)
-                                                    .push(AppRoutes.vip),
+                                            onTap: () => navigateToRoute(
+                                                context, videoPlayerInfo,
+                                                route: AppRoutes.vip),
                                             borderColor: const Color(0xffcecece)
                                                 .withOpacity(0.7),
                                             textColor: Colors.white,
@@ -287,29 +283,34 @@ class ShortCardInfo extends StatelessWidget {
                                             ))
                                         : _buildPurchaseButton(
                                             context: context,
-                                            onTap: () => purchase(
-                                              context,
-                                              id: video.id,
-                                              onSuccess: () {
-                                                final ShortVideoDetailController
-                                                    shortVideoDetailController =
-                                                    Get.find<
-                                                            ShortVideoDetailController>(
-                                                        tag: tag);
-                                                shortVideoDetailController
-                                                    .mutateAll();
-                                              },
-                                            ),
+                                            onTap: () {
+                                              videoPlayerInfo
+                                                  .observableVideoPlayerController
+                                                  .videoPlayerController
+                                                  ?.pause();
+                                              purchase(
+                                                context,
+                                                id: video.id,
+                                                onSuccess: () {
+                                                  final ShortVideoDetailController
+                                                      shortVideoDetailController =
+                                                      Get.find<
+                                                              ShortVideoDetailController>(
+                                                          tag: tag);
+                                                  shortVideoDetailController
+                                                      .mutateAll();
+                                                },
+                                              );
+                                            },
                                             borderColor:
                                                 const Color(0xffe7b400),
                                             textColor: Colors.white,
                                             text:
                                                 '${video.buyPoint} ${localizations.translate('count_gold_coins_to_unlock')} ${getTimeString(video.timeLength)}',
                                             icon: const Image(
-                                              image: AssetImage(
-                                                  'assets/images/purchase/icon-short-coin.webp'),
-                                              width: 30,
-                                            ),
+                                                image: AssetImage(
+                                                    'assets/images/purchase/icon-short-coin.webp'),
+                                                width: 30),
                                           ),
                                   )
                                 : const SizedBox(),
