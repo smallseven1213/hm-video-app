@@ -264,7 +264,7 @@ class ShortCardInfo extends StatelessWidget {
                             !video!.isAvailable
                                 ? Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: video.chargeType !=
+                                    child: video.chargeType ==
                                             ChargeType.vip.index
                                         ? _buildPurchaseButton(
                                             context: context,
