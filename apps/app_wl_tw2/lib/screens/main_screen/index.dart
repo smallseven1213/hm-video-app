@@ -67,9 +67,7 @@ class HomeMainScreen extends StatelessWidget {
                                     ),
                                   ],
                                 )
-                              : SizedBox(
-                                  height: MediaQuery.of(context).padding.top,
-                                )),
+                              : SizedBox()),
                     ),
                     Obx(() => uiController.displayHomeNavigationBar.value
                         ? LayoutStyleTabBgColorConsumer(

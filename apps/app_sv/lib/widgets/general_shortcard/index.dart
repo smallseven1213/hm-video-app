@@ -7,8 +7,9 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
-import '../shortcard/index.dart';
-import '../shortcard/short_card_info.dart';
+import 'package:shared/widgets/short_video_player/index.dart';
+import 'package:shared/widgets/short_video_player/short_card_info.dart';
+import '../../utils/show_confirm_dialog.dart';
 import 'short_bottom_area.dart';
 
 class GeneralShortCard extends StatefulWidget {
@@ -64,7 +65,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
         children: [
           VideoPlayerProvider(
             key: Key(widget.videoUrl),
-            tag: widget.videoUrl,
+            tag: widget.tag,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -88,7 +89,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               shortData: widget.shortData,
               toggleFullScreen: widget.toggleFullScreen,
               allowFullsreen: true,
-              videoUrl: widget.videoUrl,
+              showConfirmDialog: showConfirmDialog,
             ),
           ),
           Obx(
@@ -111,10 +112,10 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         children: [
                           videoDetail != null
                               ? ShortCardInfo(
-                                  videoUrl: videoUrl ?? "",
                                   tag: widget.tag,
                                   data: videoDetail,
                                   title: widget.title,
+                                  showConfirmDialog: showConfirmDialog,
                                 )
                               : const SizedBox.shrink(),
                           const SizedBox(height: 15),

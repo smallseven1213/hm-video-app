@@ -9,6 +9,7 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import 'package:shared/widgets/short_video_player/side_info.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
+import '../../utils/show_confirm_dialog.dart';
 import '../wave_loading.dart';
 
 final logger = Logger();
@@ -91,25 +92,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   shortData: widget.shortData,
                   toggleFullScreen: widget.toggleFullScreen,
                   allowFullsreen: false,
-                ),
-                Obx(
-                  () => uiController.isFullscreen.value == true
-                      ? const SizedBox.shrink()
-                      : ShortVideoConsumer(
-                          vodId: widget.id,
-                          tag: widget.tag,
-                          child: ({
-                            required isLoading,
-                            required video,
-                            required videoDetail,
-                            required videoUrl,
-                          }) =>
-                              SideInfo(
-                            tag: widget.tag,
-                            videoId: widget.shortData.id,
-                            shortData: widget.shortData,
-                          ),
-                        ),
+                  showConfirmDialog: showConfirmDialog,
                 ),
                 Obx(
                   () => uiController.isFullscreen.value == true
@@ -133,7 +116,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                                           tag: widget.tag,
                                           data: videoDetail,
                                           title: widget.title,
-                                          displayActorAvatar: false,
+                                          showConfirmDialog: showConfirmDialog,
                                         )
                                       : const SizedBox.shrink(),
                             ),

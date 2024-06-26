@@ -3,7 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import 'package:shared/widgets/short_video_player/index.dart';
+import '../../utils/show_confirm_dialog.dart';
+import '../shortcard/short_card_info.dart';
 import '../wave_loading.dart';
 
 class HomeUseShortCard extends StatefulWidget {
@@ -60,7 +64,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
         children: [
           VideoPlayerProvider(
             key: Key(widget.videoUrl),
-            tag: widget.videoUrl,
+            tag: widget.tag,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -74,7 +78,45 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
               videoViewTimes: widget.shortData.videoViewTimes!,
             ),
             loadingWidget: const WaveLoading(),
-            child: (isReady, controller) => Container(),
+            child: (isReady, controller) => ShortCard(
+              key: Key(widget.tag),
+              index: widget.index,
+              tag: widget.tag,
+              isActive: widget.isActive,
+              id: widget.shortData.id,
+              title: widget.shortData.title,
+              shortData: widget.shortData,
+              toggleFullScreen: widget.toggleFullScreen,
+              allowFullsreen: true,
+              showConfirmDialog: showConfirmDialog,
+              showProgressBar: false,
+            ),
+          ),
+          Positioned(
+            bottom: -8,
+            left: 0,
+            right: 0,
+            child: ShortVideoConsumer(
+              vodId: widget.id,
+              tag: widget.tag,
+              child: ({
+                required isLoading,
+                required video,
+                required videoDetail,
+                required videoUrl,
+              }) =>
+                  Column(
+                children: [
+                  videoDetail != null
+                      ? ShortCardInfo(
+                          tag: widget.tag,
+                          data: videoDetail,
+                          title: widget.title,
+                        )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+            ),
           ),
         ],
       ),

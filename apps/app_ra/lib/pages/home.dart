@@ -64,8 +64,6 @@ class HomeState extends State<HomePage> {
     super.initState();
     uiController = Get.put(UIController());
     Get.put(GameStartupController());
-
-    userApi.writeUserEnterHallRecord();
   }
 
   @override

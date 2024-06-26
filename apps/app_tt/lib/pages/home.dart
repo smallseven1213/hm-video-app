@@ -75,8 +75,6 @@ class HomeState extends State<HomePage> {
         _scaffoldKey.currentState?.openEndDrawer();
       }
     });
-
-    userApi.writeUserEnterHallRecord();
   }
 
   @override

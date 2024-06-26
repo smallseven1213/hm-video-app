@@ -4,6 +4,7 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/notice_api.dart';
+import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/banner_controller.dart';
 import 'package:shared/models/banner_photo.dart';
 import 'package:shared/models/color_keys.dart';
@@ -25,6 +26,7 @@ class NoticeDialog extends StatefulWidget {
 }
 
 class NoticeDialogState extends State<NoticeDialog> {
+  UserApi userApi = UserApi();
   NoticeApi noticeApi = NoticeApi();
   BannerController bannerController = Get.find<BannerController>();
   Map? bounceData = {'notice': null, 'banner': null};
@@ -36,6 +38,7 @@ class NoticeDialogState extends State<NoticeDialog> {
   }
 
   void handleUrl(String? url, BuildContext context) {
+    userApi.writeUserEnterHallRecord();
     Navigator.pop(context);
     if (url != null && url != '-1') {
       if (url.startsWith('http://') || url.startsWith('https://')) {
@@ -76,6 +79,7 @@ class NoticeDialogState extends State<NoticeDialog> {
     if (notice != null && mounted) {
       showDialog(
         context: context,
+        barrierDismissible: false,
         builder: (BuildContext ctx) {
           return AlertDialog(
             shape: RoundedRectangleBorder(

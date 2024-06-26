@@ -1,4 +1,5 @@
 import 'package:app_wl_tw1/localization/i18n.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -7,6 +8,7 @@ import 'package:shared/controllers/user_short_collection_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_collect_count_consumer.dart';
 import 'package:shared/modules/short_video/short_video_favorite_count_consumer.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../../screens/short/button.dart';
 
@@ -26,15 +28,12 @@ class ShortBottomArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingBottom = MediaQuery.of(context).padding.bottom;
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
         Get.find<UserFavoritesShortController>();
 
     return Container(
-        height: 76 + paddingBottom,
-        padding: EdgeInsets.only(bottom: paddingBottom),
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -45,69 +44,74 @@ class ShortBottomArea extends StatelessWidget {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ShortVideoFavoriteCountConsumer(
-                videoId: shortData.id,
-                tag: tag,
-                child: (favoriteCount, update) => Obx(() {
-                      bool isLike = userFavoritesShortController.data
-                          .any((e) => e.id == shortData.id);
-                      return ShortMenuButton(
-                        key: Key(
-                            'short_bottom_area_like_button ${shortData.id}'),
-                        displayFavoriteAndCollectCount:
-                            displayFavoriteAndCollectCount,
-                        count: favoriteCount,
-                        subscribe: I18n.pressLikeItIfYouLikeIt,
-                        icon: Icons.favorite_rounded,
-                        isLike: isLike,
-                        onTap: () {
-                          if (isLike) {
-                            userFavoritesShortController
-                                .removeVideo([shortData.id]);
-                            if (favoriteCount > 0) {
-                              update(-1);
-                            }
-                          } else {
-                            userFavoritesShortController.addVideo(shortData);
-                            update(1);
-                          }
-                        },
-                      );
-                    })),
-            ShortVideoCollectCountConsumer(
-                videoId: shortData.id,
-                tag: tag,
-                child: ((collectCount, update) => Obx(() {
-                      bool isLike = userShortCollectionController.data
-                          .any((e) => e.id == shortData.id);
-                      return ShortMenuButton(
-                        key: Key(
-                            'short_bottom_area_collection_button ${shortData.id}'),
-                        displayFavoriteAndCollectCount:
-                            displayFavoriteAndCollectCount,
-                        count: collectCount,
-                        subscribe: I18n.addToFavorites,
-                        icon: Icons.star_rounded,
-                        iconSize: 30,
-                        isLike: isLike,
-                        onTap: () {
-                          if (isLike) {
-                            userShortCollectionController
-                                .removeVideo([shortData.id]);
-                            if (collectCount > 0) {
-                              update(-1);
-                            }
-                          } else {
-                            userShortCollectionController.addVideo(shortData);
-                            update(1);
-                          }
-                        },
-                      );
-                    }))),
-          ],
-        ));
+        child: UIBottomSafeArea(
+            child: SizedBox(
+                height: 76,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    ShortVideoFavoriteCountConsumer(
+                        videoId: shortData.id,
+                        tag: tag,
+                        child: (favoriteCount, update) => Obx(() {
+                              bool isLike = userFavoritesShortController.data
+                                  .any((e) => e.id == shortData.id);
+                              return ShortMenuButton(
+                                key: Key(
+                                    'short_bottom_area_like_button ${shortData.id}'),
+                                displayFavoriteAndCollectCount:
+                                    displayFavoriteAndCollectCount,
+                                count: favoriteCount,
+                                subscribe: I18n.pressLikeItIfYouLikeIt,
+                                icon: Icons.favorite_rounded,
+                                isLike: isLike,
+                                onTap: () {
+                                  if (isLike) {
+                                    userFavoritesShortController
+                                        .removeVideo([shortData.id]);
+                                    if (favoriteCount > 0) {
+                                      update(-1);
+                                    }
+                                  } else {
+                                    userFavoritesShortController
+                                        .addVideo(shortData);
+                                    update(1);
+                                  }
+                                },
+                              );
+                            })),
+                    ShortVideoCollectCountConsumer(
+                        videoId: shortData.id,
+                        tag: tag,
+                        child: ((collectCount, update) => Obx(() {
+                              bool isLike = userShortCollectionController.data
+                                  .any((e) => e.id == shortData.id);
+                              return ShortMenuButton(
+                                key: Key(
+                                    'short_bottom_area_collection_button ${shortData.id}'),
+                                displayFavoriteAndCollectCount:
+                                    displayFavoriteAndCollectCount,
+                                count: collectCount,
+                                subscribe: I18n.addToFavorites,
+                                icon: Icons.star_rounded,
+                                iconSize: 30,
+                                isLike: isLike,
+                                onTap: () {
+                                  if (isLike) {
+                                    userShortCollectionController
+                                        .removeVideo([shortData.id]);
+                                    if (collectCount > 0) {
+                                      update(-1);
+                                    }
+                                  } else {
+                                    userShortCollectionController
+                                        .addVideo(shortData);
+                                    update(1);
+                                  }
+                                },
+                              );
+                            }))),
+                  ],
+                ))));
   }
 }

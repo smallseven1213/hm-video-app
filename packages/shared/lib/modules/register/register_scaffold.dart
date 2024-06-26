@@ -91,6 +91,7 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
 
         if (res.code == '00') {
           userController.fetchUserInfo();
+          userController.fetchUserInfoV2();
           // ignore: use_build_context_synchronously
           MyRouteDelegate.of(context).popRoute();
         } else if (res.code == '40000') {

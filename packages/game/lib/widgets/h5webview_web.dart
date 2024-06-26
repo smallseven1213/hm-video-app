@@ -4,10 +4,6 @@ import 'dart:ui_web' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:game/utils/loading.dart';
-import 'package:pointer_interceptor/pointer_interceptor.dart';
-
-import 'package:game/models/game_list.dart';
-import 'package:game/screens/game_webview_screen/game_webview_toggle_button.dart';
 
 class H5WebviewShared extends StatefulWidget {
   final String initialUrl;
@@ -91,46 +87,46 @@ class H5WebviewSharedState extends State<H5WebviewShared> {
         // 加入loading
         const Center(child: GameLoading()),
         HtmlElementView(viewType: viewType),
-        if (toggleButton)
-          Center(
-            child: PointerInterceptor(
-              child: GameWebviewToggleButtonWidget(
-                toggleButtonRow: toggleButtonRow,
-                direction: widget.direction,
-              ),
-            ),
-          ),
-        Positioned(
-          top: MediaQuery.of(context).size.height - 70,
-          left: widget.direction == gameWebviewDirection['vertical']
-              ? MediaQuery.of(context).size.width - 70
-              : (orientation == Orientation.portrait
-                  ? 20
-                  : MediaQuery.of(context).size.width - 70),
-          child: RotatedBox(
-            quarterTurns: widget.direction == gameWebviewDirection['vertical']
-                ? (orientation == Orientation.portrait ? 0 : 1)
-                : (orientation == Orientation.portrait ? 1 : 0),
-            child: PointerInterceptor(
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    toggleButton = !toggleButton;
-                  });
-                },
-                child: SizedBox(
-                  width: 55,
-                  height: 55,
-                  child: Image.asset(
-                    'packages/game/assets/images/game_lobby/icons-menu.webp',
-                    width: 40,
-                    height: 40,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
+        // if (toggleButton)
+        //   Center(
+        //     child: PointerInterceptor(
+        //       child: GameWebviewToggleButtonWidget(
+        //         toggleButtonRow: toggleButtonRow,
+        //         direction: widget.direction,
+        //       ),
+        //     ),
+        //   ),
+        // Positioned(
+        //   top: MediaQuery.of(context).size.height - 70,
+        //   left: widget.direction == gameWebviewDirection['vertical']
+        //       ? MediaQuery.of(context).size.width - 70
+        //       : (orientation == Orientation.portrait
+        //           ? 20
+        //           : MediaQuery.of(context).size.width - 70),
+        //   child: RotatedBox(
+        //     quarterTurns: widget.direction == gameWebviewDirection['vertical']
+        //         ? (orientation == Orientation.portrait ? 0 : 1)
+        //         : (orientation == Orientation.portrait ? 1 : 0),
+        //     child: PointerInterceptor(
+        //       child: InkWell(
+        //         onTap: () {
+        //           setState(() {
+        //             toggleButton = !toggleButton;
+        //           });
+        //         },
+        //         child: SizedBox(
+        //           width: 55,
+        //           height: 55,
+        //           child: Image.asset(
+        //             'packages/game/assets/images/game_lobby/icons-menu.webp',
+        //             width: 40,
+        //             height: 40,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

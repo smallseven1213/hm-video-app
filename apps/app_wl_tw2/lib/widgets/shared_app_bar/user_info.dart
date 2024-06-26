@@ -61,96 +61,99 @@ class _UserInfoState extends State<UserInfo>
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          InkWell(
-            onTap: () {
-              Get.find<UserController>().fetchUserInfoV2();
-            },
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  '當前餘額',
-                  style: TextStyle(
-                    fontSize: 10,
-                    color: Color(0xffb2bac5),
-                  ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        const SizedBox(
+          width: 10,
+        ),
+        InkWell(
+          onTap: () {
+            Get.find<UserController>().fetchUserInfoV2();
+          },
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                '當前餘額',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Color(0xffb2bac5),
                 ),
-                const SizedBox(height: 3),
-                Row(
-                  children: [
-                    if (widget.isLoading)
-                      RotationTransition(
-                        turns: Tween(begin: 0.0, end: 1.0)
-                            .animate(_animationController),
-                        child: const Image(
-                          image: AssetImage('assets/images/reload_balance.png'),
-                          fit: BoxFit.contain,
-                          height: 13,
-                        ),
-                      )
-                    else
-                      const Image(
+              ),
+              const SizedBox(height: 3),
+              Row(
+                children: [
+                  if (widget.isLoading)
+                    RotationTransition(
+                      turns: Tween(begin: 0.0, end: 1.0)
+                          .animate(_animationController),
+                      child: const Image(
                         image: AssetImage('assets/images/reload_balance.png'),
                         fit: BoxFit.contain,
                         height: 13,
                       ),
-                    const SizedBox(width: 4),
-                    Text(
-                      intlAmount(widget.info.points, I18n.dollar),
-                      style: const TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.white),
+                    )
+                  else
+                    const Image(
+                      image: AssetImage('assets/images/reload_balance.png'),
+                      fit: BoxFit.contain,
+                      height: 13,
                     ),
-                    const SizedBox(width: 10),
-                    InkWell(
-                        onTap: () {
-                          final currentPath =
-                              MyRouteDelegate.of(context).currentPath;
-                          final bottomNavigatorController =
-                              Get.find<BottomNavigatorController>();
-                          final currentTabActiveKey =
-                              bottomNavigatorController.activeKey;
-                          final isGameUesr = GetStorage().read('isGameUser');
-                          if ((currentTabActiveKey.value == "/game" &&
-                                  currentPath == "/home") ||
-                              isGameUesr == true) {
-                            GamePlatformConfigController gameConfigController =
-                                Get.find<GamePlatformConfigController>();
-                            final route =
-                                gameConfigController.switchPaymentPage.value ==
-                                        switchPaymentPageType['list']
-                                    ? GameAppRoutes.depositList
-                                    : GameAppRoutes.depositPolling;
-                            MyRouteDelegate.of(context).push(route);
-                          } else {
-                            bottomNavigatorController.changeKey('/game');
-                            eventBus.fireEvent("gotoDepositAfterLogin");
-                          }
-                        },
-                        child: const SizedBox(
-                          width: 15,
+                  const SizedBox(width: 4),
+                  Text(
+                    intlAmount(widget.info.points, I18n.dollar),
+                    style: const TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.white),
+                  ),
+                  const SizedBox(width: 10),
+                  InkWell(
+                      onTap: () {
+                        final currentPath =
+                            MyRouteDelegate.of(context).currentPath;
+                        final bottomNavigatorController =
+                            Get.find<BottomNavigatorController>();
+                        final currentTabActiveKey =
+                            bottomNavigatorController.activeKey;
+                        final isGameUesr = GetStorage().read('isGameUser');
+                        if ((currentTabActiveKey.value == "/game" &&
+                                currentPath == "/home") ||
+                            isGameUesr == true) {
+                          GamePlatformConfigController gameConfigController =
+                              Get.find<GamePlatformConfigController>();
+                          final route =
+                              gameConfigController.switchPaymentPage.value ==
+                                      switchPaymentPageType['list']
+                                  ? GameAppRoutes.depositList
+                                  : GameAppRoutes.depositPolling;
+                          MyRouteDelegate.of(context).push(route);
+                        } else {
+                          bottomNavigatorController.changeKey('/game');
+                          eventBus.fireEvent("gotoDepositAfterLogin");
+                        }
+                      },
+                      child: const SizedBox(
+                        width: 15,
+                        height: 15,
+                        child: Image(
+                          image: AssetImage('assets/images/user_balance.png'),
+                          fit: BoxFit.contain,
                           height: 15,
-                          child: Image(
-                            image: AssetImage('assets/images/user_balance.png'),
-                            fit: BoxFit.contain,
-                            height: 15,
-                            width: 15,
-                          ),
-                        ))
-                  ],
-                ),
-              ],
-            ),
+                          width: 15,
+                        ),
+                      ))
+                ],
+              ),
+            ],
           ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+      ],
     );
   }
 }

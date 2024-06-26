@@ -14,20 +14,18 @@ import 'next_video.dart';
 import '../shortcard/purchase.dart';
 
 class ShortCardInfo extends StatefulWidget {
-  final String videoUrl;
   final ShortVideoDetail data;
   final String title;
   final String tag;
-  final bool displayActorAvatar;
+  final bool showAvatar;
   final String? controllerTag;
 
   const ShortCardInfo({
     Key? key,
-    required this.videoUrl,
     required this.data,
     required this.title,
     required this.tag,
-    this.displayActorAvatar = true,
+    this.showAvatar = true,
     this.controllerTag,
   }) : super(key: key);
 
@@ -45,10 +43,12 @@ class ShortCardInfoState extends State<ShortCardInfo> {
     final int index = videoShortsController.data
         .indexWhere((element) => element.id == widget.data.id);
 
-    setState(() {
-      nextVideo = videoShortsController.data[index + 1];
-      currentVideoIndex = index;
-    });
+    if (videoShortsController.data.length - 1 >= index + 1) {
+      setState(() {
+        nextVideo = videoShortsController.data[index + 1];
+        currentVideoIndex = index;
+      });
+    }
   }
 
   @override
@@ -62,7 +62,7 @@ class ShortCardInfoState extends State<ShortCardInfo> {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: widget.videoUrl,
+        tag: widget.tag,
         child: (VideoPlayerInfo videoPlayerInfo) {
           if (videoPlayerInfo.videoPlayerController == null) {
             return Container();
@@ -87,7 +87,7 @@ class ShortCardInfoState extends State<ShortCardInfo> {
               children: [
                 SupplierNameWidget(
                   data: widget.data,
-                  displayActorAvatar: widget.displayActorAvatar,
+                  showAvatar: widget.showAvatar,
                   videoPlayerInfo: videoPlayerInfo,
                 ),
                 VideoTitleWidget(title: widget.title),

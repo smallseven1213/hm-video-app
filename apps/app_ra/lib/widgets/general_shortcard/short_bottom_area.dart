@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/user_favorites_short_controlle.dart';
@@ -22,7 +23,6 @@ class ShortBottomArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paddingBottom = MediaQuery.of(context).padding.bottom;
     final userShortCollectionController =
         Get.find<UserShortCollectionController>();
     final userFavoritesShortController =
@@ -30,8 +30,7 @@ class ShortBottomArea extends StatelessWidget {
 
     return Container(
       color: const Color(0xFF030923),
-      padding: EdgeInsets.only(
-          top: 18, right: 10, left: 10, bottom: 18 + paddingBottom),
+      padding: EdgeInsets.only(top: 18, right: 10, left: 10, bottom: 18),
       child: UIBottomSafeArea(
         child: SizedBox(
           height: 76,

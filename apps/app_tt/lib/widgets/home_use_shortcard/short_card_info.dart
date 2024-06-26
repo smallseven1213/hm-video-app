@@ -9,25 +9,23 @@ import '../shortcard/video_tags.dart';
 import '../shortcard/video_title.dart';
 
 class ShortCardInfo extends StatelessWidget {
-  final String videoUrl;
   final ShortVideoDetail data;
   final String title;
   final String tag;
-  final bool displayActorAvatar;
+  final bool showAvatar;
 
   const ShortCardInfo({
     Key? key,
-    required this.videoUrl,
     required this.data,
     required this.title,
     required this.tag,
-    this.displayActorAvatar = true,
+    this.showAvatar = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: videoUrl,
+        tag: tag,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
               width: MediaQuery.of(context).size.width,
@@ -49,7 +47,7 @@ class ShortCardInfo extends StatelessWidget {
                     children: [
                       SupplierNameWidget(
                         data: data,
-                        displayActorAvatar: displayActorAvatar,
+                        showAvatar: showAvatar,
                         videoPlayerInfo: videoPlayerInfo,
                       ),
                       VideoTitleWidget(title: title),

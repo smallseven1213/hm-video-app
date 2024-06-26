@@ -12,7 +12,7 @@ import 'localization/i18n.dart';
 import 'widgets/countdown.dart';
 import 'widgets/loading.dart';
 
-const env = String.fromEnvironment('ENV', defaultValue: 'prod');
+const env = String.fromEnvironment('ENV', defaultValue: 'dev');
 
 void main() async {
   final allRoutes = {
@@ -27,9 +27,9 @@ void main() async {
     allRoutes.keys.first,
     // [必填]DlJSON來源
     [
-      'https://dl.dl51ss.info/$env/dl.json',
-      'https://dl.dl51ss.com/$env/dl.json',
-      'https://dl.dl51ss.net/$env/dl.json',
+      'https://dl.dlsv.info/$env/dl.json',
+      'https://dl.dlsv.com/$env/dl.json',
+      'https://dl.dlsv.net/$env/dl.json',
       //先使用sv的配置
       // 'https://dl.dlsv.net/$env/dl.json',
       // 'https://dl.dlsv.app/$env/dl.json'

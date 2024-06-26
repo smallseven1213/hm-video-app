@@ -10,28 +10,27 @@ import 'package:shared/navigator/delegate.dart';
 import '../../screens/video/video_player_area/enums.dart';
 import '../../utils/purchase.dart';
 import '../actor_avatar.dart';
-import '../short/short_card_info_tag.dart';
+import 'short_card_info_tag.dart';
+import 'video_progress.dart';
 
 class ShortCardInfo extends StatelessWidget {
-  final String videourl;
   final ShortVideoDetail data;
   final String title;
   final String tag;
-  final bool displayActorAvatar;
+  final bool showAvatar;
 
   const ShortCardInfo({
     Key? key,
-    required this.videourl,
     required this.data,
     required this.title,
     required this.tag,
-    this.displayActorAvatar = true,
+    this.showAvatar = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: videourl,
+        tag: tag,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Container(
             width: MediaQuery.of(context).size.width,
@@ -70,7 +69,7 @@ class ShortCardInfo extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        displayActorAvatar == true
+                        showAvatar == true
                             ? Padding(
                                 padding:
                                     const EdgeInsets.only(right: 8, bottom: 8),
@@ -81,7 +80,7 @@ class ShortCardInfo extends StatelessWidget {
                                 ))
                             : const SizedBox(),
                         Text(
-                            '${displayActorAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
+                            '${showAvatar == true ? '' : '@'}${data.supplier!.aliasName}',
                             style: const TextStyle(
                                 fontSize: 16,
                                 color: Color(0xFFFDDCEF),
@@ -128,36 +127,6 @@ class ShortCardInfo extends StatelessWidget {
                   ),
                   const SizedBox(height: 10)
                 ],
-                // ShortVideoConsumer(
-                //     vodId: data.id,
-                //     tag: tag,
-                //     child: ({
-                //       required isLoading,
-                //       required video,
-                //       required videoDetail,
-                //       required videoUrl,
-                //     }) =>
-                //         VideoPlayerConsumer(
-                //             tag: videoUrl ?? "",
-                //             child: (VideoPlayerInfo videoPlayerInfo) {
-                //               return InkWell(
-                //                 onTap: () {
-                //                   final ShortVideoDetailController
-                //                       shortVideoDetailController =
-                //                       Get.find<ShortVideoDetailController>(
-                //                           tag: tag);
-                //                   shortVideoDetailController.mutateAll();
-                //                   // videoPlayerInfo
-                //                   //     .videoPlayerController
-                //                   //     ?.play();
-                //                 },
-                //                 child: Text(
-                //                   '測試金幣解鎖',
-                //                   style: const TextStyle(
-                //                       color: Color(0xFFFDDCEF), fontSize: 16),
-                //                 ),
-                //               );
-                //             })),
                 ShortVideoConsumer(
                     vodId: data.id,
                     tag: tag,
@@ -178,7 +147,7 @@ class ShortCardInfo extends StatelessWidget {
                                             fontSize: 16)),
                                   )
                                 : VideoPlayerConsumer(
-                                    tag: videoUrl ?? "",
+                                    tag: tag,
                                     child: (VideoPlayerInfo videoPlayerInfo) {
                                       return InkWell(
                                         onTap: () => purchase(
@@ -207,6 +176,11 @@ class ShortCardInfo extends StatelessWidget {
                                     })
                             : const SizedBox()),
                 const SizedBox(height: 10),
+                VideoProgressWidget(
+                  tag: tag,
+                  videoId: data.id,
+                  videoPlayerController: videoPlayerInfo.videoPlayerController!,
+                ),
               ],
             ),
           );

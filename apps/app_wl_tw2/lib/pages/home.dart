@@ -43,9 +43,11 @@ final screens = {
           layoutId: 2,
         ),
       ),
-  HomeNavigatorPathes.game: () => const Scaffold(
-        appBar: SharedAppBar(backgroundColor: Color(0xff1F2123)),
-        body: EnterGame(),
+  HomeNavigatorPathes.game: () => const SafeArea(
+        child: Scaffold(
+          appBar: SharedAppBar(),
+          body: EnterGame(),
+        ),
       ),
   HomeNavigatorPathes.apps: () => const HomeAppsScreen(),
   HomeNavigatorPathes.user: () => const UserScreen(),
@@ -71,7 +73,6 @@ class HomeState extends State<HomePage> {
     super.initState();
     Get.put(GameStartupController());
     Get.put(UIController());
-    userApi.writeUserEnterHallRecord();
   }
 
   @override
