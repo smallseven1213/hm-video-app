@@ -50,7 +50,7 @@ class LoginPageState extends State<LoginPage> {
                   child: Column(
                     children: [
                       const Image(
-                        image: AssetImage('assets/images/asia_bet_logo.png'),
+                        image: AssetImage('assets/images/logo_horizontal.png'),
                         fit: BoxFit.contain,
                         height: 35,
                       ),

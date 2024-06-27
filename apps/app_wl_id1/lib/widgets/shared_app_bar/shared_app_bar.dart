@@ -16,20 +16,14 @@ class SharedAppBar extends StatelessWidget implements PreferredSizeWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            // padding left 20
             padding: const EdgeInsets.only(left: 12),
             height: 26,
             child: const Image(
-              image: AssetImage('assets/images/asia_bet.png'),
+              image: AssetImage('assets/images/logo_horizontal.png'),
               fit: BoxFit.contain,
               height: 35,
             ),
-            // child: Image.asset(
-            //   'assets/images/asia_bet.png',
-            //   fit: BoxFit.contain,
-            // ),
           ),
-          // Spacer(),
           const UserArea()
         ],
       ),
