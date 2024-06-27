@@ -13,6 +13,7 @@ class AppColors {
     // button
     ColorKeys.buttonBgPrimary: Colors.white,
     ColorKeys.buttonBgSecondary: Colors.white,
+    ColorKeys.buttonTextSecondary: Color(0xffFFC700),
     ColorKeys.noImageBgTop: Color(0xff00234D),
     ColorKeys.noImageBgBottom: Color(0xff002D62),
     ColorKeys.formBg: Color(0xfff6f6f6),
