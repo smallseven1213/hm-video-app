@@ -131,7 +131,7 @@ class IDCardContentState extends State<IDCardContent> {
                     borderRadius: BorderRadius.circular(14.0),
                   ),
                   child: Text(
-                    '${I18n.website}gdtv.app',
+                    '${I18n.website}idstv.app',
                     style: TextStyle(color: backgroundColor, fontSize: 12),
                   ),
                 ),
