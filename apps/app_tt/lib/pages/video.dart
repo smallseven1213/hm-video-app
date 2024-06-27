@@ -1,15 +1,19 @@
 import 'package:app_tt/localization/i18n.dart';
+import 'package:app_tt/utils/show_confirm_dialog.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/video_ads_controller.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/modules/videos/video_by_tag_consumer.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 import '../screens/video/actors.dart';
 import '../screens/video/app_download_ad.dart';
@@ -90,203 +94,218 @@ class VideoState extends State<Video> {
         }
 
         return SafeArea(
-          child: Column(
-            children: [
-              Obx(
-                () => VideoPlayerProvider(
-                  key: Key(videoUrl),
-                  tag: videoUrl,
-                  autoPlay: videoAdsController.videoAds.value.playerPositions !=
-                              null &&
-                          videoAdsController
-                              .videoAds.value.playerPositions!.isNotEmpty
-                      ? false
-                      : true,
-                  videoUrl: videoUrl,
-                  videoDetail: videoDetail!,
-                  loadingWidget: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Container(
-                      color: Colors.black,
-                      child: VideoLoading(
-                          coverHorizontal: videoDetail.coverHorizontal ?? ''),
-                    ),
-                  ),
-                  child: (isReady, controller) {
-                    return VideoPlayerArea(
-                      name: name,
-                      videoUrl: videoUrl,
-                      video: videoDetail,
-                      tag: controllerTag,
-                    );
-                  },
-                ),
-              ),
-              Expanded(
-                  child: Stack(
-                children: [
-                  CustomScrollView(
-                    controller: _controller,
-                    slivers: [
-                      SliverToBoxAdapter(
-                        child: PurchaseBlock(
-                          id: videoDetail!.id.toString(),
-                          videoDetail: videoDetail,
-                          videoUrl: videoUrl,
-                          tag: controllerTag,
-                        ),
+          child: WatchPermissionProvider(
+            showConfirmDialog: () {
+              showConfirmDialog(
+                context: context,
+                message: I18n.plsLoginToWatch,
+                barrierDismissible: false,
+                showCancelButton: false,
+                onConfirm: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.login);
+                },
+              );
+            },
+            child: (canWatch) => Column(
+              children: [
+                Obx(
+                  () => VideoPlayerProvider(
+                    key: Key(videoUrl),
+                    tag: videoUrl,
+                    autoPlay:
+                        videoAdsController.videoAds.value.playerPositions !=
+                                    null &&
+                                videoAdsController
+                                    .videoAds.value.playerPositions!.isNotEmpty
+                            ? false
+                            : canWatch,
+                    videoUrl: videoUrl,
+                    videoDetail: videoDetail!,
+                    loadingWidget: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        color: Colors.black,
+                        child: VideoLoading(
+                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
                       ),
-                      SliverToBoxAdapter(
-                        child: VideoPlayerConsumer(
-                          tag: videoUrl,
-                          child: (videoPlayerInfo) => VideoInfo(
-                            videoPlayerController: videoPlayerInfo
-                                .observableVideoPlayerController
-                                .videoPlayerController,
-                            externalId: videoDetail.externalId ?? '',
-                            title: videoDetail.title,
-                            tags: videoDetail.tags ?? [],
-                            timeLength: videoDetail.timeLength ?? 0,
-                            viewTimes: videoDetail.videoViewTimes ?? 0,
-                            actor: videoDetail.actors,
-                            publisher: videoDetail.publisher,
-                            videoFavoriteTimes:
-                                videoDetail.videoFavoriteTimes ?? 0,
+                    ),
+                    child: (isReady, controller) {
+                      return VideoPlayerArea(
+                        name: name,
+                        videoUrl: videoUrl,
+                        video: videoDetail,
+                        tag: controllerTag,
+                      );
+                    },
+                  ),
+                ),
+                Expanded(
+                    child: Stack(
+                  children: [
+                    CustomScrollView(
+                      controller: _controller,
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: PurchaseBlock(
+                            id: videoDetail!.id.toString(),
                             videoDetail: videoDetail,
+                            videoUrl: videoUrl,
+                            tag: controllerTag,
                           ),
                         ),
-                      ),
-                      // 演員列表
-                      if (videoDetail.actors != null &&
-                          videoDetail.actors!.isNotEmpty)
                         SliverToBoxAdapter(
-                            child: Actors(
-                          actors: videoDetail.actors!,
-                        )),
-                      // 輪播
-                      const SliverToBoxAdapter(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 8, right: 8, left: 8),
-                          child: VideoScreenBanner(),
-                        ),
-                      ),
-                      // 選集
-                      if (videoDetail.belongVods != null &&
-                          videoDetail.belongVods!.isNotEmpty)
-                        SliverToBoxAdapter(
-                            child: BelongVideo(
-                          key: _belongVideoKey,
-                          videos: videoDetail.belongVods!,
-                        )),
-                      // APP 下載
-                      const SliverToBoxAdapter(
-                        child: Padding(
-                          padding: EdgeInsets.only(top: 8, right: 8, left: 8),
-                          child: AppDownloadAd(),
-                        ),
-                      ),
-                      // 同標籤
-                      SliverToBoxAdapter(
-                        child: Column(
-                          key: _tagVideoKey, // 使用GlobalKey
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8),
-                              child: TitleHeader(text: I18n.sameTag),
+                          child: VideoPlayerConsumer(
+                            tag: videoUrl,
+                            child: (videoPlayerInfo) => VideoInfo(
+                              videoPlayerController: videoPlayerInfo
+                                  .observableVideoPlayerController
+                                  .videoPlayerController,
+                              externalId: videoDetail.externalId ?? '',
+                              title: videoDetail.title,
+                              tags: videoDetail.tags ?? [],
+                              timeLength: videoDetail.timeLength ?? 0,
+                              viewTimes: videoDetail.videoViewTimes ?? 0,
+                              actor: videoDetail.actors,
+                              publisher: videoDetail.publisher,
+                              videoFavoriteTimes:
+                                  videoDetail.videoFavoriteTimes ?? 0,
+                              videoDetail: videoDetail,
                             ),
-                            if (videoDetail.tags!.isEmpty)
+                          ),
+                        ),
+                        // 演員列表
+                        if (videoDetail.actors != null &&
+                            videoDetail.actors!.isNotEmpty)
+                          SliverToBoxAdapter(
+                              child: Actors(
+                            actors: videoDetail.actors!,
+                          )),
+                        // 輪播
+                        const SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 8, right: 8, left: 8),
+                            child: VideoScreenBanner(),
+                          ),
+                        ),
+                        // 選集
+                        if (videoDetail.belongVods != null &&
+                            videoDetail.belongVods!.isNotEmpty)
+                          SliverToBoxAdapter(
+                              child: BelongVideo(
+                            key: _belongVideoKey,
+                            videos: videoDetail.belongVods!,
+                          )),
+                        // APP 下載
+                        const SliverToBoxAdapter(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 8, right: 8, left: 8),
+                            child: AppDownloadAd(),
+                          ),
+                        ),
+                        // 同標籤
+                        SliverToBoxAdapter(
+                          child: Column(
+                            key: _tagVideoKey, // 使用GlobalKey
+                            children: [
                               Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 20),
-                                child: Center(
-                                  child: Text(
-                                    I18n.noRelatedVideoAndGuessYouLike,
-                                    style: const TextStyle(
-                                      fontSize: 12,
-                                      color: Color(0xFF161823),
-                                      fontWeight: FontWeight.w500,
+                                padding: const EdgeInsets.all(8),
+                                child: TitleHeader(text: I18n.sameTag),
+                              ),
+                              if (videoDetail.tags!.isEmpty)
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 20),
+                                  child: Center(
+                                    child: Text(
+                                      I18n.noRelatedVideoAndGuessYouLike,
+                                      style: const TextStyle(
+                                        fontSize: 12,
+                                        color: Color(0xFF161823),
+                                        fontWeight: FontWeight.w500,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            VideoByTagConsumer(
-                                excludeId: videoDetail.id.toString(),
-                                tags: videoDetail.tags ?? [],
-                                child: (videos) {
-                                  return GridView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 193 / 159,
-                                      crossAxisSpacing: 1,
-                                      mainAxisSpacing: 1,
-                                    ),
-                                    itemCount: videos.length,
-                                    itemBuilder: (context, index) {
-                                      return VideoPreviewWidget(
-                                        id: videos[index].id,
-                                        title: videos[index].title,
-                                        coverHorizontal:
-                                            videos[index].coverHorizontal ?? '',
-                                        coverVertical:
-                                            videos[index].coverVertical ?? '',
-                                        timeLength:
-                                            videos[index].timeLength ?? 0,
-                                        tags: videos[index].tags ?? [],
-                                        videoViewTimes:
-                                            videos[index].videoViewTimes ?? 0,
-                                      );
-                                    },
-                                  );
-                                }),
-                          ],
+                              VideoByTagConsumer(
+                                  excludeId: videoDetail.id.toString(),
+                                  tags: videoDetail.tags ?? [],
+                                  child: (videos) {
+                                    return GridView.builder(
+                                      shrinkWrap: true,
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 2,
+                                        childAspectRatio: 193 / 159,
+                                        crossAxisSpacing: 1,
+                                        mainAxisSpacing: 1,
+                                      ),
+                                      itemCount: videos.length,
+                                      itemBuilder: (context, index) {
+                                        return VideoPreviewWidget(
+                                          id: videos[index].id,
+                                          title: videos[index].title,
+                                          coverHorizontal:
+                                              videos[index].coverHorizontal ??
+                                                  '',
+                                          coverVertical:
+                                              videos[index].coverVertical ?? '',
+                                          timeLength:
+                                              videos[index].timeLength ?? 0,
+                                          tags: videos[index].tags ?? [],
+                                          videoViewTimes:
+                                              videos[index].videoViewTimes ?? 0,
+                                        );
+                                      },
+                                    );
+                                  }),
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                  if (_showButton)
-                    Positioned(
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        color: Colors.white,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (videoDetail.belongVods != null &&
-                                videoDetail.belongVods!.isNotEmpty)
+                      ],
+                    ),
+                    if (_showButton)
+                      Positioned(
+                        top: 0,
+                        left: 0,
+                        right: 0,
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (videoDetail.belongVods != null &&
+                                  videoDetail.belongVods!.isNotEmpty)
+                                InkWell(
+                                  onTap: () {
+                                    _scrollToPosition(_belongVideoKey);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: Text(I18n.highlights),
+                                  ),
+                                ),
                               InkWell(
                                 onTap: () {
-                                  _scrollToPosition(_belongVideoKey);
+                                  _scrollToPosition(_tagVideoKey);
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 10),
-                                  child: Text(I18n.highlights),
+                                  child: Text(I18n.sameTag),
                                 ),
                               ),
-                            InkWell(
-                              onTap: () {
-                                _scrollToPosition(_tagVideoKey);
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Text(I18n.sameTag),
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                ],
-              )),
-            ],
+                  ],
+                )),
+              ],
+            ),
           ),
         );
       },

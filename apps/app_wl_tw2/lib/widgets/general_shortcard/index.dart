@@ -81,11 +81,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
             VideoPlayerProvider(
               key: Key(widget.videoUrl),
               tag: widget.tag,
-              autoPlay: kIsWeb
-                  ? false
-                  : canWatch
-                      ? true
-                      : false,
+              autoPlay: kIsWeb ? false : canWatch,
               videoUrl: widget.videoUrl,
               video: widget.shortData,
               videoDetail: Vod(
