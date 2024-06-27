@@ -31,7 +31,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
 
     return shouldShowAppBar
         ? UserInfoConsumer(
-            child: (info, isVIP, isGuest) => AppBar(
+            child: (info, isVIP, isGuest, isLoading) => AppBar(
               backgroundColor: Colors.white,
               elevation: 0,
               title: Text(
@@ -72,7 +72,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
         : SizedBox(
             height: maxExtent - shrinkOffset,
             child: UserInfoConsumer(
-              child: (info, isVIP, isGuest) => UserCard(info: info),
+              child: (info, isVIP, isGuest, isLoading) => UserCard(info: info),
             ),
           );
   }
@@ -115,7 +115,7 @@ class UserHeader extends SliverPersistentHeaderDelegate {
 //     final systemTopBarHeight = MediaQuery.of(context).padding.top;
 
 //     return UserInfoConsumer(
-//       child: (info, isVIP, isGuest) {
+//       child: (info, isVIP, isGuest, isLoading) {
 //         final textPainter = TextPainter(
 //           text: TextSpan(
 //             text: info.nickname,

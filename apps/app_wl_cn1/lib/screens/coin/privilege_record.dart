@@ -44,7 +44,8 @@ class PrivilegeRecordState extends State<PrivilegeRecord> {
         ),
         const SizedBox(height: 8),
         Expanded(
-          child: UserInfoConsumer(child: (User info, isVIP, isGuest) {
+          child:
+              UserInfoConsumer(child: (User info, isVIP, isGuest, isLoading) {
             if (info.id.isEmpty) {
               return const SizedBox();
             }

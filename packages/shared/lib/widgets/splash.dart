@@ -127,6 +127,8 @@ class _SplashState extends State<Splash> {
       systemConfigController.setImageHost('https://${res['pl']?.first}');
       systemConfigController
           .setMaintenance(res['maintenance'] == 'true' ? true : false);
+      systemConfigController
+          .setLoginToWatch(res['loginToWatch'] == 'true' ? true : false);
 
       gameSystemConfig.setApiHost('https://api.${res['apl']?.first}');
     }

@@ -59,7 +59,7 @@ class LayoutUserScreenState extends State<LayoutUserScreen>
                     ),
                     // SliverToBoxAdapter(
                     //   child: UserInfoConsumer(
-                    //     child: (info, isVIP, isGuest) => UserCard(info: info),
+                    //     child: (info, isVIP, isGuest, isLoading) => UserCard(info: info),
                     //   ),
                     // ),
                     SliverToBoxAdapter(

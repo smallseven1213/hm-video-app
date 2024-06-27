@@ -17,10 +17,12 @@ Future<bool?> showConfirmDialog({
   Function? onCancel,
   bool showConfirmButton = true,
   bool showCancelButton = true,
+  bool? barrierDismissible = true,
 }) {
   logger.i(title);
   return showDialog<bool>(
     context: context,
+    barrierDismissible: barrierDismissible ?? true,
     builder: (BuildContext context) {
       return Dialog(
         backgroundColor: Colors.transparent,
