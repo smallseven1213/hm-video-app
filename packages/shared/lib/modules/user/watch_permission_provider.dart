@@ -37,7 +37,7 @@ class WatchPermissionProviderState extends State<WatchPermissionProvider> {
   }
 
   void _showLoginDialog(BuildContext context) {
-    if (!_dialogShown && mounted) {
+    if (!_dialogShown) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         widget.showConfirmDialog();
         setState(() {
