@@ -21,99 +21,102 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: I18n.memberLogin,
-      ),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35),
-          child: LoginPageScaffold(
-            onError: (title, message) {
-              showConfirmDialog(
-                context: context,
-                title: title,
-                message: message,
-                showCancelButton: false,
-                onConfirm: () {},
-              );
-            },
-            child: (
-              accountController,
-              passwordController,
-              validateUsername,
-              validatePassword,
-              handleLogin,
-            ) =>
-                SingleChildScrollView(
-                    child: Column(
-              children: [
-                const SizedBox(height: 30),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    I18n.accountPasswordLogin,
-                    style: TextStyle(
-                      color: AppColors.colors[ColorKeys.textPrimary],
-                      fontSize: 20,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-                AuthTextField(
-                  label: I18n.account,
-                  controller: accountController,
-                  placeholderText: I18n.pleaseEnterYourAccountNumber,
-                  validator: validateUsername,
-                ),
-                const SizedBox(height: 10),
-                AuthTextField(
-                  label: I18n.password,
-                  controller: passwordController,
-                  placeholderText: I18n.pleaseEnterYourPassword,
-                  obscureText: true,
-                  validator: validatePassword,
-                ),
-                const ForgotPasswordButton(),
-                SizedBox(
-                  width: double.infinity,
-                  child: Button(
-                    text: I18n.login,
-                    onPressed: () => handleLogin(),
-                  ),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        MyRouteDelegate.of(context)
-                            .push(AppRoutes.register, deletePreviousCount: 1);
-                      },
-                      child: Text(
-                        I18n.noAccountYet,
-                        style: TextStyle(
-                          color: AppColors.colors[ColorKeys.textLink],
-                          fontSize: 12,
-                        ),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: I18n.memberLogin,
+        ),
+        body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35),
+            child: LoginPageScaffold(
+              onError: (title, message) {
+                showConfirmDialog(
+                  context: context,
+                  title: title,
+                  message: message,
+                  showCancelButton: false,
+                  onConfirm: () {},
+                );
+              },
+              child: (
+                accountController,
+                passwordController,
+                validateUsername,
+                validatePassword,
+                handleLogin,
+              ) =>
+                  SingleChildScrollView(
+                      child: Column(
+                children: [
+                  const SizedBox(height: 30),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      I18n.accountPasswordLogin,
+                      style: TextStyle(
+                        color: AppColors.colors[ColorKeys.textPrimary],
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
-                    InkWell(
-                      onTap: () {},
-                      child: Text(
-                        I18n.loginWithPhoneNumber,
-                        style: TextStyle(
-                          color: AppColors.colors[ColorKeys.textLink],
-                          fontSize: 12,
+                  ),
+                  const SizedBox(height: 20),
+                  AuthTextField(
+                    label: I18n.account,
+                    controller: accountController,
+                    placeholderText: I18n.pleaseEnterYourAccountNumber,
+                    validator: validateUsername,
+                  ),
+                  const SizedBox(height: 10),
+                  AuthTextField(
+                    label: I18n.password,
+                    controller: passwordController,
+                    placeholderText: I18n.pleaseEnterYourPassword,
+                    obscureText: true,
+                    validator: validatePassword,
+                  ),
+                  const ForgotPasswordButton(),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Button(
+                      text: I18n.login,
+                      onPressed: () => handleLogin(),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          MyRouteDelegate.of(context)
+                              .push(AppRoutes.register, deletePreviousCount: 1);
+                        },
+                        child: Text(
+                          I18n.noAccountYet,
+                          style: TextStyle(
+                            color: AppColors.colors[ColorKeys.textLink],
+                            fontSize: 12,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          I18n.loginWithPhoneNumber,
+                          style: TextStyle(
+                            color: AppColors.colors[ColorKeys.textLink],
+                            fontSize: 12,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              )),
             )),
-          )),
+      ),
     );
   }
 }

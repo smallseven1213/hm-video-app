@@ -22,7 +22,9 @@ class LoginPage extends StatefulWidget {
 class LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
         appBar: CustomAppBar(title: I18n.login),
         body: LoginPageScaffold(
           errorMessage: ErrorMessageProps(
@@ -115,6 +117,8 @@ class LoginPageState extends State<LoginPage> {
               ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }

@@ -17,77 +17,80 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const CustomAppBar(
-        title: '會員登入',
-      ),
-      body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 35),
-          child: LoginPageScaffold(
-            onError: (title, message) {
-              showConfirmDialog(
-                context: context,
-                title: title,
-                message: message,
-                showCancelButton: false,
-                onConfirm: () {},
-              );
-            },
-            child: (
-              accountController,
-              passwordController,
-              validateUsername,
-              validatePassword,
-              handleLogin,
-            ) =>
-                SingleChildScrollView(
-                    child: Column(
-              children: [
-                const SizedBox(height: 30),
-                AuthTextField(
-                  label: '帳號',
-                  controller: accountController,
-                  placeholderText: '請輸入帳號',
-                  validator: validateUsername,
-                ),
-                AuthTextField(
-                  label: '密碼',
-                  controller: passwordController,
-                  placeholderText: '請輸入密碼',
-                  obscureText: true,
-                  validator: validatePassword,
-                ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Button(
-                    text: '登入',
-                    onPressed: () => handleLogin(),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: const CustomAppBar(
+          title: '會員登入',
+        ),
+        body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35),
+            child: LoginPageScaffold(
+              onError: (title, message) {
+                showConfirmDialog(
+                  context: context,
+                  title: title,
+                  message: message,
+                  showCancelButton: false,
+                  onConfirm: () {},
+                );
+              },
+              child: (
+                accountController,
+                passwordController,
+                validateUsername,
+                validatePassword,
+                handleLogin,
+              ) =>
+                  SingleChildScrollView(
+                      child: Column(
+                children: [
+                  const SizedBox(height: 30),
+                  AuthTextField(
+                    label: '帳號',
+                    controller: accountController,
+                    placeholderText: '請輸入帳號',
+                    validator: validateUsername,
                   ),
-                ),
-                const SizedBox(height: 15),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        MyRouteDelegate.of(context)
-                            .push(AppRoutes.register, deletePreviousCount: 1);
-                      },
-                      child: const Text(
-                        '註冊',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12,
+                  AuthTextField(
+                    label: '密碼',
+                    controller: passwordController,
+                    placeholderText: '請輸入密碼',
+                    obscureText: true,
+                    validator: validatePassword,
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Button(
+                      text: '登入',
+                      onPressed: () => handleLogin(),
+                    ),
+                  ),
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          MyRouteDelegate.of(context)
+                              .push(AppRoutes.register, deletePreviousCount: 1);
+                        },
+                        child: const Text(
+                          '註冊',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 20),
-                    const ForgotPasswordButton(),
-                  ],
-                ),
-              ],
+                      const SizedBox(width: 20),
+                      const ForgotPasswordButton(),
+                    ],
+                  ),
+                ],
+              )),
             )),
-          )),
+      ),
     );
   }
 }
