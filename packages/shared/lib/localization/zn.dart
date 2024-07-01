@@ -66,4 +66,5 @@ const Map<String, String> sharedZhCnStrings = {
   "length_of_film": "片長：",
   "unlocked_for_full_playback": "解鎖後可完整播放",
   "upgrade_now_for_unlock": "立即升級解鎖",
+  "unmute": "取消靜音",
 };

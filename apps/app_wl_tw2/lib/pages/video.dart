@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -61,7 +62,7 @@ class VideoState extends State<Video> {
                   VideoPlayerProvider(
                     key: Key(videoUrl),
                     tag: videoUrl,
-                    autoPlay: canWatch,
+                    autoPlay: kIsWeb ? false : canWatch,
                     videoUrl: videoUrl,
                     videoDetail: videoDetail!,
                     loadingWidget: AspectRatio(

@@ -72,5 +72,6 @@ const Map<String, String> sharedViVnStrings = {
   "end_of_trial_upgrade_to_full_version": "Nâng cấp lên phiên bản đầy đủ",
   "length_of_film": "Thời lượng phim:",
   "unlocked_for_full_playback": "Đã mở khóa ngay",
-  "upgrade_now_for_unlock": "Nâng cấp ngay",
+  "upgrade_now_for_unlock": "Nâng cấp ngay",  
+  "unmute": "Bật tiếng",
 };

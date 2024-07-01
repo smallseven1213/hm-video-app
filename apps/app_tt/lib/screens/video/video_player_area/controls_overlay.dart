@@ -7,7 +7,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 
 import 'enums.dart';
-import 'mute_volume_button.dart';
+import 'package:shared/widgets/video/mute_volume_button.dart';
 import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
@@ -182,7 +182,9 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 Positioned(
                   top: 50,
                   left: 20,
-                  child: MuteVolumeButton(videoPlayerInfo: videoPlayerInfo),
+                  child: MuteVolumeButton(
+                      controller:
+                          videoPlayerInfo.observableVideoPlayerController),
                 ),
               if (videoPlayerInfo.inBuffering && !videoPlayerInfo.isScrolling)
                 const Center(
@@ -328,10 +330,12 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                           style: const TextStyle(color: Colors.white),
                         ),
                         IconButton(
-                          onPressed: () =>
-                              videoPlayerInfo.toggleMuteAndUpdateVolume(),
+                          onPressed: () => videoPlayerInfo
+                              .observableVideoPlayerController
+                              .toggleMute(),
                           icon: Icon(
-                            videoPlayerInfo.isMuted
+                            videoPlayerInfo.observableVideoPlayerController
+                                    .isMuted.value
                                 ? Icons.volume_off
                                 : Icons.volume_up,
                             color: Colors.white,

@@ -67,4 +67,5 @@ const Map<String, String> sharedJaJpStrings = {
   "length_of_film": "長さ:",
   "unlocked_for_full_playback": "今すぐアンロック",
   "upgrade_now_for_unlock": "今すぐアップグレード",
+  "unmute": "ミュート解除",
 };
