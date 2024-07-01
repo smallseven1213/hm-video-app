@@ -66,14 +66,8 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) async {
       isReady.value = true;
-      if (kIsWeb) {
-        videoPlayerController?.setVolume(autoPlay ? 0 : 1);
-        if (autoPlay) {
-          play();
-        }
-      } else {
-        final isMuted = await FlutterVolumeController.getMute();
-        videoPlayerController?.setVolume(isMuted == true ? 0 : 1);
+      await setVolumeBasedOnPlatform();
+      if (autoPlay) {
         play();
       }
     }).catchError((error) {
@@ -82,6 +76,17 @@ class ObservableVideoPlayerController extends GetxController {
         errorMessage.value = videoPlayerController!.value.errorDescription!;
       }
     });
+  }
+
+  Future<void> setVolumeBasedOnPlatform() async {
+    double volume = 1;
+    if (kIsWeb) {
+      volume = autoPlay ? 0 : 1;
+    } else {
+      final isMuted = await FlutterVolumeController.getMute();
+      volume = isMuted == true ? 0 : 1;
+    }
+    videoPlayerController?.setVolume(volume);
   }
 
   void _disposePlayer() {
