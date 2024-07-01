@@ -79,7 +79,7 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
           }
         } else {
           Get.find<AuthController>().setToken(token);
-          MyRouteDelegate.of(context).popRoute();
+          MyRouteDelegate.of(context).pop();
         }
       } catch (error) {
         if (widget.onError != null) {
