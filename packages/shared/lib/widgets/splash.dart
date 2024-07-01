@@ -151,7 +151,7 @@ class _SplashState extends State<Splash> {
     if (GetPlatform.isWeb) return true;
     if (mounted) {
       setState(() => loadingText =
-          localizations.translate('checking_for_updates')); //檢查更新....
+          localizations.translate('check_for_updates')); //檢查更新....
     }
     logger.i('step5: 檢查是否有更新');
     ApkUpdate apkUpdate = await apkApi.checkVersion(
