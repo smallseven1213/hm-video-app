@@ -33,7 +33,7 @@ class NoticeDialogState extends State<NoticeDialog> {
   @override
   void initState() {
     super.initState();
-    // showNoticeDialog();
+    showNoticeDialog();
   }
 
   void handleUrl(String? url, BuildContext context) {
