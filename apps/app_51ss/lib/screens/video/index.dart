@@ -81,7 +81,7 @@ class VideoScreenState extends State<VideoScreen> {
                 children: [
                   VideoPlayerProvider(
                     tag: videoUrl,
-                    autoPlay: kIsWeb ? false : canWatch,
+                    autoPlay: canWatch,
                     video: videoDetail!,
                     videoUrl: videoUrl,
                     videoDetail: videoDetail,

@@ -62,7 +62,7 @@ class VideoState extends State<Video> {
                   VideoPlayerProvider(
                     key: Key(videoUrl),
                     tag: videoUrl,
-                    autoPlay: kIsWeb ? false : canWatch,
+                    autoPlay: canWatch,
                     videoUrl: videoUrl,
                     videoDetail: videoDetail!,
                     loadingWidget: AspectRatio(
