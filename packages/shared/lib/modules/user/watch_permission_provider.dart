@@ -50,11 +50,12 @@ class WatchPermissionProviderState extends State<WatchPermissionProvider> {
   @override
   Widget build(BuildContext context) {
     return UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
-      if (isLoading == false &&
-          isGuest &&
-          systemConfigController.loginToWatch.value) {
+      if (isLoading) {
+        return const SizedBox.shrink();
+      } else if (isGuest && systemConfigController.loginToWatch.value) {
         _showLoginDialog(context);
       }
+
       bool canWatch =
           systemConfigController.loginToWatch.value ? !isGuest : true;
       return widget.child(canWatch);
