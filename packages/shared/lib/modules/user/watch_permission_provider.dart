@@ -55,7 +55,8 @@ class WatchPermissionProviderState extends State<WatchPermissionProvider> {
           systemConfigController.loginToWatch.value) {
         _showLoginDialog(context);
       }
-      bool canWatch = !isGuest && systemConfigController.loginToWatch.value;
+      bool canWatch =
+          systemConfigController.loginToWatch.value ? !isGuest : true;
       return widget.child(canWatch);
     });
   }
