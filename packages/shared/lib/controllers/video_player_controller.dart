@@ -24,8 +24,8 @@ class ObservableVideoPlayerController extends GetxController {
   final String videoUrl;
   final String tag;
   final RxBool isFullscreen = false.obs;
-  // var isMuted = kIsWeb ? true.obs : false.obs;
-  var isMuted = false.obs;
+  var isMuted = kIsWeb ? true.obs : false.obs;
+  // var isMuted = false.obs;
 
   var errorMessage = ''.obs;
 
@@ -66,14 +66,13 @@ class ObservableVideoPlayerController extends GetxController {
     videoPlayerController?.addListener(_onControllerValueChanged);
     videoPlayerController?.initialize().then((value) async {
       isReady.value = true;
-      if (kIsWeb) {
-        videoPlayerController?.setVolume(autoPlay ? 0 : 1);
-        if (autoPlay) {
-          play();
-        }
-      } else {
-        final isMuted = await FlutterVolumeController.getMute();
-        videoPlayerController?.setVolume(isMuted == true ? 0 : 1);
+      final muteValue =
+          kIsWeb ? isMuted.value : await FlutterVolumeController.getMute();
+      final volume = muteValue == true ? 0.0 : 1.0;
+
+      videoPlayerController?.setVolume(volume);
+
+      if (autoPlay) {
         play();
       }
     }).catchError((error) {

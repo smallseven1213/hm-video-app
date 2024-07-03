@@ -28,9 +28,7 @@ class VideoPlayerInfo {
   final Function() startToggleControlsTimer;
   final Function() startScrolling;
   final Function() stopScrolling;
-  final Function() toggleMuteAndUpdateVolume;
   final double volume;
-  final bool isMuted;
 
   VideoPlayerInfo({
     required this.videoAction,
@@ -50,9 +48,7 @@ class VideoPlayerInfo {
     required this.startToggleControlsTimer,
     required this.startScrolling,
     required this.stopScrolling,
-    required this.toggleMuteAndUpdateVolume,
     this.volume = 1.0,
-    this.isMuted = false,
   });
 }
 
@@ -86,7 +82,6 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
   bool isScrolling = false;
   Size videoSize = const Size(0, 0);
   double volume = 1.0;
-  bool isMuted = kIsWeb ? true : false;
 
   @override
   void initState() {
@@ -174,20 +169,6 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
     }
   }
 
-  void toggleMuteAndUpdateVolume() {
-    setState(() {
-      isMuted = !isMuted;
-      double targetVolume = isMuted ? 0.0 : 1.0;
-      volume = targetVolume;
-      if (kIsWeb) {
-        ovpController.videoPlayerController?.setVolume(volume);
-      } else {
-        FlutterVolumeController.setVolume(volume);
-        ovpController.videoPlayerController?.setVolume(volume);
-      }
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return widget.child(
@@ -206,12 +187,10 @@ class VideoPlayerConsumerState extends State<VideoPlayerConsumer> {
         isScrolling: isScrolling,
         videoSize: videoSize,
         volume: volume,
-        isMuted: isMuted,
         showControls: showControls,
         startToggleControlsTimer: startToggleControlsTimer,
         startScrolling: startScrolling,
         stopScrolling: stopScrolling,
-        toggleMuteAndUpdateVolume: toggleMuteAndUpdateVolume,
       ),
     );
   }

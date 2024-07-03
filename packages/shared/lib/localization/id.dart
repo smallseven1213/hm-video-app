@@ -74,4 +74,6 @@ const Map<String, String> sharedIdIdStrings = {
   "length_of_film": "Durasi film:",
   "unlocked_for_full_playback": "Sudah Dibuka Sekarang",
   "upgrade_now_for_unlock": "Tingkatkan Sekarang",
+  "unmute": "Bunyikan",
 };
+

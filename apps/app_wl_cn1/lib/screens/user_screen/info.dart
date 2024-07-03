@@ -1,4 +1,3 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
@@ -47,7 +46,7 @@ class UserInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     UserInfoConsumer(
-                      child: (info, isVIP, isGuest) {
+                      child: (info, isVIP, isGuest, isLoading) {
                         if (isVIP) {
                           return const Image(
                             image: AssetImage(
@@ -67,7 +66,7 @@ class UserInfo extends StatelessWidget {
                               return _buildShimmer(width: 80, height: 14);
                             } else {
                               return UserInfoConsumer(
-                                child: (info, isVIP, isGuest) {
+                                child: (info, isVIP, isGuest, isLoading) {
                                   return Text(
                                     info.nickname ?? '',
                                     style: const TextStyle(
@@ -82,7 +81,7 @@ class UserInfo extends StatelessWidget {
                           },
                         ),
                         UserInfoConsumer(
-                          child: (info, isVIP, isGuest) {
+                          child: (info, isVIP, isGuest, isLoading) {
                             if (!isGuest) {
                               return GestureDetector(
                                 onTap: () {
@@ -110,7 +109,7 @@ class UserInfo extends StatelessWidget {
                         return _buildShimmer(width: 50, height: 12);
                       } else {
                         return UserInfoConsumer(
-                          child: (info, isVIP, isGuest) {
+                          child: (info, isVIP, isGuest, isLoading) {
                             return Text(
                               'ID: ${info.uid}',
                               style: const TextStyle(
@@ -129,7 +128,7 @@ class UserInfo extends StatelessWidget {
             ],
           ),
           UserInfoConsumer(
-            child: (info, isVIP, isGuest) {
+            child: (info, isVIP, isGuest, isLoading) {
               return Positioned(
                 top: 0,
                 right: 0,

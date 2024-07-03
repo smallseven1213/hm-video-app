@@ -34,7 +34,7 @@ class UserInfo extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     UserInfoConsumer(
-                      child: (info, isVIP, isGuest) {
+                      child: (info, isVIP, isGuest, isLoading) {
                         if (isVIP) {
                           return const Image(
                             image: AssetImage(
@@ -54,7 +54,7 @@ class UserInfo extends StatelessWidget {
                               return const ShimmerWidget(width: 80, height: 14);
                             } else {
                               return UserInfoConsumer(
-                                child: (info, isVIP, isGuest) {
+                                child: (info, isVIP, isGuest, isLoading) {
                                   return Text(
                                     info.nickname ?? '',
                                     style: const TextStyle(
@@ -69,7 +69,7 @@ class UserInfo extends StatelessWidget {
                           },
                         ),
                         UserInfoConsumer(
-                          child: (info, isVIP, isGuest) {
+                          child: (info, isVIP, isGuest, isLoading) {
                             if (info.id.isNotEmpty && !isGuest) {
                               return GestureDetector(
                                 onTap: () {
@@ -98,7 +98,7 @@ class UserInfo extends StatelessWidget {
                         return const ShimmerWidget(width: 50, height: 12);
                       } else {
                         return UserInfoConsumer(
-                          child: (info, isVIP, isGuest) {
+                          child: (info, isVIP, isGuest, isLoading) {
                             if (info.id.isEmpty) {
                               return const SizedBox();
                             }
@@ -118,7 +118,8 @@ class UserInfo extends StatelessWidget {
               ),
               SizedBox(
                   width: 150,
-                  child: UserInfoConsumer(child: ((info, isVIP, isGuest) {
+                  child: UserInfoConsumer(
+                      child: ((info, isVIP, isGuest, isLoading) {
                     if (isGuest) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.end,

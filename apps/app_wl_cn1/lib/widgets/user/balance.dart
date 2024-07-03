@@ -13,7 +13,7 @@ class UserBalance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24),
-      child: UserInfoConsumer(child: (info, isVIP, isGuest) {
+      child: UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
         return SizedBox(
           height: 32,
           child: Row(

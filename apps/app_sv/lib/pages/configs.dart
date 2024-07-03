@@ -40,7 +40,7 @@ class ConfigsPage extends StatelessWidget {
       appBar: const CustomAppBar(title: '設置'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: UserInfoConsumer(child: (info, isVIP, isGuest) {
+        child: UserInfoConsumer(child: (info, isVIP, isGuest, isLoading) {
           // 檢查是否為 guest，如果是則不顯示修改密碼的項目
           final displayedCellDataList = cellDataList.where((data) {
             return data.text != '修改密碼' || !isGuest;

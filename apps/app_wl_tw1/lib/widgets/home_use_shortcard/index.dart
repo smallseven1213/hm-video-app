@@ -122,11 +122,6 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                     ),
                   ),
           ),
-          Obx(
-            () => uiController.isFullscreen.value != true
-                ? const FloatPageBackButton()
-                : const SizedBox.shrink(),
-          )
         ],
       ),
     );

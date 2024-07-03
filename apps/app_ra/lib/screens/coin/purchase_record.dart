@@ -14,7 +14,7 @@ class PurchaseRecord extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return UserInfoConsumer(
-      child: (User info, isVIP, isGuest) {
+      child: (User info, isVIP, isGuest, isLoading) {
         if (info.id.isEmpty) {
           return const SizedBox();
         }

@@ -9,6 +9,7 @@ import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
@@ -19,6 +20,7 @@ import '../screens/video/nested_tab_bar_view/index.dart';
 import '../screens/video/video_player_area/enums.dart';
 import '../screens/video/video_player_area/index.dart';
 import '../screens/video/video_player_area/loading.dart';
+import '../utils/show_confirm_dialog.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/wave_loading.dart';
 
@@ -117,38 +119,51 @@ class VideoState extends State<Video> {
                 : const SizedBox(),
           ),
           body: SafeArea(
-            child: Column(
-              children: [
-                VideoPlayerProvider(
-                  key: Key(videoUrl),
-                  tag: videoUrl,
-                  autoPlay: true,
-                  videoUrl: videoUrl,
-                  videoDetail: videoDetail,
-                  loadingWidget: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Container(
-                      color: Colors.black,
-                      child: VideoLoading(
-                          coverHorizontal: videoDetail.coverHorizontal ?? ''),
-                    ),
-                  ),
-                  child: (isReady, controller) {
-                    return VideoPlayerArea(
-                      name: name,
-                      videoUrl: videoUrl,
-                      video: videoDetail,
-                      tag: controllerTag,
-                    );
+            child: WatchPermissionProvider(
+              showConfirmDialog: () {
+                showConfirmDialog(
+                  context: context,
+                  message: '請先登入後觀看。',
+                  barrierDismissible: false,
+                  showCancelButton: false,
+                  onConfirm: () {
+                    MyRouteDelegate.of(context).push(AppRoutes.login);
                   },
-                ),
-                Expanded(
-                  child: NestedTabBarView(
+                );
+              },
+              child: (canWatch) => Column(
+                children: [
+                  VideoPlayerProvider(
+                    key: Key(videoUrl),
+                    tag: videoUrl,
+                    autoPlay: canWatch,
                     videoUrl: videoUrl,
                     videoDetail: videoDetail,
+                    loadingWidget: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        color: Colors.black,
+                        child: VideoLoading(
+                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                      ),
+                    ),
+                    child: (isReady, controller) {
+                      return VideoPlayerArea(
+                        name: name,
+                        videoUrl: videoUrl,
+                        video: videoDetail,
+                        tag: controllerTag,
+                      );
+                    },
                   ),
-                )
-              ],
+                  Expanded(
+                    child: NestedTabBarView(
+                      videoUrl: videoUrl,
+                      videoDetail: videoDetail,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );

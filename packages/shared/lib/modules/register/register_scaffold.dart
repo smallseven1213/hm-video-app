@@ -93,7 +93,7 @@ class RegisterPageScaffoldState extends State<RegisterPageScaffold> {
           userController.fetchUserInfo();
           userController.fetchUserInfoV2();
           // ignore: use_build_context_synchronously
-          MyRouteDelegate.of(context).popRoute();
+          MyRouteDelegate.of(context).pop();
         } else if (res.code == '40000') {
           widget.onError!(localizations.translate('registration_error'),
               localizations.translate('account_already_exists_pls_reenter'));

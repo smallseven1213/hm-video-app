@@ -15,6 +15,7 @@ class SystemConfigController extends GetxController {
   var agentCode = ''.obs; // 之后可以设置
   var version = '--'.obs; // 默认值
   var isMaintenance = false.obs;
+  var loginToWatch = false.obs;
   var userDevice = ''.obs; // 之后可以设置
   var dlJsonHostList = <String>[].obs;
   var timeout = 5000.obs;
@@ -57,6 +58,10 @@ class SystemConfigController extends GetxController {
 
   void setMaintenance(bool status) {
     isMaintenance.value = status;
+  }
+
+  void setLoginToWatch(bool status) {
+    loginToWatch.value = status;
   }
 
   void setColors(Map<ColorKeys, dynamic> colors) {

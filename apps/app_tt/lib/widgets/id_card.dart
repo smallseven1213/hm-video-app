@@ -153,7 +153,7 @@ class IDCardContentState extends State<IDCardContent> {
           ),
           child: Center(
             child: UserInfoConsumer(
-              child: (info, isVIP, isGuest) {
+              child: (info, isVIP, isGuest, isLoading) {
                 return Text(
                   "ID:${info.uid}",
                   style: const TextStyle(

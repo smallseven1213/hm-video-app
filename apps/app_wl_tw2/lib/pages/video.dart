@@ -1,14 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/user_api.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/controller_tag_genarator.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
 import '../screens/video/video_player_area/index.dart';
 import '../screens/video/video_player_area/loading.dart';
 import '../screens/video/video_player_area/purchase_block.dart';
+import '../utils/show_confirm_dialog.dart';
 import '../widgets/wave_loading.dart';
 
 final userApi = UserApi();
@@ -42,46 +46,58 @@ class VideoState extends State<Video> {
 
         return Scaffold(
           body: SafeArea(
-            child: Column(
-              children: [
-                VideoPlayerProvider(
-                  key: Key(videoUrl),
-                  tag: videoUrl,
-                  autoPlay: true,
-                  videoUrl: videoUrl,
-                  videoDetail: videoDetail!,
-                  loadingWidget: AspectRatio(
-                    aspectRatio: 16 / 9,
-                    child: Container(
-                      color: Colors.black,
-                      child: VideoLoading(
-                          coverHorizontal: videoDetail.coverHorizontal ?? ''),
+            child: WatchPermissionProvider(showConfirmDialog: () {
+              showConfirmDialog(
+                context: context,
+                message: '請先登入後觀看。',
+                barrierDismissible: false,
+                showCancelButton: false,
+                onConfirm: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.login);
+                },
+              );
+            }, child: (canWatch) {
+              return Column(
+                children: [
+                  VideoPlayerProvider(
+                    key: Key(videoUrl),
+                    tag: videoUrl,
+                    autoPlay: canWatch,
+                    videoUrl: videoUrl,
+                    videoDetail: videoDetail!,
+                    loadingWidget: AspectRatio(
+                      aspectRatio: 16 / 9,
+                      child: Container(
+                        color: Colors.black,
+                        child: VideoLoading(
+                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                      ),
                     ),
+                    child: (isReady, controller) {
+                      return VideoPlayerArea(
+                        name: name,
+                        videoUrl: videoUrl,
+                        video: videoDetail,
+                        tag: controllerTag,
+                      );
+                    },
                   ),
-                  child: (isReady, controller) {
-                    return VideoPlayerArea(
-                      name: name,
+                  if (videoDetail.isAvailable == false)
+                    PurchaseBlock(
+                      id: id.toString(),
+                      videoDetail: videoDetail,
                       videoUrl: videoUrl,
-                      video: videoDetail,
                       tag: controllerTag,
-                    );
-                  },
-                ),
-                if (videoDetail.isAvailable == false)
-                  PurchaseBlock(
-                    id: id.toString(),
-                    videoDetail: videoDetail,
-                    videoUrl: videoUrl,
-                    tag: controllerTag,
-                  ),
-                Expanded(
-                  child: NestedTabBarView(
-                    videoUrl: videoUrl,
-                    videoDetail: videoDetail,
-                  ),
-                )
-              ],
-            ),
+                    ),
+                  Expanded(
+                    child: NestedTabBarView(
+                      videoUrl: videoUrl,
+                      videoDetail: videoDetail,
+                    ),
+                  )
+                ],
+              );
+            }),
           ),
         );
       },

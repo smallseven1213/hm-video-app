@@ -3,10 +3,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/vod.dart';
+import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
+import 'package:shared/navigator/delegate.dart';
 
+import '../../localization/i18n.dart';
+import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/wave_loading.dart';
 import 'nested_tab_bar_view/index.dart';
 import 'video_player_area/loading.dart';
@@ -56,37 +61,50 @@ class VideoScreenState extends State<VideoScreen> {
         }
 
         return SafeArea(
-          child: Column(
-            children: [
-              VideoPlayerProvider(
-                tag: videoUrl,
-                autoPlay: true,
-                video: videoDetail!,
-                videoUrl: videoUrl,
-                videoDetail: videoDetail,
-                loadingWidget: AspectRatio(
-                  aspectRatio: 16 / 9,
-                  child: Container(
-                    color: Colors.black,
-                    child: VideoLoading(
-                        coverHorizontal: videoDetail.coverHorizontal ?? ''),
-                  ),
-                ),
-                child: (isReady, controller) {
-                  return VideoPlayerArea(
-                    name: widget.name,
-                    videoUrl: videoUrl,
-                    video: videoDetail,
-                  );
+          child: WatchPermissionProvider(
+            showConfirmDialog: () {
+              showConfirmDialog(
+                context: context,
+                message: I18n.plsLoginToWatch,
+                barrierDismissible: false,
+                showCancelButton: false,
+                onConfirm: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.login);
                 },
-              ),
-              Expanded(
-                child: NestedTabBarView(
+              );
+            },
+            child: (canWatch) => Column(
+              children: [
+                VideoPlayerProvider(
+                  tag: videoUrl,
+                  autoPlay: canWatch,
+                  video: videoDetail!,
                   videoUrl: videoUrl,
                   videoDetail: videoDetail,
+                  loadingWidget: AspectRatio(
+                    aspectRatio: 16 / 9,
+                    child: Container(
+                      color: Colors.black,
+                      child: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                    ),
+                  ),
+                  child: (isReady, controller) {
+                    return VideoPlayerArea(
+                      name: widget.name,
+                      videoUrl: videoUrl,
+                      video: videoDetail,
+                    );
+                  },
                 ),
-              )
-            ],
+                Expanded(
+                  child: NestedTabBarView(
+                    videoUrl: videoUrl,
+                    videoDetail: videoDetail,
+                  ),
+                )
+              ],
+            ),
           ),
         );
       },

@@ -74,4 +74,5 @@ const Map<String, String> sharedEnUsStrings = {
   "length_of_film": "Length:",
   "unlocked_for_full_playback": "Unlocked Now",
   "upgrade_now_for_unlock": "Upgrade Now",
+  "unmute": "Unmute",
 };

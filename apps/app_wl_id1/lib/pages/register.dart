@@ -119,106 +119,110 @@ class RegisterPageState extends State<RegisterPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: I18n.register,
-      ),
-      body: SingleChildScrollView(
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              const SizedBox(height: 80),
-              Container(
-                margin: const EdgeInsets.symmetric(horizontal: 50),
-                child: Column(
-                  children: [
-                    AuthTextField(
-                      label: I18n.account,
-                      controller: _accountController,
-                      placeholderText: I18n.pleaseEnterYourAccountNumber,
-                      validator: _validateUsername,
-                    ),
-                    const SizedBox(height: 10),
-                    AuthTextField(
-                      label: I18n.password,
-                      obscureText: true,
-                      controller: _passwordController,
-                      placeholderText: I18n.pleaseEnterYourPassword,
-                      validator: _validatePassword,
-                    ),
-                    const SizedBox(height: 10),
-                    AuthTextField(
-                      label: I18n.verifyPassword,
-                      obscureText: true,
-                      controller: _confirmPasswordController,
-                      placeholderText: I18n.pleaseEnterTheVerificationPassword,
-                      validator: _validateConfirmPassword,
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: 240,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Button(
-                        text: I18n.register,
-                        onPressed: () {
-                          _handleRegister(context);
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Expanded(
-                      child: Button(
-                        text: I18n.cancel,
-                        type: 'cancel',
-                        onPressed: () {
-                          MyRouteDelegate.of(context).popRoute();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: I18n.register,
+        ),
+        body: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const SizedBox(height: 80),
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 50),
+                  child: Column(
                     children: [
-                      Column(children: [
-                        GestureDetector(
-                          onTap: () {
-                            MyRouteDelegate.of(context)
-                                .push(AppRoutes.login, deletePreviousCount: 1);
-                          },
-                          child: Column(children: [
-                            Text(I18n.goToLogin,
-                                style: const TextStyle(
-                                  color: Color(0xFF00B2FF),
-                                  decoration: TextDecoration.underline,
-                                )),
-                          ]),
-                        )
-                      ]),
-                      Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 10),
-                        height: 12, // 設置分隔線高度
-                        width: 1, // 設置分隔線寬度
-                        color: Colors.grey, // 設置分隔線顏色
+                      AuthTextField(
+                        label: I18n.account,
+                        controller: _accountController,
+                        placeholderText: I18n.pleaseEnterYourAccountNumber,
+                        validator: _validateUsername,
                       ),
-                      const ForgotPasswordButton()
+                      const SizedBox(height: 10),
+                      AuthTextField(
+                        label: I18n.password,
+                        obscureText: true,
+                        controller: _passwordController,
+                        placeholderText: I18n.pleaseEnterYourPassword,
+                        validator: _validatePassword,
+                      ),
+                      const SizedBox(height: 10),
+                      AuthTextField(
+                        label: I18n.verifyPassword,
+                        obscureText: true,
+                        controller: _confirmPasswordController,
+                        placeholderText:
+                            I18n.pleaseEnterTheVerificationPassword,
+                        validator: _validateConfirmPassword,
+                      ),
                     ],
                   ),
-                ],
-              )
-            ],
+                ),
+                const SizedBox(height: 20),
+                SizedBox(
+                  width: 240,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Button(
+                          text: I18n.register,
+                          onPressed: () {
+                            _handleRegister(context);
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Button(
+                          text: I18n.cancel,
+                          type: 'cancel',
+                          onPressed: () {
+                            MyRouteDelegate.of(context).popRoute();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Column(children: [
+                          GestureDetector(
+                            onTap: () {
+                              MyRouteDelegate.of(context).push(AppRoutes.login,
+                                  deletePreviousCount: 1);
+                            },
+                            child: Column(children: [
+                              Text(I18n.goToLogin,
+                                  style: const TextStyle(
+                                    color: Color(0xFF00B2FF),
+                                    decoration: TextDecoration.underline,
+                                  )),
+                            ]),
+                          )
+                        ]),
+                        Container(
+                          margin: const EdgeInsets.symmetric(horizontal: 10),
+                          height: 12, // 設置分隔線高度
+                          width: 1, // 設置分隔線寬度
+                          color: Colors.grey, // 設置分隔線顏色
+                        ),
+                        const ForgotPasswordButton()
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
