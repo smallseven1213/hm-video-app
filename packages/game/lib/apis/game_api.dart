@@ -27,7 +27,8 @@ import 'package:shared/services/platform_service.app.dart'
 final systemConfig = GameSystemConfig();
 String apiPrefix =
     '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform';
-SystemConfigController systemController = Get.find<SystemConfigController>();
+SystemConfigController systemController =
+    Get.find<SystemConfigController>(); // from share
 
 final responseController = Get.find<GameApiResponseErrorCatchController>();
 
@@ -242,7 +243,7 @@ class GameLobbyApi {
   // 取得遊戲設置config
   Future<GameConfig> getGamePlatformConfig() => fetcher(
               url:
-                  '${systemConfig.apiHost}/public/game-platform-config/game-platform-config')
+                  '${systemController.apiHost.value}/public/game-platform-config/game-platform-config')
           .then(
         (value) {
           var res = (value.data as Map<String, dynamic>);

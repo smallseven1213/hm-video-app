@@ -1,39 +1,33 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:logger/logger.dart';
-
 import 'package:game/apis/game_api.dart';
-import 'package:game/utils/show_model.dart';
-import 'package:game/widgets/maintenance.dart';
-import 'package:game/models/game_list.dart';
-
-import 'package:shared/controllers/auth_controller.dart';
-import 'package:shared/controllers/game_platform_config_controller.dart';
-import 'package:shared/controllers/ui_controller.dart';
-import 'package:shared/controllers/user_controller.dart';
-import 'package:shared/navigator/delegate.dart';
-
-import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_banner_controller.dart';
-import 'package:game/controllers/game_wallet_controller.dart';
+import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_param_config_controller.dart';
-
+import 'package:game/controllers/game_wallet_controller.dart';
+import 'package:game/models/game_list.dart';
+import 'package:game/screens/game_theme_config.dart';
+import 'package:game/screens/lobby/floating_button/game_envelope_button.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
 import 'package:game/screens/lobby/game_list_view.dart';
 import 'package:game/screens/lobby/login_tabs.dart';
-import 'package:game/screens/lobby/floating_button/game_envelope_button.dart';
-import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
+import 'package:game/utils/show_model.dart';
+import 'package:game/widgets/maintenance.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/auth_controller.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
+import 'package:shared/controllers/user_controller.dart';
+import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/event_bus.dart';
 
 import '../enums/game_app_routes.dart';
 import '../localization/game_localization_delegate.dart';
-import 'package:shared/controllers/bottom_navigator_controller.dart';
 
 final logger = Logger();
 
@@ -76,7 +70,6 @@ class _GameLobbyState extends State<GameLobby>
     super.initState();
     _fetchDataInit();
 
-    _fetchWalletsInitFromThirdLogin();
     Get.put(GameBannerController());
     Get.put(GamesListController());
 
@@ -89,10 +82,6 @@ class _GameLobbyState extends State<GameLobby>
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _fetchEvent();
     });
-  }
-
-  void _fetchWalletsInitFromThirdLogin() async {
-    await gameWalletController.fetchWalletsInitFromThirdLogin();
   }
 
   void _fetchEvent() async {

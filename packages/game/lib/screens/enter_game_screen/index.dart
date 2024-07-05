@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:game/screens/lobby.dart';
 import 'package:game/utils/loading.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
-import 'package:game/screens/lobby.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 
 final logger = Logger();
@@ -25,6 +24,12 @@ class _EnterGame extends State<EnterGame> {
   void initState() {
     super.initState();
     gameConfigController.fetchData();
+
+    Future.wait([
+      gameConfigController.setGameApiHost(),
+    ]).then((value) {
+      gameConfigController.fetchData();
+    });
   }
 
   @override

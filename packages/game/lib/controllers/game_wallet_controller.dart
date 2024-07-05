@@ -1,6 +1,6 @@
+import 'package:game/apis/game_api.dart';
 import 'package:game/apis/game_auth_api.dart';
 import 'package:get/get.dart';
-import 'package:game/apis/game_api.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
@@ -10,6 +10,8 @@ class GameWalletController extends GetxController {
   var wallet = 0.00.obs;
   var isLoading = false.obs;
   var currency = 'TWD'.obs;
+  var apiHost = ''.obs;
+  var token = ''.obs;
 
   AuthController authController = Get.find<AuthController>();
   GameAuthApi gameAuthApi = GameAuthApi();
@@ -21,6 +23,8 @@ class GameWalletController extends GetxController {
         if (res.code == 200) {
           wallet.value = double.parse(res.data?.balance ?? '0');
           currency.value = res.data?.currency ?? 'TWD';
+          apiHost.value = res.data?.apiHost ?? '';
+          token.value = res.data?.token ?? '';
 
           logger.i(
               'Game third login success ====> balance:${res.data?.balance}, currency:${res.data?.currency}');
