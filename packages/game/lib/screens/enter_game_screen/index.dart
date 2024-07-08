@@ -22,47 +22,57 @@ class EnterGame extends StatefulWidget {
 }
 
 class _EnterGame extends State<EnterGame> {
+  GameWalletController gameWalletController = Get.find<GameWalletController>();
+  GamePlatformConfigController gamePlatformConfigController =
+      Get.find<GamePlatformConfigController>();
+  GamesListController gamesListController = Get.find<GamesListController>();
+
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
-  GameWalletController gameWalletController = Get.find<GameWalletController>();
-  GamesListController gamesListController = Get.find<GamesListController>();
   GameBannerController gameBannerController = Get.find<GameBannerController>();
   GameParamConfigController gameParamConfigController =
       Get.find<GameParamConfigController>();
 
+  bool canEnter = false;
+
   @override
   void initState() {
     super.initState();
-    fetchThirdLogin();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _initAPICalls();
+    });
   }
 
-  Future<void> fetchThirdLogin() async {
+  Future<void> _initAPICalls() async {
     try {
-      gameWalletController.fetchWalletsInitFromThirdLogin().then((_) {
-        gameConfigController.fetchData().then((_) {
-          _initGameData();
-        });
+      // 依序打三個 API
+      await gameWalletController.fetchWalletsInitFromThirdLogin();
+      await gamePlatformConfigController.fetchData();
+      await gamesListController.fetchGames();
+      // 當這三個 API 完成後，並行打其他三個 API
+      await Future.wait([
+        gameConfigController.fetchData(),
+        gameBannerController.fetchGameBanners(),
+        gameParamConfigController.fetchData(),
+      ]);
+
+      logger.i('所有 API 請求完成');
+      setState(() {
+        canEnter = true;
       });
     } catch (e) {
-      logger.e("Error initializing data: $e");
-    }
-  }
-
-  Future<void> _initGameData() async {
-    try {
-      await GameLobbyApi().registerGame();
-      // await gamesListController.fetchGames();
-      await gameBannerController.fetchGameBanners();
-      await gameParamConfigController.fetchData();
-    } catch (e) {
-      logger.e("Error initializing data: $e");
+      logger.e('API 請求失敗: $e');
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => gameConfigController.gamePageColor.value != 0
-        ? const GameLobby()
-        : const Center(child: GameLoading()));
+    return Obx(() {
+      if (gameConfigController.gamePageColor.value == 0) {
+        return Center(child: GameLoading());
+      } else {
+        return GameLobby();
+      }
+    });
   }
 }
