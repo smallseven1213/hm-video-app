@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:game/controllers/game_list_controller.dart';
+import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/handle_game_item.dart';
 import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:game/controllers/game_list_controller.dart';
-import 'package:game/screens/game_theme_config.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/utils/event_bus.dart';
@@ -95,8 +95,7 @@ class GameListView extends StatefulWidget {
 
 class GameListViewState extends State<GameListView>
     with SingleTickerProviderStateMixin {
-  final GamesListController gamesListController =
-      Get.put(GamesListController());
+  GamesListController gamesListController = Get.find<GamesListController>();
   var filteredGameCategories = [];
   List gameHistoryList = [];
   final ScrollController _scrollController = ScrollController();

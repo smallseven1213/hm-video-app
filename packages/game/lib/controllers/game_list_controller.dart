@@ -1,6 +1,10 @@
-import 'package:get/get.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
+
 import '../models/game_list.dart';
+
+final logger = Logger();
 
 class GamesListController extends GetxController {
   var games = <GameItem>[].obs;
@@ -9,8 +13,13 @@ class GamesListController extends GetxController {
   var isMaintenance = false.obs;
 
   Future<void> fetchGames() async {
-    var res = await GameLobbyApi().getGames(); // [{}]
-    games.assignAll(res);
+    try {
+      var res = await GameLobbyApi().getGames(); // [{}]
+      games.assignAll(res);
+      logger.i('fetchGames: $res');
+    } catch (e) {
+      logger.e('fetchGames: $e');
+    }
   }
 
   void updateGame(GameItem game) {

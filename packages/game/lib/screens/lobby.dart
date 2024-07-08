@@ -1,11 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_param_config_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
-import 'package:game/models/game_list.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/floating_button/game_envelope_button.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
@@ -20,7 +18,6 @@ import 'package:game/widgets/maintenance.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:shared/controllers/auth_controller.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/user_controller.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -53,7 +50,6 @@ class _GameLobbyState extends State<GameLobby>
 
   bool isShowGameList = false;
   bool updatedUserInfo = false;
-  List<GameItem> gameList = [];
   List gameHistoryList = [];
   bool isShowFab = false;
   bool isShowDownload = true;
@@ -64,20 +60,12 @@ class _GameLobbyState extends State<GameLobby>
       Get.find<GameParamConfigController>();
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
+  GamesListController gamesListController = Get.find<GamesListController>();
 
   @override
   void initState() {
     super.initState();
-    _fetchDataInit();
-
-    Get.put(GameBannerController());
-    Get.put(GamesListController());
-
-    Get.find<AuthController>().token.listen((event) {
-      _fetchDataInit();
-      // userController.fetchUserInfo();
-      logger.i('token changed');
-    });
+    logger.i('gamesListController.games: ${gamesListController.games}');
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _fetchEvent();
@@ -106,20 +94,10 @@ class _GameLobbyState extends State<GameLobby>
     }
   }
 
-  _fetchDataInit() {
-    Future.wait([
-      GameLobbyApi().registerGame(),
-    ]).then((value) {
-      GameBannerController();
-      GameParamConfigController();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
     final gameBannerController = Get.find<GameBannerController>();
-    final gamesListController = Get.find<GamesListController>();
 
     return Obx(() => gamesListController.isMaintenance.value == true
         ? const GameMaintenance()
