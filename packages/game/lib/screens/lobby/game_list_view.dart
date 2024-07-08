@@ -106,13 +106,11 @@ class GameListViewState extends State<GameListView>
   @override
   void initState() {
     super.initState();
-    gamesListController.fetchGames().then((value) {
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _handleOpenThirdPartyGame();
       _filterGameCategories();
       _getGameHistory();
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        _handleOpenThirdPartyGame();
-      });
     });
 
     eventBusSubscription = eventBus.onEvent.listen((event) {

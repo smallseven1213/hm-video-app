@@ -1,6 +1,5 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_list_controller.dart';
 import 'package:game/controllers/game_param_config_controller.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
@@ -97,7 +96,6 @@ class _GameLobbyState extends State<GameLobby>
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
-    final gameBannerController = Get.find<GameBannerController>();
 
     return Obx(() => gamesListController.isMaintenance.value == true
         ? const GameMaintenance()
@@ -162,104 +160,98 @@ class _GameLobbyState extends State<GameLobby>
                   ),
             body: OrientationBuilder(
               builder: (BuildContext context, Orientation orientation) {
-                return Obx(
-                  () => SafeArea(
-                    child: Stack(
-                      children: [
-                        Container(
-                          color: gameLobbyBgColor,
-                          height: double.infinity,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 16),
-                          child: Column(
-                            children: [
-                              GameCarousel(
-                                  data: gameBannerController.gameBanner),
-                              GameUserInfo(
-                                type: 'lobby',
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    // 存款
-                                    UserInfoDeposit(
-                                      onTap: () {
-                                        MyRouteDelegate.of(context).push(
-                                          gameConfigController.switchPaymentPage
-                                                      .value ==
-                                                  switchPaymentPageType['list']
-                                              ? GameAppRoutes.depositList
-                                              : GameAppRoutes.depositPolling,
-                                        );
-                                      },
-                                    ),
-                                    // 提現
-                                    UserInfoWithdraw(
-                                      onTap: () {
-                                        MyRouteDelegate.of(context).push(
-                                          GameAppRoutes.withdraw,
-                                        );
-                                      },
-                                    ),
-                                    // 客服
-                                    const UserInfoService(),
-                                  ],
+                return SafeArea(
+                  child: Stack(
+                    children: [
+                      Container(
+                        color: gameLobbyBgColor,
+                        height: double.infinity,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 4, horizontal: 16),
+                        child: Column(
+                          children: [
+                            GameCarousel(),
+                            GameUserInfo(
+                              type: 'lobby',
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // 存款
+                                  UserInfoDeposit(
+                                    onTap: () {
+                                      MyRouteDelegate.of(context).push(
+                                        gameConfigController
+                                                    .switchPaymentPage.value ==
+                                                switchPaymentPageType['list']
+                                            ? GameAppRoutes.depositList
+                                            : GameAppRoutes.depositPolling,
+                                      );
+                                    },
+                                  ),
+                                  // 提現
+                                  UserInfoWithdraw(
+                                    onTap: () => MyRouteDelegate.of(context)
+                                        .push(GameAppRoutes.withdraw),
+                                  ),
+                                  // 客服
+                                  const UserInfoService(),
+                                ],
+                              ),
+                            ),
+                            GameListView(
+                              activeIndex:
+                                  gameConfigController.gameTypeIndex.value,
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 35,
+                        right: 15,
+                        child: Column(
+                          children: [
+                            // 熱門活動icon
+                            if (gameParamConfigController
+                                    .activityEntrance.value ==
+                                'true')
+                              InkWell(
+                                onTap: () => MyRouteDelegate.of(context)
+                                    .push(GameAppRoutes.activity),
+                                child: Image.asset(
+                                  'packages/game/assets/images/game_lobby/gift.webp',
+                                  width: 64,
+                                  height: 64,
                                 ),
                               ),
-                              GameListView(
-                                  activeIndex:
-                                      gameConfigController.gameTypeIndex.value),
-                            ],
-                          ),
+                            // 紅包icon
+                            if (gameConfigController.isShowEnvelope.value ==
+                                    true &&
+                                userController.info.value.roles
+                                    .contains('guest'))
+                              GameEnvelopeButton(
+                                hasDownload: !kIsWeb &&
+                                    gameParamConfigController
+                                            .appDownload.value ==
+                                        'true' &&
+                                    isShowDownload &&
+                                    !localStorage.hasData('show-app-download'),
+                              ),
+                            // 下載直營app icon
+                            // if (!kIsWeb &&
+                            //     gameParamConfigController.appDownload.value ==
+                            //         'true' &&
+                            //     isShowDownload &&
+                            //     !localStorage.hasData('show-app-download'))
+                            //   GameDownloadButton(
+                            //     setShowFab: () => setState(() {
+                            //       isShowDownload = false;
+                            //     }),
+                            //   ),
+                          ],
                         ),
-                        Positioned(
-                          bottom: 35,
-                          right: 15,
-                          child: Column(
-                            children: [
-                              // 熱門活動icon
-                              if (gameParamConfigController
-                                      .activityEntrance.value ==
-                                  'true')
-                                InkWell(
-                                  onTap: () => MyRouteDelegate.of(context)
-                                      .push(GameAppRoutes.activity),
-                                  child: Image.asset(
-                                    'packages/game/assets/images/game_lobby/gift.webp',
-                                    width: 64,
-                                    height: 64,
-                                  ),
-                                ),
-                              // 紅包icon
-                              if (gameConfigController.isShowEnvelope.value ==
-                                      true &&
-                                  userController.info.value.roles
-                                      .contains('guest'))
-                                GameEnvelopeButton(
-                                  hasDownload: !kIsWeb &&
-                                      gameParamConfigController
-                                              .appDownload.value ==
-                                          'true' &&
-                                      isShowDownload &&
-                                      !localStorage
-                                          .hasData('show-app-download'),
-                                ),
-                              // 下載直營app icon
-                              // if (!kIsWeb &&
-                              //     gameParamConfigController.appDownload.value ==
-                              //         'true' &&
-                              //     isShowDownload &&
-                              //     !localStorage.hasData('show-app-download'))
-                              //   GameDownloadButton(
-                              //     setShowFab: () => setState(() {
-                              //       isShowDownload = false;
-                              //     }),
-                              //   ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 );
               },
