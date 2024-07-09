@@ -20,13 +20,18 @@ import 'game_scroll_view_tabs.dart';
 
 final logger = Logger();
 
-class GameListItem extends StatelessWidget {
+class GameListItem extends StatefulWidget {
   final String imageUrl;
   final int gameType;
 
   const GameListItem({Key? key, required this.imageUrl, required this.gameType})
       : super(key: key);
 
+  @override
+  State<GameListItem> createState() => _GameListItemState();
+}
+
+class _GameListItemState extends State<GameListItem> {
   @override
   Widget build(BuildContext context) {
     final theme = themeMode[GetStorage().hasData('pageColor')
@@ -44,7 +49,7 @@ class GameListItem extends StatelessWidget {
         duration: const Duration(milliseconds: 500),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(8.0),
-          child: imageUrl != '' || imageUrl.isNotEmpty
+          child: widget.imageUrl != '' || widget.imageUrl.isNotEmpty
               ? Stack(
                   children: [
                     Container(
@@ -54,13 +59,13 @@ class GameListItem extends StatelessWidget {
                     ),
                     kIsWeb
                         ? Image.network(
-                            imageUrl,
+                            widget.imageUrl,
                             width: double.infinity,
                             height: double.infinity,
                             fit: BoxFit.cover,
                           )
                         : CacheImage(
-                            url: imageUrl,
+                            url: widget.imageUrl,
                             width: double.infinity,
                             height:
                                 (MediaQuery.of(context).size.width - 110) / 3,
@@ -102,10 +107,15 @@ class GameListViewState extends State<GameListView>
   GamePlatformConfigController gameConfigController =
       Get.find<GamePlatformConfigController>();
   StreamSubscription<String>? eventBusSubscription;
+  // 宣告一個isSelect來接widget.activeIndex
+  // 使用setState來更新isSelect
+  // 這樣就可以在點擊時，改變選中的樣式
+  int isSelect = 0;
 
   @override
   void initState() {
     super.initState();
+    isSelect = widget.activeIndex;
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _handleOpenThirdPartyGame();
@@ -186,7 +196,7 @@ class GameListViewState extends State<GameListView>
   }
 
   // 寫一個篩選遊戲類別的方法
-  _filterGameCategories() {
+  Future<void> _filterGameCategories() async {
     if (mounted) {
       final GameLocalizations localizations = GameLocalizations.of(context)!;
 
@@ -254,9 +264,7 @@ class GameListViewState extends State<GameListView>
               category['gameType'] == -2)
           .toList();
 
-      // 將過濾後的遊戲類別列表分配給filteredGameCategories
-
-      filteredGameCategories.assignAll(filteredCategories);
+      setState(() => filteredGameCategories = filteredCategories);
     }
   }
 
@@ -302,13 +310,16 @@ class GameListViewState extends State<GameListView>
                           final category = filteredGameCategories[index];
                           return GestureDetector(
                             onTap: () {
+                              setState(() {
+                                isSelect = index;
+                              });
                               gameConfigController.setGameTypeIndex(index);
                               _scrollToItem(index);
                             },
                             child: GameScrollViewTabs(
                               text: category['name'].toString(),
                               icon: category['icon'].toString(),
-                              isActive: widget.activeIndex == index,
+                              isActive: isSelect == index,
                             ),
                           );
                         },
@@ -318,7 +329,7 @@ class GameListViewState extends State<GameListView>
                         thickness: 1, width: 10, color: Colors.transparent),
                     Expanded(
                       child: IndexedStack(
-                        index: widget.activeIndex,
+                        index: isSelect,
                         children: filteredGameCategories.map((category) {
                           final gameType = category['gameType'] as int;
                           return gamesListController.games.isNotEmpty
@@ -337,22 +348,27 @@ class GameListViewState extends State<GameListView>
 
   Widget _buildGameList(int gameType) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
-    var hotGames = [...gamesListController.games]
-        .where((game) => game.tagId == '2')
-        .toList()
-        .obs
-      ..sort((a, b) => b.hotOrderIndex.compareTo(a.hotOrderIndex));
-
-    final gameListResult = gameType == 0
-        ? gamesListController.games
-        : gameType == -2
-            ? hotGames
-            : gameHistoryList.isNotEmpty && gameType == -1
-                ? gameHistoryList
-                : gamesListController.games
-                    .where((game) => game.gameType == gameType)
-                    .toList()
-                    .obs;
+    // 根據遊戲類別過濾遊戲列表
+    List gameListResult;
+    switch (gameType) {
+      case 0:
+        gameListResult = gamesListController.games;
+        break;
+      case -2: // 熱門遊戲
+        gameListResult = [...gamesListController.games]
+            .where((game) => game.tagId == '2')
+            .toList()
+          ..sort((a, b) => b.hotOrderIndex.compareTo(a.hotOrderIndex));
+        break;
+      case -1: // 遊戲點擊歷史
+        gameListResult = gameHistoryList.isNotEmpty ? gameHistoryList : [];
+        break;
+      default:
+        gameListResult = gamesListController.games
+            .where((game) => game.gameType == gameType)
+            .toList();
+        break;
+    }
 
     return gameListResult.isNotEmpty
         ? CustomScrollView(

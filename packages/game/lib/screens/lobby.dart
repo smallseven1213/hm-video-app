@@ -64,7 +64,6 @@ class _GameLobbyState extends State<GameLobby>
   @override
   void initState() {
     super.initState();
-    logger.i('gamesListController.games: ${gamesListController.games}');
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _fetchEvent();
@@ -170,7 +169,7 @@ class _GameLobbyState extends State<GameLobby>
                             vertical: 4, horizontal: 16),
                         child: Column(
                           children: [
-                            GameCarousel(),
+                            const GameCarousel(),
                             GameUserInfo(
                               type: 'lobby',
                               child: Row(

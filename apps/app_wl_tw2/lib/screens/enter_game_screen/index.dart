@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:game/screens/enter_game_screen/index.dart' as game_lobby;
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
-import 'package:game/screens/lobby.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 
 import '../main_screen/channel_search_bar.dart';
@@ -37,7 +36,11 @@ class _EnterGame extends State<EnterGame> {
               children: [
                 ChannelSearchBar(),
                 SizedBox(height: 5),
-                Expanded(child: GameLobby(hideAppBar: true))
+                Expanded(
+                  child: game_lobby.EnterGame(
+                    hideAppBar: true,
+                  ),
+                ),
               ],
             ))
         : const CircularProgressIndicator());

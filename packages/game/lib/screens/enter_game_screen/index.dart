@@ -13,7 +13,9 @@ import 'package:shared/controllers/game_platform_config_controller.dart';
 final logger = Logger();
 
 class EnterGame extends StatefulWidget {
+  final bool? hideAppBar;
   const EnterGame({
+    this.hideAppBar = false,
     Key? key,
   }) : super(key: key);
 
@@ -26,14 +28,9 @@ class _EnterGame extends State<EnterGame> {
   GamePlatformConfigController gamePlatformConfigController =
       Get.find<GamePlatformConfigController>();
   GamesListController gamesListController = Get.find<GamesListController>();
-
-  GamePlatformConfigController gameConfigController =
-      Get.find<GamePlatformConfigController>();
   GameBannerController gameBannerController = Get.find<GameBannerController>();
   GameParamConfigController gameParamConfigController =
       Get.find<GameParamConfigController>();
-
-  bool canEnter = false;
 
   @override
   void initState() {
@@ -51,15 +48,12 @@ class _EnterGame extends State<EnterGame> {
       await gamesListController.fetchGames();
       // 當這三個 API 完成後，並行打其他三個 API
       await Future.wait([
-        gameConfigController.fetchData(),
+        GameLobbyApi().registerGame(),
         gameBannerController.fetchGameBanners(),
         gameParamConfigController.fetchData(),
       ]);
 
       logger.i('所有 API 請求完成');
-      setState(() {
-        canEnter = true;
-      });
     } catch (e) {
       logger.e('API 請求失敗: $e');
     }
@@ -68,10 +62,12 @@ class _EnterGame extends State<EnterGame> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      if (gameConfigController.gamePageColor.value == 0) {
-        return Center(child: GameLoading());
+      if (gamesListController.games.isEmpty) {
+        return const Center(child: GameLoading());
       } else {
-        return GameLobby();
+        return GameLobby(
+          hideAppBar: widget.hideAppBar,
+        );
       }
     });
   }
