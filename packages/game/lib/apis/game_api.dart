@@ -19,10 +19,13 @@ import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/fetcher.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/services/platform_service.app.dart'
     if (dart.library.html) 'package:shared/services/platform_service.web.dart'
     as app_platform_service;
+
+final logger = Logger();
 
 final systemConfig = GameSystemConfig();
 String apiPrefix =

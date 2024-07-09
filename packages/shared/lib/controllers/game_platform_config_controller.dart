@@ -1,5 +1,4 @@
 import 'package:game/apis/game_api.dart';
-import 'package:game/apis/game_auth_api.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -22,19 +21,6 @@ class GamePlatformConfigController extends GetxController {
 
   GameWalletController gameWalletController = Get.find<GameWalletController>();
   AuthController authController = Get.find<AuthController>();
-
-  Future<void> setGameApiHost() async {
-    GameAuthApi gameAuthApi = GameAuthApi();
-    // GameSystemConfig gameSystemConfig = GameSystemConfig();
-
-    try {
-      final res = await gameAuthApi.login(authController.token.value);
-      logger.i('v1 login success:  ${res.data!.apiHost}');
-      // gameSystemConfig.setApiHost(res.data!.apiHost);
-    } catch (e) {
-      logger.e('setGameApiHost error: $e');
-    }
-  }
 
   Future<void> fetchData() async {
     GameLobbyApi gameLobbyApi = GameLobbyApi();

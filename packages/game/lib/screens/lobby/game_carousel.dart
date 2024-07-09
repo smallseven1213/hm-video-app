@@ -3,12 +3,14 @@ import 'package:game/models/game_banner_image.dart';
 import 'package:game/widgets/carousel.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/game_banner_controller.dart';
+
 class GameCarousel extends StatefulWidget {
-  final List data;
+  // final List data;
 
   const GameCarousel({
     Key? key,
-    required this.data,
+    // required this.data,
   }) : super(key: key);
 
   @override
@@ -16,6 +18,8 @@ class GameCarousel extends StatefulWidget {
 }
 
 class GameCarouselState extends State<GameCarousel> {
+  GameBannerController gameBannerController = Get.find<GameBannerController>();
+
   @override
   void initState() {
     super.initState();
@@ -24,12 +28,12 @@ class GameCarouselState extends State<GameCarousel> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      var banners = widget.data;
+      var banners = gameBannerController.gameBanner;
       if (banners.isEmpty) {
         return const SizedBox();
       } else {
         try {
-          List<GameBannerImage> images = widget.data
+          List<GameBannerImage> images = banners
               .map(
                 (e) => GameBannerImage.fromJson({
                   'photoId': e['photoId'] ?? '',
