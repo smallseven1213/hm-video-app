@@ -61,6 +61,7 @@ class FollowWithRecommendationsState extends State<FollowWithRecommendations> {
               child: UserFavoritesSupplierConsumer(
                 id: widget.id,
                 info: widget.supplier,
+                actionType: 'collect',
                 child: (isLiked, handleLike) => InkWell(
                   onTap: () {
                     handleLike!();

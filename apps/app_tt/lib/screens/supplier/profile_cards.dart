@@ -89,6 +89,7 @@ class ProfileCards extends StatelessWidget {
                   UserFavoritesSupplierConsumer(
                     id: id,
                     info: supplier,
+                    actionType: 'follow',
                     child: (isLiked, handleLike) => InkWell(
                       onTap: handleLike,
                       child: FollowButton(isLiked: isLiked),

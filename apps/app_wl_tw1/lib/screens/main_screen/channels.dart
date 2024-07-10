@@ -8,14 +8,15 @@ import 'channel_style_3/index.dart';
 import 'channel_style_4/index.dart';
 import 'channel_style_5/index.dart';
 import 'channel_style_6/index.dart';
+import 'channel_style_7/index.dart';
 import 'channel_style_not_found/index.dart';
 
 Map<int, Function(SlimChannel channelData, int layoutId)> styleWidgetMap = {
-  1: (channelData, layoutId) => ChannelStyle1(
-        key: ValueKey(channelData.id),
-        channelId: channelData.id,
-        layoutId: layoutId,
-      ),
+  // 1: (channelData, layoutId) => ChannelStyle1(
+  //       key: ValueKey(channelData.id),
+  //       channelId: channelData.id,
+  //       layoutId: layoutId,
+  //     ),
   2: (channelData, layoutId) => ChannelStyle2(
         key: ValueKey(channelData.id),
       ),
@@ -36,6 +37,16 @@ Map<int, Function(SlimChannel channelData, int layoutId)> styleWidgetMap = {
       ),
   6: (channelData, layoutId) => ChannelStyle6(
         key: ValueKey(channelData.id),
+      ),
+  1: (channelData, layoutId) => ChannelStyle7(
+        key: ValueKey(channelData.id),
+        channelId: channelData.id,
+        layoutId: layoutId,
+      ),
+  7: (channelData, layoutId) => ChannelStyle7(
+        key: ValueKey(channelData.id),
+        channelId: channelData.id,
+        layoutId: layoutId,
       ),
 };
 

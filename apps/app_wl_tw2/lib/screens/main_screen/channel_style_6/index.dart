@@ -8,21 +8,6 @@ import 'package:shared/models/color_keys.dart';
 import '../../../widgets/base_short_page.dart';
 import 'suppliers.dart';
 
-class ChannelStyle6ShortsPart extends BaseShortPage {
-  ChannelStyle6ShortsPart({
-    super.key,
-    required VideoShortByChannelStyle6Controller controller,
-  }) : super(
-          style: 2,
-          createController: () =>
-              Get.find<VideoShortByChannelStyle6Controller>(),
-          onScrollBeyondFirst: () {
-            final controller = Get.find<VideoShortByChannelStyle6Controller>();
-            controller.fetchData();
-          },
-        );
-}
-
 class ChannelStyle6 extends StatefulWidget {
   const ChannelStyle6({Key? key}) : super(key: key);
 
@@ -59,13 +44,11 @@ class ChannelStyle6State extends State<ChannelStyle6> {
             width: double.infinity,
             height: double.infinity,
             color: AppColors.colors[ColorKeys.primary],
-            child: const Center(
-              child: ChannelStyle6Suppliers(),
-            ),
+            child: const Center(),
           );
         }
 
-        return ChannelStyle6ShortsPart(controller: controller);
+        return Container();
       }
     });
   }
