@@ -68,9 +68,11 @@ class GeneralShortCardState extends State<GeneralShortCard> {
           context: context,
           message: '請先登入後觀看。',
           barrierDismissible: false,
-          showCancelButton: false,
           onConfirm: () {
             MyRouteDelegate.of(context).push(AppRoutes.login);
+          },
+          onCancel: () {
+            MyRouteDelegate.of(context).push(AppRoutes.home);
           },
         );
       },

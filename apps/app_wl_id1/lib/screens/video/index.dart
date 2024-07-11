@@ -67,9 +67,11 @@ class VideoScreenState extends State<VideoScreen> {
                 context: context,
                 message: I18n.plsLoginToWatch,
                 barrierDismissible: false,
-                showCancelButton: false,
                 onConfirm: () {
                   MyRouteDelegate.of(context).push(AppRoutes.login);
+                },
+                onCancel: () {
+                  MyRouteDelegate.of(context).push(AppRoutes.home);
                 },
               );
             },

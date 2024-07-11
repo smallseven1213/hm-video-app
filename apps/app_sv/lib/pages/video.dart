@@ -56,6 +56,9 @@ class VideoState extends State<Video> {
                   onConfirm: () {
                     MyRouteDelegate.of(context).push(AppRoutes.login);
                   },
+                  onCancel: () {
+                    MyRouteDelegate.of(context).push(AppRoutes.home);
+                  },
                 );
               },
               child: (canWatch) => Column(
