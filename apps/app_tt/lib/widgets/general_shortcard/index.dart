@@ -70,11 +70,10 @@ class GeneralShortCardState extends State<GeneralShortCard> {
         showConfirmDialog(
           context: context,
           message: I18n.plsLoginToWatch,
+          cancelButtonText: I18n.back,
           barrierDismissible: false,
-          showCancelButton: false,
-          onConfirm: () {
-            MyRouteDelegate.of(context).push(AppRoutes.login);
-          },
+          onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
+          onCancel: () => MyRouteDelegate.of(context).popToHome(),
         );
       },
       child: (canWatch) => Container(

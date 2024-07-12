@@ -128,7 +128,7 @@ const Map<String, String> idIdStrings = {
   "withdrawal_method": "Metode Penarikan",
   "please_complete_the_card_binding_before_withdrawing_money":
       "Silakan selesaikan pengikatan kartu sebelum menarik uang.",
-  "go_to_binding": "Pergi untuk Pengikatan",
+  "go_to_binding": "pengikatan",
   "insufficient_liquidity_please_continue_to_play":
       "Likuiditas tidak cukup, silakan terus bermain",
   "if_you_have_not_reached_the_limit_need_to_pay_the_withdrawal_fee_of_estimated_click_to_confirm_to_send_out_the_withdrawal_order":

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
@@ -69,9 +70,12 @@ class GeneralShortCardState extends State<GeneralShortCard> {
           context: context,
           message: '請先登入後觀看。',
           barrierDismissible: false,
-          showCancelButton: false,
           onConfirm: () {
             MyRouteDelegate.of(context).push(AppRoutes.login);
+          },
+          onCancel: () {
+            MyRouteDelegate.of(context).push(AppRoutes.home,
+                args: {'defaultScreenKey': HomeNavigatorPathes.layout1});
           },
         );
       },

@@ -138,6 +138,14 @@ class MyRouteDelegate extends RouterDelegate<String>
     }
   }
 
+  void popToHome() {
+    while (_stack.length > 1) {
+      final lastStackData = _stack.removeLast();
+      lastStackData.completer.complete();
+    }
+    notifyListeners();
+  }
+
   @override
   Future<void> setNewRoutePath(String configuration) {
     // var uuid = const Uuid().v4();

@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:game/utils/show_confirm_dialog.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:shared/navigator/delegate.dart';
-
-import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:game/utils/on_loading.dart';
+import 'package:game/utils/show_confirm_dialog.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/navigator/delegate.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../enums/game_app_routes.dart';
 import '../localization/game_localization_delegate.dart';
+
+final logger = Logger();
 
 String gameUrl = '';
 

@@ -1,6 +1,8 @@
 import 'package:game/apis/game_api.dart';
+import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/auth_controller.dart';
 
 final logger = Logger();
 
@@ -16,6 +18,9 @@ class GamePlatformConfigController extends GetxController {
   var needsPhoneVerification = false.obs; // 註冊是否前往手機驗證
   var countryCode = Rx<String?>(null); // 註冊手機驗證國碼
   var isGameLobbyBalanceShow = true.obs; // 是否顯示遊戲大廳餘額
+
+  GameWalletController gameWalletController = Get.find<GameWalletController>();
+  AuthController authController = Get.find<AuthController>();
 
   Future<void> fetchData() async {
     GameLobbyApi gameLobbyApi = GameLobbyApi();

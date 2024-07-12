@@ -1,7 +1,6 @@
+import 'package:game/apis/game_api.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
-
-import 'package:game/apis/game_api.dart';
 
 final GameLobbyApi gameLobbyApi = GameLobbyApi();
 final logger = Logger();
@@ -10,15 +9,6 @@ class GameParamConfigController extends GetxController {
   var isLoading = false.obs;
   var appDownload = ''.obs;
   var activityEntrance = ''.obs;
-
-  @override
-  void onReady() {
-    super.onReady();
-    fetchData();
-    // Get.find<AuthController>().token.listen((event) {
-    //   fetchData();
-    // });
-  }
 
   Future<void> fetchData() async {
     try {
