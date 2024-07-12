@@ -1,6 +1,6 @@
+import 'package:game/apis/game_api.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:get/get.dart';
-import 'package:game/apis/game_api.dart';
 import 'package:logger/logger.dart';
 
 final logger = Logger();
@@ -36,6 +36,7 @@ class GameWithdrawController extends GetxController {
         paymentPin.value = res['data'].paymentPin ?? false;
         points.value = res['data'].points ?? 0.00;
         userPaymentSecurity.value = res['data'].userPaymentSecurity;
+        userKyc.value = res['data'].userKyc;
         initRemittanceType.value =
             res['data'].userPaymentSecurity.first.remittanceType;
 

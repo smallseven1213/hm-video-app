@@ -1,8 +1,4 @@
-import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:game/controllers/game_banner_controller.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
 import 'package:game/enums/game_app_routes.dart';
@@ -10,8 +6,10 @@ import 'package:game/localization/game_localization_delegate.dart';
 import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/game_startup.dart';
-
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final logger = Logger();
 
@@ -33,7 +31,8 @@ checkKycData({
     }
 
     // 前往绑定手机
-    if (gameWithdrawController.cellPhoneIsBound.value == false) {
+    if (gameWithdrawController.userKyc.isNotEmpty &&
+        gameWithdrawController.cellPhoneIsBound.value == false) {
       logger.i(
           'cellPhoneIsBound: ${gameWithdrawController.cellPhoneIsBound.value}');
       showConfirmDialog(
@@ -51,7 +50,8 @@ checkKycData({
       );
     }
     // 前往绑定身份证
-    else if (gameWithdrawController.cellPhoneIsBound.value &&
+    else if (gameWithdrawController.userKyc.isNotEmpty &&
+        gameWithdrawController.cellPhoneIsBound.value &&
         gameWithdrawController.idCardIsBound.value == false &&
         gameWithdrawController.idCardStatus.value == null) {
       logger.i('idCardIsBound: ${gameWithdrawController.idCardStatus.value}');
@@ -69,7 +69,8 @@ checkKycData({
       );
     }
     // 身份证審核中
-    else if (gameWithdrawController.cellPhoneIsBound.value &&
+    else if (gameWithdrawController.userKyc.isNotEmpty &&
+        gameWithdrawController.cellPhoneIsBound.value &&
         gameWithdrawController.idCardIsBound.value == false &&
         gameWithdrawController.idCardStatus.value ==
             idCardStatusEnum['REVIEWING']) {
@@ -86,7 +87,8 @@ checkKycData({
       );
     }
     // 身份证審核已拒絕
-    else if (gameWithdrawController.cellPhoneIsBound.value &&
+    else if (gameWithdrawController.userKyc.isNotEmpty &&
+        gameWithdrawController.cellPhoneIsBound.value &&
         gameWithdrawController.idCardIsBound.value == false &&
         gameWithdrawController.idCardStatus.value ==
             idCardStatusEnum['REJECTED']) {
@@ -105,7 +107,8 @@ checkKycData({
       );
     }
     // 身份证審核通過
-    else if (gameWithdrawController.cellPhoneIsBound.value &&
+    else if (gameWithdrawController.userKyc.isNotEmpty &&
+        gameWithdrawController.cellPhoneIsBound.value &&
         gameWithdrawController.idCardIsBound.value) {
       handleUserWithdrawalData();
     }
