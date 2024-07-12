@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/home_navigator_pathes.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/user/watch_permission_provider.dart';
@@ -67,13 +68,10 @@ class GeneralShortCardState extends State<GeneralShortCard> {
         showConfirmDialog(
           context: context,
           message: '請先登入後觀看。',
+          cancelButtonText: '返回',
           barrierDismissible: false,
-          onConfirm: () {
-            MyRouteDelegate.of(context).push(AppRoutes.login);
-          },
-          onCancel: () {
-            MyRouteDelegate.of(context).push(AppRoutes.home);
-          },
+          onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
+          onCancel: () => MyRouteDelegate.of(context).popToHome(),
         );
       },
       child: (canWatch) => Container(

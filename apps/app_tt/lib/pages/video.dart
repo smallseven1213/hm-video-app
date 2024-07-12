@@ -99,13 +99,11 @@ class VideoState extends State<Video> {
               showConfirmDialog(
                 context: context,
                 message: I18n.plsLoginToWatch,
+                cancelButtonText: I18n.back,
                 barrierDismissible: false,
-                onConfirm: () {
-                  MyRouteDelegate.of(context).push(AppRoutes.login);
-                },
-                onCancel: () {
-                  MyRouteDelegate.of(context).push(AppRoutes.home);
-                },
+                onConfirm: () =>
+                    MyRouteDelegate.of(context).push(AppRoutes.login),
+                onCancel: () => MyRouteDelegate.of(context).popToHome(),
               );
             },
             child: (canWatch) => Column(

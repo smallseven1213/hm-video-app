@@ -124,13 +124,11 @@ class VideoState extends State<Video> {
                 showConfirmDialog(
                   context: context,
                   message: '請先登入後觀看。',
+                  cancelButtonText: '返回',
                   barrierDismissible: false,
-                  onConfirm: () {
-                    MyRouteDelegate.of(context).push(AppRoutes.login);
-                  },
-                  onCancel: () {
-                    MyRouteDelegate.of(context).push(AppRoutes.home);
-                  },
+                  onConfirm: () =>
+                      MyRouteDelegate.of(context).push(AppRoutes.login),
+                  onCancel: () => MyRouteDelegate.of(context).popToHome(),
                 );
               },
               child: (canWatch) => Column(
