@@ -1,4 +1,3 @@
-import 'package:app_sv/screens/video/video_player_area/purchase_promotion.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
@@ -6,8 +5,11 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
+import 'package:shared/widgets/video/purchase_promotion.dart';
 import 'package:video_player/video_player.dart';
 
+import '../../../widgets/purchase_promotion/coin_part.dart';
+import '../../../widgets/purchase_promotion/vip_part.dart';
 import 'controls_overlay.dart';
 import 'error.dart';
 import 'loading.dart';
@@ -142,6 +144,21 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
               videoPlayerInfo: videoPlayerInfo,
               title: widget.video.title,
               tag: widget.tag,
+              vipPartBuilder: (timeLength) => VipPart(timeLength: timeLength),
+              coinPartBuilder: ({
+                required String buyPoints,
+                required int videoId,
+                required VideoPlayerInfo videoPlayerInfo,
+                required int timeLength,
+                required Function() onSuccess,
+                userPoints,
+              }) =>
+                  CoinPart(
+                buyPoints: buyPoints,
+                videoId: videoId,
+                videoPlayerInfo: videoPlayerInfo,
+                timeLength: timeLength,
+              ),
             );
           }
 
