@@ -3,19 +3,16 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-
-import 'package:logger/logger.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-import 'package:game/enums/game_app_routes.dart';
-import 'package:game/widgets/button.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/on_loading.dart';
-
+import 'package:game/widgets/button.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -241,7 +238,7 @@ class ConfirmPinState extends State<ConfirmPin> {
         if (isFetching == 'complete')
           Container(
             padding: const EdgeInsets.only(top: 10),
-            width: 90,
+            width: 180,
             child: GameButton(
               text: submitDepositSuccess
                   ? localizations.translate('open_top_up_page')
