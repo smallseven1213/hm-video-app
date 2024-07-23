@@ -28,9 +28,11 @@ Future<dynamic> fetcher({
   final responseController = Get.find<GameApiResponseErrorCatchController>();
   final token = Get.find<GameWalletController>().token.value;
   AuthController authController = Get.find<AuthController>();
+  GetStorage box = GetStorage('locale');
+  final locale = box.read('locale') ?? 'zh-TW';
 
   final headerConfig = {
-    'accept-language': 'zh-TW,zh;q=0.9,en;q=0.8,zh-CN;q=0.7,zh-HK;q=0.6',
+    'accept-language': locale,
     'authorization': 'Bearer $token',
   };
 

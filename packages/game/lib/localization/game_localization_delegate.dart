@@ -40,4 +40,9 @@ class GameLocalizationsDelegate
 
   @override
   bool shouldReload(GameLocalizationsDelegate old) => false;
+
+  String getCurrentLanguageTag(BuildContext context) {
+    final locale = Localizations.localeOf(context);
+    return locale.toLanguageTag();
+  }
 }
