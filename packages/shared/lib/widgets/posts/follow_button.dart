@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/index.dart';
-import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/modules/user/user_favorites_supplier_consumer.dart';
 
 class FollowButton extends StatelessWidget {
@@ -23,58 +22,24 @@ class FollowButton extends StatelessWidget {
       id: supplier.id ?? 0,
       info: supplier,
       actionType: 'follow',
-      child: (isLiked, handleLike) => Padding(
-        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
-        child: HeaderFollowButton(
-          isLiked: isLiked,
-          handleLike: handleLike,
-          photoSid: post['supplier'].photoSid ?? '',
-          backgroundColor: backgroundColor,
-          textColor: textColor,
-        ),
-      ),
-    );
-  }
-}
-
-class HeaderFollowButton extends StatelessWidget {
-  final bool isLiked;
-  final void Function()? handleLike;
-  final String photoSid;
-  final Color? backgroundColor;
-  final Color? textColor;
-
-  const HeaderFollowButton({
-    Key? key,
-    required this.isLiked,
-    required this.handleLike,
-    required this.photoSid,
-    this.backgroundColor,
-    this.textColor,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: handleLike,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(18),
-          color: isLiked ? Colors.grey : backgroundColor,
-        ),
-        padding: const EdgeInsets.only(left: 3, top: 5, bottom: 5, right: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const SizedBox(width: 8),
-            Text(
-              isLiked ? '已關注' : '+ 關注',
-              style: TextStyle(
-                fontSize: 12,
-                color: isLiked ? Colors.white : textColor,
+      child: (isLiked, handleLike) => InkWell(
+        onTap: handleLike,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: isLiked ? const Color(0xff464c61) : backgroundColor,
+          ),
+          padding: const EdgeInsets.all(2),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                size: 18,
+                isLiked ? Icons.check : Icons.add_rounded,
+                color: isLiked ? const Color(0xffb2bac5) : textColor,
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
