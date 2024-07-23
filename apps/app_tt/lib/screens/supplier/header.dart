@@ -54,17 +54,10 @@ class SupplierHeader extends SliverPersistentHeaderDelegate {
               title: UserFavoritesSupplierConsumer(
                 id: id,
                 info: info,
+                actionType: 'follow',
                 child: (isLiked, handleLike) => HeaderFollowButton(
                   isLiked: isLiked,
-                  handleLike: () {
-                    handleLike!();
-                    if (isLiked) {
-                      supplierController.decrementTotal('follow');
-                      return;
-                    } else {
-                      supplierController.incrementTotal('follow');
-                    }
-                  },
+                  handleLike: handleLike,
                   photoSid: info.photoSid ?? '',
                 ),
               ),

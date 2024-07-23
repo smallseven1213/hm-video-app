@@ -40,4 +40,5 @@ class AppRoutes {
   static const String redemption = '/redemption';
   static const String live = '/live';
   static const String tagGames = '/tag_games';
+  static const String post = '/post';
 }

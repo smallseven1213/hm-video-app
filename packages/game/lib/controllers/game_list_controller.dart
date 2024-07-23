@@ -13,13 +13,8 @@ class GamesListController extends GetxController {
   var isMaintenance = false.obs;
 
   Future<void> fetchGames() async {
-    try {
-      var res = await GameLobbyApi().getGames(); // [{}]
-      games.assignAll(res);
-      logger.i('fetchGames: $res');
-    } catch (e) {
-      logger.e('fetchGames: $e');
-    }
+    var res = await GameLobbyApi().getGames(); // to onDone
+    games.assignAll(res);
   }
 
   void updateGame(GameItem game) {

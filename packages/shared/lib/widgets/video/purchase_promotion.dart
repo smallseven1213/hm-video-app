@@ -3,17 +3,19 @@ import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'package:app_wl_tw2/screens/video/video_player_area/enums.dart';
-import 'package:app_wl_tw2/widgets/purchase_promotion/vip_part.dart';
-
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-import '../../../widgets/purchase_promotion/coin_part.dart';
-
 final logger = Logger();
+
+enum ChargeType {
+  none,
+  free, // 1: 免費
+  coin, // 2: 金幣
+  vip, // 3: VIP
+}
 
 class PurchasePromotion extends StatelessWidget {
   final String coverHorizontal;
@@ -24,6 +26,14 @@ class PurchasePromotion extends StatelessWidget {
   final VideoPlayerInfo videoPlayerInfo;
   final String title;
   final String tag;
+  final Widget Function(int timeLength) vipPartBuilder;
+  final Widget Function({
+    required String buyPoints,
+    required int videoId,
+    required VideoPlayerInfo videoPlayerInfo,
+    required int timeLength,
+    required Function() onSuccess,
+  }) coinPartBuilder;
 
   const PurchasePromotion({
     Key? key,
@@ -35,42 +45,40 @@ class PurchasePromotion extends StatelessWidget {
     required this.videoPlayerInfo,
     required this.title,
     required this.tag,
+    required this.vipPartBuilder,
+    required this.coinPartBuilder,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        SidImage(
-          key: ValueKey(coverHorizontal),
-          sid: coverHorizontal,
-          width: double.infinity,
-          height: double.infinity,
-          fit: BoxFit.cover,
-        ),
-        Positioned.fill(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), // sigma值控制模糊程度
-            child: Container(
-              color: Colors.black.withOpacity(0.3),
-            ),
+        ImageFiltered(
+          imageFilter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: SidImage(
+            key: ValueKey(coverHorizontal),
+            sid: coverHorizontal,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
           ),
         ),
         Center(
-            child: chargeType == ChargeType.vip.index
-                ? VipPart(timeLength: timeLength)
-                : CoinPart(
-                    buyPoints: buyPoints,
-                    videoId: videoId,
-                    videoPlayerInfo: videoPlayerInfo,
-                    timeLength: timeLength,
-                    onSuccess: () {
-                      final videoDetailController =
-                          Get.find<VideoDetailController>(tag: tag);
-                      videoDetailController.mutateAll();
-                      videoPlayerInfo.videoPlayerController?.play();
-                    },
-                  )),
+          child: chargeType == ChargeType.vip.index
+              ? vipPartBuilder(timeLength)
+              : coinPartBuilder(
+                  buyPoints: buyPoints,
+                  videoId: videoId,
+                  videoPlayerInfo: videoPlayerInfo,
+                  timeLength: timeLength,
+                  onSuccess: () {
+                    final videoDetailController =
+                        Get.find<VideoDetailController>(tag: tag);
+                    videoDetailController.mutateAll();
+                    videoPlayerInfo.videoPlayerController?.play();
+                  },
+                ),
+        ),
         Positioned(
           top: 0,
           left: 0,
