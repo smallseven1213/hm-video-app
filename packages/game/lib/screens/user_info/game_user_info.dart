@@ -157,7 +157,7 @@ class _GameUserInfo extends State<GameUserInfo> with TickerProviderStateMixin {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 22),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
               color: gameLobbyDividerColor,
               child: const SizedBox(

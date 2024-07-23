@@ -13,7 +13,6 @@ class GamePlatformConfigController extends GetxController {
   var isOpenThirdPartyGame = false.obs; // 是否開啟第三方遊戲webview
   var thirdPartyGameId = ''.obs; // 第三方遊戲game id
   var thirdPartyGameTpCode = ''.obs; // 第三方遊戲tp code
-  var gameTypeIndex = 0.obs; // 遊戲大廳左側遊戲類型index
   var videoToGameRoute = ''.obs; // 影音站跳轉至遊戲頁面路由
   var needsPhoneVerification = false.obs; // 註冊是否前往手機驗證
   var countryCode = Rx<String?>(null); // 註冊手機驗證國碼
@@ -47,10 +46,6 @@ class GamePlatformConfigController extends GetxController {
     isOpenThirdPartyGame.value = status;
     thirdPartyGameId.value = gameId.toString();
     thirdPartyGameTpCode.value = tpCode.toString();
-  }
-
-  void setGameTypeIndex(int index) {
-    gameTypeIndex.value = index;
   }
 
   void setSwitchPaymentPage(int type) {

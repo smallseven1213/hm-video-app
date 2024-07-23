@@ -46,6 +46,7 @@ class _EnterGame extends State<EnterGame> {
       await gameWalletController.fetchWalletsInitFromThirdLogin();
       await gamePlatformConfigController.fetchData();
       await gamesListController.fetchGames();
+      await gamesListController.fetchGamePlatform();
       // 當這三個 API 完成後，並行打其他三個 API
       await Future.wait([
         GameLobbyApi().registerGame(),
