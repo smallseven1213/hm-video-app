@@ -102,7 +102,7 @@ class PostCard extends StatelessWidget {
                             : 6), (index) {
                   if (index < detail.previewMediaCount) {
                     return detail.files.length > index
-                        ? SidImage(sid: detail.files[index].path)
+                        ? SidImage(sid: detail.files[index].path ?? '')
                         : Container(
                             decoration: BoxDecoration(
                               color: Colors.grey.withOpacity(0.4), // 設置空圖片的背景色
