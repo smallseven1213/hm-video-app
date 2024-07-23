@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:game/controllers/game_response_controller.dart';
+import 'package:game/controllers/game_wallet_controller.dart';
+import 'package:game/services/game_system_config.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
-import 'package:game/services/game_system_config.dart';
-import 'package:game/controllers/game_response_controller.dart';
 import 'package:shared/controllers/auth_controller.dart';
 
 // create a dio instance
@@ -25,8 +26,7 @@ Future<dynamic> fetcher({
   bool? shouldValidate = true,
 }) async {
   final responseController = Get.find<GameApiResponseErrorCatchController>();
-
-  final token = Get.find<AuthController>().token;
+  final token = Get.find<GameWalletController>().token.value;
   AuthController authController = Get.find<AuthController>();
 
   final headerConfig = {

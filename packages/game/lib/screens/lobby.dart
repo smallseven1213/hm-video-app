@@ -6,7 +6,7 @@ import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/floating_button/game_envelope_button.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
-import 'package:game/screens/lobby/game_list_view.dart';
+import 'package:game/screens/lobby/game_list/list_view/index.dart';
 import 'package:game/screens/lobby/login_tabs.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
@@ -200,7 +200,7 @@ class _GameLobbyState extends State<GameLobby>
                             ),
                             GameListView(
                               activeIndex:
-                                  gameConfigController.gameTypeIndex.value,
+                                  gamesListController.gameTypeIndex.value,
                             ),
                           ],
                         ),

@@ -14,7 +14,7 @@ final logger = Logger();
 String gameUrl = '';
 
 getGameUrl(String tpCode, String gameId, int gameType) async {
-  var res = await GameLobbyApi().enterGame(tpCode, gameId, gameType);
+  var res = await GameLobbyApi().enterGame(tpCode, gameId);
 
   if (res == null) {
     gameUrl = '';

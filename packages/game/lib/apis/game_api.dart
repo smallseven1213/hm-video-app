@@ -10,6 +10,7 @@ import 'package:game/models/game_list.dart';
 import 'package:game/models/game_order.dart';
 import 'package:game/models/game_payment.dart';
 import 'package:game/models/game_payment_channel_detail.dart';
+import 'package:game/models/game_platform.dart';
 import 'package:game/models/game_withdraw_record.dart';
 import 'package:game/models/game_withdraw_stack_limit.dart';
 import 'package:game/models/hm_api_response.dart';
@@ -24,15 +25,14 @@ import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/services/platform_service.app.dart'
     if (dart.library.html) 'package:shared/services/platform_service.web.dart'
     as app_platform_service;
+import 'package:shared/utils/fetcher.dart' as shared_fetcher;
 
 final logger = Logger();
 
-final systemConfig = GameSystemConfig();
-String apiPrefix =
-    '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform';
+final systemConfig = GameSystemConfig(); // 已更換api host from login
+
 SystemConfigController systemController =
     Get.find<SystemConfigController>(); // from share
-
 final responseController = Get.find<GameApiResponseErrorCatchController>();
 
 _checkMaintenance(String code) {
@@ -54,21 +54,15 @@ class GameLobbyApi {
     return _instance;
   }
 
-  Future<void> register() =>
-      fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
-
-  Future enterGame(String tpCode, String gameId, int gameType) async {
-    var value =
-        await fetcher(url: '$apiPrefix/enter-game', method: 'POST', body: {
-      'tpCode': tpCode,
-      'gameId': gameId,
-      'gameType': gameType,
-      'device': GetPlatform.isWeb
-          ? 1
-          : Platform.isAndroid
-              ? 3
-              : 2
-    });
+  // 已更換api host from login
+  Future enterGame(String tpCode, String gameId) async {
+    var value = await fetcher(
+        url: '${systemConfig.apiHost}/public/game/game/enter-game',
+        method: 'POST',
+        body: {
+          'tpCode': tpCode,
+          'gameId': gameId,
+        });
 
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
@@ -79,38 +73,10 @@ class GameLobbyApi {
     return res['data'];
   }
 
-  // 初次進入遊戲大廳
-  Future registerGame() async {
-    GetStorage box = GetStorage();
-    if (box.hasData('register-game')) return;
-    var value =
-        await fetcher(url: '$apiPrefix/register', method: 'POST', body: {});
-    var res = (value.data as Map<String, dynamic>);
-    _checkMaintenance(res['code']);
-
-    if (res['code'] == '00') {
-      box.write('register-game', true);
-    }
-
-    logger.i('registerGame: $res');
-    return res['data'];
-  }
-
-  // 取得遊戲大廳跑馬燈&輪播圖banner
-  Future getMarqueeAndBanner() =>
-      fetcher(url: '$apiPrefix/marquee-and-banner').then((value) {
-        var res = (value.data as Map<String, dynamic>);
-        _checkMaintenance(res['code']);
-
-        if (res['code'] != '00') {
-          return [];
-        }
-        if (res['data'] != null) {
-          return res['data'];
-        }
-      });
-
-  Future<List<GameItem>> getGames() => fetcher(url: '$apiPrefix/game').then(
+  // 已更換api host from login
+  // 取得遊戲列表
+  Future<List<GameItem>> getGames() =>
+      fetcher(url: '${systemConfig.apiHost}/public/game/game/list').then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
           _checkMaintenance(res['code']);
@@ -125,9 +91,19 @@ class GameLobbyApi {
               return GameItem.fromJson(d);
             } catch (e) {
               logger.e('GameItem.fromJson error: $e');
-              // print出這筆response的資料
-              logger.i('e: $d');
-              return GameItem(0, '', '', '', 0, '', 0, '', 0, 0);
+
+              return GameItem(
+                id: 0,
+                name: '',
+                gameId: '',
+                imgUrl: '',
+                orderIndex: 0,
+                tagId: '',
+                gameType: 0,
+                tpCode: '',
+                direction: 0,
+                hotOrderIndex: 0,
+              );
             }
           }));
 
@@ -135,7 +111,79 @@ class GameLobbyApi {
         },
       );
 
-  Future getPoints() => fetcher(url: '$apiPrefix/points').then(
+  // 已更換api host from login
+  // 取得遊戲平台列表
+  Future<List<GamePlatformItem>> getGamePlatform() => fetcher(
+              url:
+                  '${systemConfig.apiHost}/public/gamePlatforms/gamePlatform/list?supportDevice=2')
+          .then(
+        (value) {
+          var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
+          if (res['code'] != '00') {
+            return [];
+          }
+
+          List<GamePlatformItem> record = List.from(
+              (res['data'] as List<dynamic>)
+                  .map((e) => GamePlatformItem.fromJson(e))
+                  .toList());
+
+          return record;
+        },
+      );
+
+  // =================================== 以下 API HOST FROM VIDEO =================================== //
+
+  Future<void> register() => shared_fetcher.fetcher(
+      url:
+          '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/register',
+      method: 'POST',
+      body: {});
+
+  // 初次進入遊戲大廳
+  Future registerGame() async {
+    GetStorage box = GetStorage();
+    if (box.hasData('register-game')) return;
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/register',
+        method: 'POST',
+        body: {});
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    if (res['code'] == '00') {
+      box.write('register-game', true);
+    }
+
+    logger.i('registerGame: $res');
+    return res['data'];
+  }
+
+  // 取得遊戲大廳跑馬燈&輪播圖banner
+  Future getMarqueeAndBanner() => shared_fetcher
+          .fetcher(
+              url:
+                  '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/marquee-and-banner')
+          .then((value) {
+        var res = (value.data as Map<String, dynamic>);
+        _checkMaintenance(res['code']);
+
+        if (res['code'] != '00') {
+          return [];
+        }
+        if (res['data'] != null) {
+          return res['data'];
+        }
+      });
+
+  Future getPoints() => shared_fetcher
+          .fetcher(
+              url:
+                  '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/points')
+          .then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
           _checkMaintenance(res['code']);
@@ -149,8 +197,11 @@ class GameLobbyApi {
       );
 
   // 金幣轉帳, post to /tp-game-platform/transfer, data會有tpCode, type, applyAmount 三個值
-  Future transfer() =>
-      fetcher(url: '$apiPrefix/collect', method: 'POST', body: {}).then(
+  Future transfer() => shared_fetcher.fetcher(
+          url:
+              '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/collect',
+          method: 'POST',
+          body: {}).then(
         (value) {
           var res = (value.data as Map<String, dynamic>);
           _checkMaintenance(res['code']);
@@ -163,32 +214,13 @@ class GameLobbyApi {
         },
       );
 
-  // 銀行卡設置 > 取得銀行列表
-  Future<List<BankItem>> getBanks(int remittanceType) => fetcher(
-              url:
-                  '${systemController.apiHost.value}/api/v1/third/bank/cards?type=$remittanceType')
-          .then(
-        (value) {
-          var res = (value.data as Map<String, dynamic>);
-          _checkMaintenance(res['code']);
-
-          if (res['code'] != '00') {
-            return [];
-          }
-
-          List<BankItem> record = List.from((res['data'] as List<dynamic>)
-              .map((e) => BankItem.fromJson(e))
-              .toList());
-
-          return record;
-        },
-      );
-
   // 遊戲大廳 取得用戶遊戲提現詳情
   // 是否設置銀行卡
   // 是否設置資金密碼
   Future<Map> getUserGameWithdrawalData() async {
-    var value = await fetcher(url: '$apiPrefix/gameWithdrawal');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/gameWithdrawal');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -204,8 +236,9 @@ class GameLobbyApi {
   // 檢查資金密碼，使用get call user/paymentPin?paymentPin=, function會將paymentPin帶入
   Future<HMApiResponseBaseWithDataWithData<bool>> checkPaymentPin(
       String paymentPin) async {
-    var value =
-        await fetcher(url: '$apiPrefix/paymentPin?paymentPin=$paymentPin');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/paymentPin?paymentPin=$paymentPin');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -214,8 +247,9 @@ class GameLobbyApi {
 
   // 更新資金密碼
   Future<void> updatePaymentPin(String paymentPin) async {
-    var value = await fetcher(
-        url: '$apiPrefix/paymentPin',
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/paymentPin',
         method: 'PUT',
         body: {'paymentPin': paymentPin});
     var res = (value.data as Map<String, dynamic>);
@@ -229,7 +263,9 @@ class GameLobbyApi {
   // 取得用戶流水
   Future<HMApiResponseBaseWithDataWithData<GameWithdrawStackLimit>>
       getStackLimit() async {
-    var value = await fetcher(url: '$apiPrefix/stack-limit');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/stack-limit');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -244,7 +280,8 @@ class GameLobbyApi {
   }
 
   // 取得遊戲設置config
-  Future<GameConfig> getGamePlatformConfig() => fetcher(
+  Future<GameConfig> getGamePlatformConfig() => shared_fetcher
+          .fetcher(
               url:
                   '${systemController.apiHost.value}/public/game-platform-config/game-platform-config')
           .then(
@@ -271,7 +308,9 @@ class GameLobbyApi {
   // 取得參數設定
   Future<HMApiResponseBaseWithDataWithData<GameParamConfig>>
       getGameParamConfig() async {
-    var value = await fetcher(url: '$apiPrefix/parameter-config');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/parameter-config');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -291,14 +330,17 @@ class GameLobbyApi {
       String paymentPin,
       String stakeLimit,
       String validStake) async {
-    var value =
-        await fetcher(url: '$apiPrefix/withdrawalV2', method: 'POST', body: {
-      'remittanceType': remittanceType,
-      'applyAmount': applyAmount,
-      'paymentPin': paymentPin,
-      'stakeLimit': stakeLimit,
-      'validAmount': validStake,
-    });
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/withdrawalV2',
+        method: 'POST',
+        body: {
+          'remittanceType': remittanceType,
+          'applyAmount': applyAmount,
+          'paymentPin': paymentPin,
+          'stakeLimit': stakeLimit,
+          'validAmount': validStake,
+        });
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -319,9 +361,10 @@ class GameLobbyApi {
             ? 'android'
             : 'ios';
 
-    return fetcher(
+    return shared_fetcher
+        .fetcher(
             url:
-                '$apiPrefix/payment-channel?deviceType=${deviceType[platformKey] ?? 1}&amount=$amount')
+                '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/payment-channel?deviceType=${deviceType[platformKey] ?? 1}&amount=$amount')
         .then((value) {
       var res = (value.data as Map<String, dynamic>);
       _checkMaintenance(res['code']);
@@ -336,9 +379,9 @@ class GameLobbyApi {
 
   // 取得存款渠道v2
   Future<Map<String, dynamic>> getDepositChannel() async {
-    var value = await fetcher(
+    var value = await shared_fetcher.fetcher(
         url:
-            '$apiPrefix/deposit-channel-v2?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/deposit-channel-v2?deviceType=${GetPlatform.isWeb ? 1 : Platform.isAndroid ? 2 : 3}');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -376,7 +419,9 @@ class GameLobbyApi {
 
   // 取得存款支付類型列表
   Future<List<DepositPaymentTypeList>> getPaymentList() async {
-    var value = await fetcher(url: '$apiPrefix/payment/payment-type/list');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/payment/payment-type/list');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -390,9 +435,9 @@ class GameLobbyApi {
   // 遊戲大廳 取得渠道詳情
   Future<HMApiResponseBaseWithDataWithData<GamePaymentChannelDetail>>
       getDepositPaymentChannelDetail(int paymentChannelId) async {
-    var value = await fetcher(
+    var value = await shared_fetcher.fetcher(
         url:
-            '$apiPrefix/payment-channel-detail?paymentChannelId=$paymentChannelId');
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/payment-channel-detail?paymentChannelId=$paymentChannelId');
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -406,9 +451,9 @@ class GameLobbyApi {
 
   // 取得匯率 CNY to USDT
   Future getCNYToUSDTRate() async {
-    var value = await fetcher(
+    var value = await shared_fetcher.fetcher(
         url:
-            '${systemConfig.apiHost}/public/tp-game-platform/tp-game-platform?from=CNY&to=USDT');
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform?from=CNY&to=USDT');
 
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
@@ -426,8 +471,9 @@ class GameLobbyApi {
     String remark,
   ) async {
     try {
-      var value = await fetcher(
-          url: '$apiPrefix/company-order-deposit',
+      var value = await shared_fetcher.fetcher(
+          url:
+              '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/company-order-deposit',
           method: 'POST',
           body: {
             'amount': amount,
@@ -455,7 +501,9 @@ class GameLobbyApi {
   // 參數配置 > 取得存款金額配置
   Future<List<int>> getAmount() async {
     try {
-      var value = await fetcher(url: '$apiPrefix/amount-config');
+      var value = await shared_fetcher.fetcher(
+          url:
+              '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/amount-config');
       var res = value.data as Map<String, dynamic>;
       _checkMaintenance(res['code']);
 
@@ -486,9 +534,9 @@ class GameLobbyApi {
     String? endedAt,
   }) async {
     logger.i('paymentStatus, $paymentStatus');
-    var value = await fetcher(
+    var value = await shared_fetcher.fetcher(
         url:
-            '$apiPrefix/deposit?page=$page&limit=$limit${paymentStatus != null ? '&paymentStatus=$paymentStatus' : ''}${startedAt != null ? '&startedAt=$startedAt' : ''}${endedAt != null ? '&endedAt=$endedAt' : ''}');
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/deposit?page=$page&limit=$limit${paymentStatus != null ? '&paymentStatus=$paymentStatus' : ''}${startedAt != null ? '&startedAt=$startedAt' : ''}${endedAt != null ? '&endedAt=$endedAt' : ''}');
 
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
@@ -509,7 +557,8 @@ class GameLobbyApi {
     String? startedAt,
     String? endedAt,
   }) {
-    String path = '$apiPrefix/withdrawal';
+    String path =
+        '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/withdrawal';
     Map qs = <String, dynamic>{};
     if (page != 1) {
       qs['page'] = page;
@@ -533,7 +582,7 @@ class GameLobbyApi {
       path += '?';
       path += qs.entries.map((e) => '${e.key}=${e.value}').join('&');
     }
-    return fetcher(url: path).then((value) {
+    return shared_fetcher.fetcher(url: path).then((value) {
       var res = (value.data as Map<String, dynamic>);
       _checkMaintenance(res['code']);
 
@@ -551,8 +600,9 @@ class GameLobbyApi {
     required int paymentChannelId,
     String? name,
   }) async {
-    var value = await fetcher(
-      url: '$apiPrefix/depositV2',
+    var value = await shared_fetcher.fetcher(
+      url:
+          '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/depositV2',
       method: 'POST',
       body: {
         'amount': amount,
@@ -576,14 +626,17 @@ class GameLobbyApi {
       String bankName,
       String legalName,
       String branchName) async {
-    var value =
-        await fetcher(url: '$apiPrefix/paymentSecurity', method: 'POST', body: {
-      'account': account,
-      'remittanceType': remittanceType,
-      'bankName': bankName,
-      'legalName': legalName,
-      'branchName': branchName
-    });
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/paymentSecurity',
+        method: 'POST',
+        body: {
+          'account': account,
+          'remittanceType': remittanceType,
+          'bankName': bankName,
+          'legalName': legalName,
+          'branchName': branchName
+        });
     var res = (value.data as Map<String, dynamic>);
     _checkMaintenance(res['code']);
 
@@ -592,7 +645,9 @@ class GameLobbyApi {
 
   // 遊戲大廳 取得活動列表
   Future<List<ActivityItem>> getActivityList() async {
-    var value = await fetcher(url: '$apiPrefix/campaign?page=1&limit=100');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/campaign?page=1&limit=100');
     var res = (value.data as Map<String, dynamic>);
     // _checkIsMaintenance(res['code']);
 
@@ -611,8 +666,11 @@ class GameLobbyApi {
   Future<Map> submitCampaign(
     int id,
   ) async {
-    var value = await fetcher(
-        url: '$apiPrefix/campaign', method: 'POST', body: {'campaignId': id});
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/campaign',
+        method: 'POST',
+        body: {'campaignId': id});
     var res = (value.data as Map<String, dynamic>);
 
     if (res['code'] != '00') {
@@ -630,8 +688,9 @@ class GameLobbyApi {
   // 取得apk下載位置
   Future getApkPath() async {
     var host = app_platform_service.AppPlatformService().getHost();
-    var value =
-        await fetcher(url: '$apiPrefix/apk-path?host=$host&device=ANDROID');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/apk-path?host=$host&device=ANDROID');
     var res = (value.data as Map<String, dynamic>);
 
     if (res['code'] != '00') {
@@ -642,7 +701,9 @@ class GameLobbyApi {
 
   // 取得隨機帳密
   Future getDiversion() async {
-    var value = await fetcher(url: '$apiPrefix/diversion-update');
+    var value = await shared_fetcher.fetcher(
+        url:
+            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/diversion-update');
     if (value == null) return [];
 
     var res = (value.data as Map<String, dynamic>);
@@ -652,12 +713,36 @@ class GameLobbyApi {
     }
   }
 
+  // =================================== 以下 API HOST FROM VIDEO & 沒有使用tp-game-platform prefix =================================== //
+
+  // 銀行卡設置 > 取得銀行列表
+  Future<List<BankItem>> getBanks(int remittanceType) => shared_fetcher
+          .fetcher(
+              url:
+                  '${systemController.apiHost.value}/api/v1/third/bank/cards?type=$remittanceType')
+          .then(
+        (value) {
+          var res = (value.data as Map<String, dynamic>);
+          _checkMaintenance(res['code']);
+
+          if (res['code'] != '00') {
+            return [];
+          }
+
+          List<BankItem> record = List.from((res['data'] as List<dynamic>)
+              .map((e) => BankItem.fromJson(e))
+              .toList());
+
+          return record;
+        },
+      );
+
   // 註冊綁定手機號 - 請求綁定
   Future<HMApiResponse> registerMobileBinding({
     required String countryCode,
     required String phoneNumber,
   }) async {
-    var value = await fetcher(
+    var value = await shared_fetcher.fetcher(
         url: '${systemController.apiHost.value}/api/v1/mobile/binding',
         method: 'POST',
         body: {
@@ -676,7 +761,7 @@ class GameLobbyApi {
     required String phoneNumber,
     required String otp,
   }) async {
-    var value = await fetcher(
+    var value = await shared_fetcher.fetcher(
         url: '${systemController.apiHost.value}/api/v1/mobile/confirm',
         method: 'POST',
         body: {
@@ -695,7 +780,7 @@ class GameLobbyApi {
     required String idFront,
     required String idBack,
   }) async {
-    var value = await fetcher(
+    var value = await shared_fetcher.fetcher(
         url: '${systemController.apiHost.value}/api/v1/third/user/kyc-apply',
         method: 'POST',
         body: {

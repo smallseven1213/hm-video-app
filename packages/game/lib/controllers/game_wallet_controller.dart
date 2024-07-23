@@ -28,7 +28,7 @@ class GameWalletController extends GetxController {
           apiHost.value = res.data?.apiHost ?? '';
           token.value = res.data?.token ?? '';
 
-          // gameSystemConfig.setApiHost(res.data!.apiHost);
+          gameSystemConfig.setApiHost(res.data!.apiHost);
 
           logger.i(
               'Game third login success ====> balance:${res.data?.balance}, currency:${res.data?.currency}');
