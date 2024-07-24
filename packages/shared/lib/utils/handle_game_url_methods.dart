@@ -1,6 +1,7 @@
-import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
+import 'package:game/controllers/game_list_controller.dart';
 import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/utils/event_bus.dart';
 
@@ -13,9 +14,9 @@ BottomNavigatorController bottomNavigatorController =
     Get.find<BottomNavigatorController>();
 GamePlatformConfigController gamePlatformConfigController =
     Get.find<GamePlatformConfigController>();
+GamesListController gamesListController = Get.find<GamesListController>();
 
 void handleGameUrlMethods(BuildContext context, String url, String routePath) {
-
   logger.i('game routePath: $routePath');
   logger.i('game url: $url');
 
@@ -35,7 +36,7 @@ void handleGameUrlMethods(BuildContext context, String url, String routePath) {
     var currentPath = MyRouteDelegate.of(context).currentPath;
     eventBus.fireEvent("openGame");
   } else if (gameType != null && gameType != '') {
-    gamePlatformConfigController.setGameTypeIndex(int.parse(gameType));
+    gamesListController.setGameTypeIndex(int.parse(gameType));
     MyRouteDelegate.of(context).push(
       '/home',
       args: {'defaultScreenKey': '/game'},

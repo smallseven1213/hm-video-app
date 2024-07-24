@@ -181,7 +181,7 @@ class _AmountFormState extends State<AmountForm> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: SizedBox(
-                width: 85,
+                width: 90,
                 height: 40,
                 child: GameButton(
                   text: localizations.translate('confirm'),

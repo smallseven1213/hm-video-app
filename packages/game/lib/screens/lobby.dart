@@ -6,12 +6,13 @@ import 'package:game/controllers/game_wallet_controller.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/lobby/floating_button/game_envelope_button.dart';
 import 'package:game/screens/lobby/game_carousel.dart';
-import 'package:game/screens/lobby/game_list_view.dart';
+import 'package:game/screens/lobby/game_list/list_view/index.dart';
 import 'package:game/screens/lobby/login_tabs.dart';
 import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
+import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_model.dart';
 import 'package:game/widgets/maintenance.dart';
 import 'package:get/get.dart';
@@ -198,9 +199,11 @@ class _GameLobbyState extends State<GameLobby>
                                 ],
                               ),
                             ),
-                            GameListView(
-                              activeIndex:
-                                  gameConfigController.gameTypeIndex.value,
+                            Obx(
+                              () => gamesListController
+                                      .gamePlatformList.value.isNotEmpty
+                                  ? const GameListView()
+                                  : const GameLoading(),
                             ),
                           ],
                         ),
