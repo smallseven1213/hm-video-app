@@ -198,7 +198,7 @@ const Map<String, String> idIdStrings = {
   "please_contact_customer_service_or_log_in_with_your_id_card":
       "Silakan hubungi layanan pelanggan atau masuk dengan kartu identitas Anda",
   "all": "Semua",
-  "recent": "Terbaru",
+  "recent": "Histori",
   "fish": "Ikan",
   "card": "Kartu",
   "slots": "Slot",
