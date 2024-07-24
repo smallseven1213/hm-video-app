@@ -8,9 +8,9 @@ import '../../widgets/list_page_panel.dart';
 import 'system_event_card.dart';
 
 class SystemScreen extends StatelessWidget {
-  SystemScreen({Key? key}) : super(key: key);
+  final EventController eventsController;
+  SystemScreen({Key? key, required this.eventsController}) : super(key: key);
 
-  final eventsController = Get.put(EventController());
   final ListEditorController listEditorController =
       Get.find<ListEditorController>(
           tag: ListEditorCategory.notifications.toString());
