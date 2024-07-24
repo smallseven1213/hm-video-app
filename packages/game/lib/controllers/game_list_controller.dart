@@ -16,6 +16,7 @@ class GamesListController extends GetxController {
   RxInt gameTypeIndex = 0.obs; // 左側遊戲類型index
   var gamePlatformTpCode = Rxn<String>(); // 右側上方遊戲平台tpCode，可以為null或空字串
   var resetVerticalFilter = false.obs;
+  int? verticalFilterIndex;
 
   Future<void> fetchGames() async {
     try {
@@ -62,5 +63,9 @@ class GamesListController extends GetxController {
   void triggerVerticalFilterReset() {
     resetVerticalFilter.value = !resetVerticalFilter.value;
     update(['gameList']);
+  }
+
+  void setVerticalFilterIndex(int? index) {
+    verticalFilterIndex = index;
   }
 }

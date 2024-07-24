@@ -75,6 +75,8 @@ class _PlatformFilterState extends State<PlatformFilter> {
             activeIndex = 0;
             gamesListController.setGameTypeIndex(0);
             gamesListController.setGamePlatformTpCode(null);
+            gamesListController.triggerVerticalFilterReset();
+            gamesListController.setVerticalFilterIndex(null);
           });
         },
         avatar: Image.asset(
@@ -90,6 +92,8 @@ class _PlatformFilterState extends State<PlatformFilter> {
             activeIndex = 1;
             gamesListController.setGameTypeIndex(-1);
             gamesListController.setGamePlatformTpCode(null);
+            gamesListController.triggerVerticalFilterReset();
+            gamesListController.setVerticalFilterIndex(null);
           });
         },
         avatar: Image.asset(
@@ -105,6 +109,7 @@ class _PlatformFilterState extends State<PlatformFilter> {
       return buildChip(
           label: platform.gamePlatformName,
           selected: activeIndex == index,
+          avatar: Image.network(platform.logo ?? ''),
           onSelected: () {
             _scrollToSelectedChip(index);
             setState(() {
@@ -112,6 +117,7 @@ class _PlatformFilterState extends State<PlatformFilter> {
               gamesListController.setGameTypeIndex(-2);
               gamesListController.setGamePlatformTpCode(platform.tpCode);
               gamesListController.triggerVerticalFilterReset();
+              gamesListController.setVerticalFilterIndex(0);
             });
           });
     }));

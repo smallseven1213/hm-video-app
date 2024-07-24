@@ -207,7 +207,7 @@ class GameListViewState extends State<GameListView>
                         selectedPlatformIndex: selectedPlatformIndex,
                       ),
                     ),
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 10),
                     Expanded(
                       child: Row(
                         // 向上靠齊
@@ -299,34 +299,37 @@ class GameListViewState extends State<GameListView>
 
     return CustomScrollView(
       slivers: [
-        SliverGrid(
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 8,
-            childAspectRatio: 60 / 60, // 遊戲圖片的寬高比
-          ),
-          delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-              return GestureDetector(
-                onTap: () {
-                  handleGameItem(
-                    context,
-                    gameId: gameListResult[index].gameId,
-                    updateGameHistory: _getGameHistory,
-                    tpCode: gameListResult[index].tpCode,
-                    direction: gameListResult[index].direction,
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
+          sliver: SliverGrid(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 100, // 设置每个项目的最大宽度
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 8,
+              childAspectRatio: 90 / 130,
+            ),
+            delegate: SliverChildBuilderDelegate(
+              (BuildContext context, int index) {
+                return GestureDetector(
+                  onTap: () {
+                    handleGameItem(
+                      context,
+                      gameId: gameListResult[index].gameId,
+                      updateGameHistory: _getGameHistory,
+                      tpCode: gameListResult[index].tpCode,
+                      direction: gameListResult[index].direction,
+                      gameType: gameListResult[index].gameType,
+                    );
+                  },
+                  child: GameListItem(
+                    imageUrl: gameListResult[index].imgUrl,
                     gameType: gameListResult[index].gameType,
-                  );
-                },
-                child: GameListItem(
-                  imageUrl: gameListResult[index].imgUrl,
-                  gameType: gameListResult[index].gameType,
-                  name: gameListResult[index].name ?? '',
-                ),
-              );
-            },
-            childCount: gameListResult.length,
+                    name: gameListResult[index].name ?? '',
+                  ),
+                );
+              },
+              childCount: gameListResult.length,
+            ),
           ),
         )
       ],

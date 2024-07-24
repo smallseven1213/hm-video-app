@@ -32,58 +32,69 @@ class _GameListItemState extends State<GameListItem> {
             : 1]
         .toString();
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final availableWidth = constraints.maxWidth;
-        final imageSize = availableWidth - 30;
-        const textHeight = 30.0; // 文字區域高度
-
-        return Column(
-          mainAxisSize: MainAxisSize.min, // 讓Column只佔用需要的空間
-          children: [
-            AnimatedOpacity(
-              opacity: 1.0,
-              duration: const Duration(milliseconds: 500),
+    return Container(
+      decoration: BoxDecoration(
+        color: gameLobbyUserInfoColor2,
+        borderRadius: BorderRadius.circular(8.0),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 0,
+            blurRadius: 3,
+            offset: const Offset(0, 4),
+          ),
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: -2,
+            blurRadius: 2,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(5.0),
+            child: AspectRatio(
+              aspectRatio: 60 / 60,
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(8.0),
-                child: Container(
-                  width: imageSize,
-                  height: imageSize,
-                  color: gameLobbyEmptyColor,
-                  child: widget.imageUrl.isNotEmpty
-                      ? kIsWeb
-                          ? Image.network(
-                              widget.imageUrl,
-                              fit: BoxFit.cover,
-                            )
-                          : CacheImage(
-                              url: widget.imageUrl,
-                              fit: BoxFit.cover,
-                              emptyImageUrl:
-                                  'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-                            )
-                      : Image.asset(
-                          'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
-                          fit: BoxFit.cover,
-                        ),
-                ),
+                borderRadius: BorderRadius.circular(16.0),
+                child: widget.imageUrl.isNotEmpty
+                    ? kIsWeb
+                        ? Image.network(
+                            widget.imageUrl,
+                            fit: BoxFit.cover,
+                          )
+                        : CacheImage(
+                            url: widget.imageUrl,
+                            fit: BoxFit.cover,
+                            emptyImageUrl:
+                                'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+                          )
+                    : Image.asset(
+                        'packages/game/assets/images/game_lobby/game_empty-$theme.webp',
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
-            Container(
-              height: textHeight,
-              alignment: Alignment.center,
+          ),
+          Expanded(
+            flex: 2,
+            child: Center(
               child: Text(
                 widget.name,
-                style:
-                    TextStyle(color: gameLobbyPrimaryTextColor, fontSize: 12),
+                style: TextStyle(
+                  color: gameLobbyPrimaryTextColor,
+                  fontSize: 12,
+                ),
                 textAlign: TextAlign.center,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-          ],
-        );
-      },
+          ),
+        ],
+      ),
     );
   }
 }
