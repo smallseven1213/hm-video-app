@@ -33,10 +33,7 @@ class ChannelStyle7State extends State<ChannelStyle7> {
         itemCount: mockData.length,
         itemBuilder: (context, index) {
           final item = mockData[index];
-          return PostCard(
-            upName: item["upName"]!,
-            postContent: item["postContent"]!,
-          );
+          return Container();
         },
       ),
     );
