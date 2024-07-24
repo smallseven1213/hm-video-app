@@ -12,6 +12,7 @@ import 'package:game/screens/user_info/game_user_info.dart';
 import 'package:game/screens/user_info/game_user_info_deposit.dart';
 import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
+import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_model.dart';
 import 'package:game/widgets/maintenance.dart';
 import 'package:get/get.dart';
@@ -198,9 +199,11 @@ class _GameLobbyState extends State<GameLobby>
                                 ],
                               ),
                             ),
-                            GameListView(
-                              activeIndex:
-                                  gamesListController.gameTypeIndex.value,
+                            Obx(
+                              () => gamesListController
+                                      .gamePlatformList.value.isNotEmpty
+                                  ? const GameListView()
+                                  : const GameLoading(),
                             ),
                           ],
                         ),

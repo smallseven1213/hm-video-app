@@ -20,10 +20,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 final logger = Logger();
 
 class GameListView extends StatefulWidget {
-  final int activeIndex;
   const GameListView({
     Key? key,
-    required this.activeIndex,
   }) : super(key: key);
   @override
   GameListViewState createState() => GameListViewState();
