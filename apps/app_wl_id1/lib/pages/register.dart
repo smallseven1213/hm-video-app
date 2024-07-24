@@ -79,7 +79,7 @@ class RegisterPageState extends State<RegisterPage> {
 
         if (res.code == '00') {
           userController.fetchUserInfoV2();
-          MyRouteDelegate.of(context).popRoute();
+          MyRouteDelegate.of(context).pop();
         } else {
           showConfirmDialog(
             context: context,
