@@ -1,3 +1,5 @@
+import '../utils/datetime_formatter.dart';
+
 class Event {
   late int id;
   late String title;
@@ -17,7 +19,7 @@ class Event {
     id = json['id'];
     title = json['title'];
     content = json['content'];
-    createdAt = json['createdAt'];
+    createdAt = formatDateTime(json['createdAt']);
     isRead = json['isRead'] ?? true;
   }
 
