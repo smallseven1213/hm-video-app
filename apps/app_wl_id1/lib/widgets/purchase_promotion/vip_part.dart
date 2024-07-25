@@ -1,8 +1,14 @@
+import 'package:app_wl_id1/widgets/wave_loading.dart';
 import 'package:flutter/material.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/goto_deposit.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 import '../../localization/i18n.dart';
@@ -55,15 +61,19 @@ class VipPart extends StatelessWidget {
           width: 175,
           height: 35,
           child: Button(
-              text: I18n.upgradeNowForUnlock,
-              size: 'small',
-              onPressed: () {
-                MyRouteDelegate.of(context).pushAndRemoveUntil(
-                  AppRoutes.home,
-                  args: {'defaultScreenKey': '/game'},
-                );
-                bottomNavigatorController.changeKey('/game');
-              }),
+            text: I18n.upgradeNowForUnlock,
+            size: 'small',
+            onPressed: () {
+              final bottomNavigatorController =
+                  Get.find<BottomNavigatorController>();
+              MyRouteDelegate.of(context).pushAndRemoveUntil(
+                AppRoutes.home,
+                args: {'defaultScreenKey': '/game'},
+              );
+              bottomNavigatorController.changeKey('/game');
+              eventBus.fireEvent("gotoDepositAfterLogin");
+            },
+          ),
         ),
       ],
     );

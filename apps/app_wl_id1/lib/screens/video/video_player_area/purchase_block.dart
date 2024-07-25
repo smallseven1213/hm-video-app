@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/vod.dart';
@@ -11,6 +15,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 
 import '../../../localization/i18n.dart';
 import '../../../utils/show_confirm_dialog.dart';
+import '../../../widgets/wave_loading.dart';
 
 enum ChargeType {
   none,
@@ -40,8 +45,6 @@ class PurchaseBlock extends StatefulWidget {
 class _PurchaseBlockState extends State<PurchaseBlock> {
   @override
   Widget build(BuildContext context) {
-    final bottomNavigatorController = Get.find<BottomNavigatorController>();
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: !widget.videoDetail.isAvailable
@@ -89,13 +92,16 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                           ),
                           InkWell(
                             onTap: () {
+                              final currentPath =
+                                  MyRouteDelegate.of(context).currentPath;
+                              final bottomNavigatorController =
+                                  Get.find<BottomNavigatorController>();
                               MyRouteDelegate.of(context).pushAndRemoveUntil(
                                 AppRoutes.home,
                                 args: {'defaultScreenKey': '/game'},
                               );
                               bottomNavigatorController.changeKey('/game');
-
-                              // MyRouteDelegate.of(context).push(AppRoutes.vip),
+                              eventBus.fireEvent("gotoDepositAfterLogin");
                             },
                             child: Container(
                               padding: const EdgeInsets.only(
