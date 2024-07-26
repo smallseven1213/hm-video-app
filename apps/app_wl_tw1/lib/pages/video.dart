@@ -85,7 +85,7 @@ class VideoState extends State<Video> {
                   ),
                   if (videoDetail.isAvailable == false)
                     PurchaseBlock(
-                      id: id.toString(),
+                      id: id,
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
                       tag: controllerTag,

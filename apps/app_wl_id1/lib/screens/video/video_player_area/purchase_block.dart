@@ -22,7 +22,7 @@ enum ChargeType {
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
-  final String id;
+  final int id;
   final String videoUrl;
   final String tag;
 
@@ -61,10 +61,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(
-                        left: 41,
-                        right: 36,
-                      ),
+                      padding: const EdgeInsets.only(left: 41, right: 36),
                       child: Row(
                         children: [
                           Expanded(
@@ -88,8 +85,6 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                           ),
                           InkWell(
                             onTap: () {
-                              final currentPath =
-                                  MyRouteDelegate.of(context).currentPath;
                               final bottomNavigatorController =
                                   Get.find<BottomNavigatorController>();
                               MyRouteDelegate.of(context).pushAndRemoveUntil(
@@ -122,7 +117,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                   ],
                 )
               : VideoPlayerConsumer(
-                  tag: widget.tag,
+                  tag: widget.videoUrl,
                   child: (VideoPlayerInfo videoPlayerInfo) {
                     return Stack(
                       alignment: Alignment.center,
@@ -172,7 +167,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                               InkWell(
                                 onTap: () => purchase(
                                   context,
-                                  id: int.parse(widget.id.toString()),
+                                  id: widget.id,
                                   onSuccess: () {
                                     final videoDetailController =
                                         Get.find<VideoDetailController>(

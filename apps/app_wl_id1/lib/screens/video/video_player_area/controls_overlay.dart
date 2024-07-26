@@ -59,7 +59,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-      tag: widget.tag,
+      tag: widget.videoUrl,
       child: (VideoPlayerInfo videoPlayerInfo) =>
           LayoutBuilder(builder: (context, constraints) {
         if (videoPlayerInfo.videoPlayerController == null) {

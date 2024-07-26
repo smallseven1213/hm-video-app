@@ -52,7 +52,7 @@ class VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.id.toString());
-    final controllerTag = genaratorLongVideoDetailTag(id.toString());
+    final controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
 
     return VideoScreenProvider(
       id: widget.id,
@@ -82,7 +82,8 @@ class VideoScreenState extends State<VideoScreen> {
               return Column(
                 children: [
                   VideoPlayerProvider(
-                    tag: controllerTag,
+                    key: Key(videoUrl),
+                    tag: videoUrl,
                     autoPlay: canWatch,
                     video: videoDetail!,
                     videoUrl: videoUrl,
@@ -106,14 +107,13 @@ class VideoScreenState extends State<VideoScreen> {
                   ),
                   if (videoDetail.isAvailable == false)
                     PurchaseBlock(
-                      id: id.toString(),
+                      id: id,
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
                       tag: controllerTag,
                     ),
                   Expanded(
                     child: NestedTabBarView(
-                      tag: controllerTag,
                       videoUrl: videoUrl,
                       videoDetail: videoDetail,
                     ),

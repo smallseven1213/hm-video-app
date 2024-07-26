@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared/models/user.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/utils/video_info_formatter.dart';
@@ -135,12 +136,14 @@ class Coin extends StatelessWidget {
           child: Button(
             size: 'small',
             text: I18n.payToWatch,
-            onPressed: () => purchase(
-              context,
-              id: videoId,
-              onSuccess: onSuccess!,
-              showConfirmDialog: showConfirmDialog,
-            ),
+            onPressed: () {
+              purchase(
+                context,
+                id: videoId,
+                onSuccess: onSuccess!,
+                showConfirmDialog: showConfirmDialog,
+              );
+            },
           ),
         ),
       ],
@@ -168,14 +171,20 @@ class CoinPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return UserInfoConsumer(
-      child: (User info, isVIP, isGuest, isLoading) {
-        if (info.id.isEmpty) {
+    return UserInfoV2Consumer(
+      child: (
+        info,
+        isVIP,
+        isGuest,
+        isLoading,
+        isInfoV2Init,
+      ) {
+        if (isInfoV2Init == false) {
           return const SizedBox();
         }
         return Coin(
           direction: direction,
-          userPoints: info.points ?? '0',
+          userPoints: info.points.toString(),
           buyPoints: buyPoints,
           videoId: videoId,
           videoPlayerInfo: videoPlayerInfo,

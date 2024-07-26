@@ -11,7 +11,7 @@ import 'enums.dart';
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
-  final String id;
+  final int id;
   final String videoUrl;
   final String tag;
 
@@ -155,15 +155,18 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () => purchase(context,
-                                    id: int.parse(widget.id.toString()),
-                                    onSuccess: () {
-                                  final videoDetailController =
-                                      Get.find<VideoDetailController>(
-                                          tag: widget.tag);
-                                  videoDetailController.mutateAll();
-                                  videoPlayerInfo.videoPlayerController?.play();
-                                }),
+                                onTap: () => purchase(
+                                  context,
+                                  id: widget.id,
+                                  onSuccess: () {
+                                    final videoDetailController =
+                                        Get.find<VideoDetailController>(
+                                            tag: widget.tag);
+                                    videoDetailController.mutateAll();
+                                    videoPlayerInfo.videoPlayerController
+                                        ?.play();
+                                  },
+                                ),
                                 child: Container(
                                   padding: const EdgeInsets.only(
                                     top: 5,

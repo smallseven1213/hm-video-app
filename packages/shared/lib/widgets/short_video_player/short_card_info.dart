@@ -14,9 +14,11 @@ import 'package:shared/widgets/short_video_player/short_card_info_tag.dart';
 import 'package:shared/widgets/short_video_player/short_video_mute_button.dart';
 
 import '../../apis/vod_api.dart';
+import '../../controllers/bottom_navigator_controller.dart';
 import '../../localization/shared_localization_delegate.dart';
 import '../../models/hm_api_response.dart';
 import '../../models/videos_tag.dart';
+import '../../utils/event_bus.dart';
 
 // 常量和枚舉類型
 enum PurchaseResult {
@@ -268,9 +270,31 @@ class ShortCardInfo extends StatelessWidget {
                                             ChargeType.vip.index
                                         ? _buildPurchaseButton(
                                             context: context,
-                                            onTap: () => navigateToRoute(
-                                                context, videoPlayerInfo,
-                                                route: AppRoutes.vip),
+                                            onTap: () {
+                                              videoPlayerInfo
+                                                  .observableVideoPlayerController
+                                                  .videoPlayerController
+                                                  ?.pause();
+
+                                              final bottomNavigatorController =
+                                                  Get.find<
+                                                      BottomNavigatorController>();
+                                              MyRouteDelegate.of(context)
+                                                  .pushAndRemoveUntil(
+                                                AppRoutes.home,
+                                                args: {
+                                                  'defaultScreenKey': '/game'
+                                                },
+                                              );
+                                              bottomNavigatorController
+                                                  .changeKey('/game');
+                                              eventBus.fireEvent(
+                                                  "gotoDepositAfterLogin");
+                                              videoPlayerInfo
+                                                  .observableVideoPlayerController
+                                                  .videoPlayerController
+                                                  ?.play();
+                                            },
                                             borderColor: const Color(0xffcecece)
                                                 .withOpacity(0.7),
                                             textColor: Colors.white,
