@@ -102,6 +102,12 @@ final gameActivityContentTextColor =
 final gameTextFormFieldWithBorderBgColor =
     gameTheme[theme]!['gameTextFormFieldWithBorderBgColor'] ??
         Colors.transparent;
+final gameItemBgColor1 =
+    gameTheme[theme]!['gameItemBgColor1'] ?? Colors.transparent;
+final gameItemBgColor2 =
+    gameTheme[theme]!['gameItemBgColor2'] ?? Colors.transparent;
+final gameItemBgColor3 =
+    gameTheme[theme]!['gameItemBgColor3'] ?? Colors.transparent;
 
 class DarkThemeColors {
   static const gameLobbyBgColor = Color(0xff1E2123);
@@ -148,6 +154,9 @@ class DarkThemeColors {
   static const gameActivityIconColor = Colors.white;
   static const gameActivityContentTextColor = Colors.white;
   static const gameTextFormFieldWithBorderBgColor = Color(0xff2e3136);
+  static const gameItemBgColor1 = Color(0xff1E2123);
+  static const gameItemBgColor2 = Color(0xff1E2123);
+  static const gameItemBgColor3 = Colors.black;
 }
 
 class LightThemeColors {
@@ -195,6 +204,9 @@ class LightThemeColors {
   static const gameActivityIconColor = Color(0xffeeeeee);
   static const gameActivityContentTextColor = Color(0xff43474a);
   static const gameTextFormFieldWithBorderBgColor = Color(0xffe5f6f2);
+  static const gameItemBgColor1 = Colors.white;
+  static const gameItemBgColor2 = Color(0xffe8fdff);
+  static const gameItemBgColor3 = Color(0xff1C9CC3);
 }
 
 Map<String, Map<String, Color>> gameTheme = {
@@ -248,6 +260,9 @@ Map<String, Map<String, Color>> gameTheme = {
         LightThemeColors.gameActivityContentTextColor,
     'gameTextFormFieldWithBorderBgColor':
         LightThemeColors.gameTextFormFieldWithBorderBgColor,
+    'gameItemBgColor1': LightThemeColors.gameItemBgColor1,
+    'gameItemBgColor2': LightThemeColors.gameItemBgColor2,
+    'gameItemBgColor3': LightThemeColors.gameItemBgColor3,
   },
   'dark': {
     'gameLobbyBgColor': DarkThemeColors.gameLobbyBgColor,
@@ -299,5 +314,8 @@ Map<String, Map<String, Color>> gameTheme = {
         DarkThemeColors.gameActivityContentTextColor,
     'gameTextFormFieldWithBorderBgColor':
         DarkThemeColors.gameTextFormFieldWithBorderBgColor,
+    'gameItemBgColor1': DarkThemeColors.gameItemBgColor1,
+    'gameItemBgColor2': DarkThemeColors.gameItemBgColor2,
+    'gameItemBgColor3': DarkThemeColors.gameItemBgColor3,
   }
 };

@@ -30,7 +30,7 @@ class _VerticalFilterState extends State<VerticalFilter> {
     ever(gamesListController.resetVerticalFilter, (_) {
       if (mounted) {
         setState(() {
-          activeIndex = 0;
+          activeIndex = gamesListController.verticalFilterIndex ?? 0;
         });
       }
     });
