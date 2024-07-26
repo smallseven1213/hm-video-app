@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:game/enums/game_app_routes.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
-import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
@@ -15,7 +12,6 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 
 import '../../../localization/i18n.dart';
 import '../../../utils/show_confirm_dialog.dart';
-import '../../../widgets/wave_loading.dart';
 
 enum ChargeType {
   none,
@@ -126,7 +122,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                   ],
                 )
               : VideoPlayerConsumer(
-                  tag: widget.videoUrl,
+                  tag: widget.tag,
                   child: (VideoPlayerInfo videoPlayerInfo) {
                     return Stack(
                       alignment: Alignment.center,

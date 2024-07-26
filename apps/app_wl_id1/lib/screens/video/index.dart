@@ -82,7 +82,7 @@ class VideoScreenState extends State<VideoScreen> {
               return Column(
                 children: [
                   VideoPlayerProvider(
-                    tag: videoUrl,
+                    tag: controllerTag,
                     autoPlay: canWatch,
                     video: videoDetail!,
                     videoUrl: videoUrl,
@@ -113,6 +113,7 @@ class VideoScreenState extends State<VideoScreen> {
                     ),
                   Expanded(
                     child: NestedTabBarView(
+                      tag: controllerTag,
                       videoUrl: videoUrl,
                       videoDetail: videoDetail,
                     ),

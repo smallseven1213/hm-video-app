@@ -21,10 +21,12 @@ final logger = Logger();
 class NestedTabBarView extends StatefulWidget {
   final Vod videoDetail;
   final String videoUrl;
+  final String tag;
   const NestedTabBarView({
     Key? key,
     required this.videoDetail,
     required this.videoUrl,
+    required this.tag,
   }) : super(key: key);
 
   @override
@@ -53,7 +55,7 @@ class NestedTabBarViewState extends State<NestedTabBarView>
   @override
   Widget build(BuildContext context) {
     final obsVideoPlayerController =
-        Get.find<ObservableVideoPlayerController>(tag: widget.videoUrl);
+        Get.find<ObservableVideoPlayerController>(tag: widget.tag);
 
     final List<String> tabs = widget.videoDetail.actors!.isEmpty
         ? [I18n.sameType, I18n.sameTag]

@@ -110,7 +110,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
       width: MediaQuery.of(context).size.width,
       height: playerHeight,
       child: VideoPlayerConsumer(
-        tag: widget.videoUrl,
+        tag: widget.tag,
         child: (videoPlayerInfo) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
           var aspectRatio = videoSize.width == 0 || videoSize.height == 0
@@ -142,7 +142,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
               videoId: widget.video.id,
               videoPlayerInfo: videoPlayerInfo,
               title: widget.video.title,
-              tag: widget.tag,
+              tag: widget.tag ,
               vipPartBuilder: (timeLength) => VipPart(timeLength: timeLength),
               coinPartBuilder: ({
                 required String buyPoints,
@@ -171,6 +171,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                   child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
                 ),
                 ControlsOverlay(
+                  tag: widget.tag,
                   videoUrl: widget.videoUrl,
                   name: widget.video.title,
                   isFullscreen: isFullscreen,
