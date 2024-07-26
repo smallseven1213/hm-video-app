@@ -45,15 +45,15 @@ class _GameListItemState extends State<GameListItem> {
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
+            color: gameItemBgColor3.withOpacity(0.2),
             spreadRadius: 0,
-            blurRadius: 4,
-            offset: const Offset(0, 4),
+            blurRadius: 6,
+            offset: const Offset(0, 3),
           ),
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: gameItemBgColor3.withOpacity(0.1),
             spreadRadius: -2,
-            blurRadius: 3,
+            blurRadius: 5,
             offset: const Offset(0, 2),
           ),
         ],
