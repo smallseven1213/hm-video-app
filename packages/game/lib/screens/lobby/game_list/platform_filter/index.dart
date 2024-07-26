@@ -97,7 +97,7 @@ class _PlatformFilterState extends State<PlatformFilter> {
           });
         },
         avatar: Image.asset(
-            'packages/game/assets/images/game_lobby/menu-new@3x.webp'),
+            'packages/game/assets/images/game_lobby/menu-story@3x.webp'),
       ),
     ];
 

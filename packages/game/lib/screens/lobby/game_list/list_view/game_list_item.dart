@@ -34,19 +34,26 @@ class _GameListItemState extends State<GameListItem> {
 
     return Container(
       decoration: BoxDecoration(
-        color: gameLobbyUserInfoColor2,
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            gameItemBgColor1, // 起始顏色
+            gameItemBgColor2, // 結束顏色
+          ],
+        ),
         borderRadius: BorderRadius.circular(8.0),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.2),
             spreadRadius: 0,
-            blurRadius: 3,
+            blurRadius: 4,
             offset: const Offset(0, 4),
           ),
           BoxShadow(
             color: Colors.black.withOpacity(0.1),
             spreadRadius: -2,
-            blurRadius: 2,
+            blurRadius: 3,
             offset: const Offset(0, 2),
           ),
         ],
