@@ -27,13 +27,13 @@ class Post {
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      json['id'],
-      json['title'],
+      json['id'] ?? 0,
+      json['title'] ?? '',
       json['supplier'] != null ? Supplier.fromJson(json['supplier']) : null,
-      json['chargeType'],
-      json['isUnlock'],
-      json['previewMediaCount'],
-      json['totalMediaCount'],
+      json['chargeType'] ?? 0,
+      json['isUnlock'] ?? false,
+      json['previewMediaCount'] ?? 0,
+      json['totalMediaCount'] ?? 0,
       json['files'] != null
           ? List<Files>.from(
               (json['files'] as List<dynamic>).map((e) => Files.fromJson(e)))
@@ -44,7 +44,6 @@ class Post {
           : [],
     );
   }
-
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
@@ -65,20 +64,26 @@ class Post {
 
 class Files {
   final String? path; // 文件路徑
-  final int? type; // 文件類型：1=圖片, 2=視頻
+  final String? cover; // 文件封面
+  final int type; // 文件類型：1=圖片, 2=視頻
 
-  Files(this.path, this.type);
-
+  Files(
+    this.path,
+    this.type,
+    this.cover,
+  );
   factory Files.fromJson(Map<String, dynamic> json) {
     return Files(
-      json['path'],
-      json['type'],
+      json['path'] ?? '',
+      json['type'] ?? 0,
+      json['cover'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'path': path,
+      'cover': cover,
       'type': type,
     };
   }

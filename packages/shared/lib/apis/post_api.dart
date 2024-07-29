@@ -33,13 +33,13 @@ class PostApi {
         return InfinityPosts([], 0, false);
       }
       var data = res.data['data'];
-      List<Post> games = List.from(
+      List<Post> posts = List.from(
           (data['items'] as List<dynamic>).map((e) => Post.fromJson(e)));
 
       int total = data['meta']['total'];
       int retrievedLimit = data['meta']['per_page'];
       bool hasMoreData = total > retrievedLimit * page;
-      return InfinityPosts(games, total, hasMoreData);
+      return InfinityPosts(posts, total, hasMoreData);
     } catch (e) {
       return InfinityPosts([], 0, false);
     }

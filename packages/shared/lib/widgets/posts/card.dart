@@ -34,8 +34,6 @@ class PostCard extends StatelessWidget {
     final bool darkMode = isDarkMode ?? true;
 
     // 根據 darkMode 設置顏色
-    final backgroundColor =
-        darkMode ? AppColors.darkBackground : AppColors.lightBackground;
     final textColor = darkMode ? AppColors.darkText : AppColors.lightText;
     final buttonColor = darkMode ? AppColors.darkButton : AppColors.lightButton;
     return InkWell(
@@ -48,7 +46,6 @@ class PostCard extends StatelessWidget {
         );
       },
       child: Container(
-        color: backgroundColor,
         margin: const EdgeInsets.all(8),
         child: Padding(
           padding: const EdgeInsets.all(12),
@@ -102,15 +99,34 @@ class PostCard extends StatelessWidget {
                             : 6), (index) {
                   if (index < detail.previewMediaCount) {
                     return detail.files.length > index
-                        ? SidImage(sid: detail.files[index].path ?? '')
+                        ? ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Stack(
+                              children: [
+                                SidImage(sid: detail.files[index].cover ?? ''),
+                                if (detail.files[index].type == 2)
+                                  Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.7),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Icon(
+                                          Icons.play_arrow_rounded,
+                                          color: Colors.white),
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          )
                         : Container(
                             decoration: BoxDecoration(
                               color: Colors.grey.withOpacity(0.4), // 設置空圖片的背景色
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Icon(
+                            child: const Icon(
                               Icons.image, // 使用一個圖片icon表示空圖片
-                              color: Colors.grey[400],
+                              color: Colors.white,
                             ),
                           );
                   } else {
@@ -118,9 +134,9 @@ class PostCard extends StatelessWidget {
                     return Container(
                       decoration: BoxDecoration(
                         color: Colors.grey.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Icon(Icons.lock, color: Colors.grey[600]),
+                      child: const Icon(Icons.lock, color: Colors.white),
                     );
                   }
                 }),
