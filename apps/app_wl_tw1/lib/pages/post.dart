@@ -4,7 +4,6 @@ import 'package:shared/modules/post/post_provider.dart';
 import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 
-
 // 定義顏色配置
 class AppColors {
   static const lightBackground = Colors.white;
@@ -27,38 +26,38 @@ class PostPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return PostProvider(
-      postId: id,
-      widget: PostConsumer(
-        child: (post) => Scaffold(
+    return PostConsumer(
+      id: id,
+      child: (postDetail) {
+        print('post: $postDetail');
+        return Scaffold(
           appBar: CustomAppBar(
-            title: post['supplier'].name,
+            title: postDetail!.post.supplier!.name,
             actions: [
-              FollowButton(supplier: post['supplier']),
+              FollowButton(supplier: postDetail.post.supplier!),
             ],
           ),
           body: Padding(
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                Text(post['article']['title'],
+                Text(postDetail.post.title,
                     style: TextStyle(
                       fontSize: 13,
                       color: AppColors.darkText,
                     )),
                 SizedBox(height: 8),
-                Text(post['article']['content'],
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: AppColors.darkText,
-                      fontWeight: FontWeight.w300,
-                    )),
+                // Text(postDetail.post.content ?? '',
+                //     style: TextStyle(
+                //       fontSize: 13,
+                //       color: AppColors.darkText,
+                //       fontWeight: FontWeight.w300,
+                //     )),
               ],
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

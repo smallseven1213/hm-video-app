@@ -2,48 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/banner_controller.dart';
+import '../../controllers/post_controller.dart';
 import '../../models/banner_photo.dart';
+import '../../models/post_detail.dart';
 import '../../models/supplier.dart';
 
-final Map<String, dynamic> post = {
-  "id": 3,
-  "avatarSid": "avatar32",
-  "supplier": Supplier(
-    id: 6,
-    aliasName: "\u912d\u8208A",
-    name: "\u912d\u8208A",
-    photoSid: "ebce8cec-765a-4536-afc8-f1e10ec18854",
-    coverVertical: null,
-    collectTotal: null,
-    followTotal: null,
-  ),
-  "upName": "Creator C",
-  "postContent": "Here's a third post, but this time from Creator B.",
-  "article": {
-    "title": 'Article Title',
-    "content": 'Article Content',
-    "photos": [
-      BannerPhoto(
-        id: 1,
-        url: 'https://picsum.photos/250?image=9',
-      ),
-      BannerPhoto(
-        id: 2,
-        url: 'https://picsum.photos/250?image=10',
-      ),
-      BannerPhoto(
-        id: 3,
-        url: 'https://picsum.photos/250?image=11',
-      ),
-    ],
-  }
-};
-
 class PostConsumer extends StatefulWidget {
-  final Widget Function(Map) child;
+  final Widget Function(PostDetail?) child;
+  final int id;
   const PostConsumer({
     Key? key,
     required this.child,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -51,25 +21,23 @@ class PostConsumer extends StatefulWidget {
 }
 
 class PostConsumerState extends State<PostConsumer> {
-  final BannerController bannerController = Get.find<BannerController>();
+  late PostController postController;
 
   @override
   void initState() {
     super.initState();
-    // bannerController.fetchBanner(widget.position);
+    postController =
+        Get.put(PostController(postId: widget.id), tag: 'postId-${widget.id}');
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.child(post);
+    // return widget.child(post);
 
-    // return Obx(() {
-    //   var banners = bannerController.banners[widget.position];
-    //   if (banners == null || banners.isEmpty) {
-    //     return const SizedBox.shrink();
-    //   }
+    return Obx(() {
+      PostDetail? post = postController.postDetail;
 
-    //   return widget.child(post);
-    // });
+      return widget.child(post);
+    });
   }
 }

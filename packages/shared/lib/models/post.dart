@@ -11,6 +11,7 @@ class Post {
   final int totalMediaCount; // 總附件數量
   final List<Files> files; // 附件陣列
   final List<Tag> tags; // 附件陣列
+  // final String? content; // 貼文內容
 
   Post(
     this.id,
@@ -20,6 +21,7 @@ class Post {
     this.isUnlock,
     this.previewMediaCount,
     this.totalMediaCount,
+    // this.content,
     List<Files>? files,
     List<Tag>? tags,
   )   : files = files ?? [],
@@ -34,6 +36,7 @@ class Post {
       json['isUnlock'] ?? false,
       json['previewMediaCount'] ?? 0,
       json['totalMediaCount'] ?? 0,
+      // json['content'] ?? '',
       json['files'] != null
           ? List<Files>.from(
               (json['files'] as List<dynamic>).map((e) => Files.fromJson(e)))
@@ -55,6 +58,7 @@ class Post {
     data['isUnlock'] = isUnlock;
     data['previewMediaCount'] = previewMediaCount;
     data['totalMediaCount'] = totalMediaCount;
+    // data['content'] = content;
     data['files'] =
         files.isNotEmpty ? files.map((e) => e.toJson()).toList() : [];
     data['tags'] = tags.isNotEmpty ? tags.map((e) => e.toJson()).toList() : [];
