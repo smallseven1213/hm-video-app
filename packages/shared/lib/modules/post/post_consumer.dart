@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/banner_controller.dart';
 import '../../controllers/post_controller.dart';
-import '../../models/banner_photo.dart';
 import '../../models/post_detail.dart';
-import '../../models/supplier.dart';
 
 class PostConsumer extends StatefulWidget {
   final Widget Function(PostDetail?) child;
@@ -32,11 +29,11 @@ class PostConsumerState extends State<PostConsumer> {
 
   @override
   Widget build(BuildContext context) {
-    // return widget.child(post);
-
     return Obx(() {
-      PostDetail? post = postController.postDetail;
-
+      PostDetail? post = postController.postDetail.value;
+      if (postController.isLoading.value) {
+        return const SizedBox.shrink();
+      }
       return widget.child(post);
     });
   }

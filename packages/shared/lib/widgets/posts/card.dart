@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
+import 'package:shared/widgets/posts/tags.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../models/post.dart';
@@ -48,32 +49,33 @@ class PostCard extends StatelessWidget {
       child: Container(
         margin: const EdgeInsets.all(8),
         child: Padding(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  AvatarWidget(
-                      photoSid: detail.supplier!.photoSid,
-                      backgroundColor: Colors.white),
-                  const SizedBox(width: 8),
-                  Text(
-                    detail.supplier!.aliasName ?? '',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: textColor,
+              if (detail.supplier != null)
+                Row(
+                  children: [
+                    AvatarWidget(
+                        photoSid: detail.supplier!.photoSid,
+                        backgroundColor: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(
+                      detail.supplier!.aliasName ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  FollowButton(
-                    supplier: detail.supplier ?? Supplier(),
-                    isDarkMode: darkMode,
-                    backgroundColor: buttonColor,
-                    textColor: textColor,
-                  ),
-                ],
-              ),
+                    const Spacer(),
+                    FollowButton(
+                      supplier: detail.supplier ?? Supplier(),
+                      isDarkMode: darkMode,
+                      backgroundColor: buttonColor,
+                      textColor: textColor,
+                    ),
+                  ],
+                ),
               const SizedBox(height: 8),
               Text(
                 detail.title,
@@ -103,7 +105,7 @@ class PostCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(8),
                             child: Stack(
                               children: [
-                                SidImage(sid: detail.files[index].cover ?? ''),
+                                SidImage(sid: detail.files[index].cover),
                                 if (detail.files[index].type == 2)
                                   Center(
                                     child: Container(
@@ -141,6 +143,10 @@ class PostCard extends StatelessWidget {
                   }
                 }),
               ),
+              // create tag list
+              TagsWidget(tags: detail.tags),
+              const SizedBox(height: 16),
+              const Divider(height: 1, color: Colors.grey),
             ],
           ),
         ),
