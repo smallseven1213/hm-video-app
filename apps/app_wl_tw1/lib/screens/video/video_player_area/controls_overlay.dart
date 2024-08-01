@@ -190,9 +190,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 ),
               if (videoPlayerInfo.inBuffering && !videoPlayerInfo.isScrolling)
                 const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
+                  child: CircularProgressIndicator(color: Colors.white),
                 ),
               if (videoPlayerInfo.isScrolling)
                 Center(

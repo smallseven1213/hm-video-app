@@ -245,8 +245,7 @@ class _SplashState extends State<Splash> {
             final String code = res.code ?? '';
             final String data = res.data.toString();
             final String response = 'code: $code, data: $data';
-            message = localizations.translate('account_creation_failed') +
-                '.$response';
+            message = '${localizations.translate('account_creation_failed')}.$response';
             await Clipboard.setData(ClipboardData(text: response));
           }
           if (mounted) {
