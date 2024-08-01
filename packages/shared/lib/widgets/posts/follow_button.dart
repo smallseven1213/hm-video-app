@@ -12,8 +12,8 @@ class FollowButton extends StatelessWidget {
     Key? key,
     required this.supplier,
     this.isDarkMode = true,
-    this.backgroundColor = const Color(0xfffe2c55),
-    this.textColor = const Color(0xff161823),
+    this.backgroundColor = const Color(0xff6874b6),
+    this.textColor = Colors.white,
   }) : super(key: key);
 
   @override

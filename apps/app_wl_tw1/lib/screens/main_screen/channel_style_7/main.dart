@@ -23,7 +23,7 @@ class ChannelStyle7Main extends StatefulWidget {
 
 class ChannelStyle7MainState extends State<ChannelStyle7Main> {
   ScrollController? _scrollController;
-  PostController? postController;
+  ChannelPostController? postController;
   Timer? _debounceTimer;
   bool isRefreshing = false;
 
@@ -42,7 +42,7 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
     super.didChangeDependencies();
     _scrollController = PrimaryScrollController.of(context);
     _scrollController!.addListener(_scrollListener);
-    postController ??= PostController(
+    postController ??= ChannelPostController(
       postId: widget.postId,
       scrollController: _scrollController!,
       autoDisposeScrollController: false,
@@ -76,8 +76,6 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
     return RefreshList(
       onRefresh: _onRefresh,
       child: Obx(() {
-        print(
-            '@@@ ### postController!.postList.length: ${postController!.postList.length}');
         if (postController == null) {
           return const SizedBox();
         }

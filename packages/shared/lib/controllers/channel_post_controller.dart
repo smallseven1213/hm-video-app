@@ -9,12 +9,12 @@ final postApi = PostApi();
 const limit = 5;
 final logger = Logger();
 
-class PostController extends BasePostInfinityScrollController {
+class ChannelPostController extends BasePostInfinityScrollController {
   final int postId;
   RxInt postCount = 0.obs;
   var isError = false.obs;
 
-  PostController({
+  ChannelPostController({
     required this.postId,
     required ScrollController scrollController,
     required bool autoDisposeScrollController,
