@@ -26,6 +26,7 @@ class DraggableFloatingActionButtonState
   double _deviceWidth = 0.0;
   double _deviceHeight = 0.0;
   final double _buttonSize = 70.0;
+  bool _isFirstLoad = true;
 
   @override
   void initState() {
@@ -33,25 +34,21 @@ class DraggableFloatingActionButtonState
     WidgetsBinding.instance.addPostFrameCallback((_) {
       didChangeDependencies();
     });
-    _offset = widget.initialOffset;
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    setState(() {
-      _deviceWidth = MediaQuery.of(context).size.width;
-      _deviceHeight = MediaQuery.of(context).size.height;
-      _offset = Offset(_deviceWidth - _buttonSize, _deviceHeight - _buttonSize);
-
-      _updatePosition(
-        DragUpdateDetails(
-          globalPosition: _offset,
-          localPosition: _offset,
-          delta: _offset,
-        ),
-      );
-    });
+    if (_isFirstLoad) {
+      setState(() {
+        _deviceWidth = MediaQuery.of(context).size.width;
+        _deviceHeight = MediaQuery.of(context).size.height;
+        _offset = widget.initialOffset.dx == 0 && widget.initialOffset.dy == 0
+            ? Offset(_deviceWidth - _buttonSize, _deviceHeight - _buttonSize)
+            : widget.initialOffset;
+        _isFirstLoad = false;
+      });
+    }
   }
 
   void _startDragging(DragStartDetails details) {
