@@ -1,9 +1,14 @@
+import 'package:app_wl_tw1/utils/purchase.dart';
 import 'package:app_wl_tw1/widgets/button.dart';
 import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/post_controller.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/charge_type.dart';
+import 'package:shared/enums/purchase_type.dart';
+import 'package:shared/enums/file_type.dart';
 import 'package:shared/models/post.dart';
 import 'package:shared/models/post_detail.dart';
 import 'package:shared/models/vod.dart';
@@ -19,7 +24,6 @@ import 'package:shared/widgets/posts/recommend_list.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:shared/widgets/sid_image.dart';
-import 'package:shared/widgets/video/purchase_promotion.dart';
 
 import '../screens/nodata/index.dart';
 import '../screens/video/video_player_area/index.dart';
@@ -127,7 +131,7 @@ class FileListWidget extends StatelessWidget {
 
   const FileListWidget({Key? key, required this.postDetail}) : super(key: key);
 
-  String? getVideoUrl(String videoUrl) {
+  String? _getVideoUrl(String videoUrl) {
     final systemConfigController = Get.find<SystemConfigController>();
     if (videoUrl.isNotEmpty) {
       String uri = videoUrl.replaceAll('\\', '/').replaceAll('//', '/');
@@ -140,64 +144,86 @@ class FileListWidget extends StatelessWidget {
     return null;
   }
 
+  Widget _buildImageWidget(Files file) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: SidImage(
+        sid: file.cover,
+        width: double.infinity,
+      ),
+    );
+  }
+
+  Widget _buildVideoWidget(Files file) {
+    final videoUrl = _getVideoUrl(file.video);
+    if (videoUrl == null) {
+      return SizedBox.shrink();
+    }
+
+    return VideoPlayerProvider(
+      key: Key(videoUrl),
+      tag: videoUrl,
+      autoPlay: false,
+      videoUrl: videoUrl,
+      videoDetail: Vod(0, ''),
+      loadingWidget: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: VideoLoading(coverHorizontal: file.cover),
+      ),
+      child: (isReady, controller) {
+        return VideoPlayerArea(
+          name: '',
+          videoUrl: videoUrl,
+          video: Vod(0, ''),
+          tag: videoUrl,
+        );
+      },
+    );
+  }
+
+  Widget _buildUnlockButton(
+      BuildContext context, PostController postController) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Button(
+        text: '解鎖更多內容',
+        onPressed: () {
+          if (postDetail.chargeType == ChargeType.vip.index) {
+            MyRouteDelegate.of(context).push(AppRoutes.vip);
+          } else {
+            postController.getPostDetail(postDetail.id);
+            purchase(
+              context,
+              type: PurchaseType.post,
+              id: postDetail.id,
+              onSuccess: () => postController.getPostDetail(postDetail.id),
+            );
+          }
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Widget> fileWidgets = [];
     final int maxPreviewMediaCount = postDetail.previewMediaCount;
+    final postController =
+        Get.find<PostController>(tag: 'postId-${postDetail.id}');
 
     for (int i = 0; i < postDetail.files.length; i++) {
-      if (i < maxPreviewMediaCount) {
-        final file = postDetail.files[i];
-        final videoUrl = getVideoUrl(file.video);
+      final file = postDetail.files[i];
 
-        if (file.type == 1) {
-          fileWidgets.add(Container(
-            margin: const EdgeInsets.symmetric(vertical: 8),
-            child: SidImage(sid: file.cover),
-          ));
-        } else if (file.type == 2) {
-          if (videoUrl == null) {
-            continue;
-          }
-          fileWidgets.add(VideoPlayerProvider(
-            key: Key(videoUrl),
-            tag: videoUrl,
-            autoPlay: false,
-            videoUrl: videoUrl,
-            videoDetail: Vod(0, ''),
-            loadingWidget: AspectRatio(
-              aspectRatio: 16 / 9,
-              child: VideoLoading(coverHorizontal: file.cover),
-            ),
-            child: (isReady, controller) {
-              return VideoPlayerArea(
-                name: '',
-                videoUrl: videoUrl,
-                video: Vod(0, ''),
-                tag: videoUrl,
-              );
-            },
-          ));
+      if (i < maxPreviewMediaCount) {
+        if (file.type == FileType.image.index) {
+          fileWidgets.add(_buildImageWidget(file));
+        } else if (file.type == FileType.video.index) {
+          fileWidgets.add(_buildVideoWidget(file));
         }
-      } else if (i == maxPreviewMediaCount) {
-        fileWidgets.add(
-          Padding(
-            padding: const EdgeInsets.only(top: 8),
-            child: Button(
-              text: '解鎖更多內容',
-              onPressed: () {
-                if (postDetail.chargeType == ChargeType.vip.index) {
-                  // VIP
-                  MyRouteDelegate.of(context).push(AppRoutes.vip);
-                } else {
-                  // 金幣
-                  print('金幣付費解鎖');
-                }
-              },
-            ),
-          ),
-        );
       }
+    }
+    if (postDetail.isUnlock == false) {
+      fileWidgets.add(_buildUnlockButton(context, postController));
     }
 
     return Column(

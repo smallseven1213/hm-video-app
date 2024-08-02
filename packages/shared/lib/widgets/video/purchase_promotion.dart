@@ -8,14 +8,9 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/sid_image.dart';
 
-final logger = Logger();
+import '../../enums/charge_type.dart';
 
-enum ChargeType {
-  none,
-  free, // 1: 免費
-  coin, // 2: 金幣
-  vip, // 3: VIP
-}
+final logger = Logger();
 
 class PurchasePromotion extends StatelessWidget {
   final String coverHorizontal;

@@ -523,4 +523,20 @@ class UserApi {
     //   throw Exception('Failed to upload avatar: ${response.reasonPhrase}');
     // }
   }
+
+  // user/purchase
+  // id: 1 = 長視頻, 2 = 短視頻, 3 = 貼文, 4 = 漫畫
+  Future<HMApiResponse> purchase(int type, int id) async {
+    var value = await fetcher(
+      url: '$apiHost/api/v1/user/purchase',
+      method: 'POST',
+      body: {
+        'type': type,
+        'id': id,
+      },
+    );
+    var res = (value.data as Map<String, dynamic>);
+
+    return HMApiResponse.fromJson(res);
+  }
 }

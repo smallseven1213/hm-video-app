@@ -7,25 +7,27 @@ const int limit = 5;
 final PostApi postApi = PostApi();
 
 class PostController extends GetxController {
-  final int? postId;
+  final int postId;
+
   RxBool isLoading = false.obs;
   var postDetail = Rx<PostDetail?>(null);
 
   PostController({required this.postId}) {
-    getPostDetail();
+    getPostDetail(postId);
     Get.find<AuthController>().token.listen((event) {
-      getPostDetail();
+      getPostDetail(postId);
     });
   }
 
   // get post detail
-  Future<void> getPostDetail() async {
+  Future<void> getPostDetail(int postId) async {
     isLoading.value = true;
-    var post = await postApi.getPostDetail(postId!);
+    var post = await postApi.getPostDetail(postId);
     if (post != null) {
       postDetail.value = post;
       update();
       isLoading.value = false;
     }
   }
+
 }
