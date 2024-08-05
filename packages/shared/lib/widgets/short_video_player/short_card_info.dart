@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
+import 'package:shared/enums/charge_type.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';

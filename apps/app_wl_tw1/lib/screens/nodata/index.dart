@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../localization/i18n.dart';
 import '../../widgets/button.dart';
 import '../../widgets/custom_app_bar.dart';
 import '../../widgets/no_data.dart';

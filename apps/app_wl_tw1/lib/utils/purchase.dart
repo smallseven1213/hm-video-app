@@ -1,19 +1,23 @@
 import 'package:app_wl_tw1/utils/show_confirm_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/apis/user_api.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/hm_api_response.dart';
 import 'package:shared/navigator/delegate.dart';
 
 final vodApi = VodApi();
+final userApi = UserApi();
 
 void purchase(
   BuildContext context, {
+  PurchaseType type = PurchaseType.video,
   required int id,
   required Function onSuccess,
 }) async {
   try {
-    HMApiResponse results = await vodApi.purchase(id);
+    HMApiResponse results = await userApi.purchase(type.index, id);
     bool coinNotEnough = results.code == '50508';
     if (results.code == '00') {
       onSuccess();

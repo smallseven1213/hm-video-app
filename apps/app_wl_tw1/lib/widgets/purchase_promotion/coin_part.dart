@@ -1,5 +1,6 @@
 import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/user.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';

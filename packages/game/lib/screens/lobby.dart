@@ -14,6 +14,7 @@ import 'package:game/screens/user_info/game_user_info_service.dart';
 import 'package:game/screens/user_info/game_user_info_withdraw.dart';
 import 'package:game/utils/loading.dart';
 import 'package:game/utils/show_model.dart';
+import 'package:game/widgets/draggable_button.dart';
 import 'package:game/widgets/maintenance.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -214,19 +215,6 @@ class _GameLobbyState extends State<GameLobby>
                           right: 15,
                           child: Column(
                             children: [
-                              // 熱門活動icon
-                              if (gameParamConfigController
-                                      .activityEntrance.value ==
-                                  'true')
-                                InkWell(
-                                  onTap: () => MyRouteDelegate.of(context)
-                                      .push(GameAppRoutes.activity),
-                                  child: Image.asset(
-                                    'packages/game/assets/images/game_lobby/gift.webp',
-                                    width: 64,
-                                    height: 64,
-                                  ),
-                                ),
                               // 紅包icon
                               if (gameConfigController.isShowEnvelope.value ==
                                       true &&
@@ -255,6 +243,28 @@ class _GameLobbyState extends State<GameLobby>
                             ],
                           ),
                         ),
+                      ),
+                      // 熱門活動icon
+                      Obx(
+                        () =>
+                            gameParamConfigController.activityEntrance.value ==
+                                    'true'
+                                ? DraggableFloatingActionButton(
+                                    initialOffset: Offset(
+                                      MediaQuery.of(context).size.width - 70,
+                                      MediaQuery.of(context).size.height - 290,
+                                    ),
+                                    child: InkWell(
+                                      onTap: () => MyRouteDelegate.of(context)
+                                          .push(GameAppRoutes.activity),
+                                      child: Image.asset(
+                                        'packages/game/assets/images/game_lobby/gift.webp',
+                                        width: 64,
+                                        height: 64,
+                                      ),
+                                    ),
+                                  )
+                                : const SizedBox.shrink(),
                       ),
                     ],
                   ),

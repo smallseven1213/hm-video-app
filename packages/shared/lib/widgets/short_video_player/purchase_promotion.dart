@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
+import 'package:shared/enums/charge_type.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 
-enum ChargeType {
-  none,
-  free, // 1: 免費
-  coin, // 2: 金幣
-  vip, // 3: VIP
-}
 
 class PurchasePromotion extends StatelessWidget {
   final String buyPoints;

@@ -49,13 +49,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             )
           : Container(),
       backgroundColor: backgroundColor ?? AppColors.colors[ColorKeys.primary],
-      title: titleWidget ??
-          Text(
-            title!,
-            style: const TextStyle(
-              fontSize: 15,
-            ),
-          ),
+      title: titleWidget ?? Text(title!, style: const TextStyle(fontSize: 15)),
       bottom: bottom,
       actions: actions, // 將actions添加到AppBar
     );

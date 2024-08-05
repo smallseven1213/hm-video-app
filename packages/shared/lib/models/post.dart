@@ -10,7 +10,14 @@ class Post {
   final int previewMediaCount; // 可預覽附件數量
   final int totalMediaCount; // 總附件數量
   final List<Files> files; // 附件陣列
-  final List<Tag> tags; // 附件陣列
+  final List<Tag> tags; // 標籤陣列
+  final String? content; // 貼文內容
+  final int? viewCount; // 貼文觀看數
+  final int? likeCount; // 貼文點讚數
+  final String? cover; // 封面
+  final int? replyCount; // 回覆數
+  final int? linkType; // 連結類型
+  final String? link; // 連結
 
   Post(
     this.id,
@@ -20,28 +27,40 @@ class Post {
     this.isUnlock,
     this.previewMediaCount,
     this.totalMediaCount,
+    this.content,
     List<Files>? files,
     List<Tag>? tags,
+    this.cover,
+    this.replyCount,
+    this.linkType,
+    this.link,
+    this.viewCount,
+    this.likeCount,
   )   : files = files ?? [],
         tags = tags ?? [];
 
   factory Post.fromJson(Map<String, dynamic> json) {
     return Post(
-      json['id'],
-      json['title'],
+      json['id'] ?? 0,
+      json['title'] ?? '',
       json['supplier'] != null ? Supplier.fromJson(json['supplier']) : null,
-      json['chargeType'],
-      json['isUnlock'],
-      json['previewMediaCount'],
-      json['totalMediaCount'],
-      json['files'] != null
-          ? List<Files>.from(
-              (json['files'] as List<dynamic>).map((e) => Files.fromJson(e)))
-          : [],
-      json['tags'] != null
-          ? List<Tag>.from(
-              (json['tags'] as List<dynamic>).map((e) => Tag.fromJson(e)))
-          : [],
+      json['chargeType'] ?? 0,
+      json['isUnlock'] ?? false,
+      json['previewMediaCount'] ?? 0,
+      json['totalMediaCount'] ?? 0,
+      json['content'],
+      (json['files'] as List<dynamic>?)
+          ?.map((file) => Files.fromJson(file))
+          .toList(),
+      (json['tags'] as List<dynamic>?)
+          ?.map((tag) => Tag.fromJson(tag))
+          .toList(),
+      json['cover'],
+      json['replyCount'],
+      json['linkType'],
+      json['link'],
+      json['viewCount'],
+      json['likeCount'],
     );
   }
 
@@ -56,6 +75,13 @@ class Post {
     data['isUnlock'] = isUnlock;
     data['previewMediaCount'] = previewMediaCount;
     data['totalMediaCount'] = totalMediaCount;
+    data['content'] = content;
+    data['viewCount'] = viewCount;
+    data['likeCount'] = likeCount;
+    data['cover'] = cover;
+    data['replyCount'] = replyCount;
+    data['linkType'] = linkType;
+    data['link'] = link;
     data['files'] =
         files.isNotEmpty ? files.map((e) => e.toJson()).toList() : [];
     data['tags'] = tags.isNotEmpty ? tags.map((e) => e.toJson()).toList() : [];
@@ -64,21 +90,27 @@ class Post {
 }
 
 class Files {
-  final String? path; // 文件路徑
-  final int? type; // 文件類型：1=圖片, 2=視頻
+  final String video; // 文件路徑
+  final String cover; // 文件封面
+  final int type; // 文件類型：1=圖片, 2=視頻
 
-  Files(this.path, this.type);
-
+  Files(
+    this.video,
+    this.type,
+    this.cover,
+  );
   factory Files.fromJson(Map<String, dynamic> json) {
     return Files(
-      json['path'],
-      json['type'],
+      json['video'] ?? '',
+      json['type'] ?? 0,
+      json['cover'] ?? '',
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'path': path,
+      'video': video,
+      'cover': cover,
       'type': type,
     };
   }

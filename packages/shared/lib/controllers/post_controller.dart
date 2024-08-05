@@ -1,28 +1,33 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/auth_controller.dart';
 import '../apis/post_api.dart';
-import '../models/infinity_posts.dart';
-import 'base_post_infinity_scroll_controller.dart';
+import '../models/post_detail.dart';
 
 const int limit = 5;
 final PostApi postApi = PostApi();
 
-class PostController extends BasePostInfinityScrollController {
-  final int? postId;
+class PostController extends GetxController {
+  final int postId;
 
-  PostController({
-    this.postId,
-    required ScrollController scrollController,
-    bool loadDataOnInit = true,
-  }) : super(
-            loadDataOnInit: loadDataOnInit,
-            customScrollController: scrollController);
+  RxBool isLoading = false.obs;
+  var postDetail = Rx<PostDetail?>(null);
 
-  @override
-  Future<InfinityPosts> fetchData(int page) async {
-    InfinityPosts res = await postApi.getPostList(page: page, limit: limit);
-
-    bool hasMoreData = res.totalCount > limit * page;
-
-    return InfinityPosts(res.posts, res.totalCount, hasMoreData);
+  PostController({required this.postId}) {
+    getPostDetail(postId);
+    Get.find<AuthController>().token.listen((event) {
+      getPostDetail(postId);
+    });
   }
+
+  // get post detail
+  Future<void> getPostDetail(int postId) async {
+    isLoading.value = true;
+    var post = await postApi.getPostDetail(postId);
+    if (post != null) {
+      postDetail.value = post;
+      update();
+      isLoading.value = false;
+    }
+  }
+
 }
