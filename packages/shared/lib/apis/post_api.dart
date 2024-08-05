@@ -28,8 +28,8 @@ class PostApi {
     limit = 5,
   }) async {
     try {
-      var res = await fetcher(
-          url: '$apiPrefix/list?per_page=$limit&current_page=$page');
+      var res =
+          await fetcher(url: '$apiPrefix/list?per_page=$limit&page=$page');
       if (res.data['code'] != '00') {
         return InfinityPosts([], 0, false);
       }

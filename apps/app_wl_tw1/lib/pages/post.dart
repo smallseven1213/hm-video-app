@@ -54,6 +54,8 @@ class PostPage extends StatelessWidget {
           return const NoDataScreen();
         }
         return Scaffold(
+          key: Key(
+              'postDetail-${postDetail.post.id}-${postDetail.post.isUnlock}'),
           appBar: CustomAppBar(
             titleWidget: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -184,7 +186,7 @@ class FileListWidget extends StatelessWidget {
   Widget _buildUnlockButton(
       BuildContext context, PostController postController) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8),
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Button(
         text: '解鎖更多內容',
         onPressed: () {
@@ -207,19 +209,15 @@ class FileListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> fileWidgets = [];
-    final int maxPreviewMediaCount = postDetail.previewMediaCount;
     final postController =
         Get.find<PostController>(tag: 'postId-${postDetail.id}');
 
     for (int i = 0; i < postDetail.files.length; i++) {
       final file = postDetail.files[i];
-
-      if (i < maxPreviewMediaCount) {
-        if (file.type == FileType.image.index) {
-          fileWidgets.add(_buildImageWidget(file));
-        } else if (file.type == FileType.video.index) {
-          fileWidgets.add(_buildVideoWidget(file));
-        }
+      if (file.type == FileType.image.index) {
+        fileWidgets.add(_buildImageWidget(file));
+      } else if (file.type == FileType.video.index) {
+        fileWidgets.add(_buildVideoWidget(file));
       }
     }
     if (postDetail.isUnlock == false) {
