@@ -127,6 +127,7 @@ class _DepositPaymentTypeListWidgetState
                               color: gameLobbyPrimaryTextColor,
                               fontSize: 12,
                             ),
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
