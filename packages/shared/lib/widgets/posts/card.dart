@@ -3,6 +3,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/file_type.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
+import 'package:shared/widgets/posts/post_stats.dart';
 import 'package:shared/widgets/posts/tags.dart';
 import 'package:shared/widgets/sid_image.dart';
 
@@ -86,7 +87,10 @@ class PostCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: textColor),
               ),
-              const SizedBox(height: 8),
+              PostStatsWidget(
+                viewCount: detail.viewCount ?? 0,
+                likeCount: detail.likeCount ?? 0,
+              ),
               GridView.count(
                 shrinkWrap: true, // 使 GridView 自適應高度
                 physics: const NeverScrollableScrollPhysics(), // 禁止滾動
