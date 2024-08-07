@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/enums/app_routes.dart';
 
 import '../../models/tag.dart';
+import '../../navigator/delegate.dart';
 
 class TagItem extends StatelessWidget {
   final Color backgroundColor;
@@ -64,6 +66,11 @@ class TagsWidget extends StatelessWidget {
                   tag: tag.name,
                   onTap: () {
                     // Handle tag tap
+                    MyRouteDelegate.of(context).push(
+                      AppRoutes.tag,
+                      args: {'id': tag.id, 'title': tag.name, 'film': 3},
+                      removeSamePath: true,
+                    );
                   },
                 ))
             .toList(),

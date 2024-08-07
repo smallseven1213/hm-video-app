@@ -1,27 +1,35 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/widgets/posts/card.dart';
 import 'package:shared/controllers/channel_post_controller.dart';
+import 'package:shared/widgets/posts/horizontal_card.dart';
 import 'package:shared/widgets/refresh_list.dart';
-import '../../../widgets/list_no_more.dart';
-import '../../../widgets/reload_button.dart';
-import '../../../widgets/sliver_video_preview_skelton_list.dart';
-import '../../../widgets/no_data.dart';
 
-class ChannelStyle7Main extends StatefulWidget {
-  final int postId;
+import 'no_data.dart';
+import 'sliver_video_preview_skelton_list.dart';
 
-  const ChannelStyle7Main({
+class SliverPostGrid extends StatefulWidget {
+  final int tagId;
+  final Widget? noMoreWidget;
+  final List<Widget>? headerExtends;
+  final Function? onScrollEnd;
+  final ScrollController? customScrollController;
+
+  const SliverPostGrid({
     Key? key,
-    required this.postId,
+    required this.tagId,
+    this.noMoreWidget,
+    this.headerExtends,
+    this.onScrollEnd,
+    this.customScrollController,
   }) : super(key: key);
 
   @override
-  ChannelStyle7MainState createState() => ChannelStyle7MainState();
+  SliverPostGridState createState() => SliverPostGridState();
 }
 
-class ChannelStyle7MainState extends State<ChannelStyle7Main> {
+class SliverPostGridState extends State<SliverPostGrid> {
   ScrollController? _scrollController;
   ChannelPostController? postController;
   Timer? _debounceTimer;
@@ -40,9 +48,12 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _scrollController = PrimaryScrollController.of(context);
+    _scrollController =
+        widget.customScrollController ?? PrimaryScrollController.of(context);
     _scrollController!.addListener(_scrollListener);
     postController ??= ChannelPostController(
+      tagId: widget.tagId,
+      limit: 10,
       scrollController: _scrollController!,
     );
   }
@@ -66,6 +77,9 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
     });
     postController!.reset();
     postController!.pullToRefresh();
+    setState(() {
+      isRefreshing = false;
+    });
   }
 
   @override
@@ -78,35 +92,29 @@ class ChannelStyle7MainState extends State<ChannelStyle7Main> {
         }
         return CustomScrollView(
           controller: _scrollController,
+          key: Key(widget.tagId.toString()),
           slivers: [
+            if (postController!.isListEmpty.value)
+              const SliverToBoxAdapter(
+                child: NoDataWidget(),
+              ),
             SliverPadding(
               padding: const EdgeInsets.all(0.0),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) => PostCard(
+                  (BuildContext context, int index) => PostHorizontalCard(
                     detail: postController!.postList[index],
                   ),
                   childCount: postController!.postList.length,
                 ),
               ),
             ),
-            if (postController!.isError.value)
-              SliverFillRemaining(
-                child: Center(
-                  child: ReloadButton(
-                    onPressed: () => _onRefresh(),
-                  ),
-                ),
-              ),
-            if (!postController!.isError.value &&
-                postController!.isListEmpty.value)
-              const SliverToBoxAdapter(
-                child: NoDataWidget(),
-              ),
             if (postController!.displayLoading.value && !isRefreshing)
               const SliverVideoPreviewSkeletonList(),
             if (postController!.displayNoMoreData.value)
-              SliverToBoxAdapter(child: ListNoMore()),
+              SliverToBoxAdapter(
+                child: widget.noMoreWidget,
+              ),
           ],
         );
       }),
