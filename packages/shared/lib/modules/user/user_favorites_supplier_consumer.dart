@@ -21,8 +21,8 @@ class UserFavoritesSupplierConsumer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final supplierController =
-        Get.put(SupplierController(supplierId: id), tag: id.toString());
+    // final supplierController =
+    //     Get.put(SupplierController(supplierId: id), tag: id.toString());
     final userFavoritesSupplierController =
         Get.find<UserFavoritesSupplierController>();
 
@@ -33,10 +33,10 @@ class UserFavoritesSupplierConsumer extends StatelessWidget {
       void handleLike() {
         if (isLiked) {
           userFavoritesSupplierController.removeSupplier([id]);
-          supplierController.decrementTotal(actionType);
+          // supplierController.decrementTotal(actionType);
         } else {
           userFavoritesSupplierController.addSupplier(info);
-          supplierController.incrementTotal(actionType);
+          // supplierController.incrementTotal(actionType);
         }
       }
 

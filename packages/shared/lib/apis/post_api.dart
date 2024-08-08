@@ -1,11 +1,9 @@
 import 'package:game/models/hm_api_response_pagination.dart';
 import 'package:get/get.dart';
-
 import '../controllers/system_config_controller.dart';
 import '../models/infinity_posts.dart';
 import '../models/post.dart';
 import '../models/post_detail.dart';
-import '../models/vod.dart';
 import '../utils/fetcher.dart';
 
 class PostApi {
@@ -25,11 +23,31 @@ class PostApi {
 
   Future<InfinityPosts> getPostList({
     int page = 1,
-    limit = 5,
+    int limit = 5,
+    String? keyword,
+    int? supplierId,
+    int? publisherId,
+    int? tagId,
+    int? topicId,
   }) async {
     try {
-      var res = await fetcher(
-          url: '$apiPrefix/list?per_page=$limit&current_page=$page');
+      Map<String, String> queryParams = {
+        'per_page': limit.toString(),
+        'page': page.toString(),
+      };
+
+      if (keyword != null) queryParams['keyword'] = keyword;
+      if (supplierId != null)
+        queryParams['supplier_id'] = supplierId.toString();
+      if (publisherId != null)
+        queryParams['publisher_id'] = publisherId.toString();
+      if (tagId != null) queryParams['tag_id'] = tagId.toString();
+      if (topicId != null) queryParams['topic_id'] = topicId.toString();
+
+      var uri =
+          Uri.parse('$apiPrefix/list').replace(queryParameters: queryParams);
+
+      var res = await fetcher(url: uri.toString());
       if (res.data['code'] != '00') {
         return InfinityPosts([], 0, false);
       }

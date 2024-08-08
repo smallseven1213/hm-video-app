@@ -253,4 +253,7 @@ const Map<String, String> viVnStrings = {
   "id_verification_failed":
       "ID verification failed, please rebind or contact customer service.",
   "rebind": "Rebind",
+  "first_recharge_activity": "First Recharge Activity",
+  "recharge_activity": "Recharge Activity",
+  "betting_activity": "Betting Activity",
 };

@@ -10,6 +10,7 @@ class CircleTextItem extends StatelessWidget {
   final bool hasBorder;
   final String photoSid;
   final Function()? onTap;
+  final int? maxLines;
 
   const CircleTextItem({
     Key? key,
@@ -19,6 +20,7 @@ class CircleTextItem extends StatelessWidget {
     this.isRounded = true,
     this.hasBorder = true,
     required this.photoSid,
+    this.maxLines = 2,
     this.onTap,
   }) : super(key: key);
 
@@ -74,6 +76,8 @@ class CircleTextItem extends StatelessWidget {
             )),
       ),
       Text(text,
+          maxLines: maxLines,
+          overflow: TextOverflow.ellipsis,
           style: const TextStyle(
             fontSize: 12,
             color: Color.fromARGB(255, 255, 255, 255),

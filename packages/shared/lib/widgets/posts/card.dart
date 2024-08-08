@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/file_type.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
+import 'package:shared/widgets/posts/post_stats.dart';
 import 'package:shared/widgets/posts/tags.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../models/post.dart';
 import '../../models/supplier.dart';
-import '../../modules/user/user_favorites_supplier_consumer.dart';
 import '../../navigator/delegate.dart';
 
 // 定義顏色配置
@@ -18,17 +19,18 @@ class AppColors {
   static const darkText = Colors.white;
   static const lightButton = Colors.pink;
   static const darkButton = Color(0xff6874b6);
+  static const lockImage = Color(0xff3f4253);
 }
 
 class PostCard extends StatelessWidget {
   final bool? isDarkMode;
   final Post detail;
+
   const PostCard({
     Key? key,
     required this.detail,
     this.isDarkMode = true,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     // 使用 ?? 運算符提供默認值
@@ -37,6 +39,8 @@ class PostCard extends StatelessWidget {
     // 根據 darkMode 設置顏色
     final textColor = darkMode ? AppColors.darkText : AppColors.lightText;
     final buttonColor = darkMode ? AppColors.darkButton : AppColors.lightButton;
+    final lockImageColor = darkMode ? AppColors.lockImage : Colors.white;
+
     return InkWell(
       onTap: () {
         // 點擊卡片時的操作
@@ -83,7 +87,10 @@ class PostCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(color: textColor),
               ),
-              const SizedBox(height: 8),
+              PostStatsWidget(
+                viewCount: detail.viewCount ?? 0,
+                likeCount: detail.likeCount ?? 0,
+              ),
               GridView.count(
                 shrinkWrap: true, // 使 GridView 自適應高度
                 physics: const NeverScrollableScrollPhysics(), // 禁止滾動
@@ -91,57 +98,82 @@ class PostCard extends StatelessWidget {
                 mainAxisSpacing: 8, // 主軸間距
                 crossAxisSpacing: 8, // 交叉軸間距
                 children: List.generate(
-                    // 計算要顯示的元素數量，最多6個
-                    detail.previewMediaCount < detail.totalMediaCount
-                        ? (detail.previewMediaCount + 1 <= 6
-                            ? detail.previewMediaCount + 1
-                            : 6)
-                        : (detail.previewMediaCount <= 6
-                            ? detail.previewMediaCount
-                            : 6), (index) {
-                  if (index < detail.previewMediaCount) {
-                    return detail.files.length > index
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(8),
-                            child: Stack(
-                              children: [
-                                SidImage(sid: detail.files[index].cover),
-                                if (detail.files[index].type == 2)
-                                  Center(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey.withOpacity(0.7),
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: const Icon(
-                                          Icons.play_arrow_rounded,
-                                          color: Colors.white),
+                  // 計算要顯示的元素數量，最多6個
+                  detail.totalMediaCount <= 6 ? detail.totalMediaCount : 6,
+                  (index) {
+                    bool shouldShowLock =
+                        !detail.isUnlock && index >= detail.previewMediaCount;
+
+                    if (detail.files.length > index) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Stack(
+                          children: [
+                            SidImage(sid: detail.files[index].cover),
+                            if (detail.files[index].type ==
+                                FileType.video.index)
+                              Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withOpacity(0.7),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: const Icon(
+                                    Icons.play_arrow_rounded,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            if (shouldShowLock)
+                              Container(
+                                color: Colors.black.withOpacity(0.5),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.lock,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.4),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: shouldShowLock
+                            ? Container(
+                                decoration: BoxDecoration(
+                                  color: lockImageColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    width: 25,
+                                    height: 25,
+                                    decoration: BoxDecoration(
+                                      color:
+                                          const Color.fromRGBO(44, 49, 70, 0.7),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    child: const Icon(
+                                      Icons.lock,
+                                      color: Colors.white,
+                                      size: 15,
                                     ),
                                   ),
-                              ],
-                            ),
-                          )
-                        : Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.4), // 設置空圖片的背景色
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: const Icon(
-                              Icons.image, // 使用一個圖片icon表示空圖片
-                              color: Colors.white,
-                            ),
-                          );
-                  } else {
-                    // 顯示帶鎖頭 icon 的方框
-                    return Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.withOpacity(0.7),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: const Icon(Icons.lock, color: Colors.white),
-                    );
-                  }
-                }),
+                                ),
+                              )
+                            : const Icon(
+                                Icons.image,
+                                color: Colors.white,
+                              ),
+                      );
+                    }
+                  },
+                ),
               ),
               // create tag list
               TagsWidget(tags: detail.tags),
