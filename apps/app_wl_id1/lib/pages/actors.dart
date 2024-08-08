@@ -166,7 +166,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
               );
             }
             return AlignedGridView.count(
-                crossAxisCount: 5,
+                crossAxisCount: 4,
                 itemCount: actorsController.actors.length,
                 itemBuilder: (context, actorIndex) {
                   var actor = actorsController.actors[actorIndex];
@@ -190,6 +190,7 @@ class ActorsPageState extends State<ActorsPage> with TickerProviderStateMixin {
                         imageHeight: 60,
                         isRounded: true,
                         hasBorder: true,
+                        maxLines: 1,
                       ),
                     ),
                   );
