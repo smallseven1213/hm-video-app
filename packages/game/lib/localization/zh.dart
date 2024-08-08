@@ -230,5 +230,8 @@ const Map<String, String> zhTwStrings = {
   "id_verification_pending": "身分證審核中，請稍候。",
   "contact_customer_service": "聯繫客服",
   "id_verification_failed": "身分證審核失敗，請重新綁定或聯繫客服。",
-  "rebind": "重新綁定"
+  "rebind": "重新綁定",
+  "first_recharge_activity": "首充活動",
+  "recharge_activity": "充值活動",
+  "betting_activity": "投注活動",
 };

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 
 class ActivityItem {
   ActivityItem({
@@ -36,21 +35,6 @@ class ActivityItem {
         buttonName: json["buttonName"],
       );
 }
-
-Map<int, Map<String, dynamic>> activityTypeMapper = {
-  1: {
-    'name': '首充活動',
-    'color': const Color(0xFFff039e),
-  },
-  2: {
-    'name': '充值活動',
-    'color': const Color(0xFF03ff0d),
-  },
-  3: {
-    'name': '投注活動',
-    'color': const Color(0xFFff6d03),
-  },
-};
 
 Map<String, int> activityButtonType = {
   'NONE': 1,
