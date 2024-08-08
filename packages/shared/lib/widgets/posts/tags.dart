@@ -58,7 +58,8 @@ class TagsWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 8),
       child: Wrap(
-        spacing: 8,
+        spacing: 4,
+        runSpacing: 4,
         children: tags
             .map((tag) => TagItem(
                   backgroundColor: backgroundColor,
