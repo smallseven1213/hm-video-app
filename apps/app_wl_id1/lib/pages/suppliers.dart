@@ -154,7 +154,7 @@ class SuppliersPageState extends State<SuppliersPage>
               );
             }
             return AlignedGridView.count(
-                crossAxisCount: 5,
+                crossAxisCount: 4,
                 itemCount: suppliersController.actors.length,
                 itemBuilder: (context, actorIndex) {
                   var actor = suppliersController.actors[actorIndex];
@@ -177,6 +177,7 @@ class SuppliersPageState extends State<SuppliersPage>
                         imageHeight: 60,
                         isRounded: true,
                         hasBorder: true,
+                        maxLines: 1,
                       ),
                     ),
                   );
