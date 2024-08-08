@@ -2,15 +2,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:logger/logger.dart';
-
 import 'package:game/apis/game_api.dart';
-import 'package:game/models/game_banner_marquee_consumer.dart';
 import 'package:game/models/game_activity.dart';
+import 'package:game/models/game_banner_marquee_consumer.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/show_form_dialog.dart';
 import 'package:game/widgets/button.dart';
+import 'package:logger/logger.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -131,6 +130,21 @@ class _GameActivityState extends State<GameActivity> {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
+
+    Map<int, Map<String, dynamic>> activityTypeMapper = {
+      1: {
+        'name': localizations.translate('first_recharge_activity'),
+        'color': const Color(0xFFff039e),
+      },
+      2: {
+        'name': localizations.translate('recharge_activity'),
+        'color': const Color(0xFF03ff0d),
+      },
+      3: {
+        'name': localizations.translate('betting_activity'),
+        'color': const Color(0xFFff6d03),
+      },
+    };
 
     return Scaffold(
       appBar: AppBar(

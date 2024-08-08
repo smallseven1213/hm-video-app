@@ -230,5 +230,8 @@ const Map<String, String> zhCnStrings = {
   "id_verification_pending": "身分证审核中，请稍候。",
   "contact_customer_service": "联系客服",
   "id_verification_failed": "身分证审核失败，请重新绑定或联系客服。",
-  "rebind": "重新绑定"
+  "rebind": "重新绑定",
+  "first_recharge_activity": "首充活动",
+  "recharge_activity": "充值活动",
+  "betting_activity": "投注活动",
 };

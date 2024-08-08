@@ -252,4 +252,7 @@ const Map<String, String> idIdStrings = {
   "id_verification_failed":
       "ID verification failed, please rebind or contact customer service.",
   "rebind": "Rebind",
+  "first_recharge_activity": "Topup Awal",
+  "recharge_activity": "Topup",
+  "betting_activity": "Taruhan",
 };
