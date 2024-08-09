@@ -18,25 +18,27 @@ class Post {
   final int? replyCount; // 回覆數
   final int? linkType; // 連結類型
   final String? link; // 連結
+  final bool? isLike; // 是否點讚
 
   Post(
-    this.id,
-    this.title,
-    this.supplier,
-    this.chargeType,
-    this.isUnlock,
-    this.previewMediaCount,
-    this.totalMediaCount,
-    this.content,
-    List<Files>? files,
-    List<Tag>? tags,
-    this.cover,
-    this.replyCount,
-    this.linkType,
-    this.link,
-    this.viewCount,
-    this.likeCount,
-  )   : files = files ?? [],
+      this.id,
+      this.title,
+      this.supplier,
+      this.chargeType,
+      this.isUnlock,
+      this.previewMediaCount,
+      this.totalMediaCount,
+      this.content,
+      List<Files>? files,
+      List<Tag>? tags,
+      this.cover,
+      this.replyCount,
+      this.linkType,
+      this.link,
+      this.viewCount,
+      this.likeCount,
+      this.isLike)
+      : files = files ?? [],
         tags = tags ?? [];
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -61,6 +63,7 @@ class Post {
       json['link'],
       json['viewCount'],
       json['likeCount'],
+      json['isLike'],
     );
   }
 
@@ -82,6 +85,7 @@ class Post {
     data['replyCount'] = replyCount;
     data['linkType'] = linkType;
     data['link'] = link;
+    data['isLike'] = isLike;
     data['files'] =
         files.isNotEmpty ? files.map((e) => e.toJson()).toList() : [];
     data['tags'] = tags.isNotEmpty ? tags.map((e) => e.toJson()).toList() : [];
