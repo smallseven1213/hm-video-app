@@ -3,11 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/search_temp_controller.dart';
 import 'package:shared/controllers/search_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import '../../widgets/list_no_more.dart';
+import '../../widgets/sliver_post_grid.dart';
 import '../../widgets/sliver_vod_grid.dart';
 
 final vodApi = VodApi();
@@ -32,7 +34,7 @@ class SearchResultPageState extends State<SearchResultPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     searchVodController = SearchVodController(keyword: widget.keyword, film: 1);
     searchShortController =
         SearchVodController(keyword: widget.keyword, film: 2);
@@ -60,6 +62,7 @@ class SearchResultPageState extends State<SearchResultPage>
           tabs: const [
             '長視頻',
             '短視頻',
+            '貼文',
           ],
         ),
         // SliverVodGrid
@@ -78,15 +81,17 @@ class SearchResultPageState extends State<SearchResultPage>
                   }
                   return false;
                 },
-                child: Obx(() => SliverVodGrid(
-                      videos: searchVodController.vodList.value,
-                      displayLoading: searchVodController.isLoading.value,
-                      displayNoMoreData:
-                          searchVodController.displayNoMoreData.value,
-                      isListEmpty: searchVodController.isListEmpty.value,
-                      noMoreWidget: ListNoMore(),
-                      displayVideoFavoriteTimes: false,
-                    )),
+                child: Obx(() {
+                  return SliverVodGrid(
+                    videos: searchVodController.vodList.value,
+                    displayLoading: searchVodController.isLoading.value,
+                    displayNoMoreData:
+                        searchVodController.displayNoMoreData.value,
+                    isListEmpty: searchVodController.isListEmpty.value,
+                    noMoreWidget: ListNoMore(),
+                    displayVideoFavoriteTimes: false,
+                  );
+                }),
               ),
               NotificationListener<ScrollNotification>(
                 onNotification: (ScrollNotification scrollInfo) {
@@ -98,7 +103,8 @@ class SearchResultPageState extends State<SearchResultPage>
                   }
                   return false;
                 },
-                child: Obx(() => SliverVodGrid(
+                child: Obx(() {
+                  return SliverVodGrid(
                     film: 2,
                     isListEmpty: searchShortController.isListEmpty.value,
                     displayVideoFavoriteTimes: false,
@@ -111,8 +117,11 @@ class SearchResultPageState extends State<SearchResultPage>
                     onOverrideRedirectTap: (id) {
                       MyRouteDelegate.of(context).push(AppRoutes.shortsByLocal,
                           args: {'itemId': 3, 'videoId': id});
-                    })),
+                    },
+                  );
+                }),
               ),
+              SliverPostGrid(keyword: widget.keyword, vertical: false),
             ],
           ),
         ),

@@ -3,26 +3,32 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/channel_post_controller.dart';
+import 'package:shared/widgets/posts/card.dart';
 import 'package:shared/widgets/posts/horizontal_card.dart';
 import 'package:shared/widgets/refresh_list.dart';
 
+import 'list_no_more.dart';
 import 'no_data.dart';
+import 'reload_button.dart';
 import 'sliver_video_preview_skelton_list.dart';
 
 class SliverPostGrid extends StatefulWidget {
-  final int tagId;
-  final Widget? noMoreWidget;
+  final String? keyword;
+  final int? tagId;
+  final int? supplierId;
   final List<Widget>? headerExtends;
-  final Function? onScrollEnd;
   final ScrollController? customScrollController;
+  final bool? vertical;
 
   const SliverPostGrid({
     Key? key,
-    required this.tagId,
-    this.noMoreWidget,
+    this.keyword,
+    this.tagId,
+    this.supplierId,
     this.headerExtends,
-    this.onScrollEnd,
     this.customScrollController,
+    this.vertical = true,
+
   }) : super(key: key);
 
   @override
@@ -52,7 +58,9 @@ class SliverPostGridState extends State<SliverPostGrid> {
         widget.customScrollController ?? PrimaryScrollController.of(context);
     _scrollController!.addListener(_scrollListener);
     postController ??= ChannelPostController(
+      keyword: widget.keyword,
       tagId: widget.tagId,
+      supplierId: widget.supplierId,
       limit: 10,
       scrollController: _scrollController!,
     );
@@ -92,29 +100,37 @@ class SliverPostGridState extends State<SliverPostGrid> {
         }
         return CustomScrollView(
           controller: _scrollController,
-          key: Key(widget.tagId.toString()),
           slivers: [
-            if (postController!.isListEmpty.value)
-              const SliverToBoxAdapter(
-                child: NoDataWidget(),
-              ),
             SliverPadding(
               padding: const EdgeInsets.all(0.0),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) => PostHorizontalCard(
-                    detail: postController!.postList[index],
-                  ),
+                  (BuildContext context, int index) => widget.vertical == true
+                      ? PostCard(
+                          detail: postController!.postList[index],
+                        )
+                      : PostHorizontalCard(
+                          detail: postController!.postList[index],
+                        ),
                   childCount: postController!.postList.length,
                 ),
               ),
             ),
+            if (postController!.isError.value)
+              SliverFillRemaining(
+                child: Center(
+                  child: ReloadButton(
+                    onPressed: () => _onRefresh(),
+                  ),
+                ),
+              ),
+            if (!postController!.isError.value &&
+                postController!.isListEmpty.value)
+              const SliverToBoxAdapter(child: NoDataWidget()),
             if (postController!.displayLoading.value && !isRefreshing)
               const SliverVideoPreviewSkeletonList(),
             if (postController!.displayNoMoreData.value)
-              SliverToBoxAdapter(
-                child: widget.noMoreWidget,
-              ),
+              SliverToBoxAdapter(child: ListNoMore()),
           ],
         );
       }),
