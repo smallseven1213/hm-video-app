@@ -1,3 +1,7 @@
+import 'package:logger/logger.dart';
+
+final logger = Logger();
+
 class DepositPaymentChannel {
   final int id;
   final String name;
@@ -23,15 +27,36 @@ class DepositPaymentChannel {
     required this.orderIndex,
   });
 
+  factory DepositPaymentChannel.fromJsonWithNullCheck(
+      Map<String, dynamic> json) {
+    final nullFields = <String>[];
+    final Map<String, dynamic> safeJson = <String, dynamic>{};
+
+    json.forEach((key, value) {
+      if (value == null) {
+        nullFields.add(key);
+      } else {
+        safeJson[key] = value;
+      }
+    });
+
+    if (nullFields.isNotEmpty) {
+      logger.e('Null fields in $json: $nullFields');
+    }
+
+    return DepositPaymentChannel.fromJson(safeJson);
+  }
+
   factory DepositPaymentChannel.fromJson(Map<String, dynamic> json) {
+    List<String>? specificAmounts = json['specificAmounts']?.cast<String>();
+    specificAmounts ??= [];
+
     return DepositPaymentChannel(
       id: json['id'] as int,
       name: json['name'] as String,
       tag: json['tag'] as int,
       amountType: json['amountType'] as int,
-      specificAmounts: json['specificAmounts'] != null
-          ? List<String>.from(json['specificAmounts'] as List<dynamic>)
-          : [],
+      specificAmounts: specificAmounts,
       maxAmount: json['maxAmount'] as int,
       minAmount: json['minAmount'] as int,
       discountRatio: json['discountRatio'] as String,

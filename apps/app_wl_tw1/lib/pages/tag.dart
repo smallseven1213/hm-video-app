@@ -1,6 +1,7 @@
 import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/tag_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -30,12 +31,10 @@ class TagPageState extends State<TagPage> {
   // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
   late final TagVodController vodController;
-  late ChannelPostController? postController;
 
   @override
   void initState() {
     super.initState();
-    // postController = Get.put(ChannelPostController(postId: widget.id));
     vodController = TagVodController(
       tagId: widget.id,
       scrollController: scrollController,
@@ -58,10 +57,7 @@ class TagPageState extends State<TagPage> {
         title: '#${widget.title}',
       ),
       body: widget.film == 3
-          ? SliverPostGrid(
-              tagId: widget.id,
-              noMoreWidget: Text('No more posts'),
-            )
+          ? SliverPostGrid(tagId: widget.id, vertical: false)
           : Obx(
               () {
                 if (widget.film == 2) {

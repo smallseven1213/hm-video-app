@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/models/game_deposit_payment_type_list.dart';
-import 'package:game/models/game_payment_channel_detail.dart';
-import 'package:game/screens/game_deposit_list_screen/olive_shape_clipper.dart';
-import 'package:game/screens/game_deposit_list_screen/payment_type_list.dart';
+import 'package:game/models/game_deposit_payments_type.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/handel_submit_amount.dart';
 import 'package:game/widgets/deposit_amount_form.dart';
@@ -12,68 +9,35 @@ import 'package:game/widgets/deposit_check_icon.dart';
 import 'package:game/widgets/deposit_payment_empty.dart';
 import 'package:game/widgets/deposit_title.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
+import 'payment_type_list.dart';
 
 final logger = Logger();
 
-class CustomTriangleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
-  }
-}
-
 class DepositPaymentItems extends StatefulWidget {
-  final List<DepositPaymentTypeList> paymentList;
-  final Map depositData;
+  final List<DepositPaymentsType> paymentList;
   final String initialIndex;
   const DepositPaymentItems(
-      {Key? key,
-      required this.paymentList,
-      required this.depositData,
-      required this.initialIndex})
+      {Key? key, required this.paymentList, required this.initialIndex})
       : super(key: key);
 
   @override
   State<DepositPaymentItems> createState() => _DepositPaymentItemsState();
 }
 
-var depositAmountType = {
-  'showInput': 1,
-  'noInput': 2,
-};
-
 class _DepositPaymentItemsState extends State<DepositPaymentItems> {
-  String _paymentActiveIndex = '';
+  String _paymentActiveIndex = '99';
   int _channelActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
-  final theme = themeMode[GetStorage().hasData('pageColor')
-          ? GetStorage().read('pageColor')
-          : 1]
-      .toString();
   final gameWithdrawController = Get.put(GameWithdrawController());
   FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
     super.initState();
-    _paymentActiveIndex = widget.depositData.containsKey(widget.initialIndex)
-        ? widget.initialIndex
-        : widget.depositData.keys.first;
-
     setInitFormValue();
   }
 
@@ -86,13 +50,12 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   }
 
   void setInitFormValue() {
-    if (widget.depositData[_paymentActiveIndex].length > 0 &&
-        widget.depositData[_paymentActiveIndex][_channelActiveIndex]
-                .amountType ==
-            depositAmountType['showInput']) {
-      amountController.text = widget
-          .depositData[_paymentActiveIndex][_channelActiveIndex].minAmount
-          .toString();
+    if (widget.paymentList.isNotEmpty) {
+      amountController.text = widget.paymentList
+          .firstWhere((element) => element.label[0] == _paymentActiveIndex)
+          .minAmount;
+
+      logger.i('amountController.text: ${amountController.text}');
     }
   }
 
@@ -112,27 +75,40 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
       _channelActiveIndex = idx;
 
       Future.delayed(const Duration(milliseconds: 100)).then((value) {
-        setInitFormValue();
+        // 找到paymentList中第idx筆資料，指定給amountController.text
+        // 接著搜尋篩選後的資料中第idx筆資料
+
+        List filteredChannels = widget.paymentList
+            .where((element) => element.label[0] == _paymentActiveIndex)
+            .toList();
+        var targetChannel = filteredChannels[idx];
+        amountController.text = targetChannel.minAmount.toString();
       });
     });
   }
 
+  List paymentListItem = [
+    {
+      "id": 99,
+      "name": "TransferBank",
+      "code": "99",
+      "icon": 'packages/game/assets/images/game_deposit/icon-transferbank.webp',
+    },
+    {
+      "id": 100,
+      "name": "MobileDeposit",
+      "code": "100",
+      "icon":
+          "packages/game/assets/images/game_deposit/icon-mobiledeposit.webp",
+    },
+  ];
+
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
-    final theme = themeMode[GetStorage().hasData('pageColor')
-            ? GetStorage().read('pageColor')
-            : 1]
-        .toString();
-
-    List<DepositPaymentTypeList> paymentListItem =
-        widget.paymentList.where((element) {
-      final depositDataKeys = widget.depositData.keys.toList();
-      return depositDataKeys.contains(element.code.toLowerCase());
-    }).toList();
-
-    List channels =
-        List.from(widget.depositData[_paymentActiveIndex.toLowerCase()]);
+    List channels = widget.paymentList
+        .where((element) => element.label[0] == _paymentActiveIndex)
+        .toList();
     int channelLength = channels.isNotEmpty ? channels.length.toInt() : 0;
     num channelHeight =
         (channelLength > 3 ? (channelLength / 3).ceil() * 54 : 60);
@@ -141,22 +117,14 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
         ? channels[_channelActiveIndex].specificAmounts.length
         : 0;
     num amountHeight = amountLength > 4 ? (amountLength / 4).ceil() * 80 : 80;
-    bool requireName = paymentListItem
-            .firstWhere((element) =>
-                element.code.toLowerCase() == _paymentActiveIndex.toLowerCase())
-            .requireName
-            .toString()
-            .contains('0')
-        ? false // NO
-        : true; // YES
-    bool requirePhone = paymentListItem
-            .firstWhere((element) =>
-                element.code.toLowerCase() == _paymentActiveIndex.toLowerCase())
-            .requirePhone
-            .toString()
-            .contains('0')
-        ? false
-        : true;
+    bool requireName =
+        channels[_channelActiveIndex].requireName.toString().contains('0')
+            ? false // NO
+            : true; // YES
+    bool requirePhone =
+        channels[_channelActiveIndex].requirePhone.toString().contains('0')
+            ? false
+            : true;
 
     return GestureDetector(
       onTap: () {
@@ -193,8 +161,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
               ),
             ),
             // ======支付渠道======
-            (widget.depositData[_paymentActiveIndex].isNotEmpty &&
-                    channels.isNotEmpty)
+            channels.isNotEmpty
                 ? Column(
                     children: [
                       DepositTitle(
@@ -255,56 +222,11 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                                   ),
                                                 ),
                                                 child: Center(
-                                                  child: Text(
-                                                    channels[index]
-                                                        .name
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          gameSecondButtonTextColor,
-                                                      fontSize: 12,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                ),
+                                                    child: Image.network(
+                                                  channels[index].icon,
+                                                  width: 50,
+                                                )),
                                               ),
-                                              if (double.parse(channels[index]
-                                                      .discountRatio) >
-                                                  0.00)
-                                                Positioned(
-                                                  top: -1,
-                                                  right: -1,
-                                                  child: OliveShape(
-                                                    type: 'right',
-                                                    bgColor:
-                                                        const LinearGradient(
-                                                      colors: [
-                                                        Color(0xFFFF00B8),
-                                                        Color(0xFFFF00B8)
-                                                      ],
-                                                    ),
-                                                    text:
-                                                        '送${channels[index].discountRatio.toString()}%',
-                                                  ),
-                                                ),
-                                              if (channels[index].tag != null &&
-                                                  channels[index].tag != 0)
-                                                Positioned(
-                                                  top: 0,
-                                                  left: 0,
-                                                  child: OliveShape(
-                                                    width: 28,
-                                                    bgColor: depositChannelLabel[
-                                                            channels[index]
-                                                                .tag]!['color']
-                                                        as LinearGradient,
-                                                    text: depositChannelLabel[
-                                                            channels[index]
-                                                                .tag]!['text']
-                                                        .toString(),
-                                                  ),
-                                                )
                                             ],
                                           )),
                                     ),
@@ -319,8 +241,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                   )
                 : const PaymentEmpty(),
             // ======存款金額======
-            if (widget.depositData[_paymentActiveIndex].isNotEmpty &&
-                channels.isNotEmpty)
+            if (channels.isNotEmpty)
               Column(
                 children: [
                   SizedBox(
@@ -340,8 +261,10 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                       formKey: _formKey,
                       controller: amountController,
                       focusNode: focusNode,
-                      max: channels[_channelActiveIndex].maxAmount.toDouble(),
-                      min: channels[_channelActiveIndex].minAmount.toDouble(),
+                      max:
+                          double.parse(channels[_channelActiveIndex].maxAmount),
+                      min:
+                          double.parse(channels[_channelActiveIndex].minAmount),
                       activePayment: _paymentActiveIndex.toLowerCase(),
                       paymentChannelId:
                           channels[_channelActiveIndex].id.toString(),
@@ -371,8 +294,9 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                 gameWithdrawController.setDepositAmount(
                                     channels[_channelActiveIndex]
                                         .specificAmounts[index]);
-                                if (channels[_channelActiveIndex].amountType ==
-                                    depositAmountType['noInput']) {
+                                if (channels[_channelActiveIndex]
+                                    .specificAmounts
+                                    .isEmpty) {
                                   handleSubmitAmount(
                                     context,
                                     enableSubmit: true,
@@ -410,7 +334,14 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    '${channels[_channelActiveIndex].specificAmounts[index].toString()}${localizations.translate('dollar')}',
+                                    channels[_channelActiveIndex]
+                                                .specificAmounts !=
+                                            null
+                                        ? channels[_channelActiveIndex]
+                                                .specificAmounts[index]
+                                                .toString() +
+                                            localizations.translate('dollar')
+                                        : '0',
                                     style: TextStyle(
                                       color: gamePrimaryButtonColor,
                                       fontSize: 12,

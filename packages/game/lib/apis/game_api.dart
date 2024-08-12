@@ -6,6 +6,7 @@ import 'package:game/models/bank.dart';
 import 'package:game/models/game_activity.dart';
 import 'package:game/models/game_deposit_payment_channel.dart';
 import 'package:game/models/game_deposit_payment_type_list.dart';
+import 'package:game/models/game_deposit_payments_type.dart';
 import 'package:game/models/game_list.dart';
 import 'package:game/models/game_order.dart';
 import 'package:game/models/game_payment.dart';
@@ -133,6 +134,49 @@ class GameLobbyApi {
           return record;
         },
       );
+
+  // 已更換api host from login
+  // 取得支付類型 transfer bank / mobile deposit
+  Future<List<DepositPaymentsType>> getPaymentsType() async {
+    var value =
+        await fetcher(url: '${systemConfig.apiHost}/public/payments/type');
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    if (res['code'] != '00') {
+      return [];
+    }
+
+    return List.from((res['data'] as List<dynamic>)
+        .map((e) => DepositPaymentsType.fromJson(e)));
+  }
+
+  // 已更換api host from login
+  // 存款充值建單 transfer bank / mobile deposit
+  Future<String> depositByPaymentType({
+    String agentAccount = '',
+    required String amount,
+    required int paymentChannelId,
+    String? name,
+  }) async {
+    var value = await fetcher(
+      url:
+          '${systemConfig.apiHost}/public/orders/order/deposit/by-payment-type',
+      method: 'POST',
+      body: {
+        'amount': amount,
+        'paymentTypeId': paymentChannelId,
+        'name': name,
+      },
+    );
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    if (res['code'] != '00') {
+      return res['code'];
+    }
+    return res['data']['paymentLink'];
+  }
 
   // =================================== 以下 API HOST FROM VIDEO =================================== //
 
@@ -400,10 +444,12 @@ class GameLobbyApi {
       if (paymentChannelsData != null) {
         List<DepositPaymentChannel> paymentChannels =
             paymentChannelsData.map((channelData) {
-          List<String>? specificAmounts =
-              channelData['specificAmounts']?.cast<String>();
-          specificAmounts ??= [];
-          return DepositPaymentChannel.fromJson(channelData);
+          try {
+            return DepositPaymentChannel.fromJsonWithNullCheck(channelData);
+          } catch (e) {
+            logger.e('Error creating DepositPaymentChannel: $e');
+            rethrow;
+          }
         }).toList();
         depositChannels[key] = paymentChannels;
       } else {

@@ -48,7 +48,7 @@ class PostHorizontalCard extends StatelessWidget {
           children: [
             Expanded(
               child: Container(
-                width: 150,
+                width: 130,
                 height: 93,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(8),
