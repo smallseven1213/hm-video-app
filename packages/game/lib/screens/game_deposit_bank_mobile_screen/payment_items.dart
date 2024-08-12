@@ -5,31 +5,16 @@ import 'package:game/models/game_deposit_payments_type.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/utils/handel_submit_amount.dart';
 import 'package:game/widgets/deposit_amount_form.dart';
+import 'package:game/widgets/deposit_check_icon.dart';
+import 'package:game/widgets/deposit_payment_empty.dart';
 import 'package:game/widgets/deposit_title.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
 import 'payment_type_list.dart';
 
 final logger = Logger();
-
-class CustomTriangleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
-  }
-}
 
 class DepositPaymentItems extends StatefulWidget {
   final List<DepositPaymentsType> paymentList;
@@ -47,10 +32,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   int _channelActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
-  final theme = themeMode[GetStorage().hasData('pageColor')
-          ? GetStorage().read('pageColor')
-          : 1]
-      .toString();
   final gameWithdrawController = Get.put(GameWithdrawController());
   FocusNode focusNode = FocusNode();
 
@@ -125,11 +106,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
-    final theme = themeMode[GetStorage().hasData('pageColor')
-            ? GetStorage().read('pageColor')
-            : 1]
-        .toString();
-
     List channels = widget.paymentList
         .where((element) => element.label[0] == _paymentActiveIndex)
         .toList();
@@ -207,40 +183,8 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                             itemBuilder: (context, index) {
                               return Stack(
                                 children: [
-                                  if (_channelActiveIndex ==
-                                      index) // active 右下角三角形
-                                    Positioned(
-                                      bottom: 0,
-                                      right: 0,
-                                      child: RotatedBox(
-                                        quarterTurns: 1,
-                                        child: ClipPath(
-                                          clipper: CustomTriangleClipper(),
-                                          child: Container(
-                                            width: 20,
-                                            height: 20,
-                                            decoration: BoxDecoration(
-                                              color: gamePrimaryButtonColor,
-                                              borderRadius:
-                                                  const BorderRadius.only(
-                                                topRight: Radius.circular(10),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  if (_channelActiveIndex ==
-                                      index) // active 右下角打勾icon
-                                    Positioned(
-                                      right: 1,
-                                      bottom: 1,
-                                      child: Icon(
-                                        Icons.check,
-                                        color: gamePrimaryButtonTextColor,
-                                        size: 12,
-                                      ),
-                                    ),
+                                  if (_channelActiveIndex == index)
+                                    const CheckIcon(),
                                   GestureDetector(
                                     onTap: () {
                                       channelIndexChanged(index);
@@ -278,19 +222,10 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                                                   ),
                                                 ),
                                                 child: Center(
-                                                  child: Text(
-                                                    channels[index]
-                                                        .name
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                      color:
-                                                          gameSecondButtonTextColor,
-                                                      fontSize: 12,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                  ),
-                                                ),
+                                                    child: Image.network(
+                                                  channels[index].icon,
+                                                  width: 50,
+                                                )),
                                               ),
                                             ],
                                           )),
@@ -304,26 +239,7 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
                       )
                     ],
                   )
-                : SizedBox(
-                    width: 110,
-                    height: 160,
-                    child: Center(
-                        child: Column(
-                      children: [
-                        Image.asset(
-                          'packages/game/assets/images/game_deposit/payment_empty-$theme.webp',
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                        const SizedBox(height: 16),
-                        Text(
-                          localizations.translate('no_payment_channel'),
-                          style: TextStyle(color: gameLobbyPrimaryTextColor),
-                        ),
-                      ],
-                    )),
-                  ),
+                : const PaymentEmpty(),
             // ======存款金額======
             if (channels.isNotEmpty)
               Column(

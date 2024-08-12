@@ -82,8 +82,8 @@ class _DepositPaymentTypeListWidgetState
                     padding: const EdgeInsets.symmetric(horizontal: 1),
                     child: Container(
                       width: paymentLength <= 4
-                          ? MediaQuery.of(context).size.width / 4 - 22
-                          : MediaQuery.of(context).size.width / 4 - 32,
+                          ? MediaQuery.of(context).size.width / 4 - 12
+                          : MediaQuery.of(context).size.width / 4 - 22,
                       padding: const EdgeInsets.symmetric(vertical: 10),
                       decoration: BoxDecoration(
                         color: widget.paymentActiveIndex ==
