@@ -97,7 +97,7 @@ class _AmountFormState extends State<AmountForm> {
                     hintStyle: TextStyle(color: gameLobbyLoginPlaceholderColor),
                     contentPadding: const EdgeInsets.symmetric(
                       vertical: 5,
-                      horizontal: 15,
+                      horizontal: 8,
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(
@@ -125,8 +125,10 @@ class _AmountFormState extends State<AmountForm> {
                     ),
                     errorStyle: const TextStyle(
                       fontSize: 11,
-                      overflow: TextOverflow.visible, // 自動換行
+                      overflow: TextOverflow.visible,
+                      height: 1.2,
                     ),
+                    errorMaxLines: 3,
                     suffixIcon: IconButton(
                       icon: Icon(
                         Icons.cancel,
