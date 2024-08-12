@@ -142,6 +142,11 @@ const Map<String, String> enUsStrings = {
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Input amount must not be greater than the remaining balance",
   "input_amount_is_in_wrong_format": "Input amount is in wrong format",
+  "please_enter_the_deposit_amount": "Please enter the deposit amount",
+  "the_entered_amount_is_less_than_the_available_deposit_amount":
+      "The entered amount is less than the available deposit amount.",
+  "the_entered_amount_exceeds_the_available_deposit_amount":
+      "The entered amount exceeds the available deposit amount.",
   "minimum_withdrawal_amount_is": "Minimum withdrawal amount is",
   "application_completed": "Application Completed",
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":

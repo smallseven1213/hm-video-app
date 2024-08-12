@@ -123,6 +123,10 @@ class _AmountFormState extends State<AmountForm> {
                       ),
                       borderRadius: BorderRadius.circular(12),
                     ),
+                    errorStyle: const TextStyle(
+                      fontSize: 11,
+                      overflow: TextOverflow.visible, // 自動換行
+                    ),
                     suffixIcon: IconButton(
                       icon: Icon(
                         Icons.cancel,
@@ -152,7 +156,8 @@ class _AmountFormState extends State<AmountForm> {
                   onChanged: (val) => logger.i(val.toString()),
                   validator: FormBuilderValidators.compose([
                     FormBuilderValidators.required(
-                      errorText: '請輸入存款金額',
+                      errorText: localizations
+                          .translate('please_enter_the_deposit_amount'),
                     ),
                     FormBuilderValidators.match(
                       r'^[0-9]+(\.[0-9]{1,2})?$',
@@ -160,23 +165,30 @@ class _AmountFormState extends State<AmountForm> {
                           .translate('input_amount_is_in_wrong_format'),
                     ),
                     if (widget.min != null)
-                      FormBuilderValidators.min(widget.min ?? 0,
-                          errorText: '輸入金額小於可存款金額'),
+                      FormBuilderValidators.min(
+                        widget.min ?? 0,
+                        errorText: localizations.translate(
+                            'the_entered_amount_is_less_than_the_available_deposit_amount'),
+                      ),
                     if (widget.max != null)
-                      FormBuilderValidators.max(widget.max ?? 0,
-                          errorText: '輸入金額大於可存款金額'),
+                      FormBuilderValidators.max(
+                        widget.max ?? 0,
+                        errorText: localizations.translate(
+                            'the_entered_amount_exceeds_the_available_deposit_amount'),
+                      ),
                   ]),
                 ),
               ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 5),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: SizedBox(
-                width: 90,
+                width: 80,
                 height: 40,
                 child: GameButton(
                   text: localizations.translate('confirm'),
+                  fontSize: 12.0,
                   onPressed: () {
                     gameWithdrawController
                         .setDepositAmount(widget.controller.text);

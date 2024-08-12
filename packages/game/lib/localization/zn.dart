@@ -132,6 +132,9 @@ const Map<String, String> zhCnStrings = {
   'input_amount_must_not_be_less_than': '输入金额不得小于',
   'input_amount_must_not_be_greater_than_the_remaining_balance': '输入金额不得大于余额',
   'input_amount_is_in_wrong_format': '输入金额格式错误',
+  "please_enter_the_deposit_amount": "请输入存款金额",
+  "the_entered_amount_is_less_than_the_available_deposit_amount": "输入金额小于可存款金额",
+  "the_entered_amount_exceeds_the_available_deposit_amount": "输入金额大于可存款金额",
   'minimum_withdrawal_amount_is': '最低可提金额为',
   'application_completed': '申请完成',
   'withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log':
