@@ -7,11 +7,13 @@ class GameButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.disabled = false,
+    this.fontSize = 14.0,
   }) : super(key: key);
 
   final String text;
   final VoidCallback onPressed;
   final bool disabled;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class GameButton extends StatelessWidget {
             color: disabled
                 ? gameLobbyButtonDisableTextColor
                 : gamePrimaryButtonTextColor,
-            fontSize: 14,
+            fontSize: fontSize,
           ),
         ),
       ),

@@ -12,28 +12,11 @@ import 'package:game/widgets/deposit_check_icon.dart';
 import 'package:game/widgets/deposit_payment_empty.dart';
 import 'package:game/widgets/deposit_title.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:logger/logger.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
 final logger = Logger();
-
-class CustomTriangleClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    final path = Path();
-    path.lineTo(size.width, 0);
-    path.lineTo(size.width, size.height);
-    path.lineTo(0, 0);
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return false;
-  }
-}
 
 class DepositPaymentItems extends StatefulWidget {
   final List<DepositPaymentTypeList> paymentList;
@@ -60,10 +43,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   int _channelActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
-  final theme = themeMode[GetStorage().hasData('pageColor')
-          ? GetStorage().read('pageColor')
-          : 1]
-      .toString();
   final gameWithdrawController = Get.put(GameWithdrawController());
   FocusNode focusNode = FocusNode();
 
@@ -120,11 +99,6 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
-    final theme = themeMode[GetStorage().hasData('pageColor')
-            ? GetStorage().read('pageColor')
-            : 1]
-        .toString();
-
     List<DepositPaymentTypeList> paymentListItem =
         widget.paymentList.where((element) {
       final depositDataKeys = widget.depositData.keys.toList();

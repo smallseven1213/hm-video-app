@@ -132,6 +132,9 @@ const Map<String, String> zhTwStrings = {
   'input_amount_must_not_be_less_than': '輸入金額不得小於',
   'input_amount_must_not_be_greater_than_the_remaining_balance': '輸入金額不得大於餘額',
   'input_amount_is_in_wrong_format': '輸入金額格式錯誤',
+  "please_enter_the_deposit_amount": "請輸入存款金額",
+  "the_entered_amount_is_less_than_the_available_deposit_amount": "輸入金額小於可存款金額",
+  "the_entered_amount_exceeds_the_available_deposit_amount": "輸入金額大於可存款金額",
   'minimum_withdrawal_amount_is': '最低可提金額為',
   'application_completed': '申請完成',
   'withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log':

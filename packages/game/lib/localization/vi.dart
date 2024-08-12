@@ -146,6 +146,11 @@ const Map<String, String> viVnStrings = {
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Số tiền nhập vào không được nhiều hơn số dư còn lại",
   "input_amount_is_in_wrong_format": "Định dạng số tiền nhập vào không đúng",
+  "please_enter_the_deposit_amount": "Vui lòng nhập số tiền gửi",
+  "the_entered_amount_is_less_than_the_available_deposit_amount":
+      "Số tiền nhập vào ít hơn số tiền có thể gửi.",
+  "the_entered_amount_exceeds_the_available_deposit_amount":
+      "Số tiền nhập vào vượt quá số tiền có thể gửi.",
   "minimum_withdrawal_amount_is": "Số tiền rút tối thiểu là",
   "application_completed": "Ứng dụng đã Hoàn thành",
   "withdrawal_application_has_been_completed_you_can_check_the_current_application_status_in_the_withdrawal_log":
