@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:get_storage/get_storage.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:logger/logger.dart';
-
-import 'package:game/enums/game_app_routes.dart';
-import 'package:game/utils/on_loading.dart';
 import 'package:game/apis/game_api.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:game/utils/on_loading.dart';
 import 'package:game/widgets/button.dart';
-
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:logger/logger.dart';
+import 'package:shared/controllers/game_platform_config_controller.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../localization/game_localization_delegate.dart';
 
@@ -37,6 +37,8 @@ class ConfirmNameState extends State<ConfirmName> {
   bool enableSubmit = false;
   final _formKey = GlobalKey<FormBuilderState>();
   TextEditingController textEditingController = TextEditingController();
+  GamePlatformConfigController gameConfigController =
+      Get.find<GamePlatformConfigController>();
   final FocusNode _focusNode = FocusNode();
   // bool isUnfocus = false;
   final theme = themeMode[GetStorage().hasData('pageColor')
@@ -54,6 +56,14 @@ class ConfirmNameState extends State<ConfirmName> {
     super.dispose();
   }
 
+  void setSubmitState(value) {
+    setState(() {
+      redirectUrl = value;
+      submitDepositSuccess = true;
+      isFetching = 'complete';
+    });
+  }
+
   void submitDepositOrderForName(
     context, {
     required String amount,
@@ -62,16 +72,24 @@ class ConfirmNameState extends State<ConfirmName> {
     required String activePayment,
   }) async {
     try {
-      var value = await GameLobbyApi().makeOrderV2(
-        amount: widget.amount,
-        paymentChannelId: int.parse(widget.paymentChannelId),
-        name: userName,
-      );
-      setState(() {
-        redirectUrl = value;
-        submitDepositSuccess = true;
-        isFetching = 'complete';
-      });
+      switch (gameConfigController.depositRoute.value) {
+        case GameAppRoutes.depositBankMobile:
+          var value = await GameLobbyApi().depositByPaymentType(
+            amount: widget.amount,
+            paymentChannelId: int.parse(widget.paymentChannelId),
+            name: userName,
+          );
+          setSubmitState(value);
+          break;
+        default:
+          var value = await GameLobbyApi().makeOrderV2(
+            amount: widget.amount,
+            paymentChannelId: int.parse(widget.paymentChannelId),
+            name: userName,
+          );
+          setSubmitState(value);
+          break;
+      }
     } catch (e) {
       logger.e('name 交易失敗: $e');
       setState(() {

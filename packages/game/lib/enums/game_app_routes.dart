@@ -5,6 +5,7 @@ class GameAppRoutes {
   static const String setBankcard = '/game/set_bankcard';
   static const String depositList = '/game/deposit_page_list';
   static const String depositPolling = '/game/deposit_page_polling';
+  static const String depositBankMobile = '/game/deposit_page_bank_mobile';
   static const String depositDetail = '/game/deposit/detail';
   static const String paymentResult = '/game/deposit/payment-result';
   static const String webview = '/game/webview';

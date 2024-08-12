@@ -3,13 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:game/controllers/game_withdraw_controller.dart';
-import 'package:game/screens/game_deposit_list_screen/handel_submit_amount.dart';
 import 'package:game/screens/game_theme_config.dart';
+import 'package:game/utils/handel_submit_amount.dart';
 import 'package:game/widgets/button.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 
-import '../../localization/game_localization_delegate.dart';
+import '../localization/game_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -61,15 +61,8 @@ class _AmountFormState extends State<AmountForm> {
   @override
   Widget build(BuildContext context) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
-
-    // 放入一個Row,有一個input跟一個確認按鈕
-    // input有validator,確認按鈕有onPressed和disabledColor
-    // input的max和min根據_channels[_channelActiveIndex]['maxAmount']和_channels[_channelActiveIndex]['minAmount']來做驗證，並且只能輸入數字
-    // 如果驗證失敗會顯示"輸入金額小於或大於可存款金額"，並且按鈕disabled
-    // input的onChanged要把值傳到amountController.text
-
-    var parseMaxText = widget.max?.toStringAsFixed(0);
-    var parseMinText = widget.min?.toStringAsFixed(0);
+    var parseMaxText = widget.max ?? 0;
+    var parseMinText = widget.min ?? 0;
 
     logger.i('max: ${widget.max.toString()}, min: ${widget.min.toString()}');
 
@@ -177,7 +170,6 @@ class _AmountFormState extends State<AmountForm> {
               ),
             ),
             const SizedBox(width: 8),
-            // 按鈕初始是disabled,當input驗證成功時才會變成enabled
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: SizedBox(

@@ -1,14 +1,13 @@
-import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
-
+import 'package:logger/logger.dart';
 import 'package:shared/controllers/game_platform_config_controller.dart';
-import 'package:shared/utils/event_bus.dart';
-import 'package:shared/utils/handle_game_url_methods.dart';
 import 'package:shared/services/platform_service.app.dart'
     if (dart.library.html) 'package:shared/services/platform_service.web.dart'
     as app_platform_ervice;
+import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/handle_game_url_methods.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../controllers/bottom_navigator_controller.dart';
 import '../navigator/delegate.dart';
@@ -18,11 +17,6 @@ final logger = Logger();
 final bottomNavigatorController = Get.find<BottomNavigatorController>();
 GamePlatformConfigController gamePlatformConfigController =
     Get.find<GamePlatformConfigController>();
-
-Map<int, String> gameDepositPage = {
-  1: '/game/deposit_page_polling',
-  2: '/game/deposit_page_list',
-};
 
 // 狀況1: 如果item?.url為http://或https://開頭，則直接打開網頁
 void handleHttpUrl(String url) {

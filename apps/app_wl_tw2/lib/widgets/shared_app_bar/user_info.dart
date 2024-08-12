@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/animation.dart';
-import 'package:game/enums/game_app_routes.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared/controllers/bottom_navigator_controller.dart';
@@ -10,6 +8,7 @@ import 'package:shared/models/user_v2.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/intl_amount.dart';
+
 import '../../localization/i18n.dart';
 
 class UserInfo extends StatefulWidget {
@@ -124,12 +123,9 @@ class _UserInfoState extends State<UserInfo>
                             isGameUesr == true) {
                           GamePlatformConfigController gameConfigController =
                               Get.find<GamePlatformConfigController>();
-                          final route =
-                              gameConfigController.switchPaymentPage.value ==
-                                      switchPaymentPageType['list']
-                                  ? GameAppRoutes.depositList
-                                  : GameAppRoutes.depositPolling;
-                          MyRouteDelegate.of(context).push(route);
+
+                          MyRouteDelegate.of(context)
+                              .push(gameConfigController.depositRoute.value);
                         } else {
                           bottomNavigatorController.changeKey('/game');
                           eventBus.fireEvent("gotoDepositAfterLogin");

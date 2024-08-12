@@ -1,5 +1,6 @@
 import 'package:game/apis/game_api.dart';
 import 'package:game/controllers/game_wallet_controller.dart';
+import 'package:game/enums/game_app_routes.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/controllers/auth_controller.dart';
@@ -17,6 +18,7 @@ class GamePlatformConfigController extends GetxController {
   var needsPhoneVerification = false.obs; // 註冊是否前往手機驗證
   var countryCode = Rx<String?>(null); // 註冊手機驗證國碼
   var isGameLobbyBalanceShow = true.obs; // 是否顯示遊戲大廳餘額
+  var depositRoute = '/game/deposit_page_polling'.obs; // 存款頁面路由
 
   GameWalletController gameWalletController = Get.find<GameWalletController>();
   AuthController authController = Get.find<AuthController>();
@@ -33,6 +35,10 @@ class GamePlatformConfigController extends GetxController {
       needsPhoneVerification.value = result.needsPhoneVerification!;
       countryCode.value = result.countryCode;
       isGameLobbyBalanceShow.value = result.isGameLobbyBalanceShow!;
+
+      depositRoute.value =
+          switchPaymentPageTypeMapper[switchPaymentPage.value] ??
+              GameAppRoutes.depositPolling;
     } catch (e) {
       logger.e('fetchData platform config error: $e');
     }
@@ -57,7 +63,8 @@ class GamePlatformConfigController extends GetxController {
   }
 }
 
-Map<String, int> switchPaymentPageType = {
-  'polling': 1,
-  'list': 2,
+Map<int, String> switchPaymentPageTypeMapper = {
+  1: GameAppRoutes.depositPolling,
+  2: GameAppRoutes.depositList,
+  3: GameAppRoutes.depositBankMobile,
 };
