@@ -3,15 +3,16 @@ library game_routes;
 import 'package:game/enums/game_app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
-import '../screens/game_register_id_card_binding_screen/index.dart';
-import '../screens/game_register_mobile_confirm_screen/index.dart';
-import '../screens/game_register_mobile_binding_screen/index.dart';
 import '../screens/game_activity_screen/index.dart';
+import '../screens/game_deposit_bank_mobile_screen/index.dart';
 import '../screens/game_deposit_detail_screen/index.dart';
 import '../screens/game_deposit_list_screen/index.dart';
 import '../screens/game_deposit_polling_screen/index.dart';
 import '../screens/game_deposit_record_screen/index.dart';
 import '../screens/game_payment_result_screen/index.dart';
+import '../screens/game_register_id_card_binding_screen/index.dart';
+import '../screens/game_register_mobile_binding_screen/index.dart';
+import '../screens/game_register_mobile_confirm_screen/index.dart';
 import '../screens/game_set_bankcard_screen/index.dart';
 import '../screens/game_set_fundpassword_screen/index.dart';
 import '../screens/game_webview_screen/index.dart';
@@ -27,6 +28,8 @@ final Map<String, RouteWidgetBuilder> gameRoutes = {
       ),
   GameAppRoutes.depositList: (context, args) => const GameDepositList(),
   GameAppRoutes.depositPolling: (context, args) => const GameDepositPolling(),
+  GameAppRoutes.depositBankMobile: (context, args) =>
+      const GameDepositBankMobile(),
   GameAppRoutes.depositDetail: (context, args) => GameDepositDetail(
         payment: args['payment'] as String,
         paymentChannelId: args['paymentChannelId'] as int,

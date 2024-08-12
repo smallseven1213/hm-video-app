@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:game/controllers/game_banner_controller.dart';
-import 'package:game/enums/game_app_routes.dart';
 import 'package:game/services/game_system_config.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/game_startup.dart';
@@ -128,12 +127,8 @@ class _GameWebviewToggleButtonWidget
               child: InkWell(
                 onTap: () {
                   logger.i('充值');
-                  MyRouteDelegate.of(context).push(
-                    gameConfigController.switchPaymentPage.value ==
-                            switchPaymentPageType['list']
-                        ? GameAppRoutes.depositList
-                        : GameAppRoutes.depositPolling,
-                  );
+                  MyRouteDelegate.of(context)
+                      .push(gameConfigController.depositRoute.value);
                 },
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

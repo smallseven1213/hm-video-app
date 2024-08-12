@@ -55,6 +55,14 @@ class ConfirmPinState extends State<ConfirmPin> {
           : 1]
       .toString();
 
+  void setSubmitState(value) {
+    setState(() {
+      redirectUrl = value;
+      submitDepositSuccess = true;
+      isFetching = 'complete';
+    });
+  }
+
   void submitDepositOrderForPin(
     context, {
     required String amount,
@@ -63,16 +71,24 @@ class ConfirmPinState extends State<ConfirmPin> {
     required String activePayment,
   }) async {
     try {
-      var value = await GameLobbyApi().makeOrderV2(
-        amount: widget.amount,
-        paymentChannelId: int.parse(widget.paymentChannelId),
-        name: widget.userName,
-      );
-      setState(() {
-        redirectUrl = value;
-        submitDepositSuccess = true;
-        isFetching = 'complete';
-      });
+      switch (gameConfigController.depositRoute.value) {
+        case GameAppRoutes.depositBankMobile:
+          var value = await GameLobbyApi().depositByPaymentType(
+            amount: widget.amount,
+            paymentChannelId: int.parse(widget.paymentChannelId),
+            name: userName,
+          );
+          setSubmitState(value);
+          break;
+        default:
+          var value = await GameLobbyApi().makeOrderV2(
+            amount: widget.amount,
+            paymentChannelId: int.parse(widget.paymentChannelId),
+            name: userName,
+          );
+          setSubmitState(value);
+          break;
+      }
     } catch (e) {
       logger.e('pin 交易失敗: $e');
       setState(() {

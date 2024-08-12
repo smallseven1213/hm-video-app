@@ -85,11 +85,8 @@ class _GameLobbyState extends State<GameLobby>
         );
       } else {
         // 進入存款頁
-        final route = gameConfigController.switchPaymentPage.value ==
-                switchPaymentPageType['list']
-            ? GameAppRoutes.depositList
-            : GameAppRoutes.depositPolling;
-        MyRouteDelegate.of(context).push(route);
+        MyRouteDelegate.of(context)
+            .push(gameConfigController.depositRoute.value);
       }
     }
   }
@@ -182,12 +179,8 @@ class _GameLobbyState extends State<GameLobby>
                                   UserInfoDeposit(
                                     onTap: () {
                                       MyRouteDelegate.of(context).push(
-                                        gameConfigController
-                                                    .switchPaymentPage.value ==
-                                                switchPaymentPageType['list']
-                                            ? GameAppRoutes.depositList
-                                            : GameAppRoutes.depositPolling,
-                                      );
+                                          gameConfigController
+                                              .depositRoute.value);
                                     },
                                   ),
                                   // 提現
