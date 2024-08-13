@@ -116,7 +116,10 @@ class PostPage extends StatelessWidget {
                   // 照片 or 影片
                   FileListWidget(postDetail: postDetail.post),
                   // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
-                  SerialListWidget(series: postDetail.series),
+                  SerialListWidget(
+                    series: postDetail.series,
+                    totalChapter: postDetail.post.totalChapter ?? 0,
+                  ),
                   RecommendWidget(recommendations: postDetail.recommend)
                 ],
               ),

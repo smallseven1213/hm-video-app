@@ -18,6 +18,8 @@ class Post {
   final int? replyCount; // 回覆數
   final int? linkType; // 連結類型
   final String? link; // 連結
+  final bool? isLike; // 是否點讚
+  final int? totalChapter; // 總章節數
 
   Post(
     this.id,
@@ -36,6 +38,8 @@ class Post {
     this.link,
     this.viewCount,
     this.likeCount,
+    this.isLike,
+    this.totalChapter,
   )   : files = files ?? [],
         tags = tags ?? [];
 
@@ -61,6 +65,8 @@ class Post {
       json['link'],
       json['viewCount'],
       json['likeCount'],
+      json['isLike'],
+      json['totalChapter'] ?? 0,
     );
   }
 
@@ -85,6 +91,7 @@ class Post {
     data['files'] =
         files.isNotEmpty ? files.map((e) => e.toJson()).toList() : [];
     data['tags'] = tags.isNotEmpty ? tags.map((e) => e.toJson()).toList() : [];
+    data['totalChapter'] = totalChapter;
     return data;
   }
 }

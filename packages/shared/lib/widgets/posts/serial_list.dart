@@ -6,8 +6,13 @@ import 'package:shared/widgets/posts/post_stats.dart';
 
 class SerialListWidget extends StatelessWidget {
   final List<Series> series;
+  final int totalChapter;
 
-  const SerialListWidget({Key? key, required this.series}) : super(key: key);
+  const SerialListWidget({
+    Key? key,
+    required this.series,
+    required this.totalChapter,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,7 @@ class SerialListWidget extends StatelessWidget {
               ),
               const Spacer(),
               Text(
-                '連載中 至第${series.length}集',
+                '連載中 至第$totalChapter集',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xff919bb3),
@@ -74,7 +79,7 @@ class SerialListWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '第${index + 1}集', // 使用 index + 1 作為集數
+                              '第${serial.currentChapter}集',
                               style: const TextStyle(
                                   fontSize: 13,
                                   color: AppColors.darkText,
@@ -82,7 +87,7 @@ class SerialListWidget extends StatelessWidget {
                             ),
                             const SizedBox(height: 2),
                             Text(
-                              'serial.titleserial.titleserial.titleserial.titleserial.title${serial.title}',
+                              serial.title,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(
