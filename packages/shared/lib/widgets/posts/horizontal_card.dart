@@ -110,6 +110,8 @@ class PostHorizontalCard extends StatelessWidget {
                   PostStatsWidget(
                     viewCount: detail.viewCount ?? 0,
                     likeCount: detail.likeCount ?? 0,
+                    postId: detail.id,
+                    isInteractive: false,
                   ),
                   TagsWidget(tags: detail.tags),
                 ],

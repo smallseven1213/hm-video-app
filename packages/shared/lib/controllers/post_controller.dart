@@ -29,5 +29,4 @@ class PostController extends GetxController {
       isLoading.value = false;
     }
   }
-
 }

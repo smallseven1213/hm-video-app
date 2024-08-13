@@ -101,7 +101,6 @@ class PostPage extends StatelessWidget {
                     viewCount: postDetail.post.viewCount ?? 0,
                     likeCount: postDetail.post.likeCount ?? 0,
                     postId: postDetail.post.id,
-                    isLiked: postDetail.post.isLike,
                   ),
                   HtmlWidget(
                     postDetail.post.content ?? '',

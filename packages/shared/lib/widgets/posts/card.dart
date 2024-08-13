@@ -91,7 +91,6 @@ class PostCard extends StatelessWidget {
                 viewCount: detail.viewCount ?? 0,
                 likeCount: detail.likeCount ?? 0,
                 postId: detail.id,
-                isLiked: detail.isLike,
               ),
               GridView.count(
                 shrinkWrap: true, // 使 GridView 自適應高度

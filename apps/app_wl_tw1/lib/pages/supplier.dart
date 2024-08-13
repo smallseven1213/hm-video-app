@@ -33,7 +33,6 @@ class _SupplierPageState extends State<SupplierPage>
   late final SupplierShortController shortVideoController;
   late final SupplierVideoController supplierVideoController;
   late TabController _tabController;
-  late ChannelPostController? postController;
 
   @override
   void initState() {

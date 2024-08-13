@@ -10,7 +10,7 @@ import 'package:shared/widgets/sid_image.dart';
 class RecommendWidget extends StatelessWidget {
   final List<Recommend> recommendations;
 
-  RecommendWidget({required this.recommendations});
+  const RecommendWidget({super.key, required this.recommendations});
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,6 @@ class RecommendWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ...recommendations.asMap().entries.map((entry) {
-                  final int index = entry.key;
                   final Recommend recommendation = entry.value;
                   return InkWell(
                     onTap: () {
@@ -90,6 +89,8 @@ class RecommendWidget extends StatelessWidget {
                                   PostStatsWidget(
                                     viewCount: recommendation.viewCount,
                                     likeCount: recommendation.likeCount,
+                                    postId: recommendation.id,
+                                    isInteractive: false,
                                   ),
                                   // 標籤
 

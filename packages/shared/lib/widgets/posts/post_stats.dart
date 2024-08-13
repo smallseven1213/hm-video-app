@@ -1,58 +1,25 @@
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/apis/post_api.dart';
+import 'package:shared/controllers/post_like_controller.dart';
 
-// 定義顏色配置
 class AppColors {
   static const contentText = Colors.white;
   static const darkText = Color(0xff919bb3);
 }
 
-class PostStatsWidget extends StatefulWidget {
+class PostStatsWidget extends StatelessWidget {
   final int viewCount;
   final int likeCount;
-  final int? postId; // 將 postId 設為可選
-  final bool? isLiked;
+  final int? postId;
+  final bool? isInteractive;
 
   const PostStatsWidget({
     Key? key,
     required this.viewCount,
     required this.likeCount,
-    this.postId,
-    this.isLiked,
+    required this.postId,
+    this.isInteractive = true,
   }) : super(key: key);
-
-  @override
-  _PostStatsWidgetState createState() => _PostStatsWidgetState();
-}
-
-class _PostStatsWidgetState extends State<PostStatsWidget> {
-  late int likeCount;
-  bool? isLiked;
-
-  @override
-  void initState() {
-    super.initState();
-    likeCount = widget.likeCount;
-    isLiked = widget.isLiked;
-  }
-
-  void _toggleLike() async {
-    if (isLiked == null || widget.postId == null)
-      return; // 如果 isLiked 或 postId 為 null，則直接返回
-
-    bool success = await PostApi().likePost(widget.postId!, !isLiked!);
-    if (success) {
-      setState(() {
-        isLiked = !isLiked!;
-        likeCount += isLiked! ? 1 : -1;
-      });
-    } else {
-      // Handle the failure (e.g., show a message to the user)
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to update like status')),
-      );
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,26 +30,63 @@ class _PostStatsWidgetState extends State<PostStatsWidget> {
           const Icon(Icons.remove_red_eye, size: 15, color: AppColors.darkText),
           const SizedBox(width: 4),
           Text(
-            widget.viewCount.toString(),
+            viewCount.toString(),
             style: const TextStyle(fontSize: 13, color: AppColors.darkText),
           ),
           const SizedBox(width: 10),
-          GestureDetector(
-            onTap:
-                (isLiked != null && widget.postId != null) ? _toggleLike : null,
-            child: Icon(
-              isLiked == true ? Icons.favorite : Icons.favorite_border,
-              size: 15,
-              color: isLiked == true ? Colors.red : AppColors.darkText,
-            ),
-          ),
+          if (postId != null) _buildLikeButton() else _buildStaticLikeIcon(),
           const SizedBox(width: 4),
-          Text(
-            likeCount.toString(),
-            style: const TextStyle(fontSize: 13, color: AppColors.darkText),
-          ),
+          _buildLikeCount(),
         ],
       ),
+    );
+  }
+
+  Widget _buildLikeButton() {
+    return GetX<PostLikeController>(
+      init: PostLikeController(),
+      tag: 'post_like_$postId',
+      builder: (controller) {
+        bool isLiked = controller.isPostLiked(postId!);
+        return GestureDetector(
+          onTap: isInteractive == true
+              ? () => controller.toggleLike(postId!, likeCount)
+              : null,
+          child: Icon(
+            isLiked ? Icons.favorite : Icons.favorite_border,
+            size: 15,
+            color: isLiked ? Colors.red : AppColors.darkText,
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildStaticLikeIcon() {
+    return const Icon(
+      Icons.favorite_border,
+      size: 15,
+      color: AppColors.darkText,
+    );
+  }
+
+  Widget _buildLikeCount() {
+    if (postId == null) {
+      return Text(
+        likeCount.toString(),
+        style: const TextStyle(fontSize: 13, color: AppColors.darkText),
+      );
+    }
+
+    return GetX<PostLikeController>(
+      tag: 'post_like_$postId',
+      builder: (controller) {
+        int currentLikeCount = controller.getLikeCount(postId!, likeCount);
+        return Text(
+          currentLikeCount.toString(),
+          style: const TextStyle(fontSize: 13, color: AppColors.darkText),
+        );
+      },
     );
   }
 }
