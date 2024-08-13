@@ -78,4 +78,27 @@ class PostApi {
       return null;
     }
   }
+
+  // 貼文按讚
+  // 貼文按讚：{{api_host}}/api/{{api_version}}/post/like
+  // {
+  //     "id": 34,
+  //     "isLike": 1  // 1=按讚 0=取消按讚
+  // }
+  Future<bool> likePost(int id, bool isLike) async {
+    try {
+      var res = await fetcher(
+        url: '$apiPrefix/like',
+        method: 'POST',
+        body: {
+          'id': id,
+          'isLike': isLike ? 1 : 0,
+        },
+      );
+      return res.data['code'] == '00';
+    } catch (e) {
+      return false;
+    }
+  }
+
 }

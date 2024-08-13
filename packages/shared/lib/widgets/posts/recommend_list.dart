@@ -88,8 +88,9 @@ class RecommendWidget extends StatelessWidget {
                                   ),
                                   // 觀看和點讚數
                                   PostStatsWidget(
-                                      viewCount: recommendation.viewCount,
-                                      likeCount: recommendation.likeCount),
+                                    viewCount: recommendation.viewCount,
+                                    likeCount: recommendation.likeCount,
+                                  ),
                                   // 標籤
 
                                   Expanded(

@@ -88,6 +88,7 @@ class Post {
     data['replyCount'] = replyCount;
     data['linkType'] = linkType;
     data['link'] = link;
+    data['isLike'] = isLike;
     data['files'] =
         files.isNotEmpty ? files.map((e) => e.toJson()).toList() : [];
     data['tags'] = tags.isNotEmpty ? tags.map((e) => e.toJson()).toList() : [];
