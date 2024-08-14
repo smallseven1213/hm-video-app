@@ -153,10 +153,7 @@ class FileListWidget extends StatelessWidget {
   Widget _buildImageWidget(Files file) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: SidImage(
-        sid: file.cover,
-        width: double.infinity,
-      ),
+      child: SidImage(sid: file.cover),
     );
   }
 
