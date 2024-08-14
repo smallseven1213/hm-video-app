@@ -17,7 +17,7 @@ void purchase(
 }) async {
   try {
     Map results = await userApi.purchase(type.index, id);
-    bool coinNotEnough = results['code'] == '50508';
+    bool coinNotEnough = results['code'] == 402;
     if (results['code'] == '00') {
       onSuccess();
     } else {
