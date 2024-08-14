@@ -115,7 +115,7 @@ class PostPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   // 照片 or 影片
-                  FileListWidget(postDetail: postDetail.post),
+                  FileListWidget(postDetail: postDetail.post, context: context),
                   // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
                   SerialListWidget(
                     series: postDetail.series,
@@ -135,7 +135,13 @@ class PostPage extends StatelessWidget {
 class FileListWidget extends StatelessWidget {
   final Post postDetail;
 
-  const FileListWidget({Key? key, required this.postDetail}) : super(key: key);
+  final BuildContext context;
+
+  const FileListWidget({
+    Key? key,
+    required this.postDetail,
+    required this.context,
+  }) : super(key: key);
 
   String? _getVideoUrl(String videoUrl) {
     final systemConfigController = Get.find<SystemConfigController>();
@@ -153,7 +159,8 @@ class FileListWidget extends StatelessWidget {
   Widget _buildImageWidget(Files file) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: SidImage(sid: file.cover),
+      child:
+          SidImage(sid: file.cover, width: MediaQuery.of(context).size.width),
     );
   }
 
@@ -194,7 +201,6 @@ class FileListWidget extends StatelessWidget {
           if (postDetail.chargeType == ChargeType.vip.index) {
             MyRouteDelegate.of(context).push(AppRoutes.vip);
           } else {
-            postController.getPostDetail(postDetail.id);
             purchase(
               context,
               type: PurchaseType.post,

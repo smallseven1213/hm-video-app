@@ -68,6 +68,7 @@ class SerialListWidget extends StatelessWidget {
                       },
                       child: Container(
                         width: 156,
+                        height: 80,
                         decoration: BoxDecoration(
                           color: const Color(0xff1c202f),
                           borderRadius: BorderRadius.circular(8),

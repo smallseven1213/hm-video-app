@@ -55,19 +55,19 @@ class SidImageState extends State<SidImage> {
     final aspectRatio = frame.image.width / frame.image.height;
 
     if (widget.width == null && widget.height == null) {
-      // 如果寬度和高度都沒有提供，使用默認值
-      _width = 200;
-      _height = 200;
+      // 如果宽度和高度都没有提供，使用默认值
+      _width = MediaQuery.of(context).size.width; // 默认宽度为全屏宽度
+      _height = 200; // 默认高度
     } else if (widget.width == null) {
-      // 如果只提供了高度，根據高度和圖片比例計算寬度
+      // 如果只提供了高度，依据高度和图片比例计算宽度
       _height = widget.height!;
       _width = _height * aspectRatio;
     } else if (widget.height == null) {
-      // 如果只提供了寬度，根據寬度和圖片比例計算高度
+      // 如果只提供了宽度，依据宽度和图片比例计算高度
       _width = widget.width!;
       _height = _width / aspectRatio;
     } else {
-      // 如果寬度和高度都提供了，直接使用
+      // 如果宽度和高度都提供了，直接使用
       _width = widget.width!;
       _height = widget.height!;
     }
@@ -125,7 +125,8 @@ class SidImageState extends State<SidImage> {
         : widget.noFadeIn
             ? Image.memory(
                 image!,
-                width: _width,
+                width: widget.width ??
+                    MediaQuery.of(context).size.width, // 默认宽度为全屏宽度
                 height: _height,
                 fit: widget.fit,
                 alignment: widget.alignment,
@@ -133,12 +134,12 @@ class SidImageState extends State<SidImage> {
             : FadeInEffect(
                 child: Image.memory(
                   image!,
-                  width: widget.width,
-                  height: widget.height,
+                  width: widget.width ??
+                      MediaQuery.of(context).size.width, // 默认宽度为全屏宽度
+                  height: _height,
                   fit: widget.fit,
                   alignment: widget.alignment,
                 ),
               );
-    ;
   }
 }
