@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:shared/apis/post_api.dart';
 
 class PostLikeController extends GetxController {
   final _likedPosts = <int, bool>{}.obs;
@@ -12,13 +13,19 @@ class PostLikeController extends GetxController {
     return _likeCounts[postId] ?? initialCount;
   }
 
-  void toggleLike(int postId, int initialCount) {
+  Future<void> toggleLike(int postId, int initialCount) async {
     bool currentLikeStatus = _likedPosts[postId] ?? false;
-    _likedPosts[postId] = !currentLikeStatus;
+    bool newLikeStatus = !currentLikeStatus;
 
     int currentCount = _likeCounts[postId] ?? initialCount;
-    _likeCounts[postId] =
-        !currentLikeStatus ? currentCount + 1 : currentCount - 1;
+    int newCount = newLikeStatus ? currentCount + 1 : currentCount - 1;
+
+    bool success = await PostApi().likePost(postId, newLikeStatus);
+
+    if (success) {
+      _likedPosts[postId] = newLikeStatus;
+      _likeCounts[postId] = newCount;
+    } else {}
 
     update();
   }
@@ -27,4 +34,5 @@ class PostLikeController extends GetxController {
   void setLikeStatus(int postId, bool isLiked) {
     _likedPosts[postId] = isLiked;
   }
+
 }

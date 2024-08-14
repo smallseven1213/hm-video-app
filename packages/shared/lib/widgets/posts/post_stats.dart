@@ -45,7 +45,6 @@ class PostStatsWidget extends StatelessWidget {
   Widget _buildLikeButton() {
     return GetX<PostLikeController>(
       init: PostLikeController(),
-      tag: 'post_like_$postId',
       builder: (controller) {
         bool isLiked = controller.isPostLiked(postId!);
         return GestureDetector(
@@ -79,7 +78,6 @@ class PostStatsWidget extends StatelessWidget {
     }
 
     return GetX<PostLikeController>(
-      tag: 'post_like_$postId',
       builder: (controller) {
         int currentLikeCount = controller.getLikeCount(postId!, likeCount);
         return Text(
