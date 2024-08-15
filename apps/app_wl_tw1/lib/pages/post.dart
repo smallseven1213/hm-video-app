@@ -24,6 +24,7 @@ import 'package:shared/widgets/posts/recommend_list.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../screens/nodata/index.dart';
 import '../screens/video/video_player_area/index.dart';
@@ -85,44 +86,47 @@ class PostPage extends StatelessWidget {
             ],
           ),
           body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    postDetail.post.title,
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.contentText,
+            child: UIBottomSafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      postDetail.post.title,
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.contentText,
+                      ),
                     ),
-                  ),
-                  PostStatsWidget(
-                    viewCount: postDetail.post.viewCount ?? 0,
-                    likeCount: postDetail.post.likeCount ?? 0,
-                    postId: postDetail.post.id,
-                  ),
-                  HtmlWidget(
-                    postDetail.post.content ?? '',
-                    textStyle: const TextStyle(
-                      fontSize: 13,
-                      color: AppColors.contentText,
-                      fontWeight: FontWeight.w300,
+                    PostStatsWidget(
+                      viewCount: postDetail.post.viewCount ?? 0,
+                      likeCount: postDetail.post.likeCount ?? 0,
+                      postId: postDetail.post.id,
                     ),
-                  ),
-                  TagsWidget(
-                    tags: postDetail.post.tags,
-                  ),
-                  const SizedBox(height: 8),
-                  // 照片 or 影片
-                  FileListWidget(postDetail: postDetail.post, context: context),
-                  // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
-                  SerialListWidget(
-                    series: postDetail.series,
-                    totalChapter: postDetail.post.totalChapter ?? 0,
-                  ),
-                  RecommendWidget(recommendations: postDetail.recommend)
-                ],
+                    HtmlWidget(
+                      postDetail.post.content ?? '',
+                      textStyle: const TextStyle(
+                        fontSize: 13,
+                        color: AppColors.contentText,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    TagsWidget(
+                      tags: postDetail.post.tags,
+                    ),
+                    const SizedBox(height: 8),
+                    // 照片 or 影片
+                    FileListWidget(
+                        postDetail: postDetail.post, context: context),
+                    // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
+                    SerialListWidget(
+                      series: postDetail.series,
+                      totalChapter: postDetail.post.totalChapter ?? 0,
+                    ),
+                    RecommendWidget(recommendations: postDetail.recommend)
+                  ],
+                ),
               ),
             ),
           ),
