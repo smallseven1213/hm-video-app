@@ -113,7 +113,7 @@ class PostHorizontalCard extends StatelessWidget {
                     postId: detail.id,
                     isInteractive: false,
                   ),
-                  TagsWidget(tags: detail.tags),
+                  TagsWidget(tags: detail.tags, maxTags: 3, scrollable: true),
                 ],
               ),
             ),
