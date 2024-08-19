@@ -17,6 +17,7 @@ import '../controllers/game_area_controller.dart';
 import '../controllers/list_editor_controller.dart';
 import '../controllers/pageview_index_controller.dart';
 import '../controllers/play_record_controller.dart';
+import '../controllers/post_like_controller.dart';
 import '../controllers/redemption_controller.dart';
 import '../controllers/response_controller.dart';
 import '../controllers/route_controller.dart';
@@ -97,4 +98,6 @@ void setupDependencies() async {
   Get.lazyPut<GamePlatformConfigController>(
       () => GamePlatformConfigController());
   Get.lazyPut<GameAreaController>(() => GameAreaController());
+  Get.lazyPut<PostLikeController>(() => PostLikeController());
+
 }

@@ -3,6 +3,6 @@ enum PurchaseType {
   none,
   video,
   shortVideo,
-  post,
   comic,
+  post,
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:shared/controllers/post_like_controller.dart';
 import '../apis/post_api.dart';
 import '../models/infinity_posts.dart';
 import 'base_post_infinity_scroll_controller.dart';
@@ -9,7 +10,6 @@ final postApi = PostApi();
 final logger = Logger();
 
 class ChannelPostController extends BasePostInfinityScrollController {
-  // final int? postId;
   final String? keyword;
   final int? supplierId;
   final int? publisherId;
@@ -20,8 +20,9 @@ class ChannelPostController extends BasePostInfinityScrollController {
 
   var isError = false.obs;
 
+  final PostLikeController _postLikeController = Get.find<PostLikeController>();
+
   ChannelPostController({
-    // required this.postId,
     required ScrollController scrollController,
     this.keyword,
     this.supplierId,
@@ -50,6 +51,12 @@ class ChannelPostController extends BasePostInfinityScrollController {
       bool hasMoreData = res.totalCount > limit! * page;
       postCount.value = res.totalCount;
       isError.value = false;
+
+      // 初始化点赞状态到 PostLikeController
+      for (var post in res.posts) {
+        _postLikeController.setLikeStatus(post.id, post.isLike ?? false);
+      }
+
       return InfinityPosts(res.posts, res.totalCount, hasMoreData);
     } catch (e) {
       logger.e(e);
@@ -57,4 +64,5 @@ class ChannelPostController extends BasePostInfinityScrollController {
       return InfinityPosts([], 0, false);
     }
   }
+
 }

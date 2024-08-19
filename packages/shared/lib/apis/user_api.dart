@@ -525,8 +525,8 @@ class UserApi {
   }
 
   // user/purchase
-  // id: 1 = 長視頻, 2 = 短視頻, 3 = 貼文, 4 = 漫畫
-  Future<HMApiResponse> purchase(int type, int id) async {
+  // id: 1 = 長視頻, 2 = 短視頻, 3 = 漫畫, 4 = 貼文
+  Future<Map> purchase(int type, int id) async {
     var value = await fetcher(
       url: '$apiHost/api/v1/user/purchase',
       method: 'POST',
@@ -536,7 +536,6 @@ class UserApi {
       },
     );
     var res = (value.data as Map<String, dynamic>);
-
-    return HMApiResponse.fromJson(res);
+    return res;
   }
 }

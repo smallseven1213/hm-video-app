@@ -42,12 +42,16 @@ class TagsWidget extends StatelessWidget {
   final List<Tag> tags;
   final Color backgroundColor;
   final Color textColor;
+  final int? maxTags;
+  final bool scrollable;
 
   const TagsWidget({
     Key? key,
     required this.tags,
     this.backgroundColor = const Color.fromRGBO(104, 116, 182, 0.3),
     this.textColor = const Color(0xff919bb3),
+    this.maxTags,
+    this.scrollable = false,
   }) : super(key: key);
 
   @override
@@ -55,27 +59,58 @@ class TagsWidget extends StatelessWidget {
     if (tags.isEmpty) {
       return const SizedBox.shrink();
     }
+
+    final displayedTags = tags.take(maxTags ?? tags.length).toList();
+
     return Padding(
       padding: const EdgeInsets.only(top: 8),
-      child: Wrap(
-        spacing: 4,
-        runSpacing: 4,
-        children: tags
-            .map((tag) => TagItem(
-                  backgroundColor: backgroundColor,
-                  textColor: textColor,
-                  tag: tag.name,
-                  onTap: () {
-                    // Handle tag tap
-                    MyRouteDelegate.of(context).push(
-                      AppRoutes.tag,
-                      args: {'id': tag.id, 'title': tag.name, 'film': 3},
-                      removeSamePath: true,
-                    );
-                  },
-                ))
-            .toList(),
-      ),
+      child: scrollable
+          ? SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: displayedTags
+                    .map((tag) => Padding(
+                          padding: const EdgeInsets.only(right: 4),
+                          child: TagItem(
+                            backgroundColor: backgroundColor,
+                            textColor: textColor,
+                            tag: tag.name,
+                            onTap: () {
+                              // Handle tag tap
+                              MyRouteDelegate.of(context).push(
+                                AppRoutes.tag,
+                                args: {
+                                  'id': tag.id,
+                                  'title': tag.name,
+                                  'film': 3
+                                },
+                                removeSamePath: true,
+                              );
+                            },
+                          ),
+                        ))
+                    .toList(),
+              ),
+            )
+          : Wrap(
+              spacing: 4,
+              runSpacing: 4,
+              children: displayedTags
+                  .map((tag) => TagItem(
+                        backgroundColor: backgroundColor,
+                        textColor: textColor,
+                        tag: tag.name,
+                        onTap: () {
+                          // Handle tag tap
+                          MyRouteDelegate.of(context).push(
+                            AppRoutes.tag,
+                            args: {'id': tag.id, 'title': tag.name, 'film': 3},
+                            removeSamePath: true,
+                          );
+                        },
+                      ))
+                  .toList(),
+            ),
     );
   }
 }

@@ -23,6 +23,7 @@ class PostConsumerState extends State<PostConsumer> {
   @override
   void initState() {
     super.initState();
+    Get.delete<PostController>(tag: 'postId-${widget.id}');
     postController =
         Get.put(PostController(postId: widget.id), tag: 'postId-${widget.id}');
   }

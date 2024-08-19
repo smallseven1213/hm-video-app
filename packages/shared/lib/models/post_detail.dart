@@ -47,11 +47,13 @@ class Series {
   final int id;
   final String title;
   final String cover;
+  final int currentChapter;
 
   Series({
     required this.id,
     required this.title,
     required this.cover,
+    this.currentChapter = 0,
   });
 
   factory Series.fromJson(Map<String, dynamic> json) {
@@ -59,6 +61,7 @@ class Series {
       id: json['id'] ?? 0,
       title: json['title'] ?? '',
       cover: json['cover'] ?? '',
+      currentChapter: json['currentChapter'] ?? 0,
     );
   }
 
@@ -67,6 +70,7 @@ class Series {
       'id': id,
       'title': title,
       'cover': cover,
+      'currentChapter': currentChapter,
     };
   }
 }
