@@ -15,6 +15,7 @@ import 'package:shared/models/vod.dart';
 import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/handle_url.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
@@ -198,12 +199,33 @@ class FileListWidget extends StatelessWidget {
   Widget _buildUnlockButton(
       BuildContext context, PostController postController) {
     return Padding(
-      padding: const EdgeInsets.only(top: 8, bottom: 8),
+      padding: const EdgeInsets.symmetric(vertical: 10),
       child: Button(
-        text: '解鎖更多內容',
+        text: '觀看更多',
+        onPressed: () {
+          if (postDetail.linkType == LinkType.video.index) {
+            handlePathWithId(context, postDetail.link ?? '',
+                removeSamePath: true);
+          } else if (postDetail.linkType == LinkType.link.index) {
+            handleHttpUrl(postDetail.link ?? '');
+          } else {
+            return;
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildPurchaseButton(
+      BuildContext context, PostController postController) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Button(
+        text: postDetail.chargeType == ChargeType.vip.index
+            ? '成為VIP解鎖'
+            : '${postDetail.points} 金幣解鎖',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
-            MyRouteDelegate.of(context).push(AppRoutes.vip);
           } else {
             purchase(
               context,
@@ -232,6 +254,10 @@ class FileListWidget extends StatelessWidget {
       }
     }
     if (postDetail.isUnlock == false) {
+      fileWidgets.add(_buildPurchaseButton(context, postController));
+    } else if (postDetail.isUnlock &&
+        postDetail.link != null &&
+        postDetail.linkType != LinkType.none.index) {
       fileWidgets.add(_buildUnlockButton(context, postController));
     }
 
