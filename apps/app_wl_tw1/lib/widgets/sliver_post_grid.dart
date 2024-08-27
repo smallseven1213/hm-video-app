@@ -19,6 +19,7 @@ class SliverPostGrid extends StatefulWidget {
   final List<Widget>? headerExtends;
   final ScrollController? customScrollController;
   final bool? vertical;
+  final bool? displayFollowButton;
 
   const SliverPostGrid({
     Key? key,
@@ -28,7 +29,7 @@ class SliverPostGrid extends StatefulWidget {
     this.headerExtends,
     this.customScrollController,
     this.vertical = true,
-
+    this.displayFollowButton = true,
   }) : super(key: key);
 
   @override
@@ -108,6 +109,7 @@ class SliverPostGridState extends State<SliverPostGrid> {
                   (BuildContext context, int index) => widget.vertical == true
                       ? PostCard(
                           detail: postController!.postList[index],
+                          displayFollowButton: widget.displayFollowButton,
                         )
                       : PostHorizontalCard(
                           detail: postController!.postList[index],

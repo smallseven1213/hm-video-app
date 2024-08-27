@@ -25,11 +25,13 @@ class AppColors {
 class PostCard extends StatelessWidget {
   final bool? isDarkMode;
   final Post detail;
+  final bool? displayFollowButton;
 
   const PostCard({
     Key? key,
     required this.detail,
     this.isDarkMode = true,
+    this.displayFollowButton = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -52,34 +54,51 @@ class PostCard extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+          border:
+              Border(bottom: BorderSide(color: Color(0xff474747), width: 1)),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (detail.supplier != null)
-                Row(
-                  children: [
-                    AvatarWidget(
-                        photoSid: detail.supplier!.photoSid,
-                        backgroundColor: Colors.white),
-                    const SizedBox(width: 8),
-                    Text(
-                      detail.supplier!.aliasName ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
+              Row(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      MyRouteDelegate.of(context).push(
+                        AppRoutes.supplier,
+                        args: {'id': detail.supplier!.id},
+                        removeSamePath: true,
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        AvatarWidget(
+                            photoSid: detail.supplier!.photoSid,
+                            backgroundColor: Colors.white),
+                        const SizedBox(width: 8),
+                        Text(
+                          detail.supplier!.aliasName ?? '',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            color: textColor,
+                          ),
+                        ),
+                      ],
                     ),
-                    const Spacer(),
+                  ),
+                  const Spacer(),
+                  if (displayFollowButton == true)
                     FollowButton(
                       supplier: detail.supplier ?? Supplier(),
                       isDarkMode: darkMode,
                       backgroundColor: buttonColor,
                       textColor: textColor,
                     ),
-                  ],
-                ),
+                ],
+              ),
               const SizedBox(height: 8),
               Text(
                 detail.title,
@@ -179,7 +198,6 @@ class PostCard extends StatelessWidget {
               // create tag list
               TagsWidget(tags: detail.tags),
               const SizedBox(height: 16),
-              const Divider(height: 1, color: Colors.grey),
             ],
           ),
         ),

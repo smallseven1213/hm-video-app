@@ -102,6 +102,7 @@ class _SupplierPageState extends State<SupplierPage>
                 SliverPostGrid(
                   supplierId: widget.id,
                   customScrollController: _parentScrollController,
+                  displayFollowButton: false,
                 ),
                 NotificationListener<ScrollNotification>(
                   onNotification: (ScrollNotification scrollInfo) {

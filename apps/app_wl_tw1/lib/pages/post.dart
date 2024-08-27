@@ -59,23 +59,32 @@ class PostPage extends StatelessWidget {
           key: Key(
               'postDetail-${postDetail.post.id}-${postDetail.post.isUnlock}'),
           appBar: CustomAppBar(
-            titleWidget: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (postDetail.post.supplier != null)
-                  AvatarWidget(
-                    height: 30,
-                    width: 30,
-                    photoSid: postDetail!.post.supplier!.photoSid,
-                    backgroundColor: Color(0xFFFFFFFF),
-                  ),
-                const SizedBox(width: 8),
-                if (postDetail.post.supplier != null)
-                  Text(
-                    postDetail.post.supplier!.aliasName ?? '',
-                    style: const TextStyle(fontSize: 15),
-                  ),
-              ],
+            titleWidget: InkWell(
+              onTap: () {
+                MyRouteDelegate.of(context).push(
+                  AppRoutes.supplier,
+                  args: {'id': postDetail.post.supplier!.id},
+                  removeSamePath: true,
+                );
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (postDetail.post.supplier != null)
+                    AvatarWidget(
+                      height: 30,
+                      width: 30,
+                      photoSid: postDetail.post.supplier!.photoSid,
+                      backgroundColor: const Color(0xFFFFFFFF),
+                    ),
+                  const SizedBox(width: 8),
+                  if (postDetail.post.supplier != null)
+                    Text(
+                      postDetail.post.supplier!.aliasName ?? '',
+                      style: const TextStyle(fontSize: 15),
+                    ),
+                ],
+              ),
             ),
             actions: [
               if (postDetail.post.supplier != null)
@@ -172,7 +181,7 @@ class FileListWidget extends StatelessWidget {
   Widget _buildVideoWidget(Files file) {
     final videoUrl = _getVideoUrl(file.video);
     if (videoUrl == null) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
 
     return VideoPlayerProvider(

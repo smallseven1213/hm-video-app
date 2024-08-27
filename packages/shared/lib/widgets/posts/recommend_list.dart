@@ -48,65 +48,76 @@ class RecommendWidget extends StatelessWidget {
                 ...recommendations.asMap().entries.map((entry) {
                   final Recommend recommendation = entry.value;
                   return InkWell(
-                    onTap: () {
-                      MyRouteDelegate.of(context).push(
-                        AppRoutes.post,
-                        args: {'id': recommendation.id},
-                        removeSamePath: true,
-                      );
-                    },
-                    child: Container(
-                        height: 100,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 0, vertical: 4),
-                        margin: const EdgeInsets.only(bottom: 8),
-                        child: Row(
-                          children: [
-                            SizedBox(height: 4),
-                            // 圖片
-                            SizedBox(
-                              width: 164,
+                      onTap: () {
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.post,
+                          args: {'id': recommendation.id},
+                          removeSamePath: true,
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Container(
                               height: 100,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: SidImage(sid: recommendation.cover),
-                              ),
-                            ),
-                            SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 0, vertical: 10),
+                              child: Row(
                                 children: [
-                                  // 標題
-                                  Text(
-                                    recommendation.title,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 12, color: Colors.white),
-                                    maxLines: 2,
-                                  ),
-                                  // 觀看和點讚數
-                                  PostStatsWidget(
-                                    viewCount: recommendation.viewCount,
-                                    likeCount: recommendation.likeCount,
-                                    postId: recommendation.id,
-                                    isInteractive: false,
-                                  ),
-                                  // 標籤
-
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment.bottomLeft,
+                                  const SizedBox(height: 4),
+                                  // 圖片
+                                  SizedBox(
+                                    width: 164,
+                                    height: 100,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
                                       child:
-                                          TagsWidget(tags: recommendation.tags),
+                                          SidImage(sid: recommendation.cover),
                                     ),
                                   ),
+                                  const SizedBox(width: 8),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        // 標題
+                                        Text(
+                                          recommendation.title,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.white),
+                                          maxLines: 1,
+                                        ),
+                                        // 觀看和點讚數
+                                        PostStatsWidget(
+                                          viewCount: recommendation.viewCount,
+                                          likeCount: recommendation.likeCount,
+                                          postId: recommendation.id,
+                                          isInteractive: false,
+                                        ),
+                                        // 標籤
+                                        Expanded(
+                                          child: Align(
+                                            alignment: Alignment.bottomLeft,
+                                            child: TagsWidget(
+                                              tags: recommendation.tags,
+                                              maxTags: 3,
+                                              scrollable: true,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 ],
-                              ),
-                            )
-                          ],
-                        )),
-                  );
+                              )),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8),
+                            child: Divider(height: 1, color: Color(0xff1e212c)),
+                          ),
+                        ],
+                      ));
                 }).toList()
               ],
             ),
