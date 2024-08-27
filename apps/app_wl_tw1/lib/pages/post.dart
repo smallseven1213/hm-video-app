@@ -70,29 +70,26 @@ class PostPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  if (postDetail.post.supplier != null)
-                    AvatarWidget(
-                      height: 30,
-                      width: 30,
-                      photoSid: postDetail.post.supplier!.photoSid,
-                      backgroundColor: const Color(0xFFFFFFFF),
-                    ),
+                  AvatarWidget(
+                    height: 30,
+                    width: 30,
+                    photoSid: postDetail.post.supplier!.photoSid,
+                    backgroundColor: const Color(0xFFFFFFFF),
+                  ),
                   const SizedBox(width: 8),
-                  if (postDetail.post.supplier != null)
-                    Text(
-                      postDetail.post.supplier!.aliasName ?? '',
-                      style: const TextStyle(fontSize: 15),
-                    ),
+                  Text(
+                    postDetail.post.supplier!.aliasName ?? '',
+                    style: const TextStyle(fontSize: 15),
+                  ),
                 ],
               ),
             ),
             actions: [
-              if (postDetail.post.supplier != null)
-                Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 17),
-                  child: FollowButton(supplier: postDetail.post.supplier!),
-                ),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 17),
+                child: FollowButton(supplier: postDetail.post.supplier!),
+              ),
             ],
           ),
           body: SingleChildScrollView(
@@ -208,9 +205,10 @@ class FileListWidget extends StatelessWidget {
   Widget _buildUnlockButton(
       BuildContext context, PostController postController) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Button(
         text: '觀看更多',
+        size: 'large',
         onPressed: () {
           if (postDetail.linkType == LinkType.video.index) {
             handlePathWithId(context, postDetail.link ?? '',
@@ -228,13 +226,15 @@ class FileListWidget extends StatelessWidget {
   Widget _buildPurchaseButton(
       BuildContext context, PostController postController) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Button(
         text: postDetail.chargeType == ChargeType.vip.index
             ? '成為VIP解鎖'
             : '${postDetail.points} 金幣解鎖',
+        size: 'large',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
+            MyRouteDelegate.of(context).push(AppRoutes.vip);
           } else {
             purchase(
               context,
