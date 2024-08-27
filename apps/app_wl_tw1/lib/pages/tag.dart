@@ -1,14 +1,13 @@
 import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
+import 'package:app_wl_tw1/widgets/sliver_post_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
 import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/tag_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../widgets/list_no_more.dart';
-import '../widgets/sliver_post_grid.dart';
 import '../widgets/sliver_vod_grid.dart';
 
 class TagPage extends StatefulWidget {
@@ -28,9 +27,9 @@ class TagPage extends StatefulWidget {
 }
 
 class TagPageState extends State<TagPage> {
-  // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
   late final TagVodController vodController;
+  late final ChannelPostController postController;
 
   @override
   void initState() {
@@ -39,11 +38,17 @@ class TagPageState extends State<TagPage> {
       tagId: widget.id,
       scrollController: scrollController,
     );
+    postController = ChannelPostController(
+      tagId: widget.id,
+      scrollController: scrollController,
+      limit: 10,
+    );
   }
 
   @override
   void dispose() {
     vodController.dispose();
+    postController.dispose();
     if (scrollController.hasClients) {
       scrollController.dispose();
     }
@@ -57,7 +62,17 @@ class TagPageState extends State<TagPage> {
         title: '#${widget.title}',
       ),
       body: widget.film == 3
-          ? SliverPostGrid(tagId: widget.id, vertical: false)
+          ? Obx(() => SliverPostGrid(
+                posts: postController.postList,
+                isError: postController.isError.value,
+                isListEmpty: postController.isListEmpty.value,
+                displayLoading: postController.displayLoading.value,
+                displayNoMoreData: postController.displayNoMoreData.value,
+                onReload: postController.pullToRefresh,
+                onScrollEnd: postController.loadMoreData,
+                customScrollController: scrollController,
+                vertical: false,
+              ))
           : Obx(
               () {
                 if (widget.film == 2) {

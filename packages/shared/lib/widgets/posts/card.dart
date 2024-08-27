@@ -25,13 +25,13 @@ class AppColors {
 class PostCard extends StatelessWidget {
   final bool? isDarkMode;
   final Post detail;
-  final bool? displayFollowButton;
+  final bool? displaySupplierInfo;
 
   const PostCard({
     Key? key,
     required this.detail,
     this.isDarkMode = true,
-    this.displayFollowButton = true,
+    this.displaySupplierInfo = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -63,42 +63,42 @@ class PostCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      MyRouteDelegate.of(context).push(
-                        AppRoutes.supplier,
-                        args: {'id': detail.supplier!.id},
-                        removeSamePath: true,
-                      );
-                    },
-                    child: Row(
-                      children: [
-                        AvatarWidget(
-                            photoSid: detail.supplier!.photoSid,
-                            backgroundColor: Colors.white),
-                        const SizedBox(width: 8),
-                        Text(
-                          detail.supplier!.aliasName ?? '',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: textColor,
+              if (displaySupplierInfo == true)
+                Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.supplier,
+                          args: {'id': detail.supplier!.id},
+                          removeSamePath: true,
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          AvatarWidget(
+                              photoSid: detail.supplier!.photoSid,
+                              backgroundColor: Colors.white),
+                          const SizedBox(width: 8),
+                          Text(
+                            detail.supplier!.aliasName ?? '',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const Spacer(),
-                  if (displayFollowButton == true)
+                    const Spacer(),
                     FollowButton(
                       supplier: detail.supplier ?? Supplier(),
                       isDarkMode: darkMode,
                       backgroundColor: buttonColor,
                       textColor: textColor,
                     ),
-                ],
-              ),
+                  ],
+                ),
               const SizedBox(height: 8),
               Text(
                 detail.title,
