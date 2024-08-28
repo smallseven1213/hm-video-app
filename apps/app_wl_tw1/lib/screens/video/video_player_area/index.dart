@@ -111,7 +111,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
       width: MediaQuery.sizeOf(context).width,
       height: playerHeight,
       child: VideoPlayerConsumer(
-        tag: widget.videoUrl,
+        tag: widget.tag,
         child: (videoPlayerInfo) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
           var aspectRatio = videoSize.width == 0 || videoSize.height == 0
@@ -171,7 +171,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
               ),
               ControlsOverlay(
-                videoUrl: widget.videoUrl,
+                tag: widget.tag,
                 name: widget.video.title,
                 isFullscreen: isFullscreen,
                 onScreenLock: (bool isLocked) {

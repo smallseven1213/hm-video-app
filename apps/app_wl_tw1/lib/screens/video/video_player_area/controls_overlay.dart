@@ -17,20 +17,20 @@ import 'volume_brightness.dart';
 final logger = Logger();
 
 class ControlsOverlay extends StatefulWidget {
-  final String videoUrl;
   final String? name;
   final Function toggleFullscreen;
   final bool isFullscreen;
   final Function onScreenLock;
   final bool isScreenLocked;
+  final String tag;
   const ControlsOverlay(
       {Key? key,
       this.name,
       required this.toggleFullscreen,
       required this.isFullscreen,
-      required this.videoUrl,
       required this.onScreenLock,
-      required this.isScreenLocked})
+      required this.isScreenLocked,
+      required this.tag})
       : super(key: key);
 
   @override
@@ -59,7 +59,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-      tag: widget.videoUrl,
+      tag: widget.tag,
       child: (VideoPlayerInfo videoPlayerInfo) =>
           LayoutBuilder(builder: (context, constraints) {
         if (videoPlayerInfo.videoPlayerController == null) {

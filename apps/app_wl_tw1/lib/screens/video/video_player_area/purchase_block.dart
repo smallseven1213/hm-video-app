@@ -109,7 +109,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                   ],
                 )
               : VideoPlayerConsumer(
-                  tag: widget.videoUrl,
+                  tag: widget.tag,
                   child: (VideoPlayerInfo videoPlayerInfo) {
                     return Stack(
                       alignment: Alignment.center,

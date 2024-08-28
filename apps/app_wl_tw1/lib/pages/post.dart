@@ -145,7 +145,6 @@ class PostPage extends StatelessWidget {
 
 class FileListWidget extends StatelessWidget {
   final Post postDetail;
-
   final BuildContext context;
 
   const FileListWidget({
@@ -182,9 +181,9 @@ class FileListWidget extends StatelessWidget {
     }
 
     return VideoPlayerProvider(
-      key: Key(videoUrl),
-      tag: videoUrl,
-      autoPlay: false,
+      key: Key('post-$videoUrl'),
+      tag: 'post-$videoUrl',
+      autoPlay: true,
       videoUrl: videoUrl,
       videoDetail: Vod(0, ''),
       loadingWidget: AspectRatio(
@@ -193,10 +192,9 @@ class FileListWidget extends StatelessWidget {
       ),
       child: (isReady, controller) {
         return VideoPlayerArea(
-          name: '',
           videoUrl: videoUrl,
           video: Vod(0, ''),
-          tag: videoUrl,
+          tag: 'post-$videoUrl',
         );
       },
     );
