@@ -1,4 +1,4 @@
-import 'package:app_wl_tw1/utils/purchase.dart';
+import 'package:app_wl_tw1/utils/show_confirm_dialog.dart';
 import 'package:app_wl_tw1/widgets/button.dart';
 import 'package:app_wl_tw1/widgets/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,7 @@ import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/handle_url.dart';
+import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
@@ -239,6 +240,7 @@ class FileListWidget extends StatelessWidget {
               type: PurchaseType.post,
               id: postDetail.id,
               onSuccess: () => postController.getPostDetail(postDetail.id),
+              showConfirmDialog: showConfirmDialog,
             );
           }
         },
