@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:app_wl_tw2/utils/purchase.dart';
+import 'package:shared/utils/purchase.dart';
+import 'package:app_wl_tw2/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'enums.dart';
+
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
@@ -156,6 +159,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                               ),
                               InkWell(
                                 onTap: () => purchase(context,
+                                    type: PurchaseType.video,
                                     id: int.parse(widget.id.toString()),
                                     onSuccess: () {
                                   final videoDetailController =
@@ -163,7 +167,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                           tag: widget.tag);
                                   videoDetailController.mutateAll();
                                   videoPlayerInfo.videoPlayerController?.play();
-                                }),
+                                },
+                                showConfirmDialog: showConfirmDialog,
+                                ),
                                 child: Container(
                                   padding: const EdgeInsets.only(
                                     top: 5,

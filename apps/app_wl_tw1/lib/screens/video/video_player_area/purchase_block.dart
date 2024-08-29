@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:app_wl_tw1/utils/purchase.dart';
+import 'package:shared/utils/purchase.dart';
+import 'package:app_wl_tw1/utils/show_confirm_dialog.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/enums/charge_type.dart';
@@ -158,6 +159,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                               InkWell(
                                 onTap: () => purchase(
                                   context,
+                                  type: PurchaseType.video,
                                   id: widget.id,
                                   onSuccess: () {
                                     final controllerTag =
@@ -170,6 +172,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     videoPlayerInfo.videoPlayerController
                                         ?.play();
                                   },
+                                  showConfirmDialog: showConfirmDialog,
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.only(
