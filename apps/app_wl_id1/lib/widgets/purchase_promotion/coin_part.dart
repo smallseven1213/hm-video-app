@@ -5,6 +5,7 @@ import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/utils/video_info_formatter.dart';
+import 'package:shared/enums/purchase_type.dart';
 
 import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
@@ -87,6 +88,7 @@ class Coin extends StatelessWidget {
               text: I18n.payToWatch,
               onPressed: () => purchase(
                 context,
+                type: PurchaseType.video,
                 id: videoId,
                 onSuccess: onSuccess!,
                 showConfirmDialog: showConfirmDialog,
@@ -139,6 +141,7 @@ class Coin extends StatelessWidget {
             onPressed: () {
               purchase(
                 context,
+                type: PurchaseType.video,
                 id: videoId,
                 onSuccess: onSuccess!,
                 showConfirmDialog: showConfirmDialog,

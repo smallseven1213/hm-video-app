@@ -442,6 +442,6 @@ class UserApi {
     );
     var res = (value.data as Map<String, dynamic>);
     return HMApiResponse.fromJson(res);
-    ;
+    
   }
 }

@@ -5,8 +5,10 @@ import 'package:shared/models/user.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/video_info_formatter.dart';
+import 'package:shared/utils/purchase.dart';
+import 'package:shared/enums/purchase_type.dart';
 
-import '../../utils/purchase.dart';
+import '../../utils/show_confirm_dialog.dart';
 import '../button.dart';
 
 enum Direction {
@@ -88,8 +90,10 @@ class Coin extends StatelessWidget {
               text: '付費觀看',
               onPressed: () => purchase(
                 context,
+                type: PurchaseType.video,
                 id: videoId,
                 onSuccess: onSuccess!,
+                showConfirmDialog: showConfirmDialog,
               ),
             ),
           ),
@@ -146,8 +150,10 @@ class Coin extends StatelessWidget {
             text: '付費觀看',
             onPressed: () => purchase(
               context,
+              type: PurchaseType.video,
               id: videoId,
               onSuccess: onSuccess!,
+              showConfirmDialog: showConfirmDialog,
             ),
           ),
         ),
