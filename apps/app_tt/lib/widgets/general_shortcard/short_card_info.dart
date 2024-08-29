@@ -19,12 +19,14 @@ class ShortCardInfo extends StatefulWidget {
   final String tag;
   final bool showAvatar;
   final String? controllerTag;
+  final String videoUrl;
 
   const ShortCardInfo({
     Key? key,
     required this.data,
     required this.title,
     required this.tag,
+    required this.videoUrl,
     this.showAvatar = true,
     this.controllerTag,
   }) : super(key: key);
@@ -62,7 +64,7 @@ class ShortCardInfoState extends State<ShortCardInfo> {
   @override
   Widget build(BuildContext context) {
     return VideoPlayerConsumer(
-        tag: widget.tag,
+        tag: widget.videoUrl,
         child: (VideoPlayerInfo videoPlayerInfo) {
           if (videoPlayerInfo.videoPlayerController == null) {
             return Container();

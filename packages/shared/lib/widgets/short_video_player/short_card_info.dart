@@ -35,6 +35,7 @@ class ShortCardInfo extends StatelessWidget {
   final bool showAvatar;
   final Function showConfirmDialog;
   final bool? showMuteButton;
+  final String? videoUrl;
 
   ShortCardInfo({
     Key? key,
@@ -42,6 +43,7 @@ class ShortCardInfo extends StatelessWidget {
     required this.title,
     required this.tag,
     required this.showConfirmDialog,
+    required this.videoUrl,
     this.showAvatar = false,
     this.showMuteButton = true,
   }) : super(key: key);
@@ -184,7 +186,7 @@ class ShortCardInfo extends StatelessWidget {
   Widget _buildPurchaseButton({
     context,
     onTap,
-    video,
+    videoUrl,
     borderColor,
     textColor,
     text,
@@ -227,7 +229,7 @@ class ShortCardInfo extends StatelessWidget {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
     return VideoPlayerConsumer(
-      tag: tag,
+      tag: videoUrl ?? '',
       child: (VideoPlayerInfo videoPlayerInfo) {
         return Container(
             width: MediaQuery.sizeOf(context).width,
@@ -308,6 +310,7 @@ class ShortCardInfo extends StatelessWidget {
                                             ))
                                         : _buildPurchaseButton(
                                             context: context,
+                                            videoUrl: videoUrl,
                                             onTap: () {
                                               videoPlayerInfo
                                                   .observableVideoPlayerController

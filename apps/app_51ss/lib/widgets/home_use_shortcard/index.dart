@@ -8,7 +8,6 @@ import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
-import 'package:shared/widgets/short_video_player/side_info.dart';
 import '../../screens/video/video_player_area/flash_loading.dart';
 import '../../utils/show_confirm_dialog.dart';
 
@@ -67,7 +66,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
       child: Stack(
         children: [
           VideoPlayerProvider(
-            tag: widget.tag,
+            tag: widget.videoUrl,
             autoPlay: kIsWeb ? false : true,
             videoUrl: widget.videoUrl,
             video: widget.shortData,
@@ -86,6 +85,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                 ShortCard(
                   index: widget.index,
                   tag: widget.tag,
+                  videoUrl: widget.videoUrl,
                   isActive: widget.isActive,
                   id: widget.shortData.id,
                   title: widget.shortData.title,
@@ -114,6 +114,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                                   videoDetail != null
                                       ? ShortCardInfo(
                                           tag: widget.tag,
+                                          videoUrl: widget.videoUrl,
                                           data: videoDetail,
                                           title: widget.title,
                                           showConfirmDialog: showConfirmDialog,

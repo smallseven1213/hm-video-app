@@ -10,7 +10,6 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
-import 'package:shared/widgets/short_video_player/side_info.dart';
 import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
 import '../loading_animation.dart';
@@ -82,7 +81,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
           children: [
             VideoPlayerProvider(
               key: Key(widget.videoUrl),
-              tag: widget.tag,
+              tag: widget.videoUrl,
               autoPlay: kIsWeb ? false : canWatch,
               videoUrl: widget.videoUrl,
               video: widget.shortData,
@@ -99,6 +98,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
               child: (isReady, controller) => ShortCard(
                 key: Key(widget.tag),
                 index: widget.index,
+                videoUrl: widget.videoUrl,
                 tag: widget.tag,
                 isActive: widget.isActive,
                 id: widget.shortData.id,
@@ -131,6 +131,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                             videoDetail != null
                                 ? ShortCardInfo(
                                     key: Key(videoUrl!),
+                                    videoUrl: widget.videoUrl,
                                     tag: widget.tag,
                                     data: videoDetail,
                                     title: widget.title,
@@ -161,6 +162,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                         ? ShortCardInfo(
                             key: Key(videoUrl!),
                             tag: widget.tag,
+                            videoUrl: widget.videoUrl,
                             data: videoDetail,
                             title: widget.title,
                             controllerTag: widget.controllerTag ?? "",
