@@ -4,8 +4,8 @@ import 'package:shared/models/color_keys.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../../config/colors.dart';
-import '../button.dart';
+import '../../../config/colors.dart';
+import '../../../widgets/button.dart';
 
 class VipPart extends StatelessWidget {
   final int timeLength;

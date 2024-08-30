@@ -5,6 +5,7 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/models/hm_api_response.dart';
 
 final vodApi = VodApi();
 final userApi = UserApi();
@@ -16,16 +17,16 @@ void purchase(
   required Function onSuccess,
 }) async {
   try {
-    Map results = await userApi.purchase(type.index, id);
-    bool coinNotEnough = results['code'] == 402;
-    if (results['code'] == '00') {
+    HMApiResponse results = await userApi.purchase(type.index, id);
+    bool coinNotEnough = results.code == '402';
+    if (results.code == '00') {
       onSuccess();
     } else {
       if (context.mounted) {
         showConfirmDialog(
           context: context,
           title: coinNotEnough ? '金幣餘額不足' : '購買失敗',
-          message: coinNotEnough ? '請立即前往充值已獲得最完整的體驗' : results['message'],
+          message: coinNotEnough ? '請立即前往充值已獲得最完整的體驗' : results.message,
           showCancelButton: coinNotEnough,
           confirmButtonText: coinNotEnough ? '前往充值' : '確認',
           cancelButtonText: '取消',

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
+import 'package:shared/utils/purchase.dart';
 
 import '../../screens/video/video_player_area/enums.dart';
-import '../../utils/purchase.dart';
+import '../../utils/show_confirm_dialog.dart';
 
 class PurchaseWidget extends StatelessWidget {
   final int vodId;
@@ -32,8 +34,7 @@ class PurchaseWidget extends StatelessWidget {
         child: video!.isAvailable == false
             ? video.chargeType == ChargeType.vip.index
                 ? InkWell(
-                    onTap: () =>
-                        MyRouteDelegate.of(context).push(AppRoutes.vip),
+                    onTap: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
                     child: Stack(
                       children: [
                         Container(
@@ -62,8 +63,7 @@ class PurchaseWidget extends StatelessWidget {
                           top: -1,
                           left: -1,
                           child: Image(
-                            image: AssetImage(
-                                'assets/images/purchase/icon-short-vip.webp'),
+                            image: AssetImage('assets/images/purchase/icon-short-vip.webp'),
                             width: 25,
                           ),
                         ),
@@ -73,13 +73,13 @@ class PurchaseWidget extends StatelessWidget {
                 : InkWell(
                     onTap: () => purchase(
                       context,
+                      type: PurchaseType.shortVideo,
                       id: video.id,
                       onSuccess: () {
-                        final ShortVideoDetailController
-                            shortVideoDetailController =
-                            Get.find<ShortVideoDetailController>(tag: tag);
+                        final ShortVideoDetailController shortVideoDetailController = Get.find<ShortVideoDetailController>(tag: tag);
                         shortVideoDetailController.mutateAll();
                       },
+                      showConfirmDialog: showConfirmDialog,
                     ),
                     child: Stack(
                       children: [
@@ -109,8 +109,7 @@ class PurchaseWidget extends StatelessWidget {
                           top: -1,
                           left: -1,
                           child: Image(
-                            image: AssetImage(
-                                'assets/images/purchase/icon-short-coin.webp'),
+                            image: AssetImage('assets/images/purchase/icon-short-coin.webp'),
                             width: 30,
                           ),
                         ),

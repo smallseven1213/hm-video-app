@@ -7,6 +7,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 
@@ -167,6 +168,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                               InkWell(
                                 onTap: () => purchase(
                                   context,
+                                  type: PurchaseType.video,
                                   id: widget.id,
                                   onSuccess: () {
                                     final videoDetailController =
