@@ -25,11 +25,11 @@ import 'package:shared/widgets/posts/serial_list.dart';
 import 'package:shared/widgets/posts/recommend_list.dart';
 
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:shared/widgets/posts/video_player_area/index.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
 
 import '../screens/nodata/index.dart';
-import '../screens/video/video_player_area/index.dart';
 import '../screens/video/video_player_area/loading.dart';
 
 // 定義顏色配置
