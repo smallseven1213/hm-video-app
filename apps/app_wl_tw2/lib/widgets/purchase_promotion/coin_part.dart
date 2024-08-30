@@ -8,8 +8,8 @@ import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/enums/purchase_type.dart';
 
-import '../../../utils/show_confirm_dialog.dart';
-import '../../../widgets/button.dart';
+import '../../utils/show_confirm_dialog.dart';
+import '../button.dart';
 
 enum Direction {
   horizontal,
