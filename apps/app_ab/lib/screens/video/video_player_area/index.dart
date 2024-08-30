@@ -161,7 +161,6 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 videoId: videoId,
                 videoPlayerInfo: videoPlayerInfo,
                 timeLength: timeLength,
-                onSuccess: onSuccess,
               ),
             );
           }
