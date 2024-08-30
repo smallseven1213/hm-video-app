@@ -5,7 +5,6 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
-import 'package:shared/widgets/video/purchase_promotion.dart';
 import 'package:video_player/video_player.dart';
 
 import 'controls_overlay.dart';
@@ -137,7 +136,6 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 aspectRatio: aspectRatio,
                 child: VideoPlayer(videoPlayerInfo.videoPlayerController!),
               ),
-              // VideoPlayer(videoPlayerInfo.videoPlayerController!),
               ControlsOverlay(
                 tag: widget.tag,
                 name: widget.video.title,
