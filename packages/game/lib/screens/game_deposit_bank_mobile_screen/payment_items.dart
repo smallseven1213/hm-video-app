@@ -89,17 +89,17 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
   List paymentListItem = [
     {
-      "id": 99,
-      "name": "TransferBank",
-      "code": "99",
-      "icon": 'packages/game/assets/images/game_deposit/icon-transferbank.webp',
-    },
-    {
       "id": 100,
       "name": "MobileDeposit",
       "code": "100",
       "icon":
           "packages/game/assets/images/game_deposit/icon-mobiledeposit.webp",
+    },
+    {
+      "id": 99,
+      "name": "TransferBank",
+      "code": "99",
+      "icon": 'packages/game/assets/images/game_deposit/icon-transferbank.webp',
     },
   ];
 
