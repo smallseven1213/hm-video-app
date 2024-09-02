@@ -188,7 +188,7 @@ const Map<String, String> idIdStrings = {
   "withdrawal": "Penarikan",
   "balance": "Saldo",
   "insufficient_password": "Kata sandi tidak cukup",
-  "wrong_password": "Kata sandi salah",
+  "wrong_password": "Silakan atur kata sandi dana terlebih dahulu",
   "duplicate_login": "Login ganda",
   "duplicated": "Terduplikasi",
   "currently_under_maintenance": "Sedang dalam perawatan",
