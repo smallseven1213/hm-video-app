@@ -11,8 +11,8 @@ import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/goto_deposit.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../../localization/i18n.dart';
-import '../button.dart';
+import '../../../localization/i18n.dart';
+import '../../../widgets/button.dart';
 
 class VipPart extends StatelessWidget {
   final int timeLength;
