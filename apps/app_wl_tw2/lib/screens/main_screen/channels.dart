@@ -40,6 +40,8 @@ Map<int, Function(SlimChannel channelData, int layoutId)> styleWidgetMap = {
       ),
   7: (channelData, layoutId) => ChannelStyle7(
         key: ValueKey(channelData.id),
+        channelId: channelData.id,
+        layoutId: layoutId,
       ),
 };
 

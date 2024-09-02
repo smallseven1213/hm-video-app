@@ -1,7 +1,9 @@
 import 'package:app_wl_tw2/config/colors.dart';
+import 'package:app_wl_tw2/widgets/sliver_post_grid.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/supplier_short_controller.dart';
 import 'package:shared/controllers/supplier_video_controller.dart';
 import 'package:shared/models/color_keys.dart';
@@ -30,6 +32,8 @@ class _SupplierPageState extends State<SupplierPage>
   late ScrollController _parentScrollController;
   late final SupplierShortController shortVideoController;
   late final SupplierVideoController supplierVideoController;
+  late final ChannelPostController postController;
+
   late TabController _tabController;
 
   @override
@@ -41,17 +45,25 @@ class _SupplierPageState extends State<SupplierPage>
         supplierId: widget.id, scrollController: _parentScrollController);
     supplierVideoController = SupplierVideoController(
         supplierId: widget.id, scrollController: _parentScrollController);
-
+    postController = ChannelPostController(
+            supplierId: widget.id, scrollController: _parentScrollController);
+            
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
 
-        if (_tabController.index == 0) {
+        if (_tabController.index == 1) {
           shortVideoController.reset();
+          postController.reset();
           shortVideoController.loadMoreData();
-        } else {
+        } else if (_tabController.index == 2) {
           supplierVideoController.reset();
+          postController.reset();
           supplierVideoController.loadMoreData();
+        } else {
+          postController.loadMoreData();
+          shortVideoController.reset();
+          supplierVideoController.reset();
         }
       }
     });
@@ -63,6 +75,7 @@ class _SupplierPageState extends State<SupplierPage>
     _parentScrollController.dispose();
     shortVideoController.dispose();
     supplierVideoController.dispose();
+    postController.dispose();
     super.dispose();
   }
 
@@ -103,6 +116,28 @@ class _SupplierPageState extends State<SupplierPage>
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
                         _tabController.index == 0) {
+                      postController.loadMoreData();
+                    }
+                    return false;
+                  },
+                  child: Obx(() => SliverPostGrid(
+                        posts: postController.postList,
+                        displayLoading: postController.displayLoading.value,
+                        displayNoMoreData:
+                            postController.displayNoMoreData.value,
+                        isListEmpty: postController.isListEmpty.value,
+                        isError: postController.isError.value,
+                        onReload: postController.pullToRefresh,
+                        onScrollEnd: postController.loadMoreData,
+                        displaySupplierInfo: false,
+                      )),
+                ),
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo is ScrollEndNotification &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        _tabController.index == 1) {
                       shortVideoController.loadMoreData();
                     }
                     return false;
@@ -122,7 +157,7 @@ class _SupplierPageState extends State<SupplierPage>
                     if (scrollInfo is ScrollEndNotification &&
                         scrollInfo.metrics.pixels ==
                             scrollInfo.metrics.maxScrollExtent &&
-                        _tabController.index == 1) {
+                        _tabController.index == 2) {
                       supplierVideoController.loadMoreData();
                     }
                     return false;
