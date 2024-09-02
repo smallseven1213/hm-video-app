@@ -120,7 +120,7 @@ class _SupplierPageState extends State<SupplierPage>
                     return false;
                   },
                   child: Obx(() => SliverPostGrid(
-                        posts: postController.postList,
+                        posts: postController.postList.value,
                         displayLoading: postController.displayLoading.value,
                         displayNoMoreData:
                             postController.displayNoMoreData.value,
