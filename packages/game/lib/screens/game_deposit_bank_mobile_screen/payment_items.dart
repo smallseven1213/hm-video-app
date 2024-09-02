@@ -28,7 +28,7 @@ class DepositPaymentItems extends StatefulWidget {
 }
 
 class _DepositPaymentItemsState extends State<DepositPaymentItems> {
-  String _paymentActiveIndex = '99';
+  String _paymentActiveIndex = '100';
   int _channelActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
