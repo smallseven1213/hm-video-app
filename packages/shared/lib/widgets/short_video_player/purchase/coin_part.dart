@@ -155,7 +155,7 @@ class Coin extends StatelessWidget {
             text: localizations.translate('pay_to_watch'),
             onPressed: () => purchase(
               context,
-              type: PurchaseType.video,
+              type: PurchaseType.shortVideo,
               id: videoId,
               onSuccess: () {
                 final ShortVideoDetailController shortVideoDetailController =
