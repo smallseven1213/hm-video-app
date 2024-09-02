@@ -178,6 +178,37 @@ class GameLobbyApi {
     return res['data']['paymentLink'];
   }
 
+  // 已更換api host from login
+  // 綁定資金密碼
+  Future<HMApiResponseBaseWithDataWithData<bool>> checkPaymentPin(
+      String paymentPin) async {
+    var value = await fetcher(
+        url:
+            '${systemConfig.apiHost}/public/users/user/payment/payment-pin-code',
+        method: 'POST',
+        body: {'paymentPin': paymentPin});
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    return HMApiResponseBaseWithDataWithData<bool>.fromJson(res);
+  }
+
+  // 已更換api host from login
+  // 更新資金密碼
+  Future<void> updatePaymentPin(String paymentPin) async {
+    var value = await fetcher(
+        url:
+            '${systemController.apiHost.value}/public/users/user/payment/payment-pin-code',
+        method: 'PATCH',
+        body: {'paymentPin': paymentPin});
+    var res = (value.data as Map<String, dynamic>);
+    _checkMaintenance(res['code']);
+
+    if (res['code'] != '00') {
+      throw Exception(res['message']);
+    }
+  }
+
   // =================================== 以下 API HOST FROM VIDEO =================================== //
 
   Future<void> register() => shared_fetcher.fetcher(
@@ -275,33 +306,6 @@ class GameLobbyApi {
       "code": "00",
       "data": UserWithdrawalData.fromJson(res['data']),
     };
-  }
-
-  // 檢查資金密碼，使用get call user/paymentPin?paymentPin=, function會將paymentPin帶入
-  Future<HMApiResponseBaseWithDataWithData<bool>> checkPaymentPin(
-      String paymentPin) async {
-    var value = await shared_fetcher.fetcher(
-        url:
-            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/paymentPin?paymentPin=$paymentPin');
-    var res = (value.data as Map<String, dynamic>);
-    _checkMaintenance(res['code']);
-
-    return HMApiResponseBaseWithDataWithData<bool>.fromJson(res);
-  }
-
-  // 更新資金密碼
-  Future<void> updatePaymentPin(String paymentPin) async {
-    var value = await shared_fetcher.fetcher(
-        url:
-            '${systemController.apiHost.value}/public/tp-game-platform/tp-game-platform/paymentPin',
-        method: 'PUT',
-        body: {'paymentPin': paymentPin});
-    var res = (value.data as Map<String, dynamic>);
-    _checkMaintenance(res['code']);
-
-    if (res['code'] != '00') {
-      throw Exception(res['message']);
-    }
   }
 
   // 取得用戶流水
