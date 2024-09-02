@@ -1,14 +1,15 @@
-import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:shared/enums/purchase_type.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/user.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
+import 'package:shared/modules/user/user_info_v2_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/utils/purchase.dart';
 import 'package:shared/utils/video_info_formatter.dart';
+import 'package:shared/enums/purchase_type.dart';
 
-import '../../utils/purchase.dart';
-import '../button.dart';
+import '../../../localization/i18n.dart';
+import '../../../utils/show_confirm_dialog.dart';
+import '../../../widgets/button.dart';
 
 enum Direction {
   horizontal,
@@ -30,7 +31,7 @@ class Coin extends StatelessWidget {
     required this.videoId,
     required this.videoPlayerInfo,
     required this.timeLength,
-    this.direction = Direction.horizontal,
+    this.direction = Direction.vertical,
     this.onSuccess,
   });
 
@@ -46,49 +47,51 @@ class Coin extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Text(
-                '試看結束，此影片需付費購買',
-                style: TextStyle(
+              Text(
+                I18n.thisMovieIsAvailableForPurchase,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                '片長：${getTimeString(timeLength)}',
+                '${I18n.lengthOfFilm}：${getTimeString(timeLength)}',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 13,
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                '價格：$buyPoints金幣',
-                style: TextStyle(
-                  color: AppColors.colors[ColorKeys.secondary],
-                  fontSize: 10,
+                '${I18n.price}：$buyPoints${I18n.coins}',
+                style: const TextStyle(
+                  color: Color(0xffffd900),
+                  fontSize: 13,
                 ),
               ),
               Text(
-                '您目前擁有的金幣：$userPoints金幣',
+                '${I18n.yourCurrentCoins}：$userPoints${I18n.coins}',
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 12,
+                  fontSize: 13,
                 ),
               ),
             ],
           ),
           const SizedBox(width: 15),
           SizedBox(
-            width: 90,
+            width: 100,
             height: 35,
             child: Button(
               size: 'small',
-              text: '付費觀看',
+              text: I18n.payToWatch,
               onPressed: () => purchase(
                 context,
+                type: PurchaseType.video,
                 id: videoId,
                 onSuccess: onSuccess!,
+                showConfirmDialog: showConfirmDialog,
               ),
             ),
           ),
@@ -100,54 +103,50 @@ class Coin extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              '試看結束，此影片需付費購買',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-            Text(
-              '片長：${getTimeString(timeLength)}',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-              ),
-            ),
-            Text(
-              '價格：$buyPoints金幣',
-              style: TextStyle(
-                color: AppColors.colors[ColorKeys.secondary],
-                fontSize: 13,
-              ),
-            ),
-            Text(
-              '您目前擁有的金幣：$userPoints金幣',
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-              ),
-            ),
-          ],
+        Text(
+          I18n.endOfTrialUpgradeToFullVersion,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        Text(
+          '${I18n.lengthOfFilm}：${getTimeString(timeLength)}',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+        Text('${I18n.price}：$buyPoints${I18n.coins}',
+            style: const TextStyle(
+              color: Color(0xffffd900),
+              fontSize: 13,
+            )),
+        Text(
+          '${I18n.yourCurrentCoins}：$userPoints${I18n.coins}',
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 13,
+          ),
         ),
         const SizedBox(height: 10),
         SizedBox(
-          width: 100,
+          width: 150,
           height: 35,
           child: Button(
             size: 'small',
-            text: '付費觀看',
-            onPressed: () => purchase(
-              context,
-              id: videoId,
-              onSuccess: onSuccess!,
-            ),
+            text: I18n.payToWatch,
+            onPressed: () {
+              purchase(
+                context,
+                type: PurchaseType.video,
+                id: videoId,
+                onSuccess: onSuccess!,
+                showConfirmDialog: showConfirmDialog,
+              );
+            },
           ),
         ),
       ],
@@ -170,19 +169,25 @@ class CoinPart extends StatelessWidget {
     required this.videoPlayerInfo,
     required this.timeLength,
     this.onSuccess,
-    this.direction = Direction.horizontal,
+    this.direction = Direction.vertical,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return UserInfoConsumer(
-      child: (User info, isVIP, isGuest, isLoading) {
-        if (info.id.isEmpty) {
+    return UserInfoV2Consumer(
+      child: (
+        info,
+        isVIP,
+        isGuest,
+        isLoading,
+        isInfoV2Init,
+      ) {
+        if (isInfoV2Init == false) {
           return const SizedBox();
         }
         return Coin(
           direction: direction,
-          userPoints: info.points ?? '0',
+          userPoints: info.points.toString(),
           buyPoints: buyPoints,
           videoId: videoId,
           videoPlayerInfo: videoPlayerInfo,

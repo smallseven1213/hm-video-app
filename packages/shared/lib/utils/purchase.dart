@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/apis/user_api.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/hm_api_response.dart';
 import 'package:shared/navigator/delegate.dart';
 
 import '../localization/shared_localization_delegate.dart';
 
 final vodApi = VodApi();
+final userApi = UserApi();
 
 void purchase(
   BuildContext context, {
+  PurchaseType type = PurchaseType.video,
   required int id,
   required Function onSuccess,
   required Function showConfirmDialog,
@@ -17,7 +21,7 @@ void purchase(
   SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
   try {
-    HMApiResponse results = await vodApi.purchase(id);
+    HMApiResponse results = await userApi.purchase(type.index, id);
     bool coinNotEnough = results.code == '50508';
     if (results.code == '00') {
       onSuccess();
@@ -25,20 +29,12 @@ void purchase(
       if (context.mounted) {
         showConfirmDialog(
           context: context,
-          title: coinNotEnough
-              ? localizations.translate('insufficient_gold_balance')
-              : localizations.translate('purchase_failed'),
-          message: coinNotEnough
-              ? localizations.translate('go_to_top_up_now_for_full_exp')
-              : results.message,
+          title: coinNotEnough ? localizations.translate('insufficient_gold_balance') : localizations.translate('purchase_failed'),
+          message: coinNotEnough ? localizations.translate('go_to_top_up_now_for_full_exp') : results.message,
           showCancelButton: coinNotEnough,
-          confirmButtonText: coinNotEnough
-              ? localizations.translate('go_to_top_up')
-              : localizations.translate('confirm'),
+          confirmButtonText: coinNotEnough ? localizations.translate('go_to_top_up') : localizations.translate('confirm'),
           cancelButtonText: localizations.translate('cancel'),
-          onConfirm: () => coinNotEnough
-              ? MyRouteDelegate.of(context).push(AppRoutes.coin)
-              : null,
+          onConfirm: () => coinNotEnough ? MyRouteDelegate.of(context).push(AppRoutes.coin) : null,
         );
       }
     }

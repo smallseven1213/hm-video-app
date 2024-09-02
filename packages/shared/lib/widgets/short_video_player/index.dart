@@ -35,10 +35,12 @@ class ShortCard extends StatefulWidget {
   })? coinPartBuilder;
   final Function showConfirmDialog;
   final bool? showProgressBar;
+  final String videoUrl;
 
   const ShortCard({
     Key? key,
     required this.tag,
+    required this.videoUrl,
     required this.index,
     required this.id,
     required this.title,
@@ -69,7 +71,7 @@ class ShortCardState extends State<ShortCard> {
         uiController.isIphoneSafari.value ? 20 : screen.padding.bottom;
 
     return VideoPlayerConsumer(
-      tag: widget.tag,
+      tag: widget.videoUrl,
       child: (VideoPlayerInfo videoPlayerInfo) {
         if (videoPlayerInfo.videoPlayerController == null) {
           return Container();
@@ -222,6 +224,7 @@ class ShortCardState extends State<ShortCard> {
                           tag: widget.tag,
                           videoId: widget.shortData.id,
                           shortData: widget.shortData,
+                          videoUrl: videoUrl ?? '',
                         ),
                       ),
               ),

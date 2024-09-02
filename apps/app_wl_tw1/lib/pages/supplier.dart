@@ -1,4 +1,5 @@
 import 'package:app_wl_tw1/config/colors.dart';
+import 'package:app_wl_tw1/widgets/sliver_post_grid.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,6 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import '../screens/supplier/card.dart';
 import '../screens/supplier/list.dart';
 import '../widgets/list_no_more.dart';
-import '../widgets/sliver_post_grid.dart';
 import '../widgets/sliver_vod_grid.dart';
 import '../widgets/tab_bar.dart';
 
@@ -32,6 +32,8 @@ class _SupplierPageState extends State<SupplierPage>
   late ScrollController _parentScrollController;
   late final SupplierShortController shortVideoController;
   late final SupplierVideoController supplierVideoController;
+  late final ChannelPostController postController;
+
   late TabController _tabController;
 
   @override
@@ -43,17 +45,25 @@ class _SupplierPageState extends State<SupplierPage>
         supplierId: widget.id, scrollController: _parentScrollController);
     supplierVideoController = SupplierVideoController(
         supplierId: widget.id, scrollController: _parentScrollController);
+    postController = ChannelPostController(
+        supplierId: widget.id, scrollController: _parentScrollController);
 
     _tabController.addListener(() {
       if (_tabController.indexIsChanging) {
         _parentScrollController.jumpTo(0.0);
 
-        if (_tabController.index == 0) {
+        if (_tabController.index == 1) {
           shortVideoController.reset();
+          postController.reset();
           shortVideoController.loadMoreData();
-        } else {
+        } else if (_tabController.index == 2) {
           supplierVideoController.reset();
+          postController.reset();
           supplierVideoController.loadMoreData();
+        } else {
+          postController.loadMoreData();
+          shortVideoController.reset();
+          supplierVideoController.reset();
         }
       }
     });
@@ -65,6 +75,7 @@ class _SupplierPageState extends State<SupplierPage>
     _parentScrollController.dispose();
     shortVideoController.dispose();
     supplierVideoController.dispose();
+    postController.dispose();
     super.dispose();
   }
 
@@ -97,11 +108,28 @@ class _SupplierPageState extends State<SupplierPage>
             body: TabBarView(
               controller: _tabController,
               physics: kIsWeb ? null : const BouncingScrollPhysics(),
-              // physics: const NeverScrollableScrollPhysics(),
               children: [
-                SliverPostGrid(
-                  supplierId: widget.id,
-                  customScrollController: _parentScrollController,
+                NotificationListener<ScrollNotification>(
+                  onNotification: (ScrollNotification scrollInfo) {
+                    if (scrollInfo is ScrollEndNotification &&
+                        scrollInfo.metrics.pixels ==
+                            scrollInfo.metrics.maxScrollExtent &&
+                        _tabController.index == 0) {
+                      postController.loadMoreData();
+                    }
+                    return false;
+                  },
+                  child: Obx(() => SliverPostGrid(
+                        posts: postController.postList.value,
+                        displayLoading: postController.displayLoading.value,
+                        displayNoMoreData:
+                            postController.displayNoMoreData.value,
+                        isListEmpty: postController.isListEmpty.value,
+                        isError: postController.isError.value,
+                        onReload: postController.pullToRefresh,
+                        onScrollEnd: postController.loadMoreData,
+                        displaySupplierInfo: false,
+                      )),
                 ),
                 NotificationListener<ScrollNotification>(
                   onNotification: (ScrollNotification scrollInfo) {

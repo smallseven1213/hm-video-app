@@ -1,3 +1,4 @@
+import 'package:app_wl_tw1/widgets/sliver_post_grid.dart';
 import 'package:app_wl_tw1/widgets/tab_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:shared/controllers/search_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import '../../widgets/list_no_more.dart';
-import '../../widgets/sliver_post_grid.dart';
 import '../../widgets/sliver_vod_grid.dart';
 
 final vodApi = VodApi();
@@ -30,6 +30,7 @@ class SearchResultPageState extends State<SearchResultPage>
   final searchTempShortController = Get.find<SearchTempShortController>();
   late final SearchVodController searchVodController;
   late final SearchVodController searchShortController;
+  late final ChannelPostController postController;
 
   @override
   void initState() {
@@ -38,6 +39,11 @@ class SearchResultPageState extends State<SearchResultPage>
     searchVodController = SearchVodController(keyword: widget.keyword, film: 1);
     searchShortController =
         SearchVodController(keyword: widget.keyword, film: 2);
+    postController = ChannelPostController(
+      keyword: widget.keyword,
+      scrollController: scrollController,
+      limit: 10,
+    );
 
     searchShortController.vodList.listen((p0) {
       searchTempShortController.replaceVideos(p0);
@@ -49,6 +55,8 @@ class SearchResultPageState extends State<SearchResultPage>
   void dispose() {
     _tabController.dispose();
     searchVodController.dispose();
+    searchShortController.dispose();
+    postController.dispose();
     super.dispose();
   }
 
@@ -65,7 +73,6 @@ class SearchResultPageState extends State<SearchResultPage>
             '貼文',
           ],
         ),
-        // SliverVodGrid
         Expanded(
           child: TabBarView(
             controller: _tabController,
@@ -121,7 +128,17 @@ class SearchResultPageState extends State<SearchResultPage>
                   );
                 }),
               ),
-              SliverPostGrid(keyword: widget.keyword, vertical: false),
+              Obx(() => SliverPostGrid(
+                    posts: postController.postList,
+                    isError: postController.isError.value,
+                    isListEmpty: postController.isListEmpty.value,
+                    displayLoading: postController.displayLoading.value,
+                    displayNoMoreData: postController.displayNoMoreData.value,
+                    onReload: postController.pullToRefresh,
+                    onScrollEnd: postController.loadMoreData,
+                    customScrollController: scrollController,
+                    vertical: false,
+                  )),
             ],
           ),
         ),

@@ -1,6 +1,13 @@
 import 'package:shared/models/supplier.dart';
 import 'package:shared/models/tag.dart';
 
+enum LinkType {
+  none,
+  video,
+  comic,
+  link,
+}
+
 class Post {
   final int id; // 貼文 ID
   final String title; // 貼文標題
@@ -16,10 +23,11 @@ class Post {
   final int? likeCount; // 貼文點讚數
   final String? cover; // 封面
   final int? replyCount; // 回覆數
-  final int? linkType; // 連結類型
+  final int? linkType; // 1: 影片, 2: 漫畫, 3: 連結,
   final String? link; // 連結
   final bool? isLike; // 是否點讚
   final int? totalChapter; // 總章節數
+  final String? points; // 解鎖所需金幣數量
 
   Post(
     this.id,
@@ -40,6 +48,7 @@ class Post {
     this.likeCount,
     this.isLike,
     this.totalChapter,
+    this.points,
   )   : files = files ?? [],
         tags = tags ?? [];
 
@@ -67,6 +76,7 @@ class Post {
       json['likeCount'],
       json['isLike'],
       json['totalChapter'] ?? 0,
+      json['points'] ?? '0',
     );
   }
 
@@ -93,6 +103,7 @@ class Post {
         files.isNotEmpty ? files.map((e) => e.toJson()).toList() : [];
     data['tags'] = tags.isNotEmpty ? tags.map((e) => e.toJson()).toList() : [];
     data['totalChapter'] = totalChapter;
+    data['points'] = points;
     return data;
   }
 }

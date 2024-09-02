@@ -8,8 +8,8 @@ import 'package:shared/utils/screen_control.dart';
 import 'package:shared/widgets/video/purchase_promotion.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../widgets/purchase_promotion/coin_part.dart';
-import '../../../widgets/purchase_promotion/vip_part.dart';
+import '../video_player_area/coin_part.dart';
+import '../video_player_area/vip_part.dart';
 import 'controls_overlay.dart';
 import 'error.dart';
 import 'loading.dart';
@@ -158,6 +158,7 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 videoId: videoId,
                 videoPlayerInfo: videoPlayerInfo,
                 timeLength: timeLength,
+                onSuccess: onSuccess,
               ),
             );
           }

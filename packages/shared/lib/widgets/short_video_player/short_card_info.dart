@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/enums/charge_type.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -9,6 +10,7 @@ import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/utils/video_info_formatter.dart';
+import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/avatar.dart';
 import 'package:shared/widgets/short_video_player/purchase_promotion.dart';
 import 'package:shared/widgets/short_video_player/short_card_info_tag.dart';
@@ -35,6 +37,7 @@ class ShortCardInfo extends StatelessWidget {
   final bool showAvatar;
   final Function showConfirmDialog;
   final bool? showMuteButton;
+  final String? videoUrl;
 
   ShortCardInfo({
     Key? key,
@@ -42,6 +45,7 @@ class ShortCardInfo extends StatelessWidget {
     required this.title,
     required this.tag,
     required this.showConfirmDialog,
+    required this.videoUrl,
     this.showAvatar = false,
     this.showMuteButton = true,
   }) : super(key: key);
@@ -94,32 +98,6 @@ class ShortCardInfo extends StatelessWidget {
           );
         }
         break;
-    }
-  }
-
-  // 購買方法
-  void purchase(
-    BuildContext context, {
-    required int id,
-    required Function onSuccess,
-  }) async {
-    SharedLocalizations localizations = SharedLocalizations.of(context)!;
-
-    try {
-      HMApiResponse results = await vodApi.purchase(id);
-      handlePurchaseResult(context, results,
-          onSuccess: onSuccess, localizations: localizations);
-    } catch (e) {
-      // ignore: use_build_context_synchronously
-      showConfirmDialog(
-        context: context,
-        title: localizations.translate('purchase_failed'),
-        message: localizations.translate('purchase_failed'),
-        showCancelButton: false,
-        onConfirm: () {
-          // Navigator.of(context).pop();
-        },
-      );
     }
   }
 
@@ -184,7 +162,7 @@ class ShortCardInfo extends StatelessWidget {
   Widget _buildPurchaseButton({
     context,
     onTap,
-    video,
+    videoUrl,
     borderColor,
     textColor,
     text,
@@ -227,7 +205,7 @@ class ShortCardInfo extends StatelessWidget {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
     return VideoPlayerConsumer(
-      tag: tag,
+      tag: videoUrl ?? '',
       child: (VideoPlayerInfo videoPlayerInfo) {
         return Container(
             width: MediaQuery.sizeOf(context).width,
@@ -308,6 +286,7 @@ class ShortCardInfo extends StatelessWidget {
                                             ))
                                         : _buildPurchaseButton(
                                             context: context,
+                                            videoUrl: videoUrl,
                                             onTap: () {
                                               videoPlayerInfo
                                                   .observableVideoPlayerController
@@ -315,6 +294,7 @@ class ShortCardInfo extends StatelessWidget {
                                                   ?.pause();
                                               purchase(
                                                 context,
+                                                type: PurchaseType.shortVideo,
                                                 id: video.id,
                                                 onSuccess: () {
                                                   final ShortVideoDetailController
@@ -325,6 +305,7 @@ class ShortCardInfo extends StatelessWidget {
                                                   shortVideoDetailController
                                                       .mutateAll();
                                                 },
+                                                showConfirmDialog: showConfirmDialog,
                                               );
                                             },
                                             borderColor:

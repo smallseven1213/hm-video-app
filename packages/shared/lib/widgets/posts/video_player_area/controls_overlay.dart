@@ -1,10 +1,8 @@
-import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
-import 'package:shared/models/color_keys.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 
@@ -173,21 +171,25 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     width: constraints.maxWidth,
                     color: Colors.transparent,
                   )),
-              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
-                PlayerHeader(
-                  isFullscreen: widget.isFullscreen,
-                  title: widget.name,
-                  toggleFullscreen: widget.toggleFullscreen,
-                ),
+              // if (videoPlayerInfo.displayHeader == true &&
+              //     (videoPlayerInfo.displayControls ||
+              //         !videoPlayerInfo.isPlaying))
+              //   PlayerHeader(
+              //     isFullscreen: widget.isFullscreen,
+              //     title: widget.name,
+              //     toggleFullscreen: widget.toggleFullscreen,
+              //   ),
 
-              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
-                Positioned(
-                  top: 50,
-                  left: 20,
-                  child: MuteVolumeButton(
-                      controller:
-                          videoPlayerInfo.observableVideoPlayerController),
-                ),
+              // if (videoPlayerInfo.displayHeader == true &&
+              //     (videoPlayerInfo.displayControls ||
+              //         !videoPlayerInfo.isPlaying))
+              //   Positioned(
+              //     top: 50,
+              //     left: 20,
+              //     child: MuteVolumeButton(
+              //         controller:
+              //             videoPlayerInfo.observableVideoPlayerController),
+              //   ),
               if (videoPlayerInfo.inBuffering && !videoPlayerInfo.isScrolling)
                 const Center(
                   child: CircularProgressIndicator(color: Colors.white),
@@ -271,7 +273,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 Positioned(
                   bottom: widget.isFullscreen ? 30 : 0,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
+                    width: constraints.maxWidth,
                     child: Row(
                       children: [
                         IconButton(
@@ -299,8 +301,8 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                               // trackShape: CustomTrackShape(),
                               trackHeight: 4.0, // 這可以設定滑塊軌道的高度
                               thumbShape: TransparentSliderThumbShape(),
-                              activeTrackColor: AppColors.colors[
-                                  ColorKeys.secondary], // 滑塊左邊（或上面）的部分的顏色
+                              activeTrackColor:
+                                  Color.fromARGB(255, 247, 165, 43),
                               inactiveTrackColor: const Color(0xffb5925c)
                                   .withOpacity(0.5), // 滑塊右邊（或下面）的部分的顏色
                               overlayShape: const RoundSliderOverlayShape(
@@ -342,18 +344,18 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                             color: Colors.white,
                           ),
                         ),
-                        kIsWeb && widget.isFullscreen
-                            ? const SizedBox(width: 8.0)
-                            : IconButton(
-                                onPressed: () => widget
-                                    .toggleFullscreen(!widget.isFullscreen),
-                                icon: Icon(
-                                  widget.isFullscreen
-                                      ? Icons.close_fullscreen_rounded
-                                      : Icons.fullscreen,
-                                  color: Colors.white,
-                                ),
-                              ),
+                        // kIsWeb && widget.isFullscreen
+                        //     ? const SizedBox(width: 8.0)
+                        //     : IconButton(
+                        //         onPressed: () => widget
+                        //             .toggleFullscreen(!widget.isFullscreen),
+                        //         icon: Icon(
+                        //           widget.isFullscreen
+                        //               ? Icons.close_fullscreen_rounded
+                        //               : Icons.fullscreen,
+                        //           color: Colors.white,
+                        //         ),
+                        //       ),
                       ],
                     ),
                   ),

@@ -30,7 +30,6 @@ class VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
-    final controllerTag = genaratorLongVideoDetailTag(id.toString());
 
     var name = widget.args['name'];
     return VideoScreenProvider(
@@ -79,7 +78,7 @@ class VideoState extends State<Video> {
                         name: name,
                         videoUrl: videoUrl,
                         video: videoDetail,
-                        tag: controllerTag,
+                        tag: videoUrl,
                       );
                     },
                   ),
@@ -88,7 +87,7 @@ class VideoState extends State<Video> {
                       id: id,
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
-                      tag: controllerTag,
+                      tag: videoUrl,
                     ),
                   Expanded(
                     child: NestedTabBarView(

@@ -28,7 +28,7 @@ class DepositPaymentItems extends StatefulWidget {
 }
 
 class _DepositPaymentItemsState extends State<DepositPaymentItems> {
-  String _paymentActiveIndex = '99';
+  String _paymentActiveIndex = '100';
   int _channelActiveIndex = 0;
   final amountController = TextEditingController();
   final _formKey = GlobalKey<FormBuilderState>();
@@ -89,17 +89,17 @@ class _DepositPaymentItemsState extends State<DepositPaymentItems> {
 
   List paymentListItem = [
     {
-      "id": 99,
-      "name": "TransferBank",
-      "code": "99",
-      "icon": 'packages/game/assets/images/game_deposit/icon-transferbank.webp',
-    },
-    {
       "id": 100,
       "name": "MobileDeposit",
       "code": "100",
       "icon":
           "packages/game/assets/images/game_deposit/icon-mobiledeposit.webp",
+    },
+    {
+      "id": 99,
+      "name": "TransferBank",
+      "code": "99",
+      "icon": 'packages/game/assets/images/game_deposit/icon-transferbank.webp',
     },
   ];
 

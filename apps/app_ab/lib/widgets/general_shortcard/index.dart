@@ -85,7 +85,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
           children: [
             VideoPlayerProvider(
               key: Key(widget.videoUrl),
-              tag: widget.tag,
+              tag: widget.videoUrl,
               autoPlay: kIsWeb ? false : canWatch,
               videoUrl: widget.videoUrl,
               video: widget.shortData,
@@ -103,6 +103,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                 key: Key(widget.tag),
                 index: widget.index,
                 tag: widget.tag,
+                videoUrl: widget.videoUrl,
                 isActive: widget.isActive,
                 id: widget.shortData.id,
                 title: widget.shortData.title,
@@ -133,6 +134,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                             videoDetail != null
                                 ? ShortCardInfo(
                                     tag: widget.tag,
+                                    videoUrl: widget.videoUrl,
                                     data: videoDetail,
                                     title: widget.title,
                                     showConfirmDialog: showConfirmDialog,

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/widgets/sid_image.dart';
 
 import '../../enums/charge_type.dart';
@@ -67,8 +68,10 @@ class PurchasePromotion extends StatelessWidget {
                   videoPlayerInfo: videoPlayerInfo,
                   timeLength: timeLength,
                   onSuccess: () {
+                    final controllerTag =
+                        genaratorLongVideoDetailTag(videoId.toString());
                     final videoDetailController =
-                        Get.find<VideoDetailController>(tag: tag);
+                        Get.find<VideoDetailController>(tag: controllerTag);
                     videoDetailController.mutateAll();
                     videoPlayerInfo.videoPlayerController?.play();
                   },

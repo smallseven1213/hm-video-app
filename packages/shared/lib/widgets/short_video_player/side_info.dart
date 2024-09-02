@@ -20,12 +20,14 @@ class SideInfo extends StatefulWidget {
   final int videoId;
   final Vod shortData;
   final String tag;
+  final String videoUrl;
 
   const SideInfo({
     Key? key,
     required this.videoId,
     required this.shortData,
     required this.tag,
+    required this.videoUrl,
   }) : super(key: key);
 
   @override
@@ -41,7 +43,7 @@ class SideInfoState extends State<SideInfo> {
         Get.find<UserFavoritesShortController>();
 
     return VideoPlayerConsumer(
-        tag: widget.tag,
+        tag: widget.videoUrl,
         child: (VideoPlayerInfo videoPlayerInfo) {
           return Positioned(
             right: 8,

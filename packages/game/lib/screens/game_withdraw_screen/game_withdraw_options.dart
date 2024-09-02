@@ -1,17 +1,16 @@
-import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-
 import 'package:game/controllers/game_withdraw_controller.dart';
+import 'package:game/models/game_withdraw_stack_limit.dart';
+import 'package:game/models/user_withdrawal_data.dart';
 import 'package:game/screens/game_theme_config.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options_bankcard.dart';
 import 'package:game/screens/game_withdraw_screen/game_withdraw_options_button.dart';
 import 'package:game/utils/show_confirm_dialog.dart';
 import 'package:game/widgets/button.dart';
-import 'package:game/models/game_withdraw_stack_limit.dart';
-import 'package:game/models/user_withdrawal_data.dart';
-
+import 'package:get/get.dart';
+import 'package:logger/logger.dart';
 import 'package:shared/navigator/delegate.dart';
+
 import '../../enums/game_app_routes.dart';
 import '../../localization/game_localization_delegate.dart';
 
@@ -165,8 +164,29 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
           ),
 
         const SizedBox(height: 20),
+        // ======前往設定資金密碼======
+        if (optionType == Type.bankcard && widget.paymentPin == false)
+          GameButton(
+            text: localizations.translate('go_to_binding'),
+            onPressed: () => showFundPassword(),
+          )
+        // ======前往設置銀行卡======
+        else if (optionType == Type.bankcard &&
+            widget.paymentPin &&
+            widget.bankData.isBound == false)
+          GameButton(
+            text: localizations.translate('go_to_binding'),
+            onPressed: () {
+              MyRouteDelegate.of(context).push(
+                GameAppRoutes.setBankcard,
+                args: {
+                  'remittanceType': currentRemittanceType,
+                },
+              );
+            },
+          )
         // ======已達流水條件 widget.reachable:true 的按鈕======
-        if (optionType == Type.bankcard &&
+        else if (optionType == Type.bankcard &&
             widget.bankData.isBound &&
             widget.reachable)
           GameButton(
@@ -176,23 +196,7 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
             },
             disabled: !widget.enableSubmit,
           )
-        else if (optionType == Type.bankcard &&
-            widget.bankData.isBound == false)
-          GameButton(
-            text: localizations.translate('go_to_binding'),
-            onPressed: () {
-              if (widget.paymentPin == false) {
-                showFundPassword();
-              } else {
-                MyRouteDelegate.of(context).push(
-                  GameAppRoutes.setBankcard,
-                  args: {
-                    'remittanceType': currentRemittanceType,
-                  },
-                );
-              }
-            },
-          )
+
         // ======未達流水條件 widget.reachable:false 的兩顆按鈕======
         else if (optionType == Type.bankcard &&
             widget.bankData.isBound &&
@@ -211,7 +215,6 @@ class GameWithDrawOptionsState extends State<GameWithDrawOptions> {
           GameButton(
             text: localizations.translate('confirm'),
             onPressed: () {
-              logger.i('widget.applyAmount: ${widget.applyAmount}');
               logger.i('widget.withdrawalFee: ${widget.withdrawalFee}');
               // showDialog，並計算手續費
               // 點擊Dialog的確認按鈕後，呼叫widget.onConfirm

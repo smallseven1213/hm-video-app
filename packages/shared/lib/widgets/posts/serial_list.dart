@@ -105,6 +105,7 @@ class SerialListWidget extends StatelessWidget {
               ],
             ),
           ),
+          const SizedBox(height: 8),
         ],
       );
     } else {

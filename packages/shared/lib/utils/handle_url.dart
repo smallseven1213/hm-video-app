@@ -53,12 +53,17 @@ void handleDefaultScreenKey(BuildContext context, String url) {
 
 // 狀況3: 如果item?.url為 /{path}/{id}，則跳轉到該頁面並帶上id
 // 狀況4: 如果item?.url為 /{path}，則跳轉到該頁面
-void handlePathWithId(BuildContext context, String url) {
+void handlePathWithId(
+  BuildContext context,
+  String url, {
+  removeSamePath = false,
+}) {
   final List<String> segments = Uri.parse(url).pathSegments;
   String path = '/${segments[0]}';
   if (segments.length == 2) {
     int id = int.parse(segments[1]);
-    MyRouteDelegate.of(context).push(path, args: {'id': id});
+    MyRouteDelegate.of(context)
+        .push(path, args: {'id': id}, removeSamePath: removeSamePath);
   } else {
     MyRouteDelegate.of(context).push(path);
   }

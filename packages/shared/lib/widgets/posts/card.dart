@@ -25,11 +25,13 @@ class AppColors {
 class PostCard extends StatelessWidget {
   final bool? isDarkMode;
   final Post detail;
+  final bool? displaySupplierInfo;
 
   const PostCard({
     Key? key,
     required this.detail,
     this.isDarkMode = true,
+    this.displaySupplierInfo = true,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -52,23 +54,40 @@ class PostCard extends StatelessWidget {
       },
       child: Container(
         margin: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+          border:
+              Border(bottom: BorderSide(color: Color(0xff474747), width: 1)),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (detail.supplier != null)
+              if (displaySupplierInfo == true)
                 Row(
                   children: [
-                    AvatarWidget(
-                        photoSid: detail.supplier!.photoSid,
-                        backgroundColor: Colors.white),
-                    const SizedBox(width: 8),
-                    Text(
-                      detail.supplier!.aliasName ?? '',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
+                    InkWell(
+                      onTap: () {
+                        MyRouteDelegate.of(context).push(
+                          AppRoutes.supplier,
+                          args: {'id': detail.supplier!.id},
+                          removeSamePath: true,
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          AvatarWidget(
+                              photoSid: detail.supplier!.photoSid,
+                              backgroundColor: Colors.white),
+                          const SizedBox(width: 8),
+                          Text(
+                            detail.supplier!.aliasName ?? '',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     const Spacer(),
@@ -92,12 +111,9 @@ class PostCard extends StatelessWidget {
                 likeCount: detail.likeCount ?? 0,
                 postId: detail.id,
               ),
-              GridView.count(
-                shrinkWrap: true, // 使 GridView 自適應高度
-                physics: const NeverScrollableScrollPhysics(), // 禁止滾動
-                crossAxisCount: 3, // 每行三個元素
-                mainAxisSpacing: 8, // 主軸間距
-                crossAxisSpacing: 8, // 交叉軸間距
+              Wrap(
+                spacing: 8, // 交叉軸間距
+                runSpacing: 8, // 主軸間距
                 children: List.generate(
                   // 計算要顯示的元素數量，最多6個
                   detail.totalMediaCount <= 6 ? detail.totalMediaCount : 6,
@@ -106,43 +122,51 @@ class PostCard extends StatelessWidget {
                         !detail.isUnlock && index >= detail.previewMediaCount;
 
                     if (detail.files.length > index) {
-                      return ClipRRect(
-                        borderRadius: BorderRadius.circular(8),
-                        child: Stack(
-                          children: [
-                            SidImage(sid: detail.files[index].cover),
-                            if (detail.files[index].type ==
-                                FileType.video.index)
-                              Center(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey.withOpacity(0.7),
-                                    borderRadius: BorderRadius.circular(20),
+                      return SizedBox(
+                        width: (MediaQuery.of(context).size.width - 32) / 3,
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(8),
+                            child: Stack(
+                              children: [
+                                SidImage(sid: detail.files[index].cover),
+                                if (detail.files[index].type ==
+                                    FileType.video.index)
+                                  Center(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey.withOpacity(0.7),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: const Icon(
+                                        Icons.play_arrow_rounded,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
-                                  child: const Icon(
-                                    Icons.play_arrow_rounded,
-                                    color: Colors.white,
+                                if (shouldShowLock)
+                                  Container(
+                                    color: Colors.black.withOpacity(0.5),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.lock,
+                                        color: Colors.white,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            if (shouldShowLock)
-                              Container(
-                                color: Colors.black.withOpacity(0.5),
-                                child: const Center(
-                                  child: Icon(
-                                    Icons.lock,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                          ],
+                              ],
+                            ),
+                          ),
                         ),
                       );
                     } else {
                       return Container(
+                        width: (MediaQuery.of(context).size.width - 32) / 3,
+                        height: (MediaQuery.of(context).size.width - 32) / 3,
                         decoration: BoxDecoration(
                           color: Colors.grey.withOpacity(0.4),
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: shouldShowLock
                             ? Container(
@@ -179,7 +203,6 @@ class PostCard extends StatelessWidget {
               // create tag list
               TagsWidget(tags: detail.tags),
               const SizedBox(height: 16),
-              const Divider(height: 1, color: Colors.grey),
             ],
           ),
         ),
