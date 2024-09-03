@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
     <application
-        android:label="色天天"
+        android:label="AV-UU"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
@@ -31,7 +31,7 @@
             android:value="2" />
         <meta-data
             android:name="flutterPreviewText"
-            android:value="色天天 打开你的 AV 新世界" />
+            android:value="AV-UU 打开你的 AV 新世界" />
            
         </application>
         <!-- Permissions options for the `storage` group -->
