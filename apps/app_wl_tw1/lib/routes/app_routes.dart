@@ -108,7 +108,5 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.redemption: (context, args) =>
       const redemption_page.RedemptionPage(),
   AppRoutes.post: (context, args) => post_page.PostPage(
-        id: args['id'] as int,
-        
-      ),
+        id: args['id'] as int,),
 };

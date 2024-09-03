@@ -34,6 +34,7 @@ import '../pages/nickname.dart' as nickname_page;
 import '../pages/vip.dart' as vip_page;
 import '../pages/coin.dart' as coin_page;
 import '../pages/redemption.dart' as redemption_page;
+import '../pages/post.dart' as post_page;
 
 final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.home: (context, args) => home_page.HomePage(
@@ -106,4 +107,6 @@ final Map<String, RouteWidgetBuilder> appRoutes = {
   AppRoutes.coin: (context, args) => const coin_page.CoinPage(),
   AppRoutes.redemption: (context, args) =>
       const redemption_page.RedemptionPage(),
+  AppRoutes.post: (context, args) => post_page.PostPage(
+        id: args['id'] as int,),
 };
