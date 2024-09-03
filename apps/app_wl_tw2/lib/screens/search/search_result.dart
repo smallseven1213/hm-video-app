@@ -34,7 +34,7 @@ class SearchResultPageState extends State<SearchResultPage> with SingleTickerPro
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     searchVodController = SearchVodController(keyword: widget.keyword, film: 1);
     searchShortController = SearchVodController(keyword: widget.keyword, film: 2);
     postController = ChannelPostController(
@@ -66,7 +66,7 @@ class SearchResultPageState extends State<SearchResultPage> with SingleTickerPro
           tabs: const [
             '長視頻',
             '短視頻',
-            // TODO: 貼文
+            '貼文',
           ],
         ),
         // SliverVodGrid

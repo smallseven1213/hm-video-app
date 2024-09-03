@@ -121,7 +121,7 @@ class _SupplierPageState extends State<SupplierPage>
                     return false;
                   },
                   child: Obx(() => SliverPostGrid(
-                        posts: postController.postList,
+                        posts: postController.postList.value,
                         displayLoading: postController.displayLoading.value,
                         displayNoMoreData:
                             postController.displayNoMoreData.value,
@@ -197,7 +197,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return TabBarWidget(
       controller: tabController,
-      tabs: const ['短視頻', '長視頻'],
+      tabs: const ['貼文','短視頻', '長視頻'],
     );
   }
 
