@@ -40,7 +40,7 @@ class _SupplierPageState extends State<SupplierPage>
   void initState() {
     super.initState();
     _parentScrollController = ScrollController();
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
     shortVideoController = SupplierShortController(
         supplierId: widget.id, scrollController: _parentScrollController);
     supplierVideoController = SupplierVideoController(
