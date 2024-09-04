@@ -4,8 +4,8 @@ import 'package:shared/models/post_detail.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
 import 'package:shared/widgets/posts/tags.dart';
-
 import 'package:shared/widgets/sid_image.dart';
+import '../../../localization/shared_localization_delegate.dart';
 
 class RecommendWidget extends StatelessWidget {
   final List<Recommend> recommendations;
@@ -14,6 +14,7 @@ class RecommendWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     if (recommendations.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,9 +31,9 @@ class RecommendWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 4),
-              const Text(
-                '其他推薦貼文',
-                style: TextStyle(
+              Text(
+                localizations.translate('other_recommended_posts'),
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white,
                 ),

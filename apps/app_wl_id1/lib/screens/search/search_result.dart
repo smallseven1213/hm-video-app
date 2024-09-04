@@ -1,8 +1,10 @@
+import 'package:app_wl_id1/widgets/sliver_post_grid.dart';
 import 'package:app_wl_id1/localization/i18n.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/games_controller.dart';
 import 'package:shared/controllers/search_temp_controller.dart';
 import 'package:shared/controllers/search_vod_controller.dart';
@@ -32,17 +34,24 @@ class SearchResultPageState extends State<SearchResultPage>
   late final SearchVodController searchVodController;
   late final SearchVodController searchShortController;
   late final GamesController gamesController;
+  late final ChannelPostController postController;
+
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     searchVodController = SearchVodController(keyword: widget.keyword, film: 1);
     searchShortController =
         SearchVodController(keyword: widget.keyword, film: 2);
     gamesController = GamesController(
       name: widget.keyword,
       scrollController: scrollController,
+    );
+    postController = ChannelPostController(
+      keyword: widget.keyword,
+      scrollController: scrollController,
+      limit: 10,
     );
 
     searchShortController.vodList.listen((p0) {
@@ -55,6 +64,7 @@ class SearchResultPageState extends State<SearchResultPage>
   void dispose() {
     _tabController.dispose();
     searchVodController.dispose();
+    postController.dispose();
     super.dispose();
   }
 
@@ -65,7 +75,7 @@ class SearchResultPageState extends State<SearchResultPage>
         // GSTabBar
         GSTabBar(
           controller: _tabController,
-          tabs: [I18n.longVideo, I18n.shortVideo, I18n.game],
+          tabs: [I18n.longVideo, I18n.shortVideo, I18n.game,I18n.post],
         ),
         // SliverVodGrid
         Expanded(
@@ -133,6 +143,17 @@ class SearchResultPageState extends State<SearchResultPage>
                   gamesController: gamesController,
                 ),
               ),
+              Obx(() => SliverPostGrid(
+                    posts: postController.postList,
+                    isError: postController.isError.value,
+                    isListEmpty: postController.isListEmpty.value,
+                    displayLoading: postController.displayLoading.value,
+                    displayNoMoreData: postController.displayNoMoreData.value,
+                    onReload: postController.pullToRefresh,
+                    onScrollEnd: postController.loadMoreData,
+                    customScrollController: scrollController,
+                    vertical: false,
+                  )),
             ],
           ),
         ),

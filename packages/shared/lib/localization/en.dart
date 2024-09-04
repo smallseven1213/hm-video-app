@@ -75,4 +75,12 @@ const Map<String, String> sharedEnUsStrings = {
   "unlocked_for_full_playback": "Unlocked Now",
   "upgrade_now_for_unlock": "Upgrade Now",
   "unmute": "Unmute",
+  "serialization":"Series",
+  "serializing_to_number":"Currently serialized to",
+  "episode":"ep",
+  "number":"No.",
+  "other_recommended_posts":"Recommended",
+  "view_more":"View more",
+  "become_a _vip_to_unlock":"VIP to unlock",
+  "gold_coins_unlock":"coins to unlock",
 };

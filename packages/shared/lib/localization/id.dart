@@ -75,5 +75,13 @@ const Map<String, String> sharedIdIdStrings = {
   "unlocked_for_full_playback": "Sudah Dibuka Sekarang",
   "upgrade_now_for_unlock": "Tingkatkan Sekarang",
   "unmute": "Bunyikan",
+  "serialization":"Series",
+  "serializing_to_number":"Saat ini diserialkan hingga",
+  "episode":"ep",
+  "number":"No.",
+  "other_recommended_posts":"Direkomendasikan",
+  "view_more":"Lihat lebih banyak",
+  "become_a _vip_to_unlock":"VIP untuk membuka kunci",
+  "gold_coins_unlock":"Buka kunci dengan koin",
 };
 
