@@ -106,7 +106,7 @@ class FileListWidget extends StatelessWidget {
       child: buttonBuilder(
         text: postDetail.chargeType == ChargeType.vip.index
             ? localizations.translate('become_a _vip_to_unlock')
-            : localizations.translate('gold_coins_unlock'),
+            : '${postDetail.points} ${localizations.translate('gold_coins_unlock')}',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
             MyRouteDelegate.of(context).push(AppRoutes.vip);
