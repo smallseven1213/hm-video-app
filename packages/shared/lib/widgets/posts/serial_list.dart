@@ -3,6 +3,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/post_detail.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
+import '../../../localization/shared_localization_delegate.dart';
 
 class SerialListWidget extends StatelessWidget {
   final List<Series> series;
@@ -16,6 +17,7 @@ class SerialListWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      SharedLocalizations localizations = SharedLocalizations.of(context)!;
     if (series.isNotEmpty) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,16 +33,16 @@ class SerialListWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 4),
-              const Text(
-                '連載',
-                style: TextStyle(
+              Text(
+                localizations.translate('serialization'),
+                style: const TextStyle(
                   fontSize: 14,
                   color: Colors.white,
                 ),
               ),
               const Spacer(),
               Text(
-                '連載中 至第$totalChapter集',
+                '${localizations.translate('serializing_to_number')}$totalChapter${localizations.translate('episode')}',
                 style: const TextStyle(
                   fontSize: 14,
                   color: Color(0xff919bb3),
@@ -80,7 +82,7 @@ class SerialListWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              '第${serial.currentChapter}集',
+                              '${localizations.translate('number')}${serial.currentChapter}${localizations.translate('episode')}',
                               style: const TextStyle(
                                   fontSize: 13,
                                   color: AppColors.darkText,

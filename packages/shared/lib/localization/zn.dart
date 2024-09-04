@@ -67,4 +67,12 @@ const Map<String, String> sharedZhCnStrings = {
   "unlocked_for_full_playback": "解鎖後可完整播放",
   "upgrade_now_for_unlock": "立即升級解鎖",
   "unmute": "取消靜音",
+  "serialization":"连载",
+  "serializing_to_number":"连载中 至第",
+  "episode":"集",
+  "number":"第",
+  "other_recommended_posts":"其他推荐贴文",
+  "view_more":"观看更多",
+  "become_a _vip_to_unlock":"成为VIP解锁",
+  "gold_coins_unlock":"金币解锁",
 };

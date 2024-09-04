@@ -14,6 +14,7 @@ import 'package:shared/utils/handle_url.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/posts/video_player_area/index.dart';
 import 'package:shared/widgets/sid_image.dart';
+import '../../../localization/shared_localization_delegate.dart';
 
 class FileListWidget extends StatelessWidget {
   final Post postDetail;
@@ -78,10 +79,11 @@ class FileListWidget extends StatelessWidget {
 
   Widget _buildUnlockButton(
       BuildContext context, PostController postController) {
+        SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: buttonBuilder(
-        text: '觀看更多',
+        text: localizations.translate('view_more'),
         onPressed: () {
           if (postDetail.linkType == LinkType.video.index) {
             handlePathWithId(context, postDetail.link ?? '',
@@ -98,12 +100,13 @@ class FileListWidget extends StatelessWidget {
 
   Widget _buildPurchaseButton(
       BuildContext context, PostController postController) {
+        SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: buttonBuilder(
         text: postDetail.chargeType == ChargeType.vip.index
-            ? '成為VIP解鎖'
-            : '${postDetail.points} 金幣解鎖',
+            ? localizations.translate('become_a _vip_to_unlock')
+            : localizations.translate('gold_coins_unlock'),
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
             MyRouteDelegate.of(context).push(AppRoutes.vip);

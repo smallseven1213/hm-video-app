@@ -68,4 +68,12 @@ const Map<String, String> sharedJaJpStrings = {
   "unlocked_for_full_playback": "今すぐアンロック",
   "upgrade_now_for_unlock": "今すぐアップグレード",
   "unmute": "ミュート解除",
+  "serialization":"シリーズ",
+  "serializing_to_number":"連載中",
+  "episode":"ep",
+  "number":"話数",
+  "other_recommended_posts":"おすすめ",
+  "view_more":"もっと見る",
+  "become_a _vip_to_unlock":"VIPでアンロック",
+  "gold_coins_unlock":"コインでアンロック",
 };
