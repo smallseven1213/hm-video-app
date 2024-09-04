@@ -195,7 +195,7 @@ class TabBarHeaderDelegate extends SliverPersistentHeaderDelegate {
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return GSTabBar(
       controller: tabController,
-      tabs: ['貼文',I18n.shortVideo, I18n.longVideo],
+      tabs: [I18n.post,I18n.shortVideo, I18n.longVideo],
     );
   }
 

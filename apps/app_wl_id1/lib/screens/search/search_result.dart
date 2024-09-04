@@ -75,7 +75,7 @@ class SearchResultPageState extends State<SearchResultPage>
         // GSTabBar
         GSTabBar(
           controller: _tabController,
-          tabs: [I18n.longVideo, I18n.shortVideo, I18n.game,'貼文'],
+          tabs: [I18n.longVideo, I18n.shortVideo, I18n.game,I18n.post],
         ),
         // SliverVodGrid
         Expanded(
