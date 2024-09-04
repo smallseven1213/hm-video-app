@@ -4,7 +4,7 @@ import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../short_video_player/purchase/purchase_button.dart';
+import '../purchase/purchase_button.dart';
 
 class VipPart extends StatelessWidget {
   final int timeLength;

@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/apis/vod_api.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
-import 'package:shared/widgets/short_video_player/purchase/coin_part.dart';
-import 'package:shared/widgets/short_video_player/purchase/vip_part.dart';
+import 'package:shared/widgets/purchase/coin_part.dart';
 import 'package:shared/widgets/video/purchase_promotion.dart';
 import 'package:video_player/video_player.dart';
 
-import 'controls_overlay.dart';
+import 'controls_overlay/index.dart';
 import 'error.dart';
 import 'loading.dart';
+import 'vip_part.dart';
 
 final logger = Logger();
 
@@ -166,6 +167,7 @@ class VideoPlayerAreaState extends State<VideoPlayerWidget>
                 videoPlayerInfo: videoPlayerInfo,
                 timeLength: timeLength,
                 onSuccess: onSuccess,
+                purchaseType: PurchaseType.video,
                 showConfirmDialog: widget.showConfirmDialog,
               ),
             );

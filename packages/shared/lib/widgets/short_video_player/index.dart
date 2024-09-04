@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/ui_controller.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/widgets/short_video_player/purchase/coin_part.dart';
+import 'package:shared/widgets/purchase/coin_part.dart';
 import 'package:shared/widgets/short_video_player/draggable_video_progress_bar.dart';
 import 'package:shared/widgets/short_video_player/error.dart';
 import 'package:shared/widgets/short_video_player/fullscreen_controls.dart';
 import 'package:shared/widgets/short_video_player/player.dart';
 import 'package:video_player/video_player.dart';
 import 'purchase_promotion.dart';
-import 'purchase/vip_part.dart';
+import '../purchase/vip_part.dart';
 import 'short_video_mute_button.dart';
 import 'side_info.dart';
 
@@ -168,43 +169,36 @@ class ShortCardState extends State<ShortCard> {
                 }) =>
                     video?.isAvailable == false &&
                             videoPlayerInfo.videoAction == 'end'
-                        ? Positioned.fill(
-                            top: 0,
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            child: Container(
-                              color: Colors.black.withOpacity(0.4),
-                              child: PurchasePromotion(
-                                tag: widget.tag,
-                                buyPoints: video!.buyPoint.toString(),
-                                timeLength: video.timeLength ?? 0,
-                                chargeType: video.chargeType ?? 0,
-                                videoId: video.id,
-                                videoPlayerInfo: videoPlayerInfo,
-                                vipPartBuilder: widget.vipPartBuilder ??
-                                    (int timeLength) =>
-                                        VipPart(timeLength: timeLength),
-                                coinPartBuilder: widget.coinPartBuilder ??
-                                    ({
-                                      required String buyPoints,
-                                      required int videoId,
-                                      required VideoPlayerInfo videoPlayerInfo,
-                                      required int timeLength,
-                                      required Function() onSuccess,
-                                      userPoints,
-                                    }) =>
-                                        CoinPart(
-                                          tag: widget.tag,
-                                          buyPoints: buyPoints,
-                                          videoId: videoId,
-                                          videoPlayerInfo: videoPlayerInfo,
-                                          timeLength: timeLength,
-                                          showConfirmDialog:
-                                              widget.showConfirmDialog,
-                                        ),
-                              ),
-                            ),
+                        ? PurchasePromotion(
+                            tag: widget.tag,
+                            buyPoints: video!.buyPoint.toString(),
+                            timeLength: video.timeLength ?? 0,
+                            chargeType: video.chargeType ?? 0,
+                            videoId: video.id,
+                            videoPlayerInfo: videoPlayerInfo,
+                            vipPartBuilder: widget.vipPartBuilder ??
+                                (int timeLength) =>
+                                    VipPart(timeLength: timeLength),
+                            coinPartBuilder: widget.coinPartBuilder ??
+                                ({
+                                  required String buyPoints,
+                                  required int videoId,
+                                  required VideoPlayerInfo videoPlayerInfo,
+                                  required int timeLength,
+                                  required Function() onSuccess,
+                                  userPoints,
+                                }) =>
+                                    CoinPart(
+                                      tag: widget.tag,
+                                      buyPoints: buyPoints,
+                                      videoId: videoId,
+                                      videoPlayerInfo: videoPlayerInfo,
+                                      timeLength: timeLength,
+                                      showConfirmDialog:
+                                          widget.showConfirmDialog,
+                                      onSuccess: onSuccess,
+                                      purchaseType: PurchaseType.video,
+                                    ),
                           )
                         : const SizedBox.shrink(),
               ),

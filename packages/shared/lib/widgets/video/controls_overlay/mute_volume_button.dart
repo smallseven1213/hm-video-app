@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_player_controller.dart';
 
-import '../../localization/shared_localization_delegate.dart';
+import '../../../localization/shared_localization_delegate.dart';
 
 class MuteVolumeButton extends StatelessWidget {
   final ObservableVideoPlayerController controller;
