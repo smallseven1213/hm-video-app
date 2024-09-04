@@ -98,3 +98,19 @@ class Button extends StatelessWidget {
     );
   }
 }
+
+Button buttonBuilder({
+  required String text,
+  required VoidCallback onPressed,
+  dynamic icon,
+  String? type = 'primary',
+  String? size = 'medium',
+}) {
+  return Button(
+    text: text,
+    onPressed: onPressed,
+    icon: icon,
+    type: type,
+    size: size,
+  );
+}

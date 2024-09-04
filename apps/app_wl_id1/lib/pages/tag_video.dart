@@ -1,5 +1,7 @@
+import 'package:app_wl_id1/widgets/sliver_post_grid.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/channel_post_controller.dart';
 import 'package:shared/controllers/tag_vod_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
@@ -28,6 +30,7 @@ class TagVideoPageState extends State<TagVideoPage> {
   // DISPOSED SCROLL CONTROLLER
   final scrollController = ScrollController();
   late final TagVodController vodController;
+  late final ChannelPostController postController;
 
   @override
   void initState() {
@@ -36,11 +39,17 @@ class TagVideoPageState extends State<TagVideoPage> {
       tagId: widget.id,
       scrollController: scrollController,
     );
+    postController = ChannelPostController(
+      tagId: widget.id,
+      scrollController: scrollController,
+      limit: 10,
+    );
   }
 
   @override
   void dispose() {
     vodController.dispose();
+    postController.dispose();
     if (scrollController.hasClients) {
       scrollController.dispose();
     }
@@ -53,7 +62,19 @@ class TagVideoPageState extends State<TagVideoPage> {
       appBar: CustomAppBar(
         title: '#${widget.title}',
       ),
-      body: Obx(() {
+      body: widget.film == 3
+          ? Obx(() => SliverPostGrid(
+                posts: postController.postList,
+                isError: postController.isError.value,
+                isListEmpty: postController.isListEmpty.value,
+                displayLoading: postController.displayLoading.value,
+                displayNoMoreData: postController.displayNoMoreData.value,
+                onReload: postController.pullToRefresh,
+                onScrollEnd: postController.loadMoreData,
+                customScrollController: scrollController,
+                vertical: false,
+              ))
+          : Obx(() {
         if (widget.film == 2) {
           return SliverVodGrid(
               isListEmpty: vodController.isListEmpty.value,
