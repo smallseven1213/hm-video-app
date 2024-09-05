@@ -57,7 +57,9 @@ class FileListWidget extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return VideoPlayerProvider(
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: VideoPlayerProvider(
       key: Key('post-$videoUrl'),
       tag: 'post-$videoUrl',
       autoPlay: false,
@@ -74,20 +76,18 @@ class FileListWidget extends StatelessWidget {
           tag: 'post-$videoUrl',
         );
       },
-    );
+    ),);
   }
 
-  Widget _buildUnlockButton(
-      BuildContext context, PostController postController) {
-        SharedLocalizations localizations = SharedLocalizations.of(context)!;
+  Widget _buildUnlockButton(BuildContext context, PostController postController) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: buttonBuilder(
         text: localizations.translate('view_more'),
         onPressed: () {
           if (postDetail.linkType == LinkType.video.index) {
-            handlePathWithId(context, postDetail.link ?? '',
-                removeSamePath: true);
+            handlePathWithId(context, postDetail.link ?? '', removeSamePath: true);
           } else if (postDetail.linkType == LinkType.link.index) {
             handleHttpUrl(postDetail.link ?? '');
           } else {

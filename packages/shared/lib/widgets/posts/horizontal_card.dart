@@ -103,7 +103,7 @@ class PostHorizontalCard extends StatelessWidget {
                 children: [
                   Text(
                     detail.title,
-                    maxLines: 3,
+                    maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(color: textColor),
                   ),
