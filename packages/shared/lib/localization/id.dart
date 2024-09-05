@@ -81,7 +81,7 @@ const Map<String, String> sharedIdIdStrings = {
   "number":"No.",
   "other_recommended_posts":"Direkomendasikan",
   "view_more":"Lihat lebih banyak",
-  "become_a _vip_to_unlock":"VIP untuk membuka kunci",
-  "gold_coins_unlock":"Buka kunci dengan koin",
+  "become_a _vip_to_unlock":"Menjadi VIP",
+  "gold_coins_unlock":"Koin buka",
 };
 
