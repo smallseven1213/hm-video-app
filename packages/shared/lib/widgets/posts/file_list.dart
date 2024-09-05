@@ -12,8 +12,8 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/handle_url.dart';
 import 'package:shared/utils/purchase.dart';
-import 'package:shared/widgets/posts/video_player_area/index.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/video/index.dart';
 import '../../../localization/shared_localization_delegate.dart';
 
 class FileListWidget extends StatelessWidget {
@@ -70,10 +70,14 @@ class FileListWidget extends StatelessWidget {
       //   child: VideoLoading(coverHorizontal: file.cover),
       // ),
       child: (isReady, controller) {
-        return VideoPlayerArea(
+        return VideoPlayerWidget(
           videoUrl: videoUrl,
           video: Vod(0, ''),
           tag: 'post-$videoUrl',
+          showConfirmDialog: showConfirmDialog,
+          displayFullscreenIcon: false,
+          displayHeader: false,
+          hasPaymentProcess: false,
         );
       },
     ),);
@@ -100,7 +104,7 @@ class FileListWidget extends StatelessWidget {
 
   Widget _buildPurchaseButton(
       BuildContext context, PostController postController) {
-        SharedLocalizations localizations = SharedLocalizations.of(context)!;
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: buttonBuilder(

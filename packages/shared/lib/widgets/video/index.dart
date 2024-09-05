@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:video_player/video_player.dart';
 import 'package:shared/apis/vod_api.dart';
-import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
+import 'package:shared/widgets/video/controls_overlay/index.dart';
+import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/widgets/purchase/coin_part.dart';
+import 'package:shared/widgets/purchase/vip_part.dart';
 import 'package:shared/widgets/video/purchase_promotion.dart';
-import 'package:video_player/video_player.dart';
 
-import 'controls_overlay/index.dart';
 import 'error.dart';
 import 'loading.dart';
-import 'vip_part.dart';
 
 final logger = Logger();
 
@@ -25,6 +25,7 @@ class VideoPlayerWidget extends StatefulWidget {
   final Function showConfirmDialog;
   final bool? displayHeader;
   final bool? displayFullscreenIcon;
+  final bool? hasPaymentProcess;
   final Color? themeColor;
 
   const VideoPlayerWidget({
@@ -35,15 +36,16 @@ class VideoPlayerWidget extends StatefulWidget {
     required this.showConfirmDialog,
     this.displayHeader = true,
     this.displayFullscreenIcon = true,
+    this.hasPaymentProcess = true,
     this.name,
-    this.themeColor,
+    this.themeColor = Colors.blue,
   }) : super(key: key);
 
   @override
-  VideoPlayerAreaState createState() => VideoPlayerAreaState();
+  VideoPlayerWidgetState createState() => VideoPlayerWidgetState();
 }
 
-class VideoPlayerAreaState extends State<VideoPlayerWidget>
+class VideoPlayerWidgetState extends State<VideoPlayerWidget>
     with WidgetsBindingObserver, RouteAware {
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
@@ -117,7 +119,6 @@ class VideoPlayerAreaState extends State<VideoPlayerWidget>
 
     return Container(
       color: Colors.black,
-      width: MediaQuery.sizeOf(context).width,
       height: playerHeight,
       child: VideoPlayerConsumer(
         tag: widget.tag,
@@ -131,7 +132,9 @@ class VideoPlayerAreaState extends State<VideoPlayerWidget>
           if (videoPlayerInfo.videoAction == 'error') {
             return VideoError(
               coverHorizontal: coverHorizontal,
-              onTap: () => videoPlayerInfo.videoPlayerController?.play(),
+              onTap: () {
+                videoPlayerInfo.videoPlayerController?.play();
+              },
             );
           }
 
@@ -140,7 +143,8 @@ class VideoPlayerAreaState extends State<VideoPlayerWidget>
             return VideoLoading(coverHorizontal: coverHorizontal);
           }
 
-          if (widget.video.isAvailable == false &&
+          if (widget.hasPaymentProcess == true &&
+              widget.video.isAvailable == false &&
               videoPlayerInfo.videoAction == 'end') {
             return PurchasePromotion(
               coverHorizontal: coverHorizontal,
@@ -185,10 +189,12 @@ class VideoPlayerAreaState extends State<VideoPlayerWidget>
                 name: widget.video.title,
                 isFullscreen: isFullscreen,
                 displayHeader: widget.displayHeader,
-                displayFullscreenIcon: widget.displayFullscreenIcon,
+                displayFullScreenIcon: widget.displayFullscreenIcon,
                 themeColor: widget.themeColor,
                 onScreenLock: (bool isLocked) {
-                  setState(() => isScreenLocked = isLocked);
+                  setState(() {
+                    isScreenLocked = isLocked;
+                  });
                   if (isLocked) {
                     toggleFullscreen(fullScreen: true);
                   } else {
@@ -196,8 +202,9 @@ class VideoPlayerAreaState extends State<VideoPlayerWidget>
                   }
                 },
                 isScreenLocked: isScreenLocked,
-                toggleFullscreen: (status) =>
-                    toggleFullscreen(fullScreen: status),
+                toggleFullscreen: (status) {
+                  toggleFullscreen(fullScreen: status);
+                },
               )
             ],
           );
