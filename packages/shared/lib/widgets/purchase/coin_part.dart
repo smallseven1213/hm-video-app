@@ -48,62 +48,65 @@ class Coin extends StatelessWidget {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
     if (direction == Direction.horizontal) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  localizations
-                      .translate('this_movie_is_available_for_purchase'),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    localizations
+                        .translate('this_movie_is_available_for_purchase'),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                Text(
-                  '${localizations.translate('duration')} ${getTimeString(timeLength)}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    '${localizations.translate('duration')} ${getTimeString(timeLength)}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                Text(
-                  '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
-                  style: const TextStyle(
-                    color: Color(0xffffd900),
-                    fontSize: 13,
+                  Text(
+                    '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
+                    style: const TextStyle(
+                      color: Color(0xffffd900),
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-                Text(
-                  '${localizations.translate('your_current_coins')} $userPoints${localizations.translate('coins')}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
+                  Text(
+                    '${localizations.translate('your_current_coins')} $userPoints${localizations.translate('coins')}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 15),
-          PurchaseButton(
-            onPressed: () => purchase(
-              context,
-              type: purchaseType, // 根據傳入的 purchaseType 動態決定
-              id: videoId,
-              onSuccess: onSuccess!, // 使用傳入的回調邏輯
-              showConfirmDialog: showConfirmDialog,
+            const SizedBox(width: 15),
+            PurchaseButton(
+              onPressed: () => purchase(
+                context,
+                type: purchaseType, // 根據傳入的 purchaseType 動態決定
+                id: videoId,
+                onSuccess: onSuccess!, // 使用傳入的回調邏輯
+                showConfirmDialog: showConfirmDialog,
+              ),
+              text: localizations.translate('pay_to_watch'),
             ),
-            text: localizations.translate('pay_to_watch'),
-          ),
-        ],
+          ],
+        ),
       );
     }
     return Column(

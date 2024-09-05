@@ -1,16 +1,16 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_volume_controller/flutter_volume_controller.dart';
-import 'package:screen_brightness/screen_brightness.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
+import 'package:screen_brightness/screen_brightness.dart';
+import 'package:flutter_volume_controller/flutter_volume_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 
-import 'player_header.dart';
-import 'mute_volume_button.dart';
 import 'enums.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
+import 'player_header.dart';
+import 'mute_volume_button.dart';
 
 final logger = Logger();
 
@@ -22,7 +22,7 @@ class ControlsOverlay extends StatefulWidget {
   final bool isScreenLocked;
   final String tag;
   final bool? displayHeader;
-  final bool? displayFullscreenIcon;
+  final bool? displayFullScreenIcon;
   final Color? themeColor;
 
   const ControlsOverlay({
@@ -34,7 +34,7 @@ class ControlsOverlay extends StatefulWidget {
     required this.isScreenLocked,
     required this.tag,
     this.displayHeader = true,
-    this.displayFullscreenIcon = true,
+    this.displayFullScreenIcon = true,
     this.themeColor = Colors.blue,
   }) : super(key: key);
 
@@ -157,7 +157,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 (dragPercentage * videoPlayerInfo.videoDuration)
                     .toInt(); // 使用滑动比例来更新视频位置
 
-            // Make sure we are within the video duration
+            // 確保拖動位置在範圍內
             if (newPositionSeconds < 0) newPositionSeconds = 0;
             if (newPositionSeconds > videoPlayerInfo.videoDuration) {
               newPositionSeconds = videoPlayerInfo.videoDuration;
@@ -305,7 +305,6 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                           // 使用Expanded讓SliderTheme填充剩餘的空間
                           child: SliderTheme(
                             data: SliderThemeData(
-                              // trackShape: CustomTrackShape(),
                               trackHeight: 4.0, // 這可以設定滑塊軌道的高度
                               thumbShape: TransparentSliderThumbShape(),
                               activeTrackColor: widget.themeColor,
@@ -350,7 +349,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                             color: Colors.white,
                           ),
                         ),
-                        if (widget.displayFullscreenIcon == true)
+                        if (widget.displayFullScreenIcon == true)
                           kIsWeb && widget.isFullscreen
                               ? const SizedBox(width: 8.0)
                               : IconButton(
@@ -429,7 +428,7 @@ class TransparentSliderThumbShape extends SliderComponentShape {
     Size? sizeWithOverflow,
   }) {
     final Canvas canvas = context.canvas;
-    final Paint paintThumb = Paint()..color = Colors.transparent; // 设置为透明色
+    final Paint paintThumb = Paint()..color = Colors.transparent;
 
     canvas.drawCircle(
       center,
