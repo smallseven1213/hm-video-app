@@ -1,4 +1,4 @@
-import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_wl_tw1/widgets/flash_loading.dart';
 import 'package:logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

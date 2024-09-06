@@ -1,18 +1,16 @@
-import 'package:app_wl_tw1/config/colors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
-import 'package:shared/models/color_keys.dart';
-import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
+import 'package:shared/modules/video_player/video_player_consumer.dart';
 
 import 'enums.dart';
-import 'package:shared/widgets/video/mute_volume_button.dart';
-import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';
+import 'player_header.dart';
+import 'mute_volume_button.dart';
 
 final logger = Logger();
 
@@ -23,15 +21,22 @@ class ControlsOverlay extends StatefulWidget {
   final Function onScreenLock;
   final bool isScreenLocked;
   final String tag;
-  const ControlsOverlay(
-      {Key? key,
-      this.name,
-      required this.toggleFullscreen,
-      required this.isFullscreen,
-      required this.onScreenLock,
-      required this.isScreenLocked,
-      required this.tag})
-      : super(key: key);
+  final bool? displayHeader;
+  final bool? displayFullScreenIcon;
+  final Color? themeColor;
+
+  const ControlsOverlay({
+    Key? key,
+    this.name,
+    required this.toggleFullscreen,
+    required this.isFullscreen,
+    required this.onScreenLock,
+    required this.isScreenLocked,
+    required this.tag,
+    this.displayHeader = true,
+    this.displayFullScreenIcon = true,
+    this.themeColor = Colors.blue,
+  }) : super(key: key);
 
   @override
   ControlsOverlayState createState() => ControlsOverlayState();
@@ -152,7 +157,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 (dragPercentage * videoPlayerInfo.videoDuration)
                     .toInt(); // 使用滑动比例来更新视频位置
 
-            // Make sure we are within the video duration
+            // 確保拖動位置在範圍內
             if (newPositionSeconds < 0) newPositionSeconds = 0;
             if (newPositionSeconds > videoPlayerInfo.videoDuration) {
               newPositionSeconds = videoPlayerInfo.videoDuration;
@@ -173,14 +178,18 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                     width: constraints.maxWidth,
                     color: Colors.transparent,
                   )),
-              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+              if (widget.displayHeader == true &&
+                  (videoPlayerInfo.displayControls ||
+                      !videoPlayerInfo.isPlaying))
                 PlayerHeader(
                   isFullscreen: widget.isFullscreen,
                   title: widget.name,
                   toggleFullscreen: widget.toggleFullscreen,
                 ),
 
-              if (videoPlayerInfo.displayControls || !videoPlayerInfo.isPlaying)
+              if (widget.displayHeader == true &&
+                  (videoPlayerInfo.displayControls ||
+                      !videoPlayerInfo.isPlaying))
                 Positioned(
                   top: 50,
                   left: 20,
@@ -271,7 +280,7 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                 Positioned(
                   bottom: widget.isFullscreen ? 30 : 0,
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width,
+                    width: constraints.maxWidth,
                     child: Row(
                       children: [
                         IconButton(
@@ -296,12 +305,10 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                           // 使用Expanded讓SliderTheme填充剩餘的空間
                           child: SliderTheme(
                             data: SliderThemeData(
-                              // trackShape: CustomTrackShape(),
                               trackHeight: 4.0, // 這可以設定滑塊軌道的高度
                               thumbShape: TransparentSliderThumbShape(),
-                              activeTrackColor: AppColors.colors[
-                                  ColorKeys.secondary], // 滑塊左邊（或上面）的部分的顏色
-                              inactiveTrackColor: const Color(0xffb5925c)
+                              activeTrackColor: widget.themeColor,
+                              inactiveTrackColor: widget.themeColor!
                                   .withOpacity(0.5), // 滑塊右邊（或下面）的部分的顏色
                               overlayShape: const RoundSliderOverlayShape(
                                   overlayRadius: 0.0),
@@ -342,18 +349,19 @@ class ControlsOverlayState extends State<ControlsOverlay> {
                             color: Colors.white,
                           ),
                         ),
-                        kIsWeb && widget.isFullscreen
-                            ? const SizedBox(width: 8.0)
-                            : IconButton(
-                                onPressed: () => widget
-                                    .toggleFullscreen(!widget.isFullscreen),
-                                icon: Icon(
-                                  widget.isFullscreen
-                                      ? Icons.close_fullscreen_rounded
-                                      : Icons.fullscreen,
-                                  color: Colors.white,
+                        if (widget.displayFullScreenIcon == true)
+                          kIsWeb && widget.isFullscreen
+                              ? const SizedBox(width: 8.0)
+                              : IconButton(
+                                  onPressed: () => widget
+                                      .toggleFullscreen(!widget.isFullscreen),
+                                  icon: Icon(
+                                    widget.isFullscreen
+                                        ? Icons.close_fullscreen_rounded
+                                        : Icons.fullscreen,
+                                    color: Colors.white,
+                                  ),
                                 ),
-                              ),
                       ],
                     ),
                   ),
@@ -420,7 +428,7 @@ class TransparentSliderThumbShape extends SliderComponentShape {
     Size? sizeWithOverflow,
   }) {
     final Canvas canvas = context.canvas;
-    final Paint paintThumb = Paint()..color = Colors.transparent; // 设置为透明色
+    final Paint paintThumb = Paint()..color = Colors.transparent;
 
     canvas.drawCircle(
       center,

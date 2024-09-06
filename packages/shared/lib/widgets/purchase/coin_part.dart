@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
-import 'package:shared/models/hm_api_response.dart';
 import 'package:shared/models/user.dart';
 import 'package:shared/modules/user/user_info_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/utils/purchase.dart';
+import 'package:shared/widgets/purchase/purchase_button.dart';
 
-import '../../../controllers/short_video_detail_controller.dart';
-import '../../../localization/shared_localization_delegate.dart';
-import 'purchase_button.dart';
+import '../../localization/shared_localization_delegate.dart';
 
 enum Direction {
   horizontal,
@@ -29,9 +24,10 @@ class Coin extends StatelessWidget {
   final VideoPlayerInfo videoPlayerInfo;
   final int timeLength;
   final Function? onSuccess;
-  final Direction? direction; // 0:水平, else:垂直
+  final Direction? direction;
   final Function showConfirmDialog;
   final String tag;
+  final PurchaseType purchaseType; // 新增
 
   const Coin({
     super.key,
@@ -42,6 +38,7 @@ class Coin extends StatelessWidget {
     required this.timeLength,
     required this.showConfirmDialog,
     required this.tag,
+    required this.purchaseType, // 傳入 PurchaseType
     this.direction = Direction.vertical,
     this.onSuccess,
   });
@@ -50,69 +47,66 @@ class Coin extends StatelessWidget {
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
 
-    print('##direction: ${localizations.translate('pay_to_watch')}');
-
     if (direction == Direction.horizontal) {
-      return Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  localizations
-                      .translate('this_movie_is_available_for_purchase'),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
+      return Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    localizations
+                        .translate('this_movie_is_available_for_purchase'),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                Text(
-                  '${localizations.translate('duration')} ${getTimeString(timeLength)}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
-                    fontWeight: FontWeight.w500,
+                  Text(
+                    '${localizations.translate('duration')} ${getTimeString(timeLength)}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
-                ),
-                Text(
-                  '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
-                  style: const TextStyle(
-                    color: Color(0xffffd900),
-                    fontSize: 13,
+                  Text(
+                    '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
+                    style: const TextStyle(
+                      color: Color(0xffffd900),
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-                Text(
-                  '${localizations.translate('your_current_coins')} $userPoints${localizations.translate('coins')}',
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 13,
+                  Text(
+                    '${localizations.translate('your_current_coins')} $userPoints${localizations.translate('coins')}',
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          const SizedBox(width: 15),
-          PurchaseButton(
-            onPressed: () => purchase(
-              context,
-              type: PurchaseType.shortVideo,
-              id: videoId,
-              onSuccess: () {
-                final ShortVideoDetailController shortVideoDetailController =
-                    Get.find<ShortVideoDetailController>(tag: tag);
-                shortVideoDetailController.mutateAll();
-              },
-              showConfirmDialog: showConfirmDialog,
+            const SizedBox(width: 15),
+            PurchaseButton(
+              onPressed: () => purchase(
+                context,
+                type: purchaseType, // 根據傳入的 purchaseType 動態決定
+                id: videoId,
+                onSuccess: onSuccess!, // 使用傳入的回調邏輯
+                showConfirmDialog: showConfirmDialog,
+              ),
+              text: localizations.translate('pay_to_watch'),
             ),
-            text: localizations.translate('pay_to_watch'),
-          ),
-        ],
+          ],
+        ),
       );
     }
     return Column(
@@ -155,13 +149,9 @@ class Coin extends StatelessWidget {
             text: localizations.translate('pay_to_watch'),
             onPressed: () => purchase(
               context,
-              type: PurchaseType.shortVideo,
+              type: purchaseType, // 根據傳入的 purchaseType 動態決定
               id: videoId,
-              onSuccess: () {
-                final ShortVideoDetailController shortVideoDetailController =
-                    Get.find<ShortVideoDetailController>(tag: tag);
-                shortVideoDetailController.mutateAll();
-              },
+              onSuccess: onSuccess!, // 使用傳入的回調邏
               showConfirmDialog: showConfirmDialog,
             ),
           ),
@@ -177,9 +167,10 @@ class CoinPart extends StatelessWidget {
   final VideoPlayerInfo videoPlayerInfo;
   final int timeLength;
   final Function? onSuccess;
-  final Direction? direction; // 0:水平, else:垂直
+  final Direction? direction;
   final Function showConfirmDialog;
   final String tag;
+  final PurchaseType purchaseType; // 新增
 
   const CoinPart({
     Key? key,
@@ -191,6 +182,7 @@ class CoinPart extends StatelessWidget {
     required this.tag,
     this.onSuccess,
     this.direction = Direction.vertical,
+    required this.purchaseType, // 傳入 PurchaseType
   }) : super(key: key);
 
   @override
@@ -210,6 +202,7 @@ class CoinPart extends StatelessWidget {
           onSuccess: onSuccess,
           showConfirmDialog: showConfirmDialog,
           tag: tag,
+          purchaseType: purchaseType, // 傳入不同的 purchaseType
         );
       },
     );

@@ -1,4 +1,3 @@
-import 'package:app_wl_tw1/screens/video/video_player_area/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -14,6 +13,7 @@ import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import '../../utils/show_confirm_dialog.dart';
+import '../flash_loading.dart';
 import 'short_bottom_area.dart';
 
 class GeneralShortCard extends StatefulWidget {

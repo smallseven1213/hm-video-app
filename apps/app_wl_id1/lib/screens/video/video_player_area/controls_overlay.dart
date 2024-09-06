@@ -5,9 +5,9 @@ import 'package:logger/logger.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:flutter_volume_controller/flutter_volume_controller.dart';
+import 'package:shared/widgets/video/controls_overlay/mute_volume_button.dart';
 
 import 'enums.dart';
-import 'package:shared/widgets/video/mute_volume_button.dart';
 import 'player_header.dart';
 import 'screen_lock.dart';
 import 'volume_brightness.dart';

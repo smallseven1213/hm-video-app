@@ -2,16 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/widgets/video/index.dart';
+import 'package:shared/widgets/video/loading.dart';
+import '../config/colors.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
-import '../screens/video/video_player_area/index.dart';
-import '../screens/video/video_player_area/loading.dart';
-import '../screens/video/video_player_area/purchase_block.dart';
+import '../screens/video/purchase_block.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/wave_loading.dart';
 
@@ -74,11 +75,13 @@ class VideoState extends State<Video> {
                       ),
                     ),
                     child: (isReady, controller) {
-                      return VideoPlayerArea(
+                      return VideoPlayerWidget(
                         name: name,
                         videoUrl: videoUrl,
                         video: videoDetail,
                         tag: videoUrl,
+                        showConfirmDialog: showConfirmDialog,
+                        themeColor: AppColors.colors[ColorKeys.secondary],
                       );
                     },
                   ),

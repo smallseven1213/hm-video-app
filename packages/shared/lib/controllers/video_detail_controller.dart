@@ -63,10 +63,16 @@ class VideoDetailController extends GetxController {
       Vod videoFromApi = await vodApi.getVodUrl(videoId);
       videoUrl.value = getVideoUrl(videoFromApi.videoUrl)!;
       video.value = videoFromApi;
-      _videoUrlReady.complete();
+
+      if (!_videoUrlReady.isCompleted) {
+        _videoUrlReady.complete();
+      }
     } catch (error) {
       logger.i(error);
-      _videoUrlReady.completeError(error);
+
+      if (!_videoUrlReady.isCompleted) {
+        _videoUrlReady.completeError(error);
+      }
     }
   }
 
@@ -75,10 +81,16 @@ class VideoDetailController extends GetxController {
       Vod videoDetailFromApi = await vodApi.getVodDetail(videoId);
       videoDetail.value = videoDetailFromApi;
       videoUrl.value = getVideoUrl(videoDetailFromApi.videoUrl)!;
-      _videoUrlReady.complete();
+
+      if (!_videoUrlReady.isCompleted) {
+        _videoUrlReady.complete();
+      }
     } catch (error) {
       logger.i(error);
-      _videoUrlReady.completeError(error);
+
+      if (!_videoUrlReady.isCompleted) {
+        _videoUrlReady.completeError(error);
+      }
     }
   }
 }

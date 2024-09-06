@@ -6,7 +6,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../../../localization/shared_localization_delegate.dart';
+import '../../localization/shared_localization_delegate.dart';
 import 'purchase_button.dart';
 
 enum Direction {

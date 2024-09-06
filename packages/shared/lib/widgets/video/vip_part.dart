@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared/enums/app_routes.dart';
-import 'package:shared/models/color_keys.dart';
+import 'package:shared/localization/shared_localization_delegate.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
-import '../../../config/colors.dart';
-import '../../../widgets/button.dart';
+import '../purchase/purchase_button.dart';
 
 class VipPart extends StatelessWidget {
   final int timeLength;
+
   const VipPart({
     super.key,
     required this.timeLength,
@@ -16,6 +16,8 @@ class VipPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -45,10 +47,7 @@ class VipPart extends StatelessWidget {
             // todo : 內容：解鎖後可完整播放
             Text(
               '解鎖後可完整播放',
-              style: TextStyle(
-                color: AppColors.colors[ColorKeys.secondary],
-                fontSize: 12,
-              ),
+              style: const TextStyle(fontSize: 12, color: Colors.yellow),
             ),
           ],
         ),
@@ -57,10 +56,19 @@ class VipPart extends StatelessWidget {
         SizedBox(
           width: 87,
           height: 35,
-          child: Button(
-            text: '開通VIP',
-            size: 'small',
-            onPressed: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
+          child: PurchaseButton(
+            text: localizations.translate('become_vip'),
+            onPressed: () {
+              MyRouteDelegate.of(context).push(AppRoutes.vip);
+              // final bottomNavigatorController =
+              //     Get.find<BottomNavigatorController>();
+              // MyRouteDelegate.of(context).pushAndRemoveUntil(
+              //   AppRoutes.home,
+              //   args: {'defaultScreenKey': '/game'},
+              // );
+              // bottomNavigatorController.changeKey('/game');
+              // eventBus.fireEvent("gotoDepositAfterLogin");
+            },
           ),
         ),
       ],

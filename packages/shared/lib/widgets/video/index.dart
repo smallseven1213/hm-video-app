@@ -1,37 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
+import 'package:video_player/video_player.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/screen_control.dart';
-import 'package:video_player/video_player.dart';
+import 'package:shared/widgets/video/controls_overlay/index.dart';
+import 'package:shared/enums/purchase_type.dart';
+import 'package:shared/widgets/purchase/coin_part.dart';
+import 'package:shared/widgets/purchase/vip_part.dart';
+import 'package:shared/widgets/video/purchase_promotion.dart';
 
-import 'controls_overlay.dart';
 import 'error.dart';
 import 'loading.dart';
 
 final logger = Logger();
 
-class VideoPlayerArea extends StatefulWidget {
+class VideoPlayerWidget extends StatefulWidget {
   final String? name;
   final String videoUrl;
   final Vod video;
   final String tag;
+  final Function showConfirmDialog;
+  final bool? displayHeader;
+  final bool? displayFullscreenIcon;
+  final bool? hasPaymentProcess;
+  final Color? themeColor;
 
-  const VideoPlayerArea({
+  const VideoPlayerWidget({
     Key? key,
     required this.videoUrl,
     required this.video,
     required this.tag,
+    required this.showConfirmDialog,
+    this.displayHeader = true,
+    this.displayFullscreenIcon = true,
+    this.hasPaymentProcess = true,
     this.name,
+    this.themeColor = Colors.blue,
   }) : super(key: key);
 
   @override
-  VideoPlayerAreaState createState() => VideoPlayerAreaState();
+  VideoPlayerWidgetState createState() => VideoPlayerWidgetState();
 }
 
-class VideoPlayerAreaState extends State<VideoPlayerArea>
+class VideoPlayerWidgetState extends State<VideoPlayerWidget>
     with WidgetsBindingObserver, RouteAware {
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
@@ -129,6 +143,40 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
             return VideoLoading(coverHorizontal: coverHorizontal);
           }
 
+          if (widget.hasPaymentProcess == true &&
+              widget.video.isAvailable == false &&
+              videoPlayerInfo.videoAction == 'end') {
+            return PurchasePromotion(
+              coverHorizontal: coverHorizontal,
+              buyPoints: widget.video.buyPoint.toString(),
+              timeLength: widget.video.timeLength ?? 0,
+              chargeType: widget.video.chargeType ?? 0,
+              videoId: widget.video.id,
+              videoPlayerInfo: videoPlayerInfo,
+              title: widget.video.title,
+              tag: widget.tag,
+              vipPartBuilder: (timeLength) => VipPart(timeLength: timeLength),
+              coinPartBuilder: ({
+                required String buyPoints,
+                required int videoId,
+                required VideoPlayerInfo videoPlayerInfo,
+                required int timeLength,
+                required Function() onSuccess,
+                userPoints,
+              }) =>
+                  CoinPart(
+                tag: widget.tag,
+                buyPoints: buyPoints,
+                videoId: videoId,
+                videoPlayerInfo: videoPlayerInfo,
+                timeLength: timeLength,
+                onSuccess: onSuccess,
+                purchaseType: PurchaseType.video,
+                showConfirmDialog: widget.showConfirmDialog,
+              ),
+            );
+          }
+
           return Stack(
             alignment: Alignment.center,
             children: <Widget>[
@@ -140,6 +188,9 @@ class VideoPlayerAreaState extends State<VideoPlayerArea>
                 tag: widget.tag,
                 name: widget.video.title,
                 isFullscreen: isFullscreen,
+                displayHeader: widget.displayHeader,
+                displayFullScreenIcon: widget.displayFullscreenIcon,
+                themeColor: widget.themeColor,
                 onScreenLock: (bool isLocked) {
                   setState(() {
                     isScreenLocked = isLocked;
