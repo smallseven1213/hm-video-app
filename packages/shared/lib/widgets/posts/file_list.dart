@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/post_controller.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -10,6 +11,7 @@ import 'package:shared/models/post.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/handle_url.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/sid_image.dart';
@@ -114,7 +116,14 @@ class FileListWidget extends StatelessWidget {
             : '${postDetail.points} ${localizations.translate('gold_coins_unlock')}',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
-            MyRouteDelegate.of(context).push(AppRoutes.vip);
+            final bottomNavigatorController =
+              Get.find<BottomNavigatorController>();
+          MyRouteDelegate.of(context).pushAndRemoveUntil(
+            AppRoutes.home,
+            args: {'defaultScreenKey': '/game'},
+          );
+          bottomNavigatorController.changeKey('/game');
+          eventBus.fireEvent("gotoDepositAfterLogin");
           } else {
             purchase(
               context,
