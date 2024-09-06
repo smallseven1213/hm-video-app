@@ -15,6 +15,7 @@ import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video/index.dart';
 import '../../../localization/shared_localization_delegate.dart';
+import '../../widgets/video/loading.dart';
 
 class FileListWidget extends StatelessWidget {
   final Post postDetail;
@@ -65,10 +66,10 @@ class FileListWidget extends StatelessWidget {
       autoPlay: false,
       videoUrl: videoUrl,
       videoDetail: Vod(0, ''),
-      // loadingWidget: AspectRatio(
-      //   aspectRatio: 16 / 9,
-      //   child: VideoLoading(coverHorizontal: file.cover),
-      // ),
+      loadingWidget: AspectRatio(
+        aspectRatio: 16 / 9,
+        child: VideoLoading(coverHorizontal: file.cover),
+      ),
       child: (isReady, controller) {
         return VideoPlayerWidget(
           videoUrl: videoUrl,
