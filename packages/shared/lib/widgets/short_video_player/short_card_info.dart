@@ -58,11 +58,9 @@ class ShortCardInfo extends StatelessWidget {
     required String route,
     Map<String, dynamic>? args,
   }) async {
-    videoPlayerInfo.observableVideoPlayerController.videoPlayerController
-        ?.pause();
+    videoPlayerInfo.observableVideoPlayerController.videoPlayerController?.pause();
     await MyRouteDelegate.of(context).push(route, args: args);
-    videoPlayerInfo.observableVideoPlayerController.videoPlayerController
-        ?.play();
+    videoPlayerInfo.observableVideoPlayerController.videoPlayerController?.play();
   }
 
   // 提取的方法，用於處理購買操作的結果
@@ -81,20 +79,12 @@ class ShortCardInfo extends StatelessWidget {
         if (context.mounted) {
           showConfirmDialog(
             context: context,
-            title: coinNotEnough
-                ? localizations.translate('insufficient_gold_balance')
-                : localizations.translate('purchase_failed'),
-            message: coinNotEnough
-                ? localizations.translate('go_to_top_up_now_for_full_exp')
-                : results.message,
+            title: coinNotEnough ? localizations.translate('insufficient_gold_balance') : localizations.translate('purchase_failed'),
+            message: coinNotEnough ? localizations.translate('go_to_top_up_now_for_full_exp') : results.message,
             showCancelButton: coinNotEnough,
-            confirmButtonText: coinNotEnough
-                ? localizations.translate('go_to_top_up')
-                : localizations.translate('confirm'),
+            confirmButtonText: coinNotEnough ? localizations.translate('go_to_top_up') : localizations.translate('confirm'),
             cancelButtonText: localizations.translate('cancel'),
-            onConfirm: () => coinNotEnough
-                ? MyRouteDelegate.of(context).push(AppRoutes.coin)
-                : null,
+            onConfirm: () => coinNotEnough ? MyRouteDelegate.of(context).push(AppRoutes.coin) : null,
           );
         }
         break;
@@ -115,9 +105,7 @@ class ShortCardInfo extends StatelessWidget {
         children: tags
             .map(
               (tag) => GestureDetector(
-                onTap: () => navigateToRoute(context, videoPlayerInfo,
-                    route: AppRoutes.supplierTag,
-                    args: {'tagId': tag.id, 'tagName': tag.name}),
+                onTap: () => navigateToRoute(context, videoPlayerInfo, route: AppRoutes.supplierTag, args: {'tagId': tag.id, 'tagName': tag.name}),
                 child: ShortCardInfoTag(name: '#${tag.name}'),
               ),
             )
@@ -131,8 +119,7 @@ class ShortCardInfo extends StatelessWidget {
     VideoPlayerInfo videoPlayerInfo,
   ) {
     return GestureDetector(
-      onTap: () => navigateToRoute(context, videoPlayerInfo,
-          route: AppRoutes.supplier, args: {'id': data.supplier!.id}),
+      onTap: () => navigateToRoute(context, videoPlayerInfo, route: AppRoutes.supplier, args: {'id': data.supplier!.id}),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -218,8 +205,7 @@ class ShortCardInfo extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // 供應師
-                      if (data.supplier != null)
-                        _buildSupplierInfo(context, videoPlayerInfo),
+                      if (data.supplier != null) _buildSupplierInfo(context, videoPlayerInfo),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         child: Text(
@@ -231,8 +217,7 @@ class ShortCardInfo extends StatelessWidget {
                         ),
                       ),
                       // 標籤
-                      if (data.tag.isNotEmpty)
-                        _buildTags(context, videoPlayerInfo, data.tag),
+                      if (data.tag.isNotEmpty) _buildTags(context, videoPlayerInfo, data.tag),
                       ShortVideoConsumer(
                         vodId: data.id,
                         tag: tag,
@@ -245,78 +230,42 @@ class ShortCardInfo extends StatelessWidget {
                             !video!.isAvailable
                                 ? Padding(
                                     padding: const EdgeInsets.only(bottom: 10),
-                                    child: video.chargeType ==
-                                            ChargeType.vip.index
+                                    child: video.chargeType == ChargeType.vip.index
                                         ? _buildPurchaseButton(
                                             context: context,
                                             onTap: () {
-                                              videoPlayerInfo
-                                                  .observableVideoPlayerController
-                                                  .videoPlayerController
-                                                  ?.pause();
-
-                                              final bottomNavigatorController =
-                                                  Get.find<
-                                                      BottomNavigatorController>();
-                                              MyRouteDelegate.of(context)
-                                                  .pushAndRemoveUntil(
-                                                AppRoutes.home,
-                                                args: {
-                                                  'defaultScreenKey': '/game'
-                                                },
-                                              );
-                                              bottomNavigatorController
-                                                  .changeKey('/game');
-                                              eventBus.fireEvent(
-                                                  "gotoDepositAfterLogin");
-                                              videoPlayerInfo
-                                                  .observableVideoPlayerController
-                                                  .videoPlayerController
-                                                  ?.play();
+                                              videoPlayerInfo.observableVideoPlayerController.videoPlayerController?.pause();
+                                              MyRouteDelegate.of(context).push(AppRoutes.vip);
                                             },
-                                            borderColor: const Color(0xffcecece)
-                                                .withOpacity(0.7),
+                                            borderColor: const Color(0xffcecece).withOpacity(0.7),
                                             textColor: Colors.white,
-                                            text:
-                                                '${localizations.translate('upgrade_to_full_version')} ${getTimeString(video.timeLength)}',
+                                            text: '${localizations.translate('upgrade_to_full_version')} ${getTimeString(video.timeLength)}',
                                             icon: const Image(
-                                              image: AssetImage(
-                                                  'assets/images/purchase/icon-short-vip.webp'),
+                                              image: AssetImage('assets/images/purchase/icon-short-vip.webp'),
                                               width: 25,
                                             ))
                                         : _buildPurchaseButton(
                                             context: context,
                                             videoUrl: videoUrl,
                                             onTap: () {
-                                              videoPlayerInfo
-                                                  .observableVideoPlayerController
-                                                  .videoPlayerController
-                                                  ?.pause();
+                                              videoPlayerInfo.observableVideoPlayerController.videoPlayerController?.pause();
                                               purchase(
                                                 context,
                                                 type: PurchaseType.shortVideo,
                                                 id: video.id,
                                                 onSuccess: () {
-                                                  final ShortVideoDetailController
-                                                      shortVideoDetailController =
-                                                      Get.find<
-                                                              ShortVideoDetailController>(
-                                                          tag: tag);
-                                                  shortVideoDetailController
-                                                      .mutateAll();
+                                                  final ShortVideoDetailController shortVideoDetailController =
+                                                      Get.find<ShortVideoDetailController>(tag: tag);
+                                                  shortVideoDetailController.mutateAll();
                                                 },
                                                 showConfirmDialog: showConfirmDialog,
                                               );
                                             },
-                                            borderColor:
-                                                const Color(0xffe7b400),
+                                            borderColor: const Color(0xffe7b400),
                                             textColor: Colors.white,
                                             text:
                                                 '${video.buyPoint} ${localizations.translate('count_gold_coins_to_unlock')} ${getTimeString(video.timeLength)}',
-                                            icon: const Image(
-                                                image: AssetImage(
-                                                    'assets/images/purchase/icon-short-coin.webp'),
-                                                width: 30),
+                                            icon: const Image(image: AssetImage('assets/images/purchase/icon-short-coin.webp'), width: 30),
                                           ),
                                   )
                                 : const SizedBox(),
