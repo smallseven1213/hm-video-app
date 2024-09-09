@@ -40,7 +40,7 @@ class AdState extends State<Ad> {
 
   GetStorage box = GetStorage();
 
-  int countdownSeconds = 0;
+  int countdownSeconds = 5;
   bool imageLoaded = false;
   Timer? _timer;
 
@@ -92,77 +92,75 @@ class AdState extends State<Ad> {
     return PopScope(
       canPop: false, // HC: 煩死，勿動!!
       child: Scaffold(
-        body: SafeArea(
-          child: Stack(
-            children: [
+        body: Stack(
+          children: [
+            Positioned.fill(
+              child: BannerLink(
+                id: currentBanner.id,
+                url: currentBanner.url ?? '',
+                child: SidImage(
+                  width: size.width,
+                  height: size.height,
+                  sid: currentBanner.photoSid.toString(),
+                  fit: BoxFit.cover,
+                  onLoaded: (result) {
+                    logger.i('AD SID IMAGE ONLOAD');
+                    startTimer();
+                    setState(() => imageLoaded = true);
+                  },
+                  onError: (e) {
+                    logger.i('AD SID IMAGE ERROR: $e');
+                    MyRouteDelegate.of(context).pushAndRemoveUntil(
+                        AppRoutes.home,
+                        hasTransition: false);
+                  },
+                ),
+              ),
+            ),
+            if (imageLoaded)
+              Positioned(
+                top: 20,
+                right: 8,
+                child: TextButton(
+                    onPressed: () => {
+                          if (countdownSeconds == 0)
+                            MyRouteDelegate.of(context).pushAndRemoveUntil(
+                                AppRoutes.home,
+                                hasTransition: false)
+                        },
+                    child: widget.countdown == null
+                        ? Container()
+                        : widget.countdown!(
+                            countdownSeconds: countdownSeconds)),
+              ),
+            if (!imageLoaded) ...[
               Positioned.fill(
-                child: BannerLink(
-                  id: currentBanner.id,
-                  url: currentBanner.url ?? '',
-                  child: SidImage(
-                    width: size.width,
-                    height: size.height,
-                    sid: currentBanner.photoSid.toString(),
-                    fit: BoxFit.cover,
-                    onLoaded: (result) {
-                      logger.i('AD SID IMAGE ONLOAD');
-                      startTimer();
-                      setState(() => imageLoaded = true);
-                    },
-                    onError: (e) {
-                      logger.i('AD SID IMAGE ERROR: $e');
-                      MyRouteDelegate.of(context).pushAndRemoveUntil(
-                          AppRoutes.home,
-                          hasTransition: false);
-                    },
+                child: Image.asset(
+                  widget.backgroundAssetPath,
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Center(
+                child: widget.loading!(
+                        text: localizations
+                            .translate('fetching_latest_resources')) ??
+                    const CircularProgressIndicator(),
+              ),
+              Positioned(
+                bottom: kIsWeb ? 20 : 70,
+                right: 20,
+                child: Text(
+                  '${localizations.translate('version')} ${systemConfigController.version.value}',
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 12,
                   ),
                 ),
               ),
-              if (imageLoaded)
-                Positioned(
-                  top: 50,
-                  right: 8,
-                  child: TextButton(
-                      onPressed: () => {
-                            if (countdownSeconds == 0)
-                              MyRouteDelegate.of(context).pushAndRemoveUntil(
-                                  AppRoutes.home,
-                                  hasTransition: false)
-                          },
-                      child: widget.countdown == null
-                          ? Container()
-                          : widget.countdown!(
-                              countdownSeconds: countdownSeconds)),
-                ),
-              if (!imageLoaded) ...[
-                Positioned.fill(
-                  child: Image.asset(
-                    widget.backgroundAssetPath,
-                    width: double.infinity,
-                    height: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                Center(
-                  child: widget.loading!(
-                          text: localizations
-                              .translate('fetching_latest_resources')) ??
-                      const CircularProgressIndicator(),
-                ),
-                Positioned(
-                  bottom: kIsWeb ? 20 : 70,
-                  right: 20,
-                  child: Text(
-                    '${localizations.translate('version')} ${systemConfigController.version.value}',
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                    ),
-                  ),
-                ),
-              ],
             ],
-          ),
+          ],
         ),
       ),
     );
