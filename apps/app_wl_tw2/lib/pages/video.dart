@@ -10,7 +10,6 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/index.dart';
 import 'package:shared/widgets/video/loading.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
 import '../screens/video/purchase_block.dart';
 import '../utils/show_confirm_dialog.dart';
@@ -32,7 +31,6 @@ class VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
-    final controllerTag = genaratorLongVideoDetailTag(id.toString());
 
     var name = widget.args['name'];
     return VideoScreenProvider(
@@ -80,7 +78,7 @@ class VideoState extends State<Video> {
                         name: name,
                         videoUrl: videoUrl,
                         video: videoDetail,
-                        tag: controllerTag,
+                        tag: videoUrl,
                         showConfirmDialog: showConfirmDialog,
                         themeColor: AppColors.colors[ColorKeys.secondary],
                       );
@@ -91,7 +89,7 @@ class VideoState extends State<Video> {
                       id: id.toString(),
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
-                      tag: controllerTag,
+                      tag: videoUrl,
                     ),
                   Expanded(
                     child: NestedTabBarView(
