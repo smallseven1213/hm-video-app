@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:app_wl_tw2/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_wl_tw2/widgets/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';

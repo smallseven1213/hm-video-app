@@ -3,7 +3,7 @@ import 'package:app_wl_tw2/pages/vip.dart';
 import 'package:logger/logger.dart';
 
 import 'package:app_wl_tw2/screens/home/home_apps.dart';
-import 'package:app_wl_tw2/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_wl_tw2/widgets/flash_loading.dart';
 
 import 'package:flutter/material.dart';
 import 'package:game/widgets/game_startup.dart';
