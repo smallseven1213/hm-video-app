@@ -119,7 +119,7 @@ class FileListWidget extends StatelessWidget {
             : '${postDetail.points} ${localizations.translate('gold_coins_unlock')}',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
-            MyRouteDelegate.of(context).pushAndRemoveUntil(
+            MyRouteDelegate.of(context).push(
               AppRoutes.vip,
             );
           } else {
