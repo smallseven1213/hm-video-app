@@ -63,30 +63,32 @@ class FileListWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       child: VideoPlayerProvider(
-      key: Key('post-$videoUrl'),
-      tag: 'post-$videoUrl',
-      autoPlay: false,
-      videoUrl: videoUrl,
-      videoDetail: Vod(0, ''),
-      loadingWidget: AspectRatio(
-        aspectRatio: 16 / 9,
-        child: VideoLoading(coverHorizontal: file.cover),
+        key: Key('post-$videoUrl'),
+        tag: 'post-$videoUrl',
+        autoPlay: false,
+        videoUrl: videoUrl,
+        videoDetail: Vod(0, ''),
+        loadingWidget: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: VideoLoading(coverHorizontal: file.cover),
+        ),
+        child: (isReady, controller) {
+          return VideoPlayerWidget(
+            videoUrl: videoUrl,
+            video: Vod(0, ''),
+            tag: 'post-$videoUrl',
+            showConfirmDialog: showConfirmDialog,
+            displayFullscreenIcon: false,
+            displayHeader: false,
+            hasPaymentProcess: false,
+          );
+        },
       ),
-      child: (isReady, controller) {
-        return VideoPlayerWidget(
-          videoUrl: videoUrl,
-          video: Vod(0, ''),
-          tag: 'post-$videoUrl',
-          showConfirmDialog: showConfirmDialog,
-          displayFullscreenIcon: false,
-          displayHeader: false,
-          hasPaymentProcess: false,
-        );
-      },
-    ),);
+    );
   }
 
-  Widget _buildUnlockButton(BuildContext context, PostController postController) {
+  Widget _buildUnlockButton(
+      BuildContext context, PostController postController) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -94,7 +96,8 @@ class FileListWidget extends StatelessWidget {
         text: localizations.translate('view_more'),
         onPressed: () {
           if (postDetail.linkType == LinkType.video.index) {
-            handlePathWithId(context, postDetail.link ?? '', removeSamePath: true);
+            handlePathWithId(context, postDetail.link ?? '',
+                removeSamePath: true);
           } else if (postDetail.linkType == LinkType.link.index) {
             handleHttpUrl(postDetail.link ?? '');
           } else {
@@ -116,14 +119,9 @@ class FileListWidget extends StatelessWidget {
             : '${postDetail.points} ${localizations.translate('gold_coins_unlock')}',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
-            final bottomNavigatorController =
-              Get.find<BottomNavigatorController>();
-          MyRouteDelegate.of(context).pushAndRemoveUntil(
-            AppRoutes.home,
-            args: {'defaultScreenKey': '/game'},
-          );
-          bottomNavigatorController.changeKey('/game');
-          eventBus.fireEvent("gotoDepositAfterLogin");
+            MyRouteDelegate.of(context).pushAndRemoveUntil(
+              AppRoutes.vip,
+            );
           } else {
             purchase(
               context,

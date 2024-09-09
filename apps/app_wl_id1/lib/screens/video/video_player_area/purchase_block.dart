@@ -86,14 +86,9 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                           ),
                           InkWell(
                             onTap: () {
-                              final bottomNavigatorController =
-                                  Get.find<BottomNavigatorController>();
                               MyRouteDelegate.of(context).pushAndRemoveUntil(
-                                AppRoutes.home,
-                                args: {'defaultScreenKey': '/game'},
+                                AppRoutes.vip,
                               );
-                              bottomNavigatorController.changeKey('/game');
-                              eventBus.fireEvent("gotoDepositAfterLogin");
                             },
                             child: Container(
                               padding: const EdgeInsets.only(

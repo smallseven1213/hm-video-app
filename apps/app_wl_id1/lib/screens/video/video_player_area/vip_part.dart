@@ -64,14 +64,9 @@ class VipPart extends StatelessWidget {
             text: I18n.upgradeNowForUnlock,
             size: 'small',
             onPressed: () {
-              final bottomNavigatorController =
-                  Get.find<BottomNavigatorController>();
               MyRouteDelegate.of(context).pushAndRemoveUntil(
-                AppRoutes.home,
-                args: {'defaultScreenKey': '/game'},
+                AppRoutes.vip,
               );
-              bottomNavigatorController.changeKey('/game');
-              eventBus.fireEvent("gotoDepositAfterLogin");
             },
           ),
         ),
