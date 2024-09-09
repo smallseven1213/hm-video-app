@@ -8,7 +8,7 @@ import 'package:shared/modules/main_layout/layout_style_tab_bg_consumer.dart';
 
 import 'package:app_wl_tw2/config/colors.dart';
 import 'package:app_wl_tw2/screens/main_screen/channels.dart';
-import 'package:app_wl_tw2/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_wl_tw2/widgets/flash_loading.dart';
 
 import '../../widgets/shared_app_bar/shared_app_bar.dart';
 import 'channel_search_bar.dart';
