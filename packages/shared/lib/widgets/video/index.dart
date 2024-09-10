@@ -47,7 +47,8 @@ class VideoPlayerWidget extends StatefulWidget {
   VideoPlayerWidgetState createState() => VideoPlayerWidgetState();
 }
 
-class VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindingObserver, RouteAware {
+class VideoPlayerWidgetState extends State<VideoPlayerWidget>
+    with WidgetsBindingObserver, RouteAware {
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
   bool hasError = false;
@@ -114,7 +115,9 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindin
 
   @override
   Widget build(BuildContext context) {
-    double playerHeight = isFullscreen ? MediaQuery.sizeOf(context).height : MediaQuery.sizeOf(context).width / 16 * 9;
+    double playerHeight = isFullscreen
+        ? MediaQuery.sizeOf(context).height
+        : MediaQuery.sizeOf(context).width / 16 * 9;
 
     return Container(
       color: Colors.black,
@@ -123,7 +126,9 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindin
         tag: widget.tag,
         child: (videoPlayerInfo) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
-          var aspectRatio = videoSize.width == 0 || videoSize.height == 0 ? 16 / 9 : videoSize.width / videoSize.height;
+          var aspectRatio = videoSize.width == 0 || videoSize.height == 0
+              ? 16 / 9
+              : videoSize.width / videoSize.height;
           final coverHorizontal = widget.video.coverHorizontal ?? '';
 
           if (videoPlayerInfo.videoAction == 'error') {
@@ -135,11 +140,15 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindin
             );
           }
 
-          if (videoPlayerInfo.videoPlayerController?.value.isInitialized == false) {
-            return widget.buildLoadingWidget ?? VideoLoading(coverHorizontal: coverHorizontal);
+          if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
+              false) {
+            return widget.buildLoadingWidget ??
+                VideoLoading(coverHorizontal: coverHorizontal);
           }
 
-          if (widget.hasPaymentProcess == true && widget.video.isAvailable == false && videoPlayerInfo.videoAction == 'end') {
+          if (widget.hasPaymentProcess == true &&
+              widget.video.isAvailable == false &&
+              videoPlayerInfo.videoAction == 'end') {
             return PurchasePromotion(
               coverHorizontal: coverHorizontal,
               buyPoints: widget.video.buyPoint.toString(),
@@ -184,7 +193,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindin
                 isFullscreen: isFullscreen,
                 displayHeader: widget.displayHeader,
                 displayFullScreenIcon: widget.displayFullscreenIcon,
-                themeColor: widget.themeColor,
+                themeColor: widget.themeColor ?? Colors.blue,
                 onScreenLock: (bool isLocked) {
                   setState(() {
                     isScreenLocked = isLocked;
