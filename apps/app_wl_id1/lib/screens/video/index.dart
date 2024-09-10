@@ -1,22 +1,24 @@
-import 'package:app_wl_id1/screens/video/video_player_area/index.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/widgets/video/index.dart';
+import 'package:shared/widgets/video/loading.dart';
 
 import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/wave_loading.dart';
+import '../../config/colors.dart';
 import 'nested_tab_bar_view/index.dart';
-import 'video_player_area/loading.dart';
-import 'video_player_area/purchase_block.dart';
+import 'purchase_block.dart';
+import 'dot_line_animation.dart';
 
 final logger = Logger();
 
@@ -52,7 +54,6 @@ class VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.id.toString());
-    final controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
 
     return VideoScreenProvider(
       id: widget.id,
@@ -93,15 +94,25 @@ class VideoScreenState extends State<VideoScreen> {
                       child: Container(
                         color: Colors.black,
                         child: VideoLoading(
-                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
+                          dotLineAnimation: const DotLineAnimation(),
+                          ),
                       ),
                     ),
                     child: (isReady, controller) {
-                      return VideoPlayerArea(
+                      return VideoPlayerWidget(
                         name: widget.name,
                         videoUrl: videoUrl,
                         video: videoDetail,
-                        tag: controllerTag,
+                        tag: videoUrl,
+                      showConfirmDialog: showConfirmDialog,
+                      themeColor: AppColors.colors[ColorKeys.secondary],
+                      buildLoadingWidget: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
+                          dotLineAnimation: const DotLineAnimation(),
+                          ),
                       );
                     },
                   ),
@@ -110,7 +121,7 @@ class VideoScreenState extends State<VideoScreen> {
                       id: id,
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
-                      tag: controllerTag,
+                      tag: videoUrl,
                     ),
                   Expanded(
                     child: NestedTabBarView(
