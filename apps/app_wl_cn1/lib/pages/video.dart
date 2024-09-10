@@ -83,7 +83,6 @@ class VideoState extends State<Video> {
                         themeColor: AppColors.colors[ColorKeys.secondary],
                         buildLoadingWidget: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
                           dotLineAnimation: const FlashLoading(),
                         ),
                       );

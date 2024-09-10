@@ -10,7 +10,7 @@ import 'package:shared/modules/main_layout/layout_style_tab_bg_consumer.dart';
 
 import 'package:app_sv/config/colors.dart';
 import 'package:app_sv/screens/main_screen/channels.dart';
-import 'package:app_sv/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_sv/widgets/flash_loading.dart';
 
 import 'channel_search_bar.dart';
 import 'floating_button.dart';
