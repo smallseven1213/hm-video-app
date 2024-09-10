@@ -27,6 +27,7 @@ class VideoPlayerWidget extends StatefulWidget {
   final bool? displayFullscreenIcon;
   final bool? hasPaymentProcess;
   final Color? themeColor;
+  final Widget? buildLoadingWidget;
 
   const VideoPlayerWidget({
     Key? key,
@@ -39,6 +40,7 @@ class VideoPlayerWidget extends StatefulWidget {
     this.hasPaymentProcess = true,
     this.name,
     this.themeColor = Colors.blue,
+    this.buildLoadingWidget,
   }) : super(key: key);
 
   @override
@@ -140,7 +142,8 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
 
           if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
               false) {
-            return VideoLoading(coverHorizontal: coverHorizontal);
+            return widget.buildLoadingWidget ??
+                VideoLoading(coverHorizontal: coverHorizontal);
           }
 
           if (widget.hasPaymentProcess == true &&
@@ -190,7 +193,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
                 isFullscreen: isFullscreen,
                 displayHeader: widget.displayHeader,
                 displayFullScreenIcon: widget.displayFullscreenIcon,
-                themeColor: widget.themeColor,
+                themeColor: widget.themeColor ?? Colors.blue,
                 onScreenLock: (bool isLocked) {
                   setState(() {
                     isScreenLocked = isLocked;

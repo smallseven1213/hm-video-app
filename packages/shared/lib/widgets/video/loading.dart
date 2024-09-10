@@ -8,7 +8,9 @@ final logger = Logger();
 
 class VideoLoading extends StatelessWidget {
   final String coverHorizontal;
-  const VideoLoading({Key? key, required this.coverHorizontal})
+  final Image? image;
+  final Widget? dotLineAnimation;
+  const VideoLoading({Key? key, required this.coverHorizontal, this.image, this.dotLineAnimation})
       : super(key: key);
 
   @override
@@ -38,13 +40,15 @@ class VideoLoading extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        const Column(
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Center(child: FlashLoading()),
-            SizedBox(height: 15),
-            Text(
+            if (image != null) image!, 
+            if (dotLineAnimation != null) dotLineAnimation!,  
+            const SizedBox(height: 15),
+            const Text(
               '精彩即將呈現',
               style: TextStyle(fontSize: 12, color: Colors.white),
             )
