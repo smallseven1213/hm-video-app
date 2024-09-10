@@ -10,16 +10,9 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-
+import 'package:shared/enums/charge_type.dart';
 import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
-
-enum ChargeType {
-  none,
-  free, // 1: 免費
-  coin, // 2: 金幣
-  vip, // 3: VIP
-}
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;

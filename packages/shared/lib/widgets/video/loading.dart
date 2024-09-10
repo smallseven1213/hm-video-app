@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/sid_image.dart';
+import '../../../localization/shared_localization_delegate.dart';
 
 final logger = Logger();
 
@@ -15,6 +16,7 @@ class VideoLoading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Stack(
       children: [
         Container(
@@ -48,9 +50,9 @@ class VideoLoading extends StatelessWidget {
             if (image != null) image!, 
             if (dotLineAnimation != null) dotLineAnimation!,  
             const SizedBox(height: 15),
-            const Text(
-              '精彩即將呈現',
-              style: TextStyle(fontSize: 12, color: Colors.white),
+            Text(
+              localizations.translate('coming_soon'),
+              style: const TextStyle(fontSize: 12, color: Colors.white),
             )
           ],
         ),

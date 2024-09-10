@@ -75,4 +75,5 @@ const Map<String, String> sharedZhCnStrings = {
   "view_more":"观看更多",
   "become_a _vip_to_unlock":"成为VIP解锁",
   "gold_coins_unlock":"金币解锁",
+  "coming_soon":"精彩即将呈现",
 };

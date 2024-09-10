@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/video_ads_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -14,18 +15,19 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/modules/videos/video_by_tag_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/widgets/video/index.dart';
+import 'package:shared/widgets/video/loading.dart';
 import '../screens/video/actors.dart';
 import '../screens/video/app_download_ad.dart';
 import '../screens/video/banner.dart';
 import '../screens/video/belong_video.dart';
 import '../screens/video/video_info.dart';
-import '../screens/video/video_player_area/index.dart';
-import '../screens/video/video_player_area/loading.dart';
-import '../screens/video/video_player_area/purchase_block.dart';
+import '../screens/video/purchase_block.dart';
 import '../widgets/title_header.dart';
+import '../../config/colors.dart';
 import '../widgets/video_preview.dart';
 import '../widgets/loading_animation.dart';
+import '../../../widgets/loading_animation.dart';
 
 final userApi = UserApi();
 
@@ -79,7 +81,6 @@ class VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
-    final controllerTag = genaratorLongVideoDetailTag(id.toString());
 
     var name = widget.args['name'];
     return VideoScreenProvider(
@@ -130,11 +131,17 @@ class VideoState extends State<Video> {
                       ),
                     ),
                     child: (isReady, controller) {
-                      return VideoPlayerArea(
+                      return VideoPlayerWidget(
                         name: name,
                         videoUrl: videoUrl,
                         video: videoDetail,
-                        tag: controllerTag,
+                        tag: videoUrl,
+                      showConfirmDialog: showConfirmDialog,
+                      themeColor: AppColors.colors[ColorKeys.secondary],
+                      buildLoadingWidget: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          dotLineAnimation: const LoadingAnimation(),
+                          ),
                       );
                     },
                   ),
@@ -150,7 +157,7 @@ class VideoState extends State<Video> {
                             id: videoDetail!.id.toString(),
                             videoDetail: videoDetail,
                             videoUrl: videoUrl,
-                            tag: controllerTag,
+                            tag: videoUrl,
                           ),
                         ),
                         SliverToBoxAdapter(

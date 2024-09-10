@@ -82,4 +82,5 @@ const Map<String, String> sharedViVnStrings = {
   "view_more":"Xem thêm",
   "become_a _vip_to_unlock":"VIP để mở khóa",
   "gold_coins_unlock":"Mở khóa bằng xu",
+  "coming_soon":"Sắp tới sẽ có những điều thú vị",
 };

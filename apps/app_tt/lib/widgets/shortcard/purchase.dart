@@ -8,8 +8,8 @@ import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/utils/purchase.dart';
+import 'package:shared/enums/charge_type.dart';
 
-import '../../screens/video/video_player_area/enums.dart';
 import '../../utils/show_confirm_dialog.dart';
 
 class PurchaseWidget extends StatelessWidget {

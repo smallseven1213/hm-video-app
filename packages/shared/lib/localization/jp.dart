@@ -76,4 +76,5 @@ const Map<String, String> sharedJaJpStrings = {
   "view_more":"もっと見る",
   "become_a _vip_to_unlock":"VIPでアンロック",
   "gold_coins_unlock":"コインでアンロック",
+  "coming_soon":"近日公開",
 };
