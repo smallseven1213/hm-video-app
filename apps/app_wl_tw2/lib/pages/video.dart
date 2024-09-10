@@ -10,6 +10,10 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/index.dart';
 import 'package:shared/widgets/video/loading.dart';
+<<<<<<< HEAD
+=======
+import 'package:shared/utils/controller_tag_genarator.dart';
+>>>>>>> bd6bd14aad036d7f5503b7ac80387c0b699e4d32
 import '../screens/video/nested_tab_bar_view/index.dart';
 import '../screens/video/purchase_block.dart';
 import '../utils/show_confirm_dialog.dart';
@@ -78,7 +82,11 @@ class VideoState extends State<Video> {
                         name: name,
                         videoUrl: videoUrl,
                         video: videoDetail,
+<<<<<<< HEAD
                         tag: videoUrl,
+=======
+                        tag: controllerTag,
+>>>>>>> bd6bd14aad036d7f5503b7ac80387c0b699e4d32
                         showConfirmDialog: showConfirmDialog,
                         themeColor: AppColors.colors[ColorKeys.secondary],
                       );
