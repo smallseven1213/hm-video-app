@@ -142,7 +142,10 @@ class VideoState extends State<Video> {
                       child: Container(
                         color: Colors.black,
                         child: VideoLoading(
-                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          dotLineAnimation: CircularProgressIndicator(
+                          color: AppColors.colors[ColorKeys.textPrimary],),
+                          ),
                       ),
                     ),
                     child: (isReady, controller) {

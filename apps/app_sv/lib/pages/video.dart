@@ -54,8 +54,7 @@ class VideoState extends State<Video> {
                   message: '請先登入後觀看。',
                   cancelButtonText: '返回',
                   barrierDismissible: false,
-                  onConfirm: () =>
-                      MyRouteDelegate.of(context).push(AppRoutes.login),
+                  onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
                   onCancel: () => MyRouteDelegate.of(context).popToHome(),
                 );
               },
@@ -72,7 +71,9 @@ class VideoState extends State<Video> {
                       child: Container(
                         color: Colors.black,
                         child: VideoLoading(
-                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          dotLineAnimation: const FlashLoading(),
+                        ),
                       ),
                     ),
                     child: (isReady, controller) {
@@ -81,12 +82,12 @@ class VideoState extends State<Video> {
                         videoUrl: videoUrl,
                         video: videoDetail,
                         tag: videoUrl,
-                      showConfirmDialog: showConfirmDialog,
-                      themeColor: AppColors.colors[ColorKeys.secondary],
-                      buildLoadingWidget: VideoLoading(
+                        showConfirmDialog: showConfirmDialog,
+                        themeColor: AppColors.colors[ColorKeys.secondary],
+                        buildLoadingWidget: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
                           dotLineAnimation: const FlashLoading(),
-                          ),
+                        ),
                       );
                     },
                   ),
