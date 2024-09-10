@@ -1,5 +1,13 @@
+<<<<<<< HEAD
 import 'package:app_wl_tw2/widgets/flash_loading.dart';
 import 'package:app_wl_tw2/config/colors.dart';
+=======
+<<<<<<< HEAD
+import 'package:app_wl_tw2/config/colors.dart';
+import 'package:app_wl_tw2/widgets/flash_loading.dart';
+=======
+>>>>>>> 98d5c03c (fix(app_wl_tw2): #6029 頻道關注頁面 缺 /public/suppliers/supplier/list?)
+>>>>>>> d2138ce1 (fix(app_wl_tw2): #6029 頻道關注頁面 缺 /public/suppliers/supplier/list?)
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_short_by_channel_style6.dart';
