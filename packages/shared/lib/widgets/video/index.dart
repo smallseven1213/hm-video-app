@@ -27,6 +27,7 @@ class VideoPlayerWidget extends StatefulWidget {
   final bool? displayFullscreenIcon;
   final bool? hasPaymentProcess;
   final Color? themeColor;
+  final Widget? buildLoadingWidget;
 
   const VideoPlayerWidget({
     Key? key,
@@ -39,14 +40,14 @@ class VideoPlayerWidget extends StatefulWidget {
     this.hasPaymentProcess = true,
     this.name,
     this.themeColor = Colors.blue,
+    this.buildLoadingWidget,
   }) : super(key: key);
 
   @override
   VideoPlayerWidgetState createState() => VideoPlayerWidgetState();
 }
 
-class VideoPlayerWidgetState extends State<VideoPlayerWidget>
-    with WidgetsBindingObserver, RouteAware {
+class VideoPlayerWidgetState extends State<VideoPlayerWidget> with WidgetsBindingObserver, RouteAware {
   final VodApi vodApi = VodApi();
   bool isFullscreen = false;
   bool hasError = false;
@@ -113,9 +114,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
 
   @override
   Widget build(BuildContext context) {
-    double playerHeight = isFullscreen
-        ? MediaQuery.sizeOf(context).height
-        : MediaQuery.sizeOf(context).width / 16 * 9;
+    double playerHeight = isFullscreen ? MediaQuery.sizeOf(context).height : MediaQuery.sizeOf(context).width / 16 * 9;
 
     return Container(
       color: Colors.black,
@@ -124,9 +123,7 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
         tag: widget.tag,
         child: (videoPlayerInfo) {
           Size videoSize = videoPlayerInfo.videoPlayerController!.value.size;
-          var aspectRatio = videoSize.width == 0 || videoSize.height == 0
-              ? 16 / 9
-              : videoSize.width / videoSize.height;
+          var aspectRatio = videoSize.width == 0 || videoSize.height == 0 ? 16 / 9 : videoSize.width / videoSize.height;
           final coverHorizontal = widget.video.coverHorizontal ?? '';
 
           if (videoPlayerInfo.videoAction == 'error') {
@@ -138,14 +135,11 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
             );
           }
 
-          if (videoPlayerInfo.videoPlayerController?.value.isInitialized ==
-              false) {
-            return VideoLoading(coverHorizontal: coverHorizontal);
+          if (videoPlayerInfo.videoPlayerController?.value.isInitialized == false) {
+            return widget.buildLoadingWidget ?? VideoLoading(coverHorizontal: coverHorizontal);
           }
 
-          if (widget.hasPaymentProcess == true &&
-              widget.video.isAvailable == false &&
-              videoPlayerInfo.videoAction == 'end') {
+          if (widget.hasPaymentProcess == true && widget.video.isAvailable == false && videoPlayerInfo.videoAction == 'end') {
             return PurchasePromotion(
               coverHorizontal: coverHorizontal,
               buyPoints: widget.video.buyPoint.toString(),
