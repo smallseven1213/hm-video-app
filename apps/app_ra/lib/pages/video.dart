@@ -8,18 +8,17 @@ import 'package:shared/apis/vod_api.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/color_keys.dart';
+import 'package:shared/enums/charge_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/widgets/video/index.dart';
+import 'package:shared/widgets/video/loading.dart';
 import '../config/colors.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
-import '../screens/video/video_player_area/enums.dart';
-import '../screens/video/video_player_area/index.dart';
-import '../screens/video/video_player_area/loading.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/custom_app_bar.dart';
 import '../widgets/wave_loading.dart';
@@ -56,7 +55,6 @@ class VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
-    final controllerTag = genaratorLongVideoDetailTag(id.toString());
 
     var name = widget.args['name'];
     return VideoScreenProvider(
@@ -100,7 +98,7 @@ class VideoState extends State<Video> {
                                   onSuccess: () {
                                     final videoDetailController =
                                         Get.find<VideoDetailController>(
-                                            tag: controllerTag);
+                                            tag: videoUrl);
                                     videoDetailController.mutateAll();
                                     videoPlayerInfo.videoPlayerController
                                         ?.play();
@@ -148,11 +146,18 @@ class VideoState extends State<Video> {
                       ),
                     ),
                     child: (isReady, controller) {
-                      return VideoPlayerArea(
+                      return VideoPlayerWidget(
                         name: name,
                         videoUrl: videoUrl,
                         video: videoDetail,
-                        tag: controllerTag,
+                        tag: videoUrl,
+                      showConfirmDialog: showConfirmDialog,
+                      themeColor: AppColors.colors[ColorKeys.secondary],
+                      buildLoadingWidget: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          dotLineAnimation: CircularProgressIndicator(
+                          color: AppColors.colors[ColorKeys.textPrimary],),
+                          ),
                       );
                     },
                   ),
