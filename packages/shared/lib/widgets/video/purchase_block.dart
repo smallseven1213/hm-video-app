@@ -1,31 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-
-import '../../../localization/i18n.dart';
-import '../../../utils/show_confirm_dialog.dart';
-
-enum ChargeType {
-  none,
-  free, // 1: 免費
-  coin, // 2: 金幣
-  vip, // 3: VIP
-}
+import 'package:shared/enums/charge_type.dart';
+import '../../../localization/shared_localization_delegate.dart';
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
   final int id;
   final String videoUrl;
   final String tag;
+  final Function showConfirmDialog;
+  final Map<String, ImageProvider<Object>> images;
 
   const PurchaseBlock({
     super.key,
@@ -33,6 +26,8 @@ class PurchaseBlock extends StatefulWidget {
     required this.id,
     required this.videoUrl,
     required this.tag,
+    required this.showConfirmDialog,
+    required this.images,
   });
 
   @override
@@ -42,6 +37,8 @@ class PurchaseBlock extends StatefulWidget {
 class _PurchaseBlockState extends State<PurchaseBlock> {
   @override
   Widget build(BuildContext context) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: !widget.videoDetail.isAvailable
@@ -54,9 +51,8 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                       height: 64,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0),
-                        image: const DecorationImage(
-                          image:
-                              AssetImage('assets/images/purchase/img-vip.png'),
+                        image: DecorationImage(
+                          image: widget.images['img-vip']!,
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -68,16 +64,15 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                           Expanded(
                             child: Row(
                               children: [
-                                const Image(
-                                  image: AssetImage(
-                                      'assets/images/purchase/icon-vip.webp'),
+                                Image(
+                                  image: widget.images['icon-vip']!,
                                   width: 20,
                                   height: 20,
                                 ),
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
-                                    I18n.activateVipForFree,
+                                    localizations.translate('activate_vip_for_free'),
                                     style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
@@ -102,7 +97,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 border: Border.all(color: Colors.white),
                               ),
                               child: Text(
-                                I18n.viewDetails,
+                                localizations.translate('view_details'),
                                 style: const TextStyle(color: Colors.white),
                               ),
                             ),
@@ -123,9 +118,8 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                           height: 64,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6.0),
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                  'assets/images/purchase/img-coin.png'),
+                            image: DecorationImage(
+                              image: widget.images['img-coin']!,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -140,9 +134,8 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                               Expanded(
                                 child: Row(
                                   children: [
-                                    const Image(
-                                      image: AssetImage(
-                                          'assets/images/purchase/icon-coin.webp'),
+                                    Image(
+                                      image: widget.images['icon-coin']!,
                                       width: 20,
                                       height: 20,
                                     ),
@@ -151,7 +144,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     ),
                                     Expanded(
                                       child: Text(
-                                        '${I18n.wantToWatch}${widget.videoDetail.buyPoint}${I18n.coinsUnlock}',
+                                        '${localizations.translate('want_to_watch')}${widget.videoDetail.buyPoint}${localizations.translate('gold_coins_unlock')}',
                                         style: const TextStyle(
                                           color: Color(0xff644c14),
                                         ),
@@ -166,14 +159,12 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                   type: PurchaseType.video,
                                   id: widget.id,
                                   onSuccess: () {
-                                    final videoDetailController =
-                                        Get.find<VideoDetailController>(
-                                            tag: widget.tag);
+                                    final controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
+                                    final videoDetailController = Get.find<VideoDetailController>(tag: controllerTag);
                                     videoDetailController.mutateAll();
-                                    videoPlayerInfo.videoPlayerController
-                                        ?.play();
+                                    videoPlayerInfo.videoPlayerController?.play();
                                   },
-                                  showConfirmDialog: showConfirmDialog,
+                                  showConfirmDialog: widget.showConfirmDialog,
                                 ),
                                 child: Container(
                                   padding: const EdgeInsets.only(
@@ -188,7 +179,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                     border: Border.all(color: Colors.white),
                                   ),
                                   child: Text(
-                                    I18n.unlockNow,
+                                    localizations.translate('unlock_now'),
                                     style: const TextStyle(color: Colors.white),
                                   ),
                                 ),

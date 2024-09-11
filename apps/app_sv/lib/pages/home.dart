@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 
 import 'package:app_sv/screens/home/home_apps.dart';
-import 'package:app_sv/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_sv/widgets/flash_loading.dart';
 
 import 'package:game/widgets/game_startup.dart';
 import 'package:game/screens/enter_game_screen/index.dart';

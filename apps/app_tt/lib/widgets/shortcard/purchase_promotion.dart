@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/short_video_detail_controller.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
+import 'package:shared/enums/charge_type.dart';
 
-import '../../screens/video/video_player_area/enums.dart';
 import '../purchase_promotion/coin_part.dart';
 import '../purchase_promotion/vip_part.dart';
 

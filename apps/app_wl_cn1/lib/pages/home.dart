@@ -1,7 +1,7 @@
 import 'package:logger/logger.dart';
 
 import 'package:app_wl_cn1/screens/home/home_apps.dart';
-import 'package:app_wl_cn1/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_wl_cn1/widgets/general_shortcard/flash_loading.dart';
 
 import 'package:flutter/material.dart';
 import 'package:game/screens/enter_game_screen/index.dart';

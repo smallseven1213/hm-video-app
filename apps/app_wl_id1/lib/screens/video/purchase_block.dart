@@ -1,25 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-
+import 'package:shared/enums/charge_type.dart';
 import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
-
-enum ChargeType {
-  none,
-  free, // 1: 免費
-  coin, // 2: 金幣
-  vip, // 3: VIP
-}
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;
@@ -166,9 +158,12 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                   type: PurchaseType.video,
                                   id: widget.id,
                                   onSuccess: () {
+                                    final controllerTag =
+                                        genaratorLongVideoDetailTag(
+                                            widget.id.toString());
                                     final videoDetailController =
                                         Get.find<VideoDetailController>(
-                                            tag: widget.tag);
+                                            tag: controllerTag);
                                     videoDetailController.mutateAll();
                                     videoPlayerInfo.videoPlayerController
                                         ?.play();

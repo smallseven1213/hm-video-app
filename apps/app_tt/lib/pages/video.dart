@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:shared/models/color_keys.dart';
 import 'package:shared/apis/user_api.dart';
 import 'package:shared/controllers/video_ads_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -14,18 +15,19 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/modules/videos/video_by_tag_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/controller_tag_genarator.dart';
+import 'package:shared/widgets/video/index.dart';
+import 'package:shared/widgets/video/loading.dart';
 import '../screens/video/actors.dart';
 import '../screens/video/app_download_ad.dart';
 import '../screens/video/banner.dart';
 import '../screens/video/belong_video.dart';
 import '../screens/video/video_info.dart';
-import '../screens/video/video_player_area/index.dart';
-import '../screens/video/video_player_area/loading.dart';
-import '../screens/video/video_player_area/purchase_block.dart';
+import '../screens/video/purchase_block.dart';
 import '../widgets/title_header.dart';
+import '../../config/colors.dart';
 import '../widgets/video_preview.dart';
 import '../widgets/loading_animation.dart';
+import '../../../widgets/loading_animation.dart';
 
 final userApi = UserApi();
 
@@ -52,8 +54,7 @@ class VideoState extends State<Video> {
   void initState() {
     super.initState();
     // setScreenRotation();
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.black));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.black));
 
     _controller.addListener(() {
       if (_controller.offset > 100 && !_showButton) {
@@ -71,15 +72,13 @@ class VideoState extends State<Video> {
   @override
   void dispose() {
     // setScreenPortrait();
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
-    final controllerTag = genaratorLongVideoDetailTag(id.toString());
 
     var name = widget.args['name'];
     return VideoScreenProvider(
@@ -101,8 +100,7 @@ class VideoState extends State<Video> {
                 message: I18n.plsLoginToWatch,
                 cancelButtonText: I18n.back,
                 barrierDismissible: false,
-                onConfirm: () =>
-                    MyRouteDelegate.of(context).push(AppRoutes.login),
+                onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
                 onCancel: () => MyRouteDelegate.of(context).popToHome(),
               );
             },
@@ -113,10 +111,7 @@ class VideoState extends State<Video> {
                     key: Key(videoUrl),
                     tag: videoUrl,
                     autoPlay:
-                        videoAdsController.videoAds.value.playerPositions !=
-                                    null &&
-                                videoAdsController
-                                    .videoAds.value.playerPositions!.isNotEmpty
+                        videoAdsController.videoAds.value.playerPositions != null && videoAdsController.videoAds.value.playerPositions!.isNotEmpty
                             ? false
                             : canWatch,
                     videoUrl: videoUrl,
@@ -126,15 +121,23 @@ class VideoState extends State<Video> {
                       child: Container(
                         color: Colors.black,
                         child: VideoLoading(
-                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          loadingAnimation: const LoadingAnimation(),
+                        ),
                       ),
                     ),
                     child: (isReady, controller) {
-                      return VideoPlayerArea(
+                      return VideoPlayerWidget(
                         name: name,
                         videoUrl: videoUrl,
                         video: videoDetail,
-                        tag: controllerTag,
+                        tag: videoUrl,
+                        showConfirmDialog: showConfirmDialog,
+                        themeColor: AppColors.colors[ColorKeys.secondary],
+                        buildLoadingWidget: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          loadingAnimation: const LoadingAnimation(),
+                        ),
                       );
                     },
                   ),
@@ -150,16 +153,14 @@ class VideoState extends State<Video> {
                             id: videoDetail!.id.toString(),
                             videoDetail: videoDetail,
                             videoUrl: videoUrl,
-                            tag: controllerTag,
+                            tag: videoUrl,
                           ),
                         ),
                         SliverToBoxAdapter(
                           child: VideoPlayerConsumer(
                             tag: videoUrl,
                             child: (videoPlayerInfo) => VideoInfo(
-                              videoPlayerController: videoPlayerInfo
-                                  .observableVideoPlayerController
-                                  .videoPlayerController,
+                              videoPlayerController: videoPlayerInfo.observableVideoPlayerController.videoPlayerController,
                               externalId: videoDetail.externalId ?? '',
                               title: videoDetail.title,
                               tags: videoDetail.tags ?? [],
@@ -167,15 +168,13 @@ class VideoState extends State<Video> {
                               viewTimes: videoDetail.videoViewTimes ?? 0,
                               actor: videoDetail.actors,
                               publisher: videoDetail.publisher,
-                              videoFavoriteTimes:
-                                  videoDetail.videoFavoriteTimes ?? 0,
+                              videoFavoriteTimes: videoDetail.videoFavoriteTimes ?? 0,
                               videoDetail: videoDetail,
                             ),
                           ),
                         ),
                         // 演員列表
-                        if (videoDetail.actors != null &&
-                            videoDetail.actors!.isNotEmpty)
+                        if (videoDetail.actors != null && videoDetail.actors!.isNotEmpty)
                           SliverToBoxAdapter(
                               child: Actors(
                             actors: videoDetail.actors!,
@@ -188,8 +187,7 @@ class VideoState extends State<Video> {
                           ),
                         ),
                         // 選集
-                        if (videoDetail.belongVods != null &&
-                            videoDetail.belongVods!.isNotEmpty)
+                        if (videoDetail.belongVods != null && videoDetail.belongVods!.isNotEmpty)
                           SliverToBoxAdapter(
                               child: BelongVideo(
                             key: _belongVideoKey,
@@ -213,8 +211,7 @@ class VideoState extends State<Video> {
                               ),
                               if (videoDetail.tags!.isEmpty)
                                 Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 20),
+                                  padding: const EdgeInsets.symmetric(vertical: 20),
                                   child: Center(
                                     child: Text(
                                       I18n.noRelatedVideoAndGuessYouLike,
@@ -232,10 +229,8 @@ class VideoState extends State<Video> {
                                   child: (videos) {
                                     return GridView.builder(
                                       shrinkWrap: true,
-                                      physics:
-                                          const NeverScrollableScrollPhysics(),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithFixedCrossAxisCount(
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                         crossAxisCount: 2,
                                         childAspectRatio: 193 / 159,
                                         crossAxisSpacing: 1,
@@ -246,16 +241,11 @@ class VideoState extends State<Video> {
                                         return VideoPreviewWidget(
                                           id: videos[index].id,
                                           title: videos[index].title,
-                                          coverHorizontal:
-                                              videos[index].coverHorizontal ??
-                                                  '',
-                                          coverVertical:
-                                              videos[index].coverVertical ?? '',
-                                          timeLength:
-                                              videos[index].timeLength ?? 0,
+                                          coverHorizontal: videos[index].coverHorizontal ?? '',
+                                          coverVertical: videos[index].coverVertical ?? '',
+                                          timeLength: videos[index].timeLength ?? 0,
                                           tags: videos[index].tags ?? [],
-                                          videoViewTimes:
-                                              videos[index].videoViewTimes ?? 0,
+                                          videoViewTimes: videos[index].videoViewTimes ?? 0,
                                         );
                                       },
                                     );
@@ -276,15 +266,13 @@ class VideoState extends State<Video> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              if (videoDetail.belongVods != null &&
-                                  videoDetail.belongVods!.isNotEmpty)
+                              if (videoDetail.belongVods != null && videoDetail.belongVods!.isNotEmpty)
                                 InkWell(
                                   onTap: () {
                                     _scrollToPosition(_belongVideoKey);
                                   },
                                   child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
                                     child: Text(I18n.highlights),
                                   ),
                                 ),
@@ -293,8 +281,7 @@ class VideoState extends State<Video> {
                                   _scrollToPosition(_tagVideoKey);
                                 },
                                 child: Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10),
+                                  padding: const EdgeInsets.symmetric(horizontal: 10),
                                   child: Text(I18n.sameTag),
                                 ),
                               ),
@@ -313,8 +300,7 @@ class VideoState extends State<Video> {
   }
 
   void _scrollToPosition(GlobalKey key) {
-    final RenderBox renderBox =
-        key.currentContext!.findRenderObject() as RenderBox;
+    final RenderBox renderBox = key.currentContext!.findRenderObject() as RenderBox;
     final position = renderBox.localToGlobal(Offset.zero);
 
     _controller.animateTo(

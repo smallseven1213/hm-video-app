@@ -7,7 +7,7 @@ import 'package:shared/modules/shorts/shorts_scaffold.dart';
 import 'package:shared/widgets/create_play_record.dart';
 import 'package:uuid/uuid.dart';
 import '../screens/nodata/index.dart';
-import '../screens/video/video_player_area/flash_loading.dart';
+import 'flash_loading.dart';
 import 'general_shortcard/index.dart';
 import 'home_use_shortcard/index.dart';
 
