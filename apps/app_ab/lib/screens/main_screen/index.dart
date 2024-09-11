@@ -13,7 +13,7 @@ import 'package:shared/modules/main_layout/layout_style_tab_bg_consumer.dart';
 
 import 'package:app_ab/config/colors.dart';
 import 'package:app_ab/screens/main_screen/channels.dart';
-import 'package:app_ab/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_ab/widgets/flash_loading.dart';
 
 import 'channel_search_bar.dart';
 import 'layout_tab_bar.dart';

@@ -41,14 +41,12 @@ class VideoState extends State<Video> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.black));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.black));
   }
 
   @override
   void dispose() {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     super.dispose();
   }
 
@@ -75,8 +73,7 @@ class VideoState extends State<Video> {
                     ? Align(
                         alignment: Alignment.centerRight,
                         child: InkWell(
-                          onTap: () =>
-                              MyRouteDelegate.of(context).push(AppRoutes.vip),
+                          onTap: () => MyRouteDelegate.of(context).push(AppRoutes.vip),
                           child: Text(
                             '開通 VIP 無限看片',
                             style: TextStyle(
@@ -96,20 +93,16 @@ class VideoState extends State<Video> {
                                   context,
                                   id: id,
                                   onSuccess: () {
-                                    final videoDetailController =
-                                        Get.find<VideoDetailController>(
-                                            tag: videoUrl);
+                                    final videoDetailController = Get.find<VideoDetailController>(tag: videoUrl);
                                     videoDetailController.mutateAll();
-                                    videoPlayerInfo.videoPlayerController
-                                        ?.play();
+                                    videoPlayerInfo.videoPlayerController?.play();
                                   },
                                 ),
                                 child: Text(
                                   '${videoDetail.buyPoint}金幣解鎖',
                                   style: TextStyle(
                                     fontSize: 15,
-                                    color:
-                                        AppColors.colors[ColorKeys.textPrimary],
+                                    color: AppColors.colors[ColorKeys.textPrimary],
                                   ),
                                 ),
                               ));
@@ -124,8 +117,7 @@ class VideoState extends State<Video> {
                   message: '請先登入後觀看。',
                   cancelButtonText: '返回',
                   barrierDismissible: false,
-                  onConfirm: () =>
-                      MyRouteDelegate.of(context).push(AppRoutes.login),
+                  onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
                   onCancel: () => MyRouteDelegate.of(context).popToHome(),
                 );
               },
@@ -143,9 +135,10 @@ class VideoState extends State<Video> {
                         color: Colors.black,
                         child: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          dotLineAnimation: CircularProgressIndicator(
-                          color: AppColors.colors[ColorKeys.textPrimary],),
+                          loadingAnimation: CircularProgressIndicator(
+                            color: AppColors.colors[ColorKeys.textPrimary],
                           ),
+                        ),
                       ),
                     ),
                     child: (isReady, controller) {
@@ -154,13 +147,14 @@ class VideoState extends State<Video> {
                         videoUrl: videoUrl,
                         video: videoDetail,
                         tag: videoUrl,
-                      showConfirmDialog: showConfirmDialog,
-                      themeColor: AppColors.colors[ColorKeys.secondary],
-                      buildLoadingWidget: VideoLoading(
+                        showConfirmDialog: showConfirmDialog,
+                        themeColor: AppColors.colors[ColorKeys.secondary],
+                        buildLoadingWidget: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          dotLineAnimation: CircularProgressIndicator(
-                          color: AppColors.colors[ColorKeys.textPrimary],),
+                          loadingAnimation: CircularProgressIndicator(
+                            color: AppColors.colors[ColorKeys.textPrimary],
                           ),
+                        ),
                       );
                     },
                   ),

@@ -9,7 +9,7 @@ import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
-import 'enums.dart';
+import 'package:shared/enums/charge_type.dart';
 
 class PurchaseBlock extends StatefulWidget {
   final Vod videoDetail;

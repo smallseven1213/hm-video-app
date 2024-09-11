@@ -39,14 +39,12 @@ class VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.black));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.black));
   }
 
   @override
   void dispose() {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     super.dispose();
   }
 
@@ -71,8 +69,7 @@ class VideoScreenState extends State<VideoScreen> {
                 message: I18n.plsLoginToWatch,
                 cancelButtonText: I18n.back,
                 barrierDismissible: false,
-                onConfirm: () =>
-                    MyRouteDelegate.of(context).push(AppRoutes.login),
+                onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
                 onCancel: () => MyRouteDelegate.of(context).popToHome(),
               );
             },
@@ -90,27 +87,26 @@ class VideoScreenState extends State<VideoScreen> {
                     child: Container(
                       color: Colors.black,
                       child: VideoLoading(
-                          coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
-                          dotLineAnimation: const DotLineAnimation(),
-                          ),
-                          
+                        coverHorizontal: videoDetail.coverHorizontal ?? '',
+                        image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
+                        loadingAnimation: const DotLineAnimation(),
+                      ),
                     ),
                   ),
                   child: (isReady, controller) {
                     return VideoPlayerWidget(
-                        name: widget.name,
-                        videoUrl: videoUrl,
-                        video: videoDetail,
-                        tag: videoUrl,
+                      name: widget.name,
+                      videoUrl: videoUrl,
+                      video: videoDetail,
+                      tag: videoUrl,
                       showConfirmDialog: showConfirmDialog,
                       themeColor: AppColors.colors[ColorKeys.secondary],
                       buildLoadingWidget: VideoLoading(
-                          coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
-                          dotLineAnimation: const DotLineAnimation(),
-                          ),
-                      );
+                        coverHorizontal: videoDetail.coverHorizontal ?? '',
+                        image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
+                        loadingAnimation: const DotLineAnimation(),
+                      ),
+                    );
                   },
                 ),
                 Expanded(

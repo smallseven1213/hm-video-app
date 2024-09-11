@@ -10,9 +10,8 @@ final logger = Logger();
 class VideoLoading extends StatelessWidget {
   final String coverHorizontal;
   final Image? image;
-  final Widget? dotLineAnimation;
-  const VideoLoading({Key? key, required this.coverHorizontal, this.image, this.dotLineAnimation})
-      : super(key: key);
+  final Widget? loadingAnimation;
+  const VideoLoading({Key? key, required this.coverHorizontal, this.image, this.loadingAnimation}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -47,8 +46,8 @@ class VideoLoading extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // Center(child: FlashLoading()),
-            if (image != null) image!, 
-            if (dotLineAnimation != null) dotLineAnimation!,  
+            if (image != null) Center(child: image!),
+            if (loadingAnimation != null) Center(child: loadingAnimation!),
             const SizedBox(height: 15),
             Text(
               localizations.translate('coming_soon'),

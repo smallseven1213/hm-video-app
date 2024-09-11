@@ -15,6 +15,7 @@ import '../screens/video/purchase_block.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/wave_loading.dart';
 import '../config/colors.dart';
+import 'package:app_wl_tw2/widgets/flash_loading.dart';
 
 final userApi = UserApi();
 
@@ -52,8 +53,7 @@ class VideoState extends State<Video> {
                 message: '請先登入後觀看。',
                 cancelButtonText: '返回',
                 barrierDismissible: false,
-                onConfirm: () =>
-                    MyRouteDelegate.of(context).push(AppRoutes.login),
+                onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
                 onCancel: () => MyRouteDelegate.of(context).popToHome(),
               );
             }, child: (canWatch) {
@@ -70,7 +70,9 @@ class VideoState extends State<Video> {
                       child: Container(
                         color: Colors.black,
                         child: VideoLoading(
-                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          loadingAnimation: const FlashLoading(),
+                        ),
                       ),
                     ),
                     child: (isReady, controller) {
@@ -81,6 +83,10 @@ class VideoState extends State<Video> {
                         tag: videoUrl,
                         showConfirmDialog: showConfirmDialog,
                         themeColor: AppColors.colors[ColorKeys.secondary],
+                        buildLoadingWidget: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          loadingAnimation: const FlashLoading(),
+                        ),
                       );
                     },
                   ),

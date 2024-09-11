@@ -72,7 +72,7 @@ class VideoState extends State<Video> {
                         color: Colors.black,
                         child: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          dotLineAnimation: const FlashLoading(),
+                          loadingAnimation: const FlashLoading(),
                         ),
                       ),
                     ),
@@ -86,7 +86,7 @@ class VideoState extends State<Video> {
                         themeColor: AppColors.colors[ColorKeys.secondary],
                         buildLoadingWidget: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          dotLineAnimation: const FlashLoading(),
+                          loadingAnimation: const FlashLoading(),
                         ),
                       );
                     },
