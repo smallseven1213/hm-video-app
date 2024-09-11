@@ -84,5 +84,9 @@ const Map<String, String> sharedIdIdStrings = {
   "become_a _vip_to_unlock":"Menjadi VIP",
   "gold_coins_unlock":"Koin buka",
   "coming_soon":"Keseruan segera hadir",
+  "activate_vip_for_free": "Aktifkan VIP secara gratis",
+  "view_details": "Lihat detail",
+  "want_to_watch": "Ingin menonton，",
+  "unlock_now": "Buka sekarang",
 };
 

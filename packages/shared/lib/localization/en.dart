@@ -84,4 +84,8 @@ const Map<String, String> sharedEnUsStrings = {
   "become_a _vip_to_unlock":"VIP to unlock",
   "gold_coins_unlock":"coins to unlock",
   "coming_soon":"Coming soon",
+  "activate_vip_for_free": "Activate VIP for free",
+  "view_details": "View details",
+  "want_to_watch": "Want to watch，",
+  "unlock_now": "Unlock now",
 };
