@@ -17,17 +17,17 @@ import 'package:shared/modules/videos/video_by_tag_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/index.dart';
 import 'package:shared/widgets/video/loading.dart';
+import 'package:shared/widgets/video/purchase_block.dart';
+
 import '../screens/video/actors.dart';
 import '../screens/video/app_download_ad.dart';
 import '../screens/video/banner.dart';
 import '../screens/video/belong_video.dart';
 import '../screens/video/video_info.dart';
-import '../screens/video/purchase_block.dart';
 import '../widgets/title_header.dart';
 import '../../config/colors.dart';
 import '../widgets/video_preview.dart';
 import '../widgets/loading_animation.dart';
-import '../../../widgets/loading_animation.dart';
 
 final userApi = UserApi();
 
@@ -79,8 +79,13 @@ class VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
-
     var name = widget.args['name'];
+    final Map<String, ImageProvider<Object>> images = {
+      'img-vip': const AssetImage('assets/images/purchase/img-vipbg.webp'),
+      'icon-vip': const AssetImage('assets/images/purchase/icon-vip.webp'),
+      'img-coin': const AssetImage('assets/images/purchase/img-coinbg.webp'),
+      'icon-coin': const AssetImage('assets/images/purchase/icon-coin.webp'),
+    };
     return VideoScreenProvider(
       id: id,
       name: name,
@@ -150,10 +155,12 @@ class VideoState extends State<Video> {
                       slivers: [
                         SliverToBoxAdapter(
                           child: PurchaseBlock(
-                            id: videoDetail!.id.toString(),
+                            id: videoDetail!.id,
                             videoDetail: videoDetail,
                             videoUrl: videoUrl,
                             tag: videoUrl,
+                            showConfirmDialog: showConfirmDialog,
+                            images: images,
                           ),
                         ),
                         SliverToBoxAdapter(
