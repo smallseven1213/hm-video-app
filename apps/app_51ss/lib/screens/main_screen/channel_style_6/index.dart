@@ -5,7 +5,7 @@ import 'package:shared/models/color_keys.dart';
 
 import '../../../config/colors.dart';
 import '../../../widgets/base_short_page.dart';
-import '../../video/video_player_area/flash_loading.dart';
+import '../../../widgets/flash_loading.dart';
 import 'suppliers.dart';
 
 class ChannelStyle6ShortsPart extends BaseShortPage {

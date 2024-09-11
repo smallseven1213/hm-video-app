@@ -9,13 +9,12 @@ import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/modules/video/video_provider.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
-
+import 'package:shared/widgets/video/index.dart';
+import 'package:shared/widgets/video/loading.dart';
 import '../../config/colors.dart';
 import '../../utils/show_confirm_dialog.dart';
 import 'nested_tab_bar_view/index.dart';
-import 'video_player_area/flash_loading.dart';
-import 'video_player_area/index.dart';
-import 'video_player_area/loading.dart';
+import '../../widgets/flash_loading.dart';
 
 final logger = Logger();
 
@@ -37,22 +36,19 @@ class VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.black));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.black));
   }
 
   @override
   void dispose() {
-    SystemChrome.setSystemUIOverlayStyle(
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(
-          statusBarColor: AppColors.colors[ColorKeys.primary]),
+      value: SystemUiOverlayStyle(statusBarColor: AppColors.colors[ColorKeys.primary]),
       child: VideoScreenProvider(
         id: widget.id,
         name: widget.name,
@@ -72,8 +68,7 @@ class VideoScreenState extends State<VideoScreen> {
                   message: '請先登入後觀看。',
                   cancelButtonText: '返回',
                   barrierDismissible: false,
-                  onConfirm: () =>
-                      MyRouteDelegate.of(context).push(AppRoutes.login),
+                  onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
                   onCancel: () => MyRouteDelegate.of(context).popToHome(),
                 );
               },
@@ -89,15 +84,21 @@ class VideoScreenState extends State<VideoScreen> {
                       aspectRatio: 16 / 9,
                       child: Container(
                         color: Colors.black,
-                        child: VideoLoading(
-                            coverHorizontal: videoDetail.coverHorizontal ?? ''),
+                        child: VideoLoading(coverHorizontal: videoDetail.coverHorizontal ?? '', loadingAnimation: const FlashLoading()),
                       ),
                     ),
                     child: (isReady, controller) {
-                      return VideoPlayerArea(
+                      return VideoPlayerWidget(
                         name: widget.name,
                         videoUrl: videoUrl,
                         video: videoDetail,
+                        tag: videoUrl,
+                        showConfirmDialog: showConfirmDialog,
+                        themeColor: AppColors.colors[ColorKeys.secondary],
+                        buildLoadingWidget: VideoLoading(
+                          coverHorizontal: videoDetail.coverHorizontal ?? '',
+                          loadingAnimation: const FlashLoading(),
+                        ),
                       );
                     },
                   ),

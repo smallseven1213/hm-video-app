@@ -1,11 +1,11 @@
 {
-    "name": "色天天",
-    "short_name": "色天天",
+    "name": "AV-UU",
+    "short_name": "AV-UU",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "色天天 打開你的 AV 新世界",
+    "description": "AV-UU 打開你的 AV 新世界",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

@@ -6,8 +6,8 @@ import 'package:shared/models/short_video_detail.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/enums/charge_type.dart';
 
-import '../../screens/video/video_player_area/enums.dart';
 import '../../utils/purchase.dart';
 import '../actor_avatar.dart';
 import 'short_card_info_tag.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../screens/video/video_player_area/flash_loading.dart';
+import 'flash_loading.dart';
 
 class PageLoadingEffect extends StatelessWidget {
   const PageLoadingEffect({

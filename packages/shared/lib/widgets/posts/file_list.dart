@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/post_controller.dart';
 import 'package:shared/controllers/system_config_controller.dart';
 import 'package:shared/enums/app_routes.dart';
@@ -10,10 +11,13 @@ import 'package:shared/models/post.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/handle_url.dart';
 import 'package:shared/utils/purchase.dart';
-import 'package:shared/widgets/posts/video_player_area/index.dart';
 import 'package:shared/widgets/sid_image.dart';
+import 'package:shared/widgets/video/index.dart';
+import '../../../localization/shared_localization_delegate.dart';
+import '../../widgets/video/loading.dart';
 
 class FileListWidget extends StatelessWidget {
   final Post postDetail;
@@ -56,32 +60,40 @@ class FileListWidget extends StatelessWidget {
       return const SizedBox.shrink();
     }
 
-    return VideoPlayerProvider(
-      key: Key('post-$videoUrl'),
-      tag: 'post-$videoUrl',
-      autoPlay: false,
-      videoUrl: videoUrl,
-      videoDetail: Vod(0, ''),
-      // loadingWidget: AspectRatio(
-      //   aspectRatio: 16 / 9,
-      //   child: VideoLoading(coverHorizontal: file.cover),
-      // ),
-      child: (isReady, controller) {
-        return VideoPlayerArea(
-          videoUrl: videoUrl,
-          video: Vod(0, ''),
-          tag: 'post-$videoUrl',
-        );
-      },
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      child: VideoPlayerProvider(
+        key: Key('post-$videoUrl'),
+        tag: 'post-$videoUrl',
+        autoPlay: false,
+        videoUrl: videoUrl,
+        videoDetail: Vod(0, ''),
+        loadingWidget: AspectRatio(
+          aspectRatio: 16 / 9,
+          child: VideoLoading(coverHorizontal: file.cover),
+        ),
+        child: (isReady, controller) {
+          return VideoPlayerWidget(
+            videoUrl: videoUrl,
+            video: Vod(0, ''),
+            tag: 'post-$videoUrl',
+            showConfirmDialog: showConfirmDialog,
+            displayFullscreenIcon: false,
+            displayHeader: false,
+            hasPaymentProcess: false,
+          );
+        },
+      ),
     );
   }
 
   Widget _buildUnlockButton(
       BuildContext context, PostController postController) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: buttonBuilder(
-        text: '觀看更多',
+        text: localizations.translate('view_more'),
         onPressed: () {
           if (postDetail.linkType == LinkType.video.index) {
             handlePathWithId(context, postDetail.link ?? '',
@@ -98,15 +110,18 @@ class FileListWidget extends StatelessWidget {
 
   Widget _buildPurchaseButton(
       BuildContext context, PostController postController) {
+    SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: buttonBuilder(
         text: postDetail.chargeType == ChargeType.vip.index
-            ? '成為VIP解鎖'
-            : '${postDetail.points} 金幣解鎖',
+            ? localizations.translate('become_a _vip_to_unlock')
+            : '${postDetail.points} ${localizations.translate('gold_coins_unlock')}',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
-            MyRouteDelegate.of(context).push(AppRoutes.vip);
+            MyRouteDelegate.of(context).push(
+              AppRoutes.vip,
+            );
           } else {
             purchase(
               context,

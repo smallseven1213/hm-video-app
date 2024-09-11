@@ -1,5 +1,5 @@
 import 'package:app_sv/config/colors.dart';
-import 'package:app_sv/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_sv/widgets/flash_loading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/controllers/video_short_by_channel_style6.dart';

@@ -1,4 +1,4 @@
-import 'package:app_sv/screens/video/video_player_area/flash_loading.dart';
+import 'package:app_sv/widgets/flash_loading.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';

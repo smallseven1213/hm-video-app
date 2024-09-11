@@ -5,11 +5,10 @@ import 'package:shared/controllers/ui_controller.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/short_video/short_video_consumer.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
-import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
-import '../../screens/video/video_player_area/flash_loading.dart';
 import '../../utils/show_confirm_dialog.dart';
+import '../flash_loading.dart';
 
 class HomeUseShortCard extends StatefulWidget {
   final int index;
