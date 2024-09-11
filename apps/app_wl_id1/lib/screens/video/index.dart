@@ -11,13 +11,13 @@ import 'package:shared/modules/user/watch_permission_provider.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/index.dart';
 import 'package:shared/widgets/video/loading.dart';
+import 'package:shared/widgets/video/purchase_block.dart';
 
 import '../../localization/i18n.dart';
 import '../../utils/show_confirm_dialog.dart';
 import '../../widgets/wave_loading.dart';
 import '../../config/colors.dart';
 import 'nested_tab_bar_view/index.dart';
-import 'purchase_block.dart';
 import 'dot_line_animation.dart';
 
 final logger = Logger();
@@ -52,7 +52,12 @@ class VideoScreenState extends State<VideoScreen> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.id.toString());
-
+    final Map<String, ImageProvider<Object>> images = {
+      'img-vip': const AssetImage('assets/images/purchase/img-vip.png'),
+      'icon-vip': const AssetImage('assets/images/purchase/icon-vip.webp'),
+      'img-coin': const AssetImage('assets/images/purchase/img-coin.png'),
+      'icon-coin': const AssetImage('assets/images/purchase/icon-coin.webp'),
+    };
     return VideoScreenProvider(
       id: widget.id,
       name: widget.name,
@@ -119,6 +124,8 @@ class VideoScreenState extends State<VideoScreen> {
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
                       tag: videoUrl,
+                      showConfirmDialog: showConfirmDialog,
+                      images: images,
                     ),
                   Expanded(
                     child: NestedTabBarView(

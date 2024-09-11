@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/widgets/posts/card.dart';
 import 'package:shared/controllers/channel_post_controller.dart';
+import 'package:shared/widgets/posts/card/index.dart';
 import 'package:shared/widgets/refresh_list.dart';
 import '../../../widgets/list_no_more.dart';
 import '../../../widgets/reload_button.dart';

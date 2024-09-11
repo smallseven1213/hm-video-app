@@ -23,8 +23,8 @@ class PostStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
           const Icon(Icons.remove_red_eye, size: 15, color: AppColors.darkText),

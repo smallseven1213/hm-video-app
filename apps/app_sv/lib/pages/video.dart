@@ -10,9 +10,10 @@ import 'package:shared/modules/video_player/video_player_provider.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/video/index.dart';
 import 'package:shared/widgets/video/loading.dart';
+import 'package:shared/widgets/video/purchase_block.dart';
+
 import 'package:app_sv/widgets/flash_loading.dart';
 import '../screens/video/nested_tab_bar_view/index.dart';
-import '../screens/video/purchase_block.dart';
 import '../utils/show_confirm_dialog.dart';
 import '../widgets/wave_loading.dart';
 import '../../config/colors.dart';
@@ -32,8 +33,13 @@ class VideoState extends State<Video> {
   @override
   Widget build(BuildContext context) {
     var id = int.parse(widget.args['id'].toString());
-
     var name = widget.args['name'];
+    final Map<String, ImageProvider<Object>> images = {
+      'img-vip': const AssetImage('assets/images/purchase/img-vip.png'),
+      'icon-vip': const AssetImage('assets/images/purchase/icon-vip.webp'),
+      'img-coin': const AssetImage('assets/images/purchase/img-coin.png'),
+      'icon-coin': const AssetImage('assets/images/purchase/icon-coin.webp'),
+    };
     return VideoScreenProvider(
       id: id,
       name: name,
@@ -93,10 +99,12 @@ class VideoState extends State<Video> {
                   ),
                   if (videoDetail.isAvailable == false)
                     PurchaseBlock(
-                      id: id.toString(),
+                      id: id,
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
                       tag: videoUrl,
+                      showConfirmDialog: showConfirmDialog,
+                      images: images,
                     ),
                   Expanded(
                     child: NestedTabBarView(
