@@ -6,7 +6,7 @@ import 'package:shared/controllers/channel_shared_data_controller.dart';
 import '../../../widgets/tab_bar.dart';
 import '../../../widgets/channel_banners.dart';
 import '../../../widgets/channel_jingang_area.dart';
-import '../../video/video_player_area/flash_loading.dart';
+import '../../../widgets/flash_loading.dart';
 import '../channel_jingang_area_title.dart';
 import '../reload_button.dart';
 import 'tags.dart';

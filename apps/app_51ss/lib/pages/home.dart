@@ -18,7 +18,7 @@ import '../screens/home/home_apps.dart';
 import '../screens/main_screen/index.dart';
 import '../screens/main_screen/notice_dialog.dart';
 import '../screens/user_screen/index.dart';
-import '../screens/video/video_player_area/flash_loading.dart';
+import '../widgets/flash_loading.dart';
 import '../widgets/custom_bottom_bar_item.dart';
 
 final logger = Logger();

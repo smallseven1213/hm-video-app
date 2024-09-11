@@ -11,7 +11,7 @@ import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/float_page_back_button.dart';
 import 'package:shared/widgets/short_video_player/short_card_info.dart';
 import 'package:shared/widgets/short_video_player/index.dart';
-import '../../screens/video/video_player_area/flash_loading.dart';
+import '../flash_loading.dart';
 import '../../utils/show_confirm_dialog.dart';
 import 'short_bottom_area.dart';
 

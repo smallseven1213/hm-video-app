@@ -49,10 +49,11 @@ class VideoLoading extends StatelessWidget {
             if (image != null) Center(child: image!),
             if (loadingAnimation != null) Center(child: loadingAnimation!),
             const SizedBox(height: 15),
-            Text(
+            Center(
+                child: Text(
               localizations.translate('coming_soon'),
               style: const TextStyle(fontSize: 12, color: Colors.white),
-            )
+            )),
           ],
         ),
         const FloatPageBackButton(),
