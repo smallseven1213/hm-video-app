@@ -72,7 +72,8 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
-                                    localizations.translate('activate_vip_for_free'),
+                                    localizations
+                                        .translate('activate_vip_for_free'),
                                     style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
@@ -81,7 +82,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                           ),
                           InkWell(
                             onTap: () {
-                              MyRouteDelegate.of(context).pushAndRemoveUntil(
+                              MyRouteDelegate.of(context).push(
                                 AppRoutes.vip,
                               );
                             },
@@ -159,10 +160,15 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                   type: PurchaseType.video,
                                   id: widget.id,
                                   onSuccess: () {
-                                    final controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
-                                    final videoDetailController = Get.find<VideoDetailController>(tag: controllerTag);
+                                    final controllerTag =
+                                        genaratorLongVideoDetailTag(
+                                            widget.id.toString());
+                                    final videoDetailController =
+                                        Get.find<VideoDetailController>(
+                                            tag: controllerTag);
                                     videoDetailController.mutateAll();
-                                    videoPlayerInfo.videoPlayerController?.play();
+                                    videoPlayerInfo.videoPlayerController
+                                        ?.play();
                                   },
                                   showConfirmDialog: widget.showConfirmDialog,
                                 ),

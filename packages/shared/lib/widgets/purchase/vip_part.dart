@@ -70,14 +70,9 @@ class VipPart extends StatelessWidget {
       PurchaseButton(
         text: localizations.translate('become_vip'),
         onPressed: () {
-          final bottomNavigatorController =
-              Get.find<BottomNavigatorController>();
-          MyRouteDelegate.of(context).pushAndRemoveUntil(
-            AppRoutes.home,
-            args: {'defaultScreenKey': '/game'},
+          MyRouteDelegate.of(context).push(
+            AppRoutes.vip,
           );
-          bottomNavigatorController.changeKey('/game');
-          eventBus.fireEvent("gotoDepositAfterLogin");
         },
       ),
     ];

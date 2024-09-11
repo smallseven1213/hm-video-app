@@ -78,7 +78,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                           ),
                           InkWell(
                             onTap: () {
-                              MyRouteDelegate.of(context).pushAndRemoveUntil(
+                              MyRouteDelegate.of(context).push(
                                 AppRoutes.vip,
                               );
                             },

@@ -255,20 +255,9 @@ class ShortCardInfo extends StatelessWidget {
                                                   .videoPlayerController
                                                   ?.pause();
 
-                                              final bottomNavigatorController =
-                                                  Get.find<
-                                                      BottomNavigatorController>();
-                                              MyRouteDelegate.of(context)
-                                                  .pushAndRemoveUntil(
-                                                AppRoutes.home,
-                                                args: {
-                                                  'defaultScreenKey': '/game'
-                                                },
+                                              MyRouteDelegate.of(context).push(
+                                                AppRoutes.vip,
                                               );
-                                              bottomNavigatorController
-                                                  .changeKey('/game');
-                                              eventBus.fireEvent(
-                                                  "gotoDepositAfterLogin");
                                               videoPlayerInfo
                                                   .observableVideoPlayerController
                                                   .videoPlayerController
@@ -305,7 +294,8 @@ class ShortCardInfo extends StatelessWidget {
                                                   shortVideoDetailController
                                                       .mutateAll();
                                                 },
-                                                showConfirmDialog: showConfirmDialog,
+                                                showConfirmDialog:
+                                                    showConfirmDialog,
                                               );
                                             },
                                             borderColor:
