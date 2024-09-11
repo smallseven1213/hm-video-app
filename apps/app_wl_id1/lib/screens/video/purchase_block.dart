@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/video_detail_controller.dart';
 
 import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/controller_tag_genarator.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/purchase_type.dart';
@@ -159,9 +158,12 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                   type: PurchaseType.video,
                                   id: widget.id,
                                   onSuccess: () {
+                                    final controllerTag =
+                                        genaratorLongVideoDetailTag(
+                                            widget.id.toString());
                                     final videoDetailController =
                                         Get.find<VideoDetailController>(
-                                            tag: widget.tag);
+                                            tag: controllerTag);
                                     videoDetailController.mutateAll();
                                     videoPlayerInfo.videoPlayerController
                                         ?.play();
