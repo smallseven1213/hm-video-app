@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared/widgets/posts/card.dart';
+import 'package:shared/widgets/posts/card/index.dart';
 import 'package:shared/widgets/posts/horizontal_card.dart';
 import 'package:shared/widgets/refresh_list.dart';
 
