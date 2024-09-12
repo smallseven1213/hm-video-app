@@ -28,8 +28,7 @@ final Map<String, RouteWidgetBuilder> gameRoutes = {
       ),
   GameAppRoutes.depositList: (context, args) => const GameDepositList(),
   GameAppRoutes.depositPolling: (context, args) => const GameDepositPolling(),
-  GameAppRoutes.depositBankMobile: (context, args) =>
-      const GameDepositBankMobile(),
+  GameAppRoutes.depositBankMobile: (context, args) => GameDepositBankMobile(),
   GameAppRoutes.depositDetail: (context, args) => GameDepositDetail(
         payment: args['payment'] as String,
         paymentChannelId: args['paymentChannelId'] as int,
