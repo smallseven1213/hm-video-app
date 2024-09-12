@@ -46,7 +46,7 @@ class Coin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
-
+    bool isButtonEnabled = true;
     if (direction == Direction.horizontal) {
       return Padding(
         padding: const EdgeInsets.all(10),
@@ -61,8 +61,7 @@ class Coin extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    localizations
-                        .translate('this_movie_is_available_for_purchase'),
+                    localizations.translate('this_movie_is_available_for_purchase'),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -96,13 +95,25 @@ class Coin extends StatelessWidget {
             ),
             const SizedBox(width: 15),
             PurchaseButton(
-              onPressed: () => purchase(
+              onPressed: () {
+              if (!isButtonEnabled) return;
+              isButtonEnabled = false;
+              void wrappedOnSuccess() {
+                onSuccess?.call();
+                isButtonEnabled = true;
+              }
+              purchase(
                 context,
-                type: purchaseType, // 根據傳入的 purchaseType 動態決定
+                type: purchaseType,
                 id: videoId,
-                onSuccess: onSuccess!, // 使用傳入的回調邏輯
+                onSuccess: wrappedOnSuccess,
                 showConfirmDialog: showConfirmDialog,
-              ),
+              ).then((_) {
+                isButtonEnabled = !isButtonEnabled;
+              }).catchError((_) {
+                isButtonEnabled = true;
+              });
+            },
               text: localizations.translate('pay_to_watch'),
             ),
           ],
@@ -130,8 +141,7 @@ class Coin extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        Text(
-            '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
+        Text('${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
             style: const TextStyle(
               color: Color(0xffffd900),
               fontSize: 13,
@@ -147,13 +157,25 @@ class Coin extends StatelessWidget {
         SizedBox(
           child: PurchaseButton(
             text: localizations.translate('pay_to_watch'),
-            onPressed: () => purchase(
-              context,
-              type: purchaseType, // 根據傳入的 purchaseType 動態決定
-              id: videoId,
-              onSuccess: onSuccess!, // 使用傳入的回調邏
-              showConfirmDialog: showConfirmDialog,
-            ),
+            onPressed: () {
+              if (!isButtonEnabled) return;
+              isButtonEnabled = false;
+              void wrappedOnSuccess() {
+                onSuccess?.call(); 
+                isButtonEnabled = true;
+              }
+              purchase(
+                context,
+                type: purchaseType,
+                id: videoId,
+                onSuccess: wrappedOnSuccess,
+                showConfirmDialog: showConfirmDialog,
+              ).then((_) {
+                isButtonEnabled = !isButtonEnabled;
+              }).catchError((_) {
+                isButtonEnabled = true;
+              });
+            },
           ),
         ),
       ],

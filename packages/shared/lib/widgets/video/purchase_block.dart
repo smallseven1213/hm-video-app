@@ -38,7 +38,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
-
+    bool isButtonEnabled = true;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: !widget.videoDetail.isAvailable
@@ -72,8 +72,7 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 const SizedBox(width: 8),
                                 Expanded(
                                   child: Text(
-                                    localizations
-                                        .translate('activate_vip_for_free'),
+                                    localizations.translate('activate_vip_for_free'),
                                     style: const TextStyle(color: Colors.white),
                                   ),
                                 ),
@@ -155,23 +154,23 @@ class _PurchaseBlockState extends State<PurchaseBlock> {
                                 ),
                               ),
                               InkWell(
-                                onTap: () => purchase(
-                                  context,
-                                  type: PurchaseType.video,
-                                  id: widget.id,
-                                  onSuccess: () {
-                                    final controllerTag =
-                                        genaratorLongVideoDetailTag(
-                                            widget.id.toString());
-                                    final videoDetailController =
-                                        Get.find<VideoDetailController>(
-                                            tag: controllerTag);
-                                    videoDetailController.mutateAll();
-                                    videoPlayerInfo.videoPlayerController
-                                        ?.play();
-                                  },
-                                  showConfirmDialog: widget.showConfirmDialog,
-                                ),
+                                onTap: () {
+                                  if (!isButtonEnabled) return;
+                                  isButtonEnabled = false;
+                                  purchase(
+                                    context,
+                                    type: PurchaseType.video,
+                                    id: widget.id,
+                                    onSuccess: () {
+                                      final controllerTag = genaratorLongVideoDetailTag(widget.id.toString());
+                                      final videoDetailController = Get.find<VideoDetailController>(tag: controllerTag);
+                                      videoDetailController.mutateAll();
+                                      videoPlayerInfo.videoPlayerController?.play();
+                                      isButtonEnabled = true;
+                                    },
+                                    showConfirmDialog: widget.showConfirmDialog,
+                                  ).then((_) {isButtonEnabled = !isButtonEnabled;}).catchError((_){isButtonEnabled = true;});
+                                },
                                 child: Container(
                                   padding: const EdgeInsets.only(
                                     top: 5,
