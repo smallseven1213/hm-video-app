@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/user.dart';
@@ -7,7 +8,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/purchase/purchase_button.dart';
-
+import 'package:shared/controllers/user_controller.dart';
 import '../../localization/shared_localization_delegate.dart';
 
 enum Direction {
@@ -61,7 +62,8 @@ class Coin extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    localizations.translate('this_movie_is_available_for_purchase'),
+                    localizations
+                        .translate('this_movie_is_available_for_purchase'),
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 16,
@@ -96,24 +98,25 @@ class Coin extends StatelessWidget {
             const SizedBox(width: 15),
             PurchaseButton(
               onPressed: () {
-              if (!isButtonEnabled) return;
-              isButtonEnabled = false;
-              void wrappedOnSuccess() {
-                onSuccess?.call();
-                isButtonEnabled = true;
-              }
-              purchase(
-                context,
-                type: purchaseType,
-                id: videoId,
-                onSuccess: wrappedOnSuccess,
-                showConfirmDialog: showConfirmDialog,
-              ).then((_) {
-                isButtonEnabled = !isButtonEnabled;
-              }).catchError((_) {
-                isButtonEnabled = true;
-              });
-            },
+                if (!isButtonEnabled) return;
+                isButtonEnabled = false;
+                void wrappedOnSuccess() {
+                  onSuccess?.call();
+                  isButtonEnabled = true;
+                }
+
+                purchase(
+                  context,
+                  type: purchaseType,
+                  id: videoId,
+                  onSuccess: wrappedOnSuccess,
+                  showConfirmDialog: showConfirmDialog,
+                ).then((_) {
+                  isButtonEnabled = !isButtonEnabled;
+                }).catchError((_) {
+                  isButtonEnabled = true;
+                });
+              },
               text: localizations.translate('pay_to_watch'),
             ),
           ],
@@ -141,7 +144,8 @@ class Coin extends StatelessWidget {
             fontWeight: FontWeight.w500,
           ),
         ),
-        Text('${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
+        Text(
+            '${localizations.translate('price')} $buyPoints${localizations.translate('coins')}',
             style: const TextStyle(
               color: Color(0xffffd900),
               fontSize: 13,
@@ -161,9 +165,10 @@ class Coin extends StatelessWidget {
               if (!isButtonEnabled) return;
               isButtonEnabled = false;
               void wrappedOnSuccess() {
-                onSuccess?.call(); 
+                onSuccess?.call();
                 isButtonEnabled = true;
               }
+
               purchase(
                 context,
                 type: purchaseType,
@@ -209,22 +214,25 @@ class CoinPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find<UserController>();
     return UserInfoConsumer(
       child: (User info, isVIP, isGuest, isLoading) {
         if (info.id.isEmpty) {
           return const SizedBox();
         }
-        return Coin(
-          direction: direction,
-          userPoints: info.points ?? '0',
-          buyPoints: buyPoints,
-          videoId: videoId,
-          videoPlayerInfo: videoPlayerInfo,
-          timeLength: timeLength,
-          onSuccess: onSuccess,
-          showConfirmDialog: showConfirmDialog,
-          tag: tag,
-          purchaseType: purchaseType, // 傳入不同的 purchaseType
+        return Obx(
+          () => Coin(
+            direction: direction,
+            userPoints: userController.infoV2.value.points.toString(),
+            buyPoints: buyPoints,
+            videoId: videoId,
+            videoPlayerInfo: videoPlayerInfo,
+            timeLength: timeLength,
+            onSuccess: onSuccess,
+            showConfirmDialog: showConfirmDialog,
+            tag: tag,
+            purchaseType: purchaseType, // 傳入不同的 purchaseType
+          ),
         );
       },
     );

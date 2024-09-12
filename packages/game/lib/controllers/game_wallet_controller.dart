@@ -45,7 +45,7 @@ class GameWalletController extends GetxController {
     isLoading.value = true;
     try {
       var res = await GameLobbyApi().getPoints();
-      wallet.value = double.parse(res['balance'] ?? '0');
+      wallet.value = double.parse(res['balance'].toString());
     } catch (error) {
       logger.i('_fetchWallets: $error');
     } finally {
