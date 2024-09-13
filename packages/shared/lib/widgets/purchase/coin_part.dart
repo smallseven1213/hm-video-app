@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:shared/apis/vod_api.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/models/user.dart';
@@ -7,7 +8,7 @@ import 'package:shared/modules/video_player/video_player_consumer.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/purchase/purchase_button.dart';
-
+import 'package:shared/controllers/user_controller.dart';
 import '../../localization/shared_localization_delegate.dart';
 
 enum Direction {
@@ -46,7 +47,7 @@ class Coin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
-
+    bool isButtonEnabled = true;
     if (direction == Direction.horizontal) {
       return Padding(
         padding: const EdgeInsets.all(10),
@@ -96,13 +97,26 @@ class Coin extends StatelessWidget {
             ),
             const SizedBox(width: 15),
             PurchaseButton(
-              onPressed: () => purchase(
-                context,
-                type: purchaseType, // 根據傳入的 purchaseType 動態決定
-                id: videoId,
-                onSuccess: onSuccess!, // 使用傳入的回調邏輯
-                showConfirmDialog: showConfirmDialog,
-              ),
+              onPressed: () {
+                if (!isButtonEnabled) return;
+                isButtonEnabled = false;
+                void wrappedOnSuccess() {
+                  onSuccess?.call();
+                  isButtonEnabled = true;
+                }
+
+                purchase(
+                  context,
+                  type: purchaseType,
+                  id: videoId,
+                  onSuccess: wrappedOnSuccess,
+                  showConfirmDialog: showConfirmDialog,
+                ).then((_) {
+                  isButtonEnabled = !isButtonEnabled;
+                }).catchError((_) {
+                  isButtonEnabled = true;
+                });
+              },
               text: localizations.translate('pay_to_watch'),
             ),
           ],
@@ -147,13 +161,26 @@ class Coin extends StatelessWidget {
         SizedBox(
           child: PurchaseButton(
             text: localizations.translate('pay_to_watch'),
-            onPressed: () => purchase(
-              context,
-              type: purchaseType, // 根據傳入的 purchaseType 動態決定
-              id: videoId,
-              onSuccess: onSuccess!, // 使用傳入的回調邏
-              showConfirmDialog: showConfirmDialog,
-            ),
+            onPressed: () {
+              if (!isButtonEnabled) return;
+              isButtonEnabled = false;
+              void wrappedOnSuccess() {
+                onSuccess?.call();
+                isButtonEnabled = true;
+              }
+
+              purchase(
+                context,
+                type: purchaseType,
+                id: videoId,
+                onSuccess: wrappedOnSuccess,
+                showConfirmDialog: showConfirmDialog,
+              ).then((_) {
+                isButtonEnabled = !isButtonEnabled;
+              }).catchError((_) {
+                isButtonEnabled = true;
+              });
+            },
           ),
         ),
       ],
@@ -187,22 +214,25 @@ class CoinPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final UserController userController = Get.find<UserController>();
     return UserInfoConsumer(
       child: (User info, isVIP, isGuest, isLoading) {
         if (info.id.isEmpty) {
           return const SizedBox();
         }
-        return Coin(
-          direction: direction,
-          userPoints: info.points ?? '0',
-          buyPoints: buyPoints,
-          videoId: videoId,
-          videoPlayerInfo: videoPlayerInfo,
-          timeLength: timeLength,
-          onSuccess: onSuccess,
-          showConfirmDialog: showConfirmDialog,
-          tag: tag,
-          purchaseType: purchaseType, // 傳入不同的 purchaseType
+        return Obx(
+          () => Coin(
+            direction: direction,
+            userPoints: userController.infoV2.value.points.toString(),
+            buyPoints: buyPoints,
+            videoId: videoId,
+            videoPlayerInfo: videoPlayerInfo,
+            timeLength: timeLength,
+            onSuccess: onSuccess,
+            showConfirmDialog: showConfirmDialog,
+            tag: tag,
+            purchaseType: purchaseType, // 傳入不同的 purchaseType
+          ),
         );
       },
     );

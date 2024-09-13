@@ -11,7 +11,7 @@ import '../localization/shared_localization_delegate.dart';
 final vodApi = VodApi();
 final userApi = UserApi();
 
-void purchase(
+Future <void> purchase(
   BuildContext context, {
   PurchaseType type = PurchaseType.video,
   required int id,

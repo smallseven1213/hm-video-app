@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/apis/auth_api.dart';
+import 'package:shared/controllers/user_controller.dart';
 
 import '../../controllers/auth_controller.dart';
 import '../../localization/shared_localization_delegate.dart';
@@ -79,6 +80,7 @@ class LoginPageScaffoldState extends State<LoginPageScaffold> {
           }
         } else {
           Get.find<AuthController>().setToken(token);
+          Get.find<UserController>().connectWebSocket(token);
           MyRouteDelegate.of(context).pop();
         }
       } catch (error) {

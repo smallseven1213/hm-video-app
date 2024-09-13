@@ -85,18 +85,13 @@ class UserController extends GetxController {
   }
 
   void handleEvent(dynamic data) {
-    if (data['event'] == 'update.wallet') {
-      var point = double.parse(data['data']['wallet']);
+    if (data['event'] == 'wallet.reduce') {
+      var point = double.parse(data['data']['video.wallet'].toString());
       // 修改至V2的points
-      infoV2.value = UserV2(
-        uid: infoV2.value.uid,
-        roles: infoV2.value.roles,
-        nickname: infoV2.value.nickname,
-        avatar: infoV2.value.avatar,
-        vipExpiredAt: infoV2.value.vipExpiredAt,
-        points: point,
-        isFree: infoV2.value.isFree,
-      );
+      infoV2.update((user) {
+        user?.points = point;
+        logger.i('new wallet point $point');
+      });
     }
   }
 
