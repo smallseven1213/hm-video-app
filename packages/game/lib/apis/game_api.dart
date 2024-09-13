@@ -198,7 +198,7 @@ class GameLobbyApi {
   Future<void> updatePaymentPin(String paymentPin) async {
     var value = await fetcher(
         url:
-            '${systemController.apiHost.value}/public/users/user/payment/payment-pin-code',
+            '${systemConfig.apiHost}/public/users/user/payment/payment-pin-code',
         method: 'PATCH',
         body: {'paymentPin': paymentPin});
     var res = (value.data as Map<String, dynamic>);
