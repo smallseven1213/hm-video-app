@@ -94,10 +94,12 @@ class MyRouteDelegate extends RouterDelegate<String>
       useBottomToTopAnimation: useBottomToTopAnimation, // 传递新参数
       completer: completer, // Pass the completer to your stack data
     ));
+    print('@@@ _stack: ${_stack.last.path}');
 
     if (deletePreviousCount > 0) {
       _stack.removeRange(
           _stack.length - deletePreviousCount - 1, _stack.length - 1);
+      print('@@@ _stack---: ${_stack.last.path}');
     }
     notifyListeners();
 

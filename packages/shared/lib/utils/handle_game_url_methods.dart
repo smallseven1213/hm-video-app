@@ -29,13 +29,28 @@ void handleGameUrlMethods(BuildContext context, String url, String routePath) {
   final String? gameType = url.contains('gameType')
       ? Uri.parse(url).queryParameters['gameType'].toString()
       : null;
+  final String? gotoDepositAfterLogin = url.contains('gotoDepositAfterLogin')
+      ? Uri.parse(url).queryParameters['gotoDepositAfterLogin'].toString()
+      : null;
 
   if (routePath == '/home') {
+    print('@@@game route1');
+    if (gotoDepositAfterLogin == 'true') {
+      MyRouteDelegate.of(context).push(
+        '/home',
+        args: {'defaultScreenKey': '/game'},
+        removeSamePath: true,
+      );
+      eventBus.fireEvent("gotoDepositAfterLogin");
+    }
   } else if (gameId != '' && tpCode != '' && gameId != null && tpCode != null) {
+    print('@@@game route1');
     gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
     var currentPath = MyRouteDelegate.of(context).currentPath;
     eventBus.fireEvent("openGame");
   } else if (gameType != null && gameType != '') {
+    print('@@@game route2');
+
     gamesListController.setGameTypeIndex(int.parse(gameType));
     MyRouteDelegate.of(context).push(
       '/home',
@@ -43,6 +58,7 @@ void handleGameUrlMethods(BuildContext context, String url, String routePath) {
       removeSamePath: true,
     );
   } else {
+    print('@@@game route3');
     logger.i('else ======>: $url');
     gamePlatformConfigController.setVideoToGameRoute(routePath);
     eventBus.fireEvent("gotoDepositAfterLogin");
