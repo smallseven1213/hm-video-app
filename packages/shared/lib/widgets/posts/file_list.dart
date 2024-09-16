@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/controllers/post_controller.dart';
 import 'package:shared/controllers/system_config_controller.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/enums/charge_type.dart';
 import 'package:shared/enums/purchase_type.dart';
 import 'package:shared/enums/file_type.dart';
 import 'package:shared/models/post.dart';
 import 'package:shared/models/vod.dart';
 import 'package:shared/modules/video_player/video_player_provider.dart';
-import 'package:shared/navigator/delegate.dart';
-import 'package:shared/utils/event_bus.dart';
 import 'package:shared/utils/handle_url.dart';
+import 'package:shared/utils/navigate_to_vip.dart';
 import 'package:shared/utils/purchase.dart';
 import 'package:shared/widgets/sid_image.dart';
 import 'package:shared/widgets/video/index.dart';
@@ -24,6 +21,7 @@ class FileListWidget extends StatelessWidget {
   final BuildContext context;
   final Function showConfirmDialog;
   final dynamic buttonBuilder;
+  final bool? useGameDeposit;
 
   const FileListWidget({
     Key? key,
@@ -31,6 +29,7 @@ class FileListWidget extends StatelessWidget {
     required this.context,
     required this.showConfirmDialog,
     required this.buttonBuilder,
+    this.useGameDeposit = false,
   }) : super(key: key);
 
   String? _getVideoUrl(String videoUrl) {
@@ -49,7 +48,8 @@ class FileListWidget extends StatelessWidget {
   Widget _buildImageWidget(Files file) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
-      child: SidImage(sid: file.cover, width: MediaQuery.of(context).size.width),
+      child:
+          SidImage(sid: file.cover, width: MediaQuery.of(context).size.width),
     );
   }
 
@@ -86,7 +86,8 @@ class FileListWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildUnlockButton(BuildContext context, PostController postController) {
+  Widget _buildUnlockButton(
+      BuildContext context, PostController postController) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8),
@@ -94,7 +95,8 @@ class FileListWidget extends StatelessWidget {
         text: localizations.translate('view_more'),
         onPressed: () {
           if (postDetail.linkType == LinkType.video.index) {
-            handlePathWithId(context, postDetail.link ?? '', removeSamePath: true);
+            handlePathWithId(context, postDetail.link ?? '',
+                removeSamePath: true);
           } else if (postDetail.linkType == LinkType.link.index) {
             handleHttpUrl(postDetail.link ?? '');
           } else {
@@ -105,7 +107,8 @@ class FileListWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPurchaseButton(BuildContext context, PostController postController) {
+  Widget _buildPurchaseButton(
+      BuildContext context, PostController postController) {
     SharedLocalizations localizations = SharedLocalizations.of(context)!;
     bool isButtonEnabled = true;
     return Padding(
@@ -116,8 +119,9 @@ class FileListWidget extends StatelessWidget {
             : '${postDetail.points} ${localizations.translate('gold_coins_unlock')}',
         onPressed: () {
           if (postDetail.chargeType == ChargeType.vip.index) {
-            MyRouteDelegate.of(context).push(
-              AppRoutes.vip,
+            VipNavigationHandler.navigateToPage(
+              context,
+              useGameDeposit,
             );
           } else {
             if (!isButtonEnabled) return;
@@ -145,7 +149,8 @@ class FileListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> fileWidgets = [];
-    final postController = Get.find<PostController>(tag: 'postId-${postDetail.id}');
+    final postController =
+        Get.find<PostController>(tag: 'postId-${postDetail.id}');
 
     for (int i = 0; i < postDetail.files.length; i++) {
       final file = postDetail.files[i];
@@ -157,7 +162,9 @@ class FileListWidget extends StatelessWidget {
     }
     if (postDetail.isUnlock == false) {
       fileWidgets.add(_buildPurchaseButton(context, postController));
-    } else if (postDetail.isUnlock && postDetail.link != null && postDetail.linkType != LinkType.none.index) {
+    } else if (postDetail.isUnlock &&
+        postDetail.link != null &&
+        postDetail.linkType != LinkType.none.index) {
       fileWidgets.add(_buildUnlockButton(context, postController));
     }
 

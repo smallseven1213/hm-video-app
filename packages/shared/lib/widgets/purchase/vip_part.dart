@@ -4,6 +4,7 @@ import 'package:shared/controllers/bottom_navigator_controller.dart';
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/utils/event_bus.dart';
+import 'package:shared/utils/navigate_to_vip.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 import '../../localization/shared_localization_delegate.dart';
@@ -17,11 +18,13 @@ enum Direction {
 class VipPart extends StatelessWidget {
   final int timeLength;
   final Direction direction;
+  final bool? useGameDeposit;
 
   const VipPart({
     Key? key,
     required this.timeLength,
     this.direction = Direction.vertical,
+    this.useGameDeposit = false,
   }) : super(key: key);
 
   @override
@@ -70,8 +73,9 @@ class VipPart extends StatelessWidget {
       PurchaseButton(
         text: localizations.translate('become_vip'),
         onPressed: () {
-          MyRouteDelegate.of(context).push(
-            AppRoutes.vip,
+          VipNavigationHandler.navigateToPage(
+            context,
+            useGameDeposit,
           );
         },
       ),
