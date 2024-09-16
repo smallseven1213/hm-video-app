@@ -13,13 +13,13 @@ class VipPage extends StatelessWidget {
     // 使用 WidgetsBinding 確保轉址在頁面構建後執行
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final bottomNavigatorController = Get.find<BottomNavigatorController>();
-      MyRouteDelegate.of(context).pushAndRemoveUntil(
+      MyRouteDelegate.of(context).push(
         AppRoutes.home,
         args: {'defaultScreenKey': '/game'},
+        removeSamePath: true,
       );
       bottomNavigatorController.changeKey('/game');
       eventBus.fireEvent("gotoDepositAfterLogin");
-      MyRouteDelegate.of(context).remove('/game');
     });
 
     return const SizedBox();
