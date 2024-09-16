@@ -59,7 +59,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   String validStake = '0.00';
   String withdrawalFee = '0.000';
   String withdrawalMode = '0';
-  String withdrawalLowerLimit = '0.00';
+  String withdrawalLowerLimit = '';
   FocusNode focusNode = FocusNode(); // 初始化 FocusNode 对象
 
   @override
@@ -215,7 +215,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
   String? _validate(String? value) {
     final GameLocalizations localizations = GameLocalizations.of(context)!;
 
-    if (focusNode.hasFocus) {
+    if (focusNode.hasFocus && withdrawalLowerLimit != '') {
       if (value == null || value.isEmpty) {
         return localizations.translate('please_enter_the_withdrawal_amount');
       } else if (double.parse(value) < double.parse(withdrawalLowerLimit)) {
@@ -341,7 +341,9 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                             'please_enter_the_withdrawal_amount'),
                                       ),
                                       FormBuilderValidators.min(
-                                        double.parse(withdrawalLowerLimit),
+                                        withdrawalLowerLimit != ''
+                                            ? double.parse(withdrawalLowerLimit)
+                                            : 0,
                                         errorText:
                                             '${localizations.translate('input_amount_must_not_be_less_than')}$withdrawalLowerLimit${localizations.translate('dollar')}',
                                       ),
@@ -373,7 +375,7 @@ class _GameWithdrawState extends State<GameWithdraw> {
                                           })
                                         },
                                         warningMessage:
-                                            "${localizations.translate('minimum_withdrawal_amount_is')} $withdrawalLowerLimit",
+                                            "${localizations.translate('minimum_withdrawal_amount_is')}${withdrawalLowerLimit != '' ? withdrawalLowerLimit : '-'}",
                                         errorMessage:
                                             _validate(amountController.text),
                                         inputFormatters: <TextInputFormatter>[
