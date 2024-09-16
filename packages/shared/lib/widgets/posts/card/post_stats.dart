@@ -1,9 +1,11 @@
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:shared/controllers/post_like_controller.dart';
+import 'package:shared/widgets/comment/comment_bottom_sheet.dart';
 
 class AppColors {
   static const contentText = Color(0xff919bb3);
+  static const background = Colors.black;
 }
 
 class PostStatsWidget extends StatelessWidget {
@@ -36,7 +38,7 @@ class PostStatsWidget extends StatelessWidget {
         children: [
           _buildStatItem(Icons.remove_red_eye_outlined, viewCount),
           _buildLikeItem(),
-          _buildStatItem(Icons.chat_bubble_outline_rounded, commentCount),
+          _buildCommentItem(context),
         ],
       ),
     );
@@ -85,6 +87,26 @@ class PostStatsWidget extends StatelessWidget {
             ],
           ),
         );
+      },
+    );
+  }
+
+  Widget _buildCommentItem(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _showCommentBottomSheet(context),
+      child: _buildStatItem(Icons.chat_bubble_outline_rounded, commentCount),
+    );
+  }
+
+  void _showCommentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true, // 啟用點擊外部區域自動關閉
+      backgroundColor: Colors.transparent,
+      barrierColor: Colors.black.withOpacity(0.5), // 可選：設置點擊外部的遮罩顏色和透明度
+      builder: (BuildContext context) {
+        return CommentBottomSheet(); // 保持原本的 CommentBottomSheet
       },
     );
   }
