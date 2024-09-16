@@ -141,8 +141,7 @@ const Map<String, String> viVnStrings = {
   "achieved": "Đã đạt",
   "not_reached": "Chưa đạt",
   "please_enter_the_withdrawal_amount": "Vui lòng nhập số tiền rút",
-  "input_amount_must_not_be_less_than":
-      "Số tiền nhập vào không được ít hơn {amount}.",
+  "input_amount_must_not_be_less_than": "Số tiền nhập vào không được ít hơn",
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Số tiền nhập vào không được nhiều hơn số dư còn lại",
   "input_amount_is_in_wrong_format": "Định dạng số tiền nhập vào không đúng",
