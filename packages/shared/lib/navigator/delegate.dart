@@ -113,6 +113,10 @@ class MyRouteDelegate extends RouterDelegate<String>
     _stack.removeLast();
   }
 
+  void removeSamePath(String routeName) {
+    _stack.removeWhere((stackData) => stackData.path == routeName);
+  }
+
   void pushAndRemoveUntil(String newRoute,
       {bool hasTransition = true, Map<String, dynamic>? args}) {
     _stack.clear();
