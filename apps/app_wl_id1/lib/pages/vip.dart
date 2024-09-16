@@ -8,8 +8,8 @@ class VipPage extends StatelessWidget {
   Widget build(BuildContext context) {
     // 使用 WidgetsBinding 確保轉址在頁面構建後執行
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      const url = "/home?defaultScreenKey=game&gotoDepositAfterLogin=true";
-      handleDefaultScreenKey(
+      const url = "/home?defaultScreenKey=game&depositType=1";
+      handleGameDepositType(
         context,
         url,
       );
