@@ -35,7 +35,8 @@ void handleGameUrlMethods(BuildContext context, String url, String routePath) {
 
   if (routePath == '/home') {
     if (gotoDepositAfterLogin == 'true') {
-      MyRouteDelegate.of(context).removeLast();
+      final currentPath = MyRouteDelegate.of(context).currentPath;
+      MyRouteDelegate.of(context).removeSamePath(currentPath);
       eventBus.fireEvent("gotoDepositAfterLogin");
     }
   } else if (gameId != '' && tpCode != '' && gameId != null && tpCode != null) {
