@@ -109,6 +109,10 @@ class MyRouteDelegate extends RouterDelegate<String>
     notifyListeners();
   }
 
+  void removeLast() {
+    _stack.removeLast();
+  }
+
   void pushAndRemoveUntil(String newRoute,
       {bool hasTransition = true, Map<String, dynamic>? args}) {
     _stack.clear();
