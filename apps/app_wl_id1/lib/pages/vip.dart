@@ -19,6 +19,7 @@ class VipPage extends StatelessWidget {
       );
       bottomNavigatorController.changeKey('/game');
       eventBus.fireEvent("gotoDepositAfterLogin");
+      MyRouteDelegate.of(context).remove('/game');
     });
 
     return const SizedBox();
