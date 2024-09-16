@@ -94,6 +94,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                   toggleFullScreen: widget.toggleFullScreen,
                   allowFullsreen: false,
                   showConfirmDialog: showConfirmDialog,
+                  useGameDeposit: true,
                 ),
                 Obx(
                   () => uiController.isFullscreen.value == true
@@ -119,6 +120,7 @@ class HomeUseShortCardState extends State<HomeUseShortCard> {
                                           data: videoDetail,
                                           title: widget.title,
                                           showConfirmDialog: showConfirmDialog,
+                                          useGameDeposit: true,
                                         )
                                       : const SizedBox.shrink(),
                             ),

@@ -27,11 +27,13 @@ class AppColors {
 class PostPage extends StatelessWidget {
   final int id;
   final bool? isDarkMode;
+  final bool? useGameDeposit;
 
   const PostPage({
     Key? key,
     required this.id,
     this.isDarkMode = true,
+    this.useGameDeposit = true,
   }) : super(key: key);
 
   @override
@@ -116,6 +118,7 @@ class PostPage extends StatelessWidget {
                       postDetail: postDetail.post,
                       showConfirmDialog: showConfirmDialog,
                       buttonBuilder: buttonBuilder,
+                      useGameDeposit: useGameDeposit,
                     ),
                     // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
                     SerialListWidget(

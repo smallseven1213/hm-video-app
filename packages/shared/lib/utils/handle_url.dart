@@ -72,8 +72,6 @@ void handlePathWithId(
 // 狀況5: 如果包含depositType
 void handleGameDepositType(BuildContext context, String url) {
   logger.i('url: $url');
-  final depositType = Uri.parse(url).queryParameters['depositType'].toString();
-  gamePlatformConfigController.setSwitchPaymentPage(int.parse(depositType));
   eventBus.fireEvent("gotoDepositAfterLogin");
   bottomNavigatorController.changeKey('/game');
 }

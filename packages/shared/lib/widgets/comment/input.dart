@@ -11,10 +11,10 @@ class CommentInput extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CommentInputState createState() => _CommentInputState();
+  CommentInputState createState() => CommentInputState();
 }
 
-class _CommentInputState extends State<CommentInput> {
+class CommentInputState extends State<CommentInput> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
@@ -43,34 +43,34 @@ class _CommentInputState extends State<CommentInput> {
         right: 0,
         child: Container(
           color: const Color(0xff1c202f),
-          padding: EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
           child: Row(
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage('assets/user_avatar.png'),
+              const CircleAvatar(
+                backgroundImage: AssetImage('assets/images/play_count.webp'),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(
                 child: TextField(
                   focusNode: _focusNode, // 使用 FocusNode
                   controller: _controller,
                   minLines: 1,
                   maxLines: 3,
-                  scrollPadding: EdgeInsets.all(0),
-                  style: TextStyle(color: Colors.white),
+                  scrollPadding: const EdgeInsets.all(0),
+                  style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: '說些什麼...',
-                    hintStyle: TextStyle(color: Color(0xff5f6279)),
+                    hintStyle: const TextStyle(color: Color(0xff5f6279)),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
                     filled: true,
                     fillColor: const Color(0xff3f4253),
                     contentPadding:
-                        EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                        const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     suffixIcon: _controller.text.isNotEmpty
                         ? IconButton(
-                            icon: Icon(Icons.clear, color: Colors.white),
+                            icon: const Icon(Icons.clear, color: Colors.white),
                             onPressed: () {
                               _controller.clear();
                               setState(() {}); // 刷新 UI
@@ -85,7 +85,7 @@ class _CommentInputState extends State<CommentInput> {
               ),
               TextButton(
                 onPressed: widget.onSend,
-                child: Text('送出', style: TextStyle(color: Colors.white)),
+                child: const Text('送出', style: TextStyle(color: Colors.white)),
               ),
             ],
           ),
