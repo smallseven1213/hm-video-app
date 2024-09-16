@@ -37,6 +37,7 @@ class ShortCard extends StatefulWidget {
   final Function showConfirmDialog;
   final bool? showProgressBar;
   final String videoUrl;
+  final bool? useGameDeposit;
 
   const ShortCard({
     Key? key,
@@ -55,6 +56,7 @@ class ShortCard extends StatefulWidget {
     this.vipPartBuilder,
     this.coinPartBuilder,
     this.showProgressBar = true,
+    this.useGameDeposit = false,
   }) : super(key: key);
 
   @override
@@ -177,8 +179,10 @@ class ShortCardState extends State<ShortCard> {
                             videoId: video.id,
                             videoPlayerInfo: videoPlayerInfo,
                             vipPartBuilder: widget.vipPartBuilder ??
-                                (int timeLength) =>
-                                    VipPart(timeLength: timeLength),
+                                (int timeLength) => VipPart(
+                                      timeLength: timeLength,
+                                      useGameDeposit: widget.useGameDeposit,
+                                    ),
                             coinPartBuilder: widget.coinPartBuilder ??
                                 ({
                                   required String buyPoints,

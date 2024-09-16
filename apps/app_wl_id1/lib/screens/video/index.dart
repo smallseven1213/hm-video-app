@@ -40,12 +40,14 @@ class VideoScreenState extends State<VideoScreen> {
   @override
   void initState() {
     super.initState();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.black));
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.black));
   }
 
   @override
   void dispose() {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
     super.dispose();
   }
 
@@ -77,7 +79,8 @@ class VideoScreenState extends State<VideoScreen> {
                 message: I18n.plsLoginToWatch,
                 cancelButtonText: I18n.back,
                 barrierDismissible: false,
-                onConfirm: () => MyRouteDelegate.of(context).push(AppRoutes.login),
+                onConfirm: () =>
+                    MyRouteDelegate.of(context).push(AppRoutes.login),
                 onCancel: () => MyRouteDelegate.of(context).popToHome(),
               );
             },
@@ -97,7 +100,9 @@ class VideoScreenState extends State<VideoScreen> {
                         color: Colors.black,
                         child: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
+                          image: const Image(
+                              image: AssetImage('assets/images/logo.png'),
+                              width: 60.0),
                           loadingAnimation: const DotLineAnimation(),
                         ),
                       ),
@@ -112,7 +117,9 @@ class VideoScreenState extends State<VideoScreen> {
                         themeColor: AppColors.colors[ColorKeys.secondary],
                         buildLoadingWidget: VideoLoading(
                           coverHorizontal: videoDetail.coverHorizontal ?? '',
-                          image: const Image(image: AssetImage('assets/images/logo.png'), width: 60.0),
+                          image: const Image(
+                              image: AssetImage('assets/images/logo.png'),
+                              width: 60.0),
                           loadingAnimation: const DotLineAnimation(),
                         ),
                       );
@@ -124,8 +131,9 @@ class VideoScreenState extends State<VideoScreen> {
                       videoDetail: videoDetail,
                       videoUrl: videoUrl,
                       tag: videoUrl,
-                      showConfirmDialog: showConfirmDialog,
                       images: images,
+                      showConfirmDialog: showConfirmDialog,
+                      useGameDeposit: true,
                     ),
                   Expanded(
                     child: NestedTabBarView(

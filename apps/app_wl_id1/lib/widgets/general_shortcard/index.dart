@@ -104,6 +104,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                 toggleFullScreen: widget.toggleFullScreen,
                 allowFullsreen: true,
                 showConfirmDialog: showConfirmDialog,
+                useGameDeposit: true,
               ),
             ),
             Obx(
@@ -131,6 +132,7 @@ class GeneralShortCardState extends State<GeneralShortCard> {
                                     data: videoDetail,
                                     title: widget.title,
                                     showConfirmDialog: showConfirmDialog,
+                                    useGameDeposit: true,
                                   )
                                 : const SizedBox.shrink(),
                             const SizedBox(height: 16),

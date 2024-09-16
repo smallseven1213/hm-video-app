@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:shared/enums/app_routes.dart';
 import 'package:shared/localization/shared_localization_delegate.dart';
-import 'package:shared/navigator/delegate.dart';
+import 'package:shared/utils/navigate_to_vip.dart';
 import 'package:shared/utils/video_info_formatter.dart';
 
 import '../purchase/purchase_button.dart';
 
 class VipPart extends StatelessWidget {
   final int timeLength;
+  final bool? useGameDeposit;
 
   const VipPart({
     super.key,
     required this.timeLength,
+    this.useGameDeposit = false,
   });
 
   @override
@@ -59,15 +60,10 @@ class VipPart extends StatelessWidget {
           child: PurchaseButton(
             text: localizations.translate('become_vip'),
             onPressed: () {
-              MyRouteDelegate.of(context).push(AppRoutes.vip);
-              // final bottomNavigatorController =
-              //     Get.find<BottomNavigatorController>();
-              // MyRouteDelegate.of(context).pushAndRemoveUntil(
-              //   AppRoutes.home,
-              //   args: {'defaultScreenKey': '/game'},
-              // );
-              // bottomNavigatorController.changeKey('/game');
-              // eventBus.fireEvent("gotoDepositAfterLogin");
+              VipNavigationHandler.navigateToPage(
+                context,
+                useGameDeposit,
+              );
             },
           ),
         ),

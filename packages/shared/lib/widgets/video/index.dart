@@ -28,6 +28,7 @@ class VideoPlayerWidget extends StatefulWidget {
   final bool? hasPaymentProcess;
   final Color? themeColor;
   final Widget? buildLoadingWidget;
+  final bool? useGameDeposit;
 
   const VideoPlayerWidget({
     Key? key,
@@ -41,6 +42,7 @@ class VideoPlayerWidget extends StatefulWidget {
     this.name,
     this.themeColor = Colors.blue,
     this.buildLoadingWidget,
+    this.useGameDeposit = false,
   }) : super(key: key);
 
   @override
@@ -158,7 +160,9 @@ class VideoPlayerWidgetState extends State<VideoPlayerWidget>
               videoPlayerInfo: videoPlayerInfo,
               title: widget.video.title,
               tag: widget.tag,
-              vipPartBuilder: (timeLength) => VipPart(timeLength: timeLength),
+              vipPartBuilder: (timeLength) => VipPart(
+                  timeLength: timeLength,
+                  useGameDeposit: widget.useGameDeposit),
               coinPartBuilder: ({
                 required String buyPoints,
                 required int videoId,
