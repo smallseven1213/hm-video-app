@@ -90,7 +90,15 @@ class UserController extends GetxController {
       // 修改至V2的points
       infoV2.update((user) {
         user?.points = point;
-        logger.i('new wallet point $point');
+        logger.i('video new wallet point $point');
+      });
+    }
+    if (data['event'] == 'update.wallet') {
+      var point = double.parse(data['data']['wallet'].toString());
+      // 修改至V2的points
+      infoV2.update((user) {
+        user?.points = point;
+        logger.i('game new wallet point $point ');
       });
     }
   }

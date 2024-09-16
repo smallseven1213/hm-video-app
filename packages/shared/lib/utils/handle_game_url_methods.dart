@@ -29,11 +29,17 @@ void handleGameUrlMethods(BuildContext context, String url, String routePath) {
   final String? gameType = url.contains('gameType')
       ? Uri.parse(url).queryParameters['gameType'].toString()
       : null;
+  final String? gotoDepositAfterLogin = url.contains('gotoDepositAfterLogin')
+      ? Uri.parse(url).queryParameters['gotoDepositAfterLogin'].toString()
+      : null;
 
   if (routePath == '/home') {
+    if (gotoDepositAfterLogin == 'true') {
+      MyRouteDelegate.of(context).removeLast();
+      eventBus.fireEvent("gotoDepositAfterLogin");
+    }
   } else if (gameId != '' && tpCode != '' && gameId != null && tpCode != null) {
     gamePlatformConfigController.setThirdPartyGame(true, gameId, tpCode);
-    var currentPath = MyRouteDelegate.of(context).currentPath;
     eventBus.fireEvent("openGame");
   } else if (gameType != null && gameType != '') {
     gamesListController.setGameTypeIndex(int.parse(gameType));
