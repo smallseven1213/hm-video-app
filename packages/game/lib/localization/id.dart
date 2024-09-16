@@ -141,7 +141,7 @@ const Map<String, String> idIdStrings = {
   "not_reached": "Belum tercapai",
   "please_enter_the_withdrawal_amount": "Silakan masukkan jumlah penarikan",
   "input_amount_must_not_be_less_than":
-      "Jumlah yang dimasukkan tidak boleh kurang dari {amount}",
+      "Jumlah yang dimasukkan tidak boleh kurang dari",
   "input_amount_must_not_be_greater_than_the_remaining_balance":
       "Jumlah masukan tidak boleh lebih dari saldo yang tersisa",
   "input_amount_is_in_wrong_format": "Format jumlah masukan salah",
