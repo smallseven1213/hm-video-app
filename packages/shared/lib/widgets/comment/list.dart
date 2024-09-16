@@ -10,7 +10,7 @@ class CommentList extends StatelessWidget {
       child: ListView.builder(
         itemCount: 11,
         itemBuilder: (context, index) {
-          return CommentItem();
+          return const CommentItem();
         },
       ),
     );

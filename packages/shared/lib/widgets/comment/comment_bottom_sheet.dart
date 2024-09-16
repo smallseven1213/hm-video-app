@@ -9,11 +9,13 @@ class AppColors {
 }
 
 class CommentBottomSheet extends StatefulWidget {
+  const CommentBottomSheet({super.key});
+
   @override
-  _CommentBottomSheetState createState() => _CommentBottomSheetState();
+  CommentBottomSheetState createState() => CommentBottomSheetState();
 }
 
-class _CommentBottomSheetState extends State<CommentBottomSheet> {
+class CommentBottomSheetState extends State<CommentBottomSheet> {
   bool showInput = true;
 
   @override
@@ -52,7 +54,7 @@ class _CommentBottomSheetState extends State<CommentBottomSheet> {
                   ),
                 ),
               ),
-              Expanded(
+              const Expanded(
                 child: CommentList(),
               ),
               CommentInput(
