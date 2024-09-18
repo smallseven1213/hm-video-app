@@ -21,16 +21,25 @@ class CommentList extends StatelessWidget {
       topicId: topicId,
       topicType: topicType.index,
       child: (List<Comment> comments) {
-        if (comments.isEmpty) {
-          return const NoDataWidget();
-        }
         return Padding(
           padding: const EdgeInsets.only(bottom: 10),
-          child: ListView.builder(
-            itemCount: comments.length,
-            itemBuilder: (context, index) {
-              return CommentItem(item: comments[index]);
-            },
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Text('評論',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 14)),
+                comments.isEmpty
+                    ? NoDataWidget()
+                    : Column(
+                        children: [
+                          ...comments.map((comment) {
+                            return CommentItem(item: comment);
+                          }).toList(),
+                        ],
+                      )
+              ],
+            ),
           ),
         );
       },
@@ -61,7 +70,7 @@ class CommentItem extends StatelessWidget {
         children: [
           Expanded(
             child: Text(
-              item.userUid.toString(),
+              item.userName,
               style: TextStyle(color: Colors.white, fontSize: 12),
             ),
           ),

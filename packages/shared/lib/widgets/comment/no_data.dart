@@ -19,7 +19,7 @@ class NoDataWidget extends StatelessWidget {
             const SizedBox(height: 18),
             Text('這裡什麼都沒有',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey,
                 ))
           ],
         ),

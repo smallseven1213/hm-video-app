@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:shared/enums/app_routes.dart';
+import 'package:shared/models/comment.dart';
 import 'package:shared/models/post_detail.dart';
 import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/avatar.dart';
+import 'package:shared/widgets/comment/index.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
 import 'package:shared/widgets/posts/tags.dart';
@@ -81,50 +83,58 @@ class PostPage extends StatelessWidget {
           ),
           body: SingleChildScrollView(
             child: UIBottomSafeArea(
-              child: Padding(
-                padding: const EdgeInsets.all(8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      postDetail.post.title,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.contentText,
-                      ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          postDetail.post.title,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.contentText,
+                          ),
+                        ),
+                        PostStatsWidget(
+                          viewCount: postDetail.post.viewCount ?? 0,
+                          likeCount: postDetail.post.likeCount ?? 0,
+                          postId: postDetail.post.id,
+                        ),
+                        HtmlWidget(
+                          postDetail.post.content ?? '',
+                          textStyle: const TextStyle(
+                            fontSize: 13,
+                            color: AppColors.contentText,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        TagsWidget(
+                          tags: postDetail.post.tags,
+                        ),
+                        const SizedBox(height: 8),
+                        // 照片 or 影片
+                        FileListWidget(
+                          context: context,
+                          postDetail: postDetail.post,
+                          showConfirmDialog: showConfirmDialog,
+                          buttonBuilder: buttonBuilder,
+                        ),
+                        // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
+                        SerialListWidget(
+                          series: postDetail.series,
+                          totalChapter: postDetail.post.totalChapter ?? 0,
+                        ),
+                        RecommendWidget(recommendations: postDetail.recommend),
+                      ],
                     ),
-                    PostStatsWidget(
-                      viewCount: postDetail.post.viewCount ?? 0,
-                      likeCount: postDetail.post.likeCount ?? 0,
-                      postId: postDetail.post.id,
-                    ),
-                    HtmlWidget(
-                      postDetail.post.content ?? '',
-                      textStyle: const TextStyle(
-                        fontSize: 13,
-                        color: AppColors.contentText,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
-                    TagsWidget(
-                      tags: postDetail.post.tags,
-                    ),
-                    const SizedBox(height: 8),
-                    // 照片 or 影片
-                    FileListWidget(
-                      context: context,
-                      postDetail: postDetail.post,
-                      showConfirmDialog: showConfirmDialog,
-                      buttonBuilder: buttonBuilder,
-                    ),
-                    // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
-                    SerialListWidget(
-                      series: postDetail.series,
-                      totalChapter: postDetail.post.totalChapter ?? 0,
-                    ),
-                    RecommendWidget(recommendations: postDetail.recommend)
-                  ],
-                ),
+                  ),
+                  CommentSection(
+                    topicId: postDetail.post.id,
+                    topicType: TopicType.post,
+                  ),
+                ],
               ),
             ),
           ),

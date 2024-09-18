@@ -1,45 +1,63 @@
 import 'package:flutter/material.dart';
 
 class CommentInput extends StatefulWidget {
-  final VoidCallback onSend;
-  final VoidCallback onFocus;
+  final Function(String) onSend;
+  final ValueChanged<bool>? onFocusChange;
 
   const CommentInput({
     Key? key,
     required this.onSend,
-    required this.onFocus,
+    this.onFocusChange,
   }) : super(key: key);
 
   @override
-  CommentInputState createState() => CommentInputState();
+  _CommentInputState createState() => _CommentInputState();
 }
 
-class CommentInputState extends State<CommentInput> {
+class _CommentInputState extends State<CommentInput> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
+  bool _isKeyboardVisible = false;
 
   @override
   void initState() {
     super.initState();
-    // 當焦點變化時，檢查是否獲得焦點
+
+    // Listen to focus changes
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
-        widget.onFocus(); // 執行 onFocus 回調
+        setState(() {
+          _isKeyboardVisible = true;
+        });
+        widget.onFocusChange?.call(true);
+      } else {
+        setState(() {
+          _isKeyboardVisible = false;
+        });
+        widget.onFocusChange?.call(false);
       }
     });
   }
 
   @override
   void dispose() {
-    _focusNode.dispose(); // 銷毀 FocusNode
+    _focusNode.dispose(); // Dispose of the focus node
+    _controller.dispose(); // Dispose of the text controller
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+
     return Container(
       color: const Color(0xff1c202f),
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
+      padding: EdgeInsets.only(
+        left: 8,
+        right: 8,
+        top: 20,
+        bottom: 20,
+      ),
       child: Row(
         children: [
           const CircleAvatar(
@@ -48,7 +66,7 @@ class CommentInputState extends State<CommentInput> {
           const SizedBox(width: 8),
           Expanded(
             child: TextField(
-              focusNode: _focusNode, // 使用 FocusNode
+              focusNode: _focusNode,
               controller: _controller,
               minLines: 1,
               maxLines: 3,
@@ -69,18 +87,26 @@ class CommentInputState extends State<CommentInput> {
                         icon: const Icon(Icons.clear, color: Colors.white),
                         onPressed: () {
                           _controller.clear();
-                          setState(() {}); // 刷新 UI
+                          setState(() {}); // Refresh UI
                         },
                       )
                     : null,
               ),
               onChanged: (text) {
-                setState(() {}); // 當輸入框內容變化時刷新 UI
+                setState(() {}); // Refresh UI when text changes
               },
             ),
           ),
           TextButton(
-            onPressed: widget.onSend,
+            onPressed: () {
+              // Handle send action
+              if (_controller.text.isNotEmpty) {
+                widget.onSend(_controller.text);
+                _controller.clear();
+                FocusScope.of(context).unfocus();
+                setState(() {}); // Refresh UI
+              }
+            },
             child: const Text('送出', style: TextStyle(color: Colors.white)),
           ),
         ],
