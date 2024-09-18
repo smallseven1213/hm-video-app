@@ -1,4 +1,3 @@
-import 'package:game/models/hm_api_response_pagination.dart';
 import 'package:get/get.dart';
 import '../controllers/system_config_controller.dart';
 import '../models/infinity_posts.dart';
@@ -100,5 +99,4 @@ class PostApi {
       return false;
     }
   }
-
 }

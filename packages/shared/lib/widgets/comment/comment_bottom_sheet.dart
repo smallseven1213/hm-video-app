@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:shared/models/comment.dart';
 import 'package:shared/widgets/comment/input.dart';
 import 'package:shared/widgets/comment/list.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
@@ -9,7 +12,12 @@ class AppColors {
 }
 
 class CommentBottomSheet extends StatefulWidget {
-  const CommentBottomSheet({super.key});
+  final int postId;
+
+  const CommentBottomSheet({
+    super.key,
+    required this.postId,
+  });
 
   @override
   CommentBottomSheetState createState() => CommentBottomSheetState();
@@ -54,8 +62,11 @@ class CommentBottomSheetState extends State<CommentBottomSheet> {
                   ),
                 ),
               ),
-              const Expanded(
-                child: CommentList(),
+              Expanded(
+                child: CommentList(
+                  topicId: 1,
+                  topicType: TopicType.post,
+                ),
               ),
               CommentInput(
                 onFocus: () {

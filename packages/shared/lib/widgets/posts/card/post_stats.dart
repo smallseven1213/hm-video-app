@@ -11,7 +11,7 @@ class AppColors {
 class PostStatsWidget extends StatelessWidget {
   final int viewCount;
   final int likeCount;
-  final int commentCount;
+  final int replyCount;
   final int? postId;
   final bool? isInteractive;
 
@@ -19,7 +19,7 @@ class PostStatsWidget extends StatelessWidget {
     Key? key,
     required this.viewCount,
     required this.likeCount,
-    required this.commentCount,
+    required this.replyCount,
     required this.postId,
     this.isInteractive = true,
   }) : super(key: key);
@@ -94,7 +94,7 @@ class PostStatsWidget extends StatelessWidget {
   Widget _buildCommentItem(BuildContext context) {
     return GestureDetector(
       onTap: () => _showCommentBottomSheet(context),
-      child: _buildStatItem(Icons.chat_bubble_outline_rounded, commentCount),
+      child: _buildStatItem(Icons.chat_bubble_outline_rounded, replyCount),
     );
   }
 
@@ -106,7 +106,9 @@ class PostStatsWidget extends StatelessWidget {
       backgroundColor: Colors.transparent,
       barrierColor: Colors.black.withOpacity(0.5), // 可選：設置點擊外部的遮罩顏色和透明度
       builder: (BuildContext context) {
-        return CommentBottomSheet(); // 保持原本的 CommentBottomSheet
+        return CommentBottomSheet(
+          postId: postId!,
+        ); // 保持原本的 CommentBottomSheet
       },
     );
   }
