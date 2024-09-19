@@ -10,7 +10,6 @@ class CommentController extends GetxController {
   final int topicType;
   final int topicId;
   RxBool isLoading = false.obs;
-  RxBool isCreatingComment = false.obs;
   RxList<Comment> comments = RxList<Comment>();
 
   CommentController({
@@ -24,17 +23,13 @@ class CommentController extends GetxController {
   }
 
   // Add this method to handle comment creation
-
   Future<void> createComment(String content) async {
-    isCreatingComment.value = true;
     var comment = await commentApi.createComment(
       topicType: topicType,
       topicId: topicId,
       content: content,
     );
-    isCreatingComment.value = false;
     if (comment != null) {
-      print(content);
       comments.add(comment);
       update();
     } else {

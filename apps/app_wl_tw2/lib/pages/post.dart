@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:get/get.dart'; // Import GetX package
+import 'package:shared/controllers/comment_controller.dart'; // Import your CommentController
 import 'package:shared/enums/app_routes.dart';
 import 'package:shared/models/comment.dart';
 import 'package:shared/models/post_detail.dart';
 import 'package:shared/modules/post/post_consumer.dart';
 import 'package:shared/navigator/delegate.dart';
 import 'package:shared/widgets/avatar.dart';
-import 'package:shared/widgets/comment/index.dart';
+import 'package:shared/widgets/comment/input.dart';
+import 'package:shared/widgets/comment/list.dart';
 import 'package:shared/widgets/posts/follow_button.dart';
 import 'package:shared/widgets/posts/post_stats.dart';
 import 'package:shared/widgets/posts/tags.dart';
@@ -14,6 +17,7 @@ import 'package:shared/widgets/posts/serial_list.dart';
 import 'package:shared/widgets/posts/recommend_list.dart';
 import 'package:shared/widgets/posts/file_list.dart';
 import 'package:shared/widgets/ui_bottom_safearea.dart';
+import 'package:shared/widgets/comment/comment_section_base.dart';
 
 import '../screens/nodata/index.dart';
 import '../utils/show_confirm_dialog.dart';
@@ -26,7 +30,7 @@ class AppColors {
   static const darkText = Color(0xff919bb3);
 }
 
-class PostPage extends StatelessWidget {
+class PostPage extends StatefulWidget {
   final int id;
   final bool? isDarkMode;
 
@@ -37,9 +41,20 @@ class PostPage extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  _PostPageState createState() => _PostPageState();
+}
+
+class _PostPageState extends CommentSectionBase<PostPage> {
+  @override
+  int get topicId => widget.id;
+
+  @override
+  int get topicType => TopicType.post.index;
+
+  @override
   Widget build(BuildContext context) {
     return PostConsumer(
-      id: id,
+      id: widget.id,
       child: (PostDetail? postDetail) {
         if (postDetail == null) {
           return const NoDataScreen();
@@ -82,6 +97,7 @@ class PostPage extends StatelessWidget {
             ],
           ),
           body: SingleChildScrollView(
+            controller: scrollController,
             child: UIBottomSafeArea(
               child: Column(
                 children: [
@@ -130,14 +146,12 @@ class PostPage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  CommentSection(
-                    topicId: postDetail.post.id,
-                    topicType: TopicType.post,
-                  ),
+                  buildCommentList(),
                 ],
               ),
             ),
           ),
+          bottomNavigationBar: buildCommentInput(),
         );
       },
     );
