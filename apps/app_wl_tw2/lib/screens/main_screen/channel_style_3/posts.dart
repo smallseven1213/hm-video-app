@@ -16,7 +16,9 @@ class Posts extends StatefulWidget {
 
   const Posts({
     Key? key,
-    required this.postId, required this.areaId, required this.isActive,
+    required this.postId,
+    required this.areaId,
+    required this.isActive,
   }) : super(key: key);
 
   @override
@@ -84,13 +86,13 @@ class PostsState extends State<Posts> {
 
   @override
   Widget build(BuildContext context) {
-    return RefreshList(
-      onRefresh: _onRefresh,
-      child: Obx(() {
-        if (postController == null) {
-          return const SizedBox();
-        }
-        return CustomScrollView(
+    if (postController == null) {
+      return const SizedBox();
+    }
+    return Obx(() {
+      return RefreshList(
+        onRefresh: _onRefresh,
+        child: CustomScrollView(
           controller: _scrollController,
           slivers: [
             SliverPadding(
@@ -122,8 +124,8 @@ class PostsState extends State<Posts> {
             if (postController!.displayNoMoreData.value)
               SliverToBoxAdapter(child: ListNoMore()),
           ],
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }
