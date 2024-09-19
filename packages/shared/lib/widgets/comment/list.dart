@@ -21,26 +21,23 @@ class CommentList extends StatelessWidget {
       topicId: topicId,
       topicType: topicType.index,
       child: (List<Comment> comments) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 10),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                Text('評論',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: Colors.white, fontSize: 14)),
-                comments.isEmpty
-                    ? NoDataWidget()
-                    : Column(
-                        children: [
-                          ...comments.map((comment) {
-                            return CommentItem(item: comment);
-                          }).toList(),
-                        ],
-                      )
-              ],
+        return Column(
+          children: [
+            const SizedBox(height: 8),
+            const Text(
+              '評論',
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 14),
             ),
-          ),
+            comments.isEmpty
+                ? NoDataWidget()
+                : Column(
+                    children: comments
+                        .map((comment) => CommentItem(item: comment))
+                        .toList(),
+                  ),
+            const SizedBox(height: 8),
+          ],
         );
       },
     );

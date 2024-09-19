@@ -28,11 +28,11 @@ class Comment {
   factory Comment.fromJson(Map<String, dynamic> json) {
     return Comment(
       id: json['id'] ?? 0,
-      topicType: json['topic_type'] ?? 0,
-      topicId: json['topic_id'] ?? 0,
-      userUid: json['user_uid'] ?? 0,
-      userName: json['user_name'] ?? '',
-      userAvatar: json['user_avatar'] ?? '',
+      topicType: json['topicType'] ?? 0,
+      topicId: json['topicId'] ?? 0,
+      userUid: json['userUid'] ?? 0,
+      userName: json['userName'] ?? '',
+      userAvatar: json['userAvatar'] ?? '',
       content: json['content'] ?? '',
     );
   }
@@ -40,11 +40,11 @@ class Comment {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'topic_type': topicType,
-      'topic_id': topicId,
-      'user_uid': userUid,
-      'user_name': userName,
-      'user_avatar': userAvatar,
+      'topicType': topicType,
+      'topicId': topicId,
+      'userUid': userUid,
+      'userName': userName,
+      'userAvatar': userAvatar,
       'content': content,
     };
   }

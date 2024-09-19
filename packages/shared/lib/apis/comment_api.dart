@@ -16,7 +16,7 @@ class CommentApi {
       Get.find<SystemConfigController>();
 
   String get apiHost => _systemConfigController.apiHost.value!;
-  String get apiPrefix => '$apiHost/api/v1/comments';
+  String get apiPrefix => '$apiHost/api/v1';
 
   // 獲取評論列表
   Future<List<Comment>> getCommentList({
@@ -33,7 +33,8 @@ class CommentApi {
         'topic_id': topicId.toString(),
       };
 
-      var uri = Uri.parse(apiPrefix).replace(queryParameters: queryParams);
+      var uri = Uri.parse('$apiPrefix/comments')
+          .replace(queryParameters: queryParams);
       var res = await fetcher(url: uri.toString());
 
       if (res.data['code'] != '00') {
@@ -61,7 +62,7 @@ class CommentApi {
   }) async {
     try {
       var res = await fetcher(
-        url: '$apiPrefix/create',
+        url: '$apiPrefix/comment/create',
         method: 'POST',
         body: {
           'topic_type': topicType,

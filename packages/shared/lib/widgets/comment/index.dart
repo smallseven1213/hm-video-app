@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shared/controllers/comment_controller.dart';
 import 'package:shared/models/comment.dart';
-import 'package:shared/modules/comment/comment_consumer.dart';
 import 'package:shared/widgets/comment/input.dart';
 import 'package:shared/widgets/comment/list.dart';
-import 'package:shared/widgets/comment/no_data.dart';
-
 
 class CommentSection extends StatefulWidget {
   final int topicId;
@@ -24,38 +23,40 @@ class CommentSection extends StatefulWidget {
 
 class _CommentSectionState extends State<CommentSection> {
   bool _isKeyboardVisible = false;
+  late CommentController _commentController;
+
+  @override
+  void initState() {
+    super.initState();
+    // Register the CommentController here
+    _commentController = Get.put(
+      CommentController(
+        topicId: widget.topicId,
+        topicType: widget.topicType.index,
+      ),
+      tag: 'comment-${widget.topicId}',
+    );
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the controller when the widget is disposed
+    if (Get.isRegistered<CommentController>(tag: 'comment-${widget.topicId}')) {
+      Get.delete<CommentController>(tag: 'comment-${widget.topicId}');
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Comment list widget
-    Widget commentListWidget = CommentConsumer(
-      topicId: 1,
-      topicType: widget.topicType.index,
-      child: (List<Comment> comments) {
-        return Column(
-          children: [
-            const SizedBox(height: 8),
-            const Text(
-              '評論',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 14),
-            ),
-            comments.isEmpty
-                ? NoDataWidget()
-                : Column(
-                    children: comments
-                        .map((comment) => CommentItem(item: comment))
-                        .toList(),
-                  ),
-            const SizedBox(height: 8),
-          ],
-        );
-      },
+    Widget commentListWidget = CommentList(
+      topicId: widget.topicId,
+      topicType: widget.topicType,
     );
-
+    // Modify the CommentInput widget
     return GestureDetector(
       onTap: () {
-        // Hide the keyboard when the user taps outside the TextField
         FocusScope.of(context).unfocus();
       },
       child: Column(
@@ -70,12 +71,9 @@ class _CommentSectionState extends State<CommentSection> {
               : commentListWidget,
           // Comment Input
           CommentInput(
-            onSend: (String text) {
-              // Handle send action
-              // TODO: Implement comment sending logic
-              setState(() {
-                // Update state if needed
-              });
+            onSend: (String text) async {
+              await _commentController.createComment(text);
+              // No need to setState or update the UI manually
             },
             onFocusChange: (bool hasFocus) {
               setState(() {

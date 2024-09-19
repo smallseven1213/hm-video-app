@@ -22,8 +22,6 @@ class _CommentInputState extends State<CommentInput> {
   @override
   void initState() {
     super.initState();
-
-    // Listen to focus changes
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
         setState(() {
@@ -41,23 +39,16 @@ class _CommentInputState extends State<CommentInput> {
 
   @override
   void dispose() {
-    _focusNode.dispose(); // Dispose of the focus node
-    _controller.dispose(); // Dispose of the text controller
+    _focusNode.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
-
     return Container(
       color: const Color(0xff1c202f),
-      padding: EdgeInsets.only(
-        left: 8,
-        right: 8,
-        top: 20,
-        bottom: 20,
-      ),
+      padding: const EdgeInsets.fromLTRB(8, 20, 8, 20),
       child: Row(
         children: [
           const CircleAvatar(
@@ -70,41 +61,62 @@ class _CommentInputState extends State<CommentInput> {
               controller: _controller,
               minLines: 1,
               maxLines: 3,
-              scrollPadding: const EdgeInsets.all(0),
+              scrollPadding: EdgeInsets.zero,
               style: const TextStyle(color: Colors.white),
+              cursorColor: Colors.white,
               decoration: InputDecoration(
                 hintText: '說些什麼...',
                 hintStyle: const TextStyle(color: Color(0xff5f6279)),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                  borderSide: BorderSide(
+                    color: const Color(0xff5f6279),
+                  ),
+                ),
                 filled: true,
                 fillColor: const Color(0xff3f4253),
+                focusColor: const Color(0xff5f6279),
                 contentPadding:
                     const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 suffixIcon: _controller.text.isNotEmpty
                     ? IconButton(
-                        icon: const Icon(Icons.clear, color: Colors.white),
+                        icon: Container(
+                          width: 14,
+                          height: 14,
+                          decoration: BoxDecoration(
+                            color: Color(0xff5f6279),
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Icon(
+                              Icons.close,
+                              color: Color.fromARGB(255, 50, 52, 64),
+                              size: 12,
+                            ),
+                          ),
+                        ),
                         onPressed: () {
                           _controller.clear();
-                          setState(() {}); // Refresh UI
+                          setState(() {});
                         },
                       )
                     : null,
               ),
               onChanged: (text) {
-                setState(() {}); // Refresh UI when text changes
+                setState(() {});
               },
             ),
           ),
           TextButton(
             onPressed: () {
-              // Handle send action
               if (_controller.text.isNotEmpty) {
                 widget.onSend(_controller.text);
-                _controller.clear();
+                _controller.clear(); // Clear the text field
                 FocusScope.of(context).unfocus();
-                setState(() {}); // Refresh UI
+                setState(() {});
               }
             },
             child: const Text('送出', style: TextStyle(color: Colors.white)),

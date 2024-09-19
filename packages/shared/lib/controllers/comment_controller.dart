@@ -9,9 +9,9 @@ final CommentApi commentApi = CommentApi();
 class CommentController extends GetxController {
   final int topicType;
   final int topicId;
-
   RxBool isLoading = false.obs;
-  var comments = RxList<Comment>([]);
+  RxBool isCreatingComment = false.obs;
+  RxList<Comment> comments = RxList<Comment>();
 
   CommentController({
     required this.topicType,
@@ -21,6 +21,26 @@ class CommentController extends GetxController {
     Get.find<AuthController>().token.listen((event) {
       getComments(topicType, topicId);
     });
+  }
+
+  // Add this method to handle comment creation
+
+  Future<void> createComment(String content) async {
+    isCreatingComment.value = true;
+    var comment = await commentApi.createComment(
+      topicType: topicType,
+      topicId: topicId,
+      content: content,
+    );
+    isCreatingComment.value = false;
+    if (comment != null) {
+      print(content);
+      comments.add(comment);
+      update();
+    } else {
+      // Handle error (e.g., show a snackbar)
+      Get.snackbar('Error', 'Failed to post comment');
+    }
   }
 
   // get comment detail
