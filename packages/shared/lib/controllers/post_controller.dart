@@ -7,9 +7,9 @@ const int limit = 5;
 final PostApi postApi = PostApi();
 
 class PostController extends GetxController {
-  final int postId;
-
   RxBool isLoading = false.obs;
+  RxBool isError = false.obs;
+  final int postId;
   var postDetail = Rx<PostDetail?>(null);
 
   PostController({required this.postId}) {
@@ -22,10 +22,16 @@ class PostController extends GetxController {
   // get post detail
   Future<void> getPostDetail(int postId) async {
     isLoading.value = true;
-    var post = await postApi.getPostDetail(postId);
-    if (post != null) {
-      postDetail.value = post;
-      update();
+    isError.value = false;
+    try {
+      var post = await postApi.getPostDetail(postId);
+      if (post != null) {
+        postDetail.value = post;
+        update();
+      }
+    } catch (e) {
+      isError.value = true;
+    } finally {
       isLoading.value = false;
     }
   }

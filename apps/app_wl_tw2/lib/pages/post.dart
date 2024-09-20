@@ -24,7 +24,7 @@ import '../utils/show_confirm_dialog.dart';
 import '../widgets/button.dart';
 import '../widgets/custom_app_bar.dart';
 
-// 定義顏色配置
+// Define color configurations
 class AppColors {
   static const contentText = Colors.white;
   static const darkText = Color(0xff919bb3);
@@ -55,8 +55,8 @@ class _PostPageState extends CommentSectionBase<PostPage> {
   Widget build(BuildContext context) {
     return PostConsumer(
       id: widget.id,
-      child: (PostDetail? postDetail) {
-        if (postDetail == null) {
+      child: (PostDetail? postDetail, {bool? isError}) {
+        if (postDetail == null || isError == true) {
           return const NoDataScreen();
         }
         return Scaffold(
@@ -130,14 +130,14 @@ class _PostPageState extends CommentSectionBase<PostPage> {
                           tags: postDetail.post.tags,
                         ),
                         const SizedBox(height: 8),
-                        // 照片 or 影片
+                        // Photos or Videos
                         FileListWidget(
                           context: context,
                           postDetail: postDetail.post,
                           showConfirmDialog: showConfirmDialog,
                           buttonBuilder: buttonBuilder,
                         ),
-                        // 做一個連載的組件，向右滑動可以看到 postDetail.serials 的內容
+                        // Serial list component
                         SerialListWidget(
                           series: postDetail.series,
                           totalChapter: postDetail.post.totalChapter ?? 0,

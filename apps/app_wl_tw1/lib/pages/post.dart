@@ -38,8 +38,8 @@ class PostPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return PostConsumer(
       id: id,
-      child: (PostDetail? postDetail) {
-        if (postDetail == null) {
+      child: (PostDetail? postDetail, {bool? isError}) {
+        if (postDetail == null || isError == true) {
           return const NoDataScreen();
         }
         return Scaffold(

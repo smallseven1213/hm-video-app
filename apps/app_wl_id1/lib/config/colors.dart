@@ -13,6 +13,7 @@ class AppColors {
     // button
     ColorKeys.buttonBgPrimary: Colors.white,
     ColorKeys.buttonBgSecondary: Colors.white,
+    ColorKeys.buttonTextPrimary: Colors.white,
     ColorKeys.buttonTextSecondary: Color(0xffFFC700),
     ColorKeys.noImageBgTop: Color(0xff00234D),
     ColorKeys.noImageBgBottom: Color(0xff002D62),
@@ -21,5 +22,7 @@ class AppColors {
     ColorKeys.gradientBgBottomColor: Color.fromRGBO(20, 49, 104, 0.7),
     // video
     ColorKeys.videoTitle: Color(0xffffffff),
+    // dialog
+    ColorKeys.noticeBg: Color(0xff3F4253),
   };
 }
