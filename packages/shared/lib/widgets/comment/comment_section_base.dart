@@ -13,6 +13,7 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
   // 子類別需實現這些抽象方法
   int get topicId;
   int get topicType;
+  bool? get autoScrollOnFocus => false;
 
   @override
   void initState() {
@@ -46,24 +47,33 @@ abstract class CommentSectionBase<T extends StatefulWidget> extends State<T> {
     );
   }
 
+  // 滾動到最底部的方法
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
   // 返回 CommentInput 小部件，包含發送評論的邏輯
   Widget buildCommentInput() {
     return CommentInput(
       onSend: (String text) async {
         await _commentController.createComment(text);
-        // 等待 UI 更新，然後滾動到最新的評論
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _scrollController.animateTo(
-            _scrollController.position.maxScrollExtent,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
-          );
-        });
+        _scrollToBottom();
       },
       onFocusChange: (bool hasFocus) {
         setState(() {
           _isKeyboardVisible = hasFocus;
         });
+        if (hasFocus && autoScrollOnFocus == true) {
+          _scrollToBottom();
+        }
       },
     );
   }

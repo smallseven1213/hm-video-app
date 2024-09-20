@@ -30,7 +30,7 @@ class CommentController extends GetxController {
       content: content,
     );
     if (comment != null) {
-      comments.add(comment);
+      comments.insert(0, comment);
       update();
     } else {
       // Handle error (e.g., show a snackbar)

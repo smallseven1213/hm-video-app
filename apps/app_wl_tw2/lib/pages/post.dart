@@ -52,6 +52,9 @@ class _PostPageState extends CommentSectionBase<PostPage> {
   int get topicType => TopicType.post.index;
 
   @override
+  bool get autoScrollOnFocus => true;
+
+  @override
   Widget build(BuildContext context) {
     return PostConsumer(
       id: widget.id,

@@ -25,7 +25,7 @@ class CommentBottomSheet extends StatelessWidget {
         child: Container(
           height: 400,
           decoration: const BoxDecoration(
-            color: AppColors.background,
+            color: Color(0xff0f1320),
             borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
           ),
           child: Column(
