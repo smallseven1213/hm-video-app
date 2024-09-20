@@ -21,23 +21,13 @@ class CommentList extends StatelessWidget {
       topicId: topicId,
       topicType: topicType.index,
       child: (List<Comment> comments) {
-        return Column(
-          children: [
-            const SizedBox(height: 8),
-            const Text(
-              '評論',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 14),
-            ),
-            comments.isEmpty
-                ? NoDataWidget()
-                : Column(
-                    children: comments
-                        .map((comment) => CommentItem(item: comment))
-                        .toList(),
-                  ),
-            const SizedBox(height: 8),
-          ],
+        return ListView.builder(
+          shrinkWrap: true, // 保證根據內容大小自適應
+          physics: const NeverScrollableScrollPhysics(), // 禁止內部滾動，讓外部處理滾動
+          itemCount: comments.length,
+          itemBuilder: (context, index) {
+            return CommentItem(item: comments[index]);
+          },
         );
       },
     );
@@ -46,15 +36,14 @@ class CommentList extends StatelessWidget {
 
 class CommentItem extends StatelessWidget {
   final Comment item;
-  const CommentItem({
-    super.key,
+  CommentItem({
+    Key? key,
     required this.item,
-  });
+  }) : super(key: ValueKey(item.id));
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      // minVerticalPadding: 2,
       leading: AvatarWidget(
         photoSid: item.userAvatar,
         width: 36,
@@ -63,12 +52,12 @@ class CommentItem extends StatelessWidget {
       ),
       title: Row(
         verticalDirection: VerticalDirection.up,
-        crossAxisAlignment: CrossAxisAlignment.start, // 確保垂直居中對齊
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: Text(
               item.userName,
-              style: TextStyle(color: Colors.white, fontSize: 12),
+              style: const TextStyle(color: Colors.white, fontSize: 12),
             ),
           ),
           const Row(
@@ -80,8 +69,10 @@ class CommentItem extends StatelessWidget {
           ),
         ],
       ),
-      subtitle: Text(item.content,
-          style: const TextStyle(color: Colors.white, fontSize: 11)),
+      subtitle: Text(
+        item.content,
+        style: const TextStyle(color: Colors.white, fontSize: 11),
+      ),
     );
   }
 }
